@@ -9,13 +9,15 @@ class EntryTester < Test::Unit::TestCase
     doc.elements["fix/fields"].elements.each do |field| 
       @xml_side = field if 'Side'.eql?( field.attributes['name'] )
     end
-    entry = FieldEntry.new( @xml_side, true, nil, nil )
+    side = Field.new(@xml_side)
+    fields = { side.name=>side }
+    entry = FieldEntry.new( @xml_side, true, fields, nil )
     assert_equal 'Side', entry.field.name
     assert_equal '54', entry.field.num
     assert_equal 'CHAR', entry.field.ftype
     assert_equal 16, entry.field.values.length
     assert entry.required?
-    entry = FieldEntry.new( @xml_side, false, nil, nil )
+    entry = FieldEntry.new( @xml_side, false, fields, nil )
     assert !entry.required?
     assert entry.field?
     assert !entry.component?
