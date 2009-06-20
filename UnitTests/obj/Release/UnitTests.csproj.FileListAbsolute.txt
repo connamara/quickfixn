@@ -1,0 +1,7 @@
+C:\devel\quickfix.net\UnitTests\obj\Release\ResolveAssemblyReference.cache
+C:\devel\quickfix.net\UnitTests\bin\Release\UnitTests.dll
+C:\devel\quickfix.net\UnitTests\bin\Release\UnitTests.pdb
+C:\devel\quickfix.net\UnitTests\obj\Release\UnitTests.dll
+C:\devel\quickfix.net\UnitTests\obj\Release\UnitTests.pdb
+C:\devel\quickfix.net\UnitTests\bin\Release\nunit.framework.dll
+C:\devel\quickfix.net\UnitTests\bin\Release\nunit.framework.xml
