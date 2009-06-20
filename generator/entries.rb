@@ -22,7 +22,8 @@ class FieldEntry
   
   def initialize( element, req, fmap, cmap )
     @req = req
-    @field = Field.new( element )
+    name = element.attributes['name']
+    @field = fmap[name]
   end
 end
 

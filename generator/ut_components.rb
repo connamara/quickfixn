@@ -33,6 +33,7 @@ class ComponentTester < Test::Unit::TestCase
            el2.group.each_element { |el3| assert el3.field? }
          else
            assert el2.field?
+           assert %w[448 447 452].include?( el2.field.num.to_s ), "field.num = #{el2.field.num}"
          end
        end
      end

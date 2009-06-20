@@ -38,7 +38,7 @@ class Component < Container
   def self.ProcessAll( comp_elements, field_map )
     component_map = {}
     comp_elements.elements.each do |component| 
-      c  = Component.new( component, component_map, field_map )
+      c  = Component.new( component, field_map, component_map )
       component_map[c.name] = c
     end
     return component_map
