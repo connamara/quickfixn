@@ -17,5 +17,8 @@ class EntryTester < Test::Unit::TestCase
     assert entry.required?
     entry = FieldEntry.new( @xml_side, false, nil, nil )
     assert !entry.required?
+    assert entry.field?
+    assert !entry.component?
+    assert !entry.group?
   end
 end

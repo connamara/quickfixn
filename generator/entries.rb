@@ -2,9 +2,23 @@ require 'field'
 require 'container'
 require 'required'
 
+module TypeHelper
+  def field?
+    self.class == FieldEntry
+  end
+  
+  def component?
+    self.class == ComponentEntry
+  end
+  
+  def group?
+    self.class == GroupEntry
+  end
+end
+
 class FieldEntry
   attr_reader :field
-  include Required
+  include Required, TypeHelper
   
   def initialize( element, req, fmap, cmap )
     @req = req
@@ -14,7 +28,7 @@ end
 
 class ComponentEntry
   attr_reader :component
-  include Required
+  include Required, TypeHelper
 
   def initialize( element, req, fmap, cmap )
     @req = req
@@ -24,7 +38,7 @@ end
 
 class GroupEntry
   attr_reader :group
-  include Required
+  include Required, TypeHelper
 
   def initialize( element, req, fmap, cmap )
     @req = req
