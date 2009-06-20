@@ -26,7 +26,7 @@ class FieldTester < Test::Unit::TestCase
   
   def test_process_fields
     doc = REXML::Document.new( File.new( 'fixex.xml' ) )
-    fields = Field.ProcessAll( doc.elements["fix/fields"] )
+    fields = Field.process_all( doc.elements["fix/fields"] )
     
     side = fields['Side']
     assert_equal 'Side', side.name

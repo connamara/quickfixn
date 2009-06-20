@@ -13,7 +13,7 @@ class Field
     end
   end
   
-  def self.ProcessAll( field_elements )
+  def self.process_all( field_elements )
     fields = {}
     field_elements.elements.each do |field| 
       f = Field.new( field )

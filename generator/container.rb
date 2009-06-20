@@ -29,13 +29,17 @@ class Container
   def get_name( el )
     el.attributes['name']
   end
+  
+  def num_elements
+    @elements.size
+  end
 end
 
 class Group < Container
 end
 
 class Component < Container
-  def self.ProcessAll( comp_elements, field_map )
+  def self.process_all( comp_elements, field_map )
     component_map = {}
     comp_elements.elements.each do |component| 
       c  = Component.new( component, field_map, component_map )
@@ -44,4 +48,3 @@ class Component < Container
     return component_map
   end
 end
-
