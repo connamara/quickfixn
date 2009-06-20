@@ -13,7 +13,7 @@ class FieldEntry
 end
 
 class ComponentEntry
-  attr_reader :field
+  attr_reader :component
   include Required
 
   def initialize( element, req, fmap, cmap )
@@ -23,7 +23,7 @@ class ComponentEntry
 end
 
 class GroupEntry
-  attr_reader :field
+  attr_reader :group
   include Required
 
   def initialize( element, req, fmap, cmap )
