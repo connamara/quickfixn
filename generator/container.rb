@@ -16,6 +16,14 @@ class Container
       end
       @elements << entry.new( el, req, field_map, component_map )
     end
+    
+    def each_element
+      @elements.each { |e| yield e }
+    end
+    
+    def each_required
+      @elementes.each { |e| yield e if e.required? }
+    end
   end  
   
   def get_name( el )
@@ -30,7 +38,8 @@ class Component < Container
   def self.ProcessAll( comp_elements, field_map )
     component_map = {}
     comp_elements.elements.each do |component| 
-      component_map[component.attributes['name']] = Component.new( component, component_map, field_map )
+      c  = Component.new( component, component_map, field_map )
+      component_map[c.name] = c
     end
     return component_map
   end
