@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace QuickFIX
+namespace QuickFIX.NET
 {
-    public class FieldBase<T>
+    public abstract class FieldBase<T>
     {
         public FieldBase(int tag, T obj)
         {
@@ -13,7 +13,7 @@ namespace QuickFIX
 
         public T Obj
         {
-            get;
+            get { return Obj; }
             set
             {
                 Obj = value;
@@ -23,7 +23,7 @@ namespace QuickFIX
 
         public int Tag
         {
-            get;
+            get { return Tag; }
             set
             {
                 Tag = value;

@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFIX.NET", "QuickFIX.NET\QuickFIX.NET.csproj", "{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{186A72D8-5A70-4DD0-BABF-E3BB3BA9F419}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D67079DA-6C49-48B2-93AB-1C3E879F5A0B} = {D67079DA-6C49-48B2-93AB-1C3E879F5A0B}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
