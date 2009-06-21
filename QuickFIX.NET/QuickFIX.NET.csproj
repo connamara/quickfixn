@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Fields\BooleanField.cs" />
     <Compile Include="Fields\CharField.cs" />
     <Compile Include="Fields\DateTimeField.cs" />
     <Compile Include="Fields\DecimalField.cs" />

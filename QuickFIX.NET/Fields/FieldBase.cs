@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuickFIX.NET
+namespace QuickFIX.NET.Fields
 {
     public abstract class FieldBase<T>
     {

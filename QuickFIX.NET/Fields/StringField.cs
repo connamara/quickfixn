@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace QuickFIX.NET
+namespace QuickFIX.NET.Fields
 {
     public class StringField : FieldBase<string>
     {
