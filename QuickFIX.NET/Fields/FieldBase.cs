@@ -6,29 +6,29 @@ namespace QuickFIX.NET
     {
         public FieldBase(int tag, T obj)
         {
-            this.Tag = tag;
-            this.Obj = obj;
-            this.changed = true;
+            _tag = tag;
+            _obj = obj;
+            _changed = true;
         }
 
         #region Properties
         public T Obj
         {
-            get { return Obj; }
+            get { return _obj; }
             set
             {
-                Obj = value;
-                changed = true;
+                _obj = value;
+                _changed = true;
             }
         }
 
         public int Tag
         {
-            get { return Tag; }
+            get { return _tag; }
             set
             {
-                Tag = value;
-                changed = true;
+                _tag = value;
+                _changed = true;
             }
         }
         #endregion
@@ -36,9 +36,9 @@ namespace QuickFIX.NET
         // tag=val
         public string toStringField()
         {
-            if( changed.Equals( true ))
+            if( _changed.Equals( true ))
                 makeStringField();
-            return stringField;
+            return _stringField;
         }
 
         public string toString()
@@ -48,13 +48,13 @@ namespace QuickFIX.NET
 
         public int getLength()
         {
-            return stringField.Length + 1; // +1 for SOH
+            return _stringField.Length + 1; // +1 for SOH
         }
 
         public int getTotal()
         {
             int sum = 0;
-            foreach (char c in stringField)
+            foreach (char c in _stringField)
             {
                 sum += (int)c;
             }
@@ -63,13 +63,15 @@ namespace QuickFIX.NET
 
         private void makeStringField()
         {
-            stringField = Tag + "=" + ToString();
-            changed = false;
+            _stringField = Tag + "=" + ToString();
+            _changed = false;
         }
 
         #region Private members
-        private string stringField;
-        private bool changed;
+        private string _stringField;
+        private bool _changed;
+        private T _obj;
+        private int _tag;
         #endregion
     }
 }
