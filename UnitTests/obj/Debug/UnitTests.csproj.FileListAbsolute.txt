@@ -1,1 +1,0 @@
-C:\devel\quickfix.net\UnitTests\obj\Debug\ResolveAssemblyReference.cache
