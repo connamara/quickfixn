@@ -47,8 +47,10 @@
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
     <Compile Include="Fields\CharField.cs" />
+    <Compile Include="Fields\DateTimeField.cs" />
     <Compile Include="Fields\DecimalField.cs" />
     <Compile Include="Fields\FieldBase.cs" />
+    <Compile Include="Fields\FIXDateTime.cs" />
     <Compile Include="Fields\IntField.cs" />
     <Compile Include="Fields\StringField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace QuickFIX.NET
 {
-    class StringField : FieldBase<string>
+    public class StringField : FieldBase<string>
     {
         public StringField(int field, string str)
             : base(field, str) { }
