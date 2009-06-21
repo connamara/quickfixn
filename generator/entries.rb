@@ -33,7 +33,12 @@ class ComponentEntry
 
   def initialize( element, req, fmap, cmap )
     @req = req
-    @component = Component.new( element, fmap, cmap )
+    component_name = element.attributes['name']
+    if cmap.has_key?( component_name )
+      @component = cmap[component_name]
+    else
+      @component = Component.new( element, fmap, cmap )
+    end
   end
 end
 

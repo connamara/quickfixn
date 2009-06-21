@@ -9,12 +9,9 @@ class Message < Container
     super( xmlmsg, field_map, component_map )
   end
   
-  def self.process_all( xmlmsgs, field_map, component_map )
-    messages = {}
-    xmlmsgs.elements.each do |msg|
-      m = Message.new( msg, field_map, component_map )
-      messages[m.name] = m
-    end
-    return messages
+  def self.process_all( msgs, field_map, component_map )
+    messages = Array.new
+    msgs.elements.each { |msg| messages << Message.new( msg, field_map, component_map ) }
+    return messages.sort {|m1,m2| m1.name <=> m2.name }
   end
 end

@@ -16,20 +16,16 @@ class Container
       end
       @elements << entry.new( el, req, field_map, component_map )
     end
-    
-    def each_element
-      @elements.each { |e| yield e }
-    end
-    
-    def each_required
-      @elementes.each { |e| yield e if e.required? }
-    end
   end  
-  
-  def get_name( el )
-    el.attributes['name']
+
+  def each_element
+    @elements.each { |e| yield e }
   end
   
+  def each_required
+    @elementes.each { |e| yield e if e.required? }
+  end
+    
   def num_elements
     @elements.size
   end
