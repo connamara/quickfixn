@@ -11,6 +11,7 @@ namespace QuickFIX.NET
             this.changed = true;
         }
 
+        #region Properties
         public T Obj
         {
             get { return Obj; }
@@ -30,6 +31,7 @@ namespace QuickFIX.NET
                 changed = true;
             }
         }
+        #endregion
 
         // tag=val
         public string toStringField()
@@ -59,13 +61,15 @@ namespace QuickFIX.NET
             return( sum + 1 ); // +1 for SOH
         }
 
-        private string stringField;
-        private bool changed;
-
         private void makeStringField()
         {
             stringField = Tag + "=" + ToString();
             changed = false;
         }
+
+        #region Private members
+        private string stringField;
+        private bool changed;
+        #endregion
     }
 }
