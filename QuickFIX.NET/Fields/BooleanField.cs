@@ -7,6 +7,11 @@ namespace QuickFIX.NET.Fields
 {
     public class BooleanField : FieldBase<Boolean>
     {
+        /// <summary>
+        /// FIX boolean field
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="b"></param>
         public BooleanField(int tag, Boolean b)
             : base(tag, b) { }
 

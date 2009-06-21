@@ -5,8 +5,15 @@ using System.Text;
 
 namespace QuickFIX.NET.Fields.Converters
 {
+    /// <summary>
+    /// Converts char to/from string
+    /// </summary>
     public static class CharConverter
     {
+        /// <summary>
+        /// Convert string to char
+        /// </summary>
+        /// <exception cref="BadConversionException"/>
         public static char Convert(string c)
         {
             if (c.Length != 1)
@@ -14,6 +21,9 @@ namespace QuickFIX.NET.Fields.Converters
             return c[0];
         }
 
+        /// <summary>
+        /// Converts char to string
+        /// </summary>
         public static string Convert(char c)
         {
             return c.ToString();

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace QuickFIX.NET.Fields.Converters
 {
+    /// <summary>
+    /// convert Decimal to/from string
+    /// </summary>
     public static class DecimalConverter
     {
         /// <summary>

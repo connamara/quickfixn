@@ -5,6 +5,9 @@ using System.Text;
 
 namespace QuickFIX.NET.Fields.Converters
 {
+    /// <summary>
+    ///  convert Int64 to/from string
+    /// </summary>
     public static class IntConverter
     {
         /// <summary>
