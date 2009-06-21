@@ -39,14 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharField.cs" />
-    <Compile Include="DecimalField.cs" />
-    <Compile Include="FieldBase.cs" />
-    <Compile Include="IntField.cs" />
-    <Compile Include="StringField.cs" />
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Fields\CharField.cs" />
+    <Compile Include="Fields\DecimalField.cs" />
+    <Compile Include="Fields\FieldBase.cs" />
+    <Compile Include="Fields\IntField.cs" />
+    <Compile Include="Fields\StringField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Session.cs" />
+    <Compile Include="Session.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
