@@ -21,5 +21,10 @@ namespace QuickFIX.NET.Fields
 
         public void setValue(Boolean b)
         { Obj = b; }
+
+        protected override string makeString()
+        {
+            return Converters.BoolConverter.Convert(Obj);
+        }
     }
 }

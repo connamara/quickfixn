@@ -15,5 +15,10 @@ namespace QuickFIX.NET.Fields
 
         public void setValue(string val)
         { Obj = val; }
+
+        protected override string makeString()
+        {
+            return Obj;
+        }
     }
 }

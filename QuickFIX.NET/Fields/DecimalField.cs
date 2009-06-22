@@ -15,5 +15,10 @@ namespace QuickFIX.NET.Fields
 
         public void setValue(Decimal d)
         { Obj = d; }
+
+        protected override string makeString()
+        {
+            return Converters.DecimalConverter.Convert(Obj);
+        }
     }
 }

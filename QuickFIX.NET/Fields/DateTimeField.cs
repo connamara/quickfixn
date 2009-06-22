@@ -5,16 +5,21 @@ using System.Text;
 
 namespace QuickFIX.NET.Fields
 {
-    public class DateTimeField : FieldBase<FIXDateTime>
+    public class DateTimeField : FieldBase<DateTime>
     {
-        public DateTimeField(int tag, FIXDateTime dt)
+        public DateTimeField(int tag, DateTime dt)
             : base(tag, dt) { }
 
         // quickfix compat
-        public FIXDateTime getValue()
+        public DateTime getValue()
         { return Obj; }
 
-        public void setValue(FIXDateTime dt)
+        public void setValue(DateTime dt)
         { Obj = dt; }
+
+        protected override string makeString()
+        {
+            return Converters.DateTimeConverter.Convert(Obj);
+        }
     }
 }

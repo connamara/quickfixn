@@ -41,9 +41,9 @@ namespace QuickFIX.NET.Fields
             return _stringField;
         }
 
-        public string toString()
+        public override string ToString()
         {
-            return Obj.ToString();
+            return makeString();
         }
 
         public int getLength()
@@ -60,6 +60,8 @@ namespace QuickFIX.NET.Fields
             }
             return( sum + 1 ); // +1 for SOH
         }
+
+        protected abstract string makeString();
 
         private void makeStringField()
         {

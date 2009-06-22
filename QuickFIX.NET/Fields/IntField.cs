@@ -15,5 +15,10 @@ namespace QuickFIX.NET.Fields
 
         public void setValue(int v)
         { Obj = v; }
+
+        protected override string makeString()
+        {
+            return Converters.IntConverter.Convert(Obj);
+        }
     }
 }

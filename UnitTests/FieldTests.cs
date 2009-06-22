@@ -61,5 +61,19 @@ namespace UnitTests
             field.Obj = false;
             Assert.That(field.Obj, Is.EqualTo(false));
         }
+
+        [Test]
+        public void DateTimeFieldTest()
+        {
+            DateTime val = new DateTime( 2009, 9, 4, 3, 44, 1 );
+            DateTime newval = new DateTime(2009, 9, 4, 3, 44, 1);
+            DateTimeField field = new DateTimeField(200, val);
+            Assert.That(field.Obj, Is.EqualTo(val));
+            Assert.That(field.getValue(), Is.EqualTo(val));
+            Assert.That(field.Tag, Is.EqualTo(200));
+            field.Obj = newval;
+            Assert.That(field.Obj, Is.EqualTo(newval));
+            Assert.That(field.ToString(), Is.EqualTo("20090904-03:44:01"));
+        }
     }
 }
