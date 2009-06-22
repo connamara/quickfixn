@@ -10,6 +10,9 @@ namespace QuickFIX.NET.Fields
     /// </summary>
     public class BooleanField : FieldBase<Boolean>
     {
+        public BooleanField(int tag)
+            : base(tag, false) { }
+           
         public BooleanField(int tag, Boolean b)
             : base(tag, b) { }
 

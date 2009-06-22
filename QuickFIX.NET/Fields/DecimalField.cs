@@ -6,6 +6,9 @@ namespace QuickFIX.NET.Fields
 {
     public class DecimalField : FieldBase<Decimal>
     {
+        public DecimalField(int tag)
+            : base(tag, new Decimal(0.0)) {}
+
         public DecimalField(int tag, Decimal val)
             : base(tag, val) { }
 

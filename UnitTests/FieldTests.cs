@@ -101,5 +101,27 @@ namespace UnitTests
             Assert.That(obj.getTotal(), Is.EqualTo(544));
             Assert.That(obj.getLength(), Is.EqualTo(9));
         }
+
+        [Test]
+        public void DefaultValTest()
+        {
+            BooleanField bf = new BooleanField(110);
+            Assert.That(false, Is.EqualTo(bf.Obj));
+            Assert.That(110, Is.EqualTo(bf.Tag));
+            CharField cf = new CharField(300);
+            Assert.That('\0', Is.EqualTo(cf.getValue()));
+            Assert.That(300, Is.EqualTo(cf.Tag));
+            DateTimeField dtf = new DateTimeField(3);
+            Assert.That(3, Is.EqualTo(dtf.Tag));
+            StringField sf = new StringField(32);
+            Assert.That(32, Is.EqualTo(sf.Tag));
+            Assert.That("", Is.EqualTo(sf.Obj));
+            IntField ifld = new IntField(239);
+            Assert.That(239, Is.EqualTo(ifld.Tag));
+            Assert.That(0, Is.EqualTo(ifld.Obj));
+            DecimalField df = new DecimalField(1);
+            Assert.That(1, Is.EqualTo(df.Tag));
+            Assert.That(new Decimal(0.0), Is.EqualTo(df.Obj));
+        }
     }
 }

@@ -7,6 +7,9 @@ namespace QuickFIX.NET.Fields
 {
     public class DateTimeField : FieldBase<DateTime>
     {
+        public DateTimeField(int tag)
+            :base(tag, new DateTime()) {}
+
         public DateTimeField(int tag, DateTime dt)
             : base(tag, dt) { }
 

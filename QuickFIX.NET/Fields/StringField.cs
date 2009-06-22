@@ -6,8 +6,11 @@ namespace QuickFIX.NET.Fields
 {
     public class StringField : FieldBase<string>
     {
-        public StringField(int field, string str)
-            : base(field, str) { }
+        public StringField(int tag)
+            : base(tag, "") { }
+
+        public StringField(int tag, string str)
+            : base(tag, str) { }
 
         // quickfix compat
         public string getValue()
