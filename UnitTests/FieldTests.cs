@@ -16,6 +16,11 @@ namespace UnitTests
             IntField field = new IntField(5, 500);
             Assert.That(field.getValue(), Is.EqualTo(500));
             Assert.That(field.Tag, Is.EqualTo(5));
+            Assert.That(field.ToString(), Is.EqualTo("500"));
+            Assert.That(field.Obj, Is.EqualTo(500));
+            Assert.That(field.Tag, Is.EqualTo(5));
+            field.Tag = 10;
+            Assert.That(field.Tag, Is.EqualTo(10));
         }
 
         [Test]

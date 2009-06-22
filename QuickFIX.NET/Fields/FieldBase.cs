@@ -43,7 +43,7 @@ namespace QuickFIX.NET.Fields
         public string toStringField()
         {
             if( _changed.Equals( true ))
-                makeStringField();
+                makeStringFields();
             return _stringField;
         }
 
@@ -52,7 +52,9 @@ namespace QuickFIX.NET.Fields
         /// </summary>
         public override string ToString()
         {
-            return makeString();
+            if( _changed )
+              makeStringFields();
+            return _stringVal;
         }
 
         /// <summary>
@@ -68,8 +70,8 @@ namespace QuickFIX.NET.Fields
         /// </summary>
         public int getTotal()
         {
-            if( _changed.Equals(true) )
-              makeStringField();
+            if( _changed )
+                makeStringFields();
 
             int sum = 0;
             foreach (char c in _stringField)
@@ -84,9 +86,10 @@ namespace QuickFIX.NET.Fields
         /// <summary>
         /// returns tag=val
         /// </summary>
-        private void makeStringField()
+        private void makeStringFields()
         {
-            _stringField = Tag + "=" + ToString();
+            _stringVal = makeString();
+            _stringField = Tag + "=" + _stringVal;
             _changed = false;
         }
 
@@ -95,6 +98,7 @@ namespace QuickFIX.NET.Fields
         private bool _changed;
         private T _obj;
         private int _tag;
+        private string _stringVal;
         #endregion
     }
 }
