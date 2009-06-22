@@ -18,7 +18,7 @@ class Generator
   end
   
   def generate_fields
-    FieldGen.generate_tags( @fields, '../QuickFIX.NET/Fields' )
+    FieldGen.generate( @fields, '../QuickFIX.NET/Fields' )
   end
 end
 
