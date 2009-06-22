@@ -5,20 +5,24 @@ using System.Text;
 
 namespace QuickFIX.NET.Fields
 {
+    /// <summary>
+    /// FIX BooleanField class
+    /// </summary>
     public class BooleanField : FieldBase<Boolean>
     {
-        /// <summary>
-        /// FIX boolean field
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <param name="b"></param>
         public BooleanField(int tag, Boolean b)
             : base(tag, b) { }
 
-        // quickfix compat
+        /// <summary>
+        /// quickfix-cpp compat - returns base type
+        /// </summary>
+        /// <returns>Boolean object</returns>
         public Boolean getValue()
         { return Obj; }
 
+        /// <summary>
+        /// quickfix-cpp compat - set object
+        /// </summary>
         public void setValue(Boolean b)
         { Obj = b; }
 
