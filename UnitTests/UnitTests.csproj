@@ -52,7 +52,6 @@
     <Compile Include="ConfigTests.cs" />
     <Compile Include="ConverterTests.cs" />
     <Compile Include="FieldTests.cs" />
-    <Compile Include="FIXDateTimeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

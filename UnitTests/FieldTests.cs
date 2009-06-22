@@ -13,7 +13,7 @@ namespace UnitTests
         [Test]
         public void IntFieldTest()
         {
-            IntField field = new IntField(5, 500);
+            IntField field = new IntField(Tags.AdvTransType, 500);
             Assert.That(field.getValue(), Is.EqualTo(500));
             Assert.That(field.Tag, Is.EqualTo(5));
             Assert.That(field.ToString(), Is.EqualTo("500"));
