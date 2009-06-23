@@ -123,5 +123,13 @@ namespace UnitTests
             Assert.That(1, Is.EqualTo(df.Tag));
             Assert.That(new Decimal(0.0), Is.EqualTo(df.Obj));
         }
+
+        [Test]
+        public void AccountFieldTest()
+        {
+            Account acct = new Account("iiiD4");
+            Assert.That("iiiD4", Is.EqualTo(acct.Obj));
+            Assert.That(Tags.Account, Is.EqualTo(acct.Tag));
+        }
     }
 }

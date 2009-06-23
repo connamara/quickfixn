@@ -57,6 +57,7 @@
     <Compile Include="Fields\DateTimeField.cs" />
     <Compile Include="Fields\DecimalField.cs" />
     <Compile Include="Fields\FieldBase.cs" />
+    <Compile Include="Fields\Fields.cs" />
     <Compile Include="Fields\FieldTags.cs" />
     <Compile Include="Fields\IntField.cs" />
     <Compile Include="Fields\StringField.cs" />

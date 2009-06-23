@@ -1,5 +1,34 @@
 
 module FieldGen
+  def self.base_type_helper( field )
+    case(field.ftype)
+      when 'CHAR' then return 'char'
+      when 'STRING' then return 'string'
+      when 'INT' then return 'int'
+      when 'AMT' then return 'Decimal'
+      when 'PERCENTAGE' then return 'Decimal'
+      when 'BOOLEAN' then return 'Boolean'
+      when 'CURRENCY' then return 'Decimal'
+      when 'LOCALMKTDATE' then return 'DateTime'
+      when 'PRICE' then return 'Decimal'
+      when 'QTY' then return 'Decimal'
+      when 'SEQNUM' then return 'int'
+      when 'PRICEOFFSET' then return 'Decimal'
+      when 'LENGTH' then return 'Decimal'
+      when 'FLOAT' then return 'Decimal'
+      when 'UTCTIMESTAMP' then return 'DateTime'
+      when 'MONTHYEAR' then return 'DateTime'
+      when 'MULTIPLEVALUESTRING' then return 'string'
+      when 'COUNTRY' then return 'string'
+      when 'DATA' then return 'string'
+      when 'EXCHANGE' then return 'string'
+      when 'NUMINGROUP' then return 'int'
+      when 'UTCDATEONLY' then return 'DateTime'
+      when 'UTCTIMEONLY' then return 'DateTime'
+      else raise "field type not supported! #{field.ftype}"
+    end
+  end
+
   def self.type_helper( field )
     case(field.ftype)
       when 'CHAR' then return 'CharField'
@@ -47,26 +76,35 @@ module FieldGen
     f.puts '    public static class Tags'
     f.puts '    {'
     fields.each do |field|
-      f.puts "        public static int #{field.name} = #{field.num};"
+      f.puts "        public const int #{field.name} = #{field.num};"
     end
     f.puts '    }'
     f.puts '}'
+    f.close
   end
 
   def self.generate_fields( field_map, output_dir )
+    f = File.new( "#{output_dir}/Fields.cs", 'w' )
     fields = field_map.values.sort{ |f1, f2| f1.name <=> f2.name }
-    fields.each { |f| type_helper( f ) }
-    return # we aren't ready for this yet
-    f = File.new( "#{output_dir}/FieldTags.cs", 'w' )
     f.puts 'using System;'
     f.puts ''
     f.puts 'namespace QuickFIX.NET.Fields'
     f.puts '{'
     fields.each do |field|
-      f.puts "    public sealed class #{field.name} : #{type_helper(field)};"
       f.puts '    /// <summary>'
-      f.puts '    /// FIX Field Tag Values'
+      f.puts "    /// #{field.name} Field"
       f.puts '    /// </summary>/'
+      f.puts "    public sealed class #{field.name} : #{type_helper(field)}"
+      f.puts '    {'
+      f.puts "        public #{field.name}()"
+      f.puts "            :base(Tags.#{field.name}) {}"
+      f.puts "        public #{field.name}(#{base_type_helper(field)} val)"
+      f.puts "            :base(Tags.#{field.name}, val) {}"
+      f.puts "    }"
+      f.puts ""
+      f.puts ""
     end
+    f.puts '}'
+    f.close
   end
 end
