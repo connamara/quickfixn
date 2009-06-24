@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
+    <Compile Include="FieldMap.cs" />
     <Compile Include="Fields\BooleanField.cs" />
     <Compile Include="Fields\CharField.cs" />
     <Compile Include="Fields\Converters\BadConversionException.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Fields\FieldBase.cs" />
     <Compile Include="Fields\Fields.cs" />
     <Compile Include="Fields\FieldTags.cs" />
+    <Compile Include="Fields\IField.cs" />
     <Compile Include="Fields\IntField.cs" />
     <Compile Include="Fields\StringField.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ConfigTests.cs" />
     <Compile Include="ConverterTests.cs" />
+    <Compile Include="FieldMapTests.cs" />
     <Compile Include="FieldTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

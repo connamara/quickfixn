@@ -6,7 +6,7 @@ namespace QuickFIX.NET.Fields
     /// Base class for all field types
     /// </summary>
     /// <typeparam name="T">Internal storage type</typeparam>
-    public abstract class FieldBase<T>
+    public abstract class FieldBase<T> : IField
     {
         public FieldBase(int tag, T obj)
         {
