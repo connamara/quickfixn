@@ -48,6 +48,19 @@ namespace UnitTests
         }
 
         [Test]
+        public void DateTimeFieldTest()
+        {
+
+            fieldmap.setField(new DateTimeField(Tags.TransactTime,new DateTime(2009,12,10)));
+            TransactTime tt= new TransactTime();
+            fieldmap.getField(tt);
+            Assert.That(new DateTime(2009,12,10), Is.EqualTo(tt.Obj));
+            fieldmap.setField(new TransactTime(new DateTime(2010,12,10)));
+            fieldmap.getField(tt);
+            Assert.That(new DateTime(2010,12,10), Is.EqualTo(tt.getValue()));
+        }
+
+        [Test]
         public void BooleanFieldTest()
         {
             BooleanField field = new BooleanField(200, true);
@@ -98,6 +111,25 @@ namespace UnitTests
             string refield = fieldmap.getField(200);
             Assert.That("101.0001", Is.EqualTo(refield));
      
+        }
+
+        [Test]
+        public void FieldNotFoudnTest()
+        {
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.getField(99900); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.getField(new DateTimeField(1002030)); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                 delegate { fieldmap.getField(new CharField(23099)); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                 delegate { fieldmap.getField(new BooleanField(99900)); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                 delegate { fieldmap.getField(new StringField(99900)); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.getField(new IntField(99900)); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.getField(new DecimalField(99900)); });
         }
     }
 }
