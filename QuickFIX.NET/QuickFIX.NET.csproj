@@ -45,7 +45,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application.cs" />
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\Settings.cs" />
     <Compile Include="FieldMap.cs" />
     <Compile Include="Fields\BooleanField.cs" />
     <Compile Include="Fields\CharField.cs" />
@@ -68,6 +70,7 @@
     <Compile Include="Session.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Transport\SocketInitiator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
