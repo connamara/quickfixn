@@ -26,7 +26,7 @@ namespace QuickFIX.NET.Fields
             }
         }
 
-        public int Tag
+        public override int Tag
         {
             get { return _tag; }
             set
@@ -40,7 +40,7 @@ namespace QuickFIX.NET.Fields
         /// <summary>
         /// returns full fix string: tag=val
         /// </summary>
-        public string toStringField()
+        public override string toStringField()
         {
             if( _changed.Equals( true ))
                 makeStringFields();
@@ -60,7 +60,7 @@ namespace QuickFIX.NET.Fields
         /// <summary>
         /// length of formatted field (including tag=val\001)
         /// </summary>
-        public int getLength()
+        public override int getLength()
         {
             return _stringField.Length + 1; // +1 for SOH
         }
@@ -68,7 +68,7 @@ namespace QuickFIX.NET.Fields
         /// <summary>
         /// checksum
         /// </summary>
-        public int getTotal()
+        public override int getTotal()
         {
             if( _changed )
                 makeStringFields();

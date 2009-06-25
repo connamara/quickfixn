@@ -5,16 +5,16 @@ namespace QuickFIX.NET.Fields
     /// <summary>
     /// Interface for all field classes
     /// </summary>
-    public interface IField
+    public abstract class IField
     {
 
         #region Properties
-        int Tag { get; set; }
+        public abstract int Tag { get; set; }
         #endregion
 
-        string toStringField();
-        string ToString();
-        int getLength();
-        int getTotal();
+        public abstract string toStringField();
+        public abstract override string ToString();
+        public abstract int getLength();
+        public abstract int getTotal();
     }
 }
