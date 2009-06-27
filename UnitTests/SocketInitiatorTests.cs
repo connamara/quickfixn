@@ -30,26 +30,20 @@ namespace UnitTests
             SocketInitiator i = new SocketInitiator(_fixApp, _settings);
             i.RawDataReceived += new SocketInitiator.RawDataReceivedHandler(i_RawDataReceived);
             i.Start();
-            Thread.Sleep(500);
-            _clientSocket.Send(Encoding.UTF8.GetBytes("TESTING123\n"));
 
-            Thread.Sleep(500);
-            // Create a socket listener and expect connection.
+            Thread.Sleep(100);
+            _clientSocket.Send(Encoding.UTF8.GetBytes("TESTING123\n"));
+            Thread.Sleep(100);
+
             Assert.That(_clientSocket.Connected, Is.True);
             Assert.That(i.Connected, Is.True);
             Assert.That(_lastReceived, Is.EqualTo("TESTING123"));
 
-            try
-            {
-                _clientSocket.Shutdown(SocketShutdown.Both);
-                i.Close();
-                _clientSocket.Close();
-                listener.Stop();
-            }
-            catch (SocketException ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
+
+            _clientSocket.Shutdown(SocketShutdown.Both);
+            i.Close();
+            _clientSocket.Close();
+            listener.Stop();
         }
 
         void i_RawDataReceived(object sender, string rawData)
