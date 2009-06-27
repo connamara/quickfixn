@@ -24,7 +24,7 @@ namespace QuickFIX.NET.Transport
 
         public SocketInitiator(Application application, Settings settings)
         {
-            _application = application;
+            _app = application;
             _settings = settings;
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _socket.ReceiveTimeout = 5000;
@@ -123,7 +123,7 @@ namespace QuickFIX.NET.Transport
 
         #region Private Members
         private Socket _socket;
-        private Application _application;
+        private Application _app;
         private Settings _settings;
         private byte[] _readBuffer = new byte[512];
         private string _currentMessage;
