@@ -89,7 +89,7 @@ namespace QuickFIX.NET.Transport
                     break;
                 }
 
-                if (ClientHasDisconnected(bytesRead)) 
+                if (ClientHasDisconnected(bytesRead))
                     break;
 
                 HandleDataReceived(Encoding.UTF8.GetString(message), clientStream.GetHashCode());
