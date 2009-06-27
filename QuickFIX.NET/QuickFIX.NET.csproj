@@ -70,7 +70,7 @@
     <Compile Include="Session.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Transport\SocketConnector.cs" />
+    <Compile Include="Transport\SocketAcceptor.cs" />
     <Compile Include="Transport\SocketInitiator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
