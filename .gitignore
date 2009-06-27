@@ -3,3 +3,4 @@ QuickFIX.NET/bin/*
 QuickFIX.NET/obj/*
 UnitTests/bin/*
 UnitTests/obj/*
+*.user
