@@ -17,7 +17,7 @@ namespace UnitTests
             Assert.That(BoolConverter.Convert("N"), Is.EqualTo(false));
             Assert.That(BoolConverter.Convert(true), Is.EqualTo("Y"));
             Assert.That(BoolConverter.Convert(false), Is.EqualTo("N"));
-            Assert.Throws( typeof(BadConversionException),
+            Assert.Throws(typeof(BadConversionException),
                 delegate { BoolConverter.Convert("Z"); });
         }
 
