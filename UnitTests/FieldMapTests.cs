@@ -114,7 +114,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void FieldNotFoudnTest()
+        public void FieldNotFoundTest()
         {
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.getField(99900); });
