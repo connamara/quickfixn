@@ -20,12 +20,12 @@ namespace QuickFIX.NET.Transport
             _application = application;
             _settings = settings;
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            _socket.ReceiveTimeout = 5000;
         }
 
         public void Start()
         {
             Thread t = new Thread(new ThreadStart(ClientLoop));
-            t.IsBackground = false;
             t.Start();
         }
 
@@ -38,22 +38,44 @@ namespace QuickFIX.NET.Transport
             {
                 try
                 {
-                    // TODO: Can use .BeginConnect() if asychronous "connected" callback is necessary.
                     _socket.Connect(_settings.SocketConnectHost, _settings.SocketConnectPort);
                 }
-                catch (SocketException sex)
+                catch (SocketException ex)
                 {
-                    Debug.WriteLine(sex.ToString());
+                    Console.WriteLine(ex.ToString());
                     Thread.Sleep(_settings.ReconnectInterval);
                     continue;
                 }
 
+                Console.WriteLine("Connected");
+
                 while (true)
                 {
-                    _socket.Receive(_readBuffer);
-                    Debug.WriteLine("Received: " + _readBuffer);
+                    if (_shutdown) break;
+
+                    try
+                    {
+                        _socket.Receive(_readBuffer);
+                        Debug.WriteLine("Received: " + _readBuffer.ToString());
+                    }
+                    catch (SocketException iex)
+                    {
+                        Console.WriteLine(iex.ToString());
+                    }
                 }
+
+                if (_shutdown) break;
             }
+        }
+
+        /// <summary>
+        /// Send raw string over socket.
+        /// </summary>
+        /// <param name="data"></param>
+        public void Send(string data)
+        {
+            byte[] rawData = Encoding.ASCII.GetBytes(data);
+            _socket.Send(rawData);
         }
 
         /// <summary>
@@ -61,6 +83,7 @@ namespace QuickFIX.NET.Transport
         /// </summary>
         public void Close()
         {
+            _shutdown = true;
             _socket.Disconnect(true);
         }
 
@@ -69,6 +92,7 @@ namespace QuickFIX.NET.Transport
         private Application _application;
         private Settings _settings;
         private byte[] _readBuffer = new byte[512];
+        private bool _shutdown = false;
         #endregion
     }
 }
