@@ -28,6 +28,16 @@ namespace QuickFIX.NET.Config
             get { return _reconnectInterval; }
             set { _reconnectInterval = value; }
         }
+        public string SocketAcceptHost
+        {
+            get { return _socketAcceptHost; }
+            set { _socketAcceptHost = value; }
+        }
+        public int SocketAcceptPort
+        {
+            get { return _socketAcceptPort; }
+            set { _socketAcceptPort = value; }
+        }
         #endregion
 
         public Settings()
@@ -38,6 +48,8 @@ namespace QuickFIX.NET.Config
         private string _socketConnectHost = "localhost";
         private int _heartBtInt = 30;
         private int _reconnectInterval = 30;
+        private string _socketAcceptHost = "localhost";
+        private int _socketAcceptPort = 0;
         #endregion Private Members
     }
 }
