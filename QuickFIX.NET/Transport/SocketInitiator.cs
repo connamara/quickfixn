@@ -13,7 +13,14 @@ namespace QuickFIX.NET.Transport
 {
     public class SocketInitiator
     {
+        #region Events/Delegates
+        public delegate void RawDataReceivedHandler(object sender, string rawData);
+        public event RawDataReceivedHandler RawDataReceived;
+        #endregion
+
+        #region Properties
         public bool Connected { get { return _socket.Connected; } }
+        #endregion
 
         public SocketInitiator(Application application, Settings settings)
         {
@@ -47,16 +54,14 @@ namespace QuickFIX.NET.Transport
                     continue;
                 }
 
-                Console.WriteLine("Connected");
-
                 while (true)
                 {
                     if (_shutdown) break;
 
                     try
                     {
-                        _socket.Receive(_readBuffer);
-                        Debug.WriteLine("Received: " + _readBuffer.ToString());
+                        int bytesReceived = _socket.Receive(_readBuffer);
+                        HandleMessage(Encoding.UTF8.GetString(_readBuffer, 0, bytesReceived));
                     }
                     catch (SocketException iex)
                     {
@@ -69,12 +74,35 @@ namespace QuickFIX.NET.Transport
         }
 
         /// <summary>
+        /// Message parsing and passing back to crackers will go here.
+        /// </summary>
+        /// <param name="data"></param>
+        private void HandleMessage(string data)
+        {
+            string[] split = data.Split('\n');
+            if (split.Length > 1)
+            {
+                _currentMessage += split[0];
+                NotifyRaw(_currentMessage);
+                _currentMessage = split[1];
+            }
+
+            // Handle spillover buffer data.
+            if (split.Length > 2)
+            {
+                NotifyRaw(_currentMessage);
+                _currentMessage = split[3];
+            }
+        }
+
+        /// <summary>
         /// Send raw string over socket.
         /// </summary>
         /// <param name="data"></param>
         public void Send(string data)
         {
-            byte[] rawData = Encoding.ASCII.GetBytes(data);
+
+            byte[] rawData = Encoding.UTF8.GetBytes(data);
             _socket.Send(rawData);
         }
 
@@ -84,7 +112,13 @@ namespace QuickFIX.NET.Transport
         public void Close()
         {
             _shutdown = true;
-            _socket.Disconnect(true);
+            _socket.Shutdown(SocketShutdown.Both);
+        }
+
+        private void NotifyRaw(string data)
+        {
+            if (RawDataReceived != null)
+                RawDataReceived(this, data);
         }
 
         #region Private Members
@@ -92,6 +126,7 @@ namespace QuickFIX.NET.Transport
         private Application _application;
         private Settings _settings;
         private byte[] _readBuffer = new byte[512];
+        private string _currentMessage;
         private bool _shutdown = false;
         #endregion
     }

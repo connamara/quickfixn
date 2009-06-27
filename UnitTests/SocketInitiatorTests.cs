@@ -16,22 +16,6 @@ namespace UnitTests
     public class SocketInitiatorTests
     {
         [Test]
-        public void TestBasicSockets()
-        {
-            TcpClient client = new TcpClient();
-            TcpListener server = new TcpListener(IPAddress.Loopback, 56123);
-            server.Start();
-            client.Connect(IPAddress.Loopback, 56123);
-            Socket s = server.AcceptSocket();
-        }
-
-        private void Connected(IAsyncResult ar)
-        {
-            TcpListener listener = (TcpListener)ar.AsyncState;
-            _clientSocket = listener.EndAcceptSocket(ar); 
-        }
-
-        [Test]
         public void TestConnect()
         {
             IPAddress localAddr = IPAddress.Parse("127.0.0.1");
@@ -44,16 +28,22 @@ namespace UnitTests
             _settings.SocketConnectHost = "127.0.0.1";
             _settings.SocketConnectPort = 56123;
             SocketInitiator i = new SocketInitiator(_fixApp, _settings);
+            i.RawDataReceived += new SocketInitiator.RawDataReceivedHandler(i_RawDataReceived);
             i.Start();
+            Thread.Sleep(500);
+            _clientSocket.Send(Encoding.UTF8.GetBytes("TESTING123\n"));
 
+            Thread.Sleep(500);
             // Create a socket listener and expect connection.
             Assert.That(_clientSocket.Connected, Is.True);
             Assert.That(i.Connected, Is.True);
+            Assert.That(_lastReceived, Is.EqualTo("TESTING123"));
 
             try
             {
-                _clientSocket.Disconnect(true);
+                _clientSocket.Shutdown(SocketShutdown.Both);
                 i.Close();
+                _clientSocket.Close();
                 listener.Stop();
             }
             catch (SocketException ex)
@@ -62,6 +52,18 @@ namespace UnitTests
             }
         }
 
+        void i_RawDataReceived(object sender, string rawData)
+        {
+            _lastReceived = rawData;
+        }
+
+        private void Connected(IAsyncResult ar)
+        {
+            TcpListener listener = (TcpListener)ar.AsyncState;
+            _clientSocket = listener.EndAcceptSocket(ar);
+        }
+
+        private string _lastReceived;
         private Application _fixApp;
         private Settings _settings;
         private Socket _clientSocket;
