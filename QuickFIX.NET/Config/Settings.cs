@@ -8,11 +8,23 @@ namespace QuickFIX.NET.Config
     public class Settings
     {
         #region Properties
-        public String SocketConnectHost { get { return _socketConnectHost; } }
-        public int SocketConnectPort { get { return _socketConnectPort; } }
-        public int HeartBtInt { get { return _heartBtInt; } }
+        public string SocketConnectHost 
+        {
+            get { return _socketConnectHost; }
+            set { _socketConnectHost = value; }
+        }
+        public int SocketConnectPort 
+        {
+            get { return _socketConnectPort; }
+            set { _socketConnectPort = value; }
+        }
+        public int HeartBtInt 
+        {
+            get { return _heartBtInt; }
+            set { _heartBtInt = value; }
+        }
         public int ReconnectInterval 
-        { 
+        {
             get { return _reconnectInterval; }
             set { _reconnectInterval = value; }
         }
@@ -23,7 +35,7 @@ namespace QuickFIX.NET.Config
 
         #region Private Members
         private int _socketConnectPort = 0;
-        private String _socketConnectHost = "localhost";
+        private string _socketConnectHost = "localhost";
         private int _heartBtInt = 30;
         private int _reconnectInterval = 30;
         #endregion Private Members
