@@ -81,14 +81,14 @@ namespace QuickFIX.NET.Transport
         {
             string[] split = data.Split('\n');
 
-            for (int i = 0; i < split.Length; i++)
+            for (int i = 0; i < split.Length-1; i++)
             {
                 _currentMessage += split[i];
                 NotifyRawData(_currentMessage);
                 _currentMessage = String.Empty;
             }
 
-            _currentMessage = split[split.Length];
+            _currentMessage = split[split.Length-1];
         }
 
         /// <summary>
