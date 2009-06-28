@@ -58,6 +58,7 @@
     <Compile Include="ConverterTests.cs" />
     <Compile Include="FieldMapTests.cs" />
     <Compile Include="FieldTests.cs" />
+    <Compile Include="MessageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runner.cs" />
     <Compile Include="SocketInitiatorTests.cs" />
