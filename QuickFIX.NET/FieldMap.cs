@@ -128,8 +128,9 @@ namespace QuickFIX.NET
         /// Gets specific group instance
         /// </summary>
         /// <param name="num">num of group (starting at 1)</param>
-        /// <param name="tag">tag of group</param>
-        /// <returns></returns>
+        /// <param name="field">tag of group</param>
+        /// <returns>Group object</returns>
+        /// <exception cref="FieldNotFoundException" />
         public Group GetGroup( int num, int field )
         {
             if ( !_groups.ContainsKey(field) ) 
@@ -142,6 +143,12 @@ namespace QuickFIX.NET
             return _groups[field][num-1];
         }
 
+        /// <summary>
+        /// Removes specific group instance
+        /// </summary>
+        /// <param name="num">num of group (starting at 1)</param>
+        /// <param name="field">tag of group</param>
+        /// <exception cref="FieldNotFoundException" />
         public void RemoveGroup(int num, int field)
         {
             if (!_groups.ContainsKey(field))
@@ -154,7 +161,26 @@ namespace QuickFIX.NET
             if (_groups[field].Count.Equals(1))
                 _groups.Remove(field);
             else
-                _groups[field].RemoveAt(num);
+                _groups[field].RemoveAt(num-1);
+        }
+
+        /// <summary>
+        /// Replaces specific group instance
+        /// </summary>
+        /// <param name="num">num of group (starting at 1)</param>
+        /// <param name="field">tag of group</param>
+        /// <returns>Group object</returns>
+        /// <exception cref="FieldNotFoundException" />
+        public Group ReplaceGroup(int num, int field, Group group)
+        {
+            if (!_groups.ContainsKey(field))
+                throw new FieldNotFoundException(field);
+            if (num <= 0)
+                throw new FieldNotFoundException(field);
+            if (_groups[field].Count < num)
+                throw new FieldNotFoundException(field);
+
+            return _groups[field][num-1] = group;
         }
 
 

@@ -182,6 +182,7 @@ namespace UnitTests
                 delegate { fieldmap.GetGroup(1, 101); });
         }
 
+        [Test]
         public void RemoveGroupTest()
         {
             Group g1 = new Group(100, 200);
@@ -199,12 +200,37 @@ namespace UnitTests
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.RemoveGroup(1, 101); });
 
-            fm.RemoveGroup(100, 1);
+            fm.RemoveGroup(1, 100);
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetGroup(2, 100); });
-            fm.RemoveGroup(100, 1);
+            fm.RemoveGroup(1, 100);
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetGroup(1, 100); });
+        }
+
+        [Test]
+        public void ReplaceGroupTest()
+        {
+            Group g1 = new Group(100, 200);
+            Group g2 = new Group(100, 201);
+            MockFieldMap fm = new MockFieldMap();
+            fm.AddGroup(g1);
+            fm.AddGroup(g2);
+            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
+            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
+
+            Group g3 = new Group(100, 202);
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.ReplaceGroup(0, 101, g3); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.ReplaceGroup(3, 100, g3); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.ReplaceGroup(1, 101, g3); });
+
+            fm.ReplaceGroup(1, 100, g3);
+            fm.ReplaceGroup(2, 100, g3);
+            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g3));
+            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g3));
         }
     }
 }
