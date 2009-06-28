@@ -50,22 +50,36 @@ namespace UnitTests
 
             const int numMsgs = 50000;
 
+            // Reusable string field to avoid allocations.
+            StringField sf = new StringField(0);
+
+            int idx = 0, prevIdx = 0;
+            int tagIndex = 0;
+            string field = string.Empty;
             for (int i = 0; i < numMsgs; i++)
             {
                 Message m = new Message();
 
-                // Consider replacing split here with an iterative approach.
-                string[] fields = fix.Split('\u0001');
-
-                for (int j = 0; j < fields.Length-1; j++)
+                while (idx != -1)
                 {
-                    // Split is far less performant here!
-                    //string[] tag = fields[j].Split('=');
-                    int index = fields[j].IndexOf('=');
+                    prevIdx = idx;
+                    idx = fix.IndexOf('\u0001', prevIdx+1);
 
-                    m.setField(new StringField(
-                        IntParse(fields[j].Substring(0, index)), // tag
-                        fields[j].Substring(index+1))); // value
+                    if (idx == -1) break;
+
+                    try
+                    {
+                        field = fix.Substring(prevIdx, (idx - prevIdx) - 1);
+                        tagIndex = fix.Substring(prevIdx, idx - prevIdx).IndexOf('=');
+                    }
+                    catch (Exception)
+                    {
+                        Console.WriteLine("Index: " + idx);
+                    }
+
+                    sf.Tag = IntParse(field.Substring(0, tagIndex));
+                    sf.Obj = field.Substring(tagIndex + 1);
+                    m.setField(sf);
                 }
             }
             timer.Stop();

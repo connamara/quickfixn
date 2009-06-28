@@ -17,7 +17,7 @@ namespace QuickFIX.NET
         /// Constructor with field order
         /// </summary>
         /// <param name="fieldOrd"></param>
-        public FieldMap( int[] fieldOrd )
+        public FieldMap(int[] fieldOrd)
         {
             _fieldOrder = fieldOrd;
         }
@@ -45,7 +45,7 @@ namespace QuickFIX.NET
         /// set field in the fieldmap
         /// will overwrite field if it exists
         /// </summary>
-        public void setField(Fields.IField field )
+        public void setField(Fields.IField field)
         {
             _fields[field.Tag] = field;
         }
@@ -55,7 +55,7 @@ namespace QuickFIX.NET
         /// </summary>
         /// <param name="field"></param>
         /// <param name="overwrite">will overwrite wxisting field if set to true</param>
-        public void setField(Fields.IField field, Boolean overwrite )
+        public void setField(Fields.IField field, Boolean overwrite)
         {
             if (_fields.ContainsKey(field.Tag) && overwrite.Equals(false))
                 return;
