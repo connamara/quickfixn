@@ -232,5 +232,34 @@ namespace UnitTests
             Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g3));
             Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g3));
         }
+
+        [Test]
+        public void IsFieldSetTest()
+        {
+            MockFieldMap fieldmap = new MockFieldMap();
+            BooleanField field = new BooleanField(200, true);
+            Assert.That(fieldmap.isSetField(field), Is.EqualTo(false));
+            Assert.That(fieldmap.isSetField(field.Tag), Is.EqualTo(false));
+            fieldmap.setField(field);
+            Assert.That(fieldmap.isSetField(field), Is.EqualTo(true));
+            Assert.That(fieldmap.isSetField(field.Tag), Is.EqualTo(true));
+        }
+
+        [Test]
+        public void ClearAndIsEmptyTest()
+        {
+            MockFieldMap fieldmap = new MockFieldMap();
+            BooleanField field = new BooleanField(200, true);
+            Assert.That(fieldmap.IsEmpty(), Is.EqualTo(true));
+            fieldmap.setField(field);
+            Assert.That(fieldmap.IsEmpty(), Is.EqualTo(false));
+            fieldmap.Clear();
+            Assert.That(fieldmap.IsEmpty(), Is.EqualTo(true));
+            Group g = new Group(100, 101);
+            fieldmap.AddGroup(g);
+            Assert.That(fieldmap.IsEmpty(), Is.EqualTo(false));
+            fieldmap.Clear();
+            Assert.That(fieldmap.IsEmpty(), Is.EqualTo(true));
+        }
     }
 }

@@ -117,6 +117,26 @@ namespace QuickFIX.NET
                 throw new FieldNotFoundException(field.Tag);
         }
 
+        /// <summary>
+        /// Check to see if field is set
+        /// </summary>
+        /// <param name="field">Field Object</param>
+        /// <returns>true if set</returns>
+        public bool isSetField(Fields.IField field)
+        {
+            return isSetField(field.Tag);
+        }
+
+        /// <summary>
+        /// Check to see if field is set
+        /// </summary>
+        /// <param name="tag">Tag Number</param>
+        /// <returns>true if set</returns>
+        public bool isSetField(int tag)
+        {
+            return _fields.ContainsKey(tag);
+        }
+
         public void AddGroup(Group group)
         {
             if( !_groups.ContainsKey(group.Field) )
@@ -194,6 +214,24 @@ namespace QuickFIX.NET
                 return _fields[tag].ToString();
             else
                 throw new FieldNotFoundException(tag);
+        }
+
+        /// <summary>
+        /// Removes fields and groups in message
+        /// </summary>
+        public void Clear()
+        {
+            _fields.Clear();
+            _groups.Clear();
+        }
+
+        /// <summary>
+        /// Checks emptiness of message
+        /// </summary>
+        /// <returns>true if no fields or groups have been set</returns>
+        public bool IsEmpty()
+        {
+            return ((_fields.Count == 0) && (_groups.Count == 0));
         }
 
         #region Private Members
