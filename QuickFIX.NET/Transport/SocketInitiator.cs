@@ -80,19 +80,15 @@ namespace QuickFIX.NET.Transport
         private void HandleMessage(string data)
         {
             string[] split = data.Split('\n');
-            if (split.Length > 1)
+
+            for (int i = 0; i < split.Length-1; i++)
             {
-                _currentMessage += split[0];
-                NotifyRaw(_currentMessage);
-                _currentMessage = split[1];
+                _currentMessage += split[i];
+                NotifyRawData(_currentMessage);
+                _currentMessage = String.Empty;
             }
 
-            // Handle spillover buffer data.
-            if (split.Length > 2)
-            {
-                NotifyRaw(_currentMessage);
-                _currentMessage = split[3];
-            }
+            _currentMessage = split[split.Length-1];
         }
 
         /// <summary>
@@ -115,7 +111,7 @@ namespace QuickFIX.NET.Transport
             _socket.Shutdown(SocketShutdown.Both);
         }
 
-        private void NotifyRaw(string data)
+        private void NotifyRawData(string data)
         {
             if (RawDataReceived != null)
                 RawDataReceived(this, data);

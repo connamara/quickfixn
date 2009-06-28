@@ -4,3 +4,4 @@ QuickFIX.NET/obj/*
 UnitTests/bin/*
 UnitTests/obj/*
 *.user
+UnitTests/TestResult.xml
