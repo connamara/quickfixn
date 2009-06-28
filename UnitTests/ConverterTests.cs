@@ -59,7 +59,7 @@ namespace UnitTests
         {
             Assert.That(DateTimeConverter.Convert("20100912-04:22:01"),
                 Is.EqualTo(new DateTime(2010, 9, 12, 4, 22, 01)));
-            Assert.That(DateTimeConverter.Convert(new DateTime(2002,12,01,11,03,05)),
+            Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05)),
                 Is.EqualTo("20021201-11:01:05"));
             Assert.Throws(typeof(BadConversionException),
                 delegate { DateTimeConverter.Convert(""); });

@@ -54,7 +54,7 @@ namespace UnitTests
 
             // Handle first field differently, no SOH at start.
             StringField sf = new StringField(0);
-            idx = fix.IndexOf('\u0001');
+            idx = fix.IndexOf('\x01');
             if (idx != -1)
             {
                 field = fix.Substring(prevIdx, (idx - prevIdx));
@@ -69,7 +69,7 @@ namespace UnitTests
             while (idx != -1)
             {
                 prevIdx = idx;
-                idx = fix.IndexOf('\u0001', prevIdx + 1);
+                idx = fix.IndexOf('\x01', prevIdx + 1);
 
                 if (idx == -1) break;
 
@@ -84,9 +84,26 @@ namespace UnitTests
         }
 
         [Test]
+        public void TestNewParser()
+        {
+            HiPerfTimer timer = new HiPerfTimer();
+            string fix = GenRandomFIXString();
+
+            const int times = 50000;
+            timer.Start();
+            for (int i = 0; i < times; i++)
+            {
+                Message m = new Message();
+                m.FromString(fix);
+            }
+            timer.Stop();
+            Console.WriteLine("Total per second [new parser]: " + ((1 / timer.Duration) * times).ToString());
+        }
+
+        [Test]
         public void TestMessageParserIntegrity()
         {
-            string fix = "5=ASDF\u000110=234\u0001";
+            string fix = "5=ASDF\x01" + "10=234\x01";
 
             Message m = new Message();
             StringField sf = new StringField(0);
@@ -109,7 +126,7 @@ namespace UnitTests
                 sb.Append(i.ToString());
                 sb.Append("=");
                 sb.Append(rand.Next());
-                sb.Append("\u0001");
+                sb.Append("\x01");
             }
 
             return sb.ToString();

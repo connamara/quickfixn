@@ -2,23 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using QuickFIX.NET.Fields;
 
 namespace QuickFIX.NET
 {
     public class Message : FieldMap
     {
-        public Message() 
+        public static char SOH = '\x01';
+
+        public Message()
         {
             Header = new FieldMap();
             Trailer = new FieldMap();
         }
 
-        public void FromString( string msgstr )
+        public void FromString(string msgstr)
         {
             int pos = 0;
             while (pos < msgstr.Length)
             {
-                Fields.StringField f = ExtractField(msgstr, ref pos);
+                StringField f = ExtractField(msgstr, ref pos);
                 if (IsHeaderField(f.Tag))
                     _header.setField(f);
                 else if (IsTrailerField(f.Tag))
@@ -47,7 +50,7 @@ namespace QuickFIX.NET
             return (
                 (_header.CalculateTotal()
                 + CalculateTotal()
-                + _trailer.CalculateTotal()) % 256 );
+                + _trailer.CalculateTotal()) % 256);
         }
 
         /// <summary>
@@ -55,28 +58,28 @@ namespace QuickFIX.NET
         /// </summary>
         /// <param name="msgstr">string of a FIX message</param>
         /// <returns>MsgType object</returns>
-        public static Fields.MsgType IdentifyType(string msgstr)
+        public static MsgType IdentifyType(string msgstr)
         {
-            int valbeg = msgstr.IndexOf("\u000135=") + 4;
+            int valbeg = msgstr.IndexOf(SOH + "35=") + 4;
             if (valbeg.Equals(-1))
                 throw new MessageParseException("no tag 35 found in msg: " + msgstr);
-            int valend = msgstr.IndexOf("\u0001",valbeg);
+            int valend = msgstr.IndexOf(SOH, valbeg);
             if (valend.Equals(-1))
                 throw new MessageParseException("no SOH after tag 35 in msg: " + msgstr);
 
-            return( new Fields.MsgType( msgstr.Substring(valbeg, (valend-valbeg) )) );
+            return (new MsgType(msgstr.Substring(valbeg, (valend - valbeg))));
         }
 
-        public static Fields.StringField ExtractField(string msgstr, ref int pos)
+        public static StringField ExtractField(string msgstr, ref int pos)
         {
             try
             {
-                int tagend = msgstr.IndexOf("=",pos);
+                int tagend = msgstr.IndexOf("=", pos);
                 int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
                 pos = tagend + 1;
-                int fieldvalend = msgstr.IndexOf("\u0001",pos);
-                Fields.StringField field =
-                    new Fields.StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
+                int fieldvalend = msgstr.IndexOf(SOH, pos);
+                StringField field =
+                    new StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
                 pos = fieldvalend + 1;
                 return field;
             }
@@ -96,49 +99,49 @@ namespace QuickFIX.NET
 
         public static bool IsHeaderField(int tag)
         {
-            switch(tag)
+            switch (tag)
             {
-                case Fields.Tags.BeginString:
-                case Fields.Tags.BodyLength:
-                case Fields.Tags.MsgType:
-                case Fields.Tags.SenderCompID:
-                case Fields.Tags.TargetCompID:
-                case Fields.Tags.OnBehalfOfCompID:
-                case Fields.Tags.DeliverToCompID:
-                case Fields.Tags.SecureDataLen:
-                case Fields.Tags.MsgSeqNum:
-                case Fields.Tags.SenderSubID:
-                case Fields.Tags.SenderLocationID:
-                case Fields.Tags.TargetSubID:
-                case Fields.Tags.TargetLocationID:
-                case Fields.Tags.OnBehalfOfSubID:
-                case Fields.Tags.OnBehalfOfLocationID:
-                case Fields.Tags.DeliverToSubID:
-                case Fields.Tags.DeliverToLocationID:
-                case Fields.Tags.PossDupFlag:
-                case Fields.Tags.PossResend:
-                case Fields.Tags.SendingTime:
-                case Fields.Tags.OrigSendingTime:
-                case Fields.Tags.XmlDataLen:
-                case Fields.Tags.XmlData:
-                case Fields.Tags.MessageEncoding:
-                case Fields.Tags.LastMsgSeqNumProcessed:
-                // case Fields.Tags.OnBehalfOfSendingTime: TODO 
+                case Tags.BeginString:
+                case Tags.BodyLength:
+                case Tags.MsgType:
+                case Tags.SenderCompID:
+                case Tags.TargetCompID:
+                case Tags.OnBehalfOfCompID:
+                case Tags.DeliverToCompID:
+                case Tags.SecureDataLen:
+                case Tags.MsgSeqNum:
+                case Tags.SenderSubID:
+                case Tags.SenderLocationID:
+                case Tags.TargetSubID:
+                case Tags.TargetLocationID:
+                case Tags.OnBehalfOfSubID:
+                case Tags.OnBehalfOfLocationID:
+                case Tags.DeliverToSubID:
+                case Tags.DeliverToLocationID:
+                case Tags.PossDupFlag:
+                case Tags.PossResend:
+                case Tags.SendingTime:
+                case Tags.OrigSendingTime:
+                case Tags.XmlDataLen:
+                case Tags.XmlData:
+                case Tags.MessageEncoding:
+                case Tags.LastMsgSeqNumProcessed:
+                    // case Tags.OnBehalfOfSendingTime: TODO 
                     return true;
-                default: 
+                default:
                     return false;
             }
         }
 
-        public static bool IsTrailerField( int tag )
+        public static bool IsTrailerField(int tag)
         {
-            switch ( tag )
+            switch (tag)
             {
-                case Fields.Tags.SignatureLength:
-                case Fields.Tags.Signature:
-                case Fields.Tags.CheckSum:
+                case Tags.SignatureLength:
+                case Tags.Signature:
+                case Tags.CheckSum:
                     return true;
-                default:  
+                default:
                     return false;
             }
         }
