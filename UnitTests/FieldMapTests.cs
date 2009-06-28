@@ -114,6 +114,25 @@ namespace UnitTests
         }
 
         [Test]
+        public void SetFieldOverwriteTest()
+        {
+            IntField field = new IntField(21901, 1011);
+            IntField refield = new IntField(21901);
+            fieldmap.setField(field, false);
+            fieldmap.getField(refield);
+            Assert.That(1011, Is.EqualTo(refield.Obj));
+            field.setValue(1021);
+            IntField refield2 = new IntField(21901);
+            fieldmap.setField(field, false);
+            fieldmap.getField(refield2);
+            Assert.That(refield.Obj, Is.EqualTo(1011));
+            fieldmap.setField(field, true);
+            IntField refield3 = new IntField(21901);
+            fieldmap.getField(refield3);
+            Assert.That(1021, Is.EqualTo(refield3.Obj));
+        }
+
+        [Test]
         public void FieldNotFoundTest()
         {
             Assert.Throws(typeof(FieldNotFoundException),

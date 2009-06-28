@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using QuickFIX.NET;
 
 namespace QuickFIX.NET
 {
@@ -9,12 +10,28 @@ namespace QuickFIX.NET
     {
         public FieldMap()
         {
-            this._fields = new Dictionary<int, QuickFIX.NET.Fields.IField>();
+            this._fields = new Dictionary<int, Fields.IField>();
         }
 
-        public void setField(Fields.IField field)
+        /// <summary>
+        /// set field in the fieldmap
+        /// </summary>
+        public void setField(Fields.IField field )
         {
             _fields[field.Tag] = field;
+        }
+
+        /// <summary>
+        /// Set field with overwrite flag
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="overwrite">will overwrite wxisting field if set to true</param>
+        public void setField(Fields.IField field, Boolean overwrite )
+        {
+            if (_fields.ContainsKey(field.Tag) && overwrite.Equals(false))
+                return;
+            else
+                setField(field);
         }
 
         public void getField(Fields.BooleanField field)
@@ -69,7 +86,7 @@ namespace QuickFIX.NET
         /// <summary>
         /// getField without a type defaults to returning a string
         /// </summary>
-        /// <param name="tag"></param>
+        /// <param name="tag">fix tag</param>
         public string getField(int tag)
         {
             if (_fields.ContainsKey(tag))
@@ -79,7 +96,8 @@ namespace QuickFIX.NET
         }
 
         #region Private Members
-        protected Dictionary<int, Fields.IField> _fields;
+        private Dictionary<int, Fields.IField> _fields;
+        private Dictionary<int, List<FieldMap>> _groups;
         #endregion
     }
 }
