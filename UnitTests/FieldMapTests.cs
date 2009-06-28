@@ -8,7 +8,11 @@ using QuickFIX.NET.Fields;
 
 namespace UnitTests
 {
-    public class MockFieldMap : FieldMap {}
+    public class MockFieldMap : FieldMap 
+    {
+        public MockFieldMap() { }
+        public MockFieldMap(int[] fo) : base(fo) { }
+    }
 
     [TestFixture]
     public class FieldMapTests
@@ -149,6 +153,33 @@ namespace UnitTests
                 delegate { fieldmap.getField(new IntField(99900)); });
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.getField(new DecimalField(99900)); });
+        }
+
+        [Test]
+        public void SimpleFieldOrderTest()
+        {
+            int[] fieldord = {10, 11 ,12 ,13, 200};
+            MockFieldMap fm = new MockFieldMap(fieldord);
+            Assert.That(fm.FieldOrder, Is.EqualTo(fieldord));
+        }
+
+        [Test]
+        public void AddGetGroupTest()
+        {
+            Group g1 = new Group(100, 200);
+            Group g2 = new Group(100, 201);
+            MockFieldMap fm = new MockFieldMap();
+            fm.AddGroup(g1);
+            fm.AddGroup(g2);
+            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
+            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
+
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetGroup(0, 101); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetGroup(3,100); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetGroup(1, 101); });
         }
     }
 }
