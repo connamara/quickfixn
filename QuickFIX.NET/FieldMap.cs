@@ -5,7 +5,7 @@ using System.Text;
 
 namespace QuickFIX.NET
 {
-    public abstract class FieldMap
+    public class FieldMap
     {
         /// <summary>
         /// Default constructor
