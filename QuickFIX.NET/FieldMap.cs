@@ -6,7 +6,7 @@ using QuickFIX.NET;
 
 namespace QuickFIX.NET
 {
-    public abstract class FieldMap
+    public class FieldMap
     {
         /// <summary>
         /// Default constructor
