@@ -145,7 +145,7 @@ namespace QuickFIX.NET
         /// <param name="field">tag of group</param>
         /// <returns>Group object</returns>
         /// <exception cref="FieldNotFoundException" />
-        public Group GetGroup( int num, int field )
+        public Group GetGroup(int num, int field)
         {
             if (!_groups.ContainsKey(field))
                 throw new FieldNotFoundException(field);

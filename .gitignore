@@ -3,5 +3,7 @@ QuickFIX.NET/bin/*
 QuickFIX.NET/obj/*
 UnitTests/bin/*
 UnitTests/obj/*
+PerformanceTests/bin/*
+PerformanceTests/obj/*
 *.user
 UnitTests/TestResult.xml
