@@ -69,6 +69,42 @@ namespace UnitTests
         }
 
         [Test]
+        public void FromStringTest()
+        {
+            string str1 = "8=FIX.4.2\u00019=46\u000135=0\u000134=3\u000149=TW\u0001" +
+                "52=20000426-12:05:06\u000156=ISLD\u00011=acct123\u000110=000\u0001";
+            Message msg = new Message();
+            msg.FromString(str1);
+            StringField f1 = new StringField(8);
+            StringField f2 = new StringField(9);
+            StringField f3 = new StringField(35);
+            StringField f4 = new StringField(34);
+            StringField f5 = new StringField(49);
+            StringField f6 = new StringField(52);
+            StringField f7 = new StringField(56);
+            StringField f8 = new StringField(10);
+            StringField f9 = new StringField(1);
+            msg.Header.getField(f1);
+            msg.Header.getField(f2);
+            msg.Header.getField(f3);
+            msg.Header.getField(f4);
+            msg.Header.getField(f5);
+            msg.Header.getField(f6);
+            msg.Header.getField(f7);
+            msg.getField(f9);
+            msg.Trailer.getField(f8);
+            Assert.That(f1.Obj, Is.EqualTo("FIX.4.2"));
+            Assert.That(f2.Obj, Is.EqualTo("46"));
+            Assert.That(f3.Obj, Is.EqualTo("0"));
+            Assert.That(f4.Obj, Is.EqualTo("3"));
+            Assert.That(f5.Obj, Is.EqualTo("TW"));
+            Assert.That(f6.Obj, Is.EqualTo("20000426-12:05:06"));
+            Assert.That(f7.Obj, Is.EqualTo("ISLD"));
+            Assert.That(f8.Obj, Is.EqualTo("000"));
+            Assert.That(f9.Obj, Is.EqualTo("acct123"));
+        }
+
+        [Test]
         public void IsHeaderFieldTest()
         {
             Assert.That(Message.IsHeaderField(Tags.BeginString), Is.EqualTo(true));
