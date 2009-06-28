@@ -13,6 +13,21 @@ namespace QuickFIX.NET
             Trailer = new FieldMap();
         }
 
+        public void FromString( string msgstr )
+        {
+            int pos = 0;
+            while (pos < msgstr.Length)
+            {
+                Fields.StringField f = ExtractField(msgstr, ref pos);
+                if (IsHeaderField(f.Tag))
+                    _header.setField(f);
+                else if (IsTrailerField(f.Tag))
+                    _trailer.setField(f);
+                else
+                    setField(f);
+            }
+        }
+
         #region Properties
         public FieldMap Header
         {
@@ -52,10 +67,31 @@ namespace QuickFIX.NET
             return( new Fields.MsgType( msgstr.Substring(valbeg, (valend-valbeg) )) );
         }
 
-        public Fields.StringField extractField(string msgstr, ref int pos)
+        public static Fields.StringField ExtractField(string msgstr, ref int pos)
         {
-            int fieldend = msgstr.IndexOf("\u0001");
-            return new Fields.StringField(0, "");
+            try
+            {
+                int tagend = msgstr.IndexOf("=",pos);
+                int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
+                pos = tagend + 1;
+                int fieldvalend = msgstr.IndexOf("\u0001",pos);
+                Fields.StringField field =
+                    new Fields.StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
+                pos = fieldvalend + 1;
+                return field;
+            }
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                throw new MessageParseException("", e);
+            }
+            catch (System.OverflowException e)
+            {
+                throw new MessageParseException("", e);
+            }
+            catch (System.FormatException e)
+            {
+                throw new MessageParseException("", e);
+            }
         }
 
         public static bool IsHeaderField(int tag)
