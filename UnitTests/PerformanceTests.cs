@@ -15,24 +15,11 @@ namespace UnitTests
     public class PerformanceTests
     {
         [Test]
-        public void TestSplitPerformance()
+        public void TestParsePerformance()
         {
             string fix = GenRandomFIXString();
 
-            // Split 1000 times
             HiPerfTimer timer = new HiPerfTimer();
-            timer.Start();
-            for (int i = 0; i < 1000; i++)
-            {
-                string[] fields = fix.Split('\u0001');
-            }
-
-            timer.Stop();
-            Console.WriteLine();
-            Console.WriteLine("Duration for string split: " + timer.Duration.ToString());
-
-            // Generate FieldMap with actual tags/values:
-
             timer.Start();
 
             const int numMsgs = 50000;
@@ -127,6 +114,91 @@ namespace UnitTests
 
             return sb.ToString();
         }
+
+        #region General C# Performance Testing
+        private class MyClass
+        {
+            public MyClass(int x) { _x = x; }
+
+            public int X { get { return _x; } set { _x = value; } }
+
+            private int _x;
+        }
+
+        private struct MyStruct
+        {
+            public MyStruct(int x) { _x = x; }
+
+            public int X { get { return _x; } set { _x = value; } }
+
+            private int _x;
+        }
+
+        private class MyClassWithSmallClasses
+        {
+            public MyClassWithSmallClasses(int numObjects)
+            {
+                classes = new List<MyClass>(numObjects);
+
+                for (int i = 0; i < numObjects; i++)
+                    classes.Add(new MyClass(i));
+            }
+
+            private List<MyClass> classes;
+        }
+
+        private class MyClassWithSmallStructs
+        {
+            public MyClassWithSmallStructs(int numObjects)
+            {
+                structs = new List<MyStruct>(numObjects);
+
+                for (int i = 0; i < numObjects; i++)
+                    structs.Add(new MyStruct(i));
+            }
+
+            private List<MyStruct> structs;
+        }
+
+        [Test]
+        public void TestStructVsClass()
+        {
+            HiPerfTimer timer = new HiPerfTimer();
+            const int num = 1000000;
+
+            timer.Start();
+
+            List<MyClass> classes = new List<MyClass>(num);
+            for (int i = 0; i < num; i++)
+                classes.Add(new MyClass(i));
+
+            timer.Stop();
+
+            Console.WriteLine("Constructing {0} classes: {1}", num, timer.Duration.ToString());
+
+            timer.Start();
+
+            List<MyStruct> structs = new List<MyStruct>(num);
+            for (int i = 0; i < num; i++)
+                structs.Add(new MyStruct(i));
+
+            timer.Stop();
+
+            Console.WriteLine("Constructing {0} structs: {1}", num, timer.Duration.ToString());
+
+            timer.Start();
+            MyClassWithSmallClasses test1 = new MyClassWithSmallClasses(num);
+            timer.Stop();
+
+            Console.WriteLine("Duration to construct large class containing smaller classes: " + timer.Duration.ToString());
+
+            timer.Start();
+            MyClassWithSmallStructs test2 = new MyClassWithSmallStructs(num);
+            timer.Stop();
+
+            Console.WriteLine("Duration to construct large class containing smaller structs: " + timer.Duration.ToString());
+        }
+        #endregion
 
         /// <summary>
         /// Custom IntParser increases performance of FIX parsing by 33%
