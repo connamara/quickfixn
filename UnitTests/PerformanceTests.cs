@@ -17,20 +17,7 @@ namespace UnitTests
         [Test]
         public void TestSplitPerformance()
         {
-            // Generate random FIX string with 30 fields and parse it out.
-            StringBuilder sb = new StringBuilder();
-
-            Random rand = new Random((int)DateTime.Now.Ticks);
-
-            for (int i = 0; i < 30; i++)
-            {
-                sb.Append(i.ToString());
-                sb.Append("=");
-                sb.Append(rand.Next());
-                sb.Append("\u0001");
-            }
-
-            string fix = sb.ToString();
+            string fix = GenRandomFIXString();
 
             // Split 1000 times
             HiPerfTimer timer = new HiPerfTimer();
@@ -50,14 +37,10 @@ namespace UnitTests
 
             const int numMsgs = 50000;
 
-            // Reusable string field to avoid allocations.
-            StringField sf = new StringField(0);
-
-
             for (int i = 0; i < numMsgs; i++)
             {
                 Message m = new Message();
-                MakeMessage(m, fix, sf);
+                MakeMessage(m, fix);
             }
             timer.Stop();
 
@@ -67,7 +50,7 @@ namespace UnitTests
 
             timer.Start();
             Message newMsg = new Message();
-            MakeMessage(newMsg, fix, sf);
+            MakeMessage(newMsg, fix);
             timer.Stop();
 
             Console.WriteLine(
@@ -78,8 +61,24 @@ namespace UnitTests
         private static int tagIndex = 0;
         private static string field = string.Empty;
 
-        public void MakeMessage(Message m, string fix, StringField sf)
+        public void MakeMessage(Message m, string fix)
         {
+            idx = 0; prevIdx = 0;
+
+            // Handle first field differently, no SOH at start.
+            StringField sf = new StringField(0);
+            idx = fix.IndexOf('\u0001');
+            if (idx != -1)
+            {
+                field = fix.Substring(prevIdx, (idx - prevIdx));
+                tagIndex = field.IndexOf('=');
+
+                sf.Tag = IntParse(field.Substring(0, tagIndex));
+                sf.Obj = field.Substring(tagIndex + 1);
+                m.setField(sf);
+            }
+            else return;
+
             while (idx != -1)
             {
                 prevIdx = idx;
@@ -87,20 +86,46 @@ namespace UnitTests
 
                 if (idx == -1) break;
 
-                try
-                {
-                    field = fix.Substring(prevIdx, (idx - prevIdx) - 1);
-                    tagIndex = fix.Substring(prevIdx, idx - prevIdx).IndexOf('=');
-                }
-                catch (Exception)
-                {
-                    Console.WriteLine("Index: " + idx);
-                }
+                StringField sf2 = new StringField(0);
+                field = fix.Substring(prevIdx + 1, (idx - prevIdx) - 1);
+                tagIndex = field.IndexOf('=');
 
-                sf.Tag = IntParse(field.Substring(0, tagIndex));
-                sf.Obj = field.Substring(tagIndex + 1);
-                m.setField(sf);
+                sf2.Tag = IntParse(field.Substring(0, tagIndex));
+                sf2.Obj = field.Substring(tagIndex + 1);
+                m.setField(sf2);
             }
+        }
+
+        [Test]
+        public void TestMessageParserIntegrity()
+        {
+            string fix = "5=ASDF\u000110=234\u0001";
+
+            Message m = new Message();
+            StringField sf = new StringField(0);
+
+            MakeMessage(m, fix);
+
+            Assert.That(m.GetField(5), Is.EqualTo("ASDF"));
+            Assert.That(m.GetField(10), Is.EqualTo("234"));
+        }
+
+        public static string GenRandomFIXString()
+        {
+            // Generate random FIX string with 30 fields and parse it out.
+            StringBuilder sb = new StringBuilder();
+
+            Random rand = new Random((int)DateTime.Now.Ticks);
+
+            for (int i = 0; i < 30; i++)
+            {
+                sb.Append(i.ToString());
+                sb.Append("=");
+                sb.Append(rand.Next());
+                sb.Append("\u0001");
+            }
+
+            return sb.ToString();
         }
 
         /// <summary>
