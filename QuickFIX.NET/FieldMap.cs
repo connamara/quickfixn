@@ -8,9 +8,7 @@ namespace QuickFIX.NET
     public abstract class FieldMap
     {
         public FieldMap()
-        {
-            this._fields = new Dictionary<int, QuickFIX.NET.Fields.IField>();
-        }
+        { }
 
         public void setField(Fields.IField field)
         {
@@ -35,7 +33,7 @@ namespace QuickFIX.NET
 
         public void getField(Fields.CharField field)
         {
-            if(_fields.ContainsKey(field.Tag))
+            if (_fields.ContainsKey(field.Tag))
                 field.Obj = ((Fields.CharField)_fields[field.Tag]).Obj;
             else
                 throw new FieldNotFoundException(field.Tag);
@@ -79,7 +77,7 @@ namespace QuickFIX.NET
         }
 
         #region Private Members
-        protected Dictionary<int, Fields.IField> _fields;
+        protected Dictionary<int, Fields.IField> _fields = new Dictionary<int, QuickFIX.NET.Fields.IField>();
         #endregion
     }
 }
