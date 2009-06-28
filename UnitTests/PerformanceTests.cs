@@ -53,38 +53,54 @@ namespace UnitTests
             // Reusable string field to avoid allocations.
             StringField sf = new StringField(0);
 
-            int idx = 0, prevIdx = 0;
-            int tagIndex = 0;
-            string field = string.Empty;
+
             for (int i = 0; i < numMsgs; i++)
             {
                 Message m = new Message();
-
-                while (idx != -1)
-                {
-                    prevIdx = idx;
-                    idx = fix.IndexOf('\u0001', prevIdx+1);
-
-                    if (idx == -1) break;
-
-                    try
-                    {
-                        field = fix.Substring(prevIdx, (idx - prevIdx) - 1);
-                        tagIndex = fix.Substring(prevIdx, idx - prevIdx).IndexOf('=');
-                    }
-                    catch (Exception)
-                    {
-                        Console.WriteLine("Index: " + idx);
-                    }
-
-                    sf.Tag = IntParse(field.Substring(0, tagIndex));
-                    sf.Obj = field.Substring(tagIndex + 1);
-                    m.setField(sf);
-                }
+                MakeMessage(m, fix, sf);
             }
             timer.Stop();
 
             Console.WriteLine("Total per second: " + ((1 / timer.Duration) * numMsgs).ToString());
+
+            // Test message creation latency.
+
+            timer.Start();
+            Message newMsg = new Message();
+            MakeMessage(newMsg, fix, sf);
+            timer.Stop();
+
+            Console.WriteLine(
+                String.Format("Latency for parsing one FIX message in microseconds: {0}", (timer.Duration * 1000000).ToString()));
+        }
+
+        private static int idx = 0, prevIdx = 0;
+        private static int tagIndex = 0;
+        private static string field = string.Empty;
+
+        public void MakeMessage(Message m, string fix, StringField sf)
+        {
+            while (idx != -1)
+            {
+                prevIdx = idx;
+                idx = fix.IndexOf('\u0001', prevIdx + 1);
+
+                if (idx == -1) break;
+
+                try
+                {
+                    field = fix.Substring(prevIdx, (idx - prevIdx) - 1);
+                    tagIndex = fix.Substring(prevIdx, idx - prevIdx).IndexOf('=');
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("Index: " + idx);
+                }
+
+                sf.Tag = IntParse(field.Substring(0, tagIndex));
+                sf.Obj = field.Substring(tagIndex + 1);
+                m.setField(sf);
+            }
         }
 
         /// <summary>
