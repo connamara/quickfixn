@@ -103,7 +103,7 @@ namespace UnitTests
         [Test]
         public void TestMessageParserIntegrity()
         {
-            string fix = "5=ASDF\x01" + "10=234\x01";
+            string fix = "5=ASDF" + Message.SOH + "10=234" + Message.SOH;
 
             Message m = new Message();
             StringField sf = new StringField(0);
