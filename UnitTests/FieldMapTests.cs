@@ -8,7 +8,11 @@ using QuickFIX.NET.Fields;
 
 namespace UnitTests
 {
-    public class MockFieldMap : FieldMap {}
+    public class MockFieldMap : FieldMap 
+    {
+        public MockFieldMap() { }
+        public MockFieldMap(int[] fo) : base(fo) { }
+    }
 
     [TestFixture]
     public class FieldMapTests
@@ -108,16 +112,35 @@ namespace UnitTests
         {
             DecimalField field = new DecimalField(200, new Decimal(101.0001));
             fieldmap.setField(field);
-            string refield = fieldmap.getField(200);
+            string refield = fieldmap.GetField(200);
             Assert.That("101.0001", Is.EqualTo(refield));
      
+        }
+
+        [Test]
+        public void SetFieldOverwriteTest()
+        {
+            IntField field = new IntField(21901, 1011);
+            IntField refield = new IntField(21901);
+            fieldmap.setField(field, false);
+            fieldmap.getField(refield);
+            Assert.That(1011, Is.EqualTo(refield.Obj));
+            field.setValue(1021);
+            IntField refield2 = new IntField(21901);
+            fieldmap.setField(field, false);
+            fieldmap.getField(refield2);
+            Assert.That(refield.Obj, Is.EqualTo(1011));
+            fieldmap.setField(field, true);
+            IntField refield3 = new IntField(21901);
+            fieldmap.getField(refield3);
+            Assert.That(1021, Is.EqualTo(refield3.Obj));
         }
 
         [Test]
         public void FieldNotFoundTest()
         {
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { fieldmap.getField(99900); });
+                delegate { fieldmap.GetField(99900); });
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.getField(new DateTimeField(1002030)); });
             Assert.Throws(typeof(FieldNotFoundException),
@@ -130,6 +153,113 @@ namespace UnitTests
                 delegate { fieldmap.getField(new IntField(99900)); });
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.getField(new DecimalField(99900)); });
+        }
+
+        [Test]
+        public void SimpleFieldOrderTest()
+        {
+            int[] fieldord = {10, 11 ,12 ,13, 200};
+            MockFieldMap fm = new MockFieldMap(fieldord);
+            Assert.That(fm.FieldOrder, Is.EqualTo(fieldord));
+        }
+
+        [Test]
+        public void AddGetGroupTest()
+        {
+            Group g1 = new Group(100, 200);
+            Group g2 = new Group(100, 201);
+            MockFieldMap fm = new MockFieldMap();
+            fm.AddGroup(g1);
+            fm.AddGroup(g2);
+            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
+            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
+
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetGroup(0, 101); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetGroup(3,100); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetGroup(1, 101); });
+        }
+
+        [Test]
+        public void RemoveGroupTest()
+        {
+            Group g1 = new Group(100, 200);
+            Group g2 = new Group(100, 201);
+            MockFieldMap fm = new MockFieldMap();
+            fm.AddGroup(g1);
+            fm.AddGroup(g2);
+            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
+            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
+
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.RemoveGroup(0, 101); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.RemoveGroup(3, 100); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.RemoveGroup(1, 101); });
+
+            fm.RemoveGroup(1, 100);
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetGroup(2, 100); });
+            fm.RemoveGroup(1, 100);
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetGroup(1, 100); });
+        }
+
+        [Test]
+        public void ReplaceGroupTest()
+        {
+            Group g1 = new Group(100, 200);
+            Group g2 = new Group(100, 201);
+            MockFieldMap fm = new MockFieldMap();
+            fm.AddGroup(g1);
+            fm.AddGroup(g2);
+            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
+            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
+
+            Group g3 = new Group(100, 202);
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.ReplaceGroup(0, 101, g3); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.ReplaceGroup(3, 100, g3); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.ReplaceGroup(1, 101, g3); });
+
+            fm.ReplaceGroup(1, 100, g3);
+            fm.ReplaceGroup(2, 100, g3);
+            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g3));
+            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g3));
+        }
+
+        [Test]
+        public void IsFieldSetTest()
+        {
+            MockFieldMap fieldmap = new MockFieldMap();
+            BooleanField field = new BooleanField(200, true);
+            Assert.That(fieldmap.isSetField(field), Is.EqualTo(false));
+            Assert.That(fieldmap.isSetField(field.Tag), Is.EqualTo(false));
+            fieldmap.setField(field);
+            Assert.That(fieldmap.isSetField(field), Is.EqualTo(true));
+            Assert.That(fieldmap.isSetField(field.Tag), Is.EqualTo(true));
+        }
+
+        [Test]
+        public void ClearAndIsEmptyTest()
+        {
+            MockFieldMap fieldmap = new MockFieldMap();
+            BooleanField field = new BooleanField(200, true);
+            Assert.That(fieldmap.IsEmpty(), Is.EqualTo(true));
+            fieldmap.setField(field);
+            Assert.That(fieldmap.IsEmpty(), Is.EqualTo(false));
+            fieldmap.Clear();
+            Assert.That(fieldmap.IsEmpty(), Is.EqualTo(true));
+            Group g = new Group(100, 101);
+            fieldmap.AddGroup(g);
+            Assert.That(fieldmap.IsEmpty(), Is.EqualTo(false));
+            fieldmap.Clear();
+            Assert.That(fieldmap.IsEmpty(), Is.EqualTo(true));
         }
     }
 }

@@ -66,6 +66,9 @@
     <Compile Include="Fields\IField.cs" />
     <Compile Include="Fields\IntField.cs" />
     <Compile Include="Fields\StringField.cs" />
+    <Compile Include="Group.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="MessageParseException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs">
       <SubType>Code</SubType>
