@@ -8,12 +8,19 @@ namespace QuickFIX.NET
 {
     public abstract class FieldMap
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public FieldMap()
         {
             this._fields = new Dictionary<int, Fields.IField>();
             this._groups = new Dictionary<int, List<Group>>();
         }
 
+        /// <summary>
+        /// Constructor with field order
+        /// </summary>
+        /// <param name="fieldOrd"></param>
         public FieldMap( int[] fieldOrd )
         {
             this._fields = new Dictionary<int, Fields.IField>();
@@ -125,14 +132,29 @@ namespace QuickFIX.NET
         /// <returns></returns>
         public Group GetGroup( int num, int field )
         {
-            if( !_groups.ContainsKey(field) ) 
+            if ( !_groups.ContainsKey(field) ) 
                 throw new FieldNotFoundException(field);
-            if (num <= 0) 
+            if ( num <= 0 ) 
                 throw new FieldNotFoundException(field);
-            if (_groups[field].Count < num) 
+            if ( _groups[field].Count < num ) 
                 throw new FieldNotFoundException(field);
 
             return _groups[field][num-1];
+        }
+
+        public void RemoveGroup(int num, int field)
+        {
+            if (!_groups.ContainsKey(field))
+                throw new FieldNotFoundException(field);
+            if (num <= 0)
+                throw new FieldNotFoundException(field);
+            if (_groups[field].Count < num)
+                throw new FieldNotFoundException(field);
+            
+            if (_groups[field].Count.Equals(1))
+                _groups.Remove(field);
+            else
+                _groups[field].RemoveAt(num);
         }
 
 
@@ -140,7 +162,7 @@ namespace QuickFIX.NET
         /// getField without a type defaults to returning a string
         /// </summary>
         /// <param name="tag">fix tag</param>
-        public string getField(int tag)
+        public string GetField(int tag)
         {
             if (_fields.ContainsKey(tag))
                 return _fields[tag].ToString();

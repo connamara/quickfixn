@@ -112,7 +112,7 @@ namespace UnitTests
         {
             DecimalField field = new DecimalField(200, new Decimal(101.0001));
             fieldmap.setField(field);
-            string refield = fieldmap.getField(200);
+            string refield = fieldmap.GetField(200);
             Assert.That("101.0001", Is.EqualTo(refield));
      
         }
@@ -140,7 +140,7 @@ namespace UnitTests
         public void FieldNotFoundTest()
         {
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { fieldmap.getField(99900); });
+                delegate { fieldmap.GetField(99900); });
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.getField(new DateTimeField(1002030)); });
             Assert.Throws(typeof(FieldNotFoundException),
@@ -180,6 +180,31 @@ namespace UnitTests
                 delegate { fieldmap.GetGroup(3,100); });
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetGroup(1, 101); });
+        }
+
+        public void RemoveGroupTest()
+        {
+            Group g1 = new Group(100, 200);
+            Group g2 = new Group(100, 201);
+            MockFieldMap fm = new MockFieldMap();
+            fm.AddGroup(g1);
+            fm.AddGroup(g2);
+            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
+            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
+
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.RemoveGroup(0, 101); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.RemoveGroup(3, 100); });
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.RemoveGroup(1, 101); });
+
+            fm.RemoveGroup(100, 1);
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetGroup(2, 100); });
+            fm.RemoveGroup(100, 1);
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetGroup(1, 100); });
         }
     }
 }
