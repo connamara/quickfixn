@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickFIX.NET;
 
 namespace QuickFIX.NET
 {
@@ -12,10 +11,7 @@ namespace QuickFIX.NET
         /// Default constructor
         /// </summary>
         public FieldMap()
-        {
-            this._fields = new Dictionary<int, Fields.IField>();
-            this._groups = new Dictionary<int, List<Group>>();
-        }
+        { }
 
         /// <summary>
         /// Constructor with field order
@@ -23,9 +19,7 @@ namespace QuickFIX.NET
         /// <param name="fieldOrd"></param>
         public FieldMap( int[] fieldOrd )
         {
-            this._fields = new Dictionary<int, Fields.IField>();
-            this._fieldOrder = fieldOrd;
-            this._groups = new Dictionary<int, List<Group>>();
+            _fieldOrder = fieldOrd;
         }
 
         /// <summary>
@@ -139,7 +133,7 @@ namespace QuickFIX.NET
 
         public void AddGroup(Group group)
         {
-            if( !_groups.ContainsKey(group.Field) )
+            if(!_groups.ContainsKey(group.Field))
                 _groups.Add(group.Field, new List<Group>());
             _groups[group.Field].Add(group);
         }
@@ -153,11 +147,11 @@ namespace QuickFIX.NET
         /// <exception cref="FieldNotFoundException" />
         public Group GetGroup( int num, int field )
         {
-            if ( !_groups.ContainsKey(field) ) 
+            if (!_groups.ContainsKey(field))
                 throw new FieldNotFoundException(field);
-            if ( num <= 0 ) 
+            if (num <= 0)
                 throw new FieldNotFoundException(field);
-            if ( _groups[field].Count < num ) 
+            if (_groups[field].Count < num)
                 throw new FieldNotFoundException(field);
 
             return _groups[field][num-1];
@@ -235,8 +229,8 @@ namespace QuickFIX.NET
         }
 
         #region Private Members
-        private Dictionary<int, Fields.IField> _fields;
-        private Dictionary<int, List<Group>> _groups;
+        private Dictionary<int, Fields.IField> _fields = new Dictionary<int, Fields.IField>();
+        private Dictionary<int, List<Group>> _groups = new Dictionary<int, List<Group>>();
         private int[] _fieldOrder;
         #endregion
     }
