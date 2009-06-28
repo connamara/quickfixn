@@ -228,6 +228,23 @@ namespace QuickFIX.NET
             return ((_fields.Count == 0) && (_groups.Count == 0));
         }
 
+        public int CalculateTotal()
+        {
+            int total = 0;
+            foreach (Fields.IField field in _fields.Values)
+            {   
+                if( field.Tag != Fields.Tags.CheckSum )
+                  total += field.getTotal();
+            }
+
+            foreach (List<Group> groupList in _groups.Values)
+            {
+                foreach (Group group in groupList)
+                    total += group.CalculateTotal();
+            }
+            return total;
+        }
+
         #region Private Members
         private Dictionary<int, Fields.IField> _fields = new Dictionary<int, Fields.IField>();
         private Dictionary<int, List<Group>> _groups = new Dictionary<int, List<Group>>();
