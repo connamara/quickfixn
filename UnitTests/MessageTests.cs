@@ -71,8 +71,8 @@ namespace UnitTests
         [Test]
         public void FromStringTest()
         {
-            string str1 = "8=FIX.4.2\u00019=46\u000135=0\u000134=3\u000149=TW\u0001" +
-                "52=20000426-12:05:06\u000156=ISLD\u00011=acct123\u000110=000\u0001";
+            string str1 = "8=FIX.4.2\x01" + "9=46\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
+                "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=000\x01";
             Message msg = new Message();
             msg.FromString(str1);
             StringField f1 = new StringField(8);
