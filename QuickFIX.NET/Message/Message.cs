@@ -44,9 +44,10 @@ namespace QuickFIX.NET
 
         public int CheckSum()
         {
-            return( _header.CalculateTotal()
+            return (
+                (_header.CalculateTotal()
                 + CalculateTotal()
-                + _trailer.CalculateTotal()) % 256;
+                + _trailer.CalculateTotal()) % 256 );
         }
 
         /// <summary>
@@ -141,6 +142,8 @@ namespace QuickFIX.NET
                     return false;
             }
         }
+
+        public const string SOH = "\u0001";
 
         #region Private Members
         FieldMap _header;

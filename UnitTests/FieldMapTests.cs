@@ -8,7 +8,7 @@ using QuickFIX.NET.Fields;
 
 namespace UnitTests
 {
-    public class MockFieldMap : FieldMap 
+    public class MockFieldMap : FieldMap
     {
         public MockFieldMap() { }
         public MockFieldMap(int[] fo) : base(fo) { }
@@ -26,8 +26,8 @@ namespace UnitTests
         [Test]
         public void CharFieldTest()
         {
-           
-            CharField field = new CharField(100,'d');
+
+            CharField field = new CharField(100, 'd');
             fieldmap.setField(field);
             CharField refield = new CharField(100);
             fieldmap.getField(refield);
@@ -55,13 +55,13 @@ namespace UnitTests
         public void DateTimeFieldTest()
         {
 
-            fieldmap.setField(new DateTimeField(Tags.TransactTime,new DateTime(2009,12,10)));
-            TransactTime tt= new TransactTime();
+            fieldmap.setField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
+            TransactTime tt = new TransactTime();
             fieldmap.getField(tt);
-            Assert.That(new DateTime(2009,12,10), Is.EqualTo(tt.Obj));
-            fieldmap.setField(new TransactTime(new DateTime(2010,12,10)));
+            Assert.That(new DateTime(2009, 12, 10), Is.EqualTo(tt.Obj));
+            fieldmap.setField(new TransactTime(new DateTime(2010, 12, 10)));
             fieldmap.getField(tt);
-            Assert.That(new DateTime(2010,12,10), Is.EqualTo(tt.getValue()));
+            Assert.That(new DateTime(2010, 12, 10), Is.EqualTo(tt.getValue()));
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace UnitTests
             fieldmap.setField(field);
             string refield = fieldmap.GetField(200);
             Assert.That("101.0001", Is.EqualTo(refield));
-     
+
         }
 
         [Test]
@@ -158,7 +158,7 @@ namespace UnitTests
         [Test]
         public void SimpleFieldOrderTest()
         {
-            int[] fieldord = {10, 11 ,12 ,13, 200};
+            int[] fieldord = { 10, 11, 12, 13, 200 };
             MockFieldMap fm = new MockFieldMap(fieldord);
             Assert.That(fm.FieldOrder, Is.EqualTo(fieldord));
         }
@@ -177,7 +177,7 @@ namespace UnitTests
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetGroup(0, 101); });
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { fieldmap.GetGroup(3,100); });
+                delegate { fieldmap.GetGroup(3, 100); });
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetGroup(1, 101); });
         }

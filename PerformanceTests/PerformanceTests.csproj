@@ -5,16 +5,13 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}</ProjectGuid>
+    <ProjectGuid>{678D7A0A-D07E-4D4C-9166-E6863BF2E8FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QuickFIX.NET</RootNamespace>
-    <AssemblyName>QuickFIX.NET</AssemblyName>
+    <RootNamespace>PerformanceTests</RootNamespace>
+    <AssemblyName>PerformanceTests</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <SignAssembly>false</SignAssembly>
-    <TargetFrameworkSubset>
-    </TargetFrameworkSubset>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,44 +35,18 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application.cs" />
-    <Compile Include="Config\Config.cs" />
-    <Compile Include="Config\Settings.cs" />
-    <Compile Include="FieldMap.cs" />
-    <Compile Include="Fields\BooleanField.cs" />
-    <Compile Include="Fields\CharField.cs" />
-    <Compile Include="Fields\Converters\BadConversionException.cs" />
-    <Compile Include="Fields\Converters\BoolConverter.cs" />
-    <Compile Include="Fields\Converters\CharConverter.cs" />
-    <Compile Include="Fields\Converters\DateTimeConverter.cs" />
-    <Compile Include="Fields\Converters\DecimalConverter.cs" />
-    <Compile Include="Fields\Converters\IntConverter.cs" />
-    <Compile Include="Fields\DateTimeField.cs" />
-    <Compile Include="Fields\DecimalField.cs" />
-    <Compile Include="Fields\FieldBase.cs" />
-    <Compile Include="FieldNotFoundException.cs" />
-    <Compile Include="Fields\Fields.cs" />
-    <Compile Include="Fields\FieldTags.cs" />
-    <Compile Include="Fields\IField.cs" />
-    <Compile Include="Fields\IntField.cs" />
-    <Compile Include="Fields\StringField.cs" />
-    <Compile Include="Group.cs" />
-    <Compile Include="Message\Message.cs" />
-    <Compile Include="Message\MessageParseException.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Session.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="StringUTF8.cs" />
-    <Compile Include="Transport\SocketAcceptor.cs" />
-    <Compile Include="Transport\SocketInitiator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

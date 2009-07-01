@@ -150,6 +150,5 @@ namespace QuickFIX.NET.Transport
         private Dictionary<int, TcpClient> _clientList = new Dictionary<int,TcpClient>();
         private Dictionary<int, string> _currentClientMsg = new Dictionary<int,string>();
         #endregion
-
     }
 }

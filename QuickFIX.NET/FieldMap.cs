@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickFIX.NET;
 
 namespace QuickFIX.NET
 {
@@ -12,20 +11,15 @@ namespace QuickFIX.NET
         /// Default constructor
         /// </summary>
         public FieldMap()
-        {
-            this._fields = new Dictionary<int, Fields.IField>();
-            this._groups = new Dictionary<int, List<Group>>();
-        }
+        { }
 
         /// <summary>
         /// Constructor with field order
         /// </summary>
         /// <param name="fieldOrd"></param>
-        public FieldMap( int[] fieldOrd )
+        public FieldMap(int[] fieldOrd)
         {
-            this._fields = new Dictionary<int, Fields.IField>();
-            this._fieldOrder = fieldOrd;
-            this._groups = new Dictionary<int, List<Group>>();
+            _fieldOrder = fieldOrd;
         }
 
         /// <summary>
@@ -51,7 +45,7 @@ namespace QuickFIX.NET
         /// set field in the fieldmap
         /// will overwrite field if it exists
         /// </summary>
-        public void setField(Fields.IField field )
+        public void setField(Fields.IField field)
         {
             _fields[field.Tag] = field;
         }
@@ -61,7 +55,7 @@ namespace QuickFIX.NET
         /// </summary>
         /// <param name="field"></param>
         /// <param name="overwrite">will overwrite wxisting field if set to true</param>
-        public void setField(Fields.IField field, Boolean overwrite )
+        public void setField(Fields.IField field, Boolean overwrite)
         {
             if (_fields.ContainsKey(field.Tag) && overwrite.Equals(false))
                 return;
@@ -87,7 +81,7 @@ namespace QuickFIX.NET
 
         public void getField(Fields.CharField field)
         {
-            if(_fields.ContainsKey(field.Tag))
+            if (_fields.ContainsKey(field.Tag))
                 field.Obj = ((Fields.CharField)_fields[field.Tag]).Obj;
             else
                 throw new FieldNotFoundException(field.Tag);
@@ -139,7 +133,7 @@ namespace QuickFIX.NET
 
         public void AddGroup(Group group)
         {
-            if( !_groups.ContainsKey(group.Field) )
+            if(!_groups.ContainsKey(group.Field))
                 _groups.Add(group.Field, new List<Group>());
             _groups[group.Field].Add(group);
         }
@@ -151,13 +145,13 @@ namespace QuickFIX.NET
         /// <param name="field">tag of group</param>
         /// <returns>Group object</returns>
         /// <exception cref="FieldNotFoundException" />
-        public Group GetGroup( int num, int field )
+        public Group GetGroup(int num, int field)
         {
-            if ( !_groups.ContainsKey(field) ) 
+            if (!_groups.ContainsKey(field))
                 throw new FieldNotFoundException(field);
-            if ( num <= 0 ) 
+            if (num <= 0)
                 throw new FieldNotFoundException(field);
-            if ( _groups[field].Count < num ) 
+            if (_groups[field].Count < num)
                 throw new FieldNotFoundException(field);
 
             return _groups[field][num-1];
@@ -252,8 +246,8 @@ namespace QuickFIX.NET
         }
 
         #region Private Members
-        private Dictionary<int, Fields.IField> _fields;
-        private Dictionary<int, List<Group>> _groups;
+        private Dictionary<int, Fields.IField> _fields = new Dictionary<int, Fields.IField>();
+        private Dictionary<int, List<Group>> _groups = new Dictionary<int, List<Group>>();
         private int[] _fieldOrder;
         #endregion
     }

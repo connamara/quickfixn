@@ -7,7 +7,6 @@ namespace QuickFIX.NET.Fields
     /// </summary>
     public abstract class IField
     {
-
         #region Properties
         public abstract int Tag { get; set; }
         #endregion

@@ -6,5 +6,9 @@ namespace QuickFIX.NET
 {
     public class Session
     {
+        public void SendToTarget(Message m)
+        {
+
+        }
     }
 }
