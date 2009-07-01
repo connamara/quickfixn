@@ -64,6 +64,7 @@
     <Compile Include="SettingsTest.cs" />
     <Compile Include="SocketAcceptorTests.cs" />
     <Compile Include="SocketInitiatorTests.cs" />
+    <Compile Include="StringUTF8Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickFIX.NET\QuickFIX.NET.csproj">

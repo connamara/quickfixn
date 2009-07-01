@@ -73,6 +73,7 @@
     <Compile Include="Session.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="StringUTF8.cs" />
     <Compile Include="Transport\SocketAcceptor.cs" />
     <Compile Include="Transport\SocketInitiator.cs" />
   </ItemGroup>

@@ -44,10 +44,9 @@ namespace QuickFIX.NET
 
         public int CheckSum()
         {
-            return (
-                (_header.CalculateTotal()
+            return( _header.CalculateTotal()
                 + CalculateTotal()
-                + _trailer.CalculateTotal()) % 256 );
+                + _trailer.CalculateTotal()) % 256;
         }
 
         /// <summary>
