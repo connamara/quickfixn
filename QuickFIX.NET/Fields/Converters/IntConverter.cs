@@ -14,11 +14,11 @@ namespace QuickFIX.NET.Fields.Converters
         /// Converts string to int
         /// </summary>
         /// <exception cref="BadConversionException"/>
-        public static Int64 Convert(string i)
+        public static int Convert(string i)
         {
             try
             {
-                return System.Convert.ToInt64(i);
+                return System.Convert.ToInt32(i);
             }
             catch (FormatException e)
             {
