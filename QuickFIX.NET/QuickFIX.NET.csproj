@@ -48,6 +48,9 @@
     <Compile Include="Application.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\Settings.cs" />
+    <Compile Include="DataDictionary\DataDictionary.cs" />
+    <Compile Include="DataDictionary\DictionaryParseException.cs" />
+    <Compile Include="DataDictionary\FieldEntry.cs" />
     <Compile Include="Fields\BooleanField.cs" />
     <Compile Include="Fields\CharField.cs" />
     <Compile Include="Fields\Converters\BadConversionException.cs" />
