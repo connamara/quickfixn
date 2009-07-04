@@ -30,5 +30,26 @@ namespace UnitTests
             Assert.That(field.Tag, Is.EqualTo(1));
             Assert.That(field.Obj, Is.EqualTo("2"));
         }
+
+        [Test]
+        public void ValidFieldTagTest()
+        {
+            DataDictionary dd = new DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            Assert.That(dd.ValidFieldTag(1), Is.EqualTo(true));
+            Assert.That(dd.ValidFieldTag(742), Is.EqualTo(true));
+            Assert.That(dd.ValidFieldTag(203948), Is.EqualTo(false));
+        }
+
+        [Test]
+        public void GetTagFromNameTest()
+        {
+            DataDictionary dd = new DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            Assert.That(dd.GetFieldTagFromName("Account"), Is.EqualTo(1));
+            Assert.That(dd.GetFieldTagFromName("OfferForwardPoints"), Is.EqualTo(191));
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { dd.GetFieldTagFromName("wayner___"); });
+        }
     }
 }

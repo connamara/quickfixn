@@ -9,8 +9,9 @@ namespace QuickFIX.NET
     {
         public DataDictionary()
         {
-            this._fields = new Dictionary<int, string>();
+            this._fields = new HashSet<int>();
             this._fieldTypes = new Dictionary<int, FieldEntry>();
+            this._fieldNameToTagMap = new Dictionary<string, int>();
         }
 
         public void Load( string filename )
@@ -36,6 +37,19 @@ namespace QuickFIX.NET
                     }
                 }
             }
+        }
+
+        public int GetFieldTagFromName(string name)
+        {
+            if (_fieldNameToTagMap.ContainsKey(name))
+                return _fieldNameToTagMap[name];
+            else
+                throw new FieldNotFoundException("field not found with name: "+name);
+        }
+
+        public bool ValidFieldTag(int tag)
+        {
+            return _fields.Contains(tag);
         }
 
         public Type GetFieldType(int tag)
@@ -73,6 +87,8 @@ namespace QuickFIX.NET
             string tagstr = reader.GetAttribute("number");
             int tag = Fields.Converters.IntConverter.Convert(tagstr);
             _fieldTypes.Add(tag, FieldEntry.MakeFromType(name, tag, typestr));
+            _fields.Add(tag);
+            _fieldNameToTagMap.Add(name, tag);
         }
 
         private void MakeVersion(XmlReader reader)
@@ -89,8 +105,9 @@ namespace QuickFIX.NET
         #endregion
 
         #region Private Members
-        private Dictionary<int, string> _fields;
+        private HashSet<int> _fields;
         private Dictionary<int, FieldEntry> _fieldTypes;
+        private Dictionary<string, int> _fieldNameToTagMap;
         #endregion
     }
 }
