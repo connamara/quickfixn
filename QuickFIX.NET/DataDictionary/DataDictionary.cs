@@ -27,11 +27,12 @@ namespace QuickFIX.NET
                 {
                     switch (reader.LocalName)
                     {
-                        case "fields": 
-                            AddField(reader);
+                        case "fields":
+                            ProcessFields(reader);
                             break;
                         case "messages":
-                            return;
+                            ProcessMessages(reader);
+                            break;
                     }
                 }
             }
@@ -43,6 +44,26 @@ namespace QuickFIX.NET
                 return _fieldTypes[tag].FieldType;
             else
                 throw new FieldNotFoundException(tag);
+        }
+
+        private void ProcessMessages(XmlReader reader)
+        {
+        }
+
+        private void ProcessFields(XmlReader reader)
+        {
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    if (reader.LocalName.Equals("field"))
+                        AddField(reader);
+                    else if(reader.LocalName.Equals("value"))
+                        continue;
+                    else
+                        throw new DictionaryParseException("bad field found in fields element: " + reader.LocalName);
+                }
+            }
         }
 
         private void AddField(XmlReader reader)
