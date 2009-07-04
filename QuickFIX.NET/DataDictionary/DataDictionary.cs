@@ -11,7 +11,8 @@ namespace QuickFIX.NET
         {
             this._fields = new HashSet<int>();
             this._fieldTypes = new Dictionary<int, FieldEntry>();
-            this._fieldNameToTagMap = new Dictionary<string, int>();
+            this._fieldNameToTag = new Dictionary<string, int>();
+            this._fieldNames = new Dictionary<int, string>();
         }
 
         public void Load( string filename )
@@ -39,12 +40,20 @@ namespace QuickFIX.NET
             }
         }
 
-        public int GetFieldTagFromName(string name)
+        public int GetTagFromName(string name)
         {
-            if (_fieldNameToTagMap.ContainsKey(name))
-                return _fieldNameToTagMap[name];
+            if (_fieldNameToTag.ContainsKey(name))
+                return _fieldNameToTag[name];
             else
                 throw new FieldNotFoundException("field not found with name: "+name);
+        }
+
+        public string GetFieldName(int tag)
+        {
+            if (_fieldNames.ContainsKey(tag))
+                return _fieldNames[tag];
+            else
+                throw new FieldNotFoundException(tag);
         }
 
         public bool ValidFieldTag(int tag)
@@ -85,15 +94,34 @@ namespace QuickFIX.NET
             string name = reader.GetAttribute("name");
             string typestr = reader.GetAttribute("type");
             string tagstr = reader.GetAttribute("number");
-            int tag = Fields.Converters.IntConverter.Convert(tagstr);
-            _fieldTypes.Add(tag, FieldEntry.MakeFromType(name, tag, typestr));
-            _fields.Add(tag);
-            _fieldNameToTagMap.Add(name, tag);
+            if (name == null)
+                throw new DictionaryParseException("empty name for field: " + tagstr);
+            if (typestr == null)
+                throw new DictionaryParseException("no type for field: " + name);
+            if (tagstr == null)
+                throw new DictionaryParseException("no tag for field: " + name);
+
+            try 
+            {
+                int tag = Fields.Converters.IntConverter.Convert(tagstr);
+                if (_fields.Contains(tag))
+                    throw new DictionaryParseException("duplicate field for message: " + tagstr);
+                _fieldTypes.Add(tag, FieldEntry.MakeFromType(name, tag, typestr));
+                _fields.Add(tag);
+                _fieldNameToTag.Add(name, tag);
+                _fieldNames.Add(tag, name);
+            }
+            catch (Fields.Converters.BadConversionException ex)
+            {
+                throw new DictionaryParseException("could not parse field. name=<" 
+                    + name + "> type=<" + typestr + "> tag=<" + tagstr + ">", ex );
+            }
         }
 
         private void MakeVersion(XmlReader reader)
         {
             MajorVersion = reader.GetAttribute("major");
+         
             MinorVersion = reader.GetAttribute("minor");
             Version = "FIX." + MajorVersion + "." + MinorVersion;
         }
@@ -106,8 +134,9 @@ namespace QuickFIX.NET
 
         #region Private Members
         private HashSet<int> _fields;
+        private Dictionary<int, string> _fieldNames;
         private Dictionary<int, FieldEntry> _fieldTypes;
-        private Dictionary<string, int> _fieldNameToTagMap;
+        private Dictionary<string, int> _fieldNameToTag;
         #endregion
     }
 }

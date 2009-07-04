@@ -46,10 +46,32 @@ namespace UnitTests
         {
             DataDictionary dd = new DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
-            Assert.That(dd.GetFieldTagFromName("Account"), Is.EqualTo(1));
-            Assert.That(dd.GetFieldTagFromName("OfferForwardPoints"), Is.EqualTo(191));
+            Assert.That(dd.GetTagFromName("Account"), Is.EqualTo(1));
+            Assert.That(dd.GetTagFromName("OfferForwardPoints"), Is.EqualTo(191));
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { dd.GetFieldTagFromName("wayner___"); });
+                delegate { dd.GetTagFromName("wayner___"); });
+        }
+
+        [Test]
+        public void GetNameTest()
+        {
+            DataDictionary dd = new DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            Assert.That(dd.GetFieldName(1), Is.EqualTo("Account"));
+            Assert.That(dd.GetFieldName(191), Is.EqualTo("OfferForwardPoints"));
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { dd.GetFieldName(13030948); });
+        }
+
+        [Test]
+        public void BadXmlTests()
+        {            
+            Assert.Throws(typeof(DictionaryParseException),
+                delegate { new DataDictionary().Load("../../TestFiles/MissingFieldName.xml"); });
+            Assert.Throws(typeof(DictionaryParseException),
+                delegate { new DataDictionary().Load("../../TestFiles/MissingNumber.xml"); });
+            Assert.Throws(typeof(DictionaryParseException),
+                delegate { new DataDictionary().Load("../../TestFiles/MissingType.xml"); });
         }
     }
 }

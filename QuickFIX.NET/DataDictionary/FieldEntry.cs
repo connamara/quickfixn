@@ -7,7 +7,7 @@ namespace QuickFIX.NET
 {
     partial class DataDictionary
     {
-        public sealed class FieldEntry
+        private sealed class FieldEntry
         {
             public FieldEntry(string name, int tag, Type type)
             {
