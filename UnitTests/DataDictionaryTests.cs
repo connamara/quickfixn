@@ -72,6 +72,24 @@ namespace UnitTests
                 delegate { new DataDictionary().Load("../../TestFiles/MissingNumber.xml"); });
             Assert.Throws(typeof(DictionaryParseException),
                 delegate { new DataDictionary().Load("../../TestFiles/MissingType.xml"); });
+            Assert.Throws(typeof(DictionaryParseException),
+                delegate { new DataDictionary().Load("../../TestFiles/DuplicateField.xml"); });
+        }
+
+        [Test]
+        public void ReqFieldsSetTest()
+        {
+            DataDictionary dd = new DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            HashSet<int> logonFields = new HashSet<int>();
+            Assert.That(dd.ReqFieldsSet("A", logonFields), Is.EqualTo(false));
+            logonFields.Add(98);
+            logonFields.Add(108);
+            Assert.That(dd.ReqFieldsSet("A", logonFields), Is.EqualTo(true));
+            logonFields.Add(109);
+            Assert.That(dd.ReqFieldsSet("A", logonFields), Is.EqualTo(true));
+            Assert.Throws(typeof(InvalidMessageTypeException),
+                delegate { dd.ReqFieldsSet("__wayner", logonFields); });
         }
     }
 }
