@@ -5,23 +5,23 @@ using System.Text;
 
 namespace QuickFIX.NET
 {
-    partial class DataDictionary
+    partial class DataDictionaryParser
     {
-        private sealed class MessageComponent
+        private sealed class XMLMsgComponent
         {
             public enum TypeEnum { Field, Component, Group };
 
-            public MessageComponent(string name, bool req, TypeEnum type )
+            public XMLMsgComponent(string name, bool req, TypeEnum type )
             {
                 Name = name;
                 Required = req;
-                SubComponents = new HashSet<MessageComponent>();
+                SubComponents = new HashSet<XMLMsgComponent>();
                 ComponentType = type;
             }
             public TypeEnum ComponentType { get; set; }
             public string Name { get; set; }
             public bool Required { get; set; }
-            public HashSet<MessageComponent> SubComponents { get; set; }
+            public HashSet<XMLMsgComponent> SubComponents { get; set; }
 
             public static TypeEnum GetComponentType(string typestr, string parentName)
             {

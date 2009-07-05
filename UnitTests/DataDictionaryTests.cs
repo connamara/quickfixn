@@ -11,7 +11,7 @@ namespace UnitTests
         [Test]
         public void FieldEntryTest()
         {
-            QuickFIX.NET.DataDictionary dd = new QuickFIX.NET.DataDictionary();
+            QuickFIX.NET.DataDictionaryParser dd = new QuickFIX.NET.DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             Assert.That(dd.MajorVersion, Is.EqualTo("4"));
             Assert.That(dd.MinorVersion, Is.EqualTo("4"));
@@ -21,7 +21,7 @@ namespace UnitTests
         [Test]
         public void MakeFromType()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionaryParser dd = new DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             Type ft = dd.GetFieldType(1);
             QuickFIX.NET.Fields.StringField field = (QuickFIX.NET.Fields.StringField)Activator.CreateInstance(dd.GetFieldType(1),1);
@@ -34,7 +34,7 @@ namespace UnitTests
         [Test]
         public void ValidFieldTagTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionaryParser dd = new DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             Assert.That(dd.ValidFieldTag(1), Is.EqualTo(true));
             Assert.That(dd.ValidFieldTag(742), Is.EqualTo(true));
@@ -44,7 +44,7 @@ namespace UnitTests
         [Test]
         public void GetTagFromNameTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionaryParser dd = new DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             Assert.That(dd.GetTagFromName("Account"), Is.EqualTo(1));
             Assert.That(dd.GetTagFromName("OfferForwardPoints"), Is.EqualTo(191));
@@ -55,7 +55,7 @@ namespace UnitTests
         [Test]
         public void GetNameTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionaryParser dd = new DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             Assert.That(dd.GetFieldName(1), Is.EqualTo("Account"));
             Assert.That(dd.GetFieldName(191), Is.EqualTo("OfferForwardPoints"));
@@ -67,19 +67,19 @@ namespace UnitTests
         public void BadXmlTests()
         {            
             Assert.Throws(typeof(DictionaryParseException),
-                delegate { new DataDictionary().Load("../../TestFiles/MissingFieldName.xml"); });
+                delegate { new DataDictionaryParser().Load("../../TestFiles/MissingFieldName.xml"); });
             Assert.Throws(typeof(DictionaryParseException),
-                delegate { new DataDictionary().Load("../../TestFiles/MissingNumber.xml"); });
+                delegate { new DataDictionaryParser().Load("../../TestFiles/MissingNumber.xml"); });
             Assert.Throws(typeof(DictionaryParseException),
-                delegate { new DataDictionary().Load("../../TestFiles/MissingType.xml"); });
+                delegate { new DataDictionaryParser().Load("../../TestFiles/MissingType.xml"); });
             Assert.Throws(typeof(DictionaryParseException),
-                delegate { new DataDictionary().Load("../../TestFiles/DuplicateField.xml"); });
+                delegate { new DataDictionaryParser().Load("../../TestFiles/DuplicateField.xml"); });
         }
 
         [Test]
         public void ReqFieldsSetTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionaryParser dd = new DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             HashSet<int> logonFields = new HashSet<int>();
             Assert.That(dd.ReqFieldsSet("A", logonFields), Is.EqualTo(false));
@@ -95,7 +95,7 @@ namespace UnitTests
         [Test]
         public void ReqFieldsSetWithComponentsTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionaryParser dd = new DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             HashSet<int> ioiFields = new HashSet<int>();
             Assert.That(dd.ReqFieldsSet("6", ioiFields), Is.EqualTo(false));

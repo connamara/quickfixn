@@ -49,6 +49,7 @@
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\Settings.cs" />
     <Compile Include="DataDictionary\DataDictionary.cs" />
+    <Compile Include="DataDictionary\DDGroup.cs" />
     <Compile Include="DataDictionary\DictionaryParseException.cs" />
     <Compile Include="DataDictionary\FieldEntry.cs" />
     <Compile Include="DataDictionary\InvalidMessageTypeException.cs" />

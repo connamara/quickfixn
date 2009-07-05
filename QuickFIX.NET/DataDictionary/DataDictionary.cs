@@ -5,9 +5,9 @@ using System.Text;
 
 namespace QuickFIX.NET
 {
-    public sealed partial class DataDictionary
+    public sealed partial class DataDictionaryParser
     {
-        public DataDictionary()
+        public DataDictionaryParser()
         {
             this._fields = new HashSet<int>();
             this._fieldTypes = new Dictionary<int, FieldEntry>();
@@ -16,9 +16,9 @@ namespace QuickFIX.NET
             this._messageFields = new Dictionary<string, HashSet<int>>();
             this._messages = new HashSet<string>();
             this._reqMsgFields = new Dictionary<string, HashSet<int>>();
-            this._messageComponents = new Dictionary<string, HashSet<MessageComponent>>();
+            this._messageComponents = new Dictionary<string, HashSet<XMLMsgComponent>>();
             this._groups = new Dictionary<string, HashSet<int>>();
-            this._components = new Dictionary<string, HashSet<MessageComponent>>();
+            this._components = new Dictionary<string, HashSet<XMLMsgComponent>>();
         }
 
         public void Load( string filename )
@@ -37,13 +37,13 @@ namespace QuickFIX.NET
                     switch (reader.LocalName)
                     {
                         case "messages":
-                            ProcessMessages(reader);
+                            ProcessXMLMessages(reader);
                             break;
                         case "fields":
-                            ProcessFields(reader);
+                            ProcessXMLFields(reader);
                             break;
                         case "components":
-                            ProcessComponents(reader);
+                            ProcessXMLComponents(reader);
                             break;
                     }
                 }
@@ -100,11 +100,11 @@ namespace QuickFIX.NET
             {
                 HashSet<int> fields = new HashSet<int>();
                 HashSet<int> reqFields = new HashSet<int>();
-                foreach (MessageComponent msgcomp in _messageComponents[msg])
+                foreach (XMLMsgComponent msgcomp in _messageComponents[msg])
                 {
-                    if (msgcomp.ComponentType == MessageComponent.TypeEnum.Field)
+                    if (msgcomp.ComponentType == XMLMsgComponent.TypeEnum.Field)
                         PostProcessField(msgcomp, fields, reqFields);
-                    else if (msgcomp.ComponentType == MessageComponent.TypeEnum.Group)
+                    else if (msgcomp.ComponentType == XMLMsgComponent.TypeEnum.Group)
                         PostProcessGroup(msgcomp, fields, reqFields, msg);
                     else
                         PostProcessComponentGroup(msgcomp, fields, reqFields, msg);
@@ -115,27 +115,27 @@ namespace QuickFIX.NET
         }
 
         private void PostProcessComponentGroup(
-            MessageComponent parentcomp, HashSet<int> fields, 
+            XMLMsgComponent parentcomp, HashSet<int> fields, 
             HashSet<int> reqFields, string msgname)
         {
-            foreach (MessageComponent msgcomp in parentcomp.SubComponents)
+            foreach (XMLMsgComponent msgcomp in parentcomp.SubComponents)
             {
                 switch (msgcomp.ComponentType)
                 {
-                    case MessageComponent.TypeEnum.Field: 
+                    case XMLMsgComponent.TypeEnum.Field: 
                         PostProcessField(msgcomp, fields, reqFields); 
                         break;
-                    case MessageComponent.TypeEnum.Component: 
+                    case XMLMsgComponent.TypeEnum.Component: 
                         PostProcessComponentGroup(msgcomp, fields, reqFields, msgname); 
                         break;
-                    case MessageComponent.TypeEnum.Group:
+                    case XMLMsgComponent.TypeEnum.Group:
                         PostProcessGroup(msgcomp, fields, reqFields, msgname);
                         break;
                 }
             }
         }
 
-        private void PostProcessField(MessageComponent msgcomp, HashSet<int> fields, HashSet<int> reqFields)
+        private void PostProcessField(XMLMsgComponent msgcomp, HashSet<int> fields, HashSet<int> reqFields)
         {
             int tag = GetTagFromName(msgcomp.Name);
             fields.Add(tag);
@@ -143,7 +143,7 @@ namespace QuickFIX.NET
                 reqFields.Add(tag);
         }
 
-        private void PostProcessGroup(MessageComponent msgcomp, HashSet<int> fields, HashSet<int> reqFields, string msg)
+        private void PostProcessGroup(XMLMsgComponent msgcomp, HashSet<int> fields, HashSet<int> reqFields, string msg)
         {
             if (!_groups.ContainsKey(msg))
                 _groups.Add(msg, new HashSet<int>());
@@ -154,7 +154,7 @@ namespace QuickFIX.NET
             PostProcessComponentGroup(msgcomp, fields, reqFields, msg);
         }
 
-        private void ProcessMessages(XmlReader reader)
+        private void ProcessXMLMessages(XmlReader reader)
         {
             while(reader.Read())
             {
@@ -168,7 +168,7 @@ namespace QuickFIX.NET
             }
         }
 
-        private void ProcessFields(XmlReader reader)
+        private void ProcessXMLFields(XmlReader reader)
         {
             while (reader.Read())
             {
@@ -209,12 +209,12 @@ namespace QuickFIX.NET
                     if (reqstr.Equals("Y"))
                         req = true;
                     if (!_messageComponents.ContainsKey(msgtype))
-                        _messageComponents.Add(msgtype, new HashSet<MessageComponent>());
-                    MessageComponent.TypeEnum ctype = MessageComponent.GetComponentType(reader.LocalName, msgname);
-                    MessageComponent component = new MessageComponent(name, req, ctype );
+                        _messageComponents.Add(msgtype, new HashSet<XMLMsgComponent>());
+                    XMLMsgComponent.TypeEnum ctype = XMLMsgComponent.GetComponentType(reader.LocalName, msgname);
+                    XMLMsgComponent component = new XMLMsgComponent(name, req, ctype );
                     _messageComponents[msgtype].Add(component);
 
-                    if( ctype.Equals( MessageComponent.TypeEnum.Group ))
+                    if( ctype.Equals( XMLMsgComponent.TypeEnum.Group ))
                         ProcessGroup( reader, component );
                 }
                 else if (reader.NodeType == XmlNodeType.EndElement && reader.LocalName.Equals("message"))
@@ -222,7 +222,7 @@ namespace QuickFIX.NET
             }
         }
 
-        private void ProcessComponents(XmlReader reader)
+        private void ProcessXMLComponents(XmlReader reader)
         {
             while (reader.Read())
             {
@@ -245,7 +245,7 @@ namespace QuickFIX.NET
                 throw new DictionaryParseException("component with no name!");
             if (_components.ContainsKey(name))
                 throw new DictionaryParseException("duplicate component: " + name);
-            _components.Add(name, new HashSet<MessageComponent>());
+            _components.Add(name, new HashSet<XMLMsgComponent>());
 
             while (reader.Read())
             {
@@ -254,10 +254,10 @@ namespace QuickFIX.NET
                     string reqstr = reader.GetAttribute("required");
                     bool req = false;
                     if (reqstr.Equals("Y")) req = true;
-                    MessageComponent.TypeEnum ctype = MessageComponent.GetComponentType(reader.LocalName, name);
-                    MessageComponent component = new MessageComponent(name, req, ctype);
+                    XMLMsgComponent.TypeEnum ctype = XMLMsgComponent.GetComponentType(reader.LocalName, name);
+                    XMLMsgComponent component = new XMLMsgComponent(name, req, ctype);
                     _components[name].Add(component);
-                    if( ctype.Equals( MessageComponent.TypeEnum.Group ))
+                    if( ctype.Equals( XMLMsgComponent.TypeEnum.Group ))
                         ProcessGroup(reader,component);
 
                 }
@@ -267,7 +267,7 @@ namespace QuickFIX.NET
 
         }
 
-        private void ProcessGroup(XmlReader reader, MessageComponent group)
+        private void ProcessGroup(XmlReader reader, XMLMsgComponent group)
         {
             while( reader.Read())
             {
@@ -278,10 +278,10 @@ namespace QuickFIX.NET
                     bool req = false;
                     if (reqstr.Equals("Y"))
                         req = true;
-                    MessageComponent.TypeEnum ctype = MessageComponent.GetComponentType(reader.LocalName, grpname);
-                    MessageComponent component = new MessageComponent(grpname, req, ctype );
+                    XMLMsgComponent.TypeEnum ctype = XMLMsgComponent.GetComponentType(reader.LocalName, grpname);
+                    XMLMsgComponent component = new XMLMsgComponent(grpname, req, ctype );
                     group.SubComponents.Add(component);
-                    if (component.ComponentType.Equals(MessageComponent.TypeEnum.Group))
+                    if (component.ComponentType.Equals(XMLMsgComponent.TypeEnum.Group))
                         ProcessGroup(reader, component);
                 }
                 else if (reader.NodeType == XmlNodeType.EndElement && reader.LocalName.Equals("group"))
@@ -337,13 +337,13 @@ namespace QuickFIX.NET
         private Dictionary<int, string> _fieldNames;
         private Dictionary<int, FieldEntry> _fieldTypes;
         private Dictionary<string, int> _fieldNameToTag;
-        private Dictionary<string, HashSet<MessageComponent>> _components;
+        private Dictionary<string, HashSet<XMLMsgComponent>> _components;
 
         /// <summary>
         /// all message dictionaries indexed by msgtype
         /// </summary>
         private HashSet<string> _messages; 
-        private Dictionary<string, HashSet<MessageComponent>> _messageComponents;
+        private Dictionary<string, HashSet<XMLMsgComponent>> _messageComponents;
         private Dictionary<string, HashSet<int>> _messageFields;
         private Dictionary<string, HashSet<int>> _reqMsgFields;
         private Dictionary<string, HashSet<int>> _groups;

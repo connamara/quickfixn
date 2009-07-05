@@ -5,7 +5,7 @@ using System.Text;
 
 namespace QuickFIX.NET
 {
-    partial class DataDictionary
+    partial class DataDictionaryParser
     {
         private sealed class FieldEntry
         {
