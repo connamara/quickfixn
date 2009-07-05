@@ -91,5 +91,25 @@ namespace UnitTests
             Assert.Throws(typeof(InvalidMessageTypeException),
                 delegate { dd.ReqFieldsSet("__wayner", logonFields); });
         }
+
+        [Test]
+        public void ReqFieldsSetWithComponentsTest()
+        {
+            DataDictionary dd = new DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            HashSet<int> ioiFields = new HashSet<int>();
+            Assert.That(dd.ReqFieldsSet("6", ioiFields), Is.EqualTo(false));
+            ioiFields.Add(23);
+            ioiFields.Add(28);
+            Assert.That(dd.ReqFieldsSet("6", ioiFields), Is.EqualTo(false));
+            ioiFields.Add(55);
+            ioiFields.Add(54);
+            ioiFields.Add(27);
+            Assert.That(dd.ReqFieldsSet("6", ioiFields), Is.EqualTo(true));
+            ioiFields.Add(109);
+            Assert.That(dd.ReqFieldsSet("6", ioiFields), Is.EqualTo(true));
+            Assert.Throws(typeof(InvalidMessageTypeException),
+                delegate { dd.ReqFieldsSet("__wayner", ioiFields); });
+        }
     }
 }
