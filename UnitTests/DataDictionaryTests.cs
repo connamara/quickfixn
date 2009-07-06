@@ -82,7 +82,8 @@ namespace UnitTests
             DataDictionaryParser dd = new DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             HashSet<int> logonFields = new HashSet<int>();
-            Assert.That(dd.ReqFieldsSet("A", logonFields), Is.EqualTo(false));
+            Assert.Throws(typeof(MissingRequiredFieldException),
+                delegate { dd.ReqFieldsSet("A", logonFields); });
             logonFields.Add(98);
             logonFields.Add(108);
             Assert.That(dd.ReqFieldsSet("A", logonFields), Is.EqualTo(true));
@@ -98,10 +99,12 @@ namespace UnitTests
             DataDictionaryParser dd = new DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             HashSet<int> ioiFields = new HashSet<int>();
-            Assert.That(dd.ReqFieldsSet("6", ioiFields), Is.EqualTo(false));
+            Assert.Throws(typeof(MissingRequiredFieldException),
+                delegate { dd.ReqFieldsSet("6", ioiFields); });
             ioiFields.Add(23);
             ioiFields.Add(28);
-            Assert.That(dd.ReqFieldsSet("6", ioiFields), Is.EqualTo(false));
+            Assert.Throws(typeof(MissingRequiredFieldException),
+                delegate { dd.ReqFieldsSet("6", ioiFields); });
             ioiFields.Add(55);
             ioiFields.Add(54);
             ioiFields.Add(27);
@@ -110,6 +113,49 @@ namespace UnitTests
             Assert.That(dd.ReqFieldsSet("6", ioiFields), Is.EqualTo(true));
             Assert.Throws(typeof(InvalidMessageTypeException),
                 delegate { dd.ReqFieldsSet("__wayner", ioiFields); });
+        }
+
+        [Test]
+        public void ReqFieldsSetWithGroupTest()
+        {
+            DataDictionaryParser dd = new DataDictionaryParser();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            HashSet<int> emailFields = new HashSet<int>();
+            Assert.Throws(typeof(MissingRequiredFieldException),
+                delegate { dd.ReqFieldsSet("C", emailFields); });
+            emailFields.Add(164);
+            emailFields.Add(94);
+            Assert.Throws(typeof(MissingRequiredFieldException),
+                delegate { dd.ReqFieldsSet("C", emailFields); });
+            emailFields.Add(33);  // NumInGroup field
+            emailFields.Add(147);
+            emailFields.Add(58);
+            Assert.That(dd.ReqFieldsSet("C", emailFields), Is.EqualTo(true));
+            emailFields.Add(109);
+            Assert.That(dd.ReqFieldsSet("C", emailFields), Is.EqualTo(true));
+        }
+
+        [Test]
+        public void ReqFieldsSetWithGroupTest2()
+        {
+            DataDictionaryParser dd = new DataDictionaryParser();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            HashSet<int> emailFields = new HashSet<int>();
+            Assert.Throws(typeof(MissingRequiredFieldException),
+                delegate { dd.ReqFieldsSet("C", emailFields); });
+            emailFields.Add(146);
+            emailFields.Add(131);
+            Assert.Throws(typeof(MissingRequiredFieldException),
+                delegate { dd.ReqFieldsSet("C", emailFields); });
+            emailFields.Add(55);
+            emailFields.Add(164);
+            emailFields.Add(94);
+            emailFields.Add(147);
+            emailFields.Add(58);
+            emailFields.Add(33);
+            Assert.That(dd.ReqFieldsSet("C", emailFields), Is.EqualTo(true));
+            emailFields.Add(109);
+            Assert.That(dd.ReqFieldsSet("C", emailFields), Is.EqualTo(true));
         }
     }
 }

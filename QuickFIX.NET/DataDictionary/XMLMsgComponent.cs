@@ -15,13 +15,13 @@ namespace QuickFIX.NET
             {
                 Name = name;
                 Required = req;
-                SubComponents = new HashSet<XMLMsgComponent>();
+                SubComponents = new List<XMLMsgComponent>();
                 ComponentType = type;
             }
             public TypeEnum ComponentType { get; set; }
             public string Name { get; set; }
             public bool Required { get; set; }
-            public HashSet<XMLMsgComponent> SubComponents { get; set; }
+            public List<XMLMsgComponent> SubComponents { get; set; }
 
             public static TypeEnum GetComponentType(string typestr, string parentName)
             {

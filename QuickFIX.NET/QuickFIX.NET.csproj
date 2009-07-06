@@ -53,7 +53,8 @@
     <Compile Include="DataDictionary\DictionaryParseException.cs" />
     <Compile Include="DataDictionary\FieldEntry.cs" />
     <Compile Include="DataDictionary\InvalidMessageTypeException.cs" />
-    <Compile Include="DataDictionary\MessageFieldEntry.cs" />
+    <Compile Include="DataDictionary\MissingRequiredFieldException.cs" />
+    <Compile Include="DataDictionary\XMLMsgComponent.cs" />
     <Compile Include="Fields\BooleanField.cs" />
     <Compile Include="Fields\CharField.cs" />
     <Compile Include="Fields\Converters\BadConversionException.cs" />

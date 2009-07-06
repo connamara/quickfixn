@@ -13,12 +13,10 @@ namespace QuickFIX.NET
             this._fieldTypes = new Dictionary<int, FieldEntry>();
             this._fieldNameToTag = new Dictionary<string, int>();
             this._fieldNames = new Dictionary<int, string>();
-            this._messageFields = new Dictionary<string, HashSet<int>>();
-            this._messages = new HashSet<string>();
-            this._reqMsgFields = new Dictionary<string, HashSet<int>>();
+            this._messages = new Dictionary<string, DDFieldMap>();
+            this._msgTypes = new HashSet<string>();
             this._messageComponents = new Dictionary<string, HashSet<XMLMsgComponent>>();
-            this._groups = new Dictionary<string, HashSet<int>>();
-            this._components = new Dictionary<string, HashSet<XMLMsgComponent>>();
+            this._components = new Dictionary<string, List<XMLMsgComponent>>();
         }
 
         public void Load( string filename )
@@ -61,15 +59,39 @@ namespace QuickFIX.NET
 
         public bool ReqFieldsSet(string msgtype, HashSet<int> fields)
         {
-            if (!_reqMsgFields.ContainsKey(msgtype))
+            if (!_messages.ContainsKey(msgtype))
                 throw new InvalidMessageTypeException("message type not found: " + msgtype);
 
-            foreach (int field in _reqMsgFields[msgtype] )
+            foreach (int field in _messages[msgtype].ReqFields )
             {
                 if (!fields.Contains(field))
-                    return false;
+                    throw new MissingRequiredFieldException(field);
             }
 
+            foreach(DDGroup grp in _messages[msgtype].Groups.Values)
+            {
+                if( _messages[msgtype].ReqFields.Contains(grp.Field))
+                {
+                    ReqFieldsSetInGroups(grp, fields);
+                }
+            }
+            return true;
+        }
+
+        private bool ReqFieldsSetInGroups( DDGroup group, HashSet<int> fields )
+        {
+            foreach(DDGroup grp in group.Groups.Values)
+            {
+                if (group.ReqFields.Contains(grp.Field))
+                {
+                    foreach (int field in grp.ReqFields)
+                    {
+                        if (!fields.Contains(field))
+                            throw new MissingRequiredFieldException(field);
+                    }
+                    ReqFieldsSetInGroups(grp, fields);
+                }
+            }
             return true;
         }
 
@@ -96,62 +118,67 @@ namespace QuickFIX.NET
 
         private void PostProcess()
         {
-            foreach (string msg in _messageComponents.Keys)
+            foreach (string msgstr in _messageComponents.Keys)
             {
-                HashSet<int> fields = new HashSet<int>();
-                HashSet<int> reqFields = new HashSet<int>();
-                foreach (XMLMsgComponent msgcomp in _messageComponents[msg])
+                DDFieldMap msg = new DDFieldMap();
+                foreach (XMLMsgComponent msgcomp in _messageComponents[msgstr])
                 {
                     if (msgcomp.ComponentType == XMLMsgComponent.TypeEnum.Field)
-                        PostProcessField(msgcomp, fields, reqFields);
+                        PostProcessField(msgcomp, msg);
                     else if (msgcomp.ComponentType == XMLMsgComponent.TypeEnum.Group)
-                        PostProcessGroup(msgcomp, fields, reqFields, msg);
+                        PostProcessGroup(msgcomp, msg, msgstr);
                     else
-                        PostProcessComponentGroup(msgcomp, fields, reqFields, msg);
+                        PostProcessComponent(msgcomp, msg, msgstr);
                 }
-                _messageFields.Add(msg, fields);
-                _reqMsgFields.Add(msg, reqFields);
+                _messages.Add(msgstr, msg);
             }
         }
 
-        private void PostProcessComponentGroup(
-            XMLMsgComponent parentcomp, HashSet<int> fields, 
-            HashSet<int> reqFields, string msgname)
+        private void PostProcessComponent(XMLMsgComponent comp, DDFieldMap msg, string msgname)
         {
+            PostProcessComponentGroup(_components[comp.Name][0], msg, msgname);
+        }
+
+        private void PostProcessComponentGroup(XMLMsgComponent parentcomp, DDFieldMap msg, string msgname)
+        {
+            if (parentcomp.ComponentType == XMLMsgComponent.TypeEnum.Component)
+                parentcomp = _components[parentcomp.Name][0];
+
             foreach (XMLMsgComponent msgcomp in parentcomp.SubComponents)
             {
                 switch (msgcomp.ComponentType)
                 {
                     case XMLMsgComponent.TypeEnum.Field: 
-                        PostProcessField(msgcomp, fields, reqFields); 
+                        PostProcessField(msgcomp, msg); 
                         break;
                     case XMLMsgComponent.TypeEnum.Component: 
-                        PostProcessComponentGroup(msgcomp, fields, reqFields, msgname); 
+                        PostProcessComponent(msgcomp, msg, msgname); 
                         break;
                     case XMLMsgComponent.TypeEnum.Group:
-                        PostProcessGroup(msgcomp, fields, reqFields, msgname);
+                        PostProcessGroup(msgcomp, msg, msgname);
                         break;
                 }
             }
         }
 
-        private void PostProcessField(XMLMsgComponent msgcomp, HashSet<int> fields, HashSet<int> reqFields)
+        private void PostProcessField(XMLMsgComponent msgcomp, DDFieldMap msg)
         {
             int tag = GetTagFromName(msgcomp.Name);
-            fields.Add(tag);
+            msg.Fields.Add(tag);
             if (msgcomp.Required)
-                reqFields.Add(tag);
+                msg.ReqFields.Add(tag);
         }
 
-        private void PostProcessGroup(XMLMsgComponent msgcomp, HashSet<int> fields, HashSet<int> reqFields, string msg)
+        private void PostProcessGroup(XMLMsgComponent msgcomp, DDFieldMap msg, string msgstr)
         {
-            if (!_groups.ContainsKey(msg))
-                _groups.Add(msg, new HashSet<int>());
-            _groups[msg].Add(GetTagFromName(msgcomp.Name));
+            DDGroup grp = new DDGroup();
+            grp.Field = GetTagFromName(msgcomp.Name);
 
             if (msgcomp.Required)
-                reqFields.Add(GetTagFromName(msgcomp.Name));
-            PostProcessComponentGroup(msgcomp, fields, reqFields, msg);
+                msg.ReqFields.Add(grp.Field);
+
+            msg.Groups.Add(grp.Field, grp);
+            PostProcessComponentGroup(msgcomp, msg, msgstr);
         }
 
         private void ProcessXMLMessages(XmlReader reader)
@@ -198,7 +225,7 @@ namespace QuickFIX.NET
             if (msgcat == null)
                 throw new DictionaryParseException("no cat for msg: " + msgname);
 
-            _messages.Add(msgtype);
+            _msgTypes.Add(msgtype);
             while( reader.Read())
             {
                 if (reader.NodeType == XmlNodeType.Element)
@@ -245,7 +272,7 @@ namespace QuickFIX.NET
                 throw new DictionaryParseException("component with no name!");
             if (_components.ContainsKey(name))
                 throw new DictionaryParseException("duplicate component: " + name);
-            _components.Add(name, new HashSet<XMLMsgComponent>());
+            _components.Add(name, new List<XMLMsgComponent>());
 
             while (reader.Read())
             {
@@ -337,16 +364,14 @@ namespace QuickFIX.NET
         private Dictionary<int, string> _fieldNames;
         private Dictionary<int, FieldEntry> _fieldTypes;
         private Dictionary<string, int> _fieldNameToTag;
-        private Dictionary<string, HashSet<XMLMsgComponent>> _components;
+        private Dictionary<string, List<XMLMsgComponent>> _components;
 
         /// <summary>
         /// all message dictionaries indexed by msgtype
         /// </summary>
-        private HashSet<string> _messages; 
+        private HashSet<string> _msgTypes; 
         private Dictionary<string, HashSet<XMLMsgComponent>> _messageComponents;
-        private Dictionary<string, HashSet<int>> _messageFields;
-        private Dictionary<string, HashSet<int>> _reqMsgFields;
-        private Dictionary<string, HashSet<int>> _groups;
+        private Dictionary<string, DDFieldMap> _messages;
         #endregion
     }
 }
