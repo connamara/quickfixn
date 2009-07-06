@@ -215,6 +215,34 @@ namespace UnitTests
 
             Console.WriteLine("Duration to construct large class containing smaller structs: " + timer.Duration.ToString());
         }
+
+        [Test]
+        public void TestUTFByteEncoding()
+        {
+            string test = "LKDSAJFLAKJSFLKJFLAKSJFLAKSJFASLFASDJLFLKASFLKAFSJLKALKFSKJASLFLAFSJKLKJAFSLAALKSFKJLSAFLJKFSALJKAFSLJKAFSJKLAFSKJLFSAKJLFASKLJAFSKJLAFSLJKAFSKJLFSKJLFSALJKFSAJKLAFSLJKAFSJKLFSJKKJLAFS";
+            const int numIterations = 50000;
+            HiPerfTimer timer = new HiPerfTimer();
+            timer.Start();
+            for (int i = 0; i < numIterations; i++)
+            {
+                byte[] utf8 = Encoding.UTF8.GetBytes(test);
+            }
+            timer.Stop();
+
+            Console.WriteLine("Total UTF8 per second for " + test.Length + "-character strings: " + ((1 / timer.Duration) * numIterations).ToString());
+
+            timer.Start();
+            for (int i = 0; i < numIterations; i++)
+            {
+                byte[] utf16 = Encoding.Unicode.GetBytes(test);
+            }
+            timer.Stop();
+
+            Console.WriteLine("Total UTF16 per second for " + test.Length + "-character strings: " + ((1 / timer.Duration) * numIterations).ToString());
+        }
+
+
+
         #endregion
 
         /// <summary>
