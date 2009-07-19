@@ -104,12 +104,11 @@ namespace UnitTests
             Assert.That(f9.Obj, Is.EqualTo("acct123"));
         }
 
-        //[Ignore("Serialization is not yet implemented for Message()")]
         [Test]
         public void ToStringTest()
         {
-            string str1 = "8=FIX.4.2\x01" + "9=46\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
-                "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=000\x01";
+            string str1 = "8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
+                "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=123\x01";
             Message msg = new Message();
             msg.FromString(str1);
             StringField f1 = new StringField(8);
@@ -131,13 +130,13 @@ namespace UnitTests
             msg.getField(f9);
             msg.Trailer.getField(f8);
             Assert.That(f1.Obj, Is.EqualTo("FIX.4.2"));
-            Assert.That(f2.Obj, Is.EqualTo("46"));
+            Assert.That(f2.Obj, Is.EqualTo("55"));
             Assert.That(f3.Obj, Is.EqualTo("0"));
             Assert.That(f4.Obj, Is.EqualTo("3"));
             Assert.That(f5.Obj, Is.EqualTo("TW"));
             Assert.That(f6.Obj, Is.EqualTo("20000426-12:05:06"));
             Assert.That(f7.Obj, Is.EqualTo("ISLD"));
-            Assert.That(f8.Obj, Is.EqualTo("000"));
+            Assert.That(f8.Obj, Is.EqualTo("123"));
             Assert.That(f9.Obj, Is.EqualTo("acct123"));
             string raw = msg.ToString();
             Assert.That(raw, Is.EqualTo(str1));
