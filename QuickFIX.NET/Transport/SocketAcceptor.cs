@@ -6,6 +6,8 @@ using QuickFIX.NET.Config;
 using System.Threading;
 using System.Net.Sockets;
 using System.Net;
+using System.Diagnostics;
+using System.IO;
 
 namespace QuickFIX.NET.Transport
 {
@@ -69,7 +71,6 @@ namespace QuickFIX.NET.Transport
             _clientList.Add(c.GetHashCode(), c);
 
             NetworkStream clientStream = c.GetStream();
-
             // Initialize message buffer for new client.
             _currentClientMsg.Add(clientStream.GetHashCode(), String.Empty);
 
@@ -84,15 +85,16 @@ namespace QuickFIX.NET.Transport
                 {
                     bytesRead = clientStream.Read(message, 0, BLOCK_SIZE);
                 }
-                catch // Socket error
+                catch (Exception e) // Socket error
                 {
+                    Debug.WriteLine("SocketAcceptor: client read exception: " + e.ToString());
                     break;
                 }
 
                 if (ClientHasDisconnected(bytesRead))
                     break;
 
-                HandleDataReceived(Encoding.UTF8.GetString(message), clientStream.GetHashCode());
+                HandleDataReceived(Encoding.UTF8.GetString(message, 0, bytesRead), clientStream.GetHashCode());
             }
         }
 
@@ -102,13 +104,16 @@ namespace QuickFIX.NET.Transport
 
             for (int i = 0; i < split.Length; i++)
             {
-                _currentClientMsg[clientHashCode] += split[i];
-                NotifyRawData(_currentClientMsg[clientHashCode]);
+                _currentClientMsg[clientHashCode] += split[i].Trim(trimChars);
+                if (_currentClientMsg[clientHashCode].Length > 0)
+                    NotifyRawData(_currentClientMsg[clientHashCode]);
                 _currentClientMsg[clientHashCode] = String.Empty;
             }
 
-            _currentClientMsg[clientHashCode] = split[split.Length];
+            _currentClientMsg[clientHashCode] = split[split.Length-1];
         }
+
+        private static char[] trimChars = { '\0' };
 
         private bool ClientHasDisconnected(int bytesRead) { return (bytesRead == 0); }
         #endregion
@@ -121,8 +126,26 @@ namespace QuickFIX.NET.Transport
         {
             foreach (TcpClient client in _clientList.Values)
             {
-                client.Close();
+                try
+                {
+                    client.Close();
+                }
+                catch (SocketException ex)
+                {
+                    Debug.WriteLine("Exception while closing socket: " + ex.ToString());
+                }
             }
+
+            _clientList.Clear();
+        }
+
+        /// <summary>
+        /// Closes and stops socket listener.
+        /// </summary>
+        public void Stop()
+        {
+            _listener.Server.Close();
+            _listener.Stop();
         }
 
         /// <summary>
