@@ -9,6 +9,7 @@ using QuickFIX.NET.Config;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using QuickFIX.NET.Applications;
 
 namespace UnitTests
 {
@@ -23,7 +24,7 @@ namespace UnitTests
             listener.Start();
             listener.BeginAcceptSocket(new AsyncCallback(Connected), listener);
 
-            _fixApp = new Application();
+            _fixApp = new FIX4Application();
             _settings = new Settings();
             _settings.SocketConnectHost = "127.0.0.1";
             _settings.SocketConnectPort = 56123;
@@ -33,16 +34,19 @@ namespace UnitTests
 
             Thread.Sleep(100);
             // Server sends initiator a message.
-            _clientSocket.Send(Encoding.UTF8.GetBytes("TESTING123\n"));
+
+            const string testData = "8=FIX.4.2\x01" + "9=46\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
+                "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=000\x01";
+            _clientSocket.Send(Encoding.UTF8.GetBytes(testData + "\n"));
             Thread.Sleep(100);
 
             // Assert that the initiator is connected and receives it.
             Assert.That(_clientSocket.Connected, Is.True);
             Assert.That(i.Connected, Is.True);
-            Assert.That(_lastReceived, Is.EqualTo("TESTING123"));
+            Assert.That(_lastReceived, Is.EqualTo(testData));
             
             // Send message from initiator to server.
-            string testSend = "TESTING456";
+            string testSend = testData;
             i.Send(testSend);
 
             byte[] r = new byte[256];

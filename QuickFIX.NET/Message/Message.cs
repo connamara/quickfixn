@@ -2,18 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using QuickFIX.NET.Fields;
 
 namespace QuickFIX.NET
 {
     public class Message : FieldMap
     {
-        public Message() 
+        public Message()
         {
             Header = new FieldMap();
             Trailer = new FieldMap();
         }
 
-        public void FromString( string msgstr )
+        public void FromString(string msgstr)
         {
             int pos = 0;
             while (pos < msgstr.Length)
@@ -47,7 +48,7 @@ namespace QuickFIX.NET
             return (
                 (_header.CalculateTotal()
                 + CalculateTotal()
-                + _trailer.CalculateTotal()) % 256 );
+                + _trailer.CalculateTotal()) % 256);
         }
 
         /// <summary>
@@ -60,21 +61,21 @@ namespace QuickFIX.NET
             int valbeg = msgstr.IndexOf("\u000135=") + 4;
             if (valbeg.Equals(-1))
                 throw new MessageParseException("no tag 35 found in msg: " + msgstr);
-            int valend = msgstr.IndexOf("\u0001",valbeg);
+            int valend = msgstr.IndexOf("\u0001", valbeg);
             if (valend.Equals(-1))
                 throw new MessageParseException("no SOH after tag 35 in msg: " + msgstr);
 
-            return( new Fields.MsgType( msgstr.Substring(valbeg, (valend-valbeg) )) );
+            return (new Fields.MsgType(msgstr.Substring(valbeg, (valend - valbeg))));
         }
 
         public static Fields.StringField ExtractField(string msgstr, ref int pos)
         {
             try
             {
-                int tagend = msgstr.IndexOf("=",pos);
+                int tagend = msgstr.IndexOf("=", pos);
                 int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
                 pos = tagend + 1;
-                int fieldvalend = msgstr.IndexOf("\u0001",pos);
+                int fieldvalend = msgstr.IndexOf("\u0001", pos);
                 Fields.StringField field =
                     new Fields.StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
                 pos = fieldvalend + 1;
@@ -96,7 +97,7 @@ namespace QuickFIX.NET
 
         public static bool IsHeaderField(int tag)
         {
-            switch(tag)
+            switch (tag)
             {
                 case Fields.Tags.BeginString:
                 case Fields.Tags.BodyLength:
@@ -123,24 +124,38 @@ namespace QuickFIX.NET
                 case Fields.Tags.XmlData:
                 case Fields.Tags.MessageEncoding:
                 case Fields.Tags.LastMsgSeqNumProcessed:
-                // case Fields.Tags.OnBehalfOfSendingTime: TODO 
+                    // case Fields.Tags.OnBehalfOfSendingTime: TODO 
                     return true;
-                default: 
+                default:
                     return false;
             }
         }
 
-        public static bool IsTrailerField( int tag )
+        public static bool IsTrailerField(int tag)
         {
-            switch ( tag )
+            switch (tag)
             {
                 case Fields.Tags.SignatureLength:
                 case Fields.Tags.Signature:
                 case Fields.Tags.CheckSum:
                     return true;
-                default:  
+                default:
                     return false;
             }
+        }
+
+        public override string ToString()
+        {
+            _header.setField(new BodyLength(BodyLength()), true);
+            _trailer.setField(new CheckSum(CheckSum().ToString()), true);
+
+
+            return _header.CalculateString() + CalculateString() + _trailer.CalculateString();
+        }
+
+        private decimal BodyLength()
+        {
+            return _header.CalculateLength() + CalculateLength() + _trailer.CalculateLength();
         }
 
         public const string SOH = "\u0001";

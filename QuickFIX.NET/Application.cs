@@ -5,12 +5,11 @@ using System.Text;
 
 namespace QuickFIX.NET
 {
-    public class Application
+    public abstract class Application
     {
         public Application()
         { }
 
-        public void OnMessage()
-        { }
+        public abstract void OnMessage(Message message);
     }
 }

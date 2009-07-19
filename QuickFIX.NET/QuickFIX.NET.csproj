@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="Applications\FIX4Application.cs" />
+    <Compile Include="Applications\FIX5Application.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\Settings.cs" />
     <Compile Include="DataDictionary\DataDictionary.cs" />

@@ -85,6 +85,7 @@ namespace QuickFIX.NET.Transport
             {
                 _currentMessage += split[i];
                 NotifyRawData(_currentMessage);
+                NotifyApplication(_currentMessage);
                 _currentMessage = String.Empty;
             }
 
@@ -109,6 +110,13 @@ namespace QuickFIX.NET.Transport
         {
             _shutdown = true;
             _socket.Shutdown(SocketShutdown.Both);
+        }
+
+        private void NotifyApplication(string data)
+        {
+            Message msg = new Message();
+            msg.FromString(data);
+            _app.OnMessage(msg);
         }
 
         private void NotifyRawData(string data)

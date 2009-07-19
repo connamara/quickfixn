@@ -54,10 +54,10 @@ namespace QuickFIX.NET
         /// Set field with overwrite flag
         /// </summary>
         /// <param name="field"></param>
-        /// <param name="overwrite">will overwrite wxisting field if set to true</param>
-        public void setField(Fields.IField field, Boolean overwrite)
+        /// <param name="overwrite">will overwrite existing field if set to true</param>
+        public void setField(Fields.IField field, bool overwrite)
         {
-            if (_fields.ContainsKey(field.Tag) && overwrite.Equals(false))
+            if (_fields.ContainsKey(field.Tag) && !overwrite)
                 return;
             else
                 setField(field);
@@ -69,8 +69,8 @@ namespace QuickFIX.NET
                 field.Obj = ((Fields.BooleanField)_fields[field.Tag]).Obj;
             else
                 throw new FieldNotFoundException(field.Tag);
-        } 
-        
+        }
+
         public void getField(Fields.StringField field)
         {
             if (_fields.ContainsKey(field.Tag))
@@ -133,7 +133,7 @@ namespace QuickFIX.NET
 
         public void AddGroup(Group group)
         {
-            if(!_groups.ContainsKey(group.Field))
+            if (!_groups.ContainsKey(group.Field))
                 _groups.Add(group.Field, new List<Group>());
             _groups[group.Field].Add(group);
         }
@@ -154,7 +154,7 @@ namespace QuickFIX.NET
             if (_groups[field].Count < num)
                 throw new FieldNotFoundException(field);
 
-            return _groups[field][num-1];
+            return _groups[field][num - 1];
         }
 
         /// <summary>
@@ -171,11 +171,11 @@ namespace QuickFIX.NET
                 throw new FieldNotFoundException(field);
             if (_groups[field].Count < num)
                 throw new FieldNotFoundException(field);
-            
+
             if (_groups[field].Count.Equals(1))
                 _groups.Remove(field);
             else
-                _groups[field].RemoveAt(num-1);
+                _groups[field].RemoveAt(num - 1);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace QuickFIX.NET
             if (_groups[field].Count < num)
                 throw new FieldNotFoundException(field);
 
-            return _groups[field][num-1] = group;
+            return _groups[field][num - 1] = group;
         }
 
 
@@ -232,9 +232,9 @@ namespace QuickFIX.NET
         {
             int total = 0;
             foreach (Fields.IField field in _fields.Values)
-            {   
-                if( field.Tag != Fields.Tags.CheckSum )
-                  total += field.getTotal();
+            {
+                if (field.Tag != Fields.Tags.CheckSum)
+                    total += field.getTotal();
             }
 
             foreach (List<Group> groupList in _groups.Values)
@@ -243,6 +243,42 @@ namespace QuickFIX.NET
                     total += group.CalculateTotal();
             }
             return total;
+        }
+
+        public int CalculateLength()
+        {
+            int total = 0;
+            foreach (Fields.IField field in _fields.Values)
+            {
+                if (field != null)
+                    total += field.getLength();
+            }
+
+            foreach (List<Group> groupList in _groups.Values)
+            {
+                foreach (Group group in groupList)
+                    total += group.CalculateLength();
+            }
+            return total;
+        }
+
+        public string CalculateString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Fields.IField field in _fields.Values)
+            {
+                sb.Append(field.Tag.ToString() + "=" + field.ToString());
+                sb.Append(Message.SOH);
+            }
+
+            foreach (List<Group> groupList in _groups.Values)
+            {
+                foreach (Group group in groupList)
+                    sb.Append(CalculateString());
+            }
+
+            return sb.ToString();
         }
 
         #region Private Members

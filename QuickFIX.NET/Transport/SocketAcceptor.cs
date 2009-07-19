@@ -106,7 +106,10 @@ namespace QuickFIX.NET.Transport
             {
                 _currentClientMsg[clientHashCode] += split[i].Trim(trimChars);
                 if (_currentClientMsg[clientHashCode].Length > 0)
+                {
                     NotifyRawData(_currentClientMsg[clientHashCode]);
+                    NotifyApplication(_currentClientMsg[clientHashCode]);
+                }
                 _currentClientMsg[clientHashCode] = String.Empty;
             }
 
@@ -156,6 +159,13 @@ namespace QuickFIX.NET.Transport
             throw new NotImplementedException("Graceful shutdowns not yet implemented.");
         }
         #endregion
+
+        private void NotifyApplication(string data)
+        {
+            Message msg = new Message();
+            msg.FromString(data);
+            _app.OnMessage(msg);
+        }
 
         #region Event Helpers
         private void NotifyRawData(string data)

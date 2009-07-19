@@ -10,6 +10,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.IO;
 using System.Diagnostics;
+using QuickFIX.NET.Applications;
 
 namespace UnitTests
 {
@@ -19,7 +20,7 @@ namespace UnitTests
         [Test]
         public void TestAcceptor()
         {
-            Application acceptorApp = new Application();
+            Application acceptorApp = new FIX4Application();
             Settings acceptorSettings = new Settings();
             acceptorSettings.SocketAcceptPort = 54123;
             acceptorSettings.SocketAcceptHost = "127.0.0.1";
@@ -36,7 +37,8 @@ namespace UnitTests
 
             Stream strm = client.GetStream();
 
-            const string testData = "TESTING123";
+            const string testData = "8=FIX.4.2\x01" + "9=46\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
+    "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=000\x01";
 
             ASCIIEncoding asen = new ASCIIEncoding();
             byte[] ba = asen.GetBytes(testData + "\n");

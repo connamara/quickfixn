@@ -62,7 +62,10 @@ namespace QuickFIX.NET.Fields
         /// </summary>
         public override int getLength()
         {
-            return _stringField.Length + 1; // +1 for SOH
+            if (_stringField == null)
+                return 1;
+            else
+                return _stringField.Length + 1; // +1 for SOH
         }
 
         /// <summary>

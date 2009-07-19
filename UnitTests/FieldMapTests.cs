@@ -114,7 +114,6 @@ namespace UnitTests
             fieldmap.setField(field);
             string refield = fieldmap.GetField(200);
             Assert.That("101.0001", Is.EqualTo(refield));
-
         }
 
         [Test]

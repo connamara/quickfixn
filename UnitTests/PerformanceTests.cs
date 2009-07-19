@@ -11,6 +11,7 @@ namespace UnitTests
     /// <summary>
     /// TODO: Move performance-related tests into PerformanceTests project.
     /// </summary>
+    [Ignore("Not running perf tests as part of unit test suite.")]
     [TestFixture]
     public class PerformanceTests
     {
