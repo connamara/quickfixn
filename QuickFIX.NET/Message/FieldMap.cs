@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using QuickFIX.NET.Fields;
 
 namespace QuickFIX.NET
 {
@@ -250,8 +251,13 @@ namespace QuickFIX.NET
             int total = 0;
             foreach (Fields.IField field in _fields.Values)
             {
-                if (field != null)
+                if (field != null
+                    && field.Tag != Tags.BeginString
+                    && field.Tag != Tags.BodyLength
+                    && field.Tag != Tags.CheckSum)
+                {
                     total += field.getLength();
+                }
             }
 
             foreach (List<Group> groupList in _groups.Values)

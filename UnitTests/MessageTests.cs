@@ -139,7 +139,8 @@ namespace UnitTests
             Assert.That(f7.Obj, Is.EqualTo("ISLD"));
             Assert.That(f8.Obj, Is.EqualTo("000"));
             Assert.That(f9.Obj, Is.EqualTo("acct123"));
-            Assert.That(msg.ToString(), Is.EqualTo(str1));
+            string raw = msg.ToString();
+            Assert.That(raw, Is.EqualTo(str1));
         }
 
         [Test]

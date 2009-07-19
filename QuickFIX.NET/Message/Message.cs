@@ -149,7 +149,6 @@ namespace QuickFIX.NET
             _header.setField(new BodyLength(BodyLength()), true);
             _trailer.setField(new CheckSum(CheckSum().ToString()), true);
 
-
             return _header.CalculateString() + CalculateString() + _trailer.CalculateString();
         }
 

@@ -42,7 +42,7 @@ namespace QuickFIX.NET.Fields
         /// </summary>
         public override string toStringField()
         {
-            if( _changed.Equals( true ))
+            if (_changed.Equals(true))
                 makeStringFields();
             return _stringField;
         }
@@ -52,8 +52,8 @@ namespace QuickFIX.NET.Fields
         /// </summary>
         public override string ToString()
         {
-            if( _changed )
-              makeStringFields();
+            if (_changed)
+                makeStringFields();
             return _stringVal;
         }
 
@@ -62,10 +62,10 @@ namespace QuickFIX.NET.Fields
         /// </summary>
         public override int getLength()
         {
-            if (_stringField == null)
-                return 1;
-            else
-                return _stringField.Length + 1; // +1 for SOH
+            if (_changed)
+                makeStringFields();
+
+            return _stringField.Length + 1; // +1 for SOH
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace QuickFIX.NET.Fields
         /// </summary>
         public override int getTotal()
         {
-            if( _changed )
+            if (_changed)
                 makeStringFields();
 
             int sum = 0;
@@ -81,7 +81,7 @@ namespace QuickFIX.NET.Fields
             {
                 sum += (int)c;
             }
-            return( sum + 1 ); // +1 for SOH
+            return (sum + 1); // +1 for SOH
         }
 
         protected abstract string makeString();
