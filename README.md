@@ -14,6 +14,10 @@ To build the project, run:
 
     build.bat
 
+You can also override the default target, configuration, and .NET framework version by giving command line arguments:
+
+    build.bat Rebuild Release v3.5
+
 
 Unit Tests
 ----------
