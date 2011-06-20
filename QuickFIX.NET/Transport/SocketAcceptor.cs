@@ -23,14 +23,15 @@ namespace QuickFIX.NET.Transport
         #endregion
 
         #region Properties
-        public int NumberOfClientsConnected { get { return _clientList.Count; } }
+        public int NumberOfClientsConnected { get { return clientList_.Count; } }
         #endregion
 
         #region Constructors
         public SocketAcceptor(Application app, Settings settings)
         {
-            _app = app;
-            _settings = settings;
+            app_ = app;
+            settings_ = settings;
+            shutdownRequested_ = false;
         }
         #endregion
 
@@ -40,10 +41,10 @@ namespace QuickFIX.NET.Transport
         /// </summary>
         public void Start()
         {
-            IPAddress address = IPAddress.Parse(_settings.SocketAcceptHost);
-            _listener = new TcpListener(address, _settings.SocketAcceptPort);
-            _listenThread = new Thread(new ThreadStart(AcceptorLoop));
-            _listenThread.Start();
+            IPAddress address = IPAddress.Parse(settings_.SocketAcceptHost);
+            listener_ = new TcpListener(address, settings_.SocketAcceptPort);
+            listenThread_ = new Thread(new ThreadStart(AcceptorLoop));
+            listenThread_.Start();
         }
 
         /// <summary>
@@ -51,13 +52,21 @@ namespace QuickFIX.NET.Transport
         /// </summary>
         private void AcceptorLoop()
         {
-            _listener.Start();
-
-            while (true)
+            listener_.Start();
+            shutdownRequested_ = false;
+            while (!shutdownRequested_)
             {
-                TcpClient client = _listener.AcceptTcpClient();
-                Thread clientThread = new Thread(new ParameterizedThreadStart(HandleClient));
-                clientThread.Start(client);
+                try
+                {
+                    TcpClient client = listener_.AcceptTcpClient();
+                    Thread clientThread = new Thread(new ParameterizedThreadStart(HandleClient));
+                    clientThread.Start(client);
+                }
+                catch (SocketException e)
+                {
+                    if(!shutdownRequested_)
+                        System.Console.WriteLine("Error accepting connection: " + e.Message);
+                }
             }
         }
 
@@ -68,11 +77,11 @@ namespace QuickFIX.NET.Transport
         private void HandleClient(object client)
         {
             TcpClient c = (TcpClient)client;
-            _clientList.Add(c.GetHashCode(), c);
+            clientList_.Add(c.GetHashCode(), c);
 
             NetworkStream clientStream = c.GetStream();
             // Initialize message buffer for new client.
-            _currentClientMsg.Add(clientStream.GetHashCode(), String.Empty);
+            currentClientMsg_.Add(clientStream.GetHashCode(), String.Empty);
 
             byte[] message = new byte[BLOCK_SIZE];
             int bytesRead;
@@ -104,16 +113,16 @@ namespace QuickFIX.NET.Transport
 
             for (int i = 0; i < split.Length; i++)
             {
-                _currentClientMsg[clientHashCode] += split[i].Trim(trimChars);
-                if (_currentClientMsg[clientHashCode].Length > 0)
+                currentClientMsg_[clientHashCode] += split[i].Trim(trimChars);
+                if (currentClientMsg_[clientHashCode].Length > 0)
                 {
-                    NotifyRawData(_currentClientMsg[clientHashCode]);
-                    NotifyApplication(_currentClientMsg[clientHashCode]);
+                    NotifyRawData(currentClientMsg_[clientHashCode]);
+                    NotifyApplication(currentClientMsg_[clientHashCode]);
                 }
-                _currentClientMsg[clientHashCode] = String.Empty;
+                currentClientMsg_[clientHashCode] = String.Empty;
             }
 
-            _currentClientMsg[clientHashCode] = split[split.Length-1];
+            currentClientMsg_[clientHashCode] = split[split.Length-1];
         }
 
         private static char[] trimChars = { '\0' };
@@ -127,7 +136,7 @@ namespace QuickFIX.NET.Transport
         /// </summary>
         public void ForceShutdown()
         {
-            foreach (TcpClient client in _clientList.Values)
+            foreach (TcpClient client in clientList_.Values)
             {
                 try
                 {
@@ -139,7 +148,7 @@ namespace QuickFIX.NET.Transport
                 }
             }
 
-            _clientList.Clear();
+            clientList_.Clear();
         }
 
         /// <summary>
@@ -147,8 +156,14 @@ namespace QuickFIX.NET.Transport
         /// </summary>
         public void Stop()
         {
-            _listener.Server.Close();
-            _listener.Stop();
+            if (!listenThread_.IsAlive)
+                return;
+
+            shutdownRequested_ = true;
+            //listenThread_.Interrupt();
+            listener_.Server.Close();
+            listener_.Stop();
+            listenThread_.Join(5000);
         }
 
         /// <summary>
@@ -164,7 +179,7 @@ namespace QuickFIX.NET.Transport
         {
             Message msg = new Message();
             msg.FromString(data);
-            _app.OnMessage(msg);
+            app_.OnMessage(msg);
         }
 
         #region Event Helpers
@@ -176,12 +191,13 @@ namespace QuickFIX.NET.Transport
         #endregion
 
         #region Private Members
-        private Application _app;
-        private Settings _settings;
-        private TcpListener _listener;
-        private Thread _listenThread;
-        private Dictionary<int, TcpClient> _clientList = new Dictionary<int,TcpClient>();
-        private Dictionary<int, string> _currentClientMsg = new Dictionary<int,string>();
+        private Application app_;
+        private Settings settings_;
+        private TcpListener listener_;
+        private Thread listenThread_;
+        private volatile bool shutdownRequested_;
+        private Dictionary<int, TcpClient> clientList_ = new Dictionary<int,TcpClient>();
+        private Dictionary<int, string> currentClientMsg_ = new Dictionary<int,string>();
         #endregion
     }
 }

@@ -17,6 +17,16 @@ namespace UnitTests
     [TestFixture]
     public class SocketAcceptorTests
     {
+        private SocketAcceptor acceptor_ = null;
+        private string lastReceivedData_ = string.Empty;
+
+        [TearDown]
+        public void Dispose()
+        {
+            if (null != acceptor_)
+                acceptor_.Stop();
+        }
+
         [Test]
         public void TestAcceptor()
         {
@@ -24,16 +34,16 @@ namespace UnitTests
             Settings acceptorSettings = new Settings();
             acceptorSettings.SocketAcceptPort = 54123;
             acceptorSettings.SocketAcceptHost = "127.0.0.1";
-            SocketAcceptor acceptor = new SocketAcceptor(acceptorApp, acceptorSettings);
-            acceptor.DataReceivedFromClient += new SocketAcceptor.DataReceivedFromClientHandler(acceptor_DataReceivedFromClient);
-            acceptor.Start();
-            Assert.That(acceptor.NumberOfClientsConnected, Is.EqualTo(0));
+            acceptor_ = new SocketAcceptor(acceptorApp, acceptorSettings);
+            acceptor_.DataReceivedFromClient += new SocketAcceptor.DataReceivedFromClientHandler(acceptor_DataReceivedFromClient);
+            acceptor_.Start();
+            Assert.That(acceptor_.NumberOfClientsConnected, Is.EqualTo(0));
 
             TcpClient client = new TcpClient();
             client.Connect("127.0.0.1", 54123);
             Thread.Sleep(100);
             Assert.That(client.Connected, Is.True);
-            Assert.That(acceptor.NumberOfClientsConnected, Is.EqualTo(1));
+            Assert.That(acceptor_.NumberOfClientsConnected, Is.EqualTo(1));
 
             Stream strm = client.GetStream();
 
@@ -46,18 +56,16 @@ namespace UnitTests
             strm.Write(ba, 0, ba.Length);
             Thread.Sleep(200);
 
-            Assert.That(_lastReceivedData.Length, Is.EqualTo(testData.Length));
-            Assert.That(_lastReceivedData.Substring(0, testData.Length), Is.EqualTo(testData));
-            acceptor.ForceShutdown();
+            Assert.That(lastReceivedData_.Length, Is.EqualTo(testData.Length));
+            Assert.That(lastReceivedData_.Substring(0, testData.Length), Is.EqualTo(testData));
+            acceptor_.ForceShutdown();
             Thread.Sleep(1000);
-            Assert.That(acceptor.NumberOfClientsConnected, Is.EqualTo(0));
+            Assert.That(acceptor_.NumberOfClientsConnected, Is.EqualTo(0));
         }
-
-        private string _lastReceivedData = string.Empty;
 
         void acceptor_DataReceivedFromClient(object sender, string data)
         {
-            _lastReceivedData = data;
+            lastReceivedData_ = data;
         }
     }
 }
