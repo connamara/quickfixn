@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickFIX.NET.Config;
+using QuickFix.Config;
 using System.Threading;
 using System.Net.Sockets;
 using System.Net;
 using System.Diagnostics;
 using System.IO;
 
-namespace QuickFIX.NET.Transport
+namespace QuickFix.Transport
 {
     public class SocketAcceptor
     {

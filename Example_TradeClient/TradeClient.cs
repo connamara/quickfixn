@@ -1,7 +1,7 @@
 ﻿
-namespace QuickFIX.NET.Examples
+namespace QuickFix.Examples
 {
-    public class TradeClient : QuickFIX.NET.Application
+    public class TradeClient : QuickFix.Application
     {
         public override void OnMessage(Message message)
         {
@@ -74,11 +74,11 @@ namespace QuickFIX.NET.Examples
             
             try
             {
-                QuickFIX.NET.SessionSettings settings = new QuickFIX.NET.SessionSettings(file);
+                QuickFix.SessionSettings settings = new QuickFix.SessionSettings(file);
                 TradeClient application = new TradeClient();
-                QuickFIX.NET.MessageStoreFactory storeFactory = new QuickFIX.NET.FileStoreFactory(settings);
-                QuickFIX.NET.LogFactory logFactory = new QuickFIX.NET.ScreenLogFactory(settings);
-                QuickFIX.NET.Transport.SocketInitiator initiator = new QuickFIX.NET.Transport.SocketInitiator(application, storeFactory, settings, logFactory);
+                QuickFix.MessageStoreFactory storeFactory = new QuickFix.FileStoreFactory(settings);
+                QuickFix.LogFactory logFactory = new QuickFix.ScreenLogFactory(settings);
+                QuickFix.Transport.SocketInitiator initiator = new QuickFix.Transport.SocketInitiator(application, storeFactory, settings, logFactory);
                 initiator.Start();
                 application.Run();
                 initiator.Stop();

@@ -64,7 +64,6 @@
     <Compile Include="Exceptions.cs" />
     <Compile Include="Fields\BooleanField.cs" />
     <Compile Include="Fields\CharField.cs" />
-    <Compile Include="Fields\Converters\BadConversionException.cs" />
     <Compile Include="Fields\Converters\BoolConverter.cs" />
     <Compile Include="Fields\Converters\CharConverter.cs" />
     <Compile Include="Fields\Converters\DateTimeConverter.cs" />

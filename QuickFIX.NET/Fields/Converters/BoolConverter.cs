@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QuickFIX.NET.Fields.Converters
+namespace QuickFix.Fields.Converters
 {
     /// <summary>
     /// Converts Boolean to/from string
@@ -32,7 +32,7 @@ namespace QuickFIX.NET.Fields.Converters
             {
                 case "Y": return true;
                 case "N": return false;
-                default: throw new BadConversionException("Cannot convert string to boolean");
+                default: throw new FieldConvertError("Cannot convert string to boolean");
             }
         }
     }

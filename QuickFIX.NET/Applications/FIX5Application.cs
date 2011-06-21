@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-namespace QuickFIX.NET.Applications
+namespace QuickFix.Applications
 {
     public class FIX5Application : Application
     {

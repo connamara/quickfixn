@@ -1,5 +1,5 @@
 ﻿
-namespace QuickFIX.NET
+namespace QuickFix
 {
     public class FileStoreFactory : MessageStoreFactory
     {

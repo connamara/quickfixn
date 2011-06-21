@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QuickFIX.NET.Fields.Converters
+namespace QuickFix.Fields.Converters
 {
     /// <summary>
     /// Convert DateTime to/from String
@@ -22,7 +22,7 @@ namespace QuickFIX.NET.Fields.Converters
             }
             catch (FormatException e)
             {
-                throw new BadConversionException("could not convert string to DateTime, str=" + str, e);
+                throw new FieldConvertError("could not convert string to DateTime, str=" + str, e);
             }
 
         }
