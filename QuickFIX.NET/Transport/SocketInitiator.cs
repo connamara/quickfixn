@@ -30,10 +30,27 @@ namespace QuickFIX.NET.Transport
             _socket.ReceiveTimeout = 5000;
         }
 
+        public SocketInitiator(Application application, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void Start()
         {
-            Thread t = new Thread(new ThreadStart(ClientLoop));
-            t.Start();
+            if ((clientThread_ != null) && clientThread_.IsAlive)
+                return;
+
+            disconnectRequested_ = false;
+            shutdownRequested_ = false;
+            clientThread_ = new Thread(new ThreadStart(ClientLoop));
+            clientThread_.Start();
+        }
+
+        public void Stop()
+        {
+            shutdownRequested_ = true;
+            Close();
+            clientThread_.Join(5000);
         }
 
         /// <summary>
@@ -41,35 +58,34 @@ namespace QuickFIX.NET.Transport
         /// </summary>
         private void ClientLoop()
         {
-            while (true)
+            while (!shutdownRequested_)
             {
                 try
                 {
                     _socket.Connect(_settings.SocketConnectHost, _settings.SocketConnectPort);
                 }
-                catch (SocketException ex)
+                catch (SocketException e)
                 {
-                    Console.WriteLine(ex.ToString());
-                    Thread.Sleep(_settings.ReconnectInterval);
+                    Console.WriteLine("Error connecting to socket: " + e.Message);
+                    Thread.Sleep(_settings.ReconnectInterval * 1000);
                     continue;
                 }
 
-                while (true)
+                while(!disconnectRequested_)
                 {
-                    if (_shutdown) break;
-
                     try
                     {
                         int bytesReceived = _socket.Receive(_readBuffer);
                         HandleMessage(Encoding.UTF8.GetString(_readBuffer, 0, bytesReceived));
                     }
-                    catch (SocketException iex)
+                    catch (SocketException e)
                     {
-                        Console.WriteLine(iex.ToString());
+                        if(!disconnectRequested_)
+                            Console.WriteLine("Error reading socket: " + e.Message);
                     }
                 }
 
-                if (_shutdown) break;
+                disconnectRequested_ = false;
             }
         }
 
@@ -108,7 +124,7 @@ namespace QuickFIX.NET.Transport
         /// </summary>
         public void Close()
         {
-            _shutdown = true;
+            disconnectRequested_ = true;
             _socket.Shutdown(SocketShutdown.Both);
         }
 
@@ -126,12 +142,14 @@ namespace QuickFIX.NET.Transport
         }
 
         #region Private Members
+        private Thread clientThread_;
         private Socket _socket;
         private Application _app;
         private Settings _settings;
         private byte[] _readBuffer = new byte[512];
         private string _currentMessage;
-        private bool _shutdown = false;
+        private volatile bool disconnectRequested_ = false;
+        private volatile bool shutdownRequested_ = false;
         #endregion
     }
 }

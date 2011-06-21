@@ -48,6 +48,9 @@
     <Compile Include="Application.cs" />
     <Compile Include="Applications\FIX4Application.cs" />
     <Compile Include="Applications\FIX5Application.cs" />
+    <Compile Include="FileStoreFactory.cs" />
+    <Compile Include="LogFactory.cs" />
+    <Compile Include="MessageStoreFactory.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\Settings.cs" />
     <Compile Include="DataDictionary\DataDictionary.cs" />
@@ -57,6 +60,8 @@
     <Compile Include="DataDictionary\InvalidMessageTypeException.cs" />
     <Compile Include="DataDictionary\MissingRequiredFieldException.cs" />
     <Compile Include="DataDictionary\XMLMsgComponent.cs" />
+    <Compile Include="Dictionary.cs" />
+    <Compile Include="Exceptions.cs" />
     <Compile Include="Fields\BooleanField.cs" />
     <Compile Include="Fields\CharField.cs" />
     <Compile Include="Fields\Converters\BadConversionException.cs" />
@@ -79,9 +84,11 @@
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageParseException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScreenLogFactory.cs" />
     <Compile Include="Session.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SessionSettings.cs" />
     <Compile Include="StringUTF8.cs" />
     <Compile Include="Transport\SocketAcceptor.cs" />
     <Compile Include="Transport\SocketInitiator.cs" />
