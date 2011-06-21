@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace QuickFIX.NET
+namespace QuickFix
 {
     public class MessageParseException : ApplicationException
     {

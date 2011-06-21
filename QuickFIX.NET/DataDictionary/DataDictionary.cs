@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace QuickFIX.NET
+namespace QuickFix
 {
     public sealed partial class DataDictionaryParser
     {
@@ -338,10 +338,10 @@ namespace QuickFIX.NET
                 _fieldNameToTag.Add(name, tag);
                 _fieldNames.Add(tag, name);
             }
-            catch (Fields.Converters.BadConversionException ex)
+            catch(FieldConvertError e)
             {
                 throw new DictionaryParseException("could not parse field. name=<" 
-                    + name + "> type=<" + typestr + "> tag=<" + tagstr + ">", ex );
+                    + name + "> type=<" + typestr + "> tag=<" + tagstr + ">", e );
             }
         }
 

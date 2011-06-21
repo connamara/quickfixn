@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace QuickFIX.NET.Config
+namespace QuickFix.Config
 {
     /// <summary>
     /// Config file parser/reader.

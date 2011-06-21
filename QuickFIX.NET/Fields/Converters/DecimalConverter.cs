@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QuickFIX.NET.Fields.Converters
+namespace QuickFix.Fields.Converters
 {
     /// <summary>
     /// convert Decimal to/from string
@@ -22,17 +22,17 @@ namespace QuickFIX.NET.Fields.Converters
             }
             catch (System.OverflowException e)
             {
-                throw new BadConversionException(
+                throw new FieldConvertError(
                     "could not convert string to decimal, str=" + stringVal, e);
             }
             catch (System.FormatException e)
             {
-                throw new BadConversionException(
+                throw new FieldConvertError(
                     "could not convert string to decimal, str=" + stringVal, e);
             }
             catch (System.ArgumentNullException e)
             {
-                throw new BadConversionException(
+                throw new FieldConvertError(
                     "could not convert string to decimal, str=" + stringVal, e);
             }
         }

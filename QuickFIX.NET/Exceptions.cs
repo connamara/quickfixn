@@ -1,30 +1,42 @@
 ﻿
-namespace QuickFIX.NET
+namespace QuickFix
 {
-    class QuickFIXException : System.Exception
+    public class QuickFIXException : System.Exception
     {
         public QuickFIXException(string msg)
             : base(msg)
+        { }
+
+        public QuickFIXException(string msg, System.Exception innerException)
+            : base(msg, innerException)
         { }
     }
 
     /// <summary>
     /// Application is not configured correctly
     /// </summary>
-    class ConfigError : QuickFIXException
+    public class ConfigError : QuickFIXException
     {
         public ConfigError(string msg)
             : base("Configuration failed: " + msg)
+        { }
+
+        public ConfigError(string msg, System.Exception innerException)
+            : base("Configuration failed: " + msg, innerException)
         { }
     }
 
     /// <summary>
     /// Unable to convert field into its native format
     /// </summary>
-    class FieldConvertError : QuickFIXException
+    public class FieldConvertError : QuickFIXException
     {
         public FieldConvertError(string msg)
             : base("Could not convert field: " + msg)
+        { }
+
+        public FieldConvertError(string msg, System.Exception innerException)
+            : base("Could not convert field: " + msg, innerException)
         { }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace QuickFIX.NET.Fields
+namespace QuickFix.Fields
 {
     /// <summary>
     /// FIX Field Tag Values

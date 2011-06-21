@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
-using QuickFIX.NET;
+using QuickFix;
 
 namespace UnitTests
 {
@@ -11,7 +11,7 @@ namespace UnitTests
         [Test]
         public void FieldEntryTest()
         {
-            QuickFIX.NET.DataDictionaryParser dd = new QuickFIX.NET.DataDictionaryParser();
+            QuickFix.DataDictionaryParser dd = new QuickFix.DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             Assert.That(dd.MajorVersion, Is.EqualTo("4"));
             Assert.That(dd.MinorVersion, Is.EqualTo("4"));
@@ -24,7 +24,7 @@ namespace UnitTests
             DataDictionaryParser dd = new DataDictionaryParser();
             dd.Load("../../../spec/fix/FIX44.xml");
             Type ft = dd.GetFieldType(1);
-            QuickFIX.NET.Fields.StringField field = (QuickFIX.NET.Fields.StringField)Activator.CreateInstance(dd.GetFieldType(1),1);
+            QuickFix.Fields.StringField field = (QuickFix.Fields.StringField)Activator.CreateInstance(dd.GetFieldType(1),1);
             field.Tag = 1;
             field.Obj = "2";
             Assert.That(field.Tag, Is.EqualTo(1));
