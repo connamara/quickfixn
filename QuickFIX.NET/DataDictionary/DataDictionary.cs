@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using System.Text;
 
-namespace QuickFIX.NET
+namespace QuickFix
 {
     public sealed partial class DataDictionaryParser
     {

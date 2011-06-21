@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QuickFIX.NET.Fields.Converters
+namespace QuickFix.Fields.Converters
 {
     /// <summary>
     ///  convert Int64 to/from string

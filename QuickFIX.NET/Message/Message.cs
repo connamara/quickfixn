@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using QuickFIX.NET.Fields;
+using QuickFix.Fields;
 
-namespace QuickFIX.NET
+namespace QuickFix
 {
     public class Message : FieldMap
     {
