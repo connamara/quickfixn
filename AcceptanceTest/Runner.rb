@@ -16,6 +16,8 @@
 # not clear to you.
 #****************************************************************************
 
+$LOAD_PATH << File.dirname(__FILE__)
+
 require 'ReflectorClient'
 require 'Comparator'
 
