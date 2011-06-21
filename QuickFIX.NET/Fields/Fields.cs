@@ -14,7 +14,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AdvId Field
     /// </summary>/
     public sealed class AdvId : StringField
@@ -26,7 +26,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AdvRefID Field
     /// </summary>/
     public sealed class AdvRefID : StringField
@@ -38,7 +38,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AdvSide Field
     /// </summary>/
     public sealed class AdvSide : CharField
@@ -50,7 +50,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AdvTransType Field
     /// </summary>/
     public sealed class AdvTransType : StringField
@@ -62,7 +62,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AvgPx Field
     /// </summary>/
     public sealed class AvgPx : DecimalField
@@ -74,7 +74,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BeginSeqNo Field
     /// </summary>/
     public sealed class BeginSeqNo : IntField
@@ -86,7 +86,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BeginString Field
     /// </summary>/
     public sealed class BeginString : StringField
@@ -98,7 +98,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BodyLength Field
     /// </summary>/
     public sealed class BodyLength : DecimalField
@@ -110,7 +110,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CheckSum Field
     /// </summary>/
     public sealed class CheckSum : StringField
@@ -122,7 +122,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ClOrdID Field
     /// </summary>/
     public sealed class ClOrdID : StringField
@@ -134,7 +134,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Commission Field
     /// </summary>/
     public sealed class Commission : DecimalField
@@ -146,7 +146,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CommType Field
     /// </summary>/
     public sealed class CommType : CharField
@@ -158,7 +158,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CumQty Field
     /// </summary>/
     public sealed class CumQty : DecimalField
@@ -170,7 +170,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Currency Field
     /// </summary>/
     public sealed class Currency : DecimalField
@@ -182,7 +182,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EndSeqNo Field
     /// </summary>/
     public sealed class EndSeqNo : IntField
@@ -194,7 +194,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecID Field
     /// </summary>/
     public sealed class ExecID : StringField
@@ -206,7 +206,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecInst Field
     /// </summary>/
     public sealed class ExecInst : StringField
@@ -218,7 +218,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecRefID Field
     /// </summary>/
     public sealed class ExecRefID : StringField
@@ -230,7 +230,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecTransType Field
     /// </summary>/
     public sealed class ExecTransType : CharField
@@ -242,7 +242,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// HandlInst Field
     /// </summary>/
     public sealed class HandlInst : CharField
@@ -254,7 +254,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityIDSource Field
     /// </summary>/
     public sealed class SecurityIDSource : StringField
@@ -266,7 +266,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IOIID Field
     /// </summary>/
     public sealed class IOIID : StringField
@@ -278,7 +278,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IOIOthSvc Field
     /// </summary>/
     public sealed class IOIOthSvc : CharField
@@ -290,7 +290,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IOIQltyInd Field
     /// </summary>/
     public sealed class IOIQltyInd : CharField
@@ -302,7 +302,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IOIRefID Field
     /// </summary>/
     public sealed class IOIRefID : StringField
@@ -314,7 +314,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IOIQty Field
     /// </summary>/
     public sealed class IOIQty : StringField
@@ -326,7 +326,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IOITransType Field
     /// </summary>/
     public sealed class IOITransType : CharField
@@ -338,7 +338,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastCapacity Field
     /// </summary>/
     public sealed class LastCapacity : CharField
@@ -350,7 +350,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastMkt Field
     /// </summary>/
     public sealed class LastMkt : StringField
@@ -362,7 +362,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastPx Field
     /// </summary>/
     public sealed class LastPx : DecimalField
@@ -374,7 +374,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastQty Field
     /// </summary>/
     public sealed class LastQty : DecimalField
@@ -386,7 +386,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoLinesOfText Field
     /// </summary>/
     public sealed class NoLinesOfText : IntField
@@ -398,7 +398,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MsgSeqNum Field
     /// </summary>/
     public sealed class MsgSeqNum : IntField
@@ -410,7 +410,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MsgType Field
     /// </summary>/
     public sealed class MsgType : StringField
@@ -422,7 +422,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NewSeqNo Field
     /// </summary>/
     public sealed class NewSeqNo : IntField
@@ -434,7 +434,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderID Field
     /// </summary>/
     public sealed class OrderID : StringField
@@ -446,7 +446,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderQty Field
     /// </summary>/
     public sealed class OrderQty : DecimalField
@@ -458,7 +458,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrdStatus Field
     /// </summary>/
     public sealed class OrdStatus : CharField
@@ -470,7 +470,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrdType Field
     /// </summary>/
     public sealed class OrdType : CharField
@@ -482,7 +482,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrigClOrdID Field
     /// </summary>/
     public sealed class OrigClOrdID : StringField
@@ -494,7 +494,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrigTime Field
     /// </summary>/
     public sealed class OrigTime : DateTimeField
@@ -506,7 +506,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PossDupFlag Field
     /// </summary>/
     public sealed class PossDupFlag : BooleanField
@@ -518,7 +518,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Price Field
     /// </summary>/
     public sealed class Price : DecimalField
@@ -530,7 +530,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefSeqNum Field
     /// </summary>/
     public sealed class RefSeqNum : IntField
@@ -542,7 +542,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RelatdSym Field
     /// </summary>/
     public sealed class RelatdSym : StringField
@@ -554,7 +554,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Rule80A Field
     /// </summary>/
     public sealed class Rule80A : CharField
@@ -566,7 +566,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityID Field
     /// </summary>/
     public sealed class SecurityID : StringField
@@ -578,7 +578,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SenderCompID Field
     /// </summary>/
     public sealed class SenderCompID : StringField
@@ -590,7 +590,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SenderSubID Field
     /// </summary>/
     public sealed class SenderSubID : StringField
@@ -602,7 +602,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SendingDate Field
     /// </summary>/
     public sealed class SendingDate : StringField
@@ -614,7 +614,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SendingTime Field
     /// </summary>/
     public sealed class SendingTime : DateTimeField
@@ -626,7 +626,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Quantity Field
     /// </summary>/
     public sealed class Quantity : DecimalField
@@ -638,7 +638,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Side Field
     /// </summary>/
     public sealed class Side : CharField
@@ -650,7 +650,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Symbol Field
     /// </summary>/
     public sealed class Symbol : StringField
@@ -662,7 +662,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TargetCompID Field
     /// </summary>/
     public sealed class TargetCompID : StringField
@@ -674,7 +674,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TargetSubID Field
     /// </summary>/
     public sealed class TargetSubID : StringField
@@ -686,7 +686,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Text Field
     /// </summary>/
     public sealed class Text : StringField
@@ -698,7 +698,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TimeInForce Field
     /// </summary>/
     public sealed class TimeInForce : CharField
@@ -710,7 +710,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TransactTime Field
     /// </summary>/
     public sealed class TransactTime : DateTimeField
@@ -722,7 +722,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Urgency Field
     /// </summary>/
     public sealed class Urgency : CharField
@@ -734,7 +734,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ValidUntilTime Field
     /// </summary>/
     public sealed class ValidUntilTime : DateTimeField
@@ -746,7 +746,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlType Field
     /// </summary>/
     public sealed class SettlType : StringField
@@ -758,7 +758,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlDate Field
     /// </summary>/
     public sealed class SettlDate : StringField
@@ -770,7 +770,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SymbolSfx Field
     /// </summary>/
     public sealed class SymbolSfx : StringField
@@ -782,7 +782,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ListID Field
     /// </summary>/
     public sealed class ListID : StringField
@@ -794,7 +794,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ListSeqNo Field
     /// </summary>/
     public sealed class ListSeqNo : IntField
@@ -806,7 +806,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotNoOrders Field
     /// </summary>/
     public sealed class TotNoOrders : IntField
@@ -818,7 +818,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ListExecInst Field
     /// </summary>/
     public sealed class ListExecInst : StringField
@@ -830,7 +830,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocID Field
     /// </summary>/
     public sealed class AllocID : StringField
@@ -842,7 +842,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocTransType Field
     /// </summary>/
     public sealed class AllocTransType : CharField
@@ -854,7 +854,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefAllocID Field
     /// </summary>/
     public sealed class RefAllocID : StringField
@@ -866,7 +866,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoOrders Field
     /// </summary>/
     public sealed class NoOrders : IntField
@@ -878,7 +878,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AvgPxPrecision Field
     /// </summary>/
     public sealed class AvgPxPrecision : IntField
@@ -890,7 +890,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeDate Field
     /// </summary>/
     public sealed class TradeDate : StringField
@@ -902,7 +902,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecBroker Field
     /// </summary>/
     public sealed class ExecBroker : StringField
@@ -914,7 +914,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PositionEffect Field
     /// </summary>/
     public sealed class PositionEffect : CharField
@@ -926,7 +926,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoAllocs Field
     /// </summary>/
     public sealed class NoAllocs : IntField
@@ -938,7 +938,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocAccount Field
     /// </summary>/
     public sealed class AllocAccount : StringField
@@ -950,7 +950,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocQty Field
     /// </summary>/
     public sealed class AllocQty : DecimalField
@@ -962,7 +962,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ProcessCode Field
     /// </summary>/
     public sealed class ProcessCode : CharField
@@ -974,7 +974,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoRpts Field
     /// </summary>/
     public sealed class NoRpts : IntField
@@ -986,7 +986,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RptSeq Field
     /// </summary>/
     public sealed class RptSeq : IntField
@@ -998,7 +998,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CxlQty Field
     /// </summary>/
     public sealed class CxlQty : DecimalField
@@ -1010,7 +1010,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoDlvyInst Field
     /// </summary>/
     public sealed class NoDlvyInst : IntField
@@ -1022,7 +1022,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DlvyInst Field
     /// </summary>/
     public sealed class DlvyInst : StringField
@@ -1034,7 +1034,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocStatus Field
     /// </summary>/
     public sealed class AllocStatus : IntField
@@ -1046,7 +1046,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocRejCode Field
     /// </summary>/
     public sealed class AllocRejCode : IntField
@@ -1058,7 +1058,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Signature Field
     /// </summary>/
     public sealed class Signature : StringField
@@ -1070,7 +1070,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecureDataLen Field
     /// </summary>/
     public sealed class SecureDataLen : DecimalField
@@ -1082,7 +1082,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecureData Field
     /// </summary>/
     public sealed class SecureData : StringField
@@ -1094,7 +1094,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BrokerOfCredit Field
     /// </summary>/
     public sealed class BrokerOfCredit : StringField
@@ -1106,7 +1106,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SignatureLength Field
     /// </summary>/
     public sealed class SignatureLength : DecimalField
@@ -1118,7 +1118,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EmailType Field
     /// </summary>/
     public sealed class EmailType : CharField
@@ -1130,7 +1130,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RawDataLength Field
     /// </summary>/
     public sealed class RawDataLength : DecimalField
@@ -1142,7 +1142,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RawData Field
     /// </summary>/
     public sealed class RawData : StringField
@@ -1154,7 +1154,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PossResend Field
     /// </summary>/
     public sealed class PossResend : BooleanField
@@ -1166,7 +1166,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncryptMethod Field
     /// </summary>/
     public sealed class EncryptMethod : IntField
@@ -1178,7 +1178,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StopPx Field
     /// </summary>/
     public sealed class StopPx : DecimalField
@@ -1190,7 +1190,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExDestination Field
     /// </summary>/
     public sealed class ExDestination : StringField
@@ -1202,7 +1202,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CxlRejReason Field
     /// </summary>/
     public sealed class CxlRejReason : IntField
@@ -1214,7 +1214,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrdRejReason Field
     /// </summary>/
     public sealed class OrdRejReason : IntField
@@ -1226,7 +1226,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IOIQualifier Field
     /// </summary>/
     public sealed class IOIQualifier : CharField
@@ -1238,7 +1238,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// WaveNo Field
     /// </summary>/
     public sealed class WaveNo : StringField
@@ -1250,7 +1250,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Issuer Field
     /// </summary>/
     public sealed class Issuer : StringField
@@ -1262,7 +1262,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityDesc Field
     /// </summary>/
     public sealed class SecurityDesc : StringField
@@ -1274,7 +1274,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// HeartBtInt Field
     /// </summary>/
     public sealed class HeartBtInt : IntField
@@ -1286,7 +1286,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ClientID Field
     /// </summary>/
     public sealed class ClientID : StringField
@@ -1298,7 +1298,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MinQty Field
     /// </summary>/
     public sealed class MinQty : DecimalField
@@ -1310,7 +1310,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MaxFloor Field
     /// </summary>/
     public sealed class MaxFloor : DecimalField
@@ -1322,7 +1322,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TestReqID Field
     /// </summary>/
     public sealed class TestReqID : StringField
@@ -1334,7 +1334,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ReportToExch Field
     /// </summary>/
     public sealed class ReportToExch : BooleanField
@@ -1346,7 +1346,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LocateReqd Field
     /// </summary>/
     public sealed class LocateReqd : BooleanField
@@ -1358,7 +1358,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OnBehalfOfCompID Field
     /// </summary>/
     public sealed class OnBehalfOfCompID : StringField
@@ -1370,7 +1370,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OnBehalfOfSubID Field
     /// </summary>/
     public sealed class OnBehalfOfSubID : StringField
@@ -1382,7 +1382,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteID Field
     /// </summary>/
     public sealed class QuoteID : StringField
@@ -1394,7 +1394,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NetMoney Field
     /// </summary>/
     public sealed class NetMoney : DecimalField
@@ -1406,7 +1406,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlCurrAmt Field
     /// </summary>/
     public sealed class SettlCurrAmt : DecimalField
@@ -1418,7 +1418,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlCurrency Field
     /// </summary>/
     public sealed class SettlCurrency : DecimalField
@@ -1430,7 +1430,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ForexReq Field
     /// </summary>/
     public sealed class ForexReq : BooleanField
@@ -1442,7 +1442,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrigSendingTime Field
     /// </summary>/
     public sealed class OrigSendingTime : DateTimeField
@@ -1454,7 +1454,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// GapFillFlag Field
     /// </summary>/
     public sealed class GapFillFlag : BooleanField
@@ -1466,7 +1466,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoExecs Field
     /// </summary>/
     public sealed class NoExecs : IntField
@@ -1478,7 +1478,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CxlType Field
     /// </summary>/
     public sealed class CxlType : CharField
@@ -1490,7 +1490,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExpireTime Field
     /// </summary>/
     public sealed class ExpireTime : DateTimeField
@@ -1502,7 +1502,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DKReason Field
     /// </summary>/
     public sealed class DKReason : CharField
@@ -1514,7 +1514,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeliverToCompID Field
     /// </summary>/
     public sealed class DeliverToCompID : StringField
@@ -1526,7 +1526,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeliverToSubID Field
     /// </summary>/
     public sealed class DeliverToSubID : StringField
@@ -1538,7 +1538,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IOINaturalFlag Field
     /// </summary>/
     public sealed class IOINaturalFlag : BooleanField
@@ -1550,7 +1550,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteReqID Field
     /// </summary>/
     public sealed class QuoteReqID : StringField
@@ -1562,7 +1562,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidPx Field
     /// </summary>/
     public sealed class BidPx : DecimalField
@@ -1574,7 +1574,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OfferPx Field
     /// </summary>/
     public sealed class OfferPx : DecimalField
@@ -1586,7 +1586,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidSize Field
     /// </summary>/
     public sealed class BidSize : DecimalField
@@ -1598,7 +1598,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OfferSize Field
     /// </summary>/
     public sealed class OfferSize : DecimalField
@@ -1610,7 +1610,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoMiscFees Field
     /// </summary>/
     public sealed class NoMiscFees : IntField
@@ -1622,7 +1622,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MiscFeeAmt Field
     /// </summary>/
     public sealed class MiscFeeAmt : DecimalField
@@ -1634,7 +1634,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MiscFeeCurr Field
     /// </summary>/
     public sealed class MiscFeeCurr : DecimalField
@@ -1646,7 +1646,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MiscFeeType Field
     /// </summary>/
     public sealed class MiscFeeType : StringField
@@ -1658,7 +1658,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PrevClosePx Field
     /// </summary>/
     public sealed class PrevClosePx : DecimalField
@@ -1670,7 +1670,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ResetSeqNumFlag Field
     /// </summary>/
     public sealed class ResetSeqNumFlag : BooleanField
@@ -1682,7 +1682,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SenderLocationID Field
     /// </summary>/
     public sealed class SenderLocationID : StringField
@@ -1694,7 +1694,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TargetLocationID Field
     /// </summary>/
     public sealed class TargetLocationID : StringField
@@ -1706,7 +1706,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OnBehalfOfLocationID Field
     /// </summary>/
     public sealed class OnBehalfOfLocationID : StringField
@@ -1718,7 +1718,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeliverToLocationID Field
     /// </summary>/
     public sealed class DeliverToLocationID : StringField
@@ -1730,7 +1730,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoRelatedSym Field
     /// </summary>/
     public sealed class NoRelatedSym : IntField
@@ -1742,7 +1742,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Subject Field
     /// </summary>/
     public sealed class Subject : StringField
@@ -1754,7 +1754,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Headline Field
     /// </summary>/
     public sealed class Headline : StringField
@@ -1766,7 +1766,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// URLLink Field
     /// </summary>/
     public sealed class URLLink : StringField
@@ -1778,7 +1778,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecType Field
     /// </summary>/
     public sealed class ExecType : CharField
@@ -1790,7 +1790,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LeavesQty Field
     /// </summary>/
     public sealed class LeavesQty : DecimalField
@@ -1802,7 +1802,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashOrderQty Field
     /// </summary>/
     public sealed class CashOrderQty : DecimalField
@@ -1814,7 +1814,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocAvgPx Field
     /// </summary>/
     public sealed class AllocAvgPx : DecimalField
@@ -1826,7 +1826,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocNetMoney Field
     /// </summary>/
     public sealed class AllocNetMoney : DecimalField
@@ -1838,7 +1838,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlCurrFxRate Field
     /// </summary>/
     public sealed class SettlCurrFxRate : DecimalField
@@ -1850,7 +1850,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlCurrFxRateCalc Field
     /// </summary>/
     public sealed class SettlCurrFxRateCalc : CharField
@@ -1862,7 +1862,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NumDaysInterest Field
     /// </summary>/
     public sealed class NumDaysInterest : IntField
@@ -1874,7 +1874,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AccruedInterestRate Field
     /// </summary>/
     public sealed class AccruedInterestRate : DecimalField
@@ -1886,7 +1886,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AccruedInterestAmt Field
     /// </summary>/
     public sealed class AccruedInterestAmt : DecimalField
@@ -1898,7 +1898,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlInstMode Field
     /// </summary>/
     public sealed class SettlInstMode : CharField
@@ -1910,7 +1910,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocText Field
     /// </summary>/
     public sealed class AllocText : StringField
@@ -1922,7 +1922,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlInstID Field
     /// </summary>/
     public sealed class SettlInstID : StringField
@@ -1934,7 +1934,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlInstTransType Field
     /// </summary>/
     public sealed class SettlInstTransType : CharField
@@ -1946,7 +1946,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EmailThreadID Field
     /// </summary>/
     public sealed class EmailThreadID : StringField
@@ -1958,7 +1958,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlInstSource Field
     /// </summary>/
     public sealed class SettlInstSource : CharField
@@ -1970,7 +1970,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlLocation Field
     /// </summary>/
     public sealed class SettlLocation : StringField
@@ -1982,7 +1982,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityType Field
     /// </summary>/
     public sealed class SecurityType : StringField
@@ -1994,7 +1994,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EffectiveTime Field
     /// </summary>/
     public sealed class EffectiveTime : DateTimeField
@@ -2006,7 +2006,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StandInstDbType Field
     /// </summary>/
     public sealed class StandInstDbType : IntField
@@ -2018,7 +2018,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StandInstDbName Field
     /// </summary>/
     public sealed class StandInstDbName : StringField
@@ -2030,7 +2030,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StandInstDbID Field
     /// </summary>/
     public sealed class StandInstDbID : StringField
@@ -2042,7 +2042,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlDeliveryType Field
     /// </summary>/
     public sealed class SettlDeliveryType : IntField
@@ -2054,7 +2054,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlDepositoryCode Field
     /// </summary>/
     public sealed class SettlDepositoryCode : StringField
@@ -2066,7 +2066,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlBrkrCode Field
     /// </summary>/
     public sealed class SettlBrkrCode : StringField
@@ -2078,7 +2078,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlInstCode Field
     /// </summary>/
     public sealed class SettlInstCode : StringField
@@ -2090,7 +2090,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecuritySettlAgentName Field
     /// </summary>/
     public sealed class SecuritySettlAgentName : StringField
@@ -2102,7 +2102,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecuritySettlAgentCode Field
     /// </summary>/
     public sealed class SecuritySettlAgentCode : StringField
@@ -2114,7 +2114,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecuritySettlAgentAcctNum Field
     /// </summary>/
     public sealed class SecuritySettlAgentAcctNum : StringField
@@ -2126,7 +2126,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecuritySettlAgentAcctName Field
     /// </summary>/
     public sealed class SecuritySettlAgentAcctName : StringField
@@ -2138,7 +2138,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecuritySettlAgentContactName Field
     /// </summary>/
     public sealed class SecuritySettlAgentContactName : StringField
@@ -2150,7 +2150,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecuritySettlAgentContactPhone Field
     /// </summary>/
     public sealed class SecuritySettlAgentContactPhone : StringField
@@ -2162,7 +2162,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashSettlAgentName Field
     /// </summary>/
     public sealed class CashSettlAgentName : StringField
@@ -2174,7 +2174,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashSettlAgentCode Field
     /// </summary>/
     public sealed class CashSettlAgentCode : StringField
@@ -2186,7 +2186,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashSettlAgentAcctNum Field
     /// </summary>/
     public sealed class CashSettlAgentAcctNum : StringField
@@ -2198,7 +2198,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashSettlAgentAcctName Field
     /// </summary>/
     public sealed class CashSettlAgentAcctName : StringField
@@ -2210,7 +2210,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashSettlAgentContactName Field
     /// </summary>/
     public sealed class CashSettlAgentContactName : StringField
@@ -2222,7 +2222,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashSettlAgentContactPhone Field
     /// </summary>/
     public sealed class CashSettlAgentContactPhone : StringField
@@ -2234,7 +2234,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidSpotRate Field
     /// </summary>/
     public sealed class BidSpotRate : DecimalField
@@ -2246,7 +2246,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidForwardPoints Field
     /// </summary>/
     public sealed class BidForwardPoints : DecimalField
@@ -2258,7 +2258,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OfferSpotRate Field
     /// </summary>/
     public sealed class OfferSpotRate : DecimalField
@@ -2270,7 +2270,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OfferForwardPoints Field
     /// </summary>/
     public sealed class OfferForwardPoints : DecimalField
@@ -2282,7 +2282,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderQty2 Field
     /// </summary>/
     public sealed class OrderQty2 : DecimalField
@@ -2294,7 +2294,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlDate2 Field
     /// </summary>/
     public sealed class SettlDate2 : StringField
@@ -2306,7 +2306,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastSpotRate Field
     /// </summary>/
     public sealed class LastSpotRate : DecimalField
@@ -2318,7 +2318,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastForwardPoints Field
     /// </summary>/
     public sealed class LastForwardPoints : DecimalField
@@ -2330,7 +2330,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocLinkID Field
     /// </summary>/
     public sealed class AllocLinkID : StringField
@@ -2342,7 +2342,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocLinkType Field
     /// </summary>/
     public sealed class AllocLinkType : IntField
@@ -2354,7 +2354,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryOrderID Field
     /// </summary>/
     public sealed class SecondaryOrderID : StringField
@@ -2366,7 +2366,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoIOIQualifiers Field
     /// </summary>/
     public sealed class NoIOIQualifiers : IntField
@@ -2378,7 +2378,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MaturityMonthYear Field
     /// </summary>/
     public sealed class MaturityMonthYear : StringField
@@ -2390,7 +2390,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PutOrCall Field
     /// </summary>/
     public sealed class PutOrCall : IntField
@@ -2402,7 +2402,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StrikePrice Field
     /// </summary>/
     public sealed class StrikePrice : DecimalField
@@ -2414,7 +2414,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CoveredOrUncovered Field
     /// </summary>/
     public sealed class CoveredOrUncovered : IntField
@@ -2426,7 +2426,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CustomerOrFirm Field
     /// </summary>/
     public sealed class CustomerOrFirm : IntField
@@ -2438,7 +2438,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MaturityDay Field
     /// </summary>/
     public sealed class MaturityDay : StringField
@@ -2450,7 +2450,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OptAttribute Field
     /// </summary>/
     public sealed class OptAttribute : CharField
@@ -2462,7 +2462,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityExchange Field
     /// </summary>/
     public sealed class SecurityExchange : StringField
@@ -2474,7 +2474,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NotifyBrokerOfCredit Field
     /// </summary>/
     public sealed class NotifyBrokerOfCredit : BooleanField
@@ -2486,7 +2486,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocHandlInst Field
     /// </summary>/
     public sealed class AllocHandlInst : IntField
@@ -2498,7 +2498,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MaxShow Field
     /// </summary>/
     public sealed class MaxShow : DecimalField
@@ -2510,7 +2510,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegOffsetValue Field
     /// </summary>/
     public sealed class PegOffsetValue : DecimalField
@@ -2522,7 +2522,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// XmlDataLen Field
     /// </summary>/
     public sealed class XmlDataLen : DecimalField
@@ -2534,7 +2534,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// XmlData Field
     /// </summary>/
     public sealed class XmlData : StringField
@@ -2546,7 +2546,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlInstRefID Field
     /// </summary>/
     public sealed class SettlInstRefID : StringField
@@ -2558,7 +2558,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoRoutingIDs Field
     /// </summary>/
     public sealed class NoRoutingIDs : IntField
@@ -2570,7 +2570,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RoutingType Field
     /// </summary>/
     public sealed class RoutingType : IntField
@@ -2582,7 +2582,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RoutingID Field
     /// </summary>/
     public sealed class RoutingID : StringField
@@ -2594,7 +2594,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Spread Field
     /// </summary>/
     public sealed class Spread : DecimalField
@@ -2606,7 +2606,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Benchmark Field
     /// </summary>/
     public sealed class Benchmark : CharField
@@ -2618,7 +2618,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BenchmarkCurveCurrency Field
     /// </summary>/
     public sealed class BenchmarkCurveCurrency : DecimalField
@@ -2630,7 +2630,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BenchmarkCurveName Field
     /// </summary>/
     public sealed class BenchmarkCurveName : StringField
@@ -2642,7 +2642,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BenchmarkCurvePoint Field
     /// </summary>/
     public sealed class BenchmarkCurvePoint : StringField
@@ -2654,7 +2654,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CouponRate Field
     /// </summary>/
     public sealed class CouponRate : DecimalField
@@ -2666,7 +2666,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CouponPaymentDate Field
     /// </summary>/
     public sealed class CouponPaymentDate : StringField
@@ -2678,7 +2678,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IssueDate Field
     /// </summary>/
     public sealed class IssueDate : StringField
@@ -2690,7 +2690,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RepurchaseTerm Field
     /// </summary>/
     public sealed class RepurchaseTerm : IntField
@@ -2702,7 +2702,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RepurchaseRate Field
     /// </summary>/
     public sealed class RepurchaseRate : DecimalField
@@ -2714,7 +2714,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Factor Field
     /// </summary>/
     public sealed class Factor : DecimalField
@@ -2726,7 +2726,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeOriginationDate Field
     /// </summary>/
     public sealed class TradeOriginationDate : StringField
@@ -2738,7 +2738,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExDate Field
     /// </summary>/
     public sealed class ExDate : StringField
@@ -2750,7 +2750,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContractMultiplier Field
     /// </summary>/
     public sealed class ContractMultiplier : DecimalField
@@ -2762,7 +2762,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoStipulations Field
     /// </summary>/
     public sealed class NoStipulations : IntField
@@ -2774,7 +2774,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StipulationType Field
     /// </summary>/
     public sealed class StipulationType : StringField
@@ -2786,7 +2786,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StipulationValue Field
     /// </summary>/
     public sealed class StipulationValue : StringField
@@ -2798,7 +2798,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// YieldType Field
     /// </summary>/
     public sealed class YieldType : StringField
@@ -2810,7 +2810,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Yield Field
     /// </summary>/
     public sealed class Yield : DecimalField
@@ -2822,7 +2822,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotalTakedown Field
     /// </summary>/
     public sealed class TotalTakedown : DecimalField
@@ -2834,7 +2834,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Concession Field
     /// </summary>/
     public sealed class Concession : DecimalField
@@ -2846,7 +2846,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RepoCollateralSecurityType Field
     /// </summary>/
     public sealed class RepoCollateralSecurityType : IntField
@@ -2858,7 +2858,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RedemptionDate Field
     /// </summary>/
     public sealed class RedemptionDate : StringField
@@ -2870,7 +2870,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCouponPaymentDate Field
     /// </summary>/
     public sealed class UnderlyingCouponPaymentDate : StringField
@@ -2882,7 +2882,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingIssueDate Field
     /// </summary>/
     public sealed class UnderlyingIssueDate : StringField
@@ -2894,7 +2894,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingRepoCollateralSecurityType Field
     /// </summary>/
     public sealed class UnderlyingRepoCollateralSecurityType : IntField
@@ -2906,7 +2906,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingRepurchaseTerm Field
     /// </summary>/
     public sealed class UnderlyingRepurchaseTerm : IntField
@@ -2918,7 +2918,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingRepurchaseRate Field
     /// </summary>/
     public sealed class UnderlyingRepurchaseRate : DecimalField
@@ -2930,7 +2930,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingFactor Field
     /// </summary>/
     public sealed class UnderlyingFactor : DecimalField
@@ -2942,7 +2942,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingRedemptionDate Field
     /// </summary>/
     public sealed class UnderlyingRedemptionDate : StringField
@@ -2954,7 +2954,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegCouponPaymentDate Field
     /// </summary>/
     public sealed class LegCouponPaymentDate : StringField
@@ -2966,7 +2966,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegIssueDate Field
     /// </summary>/
     public sealed class LegIssueDate : StringField
@@ -2978,7 +2978,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegRepoCollateralSecurityType Field
     /// </summary>/
     public sealed class LegRepoCollateralSecurityType : IntField
@@ -2990,7 +2990,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegRepurchaseTerm Field
     /// </summary>/
     public sealed class LegRepurchaseTerm : IntField
@@ -3002,7 +3002,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegRepurchaseRate Field
     /// </summary>/
     public sealed class LegRepurchaseRate : DecimalField
@@ -3014,7 +3014,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegFactor Field
     /// </summary>/
     public sealed class LegFactor : DecimalField
@@ -3026,7 +3026,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegRedemptionDate Field
     /// </summary>/
     public sealed class LegRedemptionDate : StringField
@@ -3038,7 +3038,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CreditRating Field
     /// </summary>/
     public sealed class CreditRating : StringField
@@ -3050,7 +3050,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCreditRating Field
     /// </summary>/
     public sealed class UnderlyingCreditRating : StringField
@@ -3062,7 +3062,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegCreditRating Field
     /// </summary>/
     public sealed class LegCreditRating : StringField
@@ -3074,7 +3074,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradedFlatSwitch Field
     /// </summary>/
     public sealed class TradedFlatSwitch : BooleanField
@@ -3086,7 +3086,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BasisFeatureDate Field
     /// </summary>/
     public sealed class BasisFeatureDate : StringField
@@ -3098,7 +3098,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BasisFeaturePrice Field
     /// </summary>/
     public sealed class BasisFeaturePrice : DecimalField
@@ -3110,7 +3110,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDReqID Field
     /// </summary>/
     public sealed class MDReqID : StringField
@@ -3122,7 +3122,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SubscriptionRequestType Field
     /// </summary>/
     public sealed class SubscriptionRequestType : CharField
@@ -3134,7 +3134,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MarketDepth Field
     /// </summary>/
     public sealed class MarketDepth : IntField
@@ -3146,7 +3146,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDUpdateType Field
     /// </summary>/
     public sealed class MDUpdateType : IntField
@@ -3158,7 +3158,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AggregatedBook Field
     /// </summary>/
     public sealed class AggregatedBook : BooleanField
@@ -3170,7 +3170,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoMDEntryTypes Field
     /// </summary>/
     public sealed class NoMDEntryTypes : IntField
@@ -3182,7 +3182,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoMDEntries Field
     /// </summary>/
     public sealed class NoMDEntries : IntField
@@ -3194,7 +3194,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntryType Field
     /// </summary>/
     public sealed class MDEntryType : CharField
@@ -3206,7 +3206,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntryPx Field
     /// </summary>/
     public sealed class MDEntryPx : DecimalField
@@ -3218,7 +3218,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntrySize Field
     /// </summary>/
     public sealed class MDEntrySize : DecimalField
@@ -3230,7 +3230,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntryDate Field
     /// </summary>/
     public sealed class MDEntryDate : DateTimeField
@@ -3242,7 +3242,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntryTime Field
     /// </summary>/
     public sealed class MDEntryTime : DateTimeField
@@ -3254,7 +3254,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TickDirection Field
     /// </summary>/
     public sealed class TickDirection : CharField
@@ -3266,7 +3266,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDMkt Field
     /// </summary>/
     public sealed class MDMkt : StringField
@@ -3278,7 +3278,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteCondition Field
     /// </summary>/
     public sealed class QuoteCondition : StringField
@@ -3290,7 +3290,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeCondition Field
     /// </summary>/
     public sealed class TradeCondition : StringField
@@ -3302,7 +3302,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntryID Field
     /// </summary>/
     public sealed class MDEntryID : StringField
@@ -3314,7 +3314,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDUpdateAction Field
     /// </summary>/
     public sealed class MDUpdateAction : CharField
@@ -3326,7 +3326,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntryRefID Field
     /// </summary>/
     public sealed class MDEntryRefID : StringField
@@ -3338,7 +3338,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDReqRejReason Field
     /// </summary>/
     public sealed class MDReqRejReason : CharField
@@ -3350,7 +3350,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntryOriginator Field
     /// </summary>/
     public sealed class MDEntryOriginator : StringField
@@ -3362,7 +3362,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LocationID Field
     /// </summary>/
     public sealed class LocationID : StringField
@@ -3374,7 +3374,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeskID Field
     /// </summary>/
     public sealed class DeskID : StringField
@@ -3386,7 +3386,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeleteReason Field
     /// </summary>/
     public sealed class DeleteReason : CharField
@@ -3398,7 +3398,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OpenCloseSettlFlag Field
     /// </summary>/
     public sealed class OpenCloseSettlFlag : StringField
@@ -3410,7 +3410,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SellerDays Field
     /// </summary>/
     public sealed class SellerDays : IntField
@@ -3422,7 +3422,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntryBuyer Field
     /// </summary>/
     public sealed class MDEntryBuyer : StringField
@@ -3434,7 +3434,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntrySeller Field
     /// </summary>/
     public sealed class MDEntrySeller : StringField
@@ -3446,7 +3446,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntryPositionNo Field
     /// </summary>/
     public sealed class MDEntryPositionNo : IntField
@@ -3458,7 +3458,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// FinancialStatus Field
     /// </summary>/
     public sealed class FinancialStatus : StringField
@@ -3470,7 +3470,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CorporateAction Field
     /// </summary>/
     public sealed class CorporateAction : StringField
@@ -3482,7 +3482,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DefBidSize Field
     /// </summary>/
     public sealed class DefBidSize : DecimalField
@@ -3494,7 +3494,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DefOfferSize Field
     /// </summary>/
     public sealed class DefOfferSize : DecimalField
@@ -3506,7 +3506,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoQuoteEntries Field
     /// </summary>/
     public sealed class NoQuoteEntries : IntField
@@ -3518,7 +3518,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoQuoteSets Field
     /// </summary>/
     public sealed class NoQuoteSets : IntField
@@ -3530,7 +3530,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteStatus Field
     /// </summary>/
     public sealed class QuoteStatus : IntField
@@ -3542,7 +3542,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteCancelType Field
     /// </summary>/
     public sealed class QuoteCancelType : IntField
@@ -3554,7 +3554,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteEntryID Field
     /// </summary>/
     public sealed class QuoteEntryID : StringField
@@ -3566,7 +3566,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteRejectReason Field
     /// </summary>/
     public sealed class QuoteRejectReason : IntField
@@ -3578,7 +3578,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteResponseLevel Field
     /// </summary>/
     public sealed class QuoteResponseLevel : IntField
@@ -3590,7 +3590,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteSetID Field
     /// </summary>/
     public sealed class QuoteSetID : StringField
@@ -3602,7 +3602,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteRequestType Field
     /// </summary>/
     public sealed class QuoteRequestType : IntField
@@ -3614,7 +3614,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotNoQuoteEntries Field
     /// </summary>/
     public sealed class TotNoQuoteEntries : IntField
@@ -3626,7 +3626,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSecurityIDSource Field
     /// </summary>/
     public sealed class UnderlyingSecurityIDSource : StringField
@@ -3638,7 +3638,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingIssuer Field
     /// </summary>/
     public sealed class UnderlyingIssuer : StringField
@@ -3650,7 +3650,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSecurityDesc Field
     /// </summary>/
     public sealed class UnderlyingSecurityDesc : StringField
@@ -3662,7 +3662,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSecurityExchange Field
     /// </summary>/
     public sealed class UnderlyingSecurityExchange : StringField
@@ -3674,7 +3674,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSecurityID Field
     /// </summary>/
     public sealed class UnderlyingSecurityID : StringField
@@ -3686,7 +3686,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSecurityType Field
     /// </summary>/
     public sealed class UnderlyingSecurityType : StringField
@@ -3698,7 +3698,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSymbol Field
     /// </summary>/
     public sealed class UnderlyingSymbol : StringField
@@ -3710,7 +3710,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSymbolSfx Field
     /// </summary>/
     public sealed class UnderlyingSymbolSfx : StringField
@@ -3722,7 +3722,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingMaturityMonthYear Field
     /// </summary>/
     public sealed class UnderlyingMaturityMonthYear : StringField
@@ -3734,7 +3734,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingMaturityDay Field
     /// </summary>/
     public sealed class UnderlyingMaturityDay : StringField
@@ -3746,7 +3746,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingPutOrCall Field
     /// </summary>/
     public sealed class UnderlyingPutOrCall : IntField
@@ -3758,7 +3758,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingStrikePrice Field
     /// </summary>/
     public sealed class UnderlyingStrikePrice : DecimalField
@@ -3770,7 +3770,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingOptAttribute Field
     /// </summary>/
     public sealed class UnderlyingOptAttribute : CharField
@@ -3782,7 +3782,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCurrency Field
     /// </summary>/
     public sealed class UnderlyingCurrency : DecimalField
@@ -3794,7 +3794,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RatioQty Field
     /// </summary>/
     public sealed class RatioQty : DecimalField
@@ -3806,7 +3806,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityReqID Field
     /// </summary>/
     public sealed class SecurityReqID : StringField
@@ -3818,7 +3818,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityRequestType Field
     /// </summary>/
     public sealed class SecurityRequestType : IntField
@@ -3830,7 +3830,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityResponseID Field
     /// </summary>/
     public sealed class SecurityResponseID : StringField
@@ -3842,7 +3842,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityResponseType Field
     /// </summary>/
     public sealed class SecurityResponseType : IntField
@@ -3854,7 +3854,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityStatusReqID Field
     /// </summary>/
     public sealed class SecurityStatusReqID : StringField
@@ -3866,7 +3866,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnsolicitedIndicator Field
     /// </summary>/
     public sealed class UnsolicitedIndicator : BooleanField
@@ -3878,7 +3878,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityTradingStatus Field
     /// </summary>/
     public sealed class SecurityTradingStatus : IntField
@@ -3890,7 +3890,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// HaltReasonChar Field
     /// </summary>/
     public sealed class HaltReasonChar : CharField
@@ -3902,7 +3902,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InViewOfCommon Field
     /// </summary>/
     public sealed class InViewOfCommon : BooleanField
@@ -3914,7 +3914,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DueToRelated Field
     /// </summary>/
     public sealed class DueToRelated : BooleanField
@@ -3926,7 +3926,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BuyVolume Field
     /// </summary>/
     public sealed class BuyVolume : DecimalField
@@ -3938,7 +3938,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SellVolume Field
     /// </summary>/
     public sealed class SellVolume : DecimalField
@@ -3950,7 +3950,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// HighPx Field
     /// </summary>/
     public sealed class HighPx : DecimalField
@@ -3962,7 +3962,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LowPx Field
     /// </summary>/
     public sealed class LowPx : DecimalField
@@ -3974,7 +3974,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Adjustment Field
     /// </summary>/
     public sealed class Adjustment : IntField
@@ -3986,7 +3986,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradSesReqID Field
     /// </summary>/
     public sealed class TradSesReqID : StringField
@@ -3998,7 +3998,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradingSessionID Field
     /// </summary>/
     public sealed class TradingSessionID : StringField
@@ -4010,7 +4010,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContraTrader Field
     /// </summary>/
     public sealed class ContraTrader : StringField
@@ -4022,7 +4022,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradSesMethod Field
     /// </summary>/
     public sealed class TradSesMethod : IntField
@@ -4034,7 +4034,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradSesMode Field
     /// </summary>/
     public sealed class TradSesMode : IntField
@@ -4046,7 +4046,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradSesStatus Field
     /// </summary>/
     public sealed class TradSesStatus : IntField
@@ -4058,7 +4058,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradSesStartTime Field
     /// </summary>/
     public sealed class TradSesStartTime : DateTimeField
@@ -4070,7 +4070,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradSesOpenTime Field
     /// </summary>/
     public sealed class TradSesOpenTime : DateTimeField
@@ -4082,7 +4082,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradSesPreCloseTime Field
     /// </summary>/
     public sealed class TradSesPreCloseTime : DateTimeField
@@ -4094,7 +4094,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradSesCloseTime Field
     /// </summary>/
     public sealed class TradSesCloseTime : DateTimeField
@@ -4106,7 +4106,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradSesEndTime Field
     /// </summary>/
     public sealed class TradSesEndTime : DateTimeField
@@ -4118,7 +4118,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NumberOfOrders Field
     /// </summary>/
     public sealed class NumberOfOrders : IntField
@@ -4130,7 +4130,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MessageEncoding Field
     /// </summary>/
     public sealed class MessageEncoding : StringField
@@ -4142,7 +4142,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedIssuerLen Field
     /// </summary>/
     public sealed class EncodedIssuerLen : DecimalField
@@ -4154,7 +4154,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedIssuer Field
     /// </summary>/
     public sealed class EncodedIssuer : StringField
@@ -4166,7 +4166,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedSecurityDescLen Field
     /// </summary>/
     public sealed class EncodedSecurityDescLen : DecimalField
@@ -4178,7 +4178,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedSecurityDesc Field
     /// </summary>/
     public sealed class EncodedSecurityDesc : StringField
@@ -4190,7 +4190,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedListExecInstLen Field
     /// </summary>/
     public sealed class EncodedListExecInstLen : DecimalField
@@ -4202,7 +4202,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedListExecInst Field
     /// </summary>/
     public sealed class EncodedListExecInst : StringField
@@ -4214,7 +4214,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedTextLen Field
     /// </summary>/
     public sealed class EncodedTextLen : DecimalField
@@ -4226,7 +4226,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedText Field
     /// </summary>/
     public sealed class EncodedText : StringField
@@ -4238,7 +4238,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedSubjectLen Field
     /// </summary>/
     public sealed class EncodedSubjectLen : DecimalField
@@ -4250,7 +4250,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedSubject Field
     /// </summary>/
     public sealed class EncodedSubject : StringField
@@ -4262,7 +4262,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedHeadlineLen Field
     /// </summary>/
     public sealed class EncodedHeadlineLen : DecimalField
@@ -4274,7 +4274,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedHeadline Field
     /// </summary>/
     public sealed class EncodedHeadline : StringField
@@ -4286,7 +4286,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedAllocTextLen Field
     /// </summary>/
     public sealed class EncodedAllocTextLen : DecimalField
@@ -4298,7 +4298,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedAllocText Field
     /// </summary>/
     public sealed class EncodedAllocText : StringField
@@ -4310,7 +4310,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedUnderlyingIssuerLen Field
     /// </summary>/
     public sealed class EncodedUnderlyingIssuerLen : DecimalField
@@ -4322,7 +4322,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedUnderlyingIssuer Field
     /// </summary>/
     public sealed class EncodedUnderlyingIssuer : StringField
@@ -4334,7 +4334,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedUnderlyingSecurityDescLen Field
     /// </summary>/
     public sealed class EncodedUnderlyingSecurityDescLen : DecimalField
@@ -4346,7 +4346,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedUnderlyingSecurityDesc Field
     /// </summary>/
     public sealed class EncodedUnderlyingSecurityDesc : StringField
@@ -4358,7 +4358,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocPrice Field
     /// </summary>/
     public sealed class AllocPrice : DecimalField
@@ -4370,7 +4370,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteSetValidUntilTime Field
     /// </summary>/
     public sealed class QuoteSetValidUntilTime : DateTimeField
@@ -4382,7 +4382,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteEntryRejectReason Field
     /// </summary>/
     public sealed class QuoteEntryRejectReason : IntField
@@ -4394,7 +4394,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastMsgSeqNumProcessed Field
     /// </summary>/
     public sealed class LastMsgSeqNumProcessed : IntField
@@ -4406,7 +4406,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OnBehalfOfSendingTime Field
     /// </summary>/
     public sealed class OnBehalfOfSendingTime : DateTimeField
@@ -4418,7 +4418,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefTagID Field
     /// </summary>/
     public sealed class RefTagID : IntField
@@ -4430,7 +4430,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefMsgType Field
     /// </summary>/
     public sealed class RefMsgType : StringField
@@ -4442,7 +4442,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SessionRejectReason Field
     /// </summary>/
     public sealed class SessionRejectReason : IntField
@@ -4454,7 +4454,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidRequestTransType Field
     /// </summary>/
     public sealed class BidRequestTransType : CharField
@@ -4466,7 +4466,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContraBroker Field
     /// </summary>/
     public sealed class ContraBroker : StringField
@@ -4478,7 +4478,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ComplianceID Field
     /// </summary>/
     public sealed class ComplianceID : StringField
@@ -4490,7 +4490,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SolicitedFlag Field
     /// </summary>/
     public sealed class SolicitedFlag : BooleanField
@@ -4502,7 +4502,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecRestatementReason Field
     /// </summary>/
     public sealed class ExecRestatementReason : IntField
@@ -4514,7 +4514,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BusinessRejectRefID Field
     /// </summary>/
     public sealed class BusinessRejectRefID : StringField
@@ -4526,7 +4526,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BusinessRejectReason Field
     /// </summary>/
     public sealed class BusinessRejectReason : IntField
@@ -4538,7 +4538,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// GrossTradeAmt Field
     /// </summary>/
     public sealed class GrossTradeAmt : DecimalField
@@ -4550,7 +4550,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoContraBrokers Field
     /// </summary>/
     public sealed class NoContraBrokers : IntField
@@ -4562,7 +4562,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MaxMessageSize Field
     /// </summary>/
     public sealed class MaxMessageSize : DecimalField
@@ -4574,7 +4574,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoMsgTypes Field
     /// </summary>/
     public sealed class NoMsgTypes : IntField
@@ -4586,7 +4586,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MsgDirection Field
     /// </summary>/
     public sealed class MsgDirection : CharField
@@ -4598,7 +4598,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoTradingSessions Field
     /// </summary>/
     public sealed class NoTradingSessions : IntField
@@ -4610,7 +4610,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotalVolumeTraded Field
     /// </summary>/
     public sealed class TotalVolumeTraded : DecimalField
@@ -4622,7 +4622,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DiscretionInst Field
     /// </summary>/
     public sealed class DiscretionInst : CharField
@@ -4634,7 +4634,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DiscretionOffsetValue Field
     /// </summary>/
     public sealed class DiscretionOffsetValue : DecimalField
@@ -4646,7 +4646,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidID Field
     /// </summary>/
     public sealed class BidID : StringField
@@ -4658,7 +4658,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ClientBidID Field
     /// </summary>/
     public sealed class ClientBidID : StringField
@@ -4670,7 +4670,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ListName Field
     /// </summary>/
     public sealed class ListName : StringField
@@ -4682,7 +4682,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotNoRelatedSym Field
     /// </summary>/
     public sealed class TotNoRelatedSym : IntField
@@ -4694,7 +4694,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidType Field
     /// </summary>/
     public sealed class BidType : IntField
@@ -4706,7 +4706,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NumTickets Field
     /// </summary>/
     public sealed class NumTickets : IntField
@@ -4718,7 +4718,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideValue1 Field
     /// </summary>/
     public sealed class SideValue1 : DecimalField
@@ -4730,7 +4730,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideValue2 Field
     /// </summary>/
     public sealed class SideValue2 : DecimalField
@@ -4742,7 +4742,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoBidDescriptors Field
     /// </summary>/
     public sealed class NoBidDescriptors : IntField
@@ -4754,7 +4754,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidDescriptorType Field
     /// </summary>/
     public sealed class BidDescriptorType : IntField
@@ -4766,7 +4766,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidDescriptor Field
     /// </summary>/
     public sealed class BidDescriptor : StringField
@@ -4778,7 +4778,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideValueInd Field
     /// </summary>/
     public sealed class SideValueInd : IntField
@@ -4790,7 +4790,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LiquidityPctLow Field
     /// </summary>/
     public sealed class LiquidityPctLow : DecimalField
@@ -4802,7 +4802,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LiquidityPctHigh Field
     /// </summary>/
     public sealed class LiquidityPctHigh : DecimalField
@@ -4814,7 +4814,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LiquidityValue Field
     /// </summary>/
     public sealed class LiquidityValue : DecimalField
@@ -4826,7 +4826,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EFPTrackingError Field
     /// </summary>/
     public sealed class EFPTrackingError : DecimalField
@@ -4838,7 +4838,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// FairValue Field
     /// </summary>/
     public sealed class FairValue : DecimalField
@@ -4850,7 +4850,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OutsideIndexPct Field
     /// </summary>/
     public sealed class OutsideIndexPct : DecimalField
@@ -4862,7 +4862,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ValueOfFutures Field
     /// </summary>/
     public sealed class ValueOfFutures : DecimalField
@@ -4874,7 +4874,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LiquidityIndType Field
     /// </summary>/
     public sealed class LiquidityIndType : IntField
@@ -4886,7 +4886,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// WtAverageLiquidity Field
     /// </summary>/
     public sealed class WtAverageLiquidity : DecimalField
@@ -4898,7 +4898,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExchangeForPhysical Field
     /// </summary>/
     public sealed class ExchangeForPhysical : BooleanField
@@ -4910,7 +4910,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OutMainCntryUIndex Field
     /// </summary>/
     public sealed class OutMainCntryUIndex : DecimalField
@@ -4922,7 +4922,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CrossPercent Field
     /// </summary>/
     public sealed class CrossPercent : DecimalField
@@ -4934,7 +4934,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ProgRptReqs Field
     /// </summary>/
     public sealed class ProgRptReqs : IntField
@@ -4946,7 +4946,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ProgPeriodInterval Field
     /// </summary>/
     public sealed class ProgPeriodInterval : IntField
@@ -4958,7 +4958,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IncTaxInd Field
     /// </summary>/
     public sealed class IncTaxInd : IntField
@@ -4970,7 +4970,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NumBidders Field
     /// </summary>/
     public sealed class NumBidders : IntField
@@ -4982,7 +4982,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidTradeType Field
     /// </summary>/
     public sealed class BidTradeType : CharField
@@ -4994,7 +4994,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BasisPxType Field
     /// </summary>/
     public sealed class BasisPxType : CharField
@@ -5006,7 +5006,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoBidComponents Field
     /// </summary>/
     public sealed class NoBidComponents : IntField
@@ -5018,7 +5018,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Country Field
     /// </summary>/
     public sealed class Country : StringField
@@ -5030,7 +5030,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotNoStrikes Field
     /// </summary>/
     public sealed class TotNoStrikes : IntField
@@ -5042,7 +5042,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PriceType Field
     /// </summary>/
     public sealed class PriceType : IntField
@@ -5054,7 +5054,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DayOrderQty Field
     /// </summary>/
     public sealed class DayOrderQty : DecimalField
@@ -5066,7 +5066,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DayCumQty Field
     /// </summary>/
     public sealed class DayCumQty : DecimalField
@@ -5078,7 +5078,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DayAvgPx Field
     /// </summary>/
     public sealed class DayAvgPx : DecimalField
@@ -5090,7 +5090,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// GTBookingInst Field
     /// </summary>/
     public sealed class GTBookingInst : IntField
@@ -5102,7 +5102,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoStrikes Field
     /// </summary>/
     public sealed class NoStrikes : IntField
@@ -5114,7 +5114,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ListStatusType Field
     /// </summary>/
     public sealed class ListStatusType : IntField
@@ -5126,7 +5126,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NetGrossInd Field
     /// </summary>/
     public sealed class NetGrossInd : IntField
@@ -5138,7 +5138,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ListOrderStatus Field
     /// </summary>/
     public sealed class ListOrderStatus : IntField
@@ -5150,7 +5150,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExpireDate Field
     /// </summary>/
     public sealed class ExpireDate : StringField
@@ -5162,7 +5162,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ListExecInstType Field
     /// </summary>/
     public sealed class ListExecInstType : CharField
@@ -5174,7 +5174,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CxlRejResponseTo Field
     /// </summary>/
     public sealed class CxlRejResponseTo : CharField
@@ -5186,7 +5186,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCouponRate Field
     /// </summary>/
     public sealed class UnderlyingCouponRate : DecimalField
@@ -5198,7 +5198,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingContractMultiplier Field
     /// </summary>/
     public sealed class UnderlyingContractMultiplier : DecimalField
@@ -5210,7 +5210,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContraTradeQty Field
     /// </summary>/
     public sealed class ContraTradeQty : DecimalField
@@ -5222,7 +5222,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContraTradeTime Field
     /// </summary>/
     public sealed class ContraTradeTime : DateTimeField
@@ -5234,7 +5234,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ClearingFirm Field
     /// </summary>/
     public sealed class ClearingFirm : StringField
@@ -5246,7 +5246,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ClearingAccount Field
     /// </summary>/
     public sealed class ClearingAccount : StringField
@@ -5258,7 +5258,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LiquidityNumSecurities Field
     /// </summary>/
     public sealed class LiquidityNumSecurities : IntField
@@ -5270,7 +5270,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MultiLegReportingType Field
     /// </summary>/
     public sealed class MultiLegReportingType : CharField
@@ -5282,7 +5282,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StrikeTime Field
     /// </summary>/
     public sealed class StrikeTime : DateTimeField
@@ -5294,7 +5294,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ListStatusText Field
     /// </summary>/
     public sealed class ListStatusText : StringField
@@ -5306,7 +5306,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedListStatusTextLen Field
     /// </summary>/
     public sealed class EncodedListStatusTextLen : DecimalField
@@ -5318,7 +5318,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedListStatusText Field
     /// </summary>/
     public sealed class EncodedListStatusText : StringField
@@ -5330,7 +5330,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PartyIDSource Field
     /// </summary>/
     public sealed class PartyIDSource : CharField
@@ -5342,7 +5342,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PartyID Field
     /// </summary>/
     public sealed class PartyID : StringField
@@ -5354,7 +5354,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotalVolumeTradedDate Field
     /// </summary>/
     public sealed class TotalVolumeTradedDate : DateTimeField
@@ -5366,7 +5366,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotalVolumeTradedTime Field
     /// </summary>/
     public sealed class TotalVolumeTradedTime : DateTimeField
@@ -5378,7 +5378,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NetChgPrevDay Field
     /// </summary>/
     public sealed class NetChgPrevDay : DecimalField
@@ -5390,7 +5390,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PartyRole Field
     /// </summary>/
     public sealed class PartyRole : IntField
@@ -5402,7 +5402,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoPartyIDs Field
     /// </summary>/
     public sealed class NoPartyIDs : IntField
@@ -5414,7 +5414,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoSecurityAltID Field
     /// </summary>/
     public sealed class NoSecurityAltID : IntField
@@ -5426,7 +5426,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityAltID Field
     /// </summary>/
     public sealed class SecurityAltID : StringField
@@ -5438,7 +5438,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityAltIDSource Field
     /// </summary>/
     public sealed class SecurityAltIDSource : StringField
@@ -5450,7 +5450,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoUnderlyingSecurityAltID Field
     /// </summary>/
     public sealed class NoUnderlyingSecurityAltID : IntField
@@ -5462,7 +5462,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSecurityAltID Field
     /// </summary>/
     public sealed class UnderlyingSecurityAltID : StringField
@@ -5474,7 +5474,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSecurityAltIDSource Field
     /// </summary>/
     public sealed class UnderlyingSecurityAltIDSource : StringField
@@ -5486,7 +5486,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Product Field
     /// </summary>/
     public sealed class Product : IntField
@@ -5498,7 +5498,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CFICode Field
     /// </summary>/
     public sealed class CFICode : StringField
@@ -5510,7 +5510,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingProduct Field
     /// </summary>/
     public sealed class UnderlyingProduct : IntField
@@ -5522,7 +5522,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCFICode Field
     /// </summary>/
     public sealed class UnderlyingCFICode : StringField
@@ -5534,7 +5534,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TestMessageIndicator Field
     /// </summary>/
     public sealed class TestMessageIndicator : BooleanField
@@ -5546,7 +5546,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuantityType Field
     /// </summary>/
     public sealed class QuantityType : IntField
@@ -5558,7 +5558,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BookingRefID Field
     /// </summary>/
     public sealed class BookingRefID : StringField
@@ -5570,7 +5570,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IndividualAllocID Field
     /// </summary>/
     public sealed class IndividualAllocID : StringField
@@ -5582,7 +5582,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RoundingDirection Field
     /// </summary>/
     public sealed class RoundingDirection : CharField
@@ -5594,7 +5594,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RoundingModulus Field
     /// </summary>/
     public sealed class RoundingModulus : DecimalField
@@ -5606,7 +5606,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CountryOfIssue Field
     /// </summary>/
     public sealed class CountryOfIssue : StringField
@@ -5618,7 +5618,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StateOrProvinceOfIssue Field
     /// </summary>/
     public sealed class StateOrProvinceOfIssue : StringField
@@ -5630,7 +5630,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LocaleOfIssue Field
     /// </summary>/
     public sealed class LocaleOfIssue : StringField
@@ -5642,7 +5642,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoRegistDtls Field
     /// </summary>/
     public sealed class NoRegistDtls : IntField
@@ -5654,7 +5654,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MailingDtls Field
     /// </summary>/
     public sealed class MailingDtls : StringField
@@ -5666,7 +5666,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InvestorCountryOfResidence Field
     /// </summary>/
     public sealed class InvestorCountryOfResidence : StringField
@@ -5678,7 +5678,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PaymentRef Field
     /// </summary>/
     public sealed class PaymentRef : StringField
@@ -5690,7 +5690,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DistribPaymentMethod Field
     /// </summary>/
     public sealed class DistribPaymentMethod : IntField
@@ -5702,7 +5702,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashDistribCurr Field
     /// </summary>/
     public sealed class CashDistribCurr : DecimalField
@@ -5714,7 +5714,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CommCurrency Field
     /// </summary>/
     public sealed class CommCurrency : DecimalField
@@ -5726,7 +5726,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CancellationRights Field
     /// </summary>/
     public sealed class CancellationRights : CharField
@@ -5738,7 +5738,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MoneyLaunderingStatus Field
     /// </summary>/
     public sealed class MoneyLaunderingStatus : CharField
@@ -5750,7 +5750,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MailingInst Field
     /// </summary>/
     public sealed class MailingInst : StringField
@@ -5762,7 +5762,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TransBkdTime Field
     /// </summary>/
     public sealed class TransBkdTime : DateTimeField
@@ -5774,7 +5774,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecPriceType Field
     /// </summary>/
     public sealed class ExecPriceType : CharField
@@ -5786,7 +5786,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecPriceAdjustment Field
     /// </summary>/
     public sealed class ExecPriceAdjustment : DecimalField
@@ -5798,7 +5798,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DateOfBirth Field
     /// </summary>/
     public sealed class DateOfBirth : StringField
@@ -5810,7 +5810,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeReportTransType Field
     /// </summary>/
     public sealed class TradeReportTransType : IntField
@@ -5822,7 +5822,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CardHolderName Field
     /// </summary>/
     public sealed class CardHolderName : StringField
@@ -5834,7 +5834,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CardNumber Field
     /// </summary>/
     public sealed class CardNumber : StringField
@@ -5846,7 +5846,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CardExpDate Field
     /// </summary>/
     public sealed class CardExpDate : StringField
@@ -5858,7 +5858,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CardIssNum Field
     /// </summary>/
     public sealed class CardIssNum : StringField
@@ -5870,7 +5870,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PaymentMethod Field
     /// </summary>/
     public sealed class PaymentMethod : IntField
@@ -5882,7 +5882,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RegistAcctType Field
     /// </summary>/
     public sealed class RegistAcctType : StringField
@@ -5894,7 +5894,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Designation Field
     /// </summary>/
     public sealed class Designation : StringField
@@ -5906,7 +5906,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TaxAdvantageType Field
     /// </summary>/
     public sealed class TaxAdvantageType : IntField
@@ -5918,7 +5918,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RegistRejReasonText Field
     /// </summary>/
     public sealed class RegistRejReasonText : StringField
@@ -5930,7 +5930,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// FundRenewWaiv Field
     /// </summary>/
     public sealed class FundRenewWaiv : CharField
@@ -5942,7 +5942,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashDistribAgentName Field
     /// </summary>/
     public sealed class CashDistribAgentName : StringField
@@ -5954,7 +5954,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashDistribAgentCode Field
     /// </summary>/
     public sealed class CashDistribAgentCode : StringField
@@ -5966,7 +5966,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashDistribAgentAcctNumber Field
     /// </summary>/
     public sealed class CashDistribAgentAcctNumber : StringField
@@ -5978,7 +5978,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashDistribPayRef Field
     /// </summary>/
     public sealed class CashDistribPayRef : StringField
@@ -5990,7 +5990,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashDistribAgentAcctName Field
     /// </summary>/
     public sealed class CashDistribAgentAcctName : StringField
@@ -6002,7 +6002,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CardStartDate Field
     /// </summary>/
     public sealed class CardStartDate : StringField
@@ -6014,7 +6014,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PaymentDate Field
     /// </summary>/
     public sealed class PaymentDate : StringField
@@ -6026,7 +6026,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PaymentRemitterID Field
     /// </summary>/
     public sealed class PaymentRemitterID : StringField
@@ -6038,7 +6038,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RegistStatus Field
     /// </summary>/
     public sealed class RegistStatus : CharField
@@ -6050,7 +6050,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RegistRejReasonCode Field
     /// </summary>/
     public sealed class RegistRejReasonCode : IntField
@@ -6062,7 +6062,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RegistRefID Field
     /// </summary>/
     public sealed class RegistRefID : StringField
@@ -6074,7 +6074,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RegistDtls Field
     /// </summary>/
     public sealed class RegistDtls : StringField
@@ -6086,7 +6086,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoDistribInsts Field
     /// </summary>/
     public sealed class NoDistribInsts : IntField
@@ -6098,7 +6098,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RegistEmail Field
     /// </summary>/
     public sealed class RegistEmail : StringField
@@ -6110,7 +6110,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DistribPercentage Field
     /// </summary>/
     public sealed class DistribPercentage : DecimalField
@@ -6122,7 +6122,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RegistID Field
     /// </summary>/
     public sealed class RegistID : StringField
@@ -6134,7 +6134,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RegistTransType Field
     /// </summary>/
     public sealed class RegistTransType : CharField
@@ -6146,7 +6146,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecValuationPoint Field
     /// </summary>/
     public sealed class ExecValuationPoint : DateTimeField
@@ -6158,7 +6158,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderPercent Field
     /// </summary>/
     public sealed class OrderPercent : DecimalField
@@ -6170,7 +6170,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OwnershipType Field
     /// </summary>/
     public sealed class OwnershipType : CharField
@@ -6182,7 +6182,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoContAmts Field
     /// </summary>/
     public sealed class NoContAmts : IntField
@@ -6194,7 +6194,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContAmtType Field
     /// </summary>/
     public sealed class ContAmtType : IntField
@@ -6206,7 +6206,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContAmtValue Field
     /// </summary>/
     public sealed class ContAmtValue : DecimalField
@@ -6218,7 +6218,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContAmtCurr Field
     /// </summary>/
     public sealed class ContAmtCurr : DecimalField
@@ -6230,7 +6230,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OwnerType Field
     /// </summary>/
     public sealed class OwnerType : IntField
@@ -6242,7 +6242,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PartySubID Field
     /// </summary>/
     public sealed class PartySubID : StringField
@@ -6254,7 +6254,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NestedPartyID Field
     /// </summary>/
     public sealed class NestedPartyID : StringField
@@ -6266,7 +6266,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NestedPartyIDSource Field
     /// </summary>/
     public sealed class NestedPartyIDSource : CharField
@@ -6278,7 +6278,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryClOrdID Field
     /// </summary>/
     public sealed class SecondaryClOrdID : StringField
@@ -6290,7 +6290,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryExecID Field
     /// </summary>/
     public sealed class SecondaryExecID : StringField
@@ -6302,7 +6302,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderCapacity Field
     /// </summary>/
     public sealed class OrderCapacity : CharField
@@ -6314,7 +6314,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderRestrictions Field
     /// </summary>/
     public sealed class OrderRestrictions : StringField
@@ -6326,7 +6326,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MassCancelRequestType Field
     /// </summary>/
     public sealed class MassCancelRequestType : CharField
@@ -6338,7 +6338,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MassCancelResponse Field
     /// </summary>/
     public sealed class MassCancelResponse : CharField
@@ -6350,7 +6350,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MassCancelRejectReason Field
     /// </summary>/
     public sealed class MassCancelRejectReason : IntField
@@ -6362,7 +6362,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotalAffectedOrders Field
     /// </summary>/
     public sealed class TotalAffectedOrders : IntField
@@ -6374,7 +6374,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoAffectedOrders Field
     /// </summary>/
     public sealed class NoAffectedOrders : IntField
@@ -6386,7 +6386,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AffectedOrderID Field
     /// </summary>/
     public sealed class AffectedOrderID : StringField
@@ -6398,7 +6398,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AffectedSecondaryOrderID Field
     /// </summary>/
     public sealed class AffectedSecondaryOrderID : StringField
@@ -6410,7 +6410,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteType Field
     /// </summary>/
     public sealed class QuoteType : IntField
@@ -6422,7 +6422,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NestedPartyRole Field
     /// </summary>/
     public sealed class NestedPartyRole : IntField
@@ -6434,7 +6434,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoNestedPartyIDs Field
     /// </summary>/
     public sealed class NoNestedPartyIDs : IntField
@@ -6446,7 +6446,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotalAccruedInterestAmt Field
     /// </summary>/
     public sealed class TotalAccruedInterestAmt : DecimalField
@@ -6458,7 +6458,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MaturityDate Field
     /// </summary>/
     public sealed class MaturityDate : StringField
@@ -6470,7 +6470,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingMaturityDate Field
     /// </summary>/
     public sealed class UnderlyingMaturityDate : StringField
@@ -6482,7 +6482,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InstrRegistry Field
     /// </summary>/
     public sealed class InstrRegistry : StringField
@@ -6494,7 +6494,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashMargin Field
     /// </summary>/
     public sealed class CashMargin : CharField
@@ -6506,7 +6506,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NestedPartySubID Field
     /// </summary>/
     public sealed class NestedPartySubID : StringField
@@ -6518,7 +6518,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Scope Field
     /// </summary>/
     public sealed class Scope : StringField
@@ -6530,7 +6530,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDImplicitDelete Field
     /// </summary>/
     public sealed class MDImplicitDelete : BooleanField
@@ -6542,7 +6542,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CrossID Field
     /// </summary>/
     public sealed class CrossID : StringField
@@ -6554,7 +6554,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CrossType Field
     /// </summary>/
     public sealed class CrossType : IntField
@@ -6566,7 +6566,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CrossPrioritization Field
     /// </summary>/
     public sealed class CrossPrioritization : IntField
@@ -6578,7 +6578,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrigCrossID Field
     /// </summary>/
     public sealed class OrigCrossID : StringField
@@ -6590,7 +6590,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoSides Field
     /// </summary>/
     public sealed class NoSides : IntField
@@ -6602,7 +6602,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Username Field
     /// </summary>/
     public sealed class Username : StringField
@@ -6614,7 +6614,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Password Field
     /// </summary>/
     public sealed class Password : StringField
@@ -6626,7 +6626,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoLegs Field
     /// </summary>/
     public sealed class NoLegs : IntField
@@ -6638,7 +6638,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegCurrency Field
     /// </summary>/
     public sealed class LegCurrency : DecimalField
@@ -6650,7 +6650,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotNoSecurityTypes Field
     /// </summary>/
     public sealed class TotNoSecurityTypes : IntField
@@ -6662,7 +6662,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoSecurityTypes Field
     /// </summary>/
     public sealed class NoSecurityTypes : IntField
@@ -6674,7 +6674,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityListRequestType Field
     /// </summary>/
     public sealed class SecurityListRequestType : IntField
@@ -6686,7 +6686,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityRequestResult Field
     /// </summary>/
     public sealed class SecurityRequestResult : IntField
@@ -6698,7 +6698,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RoundLot Field
     /// </summary>/
     public sealed class RoundLot : DecimalField
@@ -6710,7 +6710,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MinTradeVol Field
     /// </summary>/
     public sealed class MinTradeVol : DecimalField
@@ -6722,7 +6722,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MultiLegRptTypeReq Field
     /// </summary>/
     public sealed class MultiLegRptTypeReq : IntField
@@ -6734,7 +6734,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegPositionEffect Field
     /// </summary>/
     public sealed class LegPositionEffect : CharField
@@ -6746,7 +6746,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegCoveredOrUncovered Field
     /// </summary>/
     public sealed class LegCoveredOrUncovered : IntField
@@ -6758,7 +6758,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegPrice Field
     /// </summary>/
     public sealed class LegPrice : DecimalField
@@ -6770,7 +6770,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradSesStatusRejReason Field
     /// </summary>/
     public sealed class TradSesStatusRejReason : IntField
@@ -6782,7 +6782,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeRequestID Field
     /// </summary>/
     public sealed class TradeRequestID : StringField
@@ -6794,7 +6794,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeRequestType Field
     /// </summary>/
     public sealed class TradeRequestType : IntField
@@ -6806,7 +6806,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PreviouslyReported Field
     /// </summary>/
     public sealed class PreviouslyReported : BooleanField
@@ -6818,7 +6818,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeReportID Field
     /// </summary>/
     public sealed class TradeReportID : StringField
@@ -6830,7 +6830,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeReportRefID Field
     /// </summary>/
     public sealed class TradeReportRefID : StringField
@@ -6842,7 +6842,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MatchStatus Field
     /// </summary>/
     public sealed class MatchStatus : CharField
@@ -6854,7 +6854,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MatchType Field
     /// </summary>/
     public sealed class MatchType : StringField
@@ -6866,7 +6866,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OddLot Field
     /// </summary>/
     public sealed class OddLot : BooleanField
@@ -6878,7 +6878,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoClearingInstructions Field
     /// </summary>/
     public sealed class NoClearingInstructions : IntField
@@ -6890,7 +6890,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ClearingInstruction Field
     /// </summary>/
     public sealed class ClearingInstruction : IntField
@@ -6902,7 +6902,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeInputSource Field
     /// </summary>/
     public sealed class TradeInputSource : StringField
@@ -6914,7 +6914,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeInputDevice Field
     /// </summary>/
     public sealed class TradeInputDevice : StringField
@@ -6926,7 +6926,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoDates Field
     /// </summary>/
     public sealed class NoDates : IntField
@@ -6938,7 +6938,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AccountType Field
     /// </summary>/
     public sealed class AccountType : IntField
@@ -6950,7 +6950,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CustOrderCapacity Field
     /// </summary>/
     public sealed class CustOrderCapacity : IntField
@@ -6962,7 +6962,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ClOrdLinkID Field
     /// </summary>/
     public sealed class ClOrdLinkID : StringField
@@ -6974,7 +6974,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MassStatusReqID Field
     /// </summary>/
     public sealed class MassStatusReqID : StringField
@@ -6986,7 +6986,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MassStatusReqType Field
     /// </summary>/
     public sealed class MassStatusReqType : IntField
@@ -6998,7 +6998,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrigOrdModTime Field
     /// </summary>/
     public sealed class OrigOrdModTime : DateTimeField
@@ -7010,7 +7010,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSettlType Field
     /// </summary>/
     public sealed class LegSettlType : CharField
@@ -7022,7 +7022,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSettlDate Field
     /// </summary>/
     public sealed class LegSettlDate : StringField
@@ -7034,7 +7034,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DayBookingInst Field
     /// </summary>/
     public sealed class DayBookingInst : CharField
@@ -7046,7 +7046,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BookingUnit Field
     /// </summary>/
     public sealed class BookingUnit : CharField
@@ -7058,7 +7058,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PreallocMethod Field
     /// </summary>/
     public sealed class PreallocMethod : CharField
@@ -7070,7 +7070,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCountryOfIssue Field
     /// </summary>/
     public sealed class UnderlyingCountryOfIssue : StringField
@@ -7082,7 +7082,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingStateOrProvinceOfIssue Field
     /// </summary>/
     public sealed class UnderlyingStateOrProvinceOfIssue : StringField
@@ -7094,7 +7094,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingLocaleOfIssue Field
     /// </summary>/
     public sealed class UnderlyingLocaleOfIssue : StringField
@@ -7106,7 +7106,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingInstrRegistry Field
     /// </summary>/
     public sealed class UnderlyingInstrRegistry : StringField
@@ -7118,7 +7118,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegCountryOfIssue Field
     /// </summary>/
     public sealed class LegCountryOfIssue : StringField
@@ -7130,7 +7130,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegStateOrProvinceOfIssue Field
     /// </summary>/
     public sealed class LegStateOrProvinceOfIssue : StringField
@@ -7142,7 +7142,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegLocaleOfIssue Field
     /// </summary>/
     public sealed class LegLocaleOfIssue : StringField
@@ -7154,7 +7154,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegInstrRegistry Field
     /// </summary>/
     public sealed class LegInstrRegistry : StringField
@@ -7166,7 +7166,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSymbol Field
     /// </summary>/
     public sealed class LegSymbol : StringField
@@ -7178,7 +7178,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSymbolSfx Field
     /// </summary>/
     public sealed class LegSymbolSfx : StringField
@@ -7190,7 +7190,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSecurityID Field
     /// </summary>/
     public sealed class LegSecurityID : StringField
@@ -7202,7 +7202,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSecurityIDSource Field
     /// </summary>/
     public sealed class LegSecurityIDSource : StringField
@@ -7214,7 +7214,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoLegSecurityAltID Field
     /// </summary>/
     public sealed class NoLegSecurityAltID : StringField
@@ -7226,7 +7226,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSecurityAltID Field
     /// </summary>/
     public sealed class LegSecurityAltID : StringField
@@ -7238,7 +7238,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSecurityAltIDSource Field
     /// </summary>/
     public sealed class LegSecurityAltIDSource : StringField
@@ -7250,7 +7250,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegProduct Field
     /// </summary>/
     public sealed class LegProduct : IntField
@@ -7262,7 +7262,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegCFICode Field
     /// </summary>/
     public sealed class LegCFICode : StringField
@@ -7274,7 +7274,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSecurityType Field
     /// </summary>/
     public sealed class LegSecurityType : StringField
@@ -7286,7 +7286,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegMaturityMonthYear Field
     /// </summary>/
     public sealed class LegMaturityMonthYear : StringField
@@ -7298,7 +7298,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegMaturityDate Field
     /// </summary>/
     public sealed class LegMaturityDate : StringField
@@ -7310,7 +7310,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegStrikePrice Field
     /// </summary>/
     public sealed class LegStrikePrice : DecimalField
@@ -7322,7 +7322,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegOptAttribute Field
     /// </summary>/
     public sealed class LegOptAttribute : CharField
@@ -7334,7 +7334,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegContractMultiplier Field
     /// </summary>/
     public sealed class LegContractMultiplier : DecimalField
@@ -7346,7 +7346,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegCouponRate Field
     /// </summary>/
     public sealed class LegCouponRate : DecimalField
@@ -7358,7 +7358,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSecurityExchange Field
     /// </summary>/
     public sealed class LegSecurityExchange : StringField
@@ -7370,7 +7370,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegIssuer Field
     /// </summary>/
     public sealed class LegIssuer : StringField
@@ -7382,7 +7382,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedLegIssuerLen Field
     /// </summary>/
     public sealed class EncodedLegIssuerLen : DecimalField
@@ -7394,7 +7394,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedLegIssuer Field
     /// </summary>/
     public sealed class EncodedLegIssuer : StringField
@@ -7406,7 +7406,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSecurityDesc Field
     /// </summary>/
     public sealed class LegSecurityDesc : StringField
@@ -7418,7 +7418,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedLegSecurityDescLen Field
     /// </summary>/
     public sealed class EncodedLegSecurityDescLen : DecimalField
@@ -7430,7 +7430,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EncodedLegSecurityDesc Field
     /// </summary>/
     public sealed class EncodedLegSecurityDesc : StringField
@@ -7442,7 +7442,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegRatioQty Field
     /// </summary>/
     public sealed class LegRatioQty : DecimalField
@@ -7454,7 +7454,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSide Field
     /// </summary>/
     public sealed class LegSide : CharField
@@ -7466,7 +7466,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradingSessionSubID Field
     /// </summary>/
     public sealed class TradingSessionSubID : StringField
@@ -7478,7 +7478,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocType Field
     /// </summary>/
     public sealed class AllocType : IntField
@@ -7490,7 +7490,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoHops Field
     /// </summary>/
     public sealed class NoHops : IntField
@@ -7502,7 +7502,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// HopCompID Field
     /// </summary>/
     public sealed class HopCompID : StringField
@@ -7514,7 +7514,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// HopSendingTime Field
     /// </summary>/
     public sealed class HopSendingTime : DateTimeField
@@ -7526,7 +7526,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// HopRefID Field
     /// </summary>/
     public sealed class HopRefID : IntField
@@ -7538,7 +7538,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MidPx Field
     /// </summary>/
     public sealed class MidPx : DecimalField
@@ -7550,7 +7550,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidYield Field
     /// </summary>/
     public sealed class BidYield : DecimalField
@@ -7562,7 +7562,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MidYield Field
     /// </summary>/
     public sealed class MidYield : DecimalField
@@ -7574,7 +7574,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OfferYield Field
     /// </summary>/
     public sealed class OfferYield : DecimalField
@@ -7586,7 +7586,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ClearingFeeIndicator Field
     /// </summary>/
     public sealed class ClearingFeeIndicator : StringField
@@ -7598,7 +7598,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// WorkingIndicator Field
     /// </summary>/
     public sealed class WorkingIndicator : BooleanField
@@ -7610,7 +7610,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegLastPx Field
     /// </summary>/
     public sealed class LegLastPx : DecimalField
@@ -7622,7 +7622,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PriorityIndicator Field
     /// </summary>/
     public sealed class PriorityIndicator : IntField
@@ -7634,7 +7634,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PriceImprovement Field
     /// </summary>/
     public sealed class PriceImprovement : DecimalField
@@ -7646,7 +7646,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Price2 Field
     /// </summary>/
     public sealed class Price2 : DecimalField
@@ -7658,7 +7658,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastForwardPoints2 Field
     /// </summary>/
     public sealed class LastForwardPoints2 : DecimalField
@@ -7670,7 +7670,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidForwardPoints2 Field
     /// </summary>/
     public sealed class BidForwardPoints2 : DecimalField
@@ -7682,7 +7682,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OfferForwardPoints2 Field
     /// </summary>/
     public sealed class OfferForwardPoints2 : DecimalField
@@ -7694,7 +7694,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RFQReqID Field
     /// </summary>/
     public sealed class RFQReqID : StringField
@@ -7706,7 +7706,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MktBidPx Field
     /// </summary>/
     public sealed class MktBidPx : DecimalField
@@ -7718,7 +7718,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MktOfferPx Field
     /// </summary>/
     public sealed class MktOfferPx : DecimalField
@@ -7730,7 +7730,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MinBidSize Field
     /// </summary>/
     public sealed class MinBidSize : DecimalField
@@ -7742,7 +7742,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MinOfferSize Field
     /// </summary>/
     public sealed class MinOfferSize : DecimalField
@@ -7754,7 +7754,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteStatusReqID Field
     /// </summary>/
     public sealed class QuoteStatusReqID : StringField
@@ -7766,7 +7766,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegalConfirm Field
     /// </summary>/
     public sealed class LegalConfirm : BooleanField
@@ -7778,7 +7778,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingLastPx Field
     /// </summary>/
     public sealed class UnderlyingLastPx : DecimalField
@@ -7790,7 +7790,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingLastQty Field
     /// </summary>/
     public sealed class UnderlyingLastQty : DecimalField
@@ -7802,7 +7802,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecDefStatus Field
     /// </summary>/
     public sealed class SecDefStatus : IntField
@@ -7814,7 +7814,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegRefID Field
     /// </summary>/
     public sealed class LegRefID : StringField
@@ -7826,7 +7826,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContraLegRefID Field
     /// </summary>/
     public sealed class ContraLegRefID : StringField
@@ -7838,7 +7838,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlCurrBidFxRate Field
     /// </summary>/
     public sealed class SettlCurrBidFxRate : DecimalField
@@ -7850,7 +7850,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlCurrOfferFxRate Field
     /// </summary>/
     public sealed class SettlCurrOfferFxRate : DecimalField
@@ -7862,7 +7862,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteRequestRejectReason Field
     /// </summary>/
     public sealed class QuoteRequestRejectReason : IntField
@@ -7874,7 +7874,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideComplianceID Field
     /// </summary>/
     public sealed class SideComplianceID : StringField
@@ -7886,7 +7886,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AcctIDSource Field
     /// </summary>/
     public sealed class AcctIDSource : IntField
@@ -7898,7 +7898,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocAcctIDSource Field
     /// </summary>/
     public sealed class AllocAcctIDSource : IntField
@@ -7910,7 +7910,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BenchmarkPrice Field
     /// </summary>/
     public sealed class BenchmarkPrice : DecimalField
@@ -7922,7 +7922,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BenchmarkPriceType Field
     /// </summary>/
     public sealed class BenchmarkPriceType : IntField
@@ -7934,7 +7934,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ConfirmID Field
     /// </summary>/
     public sealed class ConfirmID : StringField
@@ -7946,7 +7946,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ConfirmStatus Field
     /// </summary>/
     public sealed class ConfirmStatus : IntField
@@ -7958,7 +7958,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ConfirmTransType Field
     /// </summary>/
     public sealed class ConfirmTransType : IntField
@@ -7970,7 +7970,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContractSettlMonth Field
     /// </summary>/
     public sealed class ContractSettlMonth : StringField
@@ -7982,7 +7982,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeliveryForm Field
     /// </summary>/
     public sealed class DeliveryForm : IntField
@@ -7994,7 +7994,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastParPx Field
     /// </summary>/
     public sealed class LastParPx : DecimalField
@@ -8006,7 +8006,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoLegAllocs Field
     /// </summary>/
     public sealed class NoLegAllocs : IntField
@@ -8018,7 +8018,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegAllocAccount Field
     /// </summary>/
     public sealed class LegAllocAccount : StringField
@@ -8030,7 +8030,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegIndividualAllocID Field
     /// </summary>/
     public sealed class LegIndividualAllocID : StringField
@@ -8042,7 +8042,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegAllocQty Field
     /// </summary>/
     public sealed class LegAllocQty : DecimalField
@@ -8054,7 +8054,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegAllocAcctIDSource Field
     /// </summary>/
     public sealed class LegAllocAcctIDSource : StringField
@@ -8066,7 +8066,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSettlCurrency Field
     /// </summary>/
     public sealed class LegSettlCurrency : DecimalField
@@ -8078,7 +8078,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegBenchmarkCurveCurrency Field
     /// </summary>/
     public sealed class LegBenchmarkCurveCurrency : DecimalField
@@ -8090,7 +8090,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegBenchmarkCurveName Field
     /// </summary>/
     public sealed class LegBenchmarkCurveName : StringField
@@ -8102,7 +8102,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegBenchmarkCurvePoint Field
     /// </summary>/
     public sealed class LegBenchmarkCurvePoint : StringField
@@ -8114,7 +8114,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegBenchmarkPrice Field
     /// </summary>/
     public sealed class LegBenchmarkPrice : DecimalField
@@ -8126,7 +8126,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegBenchmarkPriceType Field
     /// </summary>/
     public sealed class LegBenchmarkPriceType : IntField
@@ -8138,7 +8138,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegBidPx Field
     /// </summary>/
     public sealed class LegBidPx : DecimalField
@@ -8150,7 +8150,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegIOIQty Field
     /// </summary>/
     public sealed class LegIOIQty : StringField
@@ -8162,7 +8162,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoLegStipulations Field
     /// </summary>/
     public sealed class NoLegStipulations : IntField
@@ -8174,7 +8174,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegOfferPx Field
     /// </summary>/
     public sealed class LegOfferPx : DecimalField
@@ -8186,7 +8186,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegOrderQty Field
     /// </summary>/
     public sealed class LegOrderQty : DecimalField
@@ -8198,7 +8198,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegPriceType Field
     /// </summary>/
     public sealed class LegPriceType : IntField
@@ -8210,7 +8210,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegQty Field
     /// </summary>/
     public sealed class LegQty : DecimalField
@@ -8222,7 +8222,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegStipulationType Field
     /// </summary>/
     public sealed class LegStipulationType : StringField
@@ -8234,7 +8234,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegStipulationValue Field
     /// </summary>/
     public sealed class LegStipulationValue : StringField
@@ -8246,7 +8246,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSwapType Field
     /// </summary>/
     public sealed class LegSwapType : IntField
@@ -8258,7 +8258,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Pool Field
     /// </summary>/
     public sealed class Pool : StringField
@@ -8270,7 +8270,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuotePriceType Field
     /// </summary>/
     public sealed class QuotePriceType : IntField
@@ -8282,7 +8282,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteRespID Field
     /// </summary>/
     public sealed class QuoteRespID : StringField
@@ -8294,7 +8294,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteRespType Field
     /// </summary>/
     public sealed class QuoteRespType : IntField
@@ -8306,7 +8306,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuoteQualifier Field
     /// </summary>/
     public sealed class QuoteQualifier : CharField
@@ -8318,7 +8318,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// YieldRedemptionDate Field
     /// </summary>/
     public sealed class YieldRedemptionDate : StringField
@@ -8330,7 +8330,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// YieldRedemptionPrice Field
     /// </summary>/
     public sealed class YieldRedemptionPrice : DecimalField
@@ -8342,7 +8342,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// YieldRedemptionPriceType Field
     /// </summary>/
     public sealed class YieldRedemptionPriceType : IntField
@@ -8354,7 +8354,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BenchmarkSecurityID Field
     /// </summary>/
     public sealed class BenchmarkSecurityID : StringField
@@ -8366,7 +8366,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ReversalIndicator Field
     /// </summary>/
     public sealed class ReversalIndicator : BooleanField
@@ -8378,7 +8378,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// YieldCalcDate Field
     /// </summary>/
     public sealed class YieldCalcDate : StringField
@@ -8390,7 +8390,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoPositions Field
     /// </summary>/
     public sealed class NoPositions : IntField
@@ -8402,7 +8402,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosType Field
     /// </summary>/
     public sealed class PosType : StringField
@@ -8414,7 +8414,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LongQty Field
     /// </summary>/
     public sealed class LongQty : DecimalField
@@ -8426,7 +8426,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ShortQty Field
     /// </summary>/
     public sealed class ShortQty : DecimalField
@@ -8438,7 +8438,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosQtyStatus Field
     /// </summary>/
     public sealed class PosQtyStatus : IntField
@@ -8450,7 +8450,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosAmtType Field
     /// </summary>/
     public sealed class PosAmtType : StringField
@@ -8462,7 +8462,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosAmt Field
     /// </summary>/
     public sealed class PosAmt : DecimalField
@@ -8474,7 +8474,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosTransType Field
     /// </summary>/
     public sealed class PosTransType : IntField
@@ -8486,7 +8486,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosReqID Field
     /// </summary>/
     public sealed class PosReqID : StringField
@@ -8498,7 +8498,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoUnderlyings Field
     /// </summary>/
     public sealed class NoUnderlyings : IntField
@@ -8510,7 +8510,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosMaintAction Field
     /// </summary>/
     public sealed class PosMaintAction : IntField
@@ -8522,7 +8522,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrigPosReqRefID Field
     /// </summary>/
     public sealed class OrigPosReqRefID : StringField
@@ -8534,7 +8534,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosMaintRptRefID Field
     /// </summary>/
     public sealed class PosMaintRptRefID : StringField
@@ -8546,7 +8546,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ClearingBusinessDate Field
     /// </summary>/
     public sealed class ClearingBusinessDate : StringField
@@ -8558,7 +8558,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlSessID Field
     /// </summary>/
     public sealed class SettlSessID : StringField
@@ -8570,7 +8570,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlSessSubID Field
     /// </summary>/
     public sealed class SettlSessSubID : StringField
@@ -8582,7 +8582,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AdjustmentType Field
     /// </summary>/
     public sealed class AdjustmentType : IntField
@@ -8594,7 +8594,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContraryInstructionIndicator Field
     /// </summary>/
     public sealed class ContraryInstructionIndicator : BooleanField
@@ -8606,7 +8606,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PriorSpreadIndicator Field
     /// </summary>/
     public sealed class PriorSpreadIndicator : BooleanField
@@ -8618,7 +8618,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosMaintRptID Field
     /// </summary>/
     public sealed class PosMaintRptID : StringField
@@ -8630,7 +8630,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosMaintStatus Field
     /// </summary>/
     public sealed class PosMaintStatus : IntField
@@ -8642,7 +8642,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosMaintResult Field
     /// </summary>/
     public sealed class PosMaintResult : IntField
@@ -8654,7 +8654,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosReqType Field
     /// </summary>/
     public sealed class PosReqType : IntField
@@ -8666,7 +8666,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ResponseTransportType Field
     /// </summary>/
     public sealed class ResponseTransportType : IntField
@@ -8678,7 +8678,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ResponseDestination Field
     /// </summary>/
     public sealed class ResponseDestination : StringField
@@ -8690,7 +8690,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotalNumPosReports Field
     /// </summary>/
     public sealed class TotalNumPosReports : IntField
@@ -8702,7 +8702,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosReqResult Field
     /// </summary>/
     public sealed class PosReqResult : IntField
@@ -8714,7 +8714,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PosReqStatus Field
     /// </summary>/
     public sealed class PosReqStatus : IntField
@@ -8726,7 +8726,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlPrice Field
     /// </summary>/
     public sealed class SettlPrice : DecimalField
@@ -8738,7 +8738,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlPriceType Field
     /// </summary>/
     public sealed class SettlPriceType : IntField
@@ -8750,7 +8750,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSettlPrice Field
     /// </summary>/
     public sealed class UnderlyingSettlPrice : DecimalField
@@ -8762,7 +8762,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSettlPriceType Field
     /// </summary>/
     public sealed class UnderlyingSettlPriceType : IntField
@@ -8774,7 +8774,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PriorSettlPrice Field
     /// </summary>/
     public sealed class PriorSettlPrice : DecimalField
@@ -8786,7 +8786,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoQuoteQualifiers Field
     /// </summary>/
     public sealed class NoQuoteQualifiers : IntField
@@ -8798,7 +8798,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocSettlCurrency Field
     /// </summary>/
     public sealed class AllocSettlCurrency : DecimalField
@@ -8810,7 +8810,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocSettlCurrAmt Field
     /// </summary>/
     public sealed class AllocSettlCurrAmt : DecimalField
@@ -8822,7 +8822,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InterestAtMaturity Field
     /// </summary>/
     public sealed class InterestAtMaturity : DecimalField
@@ -8834,7 +8834,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegDatedDate Field
     /// </summary>/
     public sealed class LegDatedDate : StringField
@@ -8846,7 +8846,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegPool Field
     /// </summary>/
     public sealed class LegPool : StringField
@@ -8858,7 +8858,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocInterestAtMaturity Field
     /// </summary>/
     public sealed class AllocInterestAtMaturity : DecimalField
@@ -8870,7 +8870,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocAccruedInterestAmt Field
     /// </summary>/
     public sealed class AllocAccruedInterestAmt : DecimalField
@@ -8882,7 +8882,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeliveryDate Field
     /// </summary>/
     public sealed class DeliveryDate : StringField
@@ -8894,7 +8894,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AssignmentMethod Field
     /// </summary>/
     public sealed class AssignmentMethod : CharField
@@ -8906,7 +8906,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AssignmentUnit Field
     /// </summary>/
     public sealed class AssignmentUnit : DecimalField
@@ -8918,7 +8918,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OpenInterest Field
     /// </summary>/
     public sealed class OpenInterest : DecimalField
@@ -8930,7 +8930,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExerciseMethod Field
     /// </summary>/
     public sealed class ExerciseMethod : CharField
@@ -8942,7 +8942,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotNumTradeReports Field
     /// </summary>/
     public sealed class TotNumTradeReports : IntField
@@ -8954,7 +8954,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeRequestResult Field
     /// </summary>/
     public sealed class TradeRequestResult : IntField
@@ -8966,7 +8966,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeRequestStatus Field
     /// </summary>/
     public sealed class TradeRequestStatus : IntField
@@ -8978,7 +8978,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeReportRejectReason Field
     /// </summary>/
     public sealed class TradeReportRejectReason : IntField
@@ -8990,7 +8990,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideMultiLegReportingType Field
     /// </summary>/
     public sealed class SideMultiLegReportingType : IntField
@@ -9002,7 +9002,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoPosAmt Field
     /// </summary>/
     public sealed class NoPosAmt : IntField
@@ -9014,7 +9014,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AutoAcceptIndicator Field
     /// </summary>/
     public sealed class AutoAcceptIndicator : BooleanField
@@ -9026,7 +9026,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocReportID Field
     /// </summary>/
     public sealed class AllocReportID : StringField
@@ -9038,7 +9038,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoNested2PartyIDs Field
     /// </summary>/
     public sealed class NoNested2PartyIDs : IntField
@@ -9050,7 +9050,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Nested2PartyID Field
     /// </summary>/
     public sealed class Nested2PartyID : StringField
@@ -9062,7 +9062,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Nested2PartyIDSource Field
     /// </summary>/
     public sealed class Nested2PartyIDSource : CharField
@@ -9074,7 +9074,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Nested2PartyRole Field
     /// </summary>/
     public sealed class Nested2PartyRole : IntField
@@ -9086,7 +9086,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Nested2PartySubID Field
     /// </summary>/
     public sealed class Nested2PartySubID : StringField
@@ -9098,7 +9098,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BenchmarkSecurityIDSource Field
     /// </summary>/
     public sealed class BenchmarkSecurityIDSource : StringField
@@ -9110,7 +9110,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecuritySubType Field
     /// </summary>/
     public sealed class SecuritySubType : StringField
@@ -9122,7 +9122,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSecuritySubType Field
     /// </summary>/
     public sealed class UnderlyingSecuritySubType : StringField
@@ -9134,7 +9134,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegSecuritySubType Field
     /// </summary>/
     public sealed class LegSecuritySubType : StringField
@@ -9146,7 +9146,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllowableOneSidednessPct Field
     /// </summary>/
     public sealed class AllowableOneSidednessPct : DecimalField
@@ -9158,7 +9158,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllowableOneSidednessValue Field
     /// </summary>/
     public sealed class AllowableOneSidednessValue : DecimalField
@@ -9170,7 +9170,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllowableOneSidednessCurr Field
     /// </summary>/
     public sealed class AllowableOneSidednessCurr : DecimalField
@@ -9182,7 +9182,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoTrdRegTimestamps Field
     /// </summary>/
     public sealed class NoTrdRegTimestamps : IntField
@@ -9194,7 +9194,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TrdRegTimestamp Field
     /// </summary>/
     public sealed class TrdRegTimestamp : DateTimeField
@@ -9206,7 +9206,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TrdRegTimestampType Field
     /// </summary>/
     public sealed class TrdRegTimestampType : IntField
@@ -9218,7 +9218,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TrdRegTimestampOrigin Field
     /// </summary>/
     public sealed class TrdRegTimestampOrigin : StringField
@@ -9230,7 +9230,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ConfirmRefID Field
     /// </summary>/
     public sealed class ConfirmRefID : StringField
@@ -9242,7 +9242,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ConfirmType Field
     /// </summary>/
     public sealed class ConfirmType : IntField
@@ -9254,7 +9254,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ConfirmRejReason Field
     /// </summary>/
     public sealed class ConfirmRejReason : IntField
@@ -9266,7 +9266,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BookingType Field
     /// </summary>/
     public sealed class BookingType : IntField
@@ -9278,7 +9278,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IndividualAllocRejCode Field
     /// </summary>/
     public sealed class IndividualAllocRejCode : IntField
@@ -9290,7 +9290,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlInstMsgID Field
     /// </summary>/
     public sealed class SettlInstMsgID : StringField
@@ -9302,7 +9302,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoSettlInst Field
     /// </summary>/
     public sealed class NoSettlInst : IntField
@@ -9314,7 +9314,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastUpdateTime Field
     /// </summary>/
     public sealed class LastUpdateTime : DateTimeField
@@ -9326,7 +9326,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocSettlInstType Field
     /// </summary>/
     public sealed class AllocSettlInstType : IntField
@@ -9338,7 +9338,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoSettlPartyIDs Field
     /// </summary>/
     public sealed class NoSettlPartyIDs : IntField
@@ -9350,7 +9350,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlPartyID Field
     /// </summary>/
     public sealed class SettlPartyID : StringField
@@ -9362,7 +9362,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlPartyIDSource Field
     /// </summary>/
     public sealed class SettlPartyIDSource : CharField
@@ -9374,7 +9374,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlPartyRole Field
     /// </summary>/
     public sealed class SettlPartyRole : IntField
@@ -9386,7 +9386,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlPartySubID Field
     /// </summary>/
     public sealed class SettlPartySubID : StringField
@@ -9398,7 +9398,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlPartySubIDType Field
     /// </summary>/
     public sealed class SettlPartySubIDType : IntField
@@ -9410,7 +9410,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DlvyInstType Field
     /// </summary>/
     public sealed class DlvyInstType : CharField
@@ -9422,7 +9422,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TerminationType Field
     /// </summary>/
     public sealed class TerminationType : IntField
@@ -9434,7 +9434,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NextExpectedMsgSeqNum Field
     /// </summary>/
     public sealed class NextExpectedMsgSeqNum : IntField
@@ -9446,7 +9446,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrdStatusReqID Field
     /// </summary>/
     public sealed class OrdStatusReqID : StringField
@@ -9458,7 +9458,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlInstReqID Field
     /// </summary>/
     public sealed class SettlInstReqID : StringField
@@ -9470,7 +9470,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettlInstReqRejCode Field
     /// </summary>/
     public sealed class SettlInstReqRejCode : IntField
@@ -9482,7 +9482,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryAllocID Field
     /// </summary>/
     public sealed class SecondaryAllocID : StringField
@@ -9494,7 +9494,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocReportType Field
     /// </summary>/
     public sealed class AllocReportType : IntField
@@ -9506,7 +9506,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocReportRefID Field
     /// </summary>/
     public sealed class AllocReportRefID : StringField
@@ -9518,7 +9518,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocCancReplaceReason Field
     /// </summary>/
     public sealed class AllocCancReplaceReason : IntField
@@ -9530,7 +9530,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CopyMsgIndicator Field
     /// </summary>/
     public sealed class CopyMsgIndicator : BooleanField
@@ -9542,7 +9542,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocAccountType Field
     /// </summary>/
     public sealed class AllocAccountType : IntField
@@ -9554,7 +9554,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderAvgPx Field
     /// </summary>/
     public sealed class OrderAvgPx : DecimalField
@@ -9566,7 +9566,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderBookingQty Field
     /// </summary>/
     public sealed class OrderBookingQty : DecimalField
@@ -9578,7 +9578,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoSettlPartySubIDs Field
     /// </summary>/
     public sealed class NoSettlPartySubIDs : IntField
@@ -9590,7 +9590,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoPartySubIDs Field
     /// </summary>/
     public sealed class NoPartySubIDs : IntField
@@ -9602,7 +9602,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PartySubIDType Field
     /// </summary>/
     public sealed class PartySubIDType : IntField
@@ -9614,7 +9614,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoNestedPartySubIDs Field
     /// </summary>/
     public sealed class NoNestedPartySubIDs : IntField
@@ -9626,7 +9626,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NestedPartySubIDType Field
     /// </summary>/
     public sealed class NestedPartySubIDType : IntField
@@ -9638,7 +9638,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoNested2PartySubIDs Field
     /// </summary>/
     public sealed class NoNested2PartySubIDs : IntField
@@ -9650,7 +9650,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Nested2PartySubIDType Field
     /// </summary>/
     public sealed class Nested2PartySubIDType : IntField
@@ -9662,7 +9662,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocIntermedReqType Field
     /// </summary>/
     public sealed class AllocIntermedReqType : IntField
@@ -9674,7 +9674,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingPx Field
     /// </summary>/
     public sealed class UnderlyingPx : DecimalField
@@ -9686,7 +9686,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PriceDelta Field
     /// </summary>/
     public sealed class PriceDelta : DecimalField
@@ -9698,7 +9698,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ApplQueueMax Field
     /// </summary>/
     public sealed class ApplQueueMax : IntField
@@ -9710,7 +9710,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ApplQueueDepth Field
     /// </summary>/
     public sealed class ApplQueueDepth : IntField
@@ -9722,7 +9722,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ApplQueueResolution Field
     /// </summary>/
     public sealed class ApplQueueResolution : IntField
@@ -9734,7 +9734,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ApplQueueAction Field
     /// </summary>/
     public sealed class ApplQueueAction : IntField
@@ -9746,7 +9746,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoAltMDSource Field
     /// </summary>/
     public sealed class NoAltMDSource : IntField
@@ -9758,7 +9758,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AltMDSourceID Field
     /// </summary>/
     public sealed class AltMDSourceID : StringField
@@ -9770,7 +9770,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryTradeReportID Field
     /// </summary>/
     public sealed class SecondaryTradeReportID : StringField
@@ -9782,7 +9782,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AvgPxIndicator Field
     /// </summary>/
     public sealed class AvgPxIndicator : IntField
@@ -9794,7 +9794,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeLinkID Field
     /// </summary>/
     public sealed class TradeLinkID : StringField
@@ -9806,7 +9806,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderInputDevice Field
     /// </summary>/
     public sealed class OrderInputDevice : StringField
@@ -9818,7 +9818,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingTradingSessionID Field
     /// </summary>/
     public sealed class UnderlyingTradingSessionID : StringField
@@ -9830,7 +9830,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingTradingSessionSubID Field
     /// </summary>/
     public sealed class UnderlyingTradingSessionSubID : StringField
@@ -9842,7 +9842,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeLegRefID Field
     /// </summary>/
     public sealed class TradeLegRefID : StringField
@@ -9854,7 +9854,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExchangeRule Field
     /// </summary>/
     public sealed class ExchangeRule : StringField
@@ -9866,7 +9866,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeAllocIndicator Field
     /// </summary>/
     public sealed class TradeAllocIndicator : IntField
@@ -9878,7 +9878,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExpirationCycle Field
     /// </summary>/
     public sealed class ExpirationCycle : IntField
@@ -9890,7 +9890,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TrdType Field
     /// </summary>/
     public sealed class TrdType : IntField
@@ -9902,7 +9902,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TrdSubType Field
     /// </summary>/
     public sealed class TrdSubType : IntField
@@ -9914,7 +9914,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TransferReason Field
     /// </summary>/
     public sealed class TransferReason : StringField
@@ -9926,7 +9926,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AsgnReqID Field
     /// </summary>/
     public sealed class AsgnReqID : StringField
@@ -9938,7 +9938,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotNumAssignmentReports Field
     /// </summary>/
     public sealed class TotNumAssignmentReports : IntField
@@ -9950,7 +9950,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AsgnRptID Field
     /// </summary>/
     public sealed class AsgnRptID : StringField
@@ -9962,7 +9962,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ThresholdAmount Field
     /// </summary>/
     public sealed class ThresholdAmount : DecimalField
@@ -9974,7 +9974,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegMoveType Field
     /// </summary>/
     public sealed class PegMoveType : IntField
@@ -9986,7 +9986,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegOffsetType Field
     /// </summary>/
     public sealed class PegOffsetType : IntField
@@ -9998,7 +9998,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegLimitType Field
     /// </summary>/
     public sealed class PegLimitType : IntField
@@ -10010,7 +10010,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegRoundDirection Field
     /// </summary>/
     public sealed class PegRoundDirection : IntField
@@ -10022,7 +10022,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PeggedPrice Field
     /// </summary>/
     public sealed class PeggedPrice : DecimalField
@@ -10034,7 +10034,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegScope Field
     /// </summary>/
     public sealed class PegScope : IntField
@@ -10046,7 +10046,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DiscretionMoveType Field
     /// </summary>/
     public sealed class DiscretionMoveType : IntField
@@ -10058,7 +10058,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DiscretionOffsetType Field
     /// </summary>/
     public sealed class DiscretionOffsetType : IntField
@@ -10070,7 +10070,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DiscretionLimitType Field
     /// </summary>/
     public sealed class DiscretionLimitType : IntField
@@ -10082,7 +10082,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DiscretionRoundDirection Field
     /// </summary>/
     public sealed class DiscretionRoundDirection : IntField
@@ -10094,7 +10094,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DiscretionPrice Field
     /// </summary>/
     public sealed class DiscretionPrice : DecimalField
@@ -10106,7 +10106,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DiscretionScope Field
     /// </summary>/
     public sealed class DiscretionScope : IntField
@@ -10118,7 +10118,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TargetStrategy Field
     /// </summary>/
     public sealed class TargetStrategy : IntField
@@ -10130,7 +10130,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TargetStrategyParameters Field
     /// </summary>/
     public sealed class TargetStrategyParameters : StringField
@@ -10142,7 +10142,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ParticipationRate Field
     /// </summary>/
     public sealed class ParticipationRate : DecimalField
@@ -10154,7 +10154,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TargetStrategyPerformance Field
     /// </summary>/
     public sealed class TargetStrategyPerformance : DecimalField
@@ -10166,7 +10166,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastLiquidityInd Field
     /// </summary>/
     public sealed class LastLiquidityInd : IntField
@@ -10178,7 +10178,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PublishTrdIndicator Field
     /// </summary>/
     public sealed class PublishTrdIndicator : BooleanField
@@ -10190,7 +10190,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ShortSaleReason Field
     /// </summary>/
     public sealed class ShortSaleReason : IntField
@@ -10202,7 +10202,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QtyType Field
     /// </summary>/
     public sealed class QtyType : IntField
@@ -10214,7 +10214,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryTrdType Field
     /// </summary>/
     public sealed class SecondaryTrdType : IntField
@@ -10226,7 +10226,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeReportType Field
     /// </summary>/
     public sealed class TradeReportType : IntField
@@ -10238,7 +10238,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocNoOrdersType Field
     /// </summary>/
     public sealed class AllocNoOrdersType : IntField
@@ -10250,7 +10250,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SharedCommission Field
     /// </summary>/
     public sealed class SharedCommission : DecimalField
@@ -10262,7 +10262,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ConfirmReqID Field
     /// </summary>/
     public sealed class ConfirmReqID : StringField
@@ -10274,7 +10274,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AvgParPx Field
     /// </summary>/
     public sealed class AvgParPx : DecimalField
@@ -10286,7 +10286,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ReportedPx Field
     /// </summary>/
     public sealed class ReportedPx : DecimalField
@@ -10298,7 +10298,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoCapacities Field
     /// </summary>/
     public sealed class NoCapacities : IntField
@@ -10310,7 +10310,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderCapacityQty Field
     /// </summary>/
     public sealed class OrderCapacityQty : DecimalField
@@ -10322,7 +10322,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoEvents Field
     /// </summary>/
     public sealed class NoEvents : IntField
@@ -10334,7 +10334,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EventType Field
     /// </summary>/
     public sealed class EventType : IntField
@@ -10346,7 +10346,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EventDate Field
     /// </summary>/
     public sealed class EventDate : StringField
@@ -10358,7 +10358,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EventPx Field
     /// </summary>/
     public sealed class EventPx : DecimalField
@@ -10370,7 +10370,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EventText Field
     /// </summary>/
     public sealed class EventText : StringField
@@ -10382,7 +10382,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PctAtRisk Field
     /// </summary>/
     public sealed class PctAtRisk : DecimalField
@@ -10394,7 +10394,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoInstrAttrib Field
     /// </summary>/
     public sealed class NoInstrAttrib : IntField
@@ -10406,7 +10406,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InstrAttribType Field
     /// </summary>/
     public sealed class InstrAttribType : IntField
@@ -10418,7 +10418,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InstrAttribValue Field
     /// </summary>/
     public sealed class InstrAttribValue : StringField
@@ -10430,7 +10430,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DatedDate Field
     /// </summary>/
     public sealed class DatedDate : StringField
@@ -10442,7 +10442,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InterestAccrualDate Field
     /// </summary>/
     public sealed class InterestAccrualDate : StringField
@@ -10454,7 +10454,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CPProgram Field
     /// </summary>/
     public sealed class CPProgram : IntField
@@ -10466,7 +10466,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CPRegType Field
     /// </summary>/
     public sealed class CPRegType : StringField
@@ -10478,7 +10478,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCPProgram Field
     /// </summary>/
     public sealed class UnderlyingCPProgram : StringField
@@ -10490,7 +10490,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCPRegType Field
     /// </summary>/
     public sealed class UnderlyingCPRegType : StringField
@@ -10502,7 +10502,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingQty Field
     /// </summary>/
     public sealed class UnderlyingQty : DecimalField
@@ -10514,7 +10514,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TrdMatchID Field
     /// </summary>/
     public sealed class TrdMatchID : StringField
@@ -10526,7 +10526,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryTradeReportRefID Field
     /// </summary>/
     public sealed class SecondaryTradeReportRefID : StringField
@@ -10538,7 +10538,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingDirtyPrice Field
     /// </summary>/
     public sealed class UnderlyingDirtyPrice : DecimalField
@@ -10550,7 +10550,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingEndPrice Field
     /// </summary>/
     public sealed class UnderlyingEndPrice : DecimalField
@@ -10562,7 +10562,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingStartValue Field
     /// </summary>/
     public sealed class UnderlyingStartValue : DecimalField
@@ -10574,7 +10574,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCurrentValue Field
     /// </summary>/
     public sealed class UnderlyingCurrentValue : DecimalField
@@ -10586,7 +10586,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingEndValue Field
     /// </summary>/
     public sealed class UnderlyingEndValue : DecimalField
@@ -10598,7 +10598,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoUnderlyingStips Field
     /// </summary>/
     public sealed class NoUnderlyingStips : IntField
@@ -10610,7 +10610,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingStipType Field
     /// </summary>/
     public sealed class UnderlyingStipType : StringField
@@ -10622,7 +10622,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingStipValue Field
     /// </summary>/
     public sealed class UnderlyingStipValue : StringField
@@ -10634,7 +10634,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MaturityNetMoney Field
     /// </summary>/
     public sealed class MaturityNetMoney : DecimalField
@@ -10646,7 +10646,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MiscFeeBasis Field
     /// </summary>/
     public sealed class MiscFeeBasis : IntField
@@ -10658,7 +10658,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotNoAllocs Field
     /// </summary>/
     public sealed class TotNoAllocs : IntField
@@ -10670,7 +10670,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastFragment Field
     /// </summary>/
     public sealed class LastFragment : BooleanField
@@ -10682,7 +10682,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollReqID Field
     /// </summary>/
     public sealed class CollReqID : StringField
@@ -10694,7 +10694,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollAsgnReason Field
     /// </summary>/
     public sealed class CollAsgnReason : IntField
@@ -10706,7 +10706,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollInquiryQualifier Field
     /// </summary>/
     public sealed class CollInquiryQualifier : IntField
@@ -10718,7 +10718,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoTrades Field
     /// </summary>/
     public sealed class NoTrades : IntField
@@ -10730,7 +10730,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MarginRatio Field
     /// </summary>/
     public sealed class MarginRatio : DecimalField
@@ -10742,7 +10742,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MarginExcess Field
     /// </summary>/
     public sealed class MarginExcess : DecimalField
@@ -10754,7 +10754,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotalNetValue Field
     /// </summary>/
     public sealed class TotalNetValue : DecimalField
@@ -10766,7 +10766,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CashOutstanding Field
     /// </summary>/
     public sealed class CashOutstanding : DecimalField
@@ -10778,7 +10778,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollAsgnID Field
     /// </summary>/
     public sealed class CollAsgnID : StringField
@@ -10790,7 +10790,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollAsgnTransType Field
     /// </summary>/
     public sealed class CollAsgnTransType : IntField
@@ -10802,7 +10802,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollRespID Field
     /// </summary>/
     public sealed class CollRespID : StringField
@@ -10814,7 +10814,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollAsgnRespType Field
     /// </summary>/
     public sealed class CollAsgnRespType : IntField
@@ -10826,7 +10826,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollAsgnRejectReason Field
     /// </summary>/
     public sealed class CollAsgnRejectReason : IntField
@@ -10838,7 +10838,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollAsgnRefID Field
     /// </summary>/
     public sealed class CollAsgnRefID : StringField
@@ -10850,7 +10850,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollRptID Field
     /// </summary>/
     public sealed class CollRptID : StringField
@@ -10862,7 +10862,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollInquiryID Field
     /// </summary>/
     public sealed class CollInquiryID : StringField
@@ -10874,7 +10874,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollStatus Field
     /// </summary>/
     public sealed class CollStatus : IntField
@@ -10886,7 +10886,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TotNumReports Field
     /// </summary>/
     public sealed class TotNumReports : IntField
@@ -10898,7 +10898,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastRptRequested Field
     /// </summary>/
     public sealed class LastRptRequested : BooleanField
@@ -10910,7 +10910,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AgreementDesc Field
     /// </summary>/
     public sealed class AgreementDesc : StringField
@@ -10922,7 +10922,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AgreementID Field
     /// </summary>/
     public sealed class AgreementID : StringField
@@ -10934,7 +10934,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AgreementDate Field
     /// </summary>/
     public sealed class AgreementDate : StringField
@@ -10946,7 +10946,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StartDate Field
     /// </summary>/
     public sealed class StartDate : StringField
@@ -10958,7 +10958,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EndDate Field
     /// </summary>/
     public sealed class EndDate : StringField
@@ -10970,7 +10970,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AgreementCurrency Field
     /// </summary>/
     public sealed class AgreementCurrency : DecimalField
@@ -10982,7 +10982,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeliveryType Field
     /// </summary>/
     public sealed class DeliveryType : IntField
@@ -10994,7 +10994,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EndAccruedInterestAmt Field
     /// </summary>/
     public sealed class EndAccruedInterestAmt : DecimalField
@@ -11006,7 +11006,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StartCash Field
     /// </summary>/
     public sealed class StartCash : DecimalField
@@ -11018,7 +11018,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// EndCash Field
     /// </summary>/
     public sealed class EndCash : DecimalField
@@ -11030,7 +11030,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UserRequestID Field
     /// </summary>/
     public sealed class UserRequestID : StringField
@@ -11042,7 +11042,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UserRequestType Field
     /// </summary>/
     public sealed class UserRequestType : IntField
@@ -11054,7 +11054,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NewPassword Field
     /// </summary>/
     public sealed class NewPassword : StringField
@@ -11066,7 +11066,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UserStatus Field
     /// </summary>/
     public sealed class UserStatus : IntField
@@ -11078,7 +11078,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UserStatusText Field
     /// </summary>/
     public sealed class UserStatusText : StringField
@@ -11090,7 +11090,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StatusValue Field
     /// </summary>/
     public sealed class StatusValue : IntField
@@ -11102,7 +11102,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StatusText Field
     /// </summary>/
     public sealed class StatusText : StringField
@@ -11114,7 +11114,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefCompID Field
     /// </summary>/
     public sealed class RefCompID : StringField
@@ -11126,7 +11126,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefSubID Field
     /// </summary>/
     public sealed class RefSubID : StringField
@@ -11138,7 +11138,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NetworkResponseID Field
     /// </summary>/
     public sealed class NetworkResponseID : StringField
@@ -11150,7 +11150,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NetworkRequestID Field
     /// </summary>/
     public sealed class NetworkRequestID : StringField
@@ -11162,7 +11162,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastNetworkResponseID Field
     /// </summary>/
     public sealed class LastNetworkResponseID : StringField
@@ -11174,7 +11174,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NetworkRequestType Field
     /// </summary>/
     public sealed class NetworkRequestType : IntField
@@ -11186,7 +11186,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoCompIDs Field
     /// </summary>/
     public sealed class NoCompIDs : IntField
@@ -11198,7 +11198,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NetworkStatusResponseType Field
     /// </summary>/
     public sealed class NetworkStatusResponseType : IntField
@@ -11210,7 +11210,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoCollInquiryQualifier Field
     /// </summary>/
     public sealed class NoCollInquiryQualifier : IntField
@@ -11222,7 +11222,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TrdRptStatus Field
     /// </summary>/
     public sealed class TrdRptStatus : IntField
@@ -11234,7 +11234,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AffirmStatus Field
     /// </summary>/
     public sealed class AffirmStatus : IntField
@@ -11246,7 +11246,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingStrikeCurrency Field
     /// </summary>/
     public sealed class UnderlyingStrikeCurrency : DecimalField
@@ -11258,7 +11258,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegStrikeCurrency Field
     /// </summary>/
     public sealed class LegStrikeCurrency : DecimalField
@@ -11270,7 +11270,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TimeBracket Field
     /// </summary>/
     public sealed class TimeBracket : StringField
@@ -11282,7 +11282,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollAction Field
     /// </summary>/
     public sealed class CollAction : IntField
@@ -11294,7 +11294,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollInquiryStatus Field
     /// </summary>/
     public sealed class CollInquiryStatus : IntField
@@ -11306,7 +11306,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollInquiryResult Field
     /// </summary>/
     public sealed class CollInquiryResult : IntField
@@ -11318,7 +11318,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StrikeCurrency Field
     /// </summary>/
     public sealed class StrikeCurrency : DecimalField
@@ -11330,7 +11330,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoNested3PartyIDs Field
     /// </summary>/
     public sealed class NoNested3PartyIDs : IntField
@@ -11342,7 +11342,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Nested3PartyID Field
     /// </summary>/
     public sealed class Nested3PartyID : StringField
@@ -11354,7 +11354,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Nested3PartyIDSource Field
     /// </summary>/
     public sealed class Nested3PartyIDSource : CharField
@@ -11366,7 +11366,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Nested3PartyRole Field
     /// </summary>/
     public sealed class Nested3PartyRole : IntField
@@ -11378,7 +11378,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoNested3PartySubIDs Field
     /// </summary>/
     public sealed class NoNested3PartySubIDs : IntField
@@ -11390,7 +11390,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Nested3PartySubID Field
     /// </summary>/
     public sealed class Nested3PartySubID : StringField
@@ -11402,7 +11402,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// Nested3PartySubIDType Field
     /// </summary>/
     public sealed class Nested3PartySubIDType : IntField
@@ -11414,7 +11414,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegContractSettlMonth Field
     /// </summary>/
     public sealed class LegContractSettlMonth : StringField
@@ -11426,7 +11426,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegInterestAccrualDate Field
     /// </summary>/
     public sealed class LegInterestAccrualDate : StringField
@@ -11438,7 +11438,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoStrategyParameters Field
     /// </summary>/
     public sealed class NoStrategyParameters : IntField
@@ -11450,7 +11450,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StrategyParameterName Field
     /// </summary>/
     public sealed class StrategyParameterName : StringField
@@ -11462,7 +11462,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StrategyParameterType Field
     /// </summary>/
     public sealed class StrategyParameterType : IntField
@@ -11474,7 +11474,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StrategyParameterValue Field
     /// </summary>/
     public sealed class StrategyParameterValue : StringField
@@ -11486,7 +11486,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// HostCrossID Field
     /// </summary>/
     public sealed class HostCrossID : StringField
@@ -11498,7 +11498,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideTimeInForce Field
     /// </summary>/
     public sealed class SideTimeInForce : DateTimeField
@@ -11510,7 +11510,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDReportID Field
     /// </summary>/
     public sealed class MDReportID : IntField
@@ -11522,7 +11522,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityReportID Field
     /// </summary>/
     public sealed class SecurityReportID : IntField
@@ -11534,7 +11534,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityStatus Field
     /// </summary>/
     public sealed class SecurityStatus : StringField
@@ -11546,7 +11546,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SettleOnOpenFlag Field
     /// </summary>/
     public sealed class SettleOnOpenFlag : StringField
@@ -11558,7 +11558,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StrikeMultiplier Field
     /// </summary>/
     public sealed class StrikeMultiplier : DecimalField
@@ -11570,7 +11570,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// StrikeValue Field
     /// </summary>/
     public sealed class StrikeValue : DecimalField
@@ -11582,7 +11582,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MinPriceIncrement Field
     /// </summary>/
     public sealed class MinPriceIncrement : DecimalField
@@ -11594,7 +11594,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PositionLimit Field
     /// </summary>/
     public sealed class PositionLimit : IntField
@@ -11606,7 +11606,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NTPositionLimit Field
     /// </summary>/
     public sealed class NTPositionLimit : IntField
@@ -11618,7 +11618,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingAllocationPercent Field
     /// </summary>/
     public sealed class UnderlyingAllocationPercent : DecimalField
@@ -11630,7 +11630,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCashAmount Field
     /// </summary>/
     public sealed class UnderlyingCashAmount : DecimalField
@@ -11642,7 +11642,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCashType Field
     /// </summary>/
     public sealed class UnderlyingCashType : StringField
@@ -11654,7 +11654,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSettlementType Field
     /// </summary>/
     public sealed class UnderlyingSettlementType : IntField
@@ -11666,7 +11666,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// QuantityDate Field
     /// </summary>/
     public sealed class QuantityDate : StringField
@@ -11678,7 +11678,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ContIntRptID Field
     /// </summary>/
     public sealed class ContIntRptID : StringField
@@ -11690,7 +11690,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LateIndicator Field
     /// </summary>/
     public sealed class LateIndicator : BooleanField
@@ -11702,7 +11702,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InputSource Field
     /// </summary>/
     public sealed class InputSource : StringField
@@ -11714,7 +11714,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecurityUpdateAction Field
     /// </summary>/
     public sealed class SecurityUpdateAction : CharField
@@ -11726,7 +11726,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoExpiration Field
     /// </summary>/
     public sealed class NoExpiration : IntField
@@ -11738,7 +11738,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExpType Field
     /// </summary>/
     public sealed class ExpType : IntField
@@ -11750,7 +11750,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExpQty Field
     /// </summary>/
     public sealed class ExpQty : DecimalField
@@ -11762,7 +11762,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoUnderlyingAmounts Field
     /// </summary>/
     public sealed class NoUnderlyingAmounts : IntField
@@ -11774,7 +11774,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingPayAmount Field
     /// </summary>/
     public sealed class UnderlyingPayAmount : DecimalField
@@ -11786,7 +11786,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCollectAmount Field
     /// </summary>/
     public sealed class UnderlyingCollectAmount : DecimalField
@@ -11798,7 +11798,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSettlementDate Field
     /// </summary>/
     public sealed class UnderlyingSettlementDate : StringField
@@ -11810,7 +11810,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSettlementStatus Field
     /// </summary>/
     public sealed class UnderlyingSettlementStatus : StringField
@@ -11822,7 +11822,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryIndividualAllocID Field
     /// </summary>/
     public sealed class SecondaryIndividualAllocID : StringField
@@ -11834,7 +11834,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegReportID Field
     /// </summary>/
     public sealed class LegReportID : StringField
@@ -11846,7 +11846,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RndPx Field
     /// </summary>/
     public sealed class RndPx : DecimalField
@@ -11858,7 +11858,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// IndividualAllocType Field
     /// </summary>/
     public sealed class IndividualAllocType : IntField
@@ -11870,7 +11870,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocCustomerCapacity Field
     /// </summary>/
     public sealed class AllocCustomerCapacity : StringField
@@ -11882,7 +11882,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TierCode Field
     /// </summary>/
     public sealed class TierCode : StringField
@@ -11894,7 +11894,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnitOfMeasure Field
     /// </summary>/
     public sealed class UnitOfMeasure : StringField
@@ -11906,7 +11906,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TimeUnit Field
     /// </summary>/
     public sealed class TimeUnit : StringField
@@ -11918,7 +11918,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingUnitOfMeasure Field
     /// </summary>/
     public sealed class UnderlyingUnitOfMeasure : StringField
@@ -11930,7 +11930,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegUnitOfMeasure Field
     /// </summary>/
     public sealed class LegUnitOfMeasure : StringField
@@ -11942,7 +11942,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingTimeUnit Field
     /// </summary>/
     public sealed class UnderlyingTimeUnit : StringField
@@ -11954,7 +11954,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegTimeUnit Field
     /// </summary>/
     public sealed class LegTimeUnit : StringField
@@ -11966,7 +11966,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocMethod Field
     /// </summary>/
     public sealed class AllocMethod : IntField
@@ -11978,7 +11978,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeID Field
     /// </summary>/
     public sealed class TradeID : StringField
@@ -11990,7 +11990,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideTradeReportID Field
     /// </summary>/
     public sealed class SideTradeReportID : StringField
@@ -12002,7 +12002,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideFillStationCd Field
     /// </summary>/
     public sealed class SideFillStationCd : StringField
@@ -12014,7 +12014,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideReasonCd Field
     /// </summary>/
     public sealed class SideReasonCd : StringField
@@ -12026,7 +12026,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideTrdSubTyp Field
     /// </summary>/
     public sealed class SideTrdSubTyp : IntField
@@ -12038,7 +12038,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideQty Field
     /// </summary>/
     public sealed class SideQty : IntField
@@ -12050,7 +12050,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MessageEventSource Field
     /// </summary>/
     public sealed class MessageEventSource : StringField
@@ -12062,7 +12062,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideTrdRegTimestamp Field
     /// </summary>/
     public sealed class SideTrdRegTimestamp : DateTimeField
@@ -12074,7 +12074,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideTrdRegTimestampType Field
     /// </summary>/
     public sealed class SideTrdRegTimestampType : IntField
@@ -12086,7 +12086,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideTrdRegTimestampSrc Field
     /// </summary>/
     public sealed class SideTrdRegTimestampSrc : StringField
@@ -12098,7 +12098,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AsOfIndicator Field
     /// </summary>/
     public sealed class AsOfIndicator : CharField
@@ -12110,7 +12110,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoSideTrdRegTS Field
     /// </summary>/
     public sealed class NoSideTrdRegTS : IntField
@@ -12122,7 +12122,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegOptionRatio Field
     /// </summary>/
     public sealed class LegOptionRatio : DecimalField
@@ -12134,7 +12134,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoInstrumentParties Field
     /// </summary>/
     public sealed class NoInstrumentParties : IntField
@@ -12146,7 +12146,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InstrumentPartyID Field
     /// </summary>/
     public sealed class InstrumentPartyID : StringField
@@ -12158,7 +12158,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeVolume Field
     /// </summary>/
     public sealed class TradeVolume : DecimalField
@@ -12170,7 +12170,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDBookType Field
     /// </summary>/
     public sealed class MDBookType : IntField
@@ -12182,7 +12182,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDFeedType Field
     /// </summary>/
     public sealed class MDFeedType : StringField
@@ -12194,7 +12194,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDPriceLevel Field
     /// </summary>/
     public sealed class MDPriceLevel : IntField
@@ -12206,7 +12206,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDOriginType Field
     /// </summary>/
     public sealed class MDOriginType : IntField
@@ -12218,7 +12218,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// FirstPx Field
     /// </summary>/
     public sealed class FirstPx : DecimalField
@@ -12230,7 +12230,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntrySpotRate Field
     /// </summary>/
     public sealed class MDEntrySpotRate : DecimalField
@@ -12242,7 +12242,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDEntryForwardPoints Field
     /// </summary>/
     public sealed class MDEntryForwardPoints : DecimalField
@@ -12254,7 +12254,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ManualOrderIndicator Field
     /// </summary>/
     public sealed class ManualOrderIndicator : BooleanField
@@ -12266,7 +12266,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CustDirectedOrder Field
     /// </summary>/
     public sealed class CustDirectedOrder : BooleanField
@@ -12278,7 +12278,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ReceivedDeptID Field
     /// </summary>/
     public sealed class ReceivedDeptID : StringField
@@ -12290,7 +12290,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CustOrderHandlingInst Field
     /// </summary>/
     public sealed class CustOrderHandlingInst : StringField
@@ -12302,7 +12302,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderHandlingInstSource Field
     /// </summary>/
     public sealed class OrderHandlingInstSource : IntField
@@ -12314,7 +12314,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeskType Field
     /// </summary>/
     public sealed class DeskType : StringField
@@ -12326,7 +12326,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeskTypeSource Field
     /// </summary>/
     public sealed class DeskTypeSource : IntField
@@ -12338,7 +12338,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DeskOrderHandlingInst Field
     /// </summary>/
     public sealed class DeskOrderHandlingInst : StringField
@@ -12350,7 +12350,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExecAckStatus Field
     /// </summary>/
     public sealed class ExecAckStatus : CharField
@@ -12362,7 +12362,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingDeliveryAmount Field
     /// </summary>/
     public sealed class UnderlyingDeliveryAmount : DecimalField
@@ -12374,7 +12374,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingCapValue Field
     /// </summary>/
     public sealed class UnderlyingCapValue : DecimalField
@@ -12386,7 +12386,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingSettlMethod Field
     /// </summary>/
     public sealed class UnderlyingSettlMethod : StringField
@@ -12398,7 +12398,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryTradeID Field
     /// </summary>/
     public sealed class SecondaryTradeID : StringField
@@ -12410,7 +12410,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// FirmTradeID Field
     /// </summary>/
     public sealed class FirmTradeID : StringField
@@ -12422,7 +12422,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryFirmTradeID Field
     /// </summary>/
     public sealed class SecondaryFirmTradeID : StringField
@@ -12434,7 +12434,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CollApplType Field
     /// </summary>/
     public sealed class CollApplType : IntField
@@ -12446,7 +12446,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingAdjustedQuantity Field
     /// </summary>/
     public sealed class UnderlyingAdjustedQuantity : DecimalField
@@ -12458,7 +12458,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingFXRate Field
     /// </summary>/
     public sealed class UnderlyingFXRate : DecimalField
@@ -12470,7 +12470,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UnderlyingFXRateCalc Field
     /// </summary>/
     public sealed class UnderlyingFXRateCalc : CharField
@@ -12482,7 +12482,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocPositionEffect Field
     /// </summary>/
     public sealed class AllocPositionEffect : CharField
@@ -12494,7 +12494,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DealingCapacity Field
     /// </summary>/
     public sealed class DealingCapacity : DecimalField
@@ -12506,7 +12506,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InstrmtAssignmentMethod Field
     /// </summary>/
     public sealed class InstrmtAssignmentMethod : CharField
@@ -12518,7 +12518,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InstrumentPartyIDSource Field
     /// </summary>/
     public sealed class InstrumentPartyIDSource : CharField
@@ -12530,7 +12530,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InstrumentPartyRole Field
     /// </summary>/
     public sealed class InstrumentPartyRole : IntField
@@ -12542,7 +12542,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoInstrumentPartySubIDs Field
     /// </summary>/
     public sealed class NoInstrumentPartySubIDs : IntField
@@ -12554,7 +12554,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InstrumentPartySubID Field
     /// </summary>/
     public sealed class InstrumentPartySubID : StringField
@@ -12566,7 +12566,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// InstrumentPartySubIDType Field
     /// </summary>/
     public sealed class InstrumentPartySubIDType : IntField
@@ -12578,7 +12578,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PositionCurrency Field
     /// </summary>/
     public sealed class PositionCurrency : StringField
@@ -12590,7 +12590,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CalculatedCcyLastQty Field
     /// </summary>/
     public sealed class CalculatedCcyLastQty : DecimalField
@@ -12602,7 +12602,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AggressorIndicator Field
     /// </summary>/
     public sealed class AggressorIndicator : BooleanField
@@ -12614,7 +12614,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoUndlyInstrumentParties Field
     /// </summary>/
     public sealed class NoUndlyInstrumentParties : IntField
@@ -12626,7 +12626,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UndlyInstrumentPartyID Field
     /// </summary>/
     public sealed class UndlyInstrumentPartyID : StringField
@@ -12638,7 +12638,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UndlyInstrumentPartyIDSource Field
     /// </summary>/
     public sealed class UndlyInstrumentPartyIDSource : CharField
@@ -12650,7 +12650,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UndlyInstrumentPartyRole Field
     /// </summary>/
     public sealed class UndlyInstrumentPartyRole : IntField
@@ -12662,7 +12662,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoUndlyInstrumentPartySubIDs Field
     /// </summary>/
     public sealed class NoUndlyInstrumentPartySubIDs : IntField
@@ -12674,7 +12674,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UndlyInstrumentPartySubID Field
     /// </summary>/
     public sealed class UndlyInstrumentPartySubID : StringField
@@ -12686,7 +12686,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// UndlyInstrumentPartySubIDType Field
     /// </summary>/
     public sealed class UndlyInstrumentPartySubIDType : IntField
@@ -12698,7 +12698,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// BidSwapPoints Field
     /// </summary>/
     public sealed class BidSwapPoints : DecimalField
@@ -12710,7 +12710,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OfferSwapPoints Field
     /// </summary>/
     public sealed class OfferSwapPoints : DecimalField
@@ -12722,7 +12722,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegBidForwardPoints Field
     /// </summary>/
     public sealed class LegBidForwardPoints : DecimalField
@@ -12734,7 +12734,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegOfferForwardPoints Field
     /// </summary>/
     public sealed class LegOfferForwardPoints : DecimalField
@@ -12746,7 +12746,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SwapPoints Field
     /// </summary>/
     public sealed class SwapPoints : DecimalField
@@ -12758,7 +12758,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MDQuoteType Field
     /// </summary>/
     public sealed class MDQuoteType : IntField
@@ -12770,7 +12770,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LastSwapPoints Field
     /// </summary>/
     public sealed class LastSwapPoints : DecimalField
@@ -12782,7 +12782,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SideGrossTradeAmt Field
     /// </summary>/
     public sealed class SideGrossTradeAmt : DecimalField
@@ -12794,7 +12794,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegLastForwardPoints Field
     /// </summary>/
     public sealed class LegLastForwardPoints : DecimalField
@@ -12806,7 +12806,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegCalculatedCcyLastQty Field
     /// </summary>/
     public sealed class LegCalculatedCcyLastQty : DecimalField
@@ -12818,7 +12818,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LegGrossTradeAmt Field
     /// </summary>/
     public sealed class LegGrossTradeAmt : DecimalField
@@ -12830,7 +12830,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MaturityTime Field
     /// </summary>/
     public sealed class MaturityTime : StringField
@@ -12842,7 +12842,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefOrderID Field
     /// </summary>/
     public sealed class RefOrderID : StringField
@@ -12854,7 +12854,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefOrderIDSource Field
     /// </summary>/
     public sealed class RefOrderIDSource : CharField
@@ -12866,7 +12866,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// SecondaryDisplayQty Field
     /// </summary>/
     public sealed class SecondaryDisplayQty : DecimalField
@@ -12878,7 +12878,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DisplayWhen Field
     /// </summary>/
     public sealed class DisplayWhen : CharField
@@ -12890,7 +12890,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DisplayMethod Field
     /// </summary>/
     public sealed class DisplayMethod : CharField
@@ -12902,7 +12902,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DisplayLowQty Field
     /// </summary>/
     public sealed class DisplayLowQty : DecimalField
@@ -12914,7 +12914,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DisplayHighQty Field
     /// </summary>/
     public sealed class DisplayHighQty : DecimalField
@@ -12926,7 +12926,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DisplayMinIncr Field
     /// </summary>/
     public sealed class DisplayMinIncr : DecimalField
@@ -12938,7 +12938,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefreshQty Field
     /// </summary>/
     public sealed class RefreshQty : DecimalField
@@ -12950,7 +12950,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MatchIncrement Field
     /// </summary>/
     public sealed class MatchIncrement : DecimalField
@@ -12962,7 +12962,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// MaxPriceLevels Field
     /// </summary>/
     public sealed class MaxPriceLevels : IntField
@@ -12974,7 +12974,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PreTradeAnonymity Field
     /// </summary>/
     public sealed class PreTradeAnonymity : BooleanField
@@ -12986,7 +12986,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PriceProtectionScope Field
     /// </summary>/
     public sealed class PriceProtectionScope : CharField
@@ -12998,7 +12998,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// LotType Field
     /// </summary>/
     public sealed class LotType : CharField
@@ -13010,7 +13010,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegPriceType Field
     /// </summary>/
     public sealed class PegPriceType : IntField
@@ -13022,7 +13022,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PeggedRefPrice Field
     /// </summary>/
     public sealed class PeggedRefPrice : DecimalField
@@ -13034,7 +13034,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegSecurityIDSource Field
     /// </summary>/
     public sealed class PegSecurityIDSource : StringField
@@ -13046,7 +13046,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegSecurityID Field
     /// </summary>/
     public sealed class PegSecurityID : StringField
@@ -13058,7 +13058,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegSymbol Field
     /// </summary>/
     public sealed class PegSymbol : StringField
@@ -13070,7 +13070,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// PegSecurityDesc Field
     /// </summary>/
     public sealed class PegSecurityDesc : StringField
@@ -13082,7 +13082,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerType Field
     /// </summary>/
     public sealed class TriggerType : CharField
@@ -13094,7 +13094,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerAction Field
     /// </summary>/
     public sealed class TriggerAction : CharField
@@ -13106,7 +13106,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerPrice Field
     /// </summary>/
     public sealed class TriggerPrice : DecimalField
@@ -13118,7 +13118,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerSymbol Field
     /// </summary>/
     public sealed class TriggerSymbol : StringField
@@ -13130,7 +13130,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerSecurityID Field
     /// </summary>/
     public sealed class TriggerSecurityID : StringField
@@ -13142,7 +13142,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerSecurityIDSource Field
     /// </summary>/
     public sealed class TriggerSecurityIDSource : StringField
@@ -13154,7 +13154,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerSecurityDesc Field
     /// </summary>/
     public sealed class TriggerSecurityDesc : StringField
@@ -13166,7 +13166,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerPriceType Field
     /// </summary>/
     public sealed class TriggerPriceType : CharField
@@ -13178,7 +13178,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerPriceTypeScope Field
     /// </summary>/
     public sealed class TriggerPriceTypeScope : CharField
@@ -13190,7 +13190,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerPriceDirection Field
     /// </summary>/
     public sealed class TriggerPriceDirection : CharField
@@ -13202,7 +13202,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerNewPrice Field
     /// </summary>/
     public sealed class TriggerNewPrice : DecimalField
@@ -13214,7 +13214,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerOrderType Field
     /// </summary>/
     public sealed class TriggerOrderType : CharField
@@ -13226,7 +13226,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerNewQty Field
     /// </summary>/
     public sealed class TriggerNewQty : DecimalField
@@ -13238,7 +13238,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerTradingSessionID Field
     /// </summary>/
     public sealed class TriggerTradingSessionID : StringField
@@ -13250,7 +13250,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TriggerTradingSessionSubID Field
     /// </summary>/
     public sealed class TriggerTradingSessionSubID : StringField
@@ -13262,7 +13262,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrderCategory Field
     /// </summary>/
     public sealed class OrderCategory : CharField
@@ -13274,7 +13274,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoRootPartyIDs Field
     /// </summary>/
     public sealed class NoRootPartyIDs : IntField
@@ -13286,7 +13286,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RootPartyID Field
     /// </summary>/
     public sealed class RootPartyID : StringField
@@ -13298,7 +13298,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RootPartyIDSource Field
     /// </summary>/
     public sealed class RootPartyIDSource : CharField
@@ -13310,7 +13310,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RootPartyRole Field
     /// </summary>/
     public sealed class RootPartyRole : IntField
@@ -13322,7 +13322,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// NoRootPartySubIDs Field
     /// </summary>/
     public sealed class NoRootPartySubIDs : IntField
@@ -13334,7 +13334,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RootPartySubID Field
     /// </summary>/
     public sealed class RootPartySubID : StringField
@@ -13346,7 +13346,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RootPartySubIDType Field
     /// </summary>/
     public sealed class RootPartySubIDType : IntField
@@ -13358,7 +13358,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TradeHandlingInstr Field
     /// </summary>/
     public sealed class TradeHandlingInstr : CharField
@@ -13370,7 +13370,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrigTradeHandlingInstr Field
     /// </summary>/
     public sealed class OrigTradeHandlingInstr : CharField
@@ -13382,7 +13382,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrigTradeDate Field
     /// </summary>/
     public sealed class OrigTradeDate : StringField
@@ -13394,7 +13394,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrigTradeID Field
     /// </summary>/
     public sealed class OrigTradeID : StringField
@@ -13406,7 +13406,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// OrigSecondaryTradeID Field
     /// </summary>/
     public sealed class OrigSecondaryTradeID : StringField
@@ -13418,7 +13418,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ApplVerID Field
     /// </summary>/
     public sealed class ApplVerID : StringField
@@ -13430,7 +13430,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// CstmApplVerID Field
     /// </summary>/
     public sealed class CstmApplVerID : StringField
@@ -13442,7 +13442,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefApplVerID Field
     /// </summary>/
     public sealed class RefApplVerID : StringField
@@ -13454,7 +13454,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RefCstmApplVerID Field
     /// </summary>/
     public sealed class RefCstmApplVerID : StringField
@@ -13466,7 +13466,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// TZTransactTime Field
     /// </summary>/
     public sealed class TZTransactTime : DateTimeField
@@ -13478,7 +13478,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExDestinationIDSource Field
     /// </summary>/
     public sealed class ExDestinationIDSource : CharField
@@ -13490,7 +13490,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ReportedPxDiff Field
     /// </summary>/
     public sealed class ReportedPxDiff : BooleanField
@@ -13502,7 +13502,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// RptSys Field
     /// </summary>/
     public sealed class RptSys : StringField
@@ -13514,7 +13514,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// AllocClearingFeeIndicator Field
     /// </summary>/
     public sealed class AllocClearingFeeIndicator : StringField
@@ -13526,7 +13526,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DefaultApplVerID Field
     /// </summary>/
     public sealed class DefaultApplVerID : StringField
@@ -13538,7 +13538,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// DisplayQty Field
     /// </summary>/
     public sealed class DisplayQty : DecimalField
@@ -13550,7 +13550,7 @@ namespace QuickFix.Fields
     }
 
 
-    /// <summary>
+    /// <summary>
     /// ExchangeSpecialInstructions Field
     /// </summary>/
     public sealed class ExchangeSpecialInstructions : StringField

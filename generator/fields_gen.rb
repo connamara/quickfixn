@@ -36,7 +36,7 @@ using System;
 
 namespace QuickFix.Fields
 {
-#{fields.map {|f| field_str f }.join("\n\r")}
+#{fields.map {|f| field_str f }.join("\n")}
 }
 HERE
   end
@@ -52,7 +52,7 @@ namespace QuickFix.Fields
     /// </summary>/
     public static class Tags
     {
-#{fields.map {|f| tag_str(f)}.join("\n\r")}
+#{fields.map {|f| tag_str(f)}.join("\n")}
     }
 }
 HERE
