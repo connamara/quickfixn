@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Text;
 
 namespace QuickFIX.NET
 {
-    class Dictionary
+    public class Dictionary
     {
         #region Private Members
 
@@ -54,10 +53,10 @@ namespace QuickFIX.NET
 
         public string GetString(string key)
         {
-            string s = data_[key];
-            if(s == null)
+            string val = "";
+            if (!data_.TryGetValue(key, out val))
                 throw new ConfigError("No value for key: " + key);
-            return s;
+            return val;
         }
 
         public String GetString(string key, bool capitalize)
@@ -78,7 +77,7 @@ namespace QuickFIX.NET
             }
             catch(FormatException)
             {
-                throw new FieldConvertError("Incorrect data type");
+                throw new ConfigError("Incorrect data type");
             }
             catch(QuickFIXException)
             {
@@ -97,7 +96,7 @@ namespace QuickFIX.NET
             }
             catch (FormatException)
             {
-                throw new FieldConvertError("Incorrect data type");
+                throw new ConfigError("Incorrect data type");
             }
             catch (QuickFIXException)
             {
@@ -112,11 +111,11 @@ namespace QuickFIX.NET
                 string val = "";
                 if (!data_.TryGetValue(key, out val))
                     throw new ConfigError("No value for key: " + key);
-                return Convert.ToBoolean(val);
+                return Fields.Converters.BoolConverter.Convert(val);
             }
             catch (FormatException)
             {
-                throw new FieldConvertError("Incorrect data type");
+                throw new ConfigError("Incorrect data type");
             }
             catch (QuickFIXException)
             {
@@ -126,20 +125,22 @@ namespace QuickFIX.NET
 
         public int GetDay(string key)
         {
-            throw new System.NotImplementedException("FIXME - Dictionary.GetDay not implemented!");
-            /*
-            string s = data_[key];
-            if (s == null)
-                throw new ConfigError("No value for key.");
-            try
+            string val = "";
+            if (!data_.TryGetValue(key, out val))
+                throw new ConfigError("No value for key: " + key);
+
+            string abbr = val.Substring(0, 2).ToUpper();
+            switch(abbr)
             {
-                return DayConverter.ToInteger(s);
+                case "SU": return 1;
+                case "MO": return 2;
+                case "TU": return 3;
+                case "WE": return 4;
+                case "TH": return 5;
+                case "FR": return 6;
+                case "SA": return 7;
+                default: throw new ConfigError("Illegal value " + val + " for " + key);
             }
-            catch (System.Exception e)
-            {
-                throw new ConfigError("Invalid data type for day value: " + e.Message);
-            }
-            */
         }
 
         public void SetString(string key, string val)
@@ -159,23 +160,22 @@ namespace QuickFIX.NET
 
         public void SetBool(string key, bool val)
         {
-            data_[key] = Convert.ToString(val);
+            data_[key] = Fields.Converters.BoolConverter.Convert(val);
         }
 
         public void SetDay(string key, int val)
         {
-            throw new System.NotImplementedException("FIXME - Dictionary.SetDay not implemented!");
-            /*
-            try
+            switch(val)
             {
-                data_[key] = DayConverter.ToString(val));
+                case 1: SetString(key, "SU"); break;
+                case 2: SetString(key, "MO"); break;
+                case 3: SetString(key, "TU"); break;
+                case 4: SetString(key, "WE"); break;
+                case 5: SetString(key, "TH"); break;
+                case 6: SetString(key, "FR"); break;
+                case 7: SetString(key, "SA"); break;
+                default: throw new ConfigError("Illegal value " + val + " for " + key);
             }
-            catch (ConfigError e)
-            {
-                // JNI API doesn't allow a ConfigError to be thrown
-                throw new RuntimeError(e);
-            }
-            */
         }
 
         public void SetDay(string key, string dayName)
@@ -191,7 +191,8 @@ namespace QuickFIX.NET
         public void Merge(Dictionary toMerge)
         {
             foreach (System.Collections.Generic.KeyValuePair<string, string> entry in toMerge.data_)
-                data_[entry.Key] = entry.Value;
+                if(!data_.ContainsKey(entry.Key))
+                    data_[entry.Key] = entry.Value;
         }
     }
 }

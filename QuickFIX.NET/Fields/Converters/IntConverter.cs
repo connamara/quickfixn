@@ -22,11 +22,11 @@ namespace QuickFIX.NET.Fields.Converters
             }
             catch (FormatException e)
             {
-                throw new BadConversionException("could not convert string to int", e);
+                throw new FieldConvertError("could not convert string to int", e);
             }
             catch (OverflowException e)
             {
-                throw new BadConversionException("could not convert string to int", e);
+                throw new FieldConvertError("could not convert string to int", e);
             }
         }
 
