@@ -16,6 +16,13 @@ namespace UnitTests
     [TestFixture]
     public class SocketInitiatorTests
     {
+        [TearDown]
+        public void Dispose()
+        {
+            if (initiator_ != null)
+                initiator_.Stop();
+        }
+
         [Test]
         public void TestConnectAndReceive()
         {
@@ -28,9 +35,9 @@ namespace UnitTests
             _settings = new Settings();
             _settings.SocketConnectHost = "127.0.0.1";
             _settings.SocketConnectPort = 56123;
-            SocketInitiator i = new SocketInitiator(_fixApp, _settings);
-            i.RawDataReceived += new SocketInitiator.RawDataReceivedHandler(i_RawDataReceived);
-            i.Start();
+            initiator_ = new SocketInitiator(_fixApp, _settings);
+            initiator_.RawDataReceived += new SocketInitiator.RawDataReceivedHandler(i_RawDataReceived);
+            initiator_.Start();
 
             Thread.Sleep(100);
             // Server sends initiator a message.
@@ -42,12 +49,12 @@ namespace UnitTests
 
             // Assert that the initiator is connected and receives it.
             Assert.That(_clientSocket.Connected, Is.True);
-            Assert.That(i.Connected, Is.True);
+            Assert.That(initiator_.Connected, Is.True);
             Assert.That(_lastReceived, Is.EqualTo(testData));
             
             // Send message from initiator to server.
             string testSend = testData;
-            i.Send(testSend);
+            initiator_.Send(testSend);
 
             byte[] r = new byte[256];
             _clientSocket.Receive(r);
@@ -60,7 +67,7 @@ namespace UnitTests
             Assert.That(received.Substring(0, testSend.Length), Is.EqualTo(testSend));
 
             _clientSocket.Shutdown(SocketShutdown.Both);
-            i.Close();
+            initiator_.Close();
             _clientSocket.Close();
             listener.Stop();
         }
@@ -80,5 +87,6 @@ namespace UnitTests
         private Application _fixApp;
         private Settings _settings;
         private Socket _clientSocket;
+        private SocketInitiator initiator_;
     }
 }
