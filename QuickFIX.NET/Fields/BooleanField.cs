@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QuickFIX.NET.Fields
+namespace QuickFix.Fields
 {
     /// <summary>
     /// FIX BooleanField class

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace QuickFIX.NET
+namespace QuickFix
 {
     public class Dictionary
     {

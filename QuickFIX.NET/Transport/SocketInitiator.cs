@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Net.Sockets;
-using QuickFIX.NET.Config;
+using QuickFix.Config;
 using System.Net;
 using System.Diagnostics;
 using System.Threading;
 using System.IO;
 
-namespace QuickFIX.NET.Transport
+namespace QuickFix.Transport
 {
     public class SocketInitiator
     {

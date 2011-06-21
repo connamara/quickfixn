@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using QuickFIX.NET;
-using QuickFIX.NET.Fields.Converters;
+using QuickFix;
+using QuickFix.Fields.Converters;
 
 namespace UnitTests
 {

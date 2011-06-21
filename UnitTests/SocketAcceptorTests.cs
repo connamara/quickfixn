@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
-using QuickFIX.NET.Transport;
-using QuickFIX.NET;
-using QuickFIX.NET.Config;
+using QuickFix.Transport;
+using QuickFix;
+using QuickFix.Config;
 using System.Net.Sockets;
 using System.Threading;
 using System.IO;
 using System.Diagnostics;
-using QuickFIX.NET.Applications;
+using QuickFix.Applications;
 
 namespace UnitTests
 {

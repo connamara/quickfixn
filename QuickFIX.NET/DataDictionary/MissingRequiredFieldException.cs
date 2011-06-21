@@ -5,7 +5,7 @@ using System.Text;
 
 #pragma warning disable 0628 // Suppress "new protected member declared in sealed class" warning.
 
-namespace QuickFIX.NET
+namespace QuickFix
 {
     public sealed class MissingRequiredFieldException : ApplicationException
     {

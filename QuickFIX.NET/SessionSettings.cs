@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace QuickFIX.NET
+namespace QuickFix
 {
     public class SessionSettings
     {

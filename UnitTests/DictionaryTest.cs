@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using QuickFIX.NET;
+using QuickFix;
 
 namespace UnitTests
 {
@@ -9,7 +9,7 @@ namespace UnitTests
         [Test]
         public void SetGetString()
         {
-            QuickFIX.NET.Dictionary d = new QuickFIX.NET.Dictionary();
+            QuickFix.Dictionary d = new QuickFix.Dictionary();
             d.SetString("STRINGKEY1", "STRINGVALUE1");
             d.SetString("STRINGKEY2", "stringvalue2");
             Assert.That(d.GetString("STRINGKEY1"), Is.EqualTo("STRINGVALUE1"));
@@ -21,7 +21,7 @@ namespace UnitTests
         [Test]
         public void SetGetLong()
         {
-            QuickFIX.NET.Dictionary d = new QuickFIX.NET.Dictionary();
+            QuickFix.Dictionary d = new QuickFix.Dictionary();
             d.SetLong("LONGKEY1", 12);
             d.SetLong("LONGKEY2", 987362);
             d.SetString("BADLONGKEY", "AB12");
@@ -34,7 +34,7 @@ namespace UnitTests
         [Test]
         public void SetGetDouble()
         {
-            QuickFIX.NET.Dictionary d = new QuickFIX.NET.Dictionary();
+            QuickFix.Dictionary d = new QuickFix.Dictionary();
             d.SetDouble("DOUBLEKEY1", 12.3);
             d.SetDouble("DOUBLEKEY2", 987362.987362);
             d.SetString("BADDOUBLEKEY", "AB12.3");
@@ -47,7 +47,7 @@ namespace UnitTests
         [Test]
         public void SetGetBool()
         {
-            QuickFIX.NET.Dictionary d = new QuickFIX.NET.Dictionary();
+            QuickFix.Dictionary d = new QuickFix.Dictionary();
             d.SetBool("BOOLKEY1", true);
             d.SetBool("BOOLKEY2", false);
             d.SetString("BADBOOLKEY2", "YO");
@@ -60,7 +60,7 @@ namespace UnitTests
         [Test]
         public void SetGetDay()
         {
-            QuickFIX.NET.Dictionary d = new QuickFIX.NET.Dictionary();
+            QuickFix.Dictionary d = new QuickFix.Dictionary();
             
             d.SetString("DAY1", "SU");
             d.SetString("DAY2", "MO");
@@ -96,11 +96,11 @@ namespace UnitTests
         [Test]
         public void Merge()
         {
-            QuickFIX.NET.Dictionary first = new QuickFIX.NET.Dictionary();
+            QuickFix.Dictionary first = new QuickFix.Dictionary();
             first.SetString("FIRSTKEY", "FIRSTVALUE");
             first.SetString("THIRDKEY", "FIRST");
 
-            QuickFIX.NET.Dictionary second = new QuickFIX.NET.Dictionary();
+            QuickFix.Dictionary second = new QuickFix.Dictionary();
             second.SetString("SECONDKEY", "SECONDVALUE");
             second.SetString("THIRDKEY", "SECOND");
 
