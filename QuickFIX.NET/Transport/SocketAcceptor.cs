@@ -94,7 +94,7 @@ namespace QuickFIX.NET.Transport
                 {
                     bytesRead = clientStream.Read(message, 0, BLOCK_SIZE);
                 }
-                catch (Exception e) // Socket error
+                catch (System.Exception e) // Socket error
                 {
                     Debug.WriteLine("SocketAcceptor: client read exception: " + e.ToString());
                     break;
