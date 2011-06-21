@@ -64,13 +64,13 @@ namespace QuickFIX.NET.Examples
 
         static void Main(string[] args)
         {
-            if(args.Length != 2)
+            if(args.Length != 1)
             {
-                System.Console.WriteLine("usage: " + args[ 0 ] + " FILE.");
+                System.Console.WriteLine("usage: Example_TradeClient.exe " + " CONFIG_FILENAME");
                 System.Environment.Exit(2);
             }
             
-            string file = args[1];
+            string file = args[0];
             
             try
             {
