@@ -88,7 +88,9 @@
         							<div class="code">
             							<tr bgcolor="#ff9900">
 	      								<td>
-                								Failure Reason:  <xsl:value-of select="failure/message" />
+                                                                        	<pre>Test Failure:</pre>
+										<pre><xsl:value-of select="failure/message" /></pre>
+										<pre><xsl:value-of select="failure/stack-trace" /></pre>
 	      								</td>
 	    							</tr>
  								</div>

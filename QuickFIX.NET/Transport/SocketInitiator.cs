@@ -13,22 +13,22 @@ namespace QuickFix.Transport
 {
     public class SocketInitiator
     {
+        public const string SOCKET_CONNECT_HOST = "SocketConnectHost";
+        public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
+        public const string RECONNECT_INTERVAL  = "ReconnectInterval";
+
         #region Events/Delegates
         public delegate void RawDataReceivedHandler(object sender, string rawData);
         public event RawDataReceivedHandler RawDataReceived;
         #endregion
 
         #region Properties
-        public bool Connected { get { return _socket.Connected; } }
+        public bool Connected { get { return socket_.Connected; } }
         #endregion
 
-        public SocketInitiator(Application application, Config.Settings settings)
-        {
-            app_ = application;
-            _deprecatedSettings = settings;
-            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            _socket.ReceiveTimeout = 5000;
-        }
+        public SocketInitiator(Application application, MessageStoreFactory storeFactory, SessionSettings settings)
+            : this(application, storeFactory, settings, null)
+        { }
 
         public SocketInitiator(Application application, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory)
         {
@@ -36,6 +36,8 @@ namespace QuickFix.Transport
             storeFactory_ = storeFactory;
             settings_ = settings;
             logFactory_ = logFactory;
+            socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket_.ReceiveTimeout = 5000;
         }
 
         public void Start()
@@ -61,16 +63,34 @@ namespace QuickFix.Transport
         /// </summary>
         private void ClientLoop()
         {
+            string host = "";
+            int port = -1;
+            int reconnectInterval = -1;
+
+            try
+            {
+                /// FIXME we need to load settings for each Session in the cfg, not just the defaults
+                QuickFix.Dictionary dict = settings_.Get();
+                host = dict.GetString(SOCKET_CONNECT_HOST);
+                port = Convert.ToInt32(dict.GetLong(SOCKET_CONNECT_PORT));
+                reconnectInterval = Convert.ToInt32(dict.GetLong(RECONNECT_INTERVAL));
+            }
+            catch (ConfigError e)
+            {
+                System.Console.WriteLine(e.Message);
+                return;
+            }
+
             while (!shutdownRequested_)
             {
                 try
                 {
-                    _socket.Connect(_deprecatedSettings.SocketConnectHost, _deprecatedSettings.SocketConnectPort);
+                    socket_.Connect(host, port);
                 }
                 catch (SocketException e)
                 {
                     Console.WriteLine("Error connecting to socket: " + e.Message);
-                    Thread.Sleep(_deprecatedSettings.ReconnectInterval * 1000);
+                    Thread.Sleep(reconnectInterval * 1000);
                     continue;
                 }
 
@@ -78,7 +98,7 @@ namespace QuickFix.Transport
                 {
                     try
                     {
-                        int bytesReceived = _socket.Receive(_readBuffer);
+                        int bytesReceived = socket_.Receive(_readBuffer);
                         HandleMessage(Encoding.UTF8.GetString(_readBuffer, 0, bytesReceived));
                     }
                     catch (SocketException e)
@@ -119,7 +139,7 @@ namespace QuickFix.Transport
         {
 
             byte[] rawData = Encoding.UTF8.GetBytes(data);
-            _socket.Send(rawData);
+            socket_.Send(rawData);
         }
 
         /// <summary>
@@ -128,7 +148,7 @@ namespace QuickFix.Transport
         public void Close()
         {
             disconnectRequested_ = true;
-            _socket.Shutdown(SocketShutdown.Both);
+            socket_.Shutdown(SocketShutdown.Both);
         }
 
         private void NotifyApplication(string data)
@@ -146,9 +166,8 @@ namespace QuickFix.Transport
 
         #region Private Members
         private Thread clientThread_;
-        private Socket _socket;
+        private Socket socket_;
         private Application app_;
-        private Config.Settings _deprecatedSettings;  /// FIXME get rid of this in favor of SessionSettings
         private SessionSettings settings_;
         private MessageStoreFactory storeFactory_;
         private LogFactory logFactory_;
