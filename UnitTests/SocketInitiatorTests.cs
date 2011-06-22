@@ -5,7 +5,6 @@ using System.Text;
 using NUnit.Framework;
 using QuickFix.Transport;
 using QuickFix;
-using QuickFix.Config;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
@@ -32,7 +31,7 @@ namespace UnitTests
             listener.BeginAcceptSocket(new AsyncCallback(Connected), listener);
 
             _fixApp = new FIX4Application();
-            _settings = new Settings();
+            _settings = new QuickFix.Config.Settings();
             _settings.SocketConnectHost = "127.0.0.1";
             _settings.SocketConnectPort = 56123;
             initiator_ = new SocketInitiator(_fixApp, _settings);
@@ -85,7 +84,7 @@ namespace UnitTests
 
         private string _lastReceived;
         private Application _fixApp;
-        private Settings _settings;
+        private QuickFix.Config.Settings _settings;
         private Socket _clientSocket;
         private SocketInitiator initiator_;
     }

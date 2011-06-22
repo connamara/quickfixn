@@ -27,7 +27,7 @@ namespace QuickFix.Transport
         #endregion
 
         #region Constructors
-        public SocketAcceptor(Application app, Settings settings)
+        public SocketAcceptor(Application app, Config.Settings settings)
         {
             app_ = app;
             settings_ = settings;
@@ -192,7 +192,7 @@ namespace QuickFix.Transport
 
         #region Private Members
         private Application app_;
-        private Settings settings_;
+        private Config.Settings settings_;
         private TcpListener listener_;
         private Thread listenThread_;
         private volatile bool shutdownRequested_;

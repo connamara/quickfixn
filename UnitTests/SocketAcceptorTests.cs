@@ -5,7 +5,6 @@ using System.Text;
 using NUnit.Framework;
 using QuickFix.Transport;
 using QuickFix;
-using QuickFix.Config;
 using System.Net.Sockets;
 using System.Threading;
 using System.IO;
@@ -31,7 +30,7 @@ namespace UnitTests
         public void TestAcceptor()
         {
             Application acceptorApp = new FIX4Application();
-            Settings acceptorSettings = new Settings();
+            QuickFix.Config.Settings acceptorSettings = new QuickFix.Config.Settings();
             acceptorSettings.SocketAcceptPort = 54123;
             acceptorSettings.SocketAcceptHost = "127.0.0.1";
             acceptor_ = new SocketAcceptor(acceptorApp, acceptorSettings);

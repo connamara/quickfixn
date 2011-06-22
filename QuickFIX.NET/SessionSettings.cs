@@ -1,9 +1,28 @@
 ﻿using System.IO;
+using System.Collections.Generic;
 
 namespace QuickFix
 {
     public class SessionSettings
     {
+        #region Public Constants
+        
+        public const string BEGINSTRING  = "BeginString";
+        public const string SENDERCOMPID = "SenderCompID";
+        public const string TARGETCOMPID = "TargetCompID";
+        public const string SESSION_QUALIFIER = "SessionQualifier";
+        public const string DEFAULT_APPLVERID = "DefaultApplVerID";
+        public const string CONNECTION_TYPE = "ConnectionType";
+
+        #endregion
+
+        #region Private Members
+        
+        private QuickFix.Dictionary defaults_ = new QuickFix.Dictionary();
+        private System.Collections.Generic.Dictionary<SessionID, QuickFix.Dictionary> settings_ = new Dictionary<SessionID, Dictionary>();
+        
+        #endregion
+
         public SessionSettings(string file)
         {
             try
@@ -22,46 +41,134 @@ namespace QuickFix
             Load(stream);
         }
 
+        public static bool IsComment(string s)
+        {
+            if (s.Length < 1)
+                return false;
+            return '#' == s[0];
+        }
+
+        public static bool IsKeyValue(string s)
+        {
+            return s.IndexOf('=') != -1;
+        }
+
+        public static bool IsSection(string s)
+        {
+            if (s.Length < 2)
+                return false;
+            return s[0] == '[' && s[s.Length - 1] == ']';
+        }
+
+        /// <summary>
+        /// Strip the outer '[' and ']' from the section name, e.g. '[DEFAULT]' becomes 'DEFAULT'
+        /// </summary>
+        /// <param name="s">the section name</param>
+        /// <returns></returns>
+        public static string SplitSection(string s)
+        {
+            return s.Trim('[', ']').Trim();
+        }
+
         protected void Load(Stream inputStream)
         {
-            throw new System.NotImplementedException("FIXME - SessionSettings.Load not implemented!");
-            /*
             StreamReader stream = new StreamReader(inputStream);
-  Settings settings;
-  stream >> settings;
+            Settings settings = new Settings();
+            QuickFix.Dictionary currentSection = null;
 
-  Settings::Sections section;
+            string line = null;
+            while ((line = stream.ReadLine()) != null)
+            {
+                line = line.Trim();
+                if (IsComment(line))
+                {
+                    continue;
+                }
+                else if (IsSection(line))
+                {
+                    currentSection = settings.Add(new Dictionary(SplitSection(line)));
+                }
+                else if (IsKeyValue(line))
+                {
+                    string[] kv = line.Split('=');
+                    if (currentSection != null)
+                        currentSection.SetString(kv[0].Trim(), kv[1].Trim());
+                }
+            }
 
-  section = settings.get( "DEFAULT" );
-  Dictionary def;
-  if ( section.size() )
-    def = section[ 0 ];
-  s.set( def );
+            //---- load the DEFAULT section
+            LinkedList<QuickFix.Dictionary> section = settings.Get("DEFAULT");
+            QuickFix.Dictionary def = new QuickFix.Dictionary();
+            if (section.Count > 0)
+                def = section.First.Value;
+            Set(def);
 
-  section = settings.get( "SESSION" );
-  Settings::Sections::size_type session;
-  Dictionary dict;
+            //---- load each SESSION section
+            section = settings.Get("SESSION");
+            foreach (QuickFix.Dictionary dict in section)
+            {
+                dict.Merge(def);
 
-  for ( session = 0; session < section.size(); ++session )
-  {
-    dict = section[ session ];
-    dict.merge( def );
+                string sessionQualifier = "";
+                if (dict.Has(SESSION_QUALIFIER))
+                    sessionQualifier = dict.GetString(SESSION_QUALIFIER);
+                SessionID sessionID = new SessionID(dict.GetString(BEGINSTRING), dict.GetString(SENDERCOMPID), dict.GetString(TARGETCOMPID), sessionQualifier);
+                Set(sessionID, dict);
+            }
+        }
 
-    BeginString beginString
-    ( dict.getString( BEGINSTRING ) );
-    SenderCompID senderCompID
-    ( dict.getString( SENDERCOMPID ) );
-    TargetCompID targetCompID
-    ( dict.getString( TARGETCOMPID ) );
+        public bool Has(SessionID sessionID)
+        {
+            return settings_.ContainsKey(sessionID);
+        }
 
-    std::string sessionQualifier;
-    if( dict.has( SESSION_QUALIFIER ) )
-      sessionQualifier = dict.getString( SESSION_QUALIFIER );
-    SessionID sessionID( beginString, senderCompID, targetCompID, sessionQualifier );
-    s.set( sessionID, dict );
-  }
-             */ 
-}
+        public Dictionary Get(SessionID sessionID)
+        {
+            Dictionary dict;
+            if (!settings_.TryGetValue(sessionID, out dict))
+                throw new ConfigError("Session '" + sessionID + "' not found");
+            return dict;
+        }
+
+        public void Set(QuickFix.Dictionary defaults)
+        {
+            defaults_ = defaults;
+            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in settings_)
+                entry.Value.Merge(defaults_);
+        }
+        
+        public void Set(SessionID sessionID, QuickFix.Dictionary settings)
+        {
+            if (Has(sessionID))
+                throw new ConfigError("Duplicate Session " + sessionID.ToString());
+            settings.SetString(BEGINSTRING, sessionID.BeginString);
+            settings.SetString(SENDERCOMPID, sessionID.SenderCompID);
+            settings.SetString(TARGETCOMPID, sessionID.TargetCompID);
+            settings.Merge(defaults_);
+            Validate(settings);
+            settings_[sessionID] = settings;
+        }
+
+        protected void Validate(QuickFix.Dictionary dictionary)
+        {
+            string beginString = dictionary.GetString(BEGINSTRING);
+            if (beginString != Values.BeginString_FIX40 &&
+                beginString != Values.BeginString_FIX42 &&
+                beginString != Values.BeginString_FIX43 &&
+                beginString != Values.BeginString_FIX44 &&
+                beginString != Values.BeginString_FIXT11)
+            {
+                throw new ConfigError(BEGINSTRING + " must be FIX.4.0 to FIX.4.4 or FIXT.1.1");
+            }
+
+            string connectionType = dictionary.GetString(CONNECTION_TYPE);
+            if (connectionType != "initiator" &&
+               connectionType != "acceptor")
+            {
+                throw new ConfigError(CONNECTION_TYPE + " must be 'initiator' or 'acceptor'");
+            }
+        }
+    }
              
             /*
 std::ostream& operator<<( std::ostream& stream, const SessionSettings& s )
@@ -115,32 +222,9 @@ throw( ConfigError )
   QF_STACK_POP
 }
 
-void SessionSettings::set( const SessionID& sessionID,
-                           Dictionary settings )
-throw( ConfigError )
-{ QF_STACK_PUSH(SessionSettings::set)
 
-  if( has(sessionID) )
-    throw ConfigError( "Duplicate Session " + sessionID.toString() );
 
-  settings.setString( BEGINSTRING, sessionID.getBeginString() );
-  settings.setString( SENDERCOMPID, sessionID.getSenderCompID() );
-  settings.setString( TARGETCOMPID, sessionID.getTargetCompID() );
 
-  settings.merge( m_defaults );
-  validate( settings );
-  m_settings[ sessionID ] = settings;
-
-  QF_STACK_POP
-}
-
-void SessionSettings::set( const Dictionary& defaults ) throw( ConfigError ) 
-{ 
-  m_defaults = defaults;
-  Dictionaries::iterator i = m_settings.begin();
-  for( i = m_settings.begin(); i != m_settings.end(); ++i )
-    i->second.merge( defaults );
-}
 
 std::set < SessionID > SessionSettings::getSessions() const
 { QF_STACK_PUSH(SessionSettings::getSessions)
@@ -154,30 +238,9 @@ std::set < SessionID > SessionSettings::getSessions() const
   QF_STACK_POP
 }
 
-void SessionSettings::validate( const Dictionary& dictionary ) const
-throw( ConfigError )
-{
-  std::string beginString = dictionary.getString( BEGINSTRING );
-  if( beginString != BeginString_FIX40 &&
-      beginString != BeginString_FIX41 &&
-      beginString != BeginString_FIX42 &&
-      beginString != BeginString_FIX43 &&
-      beginString != BeginString_FIX44 &&
-      beginString != BeginString_FIXT11 )
-  {
-    throw ConfigError( std::string(BEGINSTRING) + " must be FIX.4.0 to FIX.4.4 or FIXT.1.1" );
-  }
 
-  std::string connectionType = dictionary.getString( CONNECTION_TYPE );
-  if( connectionType != "initiator" &&
-      connectionType != "acceptor" )
-  {
-    throw ConfigError( std::string(CONNECTION_TYPE) + " must be 'initiator' or 'acceptor'" );
-  }
-}
 
 }
          * */
 
-    }
 }

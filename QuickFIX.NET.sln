@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C# Express 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFIX.NET", "QuickFIX.NET\QuickFIX.NET.csproj", "{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix", "QuickFIX.NET\QuickFix.csproj", "{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{186A72D8-5A70-4DD0-BABF-E3BB3BA9F419}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -11,6 +11,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceTests", "PerformanceTests\PerformanceTests.csproj", "{678D7A0A-D07E-4D4C-9166-E6863BF2E8FC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example_TradeClient", "Example_TradeClient\Example_TradeClient.csproj", "{5ADD4955-3018-4025-9593-74560F9D5FDE}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcceptanceTest", "AcceptanceTest\AcceptanceTest.csproj", "{B02EAF78-6335-4996-BB98-3121A4B6B0B2}"
 EndProject
 Global
@@ -35,6 +36,8 @@ Global
 		{5ADD4955-3018-4025-9593-74560F9D5FDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ADD4955-3018-4025-9593-74560F9D5FDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5ADD4955-3018-4025-9593-74560F9D5FDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B02EAF78-6335-4996-BB98-3121A4B6B0B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B02EAF78-6335-4996-BB98-3121A4B6B0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
