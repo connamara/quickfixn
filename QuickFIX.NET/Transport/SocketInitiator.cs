@@ -22,17 +22,20 @@ namespace QuickFix.Transport
         public bool Connected { get { return _socket.Connected; } }
         #endregion
 
-        public SocketInitiator(Application application, Settings settings)
+        public SocketInitiator(Application application, Config.Settings settings)
         {
-            _app = application;
-            _settings = settings;
+            app_ = application;
+            _deprecatedSettings = settings;
             _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _socket.ReceiveTimeout = 5000;
         }
 
         public SocketInitiator(Application application, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory)
         {
-            throw new System.NotImplementedException();
+            app_ = application;
+            storeFactory_ = storeFactory;
+            settings_ = settings;
+            logFactory_ = logFactory;
         }
 
         public void Start()
@@ -62,12 +65,12 @@ namespace QuickFix.Transport
             {
                 try
                 {
-                    _socket.Connect(_settings.SocketConnectHost, _settings.SocketConnectPort);
+                    _socket.Connect(_deprecatedSettings.SocketConnectHost, _deprecatedSettings.SocketConnectPort);
                 }
                 catch (SocketException e)
                 {
                     Console.WriteLine("Error connecting to socket: " + e.Message);
-                    Thread.Sleep(_settings.ReconnectInterval * 1000);
+                    Thread.Sleep(_deprecatedSettings.ReconnectInterval * 1000);
                     continue;
                 }
 
@@ -132,7 +135,7 @@ namespace QuickFix.Transport
         {
             Message msg = new Message();
             msg.FromString(data);
-            _app.OnMessage(msg);
+            app_.OnMessage(msg);
         }
 
         private void NotifyRawData(string data)
@@ -144,8 +147,11 @@ namespace QuickFix.Transport
         #region Private Members
         private Thread clientThread_;
         private Socket _socket;
-        private Application _app;
-        private Settings _settings;
+        private Application app_;
+        private Config.Settings _deprecatedSettings;  /// FIXME get rid of this in favor of SessionSettings
+        private SessionSettings settings_;
+        private MessageStoreFactory storeFactory_;
+        private LogFactory logFactory_;
         private byte[] _readBuffer = new byte[512];
         private string _currentMessage;
         private volatile bool disconnectRequested_ = false;

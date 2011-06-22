@@ -90,9 +90,9 @@
     <Compile Include="StringUTF8Tests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\QuickFIX.NET\QuickFIX.NET.csproj">
+    <ProjectReference Include="..\QuickFIX.NET\QuickFix.csproj">
       <Project>{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}</Project>
-      <Name>QuickFIX.NET</Name>
+      <Name>QuickFix</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

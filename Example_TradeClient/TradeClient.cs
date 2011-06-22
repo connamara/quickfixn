@@ -5,7 +5,7 @@ namespace QuickFix.Examples
     {
         public override void OnMessage(Message message)
         {
-            throw new System.NotImplementedException();
+            System.Console.WriteLine(message.ToString());
         }
 
         public void Run()
