@@ -47,7 +47,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void LoadSettings()
+        public void Load()
         {
             string configuration = new System.Text.StringBuilder()
                 .AppendLine("[DEFAULT]")

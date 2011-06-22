@@ -48,59 +48,9 @@ namespace QuickFix
 
         #endregion
 
-        public static bool IsComment(string s)
-        {
-            if (s.Length < 1)
-                return false;
-            return '#' == s[0];
-        }
-
-        public static bool IsKeyValue(string s)
-        {
-            return s.IndexOf('=') != -1;
-        }
-
-        public static bool IsSection(string s)
-        {
-            if (s.Length < 2)
-                return false;
-            return s[0] == '[' && s[s.Length - 1] == ']';
-        }
-
-        /// <summary>
-        /// Strip the outer '[' and ']' from the section name, e.g. '[DEFAULT]' becomes 'DEFAULT'
-        /// </summary>
-        /// <param name="s">the section name</param>
-        /// <returns></returns>
-        public static string SplitSection(string s)
-        {
-            return s.Trim('[', ']').Trim();
-        }
-
         protected void Load(TextReader conf)
         {
-            Settings settings = new Settings();
-            QuickFix.Dictionary currentSection = null;
-
-            string line = null;
-            while ((line = conf.ReadLine()) != null)
-            {
-                line = line.Trim();
-                if (IsComment(line))
-                {
-                    continue;
-                }
-                else if (IsSection(line))
-                {
-                    currentSection = settings.Add(new Dictionary(SplitSection(line)));
-                }
-                else if (IsKeyValue(line))
-                {
-                    string[] kv = line.Split('=');
-                    if (currentSection != null)
-                        currentSection.SetString(kv[0].Trim(), kv[1].Trim());
-                }
-            }
+            Settings settings = new Settings(conf);
 
             //---- load the DEFAULT section
             LinkedList<QuickFix.Dictionary> section = settings.Get("DEFAULT");
