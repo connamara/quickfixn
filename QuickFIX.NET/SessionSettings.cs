@@ -23,6 +23,8 @@ namespace QuickFix
         
         #endregion
 
+        #region Constructors
+
         public SessionSettings(string file)
         {
             try
@@ -40,6 +42,11 @@ namespace QuickFix
         {
             Load(conf);
         }
+
+        public SessionSettings()
+        { }
+
+        #endregion
 
         public static bool IsComment(string s)
         {
@@ -170,6 +177,28 @@ namespace QuickFix
             return result;
         }
 
+        public override string ToString()
+        {
+            System.Text.StringBuilder s = new System.Text.StringBuilder();
+            s.AppendLine("[DEFAULT]");
+
+            foreach (System.Collections.Generic.KeyValuePair<string, string> entry in defaults_)
+                s.Append(entry.Key).Append('=').AppendLine(entry.Value);
+
+            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in settings_)
+            {
+                s.AppendLine().AppendLine("[SESSION]");
+                foreach (System.Collections.Generic.KeyValuePair<string, string> kvp in entry.Value)
+                {
+                    if (defaults_.Has(kvp.Key) && defaults_.GetString(kvp.Key).Equals(kvp.Value))
+                        continue;
+                    s.Append(kvp.Key).Append('=').AppendLine(kvp.Value);
+                }
+            }
+
+            return s.ToString();
+        }
+
         protected void Validate(QuickFix.Dictionary dictionary)
         {
             string beginString = dictionary.GetString(BEGINSTRING);
@@ -184,47 +213,10 @@ namespace QuickFix
             }
 
             string connectionType = dictionary.GetString(CONNECTION_TYPE);
-            if (connectionType != "initiator" &&
-               connectionType != "acceptor")
+            if (connectionType != "initiator" && connectionType != "acceptor")
             {
                 throw new ConfigError(CONNECTION_TYPE + " must be 'initiator' or 'acceptor'");
             }
         }
     }
-             
-            /*
-std::ostream& operator<<( std::ostream& stream, const SessionSettings& s )
-{
-  const Dictionary& defaults = s.m_defaults;
-  if( defaults.size() )
-  {
-    stream << "[DEFAULT]" << std::endl;
-    Dictionary::iterator i;
-    for( i = defaults.begin(); i != defaults.end(); ++i )
-      stream << i->first << "=" << i->second << std::endl;
-    stream << std::endl;
-  }
-
-  std::set<SessionID> sessions = s.getSessions();
-  std::set<SessionID>::iterator i;
-  for( i = sessions.begin(); i != sessions.end(); ++i )
-  {
-    stream << "[SESSION]" << std::endl;
-    const Dictionary& section = s.get( *i );
-    if( !section.size() ) continue;
-
-    Dictionary::iterator i;
-    for( i = section.begin(); i != section.end(); ++i )
-    {
-      if( defaults.has(i->first) && defaults.getString(i->first) == i->second )
-        continue;
-      stream << i->first << "=" << i->second << std::endl;
-    }
-    stream << std::endl;
-  }
-
-  return stream;
-}
-*/
-
 }

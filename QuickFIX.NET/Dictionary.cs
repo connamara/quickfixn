@@ -2,7 +2,7 @@
 
 namespace QuickFix
 {
-    public class Dictionary
+    public class Dictionary : System.Collections.IEnumerable
     {
         #region Private Members
 
@@ -176,5 +176,14 @@ namespace QuickFix
                 if(!data_.ContainsKey(entry.Key))
                     data_[entry.Key] = entry.Value;
         }
+
+        #region IEnumerable Members
+
+        public System.Collections.IEnumerator GetEnumerator()
+        {
+            return data_.GetEnumerator();
+        }
+
+        #endregion
     }
 }
