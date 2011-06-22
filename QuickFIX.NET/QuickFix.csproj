@@ -8,8 +8,8 @@
     <ProjectGuid>{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>QuickFIX.NET</RootNamespace>
-    <AssemblyName>QuickFIX.NET</AssemblyName>
+    <RootNamespace>QuickFix</RootNamespace>
+    <AssemblyName>QuickFix</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SignAssembly>false</SignAssembly>
