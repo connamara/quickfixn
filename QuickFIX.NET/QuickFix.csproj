@@ -51,6 +51,8 @@
     <Compile Include="FileStoreFactory.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="LogFactory.cs" />
+    <Compile Include="MemoryStore.cs" />
+    <Compile Include="MemoryStoreFactory.cs" />
     <Compile Include="MessageStore.cs" />
     <Compile Include="MessageStoreFactory.cs" />
     <Compile Include="Config\Config.cs" />

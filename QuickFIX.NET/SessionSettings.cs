@@ -28,7 +28,7 @@ namespace QuickFix
             try
             {
                 FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read);
-                Load(fs);
+                Load(new StreamReader(fs));
             }
             catch(System.Exception e)
             {
@@ -36,9 +36,9 @@ namespace QuickFix
             }
         }
 
-        public SessionSettings(Stream stream)
+        public SessionSettings(TextReader conf)
         {
-            Load(stream);
+            Load(conf);
         }
 
         public static bool IsComment(string s)
@@ -70,14 +70,13 @@ namespace QuickFix
             return s.Trim('[', ']').Trim();
         }
 
-        protected void Load(Stream inputStream)
+        protected void Load(TextReader conf)
         {
-            StreamReader stream = new StreamReader(inputStream);
             Settings settings = new Settings();
             QuickFix.Dictionary currentSection = null;
 
             string line = null;
-            while ((line = stream.ReadLine()) != null)
+            while ((line = conf.ReadLine()) != null)
             {
                 line = line.Trim();
                 if (IsComment(line))
@@ -122,6 +121,20 @@ namespace QuickFix
             return settings_.ContainsKey(sessionID);
         }
 
+        /// <summary>
+        /// Get global default settings
+        /// </summary>
+        /// <returns>Dictionary of settings from the [DEFAULT] section</returns>
+        public QuickFix.Dictionary Get()
+        {
+            return defaults_;
+        }
+
+        /// <summary>
+        /// Get a dictionary for a session
+        /// </summary>
+        /// <param name="sessionID">the ID of the session</param>
+        /// <returns>Dictionary of settings from the [SESSION] section for the given SessionID</returns>
         public Dictionary Get(SessionID sessionID)
         {
             Dictionary dict;

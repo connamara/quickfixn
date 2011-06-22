@@ -29,20 +29,26 @@ namespace UnitTests
             TcpListener listener = new TcpListener(localAddr, 56123);
             listener.Start();
             listener.BeginAcceptSocket(new AsyncCallback(Connected), listener);
-
+            
+            string conf = new StringBuilder()
+                .AppendLine("[DEFAULT]")
+                .AppendLine("ReconnectInterval=1")
+                .AppendLine("SocketConnectHost=127.0.0.1")
+                .AppendLine("SocketConnectPort=56123")
+                .ToString();
+            settings_ = new SessionSettings(new System.IO.StringReader(conf));
+         
             _fixApp = new FIX4Application();
-            _settings = new QuickFix.Config.Settings();
-            _settings.SocketConnectHost = "127.0.0.1";
-            _settings.SocketConnectPort = 56123;
-            initiator_ = new SocketInitiator(_fixApp, _settings);
+            initiator_ = new SocketInitiator(_fixApp, new MemoryStoreFactory(), settings_);
             initiator_.RawDataReceived += new SocketInitiator.RawDataReceivedHandler(i_RawDataReceived);
             initiator_.Start();
 
-            Thread.Sleep(100);
+            Thread.Sleep(1000);  
             // Server sends initiator a message.
 
             const string testData = "8=FIX.4.2\x01" + "9=46\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
                 "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=000\x01";
+            Assert.NotNull(_clientSocket);
             _clientSocket.Send(Encoding.UTF8.GetBytes(testData + "\n"));
             Thread.Sleep(100);
 
@@ -84,7 +90,7 @@ namespace UnitTests
 
         private string _lastReceived;
         private Application _fixApp;
-        private QuickFix.Config.Settings _settings;
+        private SessionSettings settings_;
         private Socket _clientSocket;
         private SocketInitiator initiator_;
     }

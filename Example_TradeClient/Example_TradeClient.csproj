@@ -62,4 +62,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)tradeclient.cfg" "$(ProjectDir)$(OutDir)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
