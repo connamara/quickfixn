@@ -162,16 +162,25 @@ namespace QuickFix
             settings_[sessionID] = settings;
         }
 
+        public HashSet<SessionID> GetSessions()
+        {
+            HashSet<SessionID> result = new HashSet<SessionID>();
+            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in settings_)
+                result.Add(entry.Key);
+            return result;
+        }
+
         protected void Validate(QuickFix.Dictionary dictionary)
         {
             string beginString = dictionary.GetString(BEGINSTRING);
             if (beginString != Values.BeginString_FIX40 &&
+                beginString != Values.BeginString_FIX41 &&
                 beginString != Values.BeginString_FIX42 &&
                 beginString != Values.BeginString_FIX43 &&
                 beginString != Values.BeginString_FIX44 &&
                 beginString != Values.BeginString_FIXT11)
             {
-                throw new ConfigError(BEGINSTRING + " must be FIX.4.0 to FIX.4.4 or FIXT.1.1");
+                throw new ConfigError(BEGINSTRING + " (" + beginString + ") must be FIX.4.0 to FIX.4.4 or FIXT.1.1");
             }
 
             string connectionType = dictionary.GetString(CONNECTION_TYPE);
@@ -216,44 +225,6 @@ std::ostream& operator<<( std::ostream& stream, const SessionSettings& s )
 
   return stream;
 }
-
-const bool SessionSettings::has( const SessionID& sessionID ) const
-{ QF_STACK_PUSH(SessionSettings::has)
-  return m_settings.find( sessionID ) != m_settings.end();
-  QF_STACK_POP
-}
-
-const Dictionary& SessionSettings::get( const SessionID& sessionID ) const
-throw( ConfigError )
-{ QF_STACK_PUSH(SessionSettings::get)
-
-  Dictionaries::const_iterator i;
-  i = m_settings.find( sessionID );
-  if ( i == m_settings.end() ) throw ConfigError( "Session not found" );
-  return i->second;
-
-  QF_STACK_POP
-}
-
-
-
-
-
-std::set < SessionID > SessionSettings::getSessions() const
-{ QF_STACK_PUSH(SessionSettings::getSessions)
-
-  std::set < SessionID > result;
-  Dictionaries::const_iterator i;
-  for ( i = m_settings.begin(); i != m_settings.end(); ++i )
-    result.insert( i->first );
-  return result;
-
-  QF_STACK_POP
-}
-
-
-
-}
-         * */
+*/
 
 }
