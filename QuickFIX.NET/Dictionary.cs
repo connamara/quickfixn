@@ -54,7 +54,7 @@ namespace QuickFix
         public string GetString(string key)
         {
             string val = "";
-            if (!data_.TryGetValue(key, out val))
+            if (!data_.TryGetValue(key.ToUpper(), out val))
                 throw new ConfigError("No value for key: " + key);
             return val;
         }
@@ -69,10 +69,7 @@ namespace QuickFix
         {
             try
             {
-                string val = "";
-                if (!data_.TryGetValue(key, out val))
-                    throw new ConfigError("No value for key: " + key);
-                return Convert.ToInt64(val);
+                return Convert.ToInt64(GetString(key));
 
             }
             catch(FormatException)
@@ -89,10 +86,7 @@ namespace QuickFix
         {
             try
             {
-                string val = "";
-                if (!data_.TryGetValue(key, out val))
-                    throw new ConfigError("No value for key: " + key);
-                return Convert.ToDouble(val);
+                return Convert.ToDouble(GetString(key));
             }
             catch (FormatException)
             {
@@ -108,10 +102,7 @@ namespace QuickFix
         {
             try
             {
-                string val = "";
-                if (!data_.TryGetValue(key, out val))
-                    throw new ConfigError("No value for key: " + key);
-                return Fields.Converters.BoolConverter.Convert(val);
+                return Fields.Converters.BoolConverter.Convert(GetString(key));
             }
             catch (FormatException)
             {
@@ -125,11 +116,7 @@ namespace QuickFix
 
         public int GetDay(string key)
         {
-            string val = "";
-            if (!data_.TryGetValue(key, out val))
-                throw new ConfigError("No value for key: " + key);
-
-            string abbr = val.Substring(0, 2).ToUpper();
+            string abbr = GetString(key).Substring(0, 2).ToUpper();
             switch(abbr)
             {
                 case "SU": return 1;
@@ -139,28 +126,28 @@ namespace QuickFix
                 case "TH": return 5;
                 case "FR": return 6;
                 case "SA": return 7;
-                default: throw new ConfigError("Illegal value " + val + " for " + key);
+                default: throw new ConfigError("Illegal value " + GetString(key) + " for " + key);
             }
         }
 
         public void SetString(string key, string val)
         {
-            data_[key] = val;
+            data_[key.ToUpper()] = val;
         }
 
         public void SetLong(string key, long val)
         {
-            data_[key] = Convert.ToString(val);
+            SetString(key, Convert.ToString(val));
         }
 
         public void SetDouble(string key, double val)
         {
-            data_[key] = Convert.ToString(val);
+            SetString(key, Convert.ToString(val));
         }
 
         public void SetBool(string key, bool val)
         {
-            data_[key] = Fields.Converters.BoolConverter.Convert(val);
+            SetString(key, Fields.Converters.BoolConverter.Convert(val));
         }
 
         public void SetDay(string key, int val)
@@ -178,14 +165,9 @@ namespace QuickFix
             }
         }
 
-        public void SetDay(string key, string dayName)
-        {
-            data_[key] = dayName;
-        }
-
         public bool Has(string key)
         {
-            return data_.ContainsKey(key);
+            return data_.ContainsKey(key.ToUpper());
         }
 
         public void Merge(Dictionary toMerge)

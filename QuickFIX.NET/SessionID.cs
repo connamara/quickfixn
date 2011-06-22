@@ -34,6 +34,7 @@ namespace QuickFix
 
         #region Private Members
         
+        private string id_;
         private string beginString_;
         private string senderCompID_;
         private string targetCompID_;
@@ -53,6 +54,28 @@ namespace QuickFix
             targetCompID_ = targetCompID;
             sessionQualifier_ = sessionQualifier;
             isFIXT_ = beginString_.StartsWith("FIXT");
+            
+            id_ = beginString_ + ":" + senderCompID_ + "->" + targetCompID_;
+            if(sessionQualifier_.Length > 0)
+                id_ += ":" + sessionQualifier_;
+        }
+
+        public override string ToString()
+        {
+            return id_;
+        }
+
+        public override int GetHashCode()
+        {
+            return id_.GetHashCode();
+        }
+        
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+            SessionID rhs = (SessionID)obj;
+            return id_.Equals(rhs.id_);
         }
     }
 }
