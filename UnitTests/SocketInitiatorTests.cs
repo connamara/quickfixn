@@ -43,7 +43,7 @@ namespace UnitTests
             initiator_.RawDataReceived += new SocketInitiator.RawDataReceivedHandler(i_RawDataReceived);
             initiator_.Start();
 
-            Thread.Sleep(1000);  
+            Thread.Sleep(250);  
             // Server sends initiator a message.
 
             const string testData = "8=FIX.4.2\x01" + "9=46\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
