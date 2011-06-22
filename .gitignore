@@ -7,3 +7,7 @@ PerformanceTests/bin/*
 PerformanceTests/obj/*
 *.user
 UnitTests/TestResult.xml
+Example_TradeClient/bin/
+Example_TradeClient/obj/
+QuickFIX.NET.sln.cache
+ChangeLog
