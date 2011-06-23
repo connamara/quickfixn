@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Threading;
+using System.Collections.Generic;
 
 namespace QuickFix
 {
@@ -10,13 +11,27 @@ namespace QuickFix
         private HashSet<SessionID> pending_ = new HashSet<SessionID>();
         private HashSet<SessionID> connected_ = new HashSet<SessionID>();
         private HashSet<SessionID> disconnected_ = new HashSet<SessionID>();
+        private bool isStopped_ = true;
+        private SessionSettings settings_;
+        private Thread thread_;
+
+        #region Properties
         
+        public bool IsStopped
+        {
+            get { return isStopped_; }
+        }
+
+        #endregion
+
         public Initiator(Application application, MessageStoreFactory storeFactory, SessionSettings settings)
             : this(application, storeFactory, settings, null)
         { }
 
         public Initiator(Application app, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory)
         {
+            settings_ = settings;
+
             HashSet<SessionID> definedSessions = settings.GetSessions();
             if (0 == definedSessions.Count)
                 throw new ConfigError("No sessions defined");
@@ -37,9 +52,139 @@ namespace QuickFix
                 throw new ConfigError("No sessions defined for initiator");
         }
 
+        public void Start()
+        {
+            isStopped_ = false;
+            OnConfigure(settings_);
+            OnInitialize(settings_);
+            thread_ = new Thread(new ThreadStart(OnStart));
+            thread_.Start();
+        }
+
+        public void Stop()
+        {
+            Stop(false);
+        }
+
+        public void Stop(bool force)
+        {
+            if (IsStopped)
+                return;
+
+            HashSet<SessionID> connectedSessions;
+            lock (sync_)
+            {
+                connectedSessions = new HashSet<SessionID>(connected_);
+            }
+
+            List<Session> enabledSessions = new List<Session>();
+            foreach (SessionID sessionID in connectedSessions)
+            {
+                Session session = Session.LookupSession(sessionID);
+                if (session.IsEnabled)
+                {
+                    enabledSessions.Add(session);
+                    session.Logout();
+                }
+            }
+
+            if (!force)
+            {
+                for (int second = 0; (second < 10) && IsLoggedOn(); ++second)
+                    Thread.Sleep(1000);
+            }
+
+            lock (sync_)
+            {
+                foreach (SessionID sessionID in connected_)
+                {
+                    SetDisconnected(Session.LookupSession(sessionID).SessionID);
+                }
+            }
+
+            isStopped_ = true;
+            OnStop();
+            thread_.Join(5000);
+            thread_ = null;
+
+            foreach (Session session in enabledSessions)
+                session.Logon();
+        }
+
+        public bool IsLoggedOn()
+        {
+            lock (sync_)
+            {
+
+                foreach (SessionID sessionID in connected_)
+                {
+                    if (Session.LookupSession(sessionID).IsLoggedOn)
+                        return true;
+                }
+            }
+
+            return false;
+        }
+
+        #region Virtual Methods
+
+        /// <summary>
+        /// Implemented to configure acceptor
+        /// </summary>
+        /// <param name="settings"></param>
+        protected virtual void OnConfigure(SessionSettings settings)
+        { }
+        /// <summary>
+        /// Implemented to initialize initiator
+        /// </summary>
+        /// <param name="settings"></param>
+        protected virtual void OnInitialize(SessionSettings settings)
+        { }
+
+        #endregion
+
+        #region Abstract Methods
+
+        /// <summary>
+        /// Implemented to start connecting to targets.
+        /// </summary>
+        protected abstract void OnStart();
+        /// <summary>
+        /// Implemented to connect and poll for events.
+        /// </summary>
+        /// <param name="timeout"></param>
+        /// <returns></returns>
+        protected abstract bool OnPoll(double timeout);
+        /// <summary>
+        /// Implemented to stop a running initiator.
+        /// </summary>
+        protected abstract void OnStop();
+        /// <summary>
+        /// Implemented to connect a session to its target.
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <param name="settings"></param>
+        protected abstract void DoConnect(SessionID sessionID, QuickFix.Dictionary settings);
+
+        #endregion
 
         #region Protected Methods
-        
+
+        protected void Connect()
+        {
+            lock(sync_)
+            {
+                HashSet<SessionID> disconnectedSessions = new HashSet<SessionID>(disconnected_);
+                
+                foreach(SessionID sessionID in disconnectedSessions)
+                {
+                    Session session = Session.LookupSession(sessionID);
+                    if(session.IsEnabled && session.IsSessionTime)
+                        DoConnect(sessionID, settings_.Get(sessionID));
+                }
+            }
+        }
+
         protected void SetPending(SessionID sessionID)
         {
             lock (sync_)

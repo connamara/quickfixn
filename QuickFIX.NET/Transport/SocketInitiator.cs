@@ -11,7 +11,7 @@ using System.IO;
 
 namespace QuickFix.Transport
 {
-    public class SocketInitiator
+    public class SocketInitiator : Initiator
     {
         public const string SOCKET_CONNECT_HOST = "SocketConnectHost";
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
@@ -31,6 +31,7 @@ namespace QuickFix.Transport
         { }
 
         public SocketInitiator(Application application, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory)
+            : base(application, storeFactory, settings, logFactory)
         {
             app_ = application;
             storeFactory_ = storeFactory;
@@ -38,24 +39,6 @@ namespace QuickFix.Transport
             logFactory_ = logFactory;
             socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket_.ReceiveTimeout = 5000;
-        }
-
-        public void Start()
-        {
-            if ((clientThread_ != null) && clientThread_.IsAlive)
-                return;
-
-            disconnectRequested_ = false;
-            shutdownRequested_ = false;
-            clientThread_ = new Thread(new ThreadStart(ClientLoop));
-            clientThread_.Start();
-        }
-
-        public void Stop()
-        {
-            shutdownRequested_ = true;
-            Close();
-            clientThread_.Join(5000);
         }
 
         /// <summary>
@@ -142,15 +125,6 @@ namespace QuickFix.Transport
             socket_.Send(rawData);
         }
 
-        /// <summary>
-        /// Close connection.
-        /// </summary>
-        public void Close()
-        {
-            disconnectRequested_ = true;
-            socket_.Shutdown(SocketShutdown.Both);
-        }
-
         private void NotifyApplication(string data)
         {
             Message msg = new Message();
@@ -165,7 +139,6 @@ namespace QuickFix.Transport
         }
 
         #region Private Members
-        private Thread clientThread_;
         private Socket socket_;
         private Application app_;
         private SessionSettings settings_;
@@ -175,6 +148,34 @@ namespace QuickFix.Transport
         private string _currentMessage;
         private volatile bool disconnectRequested_ = false;
         private volatile bool shutdownRequested_ = false;
+        #endregion
+
+        #region Initiator Methods
+        
+        protected override void OnStart()
+        {
+            disconnectRequested_ = false;
+            shutdownRequested_ = false;
+            ClientLoop();
+        }
+
+        protected override bool OnPoll(double timeout)
+        {
+            throw new NotImplementedException("FIXME - SocketInitiator.OnPoll not implemented!");
+        }
+
+        protected override void OnStop()
+        {
+            shutdownRequested_ = true;
+            disconnectRequested_ = true;
+            socket_.Shutdown(SocketShutdown.Both);
+        }
+
+        protected override void DoConnect(SessionID sessionID, Dictionary settings)
+        {
+            throw new NotImplementedException("FIXME - SocketInitiator.DoConnect not implemented!");
+        }
+
         #endregion
     }
 }

@@ -99,6 +99,7 @@
     <Compile Include="SessionID.cs" />
     <Compile Include="SessionSchedule.cs" />
     <Compile Include="SessionSettings.cs" />
+    <Compile Include="SessionState.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StringUTF8.cs" />
     <Compile Include="Transport\SocketAcceptor.cs" />
