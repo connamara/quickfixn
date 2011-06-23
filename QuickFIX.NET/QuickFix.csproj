@@ -48,7 +48,9 @@
     <Compile Include="Application.cs" />
     <Compile Include="Applications\FIX4Application.cs" />
     <Compile Include="Applications\FIX5Application.cs" />
+    <Compile Include="DataDictionaryProvider.cs" />
     <Compile Include="FileStoreFactory.cs" />
+    <Compile Include="Initiator.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="LogFactory.cs" />
     <Compile Include="MemoryStore.cs" />
@@ -92,7 +94,9 @@
     <Compile Include="Session.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SessionFactory.cs" />
     <Compile Include="SessionID.cs" />
+    <Compile Include="SessionSchedule.cs" />
     <Compile Include="SessionSettings.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StringUTF8.cs" />

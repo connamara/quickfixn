@@ -13,7 +13,14 @@ namespace QuickFix
         public const string SESSION_QUALIFIER = "SessionQualifier";
         public const string DEFAULT_APPLVERID = "DefaultApplVerID";
         public const string CONNECTION_TYPE = "ConnectionType";
-
+        public const string USE_DATA_DICTIONARY = "UseDataDictionary";
+        public const string USE_LOCAL_TIME = "UseLocalTime";
+        public const string START_DAY = "StartDay";
+        public const string END_DAY = "EndDay";
+        public const string START_TIME = "StartTime";
+        public const string END_TIME = "EndTime";
+        public const string HEARTBTINT = "HeartBtInt";
+        
         #endregion
 
         #region Private Members
@@ -163,7 +170,7 @@ namespace QuickFix
             }
 
             string connectionType = dictionary.GetString(CONNECTION_TYPE);
-            if (connectionType != "initiator" && connectionType != "acceptor")
+            if (!"initiator".Equals(connectionType) && !"acceptor".Equals(connectionType))
             {
                 throw new ConfigError(CONNECTION_TYPE + " must be 'initiator' or 'acceptor'");
             }

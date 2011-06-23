@@ -25,7 +25,7 @@ namespace QuickFix
             get { return sessionQualifier_; }
         }
 
-        public bool isFIXT
+        public bool IsFIXT
         {
             get { return isFIXT_; }
         }
