@@ -8,6 +8,10 @@ namespace QuickFix
         protected MessageStoreFactory messageStoreFactory_;
         protected LogFactory logFactory_;
 
+        public SessionFactory(Application app, MessageStoreFactory storeFactory)
+            : this(app, storeFactory, null)
+        { }
+
         public SessionFactory(Application app, MessageStoreFactory storeFactory, LogFactory logFactory)
         {
             application_ = app;

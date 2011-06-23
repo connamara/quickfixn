@@ -83,6 +83,7 @@
     <Compile Include="HiPerfTimer.cs" />
     <Compile Include="MessageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SessionFactoryTest.cs" />
     <Compile Include="SessionSettingsTest.cs" />
     <Compile Include="SettingsTest.cs" />
     <Compile Include="SocketAcceptorTests.cs" />
