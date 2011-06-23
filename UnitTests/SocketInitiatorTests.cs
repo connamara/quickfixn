@@ -32,9 +32,16 @@ namespace UnitTests
             
             string conf = new StringBuilder()
                 .AppendLine("[DEFAULT]")
+                .AppendLine("ConnectionType=initiator")
                 .AppendLine("ReconnectInterval=1")
+                .AppendLine("HeartBtInt=60")
                 .AppendLine("SocketConnectHost=127.0.0.1")
                 .AppendLine("SocketConnectPort=56123")
+                .AppendLine("UseDataDictionary=N")
+                .AppendLine("[SESSION]")
+                .AppendLine("BeginString=FIX.4.2")
+                .AppendLine("SenderCompID=TW")
+                .AppendLine("TargetCompID=ISLD")
                 .ToString();
             settings_ = new SessionSettings(new System.IO.StringReader(conf));
          
@@ -72,7 +79,6 @@ namespace UnitTests
             Assert.That(received.Substring(0, testSend.Length), Is.EqualTo(testSend));
 
             _clientSocket.Shutdown(SocketShutdown.Both);
-            initiator_.Close();
             _clientSocket.Close();
             listener.Stop();
         }
