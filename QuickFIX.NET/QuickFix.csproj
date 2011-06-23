@@ -88,6 +88,7 @@
     <Compile Include="Message\Group.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageParseException.cs" />
+    <Compile Include="NullApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScreenLog.cs" />
     <Compile Include="ScreenLogFactory.cs" />
