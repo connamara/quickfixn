@@ -66,7 +66,7 @@ namespace QuickFix.Examples
         {
             if(args.Length != 1)
             {
-                System.Console.WriteLine("usage: Example_TradeClient.exe " + " CONFIG_FILENAME");
+                System.Console.WriteLine("usage: Example_TradeClient.exe CONFIG_FILENAME");
                 System.Environment.Exit(2);
             }
             

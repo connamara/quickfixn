@@ -20,6 +20,8 @@ namespace QuickFix
         public const string START_TIME = "StartTime";
         public const string END_TIME = "EndTime";
         public const string HEARTBTINT = "HeartBtInt";
+        public const string SOCKET_ACCEPT_HOST = "SocketAcceptHost";
+        public const string SOCKET_ACCEPT_PORT = "SocketAcceptPort";
         
         #endregion
 

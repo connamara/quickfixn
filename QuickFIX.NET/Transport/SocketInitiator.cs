@@ -23,7 +23,31 @@ namespace QuickFix.Transport
         #endregion
 
         #region Properties
-        public bool Connected { get { return socket_.Connected; } }
+        
+        public bool Connected
+        {
+            get
+            {
+                if (null == socket_)
+                    return false;
+                return socket_.Connected;
+            }
+        }
+
+        #endregion
+
+        #region Private Members
+        
+        private Application app_;
+        private SessionSettings settings_;
+        private MessageStoreFactory storeFactory_;
+        private LogFactory logFactory_;
+        private Socket socket_ = null;
+        private byte[] _readBuffer = new byte[512];
+        private string _currentMessage;
+        private volatile bool disconnectRequested_ = false;
+        private volatile bool shutdownRequested_ = false;
+        
         #endregion
 
         public SocketInitiator(Application application, MessageStoreFactory storeFactory, SessionSettings settings)
@@ -37,8 +61,6 @@ namespace QuickFix.Transport
             storeFactory_ = storeFactory;
             settings_ = settings;
             logFactory_ = logFactory;
-            socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket_.ReceiveTimeout = 5000;
         }
 
         /// <summary>
@@ -68,6 +90,7 @@ namespace QuickFix.Transport
             {
                 try
                 {
+                    socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     socket_.Connect(host, port);
                 }
                 catch (SocketException e)
@@ -77,6 +100,7 @@ namespace QuickFix.Transport
                     continue;
                 }
 
+                ///FIXME Send("8=FIX.4.2\x01" + "9=54\x01" + "35=A\x01" + "34=1\x01" + "49=CLIENT1\x01" + "52=20110625-08:45:00\x01" + "56=EXECUTOR\x01" + "10=000\x01");
                 while(!disconnectRequested_)
                 {
                     try
@@ -88,9 +112,11 @@ namespace QuickFix.Transport
                     {
                         if(!disconnectRequested_)
                             Console.WriteLine("Error reading socket: " + e.Message);
+                        disconnectRequested_ = true;
                     }
                 }
 
+                socket_.Shutdown(SocketShutdown.Both);
                 disconnectRequested_ = false;
             }
         }
@@ -138,18 +164,6 @@ namespace QuickFix.Transport
                 RawDataReceived(this, data);
         }
 
-        #region Private Members
-        private Socket socket_;
-        private Application app_;
-        private SessionSettings settings_;
-        private MessageStoreFactory storeFactory_;
-        private LogFactory logFactory_;
-        private byte[] _readBuffer = new byte[512];
-        private string _currentMessage;
-        private volatile bool disconnectRequested_ = false;
-        private volatile bool shutdownRequested_ = false;
-        #endregion
-
         #region Initiator Methods
         
         protected override void OnStart()
@@ -168,7 +182,8 @@ namespace QuickFix.Transport
         {
             shutdownRequested_ = true;
             disconnectRequested_ = true;
-            socket_.Shutdown(SocketShutdown.Both);
+            if(null != socket_)
+                socket_.Shutdown(SocketShutdown.Both);
         }
 
         protected override void DoConnect(SessionID sessionID, Dictionary settings)
