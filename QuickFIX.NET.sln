@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example_TradeClient", "Exam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcceptanceTest", "AcceptanceTest\AcceptanceTest.csproj", "{B02EAF78-6335-4996-BB98-3121A4B6B0B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Executor", "Examples\Executor\Executor.csproj", "{6CF22B5A-C50F-4328-9279-E07D308FCC12}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{5ADD4955-3018-4025-9593-74560F9D5FDE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B02EAF78-6335-4996-BB98-3121A4B6B0B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B02EAF78-6335-4996-BB98-3121A4B6B0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CF22B5A-C50F-4328-9279-E07D308FCC12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CF22B5A-C50F-4328-9279-E07D308FCC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CF22B5A-C50F-4328-9279-E07D308FCC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CF22B5A-C50F-4328-9279-E07D308FCC12}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,6 +6,9 @@ namespace QuickFix
     {
         private static Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private SessionState state_ = new SessionState();
+        private object responderSync_ = new object();
+        private Responder responder_ = null;
+        private Log log_;
         private SessionSchedule schedule_;
 
         #region Properties
@@ -35,6 +38,11 @@ namespace QuickFix
             get { return state_.ReceivedLogon; }
         }
 
+        public bool HasResponder
+        {
+            get { return null != responder_; }
+        }
+
         public SessionID SessionID
         { get; set; }
 
@@ -54,6 +62,10 @@ namespace QuickFix
         {
             this.SessionID = sessID;
             schedule_ = sessionSchedule;
+            if (null != logFactory)
+                log_ = logFactory.Create(sessID);
+            else
+                log_ = new NullLog();
         }
 
         #region Static Methods
@@ -94,6 +106,21 @@ namespace QuickFix
         {
             state_.IsEnabled = false;
             state_.LogoutReason = reason;
+        }
+
+        public void Disconnect(string reason)
+        {
+            lock (responderSync_)
+            {
+                if (!HasResponder)
+                {
+                    log_.OnEvent("Session " + this.SessionID + " already disconnected: " + reason);
+                    return;
+                }
+                log_.OnEvent("Session " + this.SessionID + " disconnecting: " + reason);
+                responder_.Disconnect();
+                responder_ = null;
+            }
         }
 
         /// <summary>

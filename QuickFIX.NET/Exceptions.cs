@@ -39,4 +39,18 @@ namespace QuickFix
             : base("Could not convert field: " + msg, innerException)
         { }
     }
+
+    /// <summary>
+    /// Socket connection was reset by peer
+    /// </summary>
+    public class ConnectionResetByPeerException : QuickFIXException
+    {
+        public ConnectionResetByPeerException()
+            : base("Connection reset by peer")
+        { }
+
+        public ConnectionResetByPeerException(System.Exception innerException)
+            : base("Connection reset by peer", innerException)
+        { }
+    }
 }
