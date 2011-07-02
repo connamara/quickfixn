@@ -116,7 +116,7 @@ namespace QuickFix.Transport
                     }
                 }
 
-                socket_.Shutdown(SocketShutdown.Both);
+                socket_.Close();
                 disconnectRequested_ = false;
             }
         }
@@ -182,8 +182,8 @@ namespace QuickFix.Transport
         {
             shutdownRequested_ = true;
             disconnectRequested_ = true;
-            if(null != socket_)
-                socket_.Shutdown(SocketShutdown.Both);
+            if (null != socket_)
+                socket_.Close();
         }
 
         protected override void DoConnect(SessionID sessionID, Dictionary settings)
