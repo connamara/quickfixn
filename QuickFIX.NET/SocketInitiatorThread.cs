@@ -55,7 +55,7 @@ namespace QuickFix
         {
             try
             {
-                try
+                if (socket_.Poll(1000000, SelectMode.SelectRead)) // one-second timeout
                 {
                     int bytesRead = socket_.Receive(readBuffer_);
                     if (0 == bytesRead)
@@ -63,28 +63,24 @@ namespace QuickFix
                     parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
                     initiator_.HandleMessage(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead)); /// FIXME REMOVE XXX 
                 }
-                catch (SocketException e)
+                else if (null != session_)
                 {
-                    if (SocketError.TimedOut == e.SocketErrorCode)
-                        session_.Next();
-                    else
-                        throw e;
-                }
-                
-                ProcessStream();
-                return true;
-            }
-            catch (SocketException e)
-            {
-                if (null != session_)
-                {
-                    session_.Log.OnEvent(e.Message);
-                    session_.Disconnect(e.Message);
+                    session_.Next();
                 }
                 else
                 {
-                    Disconnect();
+                    throw new QuickFIXException("Initiator timed out while reading socket");
                 }
+            
+                ProcessStream();
+                return true;
+            }
+            catch (System.Exception e)
+            {
+                if (null != session_)
+                    session_.Disconnect(e.Message);
+                else
+                    Disconnect();
                 return false;
             }
         }
