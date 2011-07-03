@@ -5,13 +5,17 @@ namespace QuickFix
     public class Session
     {
         private static Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
-        private SessionState state_ = new SessionState();
         private object responderSync_ = new object();
         private Responder responder_ = null;
-        private Log log_;
         private SessionSchedule schedule_;
+        private SessionState state_;
 
         #region Properties
+
+        public Log Log
+        {
+            get { return state_.Log; }
+        }
 
         public bool IsEnabled
         {
@@ -40,7 +44,13 @@ namespace QuickFix
 
         public bool HasResponder
         {
-            get { return null != responder_; }
+            get { lock (responderSync_) { return null != responder_; } }
+        }
+
+        public Responder Responder
+        {
+            get { lock (responderSync_) { return responder_; } }
+            set { lock (responderSync_) { responder_ = value; } }
         }
 
         public SessionID SessionID
@@ -62,10 +72,19 @@ namespace QuickFix
         {
             this.SessionID = sessID;
             schedule_ = sessionSchedule;
+
+            Log log;
             if (null != logFactory)
-                log_ = logFactory.Create(sessID);
+                log = logFactory.Create(sessID);
             else
-                log_ = new NullLog();
+                log = new NullLog();
+
+            state_ = new SessionState(log);
+
+            lock (sessions_)
+            {
+                sessions_[this.SessionID] = this;
+            }
         }
 
         #region Static Methods
@@ -86,10 +105,32 @@ namespace QuickFix
             return result;
         }
 
-        public static void SendToTarget(Message m)
-        { }
+        /// <summary>
+        /// FIXME send Message, not string
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static bool SendToTarget(string message, SessionID sessionID)
+        {
+            //message.SessionID = sessionID;
+            Session session = Session.LookupSession(sessionID);
+            if(null == session)
+                throw new SessionNotFound(sessionID);
+            return session.Send(message);
+        }
 
         #endregion
+
+        public bool Send(string message)
+        {
+            this.Log.OnOutgoing(message);
+            lock(responderSync_)
+            {
+                if(null == responder_)
+                    return false;
+                return responder_.Send(message);
+            }
+        }
 
         public void Logon()
         {
@@ -114,13 +155,18 @@ namespace QuickFix
             {
                 if (!HasResponder)
                 {
-                    log_.OnEvent("Session " + this.SessionID + " already disconnected: " + reason);
+                    this.Log.OnEvent("Session " + this.SessionID + " already disconnected: " + reason);
                     return;
                 }
-                log_.OnEvent("Session " + this.SessionID + " disconnecting: " + reason);
+                this.Log.OnEvent("Session " + this.SessionID + " disconnecting: " + reason);
                 responder_.Disconnect();
                 responder_ = null;
             }
+        }
+
+        public void Next()
+        {
+            System.Console.WriteLine("Session.Next: implement me!");
         }
 
         /// <summary>

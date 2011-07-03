@@ -39,6 +39,24 @@ namespace QuickFix
             : base("Could not convert field: " + msg, innerException)
         { }
     }
+    
+    /// <summary>
+    /// Session cannot be found for specified action
+    /// </summary>
+    public class SessionNotFound : QuickFIXException
+    {
+        public SessionNotFound(string msg)
+            : base("Session Not Found: " + msg)
+        { }
+
+        public SessionNotFound(SessionID sessionID)
+            : base("Session '" + sessionID + "' Not Found")
+        { }
+
+        public SessionNotFound(SessionID sessionID, string msg)
+            : base("Session '" + sessionID + "' Not Found: " + msg)
+        { }
+    }
 
     /// <summary>
     /// Socket connection was reset by peer

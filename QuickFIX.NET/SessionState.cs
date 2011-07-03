@@ -9,6 +9,7 @@ namespace QuickFix
         private bool sentLogon_ = false;
         private bool receivedLogon_ = false;
         private string logoutReason_ = "";
+        private Log log_;
 
         #region Properties
 
@@ -35,10 +36,17 @@ namespace QuickFix
             get { lock (sync_) { return logoutReason_; } }
             set { lock (sync_) { logoutReason_ = value; } }
         }
-        
+
+        public Log Log
+        {
+            get { return log_; }
+        }
+
         #endregion
 
-        public SessionState()
-        { }
+        public SessionState(Log log)
+        {
+            log_ = log;
+        }
     }
 }

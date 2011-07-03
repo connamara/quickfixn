@@ -1,11 +1,9 @@
 ﻿
 namespace QuickFix
 {
-    public class Responder
+    public interface Responder
     {
-        public void Disconnect()
-        {
-            System.Console.WriteLine("FIXME - Responder.Disconnect not implemented!");
-        }
+        bool Send(string s);
+        void Disconnect();
     }
 }
