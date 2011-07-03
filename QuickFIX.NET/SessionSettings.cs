@@ -22,7 +22,10 @@ namespace QuickFix
         public const string HEARTBTINT = "HeartBtInt";
         public const string SOCKET_ACCEPT_HOST = "SocketAcceptHost";
         public const string SOCKET_ACCEPT_PORT = "SocketAcceptPort";
-        
+        public const string SOCKET_CONNECT_HOST = "SocketConnectHost";
+        public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
+        public const string RECONNECT_INTERVAL = "ReconnectInterval";
+
         #endregion
 
         #region Private Members
