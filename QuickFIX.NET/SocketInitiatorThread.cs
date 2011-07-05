@@ -87,7 +87,9 @@ namespace QuickFix
 
         private void ProcessStream()
         {
-            System.Console.WriteLine("SocketInitiatorThread.ProcessStream: implement me!");
+            string msg;
+            while((msg = parser_.ReadFixMessage()) != string.Empty)
+                session_.Next(msg);
         }
 
         #region Responder Members

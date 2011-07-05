@@ -171,9 +171,6 @@ namespace QuickFix
             }
         }
 
-        /// <summary>
-        /// FIXME
-        /// </summary>
         public void Next()
         {
             if (!IsEnabled) 
@@ -218,10 +215,10 @@ namespace QuickFix
                 return;
             }
 
-            if (0 == state_.HeartBtInt) // means we are an Acceptor?
+            if (!state_.IsInitiator) // means we are an Acceptor?
                 return;
             
-            /*
+            /* TODO
             if (state_.IsLogoutTimedOut)
                 Disconnect("Timed out waiting for heartbeat");
 
@@ -256,10 +253,11 @@ namespace QuickFix
             */
         }
 
-        /// <summary>
-        /// FIXME
-        /// </summary>
-        /// <param name="message"></param>
+        public void Next(string message)
+        {
+            Next(new Message(message));
+        }
+
         public void Next(Message message)
         {
             Header header = message.Header;
@@ -268,10 +266,6 @@ namespace QuickFix
                 NextLogon(message);
         }
 
-        /// <summary>
-        /// FIXME
-        /// </summary>
-        /// <param name="message"></param>
         public void NextLogon(Message logon)
         {
             state_.ReceivedLogon = true;
@@ -282,6 +276,9 @@ namespace QuickFix
                 GenerateLogon(heartBtInt);
                 this.Log.OnEvent("Responding to logon request");
             }
+
+            state_.SentReset = false;
+            state_.ReceivedReset = false;
         }
             
 
