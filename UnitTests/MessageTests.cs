@@ -143,6 +143,19 @@ namespace UnitTests
         }
 
         [Test]
+        public void ToStringFieldOrder()
+        {
+            Message msg = new Message();
+            msg.Header.setField(new QuickFix.Fields.MsgType("A"));
+            msg.Header.setField(new QuickFix.Fields.BeginString("FIX.4.2"));
+            msg.Header.setField(new QuickFix.Fields.SenderCompID("SENDER"));
+            msg.Header.setField(new QuickFix.Fields.TargetCompID("TARGET"));
+            msg.Header.setField(new QuickFix.Fields.MsgSeqNum(42));
+            string expect = "8=FIX.4.2\x01" + "9=31\x01" + "35=A\x01" + "34=42\x01" + "49=SENDER\x01" + "56=TARGET\x01" + "10=200\x01";
+            Assert.That(msg.ToString(), Is.EqualTo(expect));
+        }
+
+        [Test]
         public void IsHeaderFieldTest()
         {
             Assert.That(Message.IsHeaderField(Tags.BeginString), Is.EqualTo(true));

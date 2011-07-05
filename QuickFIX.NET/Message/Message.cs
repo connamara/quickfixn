@@ -6,12 +6,27 @@ using QuickFix.Fields;
 
 namespace QuickFix
 {
+    public class Header : FieldMap
+    {
+        private int[] EXCLUDED_HEADER_FIELDS = { Fields.Tags.BeginString, Fields.Tags.BodyLength, Fields.Tags.MsgType };
+
+        public override string CalculateString()
+        {
+            return base.CalculateString(new StringBuilder(), EXCLUDED_HEADER_FIELDS);
+        }
+
+        public override string CalculateString(StringBuilder sb, int[] preFields)
+        {
+            return base.CalculateString(sb, EXCLUDED_HEADER_FIELDS);
+        }
+    }
+
     public class Message : FieldMap
     {
         public Message()
         {
-            Header = new FieldMap();
-            Trailer = new FieldMap();
+            this.Header = new Header();
+            this.Trailer = new FieldMap();
         }
 
         public void FromString(string msgstr)
@@ -49,6 +64,11 @@ namespace QuickFix
                 (_header.CalculateTotal()
                 + CalculateTotal()
                 + _trailer.CalculateTotal()) % 256);
+        }
+
+        public static bool IsAdminMsgType(string msgType)
+        {
+            return msgType.Length == 1 && "0A12345h".IndexOf(msgType) != -1;
         }
 
         /// <summary>

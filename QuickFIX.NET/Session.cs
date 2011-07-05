@@ -5,6 +5,7 @@ namespace QuickFix
     public class Session
     {
         private static Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
+        private object sync_ = new object();
         private object responderSync_ = new object();
         private Responder responder_ = null;
         private SessionSchedule schedule_;
@@ -79,7 +80,7 @@ namespace QuickFix
             else
                 log = new NullLog();
 
-            state_ = new SessionState(log);
+            state_ = new SessionState(log, heartBtInt);
 
             lock (sessions_)
             {
@@ -164,9 +165,89 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// FIXME
+        /// </summary>
         public void Next()
         {
-            System.Console.WriteLine("Session.Next: implement me!");
+            if (!IsEnabled) 
+            {
+                if (!IsLoggedOn)
+                    return;
+                
+                /* TODO
+                if (!state_.SentLogon) 
+                {
+                    this.Log.OnEvent("Initiated logout request");
+                    GenerateLogout(state_.LogoutReason);
+                }
+                */
+            }
+
+            /* TODO
+            if (!CheckSessionTime()) 
+            {
+                Reset();
+                return;
+            }
+            */
+
+            if (!HasResponder) 
+                return;
+
+            if (!state_.ReceivedLogon) 
+            {
+                if (state_.ShouldSendLogon && IsTimeToGenerateLogon())
+                {
+                    if (GenerateLogon()) 
+                        this.Log.OnEvent("Initiated logon request");
+                    else
+                        this.Log.OnEvent("Error during logon request initiation");
+                
+                } 
+                else if (state_.SentLogon && state_.LogonTimedOut()) 
+                {
+                    Disconnect("Timed out waiting for logon response");
+                }
+                return;
+            }
+
+            if (0 == state_.HeartBtInt) // means we are an Acceptor?
+                return;
+            
+            /*
+            if (state_.IsLogoutTimedOut)
+                Disconnect("Timed out waiting for heartbeat");
+
+            if (state_.IsWithinHeartBeat)
+                return;
+
+            if (state_.IsTimedOut) 
+            {
+                if (!disableHeartBeatCheck) 
+                {
+                    disconnect("Timed out waiting for heartbeat", true);
+                    stateListener.onHeartBeatTimeout();
+                } 
+                else 
+                {
+                    log.warn("Heartbeat failure detected but deactivated");
+                }
+            }
+            else 
+            {
+                if (state_.isTestRequestNeeded())
+                {
+                    generateTestRequest("TEST");
+                    getLog().onEvent("Sent test request TEST");
+                    stateListener.onMissedHeartBeat();
+                } 
+                else if (state_.isHeartBeatNeeded()) 
+                {
+                    generateHeartbeat();
+                }
+            }
+            */
         }
 
         /// <summary>
@@ -175,6 +256,87 @@ namespace QuickFix
         /// <param name="s"></param>
         public void SetSenderDefaultApplVerID(string s)
         {
+        }
+
+        /// <summary>
+        /// FIXME
+        /// </summary>
+        /// <returns></returns>
+        protected bool IsTimeToGenerateLogon()
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// FIXME
+        /// </summary>
+        /// <returns></returns>
+        protected bool GenerateLogon()
+        {
+            Message logon = new Message();
+            logon.Header.setField(new Fields.MsgType("A"));
+            logon.setField(new Fields.EncryptMethod(0));
+            logon.setField(new Fields.HeartBtInt(state_.HeartBtInt));
+            /*
+            if( this.SessionID.IsFIXT)
+                logon.setField( new Fields.DefaultApplVerID("FIXME"));
+            if(RefreshOnLogon)
+                Refresh();
+            if(ResetOnLogon)
+                state_.Reset();
+            if(ShouldSendReset)
+                logon.setField(new Fields.ResetSeqNumFlag(true));
+            */
+            InitializeHeader(logon);
+            state_.LastSentTimeTickCount = System.Environment.TickCount;
+            state_.TestRequestCounter = 0;
+            state_.SentLogon = true;
+            return SendRaw(logon, 0);
+        }
+
+        /// <summary>
+        /// FIXME don't do so much operator new here
+        /// </summary>
+        /// <param name="m"></param>
+        protected void InitializeHeader(Message m)
+        {
+            state_.LastSentTimeTickCount = System.Environment.TickCount;
+            m.Header.setField(new Fields.BeginString(this.SessionID.BeginString));
+            m.Header.setField(new Fields.SenderCompID(this.SessionID.SenderCompID));
+            m.Header.setField(new Fields.TargetCompID(this.SessionID.TargetCompID));
+            m.Header.setField(new Fields.MsgSeqNum(state_.NextSenderMsgSeqNum));
+            InsertSendingTime(m.Header);    
+        }
+
+        protected void InsertSendingTime(FieldMap header)
+        {
+            header.setField(new Fields.SendingTime(System.DateTime.UtcNow));
+        }
+
+        protected bool SendRaw(Message message, int seqNum)
+        {
+            lock (sync_)
+            {
+                string msgType = message.Header.GetField(Fields.Tags.MsgType);
+                if(Message.IsAdminMsgType(msgType))
+                {
+                    /// FIXME application_.ToAdmin(message, this.SessionID);
+
+                    if( msgType == "A" && !state_.ReceivedReset)
+                    {
+                        Fields.ResetSeqNumFlag resetSeqNumFlag = new QuickFix.Fields.ResetSeqNumFlag(false);
+                        if(message.isSetField(resetSeqNumFlag))
+                            message.getField(resetSeqNumFlag);
+                        if(resetSeqNumFlag.getValue())
+                        {
+                            state_.Reset();
+                            message.Header.setField(new Fields.MsgSeqNum(state_.NextSenderMsgSeqNum));
+                        }
+                        state_.SentReset = resetSeqNumFlag.Obj;
+                    }
+                }
+                return Send(message.ToString());
+            }
         }
     }
 }
