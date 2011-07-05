@@ -57,6 +57,24 @@ namespace QuickFix
             : base("Session '" + sessionID + "' Not Found: " + msg)
         { }
     }
+    
+    /// <summary>
+    /// Not a recognizable message
+    /// </summary>
+    public class InvalidMessage : QuickFIXException
+    {
+        public InvalidMessage()
+            : base("Invalid message")
+        { }
+
+        public InvalidMessage(string msg)
+            : base("Invalid message: " + msg)
+        { }
+
+        public InvalidMessage(string msg, System.Exception innerException)
+            : base("Invalid message: " + msg, innerException)
+        { }
+    }
 
     /// <summary>
     /// Socket connection was reset by peer

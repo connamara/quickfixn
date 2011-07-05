@@ -54,6 +54,12 @@ namespace QuickFix
             set { lock (responderSync_) { responder_ = value; } }
         }
 
+        public int HeartBtInt
+        {
+            get { return state_.HeartBtInt; }
+            set { state_.HeartBtInt = value; }
+        }
+
         public SessionID SessionID
         { get; set; }
 
@@ -253,6 +259,35 @@ namespace QuickFix
         /// <summary>
         /// FIXME
         /// </summary>
+        /// <param name="message"></param>
+        public void Next(Message message)
+        {
+            Header header = message.Header;
+            string msgType = header.GetField(Fields.Tags.MsgType);
+            if ("A".Equals(msgType))
+                NextLogon(message);
+        }
+
+        /// <summary>
+        /// FIXME
+        /// </summary>
+        /// <param name="message"></param>
+        public void NextLogon(Message logon)
+        {
+            state_.ReceivedLogon = true;
+            this.Log.OnEvent("Received logon");
+            if (!state_.IsInitiator)
+            {
+                int heartBtInt = Fields.Converters.IntConverter.Convert(logon.GetField(Fields.Tags.HeartBtInt)); /// FIXME
+                GenerateLogon(heartBtInt);
+                this.Log.OnEvent("Responding to logon request");
+            }
+        }
+            
+
+        /// <summary>
+        /// FIXME
+        /// </summary>
         /// <param name="s"></param>
         public void SetSenderDefaultApplVerID(string s)
         {
@@ -292,6 +327,26 @@ namespace QuickFix
             state_.TestRequestCounter = 0;
             state_.SentLogon = true;
             return SendRaw(logon, 0);
+        }
+
+        /// <summary>
+        /// FIXME don't do so much operator new here
+        /// </summary>
+        /// <param name="heartBtInt"></param>
+        /// <returns></returns>
+        protected bool GenerateLogon(int heartBtInt)
+        {
+            Message logon = new Message();
+            logon.setField(new Fields.EncryptMethod(0));
+            if (this.SessionID.IsFIXT)
+                logon.setField(new Fields.DefaultApplVerID("FIXME"));
+            if (state_.ReceivedReset)
+                logon.setField(new Fields.ResetSeqNumFlag(true));
+            logon.Header.setField(new Fields.MsgType("A"));
+            logon.setField(new Fields.HeartBtInt(heartBtInt));
+            InitializeHeader(logon);
+            state_.SentLogon = SendRaw(logon, 0);
+            return state_.SentLogon;
         }
 
         /// <summary>
