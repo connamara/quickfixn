@@ -53,32 +53,25 @@ namespace UnitTests
             Thread.Sleep(250);  
             // Server sends initiator a message.
 
-            const string testData = "8=FIX.4.2\x01" + "9=46\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
-                "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=000\x01";
             Assert.NotNull(_clientSocket);
-            _clientSocket.Send(Encoding.UTF8.GetBytes(testData + "\n"));
+            //XXX_clientSocket.Send(Encoding.UTF8.GetBytes(expectedData + "\n"));
             Thread.Sleep(500);
 
-            // Assert that the initiator is connected and receives it.
-            //Assert.That(_clientSocket.Connected, Is.True);
-            //Assert.That(initiator_.Connected, Is.True);
-            Assert.That(_lastReceived, Is.EqualTo(testData));
-            
-            // Send message from initiator to server.
-            SessionID sessionID = new SessionID("FIX.4.2", "TW", "ISLD");
-            string testSend = testData;
-            Session.SendToTarget(testSend, sessionID);
-
-            byte[] r = new byte[256];
+            // initiator sends Logon to mock acceptor
+            byte[] r = new byte[512];
             _clientSocket.Receive(r);
             string received = Encoding.UTF8.GetString(r);
-            Thread.Sleep(100);
+            Thread.Sleep(500);
+            const string expectedDataRegex = "8=FIX.4.2\x01" + "9=57\x01" + "35=A\x01" + "34=1\x01" + "49=TW\x01" + "52=.+\x01" + "56=ISLD\x01" + ".+\x01";
+            StringAssert.IsMatch(expectedDataRegex, received);
 
-            // Assert that dummy server receives our test message.
-            // Note the substring, our dummy TcpListener is only receiving raw socket blocks of 256 bytes,
-            // so we only assert that what we sent is contained in the first part of the 256 byte block.
-            Assert.That(received.Substring(0, testSend.Length), Is.EqualTo(testSend));
-
+            // mock acceptor sends Logon reply to initiator
+            const string logonReplyData = "8=FIX.4.2\x01" + "9=57\x01" + "35=A\x01" + "34=1\x01" + "49=ISLD\x01" +
+                "52=20000426-12:05:06\x01" + "56=TW\x01" + "98=0\x01" + "10=000\x01";
+            _clientSocket.Send(Encoding.UTF8.GetBytes(logonReplyData + "\n"));
+            const string logonReplyDataRegex = "8=FIX.4.2\x01" + "9=57\x01" + "35=A\x01" + "34=1\x01" + "49=ISLD\x01" + "52=.+\x01" + "56=TW\x01" + ".+\x01";
+            StringAssert.IsMatch(logonReplyDataRegex, _lastReceived);
+            
             _clientSocket.Shutdown(SocketShutdown.Both);
             _clientSocket.Close();
             listener.Stop();

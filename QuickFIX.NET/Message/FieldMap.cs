@@ -268,12 +268,23 @@ namespace QuickFix
             return total;
         }
 
-        public string CalculateString()
+        public virtual string CalculateString()
         {
-            StringBuilder sb = new StringBuilder();
+            return CalculateString(new StringBuilder(), new int[0]);
+        }
+
+        public virtual string CalculateString(StringBuilder sb, int[] preFields)
+        {
+            foreach (int preField in preFields)
+            {
+                if (isSetField(preField))
+                    sb.Append(preField + "=" + GetField(preField)).Append(Message.SOH);
+            }
 
             foreach (Fields.IField field in _fields.Values)
             {
+                if (IsOrderedField(field.Tag, preFields))
+                    continue;
                 sb.Append(field.Tag.ToString() + "=" + field.ToString());
                 sb.Append(Message.SOH);
             }
@@ -287,8 +298,19 @@ namespace QuickFix
             return sb.ToString();
         }
 
+        private bool IsOrderedField(int field, int[] fieldOrder)
+        {
+            foreach (int f in fieldOrder)
+            {
+                if (field == f)
+                    return true;
+            }
+        
+            return false;
+        }
+
         #region Private Members
-        private Dictionary<int, Fields.IField> _fields = new Dictionary<int, Fields.IField>();
+        private SortedDictionary<int, Fields.IField> _fields = new SortedDictionary<int, Fields.IField>(); /// FIXME sorted dict is a hack to get quasi-correct field order
         private Dictionary<int, List<Group>> _groups = new Dictionary<int, List<Group>>();
         private int[] _fieldOrder;
         #endregion
