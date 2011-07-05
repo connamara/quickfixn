@@ -299,8 +299,7 @@ namespace QuickFix.Transport
 
         private void NotifyApplication(string data)
         {
-            Message msg = new Message();
-            msg.FromString(data);
+            Message msg = new Message(data);
             app_.OnMessage(msg);
         }
 

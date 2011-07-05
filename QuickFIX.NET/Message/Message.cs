@@ -29,6 +29,12 @@ namespace QuickFix
             this.Trailer = new FieldMap();
         }
 
+        public Message(string msgstr)
+            : this()
+        {
+            FromString(msgstr);
+        }
+
         public void FromString(string msgstr)
         {
             int pos = 0;
@@ -45,7 +51,7 @@ namespace QuickFix
         }
 
         #region Properties
-        public FieldMap Header
+        public Header Header
         {
             get { return _header; }
             private set { _header = value; }
@@ -58,14 +64,8 @@ namespace QuickFix
         }
         #endregion
 
-        public int CheckSum()
-        {
-            return (
-                (_header.CalculateTotal()
-                + CalculateTotal()
-                + _trailer.CalculateTotal()) % 256);
-        }
-
+        #region Static Methods
+        
         public static bool IsAdminMsgType(string msgType)
         {
             return msgType.Length == 1 && "0A12345h".IndexOf(msgType) != -1;
@@ -164,6 +164,62 @@ namespace QuickFix
             }
         }
 
+        public static string GetFieldOrDefault(FieldMap fields, int tag, string defaultValue)
+        {
+            if(!fields.isSetField(tag))
+                return defaultValue;
+            
+            try 
+            {
+                return fields.GetField(tag);
+            }
+            catch(FieldNotFoundException)
+            {
+                return defaultValue;
+            }
+        }
+
+        public static SessionID GetReverseSessionID(Message msg) 
+        {
+            return new SessionID(
+                GetFieldOrDefault(msg.Header, Fields.Tags.BeginString, null),
+                GetFieldOrDefault(msg.Header, Fields.Tags.TargetCompID, null),
+                GetFieldOrDefault(msg.Header, Fields.Tags.SenderCompID, null)
+            );
+        }
+
+        /// <summary>
+        /// FIXME totally bogus
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static SessionID GetReverseSessionID(string msg)
+        {
+            Message FIXME = new Message(msg);
+            return GetReverseSessionID(FIXME);
+        }
+
+        /// <summary>
+        /// FIXME totally bogus
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static string GetMsgType(string msg)
+        {
+            Message FIXME = new Message(msg);
+            return FIXME.GetField(Fields.Tags.MsgType);
+        }
+
+        #endregion
+        
+        public int CheckSum()
+        {
+            return (
+                (_header.CalculateTotal()
+                + CalculateTotal()
+                + _trailer.CalculateTotal()) % 256);
+        }
+
         public override string ToString()
         {
             _header.setField(new BodyLength(BodyLength()), true);
@@ -180,7 +236,7 @@ namespace QuickFix
         public const string SOH = "\u0001";
 
         #region Private Members
-        FieldMap _header;
+        Header _header;
         FieldMap _trailer;
         #endregion
     }

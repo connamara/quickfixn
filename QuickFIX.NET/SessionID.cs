@@ -56,7 +56,7 @@ namespace QuickFix
             isFIXT_ = beginString_.StartsWith("FIXT");
             
             id_ = beginString_ + ":" + senderCompID_ + "->" + targetCompID_;
-            if(sessionQualifier_.Length > 0)
+            if(null != sessionQualifier_ && sessionQualifier_.Length > 0)
                 id_ += ":" + sessionQualifier_;
         }
 

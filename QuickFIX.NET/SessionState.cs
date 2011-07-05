@@ -8,30 +8,31 @@ namespace QuickFix
 
         private object sync_ = new object();
         private bool isEnabled_ = true;
-        private bool sentLogon_ = false;
         private bool receivedLogon_ = false;
         private bool receivedReset_ = false;
         private string logoutReason_ = "";
         private int testRequestCounter_ = 0;
         private int nextSenderMsgSeqNum_ = 1;
-        private int heartBtInt_;
         private Log log_;
 
         #endregion
 
         #region Unsynchronized Properties
 
-        public bool IsInitiator 
-        { get { return heartBtInt_ != 0; } }
+        public bool IsInitiator
+        { get; set; }
 
         public bool ShouldSendLogon
         { get { return IsInitiator && !SentLogon; } }
+
+        public bool SentLogon
+        { get; set; }
 
         public bool SentReset
         { get; set; }
 
         public int HeartBtInt
-        { get { return heartBtInt_; } }
+        { get; set; }
 
         public Log Log
         { get { return log_; } }
@@ -47,12 +48,6 @@ namespace QuickFix
         {
             get { lock (sync_) { return isEnabled_; } }
             set { lock (sync_) { isEnabled_ = value; } }
-        }
-
-        public bool SentLogon
-        {
-            get { lock (sync_) { return sentLogon_; } }
-            set { lock (sync_) { sentLogon_ = value; } }
         }
 
         public bool ReceivedLogon
@@ -89,7 +84,8 @@ namespace QuickFix
         public SessionState(Log log, int heartBtInt)
         {
             log_ = log;
-            heartBtInt_ = heartBtInt;
+            this.IsInitiator = (0 != heartBtInt);
+            this.HeartBtInt = heartBtInt;
         }
 
         /// <summary>
