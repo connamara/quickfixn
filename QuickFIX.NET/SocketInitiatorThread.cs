@@ -61,7 +61,7 @@ namespace QuickFix
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
                     parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
-                    initiator_.HandleMessage(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead)); /// FIXME REMOVE XXX 
+                    initiator_.HandleMessage(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead)); /// FIXME remove this  
                 }
                 else if (null != session_)
                 {
