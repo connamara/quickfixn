@@ -46,9 +46,8 @@ namespace QuickFix
                 {
                     socketReader_.Read();
                 }
-                catch (System.Exception e)
+                catch (System.Exception)
                 {
-                    this.Log("Error reading socket: " + e.Message);
                     Shutdown();
                 }
             }

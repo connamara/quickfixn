@@ -57,7 +57,6 @@ namespace QuickFix
         public int HeartBtInt
         {
             get { return state_.HeartBtInt; }
-            set { state_.HeartBtInt = value; }
         }
 
         public SessionID SessionID
@@ -215,46 +214,40 @@ namespace QuickFix
                 return;
             }
 
-            if (!state_.IsInitiator) // means we are an Acceptor?
+            if (0 == state_.HeartBtInt) /// do we really mean state_.IsInitiator?
                 return;
-            
+          
             /* TODO
             if (state_.IsLogoutTimedOut)
                 Disconnect("Timed out waiting for heartbeat");
+            */
 
-            if (state_.IsWithinHeartBeat)
+            if (state_.WithinHeartbeat())
                 return;
 
-            if (state_.IsTimedOut) 
+            if (state_.TimedOut()) 
             {
-                if (!disableHeartBeatCheck) 
-                {
-                    disconnect("Timed out waiting for heartbeat", true);
-                    stateListener.onHeartBeatTimeout();
-                } 
-                else 
-                {
-                    log.warn("Heartbeat failure detected but deactivated");
-                }
+                Disconnect("Timed out waiting for heartbeat");
             }
             else 
             {
-                if (state_.isTestRequestNeeded())
+                if (state_.NeedTestRequest())
                 {
-                    generateTestRequest("TEST");
-                    getLog().onEvent("Sent test request TEST");
-                    stateListener.onMissedHeartBeat();
+                    GenerateTestRequest("TEST");
+                    state_.TestRequestCounter += 1;
+                    this.Log.OnEvent("Sent test request TEST");
+                    
                 } 
-                else if (state_.isHeartBeatNeeded()) 
+                else if (state_.NeedHeartbeat()) 
                 {
-                    generateHeartbeat();
+                    GenerateHeartbeat();
                 }
             }
-            */
         }
 
         public void Next(string message)
         {
+            this.Log.OnIncoming(message);
             Next(new Message(message));
         }
 
@@ -264,9 +257,24 @@ namespace QuickFix
             string msgType = header.GetField(Fields.Tags.MsgType);
             if ("A".Equals(msgType))
                 NextLogon(message);
+            else if ("0".Equals(msgType))
+                NextHeartbeat(message);
+            else if ("1".Equals(msgType))
+                NextTestRequest(message);
+            else
+            {
+                if (!Verify(message))
+                    return;
+                state_.IncrNextTargetMsgSeqNum();
+            }
         }
 
-        public void NextLogon(Message logon)
+        protected void NextQueued()
+        {
+            System.Console.WriteLine("FIXME - Sessoin.NextQueued not implemented!");
+        }
+
+        protected void NextLogon(Message logon)
         {
             state_.ReceivedLogon = true;
             this.Log.OnEvent("Received logon");
@@ -280,7 +288,30 @@ namespace QuickFix
             state_.SentReset = false;
             state_.ReceivedReset = false;
         }
-            
+
+        protected void NextTestRequest(Message testRequest)
+        {
+            if (!Verify(testRequest))
+                return;
+            GenerateHeartbeat(testRequest);
+            state_.IncrNextTargetMsgSeqNum();
+            NextQueued();
+        }
+
+        protected void NextHeartbeat(Message heartbeat)
+        {
+            if (!Verify(heartbeat))
+                return;
+            state_.IncrNextTargetMsgSeqNum();
+            NextQueued();
+        }
+
+        public bool Verify(Message message)
+        {
+            state_.LastReceivedTimeTickCount = System.Environment.TickCount;
+            state_.TestRequestCounter = 0;
+            return true;
+        }
 
         /// <summary>
         /// FIXME
@@ -320,7 +351,7 @@ namespace QuickFix
                 logon.setField(new Fields.ResetSeqNumFlag(true));
             */
             InitializeHeader(logon);
-            state_.LastSentTimeTickCount = System.Environment.TickCount;
+            state_.LastReceivedTimeTickCount = System.Environment.TickCount;
             state_.TestRequestCounter = 0;
             state_.SentLogon = true;
             return SendRaw(logon, 0);
@@ -344,6 +375,37 @@ namespace QuickFix
             InitializeHeader(logon);
             state_.SentLogon = SendRaw(logon, 0);
             return state_.SentLogon;
+        }
+
+        public bool GenerateTestRequest(string id)
+        {
+            Message testRequest = new Message();
+            testRequest.Header.setField(new Fields.MsgType("1"));
+            InitializeHeader(testRequest);
+            testRequest.setField(new Fields.TestReqID(id));
+            return SendRaw(testRequest, 0);
+        }
+
+        public bool GenerateHeartbeat()
+        {
+            Message heartbeat = new Message();
+            heartbeat.Header.setField(new Fields.MsgType("0"));
+            InitializeHeader(heartbeat);
+            return SendRaw(heartbeat, 0);
+        }
+
+        public bool GenerateHeartbeat(Message testRequest)
+        {
+            Message heartbeat = new Message();
+            heartbeat.Header.setField(new Fields.MsgType("0"));
+            InitializeHeader(heartbeat);
+            try
+            {
+                heartbeat.setField(new Fields.TestReqID(testRequest.GetField(Fields.Tags.TestReqID)));
+            }
+            catch (FieldNotFoundException)
+            { }
+            return SendRaw(heartbeat, 0);
         }
 
         /// <summary>
