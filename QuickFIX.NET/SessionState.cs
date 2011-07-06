@@ -40,6 +40,9 @@ namespace QuickFix
         public int LastSentTimeTickCount
         { get; set; }
 
+        public int LastReceivedTimeTickCount
+        { get; set; }
+
         #endregion
 
         #region Synchronized Properties
@@ -103,6 +106,47 @@ namespace QuickFix
         public bool LogonTimedOut()
         {
             return false;
+        }
+
+        public bool TimedOut()
+        {
+            int nowTickCount = System.Environment.TickCount;
+            double heartBtIntAsTickCount = 1000.0 * this.HeartBtInt;
+            int elapsedTickCount = nowTickCount - this.LastReceivedTimeTickCount;
+            return elapsedTickCount >= (2.4 * heartBtIntAsTickCount);
+        }
+
+        public bool NeedTestRequest()
+        {
+            int nowTickCount = System.Environment.TickCount;
+            double heartBtIntAsTickCount = 1000.0 * this.HeartBtInt;
+            int elapsedTickCount = nowTickCount - this.LastReceivedTimeTickCount;
+            return elapsedTickCount >= ((1.2 * ((double)this.TestRequestCounter + 1)) * heartBtIntAsTickCount);
+        }
+
+        public bool NeedHeartbeat()
+        {
+            int nowTickCount = System.Environment.TickCount;
+            int elapsedTickCount = nowTickCount - this.LastSentTimeTickCount;
+            int heartBtIntAsTickCount = 1000 * this.HeartBtInt;
+            return (elapsedTickCount >= heartBtIntAsTickCount && 0 == this.TestRequestCounter);
+        }
+
+        public bool WithinHeartbeat()
+        {
+            int nowTickCount = System.Environment.TickCount;
+            int heartBtIntAsTickCount = 1000 * this.HeartBtInt;
+
+            return ((nowTickCount - this.LastSentTimeTickCount) < heartBtIntAsTickCount)
+                && ((nowTickCount - this.LastReceivedTimeTickCount) < heartBtIntAsTickCount);
+        }
+
+        public void IncrNextTargetMsgSeqNum()
+        {
+            lock (sync_)
+            {
+                ///FIXME
+            }
         }
     }
 }
