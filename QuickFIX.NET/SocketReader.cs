@@ -2,19 +2,22 @@
 
 namespace QuickFix
 {
+    /// <summary>
+    /// TODO merge with SocketInitiatorThread
+    /// </summary>
     public class SocketReader
     {
         public const int BUF_SIZE = 4096;
-        private byte[] buf_ = new byte[BUF_SIZE];
+        private byte[] readBuffer_ = new byte[BUF_SIZE];
         private Session qfSession_ = null;
         private TcpClient tcpClient_;
-        private NetworkStream tcpClientStream_;
+        private Socket socket_;
         private Responder responder_;
 
         public SocketReader(TcpClient tcpClient, Responder responder)
         {
             tcpClient_ = tcpClient;
-            tcpClientStream_ = tcpClient_.GetStream();
+            socket_ = tcpClient_.Client;
             responder_ = responder;
         }
 
@@ -25,15 +28,27 @@ namespace QuickFix
         {
             try
             {
-                int bytesRead = tcpClientStream_.Read(buf_, 0, BUF_SIZE);
-                if (0 == bytesRead)
-                    throw new ConnectionResetByPeerException();
-                OnMessageFound(System.Text.Encoding.UTF8.GetString(buf_, 0, bytesRead));
+                if (socket_.Poll(1000000, SelectMode.SelectRead)) // one-second timeout
+                {
+                    int bytesRead = socket_.Receive(readBuffer_);
+                    if (0 == bytesRead)
+                        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+                    OnMessageFound(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                    //parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                }
+                else if (null != qfSession_)
+                {
+                    qfSession_.Next();
+                }
+
+                //ProcessStream();
+                //return true;
             }
             catch (System.Exception e)
             {
                 HandleException(qfSession_, e, tcpClient_);
                 throw e;
+
             }
         }
 
