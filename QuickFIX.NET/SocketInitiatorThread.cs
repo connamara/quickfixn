@@ -47,7 +47,6 @@ namespace QuickFix
 
         public void Connect()
         {
-            socket_.ReceiveTimeout = 1 * 1000;
             socket_.Connect(socketEndPoint_);
         }
 

@@ -172,6 +172,8 @@ namespace QuickFix
 
         public void Next()
         {
+            //System.Console.WriteLine(state_.ToString());
+
             if (!IsEnabled) 
             {
                 if (!IsLoggedOn)
@@ -214,7 +216,7 @@ namespace QuickFix
                 return;
             }
 
-            if (0 == state_.HeartBtInt) /// do we really mean state_.IsInitiator?
+            if (0 == state_.HeartBtInt)
                 return;
           
             /* TODO
@@ -233,10 +235,10 @@ namespace QuickFix
             {
                 if (state_.NeedTestRequest())
                 {
+                    
                     GenerateTestRequest("TEST");
                     state_.TestRequestCounter += 1;
                     this.Log.OnEvent("Sent test request TEST");
-                    
                 } 
                 else if (state_.NeedHeartbeat()) 
                 {
@@ -271,16 +273,20 @@ namespace QuickFix
 
         protected void NextQueued()
         {
-            System.Console.WriteLine("FIXME - Sessoin.NextQueued not implemented!");
+            System.Console.WriteLine("FIXME - Session.NextQueued not implemented!");
         }
 
         protected void NextLogon(Message logon)
         {
+            if (!Verify(logon))
+                return;
+
             state_.ReceivedLogon = true;
             this.Log.OnEvent("Received logon");
             if (!state_.IsInitiator)
             {
                 int heartBtInt = Fields.Converters.IntConverter.Convert(logon.GetField(Fields.Tags.HeartBtInt)); /// FIXME
+                state_.HeartBtInt = heartBtInt;
                 GenerateLogon(heartBtInt);
                 this.Log.OnEvent("Responding to logon request");
             }
