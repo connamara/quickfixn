@@ -6,7 +6,6 @@ namespace QuickFix
     {
         private static Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private object sync_ = new object();
-        private object responderSync_ = new object();
         private Responder responder_ = null;
         private SessionSchedule schedule_;
         private SessionState state_;
@@ -45,13 +44,7 @@ namespace QuickFix
 
         public bool HasResponder
         {
-            get { lock (responderSync_) { return null != responder_; } }
-        }
-
-        public Responder Responder
-        {
-            get { lock (responderSync_) { return responder_; } }
-            set { lock (responderSync_) { responder_ = value; } }
+            get { lock (sync_) { return null != responder_; } }
         }
 
         public int HeartBtInt
@@ -60,6 +53,9 @@ namespace QuickFix
         }
 
         public bool PersistMessages
+        { get; set; }
+
+        public bool ResetOnDisconnect
         { get; set; }
 
         public SessionID SessionID
@@ -91,12 +87,16 @@ namespace QuickFix
             state_ = new SessionState(log, heartBtInt);
             state_.MessageStore = storeFactory.Create(sessID);
 
+            this.PersistMessages = true;
+            this.ResetOnDisconnect = false;
+
+            if (!CheckSessionTime())
+                Reset();
+
             lock (sessions_)
             {
                 sessions_[this.SessionID] = this;
             }
-
-            this.PersistMessages = true;
         }
 
         #region Static Methods
@@ -136,7 +136,7 @@ namespace QuickFix
         public bool Send(string message)
         {
             this.Log.OnOutgoing(message);
-            lock(responderSync_)
+            lock(sync_)
             {
                 if(null == responder_)
                     return false;
@@ -163,16 +163,34 @@ namespace QuickFix
 
         public void Disconnect(string reason)
         {
-            lock (responderSync_)
+            lock (sync_)
             {
-                if (!HasResponder)
+                if (null != responder_)
+                {
+                    this.Log.OnEvent("Session " + this.SessionID + " disconnecting: " + reason);
+                    responder_.Disconnect();
+                    responder_ = null;
+                }
+                else
                 {
                     this.Log.OnEvent("Session " + this.SessionID + " already disconnected: " + reason);
-                    return;
                 }
-                this.Log.OnEvent("Session " + this.SessionID + " disconnecting: " + reason);
-                responder_.Disconnect();
-                responder_ = null;
+
+                if(state_.ReceivedLogon || state_.SentLogon)
+                {
+                    state_.ReceivedLogon = false;
+                    state_.SentLogon = false;
+                    /// FIXME applicatiaon_.OnLogout(this.SessionID);
+                }
+
+                state_.SentLogout = false;
+                state_.ReceivedReset = false;
+                state_.SentReset = false;
+                /// FIXME state_.ClearQueue();
+                state_.LogoutReason = "";
+                if (this.ResetOnDisconnect)
+                    state_.Reset();
+                /// FIXME state_.ResendRange(0, 0);
             }
         }
 
@@ -359,6 +377,29 @@ namespace QuickFix
         /// <param name="s"></param>
         public void SetSenderDefaultApplVerID(string s)
         {
+        }
+
+        public void SetResponder(Responder responder)
+        {
+            if (!CheckSessionTime())
+                Reset();
+
+            lock (sync_)
+            {
+                responder_ = responder;
+            }
+        }
+
+        protected void Reset()
+        {
+            GenerateLogout();
+            Disconnect("Resetting...");
+            state_.Reset();
+        }
+
+        protected bool CheckSessionTime()
+        {
+            return false;
         }
 
         /// <summary>

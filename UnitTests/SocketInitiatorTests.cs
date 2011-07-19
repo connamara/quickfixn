@@ -62,7 +62,7 @@ namespace UnitTests
             _clientSocket.Receive(r);
             string received = Encoding.UTF8.GetString(r);
             Thread.Sleep(500);
-            const string expectedDataRegex = "8=FIX.4.2\x01" + "9=57\x01" + "35=A\x01" + "34=1\x01" + "49=TW\x01" + "52=.+\x01" + "56=ISLD\x01" + ".+\x01";
+            const string expectedDataRegex = "8=FIX.4.2\x01" + "9=61\x01" + "35=A\x01" + "34=1\x01" + "49=TW\x01" + "52=.+\x01" + "56=ISLD\x01" + ".+\x01";
             StringAssert.IsMatch(expectedDataRegex, received);
 
             // mock acceptor sends Logon reply to initiator

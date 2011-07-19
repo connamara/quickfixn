@@ -38,8 +38,8 @@ def extendProcess(c)
     end
 
     if( !@comp.compare(e,a) )
-       e.tr!("\001", "*")
-       a.tr!("\001", "*")
+       e.tr!("\001", "|")
+       a.tr!("\001", "|")
        report =  @comp.reason + "\n"
        report += "    <expected><![CDATA[" + e + "]]></expected>\n"
        report += "    <received><![CDATA[" + a + "]]></received>"
