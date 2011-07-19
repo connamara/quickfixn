@@ -12,9 +12,14 @@ namespace QuickFix
 
         #region MessageStoreFactory Members
 
+        /// <summary>
+        /// FIXME
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <returns></returns>
         public MessageStore Create(SessionID sessionID)
         {
-            throw new System.NotImplementedException("FIXME - FileStoreFactory.Create not implemented!");
+            return new MemoryStore();
         }
 
         #endregion

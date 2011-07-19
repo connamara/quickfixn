@@ -7,7 +7,7 @@ namespace QuickFix
 
         public MessageStore Create(SessionID sessionID)
         {
-            throw new System.NotImplementedException("FIXME - MemoryStoreFactory.Create not implemented!");
+            return new MemoryStore();
         }
 
         #endregion
