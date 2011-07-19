@@ -33,7 +33,7 @@ namespace QuickFix.Fields.Converters
         /// <returns>yyyyMMdd-HH:mm:ss</returns>
         public static string Convert(DateTime dt)
         {
-            return String.Format("{0:yyyyMMdd-HH:mm:ss}", dt);
+            return String.Format("{0:yyyyMMdd-HH:mm:ss.fff}", dt);
         }
     }
 }
