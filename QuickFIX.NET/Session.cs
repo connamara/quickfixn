@@ -59,6 +59,9 @@ namespace QuickFix
             get { return state_.HeartBtInt; }
         }
 
+        public bool PersistMessages
+        { get; set; }
+
         public SessionID SessionID
         { get; set; }
 
@@ -86,11 +89,14 @@ namespace QuickFix
                 log = new NullLog();
 
             state_ = new SessionState(log, heartBtInt);
+            state_.MessageStore = storeFactory.Create(sessID);
 
             lock (sessions_)
             {
                 sessions_[this.SessionID] = this;
             }
+
+            this.PersistMessages = true;
         }
 
         #region Static Methods
@@ -263,6 +269,8 @@ namespace QuickFix
                 NextHeartbeat(message);
             else if ("1".Equals(msgType))
                 NextTestRequest(message);
+            else if ("5".Equals(msgType))
+                NextLogout(message);
             else
             {
                 if (!Verify(message))
@@ -302,6 +310,32 @@ namespace QuickFix
             GenerateHeartbeat(testRequest);
             state_.IncrNextTargetMsgSeqNum();
             NextQueued();
+        }
+
+        protected void NextLogout(Message logout)
+        {
+            if (!Verify(logout))
+                return;
+
+            string disconnectReason;
+
+            if (!state_.SentLogout)
+            {
+                disconnectReason = "Received logout request";
+                this.Log.OnEvent(disconnectReason);
+                GenerateLogout();
+                this.Log.OnEvent("Sending logout response");
+            }
+            else
+            {
+                disconnectReason = "Received logout response";
+                this.Log.OnEvent(disconnectReason);
+            }
+
+            state_.IncrNextTargetMsgSeqNum();
+            /// FIXME if (this.ResetOnLogout)
+            /// FIXME    state_.Reset();
+            Disconnect(disconnectReason);
         }
 
         protected void NextHeartbeat(Message heartbeat)
@@ -392,6 +426,22 @@ namespace QuickFix
             return SendRaw(testRequest, 0);
         }
 
+        public bool GenerateLogout()
+        {
+            return GenerateLogout("");
+        }
+
+        public bool GenerateLogout(string text)
+        {
+            Message logout = new Message();
+            logout.Header.setField(new Fields.MsgType("5"));
+            InitializeHeader(logout);
+            if (text.Length > 0)
+                logout.setField(new Fields.Text(text));
+            state_.SentLogout = SendRaw(logout, 0);
+            return state_.SentLogout;
+        }
+
         public bool GenerateHeartbeat()
         {
             Message heartbeat = new Message();
@@ -424,13 +474,22 @@ namespace QuickFix
             m.Header.setField(new Fields.BeginString(this.SessionID.BeginString));
             m.Header.setField(new Fields.SenderCompID(this.SessionID.SenderCompID));
             m.Header.setField(new Fields.TargetCompID(this.SessionID.TargetCompID));
-            m.Header.setField(new Fields.MsgSeqNum(state_.NextSenderMsgSeqNum));
+            m.Header.setField(new Fields.MsgSeqNum(state_.GetNextSenderMsgSeqNum()));
             InsertSendingTime(m.Header);    
         }
 
         protected void InsertSendingTime(FieldMap header)
         {
             header.setField(new Fields.SendingTime(System.DateTime.UtcNow));
+        }
+
+        protected void Persist(Message message, string messageString)
+        {
+            Fields.MsgSeqNum msgSeqNum = new Fields.MsgSeqNum();
+            message.Header.getField(msgSeqNum);
+            if (this.PersistMessages)
+                state_.Set(msgSeqNum.Obj, messageString);
+            state_.IncrNextSenderMsgSeqNum();
         }
 
         protected bool SendRaw(Message message, int seqNum)
@@ -450,12 +509,16 @@ namespace QuickFix
                         if(resetSeqNumFlag.getValue())
                         {
                             state_.Reset();
-                            message.Header.setField(new Fields.MsgSeqNum(state_.NextSenderMsgSeqNum));
+                            message.Header.setField(new Fields.MsgSeqNum(state_.GetNextSenderMsgSeqNum()));
                         }
                         state_.SentReset = resetSeqNumFlag.Obj;
                     }
                 }
-                return Send(message.ToString());
+
+                string messageString = message.ToString();
+                if(0 == seqNum)
+                    Persist(message, messageString);
+                return Send(messageString);
             }
         }
     }

@@ -11,10 +11,10 @@ namespace QuickFix
         private bool receivedLogon_ = false;
         private bool receivedReset_ = false;
         private bool sentLogon_ = false;
+        private bool sentLogout_ = false;
         private bool sentReset_ = false;
         private string logoutReason_ = "";
         private int testRequestCounter_ = 0;
-        private int nextSenderMsgSeqNum_ = 1;
         private int heartBtInt_ = 0;
         private int heartBtIntAsTickCount_ = 0;
         private int lastReceivedTimeTickCount_;
@@ -25,6 +25,9 @@ namespace QuickFix
         #endregion
 
         #region Unsynchronized Properties
+
+        public MessageStore MessageStore
+        { get; set; }
 
         public bool IsInitiator
         { get; set; }
@@ -61,6 +64,12 @@ namespace QuickFix
         {
             get { lock (sync_) { return sentLogon_; } }
             set { lock (sync_) { sentLogon_ = value; } }
+        }
+
+        public bool SentLogout
+        {
+            get { lock (sync_) { return sentLogout_; } }
+            set { lock (sync_) { sentLogout_ = value; } }
         }
 
         public bool SentReset
@@ -104,11 +113,6 @@ namespace QuickFix
             set { lock (sync_) { lastSentTimeTickCount_ = value; } }
         }
 
-        public int NextSenderMsgSeqNum
-        {
-            get { lock (sync_) { return nextSenderMsgSeqNum_; } }
-        }
-
         #endregion
 
         public SessionState(Log log, int heartBtInt)
@@ -119,14 +123,6 @@ namespace QuickFix
             int now = System.Environment.TickCount;
             lastReceivedTimeTickCount_ = now;
             lastSentTimeTickCount_ = now;
-        }
-
-        /// <summary>
-        /// FIXME
-        /// </summary>
-        public void Reset()
-        {
-            // messageStore_.Reset();
         }
 
         /// <summary>
@@ -210,14 +206,6 @@ namespace QuickFix
             return WithinHeartbeat(System.Environment.TickCount, this.HeartBtIntAsTickCount, this.LastSentTimeTickCount, this.LastReceivedTimeTickCount);
         }
         
-        public void IncrNextTargetMsgSeqNum()
-        {
-            lock (sync_)
-            {
-                ///FIXME
-            }
-        }
-
         /// <summary>
         /// All time values are displayed in milliseconds.
         /// </summary>
@@ -236,5 +224,59 @@ namespace QuickFix
                 .Append(" ]").ToString();
             
         }
+
+        #region MessageStore Members
+
+        public bool Set(int msgSeqNum, string msg)
+        {
+            lock (sync_) { return this.MessageStore.Set(msgSeqNum, msg); }
+        }
+
+        public int GetNextSenderMsgSeqNum()
+        {
+            lock (sync_) { return this.MessageStore.GetNextSenderMsgSeqNum(); }
+        }
+
+        public int GetNextTargetMsgSeqNum()
+        {
+            lock (sync_) { return this.MessageStore.GetNextTargetMsgSeqNum(); }
+        }
+
+        public void SetNextSenderMsgSeqNum(int value)
+        {
+            lock (sync_) { this.MessageStore.SetNextSenderMsgSeqNum(value); }
+        }
+
+        public void SetNextTargetMsgSeqNum(int value)
+        {
+            lock (sync_) { this.MessageStore.SetNextTargetMsgSeqNum(value); }
+        }
+
+        public void IncrNextSenderMsgSeqNum()
+        {
+            lock (sync_) { this.MessageStore.IncrNextSenderMsgSeqNum(); }
+        }
+
+        public void IncrNextTargetMsgSeqNum()
+        {
+            lock (sync_) { this.MessageStore.IncrNextTargetMsgSeqNum(); }
+        }
+
+        public System.DateTime GetCreationTime()
+        {
+            lock (sync_) { return this.MessageStore.GetCreationTime(); }
+        }
+
+        public void Reset()
+        {
+            lock (sync_) { this.MessageStore.Reset(); }
+        }
+
+        public void Refresh()
+        {
+            lock (sync_) { this.MessageStore.Refresh(); }
+        }
+
+        #endregion
     }
 }
