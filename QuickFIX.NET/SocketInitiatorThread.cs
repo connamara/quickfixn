@@ -27,7 +27,7 @@ namespace QuickFix
             parser_ = new Parser();
             socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             session_ = session;
-            session_.Responder = this;
+            session_.SetResponder(this);
         }
 
         public void Start()

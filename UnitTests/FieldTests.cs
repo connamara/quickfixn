@@ -78,7 +78,7 @@ namespace UnitTests
             Assert.That(field.Tag, Is.EqualTo(200));
             field.Obj = newval;
             Assert.That(field.Obj, Is.EqualTo(newval));
-            Assert.That(field.ToString(), Is.EqualTo("20090904-03:44:01"));
+            Assert.That(field.ToString(), Is.EqualTo("20090904-03:44:01.000"));
         }
 
 
