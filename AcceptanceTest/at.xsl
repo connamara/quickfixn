@@ -33,19 +33,25 @@
 				<xsl:choose>
 					<xsl:when test="@result = 'success'">
 						<tr bgcolor="#99ff00">
-							<td><tt><xsl:value-of select="substring-after(@name,'definitions/server/')"/></tt></td>
-							<td><tt>Success</tt></td>
+							<td><xsl:value-of select="substring-after(@name,'definitions/server/')"/></td>
+							<td>Success</td>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise> 
 						<tr bgcolor="#ff6666">
 							<td>
-								<tt><xsl:value-of select="substring-after(@name,'definitions/server/')"/></tt><br/>
-								<tt><xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;</xsl:text><i>Failure at line <xsl:value-of select="message/line"/>:</i></tt><br/>
-								<tt><xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</xsl:text>Expected: <xsl:value-of select="message/expected"/></tt><br/>
-								<tt><xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</xsl:text>Received: <xsl:value-of select="message/received"/></tt>
+								<xsl:value-of select="substring-after(@name,'definitions/server/')"/><br/>
+								<xsl:for-each select="message">
+									<tt><xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;</xsl:text>Failure at line <xsl:value-of select="line"/>: <xsl:value-of select="text()"/></tt><br/>
+									<xsl:for-each select="expected">
+										<tt><xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</xsl:text>Expected: <xsl:value-of select="."/></tt><br/>
+									</xsl:for-each>
+									<xsl:for-each select="received">
+										<tt><xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</xsl:text>Received: <xsl:value-of select="."/></tt>
+									</xsl:for-each>
+								</xsl:for-each>
 							</td>
-							<td><tt>Failure</tt></td>
+							<td>Failure</td>
 						</tr>
 					</xsl:otherwise>
 				</xsl:choose>
