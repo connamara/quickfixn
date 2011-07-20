@@ -17,10 +17,38 @@
 					<td>Success</td>
 					<td><tt><xsl:value-of select="$success"/> (<xsl:value-of select="round(number($success) div number(@total) * 1000) div 10" />%)</tt></td>
 				</tr>
-				<tr bgcolor="#ffbb00">
+				<tr bgcolor="#ff6666">
 					<td>Failure</td>
 					<td><tt><xsl:value-of select="@failures"/> (<xsl:value-of select="round(number(@failures) div number(@total) * 1000) div 10" />%)</tt></td>
 				</tr>
+			</xsl:for-each>
+		</table>
+		<br/>
+		<table border="0" cellspacing="2" cellpadding="4">
+			<tr bgcolor="#6688dd">
+				<th>Test Name</th>
+				<th>Result</th>
+			</tr>
+			<xsl:for-each select="test">
+				<xsl:choose>
+					<xsl:when test="@result = 'success'">
+						<tr bgcolor="#99ff00">
+							<td><tt><xsl:value-of select="substring-after(@name,'definitions/server/')"/></tt></td>
+							<td><tt>Success</tt></td>
+						</tr>
+					</xsl:when>
+					<xsl:otherwise> 
+						<tr bgcolor="#ff6666">
+							<td>
+								<tt><xsl:value-of select="substring-after(@name,'definitions/server/')"/></tt><br/>
+								<tt><xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;</xsl:text><i>Failure at line <xsl:value-of select="message/line"/>:</i></tt><br/>
+								<tt><xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</xsl:text>Expected: <xsl:value-of select="message/expected"/></tt><br/>
+								<tt><xsl:text disable-output-escaping="yes">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</xsl:text>Received: <xsl:value-of select="message/received"/></tt>
+							</td>
+							<td><tt>Failure</tt></td>
+						</tr>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:for-each>
 		</table>
 	</body></html>
