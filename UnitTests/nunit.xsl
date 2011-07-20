@@ -3,7 +3,7 @@
                 exclude-result-prefixes="msxsl"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:msxsl="urn:schemas-microsoft-com:xslt">
-<xsl:output method="html" indent="no" />
+<xsl:output method="html" indent="yes" />
 <xsl:template match="test-results">
 	<html>
 		<body>

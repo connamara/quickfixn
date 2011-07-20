@@ -3,7 +3,7 @@
                 exclude-result-prefixes="msxsl"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 		xmlns:msxsl="urn:schemas-microsoft-com:xslt">
-<xsl:output method="html" indent="no" />
+<xsl:output method="html" indent="yes" />
 <xsl:template match="at">
 	<html><body><h2>QuickFIX.NET Acceptance Tests</h2>
 		<table border="0" cellspacing="2" cellpadding="2">
