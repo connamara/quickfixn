@@ -29,3 +29,15 @@ To run the NUnit tests, run:
 An HTML report of the test results will then be available here:
 
     UnitTests\bin\Release\UnitTests.html
+
+
+Acceptance Tests
+----------
+
+To run the acceptance tests, run:
+
+    acceptance_test.bat
+
+An HTML report of the test results will then be available here:
+
+    AcceptanceTests\AcceptanceTests.html
