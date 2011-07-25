@@ -11,7 +11,7 @@ namespace UnitTests
     public class GenMessageTests
     {
         [Test]
-        public void TCRFieldProperties()
+        public void TCRFieldPropertiesTest()
         {
             Decimal val = new Decimal(3.232535);
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
@@ -20,7 +20,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void TCRFieldGetter()
+        public void TCRFieldGetterTest()
         {
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
@@ -32,7 +32,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void TCRFieldSetterTypeSafeOldWay()
+        public void TCRFieldSetterTypeSafeOldWayTest()
         {
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
@@ -42,7 +42,7 @@ namespace UnitTests
 
 
         [Test]
-        public void TCRFieldGetterTypeSafeOldWay()
+        public void TCRFieldGetterTypeSafeOldWayTest()
         {
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
@@ -52,10 +52,28 @@ namespace UnitTests
         }
 
         [Test]
-        public void TCRMsgTypeGetsSet()
+        public void TCRMsgTypeGetsSetTest()
         {
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
             Assert.That(tcr.Header.isSetField(QuickFix.Fields.Tags.MsgType), Is.True);
+            MsgType msgType = new MsgType();
+            tcr.Header.getField(msgType);
+            Assert.That(msgType.getValue(), Is.EqualTo("AE"));
+        }
+
+        [Test]
+        public void TCRReqFieldsCTORTest()
+        {
+            QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport(
+                new TradeReportID("dude1"),
+                new PreviouslyReported(true),
+                new Symbol("AAPL"),
+                new LastQty(new Decimal(100.1)),
+                new LastPx(new Decimal(100.2)),
+                new TradeDate("2010-12-12"),
+                new TransactTime(new DateTime(2010, 12, 15, 10, 55, 32, 455)));
+            Assert.That(tcr.Symbol.getValue(), Is.EqualTo("AAPL"));
+            Assert.That(tcr.TradeReportID.getValue(), Is.EqualTo("dude1"));
             MsgType msgType = new MsgType();
             tcr.Header.getField(msgType);
             Assert.That(msgType.getValue(), Is.EqualTo("AE"));
