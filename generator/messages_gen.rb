@@ -88,7 +88,7 @@ HERE
 
             public bool isSet(QuickFix.Fields.#{fld[:name]} val) 
             { 
-                return isSetField(val);
+                return isSet#{fld[:name]}();
             }
 
             public bool isSet#{fld[:name]}() 
