@@ -87,6 +87,7 @@
     <Compile Include="Fields\StringField.cs" />
     <Compile Include="Message\FieldMap.cs" />
     <Compile Include="Message\FieldNotFoundException.cs" />
+    <Compile Include="Message\FIX44\TradeCaptureReport.cs" />
     <Compile Include="Message\Group.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageParseException.cs" />

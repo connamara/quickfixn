@@ -29,10 +29,30 @@ HERE
   end
 
   def self.gen_msg_fields fields
-    fields.map { |fld| (' '*12) + msg_field(fld) }.join("\n")
+    fields.map { |fld| msg_field(fld) }.join("\n")
   end
 
   def self.msg_field fld
-    "public QuickFix.Fields.#{fld[:name]} #{fld[:name]} { get; set; }"
+<<HERE
+            public void set(QuickFix.Fields.#{fld[:name]} val) 
+            { 
+                this.#{fld[:name]} = val;
+            }
+            public QuickFix.Fields.#{fld[:name]} get(QuickFix.Fields.#{fld[:name]} val) 
+            { 
+                getField(val);
+                return val;
+            }
+            public QuickFix.Fields.#{fld[:name]} #{fld[:name]}
+            { 
+                get 
+                {
+                    #{fld[:name]} val = new #{fld[:name]}();
+                    getField(val);
+                    return val;
+                }
+                set { setField(value); }
+            }
+HERE
   end
 end
