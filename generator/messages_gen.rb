@@ -68,11 +68,13 @@ HERE
             { 
                 this.#{fld[:name]} = val;
             }
+
             public QuickFix.Fields.#{fld[:name]} get(QuickFix.Fields.#{fld[:name]} val) 
             { 
                 getField(val);
                 return val;
             }
+
             public QuickFix.Fields.#{fld[:name]} #{fld[:name]}
             { 
                 get 
@@ -82,6 +84,16 @@ HERE
                     return val;
                 }
                 set { setField(value); }
+            }
+
+            public bool isSet(QuickFix.Fields.#{fld[:name]} val) 
+            { 
+                return isSetField(val);
+            }
+
+            public bool isSet#{fld[:name]}() 
+            { 
+                return isSetField(#{fld[:tag]});
             }
 HERE
   end
