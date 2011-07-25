@@ -86,14 +86,15 @@ class FIXDictionary
     el.children.each do |child|
       next unless child.element?
       cname = child['name']
+      req = child['required'] == 'Y' ? true : false
       
       case child.node_name
         when 'field'
           raise "field not found! #{cname}" unless @fields.include?(cname)
-          fixel[:fields] << @fields[cname]
+          fixel[:fields] << @fields[cname].merge(:required=>req)
       
         when 'group'
-          grp = {:name=>cname, :fields=>[], :groups=>[]}
+          grp = {:name=>cname, :fields=>[], :groups=>[], :required=>req}
           parse_element(child, grp, header, trailer )
           
         when 'component'

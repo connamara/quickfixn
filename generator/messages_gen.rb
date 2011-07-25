@@ -19,6 +19,7 @@ namespace QuickFix
     {
         public class #{msg[:name]} : Message
         {
+#{ctor(msg)}
             #region Properties
 #{gen_msg_fields(msg[:fields])}
             #endregion
@@ -28,8 +29,24 @@ namespace QuickFix
 HERE
   end
 
+  def self.ctor msg
+<<HERE
+            public #{msg[:name]}() : base()
+            {
+                this.Header.setField(new QuickFix.Fields.MsgType("#{msg[:msgtype]}"));
+            }
+HERE
+  end
+
   def self.gen_msg_fields fields
     fields.map { |fld| msg_field(fld) }.join("\n")
+  end
+
+  def self.required msg
+    { 
+      :fields => msg.fields.select {|f| f[:required] == true },
+      :groups => msg.groups.select {|g| g[:required] == true }
+    }
   end
 
   def self.msg_field fld
