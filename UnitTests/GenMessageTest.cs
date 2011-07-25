@@ -50,5 +50,15 @@ namespace UnitTests
             tcr.get(avgPx);
             Assert.That(tcr.AvgPx.getValue(), Is.EqualTo(avgPx.getValue()));
         }
+
+        [Test]
+        public void TCRMsgTypeGetsSet()
+        {
+            QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
+            Assert.That(tcr.Header.isSetField(QuickFix.Fields.Tags.MsgType), Is.True);
+            MsgType msgType = new MsgType();
+            tcr.Header.getField(msgType);
+            Assert.That(msgType.getValue(), Is.EqualTo("AE"));
+        }
     }
 }
