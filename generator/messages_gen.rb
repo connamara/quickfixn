@@ -20,6 +20,7 @@ namespace QuickFix
         public class #{msg[:name]} : Message
         {
 #{ctor(msg)}
+#{ctor_req(msg)}
             #region Properties
 #{gen_msg_fields(msg[:fields])}
             #endregion
@@ -38,15 +39,27 @@ HERE
 HERE
   end
 
+  def self.ctor_req msg
+    req = required(msg)
+    req_args = req.map {|r| ' '*20 + "#{r[:name]} a#{r[:name]}" }
+    req_setters = req.map {|r| ' '*16 + "this.#{r[:name]} = a#{r[:name]};" }
+<<HERE
+            public #{msg[:name]}(
+#{req_args.join(",\n")}
+                ) : this()
+            {
+#{req_setters.join("\n")}
+            }
+HERE
+  end
+
   def self.gen_msg_fields fields
     fields.map { |fld| msg_field(fld) }.join("\n")
   end
 
   def self.required msg
-    { 
-      :fields => msg.fields.select {|f| f[:required] == true },
-      :groups => msg.groups.select {|g| g[:required] == true }
-    }
+    msg[:fields].select {|f| f[:required] == true } + 
+    msg[:groups].select {|g| g[:required] == true }
   end
 
   def self.msg_field fld
