@@ -78,5 +78,27 @@ namespace UnitTests
             tcr.Header.getField(msgType);
             Assert.That(msgType.getValue(), Is.EqualTo("AE"));
         }
+
+        [Test]
+        public void TCRisSetTest()
+        {
+            QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport(
+                new TradeReportID("dude1"),
+                new PreviouslyReported(true),
+                new Symbol("AAPL"),
+                new LastQty(new Decimal(100.1)),
+                new LastPx(new Decimal(100.2)),
+                new TradeDate("2010-12-12"),
+                new TransactTime(new DateTime(2010, 12, 15, 10, 55, 32, 455)));
+            LastPx lastPx = new LastPx();
+            Assert.That(tcr.isSet(lastPx), Is.True);
+            AvgPx avgPx = new AvgPx(new Decimal(10.5));
+            Assert.That(tcr.isSet(avgPx), Is.False);
+            Assert.That(tcr.isSetAvgPx(), Is.False);
+            tcr.set(avgPx);
+            Assert.That(tcr.isSet(avgPx), Is.True);
+            Assert.That(tcr.isSetAvgPx(), Is.True);
+
+        }
     }
 }
