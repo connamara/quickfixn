@@ -114,12 +114,12 @@ HERE
             public class #{grp[:name]} : Group
             {
                 public #{grp[:name]}() 
-                  :base( 
-                    Tags.#{grp[:fields][0][:name]},
-                    Tags.#{grp[:fields][1][:name]},
-                    new int[] {#{grp_field_order grp[:fields] }})
+                  :base( Tags.#{grp[:fields][0][:name]}, Tags.#{grp[:fields][1][:name]}, fieldOrder)
                 {
                 }
+                #region Properties
+                public static int[] fieldOrder = {#{grp_field_order grp[:fields] }};
+                #endregion
             }
 HERE
   end
