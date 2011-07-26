@@ -58,23 +58,12 @@ HERE
   end
 
   def self.required msg
-    msg[:fields].select {|f| f[:required] == true } + 
-    msg[:groups].select {|g| g[:required] == true }
+    ( msg[:fields].select {|f| f[:required] == true } + 
+      msg[:groups].select {|g| g[:required] == true } )
   end
 
   def self.msg_field fld
 <<HERE
-            public void set(QuickFix.Fields.#{fld[:name]} val) 
-            { 
-                this.#{fld[:name]} = val;
-            }
-
-            public QuickFix.Fields.#{fld[:name]} get(QuickFix.Fields.#{fld[:name]} val) 
-            { 
-                getField(val);
-                return val;
-            }
-
             public QuickFix.Fields.#{fld[:name]} #{fld[:name]}
             { 
                 get 
@@ -86,6 +75,17 @@ HERE
                 set { setField(value); }
             }
 
+            public void set(QuickFix.Fields.#{fld[:name]} val) 
+            { 
+                this.#{fld[:name]} = val;
+            }
+
+            public QuickFix.Fields.#{fld[:name]} get(QuickFix.Fields.#{fld[:name]} val) 
+            { 
+                getField(val);
+                return val;
+            }
+
             public bool isSet(QuickFix.Fields.#{fld[:name]} val) 
             { 
                 return isSet#{fld[:name]}();
@@ -93,7 +93,7 @@ HERE
 
             public bool isSet#{fld[:name]}() 
             { 
-                return isSetField(#{fld[:tag]});
+                return isSetField(Tags.#{fld[:name]});
             }
 HERE
   end
