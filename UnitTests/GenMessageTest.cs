@@ -114,6 +114,7 @@ namespace UnitTests
                 };
             QuickFix.FIX44.TradeCaptureReport.NoSides noSides = new QuickFix.FIX44.TradeCaptureReport.NoSides();
             Assert.That(noSides.FieldOrder, Is.EqualTo(expFieldOrder));
+            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSides.fieldOrder, Is.EqualTo(expFieldOrder));
         }
     }
 }
