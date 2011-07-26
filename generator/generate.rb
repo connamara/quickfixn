@@ -14,13 +14,17 @@ class Generator
   end
   
   def initialize
-    @fix40 = FIXDictionary.load '../spec/fix/FIX40.xml'
-    @fix41 = FIXDictionary.load '../spec/fix/FIX41.xml'
-    @fix42 = FIXDictionary.load '../spec/fix/FIX42.xml'
-    @fix43 = FIXDictionary.load '../spec/fix/FIX43.xml'
-    @fix44 = FIXDictionary.load '../spec/fix/FIX44.xml'
-    @fix50 = FIXDictionary.load '../spec/fix/FIX50.xml'
+    @fix40 = FIXDictionary.load spec('FIX40')
+    @fix41 = FIXDictionary.load spec('FIX41')
+    @fix42 = FIXDictionary.load spec('FIX42')
+    @fix43 = FIXDictionary.load spec('FIX43')
+    @fix44 = FIXDictionary.load spec('FIX44')
+    @fix50 = FIXDictionary.load spec('FIX50')
     @src_path = File.join File.dirname(__FILE__), '..', 'QuickFIX.NET'
+  end
+
+  def spec fixver
+    File.join File.dirname(__FILE__), "..", "spec", "fix", "#{fixver}.xml"
   end
     
   def generate_fields
