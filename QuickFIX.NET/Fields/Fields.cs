@@ -255,26 +255,26 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// SecurityIDSource Field
+    /// IDSource Field
     /// </summary>/
-    public sealed class SecurityIDSource : StringField
+    public sealed class IDSource : StringField
     {
-        public SecurityIDSource()
-            :base(Tags.SecurityIDSource) {}
-        public SecurityIDSource(string val)
-            :base(Tags.SecurityIDSource, val) {}
+        public IDSource()
+            :base(Tags.IDSource) {}
+        public IDSource(string val)
+            :base(Tags.IDSource, val) {}
     }
 
 
     /// <summary>
-    /// IOIID Field
+    /// IOIid Field
     /// </summary>/
-    public sealed class IOIID : StringField
+    public sealed class IOIid : StringField
     {
-        public IOIID()
-            :base(Tags.IOIID) {}
-        public IOIID(string val)
-            :base(Tags.IOIID, val) {}
+        public IOIid()
+            :base(Tags.IOIid) {}
+        public IOIid(string val)
+            :base(Tags.IOIid, val) {}
     }
 
 
@@ -315,14 +315,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// IOIQty Field
+    /// IOIShares Field
     /// </summary>/
-    public sealed class IOIQty : StringField
+    public sealed class IOIShares : StringField
     {
-        public IOIQty()
-            :base(Tags.IOIQty) {}
-        public IOIQty(string val)
-            :base(Tags.IOIQty, val) {}
+        public IOIShares()
+            :base(Tags.IOIShares) {}
+        public IOIShares(string val)
+            :base(Tags.IOIShares, val) {}
     }
 
 
@@ -375,26 +375,26 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// LastQty Field
+    /// LastShares Field
     /// </summary>/
-    public sealed class LastQty : DecimalField
+    public sealed class LastShares : DecimalField
     {
-        public LastQty()
-            :base(Tags.LastQty) {}
-        public LastQty(Decimal val)
-            :base(Tags.LastQty, val) {}
+        public LastShares()
+            :base(Tags.LastShares) {}
+        public LastShares(Decimal val)
+            :base(Tags.LastShares, val) {}
     }
 
 
     /// <summary>
-    /// NoLinesOfText Field
+    /// LinesOfText Field
     /// </summary>/
-    public sealed class NoLinesOfText : IntField
+    public sealed class LinesOfText : IntField
     {
-        public NoLinesOfText()
-            :base(Tags.NoLinesOfText) {}
-        public NoLinesOfText(int val)
-            :base(Tags.NoLinesOfText, val) {}
+        public LinesOfText()
+            :base(Tags.LinesOfText) {}
+        public LinesOfText(int val)
+            :base(Tags.LinesOfText, val) {}
     }
 
 
@@ -603,18 +603,6 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// SendingDate Field
-    /// </summary>/
-    public sealed class SendingDate : StringField
-    {
-        public SendingDate()
-            :base(Tags.SendingDate) {}
-        public SendingDate(string val)
-            :base(Tags.SendingDate, val) {}
-    }
-
-
-    /// <summary>
     /// SendingTime Field
     /// </summary>/
     public sealed class SendingTime : DateTimeField
@@ -627,14 +615,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// Quantity Field
+    /// Shares Field
     /// </summary>/
-    public sealed class Quantity : DecimalField
+    public sealed class Shares : DecimalField
     {
-        public Quantity()
-            :base(Tags.Quantity) {}
-        public Quantity(Decimal val)
-            :base(Tags.Quantity, val) {}
+        public Shares()
+            :base(Tags.Shares) {}
+        public Shares(Decimal val)
+            :base(Tags.Shares, val) {}
     }
 
 
@@ -747,26 +735,26 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// SettlType Field
+    /// SettlmntTyp Field
     /// </summary>/
-    public sealed class SettlType : StringField
+    public sealed class SettlmntTyp : CharField
     {
-        public SettlType()
-            :base(Tags.SettlType) {}
-        public SettlType(string val)
-            :base(Tags.SettlType, val) {}
+        public SettlmntTyp()
+            :base(Tags.SettlmntTyp) {}
+        public SettlmntTyp(char val)
+            :base(Tags.SettlmntTyp, val) {}
     }
 
 
     /// <summary>
-    /// SettlDate Field
+    /// FutSettDate Field
     /// </summary>/
-    public sealed class SettlDate : StringField
+    public sealed class FutSettDate : StringField
     {
-        public SettlDate()
-            :base(Tags.SettlDate) {}
-        public SettlDate(string val)
-            :base(Tags.SettlDate, val) {}
+        public FutSettDate()
+            :base(Tags.FutSettDate) {}
+        public FutSettDate(string val)
+            :base(Tags.FutSettDate, val) {}
     }
 
 
@@ -807,14 +795,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// TotNoOrders Field
+    /// ListNoOrds Field
     /// </summary>/
-    public sealed class TotNoOrders : IntField
+    public sealed class ListNoOrds : IntField
     {
-        public TotNoOrders()
-            :base(Tags.TotNoOrders) {}
-        public TotNoOrders(int val)
-            :base(Tags.TotNoOrders, val) {}
+        public ListNoOrds()
+            :base(Tags.ListNoOrds) {}
+        public ListNoOrds(int val)
+            :base(Tags.ListNoOrds, val) {}
     }
 
 
@@ -879,14 +867,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// AvgPxPrecision Field
+    /// AvgPrxPrecision Field
     /// </summary>/
-    public sealed class AvgPxPrecision : IntField
+    public sealed class AvgPrxPrecision : IntField
     {
-        public AvgPxPrecision()
-            :base(Tags.AvgPxPrecision) {}
-        public AvgPxPrecision(int val)
-            :base(Tags.AvgPxPrecision, val) {}
+        public AvgPrxPrecision()
+            :base(Tags.AvgPrxPrecision) {}
+        public AvgPrxPrecision(int val)
+            :base(Tags.AvgPrxPrecision, val) {}
     }
 
 
@@ -915,14 +903,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// PositionEffect Field
+    /// OpenClose Field
     /// </summary>/
-    public sealed class PositionEffect : CharField
+    public sealed class OpenClose : CharField
     {
-        public PositionEffect()
-            :base(Tags.PositionEffect) {}
-        public PositionEffect(char val)
-            :base(Tags.PositionEffect, val) {}
+        public OpenClose()
+            :base(Tags.OpenClose) {}
+        public OpenClose(char val)
+            :base(Tags.OpenClose, val) {}
     }
 
 
@@ -951,14 +939,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// AllocQty Field
+    /// AllocShares Field
     /// </summary>/
-    public sealed class AllocQty : DecimalField
+    public sealed class AllocShares : DecimalField
     {
-        public AllocQty()
-            :base(Tags.AllocQty) {}
-        public AllocQty(Decimal val)
-            :base(Tags.AllocQty, val) {}
+        public AllocShares()
+            :base(Tags.AllocShares) {}
+        public AllocShares(Decimal val)
+            :base(Tags.AllocShares, val) {}
     }
 
 
@@ -2295,14 +2283,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// SettlDate2 Field
+    /// FutSettDate2 Field
     /// </summary>/
-    public sealed class SettlDate2 : StringField
+    public sealed class FutSettDate2 : StringField
     {
-        public SettlDate2()
-            :base(Tags.SettlDate2) {}
-        public SettlDate2(string val)
-            :base(Tags.SettlDate2, val) {}
+        public FutSettDate2()
+            :base(Tags.FutSettDate2) {}
+        public FutSettDate2(string val)
+            :base(Tags.FutSettDate2, val) {}
     }
 
 
@@ -2511,14 +2499,26 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// PegOffsetValue Field
+    /// PegDifference Field
     /// </summary>/
-    public sealed class PegOffsetValue : DecimalField
+    public sealed class PegDifference : DecimalField
     {
-        public PegOffsetValue()
-            :base(Tags.PegOffsetValue) {}
-        public PegOffsetValue(Decimal val)
-            :base(Tags.PegOffsetValue, val) {}
+        public PegDifference()
+            :base(Tags.PegDifference) {}
+        public PegDifference(Decimal val)
+            :base(Tags.PegDifference, val) {}
+    }
+
+
+    /// <summary>
+    /// TotNoOrders Field
+    /// </summary>/
+    public sealed class TotNoOrders : IntField
+    {
+        public TotNoOrders()
+            :base(Tags.TotNoOrders) {}
+        public TotNoOrders(int val)
+            :base(Tags.TotNoOrders, val) {}
     }
 
 
@@ -2595,14 +2595,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// Spread Field
+    /// SpreadToBenchmark Field
     /// </summary>/
-    public sealed class Spread : DecimalField
+    public sealed class SpreadToBenchmark : DecimalField
     {
-        public Spread()
-            :base(Tags.Spread) {}
-        public Spread(Decimal val)
-            :base(Tags.Spread, val) {}
+        public SpreadToBenchmark()
+            :base(Tags.SpreadToBenchmark) {}
+        public SpreadToBenchmark(Decimal val)
+            :base(Tags.SpreadToBenchmark, val) {}
     }
 
 
@@ -2619,42 +2619,6 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// BenchmarkCurveCurrency Field
-    /// </summary>/
-    public sealed class BenchmarkCurveCurrency : DecimalField
-    {
-        public BenchmarkCurveCurrency()
-            :base(Tags.BenchmarkCurveCurrency) {}
-        public BenchmarkCurveCurrency(Decimal val)
-            :base(Tags.BenchmarkCurveCurrency, val) {}
-    }
-
-
-    /// <summary>
-    /// BenchmarkCurveName Field
-    /// </summary>/
-    public sealed class BenchmarkCurveName : StringField
-    {
-        public BenchmarkCurveName()
-            :base(Tags.BenchmarkCurveName) {}
-        public BenchmarkCurveName(string val)
-            :base(Tags.BenchmarkCurveName, val) {}
-    }
-
-
-    /// <summary>
-    /// BenchmarkCurvePoint Field
-    /// </summary>/
-    public sealed class BenchmarkCurvePoint : StringField
-    {
-        public BenchmarkCurvePoint()
-            :base(Tags.BenchmarkCurvePoint) {}
-        public BenchmarkCurvePoint(string val)
-            :base(Tags.BenchmarkCurvePoint, val) {}
-    }
-
-
-    /// <summary>
     /// CouponRate Field
     /// </summary>/
     public sealed class CouponRate : DecimalField
@@ -2667,90 +2631,6 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// CouponPaymentDate Field
-    /// </summary>/
-    public sealed class CouponPaymentDate : StringField
-    {
-        public CouponPaymentDate()
-            :base(Tags.CouponPaymentDate) {}
-        public CouponPaymentDate(string val)
-            :base(Tags.CouponPaymentDate, val) {}
-    }
-
-
-    /// <summary>
-    /// IssueDate Field
-    /// </summary>/
-    public sealed class IssueDate : StringField
-    {
-        public IssueDate()
-            :base(Tags.IssueDate) {}
-        public IssueDate(string val)
-            :base(Tags.IssueDate, val) {}
-    }
-
-
-    /// <summary>
-    /// RepurchaseTerm Field
-    /// </summary>/
-    public sealed class RepurchaseTerm : IntField
-    {
-        public RepurchaseTerm()
-            :base(Tags.RepurchaseTerm) {}
-        public RepurchaseTerm(int val)
-            :base(Tags.RepurchaseTerm, val) {}
-    }
-
-
-    /// <summary>
-    /// RepurchaseRate Field
-    /// </summary>/
-    public sealed class RepurchaseRate : DecimalField
-    {
-        public RepurchaseRate()
-            :base(Tags.RepurchaseRate) {}
-        public RepurchaseRate(Decimal val)
-            :base(Tags.RepurchaseRate, val) {}
-    }
-
-
-    /// <summary>
-    /// Factor Field
-    /// </summary>/
-    public sealed class Factor : DecimalField
-    {
-        public Factor()
-            :base(Tags.Factor) {}
-        public Factor(Decimal val)
-            :base(Tags.Factor, val) {}
-    }
-
-
-    /// <summary>
-    /// TradeOriginationDate Field
-    /// </summary>/
-    public sealed class TradeOriginationDate : StringField
-    {
-        public TradeOriginationDate()
-            :base(Tags.TradeOriginationDate) {}
-        public TradeOriginationDate(string val)
-            :base(Tags.TradeOriginationDate, val) {}
-    }
-
-
-    /// <summary>
-    /// ExDate Field
-    /// </summary>/
-    public sealed class ExDate : StringField
-    {
-        public ExDate()
-            :base(Tags.ExDate) {}
-        public ExDate(string val)
-            :base(Tags.ExDate, val) {}
-    }
-
-
-    /// <summary>
     /// ContractMultiplier Field
     /// </summary>/
     public sealed class ContractMultiplier : DecimalField
@@ -2759,354 +2639,6 @@ namespace QuickFix.Fields
             :base(Tags.ContractMultiplier) {}
         public ContractMultiplier(Decimal val)
             :base(Tags.ContractMultiplier, val) {}
-    }
-
-
-    /// <summary>
-    /// NoStipulations Field
-    /// </summary>/
-    public sealed class NoStipulations : IntField
-    {
-        public NoStipulations()
-            :base(Tags.NoStipulations) {}
-        public NoStipulations(int val)
-            :base(Tags.NoStipulations, val) {}
-    }
-
-
-    /// <summary>
-    /// StipulationType Field
-    /// </summary>/
-    public sealed class StipulationType : StringField
-    {
-        public StipulationType()
-            :base(Tags.StipulationType) {}
-        public StipulationType(string val)
-            :base(Tags.StipulationType, val) {}
-    }
-
-
-    /// <summary>
-    /// StipulationValue Field
-    /// </summary>/
-    public sealed class StipulationValue : StringField
-    {
-        public StipulationValue()
-            :base(Tags.StipulationValue) {}
-        public StipulationValue(string val)
-            :base(Tags.StipulationValue, val) {}
-    }
-
-
-    /// <summary>
-    /// YieldType Field
-    /// </summary>/
-    public sealed class YieldType : StringField
-    {
-        public YieldType()
-            :base(Tags.YieldType) {}
-        public YieldType(string val)
-            :base(Tags.YieldType, val) {}
-    }
-
-
-    /// <summary>
-    /// Yield Field
-    /// </summary>/
-    public sealed class Yield : DecimalField
-    {
-        public Yield()
-            :base(Tags.Yield) {}
-        public Yield(Decimal val)
-            :base(Tags.Yield, val) {}
-    }
-
-
-    /// <summary>
-    /// TotalTakedown Field
-    /// </summary>/
-    public sealed class TotalTakedown : DecimalField
-    {
-        public TotalTakedown()
-            :base(Tags.TotalTakedown) {}
-        public TotalTakedown(Decimal val)
-            :base(Tags.TotalTakedown, val) {}
-    }
-
-
-    /// <summary>
-    /// Concession Field
-    /// </summary>/
-    public sealed class Concession : DecimalField
-    {
-        public Concession()
-            :base(Tags.Concession) {}
-        public Concession(Decimal val)
-            :base(Tags.Concession, val) {}
-    }
-
-
-    /// <summary>
-    /// RepoCollateralSecurityType Field
-    /// </summary>/
-    public sealed class RepoCollateralSecurityType : IntField
-    {
-        public RepoCollateralSecurityType()
-            :base(Tags.RepoCollateralSecurityType) {}
-        public RepoCollateralSecurityType(int val)
-            :base(Tags.RepoCollateralSecurityType, val) {}
-    }
-
-
-    /// <summary>
-    /// RedemptionDate Field
-    /// </summary>/
-    public sealed class RedemptionDate : StringField
-    {
-        public RedemptionDate()
-            :base(Tags.RedemptionDate) {}
-        public RedemptionDate(string val)
-            :base(Tags.RedemptionDate, val) {}
-    }
-
-
-    /// <summary>
-    /// UnderlyingCouponPaymentDate Field
-    /// </summary>/
-    public sealed class UnderlyingCouponPaymentDate : StringField
-    {
-        public UnderlyingCouponPaymentDate()
-            :base(Tags.UnderlyingCouponPaymentDate) {}
-        public UnderlyingCouponPaymentDate(string val)
-            :base(Tags.UnderlyingCouponPaymentDate, val) {}
-    }
-
-
-    /// <summary>
-    /// UnderlyingIssueDate Field
-    /// </summary>/
-    public sealed class UnderlyingIssueDate : StringField
-    {
-        public UnderlyingIssueDate()
-            :base(Tags.UnderlyingIssueDate) {}
-        public UnderlyingIssueDate(string val)
-            :base(Tags.UnderlyingIssueDate, val) {}
-    }
-
-
-    /// <summary>
-    /// UnderlyingRepoCollateralSecurityType Field
-    /// </summary>/
-    public sealed class UnderlyingRepoCollateralSecurityType : IntField
-    {
-        public UnderlyingRepoCollateralSecurityType()
-            :base(Tags.UnderlyingRepoCollateralSecurityType) {}
-        public UnderlyingRepoCollateralSecurityType(int val)
-            :base(Tags.UnderlyingRepoCollateralSecurityType, val) {}
-    }
-
-
-    /// <summary>
-    /// UnderlyingRepurchaseTerm Field
-    /// </summary>/
-    public sealed class UnderlyingRepurchaseTerm : IntField
-    {
-        public UnderlyingRepurchaseTerm()
-            :base(Tags.UnderlyingRepurchaseTerm) {}
-        public UnderlyingRepurchaseTerm(int val)
-            :base(Tags.UnderlyingRepurchaseTerm, val) {}
-    }
-
-
-    /// <summary>
-    /// UnderlyingRepurchaseRate Field
-    /// </summary>/
-    public sealed class UnderlyingRepurchaseRate : DecimalField
-    {
-        public UnderlyingRepurchaseRate()
-            :base(Tags.UnderlyingRepurchaseRate) {}
-        public UnderlyingRepurchaseRate(Decimal val)
-            :base(Tags.UnderlyingRepurchaseRate, val) {}
-    }
-
-
-    /// <summary>
-    /// UnderlyingFactor Field
-    /// </summary>/
-    public sealed class UnderlyingFactor : DecimalField
-    {
-        public UnderlyingFactor()
-            :base(Tags.UnderlyingFactor) {}
-        public UnderlyingFactor(Decimal val)
-            :base(Tags.UnderlyingFactor, val) {}
-    }
-
-
-    /// <summary>
-    /// UnderlyingRedemptionDate Field
-    /// </summary>/
-    public sealed class UnderlyingRedemptionDate : StringField
-    {
-        public UnderlyingRedemptionDate()
-            :base(Tags.UnderlyingRedemptionDate) {}
-        public UnderlyingRedemptionDate(string val)
-            :base(Tags.UnderlyingRedemptionDate, val) {}
-    }
-
-
-    /// <summary>
-    /// LegCouponPaymentDate Field
-    /// </summary>/
-    public sealed class LegCouponPaymentDate : StringField
-    {
-        public LegCouponPaymentDate()
-            :base(Tags.LegCouponPaymentDate) {}
-        public LegCouponPaymentDate(string val)
-            :base(Tags.LegCouponPaymentDate, val) {}
-    }
-
-
-    /// <summary>
-    /// LegIssueDate Field
-    /// </summary>/
-    public sealed class LegIssueDate : StringField
-    {
-        public LegIssueDate()
-            :base(Tags.LegIssueDate) {}
-        public LegIssueDate(string val)
-            :base(Tags.LegIssueDate, val) {}
-    }
-
-
-    /// <summary>
-    /// LegRepoCollateralSecurityType Field
-    /// </summary>/
-    public sealed class LegRepoCollateralSecurityType : IntField
-    {
-        public LegRepoCollateralSecurityType()
-            :base(Tags.LegRepoCollateralSecurityType) {}
-        public LegRepoCollateralSecurityType(int val)
-            :base(Tags.LegRepoCollateralSecurityType, val) {}
-    }
-
-
-    /// <summary>
-    /// LegRepurchaseTerm Field
-    /// </summary>/
-    public sealed class LegRepurchaseTerm : IntField
-    {
-        public LegRepurchaseTerm()
-            :base(Tags.LegRepurchaseTerm) {}
-        public LegRepurchaseTerm(int val)
-            :base(Tags.LegRepurchaseTerm, val) {}
-    }
-
-
-    /// <summary>
-    /// LegRepurchaseRate Field
-    /// </summary>/
-    public sealed class LegRepurchaseRate : DecimalField
-    {
-        public LegRepurchaseRate()
-            :base(Tags.LegRepurchaseRate) {}
-        public LegRepurchaseRate(Decimal val)
-            :base(Tags.LegRepurchaseRate, val) {}
-    }
-
-
-    /// <summary>
-    /// LegFactor Field
-    /// </summary>/
-    public sealed class LegFactor : DecimalField
-    {
-        public LegFactor()
-            :base(Tags.LegFactor) {}
-        public LegFactor(Decimal val)
-            :base(Tags.LegFactor, val) {}
-    }
-
-
-    /// <summary>
-    /// LegRedemptionDate Field
-    /// </summary>/
-    public sealed class LegRedemptionDate : StringField
-    {
-        public LegRedemptionDate()
-            :base(Tags.LegRedemptionDate) {}
-        public LegRedemptionDate(string val)
-            :base(Tags.LegRedemptionDate, val) {}
-    }
-
-
-    /// <summary>
-    /// CreditRating Field
-    /// </summary>/
-    public sealed class CreditRating : StringField
-    {
-        public CreditRating()
-            :base(Tags.CreditRating) {}
-        public CreditRating(string val)
-            :base(Tags.CreditRating, val) {}
-    }
-
-
-    /// <summary>
-    /// UnderlyingCreditRating Field
-    /// </summary>/
-    public sealed class UnderlyingCreditRating : StringField
-    {
-        public UnderlyingCreditRating()
-            :base(Tags.UnderlyingCreditRating) {}
-        public UnderlyingCreditRating(string val)
-            :base(Tags.UnderlyingCreditRating, val) {}
-    }
-
-
-    /// <summary>
-    /// LegCreditRating Field
-    /// </summary>/
-    public sealed class LegCreditRating : StringField
-    {
-        public LegCreditRating()
-            :base(Tags.LegCreditRating) {}
-        public LegCreditRating(string val)
-            :base(Tags.LegCreditRating, val) {}
-    }
-
-
-    /// <summary>
-    /// TradedFlatSwitch Field
-    /// </summary>/
-    public sealed class TradedFlatSwitch : BooleanField
-    {
-        public TradedFlatSwitch()
-            :base(Tags.TradedFlatSwitch) {}
-        public TradedFlatSwitch(Boolean val)
-            :base(Tags.TradedFlatSwitch, val) {}
-    }
-
-
-    /// <summary>
-    /// BasisFeatureDate Field
-    /// </summary>/
-    public sealed class BasisFeatureDate : StringField
-    {
-        public BasisFeatureDate()
-            :base(Tags.BasisFeatureDate) {}
-        public BasisFeatureDate(string val)
-            :base(Tags.BasisFeatureDate, val) {}
-    }
-
-
-    /// <summary>
-    /// BasisFeaturePrice Field
-    /// </summary>/
-    public sealed class BasisFeaturePrice : DecimalField
-    {
-        public BasisFeaturePrice()
-            :base(Tags.BasisFeaturePrice) {}
-        public BasisFeaturePrice(Decimal val)
-            :base(Tags.BasisFeaturePrice, val) {}
     }
 
 
@@ -3399,14 +2931,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// OpenCloseSettlFlag Field
+    /// OpenCloseSettleFlag Field
     /// </summary>/
-    public sealed class OpenCloseSettlFlag : StringField
+    public sealed class OpenCloseSettleFlag : StringField
     {
-        public OpenCloseSettlFlag()
-            :base(Tags.OpenCloseSettlFlag) {}
-        public OpenCloseSettlFlag(string val)
-            :base(Tags.OpenCloseSettlFlag, val) {}
+        public OpenCloseSettleFlag()
+            :base(Tags.OpenCloseSettleFlag) {}
+        public OpenCloseSettleFlag(string val)
+            :base(Tags.OpenCloseSettleFlag, val) {}
     }
 
 
@@ -3531,14 +3063,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// QuoteStatus Field
+    /// QuoteAckStatus Field
     /// </summary>/
-    public sealed class QuoteStatus : IntField
+    public sealed class QuoteAckStatus : IntField
     {
-        public QuoteStatus()
-            :base(Tags.QuoteStatus) {}
-        public QuoteStatus(int val)
-            :base(Tags.QuoteStatus, val) {}
+        public QuoteAckStatus()
+            :base(Tags.QuoteAckStatus) {}
+        public QuoteAckStatus(int val)
+            :base(Tags.QuoteAckStatus, val) {}
     }
 
 
@@ -3615,26 +3147,26 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// TotNoQuoteEntries Field
+    /// TotQuoteEntries Field
     /// </summary>/
-    public sealed class TotNoQuoteEntries : IntField
+    public sealed class TotQuoteEntries : IntField
     {
-        public TotNoQuoteEntries()
-            :base(Tags.TotNoQuoteEntries) {}
-        public TotNoQuoteEntries(int val)
-            :base(Tags.TotNoQuoteEntries, val) {}
+        public TotQuoteEntries()
+            :base(Tags.TotQuoteEntries) {}
+        public TotQuoteEntries(int val)
+            :base(Tags.TotQuoteEntries, val) {}
     }
 
 
     /// <summary>
-    /// UnderlyingSecurityIDSource Field
+    /// UnderlyingIDSource Field
     /// </summary>/
-    public sealed class UnderlyingSecurityIDSource : StringField
+    public sealed class UnderlyingIDSource : StringField
     {
-        public UnderlyingSecurityIDSource()
-            :base(Tags.UnderlyingSecurityIDSource) {}
-        public UnderlyingSecurityIDSource(string val)
-            :base(Tags.UnderlyingSecurityIDSource, val) {}
+        public UnderlyingIDSource()
+            :base(Tags.UnderlyingIDSource) {}
+        public UnderlyingIDSource(string val)
+            :base(Tags.UnderlyingIDSource, val) {}
     }
 
 
@@ -3891,14 +3423,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// HaltReasonChar Field
+    /// HaltReason Field
     /// </summary>/
-    public sealed class HaltReasonChar : CharField
+    public sealed class HaltReason : CharField
     {
-        public HaltReasonChar()
-            :base(Tags.HaltReasonChar) {}
-        public HaltReasonChar(char val)
-            :base(Tags.HaltReasonChar, val) {}
+        public HaltReason()
+            :base(Tags.HaltReason) {}
+        public HaltReason(char val)
+            :base(Tags.HaltReason, val) {}
     }
 
 
@@ -4635,14 +4167,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// DiscretionOffsetValue Field
+    /// DiscretionOffset Field
     /// </summary>/
-    public sealed class DiscretionOffsetValue : DecimalField
+    public sealed class DiscretionOffset : DecimalField
     {
-        public DiscretionOffsetValue()
-            :base(Tags.DiscretionOffsetValue) {}
-        public DiscretionOffsetValue(Decimal val)
-            :base(Tags.DiscretionOffsetValue, val) {}
+        public DiscretionOffset()
+            :base(Tags.DiscretionOffset) {}
+        public DiscretionOffset(Decimal val)
+            :base(Tags.DiscretionOffset, val) {}
     }
 
 
@@ -4683,14 +4215,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// TotNoRelatedSym Field
+    /// TotalNumSecurities Field
     /// </summary>/
-    public sealed class TotNoRelatedSym : IntField
+    public sealed class TotalNumSecurities : IntField
     {
-        public TotNoRelatedSym()
-            :base(Tags.TotNoRelatedSym) {}
-        public TotNoRelatedSym(int val)
-            :base(Tags.TotNoRelatedSym, val) {}
+        public TotalNumSecurities()
+            :base(Tags.TotalNumSecurities) {}
+        public TotalNumSecurities(int val)
+            :base(Tags.TotalNumSecurities, val) {}
     }
 
 
@@ -4983,14 +4515,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// BidTradeType Field
+    /// TradeType Field
     /// </summary>/
-    public sealed class BidTradeType : CharField
+    public sealed class TradeType : CharField
     {
-        public BidTradeType()
-            :base(Tags.BidTradeType) {}
-        public BidTradeType(char val)
-            :base(Tags.BidTradeType, val) {}
+        public TradeType()
+            :base(Tags.TradeType) {}
+        public TradeType(char val)
+            :base(Tags.TradeType, val) {}
     }
 
 
@@ -5327,6 +4859,594 @@ namespace QuickFix.Fields
             :base(Tags.EncodedListStatusText) {}
         public EncodedListStatusText(string val)
             :base(Tags.EncodedListStatusText, val) {}
+    }
+
+
+    /// <summary>
+    /// SecurityIDSource Field
+    /// </summary>/
+    public sealed class SecurityIDSource : StringField
+    {
+        public SecurityIDSource()
+            :base(Tags.SecurityIDSource) {}
+        public SecurityIDSource(string val)
+            :base(Tags.SecurityIDSource, val) {}
+    }
+
+
+    /// <summary>
+    /// IOIQty Field
+    /// </summary>/
+    public sealed class IOIQty : StringField
+    {
+        public IOIQty()
+            :base(Tags.IOIQty) {}
+        public IOIQty(string val)
+            :base(Tags.IOIQty, val) {}
+    }
+
+
+    /// <summary>
+    /// LastQty Field
+    /// </summary>/
+    public sealed class LastQty : DecimalField
+    {
+        public LastQty()
+            :base(Tags.LastQty) {}
+        public LastQty(Decimal val)
+            :base(Tags.LastQty, val) {}
+    }
+
+
+    /// <summary>
+    /// SendingDate Field
+    /// </summary>/
+    public sealed class SendingDate : StringField
+    {
+        public SendingDate()
+            :base(Tags.SendingDate) {}
+        public SendingDate(string val)
+            :base(Tags.SendingDate, val) {}
+    }
+
+
+    /// <summary>
+    /// Quantity Field
+    /// </summary>/
+    public sealed class Quantity : DecimalField
+    {
+        public Quantity()
+            :base(Tags.Quantity) {}
+        public Quantity(Decimal val)
+            :base(Tags.Quantity, val) {}
+    }
+
+
+    /// <summary>
+    /// PositionEffect Field
+    /// </summary>/
+    public sealed class PositionEffect : CharField
+    {
+        public PositionEffect()
+            :base(Tags.PositionEffect) {}
+        public PositionEffect(char val)
+            :base(Tags.PositionEffect, val) {}
+    }
+
+
+    /// <summary>
+    /// AllocQty Field
+    /// </summary>/
+    public sealed class AllocQty : DecimalField
+    {
+        public AllocQty()
+            :base(Tags.AllocQty) {}
+        public AllocQty(Decimal val)
+            :base(Tags.AllocQty, val) {}
+    }
+
+
+    /// <summary>
+    /// Spread Field
+    /// </summary>/
+    public sealed class Spread : DecimalField
+    {
+        public Spread()
+            :base(Tags.Spread) {}
+        public Spread(Decimal val)
+            :base(Tags.Spread, val) {}
+    }
+
+
+    /// <summary>
+    /// BenchmarkCurveCurrency Field
+    /// </summary>/
+    public sealed class BenchmarkCurveCurrency : DecimalField
+    {
+        public BenchmarkCurveCurrency()
+            :base(Tags.BenchmarkCurveCurrency) {}
+        public BenchmarkCurveCurrency(Decimal val)
+            :base(Tags.BenchmarkCurveCurrency, val) {}
+    }
+
+
+    /// <summary>
+    /// BenchmarkCurveName Field
+    /// </summary>/
+    public sealed class BenchmarkCurveName : StringField
+    {
+        public BenchmarkCurveName()
+            :base(Tags.BenchmarkCurveName) {}
+        public BenchmarkCurveName(string val)
+            :base(Tags.BenchmarkCurveName, val) {}
+    }
+
+
+    /// <summary>
+    /// BenchmarkCurvePoint Field
+    /// </summary>/
+    public sealed class BenchmarkCurvePoint : StringField
+    {
+        public BenchmarkCurvePoint()
+            :base(Tags.BenchmarkCurvePoint) {}
+        public BenchmarkCurvePoint(string val)
+            :base(Tags.BenchmarkCurvePoint, val) {}
+    }
+
+
+    /// <summary>
+    /// CouponPaymentDate Field
+    /// </summary>/
+    public sealed class CouponPaymentDate : StringField
+    {
+        public CouponPaymentDate()
+            :base(Tags.CouponPaymentDate) {}
+        public CouponPaymentDate(string val)
+            :base(Tags.CouponPaymentDate, val) {}
+    }
+
+
+    /// <summary>
+    /// IssueDate Field
+    /// </summary>/
+    public sealed class IssueDate : StringField
+    {
+        public IssueDate()
+            :base(Tags.IssueDate) {}
+        public IssueDate(string val)
+            :base(Tags.IssueDate, val) {}
+    }
+
+
+    /// <summary>
+    /// RepurchaseTerm Field
+    /// </summary>/
+    public sealed class RepurchaseTerm : IntField
+    {
+        public RepurchaseTerm()
+            :base(Tags.RepurchaseTerm) {}
+        public RepurchaseTerm(int val)
+            :base(Tags.RepurchaseTerm, val) {}
+    }
+
+
+    /// <summary>
+    /// RepurchaseRate Field
+    /// </summary>/
+    public sealed class RepurchaseRate : DecimalField
+    {
+        public RepurchaseRate()
+            :base(Tags.RepurchaseRate) {}
+        public RepurchaseRate(Decimal val)
+            :base(Tags.RepurchaseRate, val) {}
+    }
+
+
+    /// <summary>
+    /// Factor Field
+    /// </summary>/
+    public sealed class Factor : DecimalField
+    {
+        public Factor()
+            :base(Tags.Factor) {}
+        public Factor(Decimal val)
+            :base(Tags.Factor, val) {}
+    }
+
+
+    /// <summary>
+    /// TradeOriginationDate Field
+    /// </summary>/
+    public sealed class TradeOriginationDate : StringField
+    {
+        public TradeOriginationDate()
+            :base(Tags.TradeOriginationDate) {}
+        public TradeOriginationDate(string val)
+            :base(Tags.TradeOriginationDate, val) {}
+    }
+
+
+    /// <summary>
+    /// ExDate Field
+    /// </summary>/
+    public sealed class ExDate : StringField
+    {
+        public ExDate()
+            :base(Tags.ExDate) {}
+        public ExDate(string val)
+            :base(Tags.ExDate, val) {}
+    }
+
+
+    /// <summary>
+    /// NoStipulations Field
+    /// </summary>/
+    public sealed class NoStipulations : IntField
+    {
+        public NoStipulations()
+            :base(Tags.NoStipulations) {}
+        public NoStipulations(int val)
+            :base(Tags.NoStipulations, val) {}
+    }
+
+
+    /// <summary>
+    /// StipulationType Field
+    /// </summary>/
+    public sealed class StipulationType : StringField
+    {
+        public StipulationType()
+            :base(Tags.StipulationType) {}
+        public StipulationType(string val)
+            :base(Tags.StipulationType, val) {}
+    }
+
+
+    /// <summary>
+    /// StipulationValue Field
+    /// </summary>/
+    public sealed class StipulationValue : StringField
+    {
+        public StipulationValue()
+            :base(Tags.StipulationValue) {}
+        public StipulationValue(string val)
+            :base(Tags.StipulationValue, val) {}
+    }
+
+
+    /// <summary>
+    /// YieldType Field
+    /// </summary>/
+    public sealed class YieldType : StringField
+    {
+        public YieldType()
+            :base(Tags.YieldType) {}
+        public YieldType(string val)
+            :base(Tags.YieldType, val) {}
+    }
+
+
+    /// <summary>
+    /// Yield Field
+    /// </summary>/
+    public sealed class Yield : DecimalField
+    {
+        public Yield()
+            :base(Tags.Yield) {}
+        public Yield(Decimal val)
+            :base(Tags.Yield, val) {}
+    }
+
+
+    /// <summary>
+    /// TotalTakedown Field
+    /// </summary>/
+    public sealed class TotalTakedown : DecimalField
+    {
+        public TotalTakedown()
+            :base(Tags.TotalTakedown) {}
+        public TotalTakedown(Decimal val)
+            :base(Tags.TotalTakedown, val) {}
+    }
+
+
+    /// <summary>
+    /// Concession Field
+    /// </summary>/
+    public sealed class Concession : DecimalField
+    {
+        public Concession()
+            :base(Tags.Concession) {}
+        public Concession(Decimal val)
+            :base(Tags.Concession, val) {}
+    }
+
+
+    /// <summary>
+    /// RepoCollateralSecurityType Field
+    /// </summary>/
+    public sealed class RepoCollateralSecurityType : IntField
+    {
+        public RepoCollateralSecurityType()
+            :base(Tags.RepoCollateralSecurityType) {}
+        public RepoCollateralSecurityType(int val)
+            :base(Tags.RepoCollateralSecurityType, val) {}
+    }
+
+
+    /// <summary>
+    /// RedemptionDate Field
+    /// </summary>/
+    public sealed class RedemptionDate : StringField
+    {
+        public RedemptionDate()
+            :base(Tags.RedemptionDate) {}
+        public RedemptionDate(string val)
+            :base(Tags.RedemptionDate, val) {}
+    }
+
+
+    /// <summary>
+    /// UnderlyingCouponPaymentDate Field
+    /// </summary>/
+    public sealed class UnderlyingCouponPaymentDate : StringField
+    {
+        public UnderlyingCouponPaymentDate()
+            :base(Tags.UnderlyingCouponPaymentDate) {}
+        public UnderlyingCouponPaymentDate(string val)
+            :base(Tags.UnderlyingCouponPaymentDate, val) {}
+    }
+
+
+    /// <summary>
+    /// UnderlyingIssueDate Field
+    /// </summary>/
+    public sealed class UnderlyingIssueDate : StringField
+    {
+        public UnderlyingIssueDate()
+            :base(Tags.UnderlyingIssueDate) {}
+        public UnderlyingIssueDate(string val)
+            :base(Tags.UnderlyingIssueDate, val) {}
+    }
+
+
+    /// <summary>
+    /// UnderlyingRepoCollateralSecurityType Field
+    /// </summary>/
+    public sealed class UnderlyingRepoCollateralSecurityType : IntField
+    {
+        public UnderlyingRepoCollateralSecurityType()
+            :base(Tags.UnderlyingRepoCollateralSecurityType) {}
+        public UnderlyingRepoCollateralSecurityType(int val)
+            :base(Tags.UnderlyingRepoCollateralSecurityType, val) {}
+    }
+
+
+    /// <summary>
+    /// UnderlyingRepurchaseTerm Field
+    /// </summary>/
+    public sealed class UnderlyingRepurchaseTerm : IntField
+    {
+        public UnderlyingRepurchaseTerm()
+            :base(Tags.UnderlyingRepurchaseTerm) {}
+        public UnderlyingRepurchaseTerm(int val)
+            :base(Tags.UnderlyingRepurchaseTerm, val) {}
+    }
+
+
+    /// <summary>
+    /// UnderlyingRepurchaseRate Field
+    /// </summary>/
+    public sealed class UnderlyingRepurchaseRate : DecimalField
+    {
+        public UnderlyingRepurchaseRate()
+            :base(Tags.UnderlyingRepurchaseRate) {}
+        public UnderlyingRepurchaseRate(Decimal val)
+            :base(Tags.UnderlyingRepurchaseRate, val) {}
+    }
+
+
+    /// <summary>
+    /// UnderlyingFactor Field
+    /// </summary>/
+    public sealed class UnderlyingFactor : DecimalField
+    {
+        public UnderlyingFactor()
+            :base(Tags.UnderlyingFactor) {}
+        public UnderlyingFactor(Decimal val)
+            :base(Tags.UnderlyingFactor, val) {}
+    }
+
+
+    /// <summary>
+    /// UnderlyingRedemptionDate Field
+    /// </summary>/
+    public sealed class UnderlyingRedemptionDate : StringField
+    {
+        public UnderlyingRedemptionDate()
+            :base(Tags.UnderlyingRedemptionDate) {}
+        public UnderlyingRedemptionDate(string val)
+            :base(Tags.UnderlyingRedemptionDate, val) {}
+    }
+
+
+    /// <summary>
+    /// LegCouponPaymentDate Field
+    /// </summary>/
+    public sealed class LegCouponPaymentDate : StringField
+    {
+        public LegCouponPaymentDate()
+            :base(Tags.LegCouponPaymentDate) {}
+        public LegCouponPaymentDate(string val)
+            :base(Tags.LegCouponPaymentDate, val) {}
+    }
+
+
+    /// <summary>
+    /// LegIssueDate Field
+    /// </summary>/
+    public sealed class LegIssueDate : StringField
+    {
+        public LegIssueDate()
+            :base(Tags.LegIssueDate) {}
+        public LegIssueDate(string val)
+            :base(Tags.LegIssueDate, val) {}
+    }
+
+
+    /// <summary>
+    /// LegRepoCollateralSecurityType Field
+    /// </summary>/
+    public sealed class LegRepoCollateralSecurityType : IntField
+    {
+        public LegRepoCollateralSecurityType()
+            :base(Tags.LegRepoCollateralSecurityType) {}
+        public LegRepoCollateralSecurityType(int val)
+            :base(Tags.LegRepoCollateralSecurityType, val) {}
+    }
+
+
+    /// <summary>
+    /// LegRepurchaseTerm Field
+    /// </summary>/
+    public sealed class LegRepurchaseTerm : IntField
+    {
+        public LegRepurchaseTerm()
+            :base(Tags.LegRepurchaseTerm) {}
+        public LegRepurchaseTerm(int val)
+            :base(Tags.LegRepurchaseTerm, val) {}
+    }
+
+
+    /// <summary>
+    /// LegRepurchaseRate Field
+    /// </summary>/
+    public sealed class LegRepurchaseRate : DecimalField
+    {
+        public LegRepurchaseRate()
+            :base(Tags.LegRepurchaseRate) {}
+        public LegRepurchaseRate(Decimal val)
+            :base(Tags.LegRepurchaseRate, val) {}
+    }
+
+
+    /// <summary>
+    /// LegFactor Field
+    /// </summary>/
+    public sealed class LegFactor : DecimalField
+    {
+        public LegFactor()
+            :base(Tags.LegFactor) {}
+        public LegFactor(Decimal val)
+            :base(Tags.LegFactor, val) {}
+    }
+
+
+    /// <summary>
+    /// LegRedemptionDate Field
+    /// </summary>/
+    public sealed class LegRedemptionDate : StringField
+    {
+        public LegRedemptionDate()
+            :base(Tags.LegRedemptionDate) {}
+        public LegRedemptionDate(string val)
+            :base(Tags.LegRedemptionDate, val) {}
+    }
+
+
+    /// <summary>
+    /// CreditRating Field
+    /// </summary>/
+    public sealed class CreditRating : StringField
+    {
+        public CreditRating()
+            :base(Tags.CreditRating) {}
+        public CreditRating(string val)
+            :base(Tags.CreditRating, val) {}
+    }
+
+
+    /// <summary>
+    /// UnderlyingCreditRating Field
+    /// </summary>/
+    public sealed class UnderlyingCreditRating : StringField
+    {
+        public UnderlyingCreditRating()
+            :base(Tags.UnderlyingCreditRating) {}
+        public UnderlyingCreditRating(string val)
+            :base(Tags.UnderlyingCreditRating, val) {}
+    }
+
+
+    /// <summary>
+    /// LegCreditRating Field
+    /// </summary>/
+    public sealed class LegCreditRating : StringField
+    {
+        public LegCreditRating()
+            :base(Tags.LegCreditRating) {}
+        public LegCreditRating(string val)
+            :base(Tags.LegCreditRating, val) {}
+    }
+
+
+    /// <summary>
+    /// TradedFlatSwitch Field
+    /// </summary>/
+    public sealed class TradedFlatSwitch : BooleanField
+    {
+        public TradedFlatSwitch()
+            :base(Tags.TradedFlatSwitch) {}
+        public TradedFlatSwitch(Boolean val)
+            :base(Tags.TradedFlatSwitch, val) {}
+    }
+
+
+    /// <summary>
+    /// BasisFeatureDate Field
+    /// </summary>/
+    public sealed class BasisFeatureDate : StringField
+    {
+        public BasisFeatureDate()
+            :base(Tags.BasisFeatureDate) {}
+        public BasisFeatureDate(string val)
+            :base(Tags.BasisFeatureDate, val) {}
+    }
+
+
+    /// <summary>
+    /// BasisFeaturePrice Field
+    /// </summary>/
+    public sealed class BasisFeaturePrice : DecimalField
+    {
+        public BasisFeaturePrice()
+            :base(Tags.BasisFeaturePrice) {}
+        public BasisFeaturePrice(Decimal val)
+            :base(Tags.BasisFeaturePrice, val) {}
+    }
+
+
+    /// <summary>
+    /// QuoteStatus Field
+    /// </summary>/
+    public sealed class QuoteStatus : IntField
+    {
+        public QuoteStatus()
+            :base(Tags.QuoteStatus) {}
+        public QuoteStatus(int val)
+            :base(Tags.QuoteStatus, val) {}
+    }
+
+
+    /// <summary>
+    /// UnderlyingSecurityIDSource Field
+    /// </summary>/
+    public sealed class UnderlyingSecurityIDSource : StringField
+    {
+        public UnderlyingSecurityIDSource()
+            :base(Tags.UnderlyingSecurityIDSource) {}
+        public UnderlyingSecurityIDSource(string val)
+            :base(Tags.UnderlyingSecurityIDSource, val) {}
     }
 
 
@@ -5859,14 +5979,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// CardIssNum Field
+    /// CardIssNo Field
     /// </summary>/
-    public sealed class CardIssNum : StringField
+    public sealed class CardIssNo : StringField
     {
-        public CardIssNum()
-            :base(Tags.CardIssNum) {}
-        public CardIssNum(string val)
-            :base(Tags.CardIssNum, val) {}
+        public CardIssNo()
+            :base(Tags.CardIssNo) {}
+        public CardIssNo(string val)
+            :base(Tags.CardIssNo, val) {}
     }
 
 
@@ -6075,14 +6195,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// RegistDtls Field
+    /// RegistDetls Field
     /// </summary>/
-    public sealed class RegistDtls : StringField
+    public sealed class RegistDetls : StringField
     {
-        public RegistDtls()
-            :base(Tags.RegistDtls) {}
-        public RegistDtls(string val)
-            :base(Tags.RegistDtls, val) {}
+        public RegistDetls()
+            :base(Tags.RegistDetls) {}
+        public RegistDetls(string val)
+            :base(Tags.RegistDetls, val) {}
     }
 
 
@@ -6651,14 +6771,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// TotNoSecurityTypes Field
+    /// TotalNumSecurityTypes Field
     /// </summary>/
-    public sealed class TotNoSecurityTypes : IntField
+    public sealed class TotalNumSecurityTypes : IntField
     {
-        public TotNoSecurityTypes()
-            :base(Tags.TotNoSecurityTypes) {}
-        public TotNoSecurityTypes(int val)
-            :base(Tags.TotNoSecurityTypes, val) {}
+        public TotalNumSecurityTypes()
+            :base(Tags.TotalNumSecurityTypes) {}
+        public TotalNumSecurityTypes(int val)
+            :base(Tags.TotalNumSecurityTypes, val) {}
     }
 
 
@@ -7011,26 +7131,26 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// LegSettlType Field
+    /// LegSettlmntTyp Field
     /// </summary>/
-    public sealed class LegSettlType : CharField
+    public sealed class LegSettlmntTyp : CharField
     {
-        public LegSettlType()
-            :base(Tags.LegSettlType) {}
-        public LegSettlType(char val)
-            :base(Tags.LegSettlType, val) {}
+        public LegSettlmntTyp()
+            :base(Tags.LegSettlmntTyp) {}
+        public LegSettlmntTyp(char val)
+            :base(Tags.LegSettlmntTyp, val) {}
     }
 
 
     /// <summary>
-    /// LegSettlDate Field
+    /// LegFutSettDate Field
     /// </summary>/
-    public sealed class LegSettlDate : StringField
+    public sealed class LegFutSettDate : StringField
     {
-        public LegSettlDate()
-            :base(Tags.LegSettlDate) {}
-        public LegSettlDate(string val)
-            :base(Tags.LegSettlDate, val) {}
+        public LegFutSettDate()
+            :base(Tags.LegFutSettDate) {}
+        public LegFutSettDate(string val)
+            :base(Tags.LegFutSettDate, val) {}
     }
 
 
@@ -7883,6 +8003,186 @@ namespace QuickFix.Fields
             :base(Tags.SideComplianceID) {}
         public SideComplianceID(string val)
             :base(Tags.SideComplianceID, val) {}
+    }
+
+
+    /// <summary>
+    /// SettlType Field
+    /// </summary>/
+    public sealed class SettlType : StringField
+    {
+        public SettlType()
+            :base(Tags.SettlType) {}
+        public SettlType(string val)
+            :base(Tags.SettlType, val) {}
+    }
+
+
+    /// <summary>
+    /// SettlDate Field
+    /// </summary>/
+    public sealed class SettlDate : StringField
+    {
+        public SettlDate()
+            :base(Tags.SettlDate) {}
+        public SettlDate(string val)
+            :base(Tags.SettlDate, val) {}
+    }
+
+
+    /// <summary>
+    /// AvgPxPrecision Field
+    /// </summary>/
+    public sealed class AvgPxPrecision : IntField
+    {
+        public AvgPxPrecision()
+            :base(Tags.AvgPxPrecision) {}
+        public AvgPxPrecision(int val)
+            :base(Tags.AvgPxPrecision, val) {}
+    }
+
+
+    /// <summary>
+    /// SettlDate2 Field
+    /// </summary>/
+    public sealed class SettlDate2 : StringField
+    {
+        public SettlDate2()
+            :base(Tags.SettlDate2) {}
+        public SettlDate2(string val)
+            :base(Tags.SettlDate2, val) {}
+    }
+
+
+    /// <summary>
+    /// PegOffsetValue Field
+    /// </summary>/
+    public sealed class PegOffsetValue : DecimalField
+    {
+        public PegOffsetValue()
+            :base(Tags.PegOffsetValue) {}
+        public PegOffsetValue(Decimal val)
+            :base(Tags.PegOffsetValue, val) {}
+    }
+
+
+    /// <summary>
+    /// OpenCloseSettlFlag Field
+    /// </summary>/
+    public sealed class OpenCloseSettlFlag : StringField
+    {
+        public OpenCloseSettlFlag()
+            :base(Tags.OpenCloseSettlFlag) {}
+        public OpenCloseSettlFlag(string val)
+            :base(Tags.OpenCloseSettlFlag, val) {}
+    }
+
+
+    /// <summary>
+    /// TotNoQuoteEntries Field
+    /// </summary>/
+    public sealed class TotNoQuoteEntries : IntField
+    {
+        public TotNoQuoteEntries()
+            :base(Tags.TotNoQuoteEntries) {}
+        public TotNoQuoteEntries(int val)
+            :base(Tags.TotNoQuoteEntries, val) {}
+    }
+
+
+    /// <summary>
+    /// DiscretionOffsetValue Field
+    /// </summary>/
+    public sealed class DiscretionOffsetValue : DecimalField
+    {
+        public DiscretionOffsetValue()
+            :base(Tags.DiscretionOffsetValue) {}
+        public DiscretionOffsetValue(Decimal val)
+            :base(Tags.DiscretionOffsetValue, val) {}
+    }
+
+
+    /// <summary>
+    /// TotNoRelatedSym Field
+    /// </summary>/
+    public sealed class TotNoRelatedSym : IntField
+    {
+        public TotNoRelatedSym()
+            :base(Tags.TotNoRelatedSym) {}
+        public TotNoRelatedSym(int val)
+            :base(Tags.TotNoRelatedSym, val) {}
+    }
+
+
+    /// <summary>
+    /// BidTradeType Field
+    /// </summary>/
+    public sealed class BidTradeType : CharField
+    {
+        public BidTradeType()
+            :base(Tags.BidTradeType) {}
+        public BidTradeType(char val)
+            :base(Tags.BidTradeType, val) {}
+    }
+
+
+    /// <summary>
+    /// CardIssNum Field
+    /// </summary>/
+    public sealed class CardIssNum : StringField
+    {
+        public CardIssNum()
+            :base(Tags.CardIssNum) {}
+        public CardIssNum(string val)
+            :base(Tags.CardIssNum, val) {}
+    }
+
+
+    /// <summary>
+    /// RegistDtls Field
+    /// </summary>/
+    public sealed class RegistDtls : StringField
+    {
+        public RegistDtls()
+            :base(Tags.RegistDtls) {}
+        public RegistDtls(string val)
+            :base(Tags.RegistDtls, val) {}
+    }
+
+
+    /// <summary>
+    /// TotNoSecurityTypes Field
+    /// </summary>/
+    public sealed class TotNoSecurityTypes : IntField
+    {
+        public TotNoSecurityTypes()
+            :base(Tags.TotNoSecurityTypes) {}
+        public TotNoSecurityTypes(int val)
+            :base(Tags.TotNoSecurityTypes, val) {}
+    }
+
+
+    /// <summary>
+    /// LegSettlType Field
+    /// </summary>/
+    public sealed class LegSettlType : CharField
+    {
+        public LegSettlType()
+            :base(Tags.LegSettlType) {}
+        public LegSettlType(char val)
+            :base(Tags.LegSettlType, val) {}
+    }
+
+
+    /// <summary>
+    /// LegSettlDate Field
+    /// </summary>/
+    public sealed class LegSettlDate : StringField
+    {
+        public LegSettlDate()
+            :base(Tags.LegSettlDate) {}
+        public LegSettlDate(string val)
+            :base(Tags.LegSettlDate, val) {}
     }
 
 
@@ -11435,6 +11735,42 @@ namespace QuickFix.Fields
             :base(Tags.LegInterestAccrualDate) {}
         public LegInterestAccrualDate(string val)
             :base(Tags.LegInterestAccrualDate, val) {}
+    }
+
+
+    /// <summary>
+    /// IOIID Field
+    /// </summary>/
+    public sealed class IOIID : StringField
+    {
+        public IOIID()
+            :base(Tags.IOIID) {}
+        public IOIID(string val)
+            :base(Tags.IOIID, val) {}
+    }
+
+
+    /// <summary>
+    /// NoLinesOfText Field
+    /// </summary>/
+    public sealed class NoLinesOfText : IntField
+    {
+        public NoLinesOfText()
+            :base(Tags.NoLinesOfText) {}
+        public NoLinesOfText(int val)
+            :base(Tags.NoLinesOfText, val) {}
+    }
+
+
+    /// <summary>
+    /// HaltReasonChar Field
+    /// </summary>/
+    public sealed class HaltReasonChar : CharField
+    {
+        public HaltReasonChar()
+            :base(Tags.HaltReasonChar) {}
+        public HaltReasonChar(char val)
+            :base(Tags.HaltReasonChar, val) {}
     }
 
 
