@@ -2,9 +2,11 @@
 
 class MessageGen
   def self.generate messages, dir, fixver
+    destdir = File.join(dir, fixver)
+    Dir.mkdir(destdir) unless Dir.exists? destdir
     messages.each do |msg| 
       msgstr = gen_msg(msg, fixver)
-      msg_path = File.join(dir, fixver, msg[:name] + '.cs')
+      msg_path = File.join(destdir, msg[:name] + '.cs')
       puts 'generate ' + msg_path
       File.open(msg_path, 'w') {|f| f.puts(msgstr) }
     end
