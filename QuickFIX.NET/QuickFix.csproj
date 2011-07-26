@@ -87,7 +87,6 @@
     <Compile Include="Fields\StringField.cs" />
     <Compile Include="Message\FieldMap.cs" />
     <Compile Include="Message\FieldNotFoundException.cs" />
-    <Compile Include="Message\FIX44\TradeCaptureReport.cs" />
     <Compile Include="Message\Group.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="Message\MessageParseException.cs" />
@@ -117,6 +116,7 @@
     <Compile Include="Values.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="FixMessages.csproj" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

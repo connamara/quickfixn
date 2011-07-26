@@ -2,10 +2,10 @@
 
 class MessageGen
   def self.generate messages, dir, fixver
-    messages.select {|m| m[:name] == 'TradeCaptureReport'}.each do |msg| 
+    messages.each do |msg| 
       msgstr = gen_msg(msg, fixver)
       msg_path = File.join(dir, fixver, msg[:name] + '.cs')
-      puts msg_path
+      puts 'generate ' + msg_path
       File.open(msg_path, 'w') {|f| f.puts(msgstr) }
     end
   end
