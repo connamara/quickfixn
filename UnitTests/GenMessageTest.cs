@@ -118,6 +118,15 @@ namespace UnitTests
         }
 
         [Test]
+        public void TCRGroupInGroupCTORTest()
+        {
+            int[] expFieldOrder = { 757, 758, 759, 806, 0 };
+            QuickFix.FIX44.TradeCaptureReport.NoSides.NoAllocs.NoNested2PartyIDs grp = new QuickFix.FIX44.TradeCaptureReport.NoSides.NoAllocs.NoNested2PartyIDs();
+            Assert.That(grp.FieldOrder, Is.EqualTo(expFieldOrder));
+            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSides.NoAllocs.NoNested2PartyIDs.fieldOrder, Is.EqualTo(expFieldOrder));
+        }
+
+        [Test]
         public void TCRGroupFieldGetterSetterTest()
         {
             QuickFix.FIX44.TradeCaptureReport.NoSides noSides = new QuickFix.FIX44.TradeCaptureReport.NoSides();
