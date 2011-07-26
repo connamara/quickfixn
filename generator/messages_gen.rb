@@ -23,6 +23,7 @@ namespace QuickFix
 #{ctor_req(msg)}
             #region Properties
 #{gen_msg_fields(msg[:fields])}
+#{gen_msg_groups(msg[:groups])}
             #endregion
         }
     }
@@ -56,6 +57,11 @@ HERE
   def self.gen_msg_fields fields
     fields.map { |fld| msg_field(fld) }.join("\n")
   end
+
+  def self.gen_msg_groups groups
+    groups.map { |grp| msg_grp(grp) }.join("\n")
+  end
+
 
   def self.required msg
     ( msg[:fields].select {|f| f[:required] == true } + 
@@ -96,5 +102,9 @@ HERE
                 return isSetField(Tags.#{fld[:name]});
             }
 HERE
+  end
+
+  def self.msg_grp grp
+    puts grp.inspect
   end
 end
