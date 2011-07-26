@@ -94,8 +94,9 @@ class FIXDictionary
           fixel[:fields] << @fields[cname].merge(:required=>req, :group=>false)
       
         when 'group'
-          fixel[:fields] << @fields[cname].merge(:required=>req, :group=>true)
-          grp = {:name=>cname, :fields=>[], :groups=>[], :required=>req}
+          grpfld = @fields[cname].merge(:required=>req, :group=>true)
+          fixel[:fields] << grpfld
+          grp = {:group_field=>grpfld, :name=>cname, :fields=>[], :groups=>[], :required=>req}
           parse_element(child, grp, header, trailer )
           fixel[:groups] << grp
           

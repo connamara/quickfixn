@@ -27,10 +27,8 @@ namespace QuickFix
         {
 #{ctor(msg)}
 #{ctor_req(msg)}
-            #region Properties
-#{gen_msg_fields(msg[:fields])}
-#{gen_msg_groups(msg[:groups])}
-            #endregion
+#{gen_msg_fields(msg[:fields], 12)}
+#{gen_msg_groups(msg[:groups], 12)}
         }
     }
 }
@@ -60,12 +58,12 @@ HERE
 HERE
   end
 
-  def self.gen_msg_fields fields
-    fields.map { |fld| msg_field(fld) }.join("\n")
+  def self.gen_msg_fields fields, prepend_spaces
+    fields.map { |fld| msg_field(fld,prepend_spaces) }.join("\n")
   end
 
-  def self.gen_msg_groups groups
-    groups.map { |grp| msg_grp(grp) }.join("\n")
+  def self.gen_msg_groups groups, prepend_spaces
+    groups.map { |grp| msg_grp(grp, prepend_spaces) }.join("\n")
   end
 
 
@@ -73,56 +71,58 @@ HERE
     msg[:fields].select {|f| f[:required] == true and f[:group] == false }
   end
 
-  def self.msg_field fld
-<<HERE
-            public QuickFix.Fields.#{fld[:name]} #{lower(fld[:name])}
-            { 
-                get 
-                {
-                    QuickFix.Fields.#{fld[:name]} val = new QuickFix.Fields.#{fld[:name]}();
-                    getField(val);
-                    return val;
-                }
-                set { setField(value); }
-            }
-
-            public void set(QuickFix.Fields.#{fld[:name]} val) 
-            { 
-                this.#{lower(fld[:name])} = val;
-            }
-
-            public QuickFix.Fields.#{fld[:name]} get(QuickFix.Fields.#{fld[:name]} val) 
-            { 
-                getField(val);
-                return val;
-            }
-
-            public bool isSet(QuickFix.Fields.#{fld[:name]} val) 
-            { 
-                return isSet#{fld[:name]}();
-            }
-
-            public bool isSet#{fld[:name]}() 
-            { 
-                return isSetField(Tags.#{fld[:name]});
-            }
-HERE
+  def self.msg_field fld, prepend_spaces
+    str = []
+    str << "public QuickFix.Fields.#{fld[:name]} #{lower(fld[:name])}"
+    str << "{ "
+    str << "    get "
+    str << "    {"
+    str << "        QuickFix.Fields.#{fld[:name]} val = new QuickFix.Fields.#{fld[:name]}();"
+    str << "        getField(val);"
+    str << "        return val;"
+    str << "    }"
+    str << "    set { setField(value); }"
+    str << "}"
+    str << ""
+    str << "public void set(QuickFix.Fields.#{fld[:name]} val) "
+    str << "{ "
+    str << "    this.#{lower(fld[:name])} = val;"
+    str << "}"
+    str << ""
+    str << "public QuickFix.Fields.#{fld[:name]} get(QuickFix.Fields.#{fld[:name]} val) "
+    str << "{ "
+    str << "    getField(val);"
+    str << "    return val;"
+    str << "}"
+    str << ""
+    str << "public bool isSet(QuickFix.Fields.#{fld[:name]} val) "
+    str << "{ "
+    str << "    return isSet#{fld[:name]}();"
+    str << "}"
+    str << ""
+    str << "public bool isSet#{fld[:name]}() "
+    str << "{ "
+    str << "    return isSetField(Tags.#{fld[:name]});"
+    str << "}"
+    str.map! {|s| ' '*prepend_spaces + s}
+    str.join("\n")
   end
 
-  def self.msg_grp grp
-<<HERE
-            public class #{grp[:name]} : Group
-            {
-                public #{grp[:name]}() 
-                  :base( Tags.#{grp[:fields][0][:name]}, Tags.#{grp[:fields][1][:name]}, fieldOrder)
-                {
-                }
-                #region Properties
-                public static int[] fieldOrder = {#{grp_field_order grp[:fields] }};
-                #endregion
-            }
-HERE
+  def self.msg_grp grp, prepend_spaces
+    str = []
+    str << "public class #{grp[:name]} : Group"
+    str << "{"
+    str << "    public #{grp[:name]}() "
+    str << "      :base( Tags.#{grp[:group_field][:name]}, Tags.#{grp[:fields][0][:name]}, fieldOrder)"
+    str << "    {"
+    str << "    }"
+    str << "    public static int[] fieldOrder = {#{grp_field_order grp[:fields] }};"
+    str << gen_msg_fields(grp[:fields], prepend_spaces+4)
+    str << gen_msg_groups(grp[:groups], prepend_spaces+4)
+    str << "}"
+    str.map {|s| ' '*prepend_spaces + s}.join("\n")
   end
+
   def self.grp_field_order fields
     field_order = fields.map {|f| "Tags.#{f[:name]}"}
     field_order << "0"  ## um, because qf and qfj do it
