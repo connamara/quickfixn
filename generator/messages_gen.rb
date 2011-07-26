@@ -46,6 +46,7 @@ HERE
 
   def self.ctor_req msg
     req = required_fields(msg)
+    return '' if req.empty?
     req_args = req.map {|r| ' '*20 + "QuickFix.Fields.#{r[:name]} a#{r[:name]}" }
     req_setters = req.map {|r| ' '*16 + "this.#{lower(r[:name])} = a#{r[:name]};" }
 <<HERE
