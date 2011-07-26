@@ -91,11 +91,13 @@ class FIXDictionary
       case child.node_name
         when 'field'
           raise "field not found! #{cname}" unless @fields.include?(cname)
-          fixel[:fields] << @fields[cname].merge(:required=>req)
+          fixel[:fields] << @fields[cname].merge(:required=>req, :group=>false)
       
         when 'group'
+          fixel[:fields] << @fields[cname].merge(:required=>req, :group=>true)
           grp = {:name=>cname, :fields=>[], :groups=>[], :required=>req}
           parse_element(child, grp, header, trailer )
+          fixel[:groups] << grp
           
         when 'component'
           component_el = @doc.xpath("//components/component[@name='#{cname}']")
