@@ -116,5 +116,18 @@ namespace UnitTests
             Assert.That(noSides.FieldOrder, Is.EqualTo(expFieldOrder));
             Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSides.fieldOrder, Is.EqualTo(expFieldOrder));
         }
+
+        [Test]
+        public void TCRGroupFieldGetterSetterTest()
+        {
+            QuickFix.FIX44.TradeCaptureReport.NoSides noSides = new QuickFix.FIX44.TradeCaptureReport.NoSides();
+            OrderID ordId = new OrderID("fooey");
+            Assert.That(noSides.isSet(ordId), Is.False);
+            Assert.That(noSides.isSetOrderID(), Is.False);
+            noSides.set(ordId);
+            Assert.That(noSides.isSet(ordId), Is.True);
+            Assert.That(noSides.isSetOrderID(), Is.True);
+            Assert.That(noSides.orderID.getValue(), Is.EqualTo("fooey"));
+        }
     }
 }
