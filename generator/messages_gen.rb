@@ -3,7 +3,7 @@
 class MessageGen
   def self.generate messages, dir, fixver
     destdir = File.join(dir, fixver)
-    Dir.mkdir(destdir) unless Dir.exists? destdir
+    Dir.mkdir(destdir) unless File.exists? destdir
     messages.each do |msg| 
       msgstr = gen_msg(msg, fixver)
       msg_path = File.join(destdir, msg[:name] + '.cs')
@@ -12,10 +12,9 @@ class MessageGen
     end
   end
 
-  def self.lower str
-    str = str.clone
-    str[0] = str[0].downcase
-    str
+  def self.lower rawstr
+    str = rawstr.clone
+    str.slice(0,1).downcase + str.slice(1,rawstr.length)
   end
 
   def self.gen_msg msg, fixver 

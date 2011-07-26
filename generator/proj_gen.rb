@@ -1,12 +1,10 @@
-﻿
-
 class CSProjGen
   def self.generate path, fix_versions
     File.open(path, 'w') {|f| f.puts gen_str(fix_versions) }
   end
 
   def self.gen_str fix_versions
-    include_files = fix_versions.map do |fv| 
+    include_files = fix_versions.map do |fv|
       fv[:messages].map do |msg|
         "    <Compile Include=\"Message\\#{fv[:version]}\\#{msg[:name]}.cs\" />"
       end
@@ -21,3 +19,4 @@ class CSProjGen
 HERE
   end
 end
+
