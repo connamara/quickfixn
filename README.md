@@ -9,6 +9,11 @@ libxml2 and zlib).
 
 Build
 -----
+To generate the code from Data Dictionaries (spec/fix), you need Ruby/JRuby (http://jruby.org/download) and the ruby gem Nokogiri.
+
+    (j)gem install nokogiri
+    (j)ruby generator/generate.rb
+
 
 To build the project, run:
 
