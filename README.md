@@ -7,13 +7,16 @@ You can get xsltproc via cygwin, or by installing libxslt (which requires
 libxml2 and zlib).
 
 
-Build
------
-To generate the code from Data Dictionaries (spec/fix), you need Ruby/JRuby (http://jruby.org/download) and the ruby gem Nokogiri.
+Code Generation
+---------------
+To generate the code from Data Dictionaries, you need Ruby/JRuby (http://jruby.org/download) and the ruby gem Nokogiri.
 
     (j)gem install nokogiri
     (j)ruby generator/generate.rb
 
+
+Build
+-----
 
 To build the project, run:
 
