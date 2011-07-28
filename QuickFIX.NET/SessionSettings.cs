@@ -25,6 +25,7 @@ namespace QuickFix
         public const string SOCKET_CONNECT_HOST = "SocketConnectHost";
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
         public const string RECONNECT_INTERVAL = "ReconnectInterval";
+        public const string FILE_LOG_PATH = "FileLogPath";
 
         #endregion
 

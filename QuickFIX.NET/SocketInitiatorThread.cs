@@ -27,7 +27,6 @@ namespace QuickFix
             parser_ = new Parser();
             socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             session_ = session;
-            session_.SetResponder(this);
         }
 
         public void Start()
@@ -48,6 +47,7 @@ namespace QuickFix
         public void Connect()
         {
             socket_.Connect(socketEndPoint_);
+            session_.SetResponder(this);
         }
 
         public bool Read()

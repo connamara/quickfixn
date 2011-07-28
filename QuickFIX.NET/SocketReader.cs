@@ -11,13 +11,11 @@ namespace QuickFix
         private byte[] readBuffer_ = new byte[BUF_SIZE];
         private Session qfSession_ = null;
         private TcpClient tcpClient_;
-        private Socket socket_;
         private Responder responder_;
 
         public SocketReader(TcpClient tcpClient, Responder responder)
         {
             tcpClient_ = tcpClient;
-            socket_ = tcpClient_.Client;
             responder_ = responder;
         }
 
@@ -28,9 +26,9 @@ namespace QuickFix
         {
             try
             {
-                if (socket_.Poll(1000000, SelectMode.SelectRead)) // one-second timeout
+                if (tcpClient_.Client.Poll(1000000, SelectMode.SelectRead)) // one-second timeout
                 {
-                    int bytesRead = socket_.Receive(readBuffer_);
+                    int bytesRead = tcpClient_.Client.Receive(readBuffer_);
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
                     OnMessageFound(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
@@ -64,7 +62,7 @@ namespace QuickFix
                     if (null == qfSession_)
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + fixMessage.ToString());
-                        tcpClient_.Close();
+                        DisconnectClient();
                         return;
                     }
                     else
@@ -91,7 +89,7 @@ namespace QuickFix
 	                if("A".Equals(Message.GetMsgType(msg))) 
 	                {
 		                this.Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
-		                tcpClient_.Close();
+                        DisconnectClient();
 	                }
 	                else
 	                {
@@ -101,6 +99,12 @@ namespace QuickFix
                 catch(InvalidMessage)
                 { }
             }
+        }
+
+        protected void DisconnectClient()
+        {
+            tcpClient_.Client.Close();
+            tcpClient_.Close();
         }
 
         protected bool HandleNewSession(Message message)
@@ -117,7 +121,7 @@ namespace QuickFix
 			    {
 				    qfSession_.Log.OnEvent("Multiple logons/connections for this session are not allowed");
 				    qfSession_ = null;
-				    tcpClient_.Close();
+                    DisconnectClient();
 				    return false;
 			    }
 			    qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);

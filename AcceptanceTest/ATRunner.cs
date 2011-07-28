@@ -14,11 +14,13 @@ namespace AcceptanceTest
 
             try
             {
-                SessionSettings settings = new SessionSettings(args[0]);
+                SessionSettings settings = new SessionSettings(args[0]); 
                 Application testApp = new ATApplication();
                 MessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                //LogFactory logFactory = new ScreenLogFactory(settings);
-                ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings);
+                LogFactory logFactory = null;
+                if (settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose"))
+                    logFactory = new FileLogFactory(settings); //ScreenLogFactory(true, true, true);
+                ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, logFactory);
 
                 acceptor.Start();
                 while (true)
