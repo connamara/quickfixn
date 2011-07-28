@@ -72,10 +72,13 @@ class FIXDictionary
   
   def new_msg( msgel )
     name = msgel['name']
-    msg = { :name=>name, :msgtype=>msgel['msgtype'], :fields=>[], :groups=>[] }
-    parse_element( headerel, msg, true, false ) unless headerel.nil?
+    header = {:fields=>[], :groups=>[]}
+    footer = header.clone
+    msg = { :name=>name, :msgtype=>msgel['msgtype'], :fields=>[], 
+      :groups=>[], :header=>header, :footer=>footer }
+    parse_element( headerel, msg[:header], true, false ) unless headerel.nil?
     parse_element( msgel, msg )
-    parse_element( trailerel, msg, false, true ) unless trailerel.nil?
+    parse_element( trailerel, msg[:footer], false, true ) unless trailerel.nil?
     msg
   end
   
@@ -83,15 +86,19 @@ class FIXDictionary
     el.children.each do |child|
       next unless child.element?
       cname = child['name']
+      req = child['required'] == 'Y' ? true : false
       
       case child.node_name
         when 'field'
           raise "field not found! #{cname}" unless @fields.include?(cname)
-          fixel[:fields] << @fields[cname]
+          fixel[:fields] << @fields[cname].merge(:required=>req, :group=>false)
       
         when 'group'
-          grp = {:name=>cname, :fields=>[], :groups=>[]}
+          grpfld = @fields[cname].merge(:required=>req, :group=>true)
+          fixel[:fields] << grpfld
+          grp = {:group_field=>grpfld, :name=>cname, :fields=>[], :groups=>[], :required=>req}
           parse_element(child, grp, header, trailer )
+          fixel[:groups] << grp
           
         when 'component'
           component_el = @doc.xpath("//components/component[@name='#{cname}']")
