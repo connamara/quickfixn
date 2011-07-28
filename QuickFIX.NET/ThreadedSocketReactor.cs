@@ -71,6 +71,7 @@ namespace QuickFix
                 try
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
+                    ApplySocketOptions(client);
                     ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++);
                     lock (sync_)
                     {
@@ -87,6 +88,16 @@ namespace QuickFix
                 }
             }
             ShutdownClientHandlerThreads();
+        }
+
+        /// <summary>
+        /// FIXME get socket options from SessionSettings
+        /// </summary>
+        /// <param name="client"></param>
+        public static void ApplySocketOptions(TcpClient client)
+        {
+            client.LingerState = new LingerOption(false, 0);
+            client.NoDelay = true;
         }
 
         private void ShutdownClientHandlerThreads()

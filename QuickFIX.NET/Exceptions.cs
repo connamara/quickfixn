@@ -57,6 +57,24 @@ namespace QuickFix
             : base("Session '" + sessionID + "' Not Found: " + msg)
         { }
     }
+
+    /// <summary>
+    /// Version of FIX is not supported
+    /// </summary>
+    public class UnsupportedVersion : QuickFIXException
+    {
+        public UnsupportedVersion()
+            : base("Unsupported Version")
+        { }
+
+        public UnsupportedVersion(string msg)
+            : base("Unsupported Version: " + msg)
+        { }
+
+        public UnsupportedVersion(string msg, System.Exception innerException) 
+            : base("Unsupported Version: " + msg, innerException)
+        { }
+    }
     
     /// <summary>
     /// Not a recognizable message

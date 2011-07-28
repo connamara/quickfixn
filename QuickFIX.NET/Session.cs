@@ -135,11 +135,11 @@ namespace QuickFix
 
         public bool Send(string message)
         {
-            this.Log.OnOutgoing(message);
             lock(sync_)
             {
                 if(null == responder_)
                     return false;
+                this.Log.OnOutgoing(message);
                 return responder_.Send(message);
             }
         }
@@ -242,11 +242,11 @@ namespace QuickFix
 
             if (0 == state_.HeartBtInt)
                 return;
-          
-            /* TODO
-            if (state_.IsLogoutTimedOut)
-                Disconnect("Timed out waiting for heartbeat");
-            */
+
+            
+            if (state_.LogoutTimedOut())
+                Disconnect("Timed out waiting for logout response");
+            
 
             if (state_.WithinHeartbeat())
                 return;
@@ -280,20 +280,42 @@ namespace QuickFix
         public void Next(Message message)
         {
             Header header = message.Header;
-            string msgType = header.GetField(Fields.Tags.MsgType);
-            if ("A".Equals(msgType))
-                NextLogon(message);
-            else if ("0".Equals(msgType))
-                NextHeartbeat(message);
-            else if ("1".Equals(msgType))
-                NextTestRequest(message);
-            else if ("5".Equals(msgType))
-                NextLogout(message);
-            else
+            string msgType = "";
+
+            try
             {
-                if (!Verify(message))
-                    return;
-                state_.IncrNextTargetMsgSeqNum();
+                msgType = header.GetField(Fields.Tags.MsgType);
+                string beginString = header.GetField(Fields.Tags.BeginString);
+
+                if (!beginString.Equals(this.SessionID.BeginString))
+                    throw new UnsupportedVersion();
+
+                if ("A".Equals(msgType))
+                    NextLogon(message);
+                else if ("0".Equals(msgType))
+                    NextHeartbeat(message);
+                else if ("1".Equals(msgType))
+                    NextTestRequest(message);
+                else if ("5".Equals(msgType))
+                    NextLogout(message);
+                else
+                {
+                    if (!Verify(message))
+                        return;
+                    state_.IncrNextTargetMsgSeqNum();
+                }
+            }
+            catch(UnsupportedVersion)
+            {
+                if ("5".Equals(msgType))
+                {
+                    NextLogout(message);
+                }
+                else
+                {
+                    GenerateLogout("Incorrect BeginString");
+                    state_.IncrNextTargetMsgSeqNum();
+                }
             }
         }
 

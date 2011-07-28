@@ -69,7 +69,7 @@ class ReflectorClient
     def @reflector.waitDisconnectAction(cid)
       socket = @sockets[cid]
       if IO.select([socket], nil, nil, 10) == nil then 
-	    raise "Connection hangs after ten seconds."
+	    raise "Connection hangs after 10 seconds."
       elsif !socket.eof? then
 	    raise "Expected disconnection, got data"
       end

@@ -51,6 +51,8 @@
     <Compile Include="Applications\FIX5Application.cs" />
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />
+    <Compile Include="FileLog.cs" />
+    <Compile Include="FileLogFactory.cs" />
     <Compile Include="FileStoreFactory.cs" />
     <Compile Include="Initiator.cs" />
     <Compile Include="Log.cs" />
