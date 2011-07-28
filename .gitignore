@@ -13,3 +13,4 @@ Examples/Executor/bin/
 Examples/Executor/obj/
 QuickFIX.NET.sln.cache
 ChangeLog
+*.swp
