@@ -223,7 +223,7 @@ namespace QuickFix
         public override string ToString()
         {
             _header.setField(new BodyLength(BodyLength()), true);
-            _trailer.setField(new CheckSum(CheckSum().ToString()), true);
+            _trailer.setField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
 
             return _header.CalculateString() + CalculateString() + _trailer.CalculateString();
         }
