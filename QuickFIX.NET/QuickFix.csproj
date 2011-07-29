@@ -97,6 +97,7 @@
     <Compile Include="NullLog.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResendRange.cs" />
     <Compile Include="Responder.cs" />
     <Compile Include="ScreenLog.cs" />
     <Compile Include="ScreenLogFactory.cs" />

@@ -58,6 +58,9 @@ namespace QuickFix
         public bool ResetOnDisconnect
         { get; set; }
 
+        public bool SendRedundantResendRequests
+        { get; set; }
+
         public SessionID SessionID
         { get; set; }
 
@@ -89,6 +92,7 @@ namespace QuickFix
 
             this.PersistMessages = true;
             this.ResetOnDisconnect = false;
+            this.SendRedundantResendRequests = false;
 
             if (!CheckSessionTime())
                 Reset();
@@ -326,6 +330,11 @@ namespace QuickFix
 
         protected void NextLogon(Message logon)
         {
+            Fields.ResetSeqNumFlag resetSeqNumFlag = new Fields.ResetSeqNumFlag(false);
+            if (logon.isSetField(resetSeqNumFlag))
+                logon.getField(resetSeqNumFlag);
+            state_.ReceivedReset = resetSeqNumFlag.Obj;
+
             if (!Verify(logon))
                 return;
 
@@ -341,6 +350,17 @@ namespace QuickFix
 
             state_.SentReset = false;
             state_.ReceivedReset = false;
+
+            int msgSeqNum = Fields.Converters.IntConverter.Convert(logon.Header.GetField(Fields.Tags.MsgSeqNum)); /// FIXME
+            if (IsTargetTooHigh(msgSeqNum) && !resetSeqNumFlag.Obj)
+            {
+                DoTargetTooHigh(logon, msgSeqNum);
+            }
+            else
+            {
+                state_.IncrNextTargetMsgSeqNum();
+                NextQueued();
+            }
         }
 
         protected void NextTestRequest(Message testRequest)
@@ -431,6 +451,67 @@ namespace QuickFix
         protected bool IsTimeToGenerateLogon()
         {
             return true;
+        }
+
+        protected bool IsTargetTooHigh(int msgSeqNum)
+        {
+            return msgSeqNum > state_.GetNextTargetMsgSeqNum();
+        }
+
+        protected bool IsTargetTooLow(int msgSeqNum)
+        {
+            return msgSeqNum < state_.GetNextTargetMsgSeqNum();
+        }
+
+        protected void DoTargetTooHigh(Message msg, int msgSeqNum)
+        {
+            string beginString = msg.Header.GetField(Fields.Tags.BeginString);
+
+            this.Log.OnEvent("MsgSeqNum too high, expecting " + state_.GetNextTargetMsgSeqNum() + " but received " + msgSeqNum);
+            state_.Queue(msgSeqNum, msg);
+
+            if(state_.ResendRequested())
+            {
+                ResendRange range = state_.GetResendRange();
+                
+                if( !this.SendRedundantResendRequests && msgSeqNum >= range.BeginSeqNo )
+                {
+                    this.Log.OnEvent ("Already sent ResendRequest FROM: " + range.BeginSeqNo  + " TO: " + range.EndSeqNo + ".  Not sending another.");
+                    return;
+                }
+            }
+            
+            GenerateResendRequest(beginString, msgSeqNum);
+        }
+
+        protected bool GenerateResendRequest(string beginString, int msgSeqNum)
+        {
+            Message resendRequest = new Message();
+
+            Fields.BeginSeqNo beginSeqNo = new Fields.BeginSeqNo(state_.GetNextTargetMsgSeqNum());
+            Fields.EndSeqNo endSeqNo;
+            if (beginString.CompareTo("FIX.4.2") >= 0)
+                endSeqNo =  new Fields.EndSeqNo(0);
+            else if (beginString.CompareTo("FIX.4.1") <= 0)
+                endSeqNo =  new Fields.EndSeqNo(999999);
+            else
+                endSeqNo =  new Fields.EndSeqNo(msgSeqNum - 1);
+            
+            resendRequest.Header.setField(new Fields.MsgType("2"));
+            resendRequest.setField(beginSeqNo);
+            resendRequest.setField(endSeqNo);
+            InitializeHeader(resendRequest);
+            if (SendRaw(resendRequest, 0))
+            {
+                this.Log.OnEvent("Sent ResendRequest FROM: " + beginSeqNo.Obj + " TO: " + endSeqNo.Obj);
+                state_.SetResendRange(beginSeqNo.Obj, msgSeqNum - 1);
+                return true;
+            }
+            else
+            {
+                this.Log.OnEvent("Error sending ResendRequest (" + beginSeqNo.Obj + " ," + endSeqNo.Obj + ")");
+                return false;
+            }
         }
 
         /// <summary>
