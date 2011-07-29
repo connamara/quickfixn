@@ -21,6 +21,7 @@ namespace QuickFix
         private int lastSentTimeTickCount_;
         private int logoutTimeout_ = 0;
         private int logoutTimeoutAsTickCount_ = 0;
+        private ResendRange resendRange_ = new ResendRange(0,0);
 
         private Log log_;
 
@@ -234,6 +235,32 @@ namespace QuickFix
         public bool WithinHeartbeat()
         {
             return WithinHeartbeat(System.Environment.TickCount, this.HeartBtIntAsTickCount, this.LastSentTimeTickCount, this.LastReceivedTimeTickCount);
+        }
+
+        public ResendRange GetResendRange()
+        {
+            return resendRange_;
+        }
+
+        public void SetResendRange(int begin, int end)
+        {
+            resendRange_.BeginSeqNo = begin;
+            resendRange_.EndSeqNo = end;
+        }
+
+        public bool ResendRequested()
+        {
+            return !(resendRange_.BeginSeqNo == 0 && resendRange_.EndSeqNo == 0);
+        }
+
+        /// <summary>
+        /// FIXME
+        /// </summary>
+        /// <param name="msgSeqNum"></param>
+        /// <param name="msg"></param>
+        public void Queue(int msgSeqNum, Message msg)
+        {
+            System.Console.WriteLine("FIXME - SessionState.Queue(int,Message) not implemented!");
         }
         
         /// <summary>
