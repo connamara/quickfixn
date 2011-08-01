@@ -55,6 +55,7 @@
     <Compile Include="FileLog.cs" />
     <Compile Include="FileLogFactory.cs" />
     <Compile Include="FileStoreFactory.cs" />
+    <Compile Include="FixValues.cs" />
     <Compile Include="Initiator.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="LogFactory.cs" />
