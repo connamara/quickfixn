@@ -374,7 +374,7 @@ namespace QuickFix
 
         protected void NextLogout(Message logout)
         {
-            if (!Verify(logout))
+            if (!Verify(logout, false, false))
                 return;
 
             string disconnectReason;
