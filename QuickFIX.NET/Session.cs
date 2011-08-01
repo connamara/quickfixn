@@ -335,7 +335,7 @@ namespace QuickFix
                 logon.getField(resetSeqNumFlag);
             state_.ReceivedReset = resetSeqNumFlag.Obj;
 
-            if (!Verify(logon))
+            if (!Verify(logon, false, true))
                 return;
 
             state_.ReceivedLogon = true;
