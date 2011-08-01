@@ -1,5 +1,3 @@
-echo off
-
 set RESULT=0
 
 pushd AcceptanceTest

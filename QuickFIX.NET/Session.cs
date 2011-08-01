@@ -406,6 +406,32 @@ namespace QuickFix
             NextQueued();
         }
 
+        protected void NextSequenceReset(Message sequenceReset)
+        {
+            bool isGapFill = false;
+            if(sequenceReset.isSetField(Fields.Tags.GapFillFlag))
+                 isGapFill = Fields.Converters.BoolConverter.Convert(sequenceReset.GetField(Fields.Tags.GapFillFlag)); /// FIXME
+
+            if(!Verify( sequenceReset, isGapFill, isGapFill ))
+                return ;
+
+            if(sequenceReset.isSetField(Fields.Tags.NewSeqNo))
+            {
+                int newSeqNo = Fields.Converters.IntConverter.Convert(sequenceReset.GetField(Fields.Tags.NewSeqNo)); /// FIXME
+                this.Log.OnEvent( "Received SequenceReset FROM: " + state_.GetNextTargetMsgSeqNum() + " TO: " + newSeqNo);
+
+                if (newSeqNo > state_.GetNextTargetMsgSeqNum())
+                {
+                    state_.SetNextTargetMsgSeqNum(newSeqNo);
+                }
+                else
+                {
+                    if (newSeqNo < state_.GetNextTargetMsgSeqNum())
+                        GenerateReject(sequenceReset, FixValues.SessionRejectReason_VALUE_IS_INCORRECT);
+                }
+            }
+        }
+
         public bool Verify(Message message)
         {
             return Verify(message, true, true);
@@ -671,6 +697,16 @@ namespace QuickFix
             catch (FieldNotFoundException)
             { }
             return SendRaw(heartbeat, 0);
+        }
+
+        public bool GenerateReject(Message msg, int err)
+        {
+            return GenerateReject(msg, err, 0);
+        }
+        public bool GenerateReject(Message msg, int err, int field)
+        {
+            System.Console.WriteLine("FIXME - GenerateReject not implemented!");
+            return false;
         }
 
         /// <summary>
