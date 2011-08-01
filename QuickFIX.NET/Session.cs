@@ -408,6 +408,45 @@ namespace QuickFix
 
         public bool Verify(Message message)
         {
+            return Verify(message, true, true);
+        }
+        public bool Verify(Message msg, bool checkTooHigh, bool checkTooLow)
+        {
+            int msgSeqNum = 0;
+
+            try
+            {
+                if(checkTooHigh || checkTooLow)
+                    msgSeqNum = Fields.Converters.IntConverter.Convert(msg.Header.GetField(Fields.Tags.MsgSeqNum)); /// FIXME
+
+                if (checkTooHigh && IsTargetTooHigh(msgSeqNum))
+                {
+                    DoTargetTooHigh(msg, msgSeqNum);
+                    return false;
+                }
+                else if (checkTooLow && IsTargetTooLow(msgSeqNum))
+                {
+                    DoTargetTooLow(msg, msgSeqNum);
+                    return false;
+                }
+
+                if ((checkTooHigh || checkTooLow) && state_.ResendRequested())
+                {
+                    ResendRange range = state_.GetResendRange();
+                    if (msgSeqNum >= range.EndSeqNo)
+                    {
+                        this.Log.OnEvent("ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.EndSeqNo + " has been satisfied.");
+                        state_.SetResendRange(0, 0);
+                    }
+                }
+            }
+            catch(System.Exception e)
+            {
+                this.Log.OnEvent("Verify failed: " + e.Message);
+                Disconnect("Verify failed: " + e.Message);
+                return false;
+            }
+
             state_.LastReceivedTimeTickCount = System.Environment.TickCount;
             state_.TestRequestCounter = 0;
             return true;
@@ -482,6 +521,32 @@ namespace QuickFix
             }
             
             GenerateResendRequest(beginString, msgSeqNum);
+        }
+
+        protected bool DoTargetTooLow(Message msg, int msgSeqNum)
+        {
+            bool possDupFlag = false;
+            if(msg.Header.isSetField(Fields.Tags.PossDupFlag))
+                possDupFlag = Fields.Converters.BoolConverter.Convert(msg.Header.GetField(Fields.Tags.PossDupFlag)); /// FIXME
+
+            if (!possDupFlag)
+            {
+                string err = "MsgSeqNum too low, expecting " + state_.GetNextTargetMsgSeqNum() + " but received " + msgSeqNum;
+                GenerateLogout(err);
+                throw new QuickFIXException(err);
+            }
+
+            return DoPossDup(msg);
+        }
+
+        /// <summary>
+        /// FIXME
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        protected bool DoPossDup(Message msg)
+        {
+            return true;
         }
 
         protected bool GenerateResendRequest(string beginString, int msgSeqNum)
