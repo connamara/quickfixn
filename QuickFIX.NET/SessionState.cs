@@ -253,16 +253,16 @@ namespace QuickFix
             return !(resendRange_.BeginSeqNo == 0 && resendRange_.EndSeqNo == 0);
         }
 
-        /// <summary>
-        /// FIXME
-        /// </summary>
-        /// <param name="msgSeqNum"></param>
-        /// <param name="msg"></param>
         public void Queue(int msgSeqNum, Message msg)
         {
             System.Console.WriteLine("FIXME - SessionState.Queue(int,Message) not implemented!");
         }
-        
+
+        public void ClearQueue()
+        {
+            /// FIXME
+        }
+
         /// <summary>
         /// All time values are displayed in milliseconds.
         /// </summary>
