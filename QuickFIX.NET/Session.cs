@@ -190,11 +190,11 @@ namespace QuickFix
                 state_.SentLogout = false;
                 state_.ReceivedReset = false;
                 state_.SentReset = false;
-                /// FIXME state_.ClearQueue();
+                state_.ClearQueue();
                 state_.LogoutReason = "";
                 if (this.ResetOnDisconnect)
                     state_.Reset();
-                /// FIXME state_.ResendRange(0, 0);
+                state_.SetResendRange(0, 0);
             }
         }
 

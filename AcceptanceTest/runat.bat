@@ -4,7 +4,7 @@ if "%2" == "" goto usage
 
 set TESTS="definitions/server/fix42/*.def"
 if "%3" == "" goto getconfig:
-set TESTS=%3
+set TESTS="%3"
 goto getconfig
 
 :getconfig

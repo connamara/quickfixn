@@ -71,20 +71,18 @@ namespace QuickFix
             if (IsStopped)
                 return;
 
-            HashSet<SessionID> connectedSessions;
+            List<Session> enabledSessions = new List<Session>();
+
             lock (sync_)
             {
-                connectedSessions = new HashSet<SessionID>(connected_);
-            }
-
-            List<Session> enabledSessions = new List<Session>();
-            foreach (SessionID sessionID in connectedSessions)
-            {
-                Session session = Session.LookupSession(sessionID);
-                if (session.IsEnabled)
+                foreach (SessionID sessionID in connected_)
                 {
-                    enabledSessions.Add(session);
-                    session.Logout();
+                    Session session = Session.LookupSession(sessionID);
+                    if (session.IsEnabled)
+                    {
+                        enabledSessions.Add(session);
+                        session.Logout();
+                    }
                 }
             }
 
@@ -97,9 +95,7 @@ namespace QuickFix
             lock (sync_)
             {
                 foreach (SessionID sessionID in connected_)
-                {
                     SetDisconnected(Session.LookupSession(sessionID).SessionID);
-                }
             }
 
             isStopped_ = true;
