@@ -4,11 +4,15 @@ namespace QuickFix
 {
     public class Session
     {
+        #region Private Members
+
         private static Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private object sync_ = new object();
         private Responder responder_ = null;
         private SessionSchedule schedule_;
         private SessionState state_;
+
+        #endregion
 
         #region Properties
 
@@ -66,16 +70,7 @@ namespace QuickFix
 
         #endregion
 
-        /// <summary>
         /// FIXME
-        /// </summary>
-        /// <param name="app"></param>
-        /// <param name="storeFactory"></param>
-        /// <param name="sessID"></param>
-        /// <param name="dataDictProvider"></param>
-        /// <param name="sessionSchedule"></param>
-        /// <param name="heartBtInt"></param>
-        /// <param name="logFactory"></param>
         public Session(Application app, MessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider, SessionSchedule sessionSchedule, int heartBtInt, LogFactory logFactory)
         {
             this.SessionID = sessID;
@@ -294,13 +289,15 @@ namespace QuickFix
                 if (!beginString.Equals(this.SessionID.BeginString))
                     throw new UnsupportedVersion();
 
-                if ("A".Equals(msgType))
+                if (FixValues.MsgType.LOGON.Equals(msgType))
                     NextLogon(message);
-                else if ("0".Equals(msgType))
+                else if (FixValues.MsgType.HEARTBEAT.Equals(msgType))
                     NextHeartbeat(message);
-                else if ("1".Equals(msgType))
+                else if (FixValues.MsgType.TEST_REQUEST.Equals(msgType))
                     NextTestRequest(message);
-                else if ("5".Equals(msgType))
+                else if (FixValues.MsgType.SEQUENCE_RESET.Equals(msgType))
+                    NextSequenceReset(message);
+                else if (FixValues.MsgType.LOGOUT.Equals(msgType))
                     NextLogout(message);
                 else
                 {
@@ -311,7 +308,7 @@ namespace QuickFix
             }
             catch(UnsupportedVersion)
             {
-                if ("5".Equals(msgType))
+                if (FixValues.MsgType.LOGOUT.Equals(msgType))
                 {
                     NextLogout(message);
                 }
@@ -427,7 +424,7 @@ namespace QuickFix
                 else
                 {
                     if (newSeqNo < state_.GetNextTargetMsgSeqNum())
-                        GenerateReject(sequenceReset, FixValues.SessionRejectReason_VALUE_IS_INCORRECT);
+                        GenerateReject(sequenceReset, FixValues.SessionRejectReason.VALUE_IS_INCORRECT);
                 }
             }
         }
@@ -612,7 +609,7 @@ namespace QuickFix
         protected bool GenerateLogon()
         {
             Message logon = new Message();
-            logon.Header.setField(new Fields.MsgType("A"));
+            logon.Header.setField(new Fields.MsgType(FixValues.MsgType.LOGON));
             logon.setField(new Fields.EncryptMethod(0));
             logon.setField(new Fields.HeartBtInt(state_.HeartBtInt));
             /*
@@ -645,7 +642,7 @@ namespace QuickFix
                 logon.setField(new Fields.DefaultApplVerID("FIXME"));
             if (state_.ReceivedReset)
                 logon.setField(new Fields.ResetSeqNumFlag(true));
-            logon.Header.setField(new Fields.MsgType("A"));
+            logon.Header.setField(new Fields.MsgType(FixValues.MsgType.LOGON));
             logon.setField(new Fields.HeartBtInt(heartBtInt));
             InitializeHeader(logon);
             state_.SentLogon = SendRaw(logon, 0);
@@ -655,7 +652,7 @@ namespace QuickFix
         public bool GenerateTestRequest(string id)
         {
             Message testRequest = new Message();
-            testRequest.Header.setField(new Fields.MsgType("1"));
+            testRequest.Header.setField(new Fields.MsgType(FixValues.MsgType.TEST_REQUEST));
             InitializeHeader(testRequest);
             testRequest.setField(new Fields.TestReqID(id));
             return SendRaw(testRequest, 0);
@@ -669,7 +666,7 @@ namespace QuickFix
         public bool GenerateLogout(string text)
         {
             Message logout = new Message();
-            logout.Header.setField(new Fields.MsgType("5"));
+            logout.Header.setField(new Fields.MsgType(FixValues.MsgType.LOGOUT));
             InitializeHeader(logout);
             if (text.Length > 0)
                 logout.setField(new Fields.Text(text));
@@ -680,7 +677,7 @@ namespace QuickFix
         public bool GenerateHeartbeat()
         {
             Message heartbeat = new Message();
-            heartbeat.Header.setField(new Fields.MsgType("0"));
+            heartbeat.Header.setField(new Fields.MsgType(FixValues.MsgType.HEARTBEAT));
             InitializeHeader(heartbeat);
             return SendRaw(heartbeat, 0);
         }
@@ -688,7 +685,7 @@ namespace QuickFix
         public bool GenerateHeartbeat(Message testRequest)
         {
             Message heartbeat = new Message();
-            heartbeat.Header.setField(new Fields.MsgType("0"));
+            heartbeat.Header.setField(new Fields.MsgType(FixValues.MsgType.HEARTBEAT));
             InitializeHeader(heartbeat);
             try
             {
@@ -746,7 +743,7 @@ namespace QuickFix
                 {
                     /// FIXME application_.ToAdmin(message, this.SessionID);
 
-                    if( msgType == "A" && !state_.ReceivedReset)
+                    if (FixValues.MsgType.LOGON.Equals(msgType) && !state_.ReceivedReset)
                     {
                         Fields.ResetSeqNumFlag resetSeqNumFlag = new QuickFix.Fields.ResetSeqNumFlag(false);
                         if(message.isSetField(resetSeqNumFlag))
