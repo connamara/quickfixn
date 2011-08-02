@@ -31,7 +31,12 @@ namespace QuickFix
                     int bytesRead = tcpClient_.Client.Receive(readBuffer_);
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
-                    OnMessageFound(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+
+                    string msg;
+                    string buf = System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead);
+                    while (ReadFixMessage(out msg, out buf, buf))
+                        OnMessageFound(msg);
+
                     //parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
                 }
                 else if (null != qfSession_)
@@ -48,6 +53,28 @@ namespace QuickFix
                 throw e;
 
             }
+        }
+
+        /// FIXME move to Parser
+        public bool ReadFixMessage(out string msg, out string outbuf, string inbuf)
+        {
+            msg = "";
+            outbuf = inbuf;
+            int pos = 0;
+            
+            pos = inbuf.IndexOf("\x01"+"10=", pos);
+            if (-1 == pos)
+                return false;
+            pos += 4;
+
+            pos = inbuf.IndexOf("\x01", pos);
+            if (-1 == pos)
+                return false;
+            pos += 1;
+
+            msg = inbuf.Substring(0, pos);
+            outbuf = inbuf.Remove(0, pos);
+            return true;
         }
 
         public void OnMessageFound(string msg)

@@ -196,6 +196,7 @@ namespace QuickFix
         public void Next()
         {
             //System.Console.WriteLine(state_.ToString());
+            //this.Log.OnEvent(state_.ToString());
 
             if (!IsEnabled) 
             {
@@ -323,6 +324,7 @@ namespace QuickFix
         protected void NextQueued()
         {
             System.Console.WriteLine("FIXME - Session.NextQueued not implemented!");
+            this.Log.OnEvent("FIXME - Session.NextQueued not implemented!");
         }
 
         protected void NextLogon(Message logon)
@@ -696,14 +698,86 @@ namespace QuickFix
             return SendRaw(heartbeat, 0);
         }
 
-        public bool GenerateReject(Message msg, int err)
+        public bool GenerateReject(Message message, FixValue<int> sessionRejectReason)
         {
-            return GenerateReject(msg, err, 0);
+            return GenerateReject(message, sessionRejectReason, 0);
         }
-        public bool GenerateReject(Message msg, int err, int field)
+        public bool GenerateReject(Message message, FixValue<int> sessionRejectReason, int field)
         {
-            System.Console.WriteLine("FIXME - GenerateReject not implemented!");
-            return false;
+            string beginString = this.SessionID.BeginString;
+
+            Message reject = new Message();
+            reject.Header.setField(new Fields.MsgType(FixValues.MsgType.REJECT));
+            reject.ReverseRoute(message.Header);
+            InitializeHeader(reject);
+
+            string msgType;
+            if(message.Header.isSetField(Fields.Tags.MsgType))
+                msgType = message.Header.GetField(Fields.Tags.MsgType);
+            else
+                msgType = "";
+
+            int msgSeqNum = 0;
+            if(message.Header.isSetField(Fields.Tags.MsgSeqNum))
+            {
+                try
+                {
+                    msgSeqNum = Fields.Converters.IntConverter.Convert(message.Header.GetField(Fields.Tags.MsgSeqNum)); /// FIXME
+                    reject.setField(new Fields.RefSeqNum(msgSeqNum));
+                }
+                catch(System.Exception)
+                { }
+            }
+
+            if(beginString.CompareTo("FIX.4.2") >= 0)
+            {
+                if(msgType.Length > 0)
+                    reject.setField(new Fields.RefMsgType(msgType));
+                if (("FIX.4.2".Equals(beginString) && sessionRejectReason.Value <= FixValues.SessionRejectReason.INVALID_MSGTYPE.Value) || ("FIX.4.2".CompareTo(beginString) > 0))
+                {
+                    reject.setField(new Fields.SessionRejectReason(sessionRejectReason.Value));
+                }
+            }
+            if ( !FixValues.MsgType.LOGON.Equals(msgType)
+              && !FixValues.MsgType.SEQUENCE_RESET.Equals(msgType)
+              && (msgSeqNum == state_.GetNextTargetMsgSeqNum()) )
+            {
+                state_.IncrNextTargetMsgSeqNum(); 
+            }
+
+            if((0 != field) || FixValues.SessionRejectReason.INVALID_TAG_NUMBER.Equals(sessionRejectReason))
+            {
+                PopulateRejectReason(reject, msgType, field, sessionRejectReason.Description);
+                this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + sessionRejectReason.Value + ":" + field);
+            }
+            else
+            {
+                PopulateRejectReason(reject, sessionRejectReason.Description);
+                this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + sessionRejectReason.Value);
+            }
+
+            if (!state_.ReceivedLogon)
+                throw new QuickFIXException("Tried to send a reject while not logged on");
+
+            return SendRaw(reject, 0);
+        }
+
+        protected void PopulateRejectReason(Message reject, string msgType, int field, string text)
+        {
+            if (FixValues.MsgType.REJECT.Equals(msgType) && "FIX.4.2".CompareTo(this.SessionID.BeginString) >= 0)
+            {
+                reject.setField(new Fields.RefTagID(field));
+                reject.setField(new Fields.Text(text));
+            }
+            else
+            {
+                reject.setField(new Fields.Text(text + " (" + field + ")"));
+            }
+        }
+
+        protected void PopulateRejectReason(Message reject, string text)
+        {
+            reject.setField(new Fields.Text(text));
         }
 
         /// <summary>
