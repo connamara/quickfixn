@@ -14,5 +14,10 @@
             BeginSeqNo = begin;
             EndSeqNo = end;
         }
+
+        public override string ToString()
+        {
+            return BeginSeqNo + ":" + EndSeqNo;
+        }
     }
 }

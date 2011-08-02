@@ -13,7 +13,8 @@ namespace QuickFix.Fields.Converters
         /// <summary>
         /// Converts string to int
         /// </summary>
-        /// <exception cref="BadConversionException"/>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public static int Convert(string i)
         {
             try

@@ -212,6 +212,91 @@ namespace QuickFix
 
         #endregion
         
+        public void ReverseRoute(Header header)
+        {
+            // required routing tags
+            this.Header.RemoveField(Fields.Tags.BeginString);
+            this.Header.RemoveField(Fields.Tags.SenderCompID);
+            this.Header.RemoveField(Fields.Tags.TargetCompID);
+
+            if (header.isSetField(Fields.Tags.BeginString))
+            {
+                string beginString = header.GetField(Fields.Tags.BeginString);
+                if (beginString.Length > 0)
+                    this.Header.setField(new BeginString(beginString));
+
+                this.Header.RemoveField(Fields.Tags.OnBehalfOfLocationID);
+                this.Header.RemoveField(Fields.Tags.DeliverToLocationID);
+
+                if (beginString.CompareTo("FIX.4.1") >= 0)
+                {
+                    if (header.isSetField(Fields.Tags.OnBehalfOfLocationID))
+                    {
+                        string onBehalfOfLocationID = header.GetField(Fields.Tags.OnBehalfOfLocationID);
+                        if (onBehalfOfLocationID.Length > 0)
+                            this.Header.setField(new DeliverToLocationID(onBehalfOfLocationID));
+                    }
+
+                    if (header.isSetField(Fields.Tags.DeliverToLocationID))
+                    {
+                        string deliverToLocationID = header.GetField(Fields.Tags.DeliverToLocationID);
+                        if (deliverToLocationID.Length > 0)
+                            this.Header.setField(new OnBehalfOfLocationID(deliverToLocationID));
+                    }
+                }
+            }
+
+            if (header.isSetField(Fields.Tags.SenderCompID))
+            {
+                SenderCompID senderCompID = new SenderCompID();
+                header.getField(senderCompID);
+                if (senderCompID.Obj.Length > 0)
+                    this.Header.setField(new TargetCompID(senderCompID.Obj));
+            }
+
+            if (header.isSetField(Fields.Tags.TargetCompID))
+            {
+                TargetCompID targetCompID = new TargetCompID();
+                header.getField(targetCompID);
+                if (targetCompID.Obj.Length > 0)
+                    this.Header.setField(new SenderCompID(targetCompID.Obj));
+            }
+
+            // optional routing tags
+            this.Header.RemoveField(Fields.Tags.OnBehalfOfCompID);
+            this.Header.RemoveField(Fields.Tags.OnBehalfOfSubID);
+            this.Header.RemoveField(Fields.Tags.DeliverToCompID);
+            this.Header.RemoveField(Fields.Tags.DeliverToSubID);
+
+            if(header.isSetField(Fields.Tags.OnBehalfOfCompID))
+            {
+                string onBehalfOfCompID = header.GetField(Fields.Tags.OnBehalfOfCompID);
+                if(onBehalfOfCompID.Length > 0)
+                    this.Header.setField(new DeliverToCompID(onBehalfOfCompID));
+            }
+
+            if(header.isSetField(Fields.Tags.OnBehalfOfSubID))
+            {
+                string onBehalfOfSubID = header.GetField(  Fields.Tags.OnBehalfOfSubID);
+                if(onBehalfOfSubID.Length > 0)
+                    this.Header.setField(new DeliverToSubID(onBehalfOfSubID));
+            }
+
+            if(header.isSetField(Fields.Tags.DeliverToCompID))
+            {
+                string deliverToCompID = header.GetField(Fields.Tags.DeliverToCompID);
+                if(deliverToCompID.Length > 0)
+                    this.Header.setField(new OnBehalfOfCompID(deliverToCompID));
+            }
+
+            if(header.isSetField(Fields.Tags.DeliverToSubID))
+            {
+                string deliverToSubID = header.GetField(Fields.Tags.DeliverToSubID);
+                if(deliverToSubID.Length > 0)
+                    this.Header.setField(new OnBehalfOfSubID(deliverToSubID));
+            }
+        }
+
         public int CheckSum()
         {
             return (

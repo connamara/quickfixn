@@ -42,6 +42,11 @@ namespace QuickFix
             return _fieldOrder;
         }
 
+        public bool RemoveField(int field)
+        {
+            return _fields.Remove(field);
+        }
+
         /// <summary>
         /// set field in the fieldmap
         /// will overwrite field if it exists

@@ -256,6 +256,7 @@ namespace QuickFix
         public void Queue(int msgSeqNum, Message msg)
         {
             System.Console.WriteLine("FIXME - SessionState.Queue(int,Message) not implemented!");
+            this.Log.OnEvent("FIXME - SessionState.Queue(int,Message) not implemented!");
         }
 
         public void ClearQueue()
@@ -278,6 +279,7 @@ namespace QuickFix
                 .Append(", WithinHeartbeat=").Append(WithinHeartbeat())
                 .Append(", NeedHeartbeat=").Append(NeedHeartbeat())
                 .Append(", NeedTestRequest=").Append(NeedTestRequest())
+                .Append(", ResendRange=").Append(GetResendRange())
                 .Append(" ]").ToString();
             
         }
