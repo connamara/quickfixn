@@ -94,7 +94,8 @@ namespace QuickFix
 
             lock (sync_)
             {
-                foreach (SessionID sessionID in connected_)
+                HashSet<SessionID> connectedSessionIDs = new HashSet<SessionID>(connected_);
+                foreach (SessionID sessionID in connectedSessionIDs)
                     SetDisconnected(Session.LookupSession(sessionID).SessionID);
             }
 
@@ -171,7 +172,6 @@ namespace QuickFix
             lock(sync_)
             {
                 HashSet<SessionID> disconnectedSessions = new HashSet<SessionID>(disconnected_);
-                
                 foreach(SessionID sessionID in disconnectedSessions)
                 {
                     Session session = Session.LookupSession(sessionID);

@@ -107,4 +107,19 @@ namespace QuickFix
             : base("Connection reset by peer", innerException)
         { }
     }
+
+    public class MessageParseError : QuickFIXException
+    {
+        public MessageParseError()
+            : base("Could not parse message")
+        { }
+
+        public MessageParseError(string msg)
+            : base("Could not parse message: " + msg)
+        { }
+
+        public MessageParseError(string msg, System.Exception innerException)
+            : base("Could not parse message: " + msg, innerException)
+        { }
+    }
 }

@@ -9,6 +9,7 @@ namespace QuickFix
     {
         public const int BUF_SIZE = 4096;
         private byte[] readBuffer_ = new byte[BUF_SIZE];
+        private Parser parser_ = new Parser();
         private Session qfSession_ = null;
         private TcpClient tcpClient_;
         private Responder responder_;
@@ -31,50 +32,20 @@ namespace QuickFix
                     int bytesRead = tcpClient_.Client.Receive(readBuffer_);
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
-
-                    string msg;
-                    string buf = System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead);
-                    while (ReadFixMessage(out msg, out buf, buf))
-                        OnMessageFound(msg);
-
-                    //parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                    parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
                 }
                 else if (null != qfSession_)
                 {
                     qfSession_.Next();
                 }
 
-                //ProcessStream();
-                //return true;
+                ProcessStream();
             }
             catch (System.Exception e)
             {
                 HandleException(qfSession_, e, tcpClient_);
                 throw e;
-
             }
-        }
-
-        /// FIXME move to Parser
-        public bool ReadFixMessage(out string msg, out string outbuf, string inbuf)
-        {
-            msg = "";
-            outbuf = inbuf;
-            int pos = 0;
-            
-            pos = inbuf.IndexOf("\x01"+"10=", pos);
-            if (-1 == pos)
-                return false;
-            pos += 4;
-
-            pos = inbuf.IndexOf("\x01", pos);
-            if (-1 == pos)
-                return false;
-            pos += 1;
-
-            msg = inbuf.Substring(0, pos);
-            outbuf = inbuf.Remove(0, pos);
-            return true;
         }
 
         public void OnMessageFound(string msg)
@@ -113,7 +84,7 @@ namespace QuickFix
             {
                 try
                 {
-	                if("A".Equals(Message.GetMsgType(msg))) 
+	                if(FixValues.MsgType.LOGON.Equals(Message.GetMsgType(msg))) 
 	                {
 		                this.Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
                         DisconnectClient();
@@ -126,6 +97,26 @@ namespace QuickFix
                 catch(InvalidMessage)
                 { }
             }
+        }
+
+        protected bool ReadMessage(out string msg)
+        {
+            try
+            {
+                return parser_.ReadFixMessage(out msg);
+            }
+            catch(MessageParseError)
+            { }
+
+            msg = "";
+            return true;
+        }
+
+        protected void ProcessStream()
+        {
+            string msg;
+            while (ReadMessage(out msg))
+                OnMessageFound(msg);
         }
 
         protected void DisconnectClient()
@@ -162,7 +153,6 @@ namespace QuickFix
 			    throw new InvalidMessage(e.Message, e);
 		    }
 	    }
-
 
         public void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
         {
@@ -209,7 +199,6 @@ namespace QuickFix
                     client.Close();
             }
         }
-
 
         /// <summary>
         /// FIXME do proper logging

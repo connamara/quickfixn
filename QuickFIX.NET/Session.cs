@@ -712,40 +712,40 @@ namespace QuickFix
             InitializeHeader(reject);
 
             string msgType;
-            if(message.Header.isSetField(Fields.Tags.MsgType))
+            if (message.Header.isSetField(Fields.Tags.MsgType))
                 msgType = message.Header.GetField(Fields.Tags.MsgType);
             else
                 msgType = "";
 
             int msgSeqNum = 0;
-            if(message.Header.isSetField(Fields.Tags.MsgSeqNum))
+            if (message.Header.isSetField(Fields.Tags.MsgSeqNum))
             {
                 try
                 {
                     msgSeqNum = Fields.Converters.IntConverter.Convert(message.Header.GetField(Fields.Tags.MsgSeqNum)); /// FIXME
                     reject.setField(new Fields.RefSeqNum(msgSeqNum));
                 }
-                catch(System.Exception)
+                catch (System.Exception)
                 { }
             }
 
-            if(beginString.CompareTo("FIX.4.2") >= 0)
+            if (beginString.CompareTo("FIX.4.2") >= 0)
             {
-                if(msgType.Length > 0)
+                if (msgType.Length > 0)
                     reject.setField(new Fields.RefMsgType(msgType));
                 if (("FIX.4.2".Equals(beginString) && sessionRejectReason.Value <= FixValues.SessionRejectReason.INVALID_MSGTYPE.Value) || ("FIX.4.2".CompareTo(beginString) > 0))
                 {
                     reject.setField(new Fields.SessionRejectReason(sessionRejectReason.Value));
                 }
             }
-            if ( !FixValues.MsgType.LOGON.Equals(msgType)
+            if (!FixValues.MsgType.LOGON.Equals(msgType)
               && !FixValues.MsgType.SEQUENCE_RESET.Equals(msgType)
-              && (msgSeqNum == state_.GetNextTargetMsgSeqNum()) )
+              && (msgSeqNum == state_.GetNextTargetMsgSeqNum()))
             {
-                state_.IncrNextTargetMsgSeqNum(); 
+                state_.IncrNextTargetMsgSeqNum();
             }
 
-            if((0 != field) || FixValues.SessionRejectReason.INVALID_TAG_NUMBER.Equals(sessionRejectReason))
+            if ((0 != field) || FixValues.SessionRejectReason.INVALID_TAG_NUMBER.Equals(sessionRejectReason))
             {
                 PopulateRejectReason(reject, msgType, field, sessionRejectReason.Description);
                 this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + sessionRejectReason.Value + ":" + field);
