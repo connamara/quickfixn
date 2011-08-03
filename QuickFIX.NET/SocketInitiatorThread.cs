@@ -60,7 +60,6 @@ namespace QuickFix
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
                     parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
-                    initiator_.HandleMessage(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead)); /// FIXME remove this  
                 }
                 else if (null != session_)
                 {
@@ -87,8 +86,11 @@ namespace QuickFix
         private void ProcessStream()
         {
             string msg;
-            while((msg = parser_.ReadFixMessage()) != string.Empty)
+            while (parser_.ReadFixMessage(out msg))
+            {
                 session_.Next(msg);
+                initiator_.HandleMessage(msg); /// FIXME remove this  
+            }
         }
 
         #region Responder Members

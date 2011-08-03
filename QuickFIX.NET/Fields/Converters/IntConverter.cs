@@ -23,11 +23,11 @@ namespace QuickFix.Fields.Converters
             }
             catch (FormatException e)
             {
-                throw new FieldConvertError("could not convert string to int", e);
+                throw new FieldConvertError("could not convert string to int (" + i + ")", e);
             }
             catch (OverflowException e)
             {
-                throw new FieldConvertError("could not convert string to int", e);
+                throw new FieldConvertError("could not convert string to int(" + i + ")", e);
             }
         }
 
