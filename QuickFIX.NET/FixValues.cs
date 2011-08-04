@@ -51,11 +51,16 @@ namespace QuickFix
             public const string NEW_ORDER_SINGLE = "D";
         }
 
-        public class SessionRejectReason
+        public class SessionRejectReason : FixValue<int>
         {
-            public static FixValue<int> INVALID_TAG_NUMBER = new FixValue<int>(0, "Invalid tag number");
-            public static FixValue<int> VALUE_IS_INCORRECT = new FixValue<int>(5, "Value is incorrect (out of range) for this tag");
-            public static FixValue<int> INVALID_MSGTYPE    = new FixValue<int>(11, "Invalid MsgType");
+            public static SessionRejectReason INVALID_TAG_NUMBER = new SessionRejectReason(0, "Invalid tag number");
+            public static SessionRejectReason VALUE_IS_INCORRECT = new SessionRejectReason(5, "Value is incorrect (out of range) for this tag");
+            public static SessionRejectReason COMPID_PROBLEM     = new SessionRejectReason(9, "CompID problem");
+            public static SessionRejectReason INVALID_MSGTYPE    = new SessionRejectReason(11, "Invalid MsgType");
+
+            public SessionRejectReason(int value, string description)
+                : base(value, description)
+            { }
         }
     }
 }
