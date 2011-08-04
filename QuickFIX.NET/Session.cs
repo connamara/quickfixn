@@ -65,6 +65,9 @@ namespace QuickFix
         public bool SendRedundantResendRequests
         { get; set; }
 
+        public bool CheckCompID
+        { get; set; }
+
         public SessionID SessionID
         { get; set; }
 
@@ -88,6 +91,7 @@ namespace QuickFix
             this.PersistMessages = true;
             this.ResetOnDisconnect = false;
             this.SendRedundantResendRequests = false;
+            this.CheckCompID = true;
 
             if (!CheckSessionTime())
                 Reset();
@@ -441,6 +445,16 @@ namespace QuickFix
 
             try
             {
+                string senderCompID = msg.Header.GetField(Fields.Tags.SenderCompID);
+                string targetCompID = msg.Header.GetField(Fields.Tags.TargetCompID);
+                
+                if (!IsCorrectCompID(senderCompID, targetCompID))
+                {
+                    GenerateReject(msg, FixValues.SessionRejectReason.COMPID_PROBLEM);
+                    GenerateLogout();
+                    return false;
+                }
+
                 if(checkTooHigh || checkTooLow)
                     msgSeqNum = Fields.Converters.IntConverter.Convert(msg.Header.GetField(Fields.Tags.MsgSeqNum)); /// FIXME
 
@@ -508,10 +522,15 @@ namespace QuickFix
             return false;
         }
 
-        /// <summary>
+        protected bool IsCorrectCompID(string senderCompID, string targetCompID)
+        {
+            if (!this.CheckCompID)
+                return true;
+            return this.SessionID.SenderCompID.Equals(targetCompID) 
+                && this.SessionID.TargetCompID.Equals(senderCompID);
+        }
+
         /// FIXME
-        /// </summary>
-        /// <returns></returns>
         protected bool IsTimeToGenerateLogon()
         {
             return true;
@@ -564,11 +583,7 @@ namespace QuickFix
             return DoPossDup(msg);
         }
 
-        /// <summary>
         /// FIXME
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
         protected bool DoPossDup(Message msg)
         {
             return true;
@@ -698,11 +713,11 @@ namespace QuickFix
             return SendRaw(heartbeat, 0);
         }
 
-        public bool GenerateReject(Message message, FixValue<int> sessionRejectReason)
+        public bool GenerateReject(Message message, FixValues.SessionRejectReason reason)
         {
-            return GenerateReject(message, sessionRejectReason, 0);
+            return GenerateReject(message, reason, 0);
         }
-        public bool GenerateReject(Message message, FixValue<int> sessionRejectReason, int field)
+        public bool GenerateReject(Message message, FixValues.SessionRejectReason reason, int field)
         {
             string beginString = this.SessionID.BeginString;
 
@@ -733,9 +748,9 @@ namespace QuickFix
             {
                 if (msgType.Length > 0)
                     reject.setField(new Fields.RefMsgType(msgType));
-                if (("FIX.4.2".Equals(beginString) && sessionRejectReason.Value <= FixValues.SessionRejectReason.INVALID_MSGTYPE.Value) || ("FIX.4.2".CompareTo(beginString) > 0))
+                if (("FIX.4.2".Equals(beginString) && reason.Value <= FixValues.SessionRejectReason.INVALID_MSGTYPE.Value) || ("FIX.4.2".CompareTo(beginString) > 0))
                 {
-                    reject.setField(new Fields.SessionRejectReason(sessionRejectReason.Value));
+                    reject.setField(new Fields.SessionRejectReason(reason.Value));
                 }
             }
             if (!FixValues.MsgType.LOGON.Equals(msgType)
@@ -745,15 +760,15 @@ namespace QuickFix
                 state_.IncrNextTargetMsgSeqNum();
             }
 
-            if ((0 != field) || FixValues.SessionRejectReason.INVALID_TAG_NUMBER.Equals(sessionRejectReason))
+            if ((0 != field) || FixValues.SessionRejectReason.INVALID_TAG_NUMBER.Equals(reason))
             {
-                PopulateRejectReason(reject, msgType, field, sessionRejectReason.Description);
-                this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + sessionRejectReason.Value + ":" + field);
+                PopulateRejectReason(reject, msgType, field, reason.Description);
+                this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + reason.Value + ":" + field);
             }
             else
             {
-                PopulateRejectReason(reject, sessionRejectReason.Description);
-                this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + sessionRejectReason.Value);
+                PopulateRejectReason(reject, reason.Description);
+                this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + reason.Value);
             }
 
             if (!state_.ReceivedLogon)
