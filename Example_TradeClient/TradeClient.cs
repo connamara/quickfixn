@@ -3,9 +3,14 @@ namespace QuickFix.Examples
 {
     public class TradeClient : QuickFix.Application
     {
-        public override void OnMessage(Message message)
+        public override void FromAdmin(Message message, SessionID sessionID)
         {
-            System.Console.WriteLine(message.ToString());
+            System.Console.WriteLine("FromAdmin: " + message.ToString());
+        }
+
+        public override void FromApp(Message message, SessionID sessionID)
+        {
+            System.Console.WriteLine("FromApp: " + message.ToString());
         }
 
         public void Run()

@@ -10,6 +10,14 @@ namespace QuickFix
     {
         private int[] EXCLUDED_HEADER_FIELDS = { Fields.Tags.BeginString, Fields.Tags.BodyLength, Fields.Tags.MsgType };
 
+        public Header()
+            : base()
+        { }
+
+        public Header(Header src)
+            : base(src)
+        { }
+
         public override string CalculateString()
         {
             return base.CalculateString(new StringBuilder(), EXCLUDED_HEADER_FIELDS);
@@ -23,6 +31,17 @@ namespace QuickFix
 
     public class Message : FieldMap
     {
+        public const string SOH = "\u0001";
+
+        #region Properties
+
+        public Header Header { get; private set; }
+        public FieldMap Trailer { get; private set; }
+
+        #endregion
+
+        #region Constructors
+
         public Message()
         {
             this.Header = new Header();
@@ -30,49 +49,35 @@ namespace QuickFix
         }
 
         public Message(string msgstr)
+            : this(msgstr, true)
+        { }
+
+        public Message(string msgstr, bool validate)
             : this()
         {
-            FromString(msgstr);
+            FromString(msgstr, validate);
         }
 
-        public void FromString(string msgstr)
+        public Message(Message src)
+            : base(src)
         {
-            int pos = 0;
-            while (pos < msgstr.Length)
-            {
-                Fields.StringField f = ExtractField(msgstr, ref pos);
-                if (IsHeaderField(f.Tag))
-                    _header.setField(f);
-                else if (IsTrailerField(f.Tag))
-                    _trailer.setField(f);
-                else
-                    setField(f);
-            }
+            this.Header = new Header(src.Header);
+            this.Trailer = new FieldMap(src.Trailer);
+            //m_validStructure = src.m_validStructure;
+            //m_field = src.m_field;
         }
 
-        #region Properties
-        public Header Header
-        {
-            get { return _header; }
-            private set { _header = value; }
-        }
-
-        public FieldMap Trailer
-        {
-            get { return _trailer; }
-            private set { _trailer = value; }
-        }
         #endregion
 
         #region Static Methods
-        
+
         public static bool IsAdminMsgType(string msgType)
         {
             return msgType.Length == 1 && "0A12345h".IndexOf(msgType) != -1;
         }
 
         /// <summary>
-        /// Parse the MstType from a FIX string
+        /// Parse the MsgType from a FIX string
         /// </summary>
         /// <param name="msgstr">string of a FIX message</param>
         /// <returns>MsgType object</returns>
@@ -80,10 +85,10 @@ namespace QuickFix
         {
             int valbeg = msgstr.IndexOf("\u000135=") + 4;
             if (valbeg.Equals(-1))
-                throw new MessageParseException("no tag 35 found in msg: " + msgstr);
+                throw new MessageParseError("no tag 35 found in msg: " + msgstr);
             int valend = msgstr.IndexOf("\u0001", valbeg);
             if (valend.Equals(-1))
-                throw new MessageParseException("no SOH after tag 35 in msg: " + msgstr);
+                throw new MessageParseError("no SOH after tag 35 in msg: " + msgstr);
 
             return (new Fields.MsgType(msgstr.Substring(valbeg, (valend - valbeg))));
         }
@@ -96,22 +101,21 @@ namespace QuickFix
                 int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
                 pos = tagend + 1;
                 int fieldvalend = msgstr.IndexOf("\u0001", pos);
-                Fields.StringField field =
-                    new Fields.StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
+                Fields.StringField field =  new Fields.StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
                 pos = fieldvalend + 1;
                 return field;
             }
             catch (System.ArgumentOutOfRangeException e)
             {
-                throw new MessageParseException("", e);
+                throw new MessageParseError("Error at position (" + pos + ") while parsing msg (" + msgstr + ")", e);
             }
             catch (System.OverflowException e)
             {
-                throw new MessageParseException("", e);
+                throw new MessageParseError("Error at position (" + pos + ") while parsing msg (" + msgstr + ")", e);
             }
             catch (System.FormatException e)
             {
-                throw new MessageParseException("", e);
+                throw new MessageParseError("Error at position (" + pos + ") while parsing msg (" + msgstr + ")", e);
             }
         }
 
@@ -166,20 +170,20 @@ namespace QuickFix
 
         public static string GetFieldOrDefault(FieldMap fields, int tag, string defaultValue)
         {
-            if(!fields.isSetField(tag))
+            if (!fields.isSetField(tag))
                 return defaultValue;
-            
-            try 
+
+            try
             {
                 return fields.GetField(tag);
             }
-            catch(FieldNotFoundException)
+            catch (FieldNotFoundException)
             {
                 return defaultValue;
             }
         }
 
-        public static SessionID GetReverseSessionID(Message msg) 
+        public static SessionID GetReverseSessionID(Message msg)
         {
             return new SessionID(
                 GetFieldOrDefault(msg.Header, Fields.Tags.BeginString, null),
@@ -211,7 +215,47 @@ namespace QuickFix
         }
 
         #endregion
-        
+
+        public void FromString(string msgstr, bool validate)
+        {
+            int pos = 0;
+            while (pos < msgstr.Length)
+            {
+                Fields.StringField f = ExtractField(msgstr, ref pos);
+                if (IsHeaderField(f.Tag))
+                    this.Header.setField(f);
+                else if (IsTrailerField(f.Tag))
+                    this.Trailer.setField(f);
+                else
+                    setField(f);
+            }
+
+            if (validate)
+                Validate();
+        }
+
+        public void Validate()
+        {
+            try
+            {
+                int receivedBodyLength = Fields.Converters.IntConverter.Convert(this.Header.GetField(Fields.Tags.BodyLength)); /// FIXME
+                if (BodyLength() != receivedBodyLength)
+                    throw new InvalidMessage("Expected BodyLength=" + BodyLength() + ", Received BodyLength=" + receivedBodyLength);
+
+                int receivedCheckSum = Fields.Converters.IntConverter.Convert(this.Trailer.GetField(Fields.Tags.CheckSum)); /// FIXME
+                if (CheckSum() != receivedCheckSum)
+                    throw new InvalidMessage("Expected CheckSum=" + CheckSum() + ", Received CheckSum=" + receivedCheckSum);
+            }
+            catch (FieldNotFoundException e)
+            {
+                throw new InvalidMessage("BodyLength or CheckSum missing", e);
+            }
+            catch (FieldConvertError e)
+            {
+                throw new InvalidMessage("BodyLength or Checksum has wrong format", e);
+            }
+        }
+
         public void ReverseRoute(Header header)
         {
             // required routing tags
@@ -300,29 +344,33 @@ namespace QuickFix
         public int CheckSum()
         {
             return (
-                (_header.CalculateTotal()
+                (this.Header.CalculateTotal()
                 + CalculateTotal()
-                + _trailer.CalculateTotal()) % 256);
+                + this.Trailer.CalculateTotal()) % 256);
+        }
+
+        /// <summary>
+        /// FIXME less operator new
+        /// </summary>
+        /// <param name="sessionID"></param>
+        public void SetSessionID(SessionID sessionID)
+        {
+            this.Header.setField(new BeginString(sessionID.BeginString));
+            this.Header.setField(new SenderCompID(sessionID.SenderCompID));
+            this.Header.setField(new TargetCompID(sessionID.TargetCompID));            
         }
 
         public override string ToString()
         {
-            _header.setField(new BodyLength(BodyLength()), true);
-            _trailer.setField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
+            this.Header.setField(new BodyLength(BodyLength()), true);
+            this.Trailer.setField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
 
-            return _header.CalculateString() + CalculateString() + _trailer.CalculateString();
+            return this.Header.CalculateString() + CalculateString() + this.Trailer.CalculateString();
         }
 
-        private decimal BodyLength()
+        protected int BodyLength()
         {
-            return _header.CalculateLength() + CalculateLength() + _trailer.CalculateLength();
+            return this.Header.CalculateLength() + CalculateLength() + this.Trailer.CalculateLength();
         }
-
-        public const string SOH = "\u0001";
-
-        #region Private Members
-        Header _header;
-        FieldMap _trailer;
-        #endregion
     }
 }

@@ -13,11 +13,6 @@ namespace QuickFix.Transport
 {
     public class SocketAcceptor
     {
-        #region Events/Delegates
-        public delegate void DataReceivedFromClientHandler(object sender, string data);
-        public event DataReceivedFromClientHandler DataReceivedFromClient;
-        #endregion
-
         #region Constants
         public const int BLOCK_SIZE = 512;
         #endregion
@@ -103,7 +98,7 @@ namespace QuickFix.Transport
                 if (ClientHasDisconnected(bytesRead))
                     break;
 
-                HandleDataReceived(Encoding.UTF8.GetString(message, 0, bytesRead), clientStream.GetHashCode());
+                ///HandleDataReceived(Encoding.UTF8.GetString(message, 0, bytesRead), clientStream.GetHashCode());
             }
         }
 
@@ -116,8 +111,8 @@ namespace QuickFix.Transport
                 currentClientMsg_[clientHashCode] += split[i].Trim(trimChars);
                 if (currentClientMsg_[clientHashCode].Length > 0)
                 {
-                    NotifyRawData(currentClientMsg_[clientHashCode]);
-                    NotifyApplication(currentClientMsg_[clientHashCode]);
+                    ///NotifyRawData(currentClientMsg_[clientHashCode]);
+                    ///NotifyApplication(currentClientMsg_[clientHashCode]);
                 }
                 currentClientMsg_[clientHashCode] = String.Empty;
             }
@@ -172,21 +167,6 @@ namespace QuickFix.Transport
         public void Shutdown()
         {
             throw new NotImplementedException("Graceful shutdowns not yet implemented.");
-        }
-        #endregion
-
-        private void NotifyApplication(string data)
-        {
-            Message msg = new Message();
-            msg.FromString(data);
-            app_.OnMessage(msg);
-        }
-
-        #region Event Helpers
-        private void NotifyRawData(string data)
-        {
-            if (DataReceivedFromClient != null)
-                DataReceivedFromClient(this, data);
         }
         #endregion
 

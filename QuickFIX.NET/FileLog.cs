@@ -23,7 +23,6 @@ namespace QuickFix
                 .Append(".fixme.log")
                 .ToString();
             fname = System.IO.Path.Combine(fileLogPath, fname);
-            System.Console.WriteLine("@@@ " + fname);
             file_ = new System.IO.StreamWriter(fname);
         }
 

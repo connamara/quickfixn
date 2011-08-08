@@ -85,14 +85,16 @@ namespace QuickFix
                 session.SetLogonTimeout(settings.GetLong(SessionSettings.LOGON_TIMEOUT));
             if (settings.Has(SessionSettings.LOGOUT_TIMEOUT))
                 session.SetLogoutTimeout(settings.GetLong(SessionSettings.LOGOUT_TIMEOUT));
+            */
             if (settings.Has(SessionSettings.RESET_ON_LOGON))
-                session.SetResetOnLogon(settings.GetBool(SessionSettings.RESET_ON_LOGON));
+                session.ResetOnLogon = settings.GetBool(SessionSettings.RESET_ON_LOGON);
             if (settings.Has(SessionSettings.RESET_ON_LOGOUT))
-                session.SetResetOnLogout(settings.GetBool(SessionSettings.RESET_ON_LOGOUT));
+                session.ResetOnLogout = settings.GetBool(SessionSettings.RESET_ON_LOGOUT);
             if (settings.Has(SessionSettings.RESET_ON_DISCONNECT))
-                session.SetResetOnDisconnect(settings.GetBool(SessionSettings.RESET_ON_DISCONNECT));
+                session.ResetOnDisconnect = settings.GetBool(SessionSettings.RESET_ON_DISCONNECT);
             if (settings.Has(SessionSettings.REFRESH_ON_LOGON))
-                session.SetRefreshOnLogon(settings.GetBool(SessionSettings.REFRESH_ON_LOGON));
+                session.RefreshOnLogon = settings.GetBool(SessionSettings.REFRESH_ON_LOGON);
+            /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.MILLISECONDS_IN_TIMESTAMP))
                 session.SetMillisecondsInTimeStamp(settings.GetBool(SessionSettings.MILLISECONDS_IN_TIMESTAMP));
             if (settings.Has(SessionSettings.PERSIST_MESSAGES))

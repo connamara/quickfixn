@@ -111,7 +111,7 @@ namespace QuickFix
                     {
                         ClientHandlerThread t = clientThreads_.First.Value;
                         clientThreads_.RemoveFirst();
-                        t.Shutdown();
+                        t.Shutdown("reactor is shutting down");
                         try
                         {
                             t.Join();

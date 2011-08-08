@@ -53,6 +53,8 @@ class ReflectorClient
       if socket == nil
 	    raise IOError("failed to connect")
       end
+      socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER, false)
+      socket.setsockopt(Socket::IPPROTO_TCP, Socket::TCP_NODELAY, true)
       @sockets[cid] = socket
       @parsers[cid] = FixParser.new(socket)
     end

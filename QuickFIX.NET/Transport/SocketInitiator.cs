@@ -17,11 +17,6 @@ namespace QuickFix.Transport
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
         public const string RECONNECT_INTERVAL  = "ReconnectInterval";
 
-        #region Events/Delegates
-        public delegate void RawDataReceivedHandler(object sender, string rawData);
-        public event RawDataReceivedHandler RawDataReceived;
-        #endregion
-
         #region Properties
         
         public bool Connected
@@ -88,93 +83,6 @@ namespace QuickFix.Transport
                 t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.Session.SessionID);
             }
-        }
-
-        /// <summary>
-        /// Main initiator reconnect loop.
-        /// </summary>
-        /*
-        private void ClientLoop()
-        {
-            string host = "";
-            int port = -1;
-            int reconnectInterval = -1;
-
-            try
-            {
-                /// FIXME we need to load settings for each Session in the cfg, not just the defaults
-                QuickFix.Dictionary dict = settings_.Get();
-                host = dict.GetString(SOCKET_CONNECT_HOST);
-                port = Convert.ToInt32(dict.GetLong(SOCKET_CONNECT_PORT));
-                reconnectInterval = Convert.ToInt32(dict.GetLong(RECONNECT_INTERVAL));
-            }
-            catch (ConfigError e)
-            {
-                System.Console.WriteLine(e.Message);
-                return;
-            }
-
-            while (!shutdownRequested_)
-            {
-                try
-                {
-                    socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-                    socket_.ReceiveTimeout = 1 * 1000;
-                    socket_.Connect(host, port);
-                }
-                catch (SocketException e)
-                {
-                    Console.WriteLine("Error connecting to socket: " + e.Message);
-                    Thread.Sleep(reconnectInterval * 1000);
-                    continue;
-                }
-
-                ///FIXME Send("8=FIX.4.2\x01" + "9=54\x01" + "35=A\x01" + "34=1\x01" + "49=CLIENT1\x01" + "52=20110625-08:45:00\x01" + "56=EXECUTOR\x01" + "10=000\x01");
-                while(!disconnectRequested_)
-                {
-                    try
-                    {
-                        int bytesReceived = socket_.Receive(_readBuffer);
-                        HandleMessage(Encoding.UTF8.GetString(_readBuffer, 0, bytesReceived));
-                    }
-                    catch (SocketException e)
-                    {
-                        if (SocketError.TimedOut == e.SocketErrorCode)
-                        {
-                            // FIXME do session_.Next();
-                        }
-                        else
-                        {
-                            if (!disconnectRequested_)
-                                Console.WriteLine(e.SocketErrorCode + " while reading socket: " + e.Message);
-                            disconnectRequested_ = true;
-                        }
-                    }
-                }
-
-                socket_.Close();
-                disconnectRequested_ = false;
-            }
-        }
-        */
-
-        /// <summary>
-        /// Message parsing and passing back to crackers will go here.
-        /// </summary>
-        /// <param name="data"></param>
-        public void HandleMessage(string data)
-        {
-            string[] split = data.Split('\n');
-
-            for (int i = 0; i < split.Length-1; i++)
-            {
-                _currentMessage += split[i];
-                NotifyRawData(_currentMessage);
-                NotifyApplication(_currentMessage);
-                _currentMessage = String.Empty;
-            }
-
-            _currentMessage = split[split.Length-1];
         }
         
         private void AddThread(SocketInitiatorThread thread)
@@ -293,21 +201,5 @@ namespace QuickFix.Transport
         }
 
         #endregion
-
-
-
-
-        private void NotifyApplication(string data)
-        {
-            Message msg = new Message(data);
-            app_.OnMessage(msg);
-        }
-
-        private void NotifyRawData(string data)
-        {
-            if (RawDataReceived != null)
-                RawDataReceived(this, data);
-        }
-
     }
 }

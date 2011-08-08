@@ -89,7 +89,6 @@
     <Compile Include="SessionSettingsTest.cs" />
     <Compile Include="SessionStateTest.cs" />
     <Compile Include="SettingsTest.cs" />
-    <Compile Include="SocketAcceptorTests.cs" />
     <Compile Include="StringUTF8Tests.cs" />
   </ItemGroup>
   <ItemGroup>

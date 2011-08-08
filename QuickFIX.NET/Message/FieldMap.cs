@@ -12,15 +12,36 @@ namespace QuickFix
         /// Default constructor
         /// </summary>
         public FieldMap()
-        { }
+        {
+            _fields = new SortedDictionary<int, Fields.IField>(); /// FIXME sorted dict is a hack to get quasi-correct field order
+            _groups = new Dictionary<int, List<Group>>();
+        }
 
         /// <summary>
         /// Constructor with field order
         /// </summary>
         /// <param name="fieldOrd"></param>
         public FieldMap(int[] fieldOrd)
+            : this()
         {
             _fieldOrder = fieldOrd;
+        }
+
+
+        /// <summary>
+        /// FIXME this should probably make a deeper copy
+        /// </summary>
+        /// <param name="src">The QuickFix.FieldMap to copy</param>
+        /// <returns>A copy of the given QuickFix.FieldMap</returns>
+        public FieldMap(FieldMap src)
+        {
+            this._fieldOrder = src._fieldOrder;
+            
+            this._fields = new SortedDictionary<int, Fields.IField>(src._fields);
+            
+            this._groups = new Dictionary<int, List<Group>>();
+            foreach (KeyValuePair<int, List<Group>> g in src._groups)
+                this._groups.Add(g.Key, new List<Group>(g.Value));
         }
 
         /// <summary>
@@ -315,8 +336,8 @@ namespace QuickFix
         }
 
         #region Private Members
-        private SortedDictionary<int, Fields.IField> _fields = new SortedDictionary<int, Fields.IField>(); /// FIXME sorted dict is a hack to get quasi-correct field order
-        private Dictionary<int, List<Group>> _groups = new Dictionary<int, List<Group>>();
+        private SortedDictionary<int, Fields.IField> _fields; /// FIXME sorted dict is a hack to get quasi-correct field order
+        private Dictionary<int, List<Group>> _groups;
         private int[] _fieldOrder;
         #endregion
     }

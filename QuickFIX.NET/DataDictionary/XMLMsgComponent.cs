@@ -31,7 +31,7 @@ namespace QuickFix
                     case "field": ctype = TypeEnum.Field; break;
                     case "group": ctype = TypeEnum.Group; break;
                     case "component": ctype = TypeEnum.Component; break;
-                    default: throw new MessageParseException("unknown component in msg: " + parentName);
+                    default: throw new MessageParseError("unknown component in msg: " + parentName);
                 }
                 return ctype;
             }
