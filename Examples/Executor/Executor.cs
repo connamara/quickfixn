@@ -8,10 +8,15 @@ namespace QuickFix.Examples
     public class Executor : QuickFix.Application
     {
         #region QuickFix.Application Methods
-
-        public override void OnMessage(Message message)
+        
+        public override void FromAdmin(Message message, SessionID sessionID)
         {
-            Console.WriteLine("OnMessage: " + message);
+            Console.WriteLine("FromAdmin: " + message);
+        }
+
+        public override void FromApp(Message message, SessionID sessionID)
+        {
+            Console.WriteLine("FromApp: " + message);
         }
 
         #endregion

@@ -87,10 +87,7 @@ namespace QuickFix
         {
             string msg;
             while (parser_.ReadFixMessage(out msg))
-            {
                 session_.Next(msg);
-                initiator_.HandleMessage(msg); /// FIXME remove this  
-            }
         }
 
         #region Responder Members

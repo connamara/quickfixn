@@ -10,9 +10,11 @@ namespace QuickFix
         private TcpClient tcpClient_;
         private SocketReader socketReader_;
         private long id_;
+        private FileLog log_;
 
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
         {
+            log_ = new FileLog("log", new SessionID("ClientHandlerThread", clientId.ToString(), "Debug")); /// FIXME
             tcpClient_ = tcpClient;
             id_ = clientId;
             socketReader_ = new SocketReader(tcpClient_, this);
@@ -24,8 +26,9 @@ namespace QuickFix
             thread_.Start();
         }
 
-        public void Shutdown()
+        public void Shutdown(string reason)
         {
+            Log("shutdown requested: " + reason);
             isShutdownRequested_ = true;
         }
 
@@ -46,22 +49,19 @@ namespace QuickFix
                 {
                     socketReader_.Read();
                 }
-                catch (System.Exception)
+                catch (System.Exception e)
                 {
-                    Shutdown();
+                    Shutdown(e.Message);
                 }
             }
 
             this.Log("shutdown");
         }
 
-        /// <summary>
         /// FIXME do real logging
-        /// </summary>
-        /// <param name="s"></param>
         public void Log(string s)
         {
-            System.Console.WriteLine("client " + id_ + ": " + s);
+            log_.OnEvent(s);
         }
 
         #region Responder Members
