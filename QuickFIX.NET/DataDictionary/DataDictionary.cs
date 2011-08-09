@@ -7,6 +7,33 @@ namespace QuickFix
 {
     public sealed partial class DataDictionaryParser
     {
+        #region Properties
+
+        public string MajorVersion { get; private set; }
+        public string MinorVersion { get; private set; }
+        public string Version { get; private set; }
+        public bool CheckFieldsOutOfOrder { get; set; }
+        public bool CheckFieldsHaveValues { get; set; }
+        public bool CheckUserDefinedFields { get; set; }
+
+        #endregion
+
+        #region Private Members
+
+        private HashSet<int> _fields;
+        private Dictionary<int, string> _fieldNames;
+        private Dictionary<int, FieldEntry> _fieldTypes;
+        private Dictionary<string, int> _fieldNameToTag;
+        private Dictionary<string, List<XMLMsgComponent>> _components;
+        /// <summary>
+        /// all message dictionaries indexed by msgtype
+        /// </summary>
+        private HashSet<string> _msgTypes;
+        private Dictionary<string, HashSet<XMLMsgComponent>> _messageComponents;
+        private Dictionary<string, DDFieldMap> _messages;
+
+        #endregion
+
         public DataDictionaryParser()
         {
             this._fields = new HashSet<int>();
@@ -17,6 +44,39 @@ namespace QuickFix
             this._msgTypes = new HashSet<string>();
             this._messageComponents = new Dictionary<string, HashSet<XMLMsgComponent>>();
             this._components = new Dictionary<string, List<XMLMsgComponent>>();
+
+            this.CheckFieldsHaveValues  = true;
+            this.CheckFieldsOutOfOrder  = true;
+            this.CheckUserDefinedFields = true;
+        }
+
+        public DataDictionaryParser(string filename)
+            : this()
+        {
+            Load(filename);
+        }
+
+        // TODO need to make deeper copy?
+        public DataDictionaryParser(DataDictionaryParser src)
+        {
+            this._fields = new HashSet<int>(src._fields);
+            this._fieldTypes = new Dictionary<int, FieldEntry>(src._fieldTypes);
+            this._fieldNameToTag = new Dictionary<string, int>(src._fieldNameToTag);
+            this._fieldNames = new Dictionary<int, string>(src._fieldNames);
+            this._messages = new Dictionary<string, DDFieldMap>(src._messages);
+            this._msgTypes = new HashSet<string>(src._msgTypes);
+            this._messageComponents = new Dictionary<string, HashSet<XMLMsgComponent>>(src._messageComponents);
+            this._components = new Dictionary<string, List<XMLMsgComponent>>(src._components);
+            
+            if(null != src.MajorVersion)
+                this.MajorVersion = string.Copy(src.MajorVersion);
+            if (null != src.MinorVersion)
+                this.MinorVersion = string.Copy(src.MinorVersion);
+            if (null != src.Version)
+                this.Version = string.Copy(src.Version);
+            this.CheckFieldsHaveValues  = src.CheckFieldsHaveValues;
+            this.CheckFieldsOutOfOrder  = src.CheckFieldsOutOfOrder;
+            this.CheckUserDefinedFields = src.CheckUserDefinedFields;
         }
 
         public void Load( string filename )
@@ -106,6 +166,20 @@ namespace QuickFix
         public bool ValidFieldTag(int tag)
         {
             return _fields.Contains(tag);
+        }
+
+        /// FIXME
+        public bool IsHeaderField(int tag)
+        {
+            System.Console.WriteLine("FIXME - IsHeaderField not implemented!");
+            return false;
+        }
+        
+        /// FIXME
+        public bool IsTrailerField(int tag)
+        {
+            System.Console.WriteLine("FIXME - IsTrailerField not implemented!");
+            return false;
         }
 
         public Type GetFieldType(int tag)
@@ -352,26 +426,5 @@ namespace QuickFix
             MinorVersion = reader.GetAttribute("minor");
             Version = "FIX." + MajorVersion + "." + MinorVersion;
         }
-
-        #region Properties
-        public string MajorVersion { get; private set; }
-        public string MinorVersion { get; private set; }
-        public string Version { get; private set; }
-        #endregion
-
-        #region Private Members
-        private HashSet<int> _fields;
-        private Dictionary<int, string> _fieldNames;
-        private Dictionary<int, FieldEntry> _fieldTypes;
-        private Dictionary<string, int> _fieldNameToTag;
-        private Dictionary<string, List<XMLMsgComponent>> _components;
-
-        /// <summary>
-        /// all message dictionaries indexed by msgtype
-        /// </summary>
-        private HashSet<string> _msgTypes; 
-        private Dictionary<string, HashSet<XMLMsgComponent>> _messageComponents;
-        private Dictionary<string, DDFieldMap> _messages;
-        #endregion
     }
 }

@@ -7,6 +7,7 @@ namespace QuickFix
         protected Application application_;
         protected MessageStoreFactory messageStoreFactory_;
         protected LogFactory logFactory_;
+        protected Dictionary<string,DataDictionaryParser> dictionariesByPath_ = new Dictionary<string,DataDictionaryParser>();
 
         public SessionFactory(Application app, MessageStoreFactory storeFactory)
             : this(app, storeFactory, null)
@@ -48,17 +49,10 @@ namespace QuickFix
             DataDictionaryProvider dataDictionaryProvider = new DataDictionaryProvider();
             if (useDataDictionary)
             {
-                throw new System.NotImplementedException("FIXME - SessionFactory cannot handle UseDataDictionary=Y!");
-                /*
                 if (sessionID.IsFIXT)
-                {
-                    ProcessFixtDataDictionaries(sessionID, settings, dataDictionaryProvider);
-                }
+                    throw new System.NotImplementedException("FIXME - SessionFactory cannot handle 'UseDataDictionary=Y' for 'FIXT' sessions!");
                 else
-                {
                     ProcessFixDataDictionary(sessionID, settings, dataDictionaryProvider);
-                }
-                */
             }
 
             int heartBtInt = 0;
@@ -70,7 +64,7 @@ namespace QuickFix
             }
             
             Session session = new Session( application_, messageStoreFactory_, sessionID, dataDictionaryProvider, new SessionSchedule(settings, sessionID), heartBtInt, logFactory_ );
-            session.SetSenderDefaultApplVerID(defaultApplVerID);
+            session.SenderDefaultApplVerID = defaultApplVerID;
 
             /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
@@ -104,6 +98,35 @@ namespace QuickFix
             */
 
             return session;
+        }
+
+        protected DataDictionaryParser createDataDictionary(SessionID sessionID, QuickFix.Dictionary settings, string settingsKey)
+        {
+            DataDictionaryParser dd;
+            string path = settings.GetString(settingsKey);
+            if (!dictionariesByPath_.TryGetValue(path, out dd))
+            {
+                dd = new DataDictionaryParser(path);
+                dictionariesByPath_[path] = dd;
+            }
+
+            DataDictionaryParser ddCopy = new DataDictionaryParser(dd);
+
+            if (settings.Has(SessionSettings.VALIDATE_FIELDS_OUT_OF_ORDER))
+                ddCopy.CheckFieldsOutOfOrder = settings.GetBool(SessionSettings.VALIDATE_FIELDS_OUT_OF_ORDER);
+            if (settings.Has(SessionSettings.VALIDATE_FIELDS_HAVE_VALUES))
+                ddCopy.CheckFieldsHaveValues = settings.GetBool(SessionSettings.VALIDATE_FIELDS_HAVE_VALUES);
+            if (settings.Has(SessionSettings.VALIDATE_USER_DEFINED_FIELDS))
+                ddCopy.CheckUserDefinedFields = settings.GetBool(SessionSettings.VALIDATE_USER_DEFINED_FIELDS);
+
+            return ddCopy;
+        }
+
+        protected void ProcessFixDataDictionary(SessionID sessionID, Dictionary settings, DataDictionaryProvider provider)
+        {
+            DataDictionaryParser dataDictionary = createDataDictionary(sessionID, settings, SessionSettings.DATA_DICTIONARY);
+            provider.AddTransportDataDictionary(sessionID.BeginString, dataDictionary);
+            provider.AddApplicationDataDictionary(FixValues.ApplVerID.FromBeginString(sessionID.BeginString), dataDictionary);
         }
 
         private void XXXSessionTimeStuff()

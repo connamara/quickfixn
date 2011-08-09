@@ -39,7 +39,6 @@ namespace QuickFix.Transport
         private LogFactory logFactory_;
         private Socket socket_ = null;
         private byte[] _readBuffer = new byte[512];
-        private string _currentMessage;
         private volatile bool shutdownRequested_ = false;
         private int lastConnectTickCount = 0;
         private int reconnectInterval_ = 30;
