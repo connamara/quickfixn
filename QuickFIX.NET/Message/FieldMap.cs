@@ -240,7 +240,7 @@ namespace QuickFix
         /// <summary>
         /// Removes fields and groups in message
         /// </summary>
-        public void Clear()
+        public virtual void Clear()
         {
             _fields.Clear();
             _groups.Clear();

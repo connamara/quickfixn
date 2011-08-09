@@ -33,8 +33,10 @@ namespace QuickFix
         public bool SendRedundantResendRequests { get; set; }
         public bool ValidateLengthAndChecksum { get; set; }
         public bool CheckCompID { get; set; }
+        public string SenderDefaultApplVerID { get; set; }
         public SessionID SessionID { get; set; }
         public Application Application { get; set; }
+        public DataDictionaryProvider DataDictionaryProvider { get; set; }
         // synchronized
         public bool HasResponder { get { lock (sync_) { return null != responder_; } } }
 
@@ -47,6 +49,7 @@ namespace QuickFix
         {
             this.Application = app;
             this.SessionID = sessID;
+            this.DataDictionaryProvider = new DataDictionaryProvider(dataDictProvider);
             schedule_ = sessionSchedule;
 
             Log log;
@@ -261,7 +264,15 @@ namespace QuickFix
             try
             {
                 this.Log.OnIncoming(message);
-                Next(new Message(message, this.ValidateLengthAndChecksum));
+                
+                DataDictionaryParser sessionDataDict = this.DataDictionaryProvider.GetSessionDataDictionary(this.SessionID.BeginString);
+                DataDictionaryParser appDataDict;
+                if (SessionID.IsFIXT)
+                    appDataDict = this.DataDictionaryProvider.GetApplicationDataDictionary(this.SenderDefaultApplVerID);
+                else
+                    appDataDict = sessionDataDict;
+                
+                Next(new Message(message, sessionDataDict, appDataDict, this.ValidateLengthAndChecksum));
             }
             catch (InvalidMessage e)
             {
@@ -498,14 +509,6 @@ namespace QuickFix
                 this.Application.FromApp(msg, this.SessionID);
 
             return true;
-        }
-
-        /// <summary>
-        /// FIXME
-        /// </summary>
-        /// <param name="s"></param>
-        public void SetSenderDefaultApplVerID(string s)
-        {
         }
 
         public void SetResponder(Responder responder)

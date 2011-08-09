@@ -8,9 +8,9 @@ namespace AcceptanceTest
         private HashSet<KeyValuePair<string,SessionID>> clOrdIDs_ = new HashSet<KeyValuePair<string,SessionID>>();
         private FileLog log_;
 
-        public ATApplication()
+        public ATApplication(FileLog debugLog)
         {
-            log_ = new FileLog("log", new SessionID("AT", "Application", "Debug")); 
+            log_ = debugLog;
         }
 
         protected void Process(string msgType, Message message, SessionID sessionID)

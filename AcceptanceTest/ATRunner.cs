@@ -12,10 +12,12 @@ namespace AcceptanceTest
                 System.Environment.Exit(2);
             }
 
+            FileLog debugLog = new FileLog("log", new SessionID("AT", "Application", "Debug")); 
+
             try
             {
-                SessionSettings settings = new SessionSettings(args[0]); 
-                Application testApp = new ATApplication();
+                SessionSettings settings = new SessionSettings(args[0]);
+                Application testApp = new ATApplication(debugLog);
                 MessageStoreFactory storeFactory = new FileStoreFactory(settings);
                 LogFactory logFactory = null;
                 if (settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose"))
@@ -32,7 +34,7 @@ namespace AcceptanceTest
             }
             catch (System.Exception e)
             {
-                System.Console.WriteLine(e.Message);
+                debugLog.OnEvent(e.ToString());
             }
         }
     }

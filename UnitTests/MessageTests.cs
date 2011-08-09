@@ -66,7 +66,7 @@ namespace UnitTests
             Message msg = new Message();
             try
             {
-                msg.FromString(str1, true);
+                msg.FromString(str1, true, null, null);
             }
             catch (InvalidMessage e)
             {
@@ -76,14 +76,14 @@ namespace UnitTests
         }
 
         [Test]
-        public void FromStringTest()
+        public void FromStringTestWithNoDataDictionary()
         {
             string str1 = "8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
                 "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=123\x01";
             Message msg = new Message();
             try
             {
-                msg.FromString(str1, true);
+                msg.FromString(str1, true, null, null);
             }
             catch (InvalidMessage e)
             {
@@ -126,7 +126,7 @@ namespace UnitTests
             Message msg = new Message();
             try
             {
-                msg.FromString(str1, true);
+                msg.FromString(str1, true, null, null);
             }
             catch (InvalidMessage e)
             {

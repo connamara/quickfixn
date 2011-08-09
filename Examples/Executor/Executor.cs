@@ -45,7 +45,8 @@ namespace QuickFix.Examples
             }
             catch (System.Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("FATAL ERROR: " + e.Message);
+                Console.WriteLine(e.ToString());
             }
         }
     }

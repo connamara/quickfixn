@@ -8,7 +8,7 @@ namespace QuickFix
 {
     public class Header : FieldMap
     {
-        private int[] EXCLUDED_HEADER_FIELDS = { Fields.Tags.BeginString, Fields.Tags.BodyLength, Fields.Tags.MsgType };
+        public int[] HEADER_FIELD_ORDER = { Fields.Tags.BeginString, Fields.Tags.BodyLength, Fields.Tags.MsgType };
 
         public Header()
             : base()
@@ -20,24 +20,26 @@ namespace QuickFix
 
         public override string CalculateString()
         {
-            return base.CalculateString(new StringBuilder(), EXCLUDED_HEADER_FIELDS);
+            return base.CalculateString(new StringBuilder(), HEADER_FIELD_ORDER);
         }
 
         public override string CalculateString(StringBuilder sb, int[] preFields)
         {
-            return base.CalculateString(sb, EXCLUDED_HEADER_FIELDS);
+            return base.CalculateString(sb, HEADER_FIELD_ORDER);
         }
     }
 
     public class Message : FieldMap
     {
         public const string SOH = "\u0001";
-
+        private int field_ = 0;
+        private bool validStructure_;
+        
         #region Properties
 
         public Header Header { get; private set; }
         public FieldMap Trailer { get; private set; }
-
+        
         #endregion
 
         #region Constructors
@@ -46,6 +48,7 @@ namespace QuickFix
         {
             this.Header = new Header();
             this.Trailer = new FieldMap();
+            this.validStructure_ = true;
         }
 
         public Message(string msgstr)
@@ -53,9 +56,23 @@ namespace QuickFix
         { }
 
         public Message(string msgstr, bool validate)
+            : this(msgstr, null, null, validate)
+        {  }
+
+        public Message(string msgstr, DataDictionaryParser dataDictionary, bool validate)
             : this()
         {
-            FromString(msgstr, validate);
+            FromString(msgstr, validate, dataDictionary, dataDictionary);
+        }
+
+        public Message(string msgstr, DataDictionaryParser sessionDataDictionary, DataDictionaryParser applicationDataDictionary, bool validate)
+            : this()
+        {
+            FromStringHeader(msgstr);
+            if(IsAdmin())
+                FromString(msgstr, validate, sessionDataDictionary, sessionDataDictionary);
+            else
+                FromString(msgstr, validate, sessionDataDictionary, applicationDataDictionary);
         }
 
         public Message(Message src)
@@ -63,8 +80,8 @@ namespace QuickFix
         {
             this.Header = new Header(src.Header);
             this.Trailer = new FieldMap(src.Trailer);
-            //m_validStructure = src.m_validStructure;
-            //m_field = src.m_field;
+            this.validStructure_ = src.validStructure_;
+            this.field_= src.field_;
         }
 
         #endregion
@@ -93,7 +110,7 @@ namespace QuickFix
             return (new Fields.MsgType(msgstr.Substring(valbeg, (valend - valbeg))));
         }
 
-        public static Fields.StringField ExtractField(string msgstr, ref int pos)
+        public static Fields.StringField ExtractField(string msgstr, ref int pos, DataDictionaryParser sessionDD, DataDictionaryParser appDD)
         {
             try
             {
@@ -102,6 +119,30 @@ namespace QuickFix
                 pos = tagend + 1;
                 int fieldvalend = msgstr.IndexOf("\u0001", pos);
                 Fields.StringField field =  new Fields.StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
+
+                /** TODO data dict stuff
+                if (((null != sessionDD) && sessionDD.IsDataField(field.Tag)) || ((null != appDD) && appDD.IsDataField(field.Tag)))
+                {
+                    string fieldLength = "";
+                    // Assume length field is 1 less
+                    int lenField = field.Tag - 1;
+                    // Special case for Signature which violates above assumption
+                    if (Fields.Tags.Signature.Equals(field.Tag))
+                        lenField = Fields.Tags.SignatureLength;
+
+                    if ((null != group) && group.isSetField(lenField))
+                    {
+                        fieldLength = group.GetField(lenField);
+                        soh = equalSign + 1 + atol(fieldLength.c_str());
+                    }
+                    else if (isSetField(lenField))
+                    {
+                        fieldLength = getField(lenField);
+                        soh = equalSign + 1 + atol(fieldLength.c_str());
+                    }
+                }
+                */
+
                 pos = fieldvalend + 1;
                 return field;
             }
@@ -117,6 +158,11 @@ namespace QuickFix
             {
                 throw new MessageParseError("Error at position (" + pos + ") while parsing msg (" + msgstr + ")", e);
             }
+        }
+
+        public static Fields.StringField ExtractField(string msgstr, ref int pos)
+        {
+            return ExtractField(msgstr, ref pos, null, null);
         }
 
         public static bool IsHeaderField(int tag)
@@ -154,6 +200,14 @@ namespace QuickFix
                     return false;
             }
         }
+        public static bool IsHeaderField(int tag, DataDictionaryParser dd)
+        {
+            if (IsHeaderField(tag))
+                return true;
+            if (null != dd)
+                return dd.IsHeaderField(tag);
+            return false;
+        }
 
         public static bool IsTrailerField(int tag)
         {
@@ -166,6 +220,14 @@ namespace QuickFix
                 default:
                     return false;
             }
+        }
+        public static bool IsTrailerField(int tag, DataDictionaryParser dd)
+        {
+            if (IsTrailerField(tag))
+                return true;
+            if (null != dd)
+                return dd.IsTrailerField(tag);
+            return false;
         }
 
         public static string GetFieldOrDefault(FieldMap fields, int tag, string defaultValue)
@@ -216,22 +278,100 @@ namespace QuickFix
 
         #endregion
 
-        public void FromString(string msgstr, bool validate)
+        public bool FromStringHeader(string msgstr)
         {
+            Clear();
+            
+            int pos = 0;
+            int count = 0;
+            while(pos < msgstr.Length)
+            {
+                Fields.StringField f = ExtractField(msgstr, ref pos);
+                
+                if((count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
+                    return false;
+                
+                if(IsHeaderField(f.Tag))
+                    this.Header.setField(f, false);
+                else
+                    break;
+            }
+            return true;
+        }
+
+        public void FromString(string msgstr, bool validate, DataDictionaryParser sessionDataDictionary, DataDictionaryParser applicationDataDictionary)
+        {
+            Clear();
+
+            string msg = "";
+            bool expectingHeader = true;
+            bool expectingBody = true;
+            int count = 0;
             int pos = 0;
             while (pos < msgstr.Length)
             {
-                Fields.StringField f = ExtractField(msgstr, ref pos);
-                if (IsHeaderField(f.Tag))
-                    this.Header.setField(f);
-                else if (IsTrailerField(f.Tag))
-                    this.Trailer.setField(f);
+                Fields.StringField f = ExtractField(msgstr, ref pos, sessionDataDictionary, applicationDataDictionary);
+                
+                if (validate && (count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
+                    throw new InvalidMessage("Header fields out of order");
+
+                if (IsHeaderField(f.Tag, sessionDataDictionary))
+                {
+                    if (!expectingHeader)
+                    {
+                        if (0 == field_)
+                            field_ = f.Tag;
+                        validStructure_ = false;
+                    }
+
+                    if (Fields.Tags.MsgType.Equals(f.Tag))
+                        msg = string.Copy(f.Obj);
+
+                    this.Header.setField(f, false);
+
+                    /** TODO group stuff
+                    if(null != sessionDataDictionary)
+                        setGroup("_header_", f, msgstr, pos, this.Header, sessionDataDictionary);
+                    */
+                }
+                else if (IsTrailerField(f.Tag, sessionDataDictionary))
+                {
+                    expectingHeader = false;
+                    expectingBody = false;
+                    this.Trailer.setField(f, false);
+
+                    /** TODO group stuff
+                    if (null != sessionDataDictionary)
+                        setGroup("_trailer_", f, msgstr, pos, this.Trailer, sessionDataDictionary);
+                    */
+                }
                 else
-                    setField(f);
+                {
+                    if (!expectingBody)
+                    {
+                        if (0 == field_)
+                            field_ = f.Tag;
+                        validStructure_ = false;
+                    }
+
+                    expectingHeader = false;
+                    setField(f, false);
+
+                    /** TODO group stuff
+                    if(null != applicationDataDictionary)
+                        setGroup(msg, f, msgstr, pos, this, applicationDataDictionary);
+                    */
+                }
             }
 
             if (validate)
                 Validate();
+        }
+
+        public bool HasValidStructure(out int field)
+        {
+            field = field_;
+            return validStructure_;
         }
 
         public void Validate()
@@ -349,6 +489,14 @@ namespace QuickFix
                 + this.Trailer.CalculateTotal()) % 256);
         }
 
+        public bool IsAdmin()
+        {
+            if(!isSetField(Fields.Tags.MsgType))
+                return false;
+            string msgType = this.Header.GetField(Fields.Tags.MsgType); /// FIXME
+            return IsAdminMsgType(msgType);
+        }
+
         /// <summary>
         /// FIXME less operator new
         /// </summary>
@@ -358,6 +506,14 @@ namespace QuickFix
             this.Header.setField(new BeginString(sessionID.BeginString));
             this.Header.setField(new SenderCompID(sessionID.SenderCompID));
             this.Header.setField(new TargetCompID(sessionID.TargetCompID));            
+        }
+
+        public override void Clear()
+        {
+            field_ = 0;
+            this.Header.Clear();
+            base.Clear();
+            this.Trailer.Clear();
         }
 
         public override string ToString()

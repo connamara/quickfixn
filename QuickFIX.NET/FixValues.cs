@@ -39,16 +39,63 @@ namespace QuickFix
     /// </summary>
     namespace FixValues
     {
+        public class ApplVerID
+        {
+            public const string FIX27 = "0";
+            public const string FIX30 = "1";
+            public const string FIX40 = "2";
+            public const string FIX41 = "3";
+            public const string FIX42 = "4";
+            public const string FIX43 = "5";
+            public const string FIX44 = "6";
+            public const string FIX50 = "7";
+            public const string FIX50SP1 = "8";
+            public const string FIX50SP2 = "9";
+
+            public static string FromBeginString(string beginString)
+            {
+                if (BeginString.FIX40.Equals(beginString))
+                    return ApplVerID.FIX40;
+                else if (BeginString.FIX41.Equals(beginString))
+                    return ApplVerID.FIX41;
+                else if (BeginString.FIX42.Equals(beginString))
+                    return ApplVerID.FIX42;
+                else if (BeginString.FIX43.Equals(beginString))
+                    return ApplVerID.FIX43;
+                else if (BeginString.FIX44.Equals(beginString))
+                    return ApplVerID.FIX44;
+                else if (BeginString.FIX50.Equals(beginString))
+                    return ApplVerID.FIX50;
+                else if ("FIX.5.0SP1".Equals(beginString))
+                    return ApplVerID.FIX50SP1;
+                else if ("FIX.5.0SP2".Equals(beginString))
+                    return ApplVerID.FIX50SP2;
+                else
+                    return string.Copy(beginString);
+            }
+        }
+
+        public class BeginString
+        {
+            public const string FIXT11 = "FIXT.1.1";
+            public const string FIX50  = "FIX.5.0";
+            public const string FIX44  = "FIX.4.4";
+            public const string FIX43  = "FIX.4.3";
+            public const string FIX42  = "FIX.4.2";
+            public const string FIX41  = "FIX.4.1";
+            public const string FIX40  = "FIX.4.0";
+        }
+
         public class MsgType
         {
-            public const string HEARTBEAT           = "0";
-            public const string TEST_REQUEST        = "1";
-            public const string RESEND_REQUEST      = "2";
-            public const string REJECT              = "3";
-            public const string SEQUENCE_RESET      = "4";
-            public const string LOGOUT              = "5";
-            public const string LOGON               = "A";
-            public const string NEW_ORDER_SINGLE    = "D";
+            public const string HEARTBEAT = "0";
+            public const string TEST_REQUEST = "1";
+            public const string RESEND_REQUEST = "2";
+            public const string REJECT = "3";
+            public const string SEQUENCE_RESET = "4";
+            public const string LOGOUT = "5";
+            public const string LOGON = "A";
+            public const string NEW_ORDER_SINGLE = "D";
             public const string SECURITY_DEFINITION = "d";
         }
 
