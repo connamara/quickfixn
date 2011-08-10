@@ -2,7 +2,8 @@ echo off
 set PORT=%1
 echo [DEFAULT] > cfg\at.cfg
 REM FIXME:
-echo UseDataDictionary=N >> cfg\at.cfg
+echo Verbose=Y >> cfg\at.cfg
+echo FileLogPath=log >> cfg\at.cfg
 echo ConnectionType=acceptor >> cfg\at.cfg
 echo SocketAcceptPort=%PORT% >> cfg\at.cfg
 echo SocketReuseAddress=Y >> cfg\at.cfg
