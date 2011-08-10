@@ -37,6 +37,7 @@ namespace QuickFix
                     case "EXCHANGE": return new FieldEntry(name, tag, typeof(Fields.StringField));
                     case "UTCTIMESTAMP": return new FieldEntry(name, tag, typeof(Fields.DateTimeField));
                     case "BOOLEAN": return new FieldEntry(name, tag, typeof(Fields.BooleanField));
+                    case "DATE": return new FieldEntry(name, tag, typeof(Fields.StringField));
                     case "LOCALMKTDATE": return new FieldEntry(name, tag, typeof(Fields.StringField));
                     case "DATA": return new FieldEntry(name, tag, typeof(Fields.StringField));
                     case "FLOAT": return new FieldEntry(name, tag, typeof(Fields.DecimalField));
@@ -46,7 +47,7 @@ namespace QuickFix
                     case "UTCDATEONLY": return new FieldEntry(name, tag, typeof(Fields.DateTimeField));
                     case "UTCDATE": return new FieldEntry(name, tag, typeof(Fields.DateTimeField));
                     case "UTCTIMEONLY": return new FieldEntry(name, tag, typeof(Fields.DateTimeField));
-                    case "Time": return new FieldEntry(name, tag, typeof(Fields.StringField));
+                    case "TIME": return new FieldEntry(name, tag, typeof(Fields.StringField));
                     case "NUMINGROUP": return new FieldEntry(name, tag, typeof(Fields.IntField));
                     case "PERCENTAGE": return new FieldEntry(name, tag, typeof(Fields.DecimalField));
                     case "SEQNUM": return new FieldEntry(name, tag, typeof(Fields.IntField));
