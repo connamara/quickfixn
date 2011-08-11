@@ -131,4 +131,72 @@ namespace QuickFix
             : base("Could not parse message: " + msg, innerException)
         { }
     }
+
+    #region Tag Exceptions
+
+    /// <summary>
+    /// Base class for tag-related errors
+    /// </summary>
+    public abstract class TagException : QuickFIXException
+    {
+        public int field;
+        public FixValues.SessionRejectReason sessionRejectReason;
+
+        public TagException(string msg, int field)
+            : base(msg)
+        {
+            this.field = field;
+            this.sessionRejectReason = new QuickFix.FixValues.SessionRejectReason(FixValues.SessionRejectReason.OTHER.Value, msg);
+        }
+        public TagException(int field, FixValues.SessionRejectReason reason)
+            : base(reason.Description)
+        {
+            this.field = field;
+            this.sessionRejectReason = reason;
+        }
+    }
+    /// <summary>
+    /// Tag is not in the correct order
+    /// </summary>
+    public class TagOutOfOrder : TagException
+    {
+        public TagOutOfOrder(int field) : base(field, FixValues.SessionRejectReason.TAG_SPECIFIED_OUT_OF_REQUIRED_ORDER) { }
+    }
+    /// <summary>
+    /// Tag number does not exist in specification
+    /// </summary>
+    public class InvalidTagNumber : TagException
+    {
+        public InvalidTagNumber(int field) : base(field, FixValues.SessionRejectReason.INVALID_TAG_NUMBER) { }
+    }
+    /// <summary>
+    /// Required field is not in message
+    /// </summary>
+    public class RequiredTagMissing : TagException
+    {
+        public RequiredTagMissing(int field) : base(field, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING) { }
+    }
+    /// <summary>
+    /// Field does not belong to message
+    /// </summary>
+    public class TagNotDefinedForMessage : TagException
+    {
+        public TagNotDefinedForMessage(int field) : base(field, FixValues.SessionRejectReason.TAG_NOT_DEFINED_FOR_THIS_MESSAGE_TYPE) { }
+    }
+    /// <summary>
+    /// Field exists in message without a value
+    /// </summary>
+    public class NoTagValue : TagException
+    {
+        public NoTagValue(int field) : base(field, FixValues.SessionRejectReason.TAG_SPECIFIED_WITHOUT_A_VALUE) { }
+    }
+    /// <summary>
+    /// Field has a value that is out of range
+    /// </summary>
+    public class IncorrectTagValue : TagException
+    {
+        public IncorrectTagValue(int field) : base(field, FixValues.SessionRejectReason.VALUE_IS_INCORRECT) { }
+    }
+
+    #endregion
 }

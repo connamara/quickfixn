@@ -109,6 +109,76 @@ namespace QuickFix
             PostProcess();
         }
 
+        public static void Validate(Message message, DataDictionaryParser pSessionDD, DataDictionaryParser pAppDD, string beginString, string msgType)
+        {
+            bool bodyOnly = (null == pSessionDD);
+
+            if ((null != pSessionDD) && (null != pSessionDD.Version))
+                if (!pSessionDD.Version.Equals(beginString))
+                    throw new UnsupportedVersion();
+
+            if (((null != pSessionDD) && pSessionDD.CheckFieldsOutOfOrder) || ((null != pAppDD) && pAppDD.CheckFieldsOutOfOrder))
+            {
+                int field;
+                if (!message.HasValidStructure(out field))
+                    throw new TagOutOfOrder(field);
+            }
+
+            if ((null != pAppDD) && (null != pAppDD.Version))
+            {
+                pAppDD.CheckMsgType(msgType);
+                pAppDD.CheckHasRequired(message.Header, message, message.Trailer, msgType);
+            }
+            
+            if (!bodyOnly)
+            {
+                pSessionDD.Iterate(message.Header, msgType);
+                pSessionDD.Iterate(message.Trailer, msgType);
+            }
+
+            pAppDD.Iterate(message, msgType);
+        }
+
+        public void Validate(Message message, string beginString, string msgType)
+        {
+            Validate(message, false, beginString, msgType);
+        }
+
+        public void Validate(Message message, bool bodyOnly, string beginString, string msgType)
+        {
+            DataDictionaryParser sessionDataDict = null;
+            if(!bodyOnly)
+                sessionDataDict = this;
+            Validate(message, sessionDataDict, this, beginString, msgType);
+        }
+
+        /// FIXME
+        public void CheckMsgType(string msgType)
+        {
+        }
+
+        /// FIXME
+        public void CheckHasRequired(Header header, Message message, Trailer trailer, string msgType)
+        {
+        }
+
+        /// FIXME
+        public void Iterate(Message message, string msgType)
+        {
+        }
+
+        /// FIXME
+        public void Iterate(Header message, string msgType)
+        {
+        }
+
+        /// FIXME
+        public void Iterate(Trailer trailer, string msgType)
+        {
+        }
+
+        # region Parsing Methods
+
         public int GetTagFromName(string name)
         {
             if (_fieldNameToTag.ContainsKey(name))
@@ -426,5 +496,8 @@ namespace QuickFix
             MinorVersion = reader.GetAttribute("minor");
             Version = "FIX." + MajorVersion + "." + MinorVersion;
         }
+
+        #endregion
+
     }
 }
