@@ -30,7 +30,11 @@ namespace QuickFix
         /// </summary>
         private HashSet<string> _msgTypes;
         private Dictionary<string, HashSet<XMLMsgComponent>> _messageComponents;
+        private HashSet<XMLMsgComponent> _headerComponents;
+        private HashSet<XMLMsgComponent> _trailerComponents;
         private Dictionary<string, DDFieldMap> _messages;
+        private DDFieldMap _header;
+        private DDFieldMap _trailer;
 
         #endregion
 
@@ -41,10 +45,14 @@ namespace QuickFix
             this._fieldNameToTag = new Dictionary<string, int>();
             this._fieldNames = new Dictionary<int, string>();
             this._messages = new Dictionary<string, DDFieldMap>();
+            this._header = new DDFieldMap();
+            this._trailer = new DDFieldMap();
             this._msgTypes = new HashSet<string>();
             this._messageComponents = new Dictionary<string, HashSet<XMLMsgComponent>>();
+            this._headerComponents = new HashSet<XMLMsgComponent>();
+            this._trailerComponents = new HashSet<XMLMsgComponent>();
             this._components = new Dictionary<string, List<XMLMsgComponent>>();
-
+            
             this.CheckFieldsHaveValues  = true;
             this.CheckFieldsOutOfOrder  = true;
             this.CheckUserDefinedFields = true;
@@ -64,8 +72,12 @@ namespace QuickFix
             this._fieldNameToTag = new Dictionary<string, int>(src._fieldNameToTag);
             this._fieldNames = new Dictionary<int, string>(src._fieldNames);
             this._messages = new Dictionary<string, DDFieldMap>(src._messages);
+            this._header = new DDFieldMap(src._header);
+            this._trailer = new DDFieldMap(src._trailer);
             this._msgTypes = new HashSet<string>(src._msgTypes);
             this._messageComponents = new Dictionary<string, HashSet<XMLMsgComponent>>(src._messageComponents);
+            this._headerComponents = new HashSet<XMLMsgComponent>(src._headerComponents);
+            this._trailerComponents = new HashSet<XMLMsgComponent>(src._trailerComponents);
             this._components = new Dictionary<string, List<XMLMsgComponent>>(src._components);
             
             if(null != src.MajorVersion)
@@ -94,6 +106,12 @@ namespace QuickFix
                 {
                     switch (reader.LocalName)
                     {
+                        case "header":
+                            DataDictionaryParser.ProcessXMLNonBodyFields(reader, "header", _headerComponents);
+                            break;
+                        case "trailer":
+                            DataDictionaryParser.ProcessXMLNonBodyFields(reader, "trailer", _trailerComponents);
+                            break;
                         case "messages":
                             ProcessXMLMessages(reader);
                             break;
@@ -109,34 +127,34 @@ namespace QuickFix
             PostProcess();
         }
 
-        public static void Validate(Message message, DataDictionaryParser pSessionDD, DataDictionaryParser pAppDD, string beginString, string msgType)
+        public static void Validate(Message message, DataDictionaryParser sessionDataDict, DataDictionaryParser appDataDict, string beginString, string msgType)
         {
-            bool bodyOnly = (null == pSessionDD);
+            bool bodyOnly = (null == sessionDataDict);
 
-            if ((null != pSessionDD) && (null != pSessionDD.Version))
-                if (!pSessionDD.Version.Equals(beginString))
+            if ((null != sessionDataDict) && (null != sessionDataDict.Version))
+                if (!sessionDataDict.Version.Equals(beginString))
                     throw new UnsupportedVersion();
 
-            if (((null != pSessionDD) && pSessionDD.CheckFieldsOutOfOrder) || ((null != pAppDD) && pAppDD.CheckFieldsOutOfOrder))
+            if (((null != sessionDataDict) && sessionDataDict.CheckFieldsOutOfOrder) || ((null != appDataDict) && appDataDict.CheckFieldsOutOfOrder))
             {
                 int field;
                 if (!message.HasValidStructure(out field))
                     throw new TagOutOfOrder(field);
             }
 
-            if ((null != pAppDD) && (null != pAppDD.Version))
+            if ((null != appDataDict) && (null != appDataDict.Version))
             {
-                pAppDD.CheckMsgType(msgType);
-                pAppDD.CheckHasRequired(message.Header, message, message.Trailer, msgType);
+                appDataDict.CheckMsgType(msgType);
+                appDataDict.CheckHasRequired(message, msgType);
             }
             
             if (!bodyOnly)
             {
-                pSessionDD.Iterate(message.Header, msgType);
-                pSessionDD.Iterate(message.Trailer, msgType);
+                sessionDataDict.Iterate(message.Header, msgType);
+                sessionDataDict.Iterate(message.Trailer, msgType);
             }
 
-            pAppDD.Iterate(message, msgType);
+            appDataDict.Iterate(message, msgType);
         }
 
         public void Validate(Message message, string beginString, string msgType)
@@ -152,14 +170,31 @@ namespace QuickFix
             Validate(message, sessionDataDict, this, beginString, msgType);
         }
 
-        /// FIXME
         public void CheckMsgType(string msgType)
         {
+            if (!_messages.ContainsKey(msgType))
+                throw new InvalidMessageType(msgType);
         }
 
-        /// FIXME
-        public void CheckHasRequired(Header header, Message message, Trailer trailer, string msgType)
+        public void CheckHasRequired(Message message, string msgType)
         {
+            foreach(int field in _header.ReqFields)
+                if (!message.Header.isSetField(field))
+                    throw new RequiredTagMissing(field);
+
+            foreach (int field in _trailer.ReqFields)
+                if (!message.Trailer.isSetField(field))
+                    throw new RequiredTagMissing(field);
+
+            foreach (int field in _messages[msgType].ReqFields)
+                if (!message.isSetField(field))
+                    throw new RequiredTagMissing(field);
+
+            /** TODO group stuff
+            foreach (DDGroup grp in _messages[msgType].Groups.Values)
+                if (_messages[msgType].ReqFields.Contains(grp.Field))
+                    ReqFieldsSetInGroups(grp, fields);
+            */
         }
 
         /// FIXME
@@ -260,6 +295,24 @@ namespace QuickFix
                 throw new FieldNotFoundException(tag);
         }
 
+        /// <summary>
+        /// Useful for unit testing
+        /// </summary>
+        /// <returns>a copy of the set of required Header fields</returns>
+        public HashSet<int> GetRequiredHeaderFields()
+        {
+            return new HashSet<int>(_header.ReqFields);
+        }
+
+        /// <summary>
+        /// Useful for unit testing
+        /// </summary>
+        /// <returns>a copy of the set of required Trailer fields</returns>
+        public HashSet<int> GetRequiredTrailerFields()
+        {
+            return new HashSet<int>(_trailer.ReqFields);
+        }
+
         private void PostProcess()
         {
             foreach (string msgstr in _messageComponents.Keys)
@@ -276,6 +329,12 @@ namespace QuickFix
                 }
                 _messages.Add(msgstr, msg);
             }
+
+            foreach (XMLMsgComponent msgcomp in _headerComponents)
+                PostProcessField(msgcomp, _header);
+
+            foreach (XMLMsgComponent msgcomp in _trailerComponents)
+                PostProcessField(msgcomp, _trailer);
         }
 
         private void PostProcessComponent(XMLMsgComponent comp, DDFieldMap msg, string msgname)
@@ -323,6 +382,32 @@ namespace QuickFix
 
             msg.Groups.Add(grp.Field, grp);
             PostProcessComponentGroup(msgcomp, msg, msgstr);
+        }
+
+        private static void ProcessXMLNonBodyFields(XmlReader reader, string localName, HashSet<XMLMsgComponent> components)
+        {
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    string name = reader.GetAttribute("name");
+                    string reqstr = reader.GetAttribute("required");
+                    bool req = false;
+                    if (reqstr.Equals("Y"))
+                        req = true;
+                    
+                    XMLMsgComponent.TypeEnum ctype = XMLMsgComponent.GetComponentType(reader.LocalName, "[" + localName + "]");
+                    XMLMsgComponent component = new XMLMsgComponent(name, req, ctype);
+                    components.Add(component);
+
+                    if (ctype.Equals(XMLMsgComponent.TypeEnum.Group))
+                        DataDictionaryParser.ProcessGroup(reader, component);
+                }
+                else if (reader.NodeType == XmlNodeType.EndElement && reader.LocalName.Equals(localName))
+                {
+                    break;
+                }
+            }
         }
 
         private void ProcessXMLMessages(XmlReader reader)
@@ -386,7 +471,7 @@ namespace QuickFix
                     _messageComponents[msgtype].Add(component);
 
                     if( ctype.Equals( XMLMsgComponent.TypeEnum.Group ))
-                        ProcessGroup( reader, component );
+                        DataDictionaryParser.ProcessGroup(reader, component);
                 }
                 else if (reader.NodeType == XmlNodeType.EndElement && reader.LocalName.Equals("message"))
                     break;
@@ -429,7 +514,7 @@ namespace QuickFix
                     XMLMsgComponent component = new XMLMsgComponent(name, req, ctype);
                     _components[name].Add(component);
                     if( ctype.Equals( XMLMsgComponent.TypeEnum.Group ))
-                        ProcessGroup(reader,component);
+                        DataDictionaryParser.ProcessGroup(reader,component);
 
                 }
                 else if (reader.NodeType == XmlNodeType.EndElement && reader.LocalName.Equals("component"))
@@ -438,7 +523,7 @@ namespace QuickFix
 
         }
 
-        private void ProcessGroup(XmlReader reader, XMLMsgComponent group)
+        private static void ProcessGroup(XmlReader reader, XMLMsgComponent group)
         {
             while( reader.Read())
             {
@@ -453,7 +538,7 @@ namespace QuickFix
                     XMLMsgComponent component = new XMLMsgComponent(grpname, req, ctype );
                     group.SubComponents.Add(component);
                     if (component.ComponentType.Equals(XMLMsgComponent.TypeEnum.Group))
-                        ProcessGroup(reader, component);
+                        DataDictionaryParser.ProcessGroup(reader, component);
                 }
                 else if (reader.NodeType == XmlNodeType.EndElement && reader.LocalName.Equals("group"))
                     break;

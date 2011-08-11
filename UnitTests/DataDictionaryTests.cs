@@ -157,5 +157,47 @@ namespace UnitTests
             emailFields.Add(109);
             Assert.That(dd.ReqFieldsSet("C", emailFields), Is.EqualTo(true));
         }
+
+        [Test]
+        public void RequiredHeaderFields()
+        {
+            DataDictionaryParser dd = new DataDictionaryParser("../../../spec/fix/FIX42.xml");
+            HashSet<int> reqFields = dd.GetRequiredHeaderFields();
+            Assert.True(reqFields.Contains(QuickFix.Fields.Tags.SenderCompID));
+            Assert.True(reqFields.Contains(QuickFix.Fields.Tags.TargetCompID));
+            Assert.False(reqFields.Contains(QuickFix.Fields.Tags.CheckSum));
+            Assert.False(reqFields.Contains(QuickFix.Fields.Tags.ClOrdID));
+        }
+
+        [Test]
+        public void RequiredTrailerFields()
+        {
+            DataDictionaryParser dd = new DataDictionaryParser("../../../spec/fix/FIX42.xml");
+            HashSet<int> reqFields = dd.GetRequiredTrailerFields();
+            Assert.True(reqFields.Contains(QuickFix.Fields.Tags.CheckSum));
+            Assert.False(reqFields.Contains(QuickFix.Fields.Tags.SenderCompID));
+            Assert.False(reqFields.Contains(QuickFix.Fields.Tags.ClOrdID));
+        }
+
+        [Test]
+        public void CheckHasRequired()
+        {
+            DataDictionaryParser dd = new DataDictionaryParser("../../../spec/fix/FIX42.xml");
+            
+            // missing tag 56
+            Message badMsg = new Message("8=FIX.4.2\x01" + "9=37\x01" + "35=0\x01" + "34=2\x01" + "49=TW\x01" + "52=20110625-08:45:00\x01" + "10=011\x01");
+            Assert.Throws<RequiredTagMissing>(delegate { dd.CheckHasRequired(badMsg, QuickFix.FixValues.MsgType.HEARTBEAT); });
+            
+            // no missing tags
+            Message goodMsg = new Message("8=FIX.4.2\x01" + "9=45\x01" + "35=0\x01" + "34=2\x01" + "49=TW\x01" + "56=MJKG\x01" + "52=20110625-08:45:00\x01" + "10=220\x01");
+            try
+            {
+                dd.CheckHasRequired(goodMsg, QuickFix.FixValues.MsgType.HEARTBEAT);
+            }
+            catch (RequiredTagMissing e)
+            {
+                Assert.Fail("Unexpected exception (RequiredTagMissing): " + e.Message + " (" + e.field + ")");
+            }
+        }
     }
 }

@@ -86,7 +86,7 @@ namespace QuickFix
                 }
                 catch (System.Exception e)
                 {
-                    this.Log("Error on Session '" + qfSession_.SessionID + "': " + e.Message);
+                    this.Log("Error on Session '" + qfSession_.SessionID + "': " + e.ToString());
                 }
             }
             catch (InvalidMessage e)
