@@ -37,6 +37,8 @@ namespace QuickFix
         public SessionID SessionID { get; set; }
         public Application Application { get; set; }
         public DataDictionaryProvider DataDictionaryProvider { get; set; }
+        public DataDictionaryParser SessionDataDictionary { get; private set; }
+        public DataDictionaryParser ApplicationDataDictionary { get; private set; }
         // synchronized
         public bool HasResponder { get { lock (sync_) { return null != responder_; } } }
 
@@ -50,7 +52,13 @@ namespace QuickFix
             this.Application = app;
             this.SessionID = sessID;
             this.DataDictionaryProvider = new DataDictionaryProvider(dataDictProvider);
-            schedule_ = sessionSchedule;
+            this.schedule_ = sessionSchedule;
+
+            this.SessionDataDictionary = this.DataDictionaryProvider.GetSessionDataDictionary(this.SessionID.BeginString);
+            if (this.SessionID.IsFIXT)
+                this.ApplicationDataDictionary = this.DataDictionaryProvider.GetApplicationDataDictionary(this.SenderDefaultApplVerID);
+            else
+                this.ApplicationDataDictionary = this.SessionDataDictionary;
 
             Log log;
             if (null != logFactory)
@@ -264,15 +272,7 @@ namespace QuickFix
             try
             {
                 this.Log.OnIncoming(message);
-                
-                DataDictionaryParser sessionDataDict = this.DataDictionaryProvider.GetSessionDataDictionary(this.SessionID.BeginString);
-                DataDictionaryParser appDataDict;
-                if (SessionID.IsFIXT)
-                    appDataDict = this.DataDictionaryProvider.GetApplicationDataDictionary(this.SenderDefaultApplVerID);
-                else
-                    appDataDict = sessionDataDict;
-                
-                Next(new Message(message, sessionDataDict, appDataDict, this.ValidateLengthAndChecksum));
+                Next(new Message(message, this.SessionDataDictionary, this.ApplicationDataDictionary, this.ValidateLengthAndChecksum));
             }
             catch (InvalidMessage e)
             {
@@ -303,6 +303,15 @@ namespace QuickFix
                 if (!beginString.Equals(this.SessionID.BeginString))
                     throw new UnsupportedVersion();
 
+                if (this.SessionID.IsFIXT && !Message.IsAdminMsgType(msgType))
+                {
+                    throw new UnsupportedVersion("'FIXT' Sessions are not implemented yet!");
+                }
+                else
+                {
+                    this.SessionDataDictionary.Validate(message, beginString, msgType);
+                }
+
                 if (FixValues.MsgType.LOGON.Equals(msgType))
                     NextLogon(message);
                 else if (FixValues.MsgType.HEARTBEAT.Equals(msgType))
@@ -320,7 +329,11 @@ namespace QuickFix
                     state_.IncrNextTargetMsgSeqNum();
                 }
             }
-            catch(UnsupportedVersion)
+            catch (TagException e)
+            {
+                GenerateReject(message, e.sessionRejectReason, e.field);
+            }
+            catch (UnsupportedVersion)
             {
                 if (FixValues.MsgType.LOGOUT.Equals(msgType))
                 {
@@ -541,7 +554,7 @@ namespace QuickFix
 
         protected bool ShouldSendReset()
         {
-            return (this.SessionID.BeginString.CompareTo("FIX.4.1") >= 0)
+            return (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX41) >= 0)
                 && (this.ResetOnLogon || this.ResetOnLogout || this.ResetOnDisconnect)
                 && (state_.GetNextSenderMsgSeqNum() == 1)
                 && (state_.GetNextTargetMsgSeqNum() == 1);
@@ -620,9 +633,9 @@ namespace QuickFix
 
             Fields.BeginSeqNo beginSeqNo = new Fields.BeginSeqNo(state_.GetNextTargetMsgSeqNum());
             Fields.EndSeqNo endSeqNo;
-            if (beginString.CompareTo("FIX.4.2") >= 0)
+            if (beginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
                 endSeqNo =  new Fields.EndSeqNo(0);
-            else if (beginString.CompareTo("FIX.4.1") <= 0)
+            else if (beginString.CompareTo(FixValues.BeginString.FIX41) <= 0)
                 endSeqNo =  new Fields.EndSeqNo(999999);
             else
                 endSeqNo =  new Fields.EndSeqNo(msgSeqNum - 1);
@@ -769,11 +782,11 @@ namespace QuickFix
                 { }
             }
 
-            if (beginString.CompareTo("FIX.4.2") >= 0)
+            if (beginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
             {
                 if (msgType.Length > 0)
                     reject.setField(new Fields.RefMsgType(msgType));
-                if (("FIX.4.2".Equals(beginString) && reason.Value <= FixValues.SessionRejectReason.INVALID_MSGTYPE.Value) || ("FIX.4.2".CompareTo(beginString) > 0))
+                if ((FixValues.BeginString.FIX42.Equals(beginString) && reason.Value <= FixValues.SessionRejectReason.INVALID_MSGTYPE.Value) || (beginString.CompareTo(FixValues.BeginString.FIX42) > 0))
                 {
                     reject.setField(new Fields.SessionRejectReason(reason.Value));
                 }
@@ -787,7 +800,7 @@ namespace QuickFix
 
             if ((0 != field) || FixValues.SessionRejectReason.INVALID_TAG_NUMBER.Equals(reason))
             {
-                PopulateRejectReason(reject, msgType, field, reason.Description);
+                PopulateSessionRejectReason(reject, field, reason.Description);
                 this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + reason.Value + ":" + field);
             }
             else
@@ -802,9 +815,9 @@ namespace QuickFix
             return SendRaw(reject, 0);
         }
 
-        protected void PopulateRejectReason(Message reject, string msgType, int field, string text)
+        protected void PopulateSessionRejectReason(Message reject, int field, string text)
         {
-            if (FixValues.MsgType.REJECT.Equals(msgType) && "FIX.4.2".CompareTo(this.SessionID.BeginString) >= 0)
+            if (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
             {
                 reject.setField(new Fields.RefTagID(field));
                 reject.setField(new Fields.Text(text));
