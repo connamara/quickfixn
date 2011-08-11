@@ -29,6 +29,17 @@ namespace QuickFix
         }
     }
 
+    public class Trailer : FieldMap
+    {
+        public Trailer()
+            : base()
+        { }
+
+        public Trailer(Trailer src)
+            : base(src)
+        { }
+    }
+
     public class Message : FieldMap
     {
         public const string SOH = "\u0001";
@@ -38,7 +49,7 @@ namespace QuickFix
         #region Properties
 
         public Header Header { get; private set; }
-        public FieldMap Trailer { get; private set; }
+        public Trailer Trailer { get; private set; }
         
         #endregion
 
@@ -47,7 +58,7 @@ namespace QuickFix
         public Message()
         {
             this.Header = new Header();
-            this.Trailer = new FieldMap();
+            this.Trailer = new Trailer();
             this.validStructure_ = true;
         }
 
@@ -79,7 +90,7 @@ namespace QuickFix
             : base(src)
         {
             this.Header = new Header(src.Header);
-            this.Trailer = new FieldMap(src.Trailer);
+            this.Trailer = new Trailer(src.Trailer);
             this.validStructure_ = src.validStructure_;
             this.field_= src.field_;
         }
@@ -495,6 +506,14 @@ namespace QuickFix
                 return false;
             string msgType = this.Header.GetField(Fields.Tags.MsgType); /// FIXME
             return IsAdminMsgType(msgType);
+        }
+
+        public bool IsApp()
+        {
+            if (!isSetField(Fields.Tags.MsgType))
+                return false;
+            string msgType = this.Header.GetField(Fields.Tags.MsgType); /// FIXME
+            return !IsAdminMsgType(msgType);
         }
 
         /// <summary>

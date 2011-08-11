@@ -17,6 +17,15 @@ namespace QuickFix
                 FieldOrder = new List<int>();
                 Groups = new Dictionary<int, DDFieldMap>();
             }
+
+            public DDFieldMap(DDFieldMap src)
+            {
+                Fields = new HashSet<int>(src.Fields);
+                ReqFields = new HashSet<int>(src.ReqFields);
+                FieldOrder = new List<int>(src.FieldOrder);
+                Groups = new Dictionary<int, DDFieldMap>(src.Groups);
+            }
+
             public List<int> FieldOrder { get; set; }
             public HashSet<int> Fields { get; set; }
             public HashSet<int> ReqFields { get; set; }
@@ -27,8 +36,15 @@ namespace QuickFix
         {
             public DDGroup()
                 : base()
+            { }
+
+            public DDGroup(DDGroup src)
+                : base(src)
             {
+                this.Field = src.Field;
+                this.Delim = src.Delim;
             }
+
             public int Field { get; set; }
             public int Delim { get; set; }
         }
