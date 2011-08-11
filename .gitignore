@@ -14,3 +14,7 @@ Examples/Executor/obj/
 QuickFIX.NET.sln.cache
 ChangeLog
 *.swp
+AcceptanceTest/AcceptanceTests.html
+AcceptanceTest/TestResult.xml
+AcceptanceTest/bin/Release/
+AcceptanceTest/log/
