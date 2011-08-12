@@ -52,7 +52,7 @@ namespace QuickFix
 
         public void OnMessageFound(string msg)
         {
-            Message fixMessage;
+            ///Message fixMessage;
 
             try
             {
@@ -67,22 +67,14 @@ namespace QuickFix
                     }
                     else
                     {
-                        qfSession_.Log.OnIncoming(msg);
-                        fixMessage = new Message(msg);
-                        if (!HandleNewSession(fixMessage))
+                        if (!HandleNewSession(msg))
                             return;
                     }
-                }
-                else
-                {
-                    qfSession_.Log.OnIncoming(msg);
-                    fixMessage = new Message(msg);
                 }
 
                 try
                 {
-                    ///qfSession_.Log.OnIncoming(fixMessage.ToString());
-                    qfSession_.Next(fixMessage);
+                    qfSession_.Next(msg);
                 }
                 catch (System.Exception e)
                 {
@@ -150,33 +142,21 @@ namespace QuickFix
             DisconnectClient(tcpClient_);
         }
 
-        protected bool HandleNewSession(Message message)
+        protected bool HandleNewSession(string msg)
 	    {
-		    try
+		    if(qfSession_.HasResponder)
 		    {
-			    if(!FixValues.MsgType.LOGON.Equals(message.Header.GetField(Fields.Tags.MsgType)))
-			    {
-				    this.Log("WARNING: Ignoring non-logon message before session establishment: " + message);
-				    return false;
-			    }
-    	
-			    if(qfSession_.HasResponder)
-			    {
-                    qfSession_.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + tcpClient_.Client.RemoteEndPoint + ")");
-				    qfSession_ = null;
-                    DisconnectClient();
-				    return false;
-			    }
-			    qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
-                //qfSession_.HeartBtInt = QuickFix.Fields.Converters.IntConverter.Convert(message.GetField(Fields.Tags.HeartBtInt)); /// FIXME
-			    qfSession_.Log.OnEvent(qfSession_.SessionID +" Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");
-			    qfSession_.SetResponder(responder_);
-			    return true;
+                qfSession_.Log.OnIncoming(msg);
+                qfSession_.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + tcpClient_.Client.RemoteEndPoint + ")");
+			    qfSession_ = null;
+                DisconnectClient();
+			    return false;
 		    }
-		    catch(QuickFix.FieldNotFoundException e)
-		    {
-			    throw new InvalidMessage(e.Message, e);
-		    }
+		    qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
+            /// FIXME do this here? qfSession_.HeartBtInt = QuickFix.Fields.Converters.IntConverter.Convert(message.GetField(Fields.Tags.HeartBtInt)); /// FIXME
+		    qfSession_.Log.OnEvent(qfSession_.SessionID +" Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");
+		    qfSession_.SetResponder(responder_);
+		    return true;
 	    }
 
         public void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
