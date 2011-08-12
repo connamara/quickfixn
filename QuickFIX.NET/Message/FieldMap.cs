@@ -6,7 +6,7 @@ using QuickFix.Fields;
 
 namespace QuickFix
 {
-    public class FieldMap
+    public class FieldMap : IEnumerable<KeyValuePair<int, Fields.IField>>
     {
         /// <summary>
         /// Default constructor
@@ -15,6 +15,7 @@ namespace QuickFix
         {
             _fields = new SortedDictionary<int, Fields.IField>(); /// FIXME sorted dict is a hack to get quasi-correct field order
             _groups = new Dictionary<int, List<Group>>();
+            this.RepeatedTags = new List<Fields.IField>();
         }
 
         /// <summary>
@@ -42,6 +43,8 @@ namespace QuickFix
             this._groups = new Dictionary<int, List<Group>>();
             foreach (KeyValuePair<int, List<Group>> g in src._groups)
                 this._groups.Add(g.Key, new List<Group>(g.Value));
+
+            this.RepeatedTags = new List<Fields.IField>(src.RepeatedTags);
         }
 
         /// <summary>
@@ -82,12 +85,13 @@ namespace QuickFix
         /// </summary>
         /// <param name="field"></param>
         /// <param name="overwrite">will overwrite existing field if set to true</param>
-        public void setField(Fields.IField field, bool overwrite)
+        public bool setField(Fields.IField field, bool overwrite)
         {
             if (_fields.ContainsKey(field.Tag) && !overwrite)
-                return;
-            else
-                setField(field);
+                return false;
+            
+            setField(field);
+            return true;
         }
 
         public void getField(Fields.BooleanField field)
@@ -264,6 +268,13 @@ namespace QuickFix
                     total += field.getTotal();
             }
 
+            // TODO not sure if repeated CheckSum should be included int the total
+            foreach (Fields.IField field in this.RepeatedTags)
+            {
+                if (field.Tag != Fields.Tags.CheckSum)
+                    total += field.getTotal();
+            }
+
             foreach (List<Group> groupList in _groups.Values)
             {
                 foreach (Group group in groupList)
@@ -286,11 +297,24 @@ namespace QuickFix
                 }
             }
 
+            // TODO not sure if repeated BeginString/BodyLength/CheckSum should be counted
+            foreach (Fields.IField field in this.RepeatedTags)
+            {
+                if (field != null
+                    && field.Tag != Tags.BeginString
+                    && field.Tag != Tags.BodyLength
+                    && field.Tag != Tags.CheckSum)
+                {
+                    total += field.getLength();
+                }
+            }
+
             foreach (List<Group> groupList in _groups.Values)
             {
                 foreach (Group group in groupList)
                     total += group.CalculateLength();
             }
+    
             return total;
         }
 
@@ -339,6 +363,31 @@ namespace QuickFix
         private SortedDictionary<int, Fields.IField> _fields; /// FIXME sorted dict is a hack to get quasi-correct field order
         private Dictionary<int, List<Group>> _groups;
         private int[] _fieldOrder;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Used for validation.  Only set during Message parsing.
+        /// </summary>
+        public List<Fields.IField> RepeatedTags { get; private set; }
+        #endregion
+
+        #region IEnumerable<KeyValuePair<int,IField>> Members
+
+        public IEnumerator<KeyValuePair<int, IField>> GetEnumerator()
+        {
+            return _fields.GetEnumerator();
+        }
+
+        #endregion
+
+        #region IEnumerable Members
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return _fields.GetEnumerator();
+        }
+
         #endregion
     }
 }

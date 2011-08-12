@@ -190,5 +190,40 @@ namespace UnitTests
             Assert.That(Message.IsTrailerField(Tags.CheckSum), Is.EqualTo(true));
             Assert.That(Message.IsTrailerField(Tags.Price), Is.EqualTo(false));
         }
+
+        [Test]
+        public void EnumeratorTest()
+        {
+            Message msg = new Message("8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" + "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=123\x01");
+
+            int numHeaderFields = 0;
+            foreach (KeyValuePair<int, QuickFix.Fields.IField> kvp in msg.Header)
+                ++numHeaderFields;
+            Assert.AreEqual(7, numHeaderFields);
+
+            int numTrailerFields = 0;
+            foreach (KeyValuePair<int, QuickFix.Fields.IField> kvp in msg.Trailer)
+                ++numTrailerFields;
+            Assert.AreEqual(1, numTrailerFields);
+
+            int numBodyFields = 0;
+            foreach (KeyValuePair<int, QuickFix.Fields.IField> kvp in msg)
+                ++numBodyFields;
+            Assert.AreEqual(1, numBodyFields);
+        }
+
+        [Test]
+        public void RepeatedTagDetection()
+        {
+            Message msg = new Message("8=FIX.4.2\x01" + "9=72\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" + "49=BOGUS\x01" + "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "1=bogus\x01" + "10=052\x01" + "10=000\x01");
+            Assert.AreEqual(1, msg.Header.RepeatedTags.Count);
+            Assert.AreEqual(49, msg.Header.RepeatedTags[0].Tag);
+
+            Assert.AreEqual(1, msg.Trailer.RepeatedTags.Count);
+            Assert.AreEqual(10, msg.Trailer.RepeatedTags[0].Tag);
+
+            Assert.AreEqual(1, msg.RepeatedTags.Count);
+            Assert.AreEqual(1, msg.RepeatedTags[0].Tag);
+        }
     }
 }

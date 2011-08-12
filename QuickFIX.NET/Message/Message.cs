@@ -338,7 +338,8 @@ namespace QuickFix
                     if (Fields.Tags.MsgType.Equals(f.Tag))
                         msg = string.Copy(f.Obj);
 
-                    this.Header.setField(f, false);
+                    if (!this.Header.setField(f, false))
+                        this.Header.RepeatedTags.Add(f);
 
                     /** TODO group stuff
                     if(null != sessionDataDictionary)
@@ -349,7 +350,8 @@ namespace QuickFix
                 {
                     expectingHeader = false;
                     expectingBody = false;
-                    this.Trailer.setField(f, false);
+                    if (!this.Trailer.setField(f, false))
+                        this.Trailer.RepeatedTags.Add(f);
 
                     /** TODO group stuff
                     if (null != sessionDataDictionary)
@@ -366,7 +368,8 @@ namespace QuickFix
                     }
 
                     expectingHeader = false;
-                    setField(f, false);
+                    if (!setField(f, false))
+                        this.RepeatedTags.Add(f);
 
                     /** TODO group stuff
                     if(null != applicationDataDictionary)

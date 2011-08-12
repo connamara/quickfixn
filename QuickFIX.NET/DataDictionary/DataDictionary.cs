@@ -170,6 +170,12 @@ namespace QuickFix
             Validate(message, sessionDataDict, this, beginString, msgType);
         }
 
+        public static void CheckHasNoRepeatedTags(FieldMap map)
+        {
+            if (map.RepeatedTags.Count > 0)
+                throw new RepeatedTag(map.RepeatedTags[0].Tag);
+        }
+
         public void CheckMsgType(string msgType)
         {
             if (!_messages.ContainsKey(msgType))
@@ -197,19 +203,72 @@ namespace QuickFix
             */
         }
 
+        public void Iterate(FieldMap map, string msgType)
+        {
+            DataDictionaryParser.CheckHasNoRepeatedTags(map);
+
+            int lastField = 0;
+            foreach (KeyValuePair<int, Fields.IField> kvp in map)
+            {
+                Fields.IField field = kvp.Value;
+                if (lastField != 0 && field.Tag == lastField)
+                    throw new RepeatedTag(lastField);
+                CheckHasValue(field);
+
+                if (null != this.Version && this.Version.Length > 0)
+                {
+                    CheckValidFormat(field);
+                    CheckValue(field);
+
+                    if (ShouldCheckTag(field))
+                    {
+                        CheckValidTagNumber(field);
+                        if (!Message.IsHeaderField(field.Tag, this) && !Message.IsTrailerField(field.Tag, this))
+                        {
+                            CheckIsInMessage(field, msgType);
+                            CheckGroupCount(field, map, msgType);
+                        }
+                    }
+                }
+
+                lastField = field.Tag;
+            }
+        }
+
         /// FIXME
-        public void Iterate(Message message, string msgType)
+        public void CheckHasValue(Fields.IField field)
         {
         }
 
         /// FIXME
-        public void Iterate(Header message, string msgType)
+        public void CheckValidFormat(Fields.IField field)
         {
         }
 
         /// FIXME
-        public void Iterate(Trailer trailer, string msgType)
+        public void CheckValidTagNumber(Fields.IField field)
         {
+        }
+
+        /// FIXME
+        public void CheckValue(Fields.IField field)
+        {
+        }
+
+        /// FIXME
+        public void CheckIsInMessage(Fields.IField field, string msgType)
+        {
+        }
+
+        /// FIXME
+        public void CheckGroupCount(Fields.IField field, FieldMap map, string msgType)
+        {
+        }
+
+        /// FIXME
+        public bool ShouldCheckTag(Fields.IField field)
+        {
+            return false;
         }
 
         # region Parsing Methods

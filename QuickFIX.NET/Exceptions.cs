@@ -215,6 +215,12 @@ namespace QuickFix
     {
         public IncorrectTagValue(int field) : base(field, FixValues.SessionRejectReason.VALUE_IS_INCORRECT) { }
     }
-
+    /// <summary>
+    /// Repeated tag not part of repeating group
+    /// </summary>
+    public class RepeatedTag : TagException
+    {
+        public RepeatedTag(int field) : base(field, FixValues.SessionRejectReason.TAG_APPEARS_MORE_THAN_ONCE) { }
+    }
     #endregion
 }
