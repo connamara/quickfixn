@@ -222,7 +222,7 @@ namespace QuickFix
 
                     if (ShouldCheckTag(field))
                     {
-                        CheckValidTagNumber(field);
+                        CheckValidTagNumber(field.Tag);
                         if (!Message.IsHeaderField(field.Tag, this) && !Message.IsTrailerField(field.Tag, this))
                         {
                             CheckIsInMessage(field, msgType);
@@ -238,6 +238,8 @@ namespace QuickFix
         /// FIXME
         public void CheckHasValue(Fields.IField field)
         {
+            if (this.CheckFieldsHaveValues && (field.ToString().Length < 1))
+                throw new NoTagValue(field.Tag);
         }
 
         /// FIXME
@@ -245,9 +247,10 @@ namespace QuickFix
         {
         }
 
-        /// FIXME
-        public void CheckValidTagNumber(Fields.IField field)
+        public void CheckValidTagNumber(int tag)
         {
+            if (!_fields.Contains(tag))
+                throw new InvalidTagNumber(tag);
         }
 
         /// FIXME
@@ -255,9 +258,13 @@ namespace QuickFix
         {
         }
 
-        /// FIXME
         public void CheckIsInMessage(Fields.IField field, string msgType)
         {
+            DDFieldMap dd;
+            if (_messages.TryGetValue(msgType, out dd))
+                if (dd.Fields.Contains(field.Tag))
+                    return;
+            throw new TagNotDefinedForMessage(field.Tag, msgType);
         }
 
         /// FIXME
@@ -265,10 +272,11 @@ namespace QuickFix
         {
         }
 
-        /// FIXME
         public bool ShouldCheckTag(Fields.IField field)
         {
-            return false;
+            if (!this.CheckUserDefinedFields && (field.Tag >= Fields.Limits.USER_MIN))
+                return false;
+            return true;
         }
 
         # region Parsing Methods
