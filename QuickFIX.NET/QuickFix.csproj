@@ -52,6 +52,7 @@
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />
     <Compile Include="Fields\Converters\CheckSumConverter.cs" />
+    <Compile Include="Fields\Limits.cs" />
     <Compile Include="FileLog.cs" />
     <Compile Include="FileLogFactory.cs" />
     <Compile Include="FileStoreFactory.cs" />

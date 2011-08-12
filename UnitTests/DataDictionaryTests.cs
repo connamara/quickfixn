@@ -199,5 +199,15 @@ namespace UnitTests
                 Assert.Fail("Unexpected exception (RequiredTagMissing): " + e.Message + " (" + e.field + ")");
             }
         }
+
+        [Test]
+        public void CheckValidTagNumber()
+        {
+            DataDictionaryParser dd = new DataDictionaryParser("../../../spec/fix/FIX42.xml");
+            Assert.Throws<InvalidTagNumber>(delegate { dd.CheckValidTagNumber(5000); });
+            Assert.DoesNotThrow(delegate { dd.CheckValidTagNumber(49); });
+            Assert.DoesNotThrow(delegate { dd.CheckValidTagNumber(10); });
+            Assert.DoesNotThrow(delegate { dd.CheckValidTagNumber(58); });
+        }
     }
 }

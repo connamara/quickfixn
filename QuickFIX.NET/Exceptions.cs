@@ -199,7 +199,12 @@ namespace QuickFix
     /// </summary>
     public class TagNotDefinedForMessage : TagException
     {
-        public TagNotDefinedForMessage(int field) : base(field, FixValues.SessionRejectReason.TAG_NOT_DEFINED_FOR_THIS_MESSAGE_TYPE) { }
+        public string msgType;
+
+        public TagNotDefinedForMessage(int field, string msgType) : base(field, FixValues.SessionRejectReason.TAG_NOT_DEFINED_FOR_THIS_MESSAGE_TYPE)
+        {
+            this.msgType = msgType;
+        }
     }
     /// <summary>
     /// Field exists in message without a value
