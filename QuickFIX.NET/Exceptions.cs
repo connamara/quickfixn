@@ -166,8 +166,16 @@ namespace QuickFix
             this.field = field;
             this.sessionRejectReason = new QuickFix.FixValues.SessionRejectReason(FixValues.SessionRejectReason.OTHER.Value, msg);
         }
+
         public TagException(int field, FixValues.SessionRejectReason reason)
             : base(reason.Description)
+        {
+            this.field = field;
+            this.sessionRejectReason = reason;
+        }
+
+        public TagException(int field, FixValues.SessionRejectReason reason, System.Exception innerException)
+            : base(reason.Description, innerException)
         {
             this.field = field;
             this.sessionRejectReason = reason;
@@ -226,6 +234,15 @@ namespace QuickFix
     public class RepeatedTag : TagException
     {
         public RepeatedTag(int field) : base(field, FixValues.SessionRejectReason.TAG_APPEARS_MORE_THAN_ONCE) { }
+    }
+    /// <summary>
+    /// Field has a badly formatted value
+    /// </summary>
+    public class IncorrectDataFormat : TagException
+    {
+        public IncorrectDataFormat(int field, System.Exception innerException)
+            : base(field, FixValues.SessionRejectReason.INCORRECT_DATA_FORMAT_FOR_VALUE, innerException) 
+        { }
     }
     #endregion
 }

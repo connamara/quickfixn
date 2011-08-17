@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace QuickFix.Fields.Converters
 {
     /// <summary>
@@ -10,8 +6,13 @@ namespace QuickFix.Fields.Converters
     /// </summary>
     public static class IntConverter
     {
+        public const int ASCII_ZERO = 48;
+        public const int ASCII_NINE = 57;
+        public const int ASCII_MINUS = 45;
+
         /// <summary>
-        /// Converts string to int
+        /// TODO can we use NumberFormatInfo or NumberStyles to avoid this bit of ASCII hackery?
+        /// Converts string to int.
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
@@ -19,22 +20,28 @@ namespace QuickFix.Fields.Converters
         {
             try
             {
+                if ((null == i) || (i.Length < 1))
+                    throw new FieldConvertError("The argument string cannot be null or empty");
+                int asciiValOfFirstChar = System.Convert.ToInt32(i[0]);
+                if ((asciiValOfFirstChar < ASCII_ZERO) || (asciiValOfFirstChar > ASCII_NINE))
+                    if (asciiValOfFirstChar != ASCII_MINUS)
+                        throw new FieldConvertError("Could not convert string to int (" + i + "): The first character must be a digit or a minus sign");
                 return System.Convert.ToInt32(i);
             }
-            catch (FormatException e)
+            catch (System.FormatException e)
             {
-                throw new FieldConvertError("could not convert string to int (" + i + ")", e);
+                throw new FieldConvertError("Could not convert string to int (" + i + ")", e);
             }
-            catch (OverflowException e)
+            catch (System.OverflowException e)
             {
-                throw new FieldConvertError("could not convert string to int(" + i + ")", e);
+                throw new FieldConvertError("Could not convert string to int(" + i + ")", e);
             }
         }
 
         /// <summary>
         /// convert integer to string
         /// </summary>
-        public static string Convert(Int64 i)
+        public static string Convert(System.Int64 i)
         {
             return i.ToString();
         }
