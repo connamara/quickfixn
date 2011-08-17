@@ -14,26 +14,29 @@ namespace QuickFix.Fields.Converters
         /// convert string to decimal
         /// </summary>
         /// <exception cref="BadConversionException"/>
-        public static Decimal Convert(string stringVal)
+        public static Decimal Convert(string d)
         {
             try
             {
-                return System.Convert.ToDecimal(stringVal);
+                if((null == d) || (d.Length < 1))
+                    throw new FieldConvertError("The argument string cannot be null or empty");
+                int asciiValOfFirstChar = System.Convert.ToInt32(d[0]);
+                if ((asciiValOfFirstChar < IntConverter.ASCII_ZERO) || (asciiValOfFirstChar > IntConverter.ASCII_NINE))
+                    if (asciiValOfFirstChar != IntConverter.ASCII_MINUS)
+                        throw new FieldConvertError("Could not convert string to decimal (" + d + "): The first character must be a digit or a minus sign");
+                return System.Convert.ToDecimal(d);
             }
             catch (System.OverflowException e)
             {
-                throw new FieldConvertError(
-                    "could not convert string to decimal, str=" + stringVal, e);
+                throw new FieldConvertError("Could not convert string to decimal (" + d + ")", e);
             }
             catch (System.FormatException e)
             {
-                throw new FieldConvertError(
-                    "could not convert string to decimal, str=" + stringVal, e);
+                throw new FieldConvertError("Could not convert string to decimal (" + d + ")", e);
             }
             catch (System.ArgumentNullException e)
             {
-                throw new FieldConvertError(
-                    "could not convert string to decimal, str=" + stringVal, e);
+                throw new FieldConvertError("Could not convert string to decimal (" + d + ")", e);
             }
         }
 

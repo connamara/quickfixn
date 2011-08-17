@@ -242,9 +242,34 @@ namespace QuickFix
                 throw new NoTagValue(field.Tag);
         }
 
-        /// FIXME
         public void CheckValidFormat(Fields.IField field)
         {
+            try
+            {
+                Type type;
+                if (!TryGetFieldType(field.Tag, out type))
+                    return;
+
+                if (type.Equals(typeof(Fields.StringField)))
+                    return;
+                else if (type.Equals(typeof(Fields.CharField)))
+                    Fields.Converters.CharConverter.Convert(field.ToString());
+                else if (type.Equals(typeof(Fields.DateTimeField)))
+                    Fields.Converters.DateTimeConverter.Convert(field.ToString());
+                else if (type.Equals(typeof(Fields.IntField)))
+                    Fields.Converters.IntConverter.Convert(field.ToString());
+                else if (type.Equals(typeof(Fields.DecimalField)))
+                    Fields.Converters.DecimalConverter.Convert(field.ToString());
+                else if (type.Equals(typeof(Fields.BooleanField)))
+                    Fields.Converters.BoolConverter.Convert(field.ToString());
+                else
+                    return;
+
+            }
+            catch (FieldConvertError e)
+            {
+                throw new IncorrectDataFormat(field.Tag, e);
+            }
         }
 
         public void CheckValidTagNumber(int tag)
@@ -360,6 +385,18 @@ namespace QuickFix
                 return _fieldTypes[tag].FieldType;
             else
                 throw new FieldNotFoundException(tag);
+        }
+
+        public bool TryGetFieldType(int tag, out Type result)
+        {
+            FieldEntry fieldEntry;
+            if (_fieldTypes.TryGetValue(tag, out fieldEntry))
+            {
+                result = fieldEntry.FieldType;
+                return true;
+            }
+            result = null;
+            return false;
         }
 
         /// <summary>

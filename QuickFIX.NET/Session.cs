@@ -331,6 +331,8 @@ namespace QuickFix
             }
             catch (TagException e)
             {
+                if (null != e.InnerException)
+                    this.Log.OnEvent(e.InnerException.Message);
                 GenerateReject(message, e.sessionRejectReason, e.field);
             }
             catch (UnsupportedVersion)
@@ -801,7 +803,7 @@ namespace QuickFix
             if ((0 != field) || FixValues.SessionRejectReason.INVALID_TAG_NUMBER.Equals(reason))
             {
                 PopulateSessionRejectReason(reject, field, reason.Description);
-                this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + reason.Value + ":" + field);
+                this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + reason.Description + " (Field=" + field + ")");
             }
             else
             {
