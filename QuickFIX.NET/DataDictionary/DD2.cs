@@ -13,9 +13,11 @@ namespace QuickFix.DataDictionary
         public Dictionary<int, DDField> FieldsByTag = new Dictionary<int, DDField>();
         public Dictionary<String, DDField> FieldsByName = new Dictionary<string, DDField>();
         public Dictionary<String, DDMap> Messages = new Dictionary<string, DDMap>();
+        private XmlDocument RootDoc;
 
 		public void Load(String path) {
             XmlDocument doc = new XmlDocument();
+            RootDoc = doc;
             doc.Load(path);
             setVersionInfo(doc);
             parseFields(doc);
@@ -96,6 +98,13 @@ namespace QuickFix.DataDictionary
                 grp.Delim = fld;
                 parseMsgEl(grpEl, grp);
                 ddmap.Groups.Add(fld.Tag, grp);
+            }
+
+            foreach (XmlNode compEl in node.SelectNodes(".//component"))
+            {
+                String name = compEl.Attributes["name"].Value;
+                XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + name + "']");
+                parseMsgEl(compNode, ddmap);
             }
         }
     }
