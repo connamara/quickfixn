@@ -76,11 +76,39 @@ HERE
             :base(Tags.#{field[:name]}) {}
         public #{field[:name]}(#{field[:base_type]} val)
             :base(Tags.#{field[:name]}, val) {}
+#{fix_values(field)}
     }
 
 HERE
   end
 
+  def self.fix_values fld
+		return '' if fld[:values].nil? or fld[:values].empty?
+		vals = ["\n", "        // Field Enumerations"]
+		vals += fld[:values].map do |val|
+			enum = val[:enum].clone
+			desc = val[:desc].clone
+
+			# make desc ok for C# vars
+		  desc = 'VAL_' + desc if desc =~ /^(\d+)(.*)/
+			desc.gsub!('.','_')
+
+		  case fld[:base_type]
+			when 'int'
+		    "        public const int #{desc} = #{enum};"
+			when 'string'
+		    "        public const string #{desc} = \"#{enum}\";"
+			when 'char'
+		    "        public const char #{desc} = '#{enum}';"
+			when 'Boolean'
+				tf = (enum=='Y' ? "true;" : "false;")
+		    "        public const Boolean #{desc} = #{tf}"
+			else
+				raise "bad field val #{fld[:name]} #{fld[:base_type]} - #{val.inspect}"
+			end
+		end
+		vals.join("\n")
+  end
 
 end
 

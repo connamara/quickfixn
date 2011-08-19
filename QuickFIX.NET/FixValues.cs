@@ -88,7 +88,7 @@ namespace QuickFix
 
         public class MsgType
         {
-            public const string HEARTBEAT = "0";
+            public const string HEARTBEAT = Fields.MsgType.HEARTBEAT;
             public const string TEST_REQUEST = "1";
             public const string RESEND_REQUEST = "2";
             public const string REJECT = "3";
