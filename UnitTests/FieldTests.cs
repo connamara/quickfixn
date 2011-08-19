@@ -131,5 +131,16 @@ namespace UnitTests
             Assert.That("iiiD4", Is.EqualTo(acct.Obj));
             Assert.That(Tags.Account, Is.EqualTo(acct.Tag));
         }
+
+        [Test]
+        public void EnumFieldTest()
+        {
+            CommType ct = new CommType(CommType.PER_UNIT);
+            Assert.That('1', Is.EqualTo(ct.getValue()));
+            ExecInst ei = new ExecInst(ExecInst.STRICT_LIMIT);
+            Assert.That("b", Is.EqualTo(ei.getValue()));
+            AllocStatus ass = new AllocStatus(AllocStatus.REVERSED);
+            Assert.That(7, Is.EqualTo(ass.getValue()));
+        }
     }
 }
