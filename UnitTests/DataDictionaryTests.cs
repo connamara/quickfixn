@@ -186,13 +186,13 @@ namespace UnitTests
             
             // missing tag 56
             Message badMsg = new Message("8=FIX.4.2\x01" + "9=37\x01" + "35=0\x01" + "34=2\x01" + "49=TW\x01" + "52=20110625-08:45:00\x01" + "10=011\x01");
-            Assert.Throws<RequiredTagMissing>(delegate { dd.CheckHasRequired(badMsg, QuickFix.FixValues.MsgType.HEARTBEAT); });
+            Assert.Throws<RequiredTagMissing>(delegate { dd.CheckHasRequired(badMsg, QuickFix.Fields.MsgType.HEARTBEAT); });
             
             // no missing tags
             Message goodMsg = new Message("8=FIX.4.2\x01" + "9=45\x01" + "35=0\x01" + "34=2\x01" + "49=TW\x01" + "56=MJKG\x01" + "52=20110625-08:45:00\x01" + "10=220\x01");
             try
             {
-                dd.CheckHasRequired(goodMsg, QuickFix.FixValues.MsgType.HEARTBEAT);
+                dd.CheckHasRequired(goodMsg, QuickFix.Fields.MsgType.HEARTBEAT);
             }
             catch (RequiredTagMissing e)
             {
