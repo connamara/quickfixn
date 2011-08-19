@@ -51,6 +51,8 @@
     <Compile Include="Applications\FIX5Application.cs" />
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />
+    <Compile Include="DataDictionary\DD2.cs" />
+    <Compile Include="DataDictionary\DDField.cs" />
     <Compile Include="Fields\Converters\CheckSumConverter.cs" />
     <Compile Include="Fields\Limits.cs" />
     <Compile Include="FileLog.cs" />
