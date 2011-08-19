@@ -45,5 +45,15 @@ namespace UnitTests
             dd.Load("../../../spec/fix/FIX44.xml");
             Assert.That(dd.Messages["3"].Fields.Count, Is.EqualTo(7));
         }
+
+        [Test]
+        public void ComponentSmokeTest()
+        {
+            QuickFix.DataDictionary.DD2 dd = new QuickFix.DataDictionary.DD2();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            QuickFix.DataDictionary.DDMap tcr = dd.Messages["AE"];
+            Assert.True(tcr.Fields.ContainsKey(55));
+            Assert.False(tcr.Fields.ContainsKey(5995));
+        }
     }
 }
