@@ -47,12 +47,22 @@ An HTML report of the test results will then be available here:
 
 
 Acceptance Tests
-----------
-To run the acceptance tests, run:
+----------------
+To run the full suite of acceptance tests:
 
     acceptance_test.bat
 
 An HTML report of the test results will then be available here:
 
     AcceptanceTests\AcceptanceTests.html
+
+To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
+
+    cd AcceptanceTests
+    runat.bat release 5001 definitions\server\fix42\14e_IncorrectEnumValue.def
+
+The test results will then be available in AcceptanceTests\TestResults.xml and
+debug information will be available in the AcceptanceTests\log directory.
+
+
 
