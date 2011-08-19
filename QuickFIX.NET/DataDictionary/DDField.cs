@@ -19,5 +19,6 @@ namespace QuickFix.DataDictionary
         public String Name;
         public HashSet<String> Enums;
         public String FldType;
+        public Boolean Required = false;
     }
 }
