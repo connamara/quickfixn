@@ -17,7 +17,7 @@ namespace AcceptanceTest
         {
             Message echo = new Message(message);
             
-            if (QuickFix.FixValues.MsgType.NEW_ORDER_SINGLE.Equals(msgType))
+            if (QuickFix.Fields.MsgType.NEW_ORDER_D.Equals(msgType))
             {
                 bool possResend = false;
                 if (message.Header.isSetField(QuickFix.Fields.Tags.PossResend))
@@ -54,7 +54,7 @@ namespace AcceptanceTest
             try
             {
                 string msgType = message.Header.GetField(QuickFix.Fields.Tags.MsgType);
-                if(QuickFix.FixValues.MsgType.NEW_ORDER_SINGLE.Equals(msgType) || QuickFix.FixValues.MsgType.SECURITY_DEFINITION.Equals(msgType))
+                if(QuickFix.Fields.MsgType.NEW_ORDER_D.Equals(msgType) || QuickFix.Fields.MsgType.SECURITY_DEFINITION.Equals(msgType))
                     Process(msgType, message, sessionID);
             }
             catch (System.Exception e)

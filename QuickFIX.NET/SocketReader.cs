@@ -95,7 +95,7 @@ namespace QuickFix
         {
             try
             {
-                if (FixValues.MsgType.LOGON.Equals(Message.GetMsgType(msg)))
+                if (Fields.MsgType.LOGON.Equals(Message.GetMsgType(msg)))
                 {
                     this.Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
                     DisconnectClient();
