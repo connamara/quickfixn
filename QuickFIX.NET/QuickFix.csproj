@@ -53,6 +53,8 @@
     <Compile Include="DataDictionaryProvider.cs" />
     <Compile Include="DataDictionary\DD2.cs" />
     <Compile Include="DataDictionary\DDField.cs" />
+    <Compile Include="DataDictionary\DDMap.cs" />
+    <Compile Include="DataDictionary\DDMsg.cs" />
     <Compile Include="Fields\Converters\CheckSumConverter.cs" />
     <Compile Include="Fields\Limits.cs" />
     <Compile Include="FileLog.cs" />

@@ -37,5 +37,13 @@ namespace UnitTests
             Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "1"), Is.EqualTo(true));
             Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "CONNECTED"), Is.EqualTo(false));
         }
+
+        [Test]
+        public void BasicMessageTest()
+        {
+            QuickFix.DataDictionary.DD2 dd = new QuickFix.DataDictionary.DD2();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            Assert.That(dd.Messages["3"].Fields.Count, Is.EqualTo(7));
+        }
     }
 }
