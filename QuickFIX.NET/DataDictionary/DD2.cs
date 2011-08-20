@@ -15,6 +15,59 @@ namespace QuickFix.DataDictionary
         public Dictionary<String, DDMap> Messages = new Dictionary<string, DDMap>();
         private XmlDocument RootDoc;
 
+        public bool CheckFieldsOutOfOrder { get; set; }
+        public bool CheckFieldsHaveValues { get; set; }
+        public bool CheckUserDefinedFields { get; set; }
+
+        public DD2()
+        {
+        }
+
+        public DD2(String path)
+            :this()
+        {
+            Load(path);
+        }
+
+        public void Validate(Message message, DD2 sessionDataDict, DD2 appDataDict, string beginString, string msgType)
+        {
+        }
+
+        public void Validate(Message message, string beginString, string msgType)
+        {
+            Validate(message, false, beginString, msgType);
+        }
+
+        public void Validate(Message message, bool bodyOnly, string beginString, string msgType)
+        {
+            DD2 sessionDataDict = null;
+            if (!bodyOnly)
+                sessionDataDict = this;
+            Validate(message, sessionDataDict, this, beginString, msgType);
+        }
+
+        public DD2(DD2 src)
+        {
+            this.Messages = src.Messages;
+            this.FieldsByName = src.FieldsByName;
+            this.FieldsByTag = src.FieldsByTag;
+        }
+
+        /// FIXME
+        public bool IsHeaderField(int tag)
+        {
+            System.Console.WriteLine("FIXME - IsHeaderField not implemented!");
+            return false;
+        }
+
+        /// FIXME
+        public bool IsTrailerField(int tag)
+        {
+            System.Console.WriteLine("FIXME - IsTrailerField not implemented!");
+            return false;
+        }
+
+
 		public void Load(String path) {
             XmlDocument doc = new XmlDocument();
             RootDoc = doc;

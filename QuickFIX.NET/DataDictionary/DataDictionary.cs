@@ -223,7 +223,7 @@ namespace QuickFix
                     if (ShouldCheckTag(field))
                     {
                         CheckValidTagNumber(field.Tag);
-                        if (!Message.IsHeaderField(field.Tag, this) && !Message.IsTrailerField(field.Tag, this))
+                        //if (!Message.IsHeaderField(field.Tag, this) && !Message.IsTrailerField(field.Tag, this))
                         {
                             CheckIsInMessage(field, msgType);
                             CheckGroupCount(field, map, msgType);

@@ -70,13 +70,13 @@ namespace QuickFix
             : this(msgstr, null, null, validate)
         {  }
 
-        public Message(string msgstr, DataDictionaryParser dataDictionary, bool validate)
+        public Message(string msgstr, DataDictionary.DD2 dataDictionary, bool validate)
             : this()
         {
             FromString(msgstr, validate, dataDictionary, dataDictionary);
         }
 
-        public Message(string msgstr, DataDictionaryParser sessionDataDictionary, DataDictionaryParser applicationDataDictionary, bool validate)
+        public Message(string msgstr, DataDictionary.DD2 sessionDataDictionary, DataDictionary.DD2 applicationDataDictionary, bool validate)
             : this()
         {
             FromStringHeader(msgstr);
@@ -121,7 +121,7 @@ namespace QuickFix
             return (new Fields.MsgType(msgstr.Substring(valbeg, (valend - valbeg))));
         }
 
-        public static Fields.StringField ExtractField(string msgstr, ref int pos, DataDictionaryParser sessionDD, DataDictionaryParser appDD)
+        public static Fields.StringField ExtractField(string msgstr, ref int pos, DataDictionary.DD2 sessionDD, DataDictionary.DD2 appDD)
         {
             try
             {
@@ -211,7 +211,7 @@ namespace QuickFix
                     return false;
             }
         }
-        public static bool IsHeaderField(int tag, DataDictionaryParser dd)
+        public static bool IsHeaderField(int tag, DataDictionary.DD2 dd)
         {
             if (IsHeaderField(tag))
                 return true;
@@ -232,7 +232,7 @@ namespace QuickFix
                     return false;
             }
         }
-        public static bool IsTrailerField(int tag, DataDictionaryParser dd)
+        public static bool IsTrailerField(int tag, DataDictionary.DD2 dd)
         {
             if (IsTrailerField(tag))
                 return true;
@@ -310,7 +310,7 @@ namespace QuickFix
             return true;
         }
 
-        public void FromString(string msgstr, bool validate, DataDictionaryParser sessionDataDictionary, DataDictionaryParser applicationDataDictionary)
+        public void FromString(string msgstr, bool validate, DataDictionary.DD2 sessionDataDictionary, DataDictionary.DD2 applicationDataDictionary)
         {
             Clear();
 
