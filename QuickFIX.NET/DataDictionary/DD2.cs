@@ -76,35 +76,39 @@ namespace QuickFix.DataDictionary
         private void parseMsgEl(XmlNode node, DDMap ddmap)
         {
             if (!node.HasChildNodes) { return; }
-            foreach (XmlNode fldEl in node.SelectNodes(".//field"))
+            foreach (XmlNode childNode in node.ChildNodes)
             {
-                DDField fld = FieldsByName[fldEl.Attributes["name"].Value];
-                if(fldEl.Attributes["required"].Value == "Y") {
-                    fld.Required = true;
-                }
-                if (!ddmap.Fields.ContainsKey(fld.Tag))
+                if( childNode.Name == "field" )
                 {
-                    ddmap.Fields.Add(fld.Tag, fld);
+                    DDField fld = FieldsByName[childNode.Attributes["name"].Value];
+                    if (childNode.Attributes["required"].Value == "Y")
+                    {
+                        fld.Required = true;
+                    }
+                    if (!ddmap.Fields.ContainsKey(fld.Tag))
+                    {
+                        ddmap.Fields.Add(fld.Tag, fld);
+                    }
                 }
-            }
-            foreach (XmlNode grpEl in node.SelectNodes(".//group"))
-            {
-                DDField fld = FieldsByName[grpEl.Attributes["name"].Value];
-                DDGrp grp = new DDGrp();
-                if (grpEl.Attributes["required"].Value == "Y") {
-                    fld.Required = true;
-                    grp.Required = true;
+                else if(childNode.Name == "group")
+                {
+                    DDField fld = FieldsByName[childNode.Attributes["name"].Value];
+                    DDGrp grp = new DDGrp();
+                    if (childNode.Attributes["required"].Value == "Y")
+                    {
+                        fld.Required = true;
+                        grp.Required = true;
+                    }
+                    grp.Delim = fld;
+                    parseMsgEl(childNode, grp);
+                    ddmap.Groups.Add(fld.Tag, grp);
                 }
-                grp.Delim = fld;
-                parseMsgEl(grpEl, grp);
-                ddmap.Groups.Add(fld.Tag, grp);
-            }
-
-            foreach (XmlNode compEl in node.SelectNodes(".//component"))
-            {
-                String name = compEl.Attributes["name"].Value;
-                XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + name + "']");
-                parseMsgEl(compNode, ddmap);
+                else if(childNode.Name == "component")
+                {
+                    String name = childNode.Attributes["name"].Value;
+                    XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + name + "']");
+                    parseMsgEl(compNode, ddmap);
+                }
             }
         }
     }
