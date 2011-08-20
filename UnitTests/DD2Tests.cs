@@ -55,5 +55,16 @@ namespace UnitTests
             Assert.True(tcr.Fields.ContainsKey(55));
             Assert.False(tcr.Fields.ContainsKey(5995));
         }
+
+        [Test]
+        public void GroupTest()
+        {
+            QuickFix.DataDictionary.DD2 dd = new QuickFix.DataDictionary.DD2();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            QuickFix.DataDictionary.DDMap tcrr = dd.Messages["AD"];
+            Assert.That(tcrr.Groups[711].Fields[311].Name, Is.EqualTo("UnderlyingSymbol"));
+            QuickFix.DataDictionary.DDMap tcr = dd.Messages["AE"];
+            Assert.That(tcr.Groups[711].Groups[457].Fields[458].Name, Is.EqualTo("UnderlyingSecurityAltID"));
+        }
     }
 }
