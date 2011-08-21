@@ -36,6 +36,8 @@ namespace UnitTests
             dd.Load("../../../spec/fix/FIX44.xml");
             Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "1"), Is.EqualTo(true));
             Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "CONNECTED"), Is.EqualTo(false));
+            Assert.False(dd.FieldsByTag[1].HasEnums());
+            Assert.True(dd.FieldsByTag[945].HasEnums());
         }
 
         [Test]
