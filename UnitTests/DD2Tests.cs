@@ -66,5 +66,29 @@ namespace UnitTests
             QuickFix.DataDictionary.DDMap tcr = dd.Messages["AE"];
             Assert.That(tcr.Groups[711].Groups[457].Fields[458].Name, Is.EqualTo("UnderlyingSecurityAltID"));
         }
+
+        [Test]
+        public void ReqFldTest()
+        {
+            QuickFix.DataDictionary.DD2 dd = new QuickFix.DataDictionary.DD2("../../../spec/fix/FIX44.xml");
+            Assert.True(dd.Messages["AE"].ReqFields.Contains(571));
+            Assert.False(dd.Messages["AE"].ReqFields.Contains(828));
+        }
+
+        [Test]
+        public void HeaderTest()
+        {
+            QuickFix.DataDictionary.DD2 dd = new QuickFix.DataDictionary.DD2("../../../spec/fix/FIX44.xml");
+            Assert.True(dd.Header.ReqFields.Contains(9));
+            Assert.That(dd.Header.Fields.Count, Is.EqualTo(26));
+        }
+
+        [Test]
+        public void TrailerTest()
+        {
+            QuickFix.DataDictionary.DD2 dd = new QuickFix.DataDictionary.DD2("../../../spec/fix/FIX44.xml");
+            Assert.True(dd.Trailer.ReqFields.Contains(10));
+            Assert.That(dd.Trailer.Fields.Count, Is.EqualTo(3));
+        }
     }
 }

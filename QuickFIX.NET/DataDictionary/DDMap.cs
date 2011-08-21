@@ -9,6 +9,7 @@ namespace QuickFix.DataDictionary
     {
         public Dictionary<int, DDField> Fields = new Dictionary<int, DDField>();
         public Dictionary<int, DDMap> Groups = new Dictionary<int, DDMap>();
+        public HashSet<int> ReqFields = new HashSet<int>();
 
         public void AddField(DDField fld)
         {
