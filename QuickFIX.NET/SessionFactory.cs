@@ -7,7 +7,7 @@ namespace QuickFix
         protected Application application_;
         protected MessageStoreFactory messageStoreFactory_;
         protected LogFactory logFactory_;
-        protected Dictionary<string,DataDictionary.DD2> dictionariesByPath_ = new Dictionary<string,DataDictionary.DD2>();
+        protected Dictionary<string,DataDictionary.DataDictionary> dictionariesByPath_ = new Dictionary<string,DataDictionary.DataDictionary>();
 
         public SessionFactory(Application app, MessageStoreFactory storeFactory)
             : this(app, storeFactory, null)
@@ -100,17 +100,17 @@ namespace QuickFix
             return session;
         }
 
-        protected DataDictionary.DD2 createDataDictionary(SessionID sessionID, QuickFix.Dictionary settings, string settingsKey)
+        protected DataDictionary.DataDictionary createDataDictionary(SessionID sessionID, QuickFix.Dictionary settings, string settingsKey)
         {
-            DataDictionary.DD2 dd;
+            DataDictionary.DataDictionary dd;
             string path = settings.GetString(settingsKey);
             if (!dictionariesByPath_.TryGetValue(path, out dd))
             {
-                dd = new DataDictionary.DD2(path);
+                dd = new DataDictionary.DataDictionary(path);
                 dictionariesByPath_[path] = dd;
             }
 
-            DataDictionary.DD2 ddCopy = new DataDictionary.DD2(dd);
+            DataDictionary.DataDictionary ddCopy = new DataDictionary.DataDictionary(dd);
 
             if (settings.Has(SessionSettings.VALIDATE_FIELDS_OUT_OF_ORDER))
                 ddCopy.CheckFieldsOutOfOrder = settings.GetBool(SessionSettings.VALIDATE_FIELDS_OUT_OF_ORDER);
@@ -124,7 +124,7 @@ namespace QuickFix
 
         protected void ProcessFixDataDictionary(SessionID sessionID, Dictionary settings, DataDictionaryProvider provider)
         {
-            DataDictionary.DD2 dataDictionary = createDataDictionary(sessionID, settings, SessionSettings.DATA_DICTIONARY);
+            DataDictionary.DataDictionary dataDictionary = createDataDictionary(sessionID, settings, SessionSettings.DATA_DICTIONARY);
             provider.AddTransportDataDictionary(sessionID.BeginString, dataDictionary);
             provider.AddApplicationDataDictionary(FixValues.ApplVerID.FromBeginString(sessionID.BeginString), dataDictionary);
         }

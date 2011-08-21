@@ -5,7 +5,7 @@ using System.Xml.XPath;
 
 namespace QuickFix.DataDictionary
 {
-    public class DD2
+    public class DataDictionary
     {
 		public string MajorVersion { get; private set; }
 		public string MinorVersion { get; private set; }
@@ -22,21 +22,21 @@ namespace QuickFix.DataDictionary
         public DDMap Header = new DDMap();
         public DDMap Trailer = new DDMap();
 
-        public DD2()
+        public DataDictionary()
         {
             CheckFieldsHaveValues = true;
             CheckFieldsOutOfOrder = true;
             CheckUserDefinedFields = true;
         }
 
-        public DD2(String path)
+        public DataDictionary(String path)
             :this()
         {
             Load(path);
         }
 
         
-        public DD2(DD2 src)
+        public DataDictionary(DataDictionary src)
             :this()
         {
             this.Messages = src.Messages;
@@ -55,7 +55,7 @@ namespace QuickFix.DataDictionary
             this.Trailer = src.Trailer;
         }
 
-        public void Validate(Message message, DD2 sessionDataDict, DD2 appDataDict, string beginString, string msgType)
+        public void Validate(Message message, DataDictionary sessionDataDict, DataDictionary appDataDict, string beginString, string msgType)
         {
             bool bodyOnly = (null == sessionDataDict);
 
@@ -92,7 +92,7 @@ namespace QuickFix.DataDictionary
 
         public void Validate(Message message, bool bodyOnly, string beginString, string msgType)
         {
-            DD2 sessionDataDict = null;
+            DataDictionary sessionDataDict = null;
             if (!bodyOnly)
                 sessionDataDict = this;
             Validate(message, sessionDataDict, this, beginString, msgType);
@@ -139,7 +139,7 @@ namespace QuickFix.DataDictionary
 
         public void Iterate(FieldMap map, string msgType)
         {
-            DD2.CheckHasNoRepeatedTags(map);
+            DataDictionary.CheckHasNoRepeatedTags(map);
 
             int lastField = 0;
             foreach (KeyValuePair<int, Fields.IField> kvp in map)
