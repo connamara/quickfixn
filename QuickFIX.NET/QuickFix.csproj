@@ -51,10 +51,9 @@
     <Compile Include="Applications\FIX5Application.cs" />
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />
-    <Compile Include="DataDictionary\DD2.cs" />
+    <Compile Include="DataDictionary\DataDictionary.cs" />
     <Compile Include="DataDictionary\DDField.cs" />
     <Compile Include="DataDictionary\DDMap.cs" />
-    <Compile Include="DataDictionary\DDMsg.cs" />
     <Compile Include="Fields\Converters\CheckSumConverter.cs" />
     <Compile Include="Fields\Limits.cs" />
     <Compile Include="FileLog.cs" />
@@ -70,10 +69,7 @@
     <Compile Include="MessageStoreFactory.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\Settings.cs" />
-    <Compile Include="DataDictionary\DataDictionary.cs" />
-    <Compile Include="DataDictionary\DDGroup.cs" />
     <Compile Include="DataDictionary\DictionaryParseException.cs" />
-    <Compile Include="DataDictionary\FieldEntry.cs" />
     <Compile Include="DataDictionary\InvalidMessageTypeException.cs" />
     <Compile Include="DataDictionary\MissingRequiredFieldException.cs" />
     <Compile Include="DataDictionary\XMLMsgComponent.cs" />
