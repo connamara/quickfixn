@@ -169,7 +169,6 @@ namespace QuickFix.DataDictionary
             }
         }
 
-        /// FIXME
         public void CheckHasValue(Fields.IField field)
         {
             if (this.CheckFieldsHaveValues && (field.ToString().Length < 1))
