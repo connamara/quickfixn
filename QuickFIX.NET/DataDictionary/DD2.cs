@@ -24,6 +24,9 @@ namespace QuickFix.DataDictionary
 
         public DD2()
         {
+            CheckFieldsHaveValues = true;
+            CheckFieldsOutOfOrder = true;
+            CheckUserDefinedFields = true;
         }
 
         public DD2(String path)
@@ -34,6 +37,7 @@ namespace QuickFix.DataDictionary
 
         
         public DD2(DD2 src)
+            :this()
         {
             this.Messages = src.Messages;
             this.FieldsByName = src.FieldsByName;
