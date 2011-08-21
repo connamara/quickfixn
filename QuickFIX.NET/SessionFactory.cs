@@ -125,9 +125,8 @@ namespace QuickFix
         protected void ProcessFixDataDictionary(SessionID sessionID, Dictionary settings, DataDictionaryProvider provider)
         {
             DataDictionary.DD2 dataDictionary = createDataDictionary(sessionID, settings, SessionSettings.DATA_DICTIONARY);
-            //FIXME
-            //provider.AddTransportDataDictionary(sessionID.BeginString, dataDictionary);
-            //provider.AddApplicationDataDictionary(FixValues.ApplVerID.FromBeginString(sessionID.BeginString), dataDictionary);
+            provider.AddTransportDataDictionary(sessionID.BeginString, dataDictionary);
+            provider.AddApplicationDataDictionary(FixValues.ApplVerID.FromBeginString(sessionID.BeginString), dataDictionary);
         }
 
         private void XXXSessionTimeStuff()

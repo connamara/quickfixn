@@ -154,7 +154,7 @@ namespace QuickFix
                 sessionDataDict.Iterate(message.Trailer, msgType);
             }
 
-            appDataDict.Iterate(message, msgType);
+            appDataDict.Iterate(message, msgType);  
         }
 
         public void Validate(Message message, string beginString, string msgType)
