@@ -107,7 +107,7 @@ namespace QuickFix.DataDictionary
         public void CheckMsgType(string msgType)
         {
             if (!Messages.ContainsKey(msgType))
-                throw new InvalidMessageType(msgType);
+                throw new InvalidMessageType();
         }
 
         public void CheckHasRequired(Message message, string msgType)
