@@ -154,7 +154,7 @@ namespace QuickFix.DataDictionary
                     CheckValidFormat(field);
                     CheckValue(field);
 
-                    //if (ShouldCheckTag(field))
+                    if (ShouldCheckTag(field))
                     {
                         CheckValidTagNumber(field.Tag);
                         if (!Message.IsHeaderField(field.Tag, this) && !Message.IsTrailerField(field.Tag, this))
@@ -220,7 +220,9 @@ namespace QuickFix.DataDictionary
         public void CheckValidTagNumber(int tag)
         {
             if (!FieldsByTag.ContainsKey(tag))
+            {
                 throw new InvalidTagNumber(tag);
+            }
         }
 
         public void CheckValue(Fields.IField field)

@@ -92,5 +92,13 @@ namespace UnitTests
             Assert.True(dd.Trailer.ReqFields.Contains(10));
             Assert.That(dd.Trailer.Fields.Count, Is.EqualTo(3));
         }
+
+        [Test]
+        public void CheckValidTagTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            Assert.Throws(typeof(InvalidTagNumber),
+                delegate { dd.CheckValidTagNumber(999); });
+        }
     }
 }
