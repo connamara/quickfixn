@@ -104,24 +104,6 @@ namespace QuickFix
     }
 
     /// <summary>
-    /// Not a known message type
-    /// </summary>
-    public class InvalidMessageType : QuickFIXException
-    {
-        string msgType = "";
-
-        public InvalidMessageType()
-            : base("Invalid Message Type")
-        { }
-
-        public InvalidMessageType(string msgType)
-            : base("Invalid Message Type")
-        {
-            this.msgType = msgType;
-        }
-    }
-
-    /// <summary>
     /// Socket connection was reset by peer
     /// </summary>
     public class ConnectionResetByPeerException : QuickFIXException
@@ -244,5 +226,13 @@ namespace QuickFix
             : base(field, FixValues.SessionRejectReason.INCORRECT_DATA_FORMAT_FOR_VALUE, innerException) 
         { }
     }
+
+    public class InvalidMessageType : TagException
+    {
+        public InvalidMessageType()
+            : base(QuickFix.Fields.Tags.MsgType, FixValues.SessionRejectReason.INVALID_MSGTYPE)
+        { }
+    }
+
     #endregion
 }
