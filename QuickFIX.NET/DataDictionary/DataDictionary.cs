@@ -224,9 +224,13 @@ namespace QuickFix.DataDictionary
                 throw new InvalidTagNumber(tag);
         }
 
-        /// FIXME
         public void CheckValue(Fields.IField field)
         {
+            DDField fld = FieldsByTag[field.Tag];
+            if (fld.HasEnums() && !fld.Enums.Contains(field.ToString()))
+            {
+                throw new IncorrectTagValue(field.Tag);
+            }
         }
 
         public void CheckIsInMessage(Fields.IField field, string msgType)

@@ -23,6 +23,11 @@ namespace QuickFix.DataDictionary
         public Boolean Required = false;
         public Type FieldType;
 
+        public Boolean HasEnums()
+        {
+            return Enums.Count > 0;
+        }
+
         public Type FieldTypeFromFix(String type)
         {
             switch (type)
