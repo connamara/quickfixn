@@ -38,8 +38,8 @@ namespace QuickFix
         public SessionID SessionID { get; set; }
         public Application Application { get; set; }
         public DataDictionaryProvider DataDictionaryProvider { get; set; }
-        public DataDictionary.DD2 SessionDataDictionary { get; private set; }
-        public DataDictionary.DD2 ApplicationDataDictionary { get; private set; }
+        public DataDictionary.DataDictionary SessionDataDictionary { get; private set; }
+        public DataDictionary.DataDictionary ApplicationDataDictionary { get; private set; }
         // synchronized
         public bool HasResponder { get { lock (sync_) { return null != responder_; } } }
 
