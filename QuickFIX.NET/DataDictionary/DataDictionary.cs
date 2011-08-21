@@ -152,11 +152,11 @@ namespace QuickFix.DataDictionary
                 if (null != this.Version && this.Version.Length > 0)
                 {
                     CheckValidFormat(field);
-                    CheckValue(field);
-
+                    
                     if (ShouldCheckTag(field))
                     {
                         CheckValidTagNumber(field.Tag);
+                        CheckValue(field);
                         if (!Message.IsHeaderField(field.Tag, this) && !Message.IsTrailerField(field.Tag, this))
                         {
                             CheckIsInMessage(field, msgType);
