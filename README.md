@@ -64,5 +64,19 @@ To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
 The test results will then be available in AcceptanceTests\TestResults.xml and
 debug information will be available in the AcceptanceTests\log directory.
 
+To run a test with the debugger, 
+
+  1. Open the solution file in Visual Studio
+  2. Right click on "AcceptanceTest" project
+  3. Open the "properties" tab
+  4. Click "Debug" on the left hand nav bar
+  5. Set "Command line arguments" to "cfg\at.cfg"
+  6. Set the working folder to "... AcceptanceTest"
+  7. Save the properties
+  7. Right click the "AcceptanceTest" project, go to Debug -> Start New Instance
+  8. In command terminal, go into "AcceptanceTest" directory
+  9. Run: `ruby Runner.rb 127.0.0.1 5001 definitions\server\fix42\YourTestName.def`
+
+
 
 
