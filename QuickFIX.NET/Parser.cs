@@ -62,8 +62,8 @@ namespace QuickFix
             }
             catch (MessageParseError e)
             {
-                if (length > 0)
-                    buffer_ = buffer_.Remove(0, pos + length);
+                if ((length > 0) && (pos <= buffer_.Length))
+                    buffer_ = buffer_.Remove(0, pos);
                 else
                     buffer_ = buffer_.Remove(0, buffer_.Length);
                 throw e;
