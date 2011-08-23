@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Example_TradeClient")]
+[assembly: AssemblyTitle("TradeClient")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Amazon")]
-[assembly: AssemblyProduct("Example_TradeClient")]
-[assembly: AssemblyCopyright("Copyright © Amazon 2011")]
+[assembly: AssemblyProduct("TradeClient")]
+[assembly: AssemblyCopyright("Copyright © QuickFIX for .Net 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
