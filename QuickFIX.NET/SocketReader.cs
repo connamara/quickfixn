@@ -187,7 +187,10 @@ namespace QuickFix
             else if(realCause is MessageParseError)
             {
                 reason = "Protocol handler exception: " + cause;
-                disconnectNeeded = false;
+                if (quickFixSession == null)
+                    disconnectNeeded = true;
+                else
+                    disconnectNeeded = false;
             }
             else
             {

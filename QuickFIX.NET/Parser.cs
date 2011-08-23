@@ -28,11 +28,15 @@ namespace QuickFix
             buffer_ = buffer_.Remove(0, pos);
 
             int length = 0;
+            int msgBodyStart = 0;
+            int msgBodyEnd = 0;
 
             try
             {
                 if (!ExtractLength(out length, out pos, buffer_))
                     return false;
+
+                msgBodyStart = pos;
                 
                 pos += length;
                 if (buffer_.Length < pos)
@@ -41,12 +45,16 @@ namespace QuickFix
                 pos = buffer_.IndexOf("\x01" + "10=", pos - 1);
                 if (-1 == pos)
                     return false;
+                msgBodyEnd = pos + 1;
                 pos += 4;
 
                 pos = buffer_.IndexOf("\x01", pos);
                 if (-1 == pos)
                     return false;
                 pos += 1;
+
+                if ((msgBodyEnd - msgBodyStart) != length)
+                    throw new MessageParseError("Invalid body length");
 
                 msg = buffer_.Substring(0, pos);
                 buffer_ = buffer_.Remove(0, pos);
