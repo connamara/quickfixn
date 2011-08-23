@@ -25,6 +25,8 @@ namespace QuickFix
         public bool SentLogon { get { return state_.SentLogon; } }
         public bool ReceivedLogon { get { return state_.ReceivedLogon; } }
         public int HeartBtInt { get { return state_.HeartBtInt; } }
+        public bool CheckLatency { get; set; }
+        public int MaxLatency { get; set; }
         // unsynchronized
         public bool PersistMessages { get; set; }
         public bool RefreshOnLogon { get; set; }
@@ -325,9 +327,9 @@ namespace QuickFix
                     NextLogout(message);
                 else
                 {
-                    if (!Verify(message))
+                   if (!Verify(message))
                         return;
-                    state_.IncrNextTargetMsgSeqNum();
+                   state_.IncrNextTargetMsgSeqNum();
                 }
             }
             catch (TagException e)
@@ -368,6 +370,13 @@ namespace QuickFix
             
             if (!Verify(logon, false, true))
                 return;
+
+            if(!IsGoodTime(logon))
+            {
+                this.Log.OnEvent("Logon had bad sending time");
+                Disconnect("bad sending time");
+                return;
+            }
 
             state_.ReceivedLogon = true;
             this.Log.OnEvent("Received logon");
@@ -507,6 +516,11 @@ namespace QuickFix
                         this.Log.OnEvent("ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.EndSeqNo + " has been satisfied.");
                         state_.SetResendRange(0, 0);
                     }
+                }
+
+                if (CheckLatency && !IsGoodTime(msg))
+                {
+                    // FIXME
                 }
             }
             catch(System.Exception e)
@@ -872,6 +886,13 @@ namespace QuickFix
                 state_.Set(msgSeqNum, messageString);
             }
             state_.IncrNextSenderMsgSeqNum();
+        }
+
+        protected bool IsGoodTime(Message msg)
+        {
+            //QuickFix.Fields.SendingTime sendingTime = new SendingTime();
+            //msg.Header.getField(sendingTime);
+            return true;
         }
 
         protected bool SendRaw(Message message, int seqNum)

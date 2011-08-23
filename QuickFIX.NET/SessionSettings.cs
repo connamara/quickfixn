@@ -16,6 +16,7 @@ namespace QuickFix
         public const string USE_DATA_DICTIONARY = "UseDataDictionary";
         public const string USE_LOCAL_TIME = "UseLocalTime";
         public const string START_DAY = "StartDay";
+        public const string MAX_LATENCY = "MaxLatency";
         public const string END_DAY = "EndDay";
         public const string START_TIME = "StartTime";
         public const string END_TIME = "EndTime";
