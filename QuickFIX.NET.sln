@@ -10,7 +10,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\Unit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerformanceTests", "PerformanceTests\PerformanceTests.csproj", "{678D7A0A-D07E-4D4C-9166-E6863BF2E8FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example_TradeClient", "Example_TradeClient\Example_TradeClient.csproj", "{5ADD4955-3018-4025-9593-74560F9D5FDE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradeClient", "Examples\TradeClient\TradeClient.csproj", "{5ADD4955-3018-4025-9593-74560F9D5FDE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcceptanceTest", "AcceptanceTest\AcceptanceTest.csproj", "{B02EAF78-6335-4996-BB98-3121A4B6B0B2}"
 EndProject
