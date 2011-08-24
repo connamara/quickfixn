@@ -7,8 +7,6 @@ PerformanceTests/bin/*
 PerformanceTests/obj/*
 *.user
 UnitTests/TestResult.xml
-Examples/Executor/bin/
-Examples/Executor/obj/
 QuickFIX.NET.sln.cache
 ChangeLog
 *.swp
