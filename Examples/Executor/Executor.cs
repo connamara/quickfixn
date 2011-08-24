@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace QuickFix.Examples
+using QuickFix;
+
+namespace Executor
 {
     public class Executor : QuickFix.Application
     {

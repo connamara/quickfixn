@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6CF22B5A-C50F-4328-9279-E07D308FCC12}</ProjectGuid>
+    <ProjectGuid>{592C4909-1D3E-41C9-B6F9-505C770533A2}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Executor</RootNamespace>
-    <AssemblyName>Executor</AssemblyName>
+    <RootNamespace>TradeClient</RootNamespace>
+    <AssemblyName>TradeClient</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,14 +45,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Executor.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TradeClientApp.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\QuickFIX.NET\QuickFix.csproj">
       <Project>{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}</Project>
       <Name>QuickFix</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="tradeclient.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -62,7 +68,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)executor.cfg" "$(ProjectDir)$(OutDir)"</PostBuildEvent>
-  </PropertyGroup>
 </Project>
