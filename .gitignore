@@ -12,5 +12,11 @@ ChangeLog
 *.swp
 AcceptanceTest/AcceptanceTests.html
 AcceptanceTest/TestResult.xml
-AcceptanceTest/bin/Release/
+AcceptanceTest/bin/Debug/*
+AcceptanceTest/bin/Release/*
 AcceptanceTest/log/
+Examples/Executor/bin/*
+Examples/Executor/obj/*
+Examples/TradeClient/bin/*
+Examples/TradeClient/obj/*
+
