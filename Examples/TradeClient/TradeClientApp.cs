@@ -1,7 +1,8 @@
-﻿
-namespace QuickFix.Examples
+﻿using QuickFix;
+
+namespace TradeClient
 {
-    public class TradeClient : QuickFix.Application
+    public class TradeClientApp : QuickFix.Application
     {
         public override void FromAdmin(Message message, SessionID sessionID)
         {
@@ -66,33 +67,5 @@ namespace QuickFix.Examples
         void QueryCancelOrder()       { throw new System.NotImplementedException("FIXME - not implemented"); }
         void QueryReplaceOrder()      { throw new System.NotImplementedException("FIXME - not implemented"); }
         void QueryMarketDataRequest() { throw new System.NotImplementedException("FIXME - not implemented"); }
-
-        static void Main(string[] args)
-        {
-            if(args.Length != 1)
-            {
-                System.Console.WriteLine("usage: TradeClient.exe CONFIG_FILENAME");
-                System.Environment.Exit(2);
-            }
-            
-            string file = args[0];
-            
-            try
-            {
-                QuickFix.SessionSettings settings = new QuickFix.SessionSettings(file);
-                TradeClient application = new TradeClient();
-                QuickFix.MessageStoreFactory storeFactory = new QuickFix.FileStoreFactory(settings);
-                QuickFix.LogFactory logFactory = new QuickFix.ScreenLogFactory(settings);
-                QuickFix.Transport.SocketInitiator initiator = new QuickFix.Transport.SocketInitiator(application, storeFactory, settings, logFactory);
-                initiator.Start();
-                application.Run();
-                initiator.Stop();
-            }
-            catch(System.Exception e)
-            {
-                System.Console.WriteLine(e.Message);
-                System.Environment.Exit(1);
-            }
-        }
     }
 }
