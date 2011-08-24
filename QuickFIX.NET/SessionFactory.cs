@@ -80,6 +80,11 @@ namespace QuickFix
             if (settings.Has(SessionSettings.LOGOUT_TIMEOUT))
                 session.SetLogoutTimeout(settings.GetLong(SessionSettings.LOGOUT_TIMEOUT));
             */
+            
+            // FIXME to get from config if available
+            session.MaxLatency = 120;
+            session.CheckLatency = false;
+
             if (settings.Has(SessionSettings.RESET_ON_LOGON))
                 session.ResetOnLogon = settings.GetBool(SessionSettings.RESET_ON_LOGON);
             if (settings.Has(SessionSettings.RESET_ON_LOGOUT))
