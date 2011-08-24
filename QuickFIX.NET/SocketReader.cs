@@ -118,6 +118,7 @@ namespace QuickFix
             catch(MessageParseError e)
             {
                 this.Log("SocketReader: " + e.Message);
+                throw e;
             }
 
             msg = "";
