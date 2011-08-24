@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Executor")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Amazon")]
+[assembly: AssemblyCompany("Connamara Systems, LLC")]
 [assembly: AssemblyProduct("Executor")]
-[assembly: AssemblyCopyright("Copyright © Amazon 2011")]
+[assembly: AssemblyCopyright("Copyright © Connamara Systems, LLC 2011")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1e2b1f10-3aac-401e-a516-a2b22a4e5658")]
+[assembly: Guid("71a023fb-109c-4c98-a054-5285ff0be5fc")]
 
 // Version information for an assembly consists of the following four values:
 //
