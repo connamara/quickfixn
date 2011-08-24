@@ -520,7 +520,10 @@ namespace QuickFix
 
                 if (CheckLatency && !IsGoodTime(msg))
                 {
-                    // FIXME
+                    this.Log.OnEvent("Sending time accuracy problem");
+                    GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
+                    GenerateLogout();
+                    return false;
                 }
             }
             catch(System.Exception e)
@@ -890,11 +893,11 @@ namespace QuickFix
 
         protected bool IsGoodTime(Message msg)
         {
-            Fields.StringField fld = new StringField(Fields.Tags.SendingTime);
+            var fld = new StringField(Fields.Tags.SendingTime);
             msg.Header.getField(fld);
             System.DateTime sendingTime = Fields.Converters.DateTimeConverter.Convert(fld.getValue());
-            System.TimeSpan ts = System.DateTime.Now - sendingTime;
-            if (ts.TotalSeconds > MaxLatency)
+            System.TimeSpan tmSpan = System.DateTime.UtcNow - sendingTime;
+            if (System.Math.Abs(tmSpan.TotalSeconds) > MaxLatency)
             {
                 return false;
             }
