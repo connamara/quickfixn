@@ -894,7 +894,7 @@ namespace QuickFix
             msg.Header.getField(fld);
             System.DateTime sendingTime = Fields.Converters.DateTimeConverter.Convert(fld.getValue());
             System.TimeSpan ts = System.DateTime.Now - sendingTime;
-            if (ts.Seconds > MaxLatency)
+            if (ts.TotalSeconds > MaxLatency)
             {
                 return false;
             }
