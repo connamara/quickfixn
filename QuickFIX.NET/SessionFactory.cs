@@ -83,7 +83,7 @@ namespace QuickFix
             
             // FIXME to get from config if available
             session.MaxLatency = 120;
-            session.CheckLatency = false;
+            session.CheckLatency = true;
 
             if (settings.Has(SessionSettings.RESET_ON_LOGON))
                 session.ResetOnLogon = settings.GetBool(SessionSettings.RESET_ON_LOGON);
