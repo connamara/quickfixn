@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcceptanceTest", "Acceptanc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Executor", "Examples\Executor\Executor.csproj", "{6CF22B5A-C50F-4328-9279-E07D308FCC12}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.TradeClient", "Examples\TradeClient\Examples.TradeClient.csproj", "{592C4909-1D3E-41C9-B6F9-505C770533A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{6CF22B5A-C50F-4328-9279-E07D308FCC12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CF22B5A-C50F-4328-9279-E07D308FCC12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CF22B5A-C50F-4328-9279-E07D308FCC12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{592C4909-1D3E-41C9-B6F9-505C770533A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{592C4909-1D3E-41C9-B6F9-505C770533A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{592C4909-1D3E-41C9-B6F9-505C770533A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{592C4909-1D3E-41C9-B6F9-505C770533A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
