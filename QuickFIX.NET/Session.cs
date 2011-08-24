@@ -890,8 +890,14 @@ namespace QuickFix
 
         protected bool IsGoodTime(Message msg)
         {
-            //QuickFix.Fields.SendingTime sendingTime = new SendingTime();
-            //msg.Header.getField(sendingTime);
+            Fields.StringField fld = new StringField(Fields.Tags.SendingTime);
+            msg.Header.getField(fld);
+            System.DateTime sendingTime = Fields.Converters.DateTimeConverter.Convert(fld.getValue());
+            System.TimeSpan ts = System.DateTime.Now - sendingTime;
+            if (ts.Seconds > MaxLatency)
+            {
+                return false;
+            }
             return true;
         }
 
