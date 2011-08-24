@@ -117,11 +117,9 @@ namespace QuickFix
             }
             catch(MessageParseError e)
             {
-                this.Log("SocketReader: " + e.Message);
+                msg = "";
+                throw e;
             }
-
-            msg = "";
-            return true;
         }
 
         protected void ProcessStream()
