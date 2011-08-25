@@ -33,6 +33,8 @@ class FieldGen
 
   def self.fields_str fields
 <<HERE
+// This is a generated file.  Don't edit it directly!
+
 using System;
 
 namespace QuickFix.Fields
