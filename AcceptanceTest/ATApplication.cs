@@ -34,22 +34,22 @@ namespace AcceptanceTest
 
         #region Application Methods
 
-        public override void OnCreate(SessionID sessionID)
+        public void OnCreate(SessionID sessionID)
         {
             Session session = Session.LookupSession(sessionID);
             if (null != session)
                 session.Reset();
         }
         
-        public override void OnLogout(SessionID sessionID)
+        public void OnLogout(SessionID sessionID)
         {
             clOrdIDs_.Clear();
         }
 
-        public override void OnLogon(SessionID sessionID)
+        public void OnLogon(SessionID sessionID)
         { }
 
-        public override void FromApp(Message message, SessionID sessionID)
+        public void FromApp(Message message, SessionID sessionID)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace AcceptanceTest
             }
         }
 
-        public override void FromAdmin(Message message, SessionID sessionID)
+        public void FromAdmin(Message message, SessionID sessionID)
         { }
 
         #endregion
