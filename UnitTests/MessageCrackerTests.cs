@@ -4,6 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
+using System.Reflection;
 
 
 namespace UnitTests
@@ -22,6 +23,52 @@ namespace UnitTests
         public void Teardown()
         {
         }
+
+
+        class TheseMightBeHandlerMethods
+        {
+            // This is a handler.
+            public void OnMessage(QuickFix.FIX42.News m, SessionID s) { }
+
+            // These are NOT handlers because...
+
+            // it's private
+            private void OnMessage(QuickFix.FIX42.ListCancelRequest m, SessionID s) { }
+
+            // name doesn't match convention
+            public void NameIsWrong(QuickFix.FIX42.ListExecute m, SessionID s) { }
+
+            // params count != 2
+            public void OnMessage(QuickFix.FIX42.ListStatus m) { }
+            public void OnMessage(QuickFix.FIX42.ListStatusRequest m, SessionID s, object o) { }
+
+            // param types aren't correct
+            public void OnMessage(object o, SessionID s) { }
+            public void OnMessage(QuickFix.FIX42.ListStrikePrice m, object o) { }
+
+            // return value isn't void
+            public int OnMessage(QuickFix.FIX42.MassQuote m, SessionID s) { return 0; }
+        }
+
+        [Test]
+        public void IsHandlerMethod()
+        {
+            MethodInfo[] methods = typeof(TheseMightBeHandlerMethods).GetMethods();
+            List<MethodInfo> handlers = new List<MethodInfo>();
+
+            foreach (MethodInfo m in methods)
+            {
+                if (MessageCracker.IsHandlerMethod(m))
+                {
+                    Console.WriteLine("yes");
+                    handlers.Add(m);
+                }
+            }
+
+            Assert.AreEqual(1, handlers.Count);
+            Assert.AreEqual(handlers[0].GetParameters()[0].ParameterType, typeof(QuickFix.FIX42.News));
+        }
+
 
 
         public class TestCracker : MessageCracker
