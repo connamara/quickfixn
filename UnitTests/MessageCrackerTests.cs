@@ -60,7 +60,6 @@ namespace UnitTests
             {
                 if (MessageCracker.IsHandlerMethod(m))
                 {
-                    Console.WriteLine("yes");
                     handlers.Add(m);
                 }
             }
@@ -76,12 +75,11 @@ namespace UnitTests
             public bool CrackedNews42 { get; set; }
             public bool CrackedNews44 { get; set; }
 
-            public void OnMessage(QuickFix.FIX42.News msg) { CrackedNews42 = true; }
-            public void OnMessage(QuickFix.FIX44.News msg) { CrackedNews44 = true; }
+            public void OnMessage(QuickFix.FIX42.News msg, SessionID s) { CrackedNews42 = true; }
+            public void OnMessage(QuickFix.FIX44.News msg, SessionID s) { CrackedNews44 = true; }
         }
 
         [Test]
-        [Ignore("not passing yet")]
         public void GoldenPath()
         {
             MessageCracker mc = new TestCracker();
@@ -97,6 +95,14 @@ namespace UnitTests
             mc.Crack(new QuickFix.FIX44.News(), _DummySessionID);
             Assert.IsFalse(tc.CrackedNews42);
             Assert.IsTrue(tc.CrackedNews44);
+        }
+
+        [Test]
+        public void UnsupportedMessage()
+        {
+            MessageCracker mc = new TestCracker();
+            Assert.Throws<UnsupportedMessageType>(delegate { mc.Crack(new QuickFix.FIX42.Email(), _DummySessionID); });
+            Assert.Throws<UnsupportedMessageType>(delegate { mc.Crack(new QuickFix.FIX43.News(), _DummySessionID); });
         }
     }
 }
