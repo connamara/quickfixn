@@ -10,6 +10,8 @@ namespace QuickFix
 {
     public abstract class MessageCracker
     {
+        private Dictionary<Type, MethodInfo> _handlerMethods = new Dictionary<Type, MethodInfo>();
+
         public MessageCracker()
         {
             initialize(this);
@@ -24,19 +26,12 @@ namespace QuickFix
             {
                 if (IsHandlerMethod(m))
                 {
-                    // store it
+                    _handlerMethods[m.GetParameters()[0].ParameterType] = m;
                 }
             }
         }
 
-        //handler test:
-        //    must be:
-        //    * public
-        //    * matches convention
-        //    * 2 params
-        //    * param 0 derives from message
-        //    * param 1 is SessionID
-        //    * returns void
+
         static public bool IsHandlerMethod(MethodInfo m)
         {
             return (m.IsPublic == true
@@ -51,8 +46,13 @@ namespace QuickFix
 
         public void Crack(Message message, SessionID sessionID)
         {
-            // nothing
-        }
+            Type messageType = message.GetType();
+            MethodInfo handler = null;
 
+            if (_handlerMethods.TryGetValue(messageType, out handler))
+                handler.Invoke(this, new object[] { message, sessionID });
+            else
+                throw new UnsupportedMessageType();
+        }
     }
 }
