@@ -119,7 +119,6 @@
     <Compile Include="ThreadedSocketReactor.cs" />
     <Compile Include="Transport\SocketAcceptor.cs" />
     <Compile Include="Transport\SocketInitiator.cs" />
-    <Compile Include="UnsupportedMessageType.cs" />
     <Compile Include="Values.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

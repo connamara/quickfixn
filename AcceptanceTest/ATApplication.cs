@@ -66,6 +66,9 @@ namespace AcceptanceTest
         public void FromAdmin(Message message, SessionID sessionID)
         { }
 
+        public void ToAdmin(Message message, SessionID sessionID) { }
+        public void ToApp(Message message, SessionID sessionID) { }
+
         #endregion
     }
 }
