@@ -25,7 +25,9 @@ namespace QuickFix
             pos = buffer_.IndexOf("8=");
             if(-1 == pos)
                 return false;
+
             buffer_ = buffer_.Remove(0, pos);
+            pos = 0;
 
             int length = 0;
             int msgBodyStart = 0;
