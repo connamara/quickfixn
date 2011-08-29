@@ -629,7 +629,7 @@ namespace QuickFix
         {
             bool possDupFlag = false;
             if(msg.Header.isSetField(Fields.Tags.PossDupFlag))
-                possDupFlag = Fields.Converters.BoolConverter.Convert(msg.Header.GetField(Fields.Tags.PossDupFlag)); /// FIXME
+                possDupFlag = Fields.Converters.BoolConverter.Convert(msg.Header.GetField(Fields.Tags.PossDupFlag));
 
             if (!possDupFlag)
             {
@@ -644,6 +644,11 @@ namespace QuickFix
         /// FIXME
         protected bool DoPossDup(Message msg)
         {
+            if(!msg.Header.isSetField(Fields.Tags.OrigSendingTime))
+            {
+                GenerateReject(msg, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING, Fields.Tags.OrigSendingTime);
+                return false;
+            }
             return true;
         }
 
