@@ -530,6 +530,14 @@ namespace QuickFix
             this.Header.setField(new TargetCompID(sessionID.TargetCompID));            
         }
 
+        public SessionID GetSessionID(Message m)
+        {
+            return new SessionID(
+                m.Header.GetField(Tags.BeginString),
+                m.Header.GetField(Tags.SenderCompID),
+                m.Header.GetField(Tags.TargetCompID));
+        }
+
         public override void Clear()
         {
             field_ = 0;
