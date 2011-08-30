@@ -122,6 +122,17 @@ namespace QuickFix
             return session.Send(message);
         }
 
+        /// <summary>
+        /// Send to session indicated by header fields in message
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public static bool SendToTarget(Message message)
+        {
+            SessionID sessionID = message.GetSessionID(message);
+            return SendToTarget(message, sessionID);
+        }
+
         #endregion
 
         public bool Send(Message message)
