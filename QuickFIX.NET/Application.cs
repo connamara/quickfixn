@@ -22,7 +22,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="message"></param>
         /// <param name="sessionId"></param>
-        /// <exception name="DoNotSend">throw this to abort sending the message</exception>
+        /// <exception cref="DoNotSend">throw this to abort sending the message</exception>
         void ToApp(Message message, SessionID sessionId);
 
         /// <summary>
