@@ -655,9 +655,24 @@ namespace QuickFix
         /// FIXME
         protected bool DoPossDup(Message msg)
         {
-            if(!msg.Header.isSetField(Fields.Tags.OrigSendingTime))
+            var origSendingTimeFld = new StringField(Fields.Tags.OrigSendingTime);
+            if(!msg.Header.isSetField(origSendingTimeFld))
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING, Fields.Tags.OrigSendingTime);
+                return false;
+            }
+            msg.Header.getField(origSendingTimeFld);
+            var origSendingTime = Fields.Converters.DateTimeConverter.Convert(origSendingTimeFld.getValue());
+
+            var sendingTimeFld = new StringField(Fields.Tags.SendingTime);
+            msg.Header.getField(sendingTimeFld);
+            var sendingTime = Fields.Converters.DateTimeConverter.Convert(sendingTimeFld.getValue());
+
+            System.TimeSpan tmSpan = origSendingTime - sendingTime;
+            if (tmSpan.TotalSeconds > 0)
+            {
+                GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
+                GenerateLogout();
                 return false;
             }
             return true;
