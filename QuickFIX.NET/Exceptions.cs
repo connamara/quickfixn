@@ -3,6 +3,10 @@ namespace QuickFix
 {
     public class QuickFIXException : System.Exception
     {
+        public QuickFIXException()
+            : base()
+        { }
+
         public QuickFIXException(string msg)
             : base(msg)
         { }
@@ -79,7 +83,17 @@ namespace QuickFix
             : base("Unsupported Version: " + msg, innerException)
         { }
     }
-    
+
+    /// <summary>
+    /// Message type is not supported by application
+    /// </summary>
+    public class UnsupportedMessageType : QuickFIXException
+    {
+        public UnsupportedMessageType()
+            : base()
+        { }
+    }
+
     /// <summary>
     /// Not a recognizable message
     /// </summary>
@@ -129,6 +143,16 @@ namespace QuickFix
 
         public MessageParseError(string msg, System.Exception innerException)
             : base("Could not parse message: " + msg, innerException)
+        { }
+    }
+
+    /// <summary>
+    /// Thrown in Application.ToApp callback to indicate that app should abort sending the message
+    /// </summary>
+    public class DoNotSend : QuickFIXException
+    {
+        public DoNotSend()
+            : base()
         { }
     }
 
