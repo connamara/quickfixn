@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class PositionMaintenanceRequest : Message
         {
+            public const string MsgType = "AL";
+
             public PositionMaintenanceRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AL"));

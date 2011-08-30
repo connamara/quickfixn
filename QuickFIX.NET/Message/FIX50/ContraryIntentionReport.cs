@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class ContraryIntentionReport : Message
         {
+            public const string MsgType = "BO";
+
             public ContraryIntentionReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BO"));

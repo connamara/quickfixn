@@ -225,5 +225,11 @@ namespace UnitTests
             Assert.AreEqual(1, msg.RepeatedTags.Count);
             Assert.AreEqual(1, msg.RepeatedTags[0].Tag);
         }
+
+        [Test]
+        public void MsgType()
+        {
+            Assert.AreEqual("B", QuickFix.FIX42.News.MsgType);
+        }
     }
 }

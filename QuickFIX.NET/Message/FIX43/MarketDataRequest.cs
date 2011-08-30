@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class MarketDataRequest : Message
         {
+            public const string MsgType = "V";
+
             public MarketDataRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("V"));

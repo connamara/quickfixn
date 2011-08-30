@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class CollateralInquiry : Message
         {
+            public const string MsgType = "BB";
+
             public CollateralInquiry() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BB"));

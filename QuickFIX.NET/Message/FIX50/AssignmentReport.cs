@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class AssignmentReport : Message
         {
+            public const string MsgType = "AW";
+
             public AssignmentReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AW"));

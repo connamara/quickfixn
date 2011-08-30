@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class ListStrikePrice : Message
         {
+            public const string MsgType = "m";
+
             public ListStrikePrice() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("m"));

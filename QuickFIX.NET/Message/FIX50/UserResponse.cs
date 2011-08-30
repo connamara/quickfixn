@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class UserResponse : Message
         {
+            public const string MsgType = "BF";
+
             public UserResponse() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BF"));

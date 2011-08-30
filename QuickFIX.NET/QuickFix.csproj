@@ -60,13 +60,13 @@
     <Compile Include="FileLogFactory.cs" />
     <Compile Include="FileStoreFactory.cs" />
     <Compile Include="FixValues.cs" />
+    <Compile Include="IMessageFactory.cs" />
     <Compile Include="Initiator.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="LogFactory.cs" />
     <Compile Include="MemoryStore.cs" />
     <Compile Include="MemoryStoreFactory.cs" />
     <Compile Include="MessageCracker.cs" />
-    <Compile Include="MessageFactory.cs" />
     <Compile Include="MessageStore.cs" />
     <Compile Include="MessageStoreFactory.cs" />
     <Compile Include="Config\Config.cs" />

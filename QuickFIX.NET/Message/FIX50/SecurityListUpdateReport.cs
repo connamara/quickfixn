@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class SecurityListUpdateReport : Message
         {
+            public const string MsgType = "BK";
+
             public SecurityListUpdateReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BK"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class ListStatusRequest : Message
         {
+            public const string MsgType = "M";
+
             public ListStatusRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("M"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class NewOrderCross : Message
         {
+            public const string MsgType = "s";
+
             public NewOrderCross() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("s"));

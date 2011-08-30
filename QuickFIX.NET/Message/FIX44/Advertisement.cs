@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class Advertisement : Message
         {
+            public const string MsgType = "7";
+
             public Advertisement() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("7"));

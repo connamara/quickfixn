@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class RegistrationInstructions : Message
         {
+            public const string MsgType = "o";
+
             public RegistrationInstructions() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("o"));

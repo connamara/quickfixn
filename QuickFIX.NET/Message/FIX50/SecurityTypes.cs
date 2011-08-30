@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class SecurityTypes : Message
         {
+            public const string MsgType = "w";
+
             public SecurityTypes() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("w"));

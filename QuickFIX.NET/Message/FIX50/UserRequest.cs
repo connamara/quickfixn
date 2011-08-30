@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class UserRequest : Message
         {
+            public const string MsgType = "BE";
+
             public UserRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BE"));

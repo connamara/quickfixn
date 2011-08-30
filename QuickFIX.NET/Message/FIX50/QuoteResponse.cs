@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class QuoteResponse : Message
         {
+            public const string MsgType = "AJ";
+
             public QuoteResponse() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AJ"));

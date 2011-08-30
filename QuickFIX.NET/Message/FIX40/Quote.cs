@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class Quote : Message
         {
+            public const string MsgType = "S";
+
             public Quote() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("S"));

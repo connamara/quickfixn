@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class CrossOrderCancelReplaceRequest : Message
         {
+            public const string MsgType = "t";
+
             public CrossOrderCancelReplaceRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("t"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class ConfirmationAck : Message
         {
+            public const string MsgType = "AU";
+
             public ConfirmationAck() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AU"));

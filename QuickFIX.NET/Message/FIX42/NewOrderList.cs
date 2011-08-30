@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class NewOrderList : Message
         {
+            public const string MsgType = "E";
+
             public NewOrderList() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("E"));

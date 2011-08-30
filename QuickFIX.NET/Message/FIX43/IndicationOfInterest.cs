@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class IndicationOfInterest : Message
         {
+            public const string MsgType = "6";
+
             public IndicationOfInterest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("6"));

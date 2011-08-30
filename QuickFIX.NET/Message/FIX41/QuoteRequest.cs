@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class QuoteRequest : Message
         {
+            public const string MsgType = "R";
+
             public QuoteRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("R"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class ResendRequest : Message
         {
+            public const string MsgType = "2";
+
             public ResendRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("2"));
