@@ -66,6 +66,7 @@
     <Compile Include="MemoryStore.cs" />
     <Compile Include="MemoryStoreFactory.cs" />
     <Compile Include="MessageCracker.cs" />
+    <Compile Include="MessageFactory.cs" />
     <Compile Include="MessageStore.cs" />
     <Compile Include="MessageStoreFactory.cs" />
     <Compile Include="Config\Config.cs" />
