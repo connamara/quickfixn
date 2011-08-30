@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class MassQuote : Message
         {
+            public const string MsgType = "i";
+
             public MassQuote() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("i"));

@@ -9,6 +9,11 @@ class CSProjGen
         "    <Compile Include=\"Message\\#{fv[:version]}\\#{msg[:name]}.cs\" />"
       end
     end
+
+    fix_versions.each do |fv|
+      include_files << "    <Compile Include=\"Message\\#{fv[:version]}\\MessageFactory.cs\" />"
+    end
+
 <<HERE
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">

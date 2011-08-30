@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class Email : Message
         {
+            public const string MsgType = "C";
+
             public Email() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("C"));

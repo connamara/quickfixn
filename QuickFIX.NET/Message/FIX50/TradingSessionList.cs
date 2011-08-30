@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class TradingSessionList : Message
         {
+            public const string MsgType = "BJ";
+
             public TradingSessionList() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BJ"));

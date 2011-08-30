@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class RequestForPositionsAck : Message
         {
+            public const string MsgType = "AO";
+
             public RequestForPositionsAck() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AO"));

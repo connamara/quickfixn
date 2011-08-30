@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class QuoteStatusReport : Message
         {
+            public const string MsgType = "AI";
+
             public QuoteStatusReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AI"));

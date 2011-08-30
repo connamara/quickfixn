@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class SettlementInstructions : Message
         {
+            public const string MsgType = "T";
+
             public SettlementInstructions() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("T"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class RegistrationInstructionsResponse : Message
         {
+            public const string MsgType = "p";
+
             public RegistrationInstructionsResponse() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("p"));

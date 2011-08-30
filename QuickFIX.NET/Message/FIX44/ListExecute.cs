@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class ListExecute : Message
         {
+            public const string MsgType = "L";
+
             public ListExecute() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("L"));

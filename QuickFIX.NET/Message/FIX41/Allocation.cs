@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class Allocation : Message
         {
+            public const string MsgType = "J";
+
             public Allocation() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("J"));

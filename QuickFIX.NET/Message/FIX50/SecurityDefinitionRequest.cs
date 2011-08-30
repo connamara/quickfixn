@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class SecurityDefinitionRequest : Message
         {
+            public const string MsgType = "c";
+
             public SecurityDefinitionRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("c"));

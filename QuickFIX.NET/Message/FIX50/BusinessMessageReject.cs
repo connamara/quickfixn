@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class BusinessMessageReject : Message
         {
+            public const string MsgType = "j";
+
             public BusinessMessageReject() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("j"));

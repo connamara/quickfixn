@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class CollateralAssignment : Message
         {
+            public const string MsgType = "AY";
+
             public CollateralAssignment() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AY"));

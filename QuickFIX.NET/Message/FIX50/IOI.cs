@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class IOI : Message
         {
+            public const string MsgType = "6";
+
             public IOI() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("6"));

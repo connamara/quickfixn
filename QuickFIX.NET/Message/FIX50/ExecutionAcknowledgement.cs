@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class ExecutionAcknowledgement : Message
         {
+            public const string MsgType = "BN";
+
             public ExecutionAcknowledgement() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BN"));

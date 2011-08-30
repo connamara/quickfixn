@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class AdjustedPositionReport : Message
         {
+            public const string MsgType = "BL";
+
             public AdjustedPositionReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BL"));

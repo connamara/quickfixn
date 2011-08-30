@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class Heartbeat : Message
         {
+            public const string MsgType = "0";
+
             public Heartbeat() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("0"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class DerivativeSecurityListRequest : Message
         {
+            public const string MsgType = "z";
+
             public DerivativeSecurityListRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("z"));

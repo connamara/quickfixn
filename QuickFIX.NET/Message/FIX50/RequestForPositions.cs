@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class RequestForPositions : Message
         {
+            public const string MsgType = "AN";
+
             public RequestForPositions() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AN"));

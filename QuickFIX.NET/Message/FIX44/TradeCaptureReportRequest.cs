@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class TradeCaptureReportRequest : Message
         {
+            public const string MsgType = "AD";
+
             public TradeCaptureReportRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AD"));

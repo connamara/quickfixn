@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class Reject : Message
         {
+            public const string MsgType = "3";
+
             public Reject() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("3"));

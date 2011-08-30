@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class QuoteCancel : Message
         {
+            public const string MsgType = "Z";
+
             public QuoteCancel() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("Z"));

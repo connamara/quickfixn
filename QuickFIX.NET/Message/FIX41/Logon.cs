@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class Logon : Message
         {
+            public const string MsgType = "A";
+
             public Logon() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("A"));
