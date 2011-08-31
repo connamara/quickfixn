@@ -22,6 +22,7 @@ namespace QuickFix
         private int logoutTimeout_ = 0;
         private int logoutTimeoutAsTickCount_ = 0;
         private ResendRange resendRange_ = new ResendRange(0,0);
+        private Dictionary<int, Message> msgQueue = new Dictionary<int, Message>();
 
         private Log log_;
 
@@ -125,6 +126,12 @@ namespace QuickFix
         public int LogoutTimeoutAsTickCount
         {
             get { lock (sync_) { return logoutTimeoutAsTickCount_; } }
+        }
+
+        private Dictionary<int, Message> MsgQueue
+        {
+            get { lock (sync_) { return msgQueue; } }
+            set { lock (sync_) { msgQueue = value; } }
         }
 
         #endregion
@@ -242,6 +249,11 @@ namespace QuickFix
             return resendRange_;
         }
 
+        public bool Get(int begSeqNo, int endSeqNo, List<string> messages)
+        {
+            return MessageStore.Get(begSeqNo, endSeqNo, messages);
+        }
+
         public void SetResendRange(int begin, int end)
         {
             resendRange_.BeginSeqNo = begin;
@@ -252,16 +264,26 @@ namespace QuickFix
         {
             return !(resendRange_.BeginSeqNo == 0 && resendRange_.EndSeqNo == 0);
         }
-
+        
         public void Queue(int msgSeqNum, Message msg)
         {
-            System.Console.WriteLine("FIXME - SessionState.Queue(int,Message) not implemented!");
-            this.Log.OnEvent("FIXME - SessionState.Queue(int,Message) not implemented!");
+            MsgQueue.Add(msgSeqNum, msg);
         }
 
         public void ClearQueue()
         {
-            /// FIXME
+           MsgQueue.Clear();
+        }
+
+        public Message Retrieve(int msgSeqNum)
+        {
+            Message msg = null;
+            if(MsgQueue.ContainsKey(msgSeqNum))
+            {
+                msg = MsgQueue[msgSeqNum];
+                MsgQueue.Remove(msgSeqNum);
+            }
+            return msg;
         }
 
         /// <summary>
