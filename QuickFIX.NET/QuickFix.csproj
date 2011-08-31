@@ -54,6 +54,7 @@
     <Compile Include="DataDictionary\DataDictionary.cs" />
     <Compile Include="DataDictionary\DDField.cs" />
     <Compile Include="DataDictionary\DDMap.cs" />
+    <Compile Include="DefaultMessageFactory.cs" />
     <Compile Include="Fields\Converters\CheckSumConverter.cs" />
     <Compile Include="Fields\Limits.cs" />
     <Compile Include="FileLog.cs" />

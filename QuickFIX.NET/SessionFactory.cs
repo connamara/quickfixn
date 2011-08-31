@@ -63,7 +63,15 @@ namespace QuickFix
                     throw new ConfigError( "Heartbeat must be greater than zero" );
             }
             
-            Session session = new Session( application_, messageStoreFactory_, sessionID, dd, new SessionSchedule(settings, sessionID), heartBtInt, logFactory_ );
+            Session session = new Session(
+                application_,
+                messageStoreFactory_,
+                sessionID,
+                dd,
+                new SessionSchedule(settings, sessionID),
+                heartBtInt,
+                logFactory_,
+                new DefaultMessageFactory());
             session.SenderDefaultApplVerID = defaultApplVerID;
 
             /** FIXME - implement optional settings
