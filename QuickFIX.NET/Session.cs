@@ -12,6 +12,7 @@ namespace QuickFix
         private Responder responder_ = null;
         private SessionSchedule schedule_;
         private SessionState state_;
+        private IMessageFactory msgFactory_;
 
         #endregion
 
@@ -50,12 +51,13 @@ namespace QuickFix
         /// FIXME
         public Session(
             Application app, MessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
-            SessionSchedule sessionSchedule, int heartBtInt, LogFactory logFactory)
+            SessionSchedule sessionSchedule, int heartBtInt, LogFactory logFactory, IMessageFactory msgFactory)
         {
             this.Application = app;
             this.SessionID = sessID;
             this.DataDictionaryProvider = new DataDictionaryProvider(dataDictProvider);
             this.schedule_ = sessionSchedule;
+            this.msgFactory_ = msgFactory_;
 
             this.SessionDataDictionary = this.DataDictionaryProvider.GetSessionDataDictionary(this.SessionID.BeginString);
             if (this.SessionID.IsFIXT)
