@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using QuickFix.Fields;
+using QuickFix.Fields.Converters;
 
 namespace QuickFix
 {
@@ -186,6 +187,56 @@ namespace QuickFix
                 throw new FieldNotFoundException(field);
 
             return _groups[field][num - 1];
+        }
+
+        public int GetInt(int tag)
+        {
+            try
+            {
+                Fields.IField fld = _fields[tag];
+                return IntConverter.Convert(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
+        }
+
+        public System.DateTime GetDateTime(int tag)
+        {
+            try
+            {
+                Fields.IField fld = _fields[tag];
+                return DateTimeConverter.Convert(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
+        }
+
+        public Boolean GetBoolean(int tag)
+        {
+            // FIXME
+            throw new Exception("not implemented");
+        }
+
+        public String GetString(int tag)
+        {
+            // FIXME
+            throw new Exception("not implemented");
+        }
+
+        public char GetChar(int tag)
+        {
+            // FIXME
+            throw new Exception("not implemented");
+        }
+
+        public Decimal GetDecimal(int tag)
+        {
+            // FIXME
+            throw new Exception("not implemented");
         }
 
         /// <summary>

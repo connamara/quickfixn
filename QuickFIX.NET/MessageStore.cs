@@ -1,8 +1,10 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace QuickFix
 {
     public interface MessageStore
     {
+        bool Get(int startSeqNum, int endSeqNum, List<string> messages);
         bool Set(int msgSeqNum, string msg);
         int GetNextSenderMsgSeqNum();
         int GetNextTargetMsgSeqNum();
