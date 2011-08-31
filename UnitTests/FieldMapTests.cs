@@ -65,6 +65,16 @@ namespace UnitTests
         }
 
         [Test]
+        public void GetDateTimeTest()
+        {
+            fieldmap.setField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
+            Assert.That(fieldmap.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
+            Assert.Throws(typeof(FieldNotFoundException),
+                    delegate { fieldmap.GetDateTime(99900); });
+        }
+
+
+        [Test]
         public void BooleanFieldTest()
         {
             BooleanField field = new BooleanField(200, true);
@@ -91,6 +101,18 @@ namespace UnitTests
             fieldmap.setField(field);
             fieldmap.getField(refield);
             Assert.That(102, Is.EqualTo(refield.Obj));
+        }
+
+        [Test]
+        public void GetIntTest()
+        {
+
+            IntField field = new IntField(200, 101);
+            IntField refield = new IntField(200);
+            fieldmap.setField(field);
+            Assert.That(fieldmap.GetInt(200), Is.EqualTo(101));
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetInt(99900); });
         }
 
         [Test]
