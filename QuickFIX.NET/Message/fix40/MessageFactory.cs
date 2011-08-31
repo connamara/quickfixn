@@ -45,7 +45,50 @@ namespace QuickFix
 
             public Group Create(string beginString, string msgType, int correspondingFieldID)
             {
-                throw new System.Exception();
+                if (QuickFix.FIX40.News.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.News.LinesOfText();
+                    }
+                }
+
+                if (QuickFix.FIX40.Email.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.Email.LinesOfText();
+                    }
+                }
+
+                if (QuickFix.FIX40.ExecutionReport.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.ExecutionReport.NoMiscFees();
+                    }
+                }
+
+                if (QuickFix.FIX40.Allocation.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.Allocation.NoOrders();
+                        case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX40.Allocation.NoExecs();
+                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.Allocation.NoMiscFees();
+                        case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX40.Allocation.NoAllocs();
+                    }
+                }
+
+                if (QuickFix.FIX40.ListStatus.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.ListStatus.NoOrders();
+                    }
+                }
+
+                return null;
             }
 
         }

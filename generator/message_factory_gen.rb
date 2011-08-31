@@ -30,13 +30,13 @@ HERE
   end
 
 
-  def self.gen_method_create(messages,fixvar)
+  def self.gen_method_create(messages,fixver)
 return <<HERE
             public Message Create(string beginString, string msgType)
             {
                 switch (msgType)
                 {
-#{gen_method_create_cases(messages,fixvar)}
+#{gen_method_create_cases(messages,fixver)}
                 }
 
                 return new QuickFix.Message();
@@ -45,20 +45,44 @@ HERE
   end
 
 
-  def self.gen_method_group(messages,fixvar)
+  def self.gen_method_group(messages,fixver)
 return <<HERE
             public Group Create(string beginString, string msgType, int correspondingFieldID)
             {
-                throw new System.Exception();
+#{gen_method_group_ifs(messages,fixver)}
+                return null;
             }
 HERE
   end
 
 
-  def self.gen_method_create_cases(messages,fixvar)
-    indent = " "*4*5;
+  def self.gen_method_create_cases(messages,fixver)
+    indent = " "*4*5
     messages.map {|m|
-        indent + "case QuickFix.#{fixvar}.#{m[:name]}.MsgType: return new QuickFix.#{fixvar}.#{m[:name]}();"
+        indent + "case QuickFix.#{fixver}.#{m[:name]}.MsgType: return new QuickFix.#{fixver}.#{m[:name]}();"
     }.join("\n")
+  end
+
+
+  def self.gen_method_group_ifs(messages,fixver)
+    indent = " "*4*4
+    lines = Array.new
+    messages.each {|m|
+      if(m[:groups].length > 0)
+        lines << indent + "if (QuickFix.#{fixver}.#{m[:name]}.MsgType.Equals(msgType))"
+        lines << indent + "{"
+        lines << indent + "    switch (correspondingFieldID)"
+        lines << indent + "    {"
+
+	m[:groups].each {|g|
+            lines << indent + "        case QuickFix.Fields.Tags.#{g[:name]}: return new QuickFix.#{fixver}.#{m[:name]}.#{g[:name]}();"
+        }
+
+        lines << indent + "    }"
+        lines << indent + "}"
+	lines << ""
+      end
+    }
+    lines.join("\n")
   end
 end
