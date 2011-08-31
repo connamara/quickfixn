@@ -46,7 +46,51 @@ namespace QuickFix
 
             public Group Create(string beginString, string msgType, int correspondingFieldID)
             {
-                throw new System.Exception();
+                if (QuickFix.FIX41.IndicationofInterest.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                        case QuickFix.Fields.Tags.NoIOIQualifiers: return new QuickFix.FIX41.IndicationofInterest.NoIOIQualifiers();
+                    }
+                }
+
+                if (QuickFix.FIX41.News.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                        case QuickFix.Fields.Tags.NoRelatedSym: return new QuickFix.FIX41.News.NoRelatedSym();
+                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX41.News.LinesOfText();
+                    }
+                }
+
+                if (QuickFix.FIX41.Email.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                        case QuickFix.Fields.Tags.NoRelatedSym: return new QuickFix.FIX41.Email.NoRelatedSym();
+                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX41.Email.LinesOfText();
+                    }
+                }
+
+                if (QuickFix.FIX41.Allocation.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX41.Allocation.NoOrders();
+                        case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX41.Allocation.NoExecs();
+                        case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX41.Allocation.NoAllocs();
+                    }
+                }
+
+                if (QuickFix.FIX41.ListStatus.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX41.ListStatus.NoOrders();
+                    }
+                }
+
+                return null;
             }
 
         }
