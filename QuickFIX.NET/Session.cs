@@ -336,11 +336,13 @@ namespace QuickFix
                     NextSequenceReset(message);
                 else if (MsgType.LOGOUT.Equals(msgType))
                     NextLogout(message);
+                else if (MsgType.RESEND_REQUEST.Equals(msgType))
+                    NextResendRequest(message);
                 else
                 {
-                   if (!Verify(message))
+                    if (!Verify(message))
                         return;
-                   state_.IncrNextTargetMsgSeqNum();
+                    state_.IncrNextTargetMsgSeqNum();
                 }
             }
             catch (TagException e)
@@ -421,6 +423,37 @@ namespace QuickFix
             GenerateHeartbeat(testRequest);
             state_.IncrNextTargetMsgSeqNum();
             NextQueued();
+        }
+
+        protected void NextResendRequest(Message resendReq)
+        {
+            try
+            {
+                // FIXME
+                int begSeqNo = resendReq.GetInt(Fields.Tags.BeginSeqNo);
+                int endSeqNo = resendReq.GetInt(Fields.Tags.EndSeqNo);
+                this.Log.OnEvent("Got resend request from " + begSeqNo + " to " + endSeqNo);
+
+                if ((endSeqNo == 999999) || (endSeqNo == 0))
+                {
+                    endSeqNo = state_.GetNextSenderMsgSeqNum() - 1;
+                }
+
+                List<string> messages = new List<string>();
+                state_.Get(begSeqNo, endSeqNo, messages);
+                foreach (string msgStr in messages)
+                {
+                    Message msg = new Message(msgStr);
+                    initializeResendFields(msg);
+                    Send(msg.ToString());
+                }
+
+                
+            }
+            catch(System.Exception e)
+            {
+                this.Log.OnEvent("ERROR during resend request " + e.Message);
+            }
         }
 
         protected void NextLogout(Message logout)
@@ -582,6 +615,16 @@ namespace QuickFix
         {
             return true;
         }
+
+        private void initializeResendFields(Message message) 
+        {
+            FieldMap header = message.Header;
+            System.DateTime sendingTime = header.GetDateTime(Fields.Tags.SendingTime);
+            header.setField(new Fields.OrigSendingTime(sendingTime));
+            header.setField(new Fields.PossDupFlag(true));
+            InsertSendingTime(header);
+        }
+
 
         protected bool ShouldSendReset()
         {
