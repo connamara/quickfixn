@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using QuickFix.Fields;
+using QuickFix.Fields.Converters;
 
 namespace QuickFix
 {
@@ -193,7 +194,7 @@ namespace QuickFix
             try
             {
                 Fields.IField fld = _fields[tag];
-                return Fields.Converters.IntConverter.Convert(fld.ToString());
+                return IntConverter.Convert(fld.ToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -203,8 +204,15 @@ namespace QuickFix
 
         public System.DateTime GetDateTime(int tag)
         {
-            // FIXME
-            throw new Exception("not implemented");
+            try
+            {
+                Fields.IField fld = _fields[tag];
+                return DateTimeConverter.Convert(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
         }
 
         public Boolean GetBoolean(int tag)
