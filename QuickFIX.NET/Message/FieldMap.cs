@@ -188,6 +188,49 @@ namespace QuickFix
             return _groups[field][num - 1];
         }
 
+        public int GetInt(int tag)
+        {
+            try
+            {
+                Fields.IField fld = _fields[tag];
+                return Fields.Converters.IntConverter.Convert(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
+        }
+
+        public System.DateTime GetDateTime(int tag)
+        {
+            // FIXME
+            throw new Exception("not implemented");
+        }
+
+        public Boolean GetBoolean(int tag)
+        {
+            // FIXME
+            throw new Exception("not implemented");
+        }
+
+        public String GetString(int tag)
+        {
+            // FIXME
+            throw new Exception("not implemented");
+        }
+
+        public char GetChar(int tag)
+        {
+            // FIXME
+            throw new Exception("not implemented");
+        }
+
+        public Decimal GetDecimal(int tag)
+        {
+            // FIXME
+            throw new Exception("not implemented");
+        }
+
         /// <summary>
         /// Removes specific group instance
         /// </summary>

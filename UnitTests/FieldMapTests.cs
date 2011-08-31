@@ -94,6 +94,18 @@ namespace UnitTests
         }
 
         [Test]
+        public void GetIntTest()
+        {
+
+            IntField field = new IntField(200, 101);
+            IntField refield = new IntField(200);
+            fieldmap.setField(field);
+            Assert.That(fieldmap.GetInt(200), Is.EqualTo(101));
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetInt(99900); });
+        }
+
+        [Test]
         public void DecimalFieldTest()
         {
             DecimalField field = new DecimalField(200, new Decimal(101.0001));
