@@ -1,4 +1,5 @@
-﻿
+﻿using System.Collections.Generic;
+
 namespace QuickFix
 {
     public class MemoryStore : MessageStore
@@ -15,6 +16,14 @@ namespace QuickFix
         {
             messages_ = new System.Collections.Generic.Dictionary<int, string>();
             Reset();
+        }
+
+        public bool Get(int begSeqNo, int endSeqNo, List<string> messages)
+        {
+
+            for (int current = begSeqNo; current <= endSeqNo; current++)
+                messages.Add(messages_[current]);
+            return true;
         }
 
         #region MessageStore Members
