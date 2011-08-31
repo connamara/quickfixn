@@ -28,6 +28,7 @@ namespace QuickFix
     {
         public class #{msg[:name]} : Message
         {
+#{msgtype(msg)}
 #{ctor(msg)}
 #{ctor_req(msg)}
 #{gen_msg_fields(msg[:fields], 12)}
@@ -35,6 +36,12 @@ namespace QuickFix
         }
     }
 }
+HERE
+  end
+
+  def self.msgtype msg
+<<HERE
+            public const string MsgType = "#{msg[:msgtype]}";
 HERE
   end
 

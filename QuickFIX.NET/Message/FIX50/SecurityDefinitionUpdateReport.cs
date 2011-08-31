@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class SecurityDefinitionUpdateReport : Message
         {
+            public const string MsgType = "BP";
+
             public SecurityDefinitionUpdateReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BP"));

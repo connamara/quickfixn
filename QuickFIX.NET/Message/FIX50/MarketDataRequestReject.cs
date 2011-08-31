@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class MarketDataRequestReject : Message
         {
+            public const string MsgType = "Y";
+
             public MarketDataRequestReject() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("Y"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class QuoteRequestReject : Message
         {
+            public const string MsgType = "AG";
+
             public QuoteRequestReject() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AG"));

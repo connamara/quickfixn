@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class DontKnowTrade : Message
         {
+            public const string MsgType = "Q";
+
             public DontKnowTrade() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("Q"));

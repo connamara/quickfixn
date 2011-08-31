@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class NetworkStatusRequest : Message
         {
+            public const string MsgType = "BC";
+
             public NetworkStatusRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BC"));

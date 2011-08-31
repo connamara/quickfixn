@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class SettlementInstructionRequest : Message
         {
+            public const string MsgType = "AV";
+
             public SettlementInstructionRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AV"));

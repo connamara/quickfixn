@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class MarketDataIncrementalRefresh : Message
         {
+            public const string MsgType = "X";
+
             public MarketDataIncrementalRefresh() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("X"));

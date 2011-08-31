@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class RFQRequest : Message
         {
+            public const string MsgType = "AH";
+
             public RFQRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AH"));

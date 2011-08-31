@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class SecurityStatusRequest : Message
         {
+            public const string MsgType = "e";
+
             public SecurityStatusRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("e"));

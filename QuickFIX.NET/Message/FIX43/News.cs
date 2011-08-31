@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class News : Message
         {
+            public const string MsgType = "B";
+
             public News() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("B"));
