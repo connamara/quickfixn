@@ -57,7 +57,7 @@ namespace QuickFix
             this.SessionID = sessID;
             this.DataDictionaryProvider = new DataDictionaryProvider(dataDictProvider);
             this.schedule_ = sessionSchedule;
-            this.msgFactory_ = msgFactory_;
+            this.msgFactory_ = msgFactory;
 
             this.SessionDataDictionary = this.DataDictionaryProvider.GetSessionDataDictionary(this.SessionID.BeginString);
             if (this.SessionID.IsFIXT)
