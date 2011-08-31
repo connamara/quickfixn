@@ -288,7 +288,18 @@ namespace QuickFix
             try
             {
                 this.Log.OnIncoming(message);
-                Next(new Message(message, this.SessionDataDictionary, this.ApplicationDataDictionary, this.ValidateLengthAndChecksum));
+
+                MsgType msgType = Message.IdentifyType(message);
+                string beginString = Message.ExtractBeginString(message);
+
+                Message m = msgFactory_.Create(beginString, msgType.Obj);
+                m.FromString(
+                    message,
+                    this.ValidateLengthAndChecksum,
+                    this.SessionDataDictionary,
+                    this.ApplicationDataDictionary);
+
+                Next(m);
             }
             catch (InvalidMessage e)
             {
@@ -682,7 +693,7 @@ namespace QuickFix
 
         protected bool GenerateResendRequest(string beginString, int msgSeqNum)
         {
-            Message resendRequest = new Message();
+            Message resendRequest = msgFactory_.Create(beginString, Fields.MsgType.RESEND_REQUEST);
 
             Fields.BeginSeqNo beginSeqNo = new Fields.BeginSeqNo(state_.GetNextTargetMsgSeqNum());
             Fields.EndSeqNo endSeqNo;
@@ -693,7 +704,6 @@ namespace QuickFix
             else
                 endSeqNo =  new Fields.EndSeqNo(msgSeqNum - 1);
             
-            resendRequest.Header.setField(new Fields.MsgType("2"));
             resendRequest.setField(beginSeqNo);
             resendRequest.setField(endSeqNo);
             InitializeHeader(resendRequest);
@@ -716,8 +726,7 @@ namespace QuickFix
         /// <returns></returns>
         protected bool GenerateLogon()
         {
-            Message logon = new Message();
-            logon.Header.setField(new Fields.MsgType(MsgType.LOGON));
+            Message logon = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGON);
             logon.setField(new Fields.EncryptMethod(0));
             logon.setField(new Fields.HeartBtInt(state_.HeartBtInt));
 
@@ -744,13 +753,12 @@ namespace QuickFix
         /// <returns></returns>
         protected bool GenerateLogon(int heartBtInt)
         {
-            Message logon = new Message();
+            Message logon = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGON);
             logon.setField(new Fields.EncryptMethod(0));
             if (this.SessionID.IsFIXT)
                 logon.setField(new Fields.DefaultApplVerID("FIXME"));
             if (state_.ReceivedReset)
                 logon.setField(new Fields.ResetSeqNumFlag(true));
-            logon.Header.setField(new Fields.MsgType(MsgType.LOGON));
             logon.setField(new Fields.HeartBtInt(heartBtInt));
             InitializeHeader(logon);
             state_.SentLogon = SendRaw(logon, 0);
@@ -759,8 +767,7 @@ namespace QuickFix
 
         public bool GenerateTestRequest(string id)
         {
-            Message testRequest = new Message();
-            testRequest.Header.setField(new Fields.MsgType(MsgType.TEST_REQUEST));
+            Message testRequest = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.TEST_REQUEST);
             InitializeHeader(testRequest);
             testRequest.setField(new Fields.TestReqID(id));
             return SendRaw(testRequest, 0);
@@ -773,8 +780,7 @@ namespace QuickFix
 
         public bool GenerateLogout(string text)
         {
-            Message logout = new Message();
-            logout.Header.setField(new Fields.MsgType(MsgType.LOGOUT));
+            Message logout = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGOUT);
             InitializeHeader(logout);
             if (text.Length > 0)
                 logout.setField(new Fields.Text(text));
@@ -784,16 +790,14 @@ namespace QuickFix
 
         public bool GenerateHeartbeat()
         {
-            Message heartbeat = new Message();
-            heartbeat.Header.setField(new Fields.MsgType(MsgType.HEARTBEAT));
+            Message heartbeat = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.HEARTBEAT);
             InitializeHeader(heartbeat);
             return SendRaw(heartbeat, 0);
         }
 
         public bool GenerateHeartbeat(Message testRequest)
         {
-            Message heartbeat = new Message();
-            heartbeat.Header.setField(new Fields.MsgType(MsgType.HEARTBEAT));
+            Message heartbeat = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.HEARTBEAT);
             InitializeHeader(heartbeat);
             try
             {
@@ -812,8 +816,7 @@ namespace QuickFix
         {
             string beginString = this.SessionID.BeginString;
 
-            Message reject = new Message();
-            reject.Header.setField(new Fields.MsgType(MsgType.REJECT));
+            Message reject = msgFactory_.Create(beginString, Fields.MsgType.REJECT);
             reject.ReverseRoute(message.Header);
             InitializeHeader(reject);
 

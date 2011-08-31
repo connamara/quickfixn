@@ -176,6 +176,12 @@ namespace QuickFix
             return ExtractField(msgstr, ref pos, null, null);
         }
 
+        public static string ExtractBeginString(string msgstr)
+        {
+            int i = 0;
+            return ExtractField(msgstr, ref i, null, null).Obj;
+        }
+
         public static bool IsHeaderField(int tag)
         {
             switch (tag)
