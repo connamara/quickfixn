@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class ListCancelRequest : Message
         {
+            public const string MsgType = "K";
+
             public ListCancelRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("K"));

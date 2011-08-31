@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class DerivativeSecurityList : Message
         {
+            public const string MsgType = "AA";
+
             public DerivativeSecurityList() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AA"));

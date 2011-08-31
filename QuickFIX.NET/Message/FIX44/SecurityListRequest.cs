@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class SecurityListRequest : Message
         {
+            public const string MsgType = "x";
+
             public SecurityListRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("x"));

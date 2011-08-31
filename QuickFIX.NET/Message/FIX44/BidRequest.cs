@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class BidRequest : Message
         {
+            public const string MsgType = "k";
+
             public BidRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("k"));

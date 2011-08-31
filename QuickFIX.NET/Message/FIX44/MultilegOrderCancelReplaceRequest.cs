@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class MultilegOrderCancelReplaceRequest : Message
         {
+            public const string MsgType = "AC";
+
             public MultilegOrderCancelReplaceRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AC"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class SequenceReset : Message
         {
+            public const string MsgType = "4";
+
             public SequenceReset() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("4"));

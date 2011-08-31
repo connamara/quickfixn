@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class OrderCancelReject : Message
         {
+            public const string MsgType = "9";
+
             public OrderCancelReject() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("9"));

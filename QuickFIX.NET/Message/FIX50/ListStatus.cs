@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class ListStatus : Message
         {
+            public const string MsgType = "N";
+
             public ListStatus() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("N"));

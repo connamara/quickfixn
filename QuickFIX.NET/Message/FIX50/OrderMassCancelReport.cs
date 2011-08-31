@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class OrderMassCancelReport : Message
         {
+            public const string MsgType = "r";
+
             public OrderMassCancelReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("r"));

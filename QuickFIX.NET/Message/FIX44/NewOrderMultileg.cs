@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class NewOrderMultileg : Message
         {
+            public const string MsgType = "AB";
+
             public NewOrderMultileg() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AB"));

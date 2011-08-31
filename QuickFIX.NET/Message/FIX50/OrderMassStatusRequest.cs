@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class OrderMassStatusRequest : Message
         {
+            public const string MsgType = "AF";
+
             public OrderMassStatusRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AF"));

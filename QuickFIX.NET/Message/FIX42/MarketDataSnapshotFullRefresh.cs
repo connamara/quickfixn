@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class MarketDataSnapshotFullRefresh : Message
         {
+            public const string MsgType = "W";
+
             public MarketDataSnapshotFullRefresh() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("W"));

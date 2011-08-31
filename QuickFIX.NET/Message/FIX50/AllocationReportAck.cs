@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class AllocationReportAck : Message
         {
+            public const string MsgType = "AT";
+
             public AllocationReportAck() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AT"));

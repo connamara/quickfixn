@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class NetworkCounterpartySystemStatusRequest : Message
         {
+            public const string MsgType = "BC";
+
             public NetworkCounterpartySystemStatusRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("BC"));

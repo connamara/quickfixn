@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class AllocationReport : Message
         {
+            public const string MsgType = "AS";
+
             public AllocationReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AS"));

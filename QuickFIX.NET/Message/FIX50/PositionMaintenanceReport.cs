@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class PositionMaintenanceReport : Message
         {
+            public const string MsgType = "AM";
+
             public PositionMaintenanceReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AM"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class QuoteAcknowledgement : Message
         {
+            public const string MsgType = "b";
+
             public QuoteAcknowledgement() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("b"));

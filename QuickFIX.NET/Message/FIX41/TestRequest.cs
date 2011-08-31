@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class TestRequest : Message
         {
+            public const string MsgType = "1";
+
             public TestRequest() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("1"));

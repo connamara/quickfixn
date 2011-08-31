@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class Logout : Message
         {
+            public const string MsgType = "5";
+
             public Logout() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("5"));

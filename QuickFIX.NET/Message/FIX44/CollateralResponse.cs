@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class CollateralResponse : Message
         {
+            public const string MsgType = "AZ";
+
             public CollateralResponse() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AZ"));

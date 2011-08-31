@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class AllocationACK : Message
         {
+            public const string MsgType = "P";
+
             public AllocationACK() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("P"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class ExecutionReport : Message
         {
+            public const string MsgType = "8";
+
             public ExecutionReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("8"));

@@ -7,6 +7,8 @@ namespace QuickFix
     {
         public class PositionReport : Message
         {
+            public const string MsgType = "AP";
+
             public PositionReport() : base()
             {
                 this.Header.setField(new QuickFix.Fields.MsgType("AP"));
