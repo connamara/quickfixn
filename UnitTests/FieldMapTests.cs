@@ -65,6 +65,16 @@ namespace UnitTests
         }
 
         [Test]
+        public void GetDateTimeTest()
+        {
+            fieldmap.setField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
+            Assert.That(fieldmap.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
+            Assert.Throws(typeof(FieldNotFoundException),
+                    delegate { fieldmap.GetDateTime(99900); });
+        }
+
+
+        [Test]
         public void BooleanFieldTest()
         {
             BooleanField field = new BooleanField(200, true);
