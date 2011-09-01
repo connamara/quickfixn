@@ -6,7 +6,7 @@ namespace QuickFix
     {
         public class MessageFactory : IMessageFactory
         {
-            public Message Create(string beginString, string msgType)
+            public QuickFix.Message Create(string beginString, string msgType)
             {
                 switch (msgType)
                 {
