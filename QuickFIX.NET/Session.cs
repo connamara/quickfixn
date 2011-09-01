@@ -13,6 +13,7 @@ namespace QuickFix
         private SessionSchedule schedule_;
         private SessionState state_;
         private IMessageFactory msgFactory_;
+        private static readonly HashSet<string> AdminMsgTypes = new HashSet<string>() { "0", "A", "1", "2", "3", "4", "5" };
 
         #endregion
 
@@ -454,12 +455,60 @@ namespace QuickFix
 
                 List<string> messages = new List<string>();
                 state_.Get(begSeqNo, endSeqNo, messages);
+                int current = begSeqNo;
+                int begin = 0;
+                int msgSeqNum = 0;
                 foreach (string msgStr in messages)
                 {
                     Message msg = new Message(msgStr);
-                    initializeResendFields(msg);
-                    Send(msg.ToString());
+                    msgSeqNum = msg.Header.GetInt(Tags.MsgSeqNum);
+
+                    if ((current != msgSeqNum) && begin == 0)
+                    {
+                        begin = current;
+                    }
+
+                    if (IsAdminMessage(msg))
+                    {
+                        if (begin == 0)
+                        {
+                            begin = msgSeqNum;
+                        }
+                    }
+                    else
+                    {
+                        
+                        initializeResendFields(msg);
+                        if (begin != 0)
+                        {
+                            GenerateSequenceReset(begin, msgSeqNum);
+                        }
+                        Send(msg.ToString());
+                        begin = 0;
+                    }
+                    current = msgSeqNum + 1;
                 }
+
+                if (begin != 0)
+                {
+                    GenerateSequenceReset(begin, msgSeqNum + 1);
+                }
+
+                if (endSeqNo > msgSeqNum) {
+                    endSeqNo = endSeqNo + 1;
+                    int next = state_.GetNextSenderMsgSeqNum();
+                    if (endSeqNo > next) {
+                        endSeqNo = next;
+                    }
+                    GenerateSequenceReset(begSeqNo, endSeqNo);
+                }
+
+                msgSeqNum = resendReq.Header.GetInt(Tags.MsgSeqNum);
+                if (!IsTargetTooHigh(msgSeqNum) && !IsTargetTooLow(msgSeqNum))
+                {
+                    state_.IncrNextTargetMsgSeqNum();
+                }
+
             }
             catch (System.Exception e)
             {
@@ -978,6 +1027,28 @@ namespace QuickFix
                 return false;
             }
             return true;
+        }
+
+        private void GenerateSequenceReset(int beginSeqNo, int endSeqNo)  
+        {
+            string beginString = this.SessionID.BeginString;
+            Message sequenceReset = msgFactory_.Create(beginString, Fields.MsgType.SEQUENCE_RESET);
+            InitializeHeader(sequenceReset);
+            int newSeqNo = endSeqNo;
+            sequenceReset.Header.setField(new PossDupFlag(true));
+            sequenceReset.Header.setField(new OrigSendingTime(sequenceReset.Header.GetDateTime(Tags.SendingTime)));
+            sequenceReset.Header.setField(new MsgSeqNum(beginSeqNo));
+            sequenceReset.setField(new NewSeqNo(newSeqNo));
+            sequenceReset.setField(new GapFillFlag(true));
+            SendRaw(sequenceReset, beginSeqNo);
+            this.Log.OnEvent("Sent SequenceReset TO: " + newSeqNo);
+        }
+
+
+        private bool IsAdminMessage(Message msg)
+        {
+            var msgType = msg.Header.GetString(Fields.Tags.MsgType);
+            return AdminMsgTypes.Contains(msgType);
         }
 
         protected bool SendRaw(Message message, int seqNum)
