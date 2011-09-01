@@ -32,7 +32,7 @@ HERE
 
   def self.gen_method_create(messages,fixver)
 return <<HERE
-            public Message Create(string beginString, string msgType)
+            public QuickFix.Message Create(string beginString, string msgType)
             {
                 switch (msgType)
                 {

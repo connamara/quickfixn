@@ -12,6 +12,7 @@ class CSProjGen
 
     fix_versions.each do |fv|
       include_files << "    <Compile Include=\"Message\\#{fv[:version]}\\MessageFactory.cs\" />"
+      include_files << "    <Compile Include=\"Message\\#{fv[:version]}\\Message.cs\" />"
     end
 
 <<HERE

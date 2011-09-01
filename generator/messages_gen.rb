@@ -4,6 +4,12 @@ class MessageGen
   def self.generate messages, dir, fixver
     destdir = File.join(dir, fixver)
     Dir.mkdir(destdir) unless File.exists? destdir
+
+    basemsgstr = gen_basemsg(fixver,destdir)
+    basemsg_path = File.join(destdir, "Message.cs")
+    puts 'generate ' + basemsg_path
+    File.open(basemsg_path, 'w') {|f| f.puts(basemsgstr) }
+
     messages.each do |msg| 
       msgstr = gen_msg(msg, fixver)
       msg_path = File.join(destdir, msg[:name] + '.cs')
@@ -15,6 +21,27 @@ class MessageGen
   def self.lower rawstr
     str = rawstr.clone
     str.slice(0,1).downcase + str.slice(1,rawstr.length)
+  end
+
+  def self.gen_basemsg fixver, destdir
+<<HERE
+// This is a generated file.  Don't edit it directly!
+
+namespace QuickFix
+{
+    namespace #{fixver}
+    {
+        public abstract class Message : QuickFix.Message
+        {
+            public Message()
+                : base()
+            {
+                this.Header.setField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.#{fixver}));
+            }
+        }
+    }
+}
+HERE
   end
 
   def self.gen_msg msg, fixver 
