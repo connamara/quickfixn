@@ -376,6 +376,11 @@ namespace QuickFix
                     state_.IncrNextTargetMsgSeqNum();
                 }
             }
+            catch (UnsupportedMessageType e)
+            {
+                this.Log.OnEvent("Unsupported message type: " + e.Message);
+                System.Console.WriteLine("FIXME: need to generate BusinessMessageReject");
+            }
         }
 
         protected void NextQueued()

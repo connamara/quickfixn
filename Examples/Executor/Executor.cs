@@ -7,7 +7,7 @@ using QuickFix;
 
 namespace Executor
 {
-    public class Executor : QuickFix.Application
+    public class Executor : QuickFix.MessageCracker, QuickFix.Application
     {
         #region QuickFix.Application Methods
         
@@ -19,6 +19,7 @@ namespace Executor
         public void FromApp(Message message, SessionID sessionID)
         {
             Console.WriteLine("FromApp: " + message);
+            Crack(message, sessionID);
         }
 
         public void OnCreate(SessionID sessionID) { }
@@ -28,5 +29,11 @@ namespace Executor
         public void ToApp(Message message, SessionID sessionID) { }
 
         #endregion
+
+
+        public void OnMessage(QuickFix.FIX42.NewOrderSingle n, SessionID s)
+        {
+            Console.WriteLine("cracked!  it's a QuickFix.FIX42.NewOrderSingle");
+        }
     }
 }
