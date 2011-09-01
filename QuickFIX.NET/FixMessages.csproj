@@ -355,10 +355,16 @@
     <Compile Include="Message\FIX50\TradingSessionList.cs" />
     <Compile Include="Message\FIX50\TradingSessionListRequest.cs" />
     <Compile Include="Message\FIX40\MessageFactory.cs" />
+    <Compile Include="Message\FIX40\Message.cs" />
     <Compile Include="Message\FIX41\MessageFactory.cs" />
+    <Compile Include="Message\FIX41\Message.cs" />
     <Compile Include="Message\FIX42\MessageFactory.cs" />
+    <Compile Include="Message\FIX42\Message.cs" />
     <Compile Include="Message\FIX43\MessageFactory.cs" />
+    <Compile Include="Message\FIX43\Message.cs" />
     <Compile Include="Message\FIX44\MessageFactory.cs" />
+    <Compile Include="Message\FIX44\Message.cs" />
     <Compile Include="Message\FIX50\MessageFactory.cs" />
+    <Compile Include="Message\FIX50\Message.cs" />
   </ItemGroup>
 </Project>

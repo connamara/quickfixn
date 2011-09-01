@@ -31,9 +31,10 @@ namespace TradeClient
             }
             catch (System.Exception e)
             {
-                System.Console.WriteLine(e.Message);
-                System.Environment.Exit(1);
+                Console.WriteLine(e.Message);
+                Console.WriteLine(e.StackTrace);
             }
+            Environment.Exit(1);
         }
     }
 }

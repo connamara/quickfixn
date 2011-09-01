@@ -82,8 +82,10 @@ namespace TradeClient
                 catch (System.Exception e)
                 {
                     Console.WriteLine("Message Not Sent: " + e.Message);
+                    Console.WriteLine("StackTrace: " + e.StackTrace);
                 }
             }
+            Console.WriteLine("Program shutdown.");
         }
 
         private char QueryAction()
@@ -161,7 +163,11 @@ namespace TradeClient
             }
 
             if (m != null && QueryConfirm("Send order"))
+            {
+                m.Header.GetField(Tags.BeginString);
+
                 QuickFix.Session.SendToTarget(m);
+            }
         }
 
         private void QueryCancelOrder()
