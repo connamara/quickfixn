@@ -52,6 +52,15 @@ namespace UnitTests
         }
 
         [Test]
+        public void GetStringTest()
+        {
+            fieldmap.setField(new Account("hello"));
+            Assert.That(fieldmap.GetString(QuickFix.Fields.Tags.Account), Is.EqualTo("hello"));
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetString(99900); });
+        }
+
+        [Test]
         public void DateTimeFieldTest()
         {
 
