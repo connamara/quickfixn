@@ -223,8 +223,14 @@ namespace QuickFix
 
         public String GetString(int tag)
         {
-            // FIXME
-            throw new Exception("not implemented");
+            try
+            {
+                return _fields[tag].ToString();
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
         }
 
         public char GetChar(int tag)
