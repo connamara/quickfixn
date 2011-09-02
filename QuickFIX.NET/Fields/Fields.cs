@@ -278,7 +278,7 @@ namespace QuickFix.Fields
         public const string WORK_TO_TARGET_STRATEGY = "e";
         public const string DO_NOT_REDUCE = "F";
         public const string ALL_OR_NONE = "G";
-        public const string REINSTATE_ON_SYSTEM_FAILUE = "H";
+        public const string REINSTATE_ON_SYSTEM_FAILURE = "H";
         public const string INSTITUTIONS_ONLY = "I";
         public const string REINSTATE_ON_TRADING_HALT = "J";
         public const string CANCEL_ON_TRADING_HALT = "K";
@@ -303,6 +303,15 @@ namespace QuickFix.Fields
         public const string IMBALANCE_ONLY = "i";
         public const string FIXED_PEG_TO_LOCAL_BEST_BID_OR_OFFER_AT_TIME_OF_ORDER = "T";
         public const string BEST_EXECUTION = "k";
+        public const string SUSPEND_ON_SYSTEM_FAILURE = "l";
+        public const string SUSPEND_ON_TRADING_HALT = "m";
+        public const string REINSTATE_ON_CONNECTION_LOSS = "n";
+        public const string CANCEL_ON_CONNECTION_LOSS = "o";
+        public const string SUSPEND_ON_CONNECTION_LOSS = "p";
+        public const string RELEASE_FROM_SUSPENSION = "q";
+        public const string EXECUTE_AS_DELTA_NEUTRAL_USING_VOLATILITY_PROVIDED = "r";
+        public const string EXECUTE_AS_DURATION_NEUTRAL = "s";
+        public const string EXECUTE_AS_FX_NEUTRAL = "t";
     }
 
 
@@ -375,8 +384,6 @@ namespace QuickFix.Fields
         public const string RIC_CODE = "5";
         public const string ISO_CURRENCY_CODE = "6";
         public const string ISO_COUNTRY_CODE = "7";
-        public const string EXCHANGE_SYMBOL = "8";
-        public const string CONSOLIDATED_TAPE_ASSOCIATION = "9";
     }
 
 
@@ -665,6 +672,18 @@ namespace QuickFix.Fields
         public const string EXECUTION_ACKNOWLEDGEMENT = "BN";
         public const string TRADING_SESSION_LIST = "BJ";
         public const string TRADING_SESSION_LIST_REQUEST = "BI";
+        public const string SETTLEMENTOBLIGATIONREPORT = "BQ";
+        public const string DERIVATIVESECURITYLISTUPDATEREPORT = "BR";
+        public const string TRADINGSESSIONLISTUPDATEREPORT = "BS";
+        public const string MARKETDEFINITIONREQUEST = "BT";
+        public const string MARKETDEFINITION = "BU";
+        public const string MARKETDEFINITIONUPDATEREPORT = "BV";
+        public const string USERNOTIFICATION = "CB";
+        public const string ORDERMASSACTIONREPORT = "BZ";
+        public const string ORDERMASSACTIONREQUEST = "CA";
+        public const string APPLICATIONMESSAGEREQUEST = "BW";
+        public const string APPLICATIONMESSAGEREQUESTACK = "BX";
+        public const string APPLICATIONMESSAGEREPORT = "BY";
     }
 
 
@@ -872,26 +891,26 @@ namespace QuickFix.Fields
         // Field Enumerations
         public const char AGENCY_SINGLE_ORDER = 'A';
         public const char SHORT_EXEMPT_TRANSACTION_B = 'B';
-        public const char PROGRAM_ORDER_NON_INDEX_ARB_FOR_MEMBER_FIRM_ORG = 'C';
+        public const char PROPRIETARY_NON_ALGORITHMIC_PROGRAM_TRADE = 'C';
         public const char PROGRAM_ORDER_INDEX_ARB_FOR_MEMBER_FIRM_ORG = 'D';
         public const char SHORT_EXEMPT_TRANSACTION_FOR_PRINCIPAL = 'E';
         public const char SHORT_EXEMPT_TRANSACTION_F = 'F';
         public const char SHORT_EXEMPT_TRANSACTION_H = 'H';
         public const char INDIVIDUAL_INVESTOR_SINGLE_ORDER = 'I';
-        public const char PROGRAM_ORDER_INDEX_ARB_FOR_INDIVIDUAL_CUSTOMER = 'J';
-        public const char PROGRAM_ORDER_NON_INDEX_ARB_FOR_INDIVIDUAL_CUSTOMER = 'K';
+        public const char PROPRIETARY_ALGORITHMIC_PROGRAM_TRADING = 'J';
+        public const char AGENCY_ALGORITHMIC_PROGRAM_TRADING = 'K';
         public const char SHORT_EXEMPT_TRANSACTION_FOR_MEMBER_COMPETING_MARKET_MAKER_AFFLIATED_WITH_THE_FIRM_CLEARING_THE_TRADE = 'L';
         public const char PROGRAM_ORDER_INDEX_ARB_FOR_OTHER_MEMBER = 'M';
-        public const char PROGRAM_ORDER_NON_INDEX_ARB_FOR_OTHER_MEMBER = 'N';
+        public const char AGENT_FOR_OTHER_MEMBER_NON_ALGORITHMIC_PROGRAM_TRADE = 'N';
         public const char PROPRIETARY_TRANSACTIONS_FOR_COMPETING_MARKET_MAKER_THAT_IS_AFFILIATED_WITH_THE_CLEARING_MEMBER = 'O';
         public const char PRINCIPAL = 'P';
         public const char TRANSACTIONS_FOR_THE_ACCOUNT_OF_A_NON_MEMBER_COMPTING_MARKET_MAKER = 'R';
         public const char SPECIALIST_TRADES = 'S';
         public const char TRANSACTIONS_FOR_THE_ACCOUNT_OF_AN_UNAFFILIATED_MEMBERS_COMPETING_MARKET_MAKER = 'T';
-        public const char PROGRAM_ORDER_INDEX_ARB_FOR_OTHER_AGENCY = 'U';
+        public const char AGENCY_INDEX_ARBITRAGE = 'U';
         public const char ALL_OTHER_ORDERS_AS_AGENT_FOR_OTHER_MEMBER = 'W';
         public const char SHORT_EXEMPT_TRANSACTION_FOR_MEMBER_COMPETING_MARKET_MAKER_NOT_AFFILIATED_WITH_THE_FIRM_CLEARING_THE_TRADE = 'X';
-        public const char PROGRAM_ORDER_NON_INDEX_ARB_FOR_OTHER_AGENCY = 'Y';
+        public const char AGENCY_NON_ALGORITHMIC_PROGRAM_TRADE = 'Y';
         public const char SHORT_EXEMPT_TRANSACTION_FOR_NON_MEMBER_COMPETING_MARKET_MAKER = 'Z';
     }
 
@@ -1064,6 +1083,8 @@ namespace QuickFix.Fields
         public const char GOOD_TILL_CROSSING = '5';
         public const char GOOD_TILL_DATE = '6';
         public const char AT_THE_CLOSE = '7';
+        public const char GOOD_THROUGH_CROSSING = '8';
+        public const char AT_CROSSING = '9';
     }
 
 
@@ -1126,14 +1147,13 @@ namespace QuickFix.Fields
         public const char REGULAR = '0';
         public const char CASH = '1';
         public const char NEXT_DAY = '2';
-        public const char T_PLUS_2 = '3';
-        public const char T_PLUS_3 = '4';
-        public const char T_PLUS_4 = '5';
+        public const char TPLUS2 = '3';
+        public const char TPLUS3 = '4';
+        public const char TPLUS4 = '5';
         public const char FUTURE = '6';
-        public const char WHEN_AND_IF_ISSUED = '7';
+        public const char WHEN_ISSUED = '7';
         public const char SELLERS_OPTION = '8';
-        public const char T_PLUS_5 = '9';
-        public const char T_PLUS_1 = 'A';
+        public const char TPLUS5 = '9';
     }
 
 
@@ -1685,6 +1705,10 @@ namespace QuickFix.Fields
         public ExDestination(string val)
             :base(Tags.ExDestination, val) {}
 
+
+        // Field Enumerations
+        public const string NONE = "0";
+        public const string POSIT = "4";
     }
 
 
@@ -1709,6 +1733,8 @@ namespace QuickFix.Fields
         public const int DUPLICATE_CLORDID = 6;
         public const int OTHER = 99;
         public const int INVALID_PRICE_INCREMENT = 18;
+        public const int PRICE_EXCEEDS_CURRENT_PRICE = 7;
+        public const int PRICE_EXCEEDS_CURRENT_PRICE_BAND = 8;
     }
 
 
@@ -1742,6 +1768,7 @@ namespace QuickFix.Fields
         public const int TRADE_ALONG_REQUIRED = 9;
         public const int OTHER = 99;
         public const int INVALID_PRICE_INCREMENT = 18;
+        public const int PRICE_EXCEEDS_CURRENT_PRICE_BAND = 16;
     }
 
 
@@ -2064,6 +2091,10 @@ namespace QuickFix.Fields
         public CxlType(char val)
             :base(Tags.CxlType, val) {}
 
+
+        // Field Enumerations
+        public const char PARTIAL_CANCEL = 'P';
+        public const char FULL_REMAINING_QUANTITY = 'F';
     }
 
 
@@ -2444,6 +2475,8 @@ namespace QuickFix.Fields
         public const char TRADE_IN_A_CLEARING_HOLD = 'J';
         public const char TRADE_HAS_BEEN_RELEASED_TO_CLEARING = 'K';
         public const char TRIGGERED_OR_ACTIVATED_BY_SYSTEM = 'L';
+        public const char PARTIAL_FILL = '1';
+        public const char FILL = '2';
     }
 
 
@@ -2790,7 +2823,7 @@ namespace QuickFix.Fields
         public const string VARIABLE_RATE_DEMAND_NOTE = "VRDN";
         public const string WARRANT = "WAR";
         public const string WITHDRAWN = "WITHDRN";
-        public const string WILDCARD_ENTRY = "WLD";
+        public const string WILDCARD_ENTRY_FOR_USE_ON_SECURITY_DEFINITION_REQUEST = "?";
         public const string EXTENDED_COMM_NOTE = "XCN";
         public const string INDEXED_LINKED = "XLINKD";
         public const string YANKEE_CORPORATE_BOND = "YANK";
@@ -2798,6 +2831,33 @@ namespace QuickFix.Fields
         public const string OPTIONS_ON_PHYSICAL = "OOP";
         public const string OPTIONS_ON_FUTURES = "OOF";
         public const string CASH = "CASH";
+        public const string OPTIONS_ON_COMBO = "OOC";
+        public const string INTEREST_RATE_SWAP = "IRS";
+        public const string BANK_DEPOSITORY_NOTE = "BDN";
+        public const string CANADIAN_MONEY_MARKETS = "CAMM";
+        public const string CANADIAN_TREASURY_NOTES = "CAN";
+        public const string CANADIAN_TREASURY_BILLS = "CTB";
+        public const string CREDIT_DEFAULT_SWAP = "CDS";
+        public const string CANADIAN_MORTGAGE_BONDS = "CMB";
+        public const string EURO_CORPORATE_FLOATING_RATE_NOTES = "EUFRN";
+        public const string US_CORPORATE_FLOATING_RATE_NOTES = "FRN";
+        public const string CANADIAN_PROVINCIAL_BONDS = "PROV";
+        public const string SECURED_LIQUIDITY_NOTE = "SLQN";
+        public const string TREASURY_BILL = "TB";
+        public const string TERM_LIQUIDITY_NOTE = "TLQN";
+        public const string TAXABLE_MUNICIPAL_CP = "TMCP";
+        public const string WILDCARD_ENTRY = "WLD";
+        public const string REPURCHASE_AGREEMENT = "RP";
+        public const string REVERSE_REPURCHASE_AGREEMENT = "RVRP";
+        public const string AGENCY_POOLS = "POOL";
+        public const string FEDERAL_HOUSING_AUTHORITY = "FHA";
+        public const string FEDERAL_HOME_LOAN = "FHL";
+        public const string FEDERAL_NATIONAL_MORTGAGE_ASSOCIATION = "FN";
+        public const string GOVERNMENT_NATIONAL_MORTGAGE_ASSOCIATION = "GN";
+        public const string TREASURIES_PLUS_AGENCY_DEBENTURE = "GOVT";
+        public const string MUNICIPAL_BOND = "MUNI";
+        public const string STUDENT_LOAN_MARKETING_ASSOCIATION = "SL";
+        public const string CATS_TIGERS = "ZOO";
     }
 
 
@@ -3713,6 +3773,11 @@ namespace QuickFix.Fields
         public const char SESSION_LOW_OFFER = 'O';
         public const char EARLY_PRICES = 'P';
         public const char AUCTION_CLEARING_PRICE = 'Q';
+        public const char SWAP_VALUE_FACTOR = 'S';
+        public const char DAILY_VALUE_ADJUSTMENT_FOR_LONG_POSITIONS = 'R';
+        public const char CUMULATIVE_VALUE_ADJUSTMENT_FOR_LONG_POSITIONS = 'T';
+        public const char DAILY_VALUE_ADJUSTMENT_FOR_SHORT_POSITIONS = 'U';
+        public const char CUMULATIVE_VALUE_ADJUSTMENT_FOR_SHORT_POSITIONS = 'V';
     }
 
 
@@ -3867,6 +3932,9 @@ namespace QuickFix.Fields
         public const string RESERVED_SAM = "0";
         public const string NO_ACTIVE_SAM = "1";
         public const string RESTRICTED = "2";
+        public const string REST_OF_BOOK_VWAP = "3";
+        public const string BETTER_PRICES_IN_CONDITIONAL_ORDERS = "4";
+        public const string MEDIAN_PRICE = "5";
     }
 
 
@@ -3954,6 +4022,11 @@ namespace QuickFix.Fields
         public const string FORM_T = "AR";
         public const string BASKET_INDEX = "AS";
         public const string BURST_BASKET = "AT";
+        public const string IMPLIED_TRADE = "1";
+        public const string OUTSIDE_SPREAD = "AV";
+        public const string MARKETPLACE_ENTERED_TRADE = "2";
+        public const string MULT_ASSET_CLASS_MULTILEG_TRADE = "3";
+        public const string MULTILEG_TO_MULTILEG_TRADE = "4";
     }
 
 
@@ -3987,6 +4060,7 @@ namespace QuickFix.Fields
         public const char DELETE = '2';
         public const char DELETE_THRU = '3';
         public const char DELETE_FROM = '4';
+        public const char OVERLAY = '5';
     }
 
 
@@ -4100,11 +4174,9 @@ namespace QuickFix.Fields
 
 
         // Field Enumerations
-        public const string DAILY_OPEN = "0";
-        public const string SESSION_OPEN = "1";
+        public const string DAILY_OPEN_CLOSE__SETTLEMENT_PRICE = "0";
+        public const string SESSION_OPEN_CLOSE__SETTLEMENT_PRICE = "1";
         public const string DELIVERY_SETTLEMENT_PRICE = "2";
-        public const string EXPECTED_PRICE = "3";
-        public const string PRICE_FROM_PREVIOUS_BUSINESS_DAY = "4";
     }
 
 
@@ -4212,6 +4284,7 @@ namespace QuickFix.Fields
         public const string SYMBOL_CONVERSION = "T";
         public const string CUSIP = "U";
         public const string LEAP_ROLLOVER = "V";
+        public const string SUCCESSION_EVENT = "W";
     }
 
 
@@ -4335,6 +4408,8 @@ namespace QuickFix.Fields
         public const int INVALID_PRICE = 8;
         public const int NOT_AUTHORIZED_TO_QUOTE_SECURITY = 9;
         public const int OTHER = 99;
+        public const int PRICE_EXCEEDS_CURRENT_PRICE_BAND = 10;
+        public const int QUOTE_LOCKED = 11;
     }
 
 
@@ -4353,6 +4428,7 @@ namespace QuickFix.Fields
         public const int NO_ACKNOWLEDGEMENT = 0;
         public const int ACKNOWLEDGE_ONLY_NEGATIVE_OR_ERRONEOUS_QUOTES = 1;
         public const int ACKNOWLEDGE_EACH_QUOTE_MESSAGES = 2;
+        public const int SUMMARY_ACKNOWLEDGEMENT = 3;
     }
 
 
@@ -4623,6 +4699,12 @@ namespace QuickFix.Fields
         public const int REQUEST_SECURITY_IDENTITY_FOR_THE_SPECIFICATIONS_PROVIDED = 1;
         public const int REQUEST_LIST_SECURITY_TYPES = 2;
         public const int REQUEST_LIST_SECURITIES = 3;
+        public const int SYMBOL = 4;
+        public const int SECURITYTYPE_AND_OR_CFICODE = 5;
+        public const int PRODUCT = 6;
+        public const int TRADINGSESSIONID = 7;
+        public const int ALL_SECURITIES = 8;
+        public const int MARKETID_OR_MARKETID_PLUS_MARKETSEGMENTID = 9;
     }
 
 
@@ -4725,6 +4807,8 @@ namespace QuickFix.Fields
         public const int MARKET_IMBALANCE_BUY = 7;
         public const int MARKET_IMBALANCE_SELL = 8;
         public const int MARKET_ON_CLOSE_IMBALANCE_BUY = 9;
+        public const int PRE_CROSS = 24;
+        public const int CROSS = 25;
     }
 
 
@@ -4876,6 +4960,14 @@ namespace QuickFix.Fields
         public TradingSessionID(string val)
             :base(Tags.TradingSessionID, val) {}
 
+
+        // Field Enumerations
+        public const string DAY = "1";
+        public const string HALFDAY = "2";
+        public const string MORNING = "3";
+        public const string AFTERNOON = "4";
+        public const string EVENING = "5";
+        public const string AFTER_HOURS = "6";
     }
 
 
@@ -5038,6 +5130,12 @@ namespace QuickFix.Fields
         public MessageEncoding(string val)
             :base(Tags.MessageEncoding, val) {}
 
+
+        // Field Enumerations
+        public const string ISO_2022_JP = "ISO-2022-JP";
+        public const string EUC_JP = "EUC-JP";
+        public const string SHIFT_JIS = "SHIFT_JIS";
+        public const string UTF_8 = "UTF-8";
     }
 
 
@@ -5409,6 +5507,7 @@ namespace QuickFix.Fields
         public const int SIGNATURE_PROBLEM = 8;
         public const int COMPID_PROBLEM = 9;
         public const int OTHER = 99;
+        public const int INVALID_UNSUPPORTED_APPLICATION_VERSION = 18;
     }
 
 
@@ -6552,6 +6651,7 @@ namespace QuickFix.Fields
         public const string OPTION_PRICE_REPORTING_AUTHORITY = "J";
         public const string LETTER_OF_CREDIT = "L";
         public const string ISDA_FPML_PRODUCT_URL = "K";
+        public const string MARKETPLACE_ASSIGNED_IDENTIFIER = "M";
     }
 
 
@@ -6630,6 +6730,8 @@ namespace QuickFix.Fields
         public const char FIFO = 'F';
         public const char OPEN = 'O';
         public const char ROLLED = 'R';
+        public const char CLOSE_BUT_NOTIFY_ON_OPEN = 'N';
+        public const char DEFAULT = 'D';
     }
 
 
@@ -6888,6 +6990,26 @@ namespace QuickFix.Fields
         public const string WEIGHTED_AVERAGE_MATURITY = "WAM";
         public const string WHOLE_POOL = "WHOLE";
         public const string YIELD_RANGE = "YIELD";
+        public const string AVERAGE_FICO_SCORE = "AVFICO";
+        public const string AVERAGE_LOAN_SIZE = "AVSIZE";
+        public const string MAXIMUM_LOAN_BALANCE = "MAXBAL";
+        public const string POOL_IDENTIFIER = "POOL";
+        public const string TYPE_OF_ROLL_TRADE = "ROLLTYPE";
+        public const string REFERENCE_TO_ROLLING_OR_CLOSING_TRADE = "REFTRADE";
+        public const string PRINCIPAL_OF_ROLLING_OR_CLOSING_TRADE = "REFPRIN";
+        public const string INTEREST_OF_ROLLING_OR_CLOSING_TRADE = "REFINT";
+        public const string AVAILABLE_OFFER_QUANTITY_TO_BE_SHOWN_TO_THE_STREET = "AVAILQTY";
+        public const string BROKERS_SALES_CREDIT = "BROKERCREDIT";
+        public const string OFFER_PRICE_TO_BE_SHOWN_TO_INTERNAL_BROKERS = "INTERNALPX";
+        public const string OFFER_QUANTITY_TO_BE_SHOWN_TO_INTERNAL_BROKERS = "INTERNALQTY";
+        public const string THE_MINIMUM_RESIDUAL_OFFER_QUANTITY = "LEAVEQTY";
+        public const string MAXIMUM_ORDER_SIZE = "MAXORDQTY";
+        public const string ORDER_QUANTITY_INCREMENT = "ORDRINCR";
+        public const string PRIMARY_OR_SECONDARY_MARKET_INDICATOR = "PRIMARY";
+        public const string BROKER_SALES_CREDIT_OVERRIDE = "SALESCREDITOVR";
+        public const string TRADERS_CREDIT = "TRADERCREDIT";
+        public const string DISCOUNT_RATE = "DISCOUNT";
+        public const string YIELD_TO_MATURITY = "YTM";
     }
 
 
@@ -6901,6 +7023,22 @@ namespace QuickFix.Fields
         public StipulationValue(string val)
             :base(Tags.StipulationValue, val) {}
 
+
+        // Field Enumerations
+        public const string SPECIAL_CUM_DIVIDEND = "CD";
+        public const string SPECIAL_EX_DIVIDEND = "XD";
+        public const string SPECIAL_CUM_COUPON = "CC";
+        public const string SPECIAL_EX_COUPON = "XC";
+        public const string SPECIAL_CUM_BONUS = "CB";
+        public const string SPECIAL_EX_BONUS = "XB";
+        public const string SPECIAL_CUM_RIGHTS = "CR";
+        public const string SPECIAL_EX_RIGHTS = "XR";
+        public const string SPECIAL_CUM_CAPITAL_REPAYMENTS = "CP";
+        public const string SPECIAL_EX_CAPITAL_REPAYMENTS = "XP";
+        public const string CASH_SETTLEMENT = "CS";
+        public const string SPECIAL_PRICE = "SP";
+        public const string REPORT_FOR_EUROPEAN_EQUITY_MARKET_SECURITIES = "TR";
+        public const string GUARANTEED_DELIVERY = "GD";
     }
 
 
@@ -6950,6 +7088,9 @@ namespace QuickFix.Fields
         public const string TRUE_YIELD = "TRUE";
         public const string YIELD_VALUE_OF_1_32 = "VALUE1_32";
         public const string YIELD_TO_WORST = "WORST";
+        public const string YIELD_TO_AVERAGE_LIFE = "AVGLIFE";
+        public const string YIELD_TO_LONGEST_AVERAGE = "LONGEST";
+        public const string YIELD_TO_SHORTEST_AVERAGE = "SHORTEST";
     }
 
 
@@ -7310,6 +7451,11 @@ namespace QuickFix.Fields
         public const int EXPIRED = 7;
         public const int QUERY = 8;
         public const int QUOTE_NOT_FOUND = 9;
+        public const int ACTIVE = 16;
+        public const int CANCELED = 17;
+        public const int UNSOLICITED_QUOTE_REPLENISHMENT = 18;
+        public const int PENDING_END_TRADE = 19;
+        public const int TOO_LATE_TO_END = 20;
     }
 
 
@@ -7500,6 +7646,9 @@ namespace QuickFix.Fields
         public const int DESK_ID = 76;
         public const int MARKET_DATA_MARKET = 77;
         public const int ALLOCATION_ENTITY = 78;
+        public const int PRIME_BROKER_PROVIDING_GENERAL_TRADE_SERVICES = 79;
+        public const int STEP_OUT_FIRM = 80;
+        public const int BROKERCLEARINGID = 81;
     }
 
 
@@ -8723,6 +8872,10 @@ namespace QuickFix.Fields
         public const string EXTERNAL_MARKET_PARTICIPANT = "8";
         public const string EXTNERAL_INTER_CONNECTED_MARKET_LINKAGE = "9";
         public const string RISKLESS_ARBITRAGE = "A";
+        public const string ISSUER_HOLDING = "B";
+        public const string ISSUE_PRICE_STABILIZATION = "C";
+        public const string NON_ALGORITHMIC = "D";
+        public const string ALGORITHMIC = "E";
     }
 
 
@@ -8745,6 +8898,9 @@ namespace QuickFix.Fields
         public const char CANCEL_ORDERS_FOR_A_SECURITYTYPE = '5';
         public const char CANCEL_ORDERS_FOR_A_TRADING_SESSION = '6';
         public const char CANCEL_ALL_ORDERS = '7';
+        public const char CANCEL_ORDERS_FOR_A_MARKET = '8';
+        public const char CANCEL_ORDERS_FOR_A_MARKET_SEGMENT = '9';
+        public const char CANCEL_ORDERS_FOR_A_SECURITY_GROUP = 'A';
     }
 
 
@@ -8768,6 +8924,9 @@ namespace QuickFix.Fields
         public const char CANCEL_ORDERS_FOR_A_SECURITYTYPE = '5';
         public const char CANCEL_ORDERS_FOR_A_TRADING_SESSION = '6';
         public const char CANCEL_ALL_ORDERS = '7';
+        public const char CANCEL_ORDERS_FOR_A_MARKET = '8';
+        public const char CANCEL_ORDERS_FOR_A_MARKET_SEGMENT = '9';
+        public const char CANCEL_ORDERS_FOR_A_SECURITY_GROUP = 'A';
     }
 
 
@@ -8791,6 +8950,9 @@ namespace QuickFix.Fields
         public const int INVALID_OR_UNKNOWN_SECURITYTYPE = 5;
         public const int INVALID_OR_UNKNOWN_TRADING_SESSION = 6;
         public const int OTHER = 99;
+        public const int INVALID_OR_UNKNOWN_MARKET = 7;
+        public const int INVALID_OR_UNKOWN_MARKET_SEGMENT = 8;
+        public const int INVALID_OR_UNKNOWN_SECURITY_GROUP = 9;
     }
 
 
@@ -8940,6 +9102,10 @@ namespace QuickFix.Fields
         public InstrRegistry(string val)
             :base(Tags.InstrRegistry, val) {}
 
+
+        // Field Enumerations
+        public const string COUNTRY_IN_WHICH_REGISTRY_IS_KEPT = "Code";
+        public const string PHYSICAL_OR_BEARER = "ZZ";
     }
 
 
@@ -9184,6 +9350,7 @@ namespace QuickFix.Fields
         public const int PRODUCT = 2;
         public const int TRADINGSESSIONID = 3;
         public const int ALL_SECURITIES = 4;
+        public const int MARKETID_OR_MARKETID_PLUS_MARKETSEGMENTID = 5;
     }
 
 
@@ -9432,19 +9599,20 @@ namespace QuickFix.Fields
         public const string SUMMARIZED_MATCH_USING_A3_EXACT_MATCH_CRITERIA_EXCEPT_QUANTITY_IS_SUMMARIZED = "S3";
         public const string SUMMARIZED_MATCH_USING_A4_EXACT_MATCH_CRITERIA_EXCEPT_QUANTITY_IS_SUMMARIZED = "S4";
         public const string SUMMARIZED_MATCH_USING_A5_EXACT_MATCH_CRITERIA_EXCEPT_QUANTITY_IS_SUMMARIZED = "S5";
+        public const string ONE_PARTY_TRADE_REPORT = "1";
+        public const string TWO_PARTY_TRADE_REPORT = "2";
+        public const string CONFIRMED_TRADE_REPORT = "3";
+        public const string AUTO_MATCH = "4";
+        public const string CROSS_AUCTION = "5";
+        public const string COUNTER_ORDER_SELECTION = "6";
+        public const string CALL_AUCTION = "7";
+        public const string ISSUING_BUY_BACK_AUCTION = "8";
         public const string ONE_PARTY_PRIVATELY_NEGOTIATED_TRADE_REPORT = "60";
         public const string TWO_PARTY_PRIVATELY_NEGOTIATED_TRADE_REPORT = "61";
         public const string CONTINUOUS_AUTO_MATCH = "62";
         public const string CROSS_AUCTION_63 = "63";
         public const string COUNTER_ORDER_SELECTION_64 = "64";
         public const string CALL_AUCTION_65 = "65";
-        public const string ONE_PARTY_TRADE_REPORT = "1";
-        public const string TWO_PARTY_TRADE_REPORT = "2";
-        public const string CONFIRMED_TRADE_REPORT = "3";
-        public const string AUTO_MATCH = "4";
-        public const string CROSS_AUCTION_5 = "5";
-        public const string COUNTER_ORDER_SELECTION_6 = "6";
-        public const string CALL_AUCTION_7 = "7";
     }
 
 
@@ -10167,6 +10335,15 @@ namespace QuickFix.Fields
         public TradingSessionSubID(string val)
             :base(Tags.TradingSessionSubID, val) {}
 
+
+        // Field Enumerations
+        public const string PRE_TRADING = "1";
+        public const string OPENING_OR_OPENING_AUCTION = "2";
+        public const string VAL_3 = "3";
+        public const string CLOSING_OR_CLOSING_AUCTION = "4";
+        public const string POST_TRADING = "5";
+        public const string INTRADAY_AUCTION = "6";
+        public const string QUIESCENT = "7";
     }
 
 
@@ -11402,6 +11579,8 @@ namespace QuickFix.Fields
         public const int COVER = 4;
         public const int DONE_AWAY = 5;
         public const int PASS = 6;
+        public const int END_TRADE = 7;
+        public const int TIMED_OUT = 8;
     }
 
 
@@ -11544,6 +11723,7 @@ namespace QuickFix.Fields
         public const string CORPORATE_ACTION_ADJUSTMENT = "CAA";
         public const string DELIVERY_NOTICE_QTY = "DN";
         public const string EXCHANGE_FOR_PHYSICAL_QTY = "EP";
+        public const string PRIVATELY_NEGOTIATED_TRADE_QTY = "PNTN";
     }
 
 
@@ -12242,7 +12422,7 @@ namespace QuickFix.Fields
         public const int INVALID_TRANSPORT_TYPE_REQUESTED = 4;
         public const int INVALID_DESTINATION_REQUESTED = 5;
         public const int TRADEREQUESTTYPE_NOT_SUPPORTED = 8;
-        public const int UNAUTHORIZED_ROR_TRADE_CAPTURE_REPORT_REQUEST = 9;
+        public const int NOT_AUTHORIZED = 9;
         public const int OTHER = 99;
     }
 
@@ -13070,6 +13250,7 @@ namespace QuickFix.Fields
         public const int PROFESSIONAL_CLIENT = 30;
         public const int LOCATION = 31;
         public const int EXECUTION_VENUE = 32;
+        public const int CURRENCY_DELIVERY_IDENTIFIER = 33;
     }
 
 
@@ -13406,6 +13587,7 @@ namespace QuickFix.Fields
         // Field Enumerations
         public const int EXPIRE_ON_TRADING_SESSION_CLOSE = 0;
         public const int EXPIRE_ON_TRADING_SESSION_OPEN = 1;
+        public const int TRADING_ELIGIBILITY_EXPIRATION_SPECIFIED_IN_THE_DATE_AND_TIME_FIELDS_EVENTDATE = 2;
     }
 
 
@@ -13468,6 +13650,14 @@ namespace QuickFix.Fields
         public const int OPTION_EXERCISE = 45;
         public const int DELTA_NEUTRAL_TRANSACTION = 46;
         public const int FINANCING_TRANSACTION = 47;
+        public const int NON_STANDARD_SETTLEMENT = 48;
+        public const int DERIVATIVE_RELATED_TRANSACTION = 49;
+        public const int PORTFOLIO_TRADE = 50;
+        public const int VOLUME_WEIGHTED_AVERAGE_TRADE = 51;
+        public const int EXCHANGE_GRANTED_TRADE = 52;
+        public const int REPURCHASE_AGREEMENT = 53;
+        public const int OTC = 54;
+        public const int EXCHANGE_BASIS_FACILITY = 55;
     }
 
 
@@ -13514,6 +13704,13 @@ namespace QuickFix.Fields
         public const int T = 30;
         public const int WN = 31;
         public const int WT = 32;
+        public const int OFF_HOURS_TRADE = 33;
+        public const int ON_HOURS_TRADE = 34;
+        public const int OTC_QUOTE = 35;
+        public const int CONVERTED_SWAP = 36;
+        public const int CROSSED_TRADE = 37;
+        public const int INTERIM_PROTECTED_TRADE = 38;
+        public const int LARGE_IN_SCALE = 39;
     }
 
 
@@ -13681,7 +13878,7 @@ namespace QuickFix.Fields
         public const int LOCAL = 1;
         public const int NATIONAL = 2;
         public const int GLOBAL = 3;
-        public const int NATIONAL_XXCLUDING_LOCAL = 4;
+        public const int NATIONAL_EXCLUDING_LOCAL = 4;
     }
 
 
@@ -13860,6 +14057,7 @@ namespace QuickFix.Fields
         public const int ADDED_LIQUIDITY = 1;
         public const int REMOVED_LIQUIDITY = 2;
         public const int LIQUIDITY_ROUTED_OUT = 3;
+        public const int AUCTION = 4;
     }
 
 
@@ -14090,6 +14288,19 @@ namespace QuickFix.Fields
         public const int OTHER = 99;
         public const int ACTIVATION = 5;
         public const int INACTIVIATION = 6;
+        public const int LAST_ELIGIBLE_TRADE_DATE = 7;
+        public const int SWAP_START_DATE = 8;
+        public const int SWAP_END_DATE = 9;
+        public const int SWAP_NEXT_START_DATE = 11;
+        public const int SWAP_ROLL_DATE = 10;
+        public const int SWAP_NEXT_ROLL_DATE = 12;
+        public const int FIRST_DELIVERY_DATE = 13;
+        public const int LAST_DELIVERY_DATE = 14;
+        public const int INITIAL_INVENTORY_DUE_DATE = 15;
+        public const int FINAL_INVENTORY_DUE_DATE = 16;
+        public const int FIRST_INTENT_DATE = 17;
+        public const int LAST_INTENT_DATE = 18;
+        public const int POSITION_REMOVAL_DATE = 19;
     }
 
 
@@ -14193,6 +14404,13 @@ namespace QuickFix.Fields
         public const int COUPON_PERIOD = 8;
         public const int WHEN_AND_IF_ISSUED = 9;
         public const int TEXT_SUPPLY_THE_TEXT_OF_THE_ATTRIBUTE_OR_DISCLAIMER_IN_THE_INSTRATTRIBVALUE = 99;
+        public const int PRICE_TICK_RULES_FOR_SECURITY = 23;
+        public const int TRADE_TYPE_ELIGIBILITY_DETAILS_FOR_SECURITY = 24;
+        public const int INSTRUMENT_DENOMINATOR = 25;
+        public const int INSTRUMENT_NUMERATOR = 26;
+        public const int INSTRUMENT_PRICE_PRECISION = 27;
+        public const int INSTRUMENT_STRIKE_PRICE = 28;
+        public const int TRADEABLE_INDICATOR = 29;
     }
 
 
@@ -14995,6 +15213,8 @@ namespace QuickFix.Fields
         public const int PASSWORD_INCORRECT = 4;
         public const int PASSWORD_CHANGED = 5;
         public const int OTHER = 6;
+        public const int FORCED_USER_LOGOUT_BY_EXCHANGE = 7;
+        public const int SESSION_SHUTDOWN_WARNING = 8;
     }
 
 
@@ -16833,13 +17053,18 @@ namespace QuickFix.Fields
     /// <summary>
     /// DealingCapacity Field
     /// </summary>/
-    public sealed class DealingCapacity : DecimalField
+    public sealed class DealingCapacity : CharField
     {
         public DealingCapacity()
             :base(Tags.DealingCapacity) {}
-        public DealingCapacity(Decimal val)
+        public DealingCapacity(char val)
             :base(Tags.DealingCapacity, val) {}
 
+
+        // Field Enumerations
+        public const char AGENT = 'A';
+        public const char PRINCIPAL = 'P';
+        public const char RISKLESS_PRINCIPAL = 'R';
     }
 
 
@@ -17243,10 +17468,10 @@ namespace QuickFix.Fields
 
 
         // Field Enumerations
-        public const char SECONDARYORDEID = '0';
-        public const char ORDEID = '1';
-        public const char MENTRYID = '2';
-        public const char QUOTENTRYID = '3';
+        public const char SECONDARYORDERID = '0';
+        public const char ORDERID = '1';
+        public const char MDENTRYID = '2';
+        public const char QUOTEENTRYID = '3';
     }
 
 
@@ -17443,10 +17668,10 @@ namespace QuickFix.Fields
         public const int OPENING_PEG = 3;
         public const int MARKET_PEG = 4;
         public const int PRIMARY_PEG = 5;
-        public const int FIXED_PEG_TO_LOCAL_BEST_BID_OR_OFFER_AT_TIME_OF_ORDER = 6;
         public const int PEG_TO_VWAP = 7;
         public const int TRAILING_STOP_PEG = 8;
         public const int PEG_TO_LIMIT_PRICE = 9;
+        public const int FIXED_PEG_TO_LOCAL_BEST_BID_OR_OFFER_AT_TIME_OF_ORDER = 6;
     }
 
 
@@ -17763,6 +17988,7 @@ namespace QuickFix.Fields
         public const char QUOTE_REQUEST = '6';
         public const char IMPLIED_ORDER = '7';
         public const char CROSS_ORDER = '8';
+        public const char STREAMING_PRICE = '9';
     }
 
 
@@ -17874,6 +18100,7 @@ namespace QuickFix.Fields
         public const char ONE_PARTY_REPORT_FOR_MATCHING = '2';
         public const char ONE_PARTY_REPORT_FOR_PASS_THROUGH = '3';
         public const char AUTOMATED_FLOOR_ORDER_ROUTING = '4';
+        public const char TWO_PARTY_REPORT_FOR_CLAIM = '5';
     }
 
 
@@ -17949,6 +18176,7 @@ namespace QuickFix.Fields
         public const string FIX43 = "5";
         public const string FIX44 = "6";
         public const string FIX50 = "7";
+        public const string FIX50SP1 = "8";
     }
 
 
@@ -18098,6 +18326,6863 @@ namespace QuickFix.Fields
             :base(Tags.ExchangeSpecialInstructions) {}
         public ExchangeSpecialInstructions(string val)
             :base(Tags.ExchangeSpecialInstructions, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ExpirationQtyType Field
+    /// </summary>/
+    public sealed class ExpirationQtyType : IntField
+    {
+        public ExpirationQtyType()
+            :base(Tags.ExpirationQtyType) {}
+        public ExpirationQtyType(int val)
+            :base(Tags.ExpirationQtyType, val) {}
+
+
+        // Field Enumerations
+        public const int AUTO_EXERCISE = 1;
+        public const int NON_AUTO_EXERCISE = 2;
+        public const int FINAL_WILL_BE_EXERCISED = 3;
+        public const int CONTRARY_INTENTION = 4;
+        public const int DIFFERENCE = 5;
+    }
+
+
+    /// <summary>
+    /// MaxTradeVol Field
+    /// </summary>/
+    public sealed class MaxTradeVol : DecimalField
+    {
+        public MaxTradeVol()
+            :base(Tags.MaxTradeVol) {}
+        public MaxTradeVol(Decimal val)
+            :base(Tags.MaxTradeVol, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoMDFeedTypes Field
+    /// </summary>/
+    public sealed class NoMDFeedTypes : IntField
+    {
+        public NoMDFeedTypes()
+            :base(Tags.NoMDFeedTypes) {}
+        public NoMDFeedTypes(int val)
+            :base(Tags.NoMDFeedTypes, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MatchAlgorithm Field
+    /// </summary>/
+    public sealed class MatchAlgorithm : StringField
+    {
+        public MatchAlgorithm()
+            :base(Tags.MatchAlgorithm) {}
+        public MatchAlgorithm(string val)
+            :base(Tags.MatchAlgorithm, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MaxPriceVariation Field
+    /// </summary>/
+    public sealed class MaxPriceVariation : DecimalField
+    {
+        public MaxPriceVariation()
+            :base(Tags.MaxPriceVariation) {}
+        public MaxPriceVariation(Decimal val)
+            :base(Tags.MaxPriceVariation, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ImpliedMarketIndicator Field
+    /// </summary>/
+    public sealed class ImpliedMarketIndicator : IntField
+    {
+        public ImpliedMarketIndicator()
+            :base(Tags.ImpliedMarketIndicator) {}
+        public ImpliedMarketIndicator(int val)
+            :base(Tags.ImpliedMarketIndicator, val) {}
+
+
+        // Field Enumerations
+        public const int NOT_IMPLIED = 0;
+        public const int IMPLIED_IN = 1;
+        public const int IMPLIED_OUT = 2;
+        public const int BOTH_IMPLIED_IN_AND_IMPLIED_OUT = 3;
+    }
+
+
+    /// <summary>
+    /// EventTime Field
+    /// </summary>/
+    public sealed class EventTime : DateTimeField
+    {
+        public EventTime()
+            :base(Tags.EventTime) {}
+        public EventTime(DateTime val)
+            :base(Tags.EventTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MinPriceIncrementAmount Field
+    /// </summary>/
+    public sealed class MinPriceIncrementAmount : DecimalField
+    {
+        public MinPriceIncrementAmount()
+            :base(Tags.MinPriceIncrementAmount) {}
+        public MinPriceIncrementAmount(Decimal val)
+            :base(Tags.MinPriceIncrementAmount, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnitOfMeasureQty Field
+    /// </summary>/
+    public sealed class UnitOfMeasureQty : DecimalField
+    {
+        public UnitOfMeasureQty()
+            :base(Tags.UnitOfMeasureQty) {}
+        public UnitOfMeasureQty(Decimal val)
+            :base(Tags.UnitOfMeasureQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LowLimitPrice Field
+    /// </summary>/
+    public sealed class LowLimitPrice : DecimalField
+    {
+        public LowLimitPrice()
+            :base(Tags.LowLimitPrice) {}
+        public LowLimitPrice(Decimal val)
+            :base(Tags.LowLimitPrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// HighLimitPrice Field
+    /// </summary>/
+    public sealed class HighLimitPrice : DecimalField
+    {
+        public HighLimitPrice()
+            :base(Tags.HighLimitPrice) {}
+        public HighLimitPrice(Decimal val)
+            :base(Tags.HighLimitPrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TradingReferencePrice Field
+    /// </summary>/
+    public sealed class TradingReferencePrice : DecimalField
+    {
+        public TradingReferencePrice()
+            :base(Tags.TradingReferencePrice) {}
+        public TradingReferencePrice(Decimal val)
+            :base(Tags.TradingReferencePrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecurityGroup Field
+    /// </summary>/
+    public sealed class SecurityGroup : StringField
+    {
+        public SecurityGroup()
+            :base(Tags.SecurityGroup) {}
+        public SecurityGroup(string val)
+            :base(Tags.SecurityGroup, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegNumber Field
+    /// </summary>/
+    public sealed class LegNumber : IntField
+    {
+        public LegNumber()
+            :base(Tags.LegNumber) {}
+        public LegNumber(int val)
+            :base(Tags.LegNumber, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SettlementCycleNo Field
+    /// </summary>/
+    public sealed class SettlementCycleNo : IntField
+    {
+        public SettlementCycleNo()
+            :base(Tags.SettlementCycleNo) {}
+        public SettlementCycleNo(int val)
+            :base(Tags.SettlementCycleNo, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SideCurrency Field
+    /// </summary>/
+    public sealed class SideCurrency : DecimalField
+    {
+        public SideCurrency()
+            :base(Tags.SideCurrency) {}
+        public SideCurrency(Decimal val)
+            :base(Tags.SideCurrency, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SideSettlCurrency Field
+    /// </summary>/
+    public sealed class SideSettlCurrency : DecimalField
+    {
+        public SideSettlCurrency()
+            :base(Tags.SideSettlCurrency) {}
+        public SideSettlCurrency(Decimal val)
+            :base(Tags.SideSettlCurrency, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplExtID Field
+    /// </summary>/
+    public sealed class ApplExtID : IntField
+    {
+        public ApplExtID()
+            :base(Tags.ApplExtID) {}
+        public ApplExtID(int val)
+            :base(Tags.ApplExtID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// CcyAmt Field
+    /// </summary>/
+    public sealed class CcyAmt : DecimalField
+    {
+        public CcyAmt()
+            :base(Tags.CcyAmt) {}
+        public CcyAmt(Decimal val)
+            :base(Tags.CcyAmt, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoSettlDetails Field
+    /// </summary>/
+    public sealed class NoSettlDetails : IntField
+    {
+        public NoSettlDetails()
+            :base(Tags.NoSettlDetails) {}
+        public NoSettlDetails(int val)
+            :base(Tags.NoSettlDetails, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SettlObligMode Field
+    /// </summary>/
+    public sealed class SettlObligMode : IntField
+    {
+        public SettlObligMode()
+            :base(Tags.SettlObligMode) {}
+        public SettlObligMode(int val)
+            :base(Tags.SettlObligMode, val) {}
+
+
+        // Field Enumerations
+        public const int PRELIMINARY = 1;
+        public const int FINAL = 2;
+    }
+
+
+    /// <summary>
+    /// SettlObligMsgID Field
+    /// </summary>/
+    public sealed class SettlObligMsgID : StringField
+    {
+        public SettlObligMsgID()
+            :base(Tags.SettlObligMsgID) {}
+        public SettlObligMsgID(string val)
+            :base(Tags.SettlObligMsgID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SettlObligID Field
+    /// </summary>/
+    public sealed class SettlObligID : StringField
+    {
+        public SettlObligID()
+            :base(Tags.SettlObligID) {}
+        public SettlObligID(string val)
+            :base(Tags.SettlObligID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SettlObligTransType Field
+    /// </summary>/
+    public sealed class SettlObligTransType : CharField
+    {
+        public SettlObligTransType()
+            :base(Tags.SettlObligTransType) {}
+        public SettlObligTransType(char val)
+            :base(Tags.SettlObligTransType, val) {}
+
+
+        // Field Enumerations
+        public const char CANCEL = 'C';
+        public const char NEW = 'N';
+        public const char REPLACE = 'R';
+        public const char RESTATE = 'T';
+    }
+
+
+    /// <summary>
+    /// SettlObligRefID Field
+    /// </summary>/
+    public sealed class SettlObligRefID : StringField
+    {
+        public SettlObligRefID()
+            :base(Tags.SettlObligRefID) {}
+        public SettlObligRefID(string val)
+            :base(Tags.SettlObligRefID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SettlObligSource Field
+    /// </summary>/
+    public sealed class SettlObligSource : CharField
+    {
+        public SettlObligSource()
+            :base(Tags.SettlObligSource) {}
+        public SettlObligSource(char val)
+            :base(Tags.SettlObligSource, val) {}
+
+
+        // Field Enumerations
+        public const char INSTRUCTIONS_OF_BROKER = '1';
+        public const char INSTRUCTIONS_FOR_INSTITUTION = '2';
+        public const char INVESTOR = '3';
+    }
+
+
+    /// <summary>
+    /// NoSettlOblig Field
+    /// </summary>/
+    public sealed class NoSettlOblig : IntField
+    {
+        public NoSettlOblig()
+            :base(Tags.NoSettlOblig) {}
+        public NoSettlOblig(int val)
+            :base(Tags.NoSettlOblig, val) {}
+
+    }
+
+
+    /// <summary>
+    /// QuoteMsgID Field
+    /// </summary>/
+    public sealed class QuoteMsgID : StringField
+    {
+        public QuoteMsgID()
+            :base(Tags.QuoteMsgID) {}
+        public QuoteMsgID(string val)
+            :base(Tags.QuoteMsgID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// QuoteEntryStatus Field
+    /// </summary>/
+    public sealed class QuoteEntryStatus : IntField
+    {
+        public QuoteEntryStatus()
+            :base(Tags.QuoteEntryStatus) {}
+        public QuoteEntryStatus(int val)
+            :base(Tags.QuoteEntryStatus, val) {}
+
+
+        // Field Enumerations
+        public const int ACCEPTED = 0;
+        public const int REJECTED = 5;
+        public const int REMOVED_FROM_MARKET = 6;
+        public const int EXPIRED = 7;
+        public const int LOCKED_MARKET_WARNING = 12;
+        public const int CROSS_MARKET_WARNING = 13;
+        public const int CANCELED_DUE_TO_LOCK_MARKET = 14;
+        public const int CANCELED_DUE_TO_CROSS_MARKET = 15;
+        public const int ACTIVE = 16;
+    }
+
+
+    /// <summary>
+    /// TotNoCxldQuotes Field
+    /// </summary>/
+    public sealed class TotNoCxldQuotes : IntField
+    {
+        public TotNoCxldQuotes()
+            :base(Tags.TotNoCxldQuotes) {}
+        public TotNoCxldQuotes(int val)
+            :base(Tags.TotNoCxldQuotes, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TotNoAccQuotes Field
+    /// </summary>/
+    public sealed class TotNoAccQuotes : IntField
+    {
+        public TotNoAccQuotes()
+            :base(Tags.TotNoAccQuotes) {}
+        public TotNoAccQuotes(int val)
+            :base(Tags.TotNoAccQuotes, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TotNoRejQuotes Field
+    /// </summary>/
+    public sealed class TotNoRejQuotes : IntField
+    {
+        public TotNoRejQuotes()
+            :base(Tags.TotNoRejQuotes) {}
+        public TotNoRejQuotes(int val)
+            :base(Tags.TotNoRejQuotes, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PrivateQuote Field
+    /// </summary>/
+    public sealed class PrivateQuote : BooleanField
+    {
+        public PrivateQuote()
+            :base(Tags.PrivateQuote) {}
+        public PrivateQuote(Boolean val)
+            :base(Tags.PrivateQuote, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RespondentType Field
+    /// </summary>/
+    public sealed class RespondentType : IntField
+    {
+        public RespondentType()
+            :base(Tags.RespondentType) {}
+        public RespondentType(int val)
+            :base(Tags.RespondentType, val) {}
+
+
+        // Field Enumerations
+        public const int ALL_MARKET_PARTICIPANTS = 1;
+        public const int SPECIFIED_MARKET_PARTICIPANTS = 2;
+        public const int ALL_MARKET_MAKERS = 3;
+        public const int PRIMARY_MARKET_MAKER = 4;
+    }
+
+
+    /// <summary>
+    /// MDSubBookType Field
+    /// </summary>/
+    public sealed class MDSubBookType : IntField
+    {
+        public MDSubBookType()
+            :base(Tags.MDSubBookType) {}
+        public MDSubBookType(int val)
+            :base(Tags.MDSubBookType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecurityTradingEvent Field
+    /// </summary>/
+    public sealed class SecurityTradingEvent : IntField
+    {
+        public SecurityTradingEvent()
+            :base(Tags.SecurityTradingEvent) {}
+        public SecurityTradingEvent(int val)
+            :base(Tags.SecurityTradingEvent, val) {}
+
+
+        // Field Enumerations
+        public const int ORDER_IMBALANCE_AUCTION_IS_EXTENDED = 1;
+        public const int TRADING_RESUMES = 2;
+        public const int PRICE_VOLATILITY_INTERRUPTION = 3;
+        public const int CHANGE_OF_TRADING_SESSION = 4;
+        public const int CHANGE_OF_TRADING_SUBSESSION = 5;
+        public const int CHANGE_OF_SECURITY_STATUS = 6;
+        public const int CHANGE_OF_BOOK_TYPE = 7;
+        public const int CHANGE_OF_MARKET_DEPTH = 8;
+    }
+
+
+    /// <summary>
+    /// NoStatsIndicators Field
+    /// </summary>/
+    public sealed class NoStatsIndicators : IntField
+    {
+        public NoStatsIndicators()
+            :base(Tags.NoStatsIndicators) {}
+        public NoStatsIndicators(int val)
+            :base(Tags.NoStatsIndicators, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StatsType Field
+    /// </summary>/
+    public sealed class StatsType : IntField
+    {
+        public StatsType()
+            :base(Tags.StatsType) {}
+        public StatsType(int val)
+            :base(Tags.StatsType, val) {}
+
+
+        // Field Enumerations
+        public const int EXCHANGE_LAST = 1;
+        public const int HIGH = 2;
+        public const int AVERAGE_PRICE = 3;
+        public const int TURNOVER = 4;
+    }
+
+
+    /// <summary>
+    /// NoOfSecSizes Field
+    /// </summary>/
+    public sealed class NoOfSecSizes : IntField
+    {
+        public NoOfSecSizes()
+            :base(Tags.NoOfSecSizes) {}
+        public NoOfSecSizes(int val)
+            :base(Tags.NoOfSecSizes, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MDSecSizeType Field
+    /// </summary>/
+    public sealed class MDSecSizeType : IntField
+    {
+        public MDSecSizeType()
+            :base(Tags.MDSecSizeType) {}
+        public MDSecSizeType(int val)
+            :base(Tags.MDSecSizeType, val) {}
+
+
+        // Field Enumerations
+        public const int CUSTOMER = 1;
+    }
+
+
+    /// <summary>
+    /// MDSecSize Field
+    /// </summary>/
+    public sealed class MDSecSize : DecimalField
+    {
+        public MDSecSize()
+            :base(Tags.MDSecSize) {}
+        public MDSecSize(Decimal val)
+            :base(Tags.MDSecSize, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplID Field
+    /// </summary>/
+    public sealed class ApplID : StringField
+    {
+        public ApplID()
+            :base(Tags.ApplID) {}
+        public ApplID(string val)
+            :base(Tags.ApplID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplSeqNum Field
+    /// </summary>/
+    public sealed class ApplSeqNum : IntField
+    {
+        public ApplSeqNum()
+            :base(Tags.ApplSeqNum) {}
+        public ApplSeqNum(int val)
+            :base(Tags.ApplSeqNum, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplBegSeqNum Field
+    /// </summary>/
+    public sealed class ApplBegSeqNum : IntField
+    {
+        public ApplBegSeqNum()
+            :base(Tags.ApplBegSeqNum) {}
+        public ApplBegSeqNum(int val)
+            :base(Tags.ApplBegSeqNum, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplEndSeqNum Field
+    /// </summary>/
+    public sealed class ApplEndSeqNum : IntField
+    {
+        public ApplEndSeqNum()
+            :base(Tags.ApplEndSeqNum) {}
+        public ApplEndSeqNum(int val)
+            :base(Tags.ApplEndSeqNum, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecurityXMLLen Field
+    /// </summary>/
+    public sealed class SecurityXMLLen : DecimalField
+    {
+        public SecurityXMLLen()
+            :base(Tags.SecurityXMLLen) {}
+        public SecurityXMLLen(Decimal val)
+            :base(Tags.SecurityXMLLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecurityXML Field
+    /// </summary>/
+    public sealed class SecurityXML : StringField
+    {
+        public SecurityXML()
+            :base(Tags.SecurityXML) {}
+        public SecurityXML(string val)
+            :base(Tags.SecurityXML, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecurityXMLSchema Field
+    /// </summary>/
+    public sealed class SecurityXMLSchema : StringField
+    {
+        public SecurityXMLSchema()
+            :base(Tags.SecurityXMLSchema) {}
+        public SecurityXMLSchema(string val)
+            :base(Tags.SecurityXMLSchema, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RefreshIndicator Field
+    /// </summary>/
+    public sealed class RefreshIndicator : BooleanField
+    {
+        public RefreshIndicator()
+            :base(Tags.RefreshIndicator) {}
+        public RefreshIndicator(Boolean val)
+            :base(Tags.RefreshIndicator, val) {}
+
+    }
+
+
+    /// <summary>
+    /// Volatility Field
+    /// </summary>/
+    public sealed class Volatility : DecimalField
+    {
+        public Volatility()
+            :base(Tags.Volatility) {}
+        public Volatility(Decimal val)
+            :base(Tags.Volatility, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TimeToExpiration Field
+    /// </summary>/
+    public sealed class TimeToExpiration : DecimalField
+    {
+        public TimeToExpiration()
+            :base(Tags.TimeToExpiration) {}
+        public TimeToExpiration(Decimal val)
+            :base(Tags.TimeToExpiration, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskFreeRate Field
+    /// </summary>/
+    public sealed class RiskFreeRate : DecimalField
+    {
+        public RiskFreeRate()
+            :base(Tags.RiskFreeRate) {}
+        public RiskFreeRate(Decimal val)
+            :base(Tags.RiskFreeRate, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PriceUnitOfMeasure Field
+    /// </summary>/
+    public sealed class PriceUnitOfMeasure : StringField
+    {
+        public PriceUnitOfMeasure()
+            :base(Tags.PriceUnitOfMeasure) {}
+        public PriceUnitOfMeasure(string val)
+            :base(Tags.PriceUnitOfMeasure, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PriceUnitOfMeasureQty Field
+    /// </summary>/
+    public sealed class PriceUnitOfMeasureQty : DecimalField
+    {
+        public PriceUnitOfMeasureQty()
+            :base(Tags.PriceUnitOfMeasureQty) {}
+        public PriceUnitOfMeasureQty(Decimal val)
+            :base(Tags.PriceUnitOfMeasureQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SettlMethod Field
+    /// </summary>/
+    public sealed class SettlMethod : CharField
+    {
+        public SettlMethod()
+            :base(Tags.SettlMethod) {}
+        public SettlMethod(char val)
+            :base(Tags.SettlMethod, val) {}
+
+
+        // Field Enumerations
+        public const char CASH_SETTLEMENT_REQUIRED = 'C';
+        public const char PHYSICAL_SETTLEMENT_REQUIRED = 'P';
+    }
+
+
+    /// <summary>
+    /// ExerciseStyle Field
+    /// </summary>/
+    public sealed class ExerciseStyle : IntField
+    {
+        public ExerciseStyle()
+            :base(Tags.ExerciseStyle) {}
+        public ExerciseStyle(int val)
+            :base(Tags.ExerciseStyle, val) {}
+
+
+        // Field Enumerations
+        public const int EUROPEAN = 0;
+        public const int AMERICAN = 1;
+        public const int BERMUDA = 2;
+    }
+
+
+    /// <summary>
+    /// OptPayAmount Field
+    /// </summary>/
+    public sealed class OptPayAmount : DecimalField
+    {
+        public OptPayAmount()
+            :base(Tags.OptPayAmount) {}
+        public OptPayAmount(Decimal val)
+            :base(Tags.OptPayAmount, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PriceQuoteMethod Field
+    /// </summary>/
+    public sealed class PriceQuoteMethod : StringField
+    {
+        public PriceQuoteMethod()
+            :base(Tags.PriceQuoteMethod) {}
+        public PriceQuoteMethod(string val)
+            :base(Tags.PriceQuoteMethod, val) {}
+
+
+        // Field Enumerations
+        public const string STANDARD = "STD";
+        public const string INDEX = "INX";
+        public const string INTEREST_RATE_INDEX = "INT";
+    }
+
+
+    /// <summary>
+    /// FuturesValuationMethod Field
+    /// </summary>/
+    public sealed class FuturesValuationMethod : StringField
+    {
+        public FuturesValuationMethod()
+            :base(Tags.FuturesValuationMethod) {}
+        public FuturesValuationMethod(string val)
+            :base(Tags.FuturesValuationMethod, val) {}
+
+
+        // Field Enumerations
+        public const string PREMIUM_STYLE = "EQTY";
+        public const string FUTURES_STYLE_MARK_TO_MARKET = "FUT";
+        public const string FUTURES_STYLE_WITH_AN_ATTACHED_CASH_ADJUSTMENT = "FUTDA";
+    }
+
+
+    /// <summary>
+    /// ListMethod Field
+    /// </summary>/
+    public sealed class ListMethod : IntField
+    {
+        public ListMethod()
+            :base(Tags.ListMethod) {}
+        public ListMethod(int val)
+            :base(Tags.ListMethod, val) {}
+
+
+        // Field Enumerations
+        public const int PRE_LISTED_ONLY = 0;
+        public const int USER_REQUESTED = 1;
+    }
+
+
+    /// <summary>
+    /// CapPrice Field
+    /// </summary>/
+    public sealed class CapPrice : DecimalField
+    {
+        public CapPrice()
+            :base(Tags.CapPrice) {}
+        public CapPrice(Decimal val)
+            :base(Tags.CapPrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// FloorPrice Field
+    /// </summary>/
+    public sealed class FloorPrice : DecimalField
+    {
+        public FloorPrice()
+            :base(Tags.FloorPrice) {}
+        public FloorPrice(Decimal val)
+            :base(Tags.FloorPrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoStrikeRules Field
+    /// </summary>/
+    public sealed class NoStrikeRules : IntField
+    {
+        public NoStrikeRules()
+            :base(Tags.NoStrikeRules) {}
+        public NoStrikeRules(int val)
+            :base(Tags.NoStrikeRules, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StartStrikePxRange Field
+    /// </summary>/
+    public sealed class StartStrikePxRange : DecimalField
+    {
+        public StartStrikePxRange()
+            :base(Tags.StartStrikePxRange) {}
+        public StartStrikePxRange(Decimal val)
+            :base(Tags.StartStrikePxRange, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EndStrikePxRange Field
+    /// </summary>/
+    public sealed class EndStrikePxRange : DecimalField
+    {
+        public EndStrikePxRange()
+            :base(Tags.EndStrikePxRange) {}
+        public EndStrikePxRange(Decimal val)
+            :base(Tags.EndStrikePxRange, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StrikeIncrement Field
+    /// </summary>/
+    public sealed class StrikeIncrement : DecimalField
+    {
+        public StrikeIncrement()
+            :base(Tags.StrikeIncrement) {}
+        public StrikeIncrement(Decimal val)
+            :base(Tags.StrikeIncrement, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoTickRules Field
+    /// </summary>/
+    public sealed class NoTickRules : IntField
+    {
+        public NoTickRules()
+            :base(Tags.NoTickRules) {}
+        public NoTickRules(int val)
+            :base(Tags.NoTickRules, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StartTickPriceRange Field
+    /// </summary>/
+    public sealed class StartTickPriceRange : DecimalField
+    {
+        public StartTickPriceRange()
+            :base(Tags.StartTickPriceRange) {}
+        public StartTickPriceRange(Decimal val)
+            :base(Tags.StartTickPriceRange, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EndTickPriceRange Field
+    /// </summary>/
+    public sealed class EndTickPriceRange : DecimalField
+    {
+        public EndTickPriceRange()
+            :base(Tags.EndTickPriceRange) {}
+        public EndTickPriceRange(Decimal val)
+            :base(Tags.EndTickPriceRange, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TickIncrement Field
+    /// </summary>/
+    public sealed class TickIncrement : DecimalField
+    {
+        public TickIncrement()
+            :base(Tags.TickIncrement) {}
+        public TickIncrement(Decimal val)
+            :base(Tags.TickIncrement, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TickRuleType Field
+    /// </summary>/
+    public sealed class TickRuleType : IntField
+    {
+        public TickRuleType()
+            :base(Tags.TickRuleType) {}
+        public TickRuleType(int val)
+            :base(Tags.TickRuleType, val) {}
+
+
+        // Field Enumerations
+        public const int REGULAR = 0;
+        public const int VARIABLE = 1;
+        public const int FIXED = 2;
+        public const int TRADED_AS_A_SPREAD_LEG = 3;
+        public const int SETTLED_AS_A_SPREAD_LEG = 4;
+    }
+
+
+    /// <summary>
+    /// NestedInstrAttribType Field
+    /// </summary>/
+    public sealed class NestedInstrAttribType : IntField
+    {
+        public NestedInstrAttribType()
+            :base(Tags.NestedInstrAttribType) {}
+        public NestedInstrAttribType(int val)
+            :base(Tags.NestedInstrAttribType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NestedInstrAttribValue Field
+    /// </summary>/
+    public sealed class NestedInstrAttribValue : StringField
+    {
+        public NestedInstrAttribValue()
+            :base(Tags.NestedInstrAttribValue) {}
+        public NestedInstrAttribValue(string val)
+            :base(Tags.NestedInstrAttribValue, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegMaturityTime Field
+    /// </summary>/
+    public sealed class LegMaturityTime : StringField
+    {
+        public LegMaturityTime()
+            :base(Tags.LegMaturityTime) {}
+        public LegMaturityTime(string val)
+            :base(Tags.LegMaturityTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingMaturityTime Field
+    /// </summary>/
+    public sealed class UnderlyingMaturityTime : StringField
+    {
+        public UnderlyingMaturityTime()
+            :base(Tags.UnderlyingMaturityTime) {}
+        public UnderlyingMaturityTime(string val)
+            :base(Tags.UnderlyingMaturityTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSymbol Field
+    /// </summary>/
+    public sealed class DerivativeSymbol : StringField
+    {
+        public DerivativeSymbol()
+            :base(Tags.DerivativeSymbol) {}
+        public DerivativeSymbol(string val)
+            :base(Tags.DerivativeSymbol, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSymbolSfx Field
+    /// </summary>/
+    public sealed class DerivativeSymbolSfx : StringField
+    {
+        public DerivativeSymbolSfx()
+            :base(Tags.DerivativeSymbolSfx) {}
+        public DerivativeSymbolSfx(string val)
+            :base(Tags.DerivativeSymbolSfx, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityID Field
+    /// </summary>/
+    public sealed class DerivativeSecurityID : StringField
+    {
+        public DerivativeSecurityID()
+            :base(Tags.DerivativeSecurityID) {}
+        public DerivativeSecurityID(string val)
+            :base(Tags.DerivativeSecurityID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityIDSource Field
+    /// </summary>/
+    public sealed class DerivativeSecurityIDSource : StringField
+    {
+        public DerivativeSecurityIDSource()
+            :base(Tags.DerivativeSecurityIDSource) {}
+        public DerivativeSecurityIDSource(string val)
+            :base(Tags.DerivativeSecurityIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoDerivativeSecurityAltID Field
+    /// </summary>/
+    public sealed class NoDerivativeSecurityAltID : IntField
+    {
+        public NoDerivativeSecurityAltID()
+            :base(Tags.NoDerivativeSecurityAltID) {}
+        public NoDerivativeSecurityAltID(int val)
+            :base(Tags.NoDerivativeSecurityAltID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityAltID Field
+    /// </summary>/
+    public sealed class DerivativeSecurityAltID : StringField
+    {
+        public DerivativeSecurityAltID()
+            :base(Tags.DerivativeSecurityAltID) {}
+        public DerivativeSecurityAltID(string val)
+            :base(Tags.DerivativeSecurityAltID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityAltIDSource Field
+    /// </summary>/
+    public sealed class DerivativeSecurityAltIDSource : StringField
+    {
+        public DerivativeSecurityAltIDSource()
+            :base(Tags.DerivativeSecurityAltIDSource) {}
+        public DerivativeSecurityAltIDSource(string val)
+            :base(Tags.DerivativeSecurityAltIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecondaryLowLimitPrice Field
+    /// </summary>/
+    public sealed class SecondaryLowLimitPrice : DecimalField
+    {
+        public SecondaryLowLimitPrice()
+            :base(Tags.SecondaryLowLimitPrice) {}
+        public SecondaryLowLimitPrice(Decimal val)
+            :base(Tags.SecondaryLowLimitPrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MaturityRuleID Field
+    /// </summary>/
+    public sealed class MaturityRuleID : StringField
+    {
+        public MaturityRuleID()
+            :base(Tags.MaturityRuleID) {}
+        public MaturityRuleID(string val)
+            :base(Tags.MaturityRuleID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StrikeRuleID Field
+    /// </summary>/
+    public sealed class StrikeRuleID : StringField
+    {
+        public StrikeRuleID()
+            :base(Tags.StrikeRuleID) {}
+        public StrikeRuleID(string val)
+            :base(Tags.StrikeRuleID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegUnitOfMeasureQty Field
+    /// </summary>/
+    public sealed class LegUnitOfMeasureQty : DecimalField
+    {
+        public LegUnitOfMeasureQty()
+            :base(Tags.LegUnitOfMeasureQty) {}
+        public LegUnitOfMeasureQty(Decimal val)
+            :base(Tags.LegUnitOfMeasureQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeOptPayAmount Field
+    /// </summary>/
+    public sealed class DerivativeOptPayAmount : DecimalField
+    {
+        public DerivativeOptPayAmount()
+            :base(Tags.DerivativeOptPayAmount) {}
+        public DerivativeOptPayAmount(Decimal val)
+            :base(Tags.DerivativeOptPayAmount, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EndMaturityMonthYear Field
+    /// </summary>/
+    public sealed class EndMaturityMonthYear : StringField
+    {
+        public EndMaturityMonthYear()
+            :base(Tags.EndMaturityMonthYear) {}
+        public EndMaturityMonthYear(string val)
+            :base(Tags.EndMaturityMonthYear, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ProductComplex Field
+    /// </summary>/
+    public sealed class ProductComplex : StringField
+    {
+        public ProductComplex()
+            :base(Tags.ProductComplex) {}
+        public ProductComplex(string val)
+            :base(Tags.ProductComplex, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeProductComplex Field
+    /// </summary>/
+    public sealed class DerivativeProductComplex : StringField
+    {
+        public DerivativeProductComplex()
+            :base(Tags.DerivativeProductComplex) {}
+        public DerivativeProductComplex(string val)
+            :base(Tags.DerivativeProductComplex, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MaturityMonthYearIncrement Field
+    /// </summary>/
+    public sealed class MaturityMonthYearIncrement : IntField
+    {
+        public MaturityMonthYearIncrement()
+            :base(Tags.MaturityMonthYearIncrement) {}
+        public MaturityMonthYearIncrement(int val)
+            :base(Tags.MaturityMonthYearIncrement, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecondaryHighLimitPrice Field
+    /// </summary>/
+    public sealed class SecondaryHighLimitPrice : DecimalField
+    {
+        public SecondaryHighLimitPrice()
+            :base(Tags.SecondaryHighLimitPrice) {}
+        public SecondaryHighLimitPrice(Decimal val)
+            :base(Tags.SecondaryHighLimitPrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MinLotSize Field
+    /// </summary>/
+    public sealed class MinLotSize : DecimalField
+    {
+        public MinLotSize()
+            :base(Tags.MinLotSize) {}
+        public MinLotSize(Decimal val)
+            :base(Tags.MinLotSize, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoExecInstRules Field
+    /// </summary>/
+    public sealed class NoExecInstRules : IntField
+    {
+        public NoExecInstRules()
+            :base(Tags.NoExecInstRules) {}
+        public NoExecInstRules(int val)
+            :base(Tags.NoExecInstRules, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoLotTypeRules Field
+    /// </summary>/
+    public sealed class NoLotTypeRules : IntField
+    {
+        public NoLotTypeRules()
+            :base(Tags.NoLotTypeRules) {}
+        public NoLotTypeRules(int val)
+            :base(Tags.NoLotTypeRules, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoMatchRules Field
+    /// </summary>/
+    public sealed class NoMatchRules : IntField
+    {
+        public NoMatchRules()
+            :base(Tags.NoMatchRules) {}
+        public NoMatchRules(int val)
+            :base(Tags.NoMatchRules, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoMaturityRules Field
+    /// </summary>/
+    public sealed class NoMaturityRules : IntField
+    {
+        public NoMaturityRules()
+            :base(Tags.NoMaturityRules) {}
+        public NoMaturityRules(int val)
+            :base(Tags.NoMaturityRules, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoOrdTypeRules Field
+    /// </summary>/
+    public sealed class NoOrdTypeRules : IntField
+    {
+        public NoOrdTypeRules()
+            :base(Tags.NoOrdTypeRules) {}
+        public NoOrdTypeRules(int val)
+            :base(Tags.NoOrdTypeRules, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoTimeInForceRules Field
+    /// </summary>/
+    public sealed class NoTimeInForceRules : IntField
+    {
+        public NoTimeInForceRules()
+            :base(Tags.NoTimeInForceRules) {}
+        public NoTimeInForceRules(int val)
+            :base(Tags.NoTimeInForceRules, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecondaryTradingReferencePrice Field
+    /// </summary>/
+    public sealed class SecondaryTradingReferencePrice : DecimalField
+    {
+        public SecondaryTradingReferencePrice()
+            :base(Tags.SecondaryTradingReferencePrice) {}
+        public SecondaryTradingReferencePrice(Decimal val)
+            :base(Tags.SecondaryTradingReferencePrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StartMaturityMonthYear Field
+    /// </summary>/
+    public sealed class StartMaturityMonthYear : StringField
+    {
+        public StartMaturityMonthYear()
+            :base(Tags.StartMaturityMonthYear) {}
+        public StartMaturityMonthYear(string val)
+            :base(Tags.StartMaturityMonthYear, val) {}
+
+    }
+
+
+    /// <summary>
+    /// FlexProductEligibilityIndicator Field
+    /// </summary>/
+    public sealed class FlexProductEligibilityIndicator : BooleanField
+    {
+        public FlexProductEligibilityIndicator()
+            :base(Tags.FlexProductEligibilityIndicator) {}
+        public FlexProductEligibilityIndicator(Boolean val)
+            :base(Tags.FlexProductEligibilityIndicator, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivFlexProductEligibilityIndicator Field
+    /// </summary>/
+    public sealed class DerivFlexProductEligibilityIndicator : BooleanField
+    {
+        public DerivFlexProductEligibilityIndicator()
+            :base(Tags.DerivFlexProductEligibilityIndicator) {}
+        public DerivFlexProductEligibilityIndicator(Boolean val)
+            :base(Tags.DerivFlexProductEligibilityIndicator, val) {}
+
+    }
+
+
+    /// <summary>
+    /// FlexibleIndicator Field
+    /// </summary>/
+    public sealed class FlexibleIndicator : BooleanField
+    {
+        public FlexibleIndicator()
+            :base(Tags.FlexibleIndicator) {}
+        public FlexibleIndicator(Boolean val)
+            :base(Tags.FlexibleIndicator, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TradingCurrency Field
+    /// </summary>/
+    public sealed class TradingCurrency : DecimalField
+    {
+        public TradingCurrency()
+            :base(Tags.TradingCurrency) {}
+        public TradingCurrency(Decimal val)
+            :base(Tags.TradingCurrency, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeProduct Field
+    /// </summary>/
+    public sealed class DerivativeProduct : IntField
+    {
+        public DerivativeProduct()
+            :base(Tags.DerivativeProduct) {}
+        public DerivativeProduct(int val)
+            :base(Tags.DerivativeProduct, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityGroup Field
+    /// </summary>/
+    public sealed class DerivativeSecurityGroup : StringField
+    {
+        public DerivativeSecurityGroup()
+            :base(Tags.DerivativeSecurityGroup) {}
+        public DerivativeSecurityGroup(string val)
+            :base(Tags.DerivativeSecurityGroup, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeCFICode Field
+    /// </summary>/
+    public sealed class DerivativeCFICode : StringField
+    {
+        public DerivativeCFICode()
+            :base(Tags.DerivativeCFICode) {}
+        public DerivativeCFICode(string val)
+            :base(Tags.DerivativeCFICode, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityType Field
+    /// </summary>/
+    public sealed class DerivativeSecurityType : StringField
+    {
+        public DerivativeSecurityType()
+            :base(Tags.DerivativeSecurityType) {}
+        public DerivativeSecurityType(string val)
+            :base(Tags.DerivativeSecurityType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecuritySubType Field
+    /// </summary>/
+    public sealed class DerivativeSecuritySubType : StringField
+    {
+        public DerivativeSecuritySubType()
+            :base(Tags.DerivativeSecuritySubType) {}
+        public DerivativeSecuritySubType(string val)
+            :base(Tags.DerivativeSecuritySubType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeMaturityMonthYear Field
+    /// </summary>/
+    public sealed class DerivativeMaturityMonthYear : StringField
+    {
+        public DerivativeMaturityMonthYear()
+            :base(Tags.DerivativeMaturityMonthYear) {}
+        public DerivativeMaturityMonthYear(string val)
+            :base(Tags.DerivativeMaturityMonthYear, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeMaturityDate Field
+    /// </summary>/
+    public sealed class DerivativeMaturityDate : StringField
+    {
+        public DerivativeMaturityDate()
+            :base(Tags.DerivativeMaturityDate) {}
+        public DerivativeMaturityDate(string val)
+            :base(Tags.DerivativeMaturityDate, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeMaturityTime Field
+    /// </summary>/
+    public sealed class DerivativeMaturityTime : StringField
+    {
+        public DerivativeMaturityTime()
+            :base(Tags.DerivativeMaturityTime) {}
+        public DerivativeMaturityTime(string val)
+            :base(Tags.DerivativeMaturityTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSettleOnOpenFlag Field
+    /// </summary>/
+    public sealed class DerivativeSettleOnOpenFlag : StringField
+    {
+        public DerivativeSettleOnOpenFlag()
+            :base(Tags.DerivativeSettleOnOpenFlag) {}
+        public DerivativeSettleOnOpenFlag(string val)
+            :base(Tags.DerivativeSettleOnOpenFlag, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeInstrmtAssignmentMethod Field
+    /// </summary>/
+    public sealed class DerivativeInstrmtAssignmentMethod : CharField
+    {
+        public DerivativeInstrmtAssignmentMethod()
+            :base(Tags.DerivativeInstrmtAssignmentMethod) {}
+        public DerivativeInstrmtAssignmentMethod(char val)
+            :base(Tags.DerivativeInstrmtAssignmentMethod, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityStatus Field
+    /// </summary>/
+    public sealed class DerivativeSecurityStatus : StringField
+    {
+        public DerivativeSecurityStatus()
+            :base(Tags.DerivativeSecurityStatus) {}
+        public DerivativeSecurityStatus(string val)
+            :base(Tags.DerivativeSecurityStatus, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeInstrRegistry Field
+    /// </summary>/
+    public sealed class DerivativeInstrRegistry : StringField
+    {
+        public DerivativeInstrRegistry()
+            :base(Tags.DerivativeInstrRegistry) {}
+        public DerivativeInstrRegistry(string val)
+            :base(Tags.DerivativeInstrRegistry, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeCountryOfIssue Field
+    /// </summary>/
+    public sealed class DerivativeCountryOfIssue : StringField
+    {
+        public DerivativeCountryOfIssue()
+            :base(Tags.DerivativeCountryOfIssue) {}
+        public DerivativeCountryOfIssue(string val)
+            :base(Tags.DerivativeCountryOfIssue, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeStateOrProvinceOfIssue Field
+    /// </summary>/
+    public sealed class DerivativeStateOrProvinceOfIssue : StringField
+    {
+        public DerivativeStateOrProvinceOfIssue()
+            :base(Tags.DerivativeStateOrProvinceOfIssue) {}
+        public DerivativeStateOrProvinceOfIssue(string val)
+            :base(Tags.DerivativeStateOrProvinceOfIssue, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeLocaleOfIssue Field
+    /// </summary>/
+    public sealed class DerivativeLocaleOfIssue : StringField
+    {
+        public DerivativeLocaleOfIssue()
+            :base(Tags.DerivativeLocaleOfIssue) {}
+        public DerivativeLocaleOfIssue(string val)
+            :base(Tags.DerivativeLocaleOfIssue, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeStrikePrice Field
+    /// </summary>/
+    public sealed class DerivativeStrikePrice : DecimalField
+    {
+        public DerivativeStrikePrice()
+            :base(Tags.DerivativeStrikePrice) {}
+        public DerivativeStrikePrice(Decimal val)
+            :base(Tags.DerivativeStrikePrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeStrikeCurrency Field
+    /// </summary>/
+    public sealed class DerivativeStrikeCurrency : DecimalField
+    {
+        public DerivativeStrikeCurrency()
+            :base(Tags.DerivativeStrikeCurrency) {}
+        public DerivativeStrikeCurrency(Decimal val)
+            :base(Tags.DerivativeStrikeCurrency, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeStrikeMultiplier Field
+    /// </summary>/
+    public sealed class DerivativeStrikeMultiplier : DecimalField
+    {
+        public DerivativeStrikeMultiplier()
+            :base(Tags.DerivativeStrikeMultiplier) {}
+        public DerivativeStrikeMultiplier(Decimal val)
+            :base(Tags.DerivativeStrikeMultiplier, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeStrikeValue Field
+    /// </summary>/
+    public sealed class DerivativeStrikeValue : DecimalField
+    {
+        public DerivativeStrikeValue()
+            :base(Tags.DerivativeStrikeValue) {}
+        public DerivativeStrikeValue(Decimal val)
+            :base(Tags.DerivativeStrikeValue, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeOptAttribute Field
+    /// </summary>/
+    public sealed class DerivativeOptAttribute : CharField
+    {
+        public DerivativeOptAttribute()
+            :base(Tags.DerivativeOptAttribute) {}
+        public DerivativeOptAttribute(char val)
+            :base(Tags.DerivativeOptAttribute, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeContractMultiplier Field
+    /// </summary>/
+    public sealed class DerivativeContractMultiplier : DecimalField
+    {
+        public DerivativeContractMultiplier()
+            :base(Tags.DerivativeContractMultiplier) {}
+        public DerivativeContractMultiplier(Decimal val)
+            :base(Tags.DerivativeContractMultiplier, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeMinPriceIncrement Field
+    /// </summary>/
+    public sealed class DerivativeMinPriceIncrement : DecimalField
+    {
+        public DerivativeMinPriceIncrement()
+            :base(Tags.DerivativeMinPriceIncrement) {}
+        public DerivativeMinPriceIncrement(Decimal val)
+            :base(Tags.DerivativeMinPriceIncrement, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeMinPriceIncrementAmount Field
+    /// </summary>/
+    public sealed class DerivativeMinPriceIncrementAmount : DecimalField
+    {
+        public DerivativeMinPriceIncrementAmount()
+            :base(Tags.DerivativeMinPriceIncrementAmount) {}
+        public DerivativeMinPriceIncrementAmount(Decimal val)
+            :base(Tags.DerivativeMinPriceIncrementAmount, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeUnitOfMeasure Field
+    /// </summary>/
+    public sealed class DerivativeUnitOfMeasure : StringField
+    {
+        public DerivativeUnitOfMeasure()
+            :base(Tags.DerivativeUnitOfMeasure) {}
+        public DerivativeUnitOfMeasure(string val)
+            :base(Tags.DerivativeUnitOfMeasure, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeUnitOfMeasureQty Field
+    /// </summary>/
+    public sealed class DerivativeUnitOfMeasureQty : DecimalField
+    {
+        public DerivativeUnitOfMeasureQty()
+            :base(Tags.DerivativeUnitOfMeasureQty) {}
+        public DerivativeUnitOfMeasureQty(Decimal val)
+            :base(Tags.DerivativeUnitOfMeasureQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeTimeUnit Field
+    /// </summary>/
+    public sealed class DerivativeTimeUnit : StringField
+    {
+        public DerivativeTimeUnit()
+            :base(Tags.DerivativeTimeUnit) {}
+        public DerivativeTimeUnit(string val)
+            :base(Tags.DerivativeTimeUnit, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityExchange Field
+    /// </summary>/
+    public sealed class DerivativeSecurityExchange : StringField
+    {
+        public DerivativeSecurityExchange()
+            :base(Tags.DerivativeSecurityExchange) {}
+        public DerivativeSecurityExchange(string val)
+            :base(Tags.DerivativeSecurityExchange, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativePositionLimit Field
+    /// </summary>/
+    public sealed class DerivativePositionLimit : IntField
+    {
+        public DerivativePositionLimit()
+            :base(Tags.DerivativePositionLimit) {}
+        public DerivativePositionLimit(int val)
+            :base(Tags.DerivativePositionLimit, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeNTPositionLimit Field
+    /// </summary>/
+    public sealed class DerivativeNTPositionLimit : IntField
+    {
+        public DerivativeNTPositionLimit()
+            :base(Tags.DerivativeNTPositionLimit) {}
+        public DerivativeNTPositionLimit(int val)
+            :base(Tags.DerivativeNTPositionLimit, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeIssuer Field
+    /// </summary>/
+    public sealed class DerivativeIssuer : StringField
+    {
+        public DerivativeIssuer()
+            :base(Tags.DerivativeIssuer) {}
+        public DerivativeIssuer(string val)
+            :base(Tags.DerivativeIssuer, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeIssueDate Field
+    /// </summary>/
+    public sealed class DerivativeIssueDate : StringField
+    {
+        public DerivativeIssueDate()
+            :base(Tags.DerivativeIssueDate) {}
+        public DerivativeIssueDate(string val)
+            :base(Tags.DerivativeIssueDate, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeEncodedIssuerLen Field
+    /// </summary>/
+    public sealed class DerivativeEncodedIssuerLen : DecimalField
+    {
+        public DerivativeEncodedIssuerLen()
+            :base(Tags.DerivativeEncodedIssuerLen) {}
+        public DerivativeEncodedIssuerLen(Decimal val)
+            :base(Tags.DerivativeEncodedIssuerLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeEncodedIssuer Field
+    /// </summary>/
+    public sealed class DerivativeEncodedIssuer : StringField
+    {
+        public DerivativeEncodedIssuer()
+            :base(Tags.DerivativeEncodedIssuer) {}
+        public DerivativeEncodedIssuer(string val)
+            :base(Tags.DerivativeEncodedIssuer, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityDesc Field
+    /// </summary>/
+    public sealed class DerivativeSecurityDesc : StringField
+    {
+        public DerivativeSecurityDesc()
+            :base(Tags.DerivativeSecurityDesc) {}
+        public DerivativeSecurityDesc(string val)
+            :base(Tags.DerivativeSecurityDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeEncodedSecurityDescLen Field
+    /// </summary>/
+    public sealed class DerivativeEncodedSecurityDescLen : DecimalField
+    {
+        public DerivativeEncodedSecurityDescLen()
+            :base(Tags.DerivativeEncodedSecurityDescLen) {}
+        public DerivativeEncodedSecurityDescLen(Decimal val)
+            :base(Tags.DerivativeEncodedSecurityDescLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeEncodedSecurityDesc Field
+    /// </summary>/
+    public sealed class DerivativeEncodedSecurityDesc : StringField
+    {
+        public DerivativeEncodedSecurityDesc()
+            :base(Tags.DerivativeEncodedSecurityDesc) {}
+        public DerivativeEncodedSecurityDesc(string val)
+            :base(Tags.DerivativeEncodedSecurityDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityXMLLen Field
+    /// </summary>/
+    public sealed class DerivativeSecurityXMLLen : DecimalField
+    {
+        public DerivativeSecurityXMLLen()
+            :base(Tags.DerivativeSecurityXMLLen) {}
+        public DerivativeSecurityXMLLen(Decimal val)
+            :base(Tags.DerivativeSecurityXMLLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityXML Field
+    /// </summary>/
+    public sealed class DerivativeSecurityXML : StringField
+    {
+        public DerivativeSecurityXML()
+            :base(Tags.DerivativeSecurityXML) {}
+        public DerivativeSecurityXML(string val)
+            :base(Tags.DerivativeSecurityXML, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityXMLSchema Field
+    /// </summary>/
+    public sealed class DerivativeSecurityXMLSchema : StringField
+    {
+        public DerivativeSecurityXMLSchema()
+            :base(Tags.DerivativeSecurityXMLSchema) {}
+        public DerivativeSecurityXMLSchema(string val)
+            :base(Tags.DerivativeSecurityXMLSchema, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeContractSettlMonth Field
+    /// </summary>/
+    public sealed class DerivativeContractSettlMonth : StringField
+    {
+        public DerivativeContractSettlMonth()
+            :base(Tags.DerivativeContractSettlMonth) {}
+        public DerivativeContractSettlMonth(string val)
+            :base(Tags.DerivativeContractSettlMonth, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoDerivativeEvents Field
+    /// </summary>/
+    public sealed class NoDerivativeEvents : IntField
+    {
+        public NoDerivativeEvents()
+            :base(Tags.NoDerivativeEvents) {}
+        public NoDerivativeEvents(int val)
+            :base(Tags.NoDerivativeEvents, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeEventType Field
+    /// </summary>/
+    public sealed class DerivativeEventType : IntField
+    {
+        public DerivativeEventType()
+            :base(Tags.DerivativeEventType) {}
+        public DerivativeEventType(int val)
+            :base(Tags.DerivativeEventType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeEventDate Field
+    /// </summary>/
+    public sealed class DerivativeEventDate : StringField
+    {
+        public DerivativeEventDate()
+            :base(Tags.DerivativeEventDate) {}
+        public DerivativeEventDate(string val)
+            :base(Tags.DerivativeEventDate, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeEventTime Field
+    /// </summary>/
+    public sealed class DerivativeEventTime : DateTimeField
+    {
+        public DerivativeEventTime()
+            :base(Tags.DerivativeEventTime) {}
+        public DerivativeEventTime(DateTime val)
+            :base(Tags.DerivativeEventTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeEventPx Field
+    /// </summary>/
+    public sealed class DerivativeEventPx : DecimalField
+    {
+        public DerivativeEventPx()
+            :base(Tags.DerivativeEventPx) {}
+        public DerivativeEventPx(Decimal val)
+            :base(Tags.DerivativeEventPx, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeEventText Field
+    /// </summary>/
+    public sealed class DerivativeEventText : StringField
+    {
+        public DerivativeEventText()
+            :base(Tags.DerivativeEventText) {}
+        public DerivativeEventText(string val)
+            :base(Tags.DerivativeEventText, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoDerivativeInstrumentParties Field
+    /// </summary>/
+    public sealed class NoDerivativeInstrumentParties : IntField
+    {
+        public NoDerivativeInstrumentParties()
+            :base(Tags.NoDerivativeInstrumentParties) {}
+        public NoDerivativeInstrumentParties(int val)
+            :base(Tags.NoDerivativeInstrumentParties, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeInstrumentPartyID Field
+    /// </summary>/
+    public sealed class DerivativeInstrumentPartyID : StringField
+    {
+        public DerivativeInstrumentPartyID()
+            :base(Tags.DerivativeInstrumentPartyID) {}
+        public DerivativeInstrumentPartyID(string val)
+            :base(Tags.DerivativeInstrumentPartyID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeInstrumentPartyIDSource Field
+    /// </summary>/
+    public sealed class DerivativeInstrumentPartyIDSource : StringField
+    {
+        public DerivativeInstrumentPartyIDSource()
+            :base(Tags.DerivativeInstrumentPartyIDSource) {}
+        public DerivativeInstrumentPartyIDSource(string val)
+            :base(Tags.DerivativeInstrumentPartyIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeInstrumentPartyRole Field
+    /// </summary>/
+    public sealed class DerivativeInstrumentPartyRole : IntField
+    {
+        public DerivativeInstrumentPartyRole()
+            :base(Tags.DerivativeInstrumentPartyRole) {}
+        public DerivativeInstrumentPartyRole(int val)
+            :base(Tags.DerivativeInstrumentPartyRole, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoDerivativeInstrumentPartySubIDs Field
+    /// </summary>/
+    public sealed class NoDerivativeInstrumentPartySubIDs : IntField
+    {
+        public NoDerivativeInstrumentPartySubIDs()
+            :base(Tags.NoDerivativeInstrumentPartySubIDs) {}
+        public NoDerivativeInstrumentPartySubIDs(int val)
+            :base(Tags.NoDerivativeInstrumentPartySubIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeInstrumentPartySubID Field
+    /// </summary>/
+    public sealed class DerivativeInstrumentPartySubID : StringField
+    {
+        public DerivativeInstrumentPartySubID()
+            :base(Tags.DerivativeInstrumentPartySubID) {}
+        public DerivativeInstrumentPartySubID(string val)
+            :base(Tags.DerivativeInstrumentPartySubID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeInstrumentPartySubIDType Field
+    /// </summary>/
+    public sealed class DerivativeInstrumentPartySubIDType : IntField
+    {
+        public DerivativeInstrumentPartySubIDType()
+            :base(Tags.DerivativeInstrumentPartySubIDType) {}
+        public DerivativeInstrumentPartySubIDType(int val)
+            :base(Tags.DerivativeInstrumentPartySubIDType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeExerciseStyle Field
+    /// </summary>/
+    public sealed class DerivativeExerciseStyle : CharField
+    {
+        public DerivativeExerciseStyle()
+            :base(Tags.DerivativeExerciseStyle) {}
+        public DerivativeExerciseStyle(char val)
+            :base(Tags.DerivativeExerciseStyle, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MarketSegmentID Field
+    /// </summary>/
+    public sealed class MarketSegmentID : StringField
+    {
+        public MarketSegmentID()
+            :base(Tags.MarketSegmentID) {}
+        public MarketSegmentID(string val)
+            :base(Tags.MarketSegmentID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MarketID Field
+    /// </summary>/
+    public sealed class MarketID : StringField
+    {
+        public MarketID()
+            :base(Tags.MarketID) {}
+        public MarketID(string val)
+            :base(Tags.MarketID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MaturityMonthYearIncrementUnits Field
+    /// </summary>/
+    public sealed class MaturityMonthYearIncrementUnits : IntField
+    {
+        public MaturityMonthYearIncrementUnits()
+            :base(Tags.MaturityMonthYearIncrementUnits) {}
+        public MaturityMonthYearIncrementUnits(int val)
+            :base(Tags.MaturityMonthYearIncrementUnits, val) {}
+
+
+        // Field Enumerations
+        public const int MONTHS = 0;
+        public const int DAYS = 1;
+        public const int WEEKS = 2;
+        public const int YEARS = 3;
+    }
+
+
+    /// <summary>
+    /// MaturityMonthYearFormat Field
+    /// </summary>/
+    public sealed class MaturityMonthYearFormat : IntField
+    {
+        public MaturityMonthYearFormat()
+            :base(Tags.MaturityMonthYearFormat) {}
+        public MaturityMonthYearFormat(int val)
+            :base(Tags.MaturityMonthYearFormat, val) {}
+
+
+        // Field Enumerations
+        public const int YEARMONTH_ONLY = 0;
+        public const int YEARMONTHDAY = 1;
+        public const int YEARMONTHWEEK = 2;
+    }
+
+
+    /// <summary>
+    /// StrikeExerciseStyle Field
+    /// </summary>/
+    public sealed class StrikeExerciseStyle : IntField
+    {
+        public StrikeExerciseStyle()
+            :base(Tags.StrikeExerciseStyle) {}
+        public StrikeExerciseStyle(int val)
+            :base(Tags.StrikeExerciseStyle, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecondaryPriceLimitType Field
+    /// </summary>/
+    public sealed class SecondaryPriceLimitType : IntField
+    {
+        public SecondaryPriceLimitType()
+            :base(Tags.SecondaryPriceLimitType) {}
+        public SecondaryPriceLimitType(int val)
+            :base(Tags.SecondaryPriceLimitType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PriceLimitType Field
+    /// </summary>/
+    public sealed class PriceLimitType : IntField
+    {
+        public PriceLimitType()
+            :base(Tags.PriceLimitType) {}
+        public PriceLimitType(int val)
+            :base(Tags.PriceLimitType, val) {}
+
+
+        // Field Enumerations
+        public const int PRICE = 0;
+        public const int TICKS = 1;
+        public const int PERCENTAGE = 2;
+    }
+
+
+    /// <summary>
+    /// DerivativeSecurityListRequestType Field
+    /// </summary>/
+    public sealed class DerivativeSecurityListRequestType : IntField
+    {
+        public DerivativeSecurityListRequestType()
+            :base(Tags.DerivativeSecurityListRequestType) {}
+        public DerivativeSecurityListRequestType(int val)
+            :base(Tags.DerivativeSecurityListRequestType, val) {}
+
+
+        // Field Enumerations
+        public const int SYMBOL = 0;
+        public const int SECURITYTYPE_AND_OR_CFICODE = 1;
+        public const int PRODUCT = 2;
+        public const int TRADINGSESSIONID = 3;
+        public const int ALL_SECURITIES = 4;
+        public const int UNDELYINGSYMBOL = 5;
+        public const int UNDERLYING_SECURITYTYPE_AND_OR_CFICODE = 6;
+        public const int UNDERLYING_PRODUCT = 7;
+        public const int MARKETID_OR_MARKETID_PLUS_MARKETSEGMENTID = 8;
+    }
+
+
+    /// <summary>
+    /// ExecInstValue Field
+    /// </summary>/
+    public sealed class ExecInstValue : CharField
+    {
+        public ExecInstValue()
+            :base(Tags.ExecInstValue) {}
+        public ExecInstValue(char val)
+            :base(Tags.ExecInstValue, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoTradingSessionRules Field
+    /// </summary>/
+    public sealed class NoTradingSessionRules : IntField
+    {
+        public NoTradingSessionRules()
+            :base(Tags.NoTradingSessionRules) {}
+        public NoTradingSessionRules(int val)
+            :base(Tags.NoTradingSessionRules, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoMarketSegments Field
+    /// </summary>/
+    public sealed class NoMarketSegments : IntField
+    {
+        public NoMarketSegments()
+            :base(Tags.NoMarketSegments) {}
+        public NoMarketSegments(int val)
+            :base(Tags.NoMarketSegments, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoDerivativeInstrAttrib Field
+    /// </summary>/
+    public sealed class NoDerivativeInstrAttrib : IntField
+    {
+        public NoDerivativeInstrAttrib()
+            :base(Tags.NoDerivativeInstrAttrib) {}
+        public NoDerivativeInstrAttrib(int val)
+            :base(Tags.NoDerivativeInstrAttrib, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoNestedInstrAttrib Field
+    /// </summary>/
+    public sealed class NoNestedInstrAttrib : IntField
+    {
+        public NoNestedInstrAttrib()
+            :base(Tags.NoNestedInstrAttrib) {}
+        public NoNestedInstrAttrib(int val)
+            :base(Tags.NoNestedInstrAttrib, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeInstrAttribType Field
+    /// </summary>/
+    public sealed class DerivativeInstrAttribType : IntField
+    {
+        public DerivativeInstrAttribType()
+            :base(Tags.DerivativeInstrAttribType) {}
+        public DerivativeInstrAttribType(int val)
+            :base(Tags.DerivativeInstrAttribType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeInstrAttribValue Field
+    /// </summary>/
+    public sealed class DerivativeInstrAttribValue : StringField
+    {
+        public DerivativeInstrAttribValue()
+            :base(Tags.DerivativeInstrAttribValue) {}
+        public DerivativeInstrAttribValue(string val)
+            :base(Tags.DerivativeInstrAttribValue, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativePriceUnitOfMeasure Field
+    /// </summary>/
+    public sealed class DerivativePriceUnitOfMeasure : StringField
+    {
+        public DerivativePriceUnitOfMeasure()
+            :base(Tags.DerivativePriceUnitOfMeasure) {}
+        public DerivativePriceUnitOfMeasure(string val)
+            :base(Tags.DerivativePriceUnitOfMeasure, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativePriceUnitOfMeasureQty Field
+    /// </summary>/
+    public sealed class DerivativePriceUnitOfMeasureQty : DecimalField
+    {
+        public DerivativePriceUnitOfMeasureQty()
+            :base(Tags.DerivativePriceUnitOfMeasureQty) {}
+        public DerivativePriceUnitOfMeasureQty(Decimal val)
+            :base(Tags.DerivativePriceUnitOfMeasureQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeSettlMethod Field
+    /// </summary>/
+    public sealed class DerivativeSettlMethod : CharField
+    {
+        public DerivativeSettlMethod()
+            :base(Tags.DerivativeSettlMethod) {}
+        public DerivativeSettlMethod(char val)
+            :base(Tags.DerivativeSettlMethod, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativePriceQuoteMethod Field
+    /// </summary>/
+    public sealed class DerivativePriceQuoteMethod : StringField
+    {
+        public DerivativePriceQuoteMethod()
+            :base(Tags.DerivativePriceQuoteMethod) {}
+        public DerivativePriceQuoteMethod(string val)
+            :base(Tags.DerivativePriceQuoteMethod, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeFuturesValuationMethod Field
+    /// </summary>/
+    public sealed class DerivativeFuturesValuationMethod : StringField
+    {
+        public DerivativeFuturesValuationMethod()
+            :base(Tags.DerivativeFuturesValuationMethod) {}
+        public DerivativeFuturesValuationMethod(string val)
+            :base(Tags.DerivativeFuturesValuationMethod, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeListMethod Field
+    /// </summary>/
+    public sealed class DerivativeListMethod : IntField
+    {
+        public DerivativeListMethod()
+            :base(Tags.DerivativeListMethod) {}
+        public DerivativeListMethod(int val)
+            :base(Tags.DerivativeListMethod, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeCapPrice Field
+    /// </summary>/
+    public sealed class DerivativeCapPrice : DecimalField
+    {
+        public DerivativeCapPrice()
+            :base(Tags.DerivativeCapPrice) {}
+        public DerivativeCapPrice(Decimal val)
+            :base(Tags.DerivativeCapPrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeFloorPrice Field
+    /// </summary>/
+    public sealed class DerivativeFloorPrice : DecimalField
+    {
+        public DerivativeFloorPrice()
+            :base(Tags.DerivativeFloorPrice) {}
+        public DerivativeFloorPrice(Decimal val)
+            :base(Tags.DerivativeFloorPrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativePutOrCall Field
+    /// </summary>/
+    public sealed class DerivativePutOrCall : IntField
+    {
+        public DerivativePutOrCall()
+            :base(Tags.DerivativePutOrCall) {}
+        public DerivativePutOrCall(int val)
+            :base(Tags.DerivativePutOrCall, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ListUpdateAction Field
+    /// </summary>/
+    public sealed class ListUpdateAction : CharField
+    {
+        public ListUpdateAction()
+            :base(Tags.ListUpdateAction) {}
+        public ListUpdateAction(char val)
+            :base(Tags.ListUpdateAction, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ParentMktSegmID Field
+    /// </summary>/
+    public sealed class ParentMktSegmID : StringField
+    {
+        public ParentMktSegmID()
+            :base(Tags.ParentMktSegmID) {}
+        public ParentMktSegmID(string val)
+            :base(Tags.ParentMktSegmID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TradingSessionDesc Field
+    /// </summary>/
+    public sealed class TradingSessionDesc : StringField
+    {
+        public TradingSessionDesc()
+            :base(Tags.TradingSessionDesc) {}
+        public TradingSessionDesc(string val)
+            :base(Tags.TradingSessionDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TradSesUpdateAction Field
+    /// </summary>/
+    public sealed class TradSesUpdateAction : CharField
+    {
+        public TradSesUpdateAction()
+            :base(Tags.TradSesUpdateAction) {}
+        public TradSesUpdateAction(char val)
+            :base(Tags.TradSesUpdateAction, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RejectText Field
+    /// </summary>/
+    public sealed class RejectText : StringField
+    {
+        public RejectText()
+            :base(Tags.RejectText) {}
+        public RejectText(string val)
+            :base(Tags.RejectText, val) {}
+
+    }
+
+
+    /// <summary>
+    /// FeeMultiplier Field
+    /// </summary>/
+    public sealed class FeeMultiplier : DecimalField
+    {
+        public FeeMultiplier()
+            :base(Tags.FeeMultiplier) {}
+        public FeeMultiplier(Decimal val)
+            :base(Tags.FeeMultiplier, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegSymbol Field
+    /// </summary>/
+    public sealed class UnderlyingLegSymbol : StringField
+    {
+        public UnderlyingLegSymbol()
+            :base(Tags.UnderlyingLegSymbol) {}
+        public UnderlyingLegSymbol(string val)
+            :base(Tags.UnderlyingLegSymbol, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegSymbolSfx Field
+    /// </summary>/
+    public sealed class UnderlyingLegSymbolSfx : StringField
+    {
+        public UnderlyingLegSymbolSfx()
+            :base(Tags.UnderlyingLegSymbolSfx) {}
+        public UnderlyingLegSymbolSfx(string val)
+            :base(Tags.UnderlyingLegSymbolSfx, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegSecurityID Field
+    /// </summary>/
+    public sealed class UnderlyingLegSecurityID : StringField
+    {
+        public UnderlyingLegSecurityID()
+            :base(Tags.UnderlyingLegSecurityID) {}
+        public UnderlyingLegSecurityID(string val)
+            :base(Tags.UnderlyingLegSecurityID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegSecurityIDSource Field
+    /// </summary>/
+    public sealed class UnderlyingLegSecurityIDSource : StringField
+    {
+        public UnderlyingLegSecurityIDSource()
+            :base(Tags.UnderlyingLegSecurityIDSource) {}
+        public UnderlyingLegSecurityIDSource(string val)
+            :base(Tags.UnderlyingLegSecurityIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoUnderlyingLegSecurityAltID Field
+    /// </summary>/
+    public sealed class NoUnderlyingLegSecurityAltID : IntField
+    {
+        public NoUnderlyingLegSecurityAltID()
+            :base(Tags.NoUnderlyingLegSecurityAltID) {}
+        public NoUnderlyingLegSecurityAltID(int val)
+            :base(Tags.NoUnderlyingLegSecurityAltID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegSecurityAltID Field
+    /// </summary>/
+    public sealed class UnderlyingLegSecurityAltID : StringField
+    {
+        public UnderlyingLegSecurityAltID()
+            :base(Tags.UnderlyingLegSecurityAltID) {}
+        public UnderlyingLegSecurityAltID(string val)
+            :base(Tags.UnderlyingLegSecurityAltID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegSecurityAltIDSource Field
+    /// </summary>/
+    public sealed class UnderlyingLegSecurityAltIDSource : StringField
+    {
+        public UnderlyingLegSecurityAltIDSource()
+            :base(Tags.UnderlyingLegSecurityAltIDSource) {}
+        public UnderlyingLegSecurityAltIDSource(string val)
+            :base(Tags.UnderlyingLegSecurityAltIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegSecurityType Field
+    /// </summary>/
+    public sealed class UnderlyingLegSecurityType : StringField
+    {
+        public UnderlyingLegSecurityType()
+            :base(Tags.UnderlyingLegSecurityType) {}
+        public UnderlyingLegSecurityType(string val)
+            :base(Tags.UnderlyingLegSecurityType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegSecuritySubType Field
+    /// </summary>/
+    public sealed class UnderlyingLegSecuritySubType : StringField
+    {
+        public UnderlyingLegSecuritySubType()
+            :base(Tags.UnderlyingLegSecuritySubType) {}
+        public UnderlyingLegSecuritySubType(string val)
+            :base(Tags.UnderlyingLegSecuritySubType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegMaturityMonthYear Field
+    /// </summary>/
+    public sealed class UnderlyingLegMaturityMonthYear : StringField
+    {
+        public UnderlyingLegMaturityMonthYear()
+            :base(Tags.UnderlyingLegMaturityMonthYear) {}
+        public UnderlyingLegMaturityMonthYear(string val)
+            :base(Tags.UnderlyingLegMaturityMonthYear, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegStrikePrice Field
+    /// </summary>/
+    public sealed class UnderlyingLegStrikePrice : DecimalField
+    {
+        public UnderlyingLegStrikePrice()
+            :base(Tags.UnderlyingLegStrikePrice) {}
+        public UnderlyingLegStrikePrice(Decimal val)
+            :base(Tags.UnderlyingLegStrikePrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegSecurityExchange Field
+    /// </summary>/
+    public sealed class UnderlyingLegSecurityExchange : StringField
+    {
+        public UnderlyingLegSecurityExchange()
+            :base(Tags.UnderlyingLegSecurityExchange) {}
+        public UnderlyingLegSecurityExchange(string val)
+            :base(Tags.UnderlyingLegSecurityExchange, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoOfLegUnderlyings Field
+    /// </summary>/
+    public sealed class NoOfLegUnderlyings : IntField
+    {
+        public NoOfLegUnderlyings()
+            :base(Tags.NoOfLegUnderlyings) {}
+        public NoOfLegUnderlyings(int val)
+            :base(Tags.NoOfLegUnderlyings, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegPutOrCall Field
+    /// </summary>/
+    public sealed class UnderlyingLegPutOrCall : IntField
+    {
+        public UnderlyingLegPutOrCall()
+            :base(Tags.UnderlyingLegPutOrCall) {}
+        public UnderlyingLegPutOrCall(int val)
+            :base(Tags.UnderlyingLegPutOrCall, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegCFICode Field
+    /// </summary>/
+    public sealed class UnderlyingLegCFICode : StringField
+    {
+        public UnderlyingLegCFICode()
+            :base(Tags.UnderlyingLegCFICode) {}
+        public UnderlyingLegCFICode(string val)
+            :base(Tags.UnderlyingLegCFICode, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegMaturityDate Field
+    /// </summary>/
+    public sealed class UnderlyingLegMaturityDate : StringField
+    {
+        public UnderlyingLegMaturityDate()
+            :base(Tags.UnderlyingLegMaturityDate) {}
+        public UnderlyingLegMaturityDate(string val)
+            :base(Tags.UnderlyingLegMaturityDate, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplReqID Field
+    /// </summary>/
+    public sealed class ApplReqID : StringField
+    {
+        public ApplReqID()
+            :base(Tags.ApplReqID) {}
+        public ApplReqID(string val)
+            :base(Tags.ApplReqID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplReqType Field
+    /// </summary>/
+    public sealed class ApplReqType : IntField
+    {
+        public ApplReqType()
+            :base(Tags.ApplReqType) {}
+        public ApplReqType(int val)
+            :base(Tags.ApplReqType, val) {}
+
+
+        // Field Enumerations
+        public const int RETRANSMISSION_OF_APPLICATION_MESSAGES_FOR_THE_SPECIFIED_APPLICATIONS = 0;
+        public const int SUBSCRIPTION_TO_THE_SPECIFIED_APPLICATIONS = 1;
+        public const int REQUEST_FOR_THE_LAST_APPLLASTSEQNUM_PUBLISHED_FOR_THE_SPECIFIED_APPLICATIONS = 2;
+        public const int REQUEST_VALID_SET_OF_APPLICATIONS = 3;
+        public const int UNSUBSCRIBE_TO_THE_SPECIFIED_APPLICATIONS = 4;
+    }
+
+
+    /// <summary>
+    /// ApplResponseType Field
+    /// </summary>/
+    public sealed class ApplResponseType : IntField
+    {
+        public ApplResponseType()
+            :base(Tags.ApplResponseType) {}
+        public ApplResponseType(int val)
+            :base(Tags.ApplResponseType, val) {}
+
+
+        // Field Enumerations
+        public const int REQUEST_SUCCESSFULLY_PROCESSED = 0;
+        public const int APPLICATION_DOES_NOT_EXIST = 1;
+        public const int MESSAGES_NOT_AVAILABLE = 2;
+    }
+
+
+    /// <summary>
+    /// ApplTotalMessageCount Field
+    /// </summary>/
+    public sealed class ApplTotalMessageCount : IntField
+    {
+        public ApplTotalMessageCount()
+            :base(Tags.ApplTotalMessageCount) {}
+        public ApplTotalMessageCount(int val)
+            :base(Tags.ApplTotalMessageCount, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplLastSeqNum Field
+    /// </summary>/
+    public sealed class ApplLastSeqNum : IntField
+    {
+        public ApplLastSeqNum()
+            :base(Tags.ApplLastSeqNum) {}
+        public ApplLastSeqNum(int val)
+            :base(Tags.ApplLastSeqNum, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoApplIDs Field
+    /// </summary>/
+    public sealed class NoApplIDs : IntField
+    {
+        public NoApplIDs()
+            :base(Tags.NoApplIDs) {}
+        public NoApplIDs(int val)
+            :base(Tags.NoApplIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplResendFlag Field
+    /// </summary>/
+    public sealed class ApplResendFlag : BooleanField
+    {
+        public ApplResendFlag()
+            :base(Tags.ApplResendFlag) {}
+        public ApplResendFlag(Boolean val)
+            :base(Tags.ApplResendFlag, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplResponseID Field
+    /// </summary>/
+    public sealed class ApplResponseID : StringField
+    {
+        public ApplResponseID()
+            :base(Tags.ApplResponseID) {}
+        public ApplResponseID(string val)
+            :base(Tags.ApplResponseID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplResponseError Field
+    /// </summary>/
+    public sealed class ApplResponseError : IntField
+    {
+        public ApplResponseError()
+            :base(Tags.ApplResponseError) {}
+        public ApplResponseError(int val)
+            :base(Tags.ApplResponseError, val) {}
+
+
+        // Field Enumerations
+        public const int APPLICATION_DOES_NOT_EXIST = 0;
+        public const int MESSAGES_REQUESTED_ARE_NOT_AVAILABLE = 1;
+        public const int USER_NOT_AUTHORIZED_FOR_APPLICATION = 2;
+    }
+
+
+    /// <summary>
+    /// RefApplID Field
+    /// </summary>/
+    public sealed class RefApplID : StringField
+    {
+        public RefApplID()
+            :base(Tags.RefApplID) {}
+        public RefApplID(string val)
+            :base(Tags.RefApplID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplReportID Field
+    /// </summary>/
+    public sealed class ApplReportID : StringField
+    {
+        public ApplReportID()
+            :base(Tags.ApplReportID) {}
+        public ApplReportID(string val)
+            :base(Tags.ApplReportID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RefApplLastSeqNum Field
+    /// </summary>/
+    public sealed class RefApplLastSeqNum : IntField
+    {
+        public RefApplLastSeqNum()
+            :base(Tags.RefApplLastSeqNum) {}
+        public RefApplLastSeqNum(int val)
+            :base(Tags.RefApplLastSeqNum, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegPutOrCall Field
+    /// </summary>/
+    public sealed class LegPutOrCall : IntField
+    {
+        public LegPutOrCall()
+            :base(Tags.LegPutOrCall) {}
+        public LegPutOrCall(int val)
+            :base(Tags.LegPutOrCall, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncodedSymbolLen Field
+    /// </summary>/
+    public sealed class EncodedSymbolLen : DecimalField
+    {
+        public EncodedSymbolLen()
+            :base(Tags.EncodedSymbolLen) {}
+        public EncodedSymbolLen(Decimal val)
+            :base(Tags.EncodedSymbolLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncodedSymbol Field
+    /// </summary>/
+    public sealed class EncodedSymbol : StringField
+    {
+        public EncodedSymbol()
+            :base(Tags.EncodedSymbol) {}
+        public EncodedSymbol(string val)
+            :base(Tags.EncodedSymbol, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TotNoFills Field
+    /// </summary>/
+    public sealed class TotNoFills : IntField
+    {
+        public TotNoFills()
+            :base(Tags.TotNoFills) {}
+        public TotNoFills(int val)
+            :base(Tags.TotNoFills, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoFills Field
+    /// </summary>/
+    public sealed class NoFills : IntField
+    {
+        public NoFills()
+            :base(Tags.NoFills) {}
+        public NoFills(int val)
+            :base(Tags.NoFills, val) {}
+
+    }
+
+
+    /// <summary>
+    /// FillExecID Field
+    /// </summary>/
+    public sealed class FillExecID : StringField
+    {
+        public FillExecID()
+            :base(Tags.FillExecID) {}
+        public FillExecID(string val)
+            :base(Tags.FillExecID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// FillPx Field
+    /// </summary>/
+    public sealed class FillPx : DecimalField
+    {
+        public FillPx()
+            :base(Tags.FillPx) {}
+        public FillPx(Decimal val)
+            :base(Tags.FillPx, val) {}
+
+    }
+
+
+    /// <summary>
+    /// FillQty Field
+    /// </summary>/
+    public sealed class FillQty : DecimalField
+    {
+        public FillQty()
+            :base(Tags.FillQty) {}
+        public FillQty(Decimal val)
+            :base(Tags.FillQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegAllocID Field
+    /// </summary>/
+    public sealed class LegAllocID : StringField
+    {
+        public LegAllocID()
+            :base(Tags.LegAllocID) {}
+        public LegAllocID(string val)
+            :base(Tags.LegAllocID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegAllocSettlCurrency Field
+    /// </summary>/
+    public sealed class LegAllocSettlCurrency : DecimalField
+    {
+        public LegAllocSettlCurrency()
+            :base(Tags.LegAllocSettlCurrency) {}
+        public LegAllocSettlCurrency(Decimal val)
+            :base(Tags.LegAllocSettlCurrency, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TradSesEvent Field
+    /// </summary>/
+    public sealed class TradSesEvent : IntField
+    {
+        public TradSesEvent()
+            :base(Tags.TradSesEvent) {}
+        public TradSesEvent(int val)
+            :base(Tags.TradSesEvent, val) {}
+
+
+        // Field Enumerations
+        public const int TRADING_RESUMES = 0;
+        public const int CHANGE_OF_TRADING_SESSION = 1;
+        public const int CHANGE_OF_TRADING_SUBSESSION = 2;
+        public const int CHANGE_OF_TRADING_STATUS = 3;
+    }
+
+
+    /// <summary>
+    /// MassActionReportID Field
+    /// </summary>/
+    public sealed class MassActionReportID : StringField
+    {
+        public MassActionReportID()
+            :base(Tags.MassActionReportID) {}
+        public MassActionReportID(string val)
+            :base(Tags.MassActionReportID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoNotAffectedOrders Field
+    /// </summary>/
+    public sealed class NoNotAffectedOrders : IntField
+    {
+        public NoNotAffectedOrders()
+            :base(Tags.NoNotAffectedOrders) {}
+        public NoNotAffectedOrders(int val)
+            :base(Tags.NoNotAffectedOrders, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NotAffectedOrderID Field
+    /// </summary>/
+    public sealed class NotAffectedOrderID : StringField
+    {
+        public NotAffectedOrderID()
+            :base(Tags.NotAffectedOrderID) {}
+        public NotAffectedOrderID(string val)
+            :base(Tags.NotAffectedOrderID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NotAffOrigClOrdID Field
+    /// </summary>/
+    public sealed class NotAffOrigClOrdID : StringField
+    {
+        public NotAffOrigClOrdID()
+            :base(Tags.NotAffOrigClOrdID) {}
+        public NotAffOrigClOrdID(string val)
+            :base(Tags.NotAffOrigClOrdID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MassActionType Field
+    /// </summary>/
+    public sealed class MassActionType : IntField
+    {
+        public MassActionType()
+            :base(Tags.MassActionType) {}
+        public MassActionType(int val)
+            :base(Tags.MassActionType, val) {}
+
+
+        // Field Enumerations
+        public const int SUSPEND_ORDERS = 1;
+        public const int RELEASE_ORDERS_FROM_SUSPENSION = 2;
+        public const int CANCEL_ORDERS = 3;
+    }
+
+
+    /// <summary>
+    /// MassActionScope Field
+    /// </summary>/
+    public sealed class MassActionScope : IntField
+    {
+        public MassActionScope()
+            :base(Tags.MassActionScope) {}
+        public MassActionScope(int val)
+            :base(Tags.MassActionScope, val) {}
+
+
+        // Field Enumerations
+        public const int ALL_ORDERS_FOR_A_SECURITY = 1;
+        public const int ALL_ORDERS_FOR_AN_UNDERLYING_SECURITY = 2;
+        public const int ALL_ORDERS_FOR_A_PRODUCT = 3;
+        public const int ALL_ORDERS_FOR_A_CFICODE = 4;
+        public const int ALL_ORDERS_FOR_A_SECURITYTYPE = 5;
+        public const int ALL_ORDERS_FOR_A_TRADING_SESSION = 6;
+        public const int ALL_ORDERS = 7;
+        public const int ALL_ORDERS_FOR_A_MARKET = 8;
+        public const int ALL_ORDERS_FOR_A_MARKET_SEGMENT = 9;
+        public const int ALL_ORDERS_FOR_A_SECURITY_GROUP = 10;
+    }
+
+
+    /// <summary>
+    /// MassActionResponse Field
+    /// </summary>/
+    public sealed class MassActionResponse : IntField
+    {
+        public MassActionResponse()
+            :base(Tags.MassActionResponse) {}
+        public MassActionResponse(int val)
+            :base(Tags.MassActionResponse, val) {}
+
+
+        // Field Enumerations
+        public const int REJECTED = 0;
+        public const int ACCEPTED = 1;
+    }
+
+
+    /// <summary>
+    /// MassActionRejectReason Field
+    /// </summary>/
+    public sealed class MassActionRejectReason : IntField
+    {
+        public MassActionRejectReason()
+            :base(Tags.MassActionRejectReason) {}
+        public MassActionRejectReason(int val)
+            :base(Tags.MassActionRejectReason, val) {}
+
+
+        // Field Enumerations
+        public const int MASS_ACTION_NOT_SUPPORTED = 0;
+        public const int INVALID_OR_UNKNOWN_SECURITY = 1;
+        public const int INVALID_OR_UNKNOWN_UNDERLYING_SECURITY = 2;
+        public const int INVALID_OR_UNKNOWN_PRODUCT = 3;
+        public const int INVALID_OR_UNKNOWN_CFICODE = 4;
+        public const int INVALID_OR_UNKNOWN_SECURITYTYPE = 5;
+        public const int INVALID_OR_UNKNOWN_TRADING_SESSION = 6;
+        public const int INVALID_OR_UNKNOWN_MARKET = 7;
+        public const int INVALID_OR_UNKNOWN_MARKET_SEGMENT = 8;
+        public const int INVALID_OR_UNKNOWN_SECURITY_GROUP = 9;
+        public const int OTHER = 99;
+    }
+
+
+    /// <summary>
+    /// MultilegModel Field
+    /// </summary>/
+    public sealed class MultilegModel : IntField
+    {
+        public MultilegModel()
+            :base(Tags.MultilegModel) {}
+        public MultilegModel(int val)
+            :base(Tags.MultilegModel, val) {}
+
+
+        // Field Enumerations
+        public const int PREDEFINED_MULTILEG_SECURITY = 0;
+        public const int USER_DEFINED_MULTLEG_SECURITY = 1;
+        public const int USER_DEFINED_NON_SECURITIZED_MULTILEG = 2;
+    }
+
+
+    /// <summary>
+    /// MultilegPriceMethod Field
+    /// </summary>/
+    public sealed class MultilegPriceMethod : IntField
+    {
+        public MultilegPriceMethod()
+            :base(Tags.MultilegPriceMethod) {}
+        public MultilegPriceMethod(int val)
+            :base(Tags.MultilegPriceMethod, val) {}
+
+
+        // Field Enumerations
+        public const int NET_PRICE = 0;
+        public const int REVERSED_NET_PRICE = 1;
+        public const int YIELD_DIFFERENCE = 2;
+        public const int INDIVIDUAL = 3;
+        public const int CONTRACT_WEIGHTED_AVERAGE_PRICE = 4;
+        public const int MULTIPLIED_PRICE = 5;
+    }
+
+
+    /// <summary>
+    /// LegVolatility Field
+    /// </summary>/
+    public sealed class LegVolatility : DecimalField
+    {
+        public LegVolatility()
+            :base(Tags.LegVolatility) {}
+        public LegVolatility(Decimal val)
+            :base(Tags.LegVolatility, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DividendYield Field
+    /// </summary>/
+    public sealed class DividendYield : DecimalField
+    {
+        public DividendYield()
+            :base(Tags.DividendYield) {}
+        public DividendYield(Decimal val)
+            :base(Tags.DividendYield, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegDividendYield Field
+    /// </summary>/
+    public sealed class LegDividendYield : DecimalField
+    {
+        public LegDividendYield()
+            :base(Tags.LegDividendYield) {}
+        public LegDividendYield(Decimal val)
+            :base(Tags.LegDividendYield, val) {}
+
+    }
+
+
+    /// <summary>
+    /// CurrencyRatio Field
+    /// </summary>/
+    public sealed class CurrencyRatio : DecimalField
+    {
+        public CurrencyRatio()
+            :base(Tags.CurrencyRatio) {}
+        public CurrencyRatio(Decimal val)
+            :base(Tags.CurrencyRatio, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegCurrencyRatio Field
+    /// </summary>/
+    public sealed class LegCurrencyRatio : DecimalField
+    {
+        public LegCurrencyRatio()
+            :base(Tags.LegCurrencyRatio) {}
+        public LegCurrencyRatio(Decimal val)
+            :base(Tags.LegCurrencyRatio, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegExecInst Field
+    /// </summary>/
+    public sealed class LegExecInst : StringField
+    {
+        public LegExecInst()
+            :base(Tags.LegExecInst) {}
+        public LegExecInst(string val)
+            :base(Tags.LegExecInst, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ContingencyType Field
+    /// </summary>/
+    public sealed class ContingencyType : IntField
+    {
+        public ContingencyType()
+            :base(Tags.ContingencyType) {}
+        public ContingencyType(int val)
+            :base(Tags.ContingencyType, val) {}
+
+
+        // Field Enumerations
+        public const int ONE_CANCELS_THE_OTHER = 1;
+        public const int ONE_TRIGGERS_THE_OTHER = 2;
+        public const int ONE_UPDATES_THE_OTHER_3 = 3;
+        public const int ONE_UPDATES_THE_OTHER_4 = 4;
+    }
+
+
+    /// <summary>
+    /// ListRejectReason Field
+    /// </summary>/
+    public sealed class ListRejectReason : IntField
+    {
+        public ListRejectReason()
+            :base(Tags.ListRejectReason) {}
+        public ListRejectReason(int val)
+            :base(Tags.ListRejectReason, val) {}
+
+
+        // Field Enumerations
+        public const int BROKER = 0;
+        public const int EXCHANGE_CLOSED = 2;
+        public const int TOO_LATE_TO_ENTER = 4;
+        public const int UNKNOWN_ORDER = 5;
+        public const int DUPLICATE_ORDER = 6;
+        public const int UNSUPPORTED_ORDER_CHARACTERISTIC = 11;
+        public const int OTHER = 99;
+    }
+
+
+    /// <summary>
+    /// NoTrdRepIndicators Field
+    /// </summary>/
+    public sealed class NoTrdRepIndicators : IntField
+    {
+        public NoTrdRepIndicators()
+            :base(Tags.NoTrdRepIndicators) {}
+        public NoTrdRepIndicators(int val)
+            :base(Tags.NoTrdRepIndicators, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TrdRepPartyRole Field
+    /// </summary>/
+    public sealed class TrdRepPartyRole : IntField
+    {
+        public TrdRepPartyRole()
+            :base(Tags.TrdRepPartyRole) {}
+        public TrdRepPartyRole(int val)
+            :base(Tags.TrdRepPartyRole, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TrdRepIndicator Field
+    /// </summary>/
+    public sealed class TrdRepIndicator : BooleanField
+    {
+        public TrdRepIndicator()
+            :base(Tags.TrdRepIndicator) {}
+        public TrdRepIndicator(Boolean val)
+            :base(Tags.TrdRepIndicator, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TradePublishIndicator Field
+    /// </summary>/
+    public sealed class TradePublishIndicator : IntField
+    {
+        public TradePublishIndicator()
+            :base(Tags.TradePublishIndicator) {}
+        public TradePublishIndicator(int val)
+            :base(Tags.TradePublishIndicator, val) {}
+
+
+        // Field Enumerations
+        public const int DO_NOT_PUBLISH_TRADE = 0;
+        public const int PUBLISH_TRADE = 1;
+        public const int DEFERRED_PUBLICATION = 2;
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegOptAttribute Field
+    /// </summary>/
+    public sealed class UnderlyingLegOptAttribute : CharField
+    {
+        public UnderlyingLegOptAttribute()
+            :base(Tags.UnderlyingLegOptAttribute) {}
+        public UnderlyingLegOptAttribute(char val)
+            :base(Tags.UnderlyingLegOptAttribute, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegSecurityDesc Field
+    /// </summary>/
+    public sealed class UnderlyingLegSecurityDesc : StringField
+    {
+        public UnderlyingLegSecurityDesc()
+            :base(Tags.UnderlyingLegSecurityDesc) {}
+        public UnderlyingLegSecurityDesc(string val)
+            :base(Tags.UnderlyingLegSecurityDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MarketReqID Field
+    /// </summary>/
+    public sealed class MarketReqID : StringField
+    {
+        public MarketReqID()
+            :base(Tags.MarketReqID) {}
+        public MarketReqID(string val)
+            :base(Tags.MarketReqID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MarketReportID Field
+    /// </summary>/
+    public sealed class MarketReportID : StringField
+    {
+        public MarketReportID()
+            :base(Tags.MarketReportID) {}
+        public MarketReportID(string val)
+            :base(Tags.MarketReportID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MarketUpdateAction Field
+    /// </summary>/
+    public sealed class MarketUpdateAction : CharField
+    {
+        public MarketUpdateAction()
+            :base(Tags.MarketUpdateAction) {}
+        public MarketUpdateAction(char val)
+            :base(Tags.MarketUpdateAction, val) {}
+
+
+        // Field Enumerations
+        public const char ADD = 'A';
+        public const char DELETE = 'D';
+        public const char MODIFY = 'M';
+    }
+
+
+    /// <summary>
+    /// MarketSegmentDesc Field
+    /// </summary>/
+    public sealed class MarketSegmentDesc : StringField
+    {
+        public MarketSegmentDesc()
+            :base(Tags.MarketSegmentDesc) {}
+        public MarketSegmentDesc(string val)
+            :base(Tags.MarketSegmentDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncodedMktSegmDescLen Field
+    /// </summary>/
+    public sealed class EncodedMktSegmDescLen : DecimalField
+    {
+        public EncodedMktSegmDescLen()
+            :base(Tags.EncodedMktSegmDescLen) {}
+        public EncodedMktSegmDescLen(Decimal val)
+            :base(Tags.EncodedMktSegmDescLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncodedMktSegmDesc Field
+    /// </summary>/
+    public sealed class EncodedMktSegmDesc : StringField
+    {
+        public EncodedMktSegmDesc()
+            :base(Tags.EncodedMktSegmDesc) {}
+        public EncodedMktSegmDesc(string val)
+            :base(Tags.EncodedMktSegmDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplNewSeqNum Field
+    /// </summary>/
+    public sealed class ApplNewSeqNum : IntField
+    {
+        public ApplNewSeqNum()
+            :base(Tags.ApplNewSeqNum) {}
+        public ApplNewSeqNum(int val)
+            :base(Tags.ApplNewSeqNum, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncryptedPasswordMethod Field
+    /// </summary>/
+    public sealed class EncryptedPasswordMethod : IntField
+    {
+        public EncryptedPasswordMethod()
+            :base(Tags.EncryptedPasswordMethod) {}
+        public EncryptedPasswordMethod(int val)
+            :base(Tags.EncryptedPasswordMethod, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncryptedPasswordLen Field
+    /// </summary>/
+    public sealed class EncryptedPasswordLen : DecimalField
+    {
+        public EncryptedPasswordLen()
+            :base(Tags.EncryptedPasswordLen) {}
+        public EncryptedPasswordLen(Decimal val)
+            :base(Tags.EncryptedPasswordLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncryptedPassword Field
+    /// </summary>/
+    public sealed class EncryptedPassword : StringField
+    {
+        public EncryptedPassword()
+            :base(Tags.EncryptedPassword) {}
+        public EncryptedPassword(string val)
+            :base(Tags.EncryptedPassword, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncryptedNewPasswordLen Field
+    /// </summary>/
+    public sealed class EncryptedNewPasswordLen : DecimalField
+    {
+        public EncryptedNewPasswordLen()
+            :base(Tags.EncryptedNewPasswordLen) {}
+        public EncryptedNewPasswordLen(Decimal val)
+            :base(Tags.EncryptedNewPasswordLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncryptedNewPassword Field
+    /// </summary>/
+    public sealed class EncryptedNewPassword : StringField
+    {
+        public EncryptedNewPassword()
+            :base(Tags.EncryptedNewPassword) {}
+        public EncryptedNewPassword(string val)
+            :base(Tags.EncryptedNewPassword, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingLegMaturityTime Field
+    /// </summary>/
+    public sealed class UnderlyingLegMaturityTime : StringField
+    {
+        public UnderlyingLegMaturityTime()
+            :base(Tags.UnderlyingLegMaturityTime) {}
+        public UnderlyingLegMaturityTime(string val)
+            :base(Tags.UnderlyingLegMaturityTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RefApplExtID Field
+    /// </summary>/
+    public sealed class RefApplExtID : IntField
+    {
+        public RefApplExtID()
+            :base(Tags.RefApplExtID) {}
+        public RefApplExtID(int val)
+            :base(Tags.RefApplExtID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DefaultApplExtID Field
+    /// </summary>/
+    public sealed class DefaultApplExtID : IntField
+    {
+        public DefaultApplExtID()
+            :base(Tags.DefaultApplExtID) {}
+        public DefaultApplExtID(int val)
+            :base(Tags.DefaultApplExtID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DefaultCstmApplVerID Field
+    /// </summary>/
+    public sealed class DefaultCstmApplVerID : StringField
+    {
+        public DefaultCstmApplVerID()
+            :base(Tags.DefaultCstmApplVerID) {}
+        public DefaultCstmApplVerID(string val)
+            :base(Tags.DefaultCstmApplVerID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SessionStatus Field
+    /// </summary>/
+    public sealed class SessionStatus : IntField
+    {
+        public SessionStatus()
+            :base(Tags.SessionStatus) {}
+        public SessionStatus(int val)
+            :base(Tags.SessionStatus, val) {}
+
+
+        // Field Enumerations
+        public const int SESSION_ACTIVE = 0;
+        public const int SESSION_PASSWORD_CHANGED = 1;
+        public const int SESSION_PASSWORD_DUE_TO_EXPIRE = 2;
+        public const int NEW_SESSION_PASSWORD_DOES_NOT_COMPLY_WITH_POLICY = 3;
+        public const int SESSION_LOGOUT_COMPLETE = 4;
+        public const int INVALID_USERNAME_OR_PASSWORD = 5;
+        public const int ACCOUNT_LOCKED = 6;
+        public const int LOGONS_ARE_NOT_ALLOWED_AT_THIS_TIME = 7;
+        public const int PASSWORD_EXPIRED = 8;
+    }
+
+
+    /// <summary>
+    /// DefaultVerIndicator Field
+    /// </summary>/
+    public sealed class DefaultVerIndicator : BooleanField
+    {
+        public DefaultVerIndicator()
+            :base(Tags.DefaultVerIndicator) {}
+        public DefaultVerIndicator(Boolean val)
+            :base(Tags.DefaultVerIndicator, val) {}
+
+    }
+
+
+    /// <summary>
+    /// Nested4PartySubIDType Field
+    /// </summary>/
+    public sealed class Nested4PartySubIDType : IntField
+    {
+        public Nested4PartySubIDType()
+            :base(Tags.Nested4PartySubIDType) {}
+        public Nested4PartySubIDType(int val)
+            :base(Tags.Nested4PartySubIDType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// Nested4PartySubID Field
+    /// </summary>/
+    public sealed class Nested4PartySubID : StringField
+    {
+        public Nested4PartySubID()
+            :base(Tags.Nested4PartySubID) {}
+        public Nested4PartySubID(string val)
+            :base(Tags.Nested4PartySubID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoNested4PartySubIDs Field
+    /// </summary>/
+    public sealed class NoNested4PartySubIDs : IntField
+    {
+        public NoNested4PartySubIDs()
+            :base(Tags.NoNested4PartySubIDs) {}
+        public NoNested4PartySubIDs(int val)
+            :base(Tags.NoNested4PartySubIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoNested4PartyIDs Field
+    /// </summary>/
+    public sealed class NoNested4PartyIDs : IntField
+    {
+        public NoNested4PartyIDs()
+            :base(Tags.NoNested4PartyIDs) {}
+        public NoNested4PartyIDs(int val)
+            :base(Tags.NoNested4PartyIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// Nested4PartyID Field
+    /// </summary>/
+    public sealed class Nested4PartyID : StringField
+    {
+        public Nested4PartyID()
+            :base(Tags.Nested4PartyID) {}
+        public Nested4PartyID(string val)
+            :base(Tags.Nested4PartyID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// Nested4PartyIDSource Field
+    /// </summary>/
+    public sealed class Nested4PartyIDSource : CharField
+    {
+        public Nested4PartyIDSource()
+            :base(Tags.Nested4PartyIDSource) {}
+        public Nested4PartyIDSource(char val)
+            :base(Tags.Nested4PartyIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// Nested4PartyRole Field
+    /// </summary>/
+    public sealed class Nested4PartyRole : IntField
+    {
+        public Nested4PartyRole()
+            :base(Tags.Nested4PartyRole) {}
+        public Nested4PartyRole(int val)
+            :base(Tags.Nested4PartyRole, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegLastQty Field
+    /// </summary>/
+    public sealed class LegLastQty : DecimalField
+    {
+        public LegLastQty()
+            :base(Tags.LegLastQty) {}
+        public LegLastQty(Decimal val)
+            :base(Tags.LegLastQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingExerciseStyle Field
+    /// </summary>/
+    public sealed class UnderlyingExerciseStyle : IntField
+    {
+        public UnderlyingExerciseStyle()
+            :base(Tags.UnderlyingExerciseStyle) {}
+        public UnderlyingExerciseStyle(int val)
+            :base(Tags.UnderlyingExerciseStyle, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegExerciseStyle Field
+    /// </summary>/
+    public sealed class LegExerciseStyle : IntField
+    {
+        public LegExerciseStyle()
+            :base(Tags.LegExerciseStyle) {}
+        public LegExerciseStyle(int val)
+            :base(Tags.LegExerciseStyle, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegPriceUnitOfMeasure Field
+    /// </summary>/
+    public sealed class LegPriceUnitOfMeasure : StringField
+    {
+        public LegPriceUnitOfMeasure()
+            :base(Tags.LegPriceUnitOfMeasure) {}
+        public LegPriceUnitOfMeasure(string val)
+            :base(Tags.LegPriceUnitOfMeasure, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LegPriceUnitOfMeasureQty Field
+    /// </summary>/
+    public sealed class LegPriceUnitOfMeasureQty : DecimalField
+    {
+        public LegPriceUnitOfMeasureQty()
+            :base(Tags.LegPriceUnitOfMeasureQty) {}
+        public LegPriceUnitOfMeasureQty(Decimal val)
+            :base(Tags.LegPriceUnitOfMeasureQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingUnitOfMeasureQty Field
+    /// </summary>/
+    public sealed class UnderlyingUnitOfMeasureQty : DecimalField
+    {
+        public UnderlyingUnitOfMeasureQty()
+            :base(Tags.UnderlyingUnitOfMeasureQty) {}
+        public UnderlyingUnitOfMeasureQty(Decimal val)
+            :base(Tags.UnderlyingUnitOfMeasureQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingPriceUnitOfMeasure Field
+    /// </summary>/
+    public sealed class UnderlyingPriceUnitOfMeasure : StringField
+    {
+        public UnderlyingPriceUnitOfMeasure()
+            :base(Tags.UnderlyingPriceUnitOfMeasure) {}
+        public UnderlyingPriceUnitOfMeasure(string val)
+            :base(Tags.UnderlyingPriceUnitOfMeasure, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingPriceUnitOfMeasureQty Field
+    /// </summary>/
+    public sealed class UnderlyingPriceUnitOfMeasureQty : DecimalField
+    {
+        public UnderlyingPriceUnitOfMeasureQty()
+            :base(Tags.UnderlyingPriceUnitOfMeasureQty) {}
+        public UnderlyingPriceUnitOfMeasureQty(Decimal val)
+            :base(Tags.UnderlyingPriceUnitOfMeasureQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ApplReportType Field
+    /// </summary>/
+    public sealed class ApplReportType : IntField
+    {
+        public ApplReportType()
+            :base(Tags.ApplReportType) {}
+        public ApplReportType(int val)
+            :base(Tags.ApplReportType, val) {}
+
+
+        // Field Enumerations
+        public const int RESET_APPLSEQNUM_TO_NEW_VALUE_SPECIFIED_IN_APPLNEWSEQNUM = 0;
+        public const int REPORTS_THAT_THE_LAST_MESSAGE_HAS_BEEN_SENT_FOR_THE_APPLIDS_REFER_TO_REFAPPLLASTSEQNUM = 1;
+        public const int HEARTBEAT_MESSAGE_INDICATING_THAT_APPLICATION_IDENTIFIED_BY_REFAPPLID = 2;
+    }
+
+
+    /// <summary>
+    /// HaltReasonInt Field
+    /// </summary>/
+    public sealed class HaltReasonInt : IntField
+    {
+        public HaltReasonInt()
+            :base(Tags.HaltReasonInt) {}
+        public HaltReasonInt(int val)
+            :base(Tags.HaltReasonInt, val) {}
+
+
+        // Field Enumerations
+        public const int NEWS_DISSEMINATION = 0;
+        public const int ORDER_INFLUX = 1;
+        public const int ORDER_IMBALANCE = 2;
+        public const int ADDITIONAL_INFORMATION = 3;
+        public const int NEWS_PENDING = 4;
+        public const int EQUIPMENT_CHANGEOVER = 5;
+    }
+
+
+    /// <summary>
+    /// SideLastQty Field
+    /// </summary>/
+    public sealed class SideLastQty : IntField
+    {
+        public SideLastQty()
+            :base(Tags.SideLastQty) {}
+        public SideLastQty(int val)
+            :base(Tags.SideLastQty, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingInstrumentPartyID Field
+    /// </summary>/
+    public sealed class UnderlyingInstrumentPartyID : StringField
+    {
+        public UnderlyingInstrumentPartyID()
+            :base(Tags.UnderlyingInstrumentPartyID) {}
+        public UnderlyingInstrumentPartyID(string val)
+            :base(Tags.UnderlyingInstrumentPartyID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingInstrumentPartyIDSource Field
+    /// </summary>/
+    public sealed class UnderlyingInstrumentPartyIDSource : CharField
+    {
+        public UnderlyingInstrumentPartyIDSource()
+            :base(Tags.UnderlyingInstrumentPartyIDSource) {}
+        public UnderlyingInstrumentPartyIDSource(char val)
+            :base(Tags.UnderlyingInstrumentPartyIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingInstrumentPartyRole Field
+    /// </summary>/
+    public sealed class UnderlyingInstrumentPartyRole : IntField
+    {
+        public UnderlyingInstrumentPartyRole()
+            :base(Tags.UnderlyingInstrumentPartyRole) {}
+        public UnderlyingInstrumentPartyRole(int val)
+            :base(Tags.UnderlyingInstrumentPartyRole, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingInstrumentPartySubID Field
+    /// </summary>/
+    public sealed class UnderlyingInstrumentPartySubID : StringField
+    {
+        public UnderlyingInstrumentPartySubID()
+            :base(Tags.UnderlyingInstrumentPartySubID) {}
+        public UnderlyingInstrumentPartySubID(string val)
+            :base(Tags.UnderlyingInstrumentPartySubID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingInstrumentPartySubIDType Field
+    /// </summary>/
+    public sealed class UnderlyingInstrumentPartySubIDType : IntField
+    {
+        public UnderlyingInstrumentPartySubIDType()
+            :base(Tags.UnderlyingInstrumentPartySubIDType) {}
+        public UnderlyingInstrumentPartySubIDType(int val)
+            :base(Tags.UnderlyingInstrumentPartySubIDType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// OptPayoutAmount Field
+    /// </summary>/
+    public sealed class OptPayoutAmount : DecimalField
+    {
+        public OptPayoutAmount()
+            :base(Tags.OptPayoutAmount) {}
+        public OptPayoutAmount(Decimal val)
+            :base(Tags.OptPayoutAmount, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ValuationMethod Field
+    /// </summary>/
+    public sealed class ValuationMethod : StringField
+    {
+        public ValuationMethod()
+            :base(Tags.ValuationMethod) {}
+        public ValuationMethod(string val)
+            :base(Tags.ValuationMethod, val) {}
+
+
+        // Field Enumerations
+        public const string PREMIUM_STYLE = "EQTY";
+        public const string FUTURES_STYLE_MARK_TO_MARKET = "FUT";
+        public const string FUTURES_STYLE_WITH_AN_ATTACHED_CASH_ADJUSTMENT = "FUTDA";
+        public const string CDS_STYLE_COLLATERALIZATION_OF_MARKET_TO_MARKET_AND_COUPON = "CDS";
+        public const string CDS_IN_DELIVERY = "CDSD";
+    }
+
+
+    /// <summary>
+    /// DerivativeValuationMethod Field
+    /// </summary>/
+    public sealed class DerivativeValuationMethod : StringField
+    {
+        public DerivativeValuationMethod()
+            :base(Tags.DerivativeValuationMethod) {}
+        public DerivativeValuationMethod(string val)
+            :base(Tags.DerivativeValuationMethod, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SideExecID Field
+    /// </summary>/
+    public sealed class SideExecID : StringField
+    {
+        public SideExecID()
+            :base(Tags.SideExecID) {}
+        public SideExecID(string val)
+            :base(Tags.SideExecID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// OrderDelay Field
+    /// </summary>/
+    public sealed class OrderDelay : IntField
+    {
+        public OrderDelay()
+            :base(Tags.OrderDelay) {}
+        public OrderDelay(int val)
+            :base(Tags.OrderDelay, val) {}
+
+    }
+
+
+    /// <summary>
+    /// OrderDelayUnit Field
+    /// </summary>/
+    public sealed class OrderDelayUnit : IntField
+    {
+        public OrderDelayUnit()
+            :base(Tags.OrderDelayUnit) {}
+        public OrderDelayUnit(int val)
+            :base(Tags.OrderDelayUnit, val) {}
+
+
+        // Field Enumerations
+        public const int SECONDS = 0;
+        public const int TENTHS_OF_A_SECOND = 1;
+        public const int HUNDREDTHS_OF_A_SECOND = 2;
+        public const int MILLISECONDS = 3;
+        public const int MICROSECONDS = 4;
+        public const int NANOSECONDS = 5;
+        public const int MINUTES = 10;
+        public const int HOURS = 11;
+        public const int DAYS = 12;
+        public const int WEEKS = 13;
+        public const int MONTHS = 14;
+        public const int YEARS = 15;
+    }
+
+
+    /// <summary>
+    /// VenueType Field
+    /// </summary>/
+    public sealed class VenueType : CharField
+    {
+        public VenueType()
+            :base(Tags.VenueType) {}
+        public VenueType(char val)
+            :base(Tags.VenueType, val) {}
+
+
+        // Field Enumerations
+        public const char ELECTRONIC = 'E';
+        public const char PIT = 'P';
+        public const char EX_PIT = 'X';
+    }
+
+
+    /// <summary>
+    /// RefOrdIDReason Field
+    /// </summary>/
+    public sealed class RefOrdIDReason : IntField
+    {
+        public RefOrdIDReason()
+            :base(Tags.RefOrdIDReason) {}
+        public RefOrdIDReason(int val)
+            :base(Tags.RefOrdIDReason, val) {}
+
+
+        // Field Enumerations
+        public const int GTC_FROM_PREVIOUS_DAY = 0;
+        public const int PARTIAL_FILL_REMAINING = 1;
+        public const int ORDER_CHANGED = 2;
+    }
+
+
+    /// <summary>
+    /// OrigCustOrderCapacity Field
+    /// </summary>/
+    public sealed class OrigCustOrderCapacity : IntField
+    {
+        public OrigCustOrderCapacity()
+            :base(Tags.OrigCustOrderCapacity) {}
+        public OrigCustOrderCapacity(int val)
+            :base(Tags.OrigCustOrderCapacity, val) {}
+
+
+        // Field Enumerations
+        public const int MEMBER_TRADING_FOR_THEIR_OWN_ACCOUNT = 1;
+        public const int CLEARING_FIRM_TRADING_FOR_ITS_PROPRIETARY_ACCOUNT = 2;
+        public const int MEMBER_TRADING_FOR_ANOTHER_MEMBER = 3;
+        public const int ALL_OTHER = 4;
+    }
+
+
+    /// <summary>
+    /// RefApplReqID Field
+    /// </summary>/
+    public sealed class RefApplReqID : StringField
+    {
+        public RefApplReqID()
+            :base(Tags.RefApplReqID) {}
+        public RefApplReqID(string val)
+            :base(Tags.RefApplReqID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ModelType Field
+    /// </summary>/
+    public sealed class ModelType : IntField
+    {
+        public ModelType()
+            :base(Tags.ModelType) {}
+        public ModelType(int val)
+            :base(Tags.ModelType, val) {}
+
+
+        // Field Enumerations
+        public const int UTILITY_PROVIDED_STANDARD_MODEL = 0;
+        public const int PROPRIETARY = 1;
+    }
+
+
+    /// <summary>
+    /// ContractMultiplierUnit Field
+    /// </summary>/
+    public sealed class ContractMultiplierUnit : IntField
+    {
+        public ContractMultiplierUnit()
+            :base(Tags.ContractMultiplierUnit) {}
+        public ContractMultiplierUnit(int val)
+            :base(Tags.ContractMultiplierUnit, val) {}
+
+
+        // Field Enumerations
+        public const int SHARES = 0;
+        public const int HOURS = 1;
+        public const int DAYS = 2;
+    }
+
+
+    /// <summary>
+    /// LegContractMultiplierUnit Field
+    /// </summary>/
+    public sealed class LegContractMultiplierUnit : IntField
+    {
+        public LegContractMultiplierUnit()
+            :base(Tags.LegContractMultiplierUnit) {}
+        public LegContractMultiplierUnit(int val)
+            :base(Tags.LegContractMultiplierUnit, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingContractMultiplierUnit Field
+    /// </summary>/
+    public sealed class UnderlyingContractMultiplierUnit : IntField
+    {
+        public UnderlyingContractMultiplierUnit()
+            :base(Tags.UnderlyingContractMultiplierUnit) {}
+        public UnderlyingContractMultiplierUnit(int val)
+            :base(Tags.UnderlyingContractMultiplierUnit, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeContractMultiplierUnit Field
+    /// </summary>/
+    public sealed class DerivativeContractMultiplierUnit : IntField
+    {
+        public DerivativeContractMultiplierUnit()
+            :base(Tags.DerivativeContractMultiplierUnit) {}
+        public DerivativeContractMultiplierUnit(int val)
+            :base(Tags.DerivativeContractMultiplierUnit, val) {}
+
+    }
+
+
+    /// <summary>
+    /// FlowScheduleType Field
+    /// </summary>/
+    public sealed class FlowScheduleType : IntField
+    {
+        public FlowScheduleType()
+            :base(Tags.FlowScheduleType) {}
+        public FlowScheduleType(int val)
+            :base(Tags.FlowScheduleType, val) {}
+
+
+        // Field Enumerations
+        public const int NERC_EASTERN_OFF_PEAK = 0;
+        public const int NERC_WESTERN_OFF_PEAK = 1;
+        public const int NERC_CALENDAR_ALL_DAYS_IN_MONTH = 2;
+        public const int NERC_EASTERN_PEAK = 3;
+        public const int NERC_WESTERN_PEAK = 4;
+    }
+
+
+    /// <summary>
+    /// LegFlowScheduleType Field
+    /// </summary>/
+    public sealed class LegFlowScheduleType : IntField
+    {
+        public LegFlowScheduleType()
+            :base(Tags.LegFlowScheduleType) {}
+        public LegFlowScheduleType(int val)
+            :base(Tags.LegFlowScheduleType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingFlowScheduleType Field
+    /// </summary>/
+    public sealed class UnderlyingFlowScheduleType : IntField
+    {
+        public UnderlyingFlowScheduleType()
+            :base(Tags.UnderlyingFlowScheduleType) {}
+        public UnderlyingFlowScheduleType(int val)
+            :base(Tags.UnderlyingFlowScheduleType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DerivativeFlowScheduleType Field
+    /// </summary>/
+    public sealed class DerivativeFlowScheduleType : IntField
+    {
+        public DerivativeFlowScheduleType()
+            :base(Tags.DerivativeFlowScheduleType) {}
+        public DerivativeFlowScheduleType(int val)
+            :base(Tags.DerivativeFlowScheduleType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// FillLiquidityInd Field
+    /// </summary>/
+    public sealed class FillLiquidityInd : IntField
+    {
+        public FillLiquidityInd()
+            :base(Tags.FillLiquidityInd) {}
+        public FillLiquidityInd(int val)
+            :base(Tags.FillLiquidityInd, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SideLiquidityInd Field
+    /// </summary>/
+    public sealed class SideLiquidityInd : IntField
+    {
+        public SideLiquidityInd()
+            :base(Tags.SideLiquidityInd) {}
+        public SideLiquidityInd(int val)
+            :base(Tags.SideLiquidityInd, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRateSources Field
+    /// </summary>/
+    public sealed class NoRateSources : IntField
+    {
+        public NoRateSources()
+            :base(Tags.NoRateSources) {}
+        public NoRateSources(int val)
+            :base(Tags.NoRateSources, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RateSource Field
+    /// </summary>/
+    public sealed class RateSource : IntField
+    {
+        public RateSource()
+            :base(Tags.RateSource) {}
+        public RateSource(int val)
+            :base(Tags.RateSource, val) {}
+
+
+        // Field Enumerations
+        public const int BLOOMBERG = 0;
+        public const int REUTERS = 1;
+        public const int TELERATE = 2;
+        public const int OTHER = 99;
+    }
+
+
+    /// <summary>
+    /// RateSourceType Field
+    /// </summary>/
+    public sealed class RateSourceType : IntField
+    {
+        public RateSourceType()
+            :base(Tags.RateSourceType) {}
+        public RateSourceType(int val)
+            :base(Tags.RateSourceType, val) {}
+
+
+        // Field Enumerations
+        public const int PRIMARY = 0;
+        public const int SECONDARY = 1;
+    }
+
+
+    /// <summary>
+    /// ReferencePage Field
+    /// </summary>/
+    public sealed class ReferencePage : StringField
+    {
+        public ReferencePage()
+            :base(Tags.ReferencePage) {}
+        public ReferencePage(string val)
+            :base(Tags.ReferencePage, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RestructuringType Field
+    /// </summary>/
+    public sealed class RestructuringType : StringField
+    {
+        public RestructuringType()
+            :base(Tags.RestructuringType) {}
+        public RestructuringType(string val)
+            :base(Tags.RestructuringType, val) {}
+
+
+        // Field Enumerations
+        public const string FULL_RESTRUCTURING = "FR";
+        public const string MODIFIED_RESTRUCTURING = "MR";
+        public const string MODIFIED_MOD_RESTRUCTURING = "MM";
+        public const string NO_RESTRUCTURING_SPECIFIED = "XR";
+    }
+
+
+    /// <summary>
+    /// Seniority Field
+    /// </summary>/
+    public sealed class Seniority : StringField
+    {
+        public Seniority()
+            :base(Tags.Seniority) {}
+        public Seniority(string val)
+            :base(Tags.Seniority, val) {}
+
+
+        // Field Enumerations
+        public const string SENIOR_SECURED = "SD";
+        public const string SENIOR = "SR";
+        public const string SUBORDINATED = "SB";
+    }
+
+
+    /// <summary>
+    /// NotionalPercentageOutstanding Field
+    /// </summary>/
+    public sealed class NotionalPercentageOutstanding : DecimalField
+    {
+        public NotionalPercentageOutstanding()
+            :base(Tags.NotionalPercentageOutstanding) {}
+        public NotionalPercentageOutstanding(Decimal val)
+            :base(Tags.NotionalPercentageOutstanding, val) {}
+
+    }
+
+
+    /// <summary>
+    /// OriginalNotionalPercentageOutstanding Field
+    /// </summary>/
+    public sealed class OriginalNotionalPercentageOutstanding : DecimalField
+    {
+        public OriginalNotionalPercentageOutstanding()
+            :base(Tags.OriginalNotionalPercentageOutstanding) {}
+        public OriginalNotionalPercentageOutstanding(Decimal val)
+            :base(Tags.OriginalNotionalPercentageOutstanding, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingRestructuringType Field
+    /// </summary>/
+    public sealed class UnderlyingRestructuringType : StringField
+    {
+        public UnderlyingRestructuringType()
+            :base(Tags.UnderlyingRestructuringType) {}
+        public UnderlyingRestructuringType(string val)
+            :base(Tags.UnderlyingRestructuringType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingSeniority Field
+    /// </summary>/
+    public sealed class UnderlyingSeniority : StringField
+    {
+        public UnderlyingSeniority()
+            :base(Tags.UnderlyingSeniority) {}
+        public UnderlyingSeniority(string val)
+            :base(Tags.UnderlyingSeniority, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingNotionalPercentageOutstanding Field
+    /// </summary>/
+    public sealed class UnderlyingNotionalPercentageOutstanding : DecimalField
+    {
+        public UnderlyingNotionalPercentageOutstanding()
+            :base(Tags.UnderlyingNotionalPercentageOutstanding) {}
+        public UnderlyingNotionalPercentageOutstanding(Decimal val)
+            :base(Tags.UnderlyingNotionalPercentageOutstanding, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingOriginalNotionalPercentageOutstanding Field
+    /// </summary>/
+    public sealed class UnderlyingOriginalNotionalPercentageOutstanding : DecimalField
+    {
+        public UnderlyingOriginalNotionalPercentageOutstanding()
+            :base(Tags.UnderlyingOriginalNotionalPercentageOutstanding) {}
+        public UnderlyingOriginalNotionalPercentageOutstanding(Decimal val)
+            :base(Tags.UnderlyingOriginalNotionalPercentageOutstanding, val) {}
+
+    }
+
+
+    /// <summary>
+    /// AttachmentPoint Field
+    /// </summary>/
+    public sealed class AttachmentPoint : DecimalField
+    {
+        public AttachmentPoint()
+            :base(Tags.AttachmentPoint) {}
+        public AttachmentPoint(Decimal val)
+            :base(Tags.AttachmentPoint, val) {}
+
+    }
+
+
+    /// <summary>
+    /// DetachmentPoint Field
+    /// </summary>/
+    public sealed class DetachmentPoint : DecimalField
+    {
+        public DetachmentPoint()
+            :base(Tags.DetachmentPoint) {}
+        public DetachmentPoint(Decimal val)
+            :base(Tags.DetachmentPoint, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingAttachmentPoint Field
+    /// </summary>/
+    public sealed class UnderlyingAttachmentPoint : DecimalField
+    {
+        public UnderlyingAttachmentPoint()
+            :base(Tags.UnderlyingAttachmentPoint) {}
+        public UnderlyingAttachmentPoint(Decimal val)
+            :base(Tags.UnderlyingAttachmentPoint, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingDetachmentPoint Field
+    /// </summary>/
+    public sealed class UnderlyingDetachmentPoint : DecimalField
+    {
+        public UnderlyingDetachmentPoint()
+            :base(Tags.UnderlyingDetachmentPoint) {}
+        public UnderlyingDetachmentPoint(Decimal val)
+            :base(Tags.UnderlyingDetachmentPoint, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoTargetPartyIDs Field
+    /// </summary>/
+    public sealed class NoTargetPartyIDs : IntField
+    {
+        public NoTargetPartyIDs()
+            :base(Tags.NoTargetPartyIDs) {}
+        public NoTargetPartyIDs(int val)
+            :base(Tags.NoTargetPartyIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TargetPartyID Field
+    /// </summary>/
+    public sealed class TargetPartyID : StringField
+    {
+        public TargetPartyID()
+            :base(Tags.TargetPartyID) {}
+        public TargetPartyID(string val)
+            :base(Tags.TargetPartyID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TargetPartyIDSource Field
+    /// </summary>/
+    public sealed class TargetPartyIDSource : CharField
+    {
+        public TargetPartyIDSource()
+            :base(Tags.TargetPartyIDSource) {}
+        public TargetPartyIDSource(char val)
+            :base(Tags.TargetPartyIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// TargetPartyRole Field
+    /// </summary>/
+    public sealed class TargetPartyRole : IntField
+    {
+        public TargetPartyRole()
+            :base(Tags.TargetPartyRole) {}
+        public TargetPartyRole(int val)
+            :base(Tags.TargetPartyRole, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecurityListID Field
+    /// </summary>/
+    public sealed class SecurityListID : StringField
+    {
+        public SecurityListID()
+            :base(Tags.SecurityListID) {}
+        public SecurityListID(string val)
+            :base(Tags.SecurityListID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecurityListRefID Field
+    /// </summary>/
+    public sealed class SecurityListRefID : StringField
+    {
+        public SecurityListRefID()
+            :base(Tags.SecurityListRefID) {}
+        public SecurityListRefID(string val)
+            :base(Tags.SecurityListRefID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecurityListDesc Field
+    /// </summary>/
+    public sealed class SecurityListDesc : StringField
+    {
+        public SecurityListDesc()
+            :base(Tags.SecurityListDesc) {}
+        public SecurityListDesc(string val)
+            :base(Tags.SecurityListDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncodedSecurityListDescLen Field
+    /// </summary>/
+    public sealed class EncodedSecurityListDescLen : DecimalField
+    {
+        public EncodedSecurityListDescLen()
+            :base(Tags.EncodedSecurityListDescLen) {}
+        public EncodedSecurityListDescLen(Decimal val)
+            :base(Tags.EncodedSecurityListDescLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// EncodedSecurityListDesc Field
+    /// </summary>/
+    public sealed class EncodedSecurityListDesc : StringField
+    {
+        public EncodedSecurityListDesc()
+            :base(Tags.EncodedSecurityListDesc) {}
+        public EncodedSecurityListDesc(string val)
+            :base(Tags.EncodedSecurityListDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// SecurityListType Field
+    /// </summary>/
+    public sealed class SecurityListType : IntField
+    {
+        public SecurityListType()
+            :base(Tags.SecurityListType) {}
+        public SecurityListType(int val)
+            :base(Tags.SecurityListType, val) {}
+
+
+        // Field Enumerations
+        public const int INDUSTRY_CLASSIFICATION = 1;
+        public const int TRADING_LIST = 2;
+        public const int MARKET = 3;
+        public const int NEWSPAPER_LIST = 4;
+    }
+
+
+    /// <summary>
+    /// SecurityListTypeSource Field
+    /// </summary>/
+    public sealed class SecurityListTypeSource : IntField
+    {
+        public SecurityListTypeSource()
+            :base(Tags.SecurityListTypeSource) {}
+        public SecurityListTypeSource(int val)
+            :base(Tags.SecurityListTypeSource, val) {}
+
+
+        // Field Enumerations
+        public const int ICB = 1;
+        public const int NAICS = 2;
+        public const int GICS = 3;
+    }
+
+
+    /// <summary>
+    /// NewsID Field
+    /// </summary>/
+    public sealed class NewsID : StringField
+    {
+        public NewsID()
+            :base(Tags.NewsID) {}
+        public NewsID(string val)
+            :base(Tags.NewsID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NewsCategory Field
+    /// </summary>/
+    public sealed class NewsCategory : IntField
+    {
+        public NewsCategory()
+            :base(Tags.NewsCategory) {}
+        public NewsCategory(int val)
+            :base(Tags.NewsCategory, val) {}
+
+
+        // Field Enumerations
+        public const int COMPANY_NEWS = 0;
+        public const int MARKETPLACE_NEWS = 1;
+        public const int FINANCIAL_MARKET_NEWS = 2;
+        public const int TECHNICAL_NEWS = 3;
+        public const int OTHER_NEWS = 99;
+    }
+
+
+    /// <summary>
+    /// LanguageCode Field
+    /// </summary>/
+    public sealed class LanguageCode : StringField
+    {
+        public LanguageCode()
+            :base(Tags.LanguageCode) {}
+        public LanguageCode(string val)
+            :base(Tags.LanguageCode, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoNewsRefIDs Field
+    /// </summary>/
+    public sealed class NoNewsRefIDs : IntField
+    {
+        public NoNewsRefIDs()
+            :base(Tags.NoNewsRefIDs) {}
+        public NoNewsRefIDs(int val)
+            :base(Tags.NoNewsRefIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NewsRefID Field
+    /// </summary>/
+    public sealed class NewsRefID : StringField
+    {
+        public NewsRefID()
+            :base(Tags.NewsRefID) {}
+        public NewsRefID(string val)
+            :base(Tags.NewsRefID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NewsRefType Field
+    /// </summary>/
+    public sealed class NewsRefType : IntField
+    {
+        public NewsRefType()
+            :base(Tags.NewsRefType) {}
+        public NewsRefType(int val)
+            :base(Tags.NewsRefType, val) {}
+
+
+        // Field Enumerations
+        public const int REPLACEMENT = 0;
+        public const int OTHER_LANGUAGE = 1;
+        public const int COMPLIMENTARY = 2;
+    }
+
+
+    /// <summary>
+    /// StrikePriceDeterminationMethod Field
+    /// </summary>/
+    public sealed class StrikePriceDeterminationMethod : IntField
+    {
+        public StrikePriceDeterminationMethod()
+            :base(Tags.StrikePriceDeterminationMethod) {}
+        public StrikePriceDeterminationMethod(int val)
+            :base(Tags.StrikePriceDeterminationMethod, val) {}
+
+
+        // Field Enumerations
+        public const int FIXED_STRIKE = 1;
+        public const int STRIKE_SET_AT_EXPIRATION_TO_UNDERLYING_OR_OTHER_VALUE = 2;
+        public const int STRIKE_SET_TO_AVERAGE_OF_UNDERLYING_SETTLEMENT_PRICE_ACROSS_THE_LIFE_OF_THE_OPTION = 3;
+        public const int STRIKE_SET_TO_OPTIMAL_VALUE = 4;
+    }
+
+
+    /// <summary>
+    /// StrikePriceBoundaryMethod Field
+    /// </summary>/
+    public sealed class StrikePriceBoundaryMethod : IntField
+    {
+        public StrikePriceBoundaryMethod()
+            :base(Tags.StrikePriceBoundaryMethod) {}
+        public StrikePriceBoundaryMethod(int val)
+            :base(Tags.StrikePriceBoundaryMethod, val) {}
+
+
+        // Field Enumerations
+        public const int LESS_THAN_UNDERLYING_PRICE_IS_IN_THE_MONEY = 1;
+        public const int LESS_THAN_OR_EQUAL_TO_THE_UNDERLYING_PRICE_IS_IN_THE_MONEY = 2;
+        public const int EQUAL_TO_THE_UNDERLYING_PRICE_IS_IN_THE_MONEY = 3;
+        public const int GREATER_THAN_OR_EQUAL_TO_UNDERLYING_PRICE_IS_IN_THE_MONEY = 4;
+        public const int GREATER_THAN_UNDERLYING_IS_IN_THE_MONEY = 5;
+    }
+
+
+    /// <summary>
+    /// StrikePriceBoundaryPrecision Field
+    /// </summary>/
+    public sealed class StrikePriceBoundaryPrecision : DecimalField
+    {
+        public StrikePriceBoundaryPrecision()
+            :base(Tags.StrikePriceBoundaryPrecision) {}
+        public StrikePriceBoundaryPrecision(Decimal val)
+            :base(Tags.StrikePriceBoundaryPrecision, val) {}
+
+    }
+
+
+    /// <summary>
+    /// UnderlyingPriceDeterminationMethod Field
+    /// </summary>/
+    public sealed class UnderlyingPriceDeterminationMethod : IntField
+    {
+        public UnderlyingPriceDeterminationMethod()
+            :base(Tags.UnderlyingPriceDeterminationMethod) {}
+        public UnderlyingPriceDeterminationMethod(int val)
+            :base(Tags.UnderlyingPriceDeterminationMethod, val) {}
+
+
+        // Field Enumerations
+        public const int REGULAR = 1;
+        public const int SPECIAL_REFERENCE = 2;
+        public const int OPTIMAL_VALUE = 3;
+        public const int AVERAGE_VALUE = 4;
+    }
+
+
+    /// <summary>
+    /// OptPayoutType Field
+    /// </summary>/
+    public sealed class OptPayoutType : IntField
+    {
+        public OptPayoutType()
+            :base(Tags.OptPayoutType) {}
+        public OptPayoutType(int val)
+            :base(Tags.OptPayoutType, val) {}
+
+
+        // Field Enumerations
+        public const int VANILLA = 1;
+        public const int CAPPED = 2;
+        public const int BINARY = 3;
+    }
+
+
+    /// <summary>
+    /// NoComplexEvents Field
+    /// </summary>/
+    public sealed class NoComplexEvents : IntField
+    {
+        public NoComplexEvents()
+            :base(Tags.NoComplexEvents) {}
+        public NoComplexEvents(int val)
+            :base(Tags.NoComplexEvents, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ComplexEventType Field
+    /// </summary>/
+    public sealed class ComplexEventType : IntField
+    {
+        public ComplexEventType()
+            :base(Tags.ComplexEventType) {}
+        public ComplexEventType(int val)
+            :base(Tags.ComplexEventType, val) {}
+
+
+        // Field Enumerations
+        public const int CAPPED = 1;
+        public const int TRIGGER = 2;
+        public const int KNOCK_IN_UP = 3;
+        public const int KOCK_IN_DOWN = 4;
+        public const int KNOCK_OUT_UP = 5;
+        public const int KNOCK_OUT_DOWN = 6;
+        public const int UNDERLYING = 7;
+        public const int RESET_BARRIER = 8;
+        public const int ROLLING_BARRIER = 9;
+    }
+
+
+    /// <summary>
+    /// ComplexOptPayoutAmount Field
+    /// </summary>/
+    public sealed class ComplexOptPayoutAmount : DecimalField
+    {
+        public ComplexOptPayoutAmount()
+            :base(Tags.ComplexOptPayoutAmount) {}
+        public ComplexOptPayoutAmount(Decimal val)
+            :base(Tags.ComplexOptPayoutAmount, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ComplexEventPrice Field
+    /// </summary>/
+    public sealed class ComplexEventPrice : DecimalField
+    {
+        public ComplexEventPrice()
+            :base(Tags.ComplexEventPrice) {}
+        public ComplexEventPrice(Decimal val)
+            :base(Tags.ComplexEventPrice, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ComplexEventPriceBoundaryMethod Field
+    /// </summary>/
+    public sealed class ComplexEventPriceBoundaryMethod : IntField
+    {
+        public ComplexEventPriceBoundaryMethod()
+            :base(Tags.ComplexEventPriceBoundaryMethod) {}
+        public ComplexEventPriceBoundaryMethod(int val)
+            :base(Tags.ComplexEventPriceBoundaryMethod, val) {}
+
+
+        // Field Enumerations
+        public const int LESS_THAN_COMPLEXEVENTPRICE = 1;
+        public const int LESS_THAN_OR_EQUAL_TO_COMPLEXEVENTPRICE = 2;
+        public const int EQUAL_TO_COMPLEXEVENTPRICE = 3;
+        public const int GREATER_THAN_OR_EQUAL_TO_COMPLEXEVENTPRICE = 4;
+        public const int GREATER_THAN_COMPLEXEVENTPRICE = 5;
+    }
+
+
+    /// <summary>
+    /// ComplexEventPriceBoundaryPrecision Field
+    /// </summary>/
+    public sealed class ComplexEventPriceBoundaryPrecision : DecimalField
+    {
+        public ComplexEventPriceBoundaryPrecision()
+            :base(Tags.ComplexEventPriceBoundaryPrecision) {}
+        public ComplexEventPriceBoundaryPrecision(Decimal val)
+            :base(Tags.ComplexEventPriceBoundaryPrecision, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ComplexEventPriceTimeType Field
+    /// </summary>/
+    public sealed class ComplexEventPriceTimeType : IntField
+    {
+        public ComplexEventPriceTimeType()
+            :base(Tags.ComplexEventPriceTimeType) {}
+        public ComplexEventPriceTimeType(int val)
+            :base(Tags.ComplexEventPriceTimeType, val) {}
+
+
+        // Field Enumerations
+        public const int EXPIRATION = 1;
+        public const int IMMEDIATE = 2;
+        public const int SPECIFIED_DATE_TIME = 3;
+    }
+
+
+    /// <summary>
+    /// ComplexEventCondition Field
+    /// </summary>/
+    public sealed class ComplexEventCondition : IntField
+    {
+        public ComplexEventCondition()
+            :base(Tags.ComplexEventCondition) {}
+        public ComplexEventCondition(int val)
+            :base(Tags.ComplexEventCondition, val) {}
+
+
+        // Field Enumerations
+        public const int AND = 1;
+        public const int OR = 2;
+    }
+
+
+    /// <summary>
+    /// NoComplexEventDates Field
+    /// </summary>/
+    public sealed class NoComplexEventDates : IntField
+    {
+        public NoComplexEventDates()
+            :base(Tags.NoComplexEventDates) {}
+        public NoComplexEventDates(int val)
+            :base(Tags.NoComplexEventDates, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ComplexEventStartDate Field
+    /// </summary>/
+    public sealed class ComplexEventStartDate : DateTimeField
+    {
+        public ComplexEventStartDate()
+            :base(Tags.ComplexEventStartDate) {}
+        public ComplexEventStartDate(DateTime val)
+            :base(Tags.ComplexEventStartDate, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ComplexEventEndDate Field
+    /// </summary>/
+    public sealed class ComplexEventEndDate : DateTimeField
+    {
+        public ComplexEventEndDate()
+            :base(Tags.ComplexEventEndDate) {}
+        public ComplexEventEndDate(DateTime val)
+            :base(Tags.ComplexEventEndDate, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoComplexEventTimes Field
+    /// </summary>/
+    public sealed class NoComplexEventTimes : IntField
+    {
+        public NoComplexEventTimes()
+            :base(Tags.NoComplexEventTimes) {}
+        public NoComplexEventTimes(int val)
+            :base(Tags.NoComplexEventTimes, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ComplexEventStartTime Field
+    /// </summary>/
+    public sealed class ComplexEventStartTime : DateTimeField
+    {
+        public ComplexEventStartTime()
+            :base(Tags.ComplexEventStartTime) {}
+        public ComplexEventStartTime(DateTime val)
+            :base(Tags.ComplexEventStartTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ComplexEventEndTime Field
+    /// </summary>/
+    public sealed class ComplexEventEndTime : DateTimeField
+    {
+        public ComplexEventEndTime()
+            :base(Tags.ComplexEventEndTime) {}
+        public ComplexEventEndTime(DateTime val)
+            :base(Tags.ComplexEventEndTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StreamAsgnReqID Field
+    /// </summary>/
+    public sealed class StreamAsgnReqID : StringField
+    {
+        public StreamAsgnReqID()
+            :base(Tags.StreamAsgnReqID) {}
+        public StreamAsgnReqID(string val)
+            :base(Tags.StreamAsgnReqID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StreamAsgnReqType Field
+    /// </summary>/
+    public sealed class StreamAsgnReqType : IntField
+    {
+        public StreamAsgnReqType()
+            :base(Tags.StreamAsgnReqType) {}
+        public StreamAsgnReqType(int val)
+            :base(Tags.StreamAsgnReqType, val) {}
+
+
+        // Field Enumerations
+        public const int STREAM_ASSIGNMENT_FOR_NEW_CUSTOMER = 1;
+        public const int STREAM_ASSIGNMENT_FOR_EXISTING_CUSTOMER = 2;
+    }
+
+
+    /// <summary>
+    /// NoAsgnReqs Field
+    /// </summary>/
+    public sealed class NoAsgnReqs : IntField
+    {
+        public NoAsgnReqs()
+            :base(Tags.NoAsgnReqs) {}
+        public NoAsgnReqs(int val)
+            :base(Tags.NoAsgnReqs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MDStreamID Field
+    /// </summary>/
+    public sealed class MDStreamID : StringField
+    {
+        public MDStreamID()
+            :base(Tags.MDStreamID) {}
+        public MDStreamID(string val)
+            :base(Tags.MDStreamID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StreamAsgnRptID Field
+    /// </summary>/
+    public sealed class StreamAsgnRptID : StringField
+    {
+        public StreamAsgnRptID()
+            :base(Tags.StreamAsgnRptID) {}
+        public StreamAsgnRptID(string val)
+            :base(Tags.StreamAsgnRptID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StreamAsgnRejReason Field
+    /// </summary>/
+    public sealed class StreamAsgnRejReason : IntField
+    {
+        public StreamAsgnRejReason()
+            :base(Tags.StreamAsgnRejReason) {}
+        public StreamAsgnRejReason(int val)
+            :base(Tags.StreamAsgnRejReason, val) {}
+
+
+        // Field Enumerations
+        public const int UNKNOWN_CLIENT = 0;
+        public const int EXCEEDS_MAXIMUM_SIZE = 1;
+        public const int UNKNOWN_OR_INVALID_CURRENCY_PAIR = 2;
+        public const int NO_AVAILABLE_STREAM = 3;
+        public const int OTHER = 99;
+    }
+
+
+    /// <summary>
+    /// StreamAsgnAckType Field
+    /// </summary>/
+    public sealed class StreamAsgnAckType : IntField
+    {
+        public StreamAsgnAckType()
+            :base(Tags.StreamAsgnAckType) {}
+        public StreamAsgnAckType(int val)
+            :base(Tags.StreamAsgnAckType, val) {}
+
+
+        // Field Enumerations
+        public const int ASSIGNMENT_ACCEPTED = 0;
+        public const int ASSIGNMENT_REJECTED = 1;
+    }
+
+
+    /// <summary>
+    /// RelSymTransactTime Field
+    /// </summary>/
+    public sealed class RelSymTransactTime : DateTimeField
+    {
+        public RelSymTransactTime()
+            :base(Tags.RelSymTransactTime) {}
+        public RelSymTransactTime(DateTime val)
+            :base(Tags.RelSymTransactTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PartyDetailsListRequestID Field
+    /// </summary>/
+    public sealed class PartyDetailsListRequestID : StringField
+    {
+        public PartyDetailsListRequestID()
+            :base(Tags.PartyDetailsListRequestID) {}
+        public PartyDetailsListRequestID(string val)
+            :base(Tags.PartyDetailsListRequestID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoPartyListResponseTypes Field
+    /// </summary>/
+    public sealed class NoPartyListResponseTypes : IntField
+    {
+        public NoPartyListResponseTypes()
+            :base(Tags.NoPartyListResponseTypes) {}
+        public NoPartyListResponseTypes(int val)
+            :base(Tags.NoPartyListResponseTypes, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PartyListResponseType Field
+    /// </summary>/
+    public sealed class PartyListResponseType : IntField
+    {
+        public PartyListResponseType()
+            :base(Tags.PartyListResponseType) {}
+        public PartyListResponseType(int val)
+            :base(Tags.PartyListResponseType, val) {}
+
+
+        // Field Enumerations
+        public const int RETURN_ALL_AVAILABLE_INFORMATION_ON_PARTIES_AND_RELATED_PARTIES = 0;
+        public const int RETURN_ONLY_PARTY_INFORMATION = 1;
+        public const int INCLUDE_INFORMATION_ON_RELATED_PARTIES = 2;
+        public const int INCLUDE_RISK_LIMIT_INFORMATION = 3;
+    }
+
+
+    /// <summary>
+    /// NoRequestedPartyRoles Field
+    /// </summary>/
+    public sealed class NoRequestedPartyRoles : IntField
+    {
+        public NoRequestedPartyRoles()
+            :base(Tags.NoRequestedPartyRoles) {}
+        public NoRequestedPartyRoles(int val)
+            :base(Tags.NoRequestedPartyRoles, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RequestedPartyRole Field
+    /// </summary>/
+    public sealed class RequestedPartyRole : IntField
+    {
+        public RequestedPartyRole()
+            :base(Tags.RequestedPartyRole) {}
+        public RequestedPartyRole(int val)
+            :base(Tags.RequestedPartyRole, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PartyDetailsListReportID Field
+    /// </summary>/
+    public sealed class PartyDetailsListReportID : StringField
+    {
+        public PartyDetailsListReportID()
+            :base(Tags.PartyDetailsListReportID) {}
+        public PartyDetailsListReportID(string val)
+            :base(Tags.PartyDetailsListReportID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PartyDetailsRequestResult Field
+    /// </summary>/
+    public sealed class PartyDetailsRequestResult : IntField
+    {
+        public PartyDetailsRequestResult()
+            :base(Tags.PartyDetailsRequestResult) {}
+        public PartyDetailsRequestResult(int val)
+            :base(Tags.PartyDetailsRequestResult, val) {}
+
+
+        // Field Enumerations
+        public const int VALID_REQUEST = 0;
+        public const int INVALID_OR_UNSUPPORTED_REQUEST = 1;
+        public const int NO_PARTIES_OR_PARTY_DETAILS_FOUND_THAT_MATCH_SELECTION_CRITERIA = 2;
+        public const int UNSUPPORTED_PARTYLISTRESPONSETYPE = 3;
+        public const int NOT_AUTHORIZED_TO_RETRIEVE_PARTIES_OR_PARTY_DETAILS_DATA = 4;
+        public const int PARTIES_OR_PARTY_DETAILS_DATA_TEMPORARILY_UNAVAILABLE = 5;
+        public const int REQUEST_FOR_PARTIES_DATA_NOT_SUPPORTED = 6;
+        public const int OTHER = 99;
+    }
+
+
+    /// <summary>
+    /// TotNoPartyList Field
+    /// </summary>/
+    public sealed class TotNoPartyList : IntField
+    {
+        public TotNoPartyList()
+            :base(Tags.TotNoPartyList) {}
+        public TotNoPartyList(int val)
+            :base(Tags.TotNoPartyList, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoPartyList Field
+    /// </summary>/
+    public sealed class NoPartyList : IntField
+    {
+        public NoPartyList()
+            :base(Tags.NoPartyList) {}
+        public NoPartyList(int val)
+            :base(Tags.NoPartyList, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoPartyRelationships Field
+    /// </summary>/
+    public sealed class NoPartyRelationships : IntField
+    {
+        public NoPartyRelationships()
+            :base(Tags.NoPartyRelationships) {}
+        public NoPartyRelationships(int val)
+            :base(Tags.NoPartyRelationships, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PartyRelationship Field
+    /// </summary>/
+    public sealed class PartyRelationship : IntField
+    {
+        public PartyRelationship()
+            :base(Tags.PartyRelationship) {}
+        public PartyRelationship(int val)
+            :base(Tags.PartyRelationship, val) {}
+
+
+        // Field Enumerations
+        public const int IS_ALSO = 0;
+        public const int CLEARS_FOR = 1;
+        public const int CLEARS_THROUGH = 2;
+        public const int TRADES_FOR = 3;
+        public const int TRADES_THROUGH = 4;
+        public const int SPONSORS = 5;
+        public const int SPONSORED_THROUGH = 6;
+        public const int PROVIDES_GUARANTEE_FOR = 7;
+        public const int IS_GUARANTEED_BY = 8;
+        public const int MEMBER_OF = 9;
+        public const int HAS_MEMBERS = 10;
+        public const int PROVIDES_MARKETPLACE_FOR = 11;
+        public const int PARTICIPANT_OF_MARKETPLACE = 12;
+        public const int CARRIES_POSITIONS_FOR = 13;
+        public const int POSTS_TRADES_TO = 14;
+        public const int ENTERS_TRADES_FOR = 15;
+        public const int ENTERS_TRADES_THROUGH = 16;
+        public const int PROVIDES_QUOTES_TO = 17;
+        public const int REQUESTS_QUOTES_FROM = 18;
+        public const int INVESTS_FOR = 19;
+        public const int INVESTS_THROUGH = 20;
+        public const int BROKERS_TRADES_FOR = 21;
+        public const int BROKERS_TRADES_THROUGH = 22;
+        public const int PROVIDES_TRADING_SERVICES_FOR = 23;
+        public const int USES_TRADING_SERVICES_OF = 24;
+        public const int APPROVES_OF = 25;
+        public const int APPROVED_BY = 26;
+        public const int PARENT_FIRM_FOR = 27;
+        public const int SUBSIDIARY_OF = 28;
+        public const int REGULATORY_OWNER_OF = 29;
+        public const int OWNED_BY_30 = 30;
+        public const int CONTROLS = 31;
+        public const int IS_CONTROLLED_BY = 32;
+        public const int LEGAL = 33;
+        public const int OWNED_BY_34 = 34;
+        public const int BENEFICIAL_OWNER_OF = 35;
+        public const int OWNED_BY_36 = 36;
+    }
+
+
+    /// <summary>
+    /// NoPartyAltIDs Field
+    /// </summary>/
+    public sealed class NoPartyAltIDs : IntField
+    {
+        public NoPartyAltIDs()
+            :base(Tags.NoPartyAltIDs) {}
+        public NoPartyAltIDs(int val)
+            :base(Tags.NoPartyAltIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PartyAltID Field
+    /// </summary>/
+    public sealed class PartyAltID : StringField
+    {
+        public PartyAltID()
+            :base(Tags.PartyAltID) {}
+        public PartyAltID(string val)
+            :base(Tags.PartyAltID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PartyAltIDSource Field
+    /// </summary>/
+    public sealed class PartyAltIDSource : CharField
+    {
+        public PartyAltIDSource()
+            :base(Tags.PartyAltIDSource) {}
+        public PartyAltIDSource(char val)
+            :base(Tags.PartyAltIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoPartyAltSubIDs Field
+    /// </summary>/
+    public sealed class NoPartyAltSubIDs : IntField
+    {
+        public NoPartyAltSubIDs()
+            :base(Tags.NoPartyAltSubIDs) {}
+        public NoPartyAltSubIDs(int val)
+            :base(Tags.NoPartyAltSubIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PartyAltSubID Field
+    /// </summary>/
+    public sealed class PartyAltSubID : StringField
+    {
+        public PartyAltSubID()
+            :base(Tags.PartyAltSubID) {}
+        public PartyAltSubID(string val)
+            :base(Tags.PartyAltSubID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// PartyAltSubIDType Field
+    /// </summary>/
+    public sealed class PartyAltSubIDType : IntField
+    {
+        public PartyAltSubIDType()
+            :base(Tags.PartyAltSubIDType) {}
+        public PartyAltSubIDType(int val)
+            :base(Tags.PartyAltSubIDType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoContextPartyIDs Field
+    /// </summary>/
+    public sealed class NoContextPartyIDs : IntField
+    {
+        public NoContextPartyIDs()
+            :base(Tags.NoContextPartyIDs) {}
+        public NoContextPartyIDs(int val)
+            :base(Tags.NoContextPartyIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ContextPartyID Field
+    /// </summary>/
+    public sealed class ContextPartyID : StringField
+    {
+        public ContextPartyID()
+            :base(Tags.ContextPartyID) {}
+        public ContextPartyID(string val)
+            :base(Tags.ContextPartyID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ContextPartyIDSource Field
+    /// </summary>/
+    public sealed class ContextPartyIDSource : CharField
+    {
+        public ContextPartyIDSource()
+            :base(Tags.ContextPartyIDSource) {}
+        public ContextPartyIDSource(char val)
+            :base(Tags.ContextPartyIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ContextPartyRole Field
+    /// </summary>/
+    public sealed class ContextPartyRole : IntField
+    {
+        public ContextPartyRole()
+            :base(Tags.ContextPartyRole) {}
+        public ContextPartyRole(int val)
+            :base(Tags.ContextPartyRole, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoContextPartySubIDs Field
+    /// </summary>/
+    public sealed class NoContextPartySubIDs : IntField
+    {
+        public NoContextPartySubIDs()
+            :base(Tags.NoContextPartySubIDs) {}
+        public NoContextPartySubIDs(int val)
+            :base(Tags.NoContextPartySubIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ContextPartySubID Field
+    /// </summary>/
+    public sealed class ContextPartySubID : StringField
+    {
+        public ContextPartySubID()
+            :base(Tags.ContextPartySubID) {}
+        public ContextPartySubID(string val)
+            :base(Tags.ContextPartySubID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// ContextPartySubIDType Field
+    /// </summary>/
+    public sealed class ContextPartySubIDType : IntField
+    {
+        public ContextPartySubIDType()
+            :base(Tags.ContextPartySubIDType) {}
+        public ContextPartySubIDType(int val)
+            :base(Tags.ContextPartySubIDType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRiskLimits Field
+    /// </summary>/
+    public sealed class NoRiskLimits : IntField
+    {
+        public NoRiskLimits()
+            :base(Tags.NoRiskLimits) {}
+        public NoRiskLimits(int val)
+            :base(Tags.NoRiskLimits, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskLimitType Field
+    /// </summary>/
+    public sealed class RiskLimitType : IntField
+    {
+        public RiskLimitType()
+            :base(Tags.RiskLimitType) {}
+        public RiskLimitType(int val)
+            :base(Tags.RiskLimitType, val) {}
+
+
+        // Field Enumerations
+        public const int GROSS_LIMIT = 1;
+        public const int NET_LIMIT = 2;
+        public const int EXPOSURE = 3;
+        public const int LONG_LIMIT = 4;
+        public const int SHORT_LIMIT = 5;
+    }
+
+
+    /// <summary>
+    /// RiskLimitAmount Field
+    /// </summary>/
+    public sealed class RiskLimitAmount : DecimalField
+    {
+        public RiskLimitAmount()
+            :base(Tags.RiskLimitAmount) {}
+        public RiskLimitAmount(Decimal val)
+            :base(Tags.RiskLimitAmount, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskLimitCurrency Field
+    /// </summary>/
+    public sealed class RiskLimitCurrency : DecimalField
+    {
+        public RiskLimitCurrency()
+            :base(Tags.RiskLimitCurrency) {}
+        public RiskLimitCurrency(Decimal val)
+            :base(Tags.RiskLimitCurrency, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskLimitPlatform Field
+    /// </summary>/
+    public sealed class RiskLimitPlatform : StringField
+    {
+        public RiskLimitPlatform()
+            :base(Tags.RiskLimitPlatform) {}
+        public RiskLimitPlatform(string val)
+            :base(Tags.RiskLimitPlatform, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRiskInstruments Field
+    /// </summary>/
+    public sealed class NoRiskInstruments : IntField
+    {
+        public NoRiskInstruments()
+            :base(Tags.NoRiskInstruments) {}
+        public NoRiskInstruments(int val)
+            :base(Tags.NoRiskInstruments, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskInstrumentOperator Field
+    /// </summary>/
+    public sealed class RiskInstrumentOperator : IntField
+    {
+        public RiskInstrumentOperator()
+            :base(Tags.RiskInstrumentOperator) {}
+        public RiskInstrumentOperator(int val)
+            :base(Tags.RiskInstrumentOperator, val) {}
+
+
+        // Field Enumerations
+        public const int INCLUDE = 1;
+        public const int EXCLUDE = 2;
+    }
+
+
+    /// <summary>
+    /// RiskSymbol Field
+    /// </summary>/
+    public sealed class RiskSymbol : StringField
+    {
+        public RiskSymbol()
+            :base(Tags.RiskSymbol) {}
+        public RiskSymbol(string val)
+            :base(Tags.RiskSymbol, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSymbolSfx Field
+    /// </summary>/
+    public sealed class RiskSymbolSfx : StringField
+    {
+        public RiskSymbolSfx()
+            :base(Tags.RiskSymbolSfx) {}
+        public RiskSymbolSfx(string val)
+            :base(Tags.RiskSymbolSfx, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSecurityID Field
+    /// </summary>/
+    public sealed class RiskSecurityID : StringField
+    {
+        public RiskSecurityID()
+            :base(Tags.RiskSecurityID) {}
+        public RiskSecurityID(string val)
+            :base(Tags.RiskSecurityID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSecurityIDSource Field
+    /// </summary>/
+    public sealed class RiskSecurityIDSource : StringField
+    {
+        public RiskSecurityIDSource()
+            :base(Tags.RiskSecurityIDSource) {}
+        public RiskSecurityIDSource(string val)
+            :base(Tags.RiskSecurityIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRiskSecurityAltID Field
+    /// </summary>/
+    public sealed class NoRiskSecurityAltID : IntField
+    {
+        public NoRiskSecurityAltID()
+            :base(Tags.NoRiskSecurityAltID) {}
+        public NoRiskSecurityAltID(int val)
+            :base(Tags.NoRiskSecurityAltID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSecurityAltID Field
+    /// </summary>/
+    public sealed class RiskSecurityAltID : StringField
+    {
+        public RiskSecurityAltID()
+            :base(Tags.RiskSecurityAltID) {}
+        public RiskSecurityAltID(string val)
+            :base(Tags.RiskSecurityAltID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSecurityAltIDSource Field
+    /// </summary>/
+    public sealed class RiskSecurityAltIDSource : StringField
+    {
+        public RiskSecurityAltIDSource()
+            :base(Tags.RiskSecurityAltIDSource) {}
+        public RiskSecurityAltIDSource(string val)
+            :base(Tags.RiskSecurityAltIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskProduct Field
+    /// </summary>/
+    public sealed class RiskProduct : IntField
+    {
+        public RiskProduct()
+            :base(Tags.RiskProduct) {}
+        public RiskProduct(int val)
+            :base(Tags.RiskProduct, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskProductComplex Field
+    /// </summary>/
+    public sealed class RiskProductComplex : StringField
+    {
+        public RiskProductComplex()
+            :base(Tags.RiskProductComplex) {}
+        public RiskProductComplex(string val)
+            :base(Tags.RiskProductComplex, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSecurityGroup Field
+    /// </summary>/
+    public sealed class RiskSecurityGroup : StringField
+    {
+        public RiskSecurityGroup()
+            :base(Tags.RiskSecurityGroup) {}
+        public RiskSecurityGroup(string val)
+            :base(Tags.RiskSecurityGroup, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskCFICode Field
+    /// </summary>/
+    public sealed class RiskCFICode : StringField
+    {
+        public RiskCFICode()
+            :base(Tags.RiskCFICode) {}
+        public RiskCFICode(string val)
+            :base(Tags.RiskCFICode, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSecurityType Field
+    /// </summary>/
+    public sealed class RiskSecurityType : StringField
+    {
+        public RiskSecurityType()
+            :base(Tags.RiskSecurityType) {}
+        public RiskSecurityType(string val)
+            :base(Tags.RiskSecurityType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSecuritySubType Field
+    /// </summary>/
+    public sealed class RiskSecuritySubType : StringField
+    {
+        public RiskSecuritySubType()
+            :base(Tags.RiskSecuritySubType) {}
+        public RiskSecuritySubType(string val)
+            :base(Tags.RiskSecuritySubType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskMaturityMonthYear Field
+    /// </summary>/
+    public sealed class RiskMaturityMonthYear : StringField
+    {
+        public RiskMaturityMonthYear()
+            :base(Tags.RiskMaturityMonthYear) {}
+        public RiskMaturityMonthYear(string val)
+            :base(Tags.RiskMaturityMonthYear, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskMaturityTime Field
+    /// </summary>/
+    public sealed class RiskMaturityTime : StringField
+    {
+        public RiskMaturityTime()
+            :base(Tags.RiskMaturityTime) {}
+        public RiskMaturityTime(string val)
+            :base(Tags.RiskMaturityTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskRestructuringType Field
+    /// </summary>/
+    public sealed class RiskRestructuringType : StringField
+    {
+        public RiskRestructuringType()
+            :base(Tags.RiskRestructuringType) {}
+        public RiskRestructuringType(string val)
+            :base(Tags.RiskRestructuringType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSeniority Field
+    /// </summary>/
+    public sealed class RiskSeniority : StringField
+    {
+        public RiskSeniority()
+            :base(Tags.RiskSeniority) {}
+        public RiskSeniority(string val)
+            :base(Tags.RiskSeniority, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskPutOrCall Field
+    /// </summary>/
+    public sealed class RiskPutOrCall : IntField
+    {
+        public RiskPutOrCall()
+            :base(Tags.RiskPutOrCall) {}
+        public RiskPutOrCall(int val)
+            :base(Tags.RiskPutOrCall, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskFlexibleIndicator Field
+    /// </summary>/
+    public sealed class RiskFlexibleIndicator : BooleanField
+    {
+        public RiskFlexibleIndicator()
+            :base(Tags.RiskFlexibleIndicator) {}
+        public RiskFlexibleIndicator(Boolean val)
+            :base(Tags.RiskFlexibleIndicator, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskCouponRate Field
+    /// </summary>/
+    public sealed class RiskCouponRate : DecimalField
+    {
+        public RiskCouponRate()
+            :base(Tags.RiskCouponRate) {}
+        public RiskCouponRate(Decimal val)
+            :base(Tags.RiskCouponRate, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSecurityDesc Field
+    /// </summary>/
+    public sealed class RiskSecurityDesc : StringField
+    {
+        public RiskSecurityDesc()
+            :base(Tags.RiskSecurityDesc) {}
+        public RiskSecurityDesc(string val)
+            :base(Tags.RiskSecurityDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskInstrumentSettlType Field
+    /// </summary>/
+    public sealed class RiskInstrumentSettlType : StringField
+    {
+        public RiskInstrumentSettlType()
+            :base(Tags.RiskInstrumentSettlType) {}
+        public RiskInstrumentSettlType(string val)
+            :base(Tags.RiskInstrumentSettlType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskInstrumentMultiplier Field
+    /// </summary>/
+    public sealed class RiskInstrumentMultiplier : DecimalField
+    {
+        public RiskInstrumentMultiplier()
+            :base(Tags.RiskInstrumentMultiplier) {}
+        public RiskInstrumentMultiplier(Decimal val)
+            :base(Tags.RiskInstrumentMultiplier, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRiskWarningLevels Field
+    /// </summary>/
+    public sealed class NoRiskWarningLevels : IntField
+    {
+        public NoRiskWarningLevels()
+            :base(Tags.NoRiskWarningLevels) {}
+        public NoRiskWarningLevels(int val)
+            :base(Tags.NoRiskWarningLevels, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskWarningLevelPercent Field
+    /// </summary>/
+    public sealed class RiskWarningLevelPercent : DecimalField
+    {
+        public RiskWarningLevelPercent()
+            :base(Tags.RiskWarningLevelPercent) {}
+        public RiskWarningLevelPercent(Decimal val)
+            :base(Tags.RiskWarningLevelPercent, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskWarningLevelName Field
+    /// </summary>/
+    public sealed class RiskWarningLevelName : StringField
+    {
+        public RiskWarningLevelName()
+            :base(Tags.RiskWarningLevelName) {}
+        public RiskWarningLevelName(string val)
+            :base(Tags.RiskWarningLevelName, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRelatedPartyIDs Field
+    /// </summary>/
+    public sealed class NoRelatedPartyIDs : IntField
+    {
+        public NoRelatedPartyIDs()
+            :base(Tags.NoRelatedPartyIDs) {}
+        public NoRelatedPartyIDs(int val)
+            :base(Tags.NoRelatedPartyIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedPartyID Field
+    /// </summary>/
+    public sealed class RelatedPartyID : StringField
+    {
+        public RelatedPartyID()
+            :base(Tags.RelatedPartyID) {}
+        public RelatedPartyID(string val)
+            :base(Tags.RelatedPartyID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedPartyIDSource Field
+    /// </summary>/
+    public sealed class RelatedPartyIDSource : CharField
+    {
+        public RelatedPartyIDSource()
+            :base(Tags.RelatedPartyIDSource) {}
+        public RelatedPartyIDSource(char val)
+            :base(Tags.RelatedPartyIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedPartyRole Field
+    /// </summary>/
+    public sealed class RelatedPartyRole : IntField
+    {
+        public RelatedPartyRole()
+            :base(Tags.RelatedPartyRole) {}
+        public RelatedPartyRole(int val)
+            :base(Tags.RelatedPartyRole, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRelatedPartySubIDs Field
+    /// </summary>/
+    public sealed class NoRelatedPartySubIDs : IntField
+    {
+        public NoRelatedPartySubIDs()
+            :base(Tags.NoRelatedPartySubIDs) {}
+        public NoRelatedPartySubIDs(int val)
+            :base(Tags.NoRelatedPartySubIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedPartySubID Field
+    /// </summary>/
+    public sealed class RelatedPartySubID : StringField
+    {
+        public RelatedPartySubID()
+            :base(Tags.RelatedPartySubID) {}
+        public RelatedPartySubID(string val)
+            :base(Tags.RelatedPartySubID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedPartySubIDType Field
+    /// </summary>/
+    public sealed class RelatedPartySubIDType : IntField
+    {
+        public RelatedPartySubIDType()
+            :base(Tags.RelatedPartySubIDType) {}
+        public RelatedPartySubIDType(int val)
+            :base(Tags.RelatedPartySubIDType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRelatedPartyAltIDs Field
+    /// </summary>/
+    public sealed class NoRelatedPartyAltIDs : IntField
+    {
+        public NoRelatedPartyAltIDs()
+            :base(Tags.NoRelatedPartyAltIDs) {}
+        public NoRelatedPartyAltIDs(int val)
+            :base(Tags.NoRelatedPartyAltIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedPartyAltID Field
+    /// </summary>/
+    public sealed class RelatedPartyAltID : StringField
+    {
+        public RelatedPartyAltID()
+            :base(Tags.RelatedPartyAltID) {}
+        public RelatedPartyAltID(string val)
+            :base(Tags.RelatedPartyAltID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedPartyAltIDSource Field
+    /// </summary>/
+    public sealed class RelatedPartyAltIDSource : CharField
+    {
+        public RelatedPartyAltIDSource()
+            :base(Tags.RelatedPartyAltIDSource) {}
+        public RelatedPartyAltIDSource(char val)
+            :base(Tags.RelatedPartyAltIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRelatedPartyAltSubIDs Field
+    /// </summary>/
+    public sealed class NoRelatedPartyAltSubIDs : IntField
+    {
+        public NoRelatedPartyAltSubIDs()
+            :base(Tags.NoRelatedPartyAltSubIDs) {}
+        public NoRelatedPartyAltSubIDs(int val)
+            :base(Tags.NoRelatedPartyAltSubIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedPartyAltSubID Field
+    /// </summary>/
+    public sealed class RelatedPartyAltSubID : StringField
+    {
+        public RelatedPartyAltSubID()
+            :base(Tags.RelatedPartyAltSubID) {}
+        public RelatedPartyAltSubID(string val)
+            :base(Tags.RelatedPartyAltSubID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedPartyAltSubIDType Field
+    /// </summary>/
+    public sealed class RelatedPartyAltSubIDType : IntField
+    {
+        public RelatedPartyAltSubIDType()
+            :base(Tags.RelatedPartyAltSubIDType) {}
+        public RelatedPartyAltSubIDType(int val)
+            :base(Tags.RelatedPartyAltSubIDType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRelatedContextPartyIDs Field
+    /// </summary>/
+    public sealed class NoRelatedContextPartyIDs : IntField
+    {
+        public NoRelatedContextPartyIDs()
+            :base(Tags.NoRelatedContextPartyIDs) {}
+        public NoRelatedContextPartyIDs(int val)
+            :base(Tags.NoRelatedContextPartyIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedContextPartyID Field
+    /// </summary>/
+    public sealed class RelatedContextPartyID : StringField
+    {
+        public RelatedContextPartyID()
+            :base(Tags.RelatedContextPartyID) {}
+        public RelatedContextPartyID(string val)
+            :base(Tags.RelatedContextPartyID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedContextPartyIDSource Field
+    /// </summary>/
+    public sealed class RelatedContextPartyIDSource : CharField
+    {
+        public RelatedContextPartyIDSource()
+            :base(Tags.RelatedContextPartyIDSource) {}
+        public RelatedContextPartyIDSource(char val)
+            :base(Tags.RelatedContextPartyIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedContextPartyRole Field
+    /// </summary>/
+    public sealed class RelatedContextPartyRole : IntField
+    {
+        public RelatedContextPartyRole()
+            :base(Tags.RelatedContextPartyRole) {}
+        public RelatedContextPartyRole(int val)
+            :base(Tags.RelatedContextPartyRole, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRelatedContextPartySubIDs Field
+    /// </summary>/
+    public sealed class NoRelatedContextPartySubIDs : IntField
+    {
+        public NoRelatedContextPartySubIDs()
+            :base(Tags.NoRelatedContextPartySubIDs) {}
+        public NoRelatedContextPartySubIDs(int val)
+            :base(Tags.NoRelatedContextPartySubIDs, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedContextPartySubID Field
+    /// </summary>/
+    public sealed class RelatedContextPartySubID : StringField
+    {
+        public RelatedContextPartySubID()
+            :base(Tags.RelatedContextPartySubID) {}
+        public RelatedContextPartySubID(string val)
+            :base(Tags.RelatedContextPartySubID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelatedContextPartySubIDType Field
+    /// </summary>/
+    public sealed class RelatedContextPartySubIDType : IntField
+    {
+        public RelatedContextPartySubIDType()
+            :base(Tags.RelatedContextPartySubIDType) {}
+        public RelatedContextPartySubIDType(int val)
+            :base(Tags.RelatedContextPartySubIDType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRelationshipRiskLimits Field
+    /// </summary>/
+    public sealed class NoRelationshipRiskLimits : IntField
+    {
+        public NoRelationshipRiskLimits()
+            :base(Tags.NoRelationshipRiskLimits) {}
+        public NoRelationshipRiskLimits(int val)
+            :base(Tags.NoRelationshipRiskLimits, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskLimitType Field
+    /// </summary>/
+    public sealed class RelationshipRiskLimitType : IntField
+    {
+        public RelationshipRiskLimitType()
+            :base(Tags.RelationshipRiskLimitType) {}
+        public RelationshipRiskLimitType(int val)
+            :base(Tags.RelationshipRiskLimitType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskLimitAmount Field
+    /// </summary>/
+    public sealed class RelationshipRiskLimitAmount : DecimalField
+    {
+        public RelationshipRiskLimitAmount()
+            :base(Tags.RelationshipRiskLimitAmount) {}
+        public RelationshipRiskLimitAmount(Decimal val)
+            :base(Tags.RelationshipRiskLimitAmount, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskLimitCurrency Field
+    /// </summary>/
+    public sealed class RelationshipRiskLimitCurrency : DecimalField
+    {
+        public RelationshipRiskLimitCurrency()
+            :base(Tags.RelationshipRiskLimitCurrency) {}
+        public RelationshipRiskLimitCurrency(Decimal val)
+            :base(Tags.RelationshipRiskLimitCurrency, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskLimitPlatform Field
+    /// </summary>/
+    public sealed class RelationshipRiskLimitPlatform : StringField
+    {
+        public RelationshipRiskLimitPlatform()
+            :base(Tags.RelationshipRiskLimitPlatform) {}
+        public RelationshipRiskLimitPlatform(string val)
+            :base(Tags.RelationshipRiskLimitPlatform, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRelationshipRiskInstruments Field
+    /// </summary>/
+    public sealed class NoRelationshipRiskInstruments : IntField
+    {
+        public NoRelationshipRiskInstruments()
+            :base(Tags.NoRelationshipRiskInstruments) {}
+        public NoRelationshipRiskInstruments(int val)
+            :base(Tags.NoRelationshipRiskInstruments, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskInstrumentOperator Field
+    /// </summary>/
+    public sealed class RelationshipRiskInstrumentOperator : IntField
+    {
+        public RelationshipRiskInstrumentOperator()
+            :base(Tags.RelationshipRiskInstrumentOperator) {}
+        public RelationshipRiskInstrumentOperator(int val)
+            :base(Tags.RelationshipRiskInstrumentOperator, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSymbol Field
+    /// </summary>/
+    public sealed class RelationshipRiskSymbol : StringField
+    {
+        public RelationshipRiskSymbol()
+            :base(Tags.RelationshipRiskSymbol) {}
+        public RelationshipRiskSymbol(string val)
+            :base(Tags.RelationshipRiskSymbol, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSymbolSfx Field
+    /// </summary>/
+    public sealed class RelationshipRiskSymbolSfx : StringField
+    {
+        public RelationshipRiskSymbolSfx()
+            :base(Tags.RelationshipRiskSymbolSfx) {}
+        public RelationshipRiskSymbolSfx(string val)
+            :base(Tags.RelationshipRiskSymbolSfx, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSecurityID Field
+    /// </summary>/
+    public sealed class RelationshipRiskSecurityID : StringField
+    {
+        public RelationshipRiskSecurityID()
+            :base(Tags.RelationshipRiskSecurityID) {}
+        public RelationshipRiskSecurityID(string val)
+            :base(Tags.RelationshipRiskSecurityID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSecurityIDSource Field
+    /// </summary>/
+    public sealed class RelationshipRiskSecurityIDSource : StringField
+    {
+        public RelationshipRiskSecurityIDSource()
+            :base(Tags.RelationshipRiskSecurityIDSource) {}
+        public RelationshipRiskSecurityIDSource(string val)
+            :base(Tags.RelationshipRiskSecurityIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRelationshipRiskSecurityAltID Field
+    /// </summary>/
+    public sealed class NoRelationshipRiskSecurityAltID : IntField
+    {
+        public NoRelationshipRiskSecurityAltID()
+            :base(Tags.NoRelationshipRiskSecurityAltID) {}
+        public NoRelationshipRiskSecurityAltID(int val)
+            :base(Tags.NoRelationshipRiskSecurityAltID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSecurityAltID Field
+    /// </summary>/
+    public sealed class RelationshipRiskSecurityAltID : StringField
+    {
+        public RelationshipRiskSecurityAltID()
+            :base(Tags.RelationshipRiskSecurityAltID) {}
+        public RelationshipRiskSecurityAltID(string val)
+            :base(Tags.RelationshipRiskSecurityAltID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSecurityAltIDSource Field
+    /// </summary>/
+    public sealed class RelationshipRiskSecurityAltIDSource : StringField
+    {
+        public RelationshipRiskSecurityAltIDSource()
+            :base(Tags.RelationshipRiskSecurityAltIDSource) {}
+        public RelationshipRiskSecurityAltIDSource(string val)
+            :base(Tags.RelationshipRiskSecurityAltIDSource, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskProduct Field
+    /// </summary>/
+    public sealed class RelationshipRiskProduct : IntField
+    {
+        public RelationshipRiskProduct()
+            :base(Tags.RelationshipRiskProduct) {}
+        public RelationshipRiskProduct(int val)
+            :base(Tags.RelationshipRiskProduct, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskProductComplex Field
+    /// </summary>/
+    public sealed class RelationshipRiskProductComplex : StringField
+    {
+        public RelationshipRiskProductComplex()
+            :base(Tags.RelationshipRiskProductComplex) {}
+        public RelationshipRiskProductComplex(string val)
+            :base(Tags.RelationshipRiskProductComplex, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSecurityGroup Field
+    /// </summary>/
+    public sealed class RelationshipRiskSecurityGroup : StringField
+    {
+        public RelationshipRiskSecurityGroup()
+            :base(Tags.RelationshipRiskSecurityGroup) {}
+        public RelationshipRiskSecurityGroup(string val)
+            :base(Tags.RelationshipRiskSecurityGroup, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskCFICode Field
+    /// </summary>/
+    public sealed class RelationshipRiskCFICode : StringField
+    {
+        public RelationshipRiskCFICode()
+            :base(Tags.RelationshipRiskCFICode) {}
+        public RelationshipRiskCFICode(string val)
+            :base(Tags.RelationshipRiskCFICode, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSecurityType Field
+    /// </summary>/
+    public sealed class RelationshipRiskSecurityType : StringField
+    {
+        public RelationshipRiskSecurityType()
+            :base(Tags.RelationshipRiskSecurityType) {}
+        public RelationshipRiskSecurityType(string val)
+            :base(Tags.RelationshipRiskSecurityType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSecuritySubType Field
+    /// </summary>/
+    public sealed class RelationshipRiskSecuritySubType : StringField
+    {
+        public RelationshipRiskSecuritySubType()
+            :base(Tags.RelationshipRiskSecuritySubType) {}
+        public RelationshipRiskSecuritySubType(string val)
+            :base(Tags.RelationshipRiskSecuritySubType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskMaturityMonthYear Field
+    /// </summary>/
+    public sealed class RelationshipRiskMaturityMonthYear : StringField
+    {
+        public RelationshipRiskMaturityMonthYear()
+            :base(Tags.RelationshipRiskMaturityMonthYear) {}
+        public RelationshipRiskMaturityMonthYear(string val)
+            :base(Tags.RelationshipRiskMaturityMonthYear, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskMaturityTime Field
+    /// </summary>/
+    public sealed class RelationshipRiskMaturityTime : StringField
+    {
+        public RelationshipRiskMaturityTime()
+            :base(Tags.RelationshipRiskMaturityTime) {}
+        public RelationshipRiskMaturityTime(string val)
+            :base(Tags.RelationshipRiskMaturityTime, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskRestructuringType Field
+    /// </summary>/
+    public sealed class RelationshipRiskRestructuringType : StringField
+    {
+        public RelationshipRiskRestructuringType()
+            :base(Tags.RelationshipRiskRestructuringType) {}
+        public RelationshipRiskRestructuringType(string val)
+            :base(Tags.RelationshipRiskRestructuringType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSeniority Field
+    /// </summary>/
+    public sealed class RelationshipRiskSeniority : StringField
+    {
+        public RelationshipRiskSeniority()
+            :base(Tags.RelationshipRiskSeniority) {}
+        public RelationshipRiskSeniority(string val)
+            :base(Tags.RelationshipRiskSeniority, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskPutOrCall Field
+    /// </summary>/
+    public sealed class RelationshipRiskPutOrCall : IntField
+    {
+        public RelationshipRiskPutOrCall()
+            :base(Tags.RelationshipRiskPutOrCall) {}
+        public RelationshipRiskPutOrCall(int val)
+            :base(Tags.RelationshipRiskPutOrCall, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskFlexibleIndicator Field
+    /// </summary>/
+    public sealed class RelationshipRiskFlexibleIndicator : BooleanField
+    {
+        public RelationshipRiskFlexibleIndicator()
+            :base(Tags.RelationshipRiskFlexibleIndicator) {}
+        public RelationshipRiskFlexibleIndicator(Boolean val)
+            :base(Tags.RelationshipRiskFlexibleIndicator, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskCouponRate Field
+    /// </summary>/
+    public sealed class RelationshipRiskCouponRate : DecimalField
+    {
+        public RelationshipRiskCouponRate()
+            :base(Tags.RelationshipRiskCouponRate) {}
+        public RelationshipRiskCouponRate(Decimal val)
+            :base(Tags.RelationshipRiskCouponRate, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSecurityExchange Field
+    /// </summary>/
+    public sealed class RelationshipRiskSecurityExchange : StringField
+    {
+        public RelationshipRiskSecurityExchange()
+            :base(Tags.RelationshipRiskSecurityExchange) {}
+        public RelationshipRiskSecurityExchange(string val)
+            :base(Tags.RelationshipRiskSecurityExchange, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskSecurityDesc Field
+    /// </summary>/
+    public sealed class RelationshipRiskSecurityDesc : StringField
+    {
+        public RelationshipRiskSecurityDesc()
+            :base(Tags.RelationshipRiskSecurityDesc) {}
+        public RelationshipRiskSecurityDesc(string val)
+            :base(Tags.RelationshipRiskSecurityDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskInstrumentSettlType Field
+    /// </summary>/
+    public sealed class RelationshipRiskInstrumentSettlType : StringField
+    {
+        public RelationshipRiskInstrumentSettlType()
+            :base(Tags.RelationshipRiskInstrumentSettlType) {}
+        public RelationshipRiskInstrumentSettlType(string val)
+            :base(Tags.RelationshipRiskInstrumentSettlType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskInstrumentMultiplier Field
+    /// </summary>/
+    public sealed class RelationshipRiskInstrumentMultiplier : DecimalField
+    {
+        public RelationshipRiskInstrumentMultiplier()
+            :base(Tags.RelationshipRiskInstrumentMultiplier) {}
+        public RelationshipRiskInstrumentMultiplier(Decimal val)
+            :base(Tags.RelationshipRiskInstrumentMultiplier, val) {}
+
+    }
+
+
+    /// <summary>
+    /// NoRelationshipRiskWarningLevels Field
+    /// </summary>/
+    public sealed class NoRelationshipRiskWarningLevels : IntField
+    {
+        public NoRelationshipRiskWarningLevels()
+            :base(Tags.NoRelationshipRiskWarningLevels) {}
+        public NoRelationshipRiskWarningLevels(int val)
+            :base(Tags.NoRelationshipRiskWarningLevels, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskWarningLevelPercent Field
+    /// </summary>/
+    public sealed class RelationshipRiskWarningLevelPercent : DecimalField
+    {
+        public RelationshipRiskWarningLevelPercent()
+            :base(Tags.RelationshipRiskWarningLevelPercent) {}
+        public RelationshipRiskWarningLevelPercent(Decimal val)
+            :base(Tags.RelationshipRiskWarningLevelPercent, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskWarningLevelName Field
+    /// </summary>/
+    public sealed class RelationshipRiskWarningLevelName : StringField
+    {
+        public RelationshipRiskWarningLevelName()
+            :base(Tags.RelationshipRiskWarningLevelName) {}
+        public RelationshipRiskWarningLevelName(string val)
+            :base(Tags.RelationshipRiskWarningLevelName, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskSecurityExchange Field
+    /// </summary>/
+    public sealed class RiskSecurityExchange : StringField
+    {
+        public RiskSecurityExchange()
+            :base(Tags.RiskSecurityExchange) {}
+        public RiskSecurityExchange(string val)
+            :base(Tags.RiskSecurityExchange, val) {}
+
+    }
+
+
+    /// <summary>
+    /// StreamAsgnType Field
+    /// </summary>/
+    public sealed class StreamAsgnType : IntField
+    {
+        public StreamAsgnType()
+            :base(Tags.StreamAsgnType) {}
+        public StreamAsgnType(int val)
+            :base(Tags.StreamAsgnType, val) {}
+
+
+        // Field Enumerations
+        public const int ASSIGNMENT = 1;
+        public const int REJECTED = 2;
+        public const int TERMINATE_UNASSIGN = 3;
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskEncodedSecurityDescLen Field
+    /// </summary>/
+    public sealed class RelationshipRiskEncodedSecurityDescLen : DecimalField
+    {
+        public RelationshipRiskEncodedSecurityDescLen()
+            :base(Tags.RelationshipRiskEncodedSecurityDescLen) {}
+        public RelationshipRiskEncodedSecurityDescLen(Decimal val)
+            :base(Tags.RelationshipRiskEncodedSecurityDescLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RelationshipRiskEncodedSecurityDesc Field
+    /// </summary>/
+    public sealed class RelationshipRiskEncodedSecurityDesc : StringField
+    {
+        public RelationshipRiskEncodedSecurityDesc()
+            :base(Tags.RelationshipRiskEncodedSecurityDesc) {}
+        public RelationshipRiskEncodedSecurityDesc(string val)
+            :base(Tags.RelationshipRiskEncodedSecurityDesc, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskEncodedSecurityDescLen Field
+    /// </summary>/
+    public sealed class RiskEncodedSecurityDescLen : DecimalField
+    {
+        public RiskEncodedSecurityDescLen()
+            :base(Tags.RiskEncodedSecurityDescLen) {}
+        public RiskEncodedSecurityDescLen(Decimal val)
+            :base(Tags.RiskEncodedSecurityDescLen, val) {}
+
+    }
+
+
+    /// <summary>
+    /// RiskEncodedSecurityDesc Field
+    /// </summary>/
+    public sealed class RiskEncodedSecurityDesc : StringField
+    {
+        public RiskEncodedSecurityDesc()
+            :base(Tags.RiskEncodedSecurityDesc) {}
+        public RiskEncodedSecurityDesc(string val)
+            :base(Tags.RiskEncodedSecurityDesc, val) {}
 
     }
 
