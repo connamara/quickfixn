@@ -22,7 +22,8 @@ class FieldGen
         {:cs_class => 'BooleanField', :base_type=>'Boolean'}
       when 'STRING', 'MULTIPLEVALUESTRING',  'MULTIPLECHARVALUE', 
            'DATA', 'EXCHANGE', 'LOCALMKTDATE', 'MONTHYEAR', 'DAYOFMONTH', 
-           'COUNTRY', 'TZTIMEONLY', 'MULTIPLESTRINGVALUE'
+           'COUNTRY', 'TZTIMEONLY', 'MULTIPLESTRINGVALUE', 'XMLDATA',
+	   'LANGUAGE'
         {:cs_class => 'StringField', :base_type=>'string'}
       when nil 
         raise "field type is nil! #{field.inspect}"

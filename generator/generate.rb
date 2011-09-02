@@ -22,6 +22,8 @@ class Generator
     @fix43 = FIXDictionary.load spec('FIX43')
     @fix44 = FIXDictionary.load spec('FIX44')
     @fix50 = FIXDictionary.load spec('FIX50')
+    @fix50sp1 = FIXDictionary.load spec('FIX50SP1')
+    @fix50sp2 = FIXDictionary.load spec('FIX50SP2')
     @src_path = File.join File.dirname(__FILE__), '..', 'QuickFIX.NET'
   end
 
@@ -38,19 +40,36 @@ class Generator
   def agg_fields
     field_names = (@fix40.fields.keys + @fix41.fields.keys +
         @fix42.fields.keys + @fix43.fields.keys +
-        @fix44.fields.keys + @fix50.fields.keys).uniq
+        @fix44.fields.keys + @fix50.fields.keys +
+        @fix50sp1.fields.keys + @fix50sp2.fields.keys).uniq
     field_names.map {|fn| get_field_def(fn) }
   end
 
   def get_field_def fld_name
     # we give priority to latest fix version
-    fld   = @fix50.fields[fld_name]
-    fld ||= @fix44.fields[fld_name]
-    fld ||= @fix43.fields[fld_name]
-    fld ||= @fix42.fields[fld_name]
-    fld ||= @fix41.fields[fld_name]
-    fld ||= @fix40.fields[fld_name]
+    fld = merge_field_defs(
+      @fix50sp2.fields[fld_name],
+      @fix50sp1.fields[fld_name],
+      @fix50.fields[fld_name],
+      @fix44.fields[fld_name],
+      @fix43.fields[fld_name],
+      @fix42.fields[fld_name],
+      @fix41.fields[fld_name],
+      @fix40.fields[fld_name]
+    )
     raise "couldn't find field! #{fld}" if fld.nil?
+    fld
+  end
+
+  def merge_field_defs *alldefs
+    defs = alldefs.reject {|d| d.nil?}
+    return nil if defs.empty?
+    fld = defs.shift
+    vals = defs.map { |d| d[:values] }.reject { |d| d.nil? }.flatten
+    return fld if vals.empty?
+    vals.uniq! {|v| v[:enum]}
+    vals.uniq! {|v| v[:desc]}
+    fld[:values] = vals
     fld
   end
 
@@ -62,6 +81,8 @@ class Generator
     MessageGen.generate(@fix43.messages,  msgs_path, 'FIX43')
     MessageGen.generate(@fix44.messages,  msgs_path, 'FIX44')
     MessageGen.generate(@fix50.messages,  msgs_path, 'FIX50')
+    MessageGen.generate(@fix50sp1.messages,  msgs_path, 'FIX50SP1')
+    MessageGen.generate(@fix50sp2.messages,  msgs_path, 'FIX50SP2')
   end
 
   def generate_csproj
@@ -87,6 +108,8 @@ class Generator
     MessageFactoryGen.generate(@fix43.messages,  msgs_path, 'FIX43')
     MessageFactoryGen.generate(@fix44.messages,  msgs_path, 'FIX44')
     MessageFactoryGen.generate(@fix50.messages,  msgs_path, 'FIX50')
+    MessageFactoryGen.generate(@fix50sp1.messages,  msgs_path, 'FIX50SP1')
+    MessageFactoryGen.generate(@fix50sp2.messages,  msgs_path, 'FIX50SP2')
   end
 end
 
