@@ -3,7 +3,7 @@ using QuickFix;
 
 namespace AcceptanceTest
 {
-    public class ATApplication : Application
+    public class ATApplication : MessageCracker, Application
     {
         private HashSet<KeyValuePair<string,SessionID>> clOrdIDs_ = new HashSet<KeyValuePair<string,SessionID>>();
         private FileLog log_;
@@ -13,12 +13,27 @@ namespace AcceptanceTest
             log_ = debugLog;
         }
 
-        protected void Process(string msgType, Message message, SessionID sessionID)
+
+        public void OnMessage(QuickFix.FIX42.NewOrderSingle nos, SessionID sessionID) 
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX42.SecurityDefinition message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
+        protected void Echo(Message message, SessionID sessionID)
         {
             Message echo = new Message(message);
-            
-            if (QuickFix.Fields.MsgType.NEW_ORDER_D.Equals(msgType))
-            {
+            Session.SendToTarget(echo, sessionID);
+        }
+        
+        protected void ProcessNOS(Message message, SessionID sessionID)
+        {
+            Message echo = new Message(message);
+ 
                 bool possResend = false;
                 if (message.Header.isSetField(QuickFix.Fields.Tags.PossResend))
                     possResend = QuickFix.Fields.Converters.BoolConverter.Convert(message.Header.GetField(QuickFix.Fields.Tags.PossResend));
@@ -27,7 +42,6 @@ namespace AcceptanceTest
                 if (possResend && clOrdIDs_.Contains(pair))
                     return;
                 clOrdIDs_.Add(pair);
-            }
 
             Session.SendToTarget(echo, sessionID);
         }
@@ -54,8 +68,12 @@ namespace AcceptanceTest
             try
             {
                 string msgType = message.Header.GetField(QuickFix.Fields.Tags.MsgType);
-                if(QuickFix.Fields.MsgType.NEW_ORDER_D.Equals(msgType) || QuickFix.Fields.MsgType.SECURITY_DEFINITION.Equals(msgType))
-                    Process(msgType, message, sessionID);
+                log_.OnEvent("Got message " + msgType);
+                Crack(message, sessionID);
+            }
+            catch (QuickFix.UnsupportedMessageType e)
+            {
+                throw e;
             }
             catch (System.Exception e)
             {
