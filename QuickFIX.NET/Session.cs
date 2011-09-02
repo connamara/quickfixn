@@ -380,7 +380,7 @@ namespace QuickFix
             catch (UnsupportedMessageType e)
             {
                 this.Log.OnEvent("Unsupported message type: " + e.Message);
-                System.Console.WriteLine("FIXME: need to generate BusinessMessageReject");
+                GenerateBusinessMessageReject(message, Fields.BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, 0);
             }
         }
 
@@ -785,9 +785,27 @@ namespace QuickFix
             return true;
         }
 
+        protected void GenerateBusinessMessageReject(Message message, int err, int field)
+        {
+            Message reject = msgFactory_.Create(this.SessionID.BeginString,
+                MsgType.BUSINESS_MESSAGE_REJECT);
+            InitializeHeader(reject);
+            string msgType = message.Header.GetString(Tags.MsgType);
+            int msgSeqNum = message.Header.GetInt(Tags.MsgSeqNum);
+            reject.setField(new RefMsgType(msgType));
+            reject.setField(new RefSeqNum(msgSeqNum));
+            reject.setField(new BusinessRejectReason(err));
+            state_.IncrNextTargetMsgSeqNum();
+
+            string reason = FixValues.BusinessRejectReason.RejText[err];
+            reject.setField(new Text(reason));
+            Log.OnEvent("Reject sent for Message: " + msgSeqNum + " Reason:" + reason);
+            SendRaw(reject, 0);
+        }
+
         protected bool GenerateResendRequest(string beginString, int msgSeqNum)
         {
-            Message resendRequest = msgFactory_.Create(beginString, Fields.MsgType.RESEND_REQUEST);
+            Message resendRequest = msgFactory_.Create(beginString, MsgType.RESEND_REQUEST);
 
             Fields.BeginSeqNo beginSeqNo = new Fields.BeginSeqNo(state_.GetNextTargetMsgSeqNum());
             Fields.EndSeqNo endSeqNo;
