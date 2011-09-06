@@ -215,10 +215,15 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public Boolean GetBoolean(int tag)
         {
             // FIXME
-            throw new Exception("not implemented");
+            throw new Exception("not implemented");  // fix the doc comment when implemented
         }
 
         public String GetString(int tag)
@@ -233,16 +238,26 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public char GetChar(int tag)
         {
             // FIXME
-            throw new Exception("not implemented");
+            throw new Exception("not implemented");  // fix the doc comment when implemented
         }
 
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public Decimal GetDecimal(int tag)
         {
             // FIXME
-            throw new Exception("not implemented");
+            throw new Exception("not implemented");  // fix the doc comment when implemented
         }
 
         /// <summary>
