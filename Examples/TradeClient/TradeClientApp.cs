@@ -14,13 +14,22 @@ namespace TradeClient
         public void OnLogon(SessionID sessionID) { Console.WriteLine("Logon - " + sessionID.ToString()); }
         public void OnLogout(SessionID sessionID) { Console.WriteLine("Logout - " + sessionID.ToString()); }
 
-        public void FromAdmin(Message message, SessionID sessionID) { Console.WriteLine("FromAdmin: " + message.ToString()); }
+        public void FromAdmin(Message message, SessionID sessionID) { }
         public void ToAdmin(Message message, SessionID sessionID) { }
 
         public void FromApp(Message message, SessionID sessionID)
         {
-            Crack(message, sessionID);
-            Console.WriteLine("FromApp: " + message.ToString());
+            Console.WriteLine("IN:  " + message.ToString());
+            try
+            {
+                Crack(message, sessionID);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("==Cracker exception==");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.StackTrace);
+            }
         }
 
         public void ToApp(Message message, SessionID sessionID)
@@ -46,18 +55,19 @@ namespace TradeClient
 
 
         #region MessageCracker handlers
-        public void OnMessage(QuickFix.FIX40.ExecutionReport m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX40.OrderCancelReject m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX41.ExecutionReport m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX41.OrderCancelReject m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX42.ExecutionReport m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX42.OrderCancelReject m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX43.ExecutionReport m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX43.OrderCancelReject m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX44.ExecutionReport m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX44.OrderCancelReject m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX50.ExecutionReport m, SessionID s) { }
-        public void OnMessage(QuickFix.FIX50.OrderCancelReject m, SessionID s) { }
+        public void OnMessage(QuickFix.FIX40.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
+        public void OnMessage(QuickFix.FIX41.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
+        public void OnMessage(QuickFix.FIX43.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
+        public void OnMessage(QuickFix.FIX44.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
+        public void OnMessage(QuickFix.FIX50.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
+        public void OnMessage(QuickFix.FIX42.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
+
+        public void OnMessage(QuickFix.FIX42.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
+        public void OnMessage(QuickFix.FIX40.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
+        public void OnMessage(QuickFix.FIX41.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
+        public void OnMessage(QuickFix.FIX43.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
+        public void OnMessage(QuickFix.FIX44.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
+        public void OnMessage(QuickFix.FIX50.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
         #endregion
 
 
