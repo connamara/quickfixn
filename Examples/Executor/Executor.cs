@@ -43,12 +43,11 @@ namespace Executor
         public void OnMessage(QuickFix.FIX42.NewOrderSingle n, SessionID s)
         {
             Symbol symbol = n.symbol;
-            Side side = n.side;
-            OrdType ordType = n.ordType;
-            OrderQty orderQty = n.orderQty;
-            Price price = n.price;
+            Side side = new Side(n.GetField(QuickFix.Fields.Tags.Side)[0]); // TODO workaround
+            OrdType ordType = new OrdType(n.GetField(QuickFix.Fields.Tags.OrdType)[0]); // TODO workaround
+            OrderQty orderQty = new OrderQty(Convert.ToDecimal(n.GetField(QuickFix.Fields.Tags.OrderQty))); // TODO workaround
+            Price price = new Price(Convert.ToDecimal(n.GetField(QuickFix.Fields.Tags.Price))); // TODO workaround
             ClOrdID clOrdID = n.clOrdID;
-            Account account = n.account;
 
             if (ordType.getValue() != OrdType.LIMIT)
                 throw new IncorrectTagValue(ordType.Tag);
@@ -68,7 +67,7 @@ namespace Executor
             exReport.set(clOrdID);
 
             if (n.isSetAccount())
-                exReport.setField(account);
+                exReport.setField(n.account);
 
             try
             {
