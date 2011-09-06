@@ -253,10 +253,15 @@ namespace UnitTests
             string s = "8=FIX.4.2\x01" + "9=123\x01" + "35=D\x01" + "34=3\x01" + "49=CLIENT1\x01" + "52=20110901-18:41:56.917\x01" + "56=EXECUTOR\x01" + "11=asdf\x01" + "21=1\x01" + "38=5\x01" + "40=1\x01" + "54=1\x01" + "55=ibm\x01" + "59=1\x01" + "60=20110901-13:41:31.804\x01" + "10=157\x01";
             n.FromString(s, true, dd, dd);
 
-            // This throws exception:
+            // These throw this exception:
             //    System.InvalidCastException : Unable to cast object of type 'QuickFix.Fields.StringField' to type 'QuickFix.Fields.CharField'.
-            // WTF?  Side is a CharField.  Where's the StringField coming from?
-            Side side = n.side;
+
+            // 1) The way I first found it
+            //Side side = n.side;
+
+            // 2) What 1 is calling internally
+            QuickFix.Fields.Side val = new QuickFix.Fields.Side();
+            n.getField(val);
         }
     }
 }
