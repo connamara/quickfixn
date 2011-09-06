@@ -4,36 +4,92 @@ using System.Linq;
 using System.Text;
 
 using QuickFix;
+using QuickFix.Fields;
 
 namespace Executor
 {
     public class Executor : QuickFix.MessageCracker, QuickFix.Application
     {
-        #region QuickFix.Application Methods
+        int orderID = 0;
+        int execID = 0;
+
+        private string GenOrderID() { return (++orderID).ToString(); }
+        private string GenExecID() { return (++execID).ToString(); }
         
-        public void FromAdmin(Message message, SessionID sessionID)
-        {
-            Console.WriteLine("FromAdmin: " + message);
-        }
+        #region QuickFix.Application Methods
 
         public void FromApp(Message message, SessionID sessionID)
         {
-            Console.WriteLine("FromApp: " + message);
+            Console.WriteLine("IN:  " + message);
             Crack(message, sessionID);
         }
 
+        public void ToApp(Message message, SessionID sessionID)
+        {
+            Console.WriteLine("OUT: " + message);
+        }
+
+        public void FromAdmin(Message message, SessionID sessionID) { }
         public void OnCreate(SessionID sessionID) { }
         public void OnLogout(SessionID sessionID) { }
         public void OnLogon(SessionID sessionID) { }
         public void ToAdmin(Message message, SessionID sessionID) { }
-        public void ToApp(Message message, SessionID sessionID) { }
-
         #endregion
 
+        #region MessageCracker overloads
+        public void OnMessage(QuickFix.FIX40.NewOrderSingle n, SessionID s) { Console.WriteLine("cracked!"); }
+        public void OnMessage(QuickFix.FIX41.NewOrderSingle n, SessionID s) { Console.WriteLine("cracked!"); }
 
         public void OnMessage(QuickFix.FIX42.NewOrderSingle n, SessionID s)
         {
-            Console.WriteLine("cracked!  it's a QuickFix.FIX42.NewOrderSingle");
+            Symbol symbol = n.symbol;
+            Side side = n.side;
+            OrdType ordType = n.ordType;
+            OrderQty orderQty = n.orderQty;
+            Price price = n.price;
+            ClOrdID clOrdID = n.clOrdID;
+            Account account = n.account;
+
+            if (ordType.getValue() != OrdType.LIMIT)
+                throw new IncorrectTagValue(ordType.Tag);
+
+            QuickFix.FIX42.ExecutionReport exReport = new QuickFix.FIX42.ExecutionReport(
+                new OrderID(GenOrderID()),
+                new ExecID(GenExecID()),
+                new ExecTransType(ExecTransType.NEW),
+                new ExecType(ExecType.NEW),
+                new OrdStatus(OrdStatus.FILLED),
+                symbol,
+                side,
+                new LeavesQty(0),
+                new CumQty(orderQty.getValue()),
+                new AvgPx(price.getValue()));
+
+            exReport.set(clOrdID);
+
+            if (n.isSetAccount())
+                exReport.setField(account);
+
+            try
+            {
+                Session.SendToTarget(exReport, s);
+            }
+            catch (SessionNotFound ex)
+            {
+                Console.WriteLine("==session not found exception!==");
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("==unknown exception==");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.StackTrace);
+            }
         }
+
+        public void OnMessage(QuickFix.FIX43.NewOrderSingle n, SessionID s) { Console.WriteLine("cracked!"); }
+        public void OnMessage(QuickFix.FIX44.NewOrderSingle n, SessionID s) { Console.WriteLine("cracked!"); }
+        public void OnMessage(QuickFix.FIX50.NewOrderSingle n, SessionID s) { Console.WriteLine("cracked!"); }
+        #endregion
     }
 }
