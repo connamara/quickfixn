@@ -275,6 +275,17 @@ namespace QuickFix
            MsgQueue.Clear();
         }
 
+        public QuickFix.Message Dequeue(int num)
+        {
+            if(MsgQueue.ContainsKey(num))
+            {
+                QuickFix.Message msg = MsgQueue[num];
+                MsgQueue.Remove(num);
+                return msg;
+            }
+            return null;
+        }
+
         public Message Retrieve(int msgSeqNum)
         {
             Message msg = null;

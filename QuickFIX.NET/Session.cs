@@ -382,12 +382,7 @@ namespace QuickFix
                 this.Log.OnEvent("Unsupported message type: " + e.Message);
                 GenerateBusinessMessageReject(message, Fields.BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, 0);
             }
-        }
-
-        protected void NextQueued()
-        {
-            System.Console.WriteLine("FIXME - Session.NextQueued not implemented!");
-            this.Log.OnEvent("FIXME - Session.NextQueued not implemented!");
+	    NextQueued();
         }
 
         protected void NextLogon(Message logon)
@@ -1066,6 +1061,32 @@ namespace QuickFix
             SendRaw(sequenceReset, beginSeqNo);
             this.Log.OnEvent("Sent SequenceReset TO: " + newSeqNo);
         }
+
+        protected void NextQueued()
+        {
+            while (NextQueued(state_.MessageStore.GetNextTargetMsgSeqNum())) {
+                // continue
+            }
+        }
+
+        protected bool NextQueued(int num) 
+        {
+            Message msg = state_.Dequeue(num);
+    
+            if (msg != null) {
+                Log.OnEvent("Processing queued message: " + num);
+    
+                string msgType = msg.Header.GetString(Tags.MsgType);
+                if (msgType.Equals(MsgType.LOGON) || msgType.Equals(MsgType.RESEND_REQUEST)) {
+                    state_.IncrNextTargetMsgSeqNum();
+                } else {
+                    Next(msg.ToString());
+                }
+                return true;
+            }
+            return false;
+        }
+	
 
 
         private bool IsAdminMessage(Message msg)
