@@ -256,10 +256,11 @@ namespace UnitTests
             // This throws this exception:
             //    System.InvalidCastException : Unable to cast object of type 'QuickFix.Fields.StringField' to type 'QuickFix.Fields.CharField'.
             QuickFix.Fields.Side val = new QuickFix.Fields.Side();
-            n.getField(val);
+            Assert.DoesNotThrow(new TestDelegate(delegate { n.getField(val); }));
 
             // this does the same thing, because internally it does the same thing
-            //Side side = n.side;
+            Assert.DoesNotThrow(new TestDelegate(delegate { Side side = n.side; }));
+            
         }
 
         [Test]
@@ -275,7 +276,7 @@ namespace UnitTests
 
             // Same as Bug_ExtractCharFieldThrowsCastException, but for decimal
             QuickFix.Fields.OrderQty val = new QuickFix.Fields.OrderQty();
-            n.getField(val);
+            Assert.DoesNotThrow(new TestDelegate(delegate { n.getField(val); }));
         }
     }
 }
