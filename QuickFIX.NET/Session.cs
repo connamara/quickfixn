@@ -409,7 +409,7 @@ namespace QuickFix
             this.Log.OnEvent("Received logon");
             if (!state_.IsInitiator)
             {
-                int heartBtInt = Fields.Converters.IntConverter.Convert(logon.GetField(Fields.Tags.HeartBtInt)); /// FIXME
+                int heartBtInt = logon.GetInt(Fields.Tags.HeartBtInt);
                 state_.HeartBtInt = heartBtInt;
                 GenerateLogon(heartBtInt);
                 this.Log.OnEvent("Responding to logon request");
@@ -418,7 +418,7 @@ namespace QuickFix
             state_.SentReset = false;
             state_.ReceivedReset = false;
 
-            int msgSeqNum = Fields.Converters.IntConverter.Convert(logon.Header.GetField(Fields.Tags.MsgSeqNum)); /// FIXME
+            int msgSeqNum = logon.Header.GetInt(Fields.Tags.MsgSeqNum);
             if (IsTargetTooHigh(msgSeqNum) && !resetSeqNumFlag.Obj)
             {
                 DoTargetTooHigh(logon, msgSeqNum);
@@ -554,14 +554,14 @@ namespace QuickFix
         {
             bool isGapFill = false;
             if (sequenceReset.isSetField(Fields.Tags.GapFillFlag))
-                isGapFill = Fields.Converters.BoolConverter.Convert(sequenceReset.GetField(Fields.Tags.GapFillFlag)); /// FIXME
+                isGapFill = sequenceReset.GetBoolean(Fields.Tags.GapFillFlag);
 
             if (!Verify(sequenceReset, isGapFill, isGapFill))
                 return;
 
             if (sequenceReset.isSetField(Fields.Tags.NewSeqNo))
             {
-                int newSeqNo = Fields.Converters.IntConverter.Convert(sequenceReset.GetField(Fields.Tags.NewSeqNo)); /// FIXME
+                int newSeqNo = sequenceReset.GetInt(Fields.Tags.NewSeqNo);
                 this.Log.OnEvent("Received SequenceReset FROM: " + state_.GetNextTargetMsgSeqNum() + " TO: " + newSeqNo);
 
                 if (newSeqNo > state_.GetNextTargetMsgSeqNum())
@@ -599,7 +599,7 @@ namespace QuickFix
                 }
 
                 if (checkTooHigh || checkTooLow)
-                    msgSeqNum = Fields.Converters.IntConverter.Convert(msg.Header.GetField(Fields.Tags.MsgSeqNum)); /// FIXME
+                    msgSeqNum = msg.Header.GetInt(Fields.Tags.MsgSeqNum);
 
                 if (checkTooHigh && IsTargetTooHigh(msgSeqNum))
                 {
@@ -742,7 +742,7 @@ namespace QuickFix
         {
             bool possDupFlag = false;
             if (msg.Header.isSetField(Fields.Tags.PossDupFlag))
-                possDupFlag = Fields.Converters.BoolConverter.Convert(msg.Header.GetField(Fields.Tags.PossDupFlag));
+                possDupFlag = msg.Header.GetBoolean(Fields.Tags.PossDupFlag);
 
             if (!possDupFlag)
             {
@@ -757,18 +757,13 @@ namespace QuickFix
         /// FIXME
         protected bool DoPossDup(Message msg)
         {
-            var origSendingTimeFld = new StringField(Fields.Tags.OrigSendingTime);
-            if (!msg.Header.isSetField(origSendingTimeFld))
+            if (!msg.Header.isSetField(Fields.Tags.OrigSendingTime))
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING, Fields.Tags.OrigSendingTime);
                 return false;
             }
-            msg.Header.getField(origSendingTimeFld);
-            var origSendingTime = Fields.Converters.DateTimeConverter.Convert(origSendingTimeFld.getValue());
-
-            var sendingTimeFld = new StringField(Fields.Tags.SendingTime);
-            msg.Header.getField(sendingTimeFld);
-            var sendingTime = Fields.Converters.DateTimeConverter.Convert(sendingTimeFld.getValue());
+            var origSendingTime = msg.Header.GetDateTime(Fields.Tags.OrigSendingTime);
+            var sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
 
             System.TimeSpan tmSpan = origSendingTime - sendingTime;
             if (tmSpan.TotalSeconds > 0)
@@ -938,7 +933,7 @@ namespace QuickFix
             {
                 try
                 {
-                    msgSeqNum = Fields.Converters.IntConverter.Convert(message.Header.GetField(Fields.Tags.MsgSeqNum)); /// FIXME
+                    msgSeqNum = message.Header.GetInt(Fields.Tags.MsgSeqNum);
                     reject.setField(new Fields.RefSeqNum(msgSeqNum));
                 }
                 catch (System.Exception)
@@ -1028,7 +1023,7 @@ namespace QuickFix
         {
             if (this.PersistMessages)
             {
-                int msgSeqNum = Fields.Converters.IntConverter.Convert(message.Header.GetField(Fields.Tags.MsgSeqNum)); /// FIXME
+                int msgSeqNum = message.Header.GetInt(Fields.Tags.MsgSeqNum);
                 state_.Set(msgSeqNum, messageString);
             }
             state_.IncrNextSenderMsgSeqNum();
@@ -1036,9 +1031,7 @@ namespace QuickFix
 
         protected bool IsGoodTime(Message msg)
         {
-            var fld = new StringField(Fields.Tags.SendingTime);
-            msg.Header.getField(fld);
-            System.DateTime sendingTime = Fields.Converters.DateTimeConverter.Convert(fld.getValue());
+            var sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
             System.TimeSpan tmSpan = System.DateTime.UtcNow - sendingTime;
             if (System.Math.Abs(tmSpan.TotalSeconds) > MaxLatency)
             {
