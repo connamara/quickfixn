@@ -97,64 +97,32 @@ namespace QuickFix
 
         public void getField(Fields.BooleanField field)
         {
-            if (_fields.ContainsKey(field.Tag))
-                field.Obj = ((Fields.BooleanField)_fields[field.Tag]).Obj;
-            else
-                throw new FieldNotFoundException(field.Tag);
+            field.Obj = GetBoolean(field.Tag);
         }
 
         public void getField(Fields.StringField field)
         {
-            if (_fields.ContainsKey(field.Tag))
-                field.Obj = ((Fields.StringField)_fields[field.Tag]).Obj;
-            else
-                throw new FieldNotFoundException(field.Tag);
+            field.Obj = GetString(field.Tag);
         }
 
         public void getField(Fields.CharField field)
         {
-            if (_fields.ContainsKey(field.Tag))
-            {
-                IField fld = _fields[field.Tag];
-                if (fld.GetType() == typeof(StringField))
-                    field.Obj = CharConverter.Convert(fld.ToString());
-                else
-                    field.Obj = ((Fields.CharField)fld).Obj;
-            }
-            else
-                throw new FieldNotFoundException(field.Tag);
+            field.Obj = GetChar(field.Tag);
         }
 
         public void getField(Fields.IntField field)
         {
-            if (_fields.ContainsKey(field.Tag))
-                field.Obj = ((Fields.IntField)_fields[field.Tag]).Obj;
-            else
-                throw new FieldNotFoundException(field.Tag);
+            field.Obj = GetInt(field.Tag);
         }
 
         public void getField(Fields.DecimalField field)
         {
-            if (_fields.ContainsKey(field.Tag))
-            {
-                IField fld = _fields[field.Tag];
-                if( fld.GetType() == typeof(StringField))
-                    field.Obj = DecimalConverter.Convert(fld.ToString());
-                else
-                    field.Obj = ((Fields.DecimalField)fld).Obj;
-            }
-            else
-            {
-                throw new FieldNotFoundException(field.Tag);
-            }
+            field.Obj = GetDecimal(field.Tag);
         }
 
         public void getField(Fields.DateTimeField field)
         {
-            if (_fields.ContainsKey(field.Tag))
-                field.Obj = ((Fields.DateTimeField)_fields[field.Tag]).Obj;
-            else
-                throw new FieldNotFoundException(field.Tag);
+            field.Obj = GetDateTime(field.Tag);
         }
 
         /// <summary>
@@ -208,7 +176,10 @@ namespace QuickFix
             try
             {
                 Fields.IField fld = _fields[tag];
-                return IntConverter.Convert(fld.ToString());
+                if (fld.GetType() == typeof(IntField))
+                    return ((IntField)fld).Obj;
+                else
+                    return IntConverter.Convert(fld.ToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -221,7 +192,10 @@ namespace QuickFix
             try
             {
                 Fields.IField fld = _fields[tag];
-                return DateTimeConverter.Convert(fld.ToString());
+                if (fld.GetType() == typeof(DateTimeField))
+                    return ((DateTimeField)(fld)).Obj;
+                else
+                    return DateTimeConverter.Convert(fld.ToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -234,10 +208,20 @@ namespace QuickFix
         /// </summary>
         /// <param name="tag"></param>
         /// <returns></returns>
-        public Boolean GetBoolean(int tag)
+        public bool GetBoolean(int tag)
         {
-            // FIXME
-            throw new Exception("not implemented");  // fix the doc comment when implemented
+            try
+            {
+                Fields.IField fld = _fields[tag];
+                if (fld.GetType() == typeof(BooleanField))
+                    return ((BooleanField)fld).Obj;
+                else
+                    return BoolConverter.Convert(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
         }
 
         public String GetString(int tag)
@@ -259,8 +243,18 @@ namespace QuickFix
         /// <returns></returns>
         public char GetChar(int tag)
         {
-            // FIXME
-            throw new Exception("not implemented");  // fix the doc comment when implemented
+            try
+            {
+                Fields.IField fld = _fields[tag];
+                if (fld.GetType() == typeof(CharField))
+                    return ((CharField)fld).Obj;
+                else
+                    return CharConverter.Convert(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
         }
 
         /// <summary>
@@ -270,8 +264,18 @@ namespace QuickFix
         /// <returns></returns>
         public Decimal GetDecimal(int tag)
         {
-            // FIXME
-            throw new Exception("not implemented");  // fix the doc comment when implemented
+            try
+            {
+                Fields.IField fld = _fields[tag];
+                if (fld.GetType() == typeof(DecimalField))
+                    return ((DecimalField)fld).Obj;
+                else
+                    return DecimalConverter.Convert(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
         }
 
         /// <summary>
