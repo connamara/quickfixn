@@ -38,6 +38,27 @@ namespace UnitTests
             Assert.That('e', Is.EqualTo(refield.Obj));
         }
 
+
+        [Test]
+        public void GetCharTest()
+        {
+            fieldmap.setField(new CharField(20, 'a'));
+            Assert.That(fieldmap.GetChar(20), Is.EqualTo('a'));
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetString(99900); });
+        }
+
+        [Test]
+        public void GetDecimalTest()
+        {
+            var val = new Decimal(20.4);
+            fieldmap.setField(new DecimalField(200, val));
+            Assert.That(fieldmap.GetDecimal(200), Is.EqualTo(val));
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetString(99900); });
+        }
+        
+
         [Test]
         public void StringFieldTest()
         {
@@ -95,6 +116,15 @@ namespace UnitTests
             fieldmap.setField(field);
             fieldmap.getField(refield);
             Assert.That(false, Is.EqualTo(refield.Obj));
+        }
+
+        [Test]
+        public void GetBooleanTest()
+        {
+            fieldmap.setField(new BooleanField(200, true));
+            Assert.That(fieldmap.GetBoolean(200), Is.EqualTo(true));
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fieldmap.GetString(99900); });
         }
 
         [Test]
