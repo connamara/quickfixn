@@ -44,6 +44,8 @@ namespace UnitTests
         {
             fieldmap.setField(new CharField(20, 'a'));
             Assert.That(fieldmap.GetChar(20), Is.EqualTo('a'));
+            fieldmap.setField(new StringField(21, "b"));
+            Assert.That(fieldmap.GetChar(21), Is.EqualTo('b'));
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetString(99900); });
         }
@@ -54,6 +56,8 @@ namespace UnitTests
             var val = new Decimal(20.4);
             fieldmap.setField(new DecimalField(200, val));
             Assert.That(fieldmap.GetDecimal(200), Is.EqualTo(val));
+            fieldmap.setField(new StringField(201, "33.22"));
+            Assert.That(fieldmap.GetDecimal(201), Is.EqualTo(new Decimal(33.22)));
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetString(99900); });
         }
@@ -99,6 +103,8 @@ namespace UnitTests
         {
             fieldmap.setField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
             Assert.That(fieldmap.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
+            fieldmap.setField(new StringField(233, "20091211-12:12:44"));
+            Assert.That(fieldmap.GetDateTime(233), Is.EqualTo(new DateTime(2009, 12, 11, 12, 12, 44)));
             Assert.Throws(typeof(FieldNotFoundException),
                     delegate { fieldmap.GetDateTime(99900); });
         }
@@ -123,6 +129,8 @@ namespace UnitTests
         {
             fieldmap.setField(new BooleanField(200, true));
             Assert.That(fieldmap.GetBoolean(200), Is.EqualTo(true));
+            fieldmap.setField(new StringField(201, "N"));
+            Assert.That(fieldmap.GetBoolean(201), Is.EqualTo(false));
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetString(99900); });
         }
@@ -147,9 +155,10 @@ namespace UnitTests
         {
 
             IntField field = new IntField(200, 101);
-            IntField refield = new IntField(200);
             fieldmap.setField(field);
             Assert.That(fieldmap.GetInt(200), Is.EqualTo(101));
+            fieldmap.setField(new StringField(202, "2222"));
+            Assert.That(fieldmap.GetInt(202), Is.EqualTo(2222));
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetInt(99900); });
         }
