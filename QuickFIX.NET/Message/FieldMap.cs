@@ -114,7 +114,13 @@ namespace QuickFix
         public void getField(Fields.CharField field)
         {
             if (_fields.ContainsKey(field.Tag))
-                field.Obj = ((Fields.CharField)_fields[field.Tag]).Obj;
+            {
+                IField fld = _fields[field.Tag];
+                if (fld.GetType() == typeof(StringField))
+                    field.Obj = CharConverter.Convert(fld.ToString());
+                else
+                    field.Obj = ((Fields.CharField)fld).Obj;
+            }
             else
                 throw new FieldNotFoundException(field.Tag);
         }
@@ -130,9 +136,17 @@ namespace QuickFix
         public void getField(Fields.DecimalField field)
         {
             if (_fields.ContainsKey(field.Tag))
-                field.Obj = ((Fields.DecimalField)_fields[field.Tag]).Obj;
+            {
+                IField fld = _fields[field.Tag];
+                if( fld.GetType() == typeof(StringField))
+                    field.Obj = DecimalConverter.Convert(fld.ToString());
+                else
+                    field.Obj = ((Fields.DecimalField)fld).Obj;
+            }
             else
+            {
                 throw new FieldNotFoundException(field.Tag);
+            }
         }
 
         public void getField(Fields.DateTimeField field)
