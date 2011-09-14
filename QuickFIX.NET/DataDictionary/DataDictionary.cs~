@@ -106,10 +106,7 @@ namespace QuickFix.DataDictionary
 
         public DDMap GetMapForMessage(string msgType)
         {
-	        if(Messages.ContainsKey(msgType)) {
-                return Messages[msgType];
-            }
-	        return null;
+            return Messages[msgType];
         }
 
         public void CheckMsgType(string msgType)
@@ -366,12 +363,6 @@ namespace QuickFix.DataDictionary
                     {
                         ddmap.Fields.Add(fld.Tag, fld);
                     }
-
-                    // if first field in group, make it the DELIM <3 FIX
-                    if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == null))
-                    {
-                        ((DDGrp)ddmap).Delim = fld;
-                    }
                 }
                 else if(childNode.Name == "group")
                 {
@@ -383,6 +374,7 @@ namespace QuickFix.DataDictionary
                         ddmap.ReqFields.Add(fld.Tag);
                         grp.Required = true;
                     }
+                    grp.Delim = fld;
                     parseMsgEl(childNode, grp);
                     ddmap.Groups.Add(fld.Tag, grp);
                 }
