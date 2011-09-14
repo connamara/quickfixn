@@ -8,7 +8,7 @@ namespace QuickFix.DataDictionary
     public class DDMap
     {
         public Dictionary<int, DDField> Fields = new Dictionary<int, DDField>();
-        public Dictionary<int, DDMap> Groups = new Dictionary<int, DDMap>();
+        public Dictionary<int, DDGrp> Groups = new Dictionary<int, DDGrp>();
         public HashSet<int> ReqFields = new HashSet<int>();
 
         public void AddField(DDField fld)
@@ -25,11 +25,16 @@ namespace QuickFix.DataDictionary
         {
             return Groups.ContainsKey(tag);
         }
+
+        public DDGrp GetGroup(int tag)
+        {
+            return Groups[tag];
+        }
     }
 
     public class DDGrp : DDMap
     {
-        public DDField Delim;
+        public DDField Delim = null;
         public Boolean Required = false;
     }
 }

@@ -65,6 +65,7 @@ namespace UnitTests
             dd.Load("../../../spec/fix/FIX44.xml");
             QuickFix.DataDictionary.DDMap tcrr = dd.Messages["AD"];
             Assert.That(tcrr.Groups[711].Fields[311].Name, Is.EqualTo("UnderlyingSymbol"));
+            Assert.That(tcrr.Groups[711].Delim.Tag, Is.EqualTo(311));
             QuickFix.DataDictionary.DDMap tcr = dd.Messages["AE"];
             Assert.That(tcr.Groups[711].Groups[457].Fields[458].Name, Is.EqualTo("UnderlyingSecurityAltID"));
         }
