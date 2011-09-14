@@ -284,23 +284,23 @@ namespace QuickFix
             }
         }
 
-        public void Next(string message)
+        public void Next(string msgStr)
         {
             try
             {
-                this.Log.OnIncoming(message);
+                this.Log.OnIncoming(msgStr);
 
-                MsgType msgType = Message.IdentifyType(message);
-                string beginString = Message.ExtractBeginString(message);
+                MsgType msgType = Message.IdentifyType(msgStr);
+                string beginString = Message.ExtractBeginString(msgStr);
 
-                Message m = msgFactory_.Create(beginString, msgType.Obj);
-                m.FromString(
-                    message,
+                Message message = msgFactory_.Create(beginString, msgType.Obj);
+                message.FromString(
+                    msgStr,
                     this.ValidateLengthAndChecksum,
                     this.SessionDataDictionary,
                     this.ApplicationDataDictionary);
 
-                Next(m);
+                Next(message);
             }
             catch (InvalidMessage e)
             {
@@ -308,7 +308,7 @@ namespace QuickFix
 
                 try
                 {
-                    if (MsgType.LOGON.Equals(Message.IdentifyType(message)))
+                    if (MsgType.LOGON.Equals(Message.IdentifyType(msgStr)))
                         Disconnect("Logon message is not valid");
                 }
                 catch (MessageParseError)
