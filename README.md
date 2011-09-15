@@ -45,7 +45,7 @@ An HTML report of the test results will then be available here:
 
     UnitTests\bin\Release\UnitTests.html
 
-To run a Unit Test in the debugger:
+To run a Unit Test in the debugger (does not work in VS Express):
 
 1. Right-click UnitTests project, click 'Properties'
 2. Go to Debug tab
