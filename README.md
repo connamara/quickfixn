@@ -47,16 +47,16 @@ An HTML report of the test results will then be available here:
 
 To run a Unit Test in the debugger:
 1. Right-click UnitTests project, click 'Properties'
-1. Go to Debug tab
-1. Change Start Action to 'Start external program: C:\Program Files\NUnit-2.5.9.10348\bin\net-2.0\nunit.exe'
+2. Go to Debug tab
+3. Change Start Action to 'Start external program: C:\Program Files\NUnit-2.5.9.10348\bin\net-2.0\nunit.exe'
    (change the path to what is appropriate for your system)
-1. Set your 'Command line arguments' to 'C:\dev\qfnet\quickfix.net\UnitTests\bin\Debug\UnitTests.dll'
+4. Set your 'Command line arguments' to 'C:\dev\qfnet\quickfix.net\UnitTests\bin\Debug\UnitTests.dll'
    (change the path to what is appropriate for your system)
-1. Set your 'Working directory' to 'C:\dev\qfnet\quickfix.net\UnitTests\bin\Debug\'
+5. Set your 'Working directory' to 'C:\dev\qfnet\quickfix.net\UnitTests\bin\Debug\'
    (change the path to what is appropriate for your system)
-1. Open NUnit in debugger as follows:
+6. Open NUnit in debugger as follows:
    Right-click UnitTests, choose Debug->Start New Instance
-1. NUnit GUI will open and VS will be in debugger mode.  You can choose and run tests.
+7. NUnit GUI will open and VS will be in debugger mode.  You can choose and run tests.
    If you recompile, you may need to close and relaunch NUnit.
 
 
