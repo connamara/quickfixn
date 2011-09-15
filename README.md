@@ -46,6 +46,7 @@ An HTML report of the test results will then be available here:
     UnitTests\bin\Release\UnitTests.html
 
 To run a Unit Test in the debugger:
+
 1. Right-click UnitTests project, click 'Properties'
 2. Go to Debug tab
 3. Change Start Action to 'Start external program: C:\Program Files\NUnit-2.5.9.10348\bin\net-2.0\nunit.exe'
