@@ -26,6 +26,11 @@ namespace QuickFix.DataDictionary
             return Groups.ContainsKey(tag);
         }
 
+        public Boolean IsField(int tag)
+        {
+            return Fields.ContainsKey(tag);
+        }
+
         public DDGrp GetGroup(int tag)
         {
             return Groups[tag];
@@ -34,6 +39,7 @@ namespace QuickFix.DataDictionary
 
     public class DDGrp : DDMap
     {
+        public DDField NumFld = null;
         public DDField Delim = null;
         public Boolean Required = false;
     }

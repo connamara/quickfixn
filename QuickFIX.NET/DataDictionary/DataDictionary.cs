@@ -383,6 +383,7 @@ namespace QuickFix.DataDictionary
                         ddmap.ReqFields.Add(fld.Tag);
                         grp.Required = true;
                     }
+                    grp.NumFld = fld; 
                     parseMsgEl(childNode, grp);
                     ddmap.Groups.Add(fld.Tag, grp);
                 }
