@@ -227,6 +227,30 @@ namespace UnitTests
         }
 
         [Test]
+        public void AddGroupGetGroupTest()
+        {
+            var nos = new QuickFix.FIX42.NewOrderSingle();
+            var noTradingSessions = new QuickFix.FIX42.NewOrderSingle.NoTradingSessions();
+            noTradingSessions.setField(new StringField(336, "OHHAI"));
+            nos.AddGroup(noTradingSessions);
+            var noTradingSessionsRE = nos.GetGroup(1, Tags.NoTradingSessions);
+            Assert.That(noTradingSessionsRE.GetString(336), Is.EqualTo("OHHAI"));
+        }
+
+        [Test]
+        public void TestRepeatingGroupParse()
+        {
+            string data = "8=FIX.4.2\x01" + "9=216\x01" + "35=D\x01" + " 34=104324\x01" + "52=20100512-14:00:49.811\x01" + "56=LATENCYRIG\x01" + "49=REPLAYFIX\x01" + "40=2\x01" + "59=0\x01" + "109=GBG\x01" + "11=AAK2783-20100512\x01" + "47=K\x01" + "21=1\x01" + "38=100\x01" + "55=MO\x01" + "60=20100512-14:00:49.000\x01" + "44=21.63\x01" + "54=5\x01" + "167=CS\x01" + "386=1\x01" + "336=W_STOCK\x01" + "76=CBOEW:695\x01" + "100=CBOEW\x01" + "440=SU0\x01" + "10=133\x01";
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX42.xml");
+            var nos = new QuickFix.FIX42.NewOrderSingle();
+            nos.FromString(data, false, dd, dd);
+            Assert.That(nos.GetInt(Tags.NoTradingSessions), Is.EqualTo(1));
+            var noTradingSessions = nos.GetGroup(1, Tags.NoTradingSessions);
+            Assert.That(noTradingSessions.GetString(Tags.TradingSessionID), Is.EqualTo("W_STOCK"));
+        }
+
+        [Test]
         public void MsgType()
         {
             Assert.AreEqual("B", QuickFix.FIX42.News.MsgType);
