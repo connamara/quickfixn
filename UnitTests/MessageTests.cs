@@ -330,11 +330,12 @@ namespace UnitTests
             string s = "8=FIX.4.2\x01" + "9=123\x01" + "35=D\x01" + "34=3\x01" + "49=CLIENT1\x01" + "52=20110901-18:41:56.917\x01" + "56=EXECUTOR\x01" + "11=asdf\x01" + "21=1\x01" + "38=5\x01" + "40=1\x01" + "54=1\x01" + "55=ibm\x01" + "59=1\x01" + "60=20110901-13:41:31.804\x01" + "10=157\x01";
             n.FromString(s, true, dd, dd);
 
+            Assert.AreEqual("1", n.side.ToString());
+            Assert.AreEqual('1', n.side.getValue());
+
             QuickFix.Fields.Side val = new QuickFix.Fields.Side();
             n.getField(val);
-            Assert.AreEqual("1", n.side.ToString());
             Assert.AreEqual('1', val.getValue());
-            Assert.AreEqual('1', n.side.getValue());
         }
 
         [Test]
@@ -348,10 +349,12 @@ namespace UnitTests
             string s = "8=FIX.4.2\x01" + "9=123\x01" + "35=D\x01" + "34=3\x01" + "49=CLIENT1\x01" + "52=20110901-18:41:56.917\x01" + "56=EXECUTOR\x01" + "11=asdf\x01" + "21=1\x01" + "38=5\x01" + "40=1\x01" + "54=1\x01" + "55=ibm\x01" + "59=1\x01" + "60=20110901-13:41:31.804\x01" + "10=157\x01";
             n.FromString(s, true, dd, dd);
 
-            QuickFix.Fields.OrderQty val = new QuickFix.Fields.OrderQty();
+            Assert.AreEqual("38=5", n.orderQty.toStringField());
             Assert.AreEqual("5", n.orderQty.ToString());
-            Assert.AreEqual(5m, val.getValue());
             Assert.AreEqual(5m, n.orderQty.getValue());
+
+            QuickFix.Fields.OrderQty val = new QuickFix.Fields.OrderQty();
+            Assert.AreEqual(5m, val.getValue());
         }
     }
 }
