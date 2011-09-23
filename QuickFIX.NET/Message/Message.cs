@@ -367,10 +367,10 @@ namespace QuickFix
                     if (!this.Trailer.setField(f, false))
                         this.Trailer.RepeatedTags.Add(f);
 
-                    /** TODO group stuff
-                    if (null != sessionDataDictionary)
-                        setGroup("_trailer_", f, msgstr, pos, this.Trailer, sessionDataDictionary);
-                    */
+                    if ((null != sessionDD) && sessionDD.Trailer.IsGroup(f.Tag))
+                    {
+                        pos = SetGroup(f, msgstr, pos, this.Trailer, sessionDD.Trailer.GetGroup(f.Tag), sessionDD, appDD);
+                    }
                 }
                 else
                 {
