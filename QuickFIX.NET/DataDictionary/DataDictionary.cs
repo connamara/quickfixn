@@ -251,9 +251,25 @@ namespace QuickFix.DataDictionary
             throw new TagNotDefinedForMessage(field.Tag, msgType);
         }
 
-        /// FIXME
+        
         public void CheckGroupCount(Fields.IField field, FieldMap map, string msgType)
         {
+            if(IsGroup(msgType, field.Tag))
+            {
+                if (map.GetInt(field.Tag) != map.GroupCount(field.Tag))
+                {
+                    throw new RepeatingGroupCountMismatch(field.Tag);
+                }
+            }
+        }
+
+        public bool IsGroup(string msgType, int tag)
+        {
+            if (Messages.ContainsKey(msgType))
+            {
+                return Messages[msgType].IsGroup(tag);
+            }
+            return false;
         }
 
         public bool ShouldCheckTag(Fields.IField field)
