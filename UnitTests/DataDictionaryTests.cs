@@ -6,16 +6,17 @@ using QuickFix;
 namespace UnitTests
 {
     [TestFixture]
-    public class DD2Tests
+    public class DataDictionaryTests
     {
+
         [Test]
         public void VersionTest()
         {
-            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
-            Assert.That(dd.MajorVersion, Is.EqualTo("4"));
-            Assert.That(dd.MinorVersion, Is.EqualTo("4"));
-            Assert.That(dd.Version, Is.EqualTo("FIX.4.4"));
+            QuickFix.DataDictionary.DataDictionary dd44 = new QuickFix.DataDictionary.DataDictionary();
+            dd44.Load("../../../spec/fix/FIX44.xml");
+            Assert.That(dd44.MajorVersion, Is.EqualTo("4"));
+            Assert.That(dd44.MinorVersion, Is.EqualTo("4"));
+            Assert.That(dd44.Version, Is.EqualTo("FIX.4.4"));
         }
 
         [Test]
@@ -64,10 +65,25 @@ namespace UnitTests
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
             QuickFix.DataDictionary.DDMap tcrr = dd.Messages["AD"];
+            Assert.True(tcrr.IsGroup(711));
+            Assert.True(tcrr.IsField(711));  // No Field also a field
+            Assert.True(tcrr.GetGroup(711).IsField(311));
             Assert.That(tcrr.Groups[711].Fields[311].Name, Is.EqualTo("UnderlyingSymbol"));
             Assert.That(tcrr.Groups[711].Delim.Tag, Is.EqualTo(311));
             QuickFix.DataDictionary.DDMap tcr = dd.Messages["AE"];
             Assert.That(tcr.Groups[711].Groups[457].Fields[458].Name, Is.EqualTo("UnderlyingSecurityAltID"));
+        }
+
+        [Test]
+        public void HeaderGroupTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            QuickFix.DataDictionary.DDMap headerMap = dd.Header;
+            Assert.True(headerMap.IsGroup(627));
+            QuickFix.DataDictionary.DDGrp grpMap = headerMap.GetGroup(627);
+            Assert.True(dd.Header.GetGroup(627).IsField(628));
+            Assert.True(grpMap.IsField(628));
         }
 
         [Test]
@@ -83,7 +99,7 @@ namespace UnitTests
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
             Assert.True(dd.Header.ReqFields.Contains(9));
-            Assert.That(dd.Header.Fields.Count, Is.EqualTo(26));
+            Assert.That(dd.Header.Fields.Count, Is.EqualTo(27));
         }
 
         [Test]
