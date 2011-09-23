@@ -235,6 +235,12 @@ namespace UnitTests
             nos.AddGroup(noTradingSessions);
             var noTradingSessionsRE = nos.GetGroup(1, Tags.NoTradingSessions);
             Assert.That(noTradingSessionsRE.GetString(336), Is.EqualTo("OHHAI"));
+
+            var nos2 = new QuickFix.FIX42.NewOrderSingle();
+            var grp = new Group(200, 300);
+            nos2.AddGroup(grp);
+            grp.setField(new StringField(300, "Dude"));
+            Assert.That(nos2.GetGroup(1, 200).GetString(300), Is.EqualTo("Dude"));
         }
 
         [Test]
@@ -296,7 +302,6 @@ namespace UnitTests
             hops = nos.Header.GetGroup(2, Tags.NoHops);
             Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("BAR"));
         }
-
 
         [Test]
         public void MsgType()
