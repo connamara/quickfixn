@@ -432,10 +432,22 @@ namespace QuickFix
             foreach (List<Group> groupList in _groups.Values)
             {
                 foreach (Group group in groupList)
-                    sb.Append(CalculateString());
+                    sb.Append(group.CalculateString());
             }
 
             return sb.ToString();
+        }
+
+        public int GroupCount(int fieldNo)
+        {
+            if(_groups.ContainsKey(fieldNo))
+            {
+                return _groups[fieldNo].Count;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         private bool IsOrderedField(int field, int[] fieldOrder)
