@@ -316,7 +316,7 @@ namespace QuickFix
             return true;
         }
 
-        public void FromString(string msgstr, bool validate, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
+        public void FromString(string msgstr, bool validate, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
         {
             Clear();
 
@@ -329,12 +329,12 @@ namespace QuickFix
 
             while (pos < msgstr.Length)
             {
-                StringField f = ExtractField(msgstr, ref pos, sessionDataDictionary, appDD);
+                StringField f = ExtractField(msgstr, ref pos, sessionDD, appDD);
                 
                 if (validate && (count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
                     throw new InvalidMessage("Header fields out of order");
 
-                if (IsHeaderField(f.Tag, sessionDataDictionary))
+                if (IsHeaderField(f.Tag, sessionDD))
                 {
                     if (!expectingHeader)
                     {
@@ -355,12 +355,12 @@ namespace QuickFix
                     if (!this.Header.setField(f, false))
                         this.Header.RepeatedTags.Add(f);
 
-                    /** TODO group stuff
-                    if(null != sessionDataDictionary)
-                        setGroup("_header_", f, msgstr, pos, this.Header, sessionDataDictionary);
-                    */
+                    if ((null != sessionDD) && sessionDD.Header.IsGroup(f.Tag))
+                    {
+                        pos = SetGroup(f, msgstr, pos, this.Header, sessionDD.Header.GetGroup(f.Tag), sessionDD, appDD);
+                    }
                 }
-                else if (IsTrailerField(f.Tag, sessionDataDictionary))
+                else if (IsTrailerField(f.Tag, sessionDD))
                 {
                     expectingHeader = false;
                     expectingBody = false;
@@ -390,7 +390,7 @@ namespace QuickFix
                     
                     if((null != msgMap) && (msgMap.IsGroup(f.Tag))) 
                     {
-                        pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroup(f.Tag), sessionDataDictionary, appDD);
+                        pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroup(f.Tag), sessionDD, appDD);
                     }
                 }
             }

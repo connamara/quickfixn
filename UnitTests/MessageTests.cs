@@ -238,7 +238,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void TestRepeatingGroupParse()
+        public void RepeatingGroupParseTest()
         {
             string data = "8=FIX.4.2\x01" + "9=216\x01" + "35=D\x01" + " 34=104324\x01" + "52=20100512-14:00:49.811\x01" + "56=LATENCYRIG\x01" + "49=REPLAYFIX\x01" + "40=2\x01" + "59=0\x01" + "109=GBG\x01" + "11=AAK2783-20100512\x01" + "47=K\x01" + "21=1\x01" + "38=100\x01" + "55=MO\x01" + "60=20100512-14:00:49.000\x01" + "44=21.63\x01" + "54=5\x01" + "167=CS\x01" + "386=1\x01" + "336=W_STOCK\x01" + "76=CBOEW:695\x01" + "100=CBOEW\x01" + "440=SU0\x01" + "10=133\x01";
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
@@ -249,6 +249,24 @@ namespace UnitTests
             var noTradingSessions = nos.GetGroup(1, Tags.NoTradingSessions);
             Assert.That(noTradingSessions.GetString(Tags.TradingSessionID), Is.EqualTo("W_STOCK"));
         }
+
+        [Test]
+        public void HeaderGroupParsingTest()
+        {
+            string data = "8=FIX.4.4\x01" + "9=40\x01" + "35=A\x01"
+                + "627=2\x01" + "628=FOO\x01" + "628=BAR\x01"
+                + "98=0\x01" + "384=2\x01" + "372=D\x01" + "385=R\x01" + "372=8\x01" + "385=S\x01" + "10=228\x01";
+
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            var nos = new QuickFix.FIX44.Logon();
+            nos.FromString(data, false, dd, dd);
+            Group hops = nos.Header.GetGroup(1, Tags.NoHops);
+            //Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("FOO"));
+            //hops = nos.Header.GetGroup(2, Tags.NoHops);
+            //Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("BAR"));
+        }
+
 
         [Test]
         public void MsgType()

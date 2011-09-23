@@ -263,21 +263,15 @@ namespace QuickFix.DataDictionary
             return true;
         }
 
-
-        /// FIXME
         public bool IsHeaderField(int tag)
         {
-            System.Console.WriteLine("FIXME - IsHeaderField not implemented!");
-            return false;
+            return Header.IsField(tag);
         }
 
-        /// FIXME
         public bool IsTrailerField(int tag)
         {
-            System.Console.WriteLine("FIXME - IsTrailerField not implemented!");
-            return false;
+            return Trailer.IsField(tag);
         }
-
 
 		public void Load(String path) {
             XmlDocument doc = new XmlDocument();
@@ -362,7 +356,7 @@ namespace QuickFix.DataDictionary
                         fld.Required = true;
                         ddmap.ReqFields.Add(fld.Tag);
                     }
-                    if (!ddmap.Fields.ContainsKey(fld.Tag))
+                    if (!ddmap.IsField(fld.Tag))
                     {
                         ddmap.Fields.Add(fld.Tag, fld);
                     }
@@ -382,6 +376,10 @@ namespace QuickFix.DataDictionary
                         fld.Required = true;
                         ddmap.ReqFields.Add(fld.Tag);
                         grp.Required = true;
+                    }
+                    if (!ddmap.IsField(fld.Tag))
+                    {
+                        ddmap.Fields.Add(fld.Tag, fld);
                     }
                     grp.NumFld = fld; 
                     parseMsgEl(childNode, grp);
