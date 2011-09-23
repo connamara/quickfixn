@@ -314,7 +314,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void Bug_ExtractCharFieldThrowsCastException()
+        public void ExtractCharField()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX42.xml");
@@ -324,18 +324,15 @@ namespace UnitTests
             string s = "8=FIX.4.2\x01" + "9=123\x01" + "35=D\x01" + "34=3\x01" + "49=CLIENT1\x01" + "52=20110901-18:41:56.917\x01" + "56=EXECUTOR\x01" + "11=asdf\x01" + "21=1\x01" + "38=5\x01" + "40=1\x01" + "54=1\x01" + "55=ibm\x01" + "59=1\x01" + "60=20110901-13:41:31.804\x01" + "10=157\x01";
             n.FromString(s, true, dd, dd);
 
-            // This throws this exception:
-            //    System.InvalidCastException : Unable to cast object of type 'QuickFix.Fields.StringField' to type 'QuickFix.Fields.CharField'.
             QuickFix.Fields.Side val = new QuickFix.Fields.Side();
-            Assert.DoesNotThrow(new TestDelegate(delegate { n.getField(val); }));
-
-            // this does the same thing, because internally it does the same thing
-            Assert.DoesNotThrow(new TestDelegate(delegate { Side side = n.side; }));
-            
+            n.getField(val);
+            Assert.AreEqual("1", n.side.ToString());
+            Assert.AreEqual('1', val.getValue());
+            Assert.AreEqual('1', n.side.getValue());
         }
 
         [Test]
-        public void Bug_ExtractDecimalFieldThrowsCastException()
+        public void ExtractDecimalField()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX42.xml");
@@ -345,9 +342,10 @@ namespace UnitTests
             string s = "8=FIX.4.2\x01" + "9=123\x01" + "35=D\x01" + "34=3\x01" + "49=CLIENT1\x01" + "52=20110901-18:41:56.917\x01" + "56=EXECUTOR\x01" + "11=asdf\x01" + "21=1\x01" + "38=5\x01" + "40=1\x01" + "54=1\x01" + "55=ibm\x01" + "59=1\x01" + "60=20110901-13:41:31.804\x01" + "10=157\x01";
             n.FromString(s, true, dd, dd);
 
-            // Same as Bug_ExtractCharFieldThrowsCastException, but for decimal
             QuickFix.Fields.OrderQty val = new QuickFix.Fields.OrderQty();
-            Assert.DoesNotThrow(new TestDelegate(delegate { n.getField(val); }));
+            Assert.AreEqual("5", n.orderQty.ToString());
+            Assert.AreEqual(5m, val.getValue());
+            Assert.AreEqual(5m, n.orderQty.getValue());
         }
     }
 }
