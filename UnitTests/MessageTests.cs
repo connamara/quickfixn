@@ -238,16 +238,22 @@ namespace UnitTests
         }
 
         [Test]
-        public void RepeatingGroupParseTest()
+        public void RepeatingGroupParseGroupTest()
         {
-            string data = "8=FIX.4.2\x01" + "9=216\x01" + "35=D\x01" + " 34=104324\x01" + "52=20100512-14:00:49.811\x01" + "56=LATENCYRIG\x01" + "49=REPLAYFIX\x01" + "40=2\x01" + "59=0\x01" + "109=GBG\x01" + "11=AAK2783-20100512\x01" + "47=K\x01" + "21=1\x01" + "38=100\x01" + "55=MO\x01" + "60=20100512-14:00:49.000\x01" + "44=21.63\x01" + "54=5\x01" + "167=CS\x01" + "386=1\x01" + "336=W_STOCK\x01" + "76=CBOEW:695\x01" + "100=CBOEW\x01" + "440=SU0\x01" + "10=133\x01";
-            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX42.xml");
-            var nos = new QuickFix.FIX42.NewOrderSingle();
-            nos.FromString(data, false, dd, dd);
-            Assert.That(nos.GetInt(Tags.NoTradingSessions), Is.EqualTo(1));
-            var noTradingSessions = nos.GetGroup(1, Tags.NoTradingSessions);
-            Assert.That(noTradingSessions.GetString(Tags.TradingSessionID), Is.EqualTo("W_STOCK"));
+            String data = "8=FIX.4.4\x01" + "9=309\x01" + "35=8\x01" + "49=ASX\x01" + "56=CL1_FIX44\x01" + "34=4\x01" + "52=20060324-01:05:58\x01" + ""
+                + "17=X-B-WOW-1494E9A0:58BD3F9D-1109\x01" + "150=D\x01" + "39=0\x01" + "11=184271\x01" + "38=200\x01" + "198=1494E9A0:58BD3F9D\x01" + ""
+                + "526=4324\x01" + "37=B-WOW-1494E9A0:58BD3F9D\x01" + "55=WOW\x01" + "54=1\x01" + "151=200\x01" + "14=0\x01" + "40=2\x01" + "44=15\x01" + "59=1\x01" + "6=0\x01" + ""
+                + "453=3\x01" + "448=AAA35791\x01" + "447=D\x01" + "452=3\x01" + "448=8\x01" + "447=D\x01" + "452=4\x01" + "448=FIX11\x01" + "447=D\x01" + "452=36\x01" + ""
+                + "60=20060320-03:34:29\x01" + "10=169\x01" + "";
+            var msg = new QuickFix.FIX44.ExecutionReport();
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            msg.FromString(data, false, dd, dd);
+
+            var grp = msg.GetGroup(1, Tags.NoPartyIDs);
+            Assert.That(grp.GetString(Tags.PartyID), Is.EqualTo("AAA35791"));
+            grp = msg.GetGroup(3, Tags.NoPartyIDs);
+            Assert.That(grp.GetString(Tags.PartyID), Is.EqualTo("FIX11"));
         }
 
         [Test]
@@ -262,9 +268,9 @@ namespace UnitTests
             var nos = new QuickFix.FIX44.Logon();
             nos.FromString(data, false, dd, dd);
             Group hops = nos.Header.GetGroup(1, Tags.NoHops);
-            //Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("FOO"));
-            //hops = nos.Header.GetGroup(2, Tags.NoHops);
-            //Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("BAR"));
+            Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("FOO"));
+            hops = nos.Header.GetGroup(2, Tags.NoHops);
+            Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("BAR"));
         }
 
 
