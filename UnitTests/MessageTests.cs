@@ -320,41 +320,35 @@ namespace UnitTests
         }
 
         [Test]
-        public void ExtractCharField()
+        public void ExtractFieldTypes()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX42.xml");
 
             QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
 
-            string s = "8=FIX.4.2\x01" + "9=123\x01" + "35=D\x01" + "34=3\x01" + "49=CLIENT1\x01" + "52=20110901-18:41:56.917\x01" + "56=EXECUTOR\x01" + "11=asdf\x01" + "21=1\x01" + "38=5\x01" + "40=1\x01" + "54=1\x01" + "55=ibm\x01" + "59=1\x01" + "60=20110901-13:41:31.804\x01" + "10=157\x01";
+            string s = "8=FIX.4.2\x01" + "9=137\x01" + "35=D\x01" + "34=3\x01" + "49=CLIENT1\x01"
+                + "52=20110901-18:41:56.917\x01" + "56=EXECUTOR\x01" + "11=asdf\x01" + "21=1\x01"
+                + "38=5.5\x01" + "40=1\x01" + "54=1\x01" + "55=ibm\x01" + "59=1\x01" + "60=20110901-13:41:31.804\x01"
+                + "377=Y\x01" + "201=1\x01"
+                + "10=63\x01";
             n.FromString(s, true, dd, dd);
 
-            Assert.AreEqual("1", n.side.ToString());
+            // string values are good?
+            Assert.AreEqual("Y", n.solicitedFlag.ToString()); //bool, 377
+            Assert.AreEqual("1", n.side.ToString()); //char, 54
+            Assert.AreEqual("20110901-13:41:31.804", n.transactTime.ToString()); //datetime, 60
+            Assert.AreEqual("5.5", n.orderQty.ToString()); //decimal, 38
+            Assert.AreEqual("1", n.putOrCall.ToString()); //int, 201
+            Assert.AreEqual("asdf", n.clOrdID.ToString()); //string, 11
+
+            // type-converted values are good?
+            Assert.AreEqual(true, n.solicitedFlag.getValue());
             Assert.AreEqual('1', n.side.getValue());
-
-            QuickFix.Fields.Side val = new QuickFix.Fields.Side();
-            n.getField(val);
-            Assert.AreEqual('1', val.getValue());
-        }
-
-        [Test]
-        public void ExtractDecimalField()
-        {
-            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX42.xml");
-
-            QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
-
-            string s = "8=FIX.4.2\x01" + "9=123\x01" + "35=D\x01" + "34=3\x01" + "49=CLIENT1\x01" + "52=20110901-18:41:56.917\x01" + "56=EXECUTOR\x01" + "11=asdf\x01" + "21=1\x01" + "38=5\x01" + "40=1\x01" + "54=1\x01" + "55=ibm\x01" + "59=1\x01" + "60=20110901-13:41:31.804\x01" + "10=157\x01";
-            n.FromString(s, true, dd, dd);
-
-            Assert.AreEqual("38=5", n.orderQty.toStringField());
-            Assert.AreEqual("5", n.orderQty.ToString());
-            Assert.AreEqual(5m, n.orderQty.getValue());
-
-            QuickFix.Fields.OrderQty val = new QuickFix.Fields.OrderQty();
-            Assert.AreEqual(5m, val.getValue());
+            Assert.AreEqual(DateTime.Parse("2011-09-01 13:41:31.804"), n.transactTime.getValue());
+            Assert.AreEqual(5.5m, n.orderQty.getValue());
+            Assert.AreEqual(1, n.putOrCall.getValue());
+            Assert.AreEqual("asdf", n.clOrdID.getValue());
         }
     }
 }
