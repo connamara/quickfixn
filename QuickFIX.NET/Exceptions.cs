@@ -258,5 +258,13 @@ namespace QuickFix
         { }
     }
 
+
+    public class RepeatingGroupCountMismatch : TagException
+    {
+        public RepeatingGroupCountMismatch(int tag)
+            :base(tag, FixValues.SessionRejectReason.INCORRECT_NUM_IN_GROUP_COUNT_FOR_REPEATING_GROUP)
+        {}
+    }
+
     #endregion
 }
