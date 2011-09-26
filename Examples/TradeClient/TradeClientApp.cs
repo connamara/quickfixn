@@ -160,14 +160,25 @@ namespace TradeClient
             Message m = null;
             switch (v)
             {
+                case FixVersion.FIX40:
+                    m = QueryNewOrderSingle40();
+                    break;
+                case FixVersion.FIX41:
+                    m = QueryNewOrderSingle41();
+                    break;
                 case FixVersion.FIX42:
                     m = QueryNewOrderSingle42();
                     break;
-                case FixVersion.FIX40:
-                case FixVersion.FIX41:
                 case FixVersion.FIX43:
+                    m = QueryNewOrderSingle43();
+                    break;
                 case FixVersion.FIX44:
+                    m = QueryNewOrderSingle44();
+                    break;
                 case FixVersion.FIX50:
+                    m = QueryNewOrderSingle50();
+                    break;
+                default:
                     Console.WriteLine("not supported yet for version " + v.ToString());
                     return;
             }
@@ -188,14 +199,25 @@ namespace TradeClient
             Message m = null;
             switch (v)
             {
+                case FixVersion.FIX40:
+                    m = QueryOrderCancelRequest40();
+                    break;
+                case FixVersion.FIX41:
+                    m = QueryOrderCancelRequest41();
+                    break;
                 case FixVersion.FIX42:
                     m = QueryOrderCancelRequest42();
                     break;
-                case FixVersion.FIX40:
-                case FixVersion.FIX41:
                 case FixVersion.FIX43:
+                    m = QueryOrderCancelRequest43();
+                    break;
                 case FixVersion.FIX44:
+                    m = QueryOrderCancelRequest44();
+                    break;
                 case FixVersion.FIX50:
+                    m = QueryOrderCancelRequest50();
+                    break;
+                default:
                     Console.WriteLine("not supported yet for version " + v.ToString());
                     return;
             }
@@ -212,14 +234,25 @@ namespace TradeClient
             Message m = null;
             switch (v)
             {
+                case FixVersion.FIX40:
+                    m = QueryCancelReplaceRequest40();
+                    break;
+                case FixVersion.FIX41:
+                    m = QueryCancelReplaceRequest41();
+                    break;
                 case FixVersion.FIX42:
                     m = QueryCancelReplaceRequest42();
                     break;
-                case FixVersion.FIX40:
-                case FixVersion.FIX41:
                 case FixVersion.FIX43:
+                    m = QueryCancelReplaceRequest43();
+                    break;
                 case FixVersion.FIX44:
+                    m = QueryCancelReplaceRequest44();
+                    break;
                 case FixVersion.FIX50:
+                    m = QueryCancelReplaceRequest50();
+                    break; 
+                default:
                     Console.WriteLine("not supported yet for version " + v.ToString());
                     return;
             }
@@ -236,14 +269,23 @@ namespace TradeClient
             Message m = null;
             switch (v)
             {
+                case FixVersion.FIX40:
+                case FixVersion.FIX41:
+                    Console.WriteLine("FIX 4.0 and 4.1 don't have this message type.");
+                    break;
                 case FixVersion.FIX42:
                     m = QueryMarketDataRequest42();
                     break;
-                case FixVersion.FIX40:
-                case FixVersion.FIX41:
                 case FixVersion.FIX43:
+                    m = QueryMarketDataRequest43();
+                    break;
                 case FixVersion.FIX44:
+                    m = QueryMarketDataRequest44();
+                    break;
                 case FixVersion.FIX50:
+                    m = QueryMarketDataRequest50();
+                    break;
+                default:
                     Console.WriteLine("not supported yet for version " + v.ToString());
                     return;
             }
@@ -260,6 +302,50 @@ namespace TradeClient
             return (line[0].Equals('y') || line[0].Equals('Y'));
         }
 
+        #region QueryNewOrderSingleNN
+        private QuickFix.FIX40.NewOrderSingle QueryNewOrderSingle40()
+        {
+            QuickFix.Fields.OrdType ordType = null;
+
+            QuickFix.FIX40.NewOrderSingle newOrderSingle = new QuickFix.FIX40.NewOrderSingle(
+                QueryClOrdID(),
+                new HandlInst('1'),
+                QuerySymbol(),
+                QuerySide(),
+                QueryOrderQty(),
+                ordType = QueryOrdType());
+
+            newOrderSingle.set(QueryTimeInForce());
+            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
+                newOrderSingle.set(QueryPrice());
+            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
+                newOrderSingle.set(QueryStopPx());
+
+            QueryHeader(newOrderSingle.Header);
+            return newOrderSingle;
+        }
+
+        private QuickFix.FIX41.NewOrderSingle QueryNewOrderSingle41()
+        {
+            QuickFix.Fields.OrdType ordType = null;
+
+            QuickFix.FIX41.NewOrderSingle newOrderSingle = new QuickFix.FIX41.NewOrderSingle(
+                QueryClOrdID(),
+                new HandlInst('1'),
+                QuerySymbol(),
+                QuerySide(),
+                ordType = QueryOrdType());
+
+            newOrderSingle.set(QueryOrderQty());
+            newOrderSingle.set(QueryTimeInForce());
+            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
+                newOrderSingle.set(QueryPrice());
+            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
+                newOrderSingle.set(QueryStopPx());
+
+            QueryHeader(newOrderSingle.Header);
+            return newOrderSingle;
+        }
 
         private QuickFix.FIX42.NewOrderSingle QueryNewOrderSingle42()
         {
@@ -284,6 +370,104 @@ namespace TradeClient
             return newOrderSingle;
         }
 
+        private QuickFix.FIX43.NewOrderSingle QueryNewOrderSingle43()
+        {
+            QuickFix.Fields.OrdType ordType = null;
+
+            QuickFix.FIX43.NewOrderSingle newOrderSingle = new QuickFix.FIX43.NewOrderSingle(
+                QueryClOrdID(),
+                new HandlInst('1'),
+                QuerySymbol(),
+                QuerySide(),
+                new TransactTime(DateTime.Now),
+                ordType = QueryOrdType());
+
+            newOrderSingle.set(QueryOrderQty());
+            newOrderSingle.set(QueryTimeInForce());
+            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
+                newOrderSingle.set(QueryPrice());
+            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
+                newOrderSingle.set(QueryStopPx());
+
+            QueryHeader(newOrderSingle.Header);
+            return newOrderSingle;
+        }
+
+        private QuickFix.FIX44.NewOrderSingle QueryNewOrderSingle44()
+        {
+            QuickFix.Fields.OrdType ordType = null;
+
+            QuickFix.FIX44.NewOrderSingle newOrderSingle = new QuickFix.FIX44.NewOrderSingle(
+                QueryClOrdID(),
+                QuerySymbol(),
+                QuerySide(),
+                new TransactTime(DateTime.Now),
+                ordType = QueryOrdType());
+
+            newOrderSingle.set(new HandlInst('1'));
+            newOrderSingle.set(QueryOrderQty());
+            newOrderSingle.set(QueryTimeInForce());
+            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
+                newOrderSingle.set(QueryPrice());
+            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
+                newOrderSingle.set(QueryStopPx());
+
+            QueryHeader(newOrderSingle.Header);
+            return newOrderSingle;
+        }
+
+        private QuickFix.FIX50.NewOrderSingle QueryNewOrderSingle50()
+        {
+            QuickFix.Fields.OrdType ordType = null;
+
+            QuickFix.FIX50.NewOrderSingle newOrderSingle = new QuickFix.FIX50.NewOrderSingle(
+                QueryClOrdID(),
+                QuerySide(),
+                new TransactTime(DateTime.Now),
+                ordType = QueryOrdType());
+
+            newOrderSingle.set(new HandlInst('1'));
+            newOrderSingle.set(QuerySymbol());
+            newOrderSingle.set(QueryOrderQty());
+            newOrderSingle.set(QueryTimeInForce());
+            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
+                newOrderSingle.set(QueryPrice());
+            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
+                newOrderSingle.set(QueryStopPx());
+
+            QueryHeader(newOrderSingle.Header);
+            return newOrderSingle;
+        }
+        #endregion
+
+        #region QueryOrderCancelRequestNN
+        private QuickFix.FIX40.OrderCancelRequest QueryOrderCancelRequest40()
+        {
+            QuickFix.FIX40.OrderCancelRequest orderCancelRequest = new QuickFix.FIX40.OrderCancelRequest(
+                QueryOrigClOrdID(),
+                QueryClOrdID(),
+                new CxlType(CxlType.FULL_REMAINING_QUANTITY),
+                QuerySymbol(),
+                QuerySide(),
+                QueryOrderQty());
+
+            QueryHeader(orderCancelRequest.Header);
+            return orderCancelRequest;
+        }
+
+        private QuickFix.FIX41.OrderCancelRequest QueryOrderCancelRequest41()
+        {
+            QuickFix.FIX41.OrderCancelRequest orderCancelRequest = new QuickFix.FIX41.OrderCancelRequest(
+                QueryOrigClOrdID(),
+                QueryClOrdID(),
+                QuerySymbol(),
+                QuerySide());
+
+            orderCancelRequest.set(QueryOrderQty());
+            QueryHeader(orderCancelRequest.Header);
+            return orderCancelRequest;
+        }
+
         private QuickFix.FIX42.OrderCancelRequest QueryOrderCancelRequest42()
         {
             QuickFix.FIX42.OrderCancelRequest orderCancelRequest = new QuickFix.FIX42.OrderCancelRequest(
@@ -296,6 +480,89 @@ namespace TradeClient
             orderCancelRequest.set(QueryOrderQty());
             QueryHeader(orderCancelRequest.Header);
             return orderCancelRequest;
+        }
+
+        private QuickFix.FIX43.OrderCancelRequest QueryOrderCancelRequest43()
+        {
+            QuickFix.FIX43.OrderCancelRequest orderCancelRequest = new QuickFix.FIX43.OrderCancelRequest(
+                QueryOrigClOrdID(),
+                QueryClOrdID(),
+                QuerySymbol(),
+                QuerySide(),
+                new TransactTime(DateTime.Now));
+
+            orderCancelRequest.set(QueryOrderQty());
+            QueryHeader(orderCancelRequest.Header);
+            return orderCancelRequest;
+        }
+
+        private QuickFix.FIX44.OrderCancelRequest QueryOrderCancelRequest44()
+        {
+            QuickFix.FIX44.OrderCancelRequest orderCancelRequest = new QuickFix.FIX44.OrderCancelRequest(
+                QueryOrigClOrdID(),
+                QueryClOrdID(),
+                QuerySymbol(),
+                QuerySide(),
+                new TransactTime(DateTime.Now));
+
+            orderCancelRequest.set(QueryOrderQty());
+            QueryHeader(orderCancelRequest.Header);
+            return orderCancelRequest;
+        }
+
+        private QuickFix.FIX50.OrderCancelRequest QueryOrderCancelRequest50()
+        {
+            QuickFix.FIX50.OrderCancelRequest orderCancelRequest = new QuickFix.FIX50.OrderCancelRequest(
+                QueryOrigClOrdID(),
+                QueryClOrdID(),
+                QuerySide(),
+                new TransactTime(DateTime.Now));
+
+            orderCancelRequest.set(QuerySymbol());
+            orderCancelRequest.set(QueryOrderQty());
+            QueryHeader(orderCancelRequest.Header);
+            return orderCancelRequest;
+        }
+        #endregion
+
+        #region QueryCancelReplaceRequestNN
+        private QuickFix.FIX40.OrderCancelReplaceRequest QueryCancelReplaceRequest40()
+        {
+            QuickFix.FIX40.OrderCancelReplaceRequest ocrr = new QuickFix.FIX40.OrderCancelReplaceRequest(
+                QueryOrigClOrdID(),
+                QueryClOrdID(),
+                new HandlInst('1'),
+                QuerySymbol(),
+                QuerySide(),
+                QueryOrderQty(),
+                QueryOrdType());
+
+            if (QueryConfirm("New price"))
+                ocrr.set(QueryPrice());
+            if (QueryConfirm("New quantity"))
+                ocrr.set(QueryOrderQty());
+
+            QueryHeader(ocrr.Header);
+            return ocrr;
+        }
+
+        private QuickFix.FIX41.OrderCancelReplaceRequest QueryCancelReplaceRequest41()
+        {
+            QuickFix.FIX41.OrderCancelReplaceRequest ocrr = new QuickFix.FIX41.OrderCancelReplaceRequest(
+                QueryOrigClOrdID(),
+                QueryClOrdID(),
+                new HandlInst('1'),
+                QuerySymbol(),
+                QuerySide(),
+                QueryOrdType());
+
+            if (QueryConfirm("New price"))
+                ocrr.set(QueryPrice());
+            if (QueryConfirm("New quantity"))
+                ocrr.set(QueryOrderQty());
+
+            QueryHeader(ocrr.Header);
+            return ocrr;
         }
 
         private QuickFix.FIX42.OrderCancelReplaceRequest QueryCancelReplaceRequest42()
@@ -318,6 +585,68 @@ namespace TradeClient
             return ocrr;
         }
 
+        private QuickFix.FIX43.OrderCancelReplaceRequest QueryCancelReplaceRequest43()
+        {
+            QuickFix.FIX43.OrderCancelReplaceRequest ocrr = new QuickFix.FIX43.OrderCancelReplaceRequest(
+                QueryOrigClOrdID(),
+                QueryClOrdID(),
+                new HandlInst('1'),
+                QuerySymbol(),
+                QuerySide(),
+                new TransactTime(DateTime.Now),
+                QueryOrdType());
+
+            if (QueryConfirm("New price"))
+                ocrr.set(QueryPrice());
+            if (QueryConfirm("New quantity"))
+                ocrr.set(QueryOrderQty());
+
+            QueryHeader(ocrr.Header);
+            return ocrr;
+        }
+
+        private QuickFix.FIX44.OrderCancelReplaceRequest QueryCancelReplaceRequest44()
+        {
+            QuickFix.FIX44.OrderCancelReplaceRequest ocrr = new QuickFix.FIX44.OrderCancelReplaceRequest(
+                QueryOrigClOrdID(),
+                QueryClOrdID(),
+                QuerySymbol(),
+                QuerySide(),
+                new TransactTime(DateTime.Now),
+                QueryOrdType());
+
+            ocrr.set(new HandlInst('1'));
+            if (QueryConfirm("New price"))
+                ocrr.set(QueryPrice());
+            if (QueryConfirm("New quantity"))
+                ocrr.set(QueryOrderQty());
+
+            QueryHeader(ocrr.Header);
+            return ocrr;
+        }
+
+        private QuickFix.FIX50.OrderCancelReplaceRequest QueryCancelReplaceRequest50()
+        {
+            QuickFix.FIX50.OrderCancelReplaceRequest ocrr = new QuickFix.FIX50.OrderCancelReplaceRequest(
+                QueryOrigClOrdID(),
+                QueryClOrdID(),
+                QuerySide(),
+                new TransactTime(DateTime.Now),
+                QueryOrdType());
+
+            ocrr.set(new HandlInst('1'));
+            ocrr.set(QuerySymbol());
+            if (QueryConfirm("New price"))
+                ocrr.set(QueryPrice());
+            if (QueryConfirm("New quantity"))
+                ocrr.set(QueryOrderQty());
+
+            QueryHeader(ocrr.Header);
+            return ocrr;
+        }
+        #endregion
+
+        #region QueryMarketDataRequestNN
         private QuickFix.FIX42.MarketDataRequest QueryMarketDataRequest42()
         {
             MDReqID mdReqID = new MDReqID( "MARKETDATAID" );
@@ -339,6 +668,73 @@ namespace TradeClient
             Console.WriteLine(message.ToString());
             return message;
         }
+
+        private QuickFix.FIX43.MarketDataRequest QueryMarketDataRequest43()
+        {
+            MDReqID mdReqID = new MDReqID("MARKETDATAID");
+            SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
+            MarketDepth marketDepth = new MarketDepth(0);
+
+            QuickFix.FIX43.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX43.MarketDataRequest.NoMDEntryTypes();
+            marketDataEntryGroup.set(new MDEntryType(MDEntryType.BID));
+
+            QuickFix.FIX43.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX43.MarketDataRequest.NoRelatedSym();
+            symbolGroup.set(new Symbol("LNUX"));
+
+            QuickFix.FIX43.MarketDataRequest message = new QuickFix.FIX43.MarketDataRequest(mdReqID, subType, marketDepth);
+            message.AddGroup(marketDataEntryGroup);
+            message.AddGroup(symbolGroup);
+
+            QueryHeader(message.Header);
+
+            Console.WriteLine(message.ToString());
+            return message;
+        }
+
+        private QuickFix.FIX44.MarketDataRequest QueryMarketDataRequest44()
+        {
+            MDReqID mdReqID = new MDReqID("MARKETDATAID");
+            SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
+            MarketDepth marketDepth = new MarketDepth(0);
+
+            QuickFix.FIX44.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX44.MarketDataRequest.NoMDEntryTypes();
+            marketDataEntryGroup.set(new MDEntryType(MDEntryType.BID));
+
+            QuickFix.FIX44.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX44.MarketDataRequest.NoRelatedSym();
+            symbolGroup.set(new Symbol("LNUX"));
+
+            QuickFix.FIX44.MarketDataRequest message = new QuickFix.FIX44.MarketDataRequest(mdReqID, subType, marketDepth);
+            message.AddGroup(marketDataEntryGroup);
+            message.AddGroup(symbolGroup);
+
+            QueryHeader(message.Header);
+
+            Console.WriteLine(message.ToString());
+            return message;
+        }
+
+        private QuickFix.FIX50.MarketDataRequest QueryMarketDataRequest50()
+        {
+            MDReqID mdReqID = new MDReqID("MARKETDATAID");
+            SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
+            MarketDepth marketDepth = new MarketDepth(0);
+
+            QuickFix.FIX50.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX50.MarketDataRequest.NoMDEntryTypes();
+            marketDataEntryGroup.set(new MDEntryType(MDEntryType.BID));
+
+            QuickFix.FIX50.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX50.MarketDataRequest.NoRelatedSym();
+            symbolGroup.set(new Symbol("LNUX"));
+
+            QuickFix.FIX50.MarketDataRequest message = new QuickFix.FIX50.MarketDataRequest(mdReqID, subType, marketDepth);
+            message.AddGroup(marketDataEntryGroup);
+            message.AddGroup(symbolGroup);
+
+            QueryHeader(message.Header);
+
+            Console.WriteLine(message.ToString());
+            return message;
+        }
+        #endregion
 
 
         #region field query private methods
