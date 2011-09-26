@@ -10,6 +10,7 @@ Sending Messages
 
 public class Dude {
     int dude = 0;
+    string ohai = "ohai";
 }
 
 {% endhighlight %}
