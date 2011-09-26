@@ -403,7 +403,7 @@ namespace QuickFix
 
         protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.DDGrp dd, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
         {
-            int delim = dd.Delim.Tag;
+            int delim = dd.Delim;
             int grpPos = pos;
             Group grp = null;
 

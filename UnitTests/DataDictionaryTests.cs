@@ -69,7 +69,7 @@ namespace UnitTests
             Assert.True(tcrr.IsField(711));  // No Field also a field
             Assert.True(tcrr.GetGroup(711).IsField(311));
             Assert.That(tcrr.Groups[711].Fields[311].Name, Is.EqualTo("UnderlyingSymbol"));
-            Assert.That(tcrr.Groups[711].Delim.Tag, Is.EqualTo(311));
+            Assert.That(tcrr.Groups[711].Delim, Is.EqualTo(311));
             QuickFix.DataDictionary.DDMap tcr = dd.Messages["AE"];
             Assert.That(tcr.Groups[711].Groups[457].Fields[458].Name, Is.EqualTo("UnderlyingSecurityAltID"));
         }

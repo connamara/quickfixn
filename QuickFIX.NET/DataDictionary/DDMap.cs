@@ -18,7 +18,7 @@ namespace QuickFix.DataDictionary
 
         public void AddGroup(DDGrp grp)
         {
-            Groups.Add(grp.Delim.Tag, grp);
+            Groups.Add(grp.Delim, grp);
         }
 
         public Boolean IsGroup(int tag)
@@ -37,10 +37,16 @@ namespace QuickFix.DataDictionary
         }
     }
 
-    public class DDGrp : DDMap
+    public class DDGrp : DDMap, IGroupSpec
     {
-        public DDField NumFld = null;
-        public DDField Delim = null;
+        public int NumFld { get; set; }
+        public int Delim { get; set; }
         public Boolean Required = false;
+        public DDGrp() : base()
+        {
+            Delim = 0;
+            NumFld = 0;
+            Required = false;
+        }
     }
 }
