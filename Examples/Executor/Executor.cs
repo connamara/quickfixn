@@ -15,7 +15,7 @@ namespace Executor
 
         private string GenOrderID() { return (++orderID).ToString(); }
         private string GenExecID() { return (++execID).ToString(); }
-        
+
         #region QuickFix.Application Methods
 
         public void FromApp(Message message, SessionID sessionID)
@@ -37,29 +37,76 @@ namespace Executor
         #endregion
 
         #region MessageCracker overloads
-        public void OnMessage(QuickFix.FIX40.NewOrderSingle n, SessionID s) { Console.WriteLine("cracked!"); }
-        public void OnMessage(QuickFix.FIX41.NewOrderSingle n, SessionID s) { Console.WriteLine("cracked!"); }
-
-        public void OnMessage(QuickFix.FIX42.NewOrderSingle n, SessionID s)
+        public void OnMessage(QuickFix.FIX40.NewOrderSingle n, SessionID s)
         {
             Symbol symbol = n.symbol;
-            Side side = new Side(n.GetField(QuickFix.Fields.Tags.Side)[0]); // TODO workaround
-            OrdType ordType = new OrdType(n.GetField(QuickFix.Fields.Tags.OrdType)[0]); // TODO workaround
-            OrderQty orderQty = new OrderQty(Convert.ToDecimal(n.GetField(QuickFix.Fields.Tags.OrderQty))); // TODO workaround
-            Price price = new Price(Convert.ToDecimal(n.GetField(QuickFix.Fields.Tags.Price))); // TODO workaround
+            Side side = n.side;
+            OrdType ordType = n.ordType;
+            OrderQty orderQty = n.orderQty;
+            Price price = n.price;
             ClOrdID clOrdID = n.clOrdID;
 
             if (ordType.getValue() != OrdType.LIMIT)
                 throw new IncorrectTagValue(ordType.Tag);
 
-            QuickFix.FIX42.ExecutionReport exReport = new QuickFix.FIX42.ExecutionReport(
+            QuickFix.FIX40.ExecutionReport exReport = new QuickFix.FIX40.ExecutionReport(
                 new OrderID(GenOrderID()),
                 new ExecID(GenExecID()),
                 new ExecTransType(ExecTransType.NEW),
-                new ExecType(ExecType.NEW),
                 new OrdStatus(OrdStatus.FILLED),
                 symbol,
                 side,
+                orderQty,
+                new LastShares(orderQty.getValue()),
+                new LastPx(price.getValue()),
+                new CumQty(orderQty.getValue()),
+                new AvgPx(price.getValue()));
+
+            exReport.set(clOrdID);
+
+            if (n.isSetAccount())
+                exReport.setField(n.account);
+
+            try
+            {
+                Session.SendToTarget(exReport, s);
+            }
+            catch (SessionNotFound ex)
+            {
+                Console.WriteLine("==session not found exception!==");
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("==unknown exception==");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
+
+        public void OnMessage(QuickFix.FIX41.NewOrderSingle n, SessionID s)
+        {
+            Symbol symbol = n.symbol;
+            Side side = n.side;
+            OrdType ordType = n.ordType;
+            OrderQty orderQty = n.orderQty;
+            Price price = n.price;
+            ClOrdID clOrdID = n.clOrdID;
+
+            if (ordType.getValue() != OrdType.LIMIT)
+                throw new IncorrectTagValue(ordType.Tag);
+
+            QuickFix.FIX41.ExecutionReport exReport = new QuickFix.FIX41.ExecutionReport(
+                new OrderID(GenOrderID()),
+                new ExecID(GenExecID()),
+                new ExecTransType(ExecTransType.NEW),
+                new ExecType(ExecType.FILL),
+                new OrdStatus(OrdStatus.FILLED),
+                symbol,
+                side,
+                orderQty,
+                new LastShares(orderQty.getValue()),
+                new LastPx(price.getValue()),
                 new LeavesQty(0),
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
@@ -86,9 +133,200 @@ namespace Executor
             }
         }
 
-        public void OnMessage(QuickFix.FIX43.NewOrderSingle n, SessionID s) { Console.WriteLine("cracked!"); }
-        public void OnMessage(QuickFix.FIX44.NewOrderSingle n, SessionID s) { Console.WriteLine("cracked!"); }
-        public void OnMessage(QuickFix.FIX50.NewOrderSingle n, SessionID s) { Console.WriteLine("cracked!"); }
+        public void OnMessage(QuickFix.FIX42.NewOrderSingle n, SessionID s)
+        {
+            Symbol symbol = n.symbol;
+            Side side = n.side;
+            OrdType ordType = n.ordType;
+            OrderQty orderQty = n.orderQty;
+            Price price = n.price;
+            ClOrdID clOrdID = n.clOrdID;
+
+            if (ordType.getValue() != OrdType.LIMIT)
+                throw new IncorrectTagValue(ordType.Tag);
+
+            QuickFix.FIX42.ExecutionReport exReport = new QuickFix.FIX42.ExecutionReport(
+                new OrderID(GenOrderID()),
+                new ExecID(GenExecID()),
+                new ExecTransType(ExecTransType.NEW),
+                new ExecType(ExecType.FILL),
+                new OrdStatus(OrdStatus.FILLED),
+                symbol,
+                side,
+                new LeavesQty(0),
+                new CumQty(orderQty.getValue()),
+                new AvgPx(price.getValue()));
+
+            exReport.set(clOrdID);
+            exReport.set(orderQty);
+            exReport.set(new LastShares(orderQty.getValue()));
+            exReport.set(new LastPx(price.getValue()));
+
+            if (n.isSetAccount())
+                exReport.setField(n.account);
+
+            try
+            {
+                Session.SendToTarget(exReport, s);
+            }
+            catch (SessionNotFound ex)
+            {
+                Console.WriteLine("==session not found exception!==");
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("==unknown exception==");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
+
+        public void OnMessage(QuickFix.FIX43.NewOrderSingle n, SessionID s)
+        {
+            Symbol symbol = n.symbol;
+            Side side = n.side;
+            OrdType ordType = n.ordType;
+            OrderQty orderQty = n.orderQty;
+            Price price = n.price;
+            ClOrdID clOrdID = n.clOrdID;
+
+            if (ordType.getValue() != OrdType.LIMIT)
+                throw new IncorrectTagValue(ordType.Tag);
+
+            QuickFix.FIX43.ExecutionReport exReport = new QuickFix.FIX43.ExecutionReport(
+                new OrderID(GenOrderID()),
+                new ExecID(GenExecID()),
+                new ExecType(ExecType.FILL),
+                new OrdStatus(OrdStatus.FILLED),
+                symbol, // Shouldn't be here?
+                side,
+                new LeavesQty(0),
+                new CumQty(orderQty.getValue()),
+                new AvgPx(price.getValue()));
+
+            exReport.set(clOrdID);
+            exReport.set(symbol);
+            exReport.set(orderQty);
+            exReport.set(new LastQty(orderQty.getValue()));
+            exReport.set(new LastPx(price.getValue()));
+
+            if (n.isSetAccount())
+                exReport.setField(n.account);
+
+            try
+            {
+                Session.SendToTarget(exReport, s);
+            }
+            catch (SessionNotFound ex)
+            {
+                Console.WriteLine("==session not found exception!==");
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("==unknown exception==");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
+
+        public void OnMessage(QuickFix.FIX44.NewOrderSingle n, SessionID s)
+        {
+            Symbol symbol = n.symbol;
+            Side side = n.side;
+            OrdType ordType = n.ordType;
+            OrderQty orderQty = n.orderQty;
+            Price price = n.price;
+            ClOrdID clOrdID = n.clOrdID;
+
+            if (ordType.getValue() != OrdType.LIMIT)
+                throw new IncorrectTagValue(ordType.Tag);
+
+            QuickFix.FIX44.ExecutionReport exReport = new QuickFix.FIX44.ExecutionReport(
+                new OrderID(GenOrderID()),
+                new ExecID(GenExecID()),
+                new ExecType(ExecType.FILL),
+                new OrdStatus(OrdStatus.FILLED),
+                symbol, //shouldn't be here?
+                side,
+                new LeavesQty(0),
+                new CumQty(orderQty.getValue()),
+                new AvgPx(price.getValue()));
+
+            exReport.set(clOrdID);
+            exReport.set(symbol);
+            exReport.set(orderQty);
+            exReport.set(new LastQty(orderQty.getValue()));
+            exReport.set(new LastPx(price.getValue()));
+
+            if (n.isSetAccount())
+                exReport.setField(n.account);
+
+            try
+            {
+                Session.SendToTarget(exReport, s);
+            }
+            catch (SessionNotFound ex)
+            {
+                Console.WriteLine("==session not found exception!==");
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("==unknown exception==");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
+
+        public void OnMessage(QuickFix.FIX50.NewOrderSingle n, SessionID s)
+        {
+            Symbol symbol = n.symbol;
+            Side side = n.side;
+            OrdType ordType = n.ordType;
+            OrderQty orderQty = n.orderQty;
+            Price price = n.price;
+            ClOrdID clOrdID = n.clOrdID;
+
+            if (ordType.getValue() != OrdType.LIMIT)
+                throw new IncorrectTagValue(ordType.Tag);
+
+            QuickFix.FIX50.ExecutionReport exReport = new QuickFix.FIX50.ExecutionReport(
+                new OrderID(GenOrderID()),
+                new ExecID(GenExecID()),
+                new ExecType(ExecType.FILL),
+                new OrdStatus(OrdStatus.FILLED),
+                side,
+                new LeavesQty(0),
+                new CumQty(orderQty.getValue()));
+
+            exReport.set(clOrdID);
+            exReport.set(symbol);
+            exReport.set(orderQty);
+            exReport.set(new LastQty(orderQty.getValue()));
+            exReport.set(new LastPx(price.getValue()));
+            exReport.set(new AvgPx(price.getValue()));
+
+            if (n.isSetAccount())
+                exReport.setField(n.account);
+
+            try
+            {
+                Session.SendToTarget(exReport, s);
+            }
+            catch (SessionNotFound ex)
+            {
+                Console.WriteLine("==session not found exception!==");
+                Console.WriteLine(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("==unknown exception==");
+                Console.WriteLine(ex.ToString());
+                Console.WriteLine(ex.StackTrace);
+            }
+        }
         #endregion
     }
 }
