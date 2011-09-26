@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -51,6 +51,7 @@
     <Compile Include="Applications\FIX5Application.cs" />
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />
+    <Compile Include="DataDictionary\GroupSpec.cs" />
     <Compile Include="DataDictionary\DataDictionary.cs" />
     <Compile Include="DataDictionary\DDField.cs" />
     <Compile Include="DataDictionary\DDMap.cs" />

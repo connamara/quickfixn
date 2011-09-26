@@ -378,9 +378,9 @@ namespace QuickFix.DataDictionary
                     }
 
                     // if first field in group, make it the DELIM <3 FIX
-                    if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == null))
+                    if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == 0))
                     {
-                        ((DDGrp)ddmap).Delim = fld;
+                        ((DDGrp)ddmap).Delim = fld.Tag;
                     }
                 }
                 else if(childNode.Name == "group")
@@ -397,7 +397,7 @@ namespace QuickFix.DataDictionary
                     {
                         ddmap.Fields.Add(fld.Tag, fld);
                     }
-                    grp.NumFld = fld; 
+                    grp.NumFld = fld.Tag; 
                     parseMsgEl(childNode, grp);
                     ddmap.Groups.Add(fld.Tag, grp);
                 }
