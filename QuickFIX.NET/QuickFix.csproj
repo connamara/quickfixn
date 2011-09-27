@@ -51,6 +51,7 @@
     <Compile Include="Applications\FIX5Application.cs" />
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />
+    <Compile Include="DataDictionary\FieldMapSpec.cs" />
     <Compile Include="DataDictionary\GroupSpec.cs" />
     <Compile Include="DataDictionary\DataDictionary.cs" />
     <Compile Include="DataDictionary\DDField.cs" />
