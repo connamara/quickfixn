@@ -2,10 +2,8 @@
 
 namespace QuickFix.DataDictionary
 {
-    public interface IGroupSpec
+    public interface IGroupSpec : IFieldMapSpec
     {
-        Boolean IsGroup(int tag);
-        Boolean IsField(int tag);
         int Delim { get; set; }
     }
 }
