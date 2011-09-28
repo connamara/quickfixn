@@ -13,6 +13,10 @@ namespace AcceptanceTest
             log_ = debugLog;
         }
 
+        public void OnMessage(QuickFix.FIX40.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
 
         public void OnMessage(QuickFix.FIX42.NewOrderSingle nos, SessionID sessionID) 
         {
