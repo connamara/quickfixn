@@ -256,6 +256,7 @@ namespace QuickFix
         public InvalidMessageType()
             : base(QuickFix.Fields.Tags.MsgType, FixValues.SessionRejectReason.INVALID_MSGTYPE)
         { }
+
     }
 
 

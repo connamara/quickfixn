@@ -680,7 +680,7 @@ namespace QuickFix
         {
             FieldMap header = message.Header;
             System.DateTime sendingTime = header.GetDateTime(Fields.Tags.SendingTime);
-            header.setField(new Fields.OrigSendingTime(sendingTime));
+            InsertOrigSendingTime(header, sendingTime);
             header.setField(new Fields.PossDupFlag(true));
             InsertSendingTime(header);
         }
@@ -777,17 +777,28 @@ namespace QuickFix
 
         protected void GenerateBusinessMessageReject(Message message, int err, int field)
         {
-            Message reject = msgFactory_.Create(this.SessionID.BeginString,
-                MsgType.BUSINESS_MESSAGE_REJECT);
-            InitializeHeader(reject);
             string msgType = message.Header.GetString(Tags.MsgType);
-            int msgSeqNum = message.Header.GetInt(Tags.MsgSeqNum);
-            reject.setField(new RefMsgType(msgType));
+            int msgSeqNum = message.Header.GetInt(Tags.MsgSeqNum);            
+            string reason = FixValues.BusinessRejectReason.RejText[err];
+            Message reject;
+            if (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
+            {
+                reject = msgFactory_.Create(this.SessionID.BeginString, MsgType.BUSINESS_MESSAGE_REJECT);
+                reject.setField(new RefMsgType(msgType));
+                reject.setField(new BusinessRejectReason(err));
+            }
+            else
+            {
+                reject = msgFactory_.Create(this.SessionID.BeginString, MsgType.REJECT);
+                char[] reasonArray = reason.ToLower().ToCharArray();
+                reasonArray[0] = char.ToUpper(reasonArray[0]);
+                reason = new string(reasonArray);
+            }
+            InitializeHeader(reject);
             reject.setField(new RefSeqNum(msgSeqNum));
-            reject.setField(new BusinessRejectReason(err));
             state_.IncrNextTargetMsgSeqNum();
 
-            string reason = FixValues.BusinessRejectReason.RejText[err];
+
             reject.setField(new Text(reason));
             Log.OnEvent("Reject sent for Message: " + msgSeqNum + " Reason:" + reason);
             SendRaw(reject, 0);
@@ -958,7 +969,11 @@ namespace QuickFix
 
             if ((0 != field) || FixValues.SessionRejectReason.INVALID_TAG_NUMBER.Equals(reason))
             {
-                PopulateSessionRejectReason(reject, field, reason.Description);
+                if(FixValues.SessionRejectReason.INVALID_MSGTYPE.Equals(reason))
+                    PopulateSessionRejectReason(reject, field, reason.Description, false);
+                else
+                    PopulateSessionRejectReason(reject, field, reason.Description, true);
+                
                 this.Log.OnEvent("Message " + msgSeqNum + " Rejected: " + reason.Description + " (Field=" + field + ")");
             }
             else
@@ -973,7 +988,7 @@ namespace QuickFix
             return SendRaw(reject, 0);
         }
 
-        protected void PopulateSessionRejectReason(Message reject, int field, string text)
+        protected void PopulateSessionRejectReason(Message reject, int field, string text, bool includeFieldInfo)
         {
             if (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
             {
@@ -982,7 +997,10 @@ namespace QuickFix
             }
             else
             {
-                reject.setField(new Fields.Text(text + " (" + field + ")"));
+                if(includeFieldInfo)
+                    reject.setField(new Fields.Text(text + " (" + field + ")"));
+                else
+                    reject.setField(new Fields.Text(text));
             }
         }
 
@@ -1016,7 +1034,10 @@ namespace QuickFix
 
         protected void InsertSendingTime(FieldMap header)
         {
-            header.setField(new Fields.SendingTime(System.DateTime.UtcNow));
+            if (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
+                header.setField(new Fields.SendingTime(System.DateTime.UtcNow));
+            else
+                header.setField(new Fields.SendingTime(System.DateTime.UtcNow, false));
         }
 
         protected void Persist(Message message, string messageString)
@@ -1047,7 +1068,8 @@ namespace QuickFix
             InitializeHeader(sequenceReset);
             int newSeqNo = endSeqNo;
             sequenceReset.Header.setField(new PossDupFlag(true));
-            sequenceReset.Header.setField(new OrigSendingTime(sequenceReset.Header.GetDateTime(Tags.SendingTime)));
+            InsertOrigSendingTime(sequenceReset.Header, sequenceReset.Header.GetDateTime(Tags.SendingTime));
+            
             sequenceReset.Header.setField(new MsgSeqNum(beginSeqNo));
             sequenceReset.setField(new NewSeqNo(newSeqNo));
             sequenceReset.setField(new GapFillFlag(true));
@@ -1055,6 +1077,13 @@ namespace QuickFix
             this.Log.OnEvent("Sent SequenceReset TO: " + newSeqNo);
         }
 
+        protected void InsertOrigSendingTime(FieldMap header, System.DateTime sendingTime)
+        {
+            if (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
+                header.setField(new OrigSendingTime(sendingTime));
+            else
+                header.setField(new OrigSendingTime(sendingTime, false));
+        }
         protected void NextQueued()
         {
             while (NextQueued(state_.MessageStore.GetNextTargetMsgSeqNum())) {

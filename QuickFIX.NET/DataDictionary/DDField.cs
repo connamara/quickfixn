@@ -53,7 +53,7 @@ namespace QuickFix.DataDictionary
                 case "UTCDATEONLY": return typeof(Fields.DateTimeField);
                 case "UTCDATE": return typeof(Fields.DateTimeField);
                 case "UTCTIMEONLY": return typeof(Fields.DateTimeField);
-                case "TIME": return typeof(Fields.StringField);
+                case "TIME": return typeof(Fields.DateTimeField);
                 case "NUMINGROUP": return typeof(Fields.IntField);
                 case "PERCENTAGE": return typeof(Fields.DecimalField);
                 case "SEQNUM": return typeof(Fields.IntField);
