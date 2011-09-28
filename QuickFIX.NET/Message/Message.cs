@@ -325,7 +325,7 @@ namespace QuickFix
             bool expectingBody = true;
             int count = 0;
             int pos = 0;
-	        DataDictionary.DDMap msgMap = null;
+	        DataDictionary.IFieldMapSpec msgMap = null;
 
             while (pos < msgstr.Length)
             {
@@ -357,7 +357,7 @@ namespace QuickFix
 
                     if ((null != sessionDD) && sessionDD.Header.IsGroup(f.Tag))
                     {
-                        pos = SetGroup(f, msgstr, pos, this.Header, sessionDD.Header.GetGroup(f.Tag), sessionDD, appDD);
+                        pos = SetGroup(f, msgstr, pos, this.Header, sessionDD.Header.GetGroupSpec(f.Tag), sessionDD, appDD);
                     }
                 }
                 else if (IsTrailerField(f.Tag, sessionDD))
@@ -390,7 +390,7 @@ namespace QuickFix
                     
                     if((null != msgMap) && (msgMap.IsGroup(f.Tag))) 
                     {
-                        pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroup(f.Tag), sessionDD, appDD);
+                        pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroupSpec(f.Tag), sessionDD, appDD);
                     }
                 }
             }
@@ -401,7 +401,7 @@ namespace QuickFix
             }
         }
 
-        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.DDGrp dd, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
+        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
         {
             int delim = dd.Delim;
             int grpPos = pos;
@@ -430,7 +430,7 @@ namespace QuickFix
                 grp.setField(f);
                 if(dd.IsGroup(f.Tag))
                 {
-                    pos = SetGroup(f, msgstr, pos, grp, dd.GetGroup(f.Tag), sessionDataDictionary, appDD);
+                    pos = SetGroup(f, msgstr, pos, grp, dd.GetGroupSpec(f.Tag), sessionDataDictionary, appDD);
                 }
             }
             
