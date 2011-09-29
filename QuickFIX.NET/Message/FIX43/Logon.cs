@@ -19,11 +19,11 @@ namespace QuickFix
                     QuickFix.Fields.HeartBtInt aHeartBtInt
                 ) : this()
             {
-                this.encryptMethod = aEncryptMethod;
-                this.heartBtInt = aHeartBtInt;
+                this.EncryptMethod = aEncryptMethod;
+                this.HeartBtInt = aHeartBtInt;
             }
 
-            public QuickFix.Fields.EncryptMethod encryptMethod
+            public QuickFix.Fields.EncryptMethod EncryptMethod
             { 
                 get 
                 {
@@ -36,7 +36,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.EncryptMethod val) 
             { 
-                this.encryptMethod = val;
+                this.EncryptMethod = val;
             }
             
             public QuickFix.Fields.EncryptMethod Get(QuickFix.Fields.EncryptMethod val) 
@@ -54,7 +54,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.EncryptMethod);
             }
-            public QuickFix.Fields.HeartBtInt heartBtInt
+            public QuickFix.Fields.HeartBtInt HeartBtInt
             { 
                 get 
                 {
@@ -67,7 +67,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.HeartBtInt val) 
             { 
-                this.heartBtInt = val;
+                this.HeartBtInt = val;
             }
             
             public QuickFix.Fields.HeartBtInt Get(QuickFix.Fields.HeartBtInt val) 
@@ -85,7 +85,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.HeartBtInt);
             }
-            public QuickFix.Fields.RawDataLength rawDataLength
+            public QuickFix.Fields.RawDataLength RawDataLength
             { 
                 get 
                 {
@@ -98,7 +98,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.RawDataLength val) 
             { 
-                this.rawDataLength = val;
+                this.RawDataLength = val;
             }
             
             public QuickFix.Fields.RawDataLength Get(QuickFix.Fields.RawDataLength val) 
@@ -116,7 +116,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.RawDataLength);
             }
-            public QuickFix.Fields.RawData rawData
+            public QuickFix.Fields.RawData RawData
             { 
                 get 
                 {
@@ -129,7 +129,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.RawData val) 
             { 
-                this.rawData = val;
+                this.RawData = val;
             }
             
             public QuickFix.Fields.RawData Get(QuickFix.Fields.RawData val) 
@@ -147,7 +147,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.RawData);
             }
-            public QuickFix.Fields.ResetSeqNumFlag resetSeqNumFlag
+            public QuickFix.Fields.ResetSeqNumFlag ResetSeqNumFlag
             { 
                 get 
                 {
@@ -160,7 +160,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.ResetSeqNumFlag val) 
             { 
-                this.resetSeqNumFlag = val;
+                this.ResetSeqNumFlag = val;
             }
             
             public QuickFix.Fields.ResetSeqNumFlag Get(QuickFix.Fields.ResetSeqNumFlag val) 
@@ -178,7 +178,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.ResetSeqNumFlag);
             }
-            public QuickFix.Fields.MaxMessageSize maxMessageSize
+            public QuickFix.Fields.MaxMessageSize MaxMessageSize
             { 
                 get 
                 {
@@ -191,7 +191,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.MaxMessageSize val) 
             { 
-                this.maxMessageSize = val;
+                this.MaxMessageSize = val;
             }
             
             public QuickFix.Fields.MaxMessageSize Get(QuickFix.Fields.MaxMessageSize val) 
@@ -209,7 +209,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.MaxMessageSize);
             }
-            public QuickFix.Fields.NoMsgTypes noMsgTypes
+            public QuickFix.Fields.NoMsgTypes NoMsgTypes
             { 
                 get 
                 {
@@ -222,7 +222,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.NoMsgTypes val) 
             { 
-                this.noMsgTypes = val;
+                this.NoMsgTypes = val;
             }
             
             public QuickFix.Fields.NoMsgTypes Get(QuickFix.Fields.NoMsgTypes val) 
@@ -240,7 +240,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.NoMsgTypes);
             }
-            public QuickFix.Fields.TestMessageIndicator testMessageIndicator
+            public QuickFix.Fields.TestMessageIndicator TestMessageIndicator
             { 
                 get 
                 {
@@ -253,7 +253,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.TestMessageIndicator val) 
             { 
-                this.testMessageIndicator = val;
+                this.TestMessageIndicator = val;
             }
             
             public QuickFix.Fields.TestMessageIndicator Get(QuickFix.Fields.TestMessageIndicator val) 
@@ -271,7 +271,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.TestMessageIndicator);
             }
-            public QuickFix.Fields.Username username
+            public QuickFix.Fields.Username Username
             { 
                 get 
                 {
@@ -284,7 +284,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.Username val) 
             { 
-                this.username = val;
+                this.Username = val;
             }
             
             public QuickFix.Fields.Username Get(QuickFix.Fields.Username val) 
@@ -302,7 +302,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.Username);
             }
-            public QuickFix.Fields.Password password
+            public QuickFix.Fields.Password Password
             { 
                 get 
                 {
@@ -315,7 +315,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.Password val) 
             { 
-                this.password = val;
+                this.Password = val;
             }
             
             public QuickFix.Fields.Password Get(QuickFix.Fields.Password val) 
@@ -333,14 +333,14 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.Password);
             }
-            public class NoMsgTypes : Group
+            public class NoMsgTypesGroup : Group
             {
-                public NoMsgTypes() 
+                public NoMsgTypesGroup() 
                   :base( Tags.NoMsgTypes, Tags.RefMsgType, fieldOrder)
                 {
                 }
                 public static int[] fieldOrder = {Tags.RefMsgType, Tags.MsgDirection, 0};
-                            public QuickFix.Fields.RefMsgType refMsgType
+                            public QuickFix.Fields.RefMsgType RefMsgType
                 { 
                     get 
                     {
@@ -353,7 +353,7 @@ namespace QuickFix
                 
                 public void Set(QuickFix.Fields.RefMsgType val) 
                 { 
-                    this.refMsgType = val;
+                    this.RefMsgType = val;
                 }
                 
                 public QuickFix.Fields.RefMsgType Get(QuickFix.Fields.RefMsgType val) 
@@ -371,7 +371,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.RefMsgType);
                 }
-                public QuickFix.Fields.MsgDirection msgDirection
+                public QuickFix.Fields.MsgDirection MsgDirection
                 { 
                     get 
                     {
@@ -384,7 +384,7 @@ namespace QuickFix
                 
                 public void Set(QuickFix.Fields.MsgDirection val) 
                 { 
-                    this.msgDirection = val;
+                    this.MsgDirection = val;
                 }
                 
                 public QuickFix.Fields.MsgDirection Get(QuickFix.Fields.MsgDirection val) 

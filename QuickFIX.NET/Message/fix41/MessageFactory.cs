@@ -50,7 +50,7 @@ namespace QuickFix
                 {
                     switch (correspondingFieldID)
                     {
-                        case QuickFix.Fields.Tags.NoIOIQualifiers: return new QuickFix.FIX41.IndicationofInterest.NoIOIQualifiers();
+                        case QuickFix.Fields.Tags.NoIOIQualifiers: return new QuickFix.FIX41.IndicationofInterest.NoIOIQualifiersGroup();
                     }
                 }
 
@@ -58,8 +58,8 @@ namespace QuickFix
                 {
                     switch (correspondingFieldID)
                     {
-                        case QuickFix.Fields.Tags.NoRelatedSym: return new QuickFix.FIX41.News.NoRelatedSym();
-                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX41.News.LinesOfText();
+                        case QuickFix.Fields.Tags.NoRelatedSym: return new QuickFix.FIX41.News.NoRelatedSymGroup();
+                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX41.News.LinesOfTextGroup();
                     }
                 }
 
@@ -67,8 +67,8 @@ namespace QuickFix
                 {
                     switch (correspondingFieldID)
                     {
-                        case QuickFix.Fields.Tags.NoRelatedSym: return new QuickFix.FIX41.Email.NoRelatedSym();
-                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX41.Email.LinesOfText();
+                        case QuickFix.Fields.Tags.NoRelatedSym: return new QuickFix.FIX41.Email.NoRelatedSymGroup();
+                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX41.Email.LinesOfTextGroup();
                     }
                 }
 
@@ -76,9 +76,9 @@ namespace QuickFix
                 {
                     switch (correspondingFieldID)
                     {
-                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX41.Allocation.NoOrders();
-                        case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX41.Allocation.NoExecs();
-                        case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX41.Allocation.NoAllocs();
+                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX41.Allocation.NoOrdersGroup();
+                        case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX41.Allocation.NoExecsGroup();
+                        case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX41.Allocation.NoAllocsGroup();
                     }
                 }
 
@@ -86,7 +86,7 @@ namespace QuickFix
                 {
                     switch (correspondingFieldID)
                     {
-                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX41.ListStatus.NoOrders();
+                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX41.ListStatus.NoOrdersGroup();
                     }
                 }
 

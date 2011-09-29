@@ -19,11 +19,11 @@ namespace QuickFix
                     QuickFix.Fields.StreamAsgnRptID aStreamAsgnRptID
                 ) : this()
             {
-                this.streamAsgnAckType = aStreamAsgnAckType;
-                this.streamAsgnRptID = aStreamAsgnRptID;
+                this.StreamAsgnAckType = aStreamAsgnAckType;
+                this.StreamAsgnRptID = aStreamAsgnRptID;
             }
 
-            public QuickFix.Fields.StreamAsgnAckType streamAsgnAckType
+            public QuickFix.Fields.StreamAsgnAckType StreamAsgnAckType
             { 
                 get 
                 {
@@ -36,7 +36,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.StreamAsgnAckType val) 
             { 
-                this.streamAsgnAckType = val;
+                this.StreamAsgnAckType = val;
             }
             
             public QuickFix.Fields.StreamAsgnAckType Get(QuickFix.Fields.StreamAsgnAckType val) 
@@ -54,7 +54,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.StreamAsgnAckType);
             }
-            public QuickFix.Fields.StreamAsgnRptID streamAsgnRptID
+            public QuickFix.Fields.StreamAsgnRptID StreamAsgnRptID
             { 
                 get 
                 {
@@ -67,7 +67,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.StreamAsgnRptID val) 
             { 
-                this.streamAsgnRptID = val;
+                this.StreamAsgnRptID = val;
             }
             
             public QuickFix.Fields.StreamAsgnRptID Get(QuickFix.Fields.StreamAsgnRptID val) 
@@ -85,7 +85,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.StreamAsgnRptID);
             }
-            public QuickFix.Fields.StreamAsgnRejReason streamAsgnRejReason
+            public QuickFix.Fields.StreamAsgnRejReason StreamAsgnRejReason
             { 
                 get 
                 {
@@ -98,7 +98,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.StreamAsgnRejReason val) 
             { 
-                this.streamAsgnRejReason = val;
+                this.StreamAsgnRejReason = val;
             }
             
             public QuickFix.Fields.StreamAsgnRejReason Get(QuickFix.Fields.StreamAsgnRejReason val) 
@@ -116,7 +116,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.StreamAsgnRejReason);
             }
-            public QuickFix.Fields.Text text
+            public QuickFix.Fields.Text Text
             { 
                 get 
                 {
@@ -129,7 +129,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.Text val) 
             { 
-                this.text = val;
+                this.Text = val;
             }
             
             public QuickFix.Fields.Text Get(QuickFix.Fields.Text val) 
@@ -147,7 +147,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.Text);
             }
-            public QuickFix.Fields.EncodedTextLen encodedTextLen
+            public QuickFix.Fields.EncodedTextLen EncodedTextLen
             { 
                 get 
                 {
@@ -160,7 +160,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.EncodedTextLen val) 
             { 
-                this.encodedTextLen = val;
+                this.EncodedTextLen = val;
             }
             
             public QuickFix.Fields.EncodedTextLen Get(QuickFix.Fields.EncodedTextLen val) 
@@ -178,7 +178,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.EncodedTextLen);
             }
-            public QuickFix.Fields.EncodedText encodedText
+            public QuickFix.Fields.EncodedText EncodedText
             { 
                 get 
                 {
@@ -191,7 +191,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.EncodedText val) 
             { 
-                this.encodedText = val;
+                this.EncodedText = val;
             }
             
             public QuickFix.Fields.EncodedText Get(QuickFix.Fields.EncodedText val) 

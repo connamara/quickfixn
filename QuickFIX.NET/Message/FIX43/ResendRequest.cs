@@ -19,11 +19,11 @@ namespace QuickFix
                     QuickFix.Fields.EndSeqNo aEndSeqNo
                 ) : this()
             {
-                this.beginSeqNo = aBeginSeqNo;
-                this.endSeqNo = aEndSeqNo;
+                this.BeginSeqNo = aBeginSeqNo;
+                this.EndSeqNo = aEndSeqNo;
             }
 
-            public QuickFix.Fields.BeginSeqNo beginSeqNo
+            public QuickFix.Fields.BeginSeqNo BeginSeqNo
             { 
                 get 
                 {
@@ -36,7 +36,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.BeginSeqNo val) 
             { 
-                this.beginSeqNo = val;
+                this.BeginSeqNo = val;
             }
             
             public QuickFix.Fields.BeginSeqNo Get(QuickFix.Fields.BeginSeqNo val) 
@@ -54,7 +54,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.BeginSeqNo);
             }
-            public QuickFix.Fields.EndSeqNo endSeqNo
+            public QuickFix.Fields.EndSeqNo EndSeqNo
             { 
                 get 
                 {
@@ -67,7 +67,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.EndSeqNo val) 
             { 
-                this.endSeqNo = val;
+                this.EndSeqNo = val;
             }
             
             public QuickFix.Fields.EndSeqNo Get(QuickFix.Fields.EndSeqNo val) 

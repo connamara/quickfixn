@@ -18,10 +18,10 @@ namespace QuickFix
                     QuickFix.Fields.NewSeqNo aNewSeqNo
                 ) : this()
             {
-                this.newSeqNo = aNewSeqNo;
+                this.NewSeqNo = aNewSeqNo;
             }
 
-            public QuickFix.Fields.GapFillFlag gapFillFlag
+            public QuickFix.Fields.GapFillFlag GapFillFlag
             { 
                 get 
                 {
@@ -34,7 +34,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.GapFillFlag val) 
             { 
-                this.gapFillFlag = val;
+                this.GapFillFlag = val;
             }
             
             public QuickFix.Fields.GapFillFlag Get(QuickFix.Fields.GapFillFlag val) 
@@ -52,7 +52,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.GapFillFlag);
             }
-            public QuickFix.Fields.NewSeqNo newSeqNo
+            public QuickFix.Fields.NewSeqNo NewSeqNo
             { 
                 get 
                 {
@@ -65,7 +65,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.NewSeqNo val) 
             { 
-                this.newSeqNo = val;
+                this.NewSeqNo = val;
             }
             
             public QuickFix.Fields.NewSeqNo Get(QuickFix.Fields.NewSeqNo val) 

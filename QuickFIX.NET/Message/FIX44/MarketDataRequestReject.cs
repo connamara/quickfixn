@@ -18,10 +18,10 @@ namespace QuickFix
                     QuickFix.Fields.MDReqID aMDReqID
                 ) : this()
             {
-                this.mDReqID = aMDReqID;
+                this.MDReqID = aMDReqID;
             }
 
-            public QuickFix.Fields.MDReqID mDReqID
+            public QuickFix.Fields.MDReqID MDReqID
             { 
                 get 
                 {
@@ -34,7 +34,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.MDReqID val) 
             { 
-                this.mDReqID = val;
+                this.MDReqID = val;
             }
             
             public QuickFix.Fields.MDReqID Get(QuickFix.Fields.MDReqID val) 
@@ -52,7 +52,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.MDReqID);
             }
-            public QuickFix.Fields.MDReqRejReason mDReqRejReason
+            public QuickFix.Fields.MDReqRejReason MDReqRejReason
             { 
                 get 
                 {
@@ -65,7 +65,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.MDReqRejReason val) 
             { 
-                this.mDReqRejReason = val;
+                this.MDReqRejReason = val;
             }
             
             public QuickFix.Fields.MDReqRejReason Get(QuickFix.Fields.MDReqRejReason val) 
@@ -83,7 +83,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.MDReqRejReason);
             }
-            public QuickFix.Fields.NoAltMDSource noAltMDSource
+            public QuickFix.Fields.NoAltMDSource NoAltMDSource
             { 
                 get 
                 {
@@ -96,7 +96,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.NoAltMDSource val) 
             { 
-                this.noAltMDSource = val;
+                this.NoAltMDSource = val;
             }
             
             public QuickFix.Fields.NoAltMDSource Get(QuickFix.Fields.NoAltMDSource val) 
@@ -114,7 +114,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.NoAltMDSource);
             }
-            public QuickFix.Fields.Text text
+            public QuickFix.Fields.Text Text
             { 
                 get 
                 {
@@ -127,7 +127,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.Text val) 
             { 
-                this.text = val;
+                this.Text = val;
             }
             
             public QuickFix.Fields.Text Get(QuickFix.Fields.Text val) 
@@ -145,7 +145,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.Text);
             }
-            public QuickFix.Fields.EncodedTextLen encodedTextLen
+            public QuickFix.Fields.EncodedTextLen EncodedTextLen
             { 
                 get 
                 {
@@ -158,7 +158,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.EncodedTextLen val) 
             { 
-                this.encodedTextLen = val;
+                this.EncodedTextLen = val;
             }
             
             public QuickFix.Fields.EncodedTextLen Get(QuickFix.Fields.EncodedTextLen val) 
@@ -176,7 +176,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.EncodedTextLen);
             }
-            public QuickFix.Fields.EncodedText encodedText
+            public QuickFix.Fields.EncodedText EncodedText
             { 
                 get 
                 {
@@ -189,7 +189,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.EncodedText val) 
             { 
-                this.encodedText = val;
+                this.EncodedText = val;
             }
             
             public QuickFix.Fields.EncodedText Get(QuickFix.Fields.EncodedText val) 
@@ -207,14 +207,14 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.EncodedText);
             }
-            public class NoAltMDSource : Group
+            public class NoAltMDSourceGroup : Group
             {
-                public NoAltMDSource() 
+                public NoAltMDSourceGroup() 
                   :base( Tags.NoAltMDSource, Tags.AltMDSourceID, fieldOrder)
                 {
                 }
                 public static int[] fieldOrder = {Tags.AltMDSourceID, 0};
-                            public QuickFix.Fields.AltMDSourceID altMDSourceID
+                            public QuickFix.Fields.AltMDSourceID AltMDSourceID
                 { 
                     get 
                     {
@@ -227,7 +227,7 @@ namespace QuickFix
                 
                 public void Set(QuickFix.Fields.AltMDSourceID val) 
                 { 
-                    this.altMDSourceID = val;
+                    this.AltMDSourceID = val;
                 }
                 
                 public QuickFix.Fields.AltMDSourceID Get(QuickFix.Fields.AltMDSourceID val) 

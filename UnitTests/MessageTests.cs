@@ -230,7 +230,7 @@ namespace UnitTests
         public void AddGroupGetGroupTest()
         {
             var nos = new QuickFix.FIX42.NewOrderSingle();
-            var noTradingSessions = new QuickFix.FIX42.NewOrderSingle.NoTradingSessions();
+            var noTradingSessions = new QuickFix.FIX42.NewOrderSingle.NoTradingSessionsGroup();
             noTradingSessions.SetField(new StringField(336, "OHHAI"));
             nos.AddGroup(noTradingSessions);
             var noTradingSessionsRE = nos.GetGroup(1, Tags.NoTradingSessions);
@@ -335,20 +335,20 @@ namespace UnitTests
             n.FromString(s, true, dd, dd);
 
             // string values are good?
-            Assert.AreEqual("Y", n.solicitedFlag.ToString()); //bool, 377
-            Assert.AreEqual("1", n.side.ToString()); //char, 54
-            Assert.AreEqual("20110901-13:41:31.804", n.transactTime.ToString()); //datetime, 60
-            Assert.AreEqual("5.5", n.orderQty.ToString()); //decimal, 38
-            Assert.AreEqual("1", n.putOrCall.ToString()); //int, 201
-            Assert.AreEqual("asdf", n.clOrdID.ToString()); //string, 11
+            Assert.AreEqual("Y", n.SolicitedFlag.ToString()); //bool, 377
+            Assert.AreEqual("1", n.Side.ToString()); //char, 54
+            Assert.AreEqual("20110901-13:41:31.804", n.TransactTime.ToString()); //datetime, 60
+            Assert.AreEqual("5.5", n.OrderQty.ToString()); //decimal, 38
+            Assert.AreEqual("1", n.PutOrCall.ToString()); //int, 201
+            Assert.AreEqual("asdf", n.ClOrdID.ToString()); //string, 11
 
             // type-converted values are good?
-            Assert.AreEqual(true, n.solicitedFlag.getValue());
-            Assert.AreEqual('1', n.side.getValue());
-            Assert.AreEqual(DateTime.Parse("2011-09-01 13:41:31.804"), n.transactTime.getValue());
-            Assert.AreEqual(5.5m, n.orderQty.getValue());
-            Assert.AreEqual(1, n.putOrCall.getValue());
-            Assert.AreEqual("asdf", n.clOrdID.getValue());
+            Assert.AreEqual(true, n.SolicitedFlag.getValue());
+            Assert.AreEqual('1', n.Side.getValue());
+            Assert.AreEqual(DateTime.Parse("2011-09-01 13:41:31.804"), n.TransactTime.getValue());
+            Assert.AreEqual(5.5m, n.OrderQty.getValue());
+            Assert.AreEqual(1, n.PutOrCall.getValue());
+            Assert.AreEqual("asdf", n.ClOrdID.getValue());
         }
     }
 }

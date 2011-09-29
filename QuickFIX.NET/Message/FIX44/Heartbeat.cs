@@ -15,7 +15,7 @@ namespace QuickFix
             }
 
 
-            public QuickFix.Fields.TestReqID testReqID
+            public QuickFix.Fields.TestReqID TestReqID
             { 
                 get 
                 {
@@ -28,7 +28,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.TestReqID val) 
             { 
-                this.testReqID = val;
+                this.TestReqID = val;
             }
             
             public QuickFix.Fields.TestReqID Get(QuickFix.Fields.TestReqID val) 

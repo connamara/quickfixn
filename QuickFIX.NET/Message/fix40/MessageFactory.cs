@@ -49,7 +49,7 @@ namespace QuickFix
                 {
                     switch (correspondingFieldID)
                     {
-                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.News.LinesOfText();
+                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.News.LinesOfTextGroup();
                     }
                 }
 
@@ -57,7 +57,7 @@ namespace QuickFix
                 {
                     switch (correspondingFieldID)
                     {
-                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.Email.LinesOfText();
+                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.Email.LinesOfTextGroup();
                     }
                 }
 
@@ -65,7 +65,7 @@ namespace QuickFix
                 {
                     switch (correspondingFieldID)
                     {
-                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.ExecutionReport.NoMiscFees();
+                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.ExecutionReport.NoMiscFeesGroup();
                     }
                 }
 
@@ -73,10 +73,10 @@ namespace QuickFix
                 {
                     switch (correspondingFieldID)
                     {
-                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.Allocation.NoOrders();
-                        case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX40.Allocation.NoExecs();
-                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.Allocation.NoMiscFees();
-                        case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX40.Allocation.NoAllocs();
+                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.Allocation.NoOrdersGroup();
+                        case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX40.Allocation.NoExecsGroup();
+                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.Allocation.NoMiscFeesGroup();
+                        case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX40.Allocation.NoAllocsGroup();
                     }
                 }
 
@@ -84,7 +84,7 @@ namespace QuickFix
                 {
                     switch (correspondingFieldID)
                     {
-                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.ListStatus.NoOrders();
+                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.ListStatus.NoOrdersGroup();
                     }
                 }
 
