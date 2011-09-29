@@ -969,8 +969,13 @@ namespace QuickFix
 
             if ((0 != field) || FixValues.SessionRejectReason.INVALID_TAG_NUMBER.Equals(reason))
             {
-                if(FixValues.SessionRejectReason.INVALID_MSGTYPE.Equals(reason))
-                    PopulateSessionRejectReason(reject, field, reason.Description, false);
+                if (FixValues.SessionRejectReason.INVALID_MSGTYPE.Equals(reason))
+                {
+                    if (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX43) >= 0)
+                        PopulateRejectReason(reject, reason.Description);
+                    else
+                        PopulateSessionRejectReason(reject, field, reason.Description, false);
+                }
                 else
                     PopulateSessionRejectReason(reject, field, reason.Description, true);
                 

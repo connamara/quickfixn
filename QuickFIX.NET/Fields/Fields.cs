@@ -817,6 +817,8 @@ namespace QuickFix.Fields
             :base(Tags.OrigTime) {}
         public OrigTime(DateTime val)
             :base(Tags.OrigTime, val) {}
+        public OrigTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.OrigTime, val, showMilliseconds) {}
 
     }
 
@@ -963,6 +965,8 @@ namespace QuickFix.Fields
             :base(Tags.SendingTime) {}
         public SendingTime(DateTime val)
             :base(Tags.SendingTime, val) {}
+        public SendingTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.SendingTime, val, showMilliseconds) {}
 
     }
 
@@ -1097,6 +1101,8 @@ namespace QuickFix.Fields
             :base(Tags.TransactTime) {}
         public TransactTime(DateTime val)
             :base(Tags.TransactTime, val) {}
+        public TransactTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.TransactTime, val, showMilliseconds) {}
 
     }
 
@@ -1128,6 +1134,8 @@ namespace QuickFix.Fields
             :base(Tags.ValidUntilTime) {}
         public ValidUntilTime(DateTime val)
             :base(Tags.ValidUntilTime, val) {}
+        public ValidUntilTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.ValidUntilTime, val, showMilliseconds) {}
 
     }
 
@@ -2047,6 +2055,8 @@ namespace QuickFix.Fields
             :base(Tags.OrigSendingTime) {}
         public OrigSendingTime(DateTime val)
             :base(Tags.OrigSendingTime, val) {}
+        public OrigSendingTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.OrigSendingTime, val, showMilliseconds) {}
 
     }
 
@@ -2107,6 +2117,8 @@ namespace QuickFix.Fields
             :base(Tags.ExpireTime) {}
         public ExpireTime(DateTime val)
             :base(Tags.ExpireTime, val) {}
+        public ExpireTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.ExpireTime, val, showMilliseconds) {}
 
     }
 
@@ -2870,6 +2882,8 @@ namespace QuickFix.Fields
             :base(Tags.EffectiveTime) {}
         public EffectiveTime(DateTime val)
             :base(Tags.EffectiveTime, val) {}
+        public EffectiveTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.EffectiveTime, val, showMilliseconds) {}
 
     }
 
@@ -3816,6 +3830,8 @@ namespace QuickFix.Fields
             :base(Tags.MDEntryDate) {}
         public MDEntryDate(DateTime val)
             :base(Tags.MDEntryDate, val) {}
+        public MDEntryDate(DateTime val, bool showMilliseconds)
+	    :base(Tags.MDEntryDate, val, showMilliseconds) {}
 
     }
 
@@ -3829,6 +3845,8 @@ namespace QuickFix.Fields
             :base(Tags.MDEntryTime) {}
         public MDEntryTime(DateTime val)
             :base(Tags.MDEntryTime, val) {}
+        public MDEntryTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.MDEntryTime, val, showMilliseconds) {}
 
     }
 
@@ -5051,6 +5069,8 @@ namespace QuickFix.Fields
             :base(Tags.TradSesStartTime) {}
         public TradSesStartTime(DateTime val)
             :base(Tags.TradSesStartTime, val) {}
+        public TradSesStartTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.TradSesStartTime, val, showMilliseconds) {}
 
     }
 
@@ -5064,6 +5084,8 @@ namespace QuickFix.Fields
             :base(Tags.TradSesOpenTime) {}
         public TradSesOpenTime(DateTime val)
             :base(Tags.TradSesOpenTime, val) {}
+        public TradSesOpenTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.TradSesOpenTime, val, showMilliseconds) {}
 
     }
 
@@ -5077,6 +5099,8 @@ namespace QuickFix.Fields
             :base(Tags.TradSesPreCloseTime) {}
         public TradSesPreCloseTime(DateTime val)
             :base(Tags.TradSesPreCloseTime, val) {}
+        public TradSesPreCloseTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.TradSesPreCloseTime, val, showMilliseconds) {}
 
     }
 
@@ -5090,6 +5114,8 @@ namespace QuickFix.Fields
             :base(Tags.TradSesCloseTime) {}
         public TradSesCloseTime(DateTime val)
             :base(Tags.TradSesCloseTime, val) {}
+        public TradSesCloseTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.TradSesCloseTime, val, showMilliseconds) {}
 
     }
 
@@ -5103,6 +5129,8 @@ namespace QuickFix.Fields
             :base(Tags.TradSesEndTime) {}
         public TradSesEndTime(DateTime val)
             :base(Tags.TradSesEndTime, val) {}
+        public TradSesEndTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.TradSesEndTime, val, showMilliseconds) {}
 
     }
 
@@ -5395,6 +5423,8 @@ namespace QuickFix.Fields
             :base(Tags.QuoteSetValidUntilTime) {}
         public QuoteSetValidUntilTime(DateTime val)
             :base(Tags.QuoteSetValidUntilTime, val) {}
+        public QuoteSetValidUntilTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.QuoteSetValidUntilTime, val, showMilliseconds) {}
 
     }
 
@@ -5446,6 +5476,8 @@ namespace QuickFix.Fields
             :base(Tags.OnBehalfOfSendingTime) {}
         public OnBehalfOfSendingTime(DateTime val)
             :base(Tags.OnBehalfOfSendingTime, val) {}
+        public OnBehalfOfSendingTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.OnBehalfOfSendingTime, val, showMilliseconds) {}
 
     }
 
@@ -6505,6 +6537,8 @@ namespace QuickFix.Fields
             :base(Tags.ContraTradeTime) {}
         public ContraTradeTime(DateTime val)
             :base(Tags.ContraTradeTime, val) {}
+        public ContraTradeTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.ContraTradeTime, val, showMilliseconds) {}
 
     }
 
@@ -6575,6 +6609,8 @@ namespace QuickFix.Fields
             :base(Tags.StrikeTime) {}
         public StrikeTime(DateTime val)
             :base(Tags.StrikeTime, val) {}
+        public StrikeTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.StrikeTime, val, showMilliseconds) {}
 
     }
 
@@ -7527,6 +7563,8 @@ namespace QuickFix.Fields
             :base(Tags.TotalVolumeTradedDate) {}
         public TotalVolumeTradedDate(DateTime val)
             :base(Tags.TotalVolumeTradedDate, val) {}
+        public TotalVolumeTradedDate(DateTime val, bool showMilliseconds)
+	    :base(Tags.TotalVolumeTradedDate, val, showMilliseconds) {}
 
     }
 
@@ -7540,6 +7578,8 @@ namespace QuickFix.Fields
             :base(Tags.TotalVolumeTradedTime) {}
         public TotalVolumeTradedTime(DateTime val)
             :base(Tags.TotalVolumeTradedTime, val) {}
+        public TotalVolumeTradedTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.TotalVolumeTradedTime, val, showMilliseconds) {}
 
     }
 
@@ -8112,6 +8152,8 @@ namespace QuickFix.Fields
             :base(Tags.TransBkdTime) {}
         public TransBkdTime(DateTime val)
             :base(Tags.TransBkdTime, val) {}
+        public TransBkdTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.TransBkdTime, val, showMilliseconds) {}
 
     }
 
@@ -8632,6 +8674,8 @@ namespace QuickFix.Fields
             :base(Tags.ExecValuationPoint) {}
         public ExecValuationPoint(DateTime val)
             :base(Tags.ExecValuationPoint, val) {}
+        public ExecValuationPoint(DateTime val, bool showMilliseconds)
+	    :base(Tags.ExecValuationPoint, val, showMilliseconds) {}
 
     }
 
@@ -9813,6 +9857,8 @@ namespace QuickFix.Fields
             :base(Tags.OrigOrdModTime) {}
         public OrigOrdModTime(DateTime val)
             :base(Tags.OrigOrdModTime, val) {}
+        public OrigOrdModTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.OrigOrdModTime, val, showMilliseconds) {}
 
     }
 
@@ -10411,6 +10457,8 @@ namespace QuickFix.Fields
             :base(Tags.HopSendingTime) {}
         public HopSendingTime(DateTime val)
             :base(Tags.HopSendingTime, val) {}
+        public HopSendingTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.HopSendingTime, val, showMilliseconds) {}
 
     }
 
@@ -12701,6 +12749,8 @@ namespace QuickFix.Fields
             :base(Tags.TrdRegTimestamp) {}
         public TrdRegTimestamp(DateTime val)
             :base(Tags.TrdRegTimestamp, val) {}
+        public TrdRegTimestamp(DateTime val, bool showMilliseconds)
+	    :base(Tags.TrdRegTimestamp, val, showMilliseconds) {}
 
     }
 
@@ -12854,6 +12904,8 @@ namespace QuickFix.Fields
             :base(Tags.LastUpdateTime) {}
         public LastUpdateTime(DateTime val)
             :base(Tags.LastUpdateTime, val) {}
+        public LastUpdateTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.LastUpdateTime, val, showMilliseconds) {}
 
     }
 
@@ -15806,6 +15858,8 @@ namespace QuickFix.Fields
             :base(Tags.SideTimeInForce) {}
         public SideTimeInForce(DateTime val)
             :base(Tags.SideTimeInForce, val) {}
+        public SideTimeInForce(DateTime val, bool showMilliseconds)
+	    :base(Tags.SideTimeInForce, val, showMilliseconds) {}
 
     }
 
@@ -16487,6 +16541,8 @@ namespace QuickFix.Fields
             :base(Tags.SideTrdRegTimestamp) {}
         public SideTrdRegTimestamp(DateTime val)
             :base(Tags.SideTrdRegTimestamp, val) {}
+        public SideTrdRegTimestamp(DateTime val, bool showMilliseconds)
+	    :base(Tags.SideTrdRegTimestamp, val, showMilliseconds) {}
 
     }
 
@@ -18228,6 +18284,8 @@ namespace QuickFix.Fields
             :base(Tags.TZTransactTime) {}
         public TZTransactTime(DateTime val)
             :base(Tags.TZTransactTime, val) {}
+        public TZTransactTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.TZTransactTime, val, showMilliseconds) {}
 
     }
 
@@ -18430,6 +18488,8 @@ namespace QuickFix.Fields
             :base(Tags.EventTime) {}
         public EventTime(DateTime val)
             :base(Tags.EventTime, val) {}
+        public EventTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.EventTime, val, showMilliseconds) {}
 
     }
 
@@ -20357,6 +20417,8 @@ namespace QuickFix.Fields
             :base(Tags.DerivativeEventTime) {}
         public DerivativeEventTime(DateTime val)
             :base(Tags.DerivativeEventTime, val) {}
+        public DerivativeEventTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.DerivativeEventTime, val, showMilliseconds) {}
 
     }
 
@@ -23420,6 +23482,8 @@ namespace QuickFix.Fields
             :base(Tags.ComplexEventStartDate) {}
         public ComplexEventStartDate(DateTime val)
             :base(Tags.ComplexEventStartDate, val) {}
+        public ComplexEventStartDate(DateTime val, bool showMilliseconds)
+	    :base(Tags.ComplexEventStartDate, val, showMilliseconds) {}
 
     }
 
@@ -23433,6 +23497,8 @@ namespace QuickFix.Fields
             :base(Tags.ComplexEventEndDate) {}
         public ComplexEventEndDate(DateTime val)
             :base(Tags.ComplexEventEndDate, val) {}
+        public ComplexEventEndDate(DateTime val, bool showMilliseconds)
+	    :base(Tags.ComplexEventEndDate, val, showMilliseconds) {}
 
     }
 
@@ -23459,6 +23525,8 @@ namespace QuickFix.Fields
             :base(Tags.ComplexEventStartTime) {}
         public ComplexEventStartTime(DateTime val)
             :base(Tags.ComplexEventStartTime, val) {}
+        public ComplexEventStartTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.ComplexEventStartTime, val, showMilliseconds) {}
 
     }
 
@@ -23472,6 +23540,8 @@ namespace QuickFix.Fields
             :base(Tags.ComplexEventEndTime) {}
         public ComplexEventEndTime(DateTime val)
             :base(Tags.ComplexEventEndTime, val) {}
+        public ComplexEventEndTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.ComplexEventEndTime, val, showMilliseconds) {}
 
     }
 
@@ -23591,6 +23661,8 @@ namespace QuickFix.Fields
             :base(Tags.RelSymTransactTime) {}
         public RelSymTransactTime(DateTime val)
             :base(Tags.RelSymTransactTime, val) {}
+        public RelSymTransactTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.RelSymTransactTime, val, showMilliseconds) {}
 
     }
 
