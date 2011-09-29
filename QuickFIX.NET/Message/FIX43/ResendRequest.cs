@@ -11,7 +11,7 @@ namespace QuickFix
 
             public ResendRequest() : base()
             {
-                this.Header.setField(new QuickFix.Fields.MsgType("2"));
+                this.Header.SetField(new QuickFix.Fields.MsgType("2"));
             }
 
             public ResendRequest(
@@ -28,62 +28,62 @@ namespace QuickFix
                 get 
                 {
                     QuickFix.Fields.BeginSeqNo val = new QuickFix.Fields.BeginSeqNo();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.BeginSeqNo val) 
+            public void Set(QuickFix.Fields.BeginSeqNo val) 
             { 
                 this.beginSeqNo = val;
             }
             
-            public QuickFix.Fields.BeginSeqNo get(QuickFix.Fields.BeginSeqNo val) 
+            public QuickFix.Fields.BeginSeqNo Get(QuickFix.Fields.BeginSeqNo val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.BeginSeqNo val) 
+            public bool IsSet(QuickFix.Fields.BeginSeqNo val) 
             { 
-                return isSetBeginSeqNo();
+                return IsSetBeginSeqNo();
             }
             
-            public bool isSetBeginSeqNo() 
+            public bool IsSetBeginSeqNo() 
             { 
-                return isSetField(Tags.BeginSeqNo);
+                return IsSetField(Tags.BeginSeqNo);
             }
             public QuickFix.Fields.EndSeqNo endSeqNo
             { 
                 get 
                 {
                     QuickFix.Fields.EndSeqNo val = new QuickFix.Fields.EndSeqNo();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.EndSeqNo val) 
+            public void Set(QuickFix.Fields.EndSeqNo val) 
             { 
                 this.endSeqNo = val;
             }
             
-            public QuickFix.Fields.EndSeqNo get(QuickFix.Fields.EndSeqNo val) 
+            public QuickFix.Fields.EndSeqNo Get(QuickFix.Fields.EndSeqNo val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.EndSeqNo val) 
+            public bool IsSet(QuickFix.Fields.EndSeqNo val) 
             { 
-                return isSetEndSeqNo();
+                return IsSetEndSeqNo();
             }
             
-            public bool isSetEndSeqNo() 
+            public bool IsSetEndSeqNo() 
             { 
-                return isSetField(Tags.EndSeqNo);
+                return IsSetField(Tags.EndSeqNo);
             }
 
         }

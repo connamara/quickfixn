@@ -30,7 +30,7 @@ namespace QuickFix
             if (_factories.ContainsKey(beginString) == false)
             {
                 Message m = new Message();
-                m.Header.setField(new StringField(QuickFix.Fields.Tags.MsgType, msgType));
+                m.Header.SetField(new StringField(QuickFix.Fields.Tags.MsgType, msgType));
                 return m;
             }
 

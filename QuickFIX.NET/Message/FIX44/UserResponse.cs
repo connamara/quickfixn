@@ -11,7 +11,7 @@ namespace QuickFix
 
             public UserResponse() : base()
             {
-                this.Header.setField(new QuickFix.Fields.MsgType("BF"));
+                this.Header.SetField(new QuickFix.Fields.MsgType("BF"));
             }
 
             public UserResponse(
@@ -28,124 +28,124 @@ namespace QuickFix
                 get 
                 {
                     QuickFix.Fields.UserRequestID val = new QuickFix.Fields.UserRequestID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.UserRequestID val) 
+            public void Set(QuickFix.Fields.UserRequestID val) 
             { 
                 this.userRequestID = val;
             }
             
-            public QuickFix.Fields.UserRequestID get(QuickFix.Fields.UserRequestID val) 
+            public QuickFix.Fields.UserRequestID Get(QuickFix.Fields.UserRequestID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.UserRequestID val) 
+            public bool IsSet(QuickFix.Fields.UserRequestID val) 
             { 
-                return isSetUserRequestID();
+                return IsSetUserRequestID();
             }
             
-            public bool isSetUserRequestID() 
+            public bool IsSetUserRequestID() 
             { 
-                return isSetField(Tags.UserRequestID);
+                return IsSetField(Tags.UserRequestID);
             }
             public QuickFix.Fields.Username username
             { 
                 get 
                 {
                     QuickFix.Fields.Username val = new QuickFix.Fields.Username();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.Username val) 
+            public void Set(QuickFix.Fields.Username val) 
             { 
                 this.username = val;
             }
             
-            public QuickFix.Fields.Username get(QuickFix.Fields.Username val) 
+            public QuickFix.Fields.Username Get(QuickFix.Fields.Username val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.Username val) 
+            public bool IsSet(QuickFix.Fields.Username val) 
             { 
-                return isSetUsername();
+                return IsSetUsername();
             }
             
-            public bool isSetUsername() 
+            public bool IsSetUsername() 
             { 
-                return isSetField(Tags.Username);
+                return IsSetField(Tags.Username);
             }
             public QuickFix.Fields.UserStatus userStatus
             { 
                 get 
                 {
                     QuickFix.Fields.UserStatus val = new QuickFix.Fields.UserStatus();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.UserStatus val) 
+            public void Set(QuickFix.Fields.UserStatus val) 
             { 
                 this.userStatus = val;
             }
             
-            public QuickFix.Fields.UserStatus get(QuickFix.Fields.UserStatus val) 
+            public QuickFix.Fields.UserStatus Get(QuickFix.Fields.UserStatus val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.UserStatus val) 
+            public bool IsSet(QuickFix.Fields.UserStatus val) 
             { 
-                return isSetUserStatus();
+                return IsSetUserStatus();
             }
             
-            public bool isSetUserStatus() 
+            public bool IsSetUserStatus() 
             { 
-                return isSetField(Tags.UserStatus);
+                return IsSetField(Tags.UserStatus);
             }
             public QuickFix.Fields.UserStatusText userStatusText
             { 
                 get 
                 {
                     QuickFix.Fields.UserStatusText val = new QuickFix.Fields.UserStatusText();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.UserStatusText val) 
+            public void Set(QuickFix.Fields.UserStatusText val) 
             { 
                 this.userStatusText = val;
             }
             
-            public QuickFix.Fields.UserStatusText get(QuickFix.Fields.UserStatusText val) 
+            public QuickFix.Fields.UserStatusText Get(QuickFix.Fields.UserStatusText val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.UserStatusText val) 
+            public bool IsSet(QuickFix.Fields.UserStatusText val) 
             { 
-                return isSetUserStatusText();
+                return IsSetUserStatusText();
             }
             
-            public bool isSetUserStatusText() 
+            public bool IsSetUserStatusText() 
             { 
-                return isSetField(Tags.UserStatusText);
+                return IsSetField(Tags.UserStatusText);
             }
 
         }
