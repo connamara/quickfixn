@@ -18,12 +18,37 @@ namespace AcceptanceTest
             ProcessNOS(nos, sessionID);
         }
 
+        public void OnMessage(QuickFix.FIX41.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
         public void OnMessage(QuickFix.FIX42.NewOrderSingle nos, SessionID sessionID) 
         {
             ProcessNOS(nos, sessionID);
         }
 
         public void OnMessage(QuickFix.FIX42.SecurityDefinition message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX43.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX43.SecurityDefinition message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX44.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX44.SecurityDefinition message, SessionID sessionID)
         {
             Echo(message, sessionID);
         }
