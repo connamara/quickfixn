@@ -11,7 +11,7 @@ namespace QuickFix
 
             public MarketDefinitionRequest() : base()
             {
-                this.Header.setField(new QuickFix.Fields.MsgType("BT"));
+                this.Header.SetField(new QuickFix.Fields.MsgType("BT"));
             }
 
             public MarketDefinitionRequest(
@@ -28,155 +28,155 @@ namespace QuickFix
                 get 
                 {
                     QuickFix.Fields.MarketReqID val = new QuickFix.Fields.MarketReqID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.MarketReqID val) 
+            public void Set(QuickFix.Fields.MarketReqID val) 
             { 
                 this.marketReqID = val;
             }
             
-            public QuickFix.Fields.MarketReqID get(QuickFix.Fields.MarketReqID val) 
+            public QuickFix.Fields.MarketReqID Get(QuickFix.Fields.MarketReqID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.MarketReqID val) 
+            public bool IsSet(QuickFix.Fields.MarketReqID val) 
             { 
-                return isSetMarketReqID();
+                return IsSetMarketReqID();
             }
             
-            public bool isSetMarketReqID() 
+            public bool IsSetMarketReqID() 
             { 
-                return isSetField(Tags.MarketReqID);
+                return IsSetField(Tags.MarketReqID);
             }
             public QuickFix.Fields.SubscriptionRequestType subscriptionRequestType
             { 
                 get 
                 {
                     QuickFix.Fields.SubscriptionRequestType val = new QuickFix.Fields.SubscriptionRequestType();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.SubscriptionRequestType val) 
+            public void Set(QuickFix.Fields.SubscriptionRequestType val) 
             { 
                 this.subscriptionRequestType = val;
             }
             
-            public QuickFix.Fields.SubscriptionRequestType get(QuickFix.Fields.SubscriptionRequestType val) 
+            public QuickFix.Fields.SubscriptionRequestType Get(QuickFix.Fields.SubscriptionRequestType val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.SubscriptionRequestType val) 
+            public bool IsSet(QuickFix.Fields.SubscriptionRequestType val) 
             { 
-                return isSetSubscriptionRequestType();
+                return IsSetSubscriptionRequestType();
             }
             
-            public bool isSetSubscriptionRequestType() 
+            public bool IsSetSubscriptionRequestType() 
             { 
-                return isSetField(Tags.SubscriptionRequestType);
+                return IsSetField(Tags.SubscriptionRequestType);
             }
             public QuickFix.Fields.MarketID marketID
             { 
                 get 
                 {
                     QuickFix.Fields.MarketID val = new QuickFix.Fields.MarketID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.MarketID val) 
+            public void Set(QuickFix.Fields.MarketID val) 
             { 
                 this.marketID = val;
             }
             
-            public QuickFix.Fields.MarketID get(QuickFix.Fields.MarketID val) 
+            public QuickFix.Fields.MarketID Get(QuickFix.Fields.MarketID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.MarketID val) 
+            public bool IsSet(QuickFix.Fields.MarketID val) 
             { 
-                return isSetMarketID();
+                return IsSetMarketID();
             }
             
-            public bool isSetMarketID() 
+            public bool IsSetMarketID() 
             { 
-                return isSetField(Tags.MarketID);
+                return IsSetField(Tags.MarketID);
             }
             public QuickFix.Fields.MarketSegmentID marketSegmentID
             { 
                 get 
                 {
                     QuickFix.Fields.MarketSegmentID val = new QuickFix.Fields.MarketSegmentID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.MarketSegmentID val) 
+            public void Set(QuickFix.Fields.MarketSegmentID val) 
             { 
                 this.marketSegmentID = val;
             }
             
-            public QuickFix.Fields.MarketSegmentID get(QuickFix.Fields.MarketSegmentID val) 
+            public QuickFix.Fields.MarketSegmentID Get(QuickFix.Fields.MarketSegmentID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.MarketSegmentID val) 
+            public bool IsSet(QuickFix.Fields.MarketSegmentID val) 
             { 
-                return isSetMarketSegmentID();
+                return IsSetMarketSegmentID();
             }
             
-            public bool isSetMarketSegmentID() 
+            public bool IsSetMarketSegmentID() 
             { 
-                return isSetField(Tags.MarketSegmentID);
+                return IsSetField(Tags.MarketSegmentID);
             }
             public QuickFix.Fields.ParentMktSegmID parentMktSegmID
             { 
                 get 
                 {
                     QuickFix.Fields.ParentMktSegmID val = new QuickFix.Fields.ParentMktSegmID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.ParentMktSegmID val) 
+            public void Set(QuickFix.Fields.ParentMktSegmID val) 
             { 
                 this.parentMktSegmID = val;
             }
             
-            public QuickFix.Fields.ParentMktSegmID get(QuickFix.Fields.ParentMktSegmID val) 
+            public QuickFix.Fields.ParentMktSegmID Get(QuickFix.Fields.ParentMktSegmID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.ParentMktSegmID val) 
+            public bool IsSet(QuickFix.Fields.ParentMktSegmID val) 
             { 
-                return isSetParentMktSegmID();
+                return IsSetParentMktSegmID();
             }
             
-            public bool isSetParentMktSegmID() 
+            public bool IsSetParentMktSegmID() 
             { 
-                return isSetField(Tags.ParentMktSegmID);
+                return IsSetField(Tags.ParentMktSegmID);
             }
 
         }

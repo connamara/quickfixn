@@ -36,7 +36,7 @@ namespace QuickFix
             public Message()
                 : base()
             {
-                this.Header.setField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.#{fixver}));
+                this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.#{fixver}));
             }
         }
     }
@@ -76,7 +76,7 @@ HERE
 <<HERE
             public #{msg[:name]}() : base()
             {
-                this.Header.setField(new QuickFix.Fields.MsgType("#{msg[:msgtype]}"));
+                this.Header.SetField(new QuickFix.Fields.MsgType("#{msg[:msgtype]}"));
             }
 HERE
   end
@@ -116,31 +116,31 @@ HERE
     str << "    get "
     str << "    {"
     str << "        QuickFix.Fields.#{fld[:name]} val = new QuickFix.Fields.#{fld[:name]}();"
-    str << "        getField(val);"
+    str << "        GetField(val);"
     str << "        return val;"
     str << "    }"
-    str << "    set { setField(value); }"
+    str << "    set { SetField(value); }"
     str << "}"
     str << ""
-    str << "public void set(QuickFix.Fields.#{fld[:name]} val) "
+    str << "public void Set(QuickFix.Fields.#{fld[:name]} val) "
     str << "{ "
     str << "    this.#{lower(fld[:name])} = val;"
     str << "}"
     str << ""
-    str << "public QuickFix.Fields.#{fld[:name]} get(QuickFix.Fields.#{fld[:name]} val) "
+    str << "public QuickFix.Fields.#{fld[:name]} Get(QuickFix.Fields.#{fld[:name]} val) "
     str << "{ "
-    str << "    getField(val);"
+    str << "    GetField(val);"
     str << "    return val;"
     str << "}"
     str << ""
-    str << "public bool isSet(QuickFix.Fields.#{fld[:name]} val) "
+    str << "public bool IsSet(QuickFix.Fields.#{fld[:name]} val) "
     str << "{ "
-    str << "    return isSet#{fld[:name]}();"
+    str << "    return IsSet#{fld[:name]}();"
     str << "}"
     str << ""
-    str << "public bool isSet#{fld[:name]}() "
+    str << "public bool IsSet#{fld[:name]}() "
     str << "{ "
-    str << "    return isSetField(Tags.#{fld[:name]});"
+    str << "    return IsSetField(Tags.#{fld[:name]});"
     str << "}"
     str.map! {|s| ' '*prepend_spaces + s}
     str.join("\n")

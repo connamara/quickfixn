@@ -11,7 +11,7 @@ namespace QuickFix
 
             public StreamAssignmentReportACK() : base()
             {
-                this.Header.setField(new QuickFix.Fields.MsgType("CE"));
+                this.Header.SetField(new QuickFix.Fields.MsgType("CE"));
             }
 
             public StreamAssignmentReportACK(
@@ -28,186 +28,186 @@ namespace QuickFix
                 get 
                 {
                     QuickFix.Fields.StreamAsgnAckType val = new QuickFix.Fields.StreamAsgnAckType();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.StreamAsgnAckType val) 
+            public void Set(QuickFix.Fields.StreamAsgnAckType val) 
             { 
                 this.streamAsgnAckType = val;
             }
             
-            public QuickFix.Fields.StreamAsgnAckType get(QuickFix.Fields.StreamAsgnAckType val) 
+            public QuickFix.Fields.StreamAsgnAckType Get(QuickFix.Fields.StreamAsgnAckType val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.StreamAsgnAckType val) 
+            public bool IsSet(QuickFix.Fields.StreamAsgnAckType val) 
             { 
-                return isSetStreamAsgnAckType();
+                return IsSetStreamAsgnAckType();
             }
             
-            public bool isSetStreamAsgnAckType() 
+            public bool IsSetStreamAsgnAckType() 
             { 
-                return isSetField(Tags.StreamAsgnAckType);
+                return IsSetField(Tags.StreamAsgnAckType);
             }
             public QuickFix.Fields.StreamAsgnRptID streamAsgnRptID
             { 
                 get 
                 {
                     QuickFix.Fields.StreamAsgnRptID val = new QuickFix.Fields.StreamAsgnRptID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.StreamAsgnRptID val) 
+            public void Set(QuickFix.Fields.StreamAsgnRptID val) 
             { 
                 this.streamAsgnRptID = val;
             }
             
-            public QuickFix.Fields.StreamAsgnRptID get(QuickFix.Fields.StreamAsgnRptID val) 
+            public QuickFix.Fields.StreamAsgnRptID Get(QuickFix.Fields.StreamAsgnRptID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.StreamAsgnRptID val) 
+            public bool IsSet(QuickFix.Fields.StreamAsgnRptID val) 
             { 
-                return isSetStreamAsgnRptID();
+                return IsSetStreamAsgnRptID();
             }
             
-            public bool isSetStreamAsgnRptID() 
+            public bool IsSetStreamAsgnRptID() 
             { 
-                return isSetField(Tags.StreamAsgnRptID);
+                return IsSetField(Tags.StreamAsgnRptID);
             }
             public QuickFix.Fields.StreamAsgnRejReason streamAsgnRejReason
             { 
                 get 
                 {
                     QuickFix.Fields.StreamAsgnRejReason val = new QuickFix.Fields.StreamAsgnRejReason();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.StreamAsgnRejReason val) 
+            public void Set(QuickFix.Fields.StreamAsgnRejReason val) 
             { 
                 this.streamAsgnRejReason = val;
             }
             
-            public QuickFix.Fields.StreamAsgnRejReason get(QuickFix.Fields.StreamAsgnRejReason val) 
+            public QuickFix.Fields.StreamAsgnRejReason Get(QuickFix.Fields.StreamAsgnRejReason val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.StreamAsgnRejReason val) 
+            public bool IsSet(QuickFix.Fields.StreamAsgnRejReason val) 
             { 
-                return isSetStreamAsgnRejReason();
+                return IsSetStreamAsgnRejReason();
             }
             
-            public bool isSetStreamAsgnRejReason() 
+            public bool IsSetStreamAsgnRejReason() 
             { 
-                return isSetField(Tags.StreamAsgnRejReason);
+                return IsSetField(Tags.StreamAsgnRejReason);
             }
             public QuickFix.Fields.Text text
             { 
                 get 
                 {
                     QuickFix.Fields.Text val = new QuickFix.Fields.Text();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.Text val) 
+            public void Set(QuickFix.Fields.Text val) 
             { 
                 this.text = val;
             }
             
-            public QuickFix.Fields.Text get(QuickFix.Fields.Text val) 
+            public QuickFix.Fields.Text Get(QuickFix.Fields.Text val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.Text val) 
+            public bool IsSet(QuickFix.Fields.Text val) 
             { 
-                return isSetText();
+                return IsSetText();
             }
             
-            public bool isSetText() 
+            public bool IsSetText() 
             { 
-                return isSetField(Tags.Text);
+                return IsSetField(Tags.Text);
             }
             public QuickFix.Fields.EncodedTextLen encodedTextLen
             { 
                 get 
                 {
                     QuickFix.Fields.EncodedTextLen val = new QuickFix.Fields.EncodedTextLen();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.EncodedTextLen val) 
+            public void Set(QuickFix.Fields.EncodedTextLen val) 
             { 
                 this.encodedTextLen = val;
             }
             
-            public QuickFix.Fields.EncodedTextLen get(QuickFix.Fields.EncodedTextLen val) 
+            public QuickFix.Fields.EncodedTextLen Get(QuickFix.Fields.EncodedTextLen val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.EncodedTextLen val) 
+            public bool IsSet(QuickFix.Fields.EncodedTextLen val) 
             { 
-                return isSetEncodedTextLen();
+                return IsSetEncodedTextLen();
             }
             
-            public bool isSetEncodedTextLen() 
+            public bool IsSetEncodedTextLen() 
             { 
-                return isSetField(Tags.EncodedTextLen);
+                return IsSetField(Tags.EncodedTextLen);
             }
             public QuickFix.Fields.EncodedText encodedText
             { 
                 get 
                 {
                     QuickFix.Fields.EncodedText val = new QuickFix.Fields.EncodedText();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.EncodedText val) 
+            public void Set(QuickFix.Fields.EncodedText val) 
             { 
                 this.encodedText = val;
             }
             
-            public QuickFix.Fields.EncodedText get(QuickFix.Fields.EncodedText val) 
+            public QuickFix.Fields.EncodedText Get(QuickFix.Fields.EncodedText val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.EncodedText val) 
+            public bool IsSet(QuickFix.Fields.EncodedText val) 
             { 
-                return isSetEncodedText();
+                return IsSetEncodedText();
             }
             
-            public bool isSetEncodedText() 
+            public bool IsSetEncodedText() 
             { 
-                return isSetField(Tags.EncodedText);
+                return IsSetField(Tags.EncodedText);
             }
 
         }

@@ -122,19 +122,19 @@ namespace QuickFix.DataDictionary
         {
             foreach (int field in Header.ReqFields)
             {
-                if (!message.Header.isSetField(field))
+                if (!message.Header.IsSetField(field))
                     throw new RequiredTagMissing(field);
             }
 
             foreach (int field in Trailer.ReqFields)
             {
-                if (!message.Trailer.isSetField(field))
+                if (!message.Trailer.IsSetField(field))
                     throw new RequiredTagMissing(field);
             }
 
             foreach (int field in Messages[msgType].ReqFields)
             {
-                if (!message.isSetField(field))
+                if (!message.IsSetField(field))
                     throw new RequiredTagMissing(field);
             }
 

@@ -64,7 +64,7 @@ namespace AcceptanceTest
             Message echo = new Message(message);
  
                 bool possResend = false;
-                if (message.Header.isSetField(QuickFix.Fields.Tags.PossResend))
+                if (message.Header.IsSetField(QuickFix.Fields.Tags.PossResend))
                     possResend = message.Header.GetBoolean(QuickFix.Fields.Tags.PossResend);
 
                 KeyValuePair<string, SessionID> pair = new KeyValuePair<string, SessionID>(message.GetField(QuickFix.Fields.Tags.ClOrdID), sessionID);

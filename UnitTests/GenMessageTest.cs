@@ -24,10 +24,10 @@ namespace UnitTests
         {
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            tcr.setField(avgPx);
+            tcr.SetField(avgPx);
             Assert.That(tcr.avgPx.getValue(), Is.EqualTo(avgPx.getValue()));
             AvgPx avgPx2 = new AvgPx();
-            tcr.getField(avgPx2);
+            tcr.GetField(avgPx2);
             Assert.That(avgPx2.getValue(), Is.EqualTo(avgPx.getValue()));
         }
 
@@ -36,7 +36,7 @@ namespace UnitTests
         {
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            tcr.set(avgPx);
+            tcr.Set(avgPx);
             Assert.That(tcr.avgPx.getValue(), Is.EqualTo(avgPx.getValue()));
         }
 
@@ -46,8 +46,8 @@ namespace UnitTests
         {
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            tcr.set(new AvgPx(new Decimal(10.5)));
-            tcr.get(avgPx);
+            tcr.Set(new AvgPx(new Decimal(10.5)));
+            tcr.Get(avgPx);
             Assert.That(tcr.avgPx.getValue(), Is.EqualTo(avgPx.getValue()));
         }
 
@@ -55,9 +55,9 @@ namespace UnitTests
         public void TCRMsgTypeGetsSetTest()
         {
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            Assert.That(tcr.Header.isSetField(QuickFix.Fields.Tags.MsgType), Is.True);
+            Assert.That(tcr.Header.IsSetField(QuickFix.Fields.Tags.MsgType), Is.True);
             MsgType msgType = new MsgType();
-            tcr.Header.getField(msgType);
+            tcr.Header.GetField(msgType);
             Assert.That(msgType.getValue(), Is.EqualTo("AE"));
         }
 
@@ -75,7 +75,7 @@ namespace UnitTests
             Assert.That(tcr.symbol.getValue(), Is.EqualTo("AAPL"));
             Assert.That(tcr.tradeReportID.getValue(), Is.EqualTo("dude1"));
             MsgType msgType = new MsgType();
-            tcr.Header.getField(msgType);
+            tcr.Header.GetField(msgType);
             Assert.That(msgType.getValue(), Is.EqualTo("AE"));
         }
 
@@ -91,13 +91,13 @@ namespace UnitTests
                 new TradeDate("2010-12-12"),
                 new TransactTime(new DateTime(2010, 12, 15, 10, 55, 32, 455)));
             LastPx lastPx = new LastPx();
-            Assert.That(tcr.isSet(lastPx), Is.True);
+            Assert.That(tcr.IsSet(lastPx), Is.True);
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
-            Assert.That(tcr.isSet(avgPx), Is.False);
-            Assert.That(tcr.isSetAvgPx(), Is.False);
-            tcr.set(avgPx);
-            Assert.That(tcr.isSet(avgPx), Is.True);
-            Assert.That(tcr.isSetAvgPx(), Is.True);
+            Assert.That(tcr.IsSet(avgPx), Is.False);
+            Assert.That(tcr.IsSetAvgPx(), Is.False);
+            tcr.Set(avgPx);
+            Assert.That(tcr.IsSet(avgPx), Is.True);
+            Assert.That(tcr.IsSetAvgPx(), Is.True);
 
         }
 
@@ -131,11 +131,11 @@ namespace UnitTests
         {
             QuickFix.FIX44.TradeCaptureReport.NoSides noSides = new QuickFix.FIX44.TradeCaptureReport.NoSides();
             OrderID ordId = new OrderID("fooey");
-            Assert.That(noSides.isSet(ordId), Is.False);
-            Assert.That(noSides.isSetOrderID(), Is.False);
-            noSides.set(ordId);
-            Assert.That(noSides.isSet(ordId), Is.True);
-            Assert.That(noSides.isSetOrderID(), Is.True);
+            Assert.That(noSides.IsSet(ordId), Is.False);
+            Assert.That(noSides.IsSetOrderID(), Is.False);
+            noSides.Set(ordId);
+            Assert.That(noSides.IsSet(ordId), Is.True);
+            Assert.That(noSides.IsSetOrderID(), Is.True);
             Assert.That(noSides.orderID.getValue(), Is.EqualTo("fooey"));
         }
     }

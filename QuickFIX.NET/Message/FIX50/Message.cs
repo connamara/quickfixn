@@ -9,7 +9,7 @@ namespace QuickFix
             public Message()
                 : base()
             {
-                this.Header.setField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.FIX50));
+                this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.FIX50));
             }
         }
     }

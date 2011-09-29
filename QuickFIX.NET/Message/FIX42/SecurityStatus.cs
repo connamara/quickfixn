@@ -11,7 +11,7 @@ namespace QuickFix
 
             public SecurityStatus() : base()
             {
-                this.Header.setField(new QuickFix.Fields.MsgType("f"));
+                this.Header.SetField(new QuickFix.Fields.MsgType("f"));
             }
 
             public SecurityStatus(
@@ -26,1116 +26,1116 @@ namespace QuickFix
                 get 
                 {
                     QuickFix.Fields.SecurityStatusReqID val = new QuickFix.Fields.SecurityStatusReqID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.SecurityStatusReqID val) 
+            public void Set(QuickFix.Fields.SecurityStatusReqID val) 
             { 
                 this.securityStatusReqID = val;
             }
             
-            public QuickFix.Fields.SecurityStatusReqID get(QuickFix.Fields.SecurityStatusReqID val) 
+            public QuickFix.Fields.SecurityStatusReqID Get(QuickFix.Fields.SecurityStatusReqID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.SecurityStatusReqID val) 
+            public bool IsSet(QuickFix.Fields.SecurityStatusReqID val) 
             { 
-                return isSetSecurityStatusReqID();
+                return IsSetSecurityStatusReqID();
             }
             
-            public bool isSetSecurityStatusReqID() 
+            public bool IsSetSecurityStatusReqID() 
             { 
-                return isSetField(Tags.SecurityStatusReqID);
+                return IsSetField(Tags.SecurityStatusReqID);
             }
             public QuickFix.Fields.Symbol symbol
             { 
                 get 
                 {
                     QuickFix.Fields.Symbol val = new QuickFix.Fields.Symbol();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.Symbol val) 
+            public void Set(QuickFix.Fields.Symbol val) 
             { 
                 this.symbol = val;
             }
             
-            public QuickFix.Fields.Symbol get(QuickFix.Fields.Symbol val) 
+            public QuickFix.Fields.Symbol Get(QuickFix.Fields.Symbol val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.Symbol val) 
+            public bool IsSet(QuickFix.Fields.Symbol val) 
             { 
-                return isSetSymbol();
+                return IsSetSymbol();
             }
             
-            public bool isSetSymbol() 
+            public bool IsSetSymbol() 
             { 
-                return isSetField(Tags.Symbol);
+                return IsSetField(Tags.Symbol);
             }
             public QuickFix.Fields.SymbolSfx symbolSfx
             { 
                 get 
                 {
                     QuickFix.Fields.SymbolSfx val = new QuickFix.Fields.SymbolSfx();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.SymbolSfx val) 
+            public void Set(QuickFix.Fields.SymbolSfx val) 
             { 
                 this.symbolSfx = val;
             }
             
-            public QuickFix.Fields.SymbolSfx get(QuickFix.Fields.SymbolSfx val) 
+            public QuickFix.Fields.SymbolSfx Get(QuickFix.Fields.SymbolSfx val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.SymbolSfx val) 
+            public bool IsSet(QuickFix.Fields.SymbolSfx val) 
             { 
-                return isSetSymbolSfx();
+                return IsSetSymbolSfx();
             }
             
-            public bool isSetSymbolSfx() 
+            public bool IsSetSymbolSfx() 
             { 
-                return isSetField(Tags.SymbolSfx);
+                return IsSetField(Tags.SymbolSfx);
             }
             public QuickFix.Fields.SecurityID securityID
             { 
                 get 
                 {
                     QuickFix.Fields.SecurityID val = new QuickFix.Fields.SecurityID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.SecurityID val) 
+            public void Set(QuickFix.Fields.SecurityID val) 
             { 
                 this.securityID = val;
             }
             
-            public QuickFix.Fields.SecurityID get(QuickFix.Fields.SecurityID val) 
+            public QuickFix.Fields.SecurityID Get(QuickFix.Fields.SecurityID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.SecurityID val) 
+            public bool IsSet(QuickFix.Fields.SecurityID val) 
             { 
-                return isSetSecurityID();
+                return IsSetSecurityID();
             }
             
-            public bool isSetSecurityID() 
+            public bool IsSetSecurityID() 
             { 
-                return isSetField(Tags.SecurityID);
+                return IsSetField(Tags.SecurityID);
             }
             public QuickFix.Fields.IDSource iDSource
             { 
                 get 
                 {
                     QuickFix.Fields.IDSource val = new QuickFix.Fields.IDSource();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.IDSource val) 
+            public void Set(QuickFix.Fields.IDSource val) 
             { 
                 this.iDSource = val;
             }
             
-            public QuickFix.Fields.IDSource get(QuickFix.Fields.IDSource val) 
+            public QuickFix.Fields.IDSource Get(QuickFix.Fields.IDSource val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.IDSource val) 
+            public bool IsSet(QuickFix.Fields.IDSource val) 
             { 
-                return isSetIDSource();
+                return IsSetIDSource();
             }
             
-            public bool isSetIDSource() 
+            public bool IsSetIDSource() 
             { 
-                return isSetField(Tags.IDSource);
+                return IsSetField(Tags.IDSource);
             }
             public QuickFix.Fields.SecurityType securityType
             { 
                 get 
                 {
                     QuickFix.Fields.SecurityType val = new QuickFix.Fields.SecurityType();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.SecurityType val) 
+            public void Set(QuickFix.Fields.SecurityType val) 
             { 
                 this.securityType = val;
             }
             
-            public QuickFix.Fields.SecurityType get(QuickFix.Fields.SecurityType val) 
+            public QuickFix.Fields.SecurityType Get(QuickFix.Fields.SecurityType val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.SecurityType val) 
+            public bool IsSet(QuickFix.Fields.SecurityType val) 
             { 
-                return isSetSecurityType();
+                return IsSetSecurityType();
             }
             
-            public bool isSetSecurityType() 
+            public bool IsSetSecurityType() 
             { 
-                return isSetField(Tags.SecurityType);
+                return IsSetField(Tags.SecurityType);
             }
             public QuickFix.Fields.MaturityMonthYear maturityMonthYear
             { 
                 get 
                 {
                     QuickFix.Fields.MaturityMonthYear val = new QuickFix.Fields.MaturityMonthYear();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.MaturityMonthYear val) 
+            public void Set(QuickFix.Fields.MaturityMonthYear val) 
             { 
                 this.maturityMonthYear = val;
             }
             
-            public QuickFix.Fields.MaturityMonthYear get(QuickFix.Fields.MaturityMonthYear val) 
+            public QuickFix.Fields.MaturityMonthYear Get(QuickFix.Fields.MaturityMonthYear val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.MaturityMonthYear val) 
+            public bool IsSet(QuickFix.Fields.MaturityMonthYear val) 
             { 
-                return isSetMaturityMonthYear();
+                return IsSetMaturityMonthYear();
             }
             
-            public bool isSetMaturityMonthYear() 
+            public bool IsSetMaturityMonthYear() 
             { 
-                return isSetField(Tags.MaturityMonthYear);
+                return IsSetField(Tags.MaturityMonthYear);
             }
             public QuickFix.Fields.MaturityDay maturityDay
             { 
                 get 
                 {
                     QuickFix.Fields.MaturityDay val = new QuickFix.Fields.MaturityDay();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.MaturityDay val) 
+            public void Set(QuickFix.Fields.MaturityDay val) 
             { 
                 this.maturityDay = val;
             }
             
-            public QuickFix.Fields.MaturityDay get(QuickFix.Fields.MaturityDay val) 
+            public QuickFix.Fields.MaturityDay Get(QuickFix.Fields.MaturityDay val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.MaturityDay val) 
+            public bool IsSet(QuickFix.Fields.MaturityDay val) 
             { 
-                return isSetMaturityDay();
+                return IsSetMaturityDay();
             }
             
-            public bool isSetMaturityDay() 
+            public bool IsSetMaturityDay() 
             { 
-                return isSetField(Tags.MaturityDay);
+                return IsSetField(Tags.MaturityDay);
             }
             public QuickFix.Fields.PutOrCall putOrCall
             { 
                 get 
                 {
                     QuickFix.Fields.PutOrCall val = new QuickFix.Fields.PutOrCall();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.PutOrCall val) 
+            public void Set(QuickFix.Fields.PutOrCall val) 
             { 
                 this.putOrCall = val;
             }
             
-            public QuickFix.Fields.PutOrCall get(QuickFix.Fields.PutOrCall val) 
+            public QuickFix.Fields.PutOrCall Get(QuickFix.Fields.PutOrCall val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.PutOrCall val) 
+            public bool IsSet(QuickFix.Fields.PutOrCall val) 
             { 
-                return isSetPutOrCall();
+                return IsSetPutOrCall();
             }
             
-            public bool isSetPutOrCall() 
+            public bool IsSetPutOrCall() 
             { 
-                return isSetField(Tags.PutOrCall);
+                return IsSetField(Tags.PutOrCall);
             }
             public QuickFix.Fields.StrikePrice strikePrice
             { 
                 get 
                 {
                     QuickFix.Fields.StrikePrice val = new QuickFix.Fields.StrikePrice();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.StrikePrice val) 
+            public void Set(QuickFix.Fields.StrikePrice val) 
             { 
                 this.strikePrice = val;
             }
             
-            public QuickFix.Fields.StrikePrice get(QuickFix.Fields.StrikePrice val) 
+            public QuickFix.Fields.StrikePrice Get(QuickFix.Fields.StrikePrice val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.StrikePrice val) 
+            public bool IsSet(QuickFix.Fields.StrikePrice val) 
             { 
-                return isSetStrikePrice();
+                return IsSetStrikePrice();
             }
             
-            public bool isSetStrikePrice() 
+            public bool IsSetStrikePrice() 
             { 
-                return isSetField(Tags.StrikePrice);
+                return IsSetField(Tags.StrikePrice);
             }
             public QuickFix.Fields.OptAttribute optAttribute
             { 
                 get 
                 {
                     QuickFix.Fields.OptAttribute val = new QuickFix.Fields.OptAttribute();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.OptAttribute val) 
+            public void Set(QuickFix.Fields.OptAttribute val) 
             { 
                 this.optAttribute = val;
             }
             
-            public QuickFix.Fields.OptAttribute get(QuickFix.Fields.OptAttribute val) 
+            public QuickFix.Fields.OptAttribute Get(QuickFix.Fields.OptAttribute val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.OptAttribute val) 
+            public bool IsSet(QuickFix.Fields.OptAttribute val) 
             { 
-                return isSetOptAttribute();
+                return IsSetOptAttribute();
             }
             
-            public bool isSetOptAttribute() 
+            public bool IsSetOptAttribute() 
             { 
-                return isSetField(Tags.OptAttribute);
+                return IsSetField(Tags.OptAttribute);
             }
             public QuickFix.Fields.ContractMultiplier contractMultiplier
             { 
                 get 
                 {
                     QuickFix.Fields.ContractMultiplier val = new QuickFix.Fields.ContractMultiplier();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.ContractMultiplier val) 
+            public void Set(QuickFix.Fields.ContractMultiplier val) 
             { 
                 this.contractMultiplier = val;
             }
             
-            public QuickFix.Fields.ContractMultiplier get(QuickFix.Fields.ContractMultiplier val) 
+            public QuickFix.Fields.ContractMultiplier Get(QuickFix.Fields.ContractMultiplier val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.ContractMultiplier val) 
+            public bool IsSet(QuickFix.Fields.ContractMultiplier val) 
             { 
-                return isSetContractMultiplier();
+                return IsSetContractMultiplier();
             }
             
-            public bool isSetContractMultiplier() 
+            public bool IsSetContractMultiplier() 
             { 
-                return isSetField(Tags.ContractMultiplier);
+                return IsSetField(Tags.ContractMultiplier);
             }
             public QuickFix.Fields.CouponRate couponRate
             { 
                 get 
                 {
                     QuickFix.Fields.CouponRate val = new QuickFix.Fields.CouponRate();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.CouponRate val) 
+            public void Set(QuickFix.Fields.CouponRate val) 
             { 
                 this.couponRate = val;
             }
             
-            public QuickFix.Fields.CouponRate get(QuickFix.Fields.CouponRate val) 
+            public QuickFix.Fields.CouponRate Get(QuickFix.Fields.CouponRate val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.CouponRate val) 
+            public bool IsSet(QuickFix.Fields.CouponRate val) 
             { 
-                return isSetCouponRate();
+                return IsSetCouponRate();
             }
             
-            public bool isSetCouponRate() 
+            public bool IsSetCouponRate() 
             { 
-                return isSetField(Tags.CouponRate);
+                return IsSetField(Tags.CouponRate);
             }
             public QuickFix.Fields.SecurityExchange securityExchange
             { 
                 get 
                 {
                     QuickFix.Fields.SecurityExchange val = new QuickFix.Fields.SecurityExchange();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.SecurityExchange val) 
+            public void Set(QuickFix.Fields.SecurityExchange val) 
             { 
                 this.securityExchange = val;
             }
             
-            public QuickFix.Fields.SecurityExchange get(QuickFix.Fields.SecurityExchange val) 
+            public QuickFix.Fields.SecurityExchange Get(QuickFix.Fields.SecurityExchange val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.SecurityExchange val) 
+            public bool IsSet(QuickFix.Fields.SecurityExchange val) 
             { 
-                return isSetSecurityExchange();
+                return IsSetSecurityExchange();
             }
             
-            public bool isSetSecurityExchange() 
+            public bool IsSetSecurityExchange() 
             { 
-                return isSetField(Tags.SecurityExchange);
+                return IsSetField(Tags.SecurityExchange);
             }
             public QuickFix.Fields.Issuer issuer
             { 
                 get 
                 {
                     QuickFix.Fields.Issuer val = new QuickFix.Fields.Issuer();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.Issuer val) 
+            public void Set(QuickFix.Fields.Issuer val) 
             { 
                 this.issuer = val;
             }
             
-            public QuickFix.Fields.Issuer get(QuickFix.Fields.Issuer val) 
+            public QuickFix.Fields.Issuer Get(QuickFix.Fields.Issuer val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.Issuer val) 
+            public bool IsSet(QuickFix.Fields.Issuer val) 
             { 
-                return isSetIssuer();
+                return IsSetIssuer();
             }
             
-            public bool isSetIssuer() 
+            public bool IsSetIssuer() 
             { 
-                return isSetField(Tags.Issuer);
+                return IsSetField(Tags.Issuer);
             }
             public QuickFix.Fields.EncodedIssuerLen encodedIssuerLen
             { 
                 get 
                 {
                     QuickFix.Fields.EncodedIssuerLen val = new QuickFix.Fields.EncodedIssuerLen();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.EncodedIssuerLen val) 
+            public void Set(QuickFix.Fields.EncodedIssuerLen val) 
             { 
                 this.encodedIssuerLen = val;
             }
             
-            public QuickFix.Fields.EncodedIssuerLen get(QuickFix.Fields.EncodedIssuerLen val) 
+            public QuickFix.Fields.EncodedIssuerLen Get(QuickFix.Fields.EncodedIssuerLen val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.EncodedIssuerLen val) 
+            public bool IsSet(QuickFix.Fields.EncodedIssuerLen val) 
             { 
-                return isSetEncodedIssuerLen();
+                return IsSetEncodedIssuerLen();
             }
             
-            public bool isSetEncodedIssuerLen() 
+            public bool IsSetEncodedIssuerLen() 
             { 
-                return isSetField(Tags.EncodedIssuerLen);
+                return IsSetField(Tags.EncodedIssuerLen);
             }
             public QuickFix.Fields.EncodedIssuer encodedIssuer
             { 
                 get 
                 {
                     QuickFix.Fields.EncodedIssuer val = new QuickFix.Fields.EncodedIssuer();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.EncodedIssuer val) 
+            public void Set(QuickFix.Fields.EncodedIssuer val) 
             { 
                 this.encodedIssuer = val;
             }
             
-            public QuickFix.Fields.EncodedIssuer get(QuickFix.Fields.EncodedIssuer val) 
+            public QuickFix.Fields.EncodedIssuer Get(QuickFix.Fields.EncodedIssuer val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.EncodedIssuer val) 
+            public bool IsSet(QuickFix.Fields.EncodedIssuer val) 
             { 
-                return isSetEncodedIssuer();
+                return IsSetEncodedIssuer();
             }
             
-            public bool isSetEncodedIssuer() 
+            public bool IsSetEncodedIssuer() 
             { 
-                return isSetField(Tags.EncodedIssuer);
+                return IsSetField(Tags.EncodedIssuer);
             }
             public QuickFix.Fields.SecurityDesc securityDesc
             { 
                 get 
                 {
                     QuickFix.Fields.SecurityDesc val = new QuickFix.Fields.SecurityDesc();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.SecurityDesc val) 
+            public void Set(QuickFix.Fields.SecurityDesc val) 
             { 
                 this.securityDesc = val;
             }
             
-            public QuickFix.Fields.SecurityDesc get(QuickFix.Fields.SecurityDesc val) 
+            public QuickFix.Fields.SecurityDesc Get(QuickFix.Fields.SecurityDesc val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.SecurityDesc val) 
+            public bool IsSet(QuickFix.Fields.SecurityDesc val) 
             { 
-                return isSetSecurityDesc();
+                return IsSetSecurityDesc();
             }
             
-            public bool isSetSecurityDesc() 
+            public bool IsSetSecurityDesc() 
             { 
-                return isSetField(Tags.SecurityDesc);
+                return IsSetField(Tags.SecurityDesc);
             }
             public QuickFix.Fields.EncodedSecurityDescLen encodedSecurityDescLen
             { 
                 get 
                 {
                     QuickFix.Fields.EncodedSecurityDescLen val = new QuickFix.Fields.EncodedSecurityDescLen();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.EncodedSecurityDescLen val) 
+            public void Set(QuickFix.Fields.EncodedSecurityDescLen val) 
             { 
                 this.encodedSecurityDescLen = val;
             }
             
-            public QuickFix.Fields.EncodedSecurityDescLen get(QuickFix.Fields.EncodedSecurityDescLen val) 
+            public QuickFix.Fields.EncodedSecurityDescLen Get(QuickFix.Fields.EncodedSecurityDescLen val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.EncodedSecurityDescLen val) 
+            public bool IsSet(QuickFix.Fields.EncodedSecurityDescLen val) 
             { 
-                return isSetEncodedSecurityDescLen();
+                return IsSetEncodedSecurityDescLen();
             }
             
-            public bool isSetEncodedSecurityDescLen() 
+            public bool IsSetEncodedSecurityDescLen() 
             { 
-                return isSetField(Tags.EncodedSecurityDescLen);
+                return IsSetField(Tags.EncodedSecurityDescLen);
             }
             public QuickFix.Fields.EncodedSecurityDesc encodedSecurityDesc
             { 
                 get 
                 {
                     QuickFix.Fields.EncodedSecurityDesc val = new QuickFix.Fields.EncodedSecurityDesc();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.EncodedSecurityDesc val) 
+            public void Set(QuickFix.Fields.EncodedSecurityDesc val) 
             { 
                 this.encodedSecurityDesc = val;
             }
             
-            public QuickFix.Fields.EncodedSecurityDesc get(QuickFix.Fields.EncodedSecurityDesc val) 
+            public QuickFix.Fields.EncodedSecurityDesc Get(QuickFix.Fields.EncodedSecurityDesc val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.EncodedSecurityDesc val) 
+            public bool IsSet(QuickFix.Fields.EncodedSecurityDesc val) 
             { 
-                return isSetEncodedSecurityDesc();
+                return IsSetEncodedSecurityDesc();
             }
             
-            public bool isSetEncodedSecurityDesc() 
+            public bool IsSetEncodedSecurityDesc() 
             { 
-                return isSetField(Tags.EncodedSecurityDesc);
+                return IsSetField(Tags.EncodedSecurityDesc);
             }
             public QuickFix.Fields.Currency currency
             { 
                 get 
                 {
                     QuickFix.Fields.Currency val = new QuickFix.Fields.Currency();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.Currency val) 
+            public void Set(QuickFix.Fields.Currency val) 
             { 
                 this.currency = val;
             }
             
-            public QuickFix.Fields.Currency get(QuickFix.Fields.Currency val) 
+            public QuickFix.Fields.Currency Get(QuickFix.Fields.Currency val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.Currency val) 
+            public bool IsSet(QuickFix.Fields.Currency val) 
             { 
-                return isSetCurrency();
+                return IsSetCurrency();
             }
             
-            public bool isSetCurrency() 
+            public bool IsSetCurrency() 
             { 
-                return isSetField(Tags.Currency);
+                return IsSetField(Tags.Currency);
             }
             public QuickFix.Fields.TradingSessionID tradingSessionID
             { 
                 get 
                 {
                     QuickFix.Fields.TradingSessionID val = new QuickFix.Fields.TradingSessionID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.TradingSessionID val) 
+            public void Set(QuickFix.Fields.TradingSessionID val) 
             { 
                 this.tradingSessionID = val;
             }
             
-            public QuickFix.Fields.TradingSessionID get(QuickFix.Fields.TradingSessionID val) 
+            public QuickFix.Fields.TradingSessionID Get(QuickFix.Fields.TradingSessionID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.TradingSessionID val) 
+            public bool IsSet(QuickFix.Fields.TradingSessionID val) 
             { 
-                return isSetTradingSessionID();
+                return IsSetTradingSessionID();
             }
             
-            public bool isSetTradingSessionID() 
+            public bool IsSetTradingSessionID() 
             { 
-                return isSetField(Tags.TradingSessionID);
+                return IsSetField(Tags.TradingSessionID);
             }
             public QuickFix.Fields.UnsolicitedIndicator unsolicitedIndicator
             { 
                 get 
                 {
                     QuickFix.Fields.UnsolicitedIndicator val = new QuickFix.Fields.UnsolicitedIndicator();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.UnsolicitedIndicator val) 
+            public void Set(QuickFix.Fields.UnsolicitedIndicator val) 
             { 
                 this.unsolicitedIndicator = val;
             }
             
-            public QuickFix.Fields.UnsolicitedIndicator get(QuickFix.Fields.UnsolicitedIndicator val) 
+            public QuickFix.Fields.UnsolicitedIndicator Get(QuickFix.Fields.UnsolicitedIndicator val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.UnsolicitedIndicator val) 
+            public bool IsSet(QuickFix.Fields.UnsolicitedIndicator val) 
             { 
-                return isSetUnsolicitedIndicator();
+                return IsSetUnsolicitedIndicator();
             }
             
-            public bool isSetUnsolicitedIndicator() 
+            public bool IsSetUnsolicitedIndicator() 
             { 
-                return isSetField(Tags.UnsolicitedIndicator);
+                return IsSetField(Tags.UnsolicitedIndicator);
             }
             public QuickFix.Fields.SecurityTradingStatus securityTradingStatus
             { 
                 get 
                 {
                     QuickFix.Fields.SecurityTradingStatus val = new QuickFix.Fields.SecurityTradingStatus();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.SecurityTradingStatus val) 
+            public void Set(QuickFix.Fields.SecurityTradingStatus val) 
             { 
                 this.securityTradingStatus = val;
             }
             
-            public QuickFix.Fields.SecurityTradingStatus get(QuickFix.Fields.SecurityTradingStatus val) 
+            public QuickFix.Fields.SecurityTradingStatus Get(QuickFix.Fields.SecurityTradingStatus val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.SecurityTradingStatus val) 
+            public bool IsSet(QuickFix.Fields.SecurityTradingStatus val) 
             { 
-                return isSetSecurityTradingStatus();
+                return IsSetSecurityTradingStatus();
             }
             
-            public bool isSetSecurityTradingStatus() 
+            public bool IsSetSecurityTradingStatus() 
             { 
-                return isSetField(Tags.SecurityTradingStatus);
+                return IsSetField(Tags.SecurityTradingStatus);
             }
             public QuickFix.Fields.FinancialStatus financialStatus
             { 
                 get 
                 {
                     QuickFix.Fields.FinancialStatus val = new QuickFix.Fields.FinancialStatus();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.FinancialStatus val) 
+            public void Set(QuickFix.Fields.FinancialStatus val) 
             { 
                 this.financialStatus = val;
             }
             
-            public QuickFix.Fields.FinancialStatus get(QuickFix.Fields.FinancialStatus val) 
+            public QuickFix.Fields.FinancialStatus Get(QuickFix.Fields.FinancialStatus val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.FinancialStatus val) 
+            public bool IsSet(QuickFix.Fields.FinancialStatus val) 
             { 
-                return isSetFinancialStatus();
+                return IsSetFinancialStatus();
             }
             
-            public bool isSetFinancialStatus() 
+            public bool IsSetFinancialStatus() 
             { 
-                return isSetField(Tags.FinancialStatus);
+                return IsSetField(Tags.FinancialStatus);
             }
             public QuickFix.Fields.CorporateAction corporateAction
             { 
                 get 
                 {
                     QuickFix.Fields.CorporateAction val = new QuickFix.Fields.CorporateAction();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.CorporateAction val) 
+            public void Set(QuickFix.Fields.CorporateAction val) 
             { 
                 this.corporateAction = val;
             }
             
-            public QuickFix.Fields.CorporateAction get(QuickFix.Fields.CorporateAction val) 
+            public QuickFix.Fields.CorporateAction Get(QuickFix.Fields.CorporateAction val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.CorporateAction val) 
+            public bool IsSet(QuickFix.Fields.CorporateAction val) 
             { 
-                return isSetCorporateAction();
+                return IsSetCorporateAction();
             }
             
-            public bool isSetCorporateAction() 
+            public bool IsSetCorporateAction() 
             { 
-                return isSetField(Tags.CorporateAction);
+                return IsSetField(Tags.CorporateAction);
             }
             public QuickFix.Fields.HaltReason haltReason
             { 
                 get 
                 {
                     QuickFix.Fields.HaltReason val = new QuickFix.Fields.HaltReason();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.HaltReason val) 
+            public void Set(QuickFix.Fields.HaltReason val) 
             { 
                 this.haltReason = val;
             }
             
-            public QuickFix.Fields.HaltReason get(QuickFix.Fields.HaltReason val) 
+            public QuickFix.Fields.HaltReason Get(QuickFix.Fields.HaltReason val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.HaltReason val) 
+            public bool IsSet(QuickFix.Fields.HaltReason val) 
             { 
-                return isSetHaltReason();
+                return IsSetHaltReason();
             }
             
-            public bool isSetHaltReason() 
+            public bool IsSetHaltReason() 
             { 
-                return isSetField(Tags.HaltReason);
+                return IsSetField(Tags.HaltReason);
             }
             public QuickFix.Fields.InViewOfCommon inViewOfCommon
             { 
                 get 
                 {
                     QuickFix.Fields.InViewOfCommon val = new QuickFix.Fields.InViewOfCommon();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.InViewOfCommon val) 
+            public void Set(QuickFix.Fields.InViewOfCommon val) 
             { 
                 this.inViewOfCommon = val;
             }
             
-            public QuickFix.Fields.InViewOfCommon get(QuickFix.Fields.InViewOfCommon val) 
+            public QuickFix.Fields.InViewOfCommon Get(QuickFix.Fields.InViewOfCommon val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.InViewOfCommon val) 
+            public bool IsSet(QuickFix.Fields.InViewOfCommon val) 
             { 
-                return isSetInViewOfCommon();
+                return IsSetInViewOfCommon();
             }
             
-            public bool isSetInViewOfCommon() 
+            public bool IsSetInViewOfCommon() 
             { 
-                return isSetField(Tags.InViewOfCommon);
+                return IsSetField(Tags.InViewOfCommon);
             }
             public QuickFix.Fields.DueToRelated dueToRelated
             { 
                 get 
                 {
                     QuickFix.Fields.DueToRelated val = new QuickFix.Fields.DueToRelated();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.DueToRelated val) 
+            public void Set(QuickFix.Fields.DueToRelated val) 
             { 
                 this.dueToRelated = val;
             }
             
-            public QuickFix.Fields.DueToRelated get(QuickFix.Fields.DueToRelated val) 
+            public QuickFix.Fields.DueToRelated Get(QuickFix.Fields.DueToRelated val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.DueToRelated val) 
+            public bool IsSet(QuickFix.Fields.DueToRelated val) 
             { 
-                return isSetDueToRelated();
+                return IsSetDueToRelated();
             }
             
-            public bool isSetDueToRelated() 
+            public bool IsSetDueToRelated() 
             { 
-                return isSetField(Tags.DueToRelated);
+                return IsSetField(Tags.DueToRelated);
             }
             public QuickFix.Fields.BuyVolume buyVolume
             { 
                 get 
                 {
                     QuickFix.Fields.BuyVolume val = new QuickFix.Fields.BuyVolume();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.BuyVolume val) 
+            public void Set(QuickFix.Fields.BuyVolume val) 
             { 
                 this.buyVolume = val;
             }
             
-            public QuickFix.Fields.BuyVolume get(QuickFix.Fields.BuyVolume val) 
+            public QuickFix.Fields.BuyVolume Get(QuickFix.Fields.BuyVolume val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.BuyVolume val) 
+            public bool IsSet(QuickFix.Fields.BuyVolume val) 
             { 
-                return isSetBuyVolume();
+                return IsSetBuyVolume();
             }
             
-            public bool isSetBuyVolume() 
+            public bool IsSetBuyVolume() 
             { 
-                return isSetField(Tags.BuyVolume);
+                return IsSetField(Tags.BuyVolume);
             }
             public QuickFix.Fields.SellVolume sellVolume
             { 
                 get 
                 {
                     QuickFix.Fields.SellVolume val = new QuickFix.Fields.SellVolume();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.SellVolume val) 
+            public void Set(QuickFix.Fields.SellVolume val) 
             { 
                 this.sellVolume = val;
             }
             
-            public QuickFix.Fields.SellVolume get(QuickFix.Fields.SellVolume val) 
+            public QuickFix.Fields.SellVolume Get(QuickFix.Fields.SellVolume val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.SellVolume val) 
+            public bool IsSet(QuickFix.Fields.SellVolume val) 
             { 
-                return isSetSellVolume();
+                return IsSetSellVolume();
             }
             
-            public bool isSetSellVolume() 
+            public bool IsSetSellVolume() 
             { 
-                return isSetField(Tags.SellVolume);
+                return IsSetField(Tags.SellVolume);
             }
             public QuickFix.Fields.HighPx highPx
             { 
                 get 
                 {
                     QuickFix.Fields.HighPx val = new QuickFix.Fields.HighPx();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.HighPx val) 
+            public void Set(QuickFix.Fields.HighPx val) 
             { 
                 this.highPx = val;
             }
             
-            public QuickFix.Fields.HighPx get(QuickFix.Fields.HighPx val) 
+            public QuickFix.Fields.HighPx Get(QuickFix.Fields.HighPx val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.HighPx val) 
+            public bool IsSet(QuickFix.Fields.HighPx val) 
             { 
-                return isSetHighPx();
+                return IsSetHighPx();
             }
             
-            public bool isSetHighPx() 
+            public bool IsSetHighPx() 
             { 
-                return isSetField(Tags.HighPx);
+                return IsSetField(Tags.HighPx);
             }
             public QuickFix.Fields.LowPx lowPx
             { 
                 get 
                 {
                     QuickFix.Fields.LowPx val = new QuickFix.Fields.LowPx();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.LowPx val) 
+            public void Set(QuickFix.Fields.LowPx val) 
             { 
                 this.lowPx = val;
             }
             
-            public QuickFix.Fields.LowPx get(QuickFix.Fields.LowPx val) 
+            public QuickFix.Fields.LowPx Get(QuickFix.Fields.LowPx val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.LowPx val) 
+            public bool IsSet(QuickFix.Fields.LowPx val) 
             { 
-                return isSetLowPx();
+                return IsSetLowPx();
             }
             
-            public bool isSetLowPx() 
+            public bool IsSetLowPx() 
             { 
-                return isSetField(Tags.LowPx);
+                return IsSetField(Tags.LowPx);
             }
             public QuickFix.Fields.LastPx lastPx
             { 
                 get 
                 {
                     QuickFix.Fields.LastPx val = new QuickFix.Fields.LastPx();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.LastPx val) 
+            public void Set(QuickFix.Fields.LastPx val) 
             { 
                 this.lastPx = val;
             }
             
-            public QuickFix.Fields.LastPx get(QuickFix.Fields.LastPx val) 
+            public QuickFix.Fields.LastPx Get(QuickFix.Fields.LastPx val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.LastPx val) 
+            public bool IsSet(QuickFix.Fields.LastPx val) 
             { 
-                return isSetLastPx();
+                return IsSetLastPx();
             }
             
-            public bool isSetLastPx() 
+            public bool IsSetLastPx() 
             { 
-                return isSetField(Tags.LastPx);
+                return IsSetField(Tags.LastPx);
             }
             public QuickFix.Fields.TransactTime transactTime
             { 
                 get 
                 {
                     QuickFix.Fields.TransactTime val = new QuickFix.Fields.TransactTime();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.TransactTime val) 
+            public void Set(QuickFix.Fields.TransactTime val) 
             { 
                 this.transactTime = val;
             }
             
-            public QuickFix.Fields.TransactTime get(QuickFix.Fields.TransactTime val) 
+            public QuickFix.Fields.TransactTime Get(QuickFix.Fields.TransactTime val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.TransactTime val) 
+            public bool IsSet(QuickFix.Fields.TransactTime val) 
             { 
-                return isSetTransactTime();
+                return IsSetTransactTime();
             }
             
-            public bool isSetTransactTime() 
+            public bool IsSetTransactTime() 
             { 
-                return isSetField(Tags.TransactTime);
+                return IsSetField(Tags.TransactTime);
             }
             public QuickFix.Fields.Adjustment adjustment
             { 
                 get 
                 {
                     QuickFix.Fields.Adjustment val = new QuickFix.Fields.Adjustment();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.Adjustment val) 
+            public void Set(QuickFix.Fields.Adjustment val) 
             { 
                 this.adjustment = val;
             }
             
-            public QuickFix.Fields.Adjustment get(QuickFix.Fields.Adjustment val) 
+            public QuickFix.Fields.Adjustment Get(QuickFix.Fields.Adjustment val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.Adjustment val) 
+            public bool IsSet(QuickFix.Fields.Adjustment val) 
             { 
-                return isSetAdjustment();
+                return IsSetAdjustment();
             }
             
-            public bool isSetAdjustment() 
+            public bool IsSetAdjustment() 
             { 
-                return isSetField(Tags.Adjustment);
+                return IsSetField(Tags.Adjustment);
             }
 
         }

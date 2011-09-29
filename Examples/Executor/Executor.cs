@@ -62,10 +62,10 @@ namespace Executor
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
 
-            exReport.set(clOrdID);
+            exReport.Set(clOrdID);
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.account);
 
             try
             {
@@ -111,10 +111,10 @@ namespace Executor
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
 
-            exReport.set(clOrdID);
+            exReport.Set(clOrdID);
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.account);
 
             try
             {
@@ -157,13 +157,13 @@ namespace Executor
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
 
-            exReport.set(clOrdID);
-            exReport.set(orderQty);
-            exReport.set(new LastShares(orderQty.getValue()));
-            exReport.set(new LastPx(price.getValue()));
+            exReport.Set(clOrdID);
+            exReport.Set(orderQty);
+            exReport.Set(new LastShares(orderQty.getValue()));
+            exReport.Set(new LastPx(price.getValue()));
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.account);
 
             try
             {
@@ -205,14 +205,14 @@ namespace Executor
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
 
-            exReport.set(clOrdID);
-            exReport.set(symbol);
-            exReport.set(orderQty);
-            exReport.set(new LastQty(orderQty.getValue()));
-            exReport.set(new LastPx(price.getValue()));
+            exReport.Set(clOrdID);
+            exReport.Set(symbol);
+            exReport.Set(orderQty);
+            exReport.Set(new LastQty(orderQty.getValue()));
+            exReport.Set(new LastPx(price.getValue()));
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.account);
 
             try
             {
@@ -254,14 +254,14 @@ namespace Executor
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
 
-            exReport.set(clOrdID);
-            exReport.set(symbol);
-            exReport.set(orderQty);
-            exReport.set(new LastQty(orderQty.getValue()));
-            exReport.set(new LastPx(price.getValue()));
+            exReport.Set(clOrdID);
+            exReport.Set(symbol);
+            exReport.Set(orderQty);
+            exReport.Set(new LastQty(orderQty.getValue()));
+            exReport.Set(new LastPx(price.getValue()));
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.account);
 
             try
             {
@@ -301,15 +301,15 @@ namespace Executor
                 new LeavesQty(0),
                 new CumQty(orderQty.getValue()));
 
-            exReport.set(clOrdID);
-            exReport.set(symbol);
-            exReport.set(orderQty);
-            exReport.set(new LastQty(orderQty.getValue()));
-            exReport.set(new LastPx(price.getValue()));
-            exReport.set(new AvgPx(price.getValue()));
+            exReport.Set(clOrdID);
+            exReport.Set(symbol);
+            exReport.Set(orderQty);
+            exReport.Set(new LastQty(orderQty.getValue()));
+            exReport.Set(new LastPx(price.getValue()));
+            exReport.Set(new AvgPx(price.getValue()));
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.account);
 
             try
             {

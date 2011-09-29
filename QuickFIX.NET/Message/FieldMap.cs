@@ -76,7 +76,7 @@ namespace QuickFix
         /// set field in the fieldmap
         /// will overwrite field if it exists
         /// </summary>
-        public void setField(Fields.IField field)
+        public void SetField(Fields.IField field)
         {
             _fields[field.Tag] = field;
         }
@@ -86,41 +86,41 @@ namespace QuickFix
         /// </summary>
         /// <param name="field"></param>
         /// <param name="overwrite">will overwrite existing field if set to true</param>
-        public bool setField(Fields.IField field, bool overwrite)
+        public bool SetField(Fields.IField field, bool overwrite)
         {
             if (_fields.ContainsKey(field.Tag) && !overwrite)
                 return false;
             
-            setField(field);
+            SetField(field);
             return true;
         }
 
-        public void getField(Fields.BooleanField field)
+        public void GetField(Fields.BooleanField field)
         {
             field.Obj = GetBoolean(field.Tag);
         }
 
-        public void getField(Fields.StringField field)
+        public void GetField(Fields.StringField field)
         {
             field.Obj = GetString(field.Tag);
         }
 
-        public void getField(Fields.CharField field)
+        public void GetField(Fields.CharField field)
         {
             field.Obj = GetChar(field.Tag);
         }
 
-        public void getField(Fields.IntField field)
+        public void GetField(Fields.IntField field)
         {
             field.Obj = GetInt(field.Tag);
         }
 
-        public void getField(Fields.DecimalField field)
+        public void GetField(Fields.DecimalField field)
         {
             field.Obj = GetDecimal(field.Tag);
         }
 
-        public void getField(Fields.DateTimeField field)
+        public void GetField(Fields.DateTimeField field)
         {
             field.Obj = GetDateTime(field.Tag);
         }
@@ -130,9 +130,9 @@ namespace QuickFix
         /// </summary>
         /// <param name="field">Field Object</param>
         /// <returns>true if set</returns>
-        public bool isSetField(Fields.IField field)
+        public bool IsSetField(Fields.IField field)
         {
-            return isSetField(field.Tag);
+            return IsSetField(field.Tag);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="tag">Tag Number</param>
         /// <returns>true if set</returns>
-        public bool isSetField(int tag)
+        public bool IsSetField(int tag)
         {
             return _fields.ContainsKey(tag);
         }
@@ -417,7 +417,7 @@ namespace QuickFix
         {
             foreach (int preField in preFields)
             {
-                if (isSetField(preField))
+                if (IsSetField(preField))
                     sb.Append(preField + "=" + GetField(preField)).Append(Message.SOH);
             }
 
