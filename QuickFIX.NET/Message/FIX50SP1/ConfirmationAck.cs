@@ -21,13 +21,13 @@ namespace QuickFix
                     QuickFix.Fields.AffirmStatus aAffirmStatus
                 ) : this()
             {
-                this.confirmID = aConfirmID;
-                this.tradeDate = aTradeDate;
-                this.transactTime = aTransactTime;
-                this.affirmStatus = aAffirmStatus;
+                this.ConfirmID = aConfirmID;
+                this.TradeDate = aTradeDate;
+                this.TransactTime = aTransactTime;
+                this.AffirmStatus = aAffirmStatus;
             }
 
-            public QuickFix.Fields.ConfirmID confirmID
+            public QuickFix.Fields.ConfirmID ConfirmID
             { 
                 get 
                 {
@@ -40,7 +40,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.ConfirmID val) 
             { 
-                this.confirmID = val;
+                this.ConfirmID = val;
             }
             
             public QuickFix.Fields.ConfirmID Get(QuickFix.Fields.ConfirmID val) 
@@ -58,7 +58,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.ConfirmID);
             }
-            public QuickFix.Fields.TradeDate tradeDate
+            public QuickFix.Fields.TradeDate TradeDate
             { 
                 get 
                 {
@@ -71,7 +71,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.TradeDate val) 
             { 
-                this.tradeDate = val;
+                this.TradeDate = val;
             }
             
             public QuickFix.Fields.TradeDate Get(QuickFix.Fields.TradeDate val) 
@@ -89,7 +89,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.TradeDate);
             }
-            public QuickFix.Fields.TransactTime transactTime
+            public QuickFix.Fields.TransactTime TransactTime
             { 
                 get 
                 {
@@ -102,7 +102,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.TransactTime val) 
             { 
-                this.transactTime = val;
+                this.TransactTime = val;
             }
             
             public QuickFix.Fields.TransactTime Get(QuickFix.Fields.TransactTime val) 
@@ -120,7 +120,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.TransactTime);
             }
-            public QuickFix.Fields.AffirmStatus affirmStatus
+            public QuickFix.Fields.AffirmStatus AffirmStatus
             { 
                 get 
                 {
@@ -133,7 +133,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.AffirmStatus val) 
             { 
-                this.affirmStatus = val;
+                this.AffirmStatus = val;
             }
             
             public QuickFix.Fields.AffirmStatus Get(QuickFix.Fields.AffirmStatus val) 
@@ -151,7 +151,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.AffirmStatus);
             }
-            public QuickFix.Fields.ConfirmRejReason confirmRejReason
+            public QuickFix.Fields.ConfirmRejReason ConfirmRejReason
             { 
                 get 
                 {
@@ -164,7 +164,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.ConfirmRejReason val) 
             { 
-                this.confirmRejReason = val;
+                this.ConfirmRejReason = val;
             }
             
             public QuickFix.Fields.ConfirmRejReason Get(QuickFix.Fields.ConfirmRejReason val) 
@@ -182,7 +182,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.ConfirmRejReason);
             }
-            public QuickFix.Fields.MatchStatus matchStatus
+            public QuickFix.Fields.MatchStatus MatchStatus
             { 
                 get 
                 {
@@ -195,7 +195,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.MatchStatus val) 
             { 
-                this.matchStatus = val;
+                this.MatchStatus = val;
             }
             
             public QuickFix.Fields.MatchStatus Get(QuickFix.Fields.MatchStatus val) 
@@ -213,7 +213,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.MatchStatus);
             }
-            public QuickFix.Fields.Text text
+            public QuickFix.Fields.Text Text
             { 
                 get 
                 {
@@ -226,7 +226,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.Text val) 
             { 
-                this.text = val;
+                this.Text = val;
             }
             
             public QuickFix.Fields.Text Get(QuickFix.Fields.Text val) 
@@ -244,7 +244,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.Text);
             }
-            public QuickFix.Fields.EncodedTextLen encodedTextLen
+            public QuickFix.Fields.EncodedTextLen EncodedTextLen
             { 
                 get 
                 {
@@ -257,7 +257,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.EncodedTextLen val) 
             { 
-                this.encodedTextLen = val;
+                this.EncodedTextLen = val;
             }
             
             public QuickFix.Fields.EncodedTextLen Get(QuickFix.Fields.EncodedTextLen val) 
@@ -275,7 +275,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.EncodedTextLen);
             }
-            public QuickFix.Fields.EncodedText encodedText
+            public QuickFix.Fields.EncodedText EncodedText
             { 
                 get 
                 {
@@ -288,7 +288,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.EncodedText val) 
             { 
-                this.encodedText = val;
+                this.EncodedText = val;
             }
             
             public QuickFix.Fields.EncodedText Get(QuickFix.Fields.EncodedText val) 

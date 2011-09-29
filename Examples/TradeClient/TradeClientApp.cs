@@ -653,10 +653,10 @@ namespace TradeClient
             SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
             MarketDepth marketDepth = new MarketDepth(0);
 
-            QuickFix.FIX42.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX42.MarketDataRequest.NoMDEntryTypes();
+            QuickFix.FIX42.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX42.MarketDataRequest.NoMDEntryTypesGroup();
             marketDataEntryGroup.Set( new MDEntryType(MDEntryType.BID) );
 
-            QuickFix.FIX42.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX42.MarketDataRequest.NoRelatedSym();
+            QuickFix.FIX42.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX42.MarketDataRequest.NoRelatedSymGroup();
             symbolGroup.Set(new Symbol("LNUX"));
 
             QuickFix.FIX42.MarketDataRequest message = new QuickFix.FIX42.MarketDataRequest( mdReqID, subType, marketDepth );
@@ -675,10 +675,10 @@ namespace TradeClient
             SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
             MarketDepth marketDepth = new MarketDepth(0);
 
-            QuickFix.FIX43.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX43.MarketDataRequest.NoMDEntryTypes();
+            QuickFix.FIX43.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX43.MarketDataRequest.NoMDEntryTypesGroup();
             marketDataEntryGroup.Set(new MDEntryType(MDEntryType.BID));
 
-            QuickFix.FIX43.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX43.MarketDataRequest.NoRelatedSym();
+            QuickFix.FIX43.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX43.MarketDataRequest.NoRelatedSymGroup();
             symbolGroup.Set(new Symbol("LNUX"));
 
             QuickFix.FIX43.MarketDataRequest message = new QuickFix.FIX43.MarketDataRequest(mdReqID, subType, marketDepth);
@@ -697,10 +697,10 @@ namespace TradeClient
             SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
             MarketDepth marketDepth = new MarketDepth(0);
 
-            QuickFix.FIX44.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX44.MarketDataRequest.NoMDEntryTypes();
+            QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup();
             marketDataEntryGroup.Set(new MDEntryType(MDEntryType.BID));
 
-            QuickFix.FIX44.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX44.MarketDataRequest.NoRelatedSym();
+            QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup();
             symbolGroup.Set(new Symbol("LNUX"));
 
             QuickFix.FIX44.MarketDataRequest message = new QuickFix.FIX44.MarketDataRequest(mdReqID, subType, marketDepth);
@@ -719,10 +719,10 @@ namespace TradeClient
             SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
             MarketDepth marketDepth = new MarketDepth(0);
 
-            QuickFix.FIX50.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX50.MarketDataRequest.NoMDEntryTypes();
+            QuickFix.FIX50.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX50.MarketDataRequest.NoMDEntryTypesGroup();
             marketDataEntryGroup.Set(new MDEntryType(MDEntryType.BID));
 
-            QuickFix.FIX50.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX50.MarketDataRequest.NoRelatedSym();
+            QuickFix.FIX50.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX50.MarketDataRequest.NoRelatedSymGroup();
             symbolGroup.Set(new Symbol("LNUX"));
 
             QuickFix.FIX50.MarketDataRequest message = new QuickFix.FIX50.MarketDataRequest(mdReqID, subType, marketDepth);

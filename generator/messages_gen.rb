@@ -85,7 +85,7 @@ HERE
     req = required_fields(msg)
     return '' if req.empty?
     req_args = req.map {|r| ' '*20 + "QuickFix.Fields.#{r[:name]} a#{r[:name]}" }
-    req_setters = req.map {|r| ' '*16 + "this.#{lower(r[:name])} = a#{r[:name]};" }
+    req_setters = req.map {|r| ' '*16 + "this.#{(r[:name])} = a#{r[:name]};" }
 <<HERE
             public #{msg[:name]}(
 #{req_args.join(",\n")}
@@ -111,7 +111,7 @@ HERE
 
   def self.msg_field fld, prepend_spaces
     str = []
-    str << "public QuickFix.Fields.#{fld[:name]} #{lower(fld[:name])}"
+    str << "public QuickFix.Fields.#{fld[:name]} #{fld[:name]}"
     str << "{ "
     str << "    get "
     str << "    {"
@@ -124,7 +124,7 @@ HERE
     str << ""
     str << "public void Set(QuickFix.Fields.#{fld[:name]} val) "
     str << "{ "
-    str << "    this.#{lower(fld[:name])} = val;"
+    str << "    this.#{(fld[:name])} = val;"
     str << "}"
     str << ""
     str << "public QuickFix.Fields.#{fld[:name]} Get(QuickFix.Fields.#{fld[:name]} val) "
@@ -148,9 +148,9 @@ HERE
 
   def self.msg_grp grp, prepend_spaces
     str = []
-    str << "public class #{grp[:name]} : Group"
+    str << "public class #{grp[:name]}Group : Group"
     str << "{"
-    str << "    public #{grp[:name]}() "
+    str << "    public #{grp[:name]}Group() "
     str << "      :base( Tags.#{grp[:group_field][:name]}, Tags.#{grp[:fields][0][:name]}, fieldOrder)"
     str << "    {"
     str << "    }"

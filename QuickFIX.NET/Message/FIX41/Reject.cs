@@ -18,10 +18,10 @@ namespace QuickFix
                     QuickFix.Fields.RefSeqNum aRefSeqNum
                 ) : this()
             {
-                this.refSeqNum = aRefSeqNum;
+                this.RefSeqNum = aRefSeqNum;
             }
 
-            public QuickFix.Fields.RefSeqNum refSeqNum
+            public QuickFix.Fields.RefSeqNum RefSeqNum
             { 
                 get 
                 {
@@ -34,7 +34,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.RefSeqNum val) 
             { 
-                this.refSeqNum = val;
+                this.RefSeqNum = val;
             }
             
             public QuickFix.Fields.RefSeqNum Get(QuickFix.Fields.RefSeqNum val) 
@@ -52,7 +52,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.RefSeqNum);
             }
-            public QuickFix.Fields.Text text
+            public QuickFix.Fields.Text Text
             { 
                 get 
                 {
@@ -65,7 +65,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.Text val) 
             { 
-                this.text = val;
+                this.Text = val;
             }
             
             public QuickFix.Fields.Text Get(QuickFix.Fields.Text val) 

@@ -19,11 +19,11 @@ namespace QuickFix
                     QuickFix.Fields.Username aUsername
                 ) : this()
             {
-                this.userRequestID = aUserRequestID;
-                this.username = aUsername;
+                this.UserRequestID = aUserRequestID;
+                this.Username = aUsername;
             }
 
-            public QuickFix.Fields.UserRequestID userRequestID
+            public QuickFix.Fields.UserRequestID UserRequestID
             { 
                 get 
                 {
@@ -36,7 +36,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.UserRequestID val) 
             { 
-                this.userRequestID = val;
+                this.UserRequestID = val;
             }
             
             public QuickFix.Fields.UserRequestID Get(QuickFix.Fields.UserRequestID val) 
@@ -54,7 +54,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.UserRequestID);
             }
-            public QuickFix.Fields.Username username
+            public QuickFix.Fields.Username Username
             { 
                 get 
                 {
@@ -67,7 +67,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.Username val) 
             { 
-                this.username = val;
+                this.Username = val;
             }
             
             public QuickFix.Fields.Username Get(QuickFix.Fields.Username val) 
@@ -85,7 +85,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.Username);
             }
-            public QuickFix.Fields.UserStatus userStatus
+            public QuickFix.Fields.UserStatus UserStatus
             { 
                 get 
                 {
@@ -98,7 +98,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.UserStatus val) 
             { 
-                this.userStatus = val;
+                this.UserStatus = val;
             }
             
             public QuickFix.Fields.UserStatus Get(QuickFix.Fields.UserStatus val) 
@@ -116,7 +116,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.UserStatus);
             }
-            public QuickFix.Fields.UserStatusText userStatusText
+            public QuickFix.Fields.UserStatusText UserStatusText
             { 
                 get 
                 {
@@ -129,7 +129,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.UserStatusText val) 
             { 
-                this.userStatusText = val;
+                this.UserStatusText = val;
             }
             
             public QuickFix.Fields.UserStatusText Get(QuickFix.Fields.UserStatusText val) 

@@ -15891,14 +15891,14 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// SecurityStatus Field
+    /// SecurityStat Field
     /// </summary>/
-    public sealed class SecurityStatus : StringField
+    public sealed class SecurityStat : StringField
     {
-        public SecurityStatus()
-            :base(Tags.SecurityStatus) {}
-        public SecurityStatus(string val)
-            :base(Tags.SecurityStatus, val) {}
+        public SecurityStat()
+            :base(Tags.SecurityStat) {}
+        public SecurityStat(string val)
+            :base(Tags.SecurityStat, val) {}
 
 
         // Field Enumerations
@@ -18385,6 +18385,23 @@ namespace QuickFix.Fields
         public ExchangeSpecialInstructions(string val)
             :base(Tags.ExchangeSpecialInstructions, val) {}
 
+    }
+
+
+    /// <summary>
+    /// SecurityStatus Field
+    /// </summary>/
+    public sealed class SecurityStatus : StringField
+    {
+        public SecurityStatus()
+            :base(Tags.SecurityStatus) {}
+        public SecurityStatus(string val)
+            :base(Tags.SecurityStatus, val) {}
+
+
+        // Field Enumerations
+        public const string ACTIVE = "1";
+        public const string INACTIVE = "2";
     }
 
 
