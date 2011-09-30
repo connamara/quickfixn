@@ -17,6 +17,6 @@ AcceptanceTest/bin/Release/*
 AcceptanceTest/log/
 Examples/Executor/bin/*
 Examples/Executor/obj/*
+Examples/Executor/log/
 Examples/TradeClient/bin/*
 Examples/TradeClient/obj/*
-
