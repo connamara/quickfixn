@@ -36,7 +36,7 @@ namespace QuickFix
             public Message()
                 : base()
             {
-                this.Header.setField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.#{fixver}));
+                this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.#{fixver}));
             }
         }
     }
@@ -76,7 +76,7 @@ HERE
 <<HERE
             public #{msg[:name]}() : base()
             {
-                this.Header.setField(new QuickFix.Fields.MsgType("#{msg[:msgtype]}"));
+                this.Header.SetField(new QuickFix.Fields.MsgType("#{msg[:msgtype]}"));
             }
 HERE
   end
@@ -85,7 +85,7 @@ HERE
     req = required_fields(msg)
     return '' if req.empty?
     req_args = req.map {|r| ' '*20 + "QuickFix.Fields.#{r[:name]} a#{r[:name]}" }
-    req_setters = req.map {|r| ' '*16 + "this.#{lower(r[:name])} = a#{r[:name]};" }
+    req_setters = req.map {|r| ' '*16 + "this.#{(r[:name])} = a#{r[:name]};" }
 <<HERE
             public #{msg[:name]}(
 #{req_args.join(",\n")}
@@ -111,36 +111,36 @@ HERE
 
   def self.msg_field fld, prepend_spaces
     str = []
-    str << "public QuickFix.Fields.#{fld[:name]} #{lower(fld[:name])}"
+    str << "public QuickFix.Fields.#{fld[:name]} #{fld[:name]}"
     str << "{ "
     str << "    get "
     str << "    {"
     str << "        QuickFix.Fields.#{fld[:name]} val = new QuickFix.Fields.#{fld[:name]}();"
-    str << "        getField(val);"
+    str << "        GetField(val);"
     str << "        return val;"
     str << "    }"
-    str << "    set { setField(value); }"
+    str << "    set { SetField(value); }"
     str << "}"
     str << ""
-    str << "public void set(QuickFix.Fields.#{fld[:name]} val) "
+    str << "public void Set(QuickFix.Fields.#{fld[:name]} val) "
     str << "{ "
-    str << "    this.#{lower(fld[:name])} = val;"
+    str << "    this.#{(fld[:name])} = val;"
     str << "}"
     str << ""
-    str << "public QuickFix.Fields.#{fld[:name]} get(QuickFix.Fields.#{fld[:name]} val) "
+    str << "public QuickFix.Fields.#{fld[:name]} Get(QuickFix.Fields.#{fld[:name]} val) "
     str << "{ "
-    str << "    getField(val);"
+    str << "    GetField(val);"
     str << "    return val;"
     str << "}"
     str << ""
-    str << "public bool isSet(QuickFix.Fields.#{fld[:name]} val) "
+    str << "public bool IsSet(QuickFix.Fields.#{fld[:name]} val) "
     str << "{ "
-    str << "    return isSet#{fld[:name]}();"
+    str << "    return IsSet#{fld[:name]}();"
     str << "}"
     str << ""
-    str << "public bool isSet#{fld[:name]}() "
+    str << "public bool IsSet#{fld[:name]}() "
     str << "{ "
-    str << "    return isSetField(Tags.#{fld[:name]});"
+    str << "    return IsSetField(Tags.#{fld[:name]});"
     str << "}"
     str.map! {|s| ' '*prepend_spaces + s}
     str.join("\n")
@@ -148,9 +148,9 @@ HERE
 
   def self.msg_grp grp, prepend_spaces
     str = []
-    str << "public class #{grp[:name]} : Group"
+    str << "public class #{grp[:name]}Group : Group"
     str << "{"
-    str << "    public #{grp[:name]}() "
+    str << "    public #{grp[:name]}Group() "
     str << "      :base( Tags.#{grp[:group_field][:name]}, Tags.#{grp[:fields][0][:name]}, fieldOrder)"
     str << "    {"
     str << "    }"

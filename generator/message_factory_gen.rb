@@ -75,7 +75,7 @@ HERE
         lines << indent + "    {"
 
 	m[:groups].each {|g|
-            lines << indent + "        case QuickFix.Fields.Tags.#{g[:name]}: return new QuickFix.#{fixver}.#{m[:name]}.#{g[:name]}();"
+            lines << indent + "        case QuickFix.Fields.Tags.#{g[:name]}: return new QuickFix.#{fixver}.#{m[:name]}.#{g[:name]}Group();"
         }
 
         lines << indent + "    }"

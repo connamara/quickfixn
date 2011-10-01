@@ -11,108 +11,108 @@ namespace QuickFix
 
             public ListExecute() : base()
             {
-                this.Header.setField(new QuickFix.Fields.MsgType("L"));
+                this.Header.SetField(new QuickFix.Fields.MsgType("L"));
             }
 
             public ListExecute(
                     QuickFix.Fields.ListID aListID
                 ) : this()
             {
-                this.listID = aListID;
+                this.ListID = aListID;
             }
 
-            public QuickFix.Fields.ListID listID
+            public QuickFix.Fields.ListID ListID
             { 
                 get 
                 {
                     QuickFix.Fields.ListID val = new QuickFix.Fields.ListID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.ListID val) 
+            public void Set(QuickFix.Fields.ListID val) 
             { 
-                this.listID = val;
+                this.ListID = val;
             }
             
-            public QuickFix.Fields.ListID get(QuickFix.Fields.ListID val) 
+            public QuickFix.Fields.ListID Get(QuickFix.Fields.ListID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.ListID val) 
+            public bool IsSet(QuickFix.Fields.ListID val) 
             { 
-                return isSetListID();
+                return IsSetListID();
             }
             
-            public bool isSetListID() 
+            public bool IsSetListID() 
             { 
-                return isSetField(Tags.ListID);
+                return IsSetField(Tags.ListID);
             }
-            public QuickFix.Fields.WaveNo waveNo
+            public QuickFix.Fields.WaveNo WaveNo
             { 
                 get 
                 {
                     QuickFix.Fields.WaveNo val = new QuickFix.Fields.WaveNo();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.WaveNo val) 
+            public void Set(QuickFix.Fields.WaveNo val) 
             { 
-                this.waveNo = val;
+                this.WaveNo = val;
             }
             
-            public QuickFix.Fields.WaveNo get(QuickFix.Fields.WaveNo val) 
+            public QuickFix.Fields.WaveNo Get(QuickFix.Fields.WaveNo val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.WaveNo val) 
+            public bool IsSet(QuickFix.Fields.WaveNo val) 
             { 
-                return isSetWaveNo();
+                return IsSetWaveNo();
             }
             
-            public bool isSetWaveNo() 
+            public bool IsSetWaveNo() 
             { 
-                return isSetField(Tags.WaveNo);
+                return IsSetField(Tags.WaveNo);
             }
-            public QuickFix.Fields.Text text
+            public QuickFix.Fields.Text Text
             { 
                 get 
                 {
                     QuickFix.Fields.Text val = new QuickFix.Fields.Text();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.Text val) 
+            public void Set(QuickFix.Fields.Text val) 
             { 
-                this.text = val;
+                this.Text = val;
             }
             
-            public QuickFix.Fields.Text get(QuickFix.Fields.Text val) 
+            public QuickFix.Fields.Text Get(QuickFix.Fields.Text val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.Text val) 
+            public bool IsSet(QuickFix.Fields.Text val) 
             { 
-                return isSetText();
+                return IsSetText();
             }
             
-            public bool isSetText() 
+            public bool IsSetText() 
             { 
-                return isSetField(Tags.Text);
+                return IsSetField(Tags.Text);
             }
 
         }

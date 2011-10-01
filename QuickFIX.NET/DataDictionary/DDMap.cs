@@ -5,7 +5,7 @@ using System.Text;
 
 namespace QuickFix.DataDictionary
 {
-    public class DDMap
+    public class DDMap : IFieldMapSpec
     {
         public Dictionary<int, DDField> Fields = new Dictionary<int, DDField>();
         public Dictionary<int, DDGrp> Groups = new Dictionary<int, DDGrp>();
@@ -32,6 +32,11 @@ namespace QuickFix.DataDictionary
         }
 
         public DDGrp GetGroup(int tag)
+        {
+            return Groups[tag];
+        }
+
+        public IGroupSpec GetGroupSpec(int tag)
         {
             return Groups[tag];
         }

@@ -15,8 +15,8 @@ namespace UnitTests
         {
             Decimal val = new Decimal(3.232535);
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            tcr.avgPx = new AvgPx(val);
-            Assert.That(tcr.avgPx.getValue(), Is.EqualTo(val));
+            tcr.AvgPx = new AvgPx(val);
+            Assert.That(tcr.AvgPx.getValue(), Is.EqualTo(val));
         }
 
         [Test]
@@ -24,10 +24,10 @@ namespace UnitTests
         {
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            tcr.setField(avgPx);
-            Assert.That(tcr.avgPx.getValue(), Is.EqualTo(avgPx.getValue()));
+            tcr.SetField(avgPx);
+            Assert.That(tcr.AvgPx.getValue(), Is.EqualTo(avgPx.getValue()));
             AvgPx avgPx2 = new AvgPx();
-            tcr.getField(avgPx2);
+            tcr.GetField(avgPx2);
             Assert.That(avgPx2.getValue(), Is.EqualTo(avgPx.getValue()));
         }
 
@@ -36,8 +36,8 @@ namespace UnitTests
         {
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            tcr.set(avgPx);
-            Assert.That(tcr.avgPx.getValue(), Is.EqualTo(avgPx.getValue()));
+            tcr.Set(avgPx);
+            Assert.That(tcr.AvgPx.getValue(), Is.EqualTo(avgPx.getValue()));
         }
 
 
@@ -46,18 +46,18 @@ namespace UnitTests
         {
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            tcr.set(new AvgPx(new Decimal(10.5)));
-            tcr.get(avgPx);
-            Assert.That(tcr.avgPx.getValue(), Is.EqualTo(avgPx.getValue()));
+            tcr.Set(new AvgPx(new Decimal(10.5)));
+            tcr.Get(avgPx);
+            Assert.That(tcr.AvgPx.getValue(), Is.EqualTo(avgPx.getValue()));
         }
 
         [Test]
         public void TCRMsgTypeGetsSetTest()
         {
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            Assert.That(tcr.Header.isSetField(QuickFix.Fields.Tags.MsgType), Is.True);
+            Assert.That(tcr.Header.IsSetField(QuickFix.Fields.Tags.MsgType), Is.True);
             MsgType msgType = new MsgType();
-            tcr.Header.getField(msgType);
+            tcr.Header.GetField(msgType);
             Assert.That(msgType.getValue(), Is.EqualTo("AE"));
         }
 
@@ -72,10 +72,10 @@ namespace UnitTests
                 new LastPx(new Decimal(100.2)),
                 new TradeDate("2010-12-12"),
                 new TransactTime(new DateTime(2010, 12, 15, 10, 55, 32, 455)));
-            Assert.That(tcr.symbol.getValue(), Is.EqualTo("AAPL"));
-            Assert.That(tcr.tradeReportID.getValue(), Is.EqualTo("dude1"));
+            Assert.That(tcr.Symbol.getValue(), Is.EqualTo("AAPL"));
+            Assert.That(tcr.TradeReportID.getValue(), Is.EqualTo("dude1"));
             MsgType msgType = new MsgType();
-            tcr.Header.getField(msgType);
+            tcr.Header.GetField(msgType);
             Assert.That(msgType.getValue(), Is.EqualTo("AE"));
         }
 
@@ -91,13 +91,13 @@ namespace UnitTests
                 new TradeDate("2010-12-12"),
                 new TransactTime(new DateTime(2010, 12, 15, 10, 55, 32, 455)));
             LastPx lastPx = new LastPx();
-            Assert.That(tcr.isSet(lastPx), Is.True);
+            Assert.That(tcr.IsSet(lastPx), Is.True);
             AvgPx avgPx = new AvgPx(new Decimal(10.5));
-            Assert.That(tcr.isSet(avgPx), Is.False);
-            Assert.That(tcr.isSetAvgPx(), Is.False);
-            tcr.set(avgPx);
-            Assert.That(tcr.isSet(avgPx), Is.True);
-            Assert.That(tcr.isSetAvgPx(), Is.True);
+            Assert.That(tcr.IsSet(avgPx), Is.False);
+            Assert.That(tcr.IsSetAvgPx(), Is.False);
+            tcr.Set(avgPx);
+            Assert.That(tcr.IsSet(avgPx), Is.True);
+            Assert.That(tcr.IsSetAvgPx(), Is.True);
 
         }
 
@@ -112,31 +112,31 @@ namespace UnitTests
                     738, 920, 921, 922, 238, 237, 118, 119, 120, 155, 156, 77,
                     58, 354, 355, 752, 518, 232, 136, 825, 826, 591, 70, 78, 0
                 };
-            QuickFix.FIX44.TradeCaptureReport.NoSides noSides = new QuickFix.FIX44.TradeCaptureReport.NoSides();
+            QuickFix.FIX44.TradeCaptureReport.NoSidesGroup noSides = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
             Assert.That(noSides.FieldOrder, Is.EqualTo(expFieldOrder));
-            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSides.fieldOrder, Is.EqualTo(expFieldOrder));
+            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.fieldOrder, Is.EqualTo(expFieldOrder));
         }
 
         [Test]
         public void TCRGroupInGroupCTORTest()
         {
             int[] expFieldOrder = { 757, 758, 759, 806, 0 };
-            QuickFix.FIX44.TradeCaptureReport.NoSides.NoAllocs.NoNested2PartyIDs grp = new QuickFix.FIX44.TradeCaptureReport.NoSides.NoAllocs.NoNested2PartyIDs();
+            QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup grp = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup();
             Assert.That(grp.FieldOrder, Is.EqualTo(expFieldOrder));
-            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSides.NoAllocs.NoNested2PartyIDs.fieldOrder, Is.EqualTo(expFieldOrder));
+            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup.fieldOrder, Is.EqualTo(expFieldOrder));
         }
 
         [Test]
         public void TCRGroupFieldGetterSetterTest()
         {
-            QuickFix.FIX44.TradeCaptureReport.NoSides noSides = new QuickFix.FIX44.TradeCaptureReport.NoSides();
+            QuickFix.FIX44.TradeCaptureReport.NoSidesGroup noSides = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
             OrderID ordId = new OrderID("fooey");
-            Assert.That(noSides.isSet(ordId), Is.False);
-            Assert.That(noSides.isSetOrderID(), Is.False);
-            noSides.set(ordId);
-            Assert.That(noSides.isSet(ordId), Is.True);
-            Assert.That(noSides.isSetOrderID(), Is.True);
-            Assert.That(noSides.orderID.getValue(), Is.EqualTo("fooey"));
+            Assert.That(noSides.IsSet(ordId), Is.False);
+            Assert.That(noSides.IsSetOrderID(), Is.False);
+            noSides.Set(ordId);
+            Assert.That(noSides.IsSet(ordId), Is.True);
+            Assert.That(noSides.IsSetOrderID(), Is.True);
+            Assert.That(noSides.OrderID.getValue(), Is.EqualTo("fooey"));
         }
     }
 }

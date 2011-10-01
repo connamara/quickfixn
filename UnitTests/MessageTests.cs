@@ -98,15 +98,15 @@ namespace UnitTests
             StringField f7 = new StringField(56);
             StringField f8 = new StringField(10);
             StringField f9 = new StringField(1);
-            msg.Header.getField(f1);
-            msg.Header.getField(f2);
-            msg.Header.getField(f3);
-            msg.Header.getField(f4);
-            msg.Header.getField(f5);
-            msg.Header.getField(f6);
-            msg.Header.getField(f7);
-            msg.getField(f9);
-            msg.Trailer.getField(f8);
+            msg.Header.GetField(f1);
+            msg.Header.GetField(f2);
+            msg.Header.GetField(f3);
+            msg.Header.GetField(f4);
+            msg.Header.GetField(f5);
+            msg.Header.GetField(f6);
+            msg.Header.GetField(f7);
+            msg.GetField(f9);
+            msg.Trailer.GetField(f8);
             Assert.That(f1.Obj, Is.EqualTo("FIX.4.2"));
             Assert.That(f2.Obj, Is.EqualTo("55"));
             Assert.That(f3.Obj, Is.EqualTo("0"));
@@ -141,15 +141,15 @@ namespace UnitTests
             StringField f7 = new StringField(56);
             StringField f8 = new StringField(10);
             StringField f9 = new StringField(1);
-            msg.Header.getField(f1);
-            msg.Header.getField(f2);
-            msg.Header.getField(f3);
-            msg.Header.getField(f4);
-            msg.Header.getField(f5);
-            msg.Header.getField(f6);
-            msg.Header.getField(f7);
-            msg.getField(f9);
-            msg.Trailer.getField(f8);
+            msg.Header.GetField(f1);
+            msg.Header.GetField(f2);
+            msg.Header.GetField(f3);
+            msg.Header.GetField(f4);
+            msg.Header.GetField(f5);
+            msg.Header.GetField(f6);
+            msg.Header.GetField(f7);
+            msg.GetField(f9);
+            msg.Trailer.GetField(f8);
             Assert.That(f1.Obj, Is.EqualTo("FIX.4.2"));
             Assert.That(f2.Obj, Is.EqualTo("55"));
             Assert.That(f3.Obj, Is.EqualTo("0"));
@@ -167,11 +167,11 @@ namespace UnitTests
         public void ToStringFieldOrder()
         {
             Message msg = new Message();
-            msg.Header.setField(new QuickFix.Fields.MsgType("A"));
-            msg.Header.setField(new QuickFix.Fields.BeginString("FIX.4.2"));
-            msg.Header.setField(new QuickFix.Fields.SenderCompID("SENDER"));
-            msg.Header.setField(new QuickFix.Fields.TargetCompID("TARGET"));
-            msg.Header.setField(new QuickFix.Fields.MsgSeqNum(42));
+            msg.Header.SetField(new QuickFix.Fields.MsgType("A"));
+            msg.Header.SetField(new QuickFix.Fields.BeginString("FIX.4.2"));
+            msg.Header.SetField(new QuickFix.Fields.SenderCompID("SENDER"));
+            msg.Header.SetField(new QuickFix.Fields.TargetCompID("TARGET"));
+            msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(42));
             string expect = "8=FIX.4.2\x01" + "9=31\x01" + "35=A\x01" + "34=42\x01" + "49=SENDER\x01" + "56=TARGET\x01" + "10=200\x01";
             Assert.That(msg.ToString(), Is.EqualTo(expect));
         }
@@ -230,8 +230,8 @@ namespace UnitTests
         public void AddGroupGetGroupTest()
         {
             var nos = new QuickFix.FIX42.NewOrderSingle();
-            var noTradingSessions = new QuickFix.FIX42.NewOrderSingle.NoTradingSessions();
-            noTradingSessions.setField(new StringField(336, "OHHAI"));
+            var noTradingSessions = new QuickFix.FIX42.NewOrderSingle.NoTradingSessionsGroup();
+            noTradingSessions.SetField(new StringField(336, "OHHAI"));
             nos.AddGroup(noTradingSessions);
             var noTradingSessionsRE = nos.GetGroup(1, Tags.NoTradingSessions);
             Assert.That(noTradingSessionsRE.GetString(336), Is.EqualTo("OHHAI"));
@@ -239,7 +239,7 @@ namespace UnitTests
             var nos2 = new QuickFix.FIX42.NewOrderSingle();
             var grp = new Group(200, 300);
             nos2.AddGroup(grp);
-            grp.setField(new StringField(300, "Dude"));
+            grp.SetField(new StringField(300, "Dude"));
             Assert.That(nos2.GetGroup(1, 200).GetString(300), Is.EqualTo("Dude"));
         }
 
@@ -335,20 +335,20 @@ namespace UnitTests
             n.FromString(s, true, dd, dd);
 
             // string values are good?
-            Assert.AreEqual("Y", n.solicitedFlag.ToString()); //bool, 377
-            Assert.AreEqual("1", n.side.ToString()); //char, 54
-            Assert.AreEqual("20110901-13:41:31.804", n.transactTime.ToString()); //datetime, 60
-            Assert.AreEqual("5.5", n.orderQty.ToString()); //decimal, 38
-            Assert.AreEqual("1", n.putOrCall.ToString()); //int, 201
-            Assert.AreEqual("asdf", n.clOrdID.ToString()); //string, 11
+            Assert.AreEqual("Y", n.SolicitedFlag.ToString()); //bool, 377
+            Assert.AreEqual("1", n.Side.ToString()); //char, 54
+            Assert.AreEqual("20110901-13:41:31.804", n.TransactTime.ToString()); //datetime, 60
+            Assert.AreEqual("5.5", n.OrderQty.ToString()); //decimal, 38
+            Assert.AreEqual("1", n.PutOrCall.ToString()); //int, 201
+            Assert.AreEqual("asdf", n.ClOrdID.ToString()); //string, 11
 
             // type-converted values are good?
-            Assert.AreEqual(true, n.solicitedFlag.getValue());
-            Assert.AreEqual('1', n.side.getValue());
-            Assert.AreEqual(DateTime.Parse("2011-09-01 13:41:31.804"), n.transactTime.getValue());
-            Assert.AreEqual(5.5m, n.orderQty.getValue());
-            Assert.AreEqual(1, n.putOrCall.getValue());
-            Assert.AreEqual("asdf", n.clOrdID.getValue());
+            Assert.AreEqual(true, n.SolicitedFlag.getValue());
+            Assert.AreEqual('1', n.Side.getValue());
+            Assert.AreEqual(DateTime.Parse("2011-09-01 13:41:31.804"), n.TransactTime.getValue());
+            Assert.AreEqual(5.5m, n.OrderQty.getValue());
+            Assert.AreEqual(1, n.PutOrCall.getValue());
+            Assert.AreEqual("asdf", n.ClOrdID.getValue());
         }
     }
 }

@@ -37,7 +37,7 @@ namespace TradeClient
             try
             {
                 bool possDupFlag = false;
-                if (message.Header.isSetField(QuickFix.Fields.Tags.PossDupFlag))
+                if (message.Header.IsSetField(QuickFix.Fields.Tags.PossDupFlag))
                 {
                     possDupFlag = QuickFix.Fields.Converters.BoolConverter.Convert(
                         message.Header.GetField(QuickFix.Fields.Tags.PossDupFlag)); /// FIXME
@@ -315,11 +315,11 @@ namespace TradeClient
                 QueryOrderQty(),
                 ordType = QueryOrdType());
 
-            newOrderSingle.set(QueryTimeInForce());
+            newOrderSingle.Set(QueryTimeInForce());
             if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryPrice());
+                newOrderSingle.Set(QueryPrice());
             if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryStopPx());
+                newOrderSingle.Set(QueryStopPx());
 
             QueryHeader(newOrderSingle.Header);
             return newOrderSingle;
@@ -336,12 +336,12 @@ namespace TradeClient
                 QuerySide(),
                 ordType = QueryOrdType());
 
-            newOrderSingle.set(QueryOrderQty());
-            newOrderSingle.set(QueryTimeInForce());
+            newOrderSingle.Set(QueryOrderQty());
+            newOrderSingle.Set(QueryTimeInForce());
             if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryPrice());
+                newOrderSingle.Set(QueryPrice());
             if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryStopPx());
+                newOrderSingle.Set(QueryStopPx());
 
             QueryHeader(newOrderSingle.Header);
             return newOrderSingle;
@@ -359,12 +359,12 @@ namespace TradeClient
                 new TransactTime(DateTime.Now),
                 ordType = QueryOrdType());
 
-            newOrderSingle.set(QueryOrderQty());
-            newOrderSingle.set(QueryTimeInForce());
+            newOrderSingle.Set(QueryOrderQty());
+            newOrderSingle.Set(QueryTimeInForce());
             if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryPrice());
+                newOrderSingle.Set(QueryPrice());
             if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryStopPx());
+                newOrderSingle.Set(QueryStopPx());
 
             QueryHeader(newOrderSingle.Header);
             return newOrderSingle;
@@ -382,12 +382,12 @@ namespace TradeClient
                 new TransactTime(DateTime.Now),
                 ordType = QueryOrdType());
 
-            newOrderSingle.set(QueryOrderQty());
-            newOrderSingle.set(QueryTimeInForce());
+            newOrderSingle.Set(QueryOrderQty());
+            newOrderSingle.Set(QueryTimeInForce());
             if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryPrice());
+                newOrderSingle.Set(QueryPrice());
             if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryStopPx());
+                newOrderSingle.Set(QueryStopPx());
 
             QueryHeader(newOrderSingle.Header);
             return newOrderSingle;
@@ -404,13 +404,13 @@ namespace TradeClient
                 new TransactTime(DateTime.Now),
                 ordType = QueryOrdType());
 
-            newOrderSingle.set(new HandlInst('1'));
-            newOrderSingle.set(QueryOrderQty());
-            newOrderSingle.set(QueryTimeInForce());
+            newOrderSingle.Set(new HandlInst('1'));
+            newOrderSingle.Set(QueryOrderQty());
+            newOrderSingle.Set(QueryTimeInForce());
             if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryPrice());
+                newOrderSingle.Set(QueryPrice());
             if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryStopPx());
+                newOrderSingle.Set(QueryStopPx());
 
             QueryHeader(newOrderSingle.Header);
             return newOrderSingle;
@@ -426,14 +426,14 @@ namespace TradeClient
                 new TransactTime(DateTime.Now),
                 ordType = QueryOrdType());
 
-            newOrderSingle.set(new HandlInst('1'));
-            newOrderSingle.set(QuerySymbol());
-            newOrderSingle.set(QueryOrderQty());
-            newOrderSingle.set(QueryTimeInForce());
+            newOrderSingle.Set(new HandlInst('1'));
+            newOrderSingle.Set(QuerySymbol());
+            newOrderSingle.Set(QueryOrderQty());
+            newOrderSingle.Set(QueryTimeInForce());
             if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryPrice());
+                newOrderSingle.Set(QueryPrice());
             if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.set(QueryStopPx());
+                newOrderSingle.Set(QueryStopPx());
 
             QueryHeader(newOrderSingle.Header);
             return newOrderSingle;
@@ -463,7 +463,7 @@ namespace TradeClient
                 QuerySymbol(),
                 QuerySide());
 
-            orderCancelRequest.set(QueryOrderQty());
+            orderCancelRequest.Set(QueryOrderQty());
             QueryHeader(orderCancelRequest.Header);
             return orderCancelRequest;
         }
@@ -477,7 +477,7 @@ namespace TradeClient
                 QuerySide(),
                 new TransactTime(DateTime.Now));
 
-            orderCancelRequest.set(QueryOrderQty());
+            orderCancelRequest.Set(QueryOrderQty());
             QueryHeader(orderCancelRequest.Header);
             return orderCancelRequest;
         }
@@ -491,7 +491,7 @@ namespace TradeClient
                 QuerySide(),
                 new TransactTime(DateTime.Now));
 
-            orderCancelRequest.set(QueryOrderQty());
+            orderCancelRequest.Set(QueryOrderQty());
             QueryHeader(orderCancelRequest.Header);
             return orderCancelRequest;
         }
@@ -505,7 +505,7 @@ namespace TradeClient
                 QuerySide(),
                 new TransactTime(DateTime.Now));
 
-            orderCancelRequest.set(QueryOrderQty());
+            orderCancelRequest.Set(QueryOrderQty());
             QueryHeader(orderCancelRequest.Header);
             return orderCancelRequest;
         }
@@ -518,8 +518,8 @@ namespace TradeClient
                 QuerySide(),
                 new TransactTime(DateTime.Now));
 
-            orderCancelRequest.set(QuerySymbol());
-            orderCancelRequest.set(QueryOrderQty());
+            orderCancelRequest.Set(QuerySymbol());
+            orderCancelRequest.Set(QueryOrderQty());
             QueryHeader(orderCancelRequest.Header);
             return orderCancelRequest;
         }
@@ -538,9 +538,9 @@ namespace TradeClient
                 QueryOrdType());
 
             if (QueryConfirm("New price"))
-                ocrr.set(QueryPrice());
+                ocrr.Set(QueryPrice());
             if (QueryConfirm("New quantity"))
-                ocrr.set(QueryOrderQty());
+                ocrr.Set(QueryOrderQty());
 
             QueryHeader(ocrr.Header);
             return ocrr;
@@ -557,9 +557,9 @@ namespace TradeClient
                 QueryOrdType());
 
             if (QueryConfirm("New price"))
-                ocrr.set(QueryPrice());
+                ocrr.Set(QueryPrice());
             if (QueryConfirm("New quantity"))
-                ocrr.set(QueryOrderQty());
+                ocrr.Set(QueryOrderQty());
 
             QueryHeader(ocrr.Header);
             return ocrr;
@@ -577,9 +577,9 @@ namespace TradeClient
                 QueryOrdType());
 
             if(QueryConfirm("New price"))
-                ocrr.set( QueryPrice());
+                ocrr.Set( QueryPrice());
             if(QueryConfirm("New quantity"))
-                ocrr.set(QueryOrderQty());
+                ocrr.Set(QueryOrderQty());
 
             QueryHeader(ocrr.Header);
             return ocrr;
@@ -597,9 +597,9 @@ namespace TradeClient
                 QueryOrdType());
 
             if (QueryConfirm("New price"))
-                ocrr.set(QueryPrice());
+                ocrr.Set(QueryPrice());
             if (QueryConfirm("New quantity"))
-                ocrr.set(QueryOrderQty());
+                ocrr.Set(QueryOrderQty());
 
             QueryHeader(ocrr.Header);
             return ocrr;
@@ -615,11 +615,11 @@ namespace TradeClient
                 new TransactTime(DateTime.Now),
                 QueryOrdType());
 
-            ocrr.set(new HandlInst('1'));
+            ocrr.Set(new HandlInst('1'));
             if (QueryConfirm("New price"))
-                ocrr.set(QueryPrice());
+                ocrr.Set(QueryPrice());
             if (QueryConfirm("New quantity"))
-                ocrr.set(QueryOrderQty());
+                ocrr.Set(QueryOrderQty());
 
             QueryHeader(ocrr.Header);
             return ocrr;
@@ -634,12 +634,12 @@ namespace TradeClient
                 new TransactTime(DateTime.Now),
                 QueryOrdType());
 
-            ocrr.set(new HandlInst('1'));
-            ocrr.set(QuerySymbol());
+            ocrr.Set(new HandlInst('1'));
+            ocrr.Set(QuerySymbol());
             if (QueryConfirm("New price"))
-                ocrr.set(QueryPrice());
+                ocrr.Set(QueryPrice());
             if (QueryConfirm("New quantity"))
-                ocrr.set(QueryOrderQty());
+                ocrr.Set(QueryOrderQty());
 
             QueryHeader(ocrr.Header);
             return ocrr;
@@ -653,11 +653,11 @@ namespace TradeClient
             SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
             MarketDepth marketDepth = new MarketDepth(0);
 
-            QuickFix.FIX42.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX42.MarketDataRequest.NoMDEntryTypes();
-            marketDataEntryGroup.set( new MDEntryType(MDEntryType.BID) );
+            QuickFix.FIX42.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX42.MarketDataRequest.NoMDEntryTypesGroup();
+            marketDataEntryGroup.Set( new MDEntryType(MDEntryType.BID) );
 
-            QuickFix.FIX42.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX42.MarketDataRequest.NoRelatedSym();
-            symbolGroup.set(new Symbol("LNUX"));
+            QuickFix.FIX42.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX42.MarketDataRequest.NoRelatedSymGroup();
+            symbolGroup.Set(new Symbol("LNUX"));
 
             QuickFix.FIX42.MarketDataRequest message = new QuickFix.FIX42.MarketDataRequest( mdReqID, subType, marketDepth );
             message.AddGroup( marketDataEntryGroup );
@@ -675,11 +675,11 @@ namespace TradeClient
             SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
             MarketDepth marketDepth = new MarketDepth(0);
 
-            QuickFix.FIX43.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX43.MarketDataRequest.NoMDEntryTypes();
-            marketDataEntryGroup.set(new MDEntryType(MDEntryType.BID));
+            QuickFix.FIX43.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX43.MarketDataRequest.NoMDEntryTypesGroup();
+            marketDataEntryGroup.Set(new MDEntryType(MDEntryType.BID));
 
-            QuickFix.FIX43.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX43.MarketDataRequest.NoRelatedSym();
-            symbolGroup.set(new Symbol("LNUX"));
+            QuickFix.FIX43.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX43.MarketDataRequest.NoRelatedSymGroup();
+            symbolGroup.Set(new Symbol("LNUX"));
 
             QuickFix.FIX43.MarketDataRequest message = new QuickFix.FIX43.MarketDataRequest(mdReqID, subType, marketDepth);
             message.AddGroup(marketDataEntryGroup);
@@ -697,11 +697,11 @@ namespace TradeClient
             SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
             MarketDepth marketDepth = new MarketDepth(0);
 
-            QuickFix.FIX44.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX44.MarketDataRequest.NoMDEntryTypes();
-            marketDataEntryGroup.set(new MDEntryType(MDEntryType.BID));
+            QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup();
+            marketDataEntryGroup.Set(new MDEntryType(MDEntryType.BID));
 
-            QuickFix.FIX44.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX44.MarketDataRequest.NoRelatedSym();
-            symbolGroup.set(new Symbol("LNUX"));
+            QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup();
+            symbolGroup.Set(new Symbol("LNUX"));
 
             QuickFix.FIX44.MarketDataRequest message = new QuickFix.FIX44.MarketDataRequest(mdReqID, subType, marketDepth);
             message.AddGroup(marketDataEntryGroup);
@@ -719,11 +719,11 @@ namespace TradeClient
             SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
             MarketDepth marketDepth = new MarketDepth(0);
 
-            QuickFix.FIX50.MarketDataRequest.NoMDEntryTypes marketDataEntryGroup = new QuickFix.FIX50.MarketDataRequest.NoMDEntryTypes();
-            marketDataEntryGroup.set(new MDEntryType(MDEntryType.BID));
+            QuickFix.FIX50.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX50.MarketDataRequest.NoMDEntryTypesGroup();
+            marketDataEntryGroup.Set(new MDEntryType(MDEntryType.BID));
 
-            QuickFix.FIX50.MarketDataRequest.NoRelatedSym symbolGroup = new QuickFix.FIX50.MarketDataRequest.NoRelatedSym();
-            symbolGroup.set(new Symbol("LNUX"));
+            QuickFix.FIX50.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX50.MarketDataRequest.NoRelatedSymGroup();
+            symbolGroup.Set(new Symbol("LNUX"));
 
             QuickFix.FIX50.MarketDataRequest message = new QuickFix.FIX50.MarketDataRequest(mdReqID, subType, marketDepth);
             message.AddGroup(marketDataEntryGroup);
@@ -856,10 +856,10 @@ namespace TradeClient
 
         private void QueryHeader(Header h)
         {
-            h.setField(QuerySenderCompID());
-            h.setField(QueryTargetCompID());
+            h.SetField(QuerySenderCompID());
+            h.SetField(QueryTargetCompID());
             if (QueryConfirm("Use a TargetSubID"))
-                h.setField(QueryTargetSubID());
+                h.SetField(QueryTargetSubID());
         }
 
         private SenderCompID QuerySenderCompID()

@@ -40,7 +40,15 @@ using System;
 
 namespace QuickFix.Fields
 {
-#{fields.map {|f| field_str f }.join("\n")}
+#{
+    fields.map{|f|
+      if f[:cs_class] == "DateTimeField"
+       date_field_str f
+      else  
+       field_str f
+     end
+    }.join("\n")
+  }
 }
 HERE
   end
@@ -84,6 +92,26 @@ HERE
 
 HERE
   end
+
+  def self.date_field_str field
+<<HERE
+    /// <summary>
+    /// #{field[:name]} Field
+    /// </summary>/
+    public sealed class #{field[:name]} : #{field[:cs_class]}
+    {
+        public #{field[:name]}()
+            :base(Tags.#{field[:name]}) {}
+        public #{field[:name]}(#{field[:base_type]} val)
+            :base(Tags.#{field[:name]}, val) {}
+        public #{field[:name]}(#{field[:base_type]} val, bool showMilliseconds)
+	    :base(Tags.#{field[:name]}, val, showMilliseconds) {}
+#{fix_values(field)}
+    }
+
+HERE
+  end
+
 
   def self.fix_values fld
 		return '' if fld[:values].nil? or fld[:values].empty?

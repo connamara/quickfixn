@@ -249,7 +249,7 @@ namespace QuickFix
 
         public static string GetFieldOrDefault(FieldMap fields, int tag, string defaultValue)
         {
-            if (!fields.isSetField(tag))
+            if (!fields.IsSetField(tag))
                 return defaultValue;
 
             try
@@ -309,7 +309,7 @@ namespace QuickFix
                     return false;
                 
                 if(IsHeaderField(f.Tag))
-                    this.Header.setField(f, false);
+                    this.Header.SetField(f, false);
                 else
                     break;
             }
@@ -325,7 +325,7 @@ namespace QuickFix
             bool expectingBody = true;
             int count = 0;
             int pos = 0;
-	        DataDictionary.DDMap msgMap = null;
+	        DataDictionary.IFieldMapSpec msgMap = null;
 
             while (pos < msgstr.Length)
             {
@@ -352,19 +352,19 @@ namespace QuickFix
                         }
 		            }
 
-                    if (!this.Header.setField(f, false))
+                    if (!this.Header.SetField(f, false))
                         this.Header.RepeatedTags.Add(f);
 
                     if ((null != sessionDD) && sessionDD.Header.IsGroup(f.Tag))
                     {
-                        pos = SetGroup(f, msgstr, pos, this.Header, sessionDD.Header.GetGroup(f.Tag), sessionDD, appDD);
+                        pos = SetGroup(f, msgstr, pos, this.Header, sessionDD.Header.GetGroupSpec(f.Tag), sessionDD, appDD);
                     }
                 }
                 else if (IsTrailerField(f.Tag, sessionDD))
                 {
                     expectingHeader = false;
                     expectingBody = false;
-                    if (!this.Trailer.setField(f, false))
+                    if (!this.Trailer.SetField(f, false))
                         this.Trailer.RepeatedTags.Add(f);
 
                     if ((null != sessionDD) && sessionDD.Trailer.IsGroup(f.Tag))
@@ -382,7 +382,7 @@ namespace QuickFix
                     }
 
                     expectingHeader = false;
-                    if (!setField(f, false))
+                    if (!SetField(f, false))
                     {
                         this.RepeatedTags.Add(f);
                     }
@@ -390,7 +390,7 @@ namespace QuickFix
                     
                     if((null != msgMap) && (msgMap.IsGroup(f.Tag))) 
                     {
-                        pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroup(f.Tag), sessionDD, appDD);
+                        pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroupSpec(f.Tag), sessionDD, appDD);
                     }
                 }
             }
@@ -401,7 +401,7 @@ namespace QuickFix
             }
         }
 
-        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.DDGrp dd, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
+        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
         {
             int delim = dd.Delim;
             int grpPos = pos;
@@ -427,10 +427,10 @@ namespace QuickFix
                     }
                     return grpPos;
                 }
-                grp.setField(f);
+                grp.SetField(f);
                 if(dd.IsGroup(f.Tag))
                 {
-                    pos = SetGroup(f, msgstr, pos, grp, dd.GetGroup(f.Tag), sessionDataDictionary, appDD);
+                    pos = SetGroup(f, msgstr, pos, grp, dd.GetGroupSpec(f.Tag), sessionDataDictionary, appDD);
                 }
             }
             
@@ -472,47 +472,47 @@ namespace QuickFix
             this.Header.RemoveField(Tags.SenderCompID);
             this.Header.RemoveField(Tags.TargetCompID);
 
-            if (header.isSetField(Tags.BeginString))
+            if (header.IsSetField(Tags.BeginString))
             {
                 string beginString = header.GetField(Tags.BeginString);
                 if (beginString.Length > 0)
-                    this.Header.setField(new BeginString(beginString));
+                    this.Header.SetField(new BeginString(beginString));
 
                 this.Header.RemoveField(Tags.OnBehalfOfLocationID);
                 this.Header.RemoveField(Tags.DeliverToLocationID);
 
                 if (beginString.CompareTo("FIX.4.1") >= 0)
                 {
-                    if (header.isSetField(Tags.OnBehalfOfLocationID))
+                    if (header.IsSetField(Tags.OnBehalfOfLocationID))
                     {
                         string onBehalfOfLocationID = header.GetField(Tags.OnBehalfOfLocationID);
                         if (onBehalfOfLocationID.Length > 0)
-                            this.Header.setField(new DeliverToLocationID(onBehalfOfLocationID));
+                            this.Header.SetField(new DeliverToLocationID(onBehalfOfLocationID));
                     }
 
-                    if (header.isSetField(Tags.DeliverToLocationID))
+                    if (header.IsSetField(Tags.DeliverToLocationID))
                     {
                         string deliverToLocationID = header.GetField(Tags.DeliverToLocationID);
                         if (deliverToLocationID.Length > 0)
-                            this.Header.setField(new OnBehalfOfLocationID(deliverToLocationID));
+                            this.Header.SetField(new OnBehalfOfLocationID(deliverToLocationID));
                     }
                 }
             }
 
-            if (header.isSetField(Tags.SenderCompID))
+            if (header.IsSetField(Tags.SenderCompID))
             {
                 SenderCompID senderCompID = new SenderCompID();
-                header.getField(senderCompID);
+                header.GetField(senderCompID);
                 if (senderCompID.Obj.Length > 0)
-                    this.Header.setField(new TargetCompID(senderCompID.Obj));
+                    this.Header.SetField(new TargetCompID(senderCompID.Obj));
             }
 
-            if (header.isSetField(Tags.TargetCompID))
+            if (header.IsSetField(Tags.TargetCompID))
             {
                 TargetCompID targetCompID = new TargetCompID();
-                header.getField(targetCompID);
+                header.GetField(targetCompID);
                 if (targetCompID.Obj.Length > 0)
-                    this.Header.setField(new SenderCompID(targetCompID.Obj));
+                    this.Header.SetField(new SenderCompID(targetCompID.Obj));
             }
 
             // optional routing tags
@@ -521,32 +521,32 @@ namespace QuickFix
             this.Header.RemoveField(Tags.DeliverToCompID);
             this.Header.RemoveField(Tags.DeliverToSubID);
 
-            if(header.isSetField(Tags.OnBehalfOfCompID))
+            if(header.IsSetField(Tags.OnBehalfOfCompID))
             {
                 string onBehalfOfCompID = header.GetField(Tags.OnBehalfOfCompID);
                 if(onBehalfOfCompID.Length > 0)
-                    this.Header.setField(new DeliverToCompID(onBehalfOfCompID));
+                    this.Header.SetField(new DeliverToCompID(onBehalfOfCompID));
             }
 
-            if(header.isSetField(Tags.OnBehalfOfSubID))
+            if(header.IsSetField(Tags.OnBehalfOfSubID))
             {
                 string onBehalfOfSubID = header.GetField(  Tags.OnBehalfOfSubID);
                 if(onBehalfOfSubID.Length > 0)
-                    this.Header.setField(new DeliverToSubID(onBehalfOfSubID));
+                    this.Header.SetField(new DeliverToSubID(onBehalfOfSubID));
             }
 
-            if(header.isSetField(Tags.DeliverToCompID))
+            if(header.IsSetField(Tags.DeliverToCompID))
             {
                 string deliverToCompID = header.GetField(Tags.DeliverToCompID);
                 if(deliverToCompID.Length > 0)
-                    this.Header.setField(new OnBehalfOfCompID(deliverToCompID));
+                    this.Header.SetField(new OnBehalfOfCompID(deliverToCompID));
             }
 
-            if(header.isSetField(Tags.DeliverToSubID))
+            if(header.IsSetField(Tags.DeliverToSubID))
             {
                 string deliverToSubID = header.GetField(Tags.DeliverToSubID);
                 if(deliverToSubID.Length > 0)
-                    this.Header.setField(new OnBehalfOfSubID(deliverToSubID));
+                    this.Header.SetField(new OnBehalfOfSubID(deliverToSubID));
             }
         }
 
@@ -560,7 +560,7 @@ namespace QuickFix
 
         public bool IsAdmin()
         {
-            if(!isSetField(Tags.MsgType))
+            if(!IsSetField(Tags.MsgType))
                 return false;
             string msgType = this.Header.GetField(Tags.MsgType); /// FIXME
             return IsAdminMsgType(msgType);
@@ -568,7 +568,7 @@ namespace QuickFix
 
         public bool IsApp()
         {
-            if (!isSetField(Tags.MsgType))
+            if (!IsSetField(Tags.MsgType))
                 return false;
             string msgType = this.Header.GetField(Tags.MsgType); /// FIXME
             return !IsAdminMsgType(msgType);
@@ -580,9 +580,9 @@ namespace QuickFix
         /// <param name="sessionID"></param>
         public void SetSessionID(SessionID sessionID)
         {
-            this.Header.setField(new BeginString(sessionID.BeginString));
-            this.Header.setField(new SenderCompID(sessionID.SenderCompID));
-            this.Header.setField(new TargetCompID(sessionID.TargetCompID));            
+            this.Header.SetField(new BeginString(sessionID.BeginString));
+            this.Header.SetField(new SenderCompID(sessionID.SenderCompID));
+            this.Header.SetField(new TargetCompID(sessionID.TargetCompID));            
         }
 
         public SessionID GetSessionID(Message m)
@@ -603,8 +603,8 @@ namespace QuickFix
 
         public override string ToString()
         {
-            this.Header.setField(new BodyLength(BodyLength()), true);
-            this.Trailer.setField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
+            this.Header.SetField(new BodyLength(BodyLength()), true);
+            this.Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
 
             return this.Header.CalculateString() + CalculateString() + this.Trailer.CalculateString();
         }

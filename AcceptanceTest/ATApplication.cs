@@ -13,6 +13,15 @@ namespace AcceptanceTest
             log_ = debugLog;
         }
 
+        public void OnMessage(QuickFix.FIX40.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX41.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
 
         public void OnMessage(QuickFix.FIX42.NewOrderSingle nos, SessionID sessionID) 
         {
@@ -20,6 +29,26 @@ namespace AcceptanceTest
         }
 
         public void OnMessage(QuickFix.FIX42.SecurityDefinition message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX43.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX43.SecurityDefinition message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX44.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX44.SecurityDefinition message, SessionID sessionID)
         {
             Echo(message, sessionID);
         }
@@ -35,7 +64,7 @@ namespace AcceptanceTest
             Message echo = new Message(message);
  
                 bool possResend = false;
-                if (message.Header.isSetField(QuickFix.Fields.Tags.PossResend))
+                if (message.Header.IsSetField(QuickFix.Fields.Tags.PossResend))
                     possResend = message.Header.GetBoolean(QuickFix.Fields.Tags.PossResend);
 
                 KeyValuePair<string, SessionID> pair = new KeyValuePair<string, SessionID>(message.GetField(QuickFix.Fields.Tags.ClOrdID), sessionID);

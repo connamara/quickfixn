@@ -11,40 +11,40 @@ namespace QuickFix
 
             public Heartbeat() : base()
             {
-                this.Header.setField(new QuickFix.Fields.MsgType("0"));
+                this.Header.SetField(new QuickFix.Fields.MsgType("0"));
             }
 
 
-            public QuickFix.Fields.TestReqID testReqID
+            public QuickFix.Fields.TestReqID TestReqID
             { 
                 get 
                 {
                     QuickFix.Fields.TestReqID val = new QuickFix.Fields.TestReqID();
-                    getField(val);
+                    GetField(val);
                     return val;
                 }
-                set { setField(value); }
+                set { SetField(value); }
             }
             
-            public void set(QuickFix.Fields.TestReqID val) 
+            public void Set(QuickFix.Fields.TestReqID val) 
             { 
-                this.testReqID = val;
+                this.TestReqID = val;
             }
             
-            public QuickFix.Fields.TestReqID get(QuickFix.Fields.TestReqID val) 
+            public QuickFix.Fields.TestReqID Get(QuickFix.Fields.TestReqID val) 
             { 
-                getField(val);
+                GetField(val);
                 return val;
             }
             
-            public bool isSet(QuickFix.Fields.TestReqID val) 
+            public bool IsSet(QuickFix.Fields.TestReqID val) 
             { 
-                return isSetTestReqID();
+                return IsSetTestReqID();
             }
             
-            public bool isSetTestReqID() 
+            public bool IsSetTestReqID() 
             { 
-                return isSetField(Tags.TestReqID);
+                return IsSetField(Tags.TestReqID);
             }
 
         }
