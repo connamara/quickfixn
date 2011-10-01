@@ -1,5 +1,3 @@
-set RESULT=0
-
 pushd AcceptanceTest
     del TestResult.xml AcceptanceTests_40.html AcceptanceTests_41.xml AcceptanceTests_42.xml AcceptanceTests_43.xml AcceptanceTests_44.xml
     call runat release 5001 definitions/server/fix40/*.def
@@ -28,8 +26,8 @@ pushd AcceptanceTest
     xsltproc.exe -o AcceptanceTests_44.html at.xsl TestResult.xml
 popd
 
-echo "test suite results:"
-echo "    40: %RESULT40%"
+echo "test suite results (blank means success):"
+if RESULT40 1echo "    40: %RESULT40%"
 echo "    41: %RESULT41%"
 echo "    42: %RESULT42%"
 echo "    43: %RESULT43%"
@@ -37,5 +35,6 @@ echo "    44: %RESULT44%"
 
 set /a RETURNVALUE=RESULT40+RESULT41+RESULT42+RESULT43+RESULT44
 
+echo "Script returns: %RETURNVALUE%"
 exit /B %RETURNVALUE%
 
