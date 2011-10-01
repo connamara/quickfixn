@@ -39,12 +39,12 @@ namespace Executor
         #region MessageCracker overloads
         public void OnMessage(QuickFix.FIX40.NewOrderSingle n, SessionID s)
         {
-            Symbol symbol = n.symbol;
-            Side side = n.side;
-            OrdType ordType = n.ordType;
-            OrderQty orderQty = n.orderQty;
-            Price price = n.price;
-            ClOrdID clOrdID = n.clOrdID;
+            Symbol symbol = n.Symbol;
+            Side side = n.Side;
+            OrdType ordType = n.OrdType;
+            OrderQty orderQty = n.OrderQty;
+            Price price = n.Price;
+            ClOrdID clOrdID = n.ClOrdID;
 
             if (ordType.getValue() != OrdType.LIMIT)
                 throw new IncorrectTagValue(ordType.Tag);
@@ -62,10 +62,10 @@ namespace Executor
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
 
-            exReport.set(clOrdID);
+            exReport.Set(clOrdID);
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.Account);
 
             try
             {
@@ -86,12 +86,12 @@ namespace Executor
 
         public void OnMessage(QuickFix.FIX41.NewOrderSingle n, SessionID s)
         {
-            Symbol symbol = n.symbol;
-            Side side = n.side;
-            OrdType ordType = n.ordType;
-            OrderQty orderQty = n.orderQty;
-            Price price = n.price;
-            ClOrdID clOrdID = n.clOrdID;
+            Symbol symbol = n.Symbol;
+            Side side = n.Side;
+            OrdType ordType = n.OrdType;
+            OrderQty orderQty = n.OrderQty;
+            Price price = n.Price;
+            ClOrdID clOrdID = n.ClOrdID;
 
             if (ordType.getValue() != OrdType.LIMIT)
                 throw new IncorrectTagValue(ordType.Tag);
@@ -111,10 +111,10 @@ namespace Executor
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
 
-            exReport.set(clOrdID);
+            exReport.Set(clOrdID);
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.Account);
 
             try
             {
@@ -135,12 +135,12 @@ namespace Executor
 
         public void OnMessage(QuickFix.FIX42.NewOrderSingle n, SessionID s)
         {
-            Symbol symbol = n.symbol;
-            Side side = n.side;
-            OrdType ordType = n.ordType;
-            OrderQty orderQty = n.orderQty;
-            Price price = n.price;
-            ClOrdID clOrdID = n.clOrdID;
+            Symbol symbol = n.Symbol;
+            Side side = n.Side;
+            OrdType ordType = n.OrdType;
+            OrderQty orderQty = n.OrderQty;
+            Price price = n.Price;
+            ClOrdID clOrdID = n.ClOrdID;
 
             if (ordType.getValue() != OrdType.LIMIT)
                 throw new IncorrectTagValue(ordType.Tag);
@@ -157,13 +157,13 @@ namespace Executor
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
 
-            exReport.set(clOrdID);
-            exReport.set(orderQty);
-            exReport.set(new LastShares(orderQty.getValue()));
-            exReport.set(new LastPx(price.getValue()));
+            exReport.Set(clOrdID);
+            exReport.Set(orderQty);
+            exReport.Set(new LastShares(orderQty.getValue()));
+            exReport.Set(new LastPx(price.getValue()));
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.Account);
 
             try
             {
@@ -184,12 +184,12 @@ namespace Executor
 
         public void OnMessage(QuickFix.FIX43.NewOrderSingle n, SessionID s)
         {
-            Symbol symbol = n.symbol;
-            Side side = n.side;
-            OrdType ordType = n.ordType;
-            OrderQty orderQty = n.orderQty;
-            Price price = n.price;
-            ClOrdID clOrdID = n.clOrdID;
+            Symbol symbol = n.Symbol;
+            Side side = n.Side;
+            OrdType ordType = n.OrdType;
+            OrderQty orderQty = n.OrderQty;
+            Price price = n.Price;
+            ClOrdID clOrdID = n.ClOrdID;
 
             if (ordType.getValue() != OrdType.LIMIT)
                 throw new IncorrectTagValue(ordType.Tag);
@@ -205,14 +205,14 @@ namespace Executor
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
 
-            exReport.set(clOrdID);
-            exReport.set(symbol);
-            exReport.set(orderQty);
-            exReport.set(new LastQty(orderQty.getValue()));
-            exReport.set(new LastPx(price.getValue()));
+            exReport.Set(clOrdID);
+            exReport.Set(symbol);
+            exReport.Set(orderQty);
+            exReport.Set(new LastQty(orderQty.getValue()));
+            exReport.Set(new LastPx(price.getValue()));
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.Account);
 
             try
             {
@@ -233,12 +233,12 @@ namespace Executor
 
         public void OnMessage(QuickFix.FIX44.NewOrderSingle n, SessionID s)
         {
-            Symbol symbol = n.symbol;
-            Side side = n.side;
-            OrdType ordType = n.ordType;
-            OrderQty orderQty = n.orderQty;
-            Price price = n.price;
-            ClOrdID clOrdID = n.clOrdID;
+            Symbol symbol = n.Symbol;
+            Side side = n.Side;
+            OrdType ordType = n.OrdType;
+            OrderQty orderQty = n.OrderQty;
+            Price price = n.Price;
+            ClOrdID clOrdID = n.ClOrdID;
 
             if (ordType.getValue() != OrdType.LIMIT)
                 throw new IncorrectTagValue(ordType.Tag);
@@ -254,14 +254,14 @@ namespace Executor
                 new CumQty(orderQty.getValue()),
                 new AvgPx(price.getValue()));
 
-            exReport.set(clOrdID);
-            exReport.set(symbol);
-            exReport.set(orderQty);
-            exReport.set(new LastQty(orderQty.getValue()));
-            exReport.set(new LastPx(price.getValue()));
+            exReport.Set(clOrdID);
+            exReport.Set(symbol);
+            exReport.Set(orderQty);
+            exReport.Set(new LastQty(orderQty.getValue()));
+            exReport.Set(new LastPx(price.getValue()));
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.Account);
 
             try
             {
@@ -282,12 +282,12 @@ namespace Executor
 
         public void OnMessage(QuickFix.FIX50.NewOrderSingle n, SessionID s)
         {
-            Symbol symbol = n.symbol;
-            Side side = n.side;
-            OrdType ordType = n.ordType;
-            OrderQty orderQty = n.orderQty;
-            Price price = n.price;
-            ClOrdID clOrdID = n.clOrdID;
+            Symbol symbol = n.Symbol;
+            Side side = n.Side;
+            OrdType ordType = n.OrdType;
+            OrderQty orderQty = n.OrderQty;
+            Price price = n.Price;
+            ClOrdID clOrdID = n.ClOrdID;
 
             if (ordType.getValue() != OrdType.LIMIT)
                 throw new IncorrectTagValue(ordType.Tag);
@@ -301,15 +301,15 @@ namespace Executor
                 new LeavesQty(0),
                 new CumQty(orderQty.getValue()));
 
-            exReport.set(clOrdID);
-            exReport.set(symbol);
-            exReport.set(orderQty);
-            exReport.set(new LastQty(orderQty.getValue()));
-            exReport.set(new LastPx(price.getValue()));
-            exReport.set(new AvgPx(price.getValue()));
+            exReport.Set(clOrdID);
+            exReport.Set(symbol);
+            exReport.Set(orderQty);
+            exReport.Set(new LastQty(orderQty.getValue()));
+            exReport.Set(new LastPx(price.getValue()));
+            exReport.Set(new AvgPx(price.getValue()));
 
-            if (n.isSetAccount())
-                exReport.setField(n.account);
+            if (n.IsSetAccount())
+                exReport.SetField(n.Account);
 
             try
             {

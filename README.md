@@ -1,10 +1,11 @@
 System Setup
 ------------
-This project requires MSBuild, NUnit, Ruby, and xsltproc.
+This project requires MSBuild, NUnit, Ruby (1.9.2), and xsltproc.
 
 You can get xsltproc via cygwin, or by installing libxslt (which requires
 libxml2 and zlib).
 
+You can get Ruby from rubyinstall.org/downloads
 
 Code Generation
 ---------------
