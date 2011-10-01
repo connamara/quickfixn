@@ -26,8 +26,10 @@ pushd AcceptanceTest
     xsltproc.exe -o AcceptanceTests_44.html at.xsl TestResult.xml
 popd
 
+echo ""
+echo ""
 echo "test suite results (blank means success):"
-if RESULT40 1echo "    40: %RESULT40%"
+echo "    40: %RESULT40%"
 echo "    41: %RESULT41%"
 echo "    42: %RESULT42%"
 echo "    43: %RESULT43%"
