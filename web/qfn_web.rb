@@ -1,11 +1,11 @@
 $LOAD_PATH << File.dirname(__FILE__)
 require 'sinatra'
-require 'mdalbino'
+require 'mdengine'
 
 set :views, ['web/views', 'tutorial']
 
-Tilt.register MarkdownAlbinoEngine, :md
-Tilt.prefer   MarkdownAlbinoEngine
+Tilt.register MarkdownEngine, :md
+Tilt.prefer   MarkdownEngine
 
 helpers do
   def mdalbino(*args) 
@@ -15,6 +15,11 @@ helpers do
   def stylesheet f
     css_uri = uri("css/#{f}.css")
     "<link rel='stylesheet' href='#{css_uri}' type='text/css'>"
+  end
+
+  def js f
+    js_uri = uri("js/#{f}.js")
+    "<script type='text/javascript' src='#{js_uri}'></script>"
   end
 
   def find_template(views, name, engine, &block)
