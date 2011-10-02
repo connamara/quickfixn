@@ -1,6 +1,5 @@
 require 'redcarpet'
 require 'albino'
-require 'pry'
 
 class MarkdownAlbinoEngine < Tilt::Template
 
