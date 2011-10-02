@@ -7,8 +7,13 @@
     <!--[if lt IE 8]>
     <%= stylesheet 'blueprint/ie' %>
     <![endif]-->
-    <%= stylesheet 'syntax' %>
+    <%= stylesheet 'highlight' %>
     <%= stylesheet 'layout' %>
+    <%= js 'highlight.pack' %>
+    <script type="text/javascript">
+      hljs.initHighlightingOnLoad();
+    </script>
+    
 	</head>
 	
 	<body lang="en">
