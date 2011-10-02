@@ -1,5 +1,4 @@
 require 'redcarpet'
-require 'coderay'
 
 class MarkdownEngine < Tilt::Template
 
