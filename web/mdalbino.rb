@@ -5,6 +5,7 @@ class MarkdownAlbinoEngine < Tilt::Template
 
   class MarkdownAlbino < Redcarpet::Render::HTML
     def block_code(code, language)
+      puts "BLOCK CODE" + language.to_s
       return "<pre class='highlight'>#{code}</pre>" if language.nil?
       Albino.colorize(code, language)
     end
@@ -25,6 +26,7 @@ class MarkdownAlbinoEngine < Tilt::Template
   end
 
   def evaluate(scope, locals, &block)
+    puts "EVAL"
     @output ||= @engine.render(data)
   end
 end
