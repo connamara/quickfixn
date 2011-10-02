@@ -1,0 +1,39 @@
+body { background-image: url("../images/bg.jpg"); }
+
+h1, h2, h3, h4, h5, h6 { 
+  font-family: "Helvetica Neue", "Helvetica";
+  color: #031634;
+}
+h1 { font-family: Helvetica }
+h1, h2 { font-weight: bold; }
+h2 { text-transform: uppercase; }
+
+p { 
+  font-family: "Verdana";
+  font-size: 14px;
+}
+
+pre { 
+  margin: 0.2em;
+}
+code, pre {
+  font-size: 12px;
+  font-family: Monaco, "Andale Mono", "Courier New";
+  letter-spacing: 1.1px;
+}
+
+.highlight {
+  background:#f7f9f9;
+  border: 1px solid #DDD;
+  color: #444;
+  overflow: auto;
+  padding: 5px;
+  margin: 1em;
+  font-size: 12px;
+  -webkit-box-shadow: rgba(0,0,0,0.07) 0 1px 2px inset;
+  box-shadow: rgba(0,0,0,0.07) 0 1px 2px inset;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+

@@ -1,14 +1,9 @@
----
-layout: default
-title: Sending Messages
----
-
 Sending Messages
 ================
 
-We are going to send some FIX messages in this tutorial:
+In this tutorial, we will send some FIX messages:
 
-{% highlight csharp %}
+```c#
 
     var order = new FIX44.NewOrderSingle(
         new ClOrdID("1234"),
@@ -19,7 +14,7 @@ We are going to send some FIX messages in this tutorial:
 
     Session.SendToTaget(order, sessionID);
 
-{% endhighlight%}
+```
 
 First, we need to learn how to direct messages with Sessions.
 
@@ -31,16 +26,18 @@ All QuickFIX Sessions are identified by fields in the header of a
 message, usually `SenderCompID`, `TargetCompID`, and `BeginString`.
 These are specified in the config file.
 
+```
     SenderCompID=CONNAMARA
     TargetCompID=CBOE
     BeginString=FIX4.4
+```
 
 When sending a message, we must tell QuickFIX which Session to send it
 to.  There are a few patterns to gather the session.
 
 We can grab the `SessionID` after a successful logon and cache it:
 
-{% highlight csharp %}
+```c#
 
     private SessionID MySessionID { get; set; }
     public void OnLogon(SessionID sessionID)
@@ -48,27 +45,27 @@ We can grab the `SessionID` after a successful logon and cache it:
         MySessionID = sessionID;
     }
 
-{% endhighlight %}
+```
 
 We can get the `SessionID` when responding to an incoming message:
 
-{% highlight csharp %}
+```c#
 
     public void OnMessage(FIX42.ExecutionReport execution, SessionID sessionID) 
     {
         ProcessExecution(execution, sessionID);
     }
 
-{% endhighlight %}
+```
 
 Or, we can construct a `SessionID` by matching the values from
 our config file:
 
-{% highlight csharp %}
+```c#
 
     var mySessionID = new SessionID("FIX4.4", "CONNAMARA", "CBOE");
 
-{% endhighlight %}
+```
 
 Creating and Sending a Message
 ------------------------------
@@ -76,7 +73,7 @@ Creating and Sending a Message
 The preferred constructor to use includes the specific FIX version
 and message type.  We also pass in the required fields:
 
-{% highlight csharp %}
+```c#
 
     import QuickFix;
     import QuickFix.Fields;
@@ -88,22 +85,22 @@ and message type.  We also pass in the required fields:
         new TransactTime(DateTime.Now),
         new OrdType(OrdType.LIMIT));
 
-{% endhighlight %}
+```
 
 To set fields, use the message's field properties:
-{% highlight csharp %}
+
+```c#
 
     order.Price = new Price(new decimal(22.4));
     order.Account = new Account("18861112");
 
-{% endhighlight %}
+```
 
 Putting it all together - creating the message, setting its required
 fields, setting two additional fields, using `SessionID` from the
 section above, we send the message on its way:
 
-{% highlight csharp %}
-
+```c#
     var order = new QuickFix.FIX44.NewOrderSingle(
         new ClOrdID("1234"),
         new Symbol("AAPL"),
@@ -116,8 +113,9 @@ section above, we send the message on its way:
 
     Session.SendToTarget(order, sessionID);
 
-{% endhighlight %}
+```
 
+--
 
 Alternative Constructors and Field Setters
 ------------------------------------------
@@ -127,37 +125,37 @@ are a few other ways to create messages and set fields.
 
 Each message type has a default constructor:
 
-{% highlight csharp %}
+```c#
 
     var order = new QuickFix.FIX44.NewOrderSingle();
     order.ClOrdID =  new ClOrdID("1234");
     order.Symbol = new Symbol("AAPL");
     order.Side = new Side(Side.BUY);
 
-{% endhighlight %}
+```
 
 We have the QuickFIX C++ and QuickFIX/J style get/set methods available,
 which are also type safe:
 
-{% highlight csharp %}
+```c#
 
     order.Set(new TransactTime(DateTime.Now));
     order.Set(new OrdType(OrdType.LIMIT));
 
-{% endhighlight %}
+```
 
 For setting a field that isn't a property of a message, use `setField`:
 
-{% highlight csharp %}
+```c#
 
     order.SetField(new Account("18861112"));
 
-{% endhighlight %}
+```
 
 Here we create base `Message` class;  it has no properties so `SetField`
 must be used everywhere.  *This style is not recommended*:
 
-{% highlight csharp %}
+```c#
 
     var order = new QuickFix.Message();
     order.Header.SetField(new MsgType("D"));
@@ -167,4 +165,4 @@ must be used everywhere.  *This style is not recommended*:
     order.SetField(new TransactTime(DateTime.Now));
     order.SetField(new OrdType(OrdType.LIMIT));
 
-{% endhighlight %}
+```

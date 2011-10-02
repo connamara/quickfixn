@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+
+	<head>
+    <title><%= @title || "QuickFIX/N" %></title>
+    <%= stylesheet 'blueprint/screen' %>
+    <!--[if lt IE 8]>
+    <%= stylesheet 'blueprint/ie' %>
+    <![endif]-->
+    <%= stylesheet 'syntax' %>
+    <%= stylesheet 'layout' %>
+	</head>
+	
+	<body lang="en">
+	  <div class="container">
+      <%= yield %>
+    </div>
+	</body>
+	
+</html>
