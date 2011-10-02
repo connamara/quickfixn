@@ -1,6 +1,5 @@
 require 'sinatra'
 require 'mdalbino'
-require 'pry'
 
 set :views, ['web/views', 'tutorial']
 
