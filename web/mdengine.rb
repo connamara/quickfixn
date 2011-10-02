@@ -17,7 +17,6 @@ class MarkdownEngine < Tilt::Template
   end
 
   def evaluate(scope, locals, &block)
-    puts "EVAL"
     @output ||= @engine.render(data)
   end
 end
