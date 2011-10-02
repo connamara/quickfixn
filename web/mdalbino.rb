@@ -7,7 +7,9 @@ class MarkdownAlbinoEngine < Tilt::Template
     def block_code(code, language)
       puts "BLOCK CODE" + language.to_s
       return "<pre class='highlight'>#{code}</pre>" if language.nil?
-      Albino.colorize(code, language)
+      res = Albino.colorize(code, language)
+      puts res
+      res
     end
   end
 
