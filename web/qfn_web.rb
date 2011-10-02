@@ -4,7 +4,7 @@ require 'mdalbino'
 set :views, ['web/views', 'tutorial']
 
 Tilt.register MarkdownAlbinoEngine, :md
-Tilt.prefer MarkdownAlbinoEngine
+Tilt.prefer   MarkdownAlbinoEngine
 
 helpers do
   def mdalbino(*args) 
