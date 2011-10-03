@@ -8,7 +8,7 @@ Tilt.register MarkdownEngine, :md
 Tilt.prefer   MarkdownEngine
 
 helpers do
-  def mdalbino(*args) 
+  def mdengine(*args) 
     render(:md, *args) 
   end
 
@@ -55,23 +55,27 @@ helpers do
 end
 
 get '/' do
+  erb :index
 end
 
 get '/download' do
-  mdalbino :download, :layout_engine=>:erb
+  mdengine :download, :layout_engine=>:erb
 end
 
 get '/help' do
-  mdalbino :help, :layout_engine=>:erb
+  mdengine :help, :layout_engine=>:erb
 end
 
 get '/about' do
-  mdalbino :about, :layout_engine=>:erb
+  mdengine :about, :layout_engine=>:erb
 end
 
-get %r{/tutorial/?(.*)} do |tutorial|
-  tutorial = 'creating-an-application' if tutorial.nil? or tutorial.empty?
+get '/tutorial' do
+  mdengine :docs, :layout_engine=>:erb
+end
+
+get '/tutorial/:tutorial' do |tutorial|
   @title = page_title(tutorial) 
   @curnav = 'docs'
-  mdalbino tutorial.to_sym, :layout_engine=>:erb
+  mdengine tutorial.to_sym, :layout_engine=>:erb
 end
