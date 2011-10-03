@@ -85,13 +85,17 @@ pre {
   margin-left: 20px;
 }
 
-#side-nav a {
+.side-link {
   font-size: 20px;
   margin: 5px 0px 5px 0px;
   color: #8a3514;
   text-decoration: none;
   font-family: "Verdana", "Helvetica Neue", "Helvetica";
   font-style: bold;
+}
+
+.side-link:hover, .side-link-sel {
+  color: #ce5120;
 }
 
 #mainnav {
