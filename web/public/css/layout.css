@@ -28,6 +28,10 @@ p {
   font-size: 14px;
 }
 
+a:hover { color: #ce5120; }
+a { color: #8a3514; }
+
+
 .fonticon {
   font-size: 50px;
   font-family: "Pictos";
@@ -114,3 +118,27 @@ pre {
   vertical-align: middle;
 }
 
+#footer {
+  margin: 30px 0px 30px 0px;
+  border-top: 1px solid black;
+  text-align: center;
+}
+
+#footer-links { padding-top: 10px; }
+
+#footer-links a {
+  margin: 15px;
+  color: #8a3514;
+  text-decoration: none;
+  font-family: "Verdana", "Helvetica Neue", "Helvetica";
+  font-style: bold;
+}
+#footer-links a:hover { color: #ce5120; }
+
+#sponsored-by p {
+  margin: 0px;
+  -webkit-margin-before: 1em;
+  -webkit-margin-after: 1em;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
