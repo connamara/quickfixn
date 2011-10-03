@@ -67,7 +67,7 @@ get '/help' do
 end
 
 get '/about' do
-  erb :about
+  mdengine :about, :layout_engine=>:erb
 end
 
 get '/tutorial' do
