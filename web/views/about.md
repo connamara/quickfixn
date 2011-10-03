@@ -2,7 +2,7 @@ About
 =====
 **QuickFIX/N implements the FIX protocol on .NET.** 
 
-QuickFIX/N is 100% and open source with a liberal [license][4].
+QuickFIX/N is 100% free and open source with a liberal [license][4].
 
 Commercial Backing
 ------------------
