@@ -18,7 +18,33 @@
 	
 	<body lang="en">
 	  <div class="container">
-      <%= yield %>
+      <div id='header' class='span-24'>
+      </div>
+      <div id='mainnav' class='span-24'>
+        <%= nav_div('docs', @curnav) %>
+          <span class='fonticon'>F</span><span class='navitem-text'>Docs</span>
+        </div>
+        <div class='navitem'>
+          <span class='fonticon'>}</span><span class='navitem-text'>Download</span>
+        </div>
+        <div class='navitem'>
+          <span class='fonticon'>U</span><span class='navitem-text'>Get Help</span>
+        </div>
+        <div class='navitem'>
+          <span class='fonticon'>i</span><span class='navitem-text'>About</span>
+        </div>
+      </div>
+      <div id='main-content' class='prepend-1 span-14'>
+        <%= yield %>
+      </div>
+      <div id='side-nav' class='span-7 last'>
+        <a href='' class='span-7 last'>Creating an Application</a>
+        <a href='' class='span-7 last'>Sending Messages</a>
+        <a href='' class='span-7 last'>Receiving Messages</a>
+        <a href='' class='span-7 last'>Repeating Groups</a>
+        <a href='' class='span-7 last'>Configuration</a>
+        <a href='' class='span-7 last'>Custom Fields</a>
+      </div>
     </div>
 	</body>
 	

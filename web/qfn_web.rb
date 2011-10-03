@@ -22,6 +22,17 @@ helpers do
     "<script type='text/javascript' src='#{js_uri}'></script>"
   end
 
+  def img f, opts={}
+    img_uri = uri("images/#{f}")
+    alt = opts[:alt] || f
+    "<img src='#{img_uri}' alt='#{alt}'></img>"
+  end
+
+  def nav_div nav, curnav
+    css_class = curnav == nav ? 'navitem navitem-sel' : 'navitem'
+    "<div class='#{css_class}'>"
+  end
+
   def find_template(views, name, engine, &block)
     Array(views).each { |v| super(v, name, engine, &block) }
   end
@@ -41,5 +52,6 @@ end
 
 get '/tutorial/:file' do |file|
   @title = page_title(file) 
+  @curnav = 'docs'
   mdalbino file.to_sym, :layout_engine=>:erb
 end
