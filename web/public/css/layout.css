@@ -35,7 +35,11 @@ p {
   padding-left: 15px;
 }
 
-.navitem { float: left; }
+.navitem { 
+  float: left;
+  text-decoration: none;
+  color: #063969;
+}
 .navitem-sel { color: #ce5120; }
 
 .navitem:hover {

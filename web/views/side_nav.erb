@@ -1,0 +1,8 @@
+<% if @request.path_info =~ /tutorial/ %>
+  <%= side_nav '/tutorial/creating-an-application', 'Creating an Application' %>
+  <%= side_nav '/tutorial/sending-messages', 'Sending Messages' %>
+  <%= side_nav '/tutorial/receiving-messages', 'Receiving Messages' %>
+  <%= side_nav '/tutorial/repeating-groups', 'Repeating Groups' %>
+  <%= side_nav '/tutorial/configuration', 'Configuration' %>
+  <%= side_nav '/tutorial/custom-fields', 'Custom Fields' %>
+<% end %>
