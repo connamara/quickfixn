@@ -28,13 +28,20 @@ helpers do
     "<img src='#{img_uri}' alt='#{alt}'></img>"
   end
 
-  def nav_div nav, curnav
-    css_class = curnav == nav ? 'navitem navitem-sel' : 'navitem'
+  def nav_div nav
+    css_class = 'navitem'
+    css_class += ' navitem-sel' if @request.path_info =~ Regexp.new(nav)
     "<div class='#{css_class}'>"
   end
 
   def find_template(views, name, engine, &block)
     Array(views).each { |v| super(v, name, engine, &block) }
+  end
+
+  def side_nav href, text
+    css_class = 'side-link span-7 last'
+    css_class += ' side-link-sel' if href == @request.path_info
+    "<a href='#{href}' class='#{css_class}'>#{text}</a>"
   end
 
   def page_title f
