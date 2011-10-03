@@ -13,7 +13,7 @@ namespace AcceptanceTest
             }
 
             FileLog debugLog = new FileLog("log", new SessionID("AT", "Application", "Debug")); 
-
+            ThreadedSocketAcceptor acceptor = null;
             try
             {
                 SessionSettings settings = new SessionSettings(args[0]);
@@ -22,7 +22,7 @@ namespace AcceptanceTest
                 LogFactory logFactory = null;
                 if (settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose"))
                     logFactory = new FileLogFactory(settings); //ScreenLogFactory(true, true, true);
-                ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, logFactory);
+                acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, logFactory);
 
                 acceptor.Start();
                 while (true)
@@ -30,12 +30,18 @@ namespace AcceptanceTest
                     System.Console.WriteLine("o hai");
                     System.Threading.Thread.Sleep(1000);
                 }
-                //acceptor.Stop();
             }
             catch (System.Exception e)
             {
                 debugLog.OnEvent(e.ToString());
             }
+
+            finally
+            {
+                if(acceptor != null)
+                    acceptor.Stop();
+            }
+            
         }
     }
 }
