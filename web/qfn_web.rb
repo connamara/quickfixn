@@ -31,7 +31,7 @@ helpers do
   def nav_div nav
     css_class = 'navitem'
     css_class += ' navitem-sel' if @request.path_info =~ Regexp.new(nav)
-    "<div class='#{css_class}'>"
+    "<a href='/#{nav}' class='#{css_class}'>"
   end
 
   def find_template(views, name, engine, &block)
@@ -57,8 +57,21 @@ end
 get '/' do
 end
 
-get '/tutorial/:file' do |file|
-  @title = page_title(file) 
+get '/download' do
+  mdalbino :download, :layout_engine=>:erb
+end
+
+get '/help' do
+  mdalbino :help, :layout_engine=>:erb
+end
+
+get '/about' do
+  mdalbino :about, :layout_engine=>:erb
+end
+
+get %r{/tutorial/?(.*)} do |tutorial|
+  tutorial = 'creating-an-application' if tutorial.nil? or tutorial.empty?
+  @title = page_title(tutorial) 
   @curnav = 'docs'
-  mdalbino file.to_sym, :layout_engine=>:erb
+  mdalbino tutorial.to_sym, :layout_engine=>:erb
 end

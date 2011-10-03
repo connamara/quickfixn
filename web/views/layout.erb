@@ -22,28 +22,23 @@
       </div>
       <div id='mainnav' class='span-24'>
         <%= nav_div('tutorial') %>
-          <span class='fonticon'>F</span><span class='navitem-text'>Docs</span>
-        </div>
+            <span class='fonticon'>F</span><span class='navitem-text'>Docs</span>
+        </a>
         <%= nav_div('download') %>
           <span class='fonticon'>}</span><span class='navitem-text'>Download</span>
-        </div>
+        </a>
         <%= nav_div('help') %>
           <span class='fonticon'>U</span><span class='navitem-text'>Get Help</span>
-        </div>
+        </a>
         <%= nav_div('about') %>
           <span class='fonticon'>i</span><span class='navitem-text'>About</span>
-        </div>
+        </a>
       </div>
       <div id='main-content' class='prepend-1 span-14'>
         <%= yield %>
       </div>
       <div id='side-nav' class='span-7 last'>
-        <%= side_nav '/tutorial/dude', 'Creating an Application' %>
-        <%= side_nav '/tutorial/sending-messages', 'Sending Messages' %>
-        <%= side_nav '/tutorial/dude', 'Receiving Messages' %>
-        <%= side_nav '/tutorial/dude', 'Repeating Groups' %>
-        <%= side_nav '/tutorial/dude', 'Configuration' %>
-        <%= side_nav '/tutorial/dude', 'Custom Fields' %>
+        <%= erb :side_nav %>
       </div>
     </div>
 	</body>
