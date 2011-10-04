@@ -12,9 +12,8 @@ helpers do
     render(:md, *args) 
   end
 
-  def stylesheet f, remote=false
-    css_uri = uri("css/#{f}.css")
-    css_uri = f if remote
+  def stylesheet css_uri, opts={}
+    css_uri = uri("css/#{css_uri}.css") unless opts[:remote]
     "<link rel='stylesheet' href='#{css_uri}' type='text/css'>"
   end
 
