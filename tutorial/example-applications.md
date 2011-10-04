@@ -3,10 +3,10 @@ Example Applications
 
 We've made three QuickFIX/N example applications:
 
-1. The [Trade Client][1] is a command line client that will send orders
+1. The [Trade Client][1] is a command line client sends orders.
 2. The [Executor][0] takes orders over a FIX session and executes them.
-3. The [UI Demo][2] is a graphical Windows application that allows a
-   user to click around to send FIX messages.
+3. The [UI Demo][2] is a graphical Windows application where users can
+   send FIX messages.
 
 The Trade Client and Executor can be configured to send and execute
 orders with each other.
