@@ -33,11 +33,11 @@ TargetCompID=CBOE
 BeginString=FIX4.4
 ```
 
-There are a few patterns to gather the session.  We can grab the `SessionID` after a successful logon and cache it:
+There are a few patterns to gather the session.  We can grab the `SessionID` when it is created and cache it:
 
 ```c#
 private SessionID MySessionID { get; set; }
-public void OnLogon(SessionID sessionID)
+public void OnCreate(SessionID sessionID)
 {
     MySessionID = sessionID;
 }
