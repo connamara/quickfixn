@@ -5,7 +5,7 @@ Receiving messages in QuickFIX/N is type safe and simple:
 
 ```c#
 public void OnMessage(
-    FIX44.NewOrderSingle order, 
+    QuickFix.FIX44.NewOrderSingle order, 
     SessionID sessionID)
 {
     ProcessOrder(order.Price, order.OrderQty, order.Account);
@@ -41,30 +41,31 @@ respectively:
 
 ```c#
 public void OnMessage(
-    FIX44.NewOrderSingle ord, 
+    QuickFix.FIX44.NewOrderSingle ord, 
     SessionID sessionID)
 {
     ProcessOrder(ord.Price, ord.OrderQty, ord.Account);
 }
 
 public void OnMessage(
-    FIX44.SecurityDefinition secDef, 
+    QuickFix.FIX44.SecurityDefinition secDef, 
     SessionID sessionID)
 {
     GotSecDef(secDef);
 }
-
 ```
+
+Example Message Cracker
+-----------------------
 
 Putting it all together, a full application with type safe orders
 looks like this:
 
 ```c#
-
 public class MyApplication : MessageCracker, Application
 {
     public void OnMessage(
-        FIX42.NewOrderSingle ord,
+        QuickFix.FIX42.NewOrderSingle ord,
         SessionID sessionID)
     {
         ProcessOrder(ord.Price, ord.OrderQty, ord.Account);
@@ -95,5 +96,31 @@ public class MyApplication : MessageCracker, Application
     { }
 
     #endregion
+}
+```
+
+Less Type Safe
+--------------
+
+It is possible to receive message callbacks with only the base class
+`Message`.
+
+**This is not recommended** - we lose the typesafe `Group` and `Field`
+properties and lots of extra boilerplate logic is required:
+
+```c#
+// NOT RECOMMENDED
+public class MyApplication : Application
+{
+    public void FromApp(Message msg, SessionID sessionID)
+    {
+        string msgType = msg.Header.GetString(Tags.MsgType);
+        if (msgType.Equals(MsgType.EXECUTION_REPORT))
+        {
+          string account = msg.GetString(Tags.Account);
+          decimal price = msg.GetDecimal(Tags.Price);
+        }
+    }
+    // ...same Application callbacks as above
 }
 ```
