@@ -86,9 +86,8 @@ pre {
   border-radius: 3px;
 }
 
-#header {
-  height: 150px;
-}
+#header { height: 150px; }
+#main-content { min-height: 500px; }
 
 #side-nav {
   margin-top: 50px;
@@ -118,9 +117,7 @@ pre {
   color: #063969;
 }
 
-#mainnav img {
-  vertical-align: middle;
-}
+#mainnav img { vertical-align: middle; }
 
 #footer {
   margin: 30px 0px 30px 0px;
