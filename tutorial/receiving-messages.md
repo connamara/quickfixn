@@ -61,7 +61,7 @@ looks like this:
 
 ```c#
 
-public class ATApplication : MessageCracker, Application
+public class MyApplication : MessageCracker, Application
 {
     public void OnMessage(
         FIX42.NewOrderSingle ord,
