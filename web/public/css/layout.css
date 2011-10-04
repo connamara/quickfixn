@@ -23,9 +23,13 @@ h2 {
   margin-top: 40px;
 }
 
-p { 
+p, ol, li { 
   font-family: "Verdana";
   font-size: 14px;
+}
+
+li {
+  margin: 10px;
 }
 
 a:hover { color: #ce5120; }
