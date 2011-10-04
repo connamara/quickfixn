@@ -17,10 +17,9 @@ To get this functionality,  we will mixin `MessageCracker` to our application.
 Type Safe Messages
 ------------------
 
-QuickFIX/N is flexible - it gives you access to the generic base class `Message` as well as specific message classes.
-
 The best way to write an app is with the strongly typed specific Message 
-classes, and we use the `MessageCracker` for this.  We will import the `MessageCracker` class, inherit from it, then call `Crack` in the `FromApp` callback for our application:
+and Field classes, and we'll `MessageCracker` for this.  We import the
+`MessageCracker` class, inherit from it, then call `Crack` in the `FromApp` callback for our application:
 
 ```c#
 using QuickFix;
@@ -36,8 +35,7 @@ public class MyApplication : MessageCracker, Application
 ```
 
 `Crack` will then call the appropriate overloaded `OnMessage` callback.
-These callbacks would receive orders and security definitions
-respectively:
+This example receives orders and security definitions:
 
 ```c#
 public void OnMessage(
@@ -106,7 +104,7 @@ It is possible to receive message callbacks with only the base class
 `Message`.
 
 **This is not recommended** - we lose the typesafe `Group` and `Field`
-properties and lots of extra boilerplate logic is required:
+properties and extra boilerplate logic is required:
 
 ```c#
 // NOT RECOMMENDED
