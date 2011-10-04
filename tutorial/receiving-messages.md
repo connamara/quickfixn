@@ -18,8 +18,9 @@ Type Safe Messages
 ------------------
 
 The best way to write an app is with the strongly typed specific Message 
-and Field classes, and we'll need `MessageCracker` for this.  We import the
-`MessageCracker` class, inherit from it, then call `Crack` in the `FromApp` callback for our application:
+and Field classes, and we'll need `MessageCracker` for this.  We simply
+inherit from the `MessageCracker` class, then call `Crack` in the
+`FromApp` callback:
 
 ```c#
 using QuickFix;
