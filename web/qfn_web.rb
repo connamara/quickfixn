@@ -8,7 +8,7 @@ Tilt.register MarkdownEngine, :md
 Tilt.prefer   MarkdownEngine
 
 helpers do
-  def mdengine(*args) 
+  def markdown(*args) 
     render(:md, *args) 
   end
 
@@ -59,23 +59,23 @@ get '/' do
 end
 
 get '/download' do
-  mdengine :download, :layout_engine=>:erb
+  markdown :download, :layout_engine=>:erb
 end
 
 get '/help' do
-  mdengine :help, :layout_engine=>:erb
+  markdown :help, :layout_engine=>:erb
 end
 
 get '/about' do
-  mdengine :about, :layout_engine=>:erb
+  markdown :about, :layout_engine=>:erb
 end
 
 get '/tutorial' do
-  mdengine :docs, :layout_engine=>:erb
+  markdown :docs, :layout_engine=>:erb
 end
 
 get '/tutorial/:tutorial' do |tutorial|
   @title = page_title(tutorial) 
   @curnav = 'docs'
-  mdengine tutorial.to_sym, :layout_engine=>:erb
+  markdown tutorial.to_sym, :layout_engine=>:erb
 end
