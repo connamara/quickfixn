@@ -76,7 +76,7 @@ get '/about/:page' do |page|
 end
 
 get '/tutorial' do
-  redirect '/tutorial/sending-messages'
+  redirect '/tutorial/creating-an-application'
 end
 
 get '/tutorial/:tutorial' do |tutorial|
