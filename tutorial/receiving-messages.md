@@ -15,8 +15,8 @@ public void OnMessage(
 Receiving Type Safe Messages
 ----------------------------
 
-The best way to write an app is with the strongly typed Message and
-Field specific classes, which we'll mixin `MessageCracker` for. We
+The best way to write an app is with the specific, strongly typed Message
+and Field classes, which we'll mixin with `MessageCracker`. We
 import the `MessageCracker` class, inherit from it, then call `Crack`
 inside `FromApp`:
 
