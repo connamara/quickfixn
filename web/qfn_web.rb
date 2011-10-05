@@ -79,3 +79,8 @@ get '/tutorial/:tutorial' do |tutorial|
   @curnav = 'docs'
   markdown tutorial.to_sym, :layout_engine=>:erb
 end
+
+not_found do
+  markdown :not_found, :layout_engine=>:erb
+end
+
