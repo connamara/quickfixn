@@ -10,7 +10,7 @@ UnitTests/TestResult.xml
 QuickFIX.NET.sln.cache
 ChangeLog
 *.swp
-AcceptanceTest/AcceptanceTests.html
+AcceptanceTest/AcceptanceTests*.html
 AcceptanceTest/TestResult.xml
 AcceptanceTest/bin/Debug/*
 AcceptanceTest/bin/Release/*
