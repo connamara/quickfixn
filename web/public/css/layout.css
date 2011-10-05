@@ -141,6 +141,9 @@ pre {
 }
 
 #thebest {
-  font-style:italic;
   color: #ce5120;
+}
+
+#home-desc p {
+  font-size: 18px;
 }
