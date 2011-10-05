@@ -50,7 +50,7 @@ callback.
 Better Type Safety
 ------------------
 
-For receiving more type safe messages, please view the [Receiving Messages](/tutorial/receiving-messages) tutorial.
+We *highly* recommend implementing the [Receiving Messages](/tutorial/receiving-messages) tutorial to receive more type safe messages, 
 
 
 Initiators and Acceptors
