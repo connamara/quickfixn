@@ -138,3 +138,12 @@ pre {
   font-style: bold;
 }
 #footer-links a:hover { color: #ce5120; }
+
+#big-words h1 {
+  margin-bottom: 40px;
+}
+
+#thebest {
+  font-style:italic;
+  color: #ce5120;
+}
