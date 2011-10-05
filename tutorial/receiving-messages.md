@@ -12,14 +12,13 @@ public void OnMessage(
 }
 ```
 
-To get this functionality,  we will mixin `MessageCracker` to our application.
+Receiving Type Safe Messages
+----------------------------
 
-Type Safe Messages
-------------------
-
-The best way to write an app is with the strongly typed specific Message 
-and Field classes, and we'll `MessageCracker` for this.  We import the
-`MessageCracker` class, inherit from it, then call `Crack` in the `FromApp` callback for our application:
+The best way to write an app is with the strongly typed Message and
+Field specific classes, which we'll mixin `MessageCracker` for. We
+import the `MessageCracker` class, inherit from it, then call `Crack`
+inside `FromApp`:
 
 ```c#
 using QuickFix;
