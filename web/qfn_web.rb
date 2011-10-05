@@ -67,20 +67,30 @@ get '/help' do
 end
 
 get '/about' do
-  markdown :about, :layout_engine=>:erb
+  redirect '/about/about_us'
+end
+
+get '/about/:page' do |page|
+  @title = page_title(page) 
+  markdown :"about/#{page}", :layout_engine=>:erb
 end
 
 get '/tutorial' do
-  markdown :docs, :layout_engine=>:erb
+  redirect '/tutorial/sending-messages'
 end
 
 get '/tutorial/:tutorial' do |tutorial|
   @title = page_title(tutorial) 
-  @curnav = 'docs'
   markdown tutorial.to_sym, :layout_engine=>:erb
 end
 
 not_found do
   markdown :not_found, :layout_engine=>:erb
 end
+
+error do
+  puts env['sinatra.error'].inspect
+  markdown :error, :layout_engine=>:erb
+end
+
 
