@@ -47,6 +47,12 @@ this is a good place to do that.
 **ToAdmin** - all outbound admin level messages pass through this
 callback.  
 
+Better Type Safety
+------------------
+
+For receiving more type safe messages, please view the [Receiving Messages](/tutorial/receiving-messages) tutorial.
+
+
 Initiators and Acceptors
 ------------------------
 
@@ -102,6 +108,10 @@ public class MyApp
     }
 }
 ```
+
+Please view the [Receiving Messages](/tutorial/receiving-messages)
+tutorial to see how to implement type safe message callbacks. **This is
+highly recommended.**
 
 Switching this to an `Initiator` is as simple as swapping out the
 `ThreadedSocketAcceptor` class for the `SocketInitiator` class.
