@@ -141,3 +141,8 @@ For setting a custom field, we use one of the generic Field type classes:
 const int AWESOME_FIELD = 9006;
 message.SetField(new StringField(AWESOME_FIELD, "ohai"));
 ```
+
+```c#
+const int AWESOME_FIELD = 9006;
+contraBrokersGrp.SetField(new StringField(AWESOME_FIELD, "ohai"));
+```
