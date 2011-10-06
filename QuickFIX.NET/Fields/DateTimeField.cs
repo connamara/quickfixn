@@ -7,7 +7,7 @@ namespace QuickFix.Fields
 {
     public class DateTimeField : FieldBase<DateTime>
     {
-        private readonly bool showMilliseconds = true;
+        protected readonly bool showMilliseconds = true;
         public DateTimeField(int tag)
             : base(tag, new DateTime()) {}
 
@@ -27,6 +27,38 @@ namespace QuickFix.Fields
         protected override string makeString()
         {
             return Converters.DateTimeConverter.Convert(Obj, showMilliseconds);
+        }
+    }
+
+    public class DateOnlyField : DateTimeField
+    {
+        public DateOnlyField(int tag)
+            : base(tag, new DateTime()) { }
+
+        public DateOnlyField(int tag, DateTime dt)
+            : base(tag, dt) { }
+
+        public DateOnlyField(int tag, DateTime dt, bool showMilliseconds)
+            : base(tag, dt, showMilliseconds) { }
+        protected override string makeString()
+        {
+            return Converters.DateTimeConverter.ConvertDateOnly(Obj);
+        }
+    }
+
+    public class TimeOnlyField : DateTimeField
+    {
+        public TimeOnlyField(int tag)
+            : base(tag, new DateTime()) { }
+
+        public TimeOnlyField(int tag, DateTime dt)
+            : base(tag, dt) { }
+
+        public TimeOnlyField(int tag, DateTime dt, bool showMilliseconds)
+            : base(tag, dt, showMilliseconds) { }
+        protected override string makeString()
+        {
+            return Converters.DateTimeConverter.ConvertTimeOnly(Obj, base.showMilliseconds); 
         }
     }
 }
