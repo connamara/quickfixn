@@ -50,7 +50,7 @@ callback.
 Better Type Safety
 ------------------
 
-For receiving more type safe messages, please view the [Receiving Messages](/tutorial/receiving-messages) tutorial.
+We **highly recommend** implementing the [Receiving Messages](/tutorial/receiving-messages) tutorial to receive more type safe messages, 
 
 
 Initiators and Acceptors
@@ -58,10 +58,10 @@ Initiators and Acceptors
 
 QuickFIX/N implements both the initiator and acceptor pattern in FIX.
 
-*Initiator* is the FIX term for *client* - we use an `Initiator` when we are
+*Initiator* is the FIX term for client - we use an `Initiator` when we are
 connecting to another party.
 
-*Acceptor* is the FIX term for *server* - we use an `Acceptor` when
+*Acceptor* is the FIX term for server - we use an `Acceptor` when
 other parties are connecting to us.
 
 Creating Our Application
