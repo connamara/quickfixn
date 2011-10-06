@@ -67,7 +67,7 @@ get '/help' do
 end
 
 get '/about' do
-  redirect '/about/about_us'
+  redirect '/about/about-us'
 end
 
 get '/about/:page' do |page|
