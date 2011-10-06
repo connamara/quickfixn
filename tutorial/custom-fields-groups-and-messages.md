@@ -48,7 +48,7 @@ A Data Dictionary defines all FIX **Messages**:
 ...
 ```
 
-And a Data Dictionary defines all FIX **Groups** with the Messages:
+And a Data Dictionary defines all FIX **Groups** within a Message:
 
 ```
 <message name="Logon" msgtype="A" msgcat="admin">
