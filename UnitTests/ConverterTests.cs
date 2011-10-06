@@ -67,9 +67,16 @@ namespace UnitTests
 
             Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("20021201-11:03:05.321"));
 
+            Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321), false), Is.EqualTo("20021201-11:03:05"));
+            Assert.That(DateTimeConverter.ConvertDateOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("20021201"));
+            Assert.That(DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("11:03:05"));
+            Assert.That(DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321), false), Is.EqualTo("11:03:05.321"));
+
             Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.Convert(""); });
             Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.Convert("20021201"); });
             Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.Convert("20021201-11:03"); });
         }
+
+
     }
 }

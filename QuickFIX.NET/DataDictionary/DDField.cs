@@ -40,31 +40,32 @@ namespace QuickFix.DataDictionary
                 case "QTY": return typeof(Fields.DecimalField);
                 case "CURRENCY": return typeof(Fields.StringField);
                 case "MULTIPLEVALUESTRING": return typeof(Fields.StringField);
+                case "MULTIPLESTRINGVALUE": return typeof(Fields.StringField);
+                case "MULTIPLECHARVALUE": return typeof(Fields.StringField);
                 case "EXCHANGE": return typeof(Fields.StringField);
                 case "UTCTIMESTAMP": return typeof(Fields.DateTimeField);
                 case "BOOLEAN": return typeof(Fields.BooleanField);
-                case "DATE": return typeof(Fields.StringField);
                 case "LOCALMKTDATE": return typeof(Fields.StringField);
                 case "DATA": return typeof(Fields.StringField);
                 case "FLOAT": return typeof(Fields.DecimalField);
                 case "PRICEOFFSET": return typeof(Fields.DecimalField);
                 case "MONTHYEAR": return typeof(Fields.StringField);
                 case "DAYOFMONTH": return typeof(Fields.StringField);
-                case "UTCDATEONLY": return typeof(Fields.DateTimeField);
                 case "UTCDATE": return typeof(Fields.DateTimeField);
+                case "UTCDATEONLY": return typeof(Fields.DateTimeField);
                 case "UTCTIMEONLY": return typeof(Fields.DateTimeField);
-                case "TIME": return typeof(Fields.DateTimeField);
                 case "NUMINGROUP": return typeof(Fields.IntField);
                 case "PERCENTAGE": return typeof(Fields.DecimalField);
                 case "SEQNUM": return typeof(Fields.IntField);
                 case "LENGTH": return typeof(Fields.IntField);
                 case "COUNTRY": return typeof(Fields.StringField);
-                case "MULTIPLECHARVALUE": return typeof(Fields.StringField);
-                case "MULTIPLESTRINGVALUE": return typeof(Fields.StringField);
-                case "TZTIMEONLY": return typeof(Fields.DateTimeField); //FIXME nned this to be TZTimeOnly per spec
-                case "TZTIMESTAMP": return typeof(Fields.DateTimeField); //FIXME nned this to be TZTimeOnly per spec
+                case "TZTIMEONLY": return typeof(Fields.StringField);
+                case "TZTIMESTAMP": return typeof(Fields.StringField); 
                 case "XMLDATA": return typeof(Fields.StringField);
                 case "LANGUAGE": return typeof(Fields.StringField);
+
+                case "TIME": return typeof(Fields.DateTimeField);
+                case "DATE": return typeof(Fields.StringField);
                 default: throw new DictionaryParseException("invalid type: " + type);
             }
         }
