@@ -127,12 +127,12 @@ the typed getter:
 
 ```c#
 const int AWESOME_FIELD = 9006;
-string awmFld = message.GetString(AWESOME_FIELD);
+string awsmFld = message.GetString(AWESOME_FIELD);
 ```
 
 ```c#
 const int AWESOME_FIELD = 9006;
-string awmFld = contraBrokersGrp.GetString(AWESOME_FIELD);
+string awsmFld = contraBrokersGrp.GetString(AWESOME_FIELD);
 ```
 
 For setting a custom field, we use one of the generic Field type classes:
