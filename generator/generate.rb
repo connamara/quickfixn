@@ -57,6 +57,7 @@ class Generator
       @fix41.fields[fld_name],
       @fix40.fields[fld_name]
     )
+    
     raise "couldn't find field! #{fld}" if fld.nil?
     fld
   end
@@ -65,6 +66,7 @@ class Generator
     defs = alldefs.reject {|d| d.nil?}
     return nil if defs.empty?
     fld = defs.shift
+    
     vals = defs.map { |d| d[:values] }.reject { |d| d.nil? }.flatten
     return fld if vals.empty?
     vals.uniq! {|v| v[:enum]}

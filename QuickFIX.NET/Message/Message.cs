@@ -293,6 +293,31 @@ namespace QuickFix
             return FIXME.GetField(Tags.MsgType);
         }
 
+        public static ApplVerID GetApplVerID(string beginString)
+        {
+            switch (beginString)
+            {
+                case FixValues.BeginString.FIX40:
+                    return new ApplVerID(ApplVerID.FIX40);
+                case FixValues.BeginString.FIX41:
+                    return new ApplVerID(ApplVerID.FIX41);
+                case FixValues.BeginString.FIX42:
+                    return new ApplVerID(ApplVerID.FIX42);
+                case FixValues.BeginString.FIX43:
+                    return new ApplVerID(ApplVerID.FIX43);
+                case FixValues.BeginString.FIX44:
+                    return new ApplVerID(ApplVerID.FIX44);
+                case FixValues.BeginString.FIX50:
+                    return new ApplVerID(ApplVerID.FIX50);
+                case "FIX.5.0SP1":
+                    return new ApplVerID(ApplVerID.FIX50SP1);
+                case "FIX.5.0SP2":
+                    return new ApplVerID(ApplVerID.FIX50SP2);
+                default:
+                    throw new System.ArgumentException(String.Format("ApplVerID for {0} not supported", beginString));
+            }
+        }
+
         #endregion
 
         public bool FromStringHeader(string msgstr)
