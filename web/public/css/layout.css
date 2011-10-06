@@ -68,6 +68,7 @@ code, pre {
   font-family: "Droid Sans Mono", "Monaco", "Andale Mono", "Courier New";
   letter-spacing: 1.1px;
   padding: 0.5em 0.0em 0.5em 0em;
+  overflow: scroll;
 }
 
 pre {
