@@ -7,16 +7,17 @@ namespace QuickFix
 {
     public class FieldNotFoundException : ApplicationException
     {
+        public int Field { get; set; }
         public FieldNotFoundException() { }
 
         public FieldNotFoundException(int tag)
-            : base("field not found for tag: " + tag.ToString()) {}
+            : base("field not found for tag: " + tag.ToString()) { this.Field = tag; }
 
         public FieldNotFoundException(string message)
-            : base(message) { }
+            : base(message) { Field = -1; }
 
         public FieldNotFoundException(string message, System.Exception inner)
-            : base(message, inner) { }
+            : base(message, inner) { Field = -1; }
 
         protected FieldNotFoundException(
             System.Runtime.Serialization.SerializationInfo info,

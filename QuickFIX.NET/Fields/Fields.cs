@@ -18233,6 +18233,7 @@ namespace QuickFix.Fields
         public const string FIX44 = "6";
         public const string FIX50 = "7";
         public const string FIX50SP1 = "8";
+        public const string FIX50SP2 = "9";
     }
 
 

@@ -38,6 +38,7 @@ namespace QuickFix
         public bool SendRedundantResendRequests { get; set; }
         public bool ValidateLengthAndChecksum { get; set; }
         public bool CheckCompID { get; set; }
+        public ApplVerID targetDefaultApplVerID { get; set;}
         public string SenderDefaultApplVerID { get; set; }
         public SessionID SessionID { get; set; }
         public Application Application { get; set; }
@@ -52,13 +53,15 @@ namespace QuickFix
         /// FIXME
         public Session(
             Application app, MessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
-            SessionSchedule sessionSchedule, int heartBtInt, LogFactory logFactory, IMessageFactory msgFactory)
+            SessionSchedule sessionSchedule, int heartBtInt, LogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
         {
             this.Application = app;
             this.SessionID = sessID;
             this.DataDictionaryProvider = new DataDictionaryProvider(dataDictProvider);
             this.schedule_ = sessionSchedule;
             this.msgFactory_ = msgFactory;
+            
+            this.SenderDefaultApplVerID = senderDefaultApplVerID;
 
             this.SessionDataDictionary = this.DataDictionaryProvider.GetSessionDataDictionary(this.SessionID.BeginString);
             if (this.SessionID.IsFIXT)
@@ -331,15 +334,31 @@ namespace QuickFix
                 if (!beginString.Equals(this.SessionID.BeginString))
                     throw new UnsupportedVersion();
 
+
+                if (MsgType.LOGON.Equals(msgType))
+                {
+                    if (this.SessionID.IsFIXT)
+                    {
+                        targetDefaultApplVerID = new ApplVerID(message.GetString(Fields.Tags.DefaultApplVerID));
+                    }
+                    else
+                    {
+                        targetDefaultApplVerID = Message.GetApplVerID(beginString);
+                    }
+                }
+
                 if (this.SessionID.IsFIXT && !Message.IsAdminMsgType(msgType))
                 {
-                    throw new UnsupportedVersion("'FIXT' Sessions are not implemented yet!");
+
+                    DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, ApplicationDataDictionary, beginString, msgType);
                 }
                 else
                 {
                     this.SessionDataDictionary.Validate(message, beginString, msgType);
                 }
 
+
+                //End Refactor
                 if (MsgType.LOGON.Equals(msgType))
                     NextLogon(message);
                 else if (MsgType.HEARTBEAT.Equals(msgType))
@@ -382,6 +401,25 @@ namespace QuickFix
                 this.Log.OnEvent("Unsupported message type: " + e.Message);
                 GenerateBusinessMessageReject(message, Fields.BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, 0);
             }
+            catch (FieldNotFoundException e)
+            {
+                this.Log.OnEvent("Rejecting invalid message, field not found: " + e.Message);
+                if ((SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0) && (message.IsApp()))
+                {
+                    GenerateBusinessMessageReject(message, Fields.BusinessRejectReason.CONDITIONALLY_REQUIRED_FIELD_MISSING, e.Field);
+                }
+                else
+                {
+                    if (msgType.Equals(Fields.MsgType.LOGON))
+                    {
+                        this.Log.OnEvent("Required field missing from logon");
+                        Disconnect("Required field missing from logon");
+                    }
+                    else
+                        GenerateReject(message, new QuickFix.FixValues.SessionRejectReason(SessionRejectReason.REQUIRED_TAG_MISSING, "Required Tag Missing"), e.Field);
+                }
+            }
+                    
 	    NextQueued();
         }
 
@@ -428,6 +466,9 @@ namespace QuickFix
                 state_.IncrNextTargetMsgSeqNum();
                 NextQueued();
             }
+
+            if (this.IsLoggedOn)
+                this.Application.OnLogon(this.SessionID);
         }
 
         protected void NextTestRequest(Message testRequest)
@@ -844,7 +885,7 @@ namespace QuickFix
             logon.SetField(new Fields.HeartBtInt(state_.HeartBtInt));
 
             if (this.SessionID.IsFIXT)
-                logon.SetField(new Fields.DefaultApplVerID("FIXME"));
+                logon.SetField(new Fields.DefaultApplVerID(this.SenderDefaultApplVerID));
             if (this.RefreshOnLogon)
                 Refresh();
             if (this.ResetOnLogon)
@@ -869,7 +910,7 @@ namespace QuickFix
             Message logon = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGON);
             logon.SetField(new Fields.EncryptMethod(0));
             if (this.SessionID.IsFIXT)
-                logon.SetField(new Fields.DefaultApplVerID("FIXME"));
+                logon.SetField(new Fields.DefaultApplVerID(this.SenderDefaultApplVerID));
             if (state_.ReceivedReset)
                 logon.SetField(new Fields.ResetSeqNumFlag(true));
             logon.SetField(new Fields.HeartBtInt(heartBtInt));
@@ -1132,7 +1173,7 @@ namespace QuickFix
 
                 if (Message.IsAdminMsgType(msgType))
                 {
-                    /// FIXME this.Application.ToAdmin(message, this.SessionID);
+                    this.Application.ToAdmin(message, this.SessionID);
 
                     if (MsgType.LOGON.Equals(msgType) && !state_.ReceivedReset)
                     {
@@ -1146,6 +1187,10 @@ namespace QuickFix
                         }
                         state_.SentReset = resetSeqNumFlag.Obj;
                     }
+                }
+                else
+                {
+                    this.Application.ToApp(message, this.SessionID);
                 }
 
                 string messageString = message.ToString();

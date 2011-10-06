@@ -53,6 +53,16 @@ namespace AcceptanceTest
             Echo(message, sessionID);
         }
 
+        public void OnMessage(QuickFix.FIX50.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX50.SecurityDefinition message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
         protected void Echo(Message message, SessionID sessionID)
         {
             Message echo = new Message(message);

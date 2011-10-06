@@ -25,7 +25,15 @@ namespace QuickFix
 
         public Message Create(string beginString, string msgType)
         {
-            // TODO: if FIXT11 and non-admin message, use FIX50
+            IMessageFactory f = null;
+            if (beginString.Equals(FixValues.BeginString.FIXT11))
+            {
+                if (!Message.IsAdminMsgType(msgType))
+                    f = _factories[FixValues.BeginString.FIX50];
+            }
+            
+            if(f != null)
+                return f.Create(beginString, msgType);
 
             if (_factories.ContainsKey(beginString) == false)
             {
@@ -34,7 +42,7 @@ namespace QuickFix
                 return m;
             }
 
-            IMessageFactory f = _factories[beginString];
+            f = _factories[beginString];
             return f.Create(beginString, msgType);
         }
 
