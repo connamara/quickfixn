@@ -1,0 +1,19 @@
+<% if @request.path_info =~ /tutorial/ %>
+  <div id='side-nav' class='span-7 last'>
+    <%= side_nav '/tutorial/creating-an-application', 'Creating an Application' %>
+    <%= side_nav '/tutorial/sending-messages', 'Sending Messages' %>
+    <%= side_nav '/tutorial/receiving-messages', 'Receiving Messages' %>
+    <%= side_nav '/tutorial/repeating-groups', 'Repeating Groups' %>
+    <%= side_nav '/tutorial/configuration', 'Configuration' %>
+    <%= side_nav '/tutorial/custom-fields', 'Custom Fields' %>
+    <%= side_nav '/tutorial/example-applications', 'Example Apps' %>
+  </div>
+<% end %>
+<% if @request.path_info =~ /about/ %>
+  <div id='side-nav' class='span-7 last'>
+    <%= side_nav '/about/about_us', 'About Us' %>
+    <%= side_nav '/about/contact', 'Contact Us' %>
+    <%= side_nav '/about/contribute', 'Contribute' %>
+    <%= side_nav '/about/credits', 'Credits' %>
+  </div>
+<% end %>

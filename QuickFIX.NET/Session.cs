@@ -466,6 +466,9 @@ namespace QuickFix
                 state_.IncrNextTargetMsgSeqNum();
                 NextQueued();
             }
+
+            if (this.IsLoggedOn)
+                this.Application.OnLogon(this.SessionID);
         }
 
         protected void NextTestRequest(Message testRequest)
@@ -1170,7 +1173,7 @@ namespace QuickFix
 
                 if (Message.IsAdminMsgType(msgType))
                 {
-                    /// FIXME this.Application.ToAdmin(message, this.SessionID);
+                    this.Application.ToAdmin(message, this.SessionID);
 
                     if (MsgType.LOGON.Equals(msgType) && !state_.ReceivedReset)
                     {
@@ -1184,6 +1187,10 @@ namespace QuickFix
                         }
                         state_.SentReset = resetSeqNumFlag.Obj;
                     }
+                }
+                else
+                {
+                    this.Application.ToApp(message, this.SessionID);
                 }
 
                 string messageString = message.ToString();
