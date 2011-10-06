@@ -6,7 +6,7 @@ QuickFIX/N creates and reads repeating groups in FIX messages.
 Creating Groups
 ---------------
 
-Creating groups is straightforward;  instantiate the specific group
+Creating groups is straightforward - instantiate the specific group
 class then add it to the message:
 
 ```c#
