@@ -97,13 +97,9 @@ Then, we add it to our messages:
 </message>
 ```
 
-Now, QuickFIX/N will know how to handle an incoming or outgoing
-`ExecutionReport` with `AwesomeField` in it.
-
 Custom **Groups** are especially important to get right in our Data
-Dictionary, since the FIX protocol gives us no other way to know about a
-Group other than its defined specification.  Using `AwesomeField` from
-above, we add it to a Group:
+Dictionary. Using `AwesomeField` from above, we add it to the Fields
+section of the document, then to a Group:
 
 ```
 <message name="ExecutionReport" msgtype="8" msgcat="app">
@@ -120,5 +116,5 @@ above, we add it to a Group:
 ...
 ```
 
-The group would not work correctly without specifying this in our Data
-Dictionary.
+**The custom group would not work correctly without specifying this in our Data
+Dictionary.**
