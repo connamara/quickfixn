@@ -12,7 +12,7 @@ class then add it to the message:
 ```c#
 var tcr = new QuickfiFix.FIX44.TradeCaptureReport();
 var sidesGrp1 = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
-sidesGrp1.Account = new Account("MarioAzzi");
+sidesGrp1.Account = new Account("Silvio");
 sidesGrp1.OrderID = new OrderID("09011900");
 sidesGrp1.Side = new Side(Side.BUY);
 
@@ -31,7 +31,7 @@ We can create groups inside of groups, too:
 var tcr = new QuickFix.FIX44.TradeCaptureReport();
 var sidesGrp = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
 sidesGrp.Side = new Side(Side.BUY);
-sidesGrp.Account = new Account("MarioAzzi");
+sidesGrp.Account = new Account("Piola");
 sidesGrp.OrderID = new OrderID("09011900");
 var partyIdsGrp = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoPartyIDsGroup();
 partyIdsGrp.PartyID = new PartyID("Nesta13");
