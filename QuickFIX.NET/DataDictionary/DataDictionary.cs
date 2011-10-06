@@ -55,7 +55,7 @@ namespace QuickFix.DataDictionary
             this.Trailer = src.Trailer;
         }
 
-        public void Validate(Message message, DataDictionary sessionDataDict, DataDictionary appDataDict, string beginString, string msgType)
+        public static void Validate(Message message, DataDictionary sessionDataDict, DataDictionary appDataDict, string beginString, string msgType)
         {
             bool bodyOnly = (null == sessionDataDict);
 
@@ -307,7 +307,17 @@ namespace QuickFix.DataDictionary
         private void setVersionInfo(XmlDocument doc) {
             MajorVersion = doc.SelectSingleNode("/fix/@major").Value;
             MinorVersion = doc.SelectSingleNode("/fix/@minor").Value;
-            Version = "FIX." + MajorVersion + "." + MinorVersion;
+            string type;
+            XmlNode node = doc.SelectSingleNode("/fix/@type");
+            if (node == null)
+                type = "FIX";//FIXME has to be a better way to do this, but for now, only >=5.0 have type
+            else
+                type = node.Value;
+            
+            
+            if (!type.Equals("FIX") && !type.Equals("FIXT"))
+                throw new System.ArgumentException("Type must be FIX of FIXT in cofig");
+            Version = String.Format("{0}.{1}.{2}", type, MajorVersion, MinorVersion);
         }
 
         private void parseFields(XmlDocument doc)

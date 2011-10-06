@@ -59,6 +59,12 @@ namespace QuickFix.DataDictionary
                 case "SEQNUM": return typeof(Fields.IntField);
                 case "LENGTH": return typeof(Fields.IntField);
                 case "COUNTRY": return typeof(Fields.StringField);
+                case "MULTIPLECHARVALUE": return typeof(Fields.StringField);
+                case "MULTIPLESTRINGVALUE": return typeof(Fields.StringField);
+                case "TZTIMEONLY": return typeof(Fields.DateTimeField); //FIXME nned this to be TZTimeOnly per spec
+                case "TZTIMESTAMP": return typeof(Fields.DateTimeField); //FIXME nned this to be TZTimeOnly per spec
+                case "XMLDATA": return typeof(Fields.StringField);
+                case "LANGUAGE": return typeof(Fields.StringField);
                 default: throw new DictionaryParseException("invalid type: " + type);
             }
         }
