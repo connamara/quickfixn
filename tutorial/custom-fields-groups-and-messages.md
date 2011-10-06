@@ -118,3 +118,26 @@ section of the document, then to a Group:
 
 **The custom group would not work correctly without specifying this in our Data
 Dictionary.**
+
+In Code
+-------
+
+The easiest way to get a custom field from a message or group is to call
+the typed getter:
+
+```c#
+const int AWESOME_FIELD = 9006;
+string awmFld = message.GetString(AWESOME_FIELD);
+```
+
+```c#
+const int AWESOME_FIELD = 9006;
+string awmFld = contraBrokersGrp.GetString(AWESOME_FIELD);
+```
+
+For setting a custom field, we use one of the generic Field type classes:
+
+```c#
+const int AWESOME_FIELD = 9006;
+message.SetField(new StringField(AWESOME_FIELD, "ohai"));
+```
