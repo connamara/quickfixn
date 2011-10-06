@@ -73,7 +73,7 @@ code, pre {
 pre {
   padding: 1.0em;
   display: block; 
-  background:#f7f9f9;
+  background-color:#f7f9f9;
   border: 1px solid #DDD;
   color: #444;
   overflow: auto;
@@ -147,3 +147,19 @@ pre {
 #home-desc p {
   font-size: 18px;
 }
+
+pre::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+ 
+pre::-webkit-scrollbar-track {
+    background: #f3f3f3;
+}
+ 
+pre::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 7px;
+    border-radius: 7px;
+    background: #c0c0c0; 
+}
+
