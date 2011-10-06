@@ -1,7 +1,7 @@
 Sending Messages
 ================
 
-In this tutorial, we will send some FIX messages:
+Sending FIX messages in QuickFIX/N is simple:
 
 ```c#
 FIX44.NewOrderSingle order = new FIX44.NewOrderSingle(
@@ -20,6 +20,9 @@ First, we need to learn how to direct messages with Sessions.
 QuickFIX Sessions
 -----------------
 
+When sending a message, we must tell QuickFIX which Session to send it
+to.
+
 All QuickFIX Sessions are identified by fields in the header of a
 message, usually `SenderCompID`, `TargetCompID`, and `BeginString`.
 These are specified in the config file.
@@ -30,14 +33,11 @@ TargetCompID=CBOE
 BeginString=FIX4.4
 ```
 
-When sending a message, we must tell QuickFIX which Session to send it
-to.  There are a few patterns to gather the session.
-
-We can grab the `SessionID` after a successful logon and cache it:
+There are a few patterns to gather the session.  We can grab the `SessionID` when it is created and cache it:
 
 ```c#
 private SessionID MySessionID { get; set; }
-public void OnLogon(SessionID sessionID)
+public void OnCreate(SessionID sessionID)
 {
     MySessionID = sessionID;
 }

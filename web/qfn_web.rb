@@ -8,12 +8,12 @@ Tilt.register MarkdownEngine, :md
 Tilt.prefer   MarkdownEngine
 
 helpers do
-  def mdalbino(*args) 
+  def markdown(*args) 
     render(:md, *args) 
   end
 
-  def stylesheet f
-    css_uri = uri("css/#{f}.css")
+  def stylesheet f, opts={}
+    css_uri = opts[:remote] ? f : uri("css/#{f}.css")
     "<link rel='stylesheet' href='#{css_uri}' type='text/css'>"
   end
 
@@ -31,7 +31,7 @@ helpers do
   def nav_div nav
     css_class = 'navitem'
     css_class += ' navitem-sel' if @request.path_info =~ Regexp.new(nav)
-    "<div class='#{css_class}'>"
+    "<a href='/#{nav}' class='#{css_class}'>"
   end
 
   def find_template(views, name, engine, &block)
@@ -55,10 +55,42 @@ helpers do
 end
 
 get '/' do
+  erb :index
 end
 
-get '/tutorial/:file' do |file|
-  @title = page_title(file) 
-  @curnav = 'docs'
-  mdalbino file.to_sym, :layout_engine=>:erb
+get '/download' do
+  markdown :download, :layout_engine=>:erb
 end
+
+get '/help' do
+  markdown :help, :layout_engine=>:erb
+end
+
+get '/about' do
+  redirect '/about/about_us'
+end
+
+get '/about/:page' do |page|
+  @title = page_title(page) 
+  markdown :"about/#{page}", :layout_engine=>:erb
+end
+
+get '/tutorial' do
+  redirect '/tutorial/creating-an-application'
+end
+
+get '/tutorial/:tutorial' do |tutorial|
+  @title = page_title(tutorial) 
+  markdown tutorial.to_sym, :layout_engine=>:erb
+end
+
+not_found do
+  markdown :not_found, :layout_engine=>:erb
+end
+
+error do
+  puts env['sinatra.error'].inspect
+  markdown :error, :layout_engine=>:erb
+end
+
+

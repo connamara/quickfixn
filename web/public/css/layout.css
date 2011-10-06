@@ -23,10 +23,18 @@ h2 {
   margin-top: 40px;
 }
 
-p { 
+p, ol, li { 
   font-family: "Verdana";
   font-size: 14px;
 }
+
+li {
+  margin: 10px;
+}
+
+a:hover { color: #ce5120; }
+a { color: #8a3514; }
+
 
 .fonticon {
   font-size: 50px;
@@ -35,7 +43,11 @@ p {
   padding-left: 15px;
 }
 
-.navitem { float: left; }
+.navitem { 
+  float: left;
+  text-decoration: none;
+  color: #063969;
+}
 .navitem-sel { color: #ce5120; }
 
 .navitem:hover {
@@ -53,7 +65,7 @@ p {
 
 code, pre {
   font-size: 12px;
-  font-family: Monaco, "Andale Mono", "Courier New";
+  font-family: "Droid Sans Mono", "Monaco", "Andale Mono", "Courier New";
   letter-spacing: 1.1px;
   padding: 0.5em 0.0em 0.5em 0em;
 }
@@ -74,9 +86,8 @@ pre {
   border-radius: 3px;
 }
 
-#header {
-  height: 300px;
-}
+#header { height: 150px; }
+#main-content { min-height: 500px; }
 
 #side-nav {
   margin-top: 50px;
@@ -106,7 +117,33 @@ pre {
   color: #063969;
 }
 
-#mainnav img {
-  vertical-align: middle;
+#mainnav img { vertical-align: middle; }
+
+#footer {
+  margin: 30px 0px 30px 0px;
+  border-top: 1px solid black;
+  text-align: center;
 }
 
+#footer-links { padding-top: 10px; }
+
+#footer-links a {
+  margin: 15px;
+  color: #8a3514;
+  text-decoration: none;
+  font-family: "Verdana", "Helvetica Neue", "Helvetica";
+  font-style: bold;
+}
+#footer-links a:hover { color: #ce5120; }
+
+#big-words h1 {
+  margin-bottom: 40px;
+}
+
+#thebest {
+  color: #ce5120;
+}
+
+#home-desc p {
+  font-size: 18px;
+}
