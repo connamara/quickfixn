@@ -5780,10 +5780,10 @@
   <field number='34' name='MsgSeqNum' type='SEQNUM' />
   <field number='35' name='MsgType' type='STRING'>
    <value enum='0' description='HEARTBEAT' />
-   <value enum='1' description='TESTREQUEST' />
-   <value enum='2' description='RESENDREQUEST' />
+   <value enum='1' description='TEST_REQUEST' />
+   <value enum='2' description='RESEND_REQUEST' />
    <value enum='3' description='REJECT' />
-   <value enum='4' description='SEQUENCERESET' />
+   <value enum='4' description='SEQUENCE_RESET' />
    <value enum='5' description='LOGOUT' />
    <value enum='6' description='IOI' />
    <value enum='7' description='ADVERTISEMENT' />
@@ -5880,7 +5880,7 @@
    <value enum='g' description='TRADINGSESSIONSTATUSREQUEST' />
    <value enum='h' description='TRADINGSESSIONSTATUS' />
    <value enum='i' description='MASSQUOTE' />
-   <value enum='j' description='BUSINESSMESSAGEREJECT' />
+   <value enum='j' description='BUSINESS_MESSAGE_REJECT' />
    <value enum='k' description='BIDREQUEST' />
    <value enum='l' description='BIDRESPONSE' />
    <value enum='m' description='LISTSTRIKEPRICE' />
@@ -7293,7 +7293,7 @@
    <value enum='0' description='OTHER' />
    <value enum='1' description='UNKNOWN_ID' />
    <value enum='2' description='UNKNOWN_SECURITY' />
-   <value enum='3' description='UNSUPPORTED_MESSAGE_TYPE' />
+   <value enum='3' description='UNKNOWN_MESSAGE_TYPE' />
    <value enum='4' description='APPLICATION_NOT_AVAILABLE' />
    <value enum='5' description='CONDITIONALLY_REQUIRED_FIELD_MISSING' />
    <value enum='6' description='NOT_AUTHORIZED' />
