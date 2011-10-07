@@ -65,7 +65,7 @@ class Generator
   def merge_field_defs *alldefs
     defs = alldefs.reject {|d| d.nil?}
     return nil if defs.empty?
-    fld = defs.shift
+    fld = defs.first
     
     vals = defs.map { |d| d[:values] }.reject { |d| d.nil? }.flatten
     return fld if vals.empty?
