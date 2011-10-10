@@ -69,7 +69,6 @@ class Generator
     
     vals = defs.map { |d| d[:values] }.reject { |d| d.nil? }.flatten
     return fld if vals.empty?
-    vals.uniq! {|v| v[:enum]}
     vals.uniq! {|v| v[:desc]}
     fld[:values] = vals
     fld
