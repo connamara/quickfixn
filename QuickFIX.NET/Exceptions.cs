@@ -156,6 +156,17 @@ namespace QuickFix
         { }
     }
 
+    /// <summary>
+    /// Thrown in Application.FromAdmin callback to indicate that app should reject logon attempt
+    /// </summary>
+    public class RejectLogon : QuickFIXException
+    {
+        public RejectLogon(string msg)
+            : base("Rejected Logon Attempt: " + msg)
+        { }
+
+    }
+
     #region Tag Exceptions
 
     /// <summary>

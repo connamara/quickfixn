@@ -13,6 +13,7 @@ namespace UnitTests
         QuickFix.DefaultMessageFactory messageFactory = new QuickFix.DefaultMessageFactory();
         
         public Dictionary<string, Queue<QuickFix.Message>> msgLookup = new Dictionary<string, Queue<QuickFix.Message>>();
+        public bool disconnected = false;
 
         public bool Send(string msgStr)
         {
@@ -32,15 +33,16 @@ namespace UnitTests
 
         public void Disconnect()
         {
-
+            disconnected = true;
         }
 
         #endregion
     }
 
-    class TestApplication : QuickFix.Application
+    class MockApplication : QuickFix.Application
     {
-        public System.Exception fromException = null;
+        public System.Exception fromAppException = null;
+        public System.Exception fromAdminException = null;
 
         #region Application Members
 
@@ -50,7 +52,8 @@ namespace UnitTests
 
         public void FromAdmin(QuickFix.Message message, QuickFix.SessionID sessionID)
         {
-            
+            if (fromAdminException != null)
+                throw fromAdminException;
         }
 
         public void ToApp(QuickFix.Message message, QuickFix.SessionID sessionId)
@@ -60,8 +63,8 @@ namespace UnitTests
 
         public void FromApp(QuickFix.Message message, QuickFix.SessionID sessionID)
         {
-            if (fromException != null)
-                throw fromException;
+            if (fromAppException != null)
+                throw fromAppException;
         }
 
         public void OnCreate(QuickFix.SessionID sessionID)
@@ -88,7 +91,7 @@ namespace UnitTests
 
         QuickFix.SessionID sessionID = null;
         QuickFix.SessionSettings settings = null;
-        TestApplication application = null;
+        MockApplication application = null;
         QuickFix.Session session = null;
         int seqNum = 1;
 
@@ -97,7 +100,7 @@ namespace UnitTests
         {
             responder = new MockResponder();
             sessionID = new QuickFix.SessionID("FIX.4.2", "SENDER", "TARGET");
-            application = new TestApplication();
+            application = new MockApplication();
             settings = new QuickFix.SessionSettings();
 
             session = new QuickFix.Session(application, new QuickFix.MemoryStoreFactory(), sessionID, 
@@ -106,6 +109,10 @@ namespace UnitTests
             session.MaxLatency=120;
 
             seqNum = 1;
+        }
+
+        public void Logon()
+        {
             QuickFix.FIX42.Logon login = new QuickFix.FIX42.Logon();
             login.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
             login.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
@@ -125,6 +132,17 @@ namespace UnitTests
         {
             return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.BUSINESS_MESSAGE_REJECT) &&
                 responder.msgLookup[QuickFix.Fields.MsgType.BUSINESS_MESSAGE_REJECT].Count > 0;
+        }
+
+        public bool SENT_LOGOUT()
+        {
+            return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.LOGOUT) &&
+                responder.msgLookup[QuickFix.Fields.MsgType.LOGOUT].Count > 0;
+        }
+
+        public bool DISCONNECTED()
+        {
+            return responder.disconnected;
         }
 
         public bool SENT_REJECT(int reason, int refTag)
@@ -153,7 +171,7 @@ namespace UnitTests
             return true;
         }
 
-        public QuickFix.Message BuildMessage()
+        public void SendMessage()
         {
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
                 new QuickFix.Fields.ClOrdID("1"),
@@ -167,14 +185,16 @@ namespace UnitTests
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
             order.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
 
-            return order;
+            session.Next(order);
         }
 
         [Test]
         public void ConditionalTagMissingReject()
         {   
-            application.fromException = new QuickFix.FieldNotFoundException(61);
-            session.Next(BuildMessage());
+            application.fromAppException = new QuickFix.FieldNotFoundException(61);
+
+            Logon();
+            SendMessage();
 
             Assert.That(SENT_REJECT(QuickFix.Fields.SessionRejectReason.REQUIRED_TAG_MISSING,61));
         }
@@ -184,8 +204,10 @@ namespace UnitTests
         [Test]
         public void IncorrectTagValueReject()
         {
-            application.fromException = new QuickFix.IncorrectTagValue(54);
-            session.Next(BuildMessage());
+            application.fromAppException = new QuickFix.IncorrectTagValue(54);
+            
+            Logon();
+            SendMessage();
             Assert.That(SENT_REJECT(QuickFix.Fields.SessionRejectReason.VALUE_IS_INCORRECT,54));
 
         }
@@ -193,9 +215,21 @@ namespace UnitTests
         [Test]
         public void UnsupportedMessageReject()
         {
-            application.fromException = new QuickFix.UnsupportedMessageType();
-            session.Next(BuildMessage());
+            application.fromAppException = new QuickFix.UnsupportedMessageType();
+
+            Logon();
+            SendMessage();
             Assert.That(SENT_BUSINESS_REJECT());
+        }
+
+        [Test]
+        public void LogonReject()
+        {
+            application.fromAdminException  = new QuickFix.RejectLogon("Failed Logon");
+            Logon();
+
+            Assert.That(SENT_LOGOUT());
+            Assert.That(DISCONNECTED());
         }
     }
 }
