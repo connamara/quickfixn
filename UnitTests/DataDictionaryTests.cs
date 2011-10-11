@@ -133,8 +133,10 @@ namespace UnitTests
                 + "10=34" + nul;
 
             n.FromString(s, true, dd, dd);
-            n.SetField(new QuickFix.Fields.NoTradingSessions(3)); // FromString correct's the value above, but I want it wrong
-            StringAssert.Contains("386=3" + nul, s);  //verify it's wrong like I want
+
+            //verify that FromString didn't correct the counter (if these fail, check if MessageTests::FromString_DoNotCorrectCounter() passes)
+            Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());  
+            StringAssert.Contains("386=3", n.ToString());
 
             Assert.Throws<QuickFix.RepeatingGroupCountMismatch>(delegate { dd.CheckGroupCount(n.NoTradingSessions, n, "D"); });
         }
