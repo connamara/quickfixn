@@ -233,6 +233,25 @@ namespace UnitTests
         }
 
         [Test]
+        public void GroupDelimTest()
+        {
+            Group g1 = new Group(100, 200);
+            Assert.AreEqual(100, g1.Field); //counter
+            Assert.AreEqual(200, g1.Delim);
+
+            g1.SetField(new StringField(200, "delim!"));
+
+            MockFieldMap fm = new MockFieldMap();
+            fm.AddGroup(g1);
+            Assert.AreEqual(1, fm.GetInt(100));
+
+            Group g2 = new Group(100, 200);
+            g2.SetField(new StringField(200, "again!"));
+            fm.AddGroup(g2);
+            Assert.AreEqual(2, fm.GetInt(100));
+        }
+
+        [Test]
         public void AddGetGroupTest()
         {
             Group g1 = new Group(100, 200);

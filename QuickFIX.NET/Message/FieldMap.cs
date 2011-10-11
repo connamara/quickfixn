@@ -145,11 +145,25 @@ namespace QuickFix
             return _fields.ContainsKey(tag);
         }
 
-        public void AddGroup(Group group)
+        /// <summary>
+        /// Add a group to message; the group counter is automatically incremented.
+        /// </summary>
+        /// <param name="group">group to add</param>
+        public void AddGroup(Group grp)
         {
+            Group group = new Group(grp); // copy, incase client code reuses input object
+
             if (!_groups.ContainsKey(group.Field))
                 _groups.Add(group.Field, new List<Group>());
             _groups[group.Field].Add(group);
+
+            // increment group size
+            int groupsize = _groups[group.Field].Count;
+            int counttag = group.Field;
+            IntField count = null;
+
+            count = new IntField(counttag, groupsize);
+            this.SetField(count, true);
         }
 
         /// <summary>
