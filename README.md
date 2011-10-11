@@ -93,6 +93,34 @@ To run a test with the debugger,
   8. In command terminal, go into "AcceptanceTest" directory
   9. Run: `ruby Runner.rb 127.0.0.1 5001 definitions\server\fix42\YourTestName.def`
 
+Website
+-------
 
+The website is a small Ruby Sinatra application.
 
+For development, you should install Ruby 1.9.2 and the bundler gem then
+bundle:
 
+    gem install bundler
+    bundle
+
+Upon installing the gems, you can run this in the top directory to
+start the website:
+
+    thin start
+
+`thin` automatically picks up the Rackfile `config.ru` in the top
+directory.
+
+Website specific files live in `/web`.
+
+The website also serves tutorial files from the `/tutorial` directory
+
+Markdown should be used for all tutorial files whenever possible, so
+that viewers of the source can easily read plain text documnetation.
+
+For development purposes, you can install the `shotgun` web server;
+this will re-load the website on every request. To start the website
+with shotgun, simply run shotgun at the top directory:
+
+    shotgun -p 3002
