@@ -251,7 +251,12 @@ namespace QuickFix.DataDictionary
             throw new TagNotDefinedForMessage(field.Tag, msgType);
         }
 
-        
+        /// <summary>
+        /// Check that the group's counter field is accurate
+        /// </summary>
+        /// <param name="field">a group's counter field</param>
+        /// <param name="map">the FieldMap that contains the group being checked</param>
+        /// <param name="msgType">msg type of message that is/contains <paramref name="map"/></param>
         public void CheckGroupCount(Fields.IField field, FieldMap map, string msgType)
         {
             if(IsGroup(msgType, field.Tag))

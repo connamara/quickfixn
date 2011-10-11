@@ -117,5 +117,26 @@ namespace UnitTests
             Assert.Throws(typeof(InvalidTagNumber),
                 delegate { dd.CheckValidTagNumber(999); });
         }
+
+        [Test]
+        public void CheckGroupCountTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX42.xml");
+
+            QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
+
+            string nul = "\x01";
+            string s = "8=FIX.4.2" + nul + "9=148" + nul + "35=D" + nul + "34=2" + nul + "49=TW" + nul + "52=20111011-15:06:23.103" + nul + "56=ISLD" + nul
+                + "11=ID" + nul + "21=1" + nul + "40=1" + nul + "54=1" + nul + "38=200.00" + nul + "55=INTC" + nul
+                + "386=3" + nul + "336=PRE-OPEN" + nul + "336=AFTER-HOURS" + nul
+                + "60=20111011-15:06:23.103" + nul
+                + "10=34" + nul;
+
+            n.FromString(s, true, dd, dd);
+            n.SetField(new QuickFix.Fields.NoTradingSessions(3)); // FromString correct's the value above, but I want it wrong
+            StringAssert.Contains("386=3" + nul, s);  //verify it's wrong like I want
+
+            Assert.Throws<QuickFix.RepeatingGroupCountMismatch>(delegate { dd.CheckGroupCount(n.NoTradingSessions, n, "D"); });
+        }
     }
 }
