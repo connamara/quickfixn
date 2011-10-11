@@ -112,7 +112,7 @@ start the website:
 `thin` automatically picks up the Rackfile `config.ru` in the top
 directory.
 
-The website specific files live in `/web`.
+Website specific files live in `/web`.
 
 The website also serves tutorial files from the `/tutorial` directory
 
