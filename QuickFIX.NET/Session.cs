@@ -419,6 +419,11 @@ namespace QuickFix
                         GenerateReject(message, new QuickFix.FixValues.SessionRejectReason(SessionRejectReason.REQUIRED_TAG_MISSING, "Required Tag Missing"), e.Field);
                 }
             }
+            catch (RejectLogon e)
+            {
+                GenerateLogout(e.Message);
+                Disconnect(e.Message);
+            }
                     
 	    NextQueued();
         }
