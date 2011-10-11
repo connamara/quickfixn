@@ -327,6 +327,20 @@ namespace Executor
                 Console.WriteLine(ex.StackTrace);
             }
         }
-        #endregion
+
+        public void OnMessage(QuickFix.FIX40.News n, SessionID s)
+        { }
+        public void OnMessage(QuickFix.FIX41.News n, SessionID s)
+        { }
+        public void OnMessage(QuickFix.FIX42.News n, SessionID s)
+        { }
+        public void OnMessage(QuickFix.FIX43.News n, SessionID s)
+        { }
+        public void OnMessage(QuickFix.FIX44.News n, SessionID s)
+        { }
+        public void OnMessage(QuickFix.FIX50.News n, SessionID s)
+        { }
+        
+        #endregion //MessageCracker overloads
     }
 }
