@@ -238,8 +238,8 @@ namespace UnitTests
 
             var nos2 = new QuickFix.FIX42.NewOrderSingle();
             var grp = new Group(200, 300);
-            nos2.AddGroup(grp);
             grp.SetField(new StringField(300, "Dude"));
+            nos2.AddGroup(grp);
             Assert.That(nos2.GetGroup(1, 200).GetString(300), Is.EqualTo("Dude"));
         }
 
@@ -349,6 +349,55 @@ namespace UnitTests
             Assert.AreEqual(5.5m, n.OrderQty.getValue());
             Assert.AreEqual(1, n.PutOrCall.getValue());
             Assert.AreEqual("asdf", n.ClOrdID.getValue());
+        }
+
+        [Test]
+        public void RepeatingGroup()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX42.xml");
+
+            QuickFix.FIX42.News news = new QuickFix.FIX42.News(new QuickFix.Fields.Headline("Foo headline"));
+
+            QuickFix.FIX42.News.LinesOfTextGroup group1 = new QuickFix.FIX42.News.LinesOfTextGroup();
+            group1.Text = new QuickFix.Fields.Text("line1");
+            group1.EncodedTextLen = new QuickFix.Fields.EncodedTextLen(3);
+            group1.EncodedText = new QuickFix.Fields.EncodedText("aaa");
+            news.AddGroup(group1);
+
+            QuickFix.FIX42.News.LinesOfTextGroup group2 = new QuickFix.FIX42.News.LinesOfTextGroup();
+            group2.Text = new QuickFix.Fields.Text("line2");
+            group2.EncodedText = new QuickFix.Fields.EncodedText("bbb");
+            news.AddGroup(group2);
+
+            string raw = news.ToString();
+
+            string nul = "\x01";
+            StringAssert.Contains(
+                "33=2" + nul + "148=Foo headline" + nul + "58=line1" + nul + "354=3" + nul + "355=aaa" + nul + "58=line2" + nul + "355=bbb",
+                raw);
+        }
+
+        [Test]
+        public void RepeatingGroup_ReuseObject()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX42.xml");
+
+            QuickFix.FIX42.News news = new QuickFix.FIX42.News(new QuickFix.Fields.Headline("Foo headline"));
+
+            QuickFix.FIX42.News.LinesOfTextGroup group = new QuickFix.FIX42.News.LinesOfTextGroup();
+            group.Text = new QuickFix.Fields.Text("line1");
+            news.AddGroup(group);
+            group.Text = new QuickFix.Fields.Text("line2");
+            news.AddGroup(group);
+
+            string raw = news.ToString();
+
+            string nul = "\x01";
+            StringAssert.Contains(
+                "33=2" + nul + "148=Foo headline" + nul + "58=line1" + nul + "58=line2",
+                raw);
         }
     }
 }
