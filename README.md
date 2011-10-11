@@ -114,10 +114,13 @@ directory.
 
 The website specific files live in `/web`.
 
-The website also servers tutorial files from the `/tutorial` directory.  
+The website also serves tutorial files from the `/tutorial` directory
 
 Markdown should be used for all tutorial files whenever possible, so
 that viewers of the source can easily read plain text documnetation.
 
 For development purposes, you can install the `shotgun` web server;
-this will re-load the website on every request.
+this will re-load the website on every request. To start the website
+with shotgun, simply run shotgun at the top directory:
+
+    shotgun -p 3002
