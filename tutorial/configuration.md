@@ -10,7 +10,7 @@ The `SessionSettings` class has the ability to parse settings out of any `System
 A settings file is set up with two types of heading; [DEFAULT] and [SESSION]. [SESSION] tells QuickFIX/N that a new Session is being defined.  [DEFAULT] is a section to define settings which will be associated with sessions that don't explicitly define them.  QuickFIX/N itself will not define default values for all required settings.  If you do not provide a setting that QuickFIX/N needs, it will throw a `ConfigError` telling you what setting is missing or improperly formatted.
 
 
-Below are the settigns that can be associated with a session based on the default functionality provided with QuickFIX/N, followed by an example.
+Below are the settings that can be associated with a session based on the default functionality provided with QuickFIX/N, followed by an example.
 
 QuickFIX Settings
 -----------------
@@ -23,16 +23,117 @@ QuickFIX Settings
     <th>Default</th>
   </tr>
   <tr>
-    <td colspan='4'>Session</td>
+    <th colspan='4' class='th-sub'>Session</td>
   </tr>
+
   <tr>
     <td>BeginString</td>
-    <td>Version of FIX this session uses</td>
     <td>
     Version of FIX this session uses
     </td>
     <td>
+      <div>FIXT.1.1</div>
+      <div>FIX.4.4</div>
+      <div>FIX.4.3</div>
+      <div>FIX.4.2</div>
+      <div>FIX.4.1</div>
+      <div>FIX.4.0</div>
     </td>
+    <td></td>
   </tr>
+
+  <tr>
+    <td>SenderCompID</td>
+    <td>Your ID as associated with this FIX session</td>
+    <td>case-sensitive alpha-numeric string</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>TargetCompID</td>
+    <td>Counterparty's ID as associated with this FIX session</td>
+    <td>case-sensitive alpha-numeric string</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>SessionQualifier</td>
+    <td>Additional qualifier to disambiguate otherwise identical sessions</td>
+    <td>case-sensitive alpha-numeric string</td>
+    <td></td>
+  </tr>
+
+  <tr>
+    <td>DefaultApplVerID</td>
+    <td>Required only for FIXT 1.1 (and newer).  Ignored for earlier transport versions. Specifies the default application version ID for the session.  This can be the ApplVerID enum (see the ApplVerID field) or the BeginString for the default version.</td>
+    <td>
+      <div>FIX.5.0SP2</div>
+      <div>FIX.5.0SP1</div>
+      <div>FIX.5.0</div>
+      <div>FIX.4.4</div>
+      <div>FIX.4.3</div>
+      <div>FIX.4.2</div>
+      <div>FIX.4.1</div>
+      <div>FIX.4.0</div>
+    </td>
+    <td/>
+  </tr>
+
+  <tr>
+    <td>ConnectionType</td>
+    <td>Defines if session will act as an acceptor or initiator</td>
+    <td>
+      <div>initiator</div>
+      <div>acceptor</div>
+    </td>
+    <td/>
+  </tr>
+
+  <tr>
+    <td>ResetOnLogon</td>
+    <td>Determines if sequence numbers should be reset when receiving a logon request. Acceptors only.</td>
+    <td>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td>N</td>
+  </tr>
+
+  <tr>
+    <td>ResetOnLogout</td>
+    <td>Determines if sequence numbers should be reset to 1 after a normal logout termination.</td>
+    <td>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td>N</td>
+  </tr>
+
+  <tr>
+    <td>ResetOnDisconnect</td>
+    <td>Determines if sequence numbers should be reset to 1 after an abnormal termination</td>
+    <td>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td>N</td>
+  </tr>
+
+  <tr>
+    <td>RefreshOnLogout</td>
+    <td>Determines if session state should be restored from persistence layer when logging on.  Useful for creating hot failover sessions.</td>
+    <td>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td>N</td>
+  </tr>
+  <tr>
+    <th colspan='4' class='th-sub'>Validation</td>
+  </tr>
+
+
+
+
 </table>
 
