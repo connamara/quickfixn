@@ -40,7 +40,7 @@ namespace UnitTests
 
     class TestApplication : QuickFix.Application
     {
-
+        public System.Exception fromException = null;
 
         #region Application Members
 
@@ -55,12 +55,13 @@ namespace UnitTests
 
         public void ToApp(QuickFix.Message message, QuickFix.SessionID sessionId)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void FromApp(QuickFix.Message message, QuickFix.SessionID sessionID)
         {
-            throw new QuickFix.FieldNotFoundException(61);
+            if (fromException != null)
+                throw fromException;
         }
 
         public void OnCreate(QuickFix.SessionID sessionID)
@@ -83,7 +84,7 @@ namespace UnitTests
     [TestFixture]
     public class SessionTest
     {
-        MockResponder responder = new MockResponder();
+        MockResponder responder = null;
 
         QuickFix.SessionID sessionID = null;
         QuickFix.SessionSettings settings = null;
@@ -94,6 +95,7 @@ namespace UnitTests
         [SetUp]
         public void setup()
         {
+            responder = new MockResponder();
             sessionID = new QuickFix.SessionID("FIX.4.2", "SENDER", "TARGET");
             application = new TestApplication();
             settings = new QuickFix.SessionSettings();
@@ -119,19 +121,39 @@ namespace UnitTests
                 responder.msgLookup[QuickFix.Fields.MsgType.REJECT].Count>0;
         }
 
-        public bool SENT_REJECT(int reason)
+        public bool SENT_BUSINESS_REJECT()
+        {
+            return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.BUSINESS_MESSAGE_REJECT) &&
+                responder.msgLookup[QuickFix.Fields.MsgType.BUSINESS_MESSAGE_REJECT].Count > 0;
+        }
+
+        public bool SENT_REJECT(int reason, int refTag)
         {
             if (!SENT_REJECT())
                 return false;
 
-            QuickFix.Fields.SessionRejectReason reasonField = new QuickFix.Fields.SessionRejectReason();
-            responder.msgLookup[QuickFix.Fields.MsgType.REJECT].First().GetField(reasonField);
+            QuickFix.Message msg = responder.msgLookup[QuickFix.Fields.MsgType.REJECT].First();
 
-            return reasonField.getValue() == reason;
+            if (!msg.IsSetField(QuickFix.Fields.Tags.SessionRejectReason))
+                return false;
+
+            QuickFix.Fields.SessionRejectReason reasonField = new QuickFix.Fields.SessionRejectReason();
+            msg.GetField(reasonField);
+            if(reasonField.getValue() != reason)
+                return false;
+
+            if (!msg.IsSetField(QuickFix.Fields.Tags.RefTagID))
+                return false;
+
+            QuickFix.Fields.RefTagID refTagField = new QuickFix.Fields.RefTagID();
+            msg.GetField(refTagField);
+            if (refTagField.getValue() != refTag)
+                return false;
+
+            return true;
         }
 
-        [Test]
-        public void ConditionalTagMissingReject()
+        public QuickFix.Message BuildMessage()
         {
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
                 new QuickFix.Fields.ClOrdID("1"),
@@ -145,10 +167,35 @@ namespace UnitTests
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
             order.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
 
-            session.Next(order);
+            return order;
+        }
 
-            Assert.That(SENT_REJECT(QuickFix.Fields.SessionRejectReason.REQUIRED_TAG_MISSING));
-            
+        [Test]
+        public void ConditionalTagMissingReject()
+        {   
+            application.fromException = new QuickFix.FieldNotFoundException(61);
+            session.Next(BuildMessage());
+
+            Assert.That(SENT_REJECT(QuickFix.Fields.SessionRejectReason.REQUIRED_TAG_MISSING,61));
+        }
+
+
+
+        [Test]
+        public void IncorrectTagValueReject()
+        {
+            application.fromException = new QuickFix.IncorrectTagValue(54);
+            session.Next(BuildMessage());
+            Assert.That(SENT_REJECT(QuickFix.Fields.SessionRejectReason.VALUE_IS_INCORRECT,54));
+
+        }
+
+        [Test]
+        public void UnsupportedMessageReject()
+        {
+            application.fromException = new QuickFix.UnsupportedMessageType();
+            session.Next(BuildMessage());
+            Assert.That(SENT_BUSINESS_REJECT());
         }
     }
 }
