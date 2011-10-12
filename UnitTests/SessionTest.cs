@@ -103,6 +103,11 @@ namespace UnitTests
             application = new MockApplication();
             settings = new QuickFix.SessionSettings();
 
+            QuickFix.Dictionary config = new QuickFix.Dictionary();
+            config.SetBool(QuickFix.SessionSettings.PERSIST_MESSAGES, false);
+            config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
+            settings.Set(sessionID, config);
+
             session = new QuickFix.Session(application, new QuickFix.MemoryStoreFactory(), sessionID, 
                 new QuickFix.DataDictionaryProvider(), null, 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
