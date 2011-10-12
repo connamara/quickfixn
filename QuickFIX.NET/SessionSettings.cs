@@ -37,6 +37,7 @@ namespace QuickFix
         public const string DATA_DICTIONARY = "DataDictionary";
         public const string TRANSPORT_DATA_DICTIONARY = "TransportDataDictionary";
         public const string APP_DATA_DICTIONARY = "AppDataDictionary";
+        public const string PERSIST_MESSAGES = "PersistMessages";
 
         #endregion
 
