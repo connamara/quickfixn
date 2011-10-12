@@ -374,7 +374,7 @@ namespace UnitTests
 
             string nul = "\x01";
             StringAssert.Contains(
-                "33=2" + nul + "148=Foo headline" + nul + "58=line1" + nul + "354=3" + nul + "355=aaa" + nul + "58=line2" + nul + "355=bbb",
+                nul + "33=2" + nul + "58=line1" + nul + "354=3" + nul + "355=aaa" + nul + "58=line2" + nul + "355=bbb",
                 raw);
         }
 
@@ -396,7 +396,7 @@ namespace UnitTests
 
             string nul = "\x01";
             StringAssert.Contains(
-                "33=2" + nul + "148=Foo headline" + nul + "58=line1" + nul + "58=line2",
+                nul + "33=2" + nul + "58=line1" + nul + "58=line2",
                 raw);
         }
 
