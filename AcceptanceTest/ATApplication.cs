@@ -119,7 +119,7 @@ namespace AcceptanceTest
                 log_.OnEvent("Got message " + msgType);
                 Crack(message, sessionID);
             }
-            catch (QuickFix.UnsupportedMessageType e)
+            catch (QuickFix.UnsupportedMessageType)
             {
                 throw;
             }
