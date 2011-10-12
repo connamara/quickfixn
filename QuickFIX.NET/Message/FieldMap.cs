@@ -82,10 +82,11 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Set field with overwrite flag
+        /// Set field, with optional override check
         /// </summary>
         /// <param name="field"></param>
         /// <param name="overwrite">will overwrite existing field if set to true</param>
+        /// <returns>false if overwrite would be violated, else true</returns>
         public bool SetField(Fields.IField field, bool overwrite)
         {
             if (_fields.ContainsKey(field.Tag) && !overwrite)
@@ -151,19 +152,34 @@ namespace QuickFix
         /// <param name="group">group to add</param>
         public void AddGroup(Group grp)
         {
-            Group group = new Group(grp); // copy, incase client code reuses input object
+            AddGroup(grp, true);
+        }
+
+        /// <summary>
+        /// Add a group to message; optionally auto-increment the counter.
+        /// When parsing from a string (e.g. Message::FromString()), we want to leave the counter alone
+        /// so we can detect when the counterparty has set it wrong.
+        /// </summary>
+        /// <param name="group">group to add</param>
+        /// <param name="autoIncCounter">if true, auto-increment the counter, else leave it as-is</param>
+        internal void AddGroup(Group grp, bool autoIncCounter)
+        {
+            Group group = new Group(grp); // copy, in case user code reuses input object
 
             if (!_groups.ContainsKey(group.Field))
                 _groups.Add(group.Field, new List<Group>());
             _groups[group.Field].Add(group);
 
-            // increment group size
-            int groupsize = _groups[group.Field].Count;
-            int counttag = group.Field;
-            IntField count = null;
+            if (autoIncCounter)
+            {
+                // increment group size
+                int groupsize = _groups[group.Field].Count;
+                int counttag = group.Field;
+                IntField count = null;
 
-            count = new IntField(counttag, groupsize);
-            this.SetField(count, true);
+                count = new IntField(counttag, groupsize);
+                this.SetField(count, true);
+            }
         }
 
         /// <summary>

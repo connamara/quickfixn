@@ -413,7 +413,7 @@ namespace QuickFix
                     }
 
                     
-                    if((null != msgMap) && (msgMap.IsGroup(f.Tag))) 
+                    if((null != msgMap) && (msgMap.IsGroup(f.Tag)))
                     {
                         pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroupSpec(f.Tag), sessionDD, appDD);
                     }
@@ -440,7 +440,7 @@ namespace QuickFix
                 {
                     if (grp != null)
                     {
-                        fieldMap.AddGroup(grp);
+                        fieldMap.AddGroup(grp, false);
                     }
                     grp = new Group(grpNoFld.Tag, delim);
                 }
@@ -448,7 +448,7 @@ namespace QuickFix
                 {
                     if (grp != null)
                     {
-                        fieldMap.AddGroup(grp);
+                        fieldMap.AddGroup(grp, false);
                     }
                     return grpPos;
                 }

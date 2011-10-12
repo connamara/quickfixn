@@ -412,7 +412,7 @@ namespace UnitTests
                 + "11=ID" + nul + "21=1" + nul + "40=1" + nul + "54=1" + nul + "38=200.00" + nul + "55=INTC" + nul
                 + "386=3" + nul + "336=PRE-OPEN" + nul + "336=AFTER-HOURS" + nul
                 + "60=20111011-15:06:23.103" + nul
-                + "10=34" + nul;
+                + "10=35" + nul;
 
             n.FromString(s, true, dd, dd);
             Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());
