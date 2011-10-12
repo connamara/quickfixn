@@ -15,6 +15,14 @@ Below are the settings that can be associated with a session based on the defaul
 QuickFIX Settings
 -----------------
 
+* [Session](#session)
+* [Validation](#validation)
+* [Initiator](#initiator)
+* [Acceptor](#acceptor)
+* [Logging](#logging)
+
+<a name='session'> </a>
+
 ### Session
 
 <table>
@@ -129,6 +137,9 @@ QuickFIX Settings
   </tr>
 </table>
 
+
+<a name='validation'> </a>
+
 ### Validation
 
 <table>
@@ -238,6 +249,8 @@ QuickFIX Settings
   </tr>
 </table>
 
+<a name='initiator'></a>
+
 ###Initiator
 
 <table>
@@ -286,11 +299,56 @@ QuickFIX Settings
   <tr>
     <td class='setting'>SocketConnectHost&lt;n&gt;</td>
     <td class='description'>Alternate socket hosts for connecting to a session for failover, where <strong>n</strong> is a positive integer. ie, SocketConnectHost1, SocketConnectHost2... must be consecutive and have a matching SocketConnectPort&lt;n&gt;</td>
-    <td class='valid'>Positive integer</td>
+    <td class='valid'>Valid IP address in the format of x.x.x.x or a domain name</td>
+    <td class='default'/>
+  </tr>
+</table>
+
+<a name='acceptor'></a>
+
+###Acceptor
+
+<table>
+  <tr>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketAcceptPort</td>
+    <td class='description'>Socket port for listening to incoming connections.  Only used with acceptors.</td>
+    <td class='valid'>Positive integer, valid open socket port</td>
     <td class='default'/>
   </tr>
 
+  <tr>
+    <td class='setting'>SocketAcceptHost</td>
+    <td class='description'>Socket host for listening to incoming connections.  If not provided, the acceptor will listen on all network interfaces (0.0.0.0)</td>
+    <td class='valid'>Valid IP address in the format of x.x.x.x</td>
+    <td class='default'>0.0.0.0</td>
+  </tr>
+</table>
 
+<a name='logging'></a>
+
+###Logging
+
+<table>
+  <tr>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
+  </tr>
+
+  <tr>
+    <td class='setting'>FileLogPath</td>
+    <td class='description'>Directory to store logs.</td>
+    <td class='valid'>Valid directory for storing files, must have write access</td>
+    <td class='default'/>
+  </tr>
 
 
 </table>
