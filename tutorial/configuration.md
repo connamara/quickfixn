@@ -35,11 +35,11 @@ QuickFIX Settings
   </tr>
 
   <tr>
-    <td>BeginString</td>
-    <td>
+    <td class='setting'>BeginString</td>
+    <td class='description'>
     Version of FIX this session uses
     </td>
-    <td>
+    <td class='valid'>
       <div>FIXT.1.1</div>
       <div>FIX.4.4</div>
       <div>FIX.4.3</div>
@@ -47,34 +47,34 @@ QuickFIX Settings
       <div>FIX.4.1</div>
       <div>FIX.4.0</div>
     </td>
-    <td></td>
+    <td class='default'></td>
   </tr>
 
   <tr>
-    <td>SenderCompID</td>
-    <td>Your ID as associated with this FIX session</td>
-    <td>case-sensitive alpha-numeric string</td>
-    <td></td>
+    <td class='setting'>SenderCompID</td>
+    <td class='description'>Your ID as associated with this FIX session</td>
+    <td class='valid'>case-sensitive alpha-numeric string</td>
+    <td class='default'></td>
   </tr>
 
   <tr>
-    <td>TargetCompID</td>
-    <td>Counterparty's ID as associated with this FIX session</td>
-    <td>case-sensitive alpha-numeric string</td>
-    <td></td>
+    <td class='setting'>TargetCompID</td>
+    <td class='description'>Counterparty's ID as associated with this FIX session</td>
+    <td class='valid'>case-sensitive alpha-numeric string</td>
+    <td class='default'></td>
   </tr>
 
   <tr>
-    <td>SessionQualifier</td>
-    <td>Additional qualifier to disambiguate otherwise identical sessions</td>
-    <td>case-sensitive alpha-numeric string</td>
-    <td></td>
+    <td class='setting'>SessionQualifier</td>
+    <td class='description'>Additional qualifier to disambiguate otherwise identical sessions</td>
+    <td class='valid'>case-sensitive alpha-numeric string</td>
+    <td class='default'></td>
   </tr>
 
   <tr>
-    <td>DefaultApplVerID</td>
-    <td>Required only for FIXT 1.1 (and newer).  Ignored for earlier transport versions. Specifies the default application version ID for the session.  This can be the ApplVerID enum (see the ApplVerID field) or the BeginString for the default version.</td>
-    <td>
+    <td class='setting'>DefaultApplVerID</td>
+    <td class='description'>Required only for FIXT 1.1 (and newer).  Ignored for earlier transport versions. Specifies the default application version ID for the session.  This can be the ApplVerID enum (see the ApplVerID field) or the BeginString for the default version.</td>
+    <td class='valid'>
       <div>FIX.5.0SP2</div>
       <div>FIX.5.0SP1</div>
       <div>FIX.5.0</div>
@@ -84,57 +84,57 @@ QuickFIX Settings
       <div>FIX.4.1</div>
       <div>FIX.4.0</div>
     </td>
-    <td/>
+    <td class='default'/>
   </tr>
 
   <tr>
-    <td>ConnectionType</td>
-    <td>Defines if session will act as an acceptor or initiator</td>
-    <td>
+    <td class='setting'>ConnectionType</td>
+    <td class='description'>Defines if session will act as an acceptor or initiator</td>
+    <td class='valid'>
       <div>initiator</div>
       <div>acceptor</div>
     </td>
-    <td/>
+    <td class='default'/>
   </tr>
 
   <tr>
-    <td>ResetOnLogon</td>
-    <td>Determines if sequence numbers should be reset when receiving a logon request. Acceptors only.</td>
-    <td>
+    <td class='setting'>ResetOnLogon</td>
+    <td class='description'>Determines if sequence numbers should be reset when receiving a logon request. Acceptors only.</td>
+    <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
-    <td>N</td>
+    <td class='default'>N</td>
   </tr>
 
   <tr>
-    <td>ResetOnLogout</td>
-    <td>Determines if sequence numbers should be reset to 1 after a normal logout termination.</td>
-    <td>
+    <td class='setting'>ResetOnLogout</td>
+    <td class='description'>Determines if sequence numbers should be reset to 1 after a normal logout termination.</td>
+    <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
-    <td>N</td>
+    <td class='default'>N</td>
   </tr>
 
   <tr>
-    <td>ResetOnDisconnect</td>
-    <td>Determines if sequence numbers should be reset to 1 after an abnormal termination</td>
-    <td>
+    <td class='setting'>ResetOnDisconnect</td>
+    <td class='description'>Determines if sequence numbers should be reset to 1 after an abnormal termination</td>
+    <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
-    <td>N</td>
+    <td class='default'>N</td>
   </tr>
 
   <tr>
-    <td>RefreshOnLogout</td>
-    <td>Determines if session state should be restored from persistence layer when logging on.  Useful for creating hot failover sessions.</td>
-    <td>
+    <td class='setting'>RefreshOnLogout</td>
+    <td class='description'>Determines if session state should be restored from persistence layer when logging on.  Useful for creating hot failover sessions.</td>
+    <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
-    <td>N</td>
+    <td class='default'>N</td>
   </tr>
 </table>
 
@@ -152,22 +152,22 @@ QuickFIX Settings
   </tr>
 
   <tr>
-    <td>UseDataDictionary</td>
-    <td>Tells session whether or not to expect a data dictionary.  <em>You should always use a DataDictionary if you are using repeating groups.</em></td>
-    <td>
+    <td class='setting'>UseDataDictionary</td>
+    <td class='description'>Tells session whether or not to expect a data dictionary.  <em>You should always use a DataDictionary if you are using repeating groups.</em></td>
+    <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
-    <td>Y</td>
+    <td class='default'>Y</td>
   </tr>
 
   <tr>
-    <td>DataDictionary</td>
-    <td>
+    <td class='setting'>DataDictionary</td>
+    <td class='description'>
       <div>XML definition file for validating incoming FIX messages. If no DataDictionary is supplied, only basic message validation will be done.</div><br/> 
       <div>This setting should only be used with FIX transport versions older than FIXT.1.1. See TransportDataDictionary and AppDataDictionary for FIXT.1.1 settings.</div>
     </td>
-    <td>
+    <td class='valid'>
       <div>Valid XML data dictionary file.  QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
       <div>FIX44.xml</div>
       <div>FIX43.xml</div>
@@ -175,25 +175,25 @@ QuickFIX Settings
       <div>FIX41.xml</div>
       <div>FIX40.xml</div>
     </td>
-    <td/>
+    <td class='default'/>
   </tr>
 
   <tr>
-    <td>TransportDataDictionary</td>
-    <td>
+    <td class='setting'>TransportDataDictionary</td>
+    <td class='description'>
       <div>XML definition file for validating admin (transport) messages.  This setting is only valid for FIXT.1.1 (or newer) sessions.</div><br/>
       <div>See DataDictionary for older transport versions (FIX.4.0-FIX.4.4) for additional information.</div>
     </td>
-    <td>
+    <td class='valid'>
       <div>Valid XML data dictionary file. QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
       <div>FIXT1.1.xml</div>
     </td>
-    <td/>
+    <td class='default'/>
   </tr>
 
   <tr>
-    <td>AppDataDictionary</td>
-    <td>
+    <td class='setting'>AppDataDictionary</td>
+    <td class='description'>
       <div>XML definition file for validating application messages.  This setting is only valid for FIXT.1.1 (or newer) sessions.</div><br/>
       <div>See DataDictionary for older transport versions (FIX.4.0-FIX.4.4) for additional information.</div><br/>
       <div>This setting supports the possibility of a custom application data dictionary for each session.  This setting would only be used with FIXT.1.1 and newer transport protocols.  This setting can be used as a prefix to specify multiple application dictionaries for the FIXT transport.  For example:</div><br/>
@@ -206,7 +206,7 @@ QuickFIX Settings
         AppDataDictionary.FIX.4.4=FIX44.xml
       </code>
     </td>
-    <td>
+    <td class='valid'>
       <div>Valid XML data dictionary file, QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
       <div>FIX50SP2.xml</div>
       <div>FIX50SP1.xml</div>
