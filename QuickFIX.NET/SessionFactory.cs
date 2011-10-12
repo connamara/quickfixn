@@ -104,11 +104,11 @@ namespace QuickFix
                 session.ResetOnDisconnect = settings.GetBool(SessionSettings.RESET_ON_DISCONNECT);
             if (settings.Has(SessionSettings.REFRESH_ON_LOGON))
                 session.RefreshOnLogon = settings.GetBool(SessionSettings.REFRESH_ON_LOGON);
+            if (settings.Has(SessionSettings.PERSIST_MESSAGES))
+                session.PersistMessages = settings.GetBool(SessionSettings.PERSIST_MESSAGES);
             /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.MILLISECONDS_IN_TIMESTAMP))
                 session.SetMillisecondsInTimeStamp(settings.GetBool(SessionSettings.MILLISECONDS_IN_TIMESTAMP));
-            if (settings.Has(SessionSettings.PERSIST_MESSAGES))
-                session.SetPersistMessages(settings.GetBool(SessionSettings.PERSIST_MESSAGES));
             if (settings.Has(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM))
                 session.SetValidateLengthAndChecksum(settings.GetBool(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM));
             */
