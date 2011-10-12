@@ -19,6 +19,7 @@ QuickFIX Settings
 * [Validation](#validation)
 * [Initiator](#initiator)
 * [Acceptor](#acceptor)
+* [Storage](#storage)
 * [Logging](#logging)
 * [Sample Settings File](#sample)
 
@@ -330,6 +331,32 @@ QuickFIX Settings
     <td class='valid'>Valid IP address in the format of x.x.x.x</td>
     <td class='default'>0.0.0.0</td>
   </tr>
+</table>
+
+<a name='storage'></a>
+
+###Storage
+
+<table>
+  <tr>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
+  </tr>
+
+  <tr>
+    <td class='setting'>PersistMessages</td>
+    <td class='description'>If set to N, no messages will be persisted. This will force QuickFIX to always send GapFills instead of resending messages. Use this if you know you never want to resend a message. Useful for market data streams.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>
+      Y
+    </td>
+  </tr>
+
 </table>
 
 <a name='logging'></a>
