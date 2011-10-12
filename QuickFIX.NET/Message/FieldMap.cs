@@ -451,8 +451,12 @@ namespace QuickFix
                     sb.Append(preField + "=" + GetField(preField)).Append(Message.SOH);
             }
 
+            HashSet<int> groupCounterTags = new HashSet<int>(_groups.Keys);
+
             foreach (Fields.IField field in _fields.Values)
             {
+                if (groupCounterTags.Contains(field.Tag))
+                    continue;
                 if (IsOrderedField(field.Tag, preFields))
                     continue;
                 sb.Append(field.Tag.ToString() + "=" + field.ToString());
@@ -461,8 +465,17 @@ namespace QuickFix
 
             foreach (List<Group> groupList in _groups.Values)
             {
+                if (groupList.Count > 0) // for extra caution
+                {
+                    int counterTag = groupList[0].Field;
+                    sb.Append(_fields[counterTag].toStringField());
+                    sb.Append(Message.SOH);
+                }
+
                 foreach (Group group in groupList)
+                {
                     sb.Append(group.CalculateString());
+                }
             }
 
             return sb.ToString();
