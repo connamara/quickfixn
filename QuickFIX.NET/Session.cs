@@ -489,7 +489,6 @@ namespace QuickFix
         {
             try
             {
-                // FIXME
                 int begSeqNo = resendReq.GetInt(Fields.Tags.BeginSeqNo);
                 int endSeqNo = resendReq.GetInt(Fields.Tags.EndSeqNo);
                 this.Log.OnEvent("Got resend request from " + begSeqNo + " to " + endSeqNo);
@@ -497,6 +496,16 @@ namespace QuickFix
                 if ((endSeqNo == 999999) || (endSeqNo == 0))
                 {
                     endSeqNo = state_.GetNextSenderMsgSeqNum() - 1;
+                }
+
+                if (!PersistMessages)
+                {
+                    endSeqNo++;
+                    int next = state_.GetNextSenderMsgSeqNum();
+                    if (endSeqNo > next)
+                        endSeqNo = next;
+                    GenerateSequenceReset(begSeqNo, endSeqNo);
+                    return;
                 }
 
                 List<string> messages = new List<string>();
