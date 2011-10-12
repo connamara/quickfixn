@@ -236,6 +236,61 @@ QuickFIX Settings
     </td>
     <td class='default'>Y</td>
   </tr>
-
 </table>
 
+###Initiator
+
+<table>
+  <tr>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
+  </tr>
+
+  <tr>
+    <td class='setting'>ReconnectInterval</td>
+    <td class='description'>Time between reconnection attempts in seconds.  Only used for initiators.</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'>30</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>HeartBtInt</td>
+    <td class='description'>Heartbeat interval in seconds. Only used for initiators.</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketConnectPort</td>
+    <td class='description'>Socket port for connecting to a session.  Only used for initiators.</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketConnectHost</td>
+    <td class='description'>Host to connect to.  Only used for initiators.</td>
+    <td class='valid'>Valid IP address in the format of x.x.x.x or a domain name</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketConnectPort&lt;n&gt;</td>
+    <td class='description'>Alternate socket ports for connecting to a session for failover, where <strong>n</strong> is a positive integer. ie, SocketConnectPort1, SocketConnectPort2... must be consecutive and have a matching SocketConnectHost&lt;n&gt;</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketConnectHost&lt;n&gt;</td>
+    <td class='description'>Alternate socket hosts for connecting to a session for failover, where <strong>n</strong> is a positive integer. ie, SocketConnectHost1, SocketConnectHost2... must be consecutive and have a matching SocketConnectPort&lt;n&gt;</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'/>
+  </tr>
+
+
+
+
+</table>
