@@ -85,6 +85,15 @@ namespace AcceptanceTest
             Session.SendToTarget(echo, sessionID);
         }
 
+
+        public void OnMessage(QuickFix.FIX41.News news, SessionID sessionID) { Echo(news, sessionID); }
+        public void OnMessage(QuickFix.FIX42.News news, SessionID sessionID) { Echo(news, sessionID); }
+        public void OnMessage(QuickFix.FIX43.News news, SessionID sessionID) { Echo(news, sessionID); }
+        public void OnMessage(QuickFix.FIX44.News news, SessionID sessionID) { Echo(news, sessionID); }
+        public void OnMessage(QuickFix.FIX50.News news, SessionID sessionID) { Echo(news, sessionID); }
+
+
+
         #region Application Methods
 
         public void OnCreate(SessionID sessionID)
@@ -112,7 +121,7 @@ namespace AcceptanceTest
             }
             catch (QuickFix.UnsupportedMessageType e)
             {
-                throw e;
+                throw;
             }
             catch (System.Exception e)
             {
