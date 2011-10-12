@@ -13,6 +13,8 @@ namespace UnitTests
         QuickFix.DefaultMessageFactory messageFactory = new QuickFix.DefaultMessageFactory();
         
         public Dictionary<string, Queue<QuickFix.Message>> msgLookup = new Dictionary<string, Queue<QuickFix.Message>>();
+        public Queue<QuickFix.Message> dups = new Queue<QuickFix.Message>();
+
         public bool disconnected = false;
 
         public bool Send(string msgStr)
@@ -27,6 +29,15 @@ namespace UnitTests
                 msgLookup.Add(msgType.getValue(), new Queue<QuickFix.Message>());
 
             msgLookup[msgType.getValue()].Enqueue(message);
+
+            QuickFix.Fields.PossDupFlag possDup = new QuickFix.Fields.PossDupFlag(false);
+            if (message.Header.IsSetField(possDup))
+                message.Header.GetField(possDup);
+
+            if (possDup.getValue() && msgType.getValue()!= QuickFix.Fields.MsgType.SEQUENCE_RESET)
+            {
+                dups.Enqueue(message);
+            }
 
             return true;
         }
@@ -103,6 +114,11 @@ namespace UnitTests
             application = new MockApplication();
             settings = new QuickFix.SessionSettings();
 
+            QuickFix.Dictionary config = new QuickFix.Dictionary();
+            config.SetBool(QuickFix.SessionSettings.PERSIST_MESSAGES, false);
+            config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
+            settings.Set(sessionID, config);
+
             session = new QuickFix.Session(application, new QuickFix.MemoryStoreFactory(), sessionID, 
                 new QuickFix.DataDictionaryProvider(), null, 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
@@ -120,6 +136,26 @@ namespace UnitTests
             login.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
             login.SetField(new QuickFix.Fields.HeartBtInt(30));
             session.Next(login);
+        }
+
+        public bool SENT_RESEND()
+        {
+            if (!responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.SEQUENCE_RESET) &&
+                responder.msgLookup[QuickFix.Fields.MsgType.SEQUENCE_RESET].Count > 0)
+                return false;
+
+            responder.msgLookup[QuickFix.Fields.MsgType.SEQUENCE_RESET].Dequeue();
+
+            return true;
+        }
+
+        public bool RESENT()
+        {
+            if (responder.dups.Count == 0)
+                return false;
+
+            responder.dups.Dequeue();
+            return true;
         }
 
         public bool SENT_REJECT()
@@ -188,6 +224,19 @@ namespace UnitTests
             session.Next(order);
         }
 
+        public void SendResendRequest(int begin, int end)
+        {
+            QuickFix.FIX42.ResendRequest req = new QuickFix.FIX42.ResendRequest(
+                new QuickFix.Fields.BeginSeqNo(begin),
+                new QuickFix.Fields.EndSeqNo(end));
+
+            req.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
+            req.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
+            req.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
+
+            session.Next(req);
+        }
+
         [Test]
         public void ConditionalTagMissingReject()
         {   
@@ -230,6 +279,23 @@ namespace UnitTests
 
             Assert.That(SENT_LOGOUT());
             Assert.That(DISCONNECTED());
+        }
+
+        [Test]
+        public void NextResendRequestNoMessagePersist()
+        {
+            session.PersistMessages = false;
+
+            Logon(); //seq 1
+
+            for (int i = 0; i < 3; ++i)
+            {
+                SendMessage();
+            } //seq 4, next is 5
+
+            SendResendRequest(1, 4);
+            Assert.That(SENT_RESEND());
+            Assert.IsFalse(RESENT());
         }
     }
 }
