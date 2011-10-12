@@ -15,6 +15,17 @@ Below are the settings that can be associated with a session based on the defaul
 QuickFIX Settings
 -----------------
 
+* [Session](#session)
+* [Validation](#validation)
+* [Initiator](#initiator)
+* [Acceptor](#acceptor)
+* [Logging](#logging)
+* [Sample Settings File](#sample)
+
+<a name='session'> </a>
+
+### Session
+
 <table>
   <tr>
     <th>Setting</th>
@@ -22,16 +33,13 @@ QuickFIX Settings
     <th>Valid Values</th>
     <th>Default</th>
   </tr>
-  <tr>
-    <th colspan='4' class='th-sub'>Session</td>
-  </tr>
 
   <tr>
-    <td>BeginString</td>
-    <td>
+    <td class='setting'>BeginString</td>
+    <td class='description'>
     Version of FIX this session uses
     </td>
-    <td>
+    <td class='valid'>
       <div>FIXT.1.1</div>
       <div>FIX.4.4</div>
       <div>FIX.4.3</div>
@@ -39,34 +47,34 @@ QuickFIX Settings
       <div>FIX.4.1</div>
       <div>FIX.4.0</div>
     </td>
-    <td></td>
+    <td class='default'></td>
   </tr>
 
   <tr>
-    <td>SenderCompID</td>
-    <td>Your ID as associated with this FIX session</td>
-    <td>case-sensitive alpha-numeric string</td>
-    <td></td>
+    <td class='setting'>SenderCompID</td>
+    <td class='description'>Your ID as associated with this FIX session</td>
+    <td class='valid'>case-sensitive alpha-numeric string</td>
+    <td class='default'></td>
   </tr>
 
   <tr>
-    <td>TargetCompID</td>
-    <td>Counterparty's ID as associated with this FIX session</td>
-    <td>case-sensitive alpha-numeric string</td>
-    <td></td>
+    <td class='setting'>TargetCompID</td>
+    <td class='description'>Counterparty's ID as associated with this FIX session</td>
+    <td class='valid'>case-sensitive alpha-numeric string</td>
+    <td class='default'></td>
   </tr>
 
   <tr>
-    <td>SessionQualifier</td>
-    <td>Additional qualifier to disambiguate otherwise identical sessions</td>
-    <td>case-sensitive alpha-numeric string</td>
-    <td></td>
+    <td class='setting'>SessionQualifier</td>
+    <td class='description'>Additional qualifier to disambiguate otherwise identical sessions</td>
+    <td class='valid'>case-sensitive alpha-numeric string</td>
+    <td class='default'></td>
   </tr>
 
   <tr>
-    <td>DefaultApplVerID</td>
-    <td>Required only for FIXT 1.1 (and newer).  Ignored for earlier transport versions. Specifies the default application version ID for the session.  This can be the ApplVerID enum (see the ApplVerID field) or the BeginString for the default version.</td>
-    <td>
+    <td class='setting'>DefaultApplVerID</td>
+    <td class='description'>Required only for FIXT 1.1 (and newer).  Ignored for earlier transport versions. Specifies the default application version ID for the session.  This can be the ApplVerID enum (see the ApplVerID field) or the BeginString for the default version.</td>
+    <td class='valid'>
       <div>FIX.5.0SP2</div>
       <div>FIX.5.0SP1</div>
       <div>FIX.5.0</div>
@@ -76,64 +84,321 @@ QuickFIX Settings
       <div>FIX.4.1</div>
       <div>FIX.4.0</div>
     </td>
-    <td/>
+    <td class='default'/>
   </tr>
 
   <tr>
-    <td>ConnectionType</td>
-    <td>Defines if session will act as an acceptor or initiator</td>
-    <td>
+    <td class='setting'>ConnectionType</td>
+    <td class='description'>Defines if session will act as an acceptor or initiator</td>
+    <td class='valid'>
       <div>initiator</div>
       <div>acceptor</div>
     </td>
-    <td/>
+    <td class='default'/>
   </tr>
 
   <tr>
-    <td>ResetOnLogon</td>
-    <td>Determines if sequence numbers should be reset when receiving a logon request. Acceptors only.</td>
-    <td>
+    <td class='setting'>ResetOnLogon</td>
+    <td class='description'>Determines if sequence numbers should be reset when receiving a logon request. Acceptors only.</td>
+    <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
-    <td>N</td>
+    <td class='default'>N</td>
   </tr>
 
   <tr>
-    <td>ResetOnLogout</td>
-    <td>Determines if sequence numbers should be reset to 1 after a normal logout termination.</td>
-    <td>
+    <td class='setting'>ResetOnLogout</td>
+    <td class='description'>Determines if sequence numbers should be reset to 1 after a normal logout termination.</td>
+    <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
-    <td>N</td>
+    <td class='default'>N</td>
   </tr>
 
   <tr>
-    <td>ResetOnDisconnect</td>
-    <td>Determines if sequence numbers should be reset to 1 after an abnormal termination</td>
-    <td>
+    <td class='setting'>ResetOnDisconnect</td>
+    <td class='description'>Determines if sequence numbers should be reset to 1 after an abnormal termination</td>
+    <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
-    <td>N</td>
+    <td class='default'>N</td>
   </tr>
 
   <tr>
-    <td>RefreshOnLogout</td>
-    <td>Determines if session state should be restored from persistence layer when logging on.  Useful for creating hot failover sessions.</td>
-    <td>
+    <td class='setting'>RefreshOnLogout</td>
+    <td class='description'>Determines if session state should be restored from persistence layer when logging on.  Useful for creating hot failover sessions.</td>
+    <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
-    <td>N</td>
+    <td class='default'>N</td>
   </tr>
-  <tr>
-    <th colspan='4' class='th-sub'>Validation</td>
-  </tr>
-
-
-
-
 </table>
 
+
+<a name='validation'> </a>
+
+### Validation
+
+<table>
+  <tr>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
+  </tr>
+
+  <tr>
+    <td class='setting'>UseDataDictionary</td>
+    <td class='description'>Tells session whether or not to expect a data dictionary.  <em>You should always use a DataDictionary if you are using repeating groups.</em></td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>DataDictionary</td>
+    <td class='description'>
+      <div>XML definition file for validating incoming FIX messages. If no DataDictionary is supplied, only basic message validation will be done.</div><br/> 
+      <div>This setting should only be used with FIX transport versions older than FIXT.1.1. See TransportDataDictionary and AppDataDictionary for FIXT.1.1 settings.</div>
+    </td>
+    <td class='valid'>
+      <div>Valid XML data dictionary file.  QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
+      <div>FIX44.xml</div>
+      <div>FIX43.xml</div>
+      <div>FIX42.xml</div>
+      <div>FIX41.xml</div>
+      <div>FIX40.xml</div>
+    </td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>TransportDataDictionary</td>
+    <td class='description'>
+      <div>XML definition file for validating admin (transport) messages.  This setting is only valid for FIXT.1.1 (or newer) sessions.</div><br/>
+      <div>See DataDictionary for older transport versions (FIX.4.0-FIX.4.4) for additional information.</div>
+    </td>
+    <td class='valid'>
+      <div>Valid XML data dictionary file. QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
+      <div>FIXT1.1.xml</div>
+    </td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>AppDataDictionary</td>
+    <td class='description'>
+      <div>XML definition file for validating application messages.  This setting is only valid for FIXT.1.1 (or newer) sessions.</div><br/>
+      <div>See DataDictionary for older transport versions (FIX.4.0-FIX.4.4) for additional information.</div><br/>
+      <div>This setting supports the possibility of a custom application data dictionary for each session.  This setting would only be used with FIXT.1.1 and newer transport protocols.  This setting can be used as a prefix to specify multiple application dictionaries for the FIXT transport.  For example:</div><br/>
+      <code>
+        DefaultApplVerID=FIX.4.2
+        # For default application version ID
+        AppDataDictionary=FIX42.xml
+        # For nondefault application version ID
+        # Use BeginString suffix for app version
+        AppDataDictionary.FIX.4.4=FIX44.xml
+      </code>
+    </td>
+    <td class='valid'>
+      <div>Valid XML data dictionary file, QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
+      <div>FIX50SP2.xml</div>
+      <div>FIX50SP1.xml</div>
+      <div>FIX50.xml</div>
+      <div>FIX44.xml</div>
+      <div>FIX43.xml</div>
+      <div>FIX42.xml</div>
+      <div>FIX41.xml</div>
+      <div>FIX40.xml</div>
+    </td>
+  </tr>
+
+  <tr>
+    <td class='setting'>ValidateFieldsOutOfOrder</td>
+    <td class='description'>If set to N, fields that are out of order (ie, body fields in the header, or header fields in the body) will not be rejected.  Useful for connecting to systems which do not properly order fields.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>ValidateFieldsHaveValues</td>
+    <td class='description'>If set to N, fields without values (empty) will not be rejected.  Useful for connecting to systems that improperly send empty tags.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>ValidateUserDefinedFields</td>
+    <td class='description'>If set to N, user defined fields will not be rejected if they are not defined in the data dictionary, or are not present in messages they do not belong to.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
+</table>
+
+<a name='initiator'></a>
+
+###Initiator
+
+<table>
+  <tr>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
+  </tr>
+
+  <tr>
+    <td class='setting'>ReconnectInterval</td>
+    <td class='description'>Time between reconnection attempts in seconds.  Only used for initiators.</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'>30</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>HeartBtInt</td>
+    <td class='description'>Heartbeat interval in seconds. Only used for initiators.</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketConnectPort</td>
+    <td class='description'>Socket port for connecting to a session.  Only used for initiators.</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketConnectHost</td>
+    <td class='description'>Host to connect to.  Only used for initiators.</td>
+    <td class='valid'>Valid IP address in the format of x.x.x.x or a domain name</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketConnectPort&lt;n&gt;</td>
+    <td class='description'>Alternate socket ports for connecting to a session for failover, where <strong>n</strong> is a positive integer. ie, SocketConnectPort1, SocketConnectPort2... must be consecutive and have a matching SocketConnectHost&lt;n&gt;</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketConnectHost&lt;n&gt;</td>
+    <td class='description'>Alternate socket hosts for connecting to a session for failover, where <strong>n</strong> is a positive integer. ie, SocketConnectHost1, SocketConnectHost2... must be consecutive and have a matching SocketConnectPort&lt;n&gt;</td>
+    <td class='valid'>Valid IP address in the format of x.x.x.x or a domain name</td>
+    <td class='default'/>
+  </tr>
+</table>
+
+<a name='acceptor'></a>
+
+###Acceptor
+
+<table>
+  <tr>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketAcceptPort</td>
+    <td class='description'>Socket port for listening to incoming connections.  Only used with acceptors.</td>
+    <td class='valid'>Positive integer, valid open socket port</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketAcceptHost</td>
+    <td class='description'>Socket host for listening to incoming connections.  If not provided, the acceptor will listen on all network interfaces (0.0.0.0)</td>
+    <td class='valid'>Valid IP address in the format of x.x.x.x</td>
+    <td class='default'>0.0.0.0</td>
+  </tr>
+</table>
+
+<a name='logging'></a>
+
+###Logging
+
+<table>
+  <tr>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
+  </tr>
+
+  <tr>
+    <td class='setting'>FileLogPath</td>
+    <td class='description'>Directory to store logs.</td>
+    <td class='valid'>Valid directory for storing files, must have write access</td>
+    <td class='default'/>
+  </tr>
+</table>
+
+<a name='sample'></a>
+
+###Sample Settings File
+
+Here is a typical settings file you might find in a firm that wants to connect to several ECNs.
+
+    # default settings for sessions
+    [DEFAULT]
+    ConnectionType=initiator
+    ReconnectInterval=60
+    SenderCompID=TW
+
+    # session definition
+    [SESSION]
+    # inherit ConnectionType, ReconnectInterval and SenderCompID from default
+    BeginString=FIX.4.1
+    TargetCompID=ARCA
+    StartTime=12:30:00
+    EndTime=23:30:00
+    HeartBtInt=20
+    SocketConnectPort=9823
+    SocketConnectHost=123.123.123.123
+    DataDictionary=somewhere/FIX41.xml
+
+    [SESSION]
+    BeginString=FIX.4.0
+    TargetCompID=ISLD
+    StartTime=12:00:00
+    EndTime=23:00:00
+    HeartBtInt=30
+    SocketConnectPort=8323
+    SocketConnectHost=23.23.23.23
+    DataDictionary=somewhere/FIX40.xml
+
+    [SESSION]
+    BeginString=FIX.4.2
+    TargetCompID=INCA
+    StartTime=12:30:00
+    EndTime=21:30:00
+    # overide default setting for RecconnectInterval
+    ReconnectInterval=30
+    HeartBtInt=30
+    SocketConnectPort=6523
+    SocketConnectHost=3.3.3.3
+    # (optional) alternate connection ports and hosts to cycle through on failover
+    SocketConnectPort1=8392
+    SocketConnectHost1=8.8.8.8
+    SocketConnectPort2=2932
+    SocketConnectHost2=12.12.12.12
+    DataDictionary=somewhere/FIX42.xml
