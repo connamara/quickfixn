@@ -15,15 +15,14 @@ Below are the settings that can be associated with a session based on the defaul
 QuickFIX Settings
 -----------------
 
+### Session
+
 <table>
   <tr>
     <th>Setting</th>
     <th>Description</th>
     <th>Valid Values</th>
     <th>Default</th>
-  </tr>
-  <tr>
-    <th colspan='4' class='th-sub'>Session</td>
   </tr>
 
   <tr>
@@ -128,12 +127,115 @@ QuickFIX Settings
     </td>
     <td>N</td>
   </tr>
+</table>
+
+### Validation
+
+<table>
   <tr>
-    <th colspan='4' class='th-sub'>Validation</td>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
   </tr>
 
+  <tr>
+    <td>UseDataDictionary</td>
+    <td>Tells session whether or not to expect a data dictionary.  <em>You should always use a DataDictionary if you are using repeating groups.</em></td>
+    <td>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td>Y</td>
+  </tr>
 
+  <tr>
+    <td>DataDictionary</td>
+    <td>
+      <div>XML definition file for validating incoming FIX messages. If no DataDictionary is supplied, only basic message validation will be done.</div><br/> 
+      <div>This setting should only be used with FIX transport versions older than FIXT.1.1. See TransportDataDictionary and AppDataDictionary for FIXT.1.1 settings.</div>
+    </td>
+    <td>
+      <div>Valid XML data dictionary file.  QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
+      <div>FIX44.xml</div>
+      <div>FIX43.xml</div>
+      <div>FIX42.xml</div>
+      <div>FIX41.xml</div>
+      <div>FIX40.xml</div>
+    </td>
+    <td/>
+  </tr>
 
+  <tr>
+    <td>TransportDataDictionary</td>
+    <td>
+      <div>XML definition file for validating admin (transport) messages.  This setting is only valid for FIXT.1.1 (or newer) sessions.</div><br/>
+      <div>See DataDictionary for older transport versions (FIX.4.0-FIX.4.4) for additional information.</div>
+    </td>
+    <td>
+      <div>Valid XML data dictionary file. QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
+      <div>FIXT1.1.xml</div>
+    </td>
+    <td/>
+  </tr>
+
+  <tr>
+    <td>AppDataDictionary</td>
+    <td>
+      <div>XML definition file for validating application messages.  This setting is only valid for FIXT.1.1 (or newer) sessions.</div><br/>
+      <div>See DataDictionary for older transport versions (FIX.4.0-FIX.4.4) for additional information.</div><br/>
+      <div>This setting supports the possibility of a custom application data dictionary for each session.  This setting would only be used with FIXT.1.1 and newer transport protocols.  This setting can be used as a prefix to specify multiple application dictionaries for the FIXT transport.  For example:</div><br/>
+      <code>
+        DefaultApplVerID=FIX.4.2
+        # For default application version ID
+        AppDataDictionary=FIX42.xml
+        # For nondefault application version ID
+        # Use BeginString suffix for app version
+        AppDataDictionary.FIX.4.4=FIX44.xml
+      </code>
+    </td>
+    <td>
+      <div>Valid XML data dictionary file, QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
+      <div>FIX50SP2.xml</div>
+      <div>FIX50SP1.xml</div>
+      <div>FIX50.xml</div>
+      <div>FIX44.xml</div>
+      <div>FIX43.xml</div>
+      <div>FIX42.xml</div>
+      <div>FIX41.xml</div>
+      <div>FIX40.xml</div>
+    </td>
+  </tr>
+
+  <tr>
+    <td class='setting'>ValidateFieldsOutOfOrder</td>
+    <td class='description'>If set to N, fields that are out of order (ie, body fields in the header, or header fields in the body) will not be rejected.  Useful for connecting to systems which do not properly order fields.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>ValidateFieldsHaveValues</td>
+    <td class='description'>If set to N, fields without values (empty) will not be rejected.  Useful for connecting to systems that improperly send empty tags.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>ValidateUserDefinedFields</td>
+    <td class='description'>If set to N, user defined fields will not be rejected if they are not defined in the data dictionary, or are not present in messages they do not belong to.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
 
 </table>
 
