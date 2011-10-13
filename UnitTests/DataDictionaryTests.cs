@@ -125,7 +125,7 @@ namespace UnitTests
 
             QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
 
-            string nul = "\x01";
+            string nul = Message.SOH;
             string s = "8=FIX.4.2" + nul + "9=148" + nul + "35=D" + nul + "34=2" + nul + "49=TW" + nul + "52=20111011-15:06:23.103" + nul + "56=ISLD" + nul
                 + "11=ID" + nul + "21=1" + nul + "40=1" + nul + "54=1" + nul + "38=200.00" + nul + "55=INTC" + nul
                 + "386=3" + nul + "336=PRE-OPEN" + nul + "336=AFTER-HOURS" + nul
@@ -139,6 +139,32 @@ namespace UnitTests
             StringAssert.Contains("386=3", n.ToString());
 
             Assert.Throws<QuickFix.RepeatingGroupCountMismatch>(delegate { dd.CheckGroupCount(n.NoTradingSessions, n, "D"); });
+        }
+
+        [Test]
+        public void ValidateWithRepeatingGroupTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX42.xml");
+            QuickFix.FIX42.MessageFactory f = new QuickFix.FIX42.MessageFactory();
+            
+            string nul = Message.SOH;
+            string msgStr = "8=FIX.4.2" + nul + "9=87" + nul + "35=B" + nul + "34=3" + nul + "49=CLIENT1" + nul
+                + "52=20111012-22:15:55.474" + nul + "56=EXECUTOR" + nul + "148=AAAAAAA" + nul
+                + "33=2" + nul + "58=L1" + nul + "58=L2" + nul + "10=016" + nul;
+
+            QuickFix.Fields.MsgType msgType = Message.IdentifyType(msgStr);
+            string beginString = Message.ExtractBeginString(msgStr);
+
+            Message message = f.Create(beginString, msgType.Obj);
+            message.FromString(
+                msgStr,
+                true,
+                dd,
+                dd);
+
+            // Session.Next(message)
+
+            dd.Validate(message, beginString, msgType.Obj);
         }
     }
 }
