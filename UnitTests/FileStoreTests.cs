@@ -55,6 +55,8 @@ namespace UnitTests
         public void generateFileNamesTest()
         {
             Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.seqnums"));
+            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.body"));
+            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.header"));
         }
 
         [Test]
@@ -95,17 +97,28 @@ namespace UnitTests
             Assert.AreEqual(2, store.GetNextTargetMsgSeqNum());
         }
 
-       /* [Test]
+
+        [Test]
         public void getTest()
         {
-            store.set
             store.Set(1, "dude");
             store.Set(2, "pude");
             store.Set(3, "ok");
             store.Set(4, "ohai");
 
-            //store.
+            var msgs = new List<string>();
+            store.Get(2, 3, msgs);
+            var expected = new List<string>() { "pude", "ok" };
+
+            Assert.AreEqual(expected, msgs);
+
+            rebuildStore();
+
+            msgs = new List<string>();
+            store.Get(2, 3, msgs);
+
+            Assert.AreEqual(expected, msgs);
         }
-        */
+        
     }
 }
