@@ -10,6 +10,8 @@ namespace QuickFix
         private System.IO.FileStream seqNumsFile;
         private string seqNumsFileName;
 
+        private MemoryStore cache = new MemoryStore();
+
         public static string Prefix(SessionID sessionID)
         {
             System.Text.StringBuilder prefix = new System.Text.StringBuilder(sessionID.BeginString)
@@ -28,8 +30,23 @@ namespace QuickFix
                 System.IO.Directory.CreateDirectory(path);
 
             seqNumsFileName = System.IO.Path.Combine(path, Prefix(sessionID)+".seqnums");
-            seqNumsFile = new System.IO.FileStream(seqNumsFileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+            open();
         }
+
+        private void open()
+        {
+            seqNumsFile = new System.IO.FileStream(seqNumsFileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+
+            System.IO.StreamReader reader = new System.IO.StreamReader(seqNumsFile);
+            
+            string[] parts = reader.ReadToEnd().Split(':');
+            if (parts.Length == 2)
+            {
+                cache.SetNextSenderMsgSeqNum(Convert.ToInt32(parts[0]));
+                cache.SetNextTargetMsgSeqNum(Convert.ToInt32(parts[1]));
+            }
+        }
+
 
         #region MessageStore Members
 
@@ -45,32 +62,44 @@ namespace QuickFix
 
         public int GetNextSenderMsgSeqNum()
         {
-            throw new NotImplementedException();
+            return cache.GetNextSenderMsgSeqNum();
         }
 
         public int GetNextTargetMsgSeqNum()
         {
-            throw new NotImplementedException();
+            return cache.GetNextTargetMsgSeqNum();
         }
 
         public void SetNextSenderMsgSeqNum(int value)
         {
-            throw new NotImplementedException();
+            cache.SetNextSenderMsgSeqNum(value);
+            setSeqNum();
         }
 
         public void SetNextTargetMsgSeqNum(int value)
         {
-            throw new NotImplementedException();
+            cache.SetNextTargetMsgSeqNum(value);
+            setSeqNum();
         }
 
         public void IncrNextSenderMsgSeqNum()
         {
-            throw new NotImplementedException();
+            cache.IncrNextSenderMsgSeqNum();
+            setSeqNum();
         }
 
         public void IncrNextTargetMsgSeqNum()
         {
-            throw new NotImplementedException();
+            cache.IncrNextTargetMsgSeqNum();
+            setSeqNum();
+        }
+
+        private void setSeqNum()
+        {
+            seqNumsFile.Seek(0, System.IO.SeekOrigin.Begin);
+            System.IO.StreamWriter writer = new System.IO.StreamWriter(seqNumsFile);
+            writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10"));
+            writer.Flush();
         }
 
         public DateTime GetCreationTime()
