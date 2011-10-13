@@ -10,6 +10,8 @@ namespace UnitTests
     class FileStoreTests
     {
         QuickFix.FileStore store;
+        QuickFix.FileStoreFactory factory;
+
         QuickFix.SessionSettings settings;
         QuickFix.SessionID sessionID;
 
@@ -27,9 +29,22 @@ namespace UnitTests
 
             settings = new QuickFix.SessionSettings();
             settings.Set(sessionID, config);
-            QuickFix.FileStoreFactory factory = new QuickFix.FileStoreFactory(settings);
+            factory = new QuickFix.FileStoreFactory(settings);
+
             store = (QuickFix.FileStore)factory.Create(sessionID);
         }
+
+        void rebuildStore()
+        {
+            if(store != null)
+            {
+                store.Dispose();
+            }
+
+            store = (QuickFix.FileStore)factory.Create(sessionID);
+        }
+
+
         [TearDown]
         public void teardown()
         {
@@ -37,9 +52,60 @@ namespace UnitTests
         }
 
         [Test]
-        public void testGenerateFileNames()
+        public void generateFileNamesTest()
         {
             Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.seqnums"));
         }
+
+        [Test]
+        public void getNextSenderMsgSeqNumTest()
+        {
+            Assert.AreEqual(1, store.GetNextSenderMsgSeqNum());
+            store.SetNextSenderMsgSeqNum(5);
+            Assert.AreEqual(5, store.GetNextSenderMsgSeqNum());
+            rebuildStore();
+            Assert.AreEqual(5, store.GetNextSenderMsgSeqNum());
+        }
+
+        [Test]
+        public void incNextSenderMsgSeqNumTest()
+        {
+            store.IncrNextSenderMsgSeqNum();
+            Assert.AreEqual(2, store.GetNextSenderMsgSeqNum());
+            rebuildStore();
+            Assert.AreEqual(2, store.GetNextSenderMsgSeqNum());
+        }
+
+        [Test]
+        public void getNextTargetMsgSeqNumTest()
+        {
+            Assert.AreEqual(1, store.GetNextTargetMsgSeqNum());
+            store.SetNextTargetMsgSeqNum(6);
+            Assert.AreEqual(6, store.GetNextTargetMsgSeqNum());
+            rebuildStore();
+            Assert.AreEqual(6, store.GetNextTargetMsgSeqNum());
+        }
+
+        [Test]
+        public void incNextTargetMsgSeqNumTest()
+        {
+            store.IncrNextTargetMsgSeqNum();
+            Assert.AreEqual(2, store.GetNextTargetMsgSeqNum());
+            rebuildStore();
+            Assert.AreEqual(2, store.GetNextTargetMsgSeqNum());
+        }
+
+       /* [Test]
+        public void getTest()
+        {
+            store.set
+            store.Set(1, "dude");
+            store.Set(2, "pude");
+            store.Set(3, "ok");
+            store.Set(4, "ohai");
+
+            //store.
+        }
+        */
     }
 }
