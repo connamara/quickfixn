@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{186A72D8-5A70-4DD0-BABF-E3BB3BA9F419}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -81,6 +81,7 @@
     <Compile Include="FieldMapTests.cs" />
     <Compile Include="FieldTests.cs" />
     <Compile Include="FileLogTests.cs" />
+    <Compile Include="FileStoreTests.cs" />
     <Compile Include="GenMessageTest.cs" />
     <Compile Include="HiPerfTimer.cs" />
     <Compile Include="MemoryStoreTest.cs" />
