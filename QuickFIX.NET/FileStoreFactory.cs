@@ -13,13 +13,12 @@ namespace QuickFix
         #region MessageStoreFactory Members
 
         /// <summary>
-        /// FIXME
         /// </summary>
         /// <param name="sessionID"></param>
         /// <returns></returns>
         public MessageStore Create(SessionID sessionID)
         {
-            return new MemoryStore();
+            return new FileStore(settings_.Get(sessionID).GetString(SessionSettings.FILE_STORE_PATH), sessionID);
         }
 
         #endregion
