@@ -10,6 +10,8 @@ namespace Executor
 {
     public class Executor : QuickFix.MessageCracker, QuickFix.Application
     {
+        static readonly decimal DEFAULT_MARKET_PRICE = 10;
+
         int orderID = 0;
         int execID = 0;
 
@@ -139,11 +141,15 @@ namespace Executor
             Side side = n.Side;
             OrdType ordType = n.OrdType;
             OrderQty orderQty = n.OrderQty;
-            Price price = n.Price;
             ClOrdID clOrdID = n.ClOrdID;
+            Price price = new Price(DEFAULT_MARKET_PRICE);
 
-            if (ordType.getValue() != OrdType.LIMIT)
-                throw new IncorrectTagValue(ordType.Tag);
+            switch (ordType.getValue())
+            {
+                case OrdType.LIMIT: price = n.Price; break;
+                case OrdType.MARKET: break;
+                default: throw new IncorrectTagValue(ordType.Tag);
+            }
 
             QuickFix.FIX42.ExecutionReport exReport = new QuickFix.FIX42.ExecutionReport(
                 new OrderID(GenOrderID()),
@@ -328,19 +334,21 @@ namespace Executor
             }
         }
 
-        public void OnMessage(QuickFix.FIX40.News n, SessionID s)
-        { }
-        public void OnMessage(QuickFix.FIX41.News n, SessionID s)
-        { }
-        public void OnMessage(QuickFix.FIX42.News n, SessionID s)
-        { }
-        public void OnMessage(QuickFix.FIX43.News n, SessionID s)
-        { }
-        public void OnMessage(QuickFix.FIX44.News n, SessionID s)
-        { }
-        public void OnMessage(QuickFix.FIX50.News n, SessionID s)
-        { }
-        
+        public void OnMessage(QuickFix.FIX40.News n, SessionID s) { }
+        public void OnMessage(QuickFix.FIX41.News n, SessionID s) { }
+        public void OnMessage(QuickFix.FIX42.News n, SessionID s) { }
+        public void OnMessage(QuickFix.FIX43.News n, SessionID s) { }
+        public void OnMessage(QuickFix.FIX44.News n, SessionID s) { }
+        public void OnMessage(QuickFix.FIX50.News n, SessionID s) { }
+
+
+        // FIX40-41 don't have rejects
+        public void OnMessage(QuickFix.FIX42.BusinessMessageReject n, SessionID s) { }
+        public void OnMessage(QuickFix.FIX43.BusinessMessageReject n, SessionID s) { }
+        public void OnMessage(QuickFix.FIX44.BusinessMessageReject n, SessionID s) { }
+        public void OnMessage(QuickFix.FIX50.BusinessMessageReject n, SessionID s) { }
+
+
         #endregion //MessageCracker overloads
     }
 }
