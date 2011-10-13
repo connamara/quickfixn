@@ -50,7 +50,7 @@ namespace QuickFix.Fields.Converters
         /// Convert DateTime to string in FIX Format, with milliseconds
         /// </summary>
         /// <param name="dt">the DateTime to convert</param>
-        /// <returns>FIX-formatted DataTime</returns>
+        /// <returns>FIX-formatted DateTime</returns>
         public static string Convert(System.DateTime dt)
         {
             return DateTimeConverter.Convert(dt, true);
