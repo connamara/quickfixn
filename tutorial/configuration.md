@@ -20,6 +20,7 @@ QuickFIX Settings
 * [Initiator](#initiator)
 * [Acceptor](#acceptor)
 * [Storage](#storage)
+* [File Storage](#file)
 * [Logging](#logging)
 * [Sample Settings File](#sample)
 
@@ -357,6 +358,26 @@ QuickFIX Settings
     </td>
   </tr>
 
+</table>
+
+<a name='file'></a>
+
+###File Storage
+
+<table>
+  <tr>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
+  </tr>
+
+  <tr>
+    <td class='setting'>FileStorePath</td>
+    <td class='description'>Directory to store sequence number and message files.</td>
+    <td class='valid'>Valid directory for storing files, must have write access.</td>
+    <td class='default'/>
+  </tr>
 </table>
 
 <a name='logging'></a>
