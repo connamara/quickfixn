@@ -249,9 +249,9 @@ namespace QuickFix
             return resendRange_;
         }
 
-        public bool Get(int begSeqNo, int endSeqNo, List<string> messages)
+        public void Get(int begSeqNo, int endSeqNo, List<string> messages)
         {
-            return MessageStore.Get(begSeqNo, endSeqNo, messages);
+            MessageStore.Get(begSeqNo, endSeqNo, messages);
         }
 
         public void SetResendRange(int begin, int end)

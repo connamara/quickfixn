@@ -7,10 +7,31 @@ namespace QuickFix
 {
     public class FileStore : MessageStore, IDisposable
     {
-        private System.IO.FileStream seqNumsFile;
-        private string seqNumsFileName;
+        private class MsgDef
+        {
+            public long index { get; private set; }
+            public int size { get; private set; }
+            
+            public MsgDef(long index, int size)
+            {
+                this.index = index;
+                this.size = size;
+            }
+        }
+
+        private System.IO.FileStream seqNumsFile_;
+        private string seqNumsFileName_;
+
+        private System.IO.FileStream msgFile_;
+        private string msgFileName_;
+
+        private System.IO.StreamWriter headerFile_;
+        private string headerFileName_;
 
         private MemoryStore cache = new MemoryStore();
+
+        System.Collections.Generic.Dictionary<int, MsgDef> offsets_ = 
+            new Dictionary<int, MsgDef>();
 
         public static string Prefix(SessionID sessionID)
         {
@@ -29,17 +50,41 @@ namespace QuickFix
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
 
-            seqNumsFileName = System.IO.Path.Combine(path, Prefix(sessionID)+".seqnums");
+            string prefix = Prefix(sessionID);
+
+            seqNumsFileName_ = System.IO.Path.Combine(path, prefix + ".seqnums");
+            msgFileName_ = System.IO.Path.Combine(path, prefix + ".body");
+            headerFileName_ = System.IO.Path.Combine(path, prefix + ".header");
+
             open();
         }
 
         private void open()
         {
-            seqNumsFile = new System.IO.FileStream(seqNumsFileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+            seqNumsFile_ = new System.IO.FileStream(seqNumsFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+            msgFile_ = new System.IO.FileStream(msgFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
 
-            System.IO.StreamReader reader = new System.IO.StreamReader(seqNumsFile);
-            
-            string[] parts = reader.ReadToEnd().Split(':');
+            if(System.IO.File.Exists(headerFileName_))
+            {
+                using(System.IO.StreamReader reader = new System.IO.StreamReader(headerFileName_))
+                {
+                    string line;
+                    while((line = reader.ReadLine())!=null)
+                    {
+                        string[] headerParts = line.Split(',');
+                        if (headerParts.Length == 3)
+                        {
+                            offsets_[Convert.ToInt32(headerParts[0])] = new MsgDef(
+                                Convert.ToInt64(headerParts[1]), Convert.ToInt32(headerParts[2]));
+                        }
+                    }
+                }
+            }
+
+            headerFile_ = new System.IO.StreamWriter(headerFileName_, true);
+
+            System.IO.StreamReader seqNumReader = new System.IO.StreamReader(seqNumsFile_);
+            string[] parts = seqNumReader.ReadToEnd().Split(':');
             if (parts.Length == 2)
             {
                 cache.SetNextSenderMsgSeqNum(Convert.ToInt32(parts[0]));
@@ -48,16 +93,46 @@ namespace QuickFix
         }
 
 
+
+
         #region MessageStore Members
 
-        public bool Get(int startSeqNum, int endSeqNum, List<string> messages)
+        public void Get(int startSeqNum, int endSeqNum, List<string> messages)
         {
-            throw new NotImplementedException();
+            for(int i = startSeqNum; i<=endSeqNum; i++)
+            {
+                if(offsets_.ContainsKey(i))
+                {
+                    msgFile_.Seek(offsets_[i].index, System.IO.SeekOrigin.Begin);
+                    byte[] msgBytes = new byte[offsets_[i].size];
+                    msgFile_.Read(msgBytes, 0, msgBytes.Length);
+
+                    messages.Add(Encoding.UTF8.GetString(msgBytes));
+                }
+            }
+
         }
 
         public bool Set(int msgSeqNum, string msg)
         {
-            throw new NotImplementedException();
+            msgFile_.Seek(0, System.IO.SeekOrigin.End);
+
+            long offset = msgFile_.Position;
+            byte[] msgBytes = Encoding.UTF8.GetBytes(msg);
+            int size = msgBytes.Length;
+
+            StringBuilder b = new StringBuilder();
+            b.Append(msgSeqNum).Append(",").Append(offset).Append(",").Append(size);
+            headerFile_.WriteLine(b.ToString());
+            headerFile_.Flush();
+
+            offsets_[msgSeqNum] = new MsgDef(offset,size);
+
+            msgFile_.Write(msgBytes, 0, size);
+            msgFile_.Flush();
+
+
+            return true;
         }
 
         public int GetNextSenderMsgSeqNum()
@@ -96,8 +171,9 @@ namespace QuickFix
 
         private void setSeqNum()
         {
-            seqNumsFile.Seek(0, System.IO.SeekOrigin.Begin);
-            System.IO.StreamWriter writer = new System.IO.StreamWriter(seqNumsFile);
+            seqNumsFile_.Seek(0, System.IO.SeekOrigin.Begin);
+            System.IO.StreamWriter writer = new System.IO.StreamWriter(seqNumsFile_);
+            
             writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10"));
             writer.Flush();
         }
@@ -123,7 +199,9 @@ namespace QuickFix
 
         public void Dispose()
         {
-            seqNumsFile.Close();
+            seqNumsFile_.Close();
+            msgFile_.Close();
+            headerFile_.Close();
         }
 
         #endregion
