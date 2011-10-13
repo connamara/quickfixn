@@ -16,8 +16,10 @@ namespace UnitTests
         [SetUp]
         public void setup()
         {
-            sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP","TARGETCOMP");
+            if(System.IO.Directory.Exists("log"))
+                System.IO.Directory.Delete("log",true);
 
+            sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP","TARGETCOMP");
 
             QuickFix.Dictionary config = new QuickFix.Dictionary();
             config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
@@ -34,6 +36,7 @@ namespace UnitTests
         public void teardown()
         {
             log.Dispose();
+            
         }
 
         [Test]
