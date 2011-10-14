@@ -19,6 +19,8 @@ namespace UnitTests
             settings.SetString(SessionSettings.USE_DATA_DICTIONARY, "N");
             settings.SetString(SessionSettings.CONNECTION_TYPE, "initiator");
             settings.SetString(SessionSettings.HEARTBTINT, "30");
+            settings.SetString(SessionSettings.START_TIME, "12:00:00");
+            settings.SetString(SessionSettings.END_TIME, "12:00:00");
             Session session = factory.Create(sessionID, settings);
 
             //true by default
