@@ -69,7 +69,7 @@ namespace QuickFix
                 messageStoreFactory_,
                 sessionID,
                 dd,
-                new SessionSchedule(settings, sessionID),
+                new SessionSchedule(settings),
                 heartBtInt,
                 logFactory_,
                 new DefaultMessageFactory(),

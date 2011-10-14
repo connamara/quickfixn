@@ -117,10 +117,12 @@ namespace UnitTests
             QuickFix.Dictionary config = new QuickFix.Dictionary();
             config.SetBool(QuickFix.SessionSettings.PERSIST_MESSAGES, false);
             config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
+            config.SetString(QuickFix.SessionSettings.START_TIME, "00:00:00");
+            config.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
             settings.Set(sessionID, config);
 
             session = new QuickFix.Session(application, new QuickFix.MemoryStoreFactory(), sessionID, 
-                new QuickFix.DataDictionaryProvider(),new QuickFix.SessionSchedule(config, sessionID), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
+                new QuickFix.DataDictionaryProvider(),new QuickFix.SessionSchedule(config), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
             session.MaxLatency=120;
 
