@@ -3,17 +3,10 @@ namespace QuickFix
 {
     public class SessionSchedule
     {
-        #region Properties
-
-        /// <summary>
-        /// FIXME
-        /// </summary>
-        public bool IsSessionTime
+        public bool IsSessionTime(System.DateTime time)
         {
-            get { return true; }
+            return true;
         }
-
-        #endregion
 
         /// <summary>
         /// FIXME
