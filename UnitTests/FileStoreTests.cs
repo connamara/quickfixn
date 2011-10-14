@@ -97,6 +97,62 @@ namespace UnitTests
             Assert.AreEqual(2, store.GetNextTargetMsgSeqNum());
         }
 
+        [Test]
+        public void resetTest()
+        {
+            store.SetNextTargetMsgSeqNum(5);
+            store.SetNextSenderMsgSeqNum(4);
+            store.Reset();
+
+            Assert.AreEqual(1, store.GetNextTargetMsgSeqNum());
+            Assert.AreEqual(1, store.GetNextSenderMsgSeqNum());
+
+            rebuildStore();
+            Assert.AreEqual(1, store.GetNextTargetMsgSeqNum());
+            Assert.AreEqual(1, store.GetNextSenderMsgSeqNum());
+
+            store.SetNextTargetMsgSeqNum(5);
+            store.SetNextSenderMsgSeqNum(6);
+
+            Assert.AreEqual(5, store.GetNextTargetMsgSeqNum());
+            Assert.AreEqual(6, store.GetNextSenderMsgSeqNum());
+
+            rebuildStore();
+
+            Assert.AreEqual(5, store.GetNextTargetMsgSeqNum());
+            Assert.AreEqual(6, store.GetNextSenderMsgSeqNum());
+
+            store.Set(1, "dude");
+            store.Set(2, "pude");
+            store.Set(3, "ok");
+            store.Set(4, "ohai");
+
+            store.Reset();
+
+            var msgs = new List<string>();
+            store.Get(2, 3, msgs);
+            Assert.That(msgs,Is.Empty);
+
+            rebuildStore();
+            store.Get(2, 3, msgs);
+            Assert.That(msgs, Is.Empty);
+
+            store.Set(1, "dude");
+            store.Set(2, "pude");
+            store.Set(3, "ok");
+            store.Set(4, "ohai");
+
+            store.Get(2, 3, msgs);
+            var expected = new List<string>() { "pude", "ok" };
+
+            Assert.AreEqual(expected, msgs);
+
+            rebuildStore();
+
+            msgs = new List<string>();
+            store.Get(2, 3, msgs);
+        }
+
 
         [Test]
         public void getTest()
