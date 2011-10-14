@@ -22,7 +22,7 @@ namespace QuickFix
         // state
         public Log Log { get { return state_.Log; } }
         public bool IsEnabled { get { return state_.IsEnabled; } }
-        public bool IsSessionTime { get { return schedule_.IsSessionTime; } }
+        public bool IsSessionTime { get { return schedule_.IsSessionTime(System.DateTime.UtcNow); } }
         public bool IsLoggedOn { get { return ReceivedLogon && SentLogon; } }
         public bool SentLogon { get { return state_.SentLogon; } }
         public bool ReceivedLogon { get { return state_.ReceivedLogon; } }
@@ -84,7 +84,7 @@ namespace QuickFix
             this.ValidateLengthAndChecksum = true;
             this.CheckCompID = true;
 
-            if (!CheckSessionTime())
+            if (!IsSessionTime)
                 Reset();
 
             lock (sessions_)
@@ -211,6 +211,15 @@ namespace QuickFix
 
         public void Next()
         {
+            if (!HasResponder)
+                return;
+
+            if (!IsSessionTime) 
+            {
+                Reset();
+                return;
+            }
+
             if (!IsEnabled)
             {
                 if (!IsLoggedOn)
@@ -222,17 +231,6 @@ namespace QuickFix
                     GenerateLogout(state_.LogoutReason);
                 }
             }
-
-            /* TODO
-            if (!CheckSessionTime()) 
-            {
-                Reset();
-                return;
-            }
-            */
-
-            if (!HasResponder)
-                return;
 
             if (!state_.ReceivedLogon)
             {
@@ -700,7 +698,7 @@ namespace QuickFix
 
         public void SetResponder(Responder responder)
         {
-            if (!CheckSessionTime())
+            if (!IsSessionTime)
                 Reset();
 
             lock (sync_)
@@ -719,11 +717,6 @@ namespace QuickFix
             GenerateLogout();
             Disconnect("Resetting...");
             state_.Reset();
-        }
-
-        protected bool CheckSessionTime()
-        {
-            return true;
         }
 
         private void initializeResendFields(Message message)

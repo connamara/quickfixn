@@ -120,7 +120,7 @@ namespace UnitTests
             settings.Set(sessionID, config);
 
             session = new QuickFix.Session(application, new QuickFix.MemoryStoreFactory(), sessionID, 
-                new QuickFix.DataDictionaryProvider(), null, 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
+                new QuickFix.DataDictionaryProvider(),new QuickFix.SessionSchedule(config, sessionID), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
             session.MaxLatency=120;
 
