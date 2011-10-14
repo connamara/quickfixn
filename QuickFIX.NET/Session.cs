@@ -211,21 +211,16 @@ namespace QuickFix
 
         public void Next()
         {
-            //System.Console.WriteLine(state_.ToString());
-            //this.Log.OnEvent(state_.ToString());
-
             if (!IsEnabled)
             {
                 if (!IsLoggedOn)
                     return;
 
-                /* TODO
                 if (!state_.SentLogon) 
                 {
                     this.Log.OnEvent("Initiated logout request");
                     GenerateLogout(state_.LogoutReason);
                 }
-                */
             }
 
             /* TODO
