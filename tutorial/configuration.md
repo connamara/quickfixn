@@ -102,14 +102,14 @@ QuickFIX Settings
   <tr>
     <td class='setting'>StartTime</td>
     <td class='description'>Time of day that this FIX session becomes activated</td>
-    <td class='valid'>Time in the format of HH::MM::SS, time is represented in UTC</td>
+    <td class='valid'>Time in the format of HH:MM:SS, time is represented in UTC</td>
     <td class='default'/>
   </tr>
 
   <tr>
     <td class='setting'>EndTime</td>
     <td class='description'>Time of day that this FIX session becomes deactivated</td>
-    <td class='valid'>Time in the format of HH::MM::SS, time is represented in UTC</td>
+    <td class='valid'>Time in the format of HH:MM:SS, time is represented in UTC</td>
     <td class='default'/>
   </tr>
 
