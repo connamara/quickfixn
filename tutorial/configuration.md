@@ -130,7 +130,7 @@ QuickFIX Settings
   </tr>
 
   <tr>
-    <td class='setting'>RefreshOnLogout</td>
+    <td class='setting'>RefreshOnLogon</td>
     <td class='description'>Determines if session state should be restored from persistence layer when logging on.  Useful for creating hot failover sessions.</td>
     <td class='valid'>
       <div>Y</div>
