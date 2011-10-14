@@ -100,6 +100,38 @@ QuickFIX Settings
   </tr>
 
   <tr>
+    <td class='setting'>StartTime</td>
+    <td class='description'>Time of day that this FIX session becomes activated</td>
+    <td class='valid'>Time in the format of HH::MM::SS, time is represented in UTC</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>EndTime</td>
+    <td class='description'>Time of day that this FIX session becomes deactivated</td>
+    <td class='valid'>Time in the format of HH::MM::SS, time is represented in UTC</td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>StartDay</td>
+    <td class='description'>For week long sessions, the starting day of week of the session.  Use in combination with StartTime.</td>
+    <td class='valid'>
+      Day of week in English using any abbreviation (ie mo, mon, mond, monda, monday are valid)
+    </td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
+    <td class='setting'>EndDay</td>
+    <td class='description'>For week long sessions, the ending day of week for the session.  Use in combination with EndTime.</td>
+    <td class='valid'>
+      Day of week in English using any abbreviation (ie mo, mon, mond, monda, monday are valid)
+    </td>
+    <td class='default'/>
+  </tr>
+
+  <tr>
     <td class='setting'>ResetOnLogon</td>
     <td class='description'>Determines if sequence numbers should be reset when receiving a logon request. Acceptors only.</td>
     <td class='valid'>
