@@ -61,6 +61,7 @@
     <Compile Include="Fields\Limits.cs" />
     <Compile Include="FileLog.cs" />
     <Compile Include="FileLogFactory.cs" />
+    <Compile Include="FileStore.cs" />
     <Compile Include="FileStoreFactory.cs" />
     <Compile Include="FixValues.cs" />
     <Compile Include="IMessageFactory.cs" />

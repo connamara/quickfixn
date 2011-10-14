@@ -18,12 +18,13 @@ namespace QuickFix
             Reset();
         }
 
-        public bool Get(int begSeqNo, int endSeqNo, List<string> messages)
+        public void Get(int begSeqNo, int endSeqNo, List<string> messages)
         {
-
             for (int current = begSeqNo; current <= endSeqNo; current++)
-                messages.Add(messages_[current]);
-            return true;
+            {
+                if (messages_.ContainsKey(current))
+                    messages.Add(messages_[current]);
+            }
         }
 
         #region MessageStore Members

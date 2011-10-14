@@ -21,6 +21,11 @@ namespace UnitTests
             var expected = new List<string>() { "pude", "ok" };
             Assert.That(msgs, Is.EqualTo(expected));
 
+            msgs = new List<string>();
+            store.Get(5, 6, msgs);
+            Assert.That(msgs, Is.Empty);
+
+
         }
     }
 }
