@@ -19,16 +19,16 @@ namespace QuickFix
             }
         }
 
-        private System.IO.FileStream seqNumsFile_;
         private string seqNumsFileName_;
-
-        private System.IO.FileStream msgFile_;
         private string msgFileName_;
-
-        private System.IO.StreamWriter headerFile_;
         private string headerFileName_;
 
-        private MemoryStore cache = new MemoryStore();
+        private System.IO.FileStream seqNumsFile_;
+        private System.IO.FileStream msgFile_;
+
+        private System.IO.StreamWriter headerFile_;
+
+        private MemoryStore cache_ = new MemoryStore();
 
         System.Collections.Generic.Dictionary<int, MsgDef> offsets_ = 
             new Dictionary<int, MsgDef>();
@@ -61,15 +61,43 @@ namespace QuickFix
 
         private void open()
         {
+            ConstructFromFileCache();
+
             seqNumsFile_ = new System.IO.FileStream(seqNumsFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
             msgFile_ = new System.IO.FileStream(msgFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+            headerFile_ = new System.IO.StreamWriter(headerFileName_, true);
+        }
+
+        private void PurgeFileCache()
+        {
+            if (seqNumsFile_ != null)
+                seqNumsFile_.Close();
+
+            if (msgFile_ != null)
+                msgFile_.Close();
+
+            if (headerFile_ != null)
+                headerFile_.Close();
+
+            if(System.IO.File.Exists(seqNumsFileName_))
+                System.IO.File.Delete(seqNumsFileName_);
 
             if(System.IO.File.Exists(headerFileName_))
+                System.IO.File.Delete(headerFileName_);
+
+            if(System.IO.File.Exists(msgFileName_))
+                System.IO.File.Delete(msgFileName_);
+        }
+
+        private void ConstructFromFileCache()
+        {
+            offsets_.Clear();
+            if (System.IO.File.Exists(headerFileName_))
             {
-                using(System.IO.StreamReader reader = new System.IO.StreamReader(headerFileName_))
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(headerFileName_))
                 {
                     string line;
-                    while((line = reader.ReadLine())!=null)
+                    while ((line = reader.ReadLine()) != null)
                     {
                         string[] headerParts = line.Split(',');
                         if (headerParts.Length == 3)
@@ -81,14 +109,17 @@ namespace QuickFix
                 }
             }
 
-            headerFile_ = new System.IO.StreamWriter(headerFileName_, true);
-
-            System.IO.StreamReader seqNumReader = new System.IO.StreamReader(seqNumsFile_);
-            string[] parts = seqNumReader.ReadToEnd().Split(':');
-            if (parts.Length == 2)
+            if(System.IO.File.Exists(seqNumsFileName_))
             {
-                cache.SetNextSenderMsgSeqNum(Convert.ToInt32(parts[0]));
-                cache.SetNextTargetMsgSeqNum(Convert.ToInt32(parts[1]));
+                using (System.IO.StreamReader seqNumReader = new System.IO.StreamReader(seqNumsFileName_))
+                {
+                    string[] parts = seqNumReader.ReadToEnd().Split(':');
+                    if (parts.Length == 2)
+                    {
+                        cache_.SetNextSenderMsgSeqNum(Convert.ToInt32(parts[0]));
+                        cache_.SetNextTargetMsgSeqNum(Convert.ToInt32(parts[1]));
+                    }
+                }
             }
         }
 
@@ -137,35 +168,35 @@ namespace QuickFix
 
         public int GetNextSenderMsgSeqNum()
         {
-            return cache.GetNextSenderMsgSeqNum();
+            return cache_.GetNextSenderMsgSeqNum();
         }
 
         public int GetNextTargetMsgSeqNum()
         {
-            return cache.GetNextTargetMsgSeqNum();
+            return cache_.GetNextTargetMsgSeqNum();
         }
 
         public void SetNextSenderMsgSeqNum(int value)
         {
-            cache.SetNextSenderMsgSeqNum(value);
+            cache_.SetNextSenderMsgSeqNum(value);
             setSeqNum();
         }
 
         public void SetNextTargetMsgSeqNum(int value)
         {
-            cache.SetNextTargetMsgSeqNum(value);
+            cache_.SetNextTargetMsgSeqNum(value);
             setSeqNum();
         }
 
         public void IncrNextSenderMsgSeqNum()
         {
-            cache.IncrNextSenderMsgSeqNum();
+            cache_.IncrNextSenderMsgSeqNum();
             setSeqNum();
         }
 
         public void IncrNextTargetMsgSeqNum()
         {
-            cache.IncrNextTargetMsgSeqNum();
+            cache_.IncrNextTargetMsgSeqNum();
             setSeqNum();
         }
 
@@ -185,7 +216,9 @@ namespace QuickFix
 
         public void Reset()
         {
-            throw new NotImplementedException();
+            cache_.Reset();
+            PurgeFileCache();
+            open();
         }
 
         public void Refresh()
