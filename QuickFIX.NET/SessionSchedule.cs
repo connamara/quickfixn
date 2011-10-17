@@ -3,15 +3,27 @@ namespace QuickFix
 {
     public class SessionSchedule
     {
+        public System.TimeSpan StartTime { get; private set; }
+        public System.TimeSpan EndTime { get; private set; }
+
         public bool IsSessionTime(System.DateTime time)
         {
+            if (StartTime.CompareTo(EndTime) < 0)
+            {
+                return (time.TimeOfDay.CompareTo(StartTime) >= 0 &&
+                    time.TimeOfDay.CompareTo(EndTime) <= 0);
+            } else if(StartTime.CompareTo(EndTime)>0)
+            {
+                return (time.TimeOfDay.CompareTo(StartTime) >= 0 ||
+                    time.TimeOfDay.CompareTo(EndTime) <= 0);
+            }
+
             return true;
         }
 
         /// <summary>
         /// </summary>
         /// <param name="settings"></param>
-        /// <param name="sessionID"></param>
         public SessionSchedule(QuickFix.Dictionary settings)
         {
             int startDay = -1;
@@ -29,17 +41,13 @@ namespace QuickFix
             if (endDay >= 0 && startDay < 0)
                 throw new QuickFix.ConfigError("EndDay used without StartDay");
 
-            System.DateTime startTime;
-            System.DateTime endTime;
-
-
             try
             {
-                startTime = System.DateTime.ParseExact(
-                    settings.GetString(SessionSettings.START_TIME),"HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture);
+                this.StartTime = System.TimeSpan.Parse(
+                    settings.GetString(SessionSettings.START_TIME));
 
-                endTime = System.DateTime.ParseExact(
-                    settings.GetString(SessionSettings.END_TIME),"HH:mm:ss",System.Globalization.CultureInfo.InvariantCulture);
+                this.EndTime = System.TimeSpan.Parse(
+                    settings.GetString(SessionSettings.END_TIME));
             }
             catch (System.FormatException e)
             {
