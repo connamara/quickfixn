@@ -32,10 +32,10 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.START_TIME, "00:00:00");
             settings.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
 
-            settings.SetDay(QuickFix.SessionSettings.START_DAY, 5);
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Thursday);
             Assert.Throws(typeof(QuickFix.ConfigError), delegate { new QuickFix.SessionSchedule(settings); });
 
-            settings.SetDay(QuickFix.SessionSettings.END_DAY, 6);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
             Assert.DoesNotThrow(delegate { new QuickFix.SessionSchedule(settings); });
         }
 
@@ -62,8 +62,8 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
 
             //only on monday
-            settings.SetDay(QuickFix.SessionSettings.START_DAY, 1);
-            settings.SetDay(QuickFix.SessionSettings.END_DAY, 1);
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Monday);
 
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
@@ -84,8 +84,8 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
 
             //only on monday-fri
-            settings.SetDay(QuickFix.SessionSettings.START_DAY, 1);
-            settings.SetDay(QuickFix.SessionSettings.END_DAY, 5);
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
 
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
@@ -106,8 +106,8 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
 
             //only on wed-mon
-            settings.SetDay(QuickFix.SessionSettings.START_DAY, 3);
-            settings.SetDay(QuickFix.SessionSettings.END_DAY, 1);
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Wednesday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Monday);
 
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
@@ -131,8 +131,8 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.END_TIME, "15:00:00");
 
             //only on monday-fri
-            settings.SetDay(QuickFix.SessionSettings.START_DAY, 1);
-            settings.SetDay(QuickFix.SessionSettings.END_DAY, 5);
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
 
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
@@ -152,8 +152,8 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.END_TIME, "07:00:00");
 
             //only on monday-fri
-            settings.SetDay(QuickFix.SessionSettings.START_DAY, 1);
-            settings.SetDay(QuickFix.SessionSettings.END_DAY, 5);
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
 
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
