@@ -222,10 +222,11 @@ namespace QuickFix
 
             if (!IsEnabled)
             {
+
                 if (!IsLoggedOn)
                     return;
 
-                if (!state_.SentLogon) 
+                if (!state_.SentLogout) 
                 {
                     this.Log.OnEvent("Initiated logout request");
                     GenerateLogout(state_.LogoutReason);
