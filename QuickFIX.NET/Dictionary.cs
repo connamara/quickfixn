@@ -114,18 +114,18 @@ namespace QuickFix
             }
         }
 
-        public int GetDay(string key)
+        public System.DayOfWeek GetDay(string key)
         {
             string abbr = GetString(key).Substring(0, 2).ToUpper();
             switch(abbr)
             {
-                case "SU": return 1;
-                case "MO": return 2;
-                case "TU": return 3;
-                case "WE": return 4;
-                case "TH": return 5;
-                case "FR": return 6;
-                case "SA": return 7;
+                case "SU": return System.DayOfWeek.Sunday;
+                case "MO": return System.DayOfWeek.Monday;
+                case "TU": return System.DayOfWeek.Tuesday;
+                case "WE": return System.DayOfWeek.Wednesday;
+                case "TH": return System.DayOfWeek.Thursday;
+                case "FR": return System.DayOfWeek.Friday;
+                case "SA": return System.DayOfWeek.Saturday;
                 default: throw new ConfigError("Illegal value " + GetString(key) + " for " + key);
             }
         }
@@ -150,17 +150,17 @@ namespace QuickFix
             SetString(key, Fields.Converters.BoolConverter.Convert(val));
         }
 
-        public void SetDay(string key, int val)
+        public void SetDay(string key, System.DayOfWeek val)
         {
             switch(val)
             {
-                case 1: SetString(key, "SU"); break;
-                case 2: SetString(key, "MO"); break;
-                case 3: SetString(key, "TU"); break;
-                case 4: SetString(key, "WE"); break;
-                case 5: SetString(key, "TH"); break;
-                case 6: SetString(key, "FR"); break;
-                case 7: SetString(key, "SA"); break;
+                case System.DayOfWeek.Sunday: SetString(key, "SU"); break;
+                case System.DayOfWeek.Monday: SetString(key, "MO"); break;
+                case System.DayOfWeek.Tuesday: SetString(key, "TU"); break;
+                case System.DayOfWeek.Wednesday: SetString(key, "WE"); break;
+                case System.DayOfWeek.Thursday: SetString(key, "TH"); break;
+                case System.DayOfWeek.Friday: SetString(key, "FR"); break;
+                case System.DayOfWeek.Saturday: SetString(key, "SA"); break;
                 default: throw new ConfigError("Illegal value " + val + " for " + key);
             }
         }
