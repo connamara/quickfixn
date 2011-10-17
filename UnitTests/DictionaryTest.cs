@@ -69,28 +69,28 @@ namespace UnitTests
             d.SetString("DAY5", "TH");
             d.SetString("DAY6", "FR");
             d.SetString("DAY7", "SA");
-            Assert.That(d.GetDay("DAY1"), Is.EqualTo(1));
-            Assert.That(d.GetDay("DAY2"), Is.EqualTo(2));
-            Assert.That(d.GetDay("DAY3"), Is.EqualTo(3));
-            Assert.That(d.GetDay("DAY4"), Is.EqualTo(4));
-            Assert.That(d.GetDay("DAY5"), Is.EqualTo(5));
-            Assert.That(d.GetDay("DAY6"), Is.EqualTo(6));
-            Assert.That(d.GetDay("DAY7"), Is.EqualTo(7));
+            Assert.That(d.GetDay("DAY1"), Is.EqualTo(System.DayOfWeek.Sunday));
+            Assert.That(d.GetDay("DAY2"), Is.EqualTo(System.DayOfWeek.Monday));
+            Assert.That(d.GetDay("DAY3"), Is.EqualTo(System.DayOfWeek.Tuesday));
+            Assert.That(d.GetDay("DAY4"), Is.EqualTo(System.DayOfWeek.Wednesday));
+            Assert.That(d.GetDay("DAY5"), Is.EqualTo(System.DayOfWeek.Thursday));
+            Assert.That(d.GetDay("DAY6"), Is.EqualTo(System.DayOfWeek.Friday));
+            Assert.That(d.GetDay("DAY7"), Is.EqualTo(System.DayOfWeek.Saturday));
 
-            d.SetDay("NEXTDAY1", 1);
-            d.SetDay("NEXTDAY2", 2);
-            d.SetDay("NEXTDAY3", 3);
-            d.SetDay("NEXTDAY4", 4);
-            d.SetDay("NEXTDAY5", 5);
-            d.SetDay("NEXTDAY6", 6);
-            d.SetDay("NEXTDAY7", 7);
-            Assert.That(d.GetDay("NEXTDAY1"), Is.EqualTo(1));
-            Assert.That(d.GetDay("NEXTDAY2"), Is.EqualTo(2));
-            Assert.That(d.GetDay("NEXTDAY3"), Is.EqualTo(3));
-            Assert.That(d.GetDay("NEXTDAY4"), Is.EqualTo(4));
-            Assert.That(d.GetDay("NEXTDAY5"), Is.EqualTo(5));
-            Assert.That(d.GetDay("NEXTDAY6"), Is.EqualTo(6));
-            Assert.That(d.GetDay("NEXTDAY7"), Is.EqualTo(7));
+            d.SetDay("NEXTDAY1", System.DayOfWeek.Sunday);
+            d.SetDay("NEXTDAY2", System.DayOfWeek.Monday);
+            d.SetDay("NEXTDAY3", System.DayOfWeek.Tuesday);
+            d.SetDay("NEXTDAY4", System.DayOfWeek.Wednesday);
+            d.SetDay("NEXTDAY5", System.DayOfWeek.Thursday);
+            d.SetDay("NEXTDAY6", System.DayOfWeek.Friday);
+            d.SetDay("NEXTDAY7", System.DayOfWeek.Saturday);
+            Assert.That(d.GetDay("NEXTDAY1"), Is.EqualTo(System.DayOfWeek.Sunday));
+            Assert.That(d.GetDay("NEXTDAY2"), Is.EqualTo(System.DayOfWeek.Monday));
+            Assert.That(d.GetDay("NEXTDAY3"), Is.EqualTo(System.DayOfWeek.Tuesday));
+            Assert.That(d.GetDay("NEXTDAY4"), Is.EqualTo(System.DayOfWeek.Wednesday));
+            Assert.That(d.GetDay("NEXTDAY5"), Is.EqualTo(System.DayOfWeek.Thursday));
+            Assert.That(d.GetDay("NEXTDAY6"), Is.EqualTo(System.DayOfWeek.Friday));
+            Assert.That(d.GetDay("NEXTDAY7"), Is.EqualTo(System.DayOfWeek.Saturday));
         }
         
         [Test]
