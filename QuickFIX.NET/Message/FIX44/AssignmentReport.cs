@@ -17,7 +17,6 @@ namespace QuickFix
             public AssignmentReport(
                     QuickFix.Fields.AsgnRptID aAsgnRptID,
                     QuickFix.Fields.AccountType aAccountType,
-                    QuickFix.Fields.Symbol aSymbol,
                     QuickFix.Fields.SettlPrice aSettlPrice,
                     QuickFix.Fields.SettlPriceType aSettlPriceType,
                     QuickFix.Fields.UnderlyingSettlPrice aUnderlyingSettlPrice,
@@ -31,7 +30,6 @@ namespace QuickFix
             {
                 this.AsgnRptID = aAsgnRptID;
                 this.AccountType = aAccountType;
-                this.Symbol = aSymbol;
                 this.SettlPrice = aSettlPrice;
                 this.SettlPriceType = aSettlPriceType;
                 this.UnderlyingSettlPrice = aUnderlyingSettlPrice;

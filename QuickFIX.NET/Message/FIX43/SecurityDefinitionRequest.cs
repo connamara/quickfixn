@@ -16,13 +16,11 @@ namespace QuickFix
 
             public SecurityDefinitionRequest(
                     QuickFix.Fields.SecurityReqID aSecurityReqID,
-                    QuickFix.Fields.SecurityRequestType aSecurityRequestType,
-                    QuickFix.Fields.Symbol aSymbol
+                    QuickFix.Fields.SecurityRequestType aSecurityRequestType
                 ) : this()
             {
                 this.SecurityReqID = aSecurityReqID;
                 this.SecurityRequestType = aSecurityRequestType;
-                this.Symbol = aSymbol;
             }
 
             public QuickFix.Fields.SecurityReqID SecurityReqID

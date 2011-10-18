@@ -82,11 +82,12 @@ class FIXDictionary
     msg
   end
   
-  def parse_element( el, fixel, header=false, trailer=false )
+  def parse_element( el, fixel, header=false, trailer=false, override_req=false )
     el.children.each do |child|
       next unless child.element?
       cname = child['name']
       req = child['required'] == 'Y' ? true : false
+      req = (req and !override_req)
       
       case child.node_name
         when 'field'
@@ -97,12 +98,12 @@ class FIXDictionary
           grpfld = @fields[cname].merge(:required=>req, :group=>true)
           fixel[:fields] << grpfld
           grp = {:group_field=>grpfld, :name=>cname, :fields=>[], :groups=>[], :required=>req}
-          parse_element(child, grp, header, trailer )
+          parse_element(child, grp, header, trailer, override_req )
           fixel[:groups] << grp
           
         when 'component'
           component_el = @doc.xpath("//components/component[@name='#{cname}']")
-          parse_element component_el, fixel, header, trailer
+          parse_element component_el, fixel, header, trailer, !req
       end
     end
   end  

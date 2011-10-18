@@ -17,14 +17,12 @@ namespace QuickFix
             public SecurityDefinition(
                     QuickFix.Fields.SecurityReqID aSecurityReqID,
                     QuickFix.Fields.SecurityResponseID aSecurityResponseID,
-                    QuickFix.Fields.SecurityResponseType aSecurityResponseType,
-                    QuickFix.Fields.Symbol aSymbol
+                    QuickFix.Fields.SecurityResponseType aSecurityResponseType
                 ) : this()
             {
                 this.SecurityReqID = aSecurityReqID;
                 this.SecurityResponseID = aSecurityResponseID;
                 this.SecurityResponseType = aSecurityResponseType;
-                this.Symbol = aSymbol;
             }
 
             public QuickFix.Fields.SecurityReqID SecurityReqID

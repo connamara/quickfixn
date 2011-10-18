@@ -16,15 +16,11 @@ namespace QuickFix
 
             public OrderMassStatusRequest(
                     QuickFix.Fields.MassStatusReqID aMassStatusReqID,
-                    QuickFix.Fields.MassStatusReqType aMassStatusReqType,
-                    QuickFix.Fields.Symbol aSymbol,
-                    QuickFix.Fields.UnderlyingSymbol aUnderlyingSymbol
+                    QuickFix.Fields.MassStatusReqType aMassStatusReqType
                 ) : this()
             {
                 this.MassStatusReqID = aMassStatusReqID;
                 this.MassStatusReqType = aMassStatusReqType;
-                this.Symbol = aSymbol;
-                this.UnderlyingSymbol = aUnderlyingSymbol;
             }
 
             public QuickFix.Fields.MassStatusReqID MassStatusReqID

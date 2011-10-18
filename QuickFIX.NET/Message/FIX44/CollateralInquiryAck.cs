@@ -16,13 +16,11 @@ namespace QuickFix
 
             public CollateralInquiryAck(
                     QuickFix.Fields.CollInquiryID aCollInquiryID,
-                    QuickFix.Fields.CollInquiryStatus aCollInquiryStatus,
-                    QuickFix.Fields.Symbol aSymbol
+                    QuickFix.Fields.CollInquiryStatus aCollInquiryStatus
                 ) : this()
             {
                 this.CollInquiryID = aCollInquiryID;
                 this.CollInquiryStatus = aCollInquiryStatus;
-                this.Symbol = aSymbol;
             }
 
             public QuickFix.Fields.CollInquiryID CollInquiryID

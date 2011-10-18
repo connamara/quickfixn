@@ -16,13 +16,11 @@ namespace QuickFix
 
             public TradeCaptureReportRequest(
                     QuickFix.Fields.TradeRequestID aTradeRequestID,
-                    QuickFix.Fields.TradeRequestType aTradeRequestType,
-                    QuickFix.Fields.Symbol aSymbol
+                    QuickFix.Fields.TradeRequestType aTradeRequestType
                 ) : this()
             {
                 this.TradeRequestID = aTradeRequestID;
                 this.TradeRequestType = aTradeRequestType;
-                this.Symbol = aSymbol;
             }
 
             public QuickFix.Fields.TradeRequestID TradeRequestID
