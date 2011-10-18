@@ -69,7 +69,7 @@ class Generator
     
     vals = defs.map { |d| d[:values] }.reject { |d| d.nil? }.flatten
     return fld if vals.empty?
-    vals.uniq! {|v| v[:desc]}
+    vals = vals.inject([]) {|saved, v| saved << v unless saved.detect {|u| u[:desc] == v[:desc]}; saved}
     fld[:values] = vals
     fld
   end
