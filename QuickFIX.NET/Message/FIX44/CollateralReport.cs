@@ -16,13 +16,11 @@ namespace QuickFix
 
             public CollateralReport(
                     QuickFix.Fields.CollRptID aCollRptID,
-                    QuickFix.Fields.CollStatus aCollStatus,
-                    QuickFix.Fields.Symbol aSymbol
+                    QuickFix.Fields.CollStatus aCollStatus
                 ) : this()
             {
                 this.CollRptID = aCollRptID;
                 this.CollStatus = aCollStatus;
-                this.Symbol = aSymbol;
             }
 
             public QuickFix.Fields.CollRptID CollRptID

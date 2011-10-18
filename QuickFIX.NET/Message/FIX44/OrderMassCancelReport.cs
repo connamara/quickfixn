@@ -17,16 +17,12 @@ namespace QuickFix
             public OrderMassCancelReport(
                     QuickFix.Fields.OrderID aOrderID,
                     QuickFix.Fields.MassCancelRequestType aMassCancelRequestType,
-                    QuickFix.Fields.MassCancelResponse aMassCancelResponse,
-                    QuickFix.Fields.Symbol aSymbol,
-                    QuickFix.Fields.UnderlyingSymbol aUnderlyingSymbol
+                    QuickFix.Fields.MassCancelResponse aMassCancelResponse
                 ) : this()
             {
                 this.OrderID = aOrderID;
                 this.MassCancelRequestType = aMassCancelRequestType;
                 this.MassCancelResponse = aMassCancelResponse;
-                this.Symbol = aSymbol;
-                this.UnderlyingSymbol = aUnderlyingSymbol;
             }
 
             public QuickFix.Fields.ClOrdID ClOrdID

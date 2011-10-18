@@ -19,8 +19,7 @@ namespace QuickFix
                     QuickFix.Fields.PosReqResult aPosReqResult,
                     QuickFix.Fields.PosReqStatus aPosReqStatus,
                     QuickFix.Fields.Account aAccount,
-                    QuickFix.Fields.AccountType aAccountType,
-                    QuickFix.Fields.Symbol aSymbol
+                    QuickFix.Fields.AccountType aAccountType
                 ) : this()
             {
                 this.PosMaintRptID = aPosMaintRptID;
@@ -28,7 +27,6 @@ namespace QuickFix
                 this.PosReqStatus = aPosReqStatus;
                 this.Account = aAccount;
                 this.AccountType = aAccountType;
-                this.Symbol = aSymbol;
             }
 
             public QuickFix.Fields.PosMaintRptID PosMaintRptID

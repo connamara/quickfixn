@@ -18,15 +18,13 @@ namespace QuickFix
                     QuickFix.Fields.TradeRequestID aTradeRequestID,
                     QuickFix.Fields.TradeRequestType aTradeRequestType,
                     QuickFix.Fields.TradeRequestResult aTradeRequestResult,
-                    QuickFix.Fields.TradeRequestStatus aTradeRequestStatus,
-                    QuickFix.Fields.Symbol aSymbol
+                    QuickFix.Fields.TradeRequestStatus aTradeRequestStatus
                 ) : this()
             {
                 this.TradeRequestID = aTradeRequestID;
                 this.TradeRequestType = aTradeRequestType;
                 this.TradeRequestResult = aTradeRequestResult;
                 this.TradeRequestStatus = aTradeRequestStatus;
-                this.Symbol = aSymbol;
             }
 
             public QuickFix.Fields.TradeRequestID TradeRequestID

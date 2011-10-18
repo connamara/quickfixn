@@ -19,7 +19,6 @@ namespace QuickFix
                     QuickFix.Fields.PosReqType aPosReqType,
                     QuickFix.Fields.Account aAccount,
                     QuickFix.Fields.AccountType aAccountType,
-                    QuickFix.Fields.Symbol aSymbol,
                     QuickFix.Fields.ClearingBusinessDate aClearingBusinessDate,
                     QuickFix.Fields.TransactTime aTransactTime
                 ) : this()
@@ -28,7 +27,6 @@ namespace QuickFix
                 this.PosReqType = aPosReqType;
                 this.Account = aAccount;
                 this.AccountType = aAccountType;
-                this.Symbol = aSymbol;
                 this.ClearingBusinessDate = aClearingBusinessDate;
                 this.TransactTime = aTransactTime;
             }

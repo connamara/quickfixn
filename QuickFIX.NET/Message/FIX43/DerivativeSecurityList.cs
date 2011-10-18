@@ -17,14 +17,12 @@ namespace QuickFix
             public DerivativeSecurityList(
                     QuickFix.Fields.SecurityReqID aSecurityReqID,
                     QuickFix.Fields.SecurityResponseID aSecurityResponseID,
-                    QuickFix.Fields.SecurityRequestResult aSecurityRequestResult,
-                    QuickFix.Fields.UnderlyingSymbol aUnderlyingSymbol
+                    QuickFix.Fields.SecurityRequestResult aSecurityRequestResult
                 ) : this()
             {
                 this.SecurityReqID = aSecurityReqID;
                 this.SecurityResponseID = aSecurityResponseID;
                 this.SecurityRequestResult = aSecurityRequestResult;
-                this.UnderlyingSymbol = aUnderlyingSymbol;
             }
 
             public QuickFix.Fields.SecurityReqID SecurityReqID

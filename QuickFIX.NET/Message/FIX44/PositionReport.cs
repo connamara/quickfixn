@@ -20,7 +20,6 @@ namespace QuickFix
                     QuickFix.Fields.ClearingBusinessDate aClearingBusinessDate,
                     QuickFix.Fields.Account aAccount,
                     QuickFix.Fields.AccountType aAccountType,
-                    QuickFix.Fields.Symbol aSymbol,
                     QuickFix.Fields.SettlPrice aSettlPrice,
                     QuickFix.Fields.SettlPriceType aSettlPriceType,
                     QuickFix.Fields.PriorSettlPrice aPriorSettlPrice
@@ -31,7 +30,6 @@ namespace QuickFix
                 this.ClearingBusinessDate = aClearingBusinessDate;
                 this.Account = aAccount;
                 this.AccountType = aAccountType;
-                this.Symbol = aSymbol;
                 this.SettlPrice = aSettlPrice;
                 this.SettlPriceType = aSettlPriceType;
                 this.PriorSettlPrice = aPriorSettlPrice;

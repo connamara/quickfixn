@@ -19,8 +19,7 @@ namespace QuickFix
                     QuickFix.Fields.CollAsgnID aCollAsgnID,
                     QuickFix.Fields.CollAsgnReason aCollAsgnReason,
                     QuickFix.Fields.CollAsgnRespType aCollAsgnRespType,
-                    QuickFix.Fields.TransactTime aTransactTime,
-                    QuickFix.Fields.Symbol aSymbol
+                    QuickFix.Fields.TransactTime aTransactTime
                 ) : this()
             {
                 this.CollRespID = aCollRespID;
@@ -28,7 +27,6 @@ namespace QuickFix
                 this.CollAsgnReason = aCollAsgnReason;
                 this.CollAsgnRespType = aCollAsgnRespType;
                 this.TransactTime = aTransactTime;
-                this.Symbol = aSymbol;
             }
 
             public QuickFix.Fields.CollRespID CollRespID

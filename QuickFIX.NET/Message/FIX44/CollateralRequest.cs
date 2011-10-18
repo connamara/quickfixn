@@ -17,14 +17,12 @@ namespace QuickFix
             public CollateralRequest(
                     QuickFix.Fields.CollReqID aCollReqID,
                     QuickFix.Fields.CollAsgnReason aCollAsgnReason,
-                    QuickFix.Fields.TransactTime aTransactTime,
-                    QuickFix.Fields.Symbol aSymbol
+                    QuickFix.Fields.TransactTime aTransactTime
                 ) : this()
             {
                 this.CollReqID = aCollReqID;
                 this.CollAsgnReason = aCollAsgnReason;
                 this.TransactTime = aTransactTime;
-                this.Symbol = aSymbol;
             }
 
             public QuickFix.Fields.CollReqID CollReqID

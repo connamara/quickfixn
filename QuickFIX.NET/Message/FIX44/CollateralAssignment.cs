@@ -18,15 +18,13 @@ namespace QuickFix
                     QuickFix.Fields.CollAsgnID aCollAsgnID,
                     QuickFix.Fields.CollAsgnReason aCollAsgnReason,
                     QuickFix.Fields.CollAsgnTransType aCollAsgnTransType,
-                    QuickFix.Fields.TransactTime aTransactTime,
-                    QuickFix.Fields.Symbol aSymbol
+                    QuickFix.Fields.TransactTime aTransactTime
                 ) : this()
             {
                 this.CollAsgnID = aCollAsgnID;
                 this.CollAsgnReason = aCollAsgnReason;
                 this.CollAsgnTransType = aCollAsgnTransType;
                 this.TransactTime = aTransactTime;
-                this.Symbol = aSymbol;
             }
 
             public QuickFix.Fields.CollAsgnID CollAsgnID

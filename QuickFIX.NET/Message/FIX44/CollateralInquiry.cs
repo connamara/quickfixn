@@ -14,12 +14,6 @@ namespace QuickFix
                 this.Header.SetField(new QuickFix.Fields.MsgType("BB"));
             }
 
-            public CollateralInquiry(
-                    QuickFix.Fields.Symbol aSymbol
-                ) : this()
-            {
-                this.Symbol = aSymbol;
-            }
 
             public QuickFix.Fields.CollInquiryID CollInquiryID
             { 
