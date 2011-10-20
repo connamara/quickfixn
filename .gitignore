@@ -15,6 +15,7 @@ AcceptanceTest/TestResult.xml
 AcceptanceTest/bin/Debug/*
 AcceptanceTest/bin/Release/*
 AcceptanceTest/log/
+AcceptanceTest/store/
 Examples/Executor/bin/*
 Examples/Executor/obj/*
 Examples/Executor/log/
