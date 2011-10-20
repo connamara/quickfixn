@@ -11,7 +11,7 @@ using System.IO;
 
 namespace QuickFix.Transport
 {
-    public class SocketInitiator : Initiator
+    public class SocketInitiator : AbstractInitiator
     {
         public const string SOCKET_CONNECT_HOST = "SocketConnectHost";
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";

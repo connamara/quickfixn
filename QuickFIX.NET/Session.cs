@@ -141,7 +141,12 @@ namespace QuickFix
 
         #endregion
 
-        public bool Send(Message message)
+        /// <summary>
+        /// Sends a message via the session indicated by the header fields
+        /// </summary>
+        /// <param name="message">message to send</param>
+        /// <returns>true if was sent successfully</returns>
+        public virtual bool Send(Message message)
         {
             message.Header.RemoveField(Fields.Tags.PossDupFlag);
             message.Header.RemoveField(Fields.Tags.OrigSendingTime);
