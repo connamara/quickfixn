@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace QuickFix
 {
-    public abstract class AbstractInitiator
+    public abstract class AbstractInitiator : IInitiator
     {
         private object sync_ = new object();
         private Dictionary<SessionID,Session> sessions_ = new Dictionary<SessionID, Session>();
@@ -112,7 +112,6 @@ namespace QuickFix
         {
             lock (sync_)
             {
-
                 foreach (SessionID sessionID in connected_)
                 {
                     if (Session.LookupSession(sessionID).IsLoggedOn)
