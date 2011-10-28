@@ -45,11 +45,19 @@ namespace Executor
             Side side = n.Side;
             OrdType ordType = n.OrdType;
             OrderQty orderQty = n.OrderQty;
-            Price price = n.Price;
+            Price price = new Price(DEFAULT_MARKET_PRICE);
             ClOrdID clOrdID = n.ClOrdID;
 
-            if (ordType.getValue() != OrdType.LIMIT)
-                throw new IncorrectTagValue(ordType.Tag);
+            switch (ordType.getValue())
+            {
+                case OrdType.LIMIT:
+                    price = n.Price;
+                    if (price.Obj == 0)
+                        throw new IncorrectTagValue(price.Tag);
+                    break;
+                case OrdType.MARKET: break;
+                default: throw new IncorrectTagValue(ordType.Tag);
+            }
 
             QuickFix.FIX40.ExecutionReport exReport = new QuickFix.FIX40.ExecutionReport(
                 new OrderID(GenOrderID()),
@@ -92,11 +100,19 @@ namespace Executor
             Side side = n.Side;
             OrdType ordType = n.OrdType;
             OrderQty orderQty = n.OrderQty;
-            Price price = n.Price;
+            Price price = new Price(DEFAULT_MARKET_PRICE);
             ClOrdID clOrdID = n.ClOrdID;
 
-            if (ordType.getValue() != OrdType.LIMIT)
-                throw new IncorrectTagValue(ordType.Tag);
+            switch (ordType.getValue())
+            {
+                case OrdType.LIMIT:
+                    price = n.Price;
+                    if (price.Obj == 0)
+                        throw new IncorrectTagValue(price.Tag);
+                    break;
+                case OrdType.MARKET: break;
+                default: throw new IncorrectTagValue(ordType.Tag);
+            }
 
             QuickFix.FIX41.ExecutionReport exReport = new QuickFix.FIX41.ExecutionReport(
                 new OrderID(GenOrderID()),
@@ -146,7 +162,11 @@ namespace Executor
 
             switch (ordType.getValue())
             {
-                case OrdType.LIMIT: price = n.Price; break;
+                case OrdType.LIMIT:
+                    price = n.Price;
+                    if (price.Obj == 0)
+                        throw new IncorrectTagValue(price.Tag);
+                    break;
                 case OrdType.MARKET: break;
                 default: throw new IncorrectTagValue(ordType.Tag);
             }
@@ -194,11 +214,19 @@ namespace Executor
             Side side = n.Side;
             OrdType ordType = n.OrdType;
             OrderQty orderQty = n.OrderQty;
-            Price price = n.Price;
+            Price price = new Price(DEFAULT_MARKET_PRICE);
             ClOrdID clOrdID = n.ClOrdID;
 
-            if (ordType.getValue() != OrdType.LIMIT)
-                throw new IncorrectTagValue(ordType.Tag);
+            switch (ordType.getValue())
+            {
+                case OrdType.LIMIT:
+                    price = n.Price;
+                    if (price.Obj == 0)
+                        throw new IncorrectTagValue(price.Tag);
+                    break;
+                case OrdType.MARKET: break;
+                default: throw new IncorrectTagValue(ordType.Tag);
+            }
 
             QuickFix.FIX43.ExecutionReport exReport = new QuickFix.FIX43.ExecutionReport(
                 new OrderID(GenOrderID()),
@@ -243,11 +271,19 @@ namespace Executor
             Side side = n.Side;
             OrdType ordType = n.OrdType;
             OrderQty orderQty = n.OrderQty;
-            Price price = n.Price;
+            Price price = new Price(DEFAULT_MARKET_PRICE);
             ClOrdID clOrdID = n.ClOrdID;
 
-            if (ordType.getValue() != OrdType.LIMIT)
-                throw new IncorrectTagValue(ordType.Tag);
+            switch (ordType.getValue())
+            {
+                case OrdType.LIMIT:
+                    price = n.Price;
+                    if (price.Obj == 0)
+                        throw new IncorrectTagValue(price.Tag);
+                    break;
+                case OrdType.MARKET: break;
+                default: throw new IncorrectTagValue(ordType.Tag);
+            }
 
             QuickFix.FIX44.ExecutionReport exReport = new QuickFix.FIX44.ExecutionReport(
                 new OrderID(GenOrderID()),
@@ -292,11 +328,19 @@ namespace Executor
             Side side = n.Side;
             OrdType ordType = n.OrdType;
             OrderQty orderQty = n.OrderQty;
-            Price price = n.Price;
+            Price price = new Price(DEFAULT_MARKET_PRICE);
             ClOrdID clOrdID = n.ClOrdID;
 
-            if (ordType.getValue() != OrdType.LIMIT)
-                throw new IncorrectTagValue(ordType.Tag);
+            switch (ordType.getValue())
+            {
+                case OrdType.LIMIT:
+                    price = n.Price;
+                    if (price.Obj == 0)
+                        throw new IncorrectTagValue(price.Tag);
+                    break;
+                case OrdType.MARKET: break;
+                default: throw new IncorrectTagValue(ordType.Tag);
+            }
 
             QuickFix.FIX50.ExecutionReport exReport = new QuickFix.FIX50.ExecutionReport(
                 new OrderID(GenOrderID()),
