@@ -6,7 +6,7 @@
 	font-style: normal;
 }
 
-body { background-image: url("../images/bg.jpg"); }
+body { background-image: url("../images/bg.png"); }
 
 h1 { 
   color: #03203b;
@@ -28,17 +28,26 @@ p, ol, li {
   font-size: 14px;
 }
 
+th, td, caption {padding:4px 10px 4px 5px;}
+
+tbody tr:nth-child(even) td, tbody tr.even td {background:#e5ecf9;}
+tbody tr:nth-child(odd) td, tbody tr.even td {background:white;}
+
+th {font-weight:bold;}
+thead th {background:#c3d9ff;}
+
 th { 
   font-family: "Helvetica Neue", "Helvetica";
   font-weight: bold;
   color: #063969;
   background-color:#f7f9f9;
   text-align: center;
+  font-size: 14px;
 }
 
 td {
   font-family: "Verdana";
-  font-size: 11px;
+  font-size: 14px;
 }
 
 li {
@@ -48,6 +57,14 @@ li {
 a:hover { color: #ce5120; }
 a { color: #8a3514; }
 
+#top-logo img {
+  max-height: 120px;
+  margin: 30px 0px 0px 0px;
+}
+
+#top-logo {
+    text-align: center;
+}
 
 .fonticon {
   font-size: 50px;
@@ -99,7 +116,12 @@ pre {
   border-radius: 3px;
 }
 
-#header { height: 150px; }
+table {
+  -webkit-box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 6px 2px rgba(0, 0, 0, 0.5);
+}
+
 #main-content { min-height: 500px; }
 
 #side-nav {
@@ -124,7 +146,7 @@ pre {
 
 #mainnav {
   padding: 10px 0px 10px 0px;
-  margin: 50px 0px 50px 0px;
+  margin: 20px 0px 50px 0px;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
   color: #063969;
