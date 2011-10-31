@@ -4,16 +4,6 @@ About
 
 QuickFIX/N is 100% free and open source with a liberal [license][4].
 
-Commercial Backing
-------------------
-Work on QuickFIX/N is sponosed by Connamara Systems.
-
-[![Connamara Systems, LLC][3]][2]
-
-Connamara offers commercial support packages, custom trading application
-development, and general technology consulting.
-
-
 Comparisons to QuickFIX
 -----------------------
 QuickFIX/N is a .NET port of [QuickFIX][0], an open source C++ FIX engine.<br/>
@@ -32,6 +22,18 @@ usage to .NET.
 For Java development, please visit the excellent [QuickFIX/J][1].
 
 QuickFIX/N uses the QuickFIX name with the full backing and support of QuickFIX and its creator Oren Miller.
+
+Commercial Backing
+------------------
+Work on QuickFIX/N is sponosed by Connamara Systems.
+
+[![Connamara Systems, LLC][3]][2]
+
+In addition to launching and supporting the QuickFIX/N initiative, Connamara 
+has been involved with the QuickFIX project since it's inception. Today, 
+Connamara is an active maintainer of QuickFIX and a contributor to the 
+QuickFIX/J project. Connamara also offers a commercial version of QuickFIX/J 
+that exhibits dramatically lower latencies and variance.
 
 [0]: http://quickfixengine.org
 [1]: http://quickfixj.org
