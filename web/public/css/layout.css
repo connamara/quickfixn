@@ -28,19 +28,21 @@ p, ol, li {
   font-size: 14px;
 }
 
-th, td, caption {padding:4px 10px 4px 5px;}
+th, td, caption {padding:8px 12px 8px 10px;}
 
 tbody tr:nth-child(even) td, tbody tr.even td {background:#e5ecf9;}
 tbody tr:nth-child(odd) td, tbody tr.even td {background:white;}
 
-th {font-weight:bold;}
-thead th {background:#c3d9ff;}
+.default {
+  text-align: center;
+}
 
 th { 
+  font-weight:bold;
   font-family: "Helvetica Neue", "Helvetica";
   font-weight: bold;
-  color: #063969;
-  background-color:#f7f9f9;
+  background-color: #063969;
+  color:#f7f9f9;
   text-align: center;
   font-size: 14px;
 }
@@ -54,7 +56,7 @@ li {
   margin: 10px;
 }
 
-a:hover { color: #ce5120; }
+a:hover { color: #cd4c39; }
 a { color: #8a3514; }
 
 #top-logo img {
@@ -78,10 +80,10 @@ a { color: #8a3514; }
   text-decoration: none;
   color: #063969;
 }
-.navitem-sel { color: #ce5120; }
+.navitem-sel { color: #cd4c39; }
 
 .navitem:hover {
-  color: #ce5120;
+  color: #cd4c39;
   cursor: pointer;
 }
 
@@ -141,12 +143,12 @@ table {
 }
 
 .side-link:hover, .side-link-sel {
-  color: #ce5120;
+  color: #cd4c39;
 }
 
 #mainnav {
   padding: 10px 0px 10px 0px;
-  margin: 20px 0px 50px 0px;
+  margin: 10px 0px 50px 0px;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
   color: #063969;
@@ -169,14 +171,18 @@ table {
   font-family: "Verdana", "Helvetica Neue", "Helvetica";
   font-style: bold;
 }
-#footer-links a:hover { color: #ce5120; }
+#footer-links a:hover { color: #cd4c39; }
 
 #big-words h1 {
   margin-bottom: 40px;
 }
 
+#config-table {
+  margin-right: -200px;
+}
+
 #thebest {
-  color: #ce5120;
+  color: #cd4c39;
 }
 
 #home-desc p {
