@@ -26,7 +26,11 @@ QuickFIX Settings
 
 <a name='session'> </a>
 
-### Session
+## Session
+
+
+<div id="config-table">
+
 
 <table>
   <tr>
@@ -86,7 +90,7 @@ QuickFIX Settings
       <div>FIX.4.1</div>
       <div>FIX.4.0</div>
     </td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
@@ -96,21 +100,21 @@ QuickFIX Settings
       <div>initiator</div>
       <div>acceptor</div>
     </td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
     <td class='setting'>StartTime</td>
     <td class='description'>Time of day that this FIX session becomes activated</td>
     <td class='valid'>Time in the format of HH:MM:SS, time is represented in UTC</td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
     <td class='setting'>EndTime</td>
     <td class='description'>Time of day that this FIX session becomes deactivated</td>
     <td class='valid'>Time in the format of HH:MM:SS, time is represented in UTC</td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
@@ -119,7 +123,7 @@ QuickFIX Settings
     <td class='valid'>
       Day of week in English using any abbreviation (ie mo, mon, mond, monda, monday are valid)
     </td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
@@ -128,7 +132,7 @@ QuickFIX Settings
     <td class='valid'>
       Day of week in English using any abbreviation (ie mo, mon, mond, monda, monday are valid)
     </td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
@@ -175,7 +179,7 @@ QuickFIX Settings
 
 <a name='validation'> </a>
 
-### Validation
+<h2>Validation</h2>
 
 <table>
   <tr>
@@ -209,7 +213,7 @@ QuickFIX Settings
       <div>FIX41.xml</div>
       <div>FIX40.xml</div>
     </td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
@@ -222,7 +226,7 @@ QuickFIX Settings
       <div>Valid XML data dictionary file. QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
       <div>FIXT1.1.xml</div>
     </td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
@@ -251,6 +255,7 @@ QuickFIX Settings
       <div>FIX41.xml</div>
       <div>FIX40.xml</div>
     </td>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
@@ -286,7 +291,7 @@ QuickFIX Settings
 
 <a name='initiator'></a>
 
-###Initiator
+<h2>Initiator</h2>
 
 <table>
   <tr>
@@ -307,41 +312,41 @@ QuickFIX Settings
     <td class='setting'>HeartBtInt</td>
     <td class='description'>Heartbeat interval in seconds. Only used for initiators.</td>
     <td class='valid'>Positive integer</td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
     <td class='setting'>SocketConnectPort</td>
     <td class='description'>Socket port for connecting to a session.  Only used for initiators.</td>
     <td class='valid'>Positive integer</td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
     <td class='setting'>SocketConnectHost</td>
     <td class='description'>Host to connect to.  Only used for initiators.</td>
     <td class='valid'>Valid IP address in the format of x.x.x.x or a domain name</td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
     <td class='setting'>SocketConnectPort&lt;n&gt;</td>
     <td class='description'>Alternate socket ports for connecting to a session for failover, where <strong>n</strong> is a positive integer. ie, SocketConnectPort1, SocketConnectPort2... must be consecutive and have a matching SocketConnectHost&lt;n&gt;</td>
     <td class='valid'>Positive integer</td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
     <td class='setting'>SocketConnectHost&lt;n&gt;</td>
     <td class='description'>Alternate socket hosts for connecting to a session for failover, where <strong>n</strong> is a positive integer. ie, SocketConnectHost1, SocketConnectHost2... must be consecutive and have a matching SocketConnectPort&lt;n&gt;</td>
     <td class='valid'>Valid IP address in the format of x.x.x.x or a domain name</td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 </table>
 
 <a name='acceptor'></a>
 
-###Acceptor
+<h2>Acceptor</h2>
 
 <table>
   <tr>
@@ -355,7 +360,7 @@ QuickFIX Settings
     <td class='setting'>SocketAcceptPort</td>
     <td class='description'>Socket port for listening to incoming connections.  Only used with acceptors.</td>
     <td class='valid'>Positive integer, valid open socket port</td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 
   <tr>
@@ -368,7 +373,7 @@ QuickFIX Settings
 
 <a name='storage'></a>
 
-###Storage
+<h2>Storage</h2>
 
 <table>
   <tr>
@@ -394,7 +399,7 @@ QuickFIX Settings
 
 <a name='file'></a>
 
-###File Storage
+<h2>File Storage</h2>
 
 <table>
   <tr>
@@ -408,13 +413,13 @@ QuickFIX Settings
     <td class='setting'>FileStorePath</td>
     <td class='description'>Directory to store sequence number and message files.</td>
     <td class='valid'>Valid directory for storing files, must have write access.</td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 </table>
 
 <a name='logging'></a>
 
-###Logging
+<h2>Logging</h2>
 
 <table>
   <tr>
@@ -428,13 +433,17 @@ QuickFIX Settings
     <td class='setting'>FileLogPath</td>
     <td class='description'>Directory to store logs.</td>
     <td class='valid'>Valid directory for storing files, must have write access</td>
-    <td class='default'/>
+    <td class='default'>-</td>
   </tr>
 </table>
 
+
+</div>
+
+
 <a name='sample'></a>
 
-###Sample Settings File
+##Sample Settings File
 
 Here is a typical settings file you might find in a firm that wants to connect to several ECNs.
 
