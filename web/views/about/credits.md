@@ -9,7 +9,7 @@ and launched with significantly more bugs had we not been able to copy
 the hundreds of acceptance tests that ship with his original QuickFIX 
 project. 
 
-Thanks to **Jim Downs** and Connamara Systems, who took our baby project 
+Thanks to **Jim Downs**, CEO of Connamara Systems, who took our baby project 
 into his company and gave it a final push into reality.
 
 Contributors
