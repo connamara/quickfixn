@@ -1,3 +1,5 @@
+[![Connamara Systems, LLC][1]][0]
+
 System Setup
 ------------
 This project requires MSBuild, NUnit, Ruby (1.9.2), and xsltproc.
@@ -124,3 +126,7 @@ this will re-load the website on every request. To start the website
 with shotgun, simply run shotgun at the top directory:
 
     shotgun -p 3002
+
+
+[0]: http://quickfixn.org
+[1]: /web/public/images/qfn-logo/QuickFIX-n_logo-small.png
