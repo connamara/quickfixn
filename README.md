@@ -1,4 +1,4 @@
-[![Connamara Systems, LLC][1]][0]
+[![QuickFIX/N][1]][0]
 
 System Setup
 ------------
