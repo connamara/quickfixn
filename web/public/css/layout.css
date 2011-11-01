@@ -76,7 +76,6 @@ a { color: #8a3514; }
 }
 
 .navitem { 
-  float: left;
   text-decoration: none;
   color: #063969;
 }
@@ -152,6 +151,7 @@ table {
   border-bottom: 1px solid black;
   border-top: 1px solid black;
   color: #063969;
+  text-align: center;
 }
 
 #mainnav img { vertical-align: middle; }
