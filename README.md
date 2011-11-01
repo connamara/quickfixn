@@ -129,4 +129,4 @@ with shotgun, simply run shotgun at the top directory:
 
 
 [0]: http://quickfixn.org
-[1]: web/public/images/qfn-logo/QuickFIX-n_logo-small.png
+[1]: http://quickfixn.org/images/qfn-logo/QuickFIX-n_logo-small.png
