@@ -47,10 +47,10 @@ helpers do
   def page_title f
     words = File.basename(f, '.md').split('-')
     upcase_words = words.map {|w| w[0].upcase + w[1..-1] }
-    'QuickFIX/N - ' + upcase_words.join(' ')
+    'QuickFIX/n - ' + upcase_words.join(' ')
   rescue => e
     puts 'PAGE TITLE ERROR: ' + e.inspect
-    'QuickFIX/N'
+    'QuickFIX/n'
   end
 end
 

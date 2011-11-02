@@ -1,7 +1,7 @@
 Get Help
 ========
 
-We offer a free mailing list and commerical support for QuickFIX/N.
+We offer a free mailing list and commerical support for QuickFIX/n.
 
 Mailing List
 ------------
@@ -18,7 +18,7 @@ Commercial Support
 Connamara offers commercial support for developers who are integrating 
 any of the QuickFIX implementations (C++, Java, .NET). The support is 
 offered in 10 hour bundles and grants developers access, via telephone 
-or email, to the team that created QuickFIX/N and are maintainers of 
+or email, to the team that created QuickFIX/n and are maintainers of 
 QuickFIX.
 
 In addition to offering QuickFIX support, Connamara delivers Made-To-Measure 
