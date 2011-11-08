@@ -86,11 +86,11 @@ namespace QuickFix
                 session.SetCheckLatency(settings.GetBool(SessionSettings.CHECK_LATENCY));
             if (settings.Has(SessionSettings.MAX_LATENCY))
                 session.SetMaxLatency(settings.GetLong(SessionSettings.MAX_LATENCY));
+             */
             if (settings.Has(SessionSettings.LOGON_TIMEOUT))
-                session.SetLogonTimeout(settings.GetLong(SessionSettings.LOGON_TIMEOUT));
+                session.LogonTimeout = settings.GetInt(SessionSettings.LOGON_TIMEOUT);
             if (settings.Has(SessionSettings.LOGOUT_TIMEOUT))
-                session.SetLogoutTimeout(settings.GetLong(SessionSettings.LOGOUT_TIMEOUT));
-            */
+                session.LogoutTimeout = settings.GetInt(SessionSettings.LOGOUT_TIMEOUT);
             
             // FIXME to get from config if available
             session.MaxLatency = 120;

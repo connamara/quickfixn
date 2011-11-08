@@ -19,8 +19,10 @@ namespace QuickFix
         private int heartBtIntAsTickCount_ = 0;
         private int lastReceivedTimeTickCount_;
         private int lastSentTimeTickCount_;
-        private int logoutTimeout_ = 0;
-        private int logoutTimeoutAsTickCount_ = 0;
+        private int logonTimeout_ = 10;
+        private long logonTimeoutAsTickCount_ = 10 * 1000;
+        private int logoutTimeout_ = 2;
+        private long logoutTimeoutAsTickCount_ = 2 * 1000;
         private ResendRange resendRange_ = new ResendRange(0,0);
         private Dictionary<int, Message> msgQueue = new Dictionary<int, Message>();
 
@@ -117,13 +119,24 @@ namespace QuickFix
             set { lock (sync_) { lastSentTimeTickCount_ = value; } }
         }
 
+        public int LogonTimeout
+        {
+            get { lock (sync_) { return logonTimeout_; } }
+            set { lock (sync_) { logonTimeout_ = value; logonTimeoutAsTickCount_ = 1000 * value; } }
+        }
+
+        public long LogonTimeoutAsTickCount
+        {
+            get { lock (sync_) { return logonTimeoutAsTickCount_; } }
+        }
+
         public int LogoutTimeout
         {
             get { lock (sync_) { return logoutTimeout_; } }
             set { lock (sync_) { logoutTimeout_ = value; logoutTimeoutAsTickCount_ = 1000 * value; } }
         }
 
-        public int LogoutTimeoutAsTickCount
+        public long LogoutTimeoutAsTickCount
         {
             get { lock (sync_) { return logoutTimeoutAsTickCount_; } }
         }
@@ -141,7 +154,6 @@ namespace QuickFix
             log_ = log;
             this.IsInitiator = (0 != heartBtInt);
             this.HeartBtInt = heartBtInt;
-            this.LogoutTimeout = 2;
             int now = System.Environment.TickCount;
             lastReceivedTimeTickCount_ = now;
             lastSentTimeTickCount_ = now;
@@ -181,7 +193,7 @@ namespace QuickFix
         /// <param name="logoutTimeout">number of milliseconds to wait for a Logout from the counterparty</param>
         /// <param name="lastSentTime">last sent time in milliseconds</param>
         /// <returns></returns>
-        public static bool LogoutTimedOut(int now, bool sentLogout, int logoutTimeout, int lastSentTime)
+        public static bool LogoutTimedOut(int now, bool sentLogout, long logoutTimeout, int lastSentTime)
         {
             return sentLogout && ((now - lastSentTime) >= logoutTimeout);
         }

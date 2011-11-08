@@ -65,12 +65,27 @@ namespace QuickFix
             return capitalize ? s.ToUpper() : s;
         }
 
+        public int GetInt(string key)
+        {
+            try
+            {
+                return Convert.ToInt32(GetString(key));
+            }
+            catch (FormatException)
+            {
+                throw new ConfigError("Incorrect data type");
+            }
+            catch (QuickFIXException)
+            {
+                throw new ConfigError("No value for key: " + key);
+            }
+        }
+
         public long GetLong(string key)
         {
             try
             {
                 return Convert.ToInt64(GetString(key));
-
             }
             catch(FormatException)
             {
