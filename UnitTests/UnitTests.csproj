@@ -90,6 +90,7 @@
     <Compile Include="ParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionFactoryTest.cs" />
+	<Compile Include="SessionIDTest.cs" />
     <Compile Include="SessionScheduleTests.cs" />
     <Compile Include="SessionSettingsTest.cs" />
     <Compile Include="SessionStateTest.cs" />

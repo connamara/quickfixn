@@ -36,8 +36,16 @@ namespace QuickFix
         public static string Prefix(SessionID sessionID)
         {
             System.Text.StringBuilder prefix = new System.Text.StringBuilder(sessionID.BeginString)
-                .Append('-').Append(sessionID.SenderCompID)
-                .Append('-').Append(sessionID.TargetCompID);
+                .Append('-').Append(sessionID.SenderCompID);
+            if(SessionID.IsSet(sessionID.SenderSubID))
+                prefix.Append('_').Append(sessionID.SenderSubID);
+            if(SessionID.IsSet(sessionID.SenderLocationID))
+                prefix.Append('_').Append(sessionID.SenderLocationID);
+            prefix.Append('-').Append(sessionID.TargetCompID);
+            if (SessionID.IsSet(sessionID.TargetSubID))
+                prefix.Append('_').Append(sessionID.TargetSubID);
+            if (SessionID.IsSet(sessionID.TargetLocationID))
+                prefix.Append('_').Append(sessionID.TargetLocationID);
 
             if (sessionID.SessionQualifier.Length != 0)
                 prefix.Append('-').Append(sessionID.SessionQualifier);
