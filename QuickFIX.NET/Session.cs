@@ -29,6 +29,18 @@ namespace QuickFix
         public int HeartBtInt { get { return state_.HeartBtInt; } }
         public bool CheckLatency { get; set; }
         public int MaxLatency { get; set; }
+        public int NextSenderMsgSeqNum { get { return state_.GetNextSenderMsgSeqNum(); } }
+        public int NextTargetMsgSeqNum { get { return state_.GetNextTargetMsgSeqNum(); } }
+        public int LogonTimeout
+        {
+            get { return state_.LogonTimeout; }
+            set { state_.LogonTimeout = value; }
+        }
+        public int LogoutTimeout
+        {
+            get { return state_.LogoutTimeout; }
+            set { state_.LogoutTimeout = value; }
+        }
         // unsynchronized
         public bool PersistMessages { get; set; }
         public bool RefreshOnLogon { get; set; }
@@ -227,7 +239,6 @@ namespace QuickFix
 
             if (!IsEnabled)
             {
-
                 if (!IsLoggedOn)
                     return;
 
