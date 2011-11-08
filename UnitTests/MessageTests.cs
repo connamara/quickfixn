@@ -418,5 +418,88 @@ namespace UnitTests
             Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());
             StringAssert.Contains("386=3", n.ToString()); //don't correct it to 2, you bastard
         }
+
+        [Test]
+        public void ReverseRoute()
+        {
+            string str1 = "8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
+                "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=123\x01";
+            Message msg = new Message();
+            try
+            {
+                msg.FromString(str1, true, null, null);
+            }
+            catch (InvalidMessage e)
+            {
+                Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
+            }
+            Header header = new Header();
+            header.SetField(new BeginString("FIX.4.2"));
+            header.SetField(new SenderCompID("SENDER"));
+            header.SetField(new SenderSubID("SENDERSUB"));
+            header.SetField(new SenderLocationID("SENDERLOC"));
+            header.SetField(new TargetCompID("TARGET"));
+            header.SetField(new TargetSubID("TARGETSUB"));
+            header.SetField(new TargetLocationID("TARGETLOC"));
+
+            msg.ReverseRoute(header);
+            
+            Assert.That(msg.Header.GetString(Tags.BeginString), Is.EqualTo("FIX.4.2"));
+            Assert.That(msg.Header.GetString(Tags.TargetCompID), Is.EqualTo("SENDER"));
+            Assert.That(msg.Header.GetString(Tags.TargetSubID), Is.EqualTo("SENDERSUB"));
+            Assert.That(msg.Header.GetString(Tags.TargetLocationID), Is.EqualTo("SENDERLOC"));
+            Assert.That(msg.Header.GetString(Tags.SenderCompID), Is.EqualTo("TARGET"));
+            Assert.That(msg.Header.GetString(Tags.SenderSubID), Is.EqualTo("TARGETSUB"));
+            Assert.That(msg.Header.GetString(Tags.SenderLocationID), Is.EqualTo("TARGETLOC"));
+        }
+
+        [Test]
+        public void TestGetSetSessionID()
+        {
+            SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "SENDERSUB", "SENDERLOC", "TARGET", "TARGETSUB", "TARGETLOC");
+            Message msg = new Message();
+
+            msg.SetSessionID(sessionID);
+
+            Assert.That(msg.Header.GetString(Tags.BeginString), Is.EqualTo("FIX.4.2"));
+            Assert.That(msg.Header.GetString(Tags.SenderCompID), Is.EqualTo("SENDER"));
+            Assert.That(msg.Header.GetString(Tags.SenderSubID), Is.EqualTo("SENDERSUB"));
+            Assert.That(msg.Header.GetString(Tags.SenderLocationID), Is.EqualTo("SENDERLOC"));
+            Assert.That(msg.Header.GetString(Tags.TargetCompID), Is.EqualTo("TARGET"));
+            Assert.That(msg.Header.GetString(Tags.TargetSubID), Is.EqualTo("TARGETSUB"));
+            Assert.That(msg.Header.GetString(Tags.TargetLocationID), Is.EqualTo("TARGETLOC"));
+
+            SessionID getSessionID = msg.GetSessionID(msg);
+            Assert.That(getSessionID.BeginString, Is.EqualTo("FIX.4.2"));
+            Assert.That(getSessionID.SenderCompID, Is.EqualTo("SENDER"));
+            Assert.That(getSessionID.SenderSubID, Is.EqualTo("SENDERSUB"));
+            Assert.That(getSessionID.SenderLocationID, Is.EqualTo("SENDERLOC"));
+            Assert.That(getSessionID.TargetCompID, Is.EqualTo("TARGET"));
+            Assert.That(getSessionID.TargetSubID, Is.EqualTo("TARGETSUB"));
+            Assert.That(getSessionID.TargetLocationID, Is.EqualTo("TARGETLOC"));
+
+            ////
+            sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET");
+            msg = new Message();
+
+            msg.SetSessionID(sessionID);
+
+            Assert.That(msg.Header.GetString(Tags.BeginString), Is.EqualTo("FIX.4.2"));
+            Assert.That(msg.Header.GetString(Tags.SenderCompID), Is.EqualTo("SENDER"));
+            Assert.That(msg.Header.IsSetField(Tags.SenderSubID), Is.False);
+            Assert.That(msg.Header.IsSetField(Tags.SenderLocationID), Is.False);
+            Assert.That(msg.Header.GetString(Tags.TargetCompID), Is.EqualTo("TARGET"));
+            Assert.That(msg.Header.IsSetField(Tags.TargetSubID), Is.False);
+            Assert.That(msg.Header.IsSetField(Tags.TargetLocationID), Is.False);
+
+            getSessionID = msg.GetSessionID(msg);
+            Assert.That(getSessionID.BeginString, Is.EqualTo("FIX.4.2"));
+            Assert.That(getSessionID.SenderCompID, Is.EqualTo("SENDER"));
+            Assert.That(getSessionID.SenderSubID, Is.EqualTo(""));
+            Assert.That(getSessionID.SenderLocationID, Is.EqualTo(""));
+            Assert.That(getSessionID.TargetCompID, Is.EqualTo("TARGET"));
+            Assert.That(getSessionID.TargetSubID, Is.EqualTo(""));
+            Assert.That(getSessionID.TargetLocationID, Is.EqualTo(""));
+        }
     }
 }

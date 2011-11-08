@@ -1072,7 +1072,15 @@ namespace QuickFix
             state_.LastSentTimeTickCount = System.Environment.TickCount;
             m.Header.SetField(new Fields.BeginString(this.SessionID.BeginString));
             m.Header.SetField(new Fields.SenderCompID(this.SessionID.SenderCompID));
+            if (SessionID.IsSet(this.SessionID.SenderSubID))
+                m.Header.SetField(new Fields.SenderSubID(this.SessionID.SenderSubID));
+            if (SessionID.IsSet(this.SessionID.SenderLocationID))
+                m.Header.SetField(new Fields.SenderLocationID(this.SessionID.SenderLocationID));
             m.Header.SetField(new Fields.TargetCompID(this.SessionID.TargetCompID));
+            if (SessionID.IsSet(this.SessionID.TargetSubID))
+                m.Header.SetField(new Fields.TargetSubID(this.SessionID.TargetSubID));
+            if (SessionID.IsSet(this.SessionID.TargetLocationID))
+                m.Header.SetField(new Fields.TargetLocationID(this.SessionID.TargetLocationID));
 
             if (msgSeqNum > 0)
                 m.Header.SetField(new Fields.MsgSeqNum(msgSeqNum));

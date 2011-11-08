@@ -495,7 +495,11 @@ namespace QuickFix
             // required routing tags
             this.Header.RemoveField(Tags.BeginString);
             this.Header.RemoveField(Tags.SenderCompID);
+            this.Header.RemoveField(Tags.SenderSubID);
+            this.Header.RemoveField(Tags.SenderLocationID);
             this.Header.RemoveField(Tags.TargetCompID);
+            this.Header.RemoveField(Tags.TargetSubID);
+            this.Header.RemoveField(Tags.TargetLocationID);
 
             if (header.IsSetField(Tags.BeginString))
             {
@@ -532,12 +536,44 @@ namespace QuickFix
                     this.Header.SetField(new TargetCompID(senderCompID.Obj));
             }
 
+            if (header.IsSetField(Tags.SenderSubID))
+            {
+                SenderSubID senderSubID = new SenderSubID();
+                header.GetField(senderSubID);
+                if (senderSubID.Obj.Length > 0)
+                    this.Header.SetField(new TargetSubID(senderSubID.Obj));
+            }
+
+            if (header.IsSetField(Tags.SenderLocationID))
+            {
+                SenderLocationID senderLocationID = new SenderLocationID();
+                header.GetField(senderLocationID);
+                if (senderLocationID.Obj.Length > 0)
+                    this.Header.SetField(new TargetLocationID(senderLocationID.Obj));
+            }
+
             if (header.IsSetField(Tags.TargetCompID))
             {
                 TargetCompID targetCompID = new TargetCompID();
                 header.GetField(targetCompID);
                 if (targetCompID.Obj.Length > 0)
                     this.Header.SetField(new SenderCompID(targetCompID.Obj));
+            }
+
+            if (header.IsSetField(Tags.TargetSubID))
+            {
+                TargetSubID targetSubID = new TargetSubID();
+                header.GetField(targetSubID);
+                if (targetSubID.Obj.Length > 0)
+                    this.Header.SetField(new SenderSubID(targetSubID.Obj));
+            }
+
+            if (header.IsSetField(Tags.TargetLocationID))
+            {
+                TargetLocationID targetLocationID = new TargetLocationID();
+                header.GetField(targetLocationID);
+                if (targetLocationID.Obj.Length > 0)
+                    this.Header.SetField(new SenderLocationID(targetLocationID.Obj));
             }
 
             // optional routing tags
@@ -607,15 +643,37 @@ namespace QuickFix
         {
             this.Header.SetField(new BeginString(sessionID.BeginString));
             this.Header.SetField(new SenderCompID(sessionID.SenderCompID));
-            this.Header.SetField(new TargetCompID(sessionID.TargetCompID));            
+            if (sessionID.SenderSubID != SessionID.NOT_SET)
+                this.Header.SetField(new SenderSubID(sessionID.SenderSubID));
+            if (sessionID.SenderLocationID != SessionID.NOT_SET)
+                this.Header.SetField(new SenderLocationID(sessionID.SenderLocationID));
+            this.Header.SetField(new TargetCompID(sessionID.TargetCompID));
+            if (sessionID.TargetSubID != SessionID.NOT_SET)
+                this.Header.SetField(new TargetSubID(sessionID.TargetSubID));
+            if (sessionID.TargetLocationID != SessionID.NOT_SET)
+                this.Header.SetField(new TargetLocationID(sessionID.TargetLocationID));
         }
 
         public SessionID GetSessionID(Message m)
         {
-            return new SessionID(
-                m.Header.GetField(Tags.BeginString),
-                m.Header.GetField(Tags.SenderCompID),
-                m.Header.GetField(Tags.TargetCompID));
+            bool senderSubIDSet = m.Header.IsSetField(Tags.SenderSubID);
+            bool senderLocationIDSet = m.Header.IsSetField(Tags.SenderLocationID);
+            bool targetSubIDSet = m.Header.IsSetField(Tags.TargetSubID);
+            bool targetLocationIDSet = m.Header.IsSetField(Tags.TargetLocationID);
+
+            if (senderSubIDSet && senderLocationIDSet && targetSubIDSet && targetLocationIDSet)
+                return new SessionID(m.Header.GetField(Tags.BeginString),
+                    m.Header.GetField(Tags.SenderCompID), m.Header.GetField(Tags.SenderSubID), m.Header.GetField(Tags.SenderLocationID),
+                    m.Header.GetField(Tags.TargetCompID), m.Header.GetField(Tags.TargetSubID), m.Header.GetField(Tags.TargetLocationID));
+            else if (senderSubIDSet && targetSubIDSet)
+                return new SessionID(m.Header.GetField(Tags.BeginString),
+                    m.Header.GetField(Tags.SenderCompID), m.Header.GetField(Tags.SenderSubID),
+                    m.Header.GetField(Tags.TargetCompID), m.Header.GetField(Tags.TargetSubID));
+            else
+                return new SessionID(
+                    m.Header.GetField(Tags.BeginString),
+                    m.Header.GetField(Tags.SenderCompID),
+                    m.Header.GetField(Tags.TargetCompID));
         }
 
         public override void Clear()

@@ -9,7 +9,11 @@ namespace QuickFix
         
         public const string BEGINSTRING  = "BeginString";
         public const string SENDERCOMPID = "SenderCompID";
+        public const string SENDERSUBID = "SenderSubID";
+        public const string SENDERLOCID = "SenderLocationID";
         public const string TARGETCOMPID = "TargetCompID";
+        public const string TARGETSUBID = "TargetSubID";
+        public const string TARGETLOCID = "TargetLocationID";
         public const string SESSION_QUALIFIER = "SessionQualifier";
         public const string DEFAULT_APPLVERID = "DefaultApplVerID";
         public const string CONNECTION_TYPE = "ConnectionType";
@@ -91,10 +95,23 @@ namespace QuickFix
             {
                 dict.Merge(def);
 
-                string sessionQualifier = "";
+                string sessionQualifier = SessionID.NOT_SET;
+                string senderSubID = SessionID.NOT_SET;
+                string senderLocID = SessionID.NOT_SET;
+                string targetSubID = SessionID.NOT_SET;
+                string targetLocID = SessionID.NOT_SET;
+
                 if (dict.Has(SESSION_QUALIFIER))
                     sessionQualifier = dict.GetString(SESSION_QUALIFIER);
-                SessionID sessionID = new SessionID(dict.GetString(BEGINSTRING), dict.GetString(SENDERCOMPID), dict.GetString(TARGETCOMPID), sessionQualifier);
+                if (dict.Has(SENDERSUBID))
+                    senderSubID = dict.GetString(SENDERSUBID);
+                if (dict.Has(SENDERLOCID))
+                    senderLocID = dict.GetString(SENDERLOCID);
+                if (dict.Has(TARGETSUBID))
+                    targetSubID = dict.GetString(TARGETSUBID);
+                if (dict.Has(TARGETLOCID))
+                    targetLocID = dict.GetString(TARGETLOCID);
+                SessionID sessionID = new SessionID(dict.GetString(BEGINSTRING), dict.GetString(SENDERCOMPID), senderSubID, senderLocID, dict.GetString(TARGETCOMPID), targetSubID, targetLocID, sessionQualifier);
                 Set(sessionID, dict);
             }
         }
@@ -139,7 +156,15 @@ namespace QuickFix
                 throw new ConfigError("Duplicate Session " + sessionID.ToString());
             settings.SetString(BEGINSTRING, sessionID.BeginString);
             settings.SetString(SENDERCOMPID, sessionID.SenderCompID);
+            if (SessionID.IsSet(sessionID.SenderSubID))
+                settings.SetString(SENDERSUBID, sessionID.SenderSubID);
+            if (SessionID.IsSet(sessionID.SenderLocationID))
+                settings.SetString(SENDERLOCID, sessionID.SenderLocationID);
             settings.SetString(TARGETCOMPID, sessionID.TargetCompID);
+            if (SessionID.IsSet(sessionID.TargetSubID))
+                settings.SetString(TARGETSUBID, sessionID.TargetSubID);
+            if (SessionID.IsSet(sessionID.TargetLocationID))
+                settings.SetString(TARGETLOCID, sessionID.TargetLocationID);
             settings.Merge(defaults_);
             Validate(settings);
             settings_[sessionID] = settings;

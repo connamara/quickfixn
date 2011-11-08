@@ -235,5 +235,48 @@ namespace UnitTests
 
             Assert.That(settings.ToString(), Is.EqualTo(configuration));
         }
+
+        [Test]
+        public void testExtendedSettings()
+        {
+            string settingsString = new System.Text.StringBuilder()
+                .AppendLine("[DEFAULT]")
+                .AppendLine("ConnectionType=initiator")
+                .AppendLine("[SESSION]")
+                .AppendLine("BeginString=FIX.4.2")
+                .AppendLine("SenderCompID=Company")
+                .AppendLine("SenderSubID=FixedIncome")
+                .AppendLine("SenderLocationID=HongKong")
+                .AppendLine("TargetCompID=CLIENT1")
+                .AppendLine("TargetSubID=HedgeFund")
+                .AppendLine("TargetLocationID=NYC")
+                .ToString();
+
+            SessionSettings settings = new SessionSettings(new System.IO.StringReader(settingsString));
+            
+            SessionID id = new SessionID("FIX.4.2", "Company", "FixedIncome", "HongKong", "CLIENT1", "HedgeFund", "NYC");
+            Assert.That(settings.Get(id).GetString("BeginString"), Is.EqualTo("FIX.4.2"));
+            Assert.That(settings.Get(id).GetString("SenderCompID"), Is.EqualTo("Company"));
+            Assert.That(settings.Get(id).GetString("SenderSubID"), Is.EqualTo("FixedIncome"));
+            Assert.That(settings.Get(id).GetString("SenderLocationID"), Is.EqualTo("HongKong"));
+            Assert.That(settings.Get(id).GetString("TargetCompID"), Is.EqualTo("CLIENT1"));
+            Assert.That(settings.Get(id).GetString("TargetSubID"), Is.EqualTo("HedgeFund"));
+            Assert.That(settings.Get(id).GetString("TargetLocationID"), Is.EqualTo("NYC"));
+
+            id = null;
+            foreach(SessionID sid in settings.GetSessions())
+            {
+                id = sid;
+                break;
+            }
+            Assert.NotNull(id);
+            Assert.That(id.BeginString, Is.EqualTo("FIX.4.2"));
+            Assert.That(id.SenderCompID, Is.EqualTo("Company"));
+            Assert.That(id.SenderSubID, Is.EqualTo("FixedIncome"));
+            Assert.That(id.SenderLocationID, Is.EqualTo("HongKong"));
+            Assert.That(id.TargetCompID, Is.EqualTo("CLIENT1"));
+            Assert.That(id.TargetSubID, Is.EqualTo("HedgeFund"));
+            Assert.That(id.TargetLocationID, Is.EqualTo("NYC"));
+        }
     }
 }
