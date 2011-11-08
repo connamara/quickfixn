@@ -43,6 +43,8 @@ namespace QuickFix
         public const string TRANSPORT_DATA_DICTIONARY = "TransportDataDictionary";
         public const string APP_DATA_DICTIONARY = "AppDataDictionary";
         public const string PERSIST_MESSAGES = "PersistMessages";
+        public const string LOGON_TIMEOUT = "LogonTimeout";
+        public const string LOGOUT_TIMEOUT = "LogoutTimeout";
 
         #endregion
 
