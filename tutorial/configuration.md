@@ -64,8 +64,36 @@ QuickFIX Settings
   </tr>
 
   <tr>
+    <td class='setting'>SenderSubID</td>
+    <td class='description'>(Optional) Your subID as associated with this FIX session</td>
+    <td class='valid'>case-sensitive alpha-numeric string</td>
+    <td class='default'></td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SenderLocationID</td>
+    <td class='description'>(Optional) Your locationID as associated with this FIX session</td>
+    <td class='valid'>case-sensitive alpha-numeric string</td>
+    <td class='default'></td>
+  </tr>
+
+  <tr>
     <td class='setting'>TargetCompID</td>
     <td class='description'>Counterparty's ID as associated with this FIX session</td>
+    <td class='valid'>case-sensitive alpha-numeric string</td>
+    <td class='default'></td>
+  </tr>
+
+  <tr>
+    <td class='setting'>TargetSubID</td>
+    <td class='description'>(Optional) Counterparty's subID as associated with this FIX session</td>
+    <td class='valid'>case-sensitive alpha-numeric string</td>
+    <td class='default'></td>
+  </tr>
+
+  <tr>
+    <td class='setting'>TargetLocationID</td>
+    <td class='description'>(Optional) Counterparty's locationID as associated with this FIX session</td>
     <td class='valid'>case-sensitive alpha-numeric string</td>
     <td class='default'></td>
   </tr>
