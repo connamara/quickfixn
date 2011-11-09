@@ -15,7 +15,7 @@ Then read the [documentation] (http://quickfixn.org/tutorial/creating-an-applica
 File and Directory Information
 ==============================
 * RELEASE_NOTES.md - release notes
-* README - this file
+* README.md - this file
 * LICENSE - license information
 * bin - Contains the QuickFix.dll library
 * config - Contains sample config files for an acceptor or initiator
