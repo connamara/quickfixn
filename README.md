@@ -105,12 +105,14 @@ Prerequisites:
   3. nokogiri, rubyzip, and aws-s3 gems are installed.
   4. MSBuild.exe (v3.5) is in your Windows PATH
 
-First, make sure you're on master, and you have the most recent changes:
+First, if necessary, make sure you have updated the release notes or the readme (RELEASE_NOTES.md and RELEASE_README.md), and they are checked in.
+
+Next, make sure you're on master, and you have the most recent changes:
 
     git checkout master
     git pull
 
-First run
+Then run
 
     package_release.bat <TAGNAME>
 
