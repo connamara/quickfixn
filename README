@@ -1,0 +1,14 @@
+QuickFIX/n README
+
+Introduction
+=====================
+QuickFIX/n implements the FIX protocol on .NET.
+For more information, visit http://www.quickfixn.org
+
+File and Directory Information
+==============================
+README - this file
+LICENSE - license information
+bin - Contains the QuickFix.dll library
+config - Contains sample config files for an acceptor or initiator
+spec - Contains the various FIX data dictionaries
