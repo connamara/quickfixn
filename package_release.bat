@@ -28,8 +28,9 @@ copy QuickFIX.NET\bin\Release\QuickFix.dll tmp\%QF_DIR%\bin
 xcopy spec tmp\%QF_DIR%\spec /e /y
 copy config\sample_acceptor.cfg tmp\%QF_DIR%\config\
 copy config\sample_initiator.cfg tmp\%QF_DIR%\config\
-copy README tmp\%QF_DIR%\
+copy RELEASE_README.md tmp\%QF_DIR%\README.md
 copy LICENSE tmp\%QF_DIR%\
+copy RELEASE_NOTES.md tmp\%QF_DIR%\
 
 rem Create ZIP
 set ZIP_NAME=%QF_DIR%.zip
