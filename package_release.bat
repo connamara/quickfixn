@@ -47,4 +47,4 @@ rmdir /s/q tmp
 echo 
 echo Successfully created QuickFIX/n %TAG_VERSION%.
 echo You can download the zip here: http://quickfixn.s3.amazonaws.com/%ZIP_NAME%
-echo You must manually add and commit web/views/download.md, and deploy the website
+echo You must commit the new tag and deploy the website
