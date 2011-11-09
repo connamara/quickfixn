@@ -127,7 +127,7 @@ After the script is done, you will need to manually push the tag:
     git checkout master
 	git push origin master <TAGNAME>
 
-Finally [Deploy the website](quickfixn/wiki/Deploying-the-website).
+Finally, [deploy the website](quickfixn/wiki/Deploying-the-website).
 
 Website
 -------
