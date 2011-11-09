@@ -68,5 +68,31 @@ namespace UnitTests
 
             Assert.DoesNotThrow(delegate { factory.Create(sessionID, settings); });
         }
+
+        [Test]
+        public void TestRedundantResendRequestSetting()
+        {
+            Application app = new NullApplication();
+            MessageStoreFactory storeFactory = new MemoryStoreFactory();
+            SessionFactory factory = new SessionFactory(app, storeFactory);
+
+            SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET");
+            Dictionary settings = new Dictionary();
+            settings.SetString(SessionSettings.USE_DATA_DICTIONARY, "N");
+            settings.SetString(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS, "Y");
+            settings.SetString(SessionSettings.CONNECTION_TYPE, "initiator");
+            settings.SetString(SessionSettings.HEARTBTINT, "30");
+            settings.SetString(SessionSettings.START_TIME, "12:00:00");
+            settings.SetString(SessionSettings.END_TIME, "12:00:00");
+            Session session = factory.Create(sessionID, settings);
+
+            //true
+            Assert.That(session.SendRedundantResendRequests);
+
+            settings.SetString(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS, "N");
+            session = factory.Create(sessionID, settings);
+
+            Assert.That(!session.SendRedundantResendRequests);
+        }
     }
 }
