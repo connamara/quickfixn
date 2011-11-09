@@ -116,7 +116,7 @@ Next, the download page needs to be updated to point to the new zip. This must b
 Then, create a tag:
     git tag -a <TAGNAME> -m "Created a tag for version <TAGNAME>"
 
-Next, run `package_release.bat` to build, package, and upload QuickFIX/n to the web:
+Next, run `package_release.bat <TAGNAME>` to build, package, and upload QuickFIX/n to the web:
 
 After the script is done, you will need to manually push the tag:
     
