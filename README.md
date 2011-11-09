@@ -99,6 +99,7 @@ To run a test with the debugger,
 Packaging and Releasing
 -----------------------
 Prerequisites: 
+
   1. git (http://code.google.com/p/msysgit/) is setup and in your Windows PATH
   2. ruby is installed and in your Windows PATH
   3. nokogiri and rubyzip gems are installed.
@@ -107,22 +108,25 @@ Prerequisites:
   6. s3cmd 1.0.1 (http://sourceforge.net/projects/s3tools/files/s3cmd). After you download and extract the files, run `python setup.py install`. Then run `python C:\Python27\Scripts\s3cmd --configure`, and enter the access key (s3 account) anad secret (s3 account), found on the wiki (http://wiki.private.connamara.com/index.php?title=EC2)
 
 First, make sure you're on master, and you have the most recent changes:
+
     git checkout master
     git pull
 
 Next, the download page needs to be updated to point to the new zip. This must be done first, so the changes to the page will be part of the version tag. The following script will update the download page and commit the changes into git:
+
     update_download_page.bat <TAGNAME>
 	
 Then, create a tag:
+
     git tag -a <TAGNAME> -m "Created a tag for version <TAGNAME>"
 
-Next, run `package_release.bat <TAGNAME>` to build, package, and upload QuickFIX/n to the web:
+Next, run `package_release.bat <TAGNAME>` to build, package, and upload QuickFIX/n to the web.
 
 After the script is done, you will need to manually push the tag:
     
 	git push origin <TAGNAME>
 
-Finally [Deploy the website](wiki/Deploying-the-website).
+Finally [Deploy the website](quickfixn/wiki/Deploying-the-website).
 
 Website
 -------
