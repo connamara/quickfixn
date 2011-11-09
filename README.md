@@ -112,19 +112,14 @@ First, make sure you're on master, and you have the most recent changes:
     git checkout master
     git pull
 
-Next, the download page needs to be updated to point to the new zip. This must be done first, so the changes to the page will be part of the version tag. The following script will update the download page:
+First run
 
-    update_download_page.bat <TAGNAME>
-	
-Then, create a tag:
+    package_release.bat <TAGNAME>
 
-    git tag -a <TAGNAME> -m "Created a tag for version <TAGNAME>"
-
-Next, run `package_release.bat <TAGNAME>` to build, package, and upload QuickFIX/n to the web.
+This script will update the downloads page, create the tag, build, package, and upload QuickFIX/n to the web.
 
 After the script is done, you will need to manually push the tag:
     
-    git checkout master
 	git push origin master <TAGNAME>
 
 Finally, [deploy the website](quickfixn/wiki/Deploying-the-website).

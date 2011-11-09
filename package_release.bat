@@ -5,6 +5,17 @@ set TAG_VERSION=%1
 if "%TAG_VERSION%" == "" echo "Please provide a version (e.g. package_release.bat v1.0)" && exit /b
 set QF_DIR=quickfixn-%TAG_VERSION%
 
+rem Update downloads page - NOTE this must be done first
+ruby scripts\update_download_page.rb web/views/download.md %TAG_VERSION%
+if %errorlevel% neq 0 echo "There was an error uploading the downloads page" && exit /b %errorlevel%
+
+rem commit the downloads page, so it will be part of the tag
+git add web/views/download.md
+git commit -m "Download page for version %TAG_VERSION%"
+
+rem create the tag
+git tag -a %TAG_VERSION% -m "Created a tag for version %TAG_VERSION%"
+
 rem Get requested version
 git checkout %TAG_VERSION%
 if %errorlevel% neq 0 echo "There was an error checking out QuickFIX/n %TAG_VERSION%" && exit /b %errorlevel%
@@ -44,6 +55,9 @@ if %errorlevel% neq 0 echo "There was an error uploading %ZIP_NAME% into the s3"
 
 rem Remove temp directory
 rmdir /s/q tmp
+
+rem Switch back to master
+git checkout master
 
 echo 
 echo Successfully created QuickFIX/n %TAG_VERSION%.
