@@ -11,8 +11,8 @@ namespace QuickFix.Fields.Converters
         public const string DATE_TIME_FORMAT_WITH_MILLISECONDS = "{0:yyyyMMdd-HH:mm:ss.fff}";
         public const string DATE_TIME_FORMAT_WITHOUT_MILLISECONDS = "{0:yyyyMMdd-HH:mm:ss}";
         public const string DATE_ONLY_FORMAT = "{0:yyyyMMdd}";
-        public const string TIME_ONLY_FORMAT_WITH_MILLISECONDS = "{0:HH:mm:ss}";
-        public const string TIME_ONLY_FORMAT_WITHOUT_MILLISECONDS = "{0:HH:mm:ss.fff}";
+        public const string TIME_ONLY_FORMAT_WITH_MILLISECONDS = "{0:HH:mm:ss.fff}";
+        public const string TIME_ONLY_FORMAT_WITHOUT_MILLISECONDS = "{0:HH:mm:ss}";
         public static string[] DATE_TIME_FORMATS = { "yyyyMMdd-HH:mm:ss.fff", "yyyyMMdd-HH:mm:ss" };
         public static DateTimeStyles DATE_TIME_STYLES = DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal;
         public static CultureInfo DATE_TIME_CULTURE_INFO = CultureInfo.InvariantCulture;
