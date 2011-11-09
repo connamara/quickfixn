@@ -77,9 +77,9 @@ namespace QuickFix
 
 
 
-            /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
-                session.SetSendRedundantResendRequests(settings.GetBool(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS));
+                session.SendRedundantResendRequests = settings.GetBool(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS);
+            /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.CHECK_COMPID))
                 session.SetCheckCompId(settings.GetBool(SessionSettings.CHECK_COMPID));
             if (settings.Has(SessionSettings.CHECK_LATENCY))
