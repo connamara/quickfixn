@@ -102,10 +102,8 @@ Prerequisites:
 
   1. [git] (http://code.google.com/p/msysgit/) is setup and in your Windows PATH
   2. ruby is installed and in your Windows PATH
-  3. nokogiri and rubyzip gems are installed.
+  3. nokogiri, rubyzip, and aws-s3 gems are installed.
   4. MSBuild.exe (v3.5) is in your Windows PATH
-  5. [Python 2.7] (http://www.python.org/getit/releases/2.7)
-  6. [s3cmd 1.0.1] (http://sourceforge.net/projects/s3tools/files/s3cmd). After you download and extract the files, run `python setup.py install`. Then run `python C:\Python27\Scripts\s3cmd --configure`, and enter the access key (s3 account) anad secret (s3 account), found on the [wiki] (http://wiki.private.connamara.com/index.php?title=EC2)
 
 First, make sure you're on master, and you have the most recent changes:
 
