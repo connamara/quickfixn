@@ -23,5 +23,6 @@ Website Contributions
 The QuickFIX/n website is open source and is located in the same 
 [repository][0] on github.  To make a change to the website, fork the
 project, make your changes to the web directory, then issue a pull request.
+The [README][0] contains instructions for developing the website.
 
 [0]: http://github.com/connamara/quickfixn
