@@ -212,6 +212,16 @@ QuickFIX Settings
     </td>
     <td class='default'>N</td>
   </tr>
+  
+  <tr>
+    <td class='setting'>EnableLastMsgSeqNumProcessed</td>
+    <td class='description'>Add the last message sequence number processed in the header (optional tag 369).</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
 </table>
 
 
