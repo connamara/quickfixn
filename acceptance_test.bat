@@ -13,7 +13,7 @@ pushd AcceptanceTest
     
     call pause
     call runat release 5003 definitions/server/fix42/*.def cfg/at_42.cfg
-    if ERRORLEVEL 1 set RESULT42=1
+	if ERRORLEVEL 1 set RESULT42=1
     echo "42 tests result: %RESULT42%"
     xsltproc.exe -o AcceptanceTests_42.html at.xsl TestResult.xml
 
@@ -46,6 +46,12 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULT50SP2=1
     echo "50 SP2 tests result: %RESULT50SP2%"
     xsltproc.exe -o AcceptanceTests_50_SP2.html at.xsl TestResult.xml
+	
+	call pause
+    call runat release 5003 definitions/server/misc/*.def cfg/at_42.misc.cfg
+	if ERRORLEVEL 1 set RESULTMISC=1
+    echo "Misc tests result: %RESULTMISC%"
+    xsltproc.exe -o AcceptanceTests_Misc.html at.xsl TestResult.xml
 popd
 
 echo ""
@@ -59,9 +65,9 @@ echo "    44: %RESULT44%"
 echo "    50: %RESULT50%"
 echo "50 SP1: %RESULT50SP1%"
 echo "50 SP2: %RESULT50SP2%"
+echo "  MISC: %RESULTMISC%"
 
-set /a RETURNVALUE=RESULT40+RESULT41+RESULT42+RESULT43+RESULT44+RESULT50+RESULT50SP1+RESULT50SP2
+set /a RETURNVALUE=RESULT40+RESULT41+RESULT42+RESULT43+RESULT44+RESULT50+RESULT50SP1+RESULT50SP2+RESULTMISC
 
 echo "Script returns: %RETURNVALUE%"
 exit /B %RETURNVALUE%
-
