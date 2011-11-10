@@ -251,6 +251,7 @@ namespace UnitTests
                 .AppendLine("TargetSubID=HedgeFund")
                 .AppendLine("TargetLocationID=NYC")
                 .AppendLine("SendRedundantResendRequests=Y")
+                .AppendLine("MillisecondsInTimeStamp=Y")
                 .ToString();
 
             SessionSettings settings = new SessionSettings(new System.IO.StringReader(settingsString));
@@ -264,6 +265,7 @@ namespace UnitTests
             Assert.That(settings.Get(id).GetString("TargetSubID"), Is.EqualTo("HedgeFund"));
             Assert.That(settings.Get(id).GetString("TargetLocationID"), Is.EqualTo("NYC"));
             Assert.That(settings.Get(id).GetString("SendRedundantResendRequests"), Is.EqualTo("Y"));
+            Assert.That(settings.Get(id).GetString("MillisecondsInTimeStamp"), Is.EqualTo("Y"));
 
             id = null;
             foreach(SessionID sid in settings.GetSessions())

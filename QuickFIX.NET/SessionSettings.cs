@@ -46,6 +46,7 @@ namespace QuickFix
         public const string LOGON_TIMEOUT = "LogonTimeout";
         public const string LOGOUT_TIMEOUT = "LogoutTimeout";
         public const string SEND_REDUNDANT_RESENDREQUESTS = "SendRedundantResendRequests";
+        public const string MILLISECONDS_IN_TIMESTAMP = "MillisecondsInTimeStamp";
 
         #endregion
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using NUnit.Framework;
 
 namespace UnitTests
@@ -105,6 +106,7 @@ namespace UnitTests
         MockApplication application = null;
         QuickFix.Session session = null;
         int seqNum = 1;
+        Regex msRegex = new Regex(@"\.[\d]{1,3}$");
 
         [SetUp]
         public void setup()
@@ -131,13 +133,22 @@ namespace UnitTests
 
         public void Logon()
         {
-            QuickFix.FIX42.Logon login = new QuickFix.FIX42.Logon();
-            login.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
-            login.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
-            login.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
-            login.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
-            login.SetField(new QuickFix.Fields.HeartBtInt(30));
-            session.Next(login);
+            SendLogon(new QuickFix.FIX42.Logon());
+        }
+
+        public void Logon40()
+        {
+            SendLogon(new QuickFix.FIX40.Logon());
+        }
+
+        private void SendLogon(QuickFix.Message msg)
+        {
+            msg.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
+            msg.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
+            msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
+            msg.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
+            msg.SetField(new QuickFix.Fields.HeartBtInt(30));
+            session.Next(msg);
         }
 
         public bool SENT_RESEND()
@@ -209,7 +220,7 @@ namespace UnitTests
             return true;
         }
 
-        public void SendMessage()
+        public void SendNOSMessage()
         {
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
                 new QuickFix.Fields.ClOrdID("1"),
@@ -228,15 +239,25 @@ namespace UnitTests
 
         public void SendResendRequest(int begin, int end)
         {
-            QuickFix.FIX42.ResendRequest req = new QuickFix.FIX42.ResendRequest(
+            SendTheMessage(new QuickFix.FIX42.ResendRequest(
                 new QuickFix.Fields.BeginSeqNo(begin),
-                new QuickFix.Fields.EndSeqNo(end));
+                new QuickFix.Fields.EndSeqNo(end)));
+        }
 
-            req.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
-            req.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
-            req.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
+        public void SendResendRequest40(int begin, int end)
+        {
+            SendTheMessage(new QuickFix.FIX40.ResendRequest(
+                new QuickFix.Fields.BeginSeqNo(begin),
+                new QuickFix.Fields.EndSeqNo(end)));
+        }
 
-            session.Next(req);
+        private void SendTheMessage(QuickFix.Message msg)
+        {
+            msg.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
+            msg.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
+            msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
+
+            session.Next(msg);
         }
 
         [Test]
@@ -245,7 +266,7 @@ namespace UnitTests
             application.fromAppException = new QuickFix.FieldNotFoundException(61);
 
             Logon();
-            SendMessage();
+            SendNOSMessage();
 
             Assert.That(SENT_REJECT(QuickFix.Fields.SessionRejectReason.REQUIRED_TAG_MISSING,61));
         }
@@ -258,7 +279,7 @@ namespace UnitTests
             application.fromAppException = new QuickFix.IncorrectTagValue(54);
             
             Logon();
-            SendMessage();
+            SendNOSMessage();
             Assert.That(SENT_REJECT(QuickFix.Fields.SessionRejectReason.VALUE_IS_INCORRECT,54));
 
         }
@@ -269,7 +290,7 @@ namespace UnitTests
             application.fromAppException = new QuickFix.UnsupportedMessageType();
 
             Logon();
-            SendMessage();
+            SendNOSMessage();
             Assert.That(SENT_BUSINESS_REJECT());
         }
 
@@ -292,12 +313,71 @@ namespace UnitTests
 
             for (int i = 0; i < 3; ++i)
             {
-                SendMessage();
+                SendNOSMessage();
             } //seq 4, next is 5
 
             SendResendRequest(1, 4);
             Assert.That(SENT_RESEND());
             Assert.IsFalse(RESENT());
+        }
+
+        public void AssertMsInTag(string msgType, int tag, bool shouldHaveMs)
+        {
+            QuickFix.Message msg = responder.msgLookup[msgType].Last();
+            string sendingTime = msg.Header.GetField(tag);
+            Match m = msRegex.Match(sendingTime);
+            Assert.That(m.Success == shouldHaveMs);
+        }
+
+        [Test]
+        public void TestMillisecondsInSendingTimeStamp()
+        {
+            // MS in timestamp should default to Y
+            Assert.That(session.MillisecondsInTimeStamp);
+
+            // Ms should show up
+            Logon();
+            AssertMsInTag(QuickFix.Fields.MsgType.LOGON, QuickFix.Fields.Tags.SendingTime, true);
+            
+            // No ms
+            session.MillisecondsInTimeStamp = false;
+            Logon();
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.LOGON].Count == 2);
+            AssertMsInTag(QuickFix.Fields.MsgType.LOGON, QuickFix.Fields.Tags.SendingTime, false);
+
+            // Less than FIX42 - no ms in timestamp, even if you tell it to
+            sessionID = new QuickFix.SessionID(QuickFix.FixValues.BeginString.FIX40, "SENDER", "TARGET");
+            session.SessionID = sessionID;
+            session.MillisecondsInTimeStamp = true;
+            Logon40();
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.LOGON].Count == 3);
+            AssertMsInTag(QuickFix.Fields.MsgType.LOGON, QuickFix.Fields.Tags.SendingTime, false);
+        }
+
+        [Test]
+        public void TestMillisecondsInOrigSendingTimeStamp()
+        {
+            // MS in timestamp should default to Y
+            Assert.That(session.MillisecondsInTimeStamp);
+            
+            // Logon first
+            Logon();
+            
+            // Do a resend request
+            SendResendRequest(0, 2);
+            AssertMsInTag(QuickFix.Fields.MsgType.SEQUENCERESET, QuickFix.Fields.Tags.OrigSendingTime, true);
+            
+            // NO MS
+            session.MillisecondsInTimeStamp = false;
+            SendResendRequest(0, 2);
+            AssertMsInTag(QuickFix.Fields.MsgType.SEQUENCERESET, QuickFix.Fields.Tags.OrigSendingTime, false);
+
+            // Less than FIX42 - no ms in timestamp, even if you tell it to
+            sessionID = new QuickFix.SessionID(QuickFix.FixValues.BeginString.FIX40, "SENDER", "TARGET");
+            session.SessionID = sessionID;
+            session.MillisecondsInTimeStamp = true;
+            SendResendRequest40(0, 2);
+            AssertMsInTag(QuickFix.Fields.MsgType.SEQUENCERESET, QuickFix.Fields.Tags.OrigSendingTime, false);
         }
     }
 }

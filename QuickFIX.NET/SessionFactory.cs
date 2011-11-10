@@ -106,9 +106,9 @@ namespace QuickFix
                 session.RefreshOnLogon = settings.GetBool(SessionSettings.REFRESH_ON_LOGON);
             if (settings.Has(SessionSettings.PERSIST_MESSAGES))
                 session.PersistMessages = settings.GetBool(SessionSettings.PERSIST_MESSAGES);
-            /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.MILLISECONDS_IN_TIMESTAMP))
-                session.SetMillisecondsInTimeStamp(settings.GetBool(SessionSettings.MILLISECONDS_IN_TIMESTAMP));
+                session.MillisecondsInTimeStamp = settings.GetBool(SessionSettings.MILLISECONDS_IN_TIMESTAMP);
+            /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM))
                 session.SetValidateLengthAndChecksum(settings.GetBool(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM));
             */
