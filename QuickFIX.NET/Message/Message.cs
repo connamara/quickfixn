@@ -267,7 +267,11 @@ namespace QuickFix
             return new SessionID(
                 GetFieldOrDefault(msg.Header, Tags.BeginString, null),
                 GetFieldOrDefault(msg.Header, Tags.TargetCompID, null),
-                GetFieldOrDefault(msg.Header, Tags.SenderCompID, null)
+                GetFieldOrDefault(msg.Header, Tags.TargetSubID, SessionID.NOT_SET),
+                GetFieldOrDefault(msg.Header, Tags.TargetLocationID, SessionID.NOT_SET),
+                GetFieldOrDefault(msg.Header, Tags.SenderCompID, null),
+                GetFieldOrDefault(msg.Header, Tags.SenderSubID, SessionID.NOT_SET),
+                GetFieldOrDefault(msg.Header, Tags.SenderLocationID, SessionID.NOT_SET)
             );
         }
 
