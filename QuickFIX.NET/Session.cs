@@ -50,6 +50,7 @@ namespace QuickFix
         public bool SendRedundantResendRequests { get; set; }
         public bool ValidateLengthAndChecksum { get; set; }
         public bool CheckCompID { get; set; }
+        public bool MillisecondsInTimeStamp { get; set; }
         public ApplVerID targetDefaultApplVerID { get; set;}
         public string SenderDefaultApplVerID { get; set; }
         public SessionID SessionID { get; set; }
@@ -95,6 +96,7 @@ namespace QuickFix
             this.SendRedundantResendRequests = false;
             this.ValidateLengthAndChecksum = true;
             this.CheckCompID = true;
+            this.MillisecondsInTimeStamp = true;
 
             if (!IsSessionTime)
                 Reset();
@@ -1107,10 +1109,13 @@ namespace QuickFix
 
         protected void InsertSendingTime(FieldMap header)
         {
-            if (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
-                header.SetField(new Fields.SendingTime(System.DateTime.UtcNow));
+            bool showMilliseconds = false;
+            if (this.SessionID.BeginString == FixValues.BeginString.FIXT11)
+                showMilliseconds = true;
             else
-                header.SetField(new Fields.SendingTime(System.DateTime.UtcNow, false));
+                showMilliseconds = this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0;
+
+            header.SetField(new Fields.SendingTime(System.DateTime.UtcNow, showMilliseconds && MillisecondsInTimeStamp));
         }
 
         protected void Persist(Message message, string messageString)
@@ -1152,10 +1157,13 @@ namespace QuickFix
 
         protected void InsertOrigSendingTime(FieldMap header, System.DateTime sendingTime)
         {
-            if (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
-                header.SetField(new OrigSendingTime(sendingTime));
-            else
-                header.SetField(new OrigSendingTime(sendingTime, false));
+            bool showMilliseconds = false;
+            if (this.SessionID.BeginString == FixValues.BeginString.FIXT11)
+                showMilliseconds = true;
+            else 
+                showMilliseconds = this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0;
+                
+            header.SetField(new OrigSendingTime(sendingTime, showMilliseconds && MillisecondsInTimeStamp));
         }
         protected void NextQueued()
         {

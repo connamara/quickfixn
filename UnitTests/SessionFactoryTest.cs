@@ -70,7 +70,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void TestRedundantResendRequestSetting()
+        public void TestExtendedSettings()
         {
             Application app = new NullApplication();
             MessageStoreFactory storeFactory = new MemoryStoreFactory();
@@ -80,19 +80,22 @@ namespace UnitTests
             Dictionary settings = new Dictionary();
             settings.SetString(SessionSettings.USE_DATA_DICTIONARY, "N");
             settings.SetString(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS, "Y");
+            settings.SetString(SessionSettings.MILLISECONDS_IN_TIMESTAMP, "Y");
             settings.SetString(SessionSettings.CONNECTION_TYPE, "initiator");
             settings.SetString(SessionSettings.HEARTBTINT, "30");
             settings.SetString(SessionSettings.START_TIME, "12:00:00");
             settings.SetString(SessionSettings.END_TIME, "12:00:00");
             Session session = factory.Create(sessionID, settings);
 
-            //true
             Assert.That(session.SendRedundantResendRequests);
+            Assert.That(session.MillisecondsInTimeStamp);
 
             settings.SetString(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS, "N");
+            settings.SetString(SessionSettings.MILLISECONDS_IN_TIMESTAMP, "N");
             session = factory.Create(sessionID, settings);
 
             Assert.That(!session.SendRedundantResendRequests);
+            Assert.That(!session.MillisecondsInTimeStamp);
         }
     }
 }
