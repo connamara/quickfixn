@@ -491,19 +491,22 @@ QuickFIX Settings
 
 <a name='sample'></a>
 
-##Sample Settings File
+##Sample Initiator Settings File
 
-Here is a typical settings file you might find in a firm that wants to connect to several ECNs.
+Here is a typical initiator settings file you might find in a firm that wants to connect to several ECNs.
 
     # default settings for sessions
     [DEFAULT]
+    FileStorePath=store
+    FileLogPath=log
     ConnectionType=initiator
     ReconnectInterval=60
     SenderCompID=TW
 
     # session definition
     [SESSION]
-    # inherit ConnectionType, ReconnectInterval and SenderCompID from default
+    # inherit FileStorePath, FileLogPath, ConnectionType, 
+    #    ReconnectInterval and SenderCompID from default
     BeginString=FIX.4.1
     TargetCompID=ARCA
     StartTime=12:30:00
@@ -533,9 +536,56 @@ Here is a typical settings file you might find in a firm that wants to connect t
     HeartBtInt=30
     SocketConnectPort=6523
     SocketConnectHost=3.3.3.3
-    # (optional) alternate connection ports and hosts to cycle through on failover
+    # (optional) alternate connection ports 
+    #  and hosts to cycle through on failover
     SocketConnectPort1=8392
     SocketConnectHost1=8.8.8.8
     SocketConnectPort2=2932
     SocketConnectHost2=12.12.12.12
+    DataDictionary=somewhere/FIX42.xml
+
+##Sample Acceptor Settings File
+
+Here is a typical acceptor settings file.
+
+    # default settings for sessions
+    [DEFAULT]
+    FileStorePath=store
+    FileLogPath=log
+    ConnectionType=acceptor
+    ReconnectInterval=60
+    SenderCompID=ARCA
+
+    # session definition
+    [SESSION]
+    # inherit FileStorePath, FileLogPath, ConnectionType, 
+    #  ReconnectInterval and SenderCompID from default
+    BeginString=FIX.4.1
+    TargetCompID=TW
+    StartTime=12:30:00
+    EndTime=23:30:00
+    HeartBtInt=20
+    SocketAcceptPort=9823
+    DataDictionary=somewhere/FIX41.xml
+
+    [SESSION]
+    BeginString=FIX.4.0
+    TargetCompID=TW
+    StartTime=12:00:00
+    EndTime=23:00:00
+    HeartBtInt=30
+    SocketAcceptPort=8323
+    DataDictionary=somewhere/FIX40.xml
+
+    [SESSION]
+    BeginString=FIX.4.2
+    TargetCompID=TW
+    StartTime=12:30:00
+    EndTime=21:30:00
+    # overide default setting for RecconnectInterval
+    ReconnectInterval=30
+    HeartBtInt=30
+    SocketAcceptPort=6523
+    # (optional) only listen for incoming connections on a specific host
+    SocketAcceptHost=127.0.0.1
     DataDictionary=somewhere/FIX42.xml
