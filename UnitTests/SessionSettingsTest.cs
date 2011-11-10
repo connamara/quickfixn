@@ -252,6 +252,7 @@ namespace UnitTests
                 .AppendLine("TargetLocationID=NYC")
                 .AppendLine("SendRedundantResendRequests=Y")
                 .AppendLine("MillisecondsInTimeStamp=Y")
+                .AppendLine("EnableLastMsgSeqNumProcessed=Y")
                 .ToString();
 
             SessionSettings settings = new SessionSettings(new System.IO.StringReader(settingsString));
@@ -266,6 +267,7 @@ namespace UnitTests
             Assert.That(settings.Get(id).GetString("TargetLocationID"), Is.EqualTo("NYC"));
             Assert.That(settings.Get(id).GetString("SendRedundantResendRequests"), Is.EqualTo("Y"));
             Assert.That(settings.Get(id).GetString("MillisecondsInTimeStamp"), Is.EqualTo("Y"));
+            Assert.That(settings.Get(id).GetString("EnableLastMsgSeqNumProcessed"), Is.EqualTo("Y"));
 
             id = null;
             foreach(SessionID sid in settings.GetSessions())

@@ -51,6 +51,7 @@ namespace QuickFix
         public bool ValidateLengthAndChecksum { get; set; }
         public bool CheckCompID { get; set; }
         public bool MillisecondsInTimeStamp { get; set; }
+        public bool EnableLastMsgSeqNumProcessed { get; set; }
         public ApplVerID targetDefaultApplVerID { get; set;}
         public string SenderDefaultApplVerID { get; set; }
         public SessionID SessionID { get; set; }
@@ -97,6 +98,7 @@ namespace QuickFix
             this.ValidateLengthAndChecksum = true;
             this.CheckCompID = true;
             this.MillisecondsInTimeStamp = true;
+            this.EnableLastMsgSeqNumProcessed = false;
 
             if (!IsSessionTime)
                 Reset();
@@ -1099,6 +1101,11 @@ namespace QuickFix
                 m.Header.SetField(new Fields.MsgSeqNum(msgSeqNum));
             else
                 m.Header.SetField(new Fields.MsgSeqNum(state_.GetNextSenderMsgSeqNum()));
+
+            if (this.EnableLastMsgSeqNumProcessed)
+            {
+                m.Header.SetField(new LastMsgSeqNumProcessed(this.NextTargetMsgSeqNum - 1));
+            }
 
             InsertSendingTime(m.Header);
         }
