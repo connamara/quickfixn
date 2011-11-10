@@ -162,6 +162,16 @@ QuickFIX Settings
     </td>
     <td class='default'>-</td>
   </tr>
+  
+  <tr>
+    <td class='setting'>MillisecondsInTimeStamp</td>
+    <td class='description'>Determines if milliseconds should be added to timestamps. Only available for FIX.4.2 and greater.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
 
   <tr>
     <td class='setting'>ResetOnLogon</td>
