@@ -470,7 +470,7 @@ namespace QuickFix
             {
                 int heartBtInt = logon.GetInt(Fields.Tags.HeartBtInt);
                 state_.HeartBtInt = heartBtInt;
-                GenerateLogon(heartBtInt);
+                GenerateLogon(logon);
                 this.Log.OnEvent("Responding to logon request");
             }
 
@@ -955,7 +955,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="heartBtInt"></param>
         /// <returns></returns>
-        protected bool GenerateLogon(int heartBtInt)
+        protected bool GenerateLogon(Message otherLogon)
         {
             Message logon = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGON);
             logon.SetField(new Fields.EncryptMethod(0));
@@ -963,7 +963,10 @@ namespace QuickFix
                 logon.SetField(new Fields.DefaultApplVerID(this.SenderDefaultApplVerID));
             if (state_.ReceivedReset)
                 logon.SetField(new Fields.ResetSeqNumFlag(true));
-            logon.SetField(new Fields.HeartBtInt(heartBtInt));
+            logon.SetField(new Fields.HeartBtInt(otherLogon.GetInt(Tags.HeartBtInt)));
+            if (this.EnableLastMsgSeqNumProcessed)
+                logon.Header.SetField(new Fields.LastMsgSeqNumProcessed(otherLogon.Header.GetInt(Tags.MsgSeqNum)));
+
             InitializeHeader(logon);
             state_.SentLogon = SendRaw(logon, 0);
             return state_.SentLogon;
@@ -1129,7 +1132,7 @@ namespace QuickFix
             else
                 m.Header.SetField(new Fields.MsgSeqNum(state_.GetNextSenderMsgSeqNum()));
 
-            if (this.EnableLastMsgSeqNumProcessed)
+            if (this.EnableLastMsgSeqNumProcessed && !m.Header.IsSetField(Tags.LastMsgSeqNumProcessed))
             {
                 m.Header.SetField(new LastMsgSeqNumProcessed(this.NextTargetMsgSeqNum - 1));
             }
