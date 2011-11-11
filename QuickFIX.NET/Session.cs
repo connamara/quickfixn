@@ -52,6 +52,7 @@ namespace QuickFix
         public bool CheckCompID { get; set; }
         public bool MillisecondsInTimeStamp { get; set; }
         public bool EnableLastMsgSeqNumProcessed { get; set; }
+        public int MaxMessagesInResendRequest { get; set; }
         public ApplVerID targetDefaultApplVerID { get; set;}
         public string SenderDefaultApplVerID { get; set; }
         public SessionID SessionID { get; set; }
@@ -99,6 +100,7 @@ namespace QuickFix
             this.CheckCompID = true;
             this.MillisecondsInTimeStamp = true;
             this.EnableLastMsgSeqNumProcessed = false;
+            this.MaxMessagesInResendRequest = 0;
 
             if (!IsSessionTime)
                 Reset();
@@ -868,33 +870,58 @@ namespace QuickFix
             SendRaw(reject, 0);
         }
 
-        protected bool GenerateResendRequest(string beginString, int msgSeqNum)
+        protected bool GenerateResendRequestRange(string beginString, int startSeqNum, int endSeqNum)
         {
             Message resendRequest = msgFactory_.Create(beginString, MsgType.RESEND_REQUEST);
 
-            Fields.BeginSeqNo beginSeqNo = new Fields.BeginSeqNo(state_.GetNextTargetMsgSeqNum());
-            Fields.EndSeqNo endSeqNo;
-            if (beginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
-                endSeqNo = new Fields.EndSeqNo(0);
-            else if (beginString.CompareTo(FixValues.BeginString.FIX41) <= 0)
-                endSeqNo = new Fields.EndSeqNo(999999);
-            else
-                endSeqNo = new Fields.EndSeqNo(msgSeqNum - 1);
-
-            resendRequest.SetField(beginSeqNo);
-            resendRequest.SetField(endSeqNo);
+            resendRequest.SetField(new Fields.BeginSeqNo(startSeqNum));
+            resendRequest.SetField(new Fields.EndSeqNo(endSeqNum));
+            
             InitializeHeader(resendRequest);
             if (SendRaw(resendRequest, 0))
             {
-                this.Log.OnEvent("Sent ResendRequest FROM: " + beginSeqNo.Obj + " TO: " + endSeqNo.Obj);
-                state_.SetResendRange(beginSeqNo.Obj, msgSeqNum - 1);
+                this.Log.OnEvent("Sent ResendRequest FROM: " + startSeqNum + " TO: " + endSeqNum);
                 return true;
             }
             else
             {
-                this.Log.OnEvent("Error sending ResendRequest (" + beginSeqNo.Obj + " ," + endSeqNo.Obj + ")");
+                this.Log.OnEvent("Error sending ResendRequest (" + startSeqNum + " ," + endSeqNum + ")");
                 return false;
             }
+        }
+
+        protected bool GenerateResendRequest(string beginString, int msgSeqNum)
+        {
+            int beginSeqNum = state_.GetNextTargetMsgSeqNum();
+            int endSeqNum = msgSeqNum - 1;
+            if (this.MaxMessagesInResendRequest > 0)
+            {
+                int counter = beginSeqNum;
+                while (counter <= endSeqNum)
+                {
+                    int end = counter + this.MaxMessagesInResendRequest - 1;
+                    if (end > endSeqNum)
+                        end = endSeqNum;
+
+                    if (!GenerateResendRequestRange(beginString, counter, end))
+                        return false;
+                    
+                    counter += this.MaxMessagesInResendRequest;
+                }
+            }
+            else
+            {
+                if (beginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
+                    endSeqNum = 0;
+                else if (beginString.CompareTo(FixValues.BeginString.FIX41) <= 0)
+                    endSeqNum = 999999;
+                if (!GenerateResendRequestRange(beginString, beginSeqNum, endSeqNum))
+                {
+                    return false;
+                }
+            }
+            state_.SetResendRange(beginSeqNum, endSeqNum);
+            return true;
         }
 
         /// <summary>
