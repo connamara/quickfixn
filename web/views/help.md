@@ -14,8 +14,7 @@ Issues can be submitted by anyone through our [github repository][4].
 Please provide sample code, logs, and a description of the problem when
 the issue is submitted.
 
-We will make every attempt to address new issues as quickly as
-possible.
+We will try to address new issues as quickly as possible.
 
 
 Mailing List
