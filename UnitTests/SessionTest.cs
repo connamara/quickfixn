@@ -412,5 +412,48 @@ namespace UnitTests
             lastSeqNumProcessed = msg.Header.GetInt(QuickFix.Fields.Tags.LastMsgSeqNumProcessed);
             Assert.That(lastSeqNumProcessed == 1);
         }
+
+        [Test]
+        public void TestMaxMessagesInResendRequest()
+        {
+            // Default
+            Assert.That(session.MaxMessagesInResendRequest, Is.EqualTo(0));
+
+            session.MaxMessagesInResendRequest = 2500;
+            // Logon 
+            Logon();
+
+            // NOS
+            QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
+                new QuickFix.Fields.ClOrdID("1"),
+                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
+                new QuickFix.Fields.Symbol("IBM"),
+                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
+                new QuickFix.Fields.TransactTime(),
+                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+
+            order.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
+            order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
+            order.Header.SetField(new QuickFix.Fields.MsgSeqNum(5005));
+            // This will generate resend requests
+            session.Verify(order, true, false);
+
+            // 3 resend requests
+            //  2->2501
+            //  2502->5001
+            //  5002->5005
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count == 3);
+            QuickFix.Message msg = responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Dequeue();
+            Assert.That(msg.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(2));
+            Assert.That(msg.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(2501));
+
+            msg = responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Dequeue();
+            Assert.That(msg.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(2502));
+            Assert.That(msg.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(5001));
+
+            msg = responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Dequeue();
+            Assert.That(msg.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(5002));
+            Assert.That(msg.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(5004));
+        }
     }
 }

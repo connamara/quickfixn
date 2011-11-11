@@ -253,6 +253,7 @@ namespace UnitTests
                 .AppendLine("SendRedundantResendRequests=Y")
                 .AppendLine("MillisecondsInTimeStamp=Y")
                 .AppendLine("EnableLastMsgSeqNumProcessed=Y")
+                .AppendLine("MaxMessagesInResendRequest=2500")
                 .ToString();
 
             SessionSettings settings = new SessionSettings(new System.IO.StringReader(settingsString));
@@ -268,6 +269,7 @@ namespace UnitTests
             Assert.That(settings.Get(id).GetString("SendRedundantResendRequests"), Is.EqualTo("Y"));
             Assert.That(settings.Get(id).GetString("MillisecondsInTimeStamp"), Is.EqualTo("Y"));
             Assert.That(settings.Get(id).GetString("EnableLastMsgSeqNumProcessed"), Is.EqualTo("Y"));
+            Assert.That(settings.Get(id).GetString("MaxMessagesInResendRequest"), Is.EqualTo("2500"));
 
             id = null;
             foreach(SessionID sid in settings.GetSessions())
