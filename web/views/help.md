@@ -3,12 +3,27 @@ Get Help
 
 We offer a free mailing list and commerical support for QuickFIX/n.
 
+Issues are tracked in our [github repository][4].
+
+
+Issues
+------
+
+Issues can be submitted by anyone through our [github repository][4].
+
+Please provide sample code, logs, and a description of the problem when
+the issue is submitted.
+
+We will try to address new issues as quickly as possible.
+
+
 Mailing List
 ------------
 
 Our [mailing list][2] is free, public, and easily searchable. 
 Sign up [here][2] or send an email to: 
 [quickfixn+subscribe@googlegroups.com][3] to subscribe.
+
 
 Commercial Support
 ------------------
@@ -32,3 +47,4 @@ best of both build and buy.
 [1]: /images/Connamara-Logo.png
 [2]: https://groups.google.com/forum/?hl=en#!forum/quickfixn
 [3]: mailto:quickfixn+subscribe@googlegroups.com
+[4]: https://github.com/connamara/quickfixn/issues
