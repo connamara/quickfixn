@@ -1,13 +1,13 @@
 require 'rubygems'
 require 'aws/s3'
 
-if ARGV[0].nil?
-  puts "Usage: ruby upload_to_s3.rb <ZIPFILE>"
+if ARGV[0].nil? or ARGV[1].nil? or ARGV[2].nil?
+  puts "Usage: ruby upload_to_s3.rb <ZIPFILE> <ACCESS_KEY> <SECRET_KEY>"
   exit 1
 end
 
-access_key = "0X9JG3E4ARW3TGYX68G2"
-secret_key = "ZHg5yFD+O86npvzSzGT5EOYWINqm+sMkTdnh+V8d"
+access_key = ARGV[1]
+secret_key = ARGV[2]
 bucket = "quickfixn"
 file = File.join(Dir.pwd, ARGV.first)
 
