@@ -2,8 +2,14 @@
 
 rem Setup variables
 set TAG_VERSION=%1
-if "%TAG_VERSION%" == "" echo "Please provide a version (e.g. package_release.bat v1.0)" && exit /b
+if "%TAG_VERSION%" == "" goto usage
 set QF_DIR=quickfixn-%TAG_VERSION%
+
+SET ACCESS_KEY=%2
+if "%ACCESS_KEY%" == "" goto usage
+
+set SECRET_KEY=%3
+if "%SECRET_KEY%" == "" goto usage
 
 rem Update downloads page - NOTE this must be done first
 ruby scripts\update_download_page.rb web/views/download.md %TAG_VERSION%
@@ -50,7 +56,7 @@ ruby scripts\create_zip.rb tmp/%QF_DIR% %ZIP_NAME%
 if %errorlevel% neq 0 echo "There was an error creating QuickFIX/n ZIP: %ZIP_NAME%" && exit /b %errorlevel%
 
 rem Upload ZIP
-ruby scripts\upload_to_s3.rb %ZIP_NAME%
+ruby scripts\upload_to_s3.rb %ZIP_NAME% %ACCESS_KEY% %SECRET_KEY%
 if %errorlevel% neq 0 echo "There was an error uploading %ZIP_NAME% into the s3" && exit /b %errorlevel%
 
 rem Remove temp directory
@@ -63,3 +69,12 @@ echo
 echo Successfully created QuickFIX/n %TAG_VERSION%.
 echo You can download the zip here: http://quickfixn.s3.amazonaws.com/%ZIP_NAME%
 echo You must commit the new tag and deploy the website
+set RESULT=0
+goto quit
+
+:usage
+echo "Usage: package_release.bat [VERSION] [S3_ACCESS_KEY] [S3_SECRET_KEY]"
+set RESULT=1
+
+:quit
+exit /B %RESULT%
