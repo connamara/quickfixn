@@ -56,7 +56,7 @@ ruby scripts\create_zip.rb tmp/%QF_DIR% %ZIP_NAME%
 if %errorlevel% neq 0 echo "There was an error creating QuickFIX/n ZIP: %ZIP_NAME%" && exit /b %errorlevel%
 
 rem Upload ZIP
-ruby scripts\upload_to_s3.rb %ZIP_NAME% %ACCESS_KEY% %SECRET_KEY%
+ruby scripts\s3_upload.rb %ZIP_NAME% %ACCESS_KEY% %SECRET_KEY%
 if %errorlevel% neq 0 echo "There was an error uploading %ZIP_NAME% into the s3" && exit /b %errorlevel%
 
 rem Remove temp directory
