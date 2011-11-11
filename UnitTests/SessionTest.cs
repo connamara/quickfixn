@@ -392,7 +392,7 @@ namespace UnitTests
             Logon();
             QuickFix.Message msg = responder.msgLookup[QuickFix.Fields.MsgType.LOGON].Last();
             int lastSeqNumProcessed = msg.Header.GetInt(QuickFix.Fields.Tags.LastMsgSeqNumProcessed);
-            Assert.That(lastSeqNumProcessed == 0);
+            Assert.That(lastSeqNumProcessed == 1);
 
             // NOS
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
