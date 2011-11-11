@@ -114,7 +114,7 @@ Next, make sure you're on master, and you have the most recent changes:
 
 Then run
 
-    package_release.bat <TAGNAME>
+    package_release.bat <TAGNAME> <S3_ACCESS_KEY> <S3_SECRET_KEY>
 
 This script will update the downloads page, create the tag, build, package, and upload QuickFIX/n to the web.
 
