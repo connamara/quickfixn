@@ -1,5 +1,5 @@
 pushd AcceptanceTest
-    del TestResult.xml AcceptanceTests_40.html AcceptanceTests_41.xml AcceptanceTests_42.xml AcceptanceTests_43.xml AcceptanceTests_44.xml
+    del TestResult.xml AcceptanceTests_40.html AcceptanceTests_41.xml AcceptanceTests_42.xml AcceptanceTests_43.xml AcceptanceTests_44.xml AcceptanceTests_Misc.html
     call runat release 5001 definitions/server/fix40/*.def cfg/at_40.cfg
     if ERRORLEVEL 1 set RESULT40=1
     echo "40 tests result: %RESULT40%"

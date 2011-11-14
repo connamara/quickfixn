@@ -222,6 +222,15 @@ QuickFIX Settings
     </td>
     <td class='default'>N</td>
   </tr>
+  
+  <tr>
+    <td class='setting'>MaxMessagesInResendRequest</td>
+    <td class='description'>Sets the maximum number of messages to retransmit in a single resend request.</td>
+    <td class='valid'>
+      Any integer greater than 0 is valid. Use 0 for infinity (default).
+    </td>
+    <td class='default'>0</td>
+  </tr>
 </table>
 
 

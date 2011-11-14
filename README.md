@@ -96,34 +96,6 @@ To run a test with the debugger,
   9. Run: `ruby Runner.rb 127.0.0.1 5001 definitions\server\fix42\YourTestName.def`
 
 
-Packaging and Releasing
------------------------
-Prerequisites: 
-
-  1. [git] (http://code.google.com/p/msysgit/) is setup and in your Windows PATH
-  2. ruby is installed and in your Windows PATH
-  3. nokogiri, rubyzip, and aws-s3 gems are installed.
-  4. MSBuild.exe (v3.5) is in your Windows PATH
-
-First, if necessary, make sure you have updated the release notes or the readme (RELEASE_NOTES.md and RELEASE_README.md), and they are checked in.
-
-Next, make sure you're on master, and you have the most recent changes:
-
-    git checkout master
-    git pull
-
-Then run
-
-    package_release.bat <TAGNAME> <S3_ACCESS_KEY> <S3_SECRET_KEY>
-
-This script will update the downloads page, create the tag, build, package, and upload QuickFIX/n to the web.
-
-After the script is done, you will need to manually push the tag:
-    
-	git push origin master <TAGNAME>
-
-Finally, [deploy the website](quickfixn/wiki/Deploying-the-website).
-
 Website
 -------
 

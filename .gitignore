@@ -22,4 +22,5 @@ Examples/Executor/log/
 Examples/TradeClient/bin/*
 Examples/TradeClient/obj/*
 .DS_Store
+upload_to_s3.rb
 *~
