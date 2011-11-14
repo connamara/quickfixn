@@ -48,6 +48,7 @@ namespace QuickFix
         public const string SEND_REDUNDANT_RESENDREQUESTS = "SendRedundantResendRequests";
         public const string MILLISECONDS_IN_TIMESTAMP = "MillisecondsInTimeStamp";
         public const string ENABLE_LAST_MSG_SEQ_NUM_PROCESSED = "EnableLastMsgSeqNumProcessed";
+        public const string MAX_MESSAGES_IN_RESEND_REQUEST = "MaxMessagesInResendRequest";
 
         #endregion
 
