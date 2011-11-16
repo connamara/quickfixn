@@ -5,6 +5,8 @@ namespace AcceptanceTest
 {
     public class ATApplication : MessageCracker, Application
     {
+        public event System.Action StopMeEvent;
+
         private HashSet<KeyValuePair<string,SessionID>> clOrdIDs_ = new HashSet<KeyValuePair<string,SessionID>>();
         private FileLog log_;
 
@@ -86,12 +88,22 @@ namespace AcceptanceTest
         }
 
 
-        public void OnMessage(QuickFix.FIX41.News news, SessionID sessionID) { Echo(news, sessionID); }
-        public void OnMessage(QuickFix.FIX42.News news, SessionID sessionID) { Echo(news, sessionID); }
-        public void OnMessage(QuickFix.FIX43.News news, SessionID sessionID) { Echo(news, sessionID); }
-        public void OnMessage(QuickFix.FIX44.News news, SessionID sessionID) { Echo(news, sessionID); }
-        public void OnMessage(QuickFix.FIX50.News news, SessionID sessionID) { Echo(news, sessionID); }
+        public void OnMessage(QuickFix.FIX41.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
+        public void OnMessage(QuickFix.FIX42.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
+        public void OnMessage(QuickFix.FIX43.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
+        public void OnMessage(QuickFix.FIX44.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
+        public void OnMessage(QuickFix.FIX50.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
 
+        public void ProcessNews(QuickFix.Message msg, SessionID sessionID)
+        {
+            if (msg.IsSetField(QuickFix.Fields.Tags.Headline) && (msg.GetString(QuickFix.Fields.Tags.Headline) == "STOPME"))
+            {
+                if (this.StopMeEvent != null)
+                    StopMeEvent();
+            }
+            else
+                Echo(msg, sessionID);
+        }
 
 
         #region Application Methods
