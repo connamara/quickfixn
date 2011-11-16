@@ -1,9 +1,12 @@
 ﻿using QuickFix;
+using System.Threading;
 
 namespace AcceptanceTest
 {
     public class ATRunner
     {
+        static bool _stopMe = false;
+
         static void Main(string[] args)
         {
             if (args.Length != 1)
@@ -16,12 +19,14 @@ namespace AcceptanceTest
             ThreadedSocketAcceptor acceptor = null;
             try
             {
+                ATApplication testApp = new ATApplication(debugLog);
+                testApp.StopMeEvent += new System.Action(delegate() { _stopMe = true; });
+                
                 SessionSettings settings = new SessionSettings(args[0]);
-                Application testApp = new ATApplication(debugLog);
                 MessageStoreFactory storeFactory = new FileStoreFactory(settings);
                 LogFactory logFactory = null;
                 if (settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose"))
-                    logFactory = new FileLogFactory(settings); //ScreenLogFactory(true, true, true);
+                    logFactory = new FileLogFactory(settings);
                 acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, logFactory);
 
                 acceptor.Start();
@@ -29,6 +34,19 @@ namespace AcceptanceTest
                 {
                     System.Console.WriteLine("o hai");
                     System.Threading.Thread.Sleep(1000);
+
+                    // for tests of logout
+                    if (_stopMe)
+                    {
+                        // this doesn't seem to work
+                        // after stop, it doesn't seem to start up again
+                        /*
+                        acceptor.Stop();
+                        Thread.Sleep(5 * 1000);
+                        _stopMe = false;
+                        acceptor.Start();
+                         */
+                    }
                 }
             }
             catch (System.Exception e)
