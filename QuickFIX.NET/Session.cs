@@ -520,7 +520,7 @@ namespace QuickFix
                     int next = state_.GetNextSenderMsgSeqNum();
                     if (endSeqNo > next)
                         endSeqNo = next;
-                    GenerateSequenceReset(begSeqNo, endSeqNo);
+                    GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
                     return;
                 }
 
@@ -552,7 +552,7 @@ namespace QuickFix
                         initializeResendFields(msg);
                         if (begin != 0)
                         {
-                            GenerateSequenceReset(begin, msgSeqNum);
+                            GenerateSequenceReset(resendReq, begin, msgSeqNum);
                         }
                         Send(msg.ToString());
                         begin = 0;
@@ -562,7 +562,7 @@ namespace QuickFix
 
                 if (begin != 0)
                 {
-                    GenerateSequenceReset(begin, msgSeqNum + 1);
+                    GenerateSequenceReset(resendReq, begin, msgSeqNum + 1);
                 }
 
                 if (endSeqNo > msgSeqNum) {
@@ -571,7 +571,7 @@ namespace QuickFix
                     if (endSeqNo > next) {
                         endSeqNo = next;
                     }
-                    GenerateSequenceReset(begSeqNo, endSeqNo);
+                    GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
                 }
 
                 msgSeqNum = resendReq.Header.GetInt(Tags.MsgSeqNum);
@@ -598,7 +598,7 @@ namespace QuickFix
             {
                 disconnectReason = "Received logout request";
                 this.Log.OnEvent(disconnectReason);
-                GenerateLogout();
+                GenerateLogout(logout);
                 this.Log.OnEvent("Sending logout response");
             }
             else
@@ -982,15 +982,36 @@ namespace QuickFix
 
         public bool GenerateLogout()
         {
-            return GenerateLogout("");
+            return GenerateLogout(null, "");
         }
 
-        public bool GenerateLogout(string text)
+        private bool GenerateLogout(string text)
+        {
+            return GenerateLogout(null, text);
+        }
+
+        private bool GenerateLogout(Message other)
+        {
+            return GenerateLogout(other, "");
+        }
+
+        private bool GenerateLogout(Message other, string text)
         {
             Message logout = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGOUT);
             InitializeHeader(logout);
             if (text.Length > 0)
                 logout.SetField(new Fields.Text(text));
+            if (other != null && this.EnableLastMsgSeqNumProcessed)
+            {
+                try
+                {
+                    logout.Header.SetField(new Fields.LastMsgSeqNumProcessed(other.Header.GetInt(Tags.MsgSeqNum)));
+                }
+                catch (FieldNotFoundException e)
+                {
+                    this.Log.OnEvent("Error: No message sequence number: " + other);
+                }
+            }
             state_.SentLogout = SendRaw(logout, 0);
             return state_.SentLogout;
         }
@@ -1009,6 +1030,10 @@ namespace QuickFix
             try
             {
                 heartbeat.SetField(new Fields.TestReqID(testRequest.GetField(Fields.Tags.TestReqID)));
+                if (this.EnableLastMsgSeqNumProcessed)
+                {
+                    heartbeat.Header.SetField(new Fields.LastMsgSeqNumProcessed(testRequest.Header.GetInt(Tags.MsgSeqNum)));
+                }
             }
             catch (FieldNotFoundException)
             { }
@@ -1176,7 +1201,7 @@ namespace QuickFix
             return true;
         }
 
-        private void GenerateSequenceReset(int beginSeqNo, int endSeqNo)  
+        private void GenerateSequenceReset(Message receivedMessage, int beginSeqNo, int endSeqNo)  
         {
             string beginString = this.SessionID.BeginString;
             Message sequenceReset = msgFactory_.Create(beginString, Fields.MsgType.SEQUENCE_RESET);
@@ -1188,6 +1213,17 @@ namespace QuickFix
             sequenceReset.Header.SetField(new MsgSeqNum(beginSeqNo));
             sequenceReset.SetField(new NewSeqNo(newSeqNo));
             sequenceReset.SetField(new GapFillFlag(true));
+            if (receivedMessage != null && this.EnableLastMsgSeqNumProcessed)
+            {
+                try
+                {
+                    sequenceReset.Header.SetField(new Fields.LastMsgSeqNumProcessed(receivedMessage.Header.GetInt(Tags.MsgSeqNum)));
+                }
+                catch (FieldNotFoundException)
+                {
+                    this.Log.OnEvent("Error: Received message without MsgSeqNum: " + receivedMessage);
+                }
+            }
             SendRaw(sequenceReset, beginSeqNo);
             this.Log.OnEvent("Sent SequenceReset TO: " + newSeqNo);
         }
