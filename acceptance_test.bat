@@ -47,9 +47,9 @@ pushd AcceptanceTest
     echo "50 SP2 tests result: %RESULT50SP2%"
     xsltproc.exe -o AcceptanceTests_50_SP2.html at.xsl TestResult.xml
 	
-	call pause
+    call pause
     call runat release 5003 definitions/server/misc/*.def cfg/at_42.misc.cfg
-	if ERRORLEVEL 1 set RESULTMISC=1
+    if ERRORLEVEL 1 set RESULTMISC=1
     echo "Misc tests result: %RESULTMISC%"
     xsltproc.exe -o AcceptanceTests_Misc.html at.xsl TestResult.xml
 popd
