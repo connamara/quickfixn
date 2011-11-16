@@ -32,7 +32,7 @@ namespace Executor
             }
             catch (System.Exception e)
             {
-                Console.WriteLine("FATAL ERROR: " + e.Message);
+                Console.WriteLine("==FATAL ERROR==");
                 Console.WriteLine(e.ToString());
             }
         }
