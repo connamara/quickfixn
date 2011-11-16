@@ -1007,7 +1007,7 @@ namespace QuickFix
                 {
                     logout.Header.SetField(new Fields.LastMsgSeqNumProcessed(other.Header.GetInt(Tags.MsgSeqNum)));
                 }
-                catch (FieldNotFoundException e)
+                catch (FieldNotFoundException)
                 {
                     this.Log.OnEvent("Error: No message sequence number: " + other);
                 }
