@@ -33,6 +33,10 @@ class Reflector < Array
       lineNum += 1
       line.chomp!
       if line.empty? then
+      elsif (/^sleep\([\d.]*\)/ === line) then
+        cid = -1
+        body = /^sleep\(([\d.]*)\)/.match(line)[1]
+	line = :sleep
       elsif (/^[IEie]\d{1},/ === line) then
 	cid = line[1].to_i - 48
 	body = fixify!(timify!(line[3, line.length]))
@@ -51,6 +55,8 @@ class Reflector < Array
   
   def processLine(lineNum, line, body, cid)
     if line.empty?
+    elsif line==:sleep
+      sleep(body.to_f)
     elsif line[0] == ?\#
     elsif identifyMessage(line) == ?I
       initiateAction(body, cid)
