@@ -13,7 +13,7 @@ orders with each other.
 
 Have your own app you'd like to share?  [Contact us!][3]
 
-[0]: https://github.com/connamara/quickfix.net/tree/master/Examples/TradeClient
-[1]: https://github.com/connamara/quickfix.net/tree/master/Examples/Executor
+[0]: https://github.com/connamara/quickfixn/tree/master/Examples/TradeClient
+[1]: https://github.com/connamara/quickfixn/tree/master/Examples/Executor
 [2]: https://github.com/connamara/qfn_uidemo
 [3]: /help
