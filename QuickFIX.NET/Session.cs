@@ -29,6 +29,7 @@ namespace QuickFix
         public int HeartBtInt { get { return state_.HeartBtInt; } }
         public bool CheckLatency { get; set; }
         public int MaxLatency { get; set; }
+        public bool SendLogoutBeforeTimeoutDisconnect { get; set; }
         public int NextSenderMsgSeqNum { get { return state_.GetNextSenderMsgSeqNum(); } }
         public int NextTargetMsgSeqNum { get { return state_.GetNextTargetMsgSeqNum(); } }
         public int LogonTimeout
@@ -101,6 +102,7 @@ namespace QuickFix
             this.MillisecondsInTimeStamp = true;
             this.EnableLastMsgSeqNumProcessed = false;
             this.MaxMessagesInResendRequest = 0;
+            this.SendLogoutBeforeTimeoutDisconnect = false;
 
             if (!IsSessionTime)
                 Reset();
@@ -285,6 +287,8 @@ namespace QuickFix
 
             if (state_.TimedOut())
             {
+                if (this.SendLogoutBeforeTimeoutDisconnect)
+                    GenerateLogout();
                 Disconnect("Timed out waiting for heartbeat");
             }
             else

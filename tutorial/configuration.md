@@ -231,6 +231,16 @@ QuickFIX Settings
     </td>
     <td class='default'>0</td>
   </tr>
+  
+  <tr>
+    <td class='setting'>SendLogoutBeforeDisconnectFromTimeout</td>
+    <td class='description'>Specifies whether a logout message should be sent before a connection is disconnected due to a timeout.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
 </table>
 
 
