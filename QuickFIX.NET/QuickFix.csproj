@@ -123,7 +123,6 @@
     <Compile Include="ThreadedSocketAcceptor.cs" />
     <Compile Include="StringUTF8.cs" />
     <Compile Include="ThreadedSocketReactor.cs" />
-    <Compile Include="Transport\SocketAcceptor.cs" />
     <Compile Include="Transport\SocketInitiator.cs" />
     <Compile Include="Values.cs" />
   </ItemGroup>
