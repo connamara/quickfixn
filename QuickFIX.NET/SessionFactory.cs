@@ -112,6 +112,8 @@ namespace QuickFix
                 session.EnableLastMsgSeqNumProcessed = settings.GetBool(SessionSettings.ENABLE_LAST_MSG_SEQ_NUM_PROCESSED);
             if (settings.Has(SessionSettings.MAX_MESSAGES_IN_RESEND_REQUEST))
                 session.MaxMessagesInResendRequest = settings.GetInt(SessionSettings.MAX_MESSAGES_IN_RESEND_REQUEST);
+            if (settings.Has(SessionSettings.SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT))
+                session.SendLogoutBeforeTimeoutDisconnect = settings.GetBool(SessionSettings.SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT);
             /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM))
                 session.SetValidateLengthAndChecksum(settings.GetBool(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM));

@@ -49,6 +49,7 @@ namespace QuickFix
         public const string MILLISECONDS_IN_TIMESTAMP = "MillisecondsInTimeStamp";
         public const string ENABLE_LAST_MSG_SEQ_NUM_PROCESSED = "EnableLastMsgSeqNumProcessed";
         public const string MAX_MESSAGES_IN_RESEND_REQUEST = "MaxMessagesInResendRequest";
+        public const string SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT = "SendLogoutBeforeDisconnectFromTimeout";
 
         #endregion
 
