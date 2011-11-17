@@ -22,7 +22,7 @@ namespace Executor
                 SessionSettings settings = new SessionSettings(args[0]);
                 Application executorApp = new Executor();
                 MessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                LogFactory logFactory = new ScreenLogFactory(settings);
+                LogFactory logFactory = new FileLogFactory(settings);
                 ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(executorApp, storeFactory, settings, logFactory);
 
                 acceptor.Start();
