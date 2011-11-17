@@ -21,6 +21,8 @@ Examples/Executor/obj/*
 Examples/Executor/log/
 Examples/TradeClient/bin/*
 Examples/TradeClient/obj/*
+Examples/SimpleAcceptor/bin/*
+Examples/SimpleAcceptor/obj/*
 .DS_Store
 upload_to_s3.rb
 *~
