@@ -4,6 +4,9 @@ using System.Threading;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Handles a connection with an acceptor.
+    /// </summary>
     public class SocketInitiatorThread : Responder
     {
         public Session Session { get { return session_; } }

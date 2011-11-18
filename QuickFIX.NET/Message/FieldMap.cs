@@ -7,6 +7,9 @@ using QuickFix.Fields.Converters;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Field container used by messages, groups, and composites
+    /// </summary>
     public class FieldMap : IEnumerable<KeyValuePair<int, Fields.IField>>
     {
         /// <summary>
@@ -67,6 +70,11 @@ namespace QuickFix
             return _fieldOrder;
         }
 
+        /// <summary>
+        /// Remove a field from the fieldmap
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns>true if field was removed, false otherwise</returns>
         public bool RemoveField(int field)
         {
             return _fields.Remove(field);
@@ -96,31 +104,61 @@ namespace QuickFix
             return true;
         }
 
+        /// <summary>
+        /// Gets a boolean field
+        /// </summary>
+        /// <param name="field"></param>
+        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
         public void GetField(Fields.BooleanField field)
         {
             field.Obj = GetBoolean(field.Tag);
         }
 
+        /// <summary>
+        /// Gets a string field
+        /// </summary>
+        /// <param name="field"></param>
+        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
         public void GetField(Fields.StringField field)
         {
             field.Obj = GetString(field.Tag);
         }
 
+        /// <summary>
+        /// Gets a char field
+        /// </summary>
+        /// <param name="field"></param>
+        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
         public void GetField(Fields.CharField field)
         {
             field.Obj = GetChar(field.Tag);
         }
 
+        /// <summary>
+        /// Gets an int field
+        /// </summary>
+        /// <param name="field"></param>
+        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
         public void GetField(Fields.IntField field)
         {
             field.Obj = GetInt(field.Tag);
         }
 
+        /// <summary>
+        /// Gets a decimal field
+        /// </summary>
+        /// <param name="field"></param>
+        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
         public void GetField(Fields.DecimalField field)
         {
             field.Obj = GetDecimal(field.Tag);
         }
 
+        /// <summary>
+        /// Gets a datetime field
+        /// </summary>
+        /// <param name="field"></param>
+        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
         public void GetField(Fields.DateTimeField field)
         {
             field.Obj = GetDateTime(field.Tag);
@@ -233,11 +271,6 @@ namespace QuickFix
             }
         }
 
-        /// <summary>
-        /// Not implemented
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns></returns>
         public bool GetBoolean(int tag)
         {
             try
@@ -266,11 +299,6 @@ namespace QuickFix
             }
         }
 
-        /// <summary>
-        /// Not implemented
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns></returns>
         public char GetChar(int tag)
         {
             try
@@ -287,11 +315,6 @@ namespace QuickFix
             }
         }
 
-        /// <summary>
-        /// Not implemented
-        /// </summary>
-        /// <param name="tag"></param>
-        /// <returns></returns>
         public Decimal GetDecimal(int tag)
         {
             try
@@ -388,7 +411,7 @@ namespace QuickFix
                     total += field.getTotal();
             }
 
-            // TODO not sure if repeated CheckSum should be included int the total
+            // TODO not sure if repeated CheckSum should be included in the total
             foreach (Fields.IField field in this.RepeatedTags)
             {
                 if (field.Tag != Fields.Tags.CheckSum)

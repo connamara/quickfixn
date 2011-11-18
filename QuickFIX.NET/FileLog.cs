@@ -1,6 +1,9 @@
 ﻿
 namespace QuickFix
 {
+    /// <summary>
+    /// File log implementation
+    /// </summary>
     public class FileLog : Log, System.IDisposable
     {
         private object sync_ = new object();

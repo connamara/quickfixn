@@ -8,6 +8,10 @@ using System.Reflection;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Helper class for delegating message types for various FIX versions to
+    /// type-safe onMessage methods.
+    /// </summary>
     public abstract class MessageCracker
     {
         private Dictionary<Type, MethodInfo> _handlerMethods = new Dictionary<Type, MethodInfo>();
@@ -43,7 +47,11 @@ namespace QuickFix
         }
 
 
-
+        /// <summary>
+        /// Process ("crack") a FIX message and call the registered handlers for that type, if any
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="sessionID"></param>
         public void Crack(Message message, SessionID sessionID)
         {
             Type messageType = message.GetType();
