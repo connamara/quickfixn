@@ -5,6 +5,10 @@ using System.Collections.Generic;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Handles incoming connections on a single endpoint. When a socket connection
+    /// is accepted, a ClientHandlerThread is created to handle the connection
+    /// </summary>
     public class ThreadedSocketReactor
     {
         public enum State { RUNNING, SHUTDOWN_REQUESTED, SHUTDOWN_COMPLETE }

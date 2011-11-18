@@ -2,6 +2,9 @@
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Creates a Session based on specified settings
+    /// </summary>
     public class SessionFactory
     {
         protected Application application_;

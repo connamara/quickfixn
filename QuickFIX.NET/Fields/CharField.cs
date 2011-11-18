@@ -4,6 +4,9 @@ using System.Text;
 
 namespace QuickFix.Fields
 {
+    /// <summary>
+    /// A character message field
+    /// </summary>
     public class CharField : FieldBase<Char>
     {
         public CharField(int tag)

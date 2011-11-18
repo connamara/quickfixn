@@ -4,6 +4,9 @@ using System.Text;
 
 namespace QuickFix.Fields
 {
+    /// <summary>
+    /// A decimal FIX field
+    /// </summary>
     public class DecimalField : FieldBase<Decimal>
     {
         public DecimalField(int tag)

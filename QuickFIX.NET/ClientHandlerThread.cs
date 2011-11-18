@@ -3,6 +3,11 @@ using System.Threading;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Created by a ThreadedSocketReactor to handle a client connection.
+    /// Each ClientHandlerThread has a SocketReader which reads
+    /// from the socket.
+    /// </summary>
     public class ClientHandlerThread : Responder
     {
         private Thread thread_ = null;
