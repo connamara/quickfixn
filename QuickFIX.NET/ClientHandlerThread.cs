@@ -75,6 +75,7 @@ namespace QuickFix
 
         public void Disconnect()
         {
+            Shutdown("Disconnected");
             tcpClient_.Client.Close();
             tcpClient_.Close();
         }
