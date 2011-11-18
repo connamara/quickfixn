@@ -18,9 +18,11 @@ namespace QuickFix
         private Transport.SocketInitiator initiator_;
         private Session session_;
         private IPEndPoint socketEndPoint_;
+        private bool isDisconnectRequested_ = false;
 
         public SocketInitiatorThread(Transport.SocketInitiator initiator, Session session, IPEndPoint socketEndPoint)
         {
+            isDisconnectRequested_ = false;
             initiator_ = initiator;
             session_ = session;
             socketEndPoint_ = socketEndPoint;
@@ -31,6 +33,7 @@ namespace QuickFix
 
         public void Start()
         {
+            isDisconnectRequested_ = false;
             thread_ = new Thread(new ParameterizedThreadStart(Transport.SocketInitiator.SocketInitiatorThreadStart));
             thread_.Start(this);
         }
@@ -73,6 +76,19 @@ namespace QuickFix
                 ProcessStream();
                 return true;
             }
+            catch(System.ObjectDisposedException e)
+            {
+                // this exception means socket_ is already closed when poll() is called
+                if(isDisconnectRequested_==false)
+                {
+                    // for lack of a better idea, do what the general exception does
+                    if (null != session_)
+                        session_.Disconnect(e.Message);
+                    else
+                        Disconnect();
+                }
+                return false;                    
+            }
             catch (System.Exception e)
             {
                 if (null != session_)
@@ -101,6 +117,7 @@ namespace QuickFix
 
         public void Disconnect()
         {
+            isDisconnectRequested_ = true;
             socket_.Close();
         }
 
