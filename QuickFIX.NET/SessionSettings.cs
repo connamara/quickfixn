@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Settings for sessions. Settings are grouped by FIX version and target ID
+    /// There is also a default settings that is inherited by the session-specific sections.
+    /// </summary>
     public class SessionSettings
     {
         #region Public Constants

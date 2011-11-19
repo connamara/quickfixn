@@ -11,6 +11,9 @@ using System.IO;
 
 namespace QuickFix.Transport
 {
+    /// <summary>
+    /// Initiates connections and uses a single thread to process messages for all sessions.
+    /// </summary>
     public class SocketInitiator : AbstractInitiator
     {
         public const string SOCKET_CONNECT_HOST = "SocketConnectHost";

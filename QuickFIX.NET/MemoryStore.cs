@@ -2,6 +2,9 @@
 
 namespace QuickFix
 {
+    /// <summary>
+    /// In-memory message store implementation
+    /// </summary>
     public class MemoryStore : MessageStore
     {
         #region Private Members

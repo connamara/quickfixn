@@ -8,6 +8,11 @@ namespace QuickFix.Fields
     /// <typeparam name="T">Internal storage type</typeparam>
     public abstract class FieldBase<T> : IField
     {
+        /// <summary>
+        /// Constructs a new field with the specified tag and value
+        /// </summary>
+        /// <param name="tag">the FIX tag number</param>
+        /// <param name="obj">the value of the field</param>
         public FieldBase(int tag, T obj)
         {
             _tag = tag;
@@ -26,6 +31,9 @@ namespace QuickFix.Fields
             }
         }
 
+        /// <summary>
+        /// the FIX tag number
+        /// </summary>
         public override int Tag
         {
             get { return _tag; }

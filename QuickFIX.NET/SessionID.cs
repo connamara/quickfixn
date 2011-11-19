@@ -1,6 +1,13 @@
 ﻿
 namespace QuickFix
 {
+    /// <summary>
+    /// Identifies a session. Only supports a company ID (target, sender)
+    /// and a session qualifier. Sessions are also identified by FIX version so
+    /// that it's possible to have multiple sessions to the same counterparty
+    /// but using different FIX versions (and/or session qualifiers).
+    /// 
+    /// </summary>
     public class SessionID
     {
         #region Properties
@@ -40,11 +47,19 @@ namespace QuickFix
             get { return targetLocationID_; }
         }
 
+        /// <summary>
+        /// Session qualifier can be used to identify different sessions
+        /// for the same target company ID. Session qualifiers can only be used
+        /// with initiated sessions. They cannot be used with accepted sessions.
+        /// </summary>
         public string SessionQualifier
         {
             get { return sessionQualifier_; }
         }
 
+        /// <summary>
+        /// Returns whether session version is FIXT 1.1 or newer
+        /// </summary>
         public bool IsFIXT
         {
             get { return isFIXT_; }

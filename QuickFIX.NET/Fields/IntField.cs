@@ -4,6 +4,9 @@ using System.Text;
 
 namespace QuickFix.Fields
 {
+    /// <summary>
+    /// An integer message field
+    /// </summary>
     public class IntField : FieldBase<int>
     {
         public IntField(int tag)
