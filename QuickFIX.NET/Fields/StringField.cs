@@ -4,6 +4,9 @@ using System.Text;
 
 namespace QuickFix.Fields
 {
+    /// <summary>
+    /// A string message field
+    /// </summary>
     public class StringField : FieldBase<string>
     {
         public StringField(int tag)

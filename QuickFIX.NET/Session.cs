@@ -3,6 +3,14 @@ using QuickFix.Fields;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// The Session is the primary FIX abstraction for message communication. 
+    /// It performs sequencing and error recovery and represents a communication
+    /// channel to a counterparty. Sessions are independent of specific communication
+    /// layer connections. A Session is defined as starting with message sequence number
+    /// of 1 and ending when the session is reset. The Session could span many sequential
+    /// connections (it cannot operate on multiple connections simultaneously).
+    /// </summary>
     public class Session
     {
         #region Private Members
@@ -26,33 +34,113 @@ namespace QuickFix
         public bool IsLoggedOn { get { return ReceivedLogon && SentLogon; } }
         public bool SentLogon { get { return state_.SentLogon; } }
         public bool ReceivedLogon { get { return state_.ReceivedLogon; } }
+
+        /// <summary>
+        /// Session setting for heartbeat interval (in seconds)
+        /// </summary>
         public int HeartBtInt { get { return state_.HeartBtInt; } }
+
+        /// <summary>
+        /// Session setting for enabling message latency checks
+        /// </summary>
         public bool CheckLatency { get; set; }
+
+        /// <summary>
+        /// Session setting for maximum message latency (in seconds)
+        /// </summary>
         public int MaxLatency { get; set; }
+
+        /// <summary>
+        /// Send a logout if counterparty times out and does not heartbeat
+        /// in response to a TestRequeset. Defaults to false
+        /// </summary>
         public bool SendLogoutBeforeTimeoutDisconnect { get; set; }
+
+        /// <summary>
+        /// Returns the next expected outgoing sequence number
+        /// </summary>
         public int NextSenderMsgSeqNum { get { return state_.GetNextSenderMsgSeqNum(); } }
+
+        /// <summary>
+        /// Returns the next expected incoming sequence number
+        /// </summary>
         public int NextTargetMsgSeqNum { get { return state_.GetNextTargetMsgSeqNum(); } }
+
+        /// <summary>
+        /// Logon timeout in seconds
+        /// </summary>
         public int LogonTimeout
         {
             get { return state_.LogonTimeout; }
             set { state_.LogonTimeout = value; }
         }
+
+        /// <summary>
+        /// Logout timeout in seconds
+        /// </summary>
         public int LogoutTimeout
         {
             get { return state_.LogoutTimeout; }
             set { state_.LogoutTimeout = value; }
         }
-        // unsynchronized
+        
+        // unsynchronized properties
+        /// <summary>
+        /// Whether to persist messages or not. Setting to false forces quickfix 
+        /// to always send GapFills instead of resending messages.
+        /// </summary>
         public bool PersistMessages { get; set; }
+
+        /// <summary>
+        /// Determines if session state should be restored from persistance
+        /// layer when logging on. Useful for creating hot failover sessions.
+        /// </summary>
         public bool RefreshOnLogon { get; set; }
+
+        /// <summary>
+        /// Reset sequence numbers on logon request
+        /// </summary>
         public bool ResetOnLogon { get; set; }
+
+        /// <summary>
+        /// Reset sequence numbers to 1 after a normal logout
+        /// </summary>
         public bool ResetOnLogout { get; set; }
+
+        /// <summary>
+        /// Reset sequence numbers to 1 after abnormal termination
+        /// </summary>
         public bool ResetOnDisconnect { get; set; }
+
+        /// <summary>
+        /// Whether to send redundant resend requests
+        /// </summary>
         public bool SendRedundantResendRequests { get; set; }
+
+        /// <summary>
+        /// Whether to validate length and checksum of messages
+        /// </summary>
         public bool ValidateLengthAndChecksum { get; set; }
+
+        /// <summary>
+        /// Validates Comp IDs for each message
+        /// </summary>
         public bool CheckCompID { get; set; }
+
+        /// <summary>
+        /// Determines if milliseconds should be added to timestamps.
+        /// Only avilable on FIX4.2. or greater
+        /// </summary>
         public bool MillisecondsInTimeStamp { get; set; }
+
+        /// <summary>
+        /// Adds the last message sequence number processed in the header (tag 369)
+        /// </summary>
         public bool EnableLastMsgSeqNumProcessed { get; set; }
+
+        /// <summary>
+        /// Sets a maximum number of messages to request in a resend request.
+        /// </summary>
         public int MaxMessagesInResendRequest { get; set; }
         public ApplVerID targetDefaultApplVerID { get; set;}
         public string SenderDefaultApplVerID { get; set; }
@@ -61,7 +149,10 @@ namespace QuickFix
         public DataDictionaryProvider DataDictionaryProvider { get; set; }
         public DataDictionary.DataDictionary SessionDataDictionary { get; private set; }
         public DataDictionary.DataDictionary ApplicationDataDictionary { get; private set; }
-        // synchronized
+
+        /// <summary>
+        /// Returns whether the Session has a Responder. This method is synchronized
+        /// </summary>
         public bool HasResponder { get { lock (sync_) { return null != responder_; } } }
 
         #endregion
@@ -135,10 +226,11 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME send Message, not string
+        /// Sends a message to the session specified by the provider session ID.
         /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
+        /// <param name="message">FIX message</param>
+        /// <param name="sessionID">target SessionID</param>
+        /// <returns>true if send was successful, false otherwise</returns>
         public static bool SendToTarget(Message message, SessionID sessionID)
         {
             message.SetSessionID(sessionID);
@@ -173,6 +265,11 @@ namespace QuickFix
             return SendRaw(message, 0);
         }
 
+        /// <summary>
+        /// Sends a message
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public bool Send(string message)
         {
             lock (sync_)
@@ -201,6 +298,10 @@ namespace QuickFix
             state_.LogoutReason = reason;
         }
 
+        /// <summary>
+        /// Logs out from session and closes the network connection
+        /// </summary>
+        /// <param name="reason"></param>
         public void Disconnect(string reason)
         {
             lock (sync_)

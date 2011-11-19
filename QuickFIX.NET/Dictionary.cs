@@ -2,6 +2,9 @@
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Name/value pairs used for specifying groups of settings
+    /// </summary>
     public class Dictionary : System.Collections.IEnumerable
     {
         #region Private Members
