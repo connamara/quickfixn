@@ -1,6 +1,9 @@
 ﻿
 namespace QuickFix
 {
+    /// <summary>
+    /// Log implementation that does not do anything
+    /// </summary>
     public class NullLog : Log
     {
         #region Log Members

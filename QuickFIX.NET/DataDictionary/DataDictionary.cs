@@ -5,6 +5,9 @@ using System.Xml.XPath;
 
 namespace QuickFix.DataDictionary
 {
+    /// <summary>
+    /// Provide the message metadata for various versions of FIX
+    /// </summary>
     public class DataDictionary
     {
 		public string MajorVersion { get; private set; }
@@ -29,13 +32,20 @@ namespace QuickFix.DataDictionary
             CheckUserDefinedFields = true;
         }
 
+        /// <summary>
+        /// Initialize a data dictionary from a file path
+        /// </summary>
+        /// <param name="path"></param>
         public DataDictionary(String path)
             :this()
         {
             Load(path);
         }
 
-        
+        /// <summary>
+        /// Copy a data dictionary
+        /// </summary>
+        /// <param name="src">the source dictionary that will be copied into this dictionary</param>
         public DataDictionary(DataDictionary src)
             :this()
         {
@@ -90,6 +100,13 @@ namespace QuickFix.DataDictionary
             Validate(message, false, beginString, msgType);
         }
 
+        /// <summary>
+        /// Validate the message body, with header and trailer fields being validated conditionally
+        /// </summary>
+        /// <param name="message">the message</param>
+        /// <param name="bodyOnly">whether to validate just the message body, or to validate the header and trailer sections as well</param>
+        /// <param name="beginString"></param>
+        /// <param name="msgType"></param>
         public void Validate(Message message, bool bodyOnly, string beginString, string msgType)
         {
             DataDictionary sessionDataDict = null;

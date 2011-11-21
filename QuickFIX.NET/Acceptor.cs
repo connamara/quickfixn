@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Accepts connections from FIX clients and manages the associated sessions.
+    /// </summary>
     public interface Acceptor
     {
         /// <summary>
