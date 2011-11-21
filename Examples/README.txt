@@ -1,0 +1,56 @@
+Example Applications
+====================
+
+These example applications demonstrate how to use the QuickFIX/n library to 
+build your own FIX applications. There are 3 QuickFIX/N example applications:
+
+1. The SimpleAcceptor demonstrates a barebones acceptor application.
+2. The Trade Client is a command line client that sends orders.
+3. The Executor takes orders over a FIX session and executes them.
+
+The Trade Client and Executor can be configured to send and execute
+orders with each other.
+
+SimpleAcceptor
+==============
+
+The SimpleAcceptor example shows you how to create a simple acceptor server.
+It will let initiators connect to it, and logs all admin and application 
+level messages to the screen. It does not process these messages.
+
+Configure the SimpleAcceptor by modifying SimpleAcceptor/simpleacc.cfg
+This configuration file defines the FIX Sessions the acceptor will
+handle. For more information - http://quickfixn.org/tutorial/configuration
+
+Build QuickFIX/n first by running build.bat
+Then start the SimpleAcceptor by opening a command prompt at 
+quickfixn/Examples/SimpleAcceptor/bin/Release and running:
+Examples.SimpleAcceptor.exe simpleacc.cfg
+
+Executor
+========
+
+The Executor example demonstrates how to create an acceptor to crack messages 
+and execute orders. The Executor class inherits MessageCracker and implements
+Application. For more information on how message cracking works - 
+http://quickfixn.org/tutorial/receiving-messages
+
+The OnMessage callbacks show you how to get field values from the NewOrderSingle 
+FIX message and create an ExecutionReport response back to the initiator.
+
+The Executor is configured with the executor.cfg file.
+
+Build QuickFIX/n by running build.bat, then start the Executor by opening a command
+prompt at quickfixn/Examples/Executor/bin/Release and running:
+Executor.exe executor.cfg
+
+TradeClient
+===========
+
+The TradeClient example shows how to create different FIX message types and versions.
+
+TradeClient is configured with the tradeclient.cfg file.
+
+Build QuickFIX/n by running build.bat, then start TradeClient by opening a command
+prompt at quickfixn/Examples/TradeClient/bin/Release and running
+TradeClient.exe tradeclient.cfg
