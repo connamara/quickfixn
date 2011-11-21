@@ -18,6 +18,11 @@ The SimpleAcceptor example shows you how to create a simple acceptor server.
 It will let initiators connect to it, and logs all admin and application 
 level messages to the screen. It does not process these messages.
 
+Program.cs demonstrates how to setup and start a new acceptor object 
+from the Session settings file. SimpleAcceptorApp.cs implements
+the Application interface and is where you would handle all your application
+level logic.
+
 Configure the SimpleAcceptor by modifying SimpleAcceptor/simpleacc.cfg
 This configuration file defines the FIX Sessions the acceptor will
 handle. For more information - http://quickfixn.org/tutorial/configuration
@@ -36,7 +41,10 @@ Application. For more information on how message cracking works -
 http://quickfixn.org/tutorial/receiving-messages
 
 The OnMessage callbacks show you how to get field values from the NewOrderSingle 
-FIX message and create an ExecutionReport response back to the initiator.
+FIX message and create an ExecutionReport response back to the initiator. Every
+FIX version has its own namespace and Messages. When responding to a NewOrderSingle,
+you must create a Message based on the initiator's FIX version. If you do not,
+the counterparty will reject your message.
 
 The Executor is configured with the executor.cfg file.
 
