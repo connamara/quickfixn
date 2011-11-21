@@ -40,6 +40,9 @@ namespace QuickFix
         { }
     }
 
+    /// <summary>
+    /// Represents a FIX message
+    /// </summary>
     public class Message : FieldMap
     {
         public const string SOH = "\u0001";
@@ -345,6 +348,13 @@ namespace QuickFix
             return true;
         }
 
+        /// <summary>
+        /// Creates a Message from a FIX string
+        /// </summary>
+        /// <param name="msgstr"></param>
+        /// <param name="validate"></param>
+        /// <param name="sessionDD"></param>
+        /// <param name="appDD"></param>
         public void FromString(string msgstr, bool validate, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
         {
             Clear();

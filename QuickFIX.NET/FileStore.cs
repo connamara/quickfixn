@@ -5,6 +5,9 @@ using System.Text;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// File store implementation
+    /// </summary>
     public class FileStore : MessageStore, IDisposable
     {
         private class MsgDef

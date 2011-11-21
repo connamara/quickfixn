@@ -1,10 +1,17 @@
 ﻿
 namespace QuickFix
 {
+    /// <summary>
+    /// Creates a message store that stores messages in a file
+    /// </summary>
     public class FileStoreFactory : MessageStoreFactory
     {
         private SessionSettings settings_;
 
+        /// <summary>
+        /// Create the factory with configuration in session settings
+        /// </summary>
+        /// <param name="settings"></param>
         public FileStoreFactory(SessionSettings settings)
         {
             settings_ = settings;
@@ -13,8 +20,9 @@ namespace QuickFix
         #region MessageStoreFactory Members
 
         /// <summary>
+        /// Creates a file-based message store
         /// </summary>
-        /// <param name="sessionID"></param>
+        /// <param name="sessionID">session ID for the message store</param>
         /// <returns></returns>
         public MessageStore Create(SessionID sessionID)
         {

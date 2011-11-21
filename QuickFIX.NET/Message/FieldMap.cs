@@ -239,6 +239,12 @@ namespace QuickFix
             return _groups[field][num - 1];
         }
 
+        /// <summary>
+        /// Gets the integer value of a field
+        /// </summary>
+        /// <param name="tag">the FIX tag</param>
+        /// <returns>the integer field value</returns>
+        /// <exception cref="FieldNotFoundException" />
         public int GetInt(int tag)
         {
             try
@@ -255,6 +261,12 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Gets the DateTime value of a field
+        /// </summary>
+        /// <param name="tag">the FIX tag</param>
+        /// <returns>the DateTime value</returns>
+        /// <exception cref="FieldNotFoundException" />
         public System.DateTime GetDateTime(int tag)
         {
             try
@@ -271,6 +283,12 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Gets the boolean value of a field
+        /// </summary>
+        /// <param name="tag">the FIX tag</param>
+        /// <returns>the bool value</returns>
+        /// <exception cref="FieldNotFoundException" />
         public bool GetBoolean(int tag)
         {
             try
@@ -287,6 +305,12 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Gets the string value of a field
+        /// </summary>
+        /// <param name="tag">the FIX tag</param>
+        /// <returns>the string value</returns>
+        /// <exception cref="FieldNotFoundException" />
         public String GetString(int tag)
         {
             try
@@ -299,6 +323,12 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Gets the char value of a field
+        /// </summary>
+        /// <param name="tag">the FIX tag</param>
+        /// <returns>the char value</returns>
+        /// <exception cref="FieldNotFoundException" />
         public char GetChar(int tag)
         {
             try
@@ -315,6 +345,12 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Gets the decimal value of a field
+        /// </summary>
+        /// <param name="tag">the FIX tag</param>
+        /// <returns>the decimal value</returns>
+        /// <exception cref="FieldNotFoundException" />
         public Decimal GetDecimal(int tag)
         {
             try

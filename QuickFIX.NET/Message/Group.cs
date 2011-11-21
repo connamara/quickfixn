@@ -5,6 +5,9 @@ using System.Text;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Represents a repeating field group within a message
+    /// </summary>
     public class Group : FieldMap
     {
         /// <summary>

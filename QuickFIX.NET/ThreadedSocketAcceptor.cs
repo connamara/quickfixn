@@ -4,6 +4,10 @@ using System.Net;
 
 namespace QuickFix
 {
+    /// <summary>
+    /// Acceptor implementation - with threads
+    /// Creates a ThreadedSocketReactor for every listening endpoint.
+    /// </summary>
     public class ThreadedSocketAcceptor : Acceptor
     {
         class AcceptorSocketDescriptor

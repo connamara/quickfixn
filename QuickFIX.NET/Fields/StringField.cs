@@ -5,7 +5,7 @@ using System.Text;
 namespace QuickFix.Fields
 {
     /// <summary>
-    /// A string message field
+    /// A string-valued message field
     /// </summary>
     public class StringField : FieldBase<string>
     {

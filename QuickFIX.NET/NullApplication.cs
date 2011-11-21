@@ -1,6 +1,10 @@
 ﻿
 namespace QuickFix
 {
+    /// <summary>
+    /// Application implementation that does not do anything.
+    /// Useful for unit testing.
+    /// </summary>
     public class NullApplication : Application
     {
         public void FromAdmin(Message message, SessionID sessionID)
