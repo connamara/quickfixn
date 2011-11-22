@@ -35,9 +35,10 @@ Examples.SimpleAcceptor.exe simpleacc.cfg
 Executor
 ========
 
-The Executor example demonstrates how to create an acceptor to crack messages 
-and execute orders. The Executor class inherits MessageCracker and implements
-Application. For more information on how message cracking works - 
+The Executor example takes incoming orders and executes them. Executor demonstrates 
+how to create an acceptor to crack messages and execute orders. 
+The Executor class inherits MessageCracker and implements Application. 
+For more information on how message cracking works - 
 http://quickfixn.org/tutorial/receiving-messages
 
 The OnMessage callbacks show you how to get field values from the NewOrderSingle 
@@ -55,7 +56,9 @@ Executor.exe executor.cfg
 TradeClient
 ===========
 
-The TradeClient example shows how to create different FIX message types and versions.
+The TradeClient is a command line example that shows how to create different FIX 
+message types and versions. You can create new order singles, cancel order requests, 
+cancel replace requests, and market data requests. 
 
 TradeClient is configured with the tradeclient.cfg file.
 
