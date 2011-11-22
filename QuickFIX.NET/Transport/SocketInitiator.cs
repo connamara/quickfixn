@@ -45,6 +45,7 @@ namespace QuickFix.Transport
         private volatile bool shutdownRequested_ = false;
         private int lastConnectTickCount = 0;
         private int reconnectInterval_ = 30;
+        private SocketSettings socketSettings_ = new SocketSettings();
         private Dictionary<SessionID, SocketInitiatorThread> threads_ = new Dictionary<SessionID, SocketInitiatorThread>();
         private Dictionary<SessionID, int> sessionToHostNum_ = new Dictionary<SessionID, int>();
         private object sync_ = new object();
@@ -134,7 +135,10 @@ namespace QuickFix.Transport
 
         #region Initiator Methods
         
-        /// FIXME handle other socket options like TCP_NO_DELAY here
+        /// <summary>
+        /// handle other socket options like TCP_NO_DELAY here
+        /// </summary>
+        /// <param name="settings"></param>
         protected override void OnConfigure(SessionSettings settings)
         {
             try
@@ -143,6 +147,10 @@ namespace QuickFix.Transport
             }
             catch (System.Exception)
             { }
+            if (settings.Get().Has(SessionSettings.SOCKET_NODELAY))
+            {
+                socketSettings_.SocketNodelay = settings.Get().GetBool(SessionSettings.SOCKET_NODELAY);
+            }
         }
 
         protected override void OnStart()
@@ -190,7 +198,7 @@ namespace QuickFix.Transport
                 SetPending(sessionID);
                 session.Log.OnEvent("Connecting to " + socketEndPoint.Address + " on port " + socketEndPoint.Port);
 
-                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint);
+                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings_);
                 t.Start();
                 AddThread(t);
 

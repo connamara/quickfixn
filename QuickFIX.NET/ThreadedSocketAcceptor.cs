@@ -27,17 +27,17 @@ namespace QuickFix
             #endregion 
 
             #region Private Members
-            
+
             private ThreadedSocketReactor socketReactor_;
             private IPEndPoint socketEndPoint_;
             private Dictionary<SessionID, Session> acceptedSessions_ = new Dictionary<SessionID, Session>();
 
             #endregion
 
-            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint)
+            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings)
             {
                 socketEndPoint_ = socketEndPoint;
-                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_);
+                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings);
             }
 
             public void AcceptSession(Session session)
@@ -111,6 +111,7 @@ namespace QuickFix
         {
             QuickFix.Dictionary dict = settings_.Get(sessionID);
             int port = System.Convert.ToInt32(dict.GetLong(SessionSettings.SOCKET_ACCEPT_PORT));
+            SocketSettings socketSettings = new SocketSettings();
 
             IPEndPoint socketEndPoint;
             if (dict.Has(SessionSettings.SOCKET_ACCEPT_HOST))
@@ -124,12 +125,18 @@ namespace QuickFix
                 socketEndPoint = new IPEndPoint(IPAddress.Any, port);
             }
 
+            if (dict.Has(SessionSettings.SOCKET_NODELAY))
+            {
+                socketSettings.SocketNodelay = dict.GetBool(SessionSettings.SOCKET_NODELAY);
+            }
+
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings);
                 socketDescriptorForAddress_[socketEndPoint] = descriptor;
             }
+
             return descriptor;
         }
 

@@ -30,11 +30,13 @@ namespace QuickFix
         private Thread serverThread_ = null;
         private LinkedList<ClientHandlerThread> clientThreads_ = new LinkedList<ClientHandlerThread>();
         private TcpListener tcpListener_;
+        private SocketSettings socketSettings_;
 
         #endregion
 
-        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint)
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
         {
+            socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
         }
 
@@ -75,7 +77,7 @@ namespace QuickFix
                 try
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
-                    ApplySocketOptions(client);
+                    ApplySocketOptions(client, socketSettings_);
                     ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++);
                     lock (sync_)
                     {
@@ -98,10 +100,10 @@ namespace QuickFix
         /// FIXME get socket options from SessionSettings
         /// </summary>
         /// <param name="client"></param>
-        public static void ApplySocketOptions(TcpClient client)
+        public static void ApplySocketOptions(TcpClient client, SocketSettings socketSettings)
         {
             client.LingerState = new LingerOption(false, 0);
-            client.NoDelay = true;
+            client.NoDelay = socketSettings.SocketNodelay;
         }
 
         private void ShutdownClientHandlerThreads()

@@ -23,7 +23,7 @@ namespace QuickFix
         private IPEndPoint socketEndPoint_;
         private bool isDisconnectRequested_ = false;
 
-        public SocketInitiatorThread(Transport.SocketInitiator initiator, Session session, IPEndPoint socketEndPoint)
+        public SocketInitiatorThread(Transport.SocketInitiator initiator, Session session, IPEndPoint socketEndPoint, SocketSettings socketSettings)
         {
             isDisconnectRequested_ = false;
             initiator_ = initiator;
@@ -31,6 +31,7 @@ namespace QuickFix
             socketEndPoint_ = socketEndPoint;
             parser_ = new Parser();
             socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket_.NoDelay = socketSettings.SocketNodelay;
             session_ = session;
         }
 
