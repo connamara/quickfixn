@@ -27,6 +27,14 @@ namespace name. Below is a list of known compatibility issues:
    
      For example: `QuickFix42.NewOrderSingle` is now `QuickFix.FIX42.NewOrderSingle`
 
+*  Socket acceptor and initiator classes are different.
+
+     QuickFIX/n's default initiator is `QuickFix.Transport.SocketInitiator` and the
+     default acceptor is `QuickFix.ThreadedSocketAcceptor`
+
+     The constructors have changed. A MessageFactory is not passed into the initiator
+     and acceptor's constructors in QuickFIX/n.
+
 If we missed anything, [let us know][1]
 
 [0]: http://www.quickfixengine.org/quickfix/doc/html/building.html#Windows%20(.NET)
