@@ -409,6 +409,16 @@ QuickFIX Settings
     <td class='valid'>Valid IP address in the format of x.x.x.x or a domain name</td>
     <td class='default'>-</td>
   </tr>
+  
+  <tr>
+    <td class='setting'>SocketNodelay</td>
+    <td class='description'>Disable Nagle's algorithm for this connection. Written data to the network is not buffered pending acknowledgement of previously written data. Currently, this must be defined in the [DEFAULT] section.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
 </table>
 
 <a name='acceptor'></a>
@@ -435,6 +445,16 @@ QuickFIX Settings
     <td class='description'>Socket host for listening to incoming connections.  If not provided, the acceptor will listen on all network interfaces (0.0.0.0)</td>
     <td class='valid'>Valid IP address in the format of x.x.x.x</td>
     <td class='default'>0.0.0.0</td>
+  </tr>
+  
+  <tr>
+    <td class='setting'>SocketNodelay</td>
+    <td class='description'>Disable Nagle's algorithm for this connection. Written data to the network is not buffered pending acknowledgement of previously written data. Currently, this must be defined in the [DEFAULT] section.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
   </tr>
 </table>
 

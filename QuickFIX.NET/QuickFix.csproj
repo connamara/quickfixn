@@ -120,6 +120,7 @@
     <Compile Include="Settings.cs" />
     <Compile Include="SocketInitiatorThread.cs" />
     <Compile Include="SocketReader.cs" />
+    <Compile Include="SocketSettings.cs" />
     <Compile Include="ThreadedSocketAcceptor.cs" />
     <Compile Include="StringUTF8.cs" />
     <Compile Include="ThreadedSocketReactor.cs" />
