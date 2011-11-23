@@ -55,6 +55,7 @@ namespace QuickFix
         public const string MAX_MESSAGES_IN_RESEND_REQUEST = "MaxMessagesInResendRequest";
         public const string SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT = "SendLogoutBeforeDisconnectFromTimeout";
         public const string SOCKET_NODELAY = "SocketNodelay";
+        public const string IGNORE_POSSDUP_RESEND_REQUESTS = "IgnorePossDupResendRequests";
 
         #endregion
 

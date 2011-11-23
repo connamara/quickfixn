@@ -117,6 +117,8 @@ namespace QuickFix
                 session.MaxMessagesInResendRequest = settings.GetInt(SessionSettings.MAX_MESSAGES_IN_RESEND_REQUEST);
             if (settings.Has(SessionSettings.SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT))
                 session.SendLogoutBeforeTimeoutDisconnect = settings.GetBool(SessionSettings.SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT);
+            if (settings.Has(SessionSettings.IGNORE_POSSDUP_RESEND_REQUESTS))
+                session.IgnorePossDupResendRequests = settings.GetBool(SessionSettings.IGNORE_POSSDUP_RESEND_REQUESTS);
             /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM))
                 session.SetValidateLengthAndChecksum(settings.GetBool(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM));

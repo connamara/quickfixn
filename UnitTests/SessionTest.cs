@@ -455,5 +455,41 @@ namespace UnitTests
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(5002));
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(5004));
         }
+
+        [Test]
+        public void TestIgnorePossDupInResendRequest()
+        {
+            // Default is false
+            Assert.That(session.IgnorePossDupResendRequests, Is.EqualTo(false));
+
+            session.IgnorePossDupResendRequests = true;
+            // Logon 
+            Logon();
+
+            // NOS
+            QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
+                new QuickFix.Fields.ClOrdID("1"),
+                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
+                new QuickFix.Fields.Symbol("IBM"),
+                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
+                new QuickFix.Fields.TransactTime(),
+                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+
+            order.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
+            order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
+            order.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
+            // This will generate resend requests
+            session.Send(order);
+
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.NEWORDERSINGLE].Count == 1);
+
+            QuickFix.Message msg = new QuickFix.FIX42.ResendRequest(
+                new QuickFix.Fields.BeginSeqNo(1),
+                new QuickFix.Fields.EndSeqNo(0));
+            msg.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
+            SendTheMessage(msg);
+
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.NEWORDERSINGLE].Count == 1);
+        }
     }
 }

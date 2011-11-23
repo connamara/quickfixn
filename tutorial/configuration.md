@@ -241,6 +241,16 @@ QuickFIX Settings
     </td>
     <td class='default'>N</td>
   </tr>
+  
+  <tr>
+    <td class='setting'>IgnorePossDupResendRequests</td>
+    <td class='description'>Specifies whether to ignore a resend request when PossDupFlag (tag 43) is set to true</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
 </table>
 
 
