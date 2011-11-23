@@ -139,6 +139,11 @@ namespace QuickFix
         public bool EnableLastMsgSeqNumProcessed { get; set; }
 
         /// <summary>
+        /// Ignores resend requests marked poss dup
+        /// </summary>
+        public bool IgnorePossDupResendRequests { get; set; }
+
+        /// <summary>
         /// Sets a maximum number of messages to request in a resend request.
         /// </summary>
         public int MaxMessagesInResendRequest { get; set; }
@@ -194,6 +199,7 @@ namespace QuickFix
             this.EnableLastMsgSeqNumProcessed = false;
             this.MaxMessagesInResendRequest = 0;
             this.SendLogoutBeforeTimeoutDisconnect = false;
+            this.IgnorePossDupResendRequests = false;
 
             if (!IsSessionTime)
                 Reset();
@@ -610,6 +616,10 @@ namespace QuickFix
         {
             try
             {
+                if (this.IgnorePossDupResendRequests && resendReq.Header.IsSetField(Tags.PossDupFlag))
+                {
+                    return;
+                }
                 int begSeqNo = resendReq.GetInt(Fields.Tags.BeginSeqNo);
                 int endSeqNo = resendReq.GetInt(Fields.Tags.EndSeqNo);
                 this.Log.OnEvent("Got resend request from " + begSeqNo + " to " + endSeqNo);

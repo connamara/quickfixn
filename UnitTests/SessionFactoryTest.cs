@@ -88,6 +88,7 @@ namespace UnitTests
             settings.SetString(SessionSettings.ENABLE_LAST_MSG_SEQ_NUM_PROCESSED, "Y");
             settings.SetString(SessionSettings.MAX_MESSAGES_IN_RESEND_REQUEST, "2500");
             settings.SetString(SessionSettings.SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT, "Y");
+            settings.SetString(SessionSettings.IGNORE_POSSDUP_RESEND_REQUESTS, "Y");
 
             Session session = factory.Create(sessionID, settings);
 
@@ -103,6 +104,7 @@ namespace UnitTests
             Assert.That(session.EnableLastMsgSeqNumProcessed);
             Assert.That(session.MaxMessagesInResendRequest, Is.EqualTo(2500));
             Assert.That(session.SendLogoutBeforeTimeoutDisconnect);
+            Assert.That(session.IgnorePossDupResendRequests);
         }
     }
 }
