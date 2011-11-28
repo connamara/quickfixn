@@ -6,7 +6,7 @@ QuickFIX/n is 100% free and open source with a liberal [license][4].
 
 Comparisons to QuickFIX
 -----------------------
-QuickFIX/n is a .NET port of [QuickFIX][0], an open source C++ FIX engine.<br/>
+QuickFIX/n is a .NET port of [QuickFIX][0], an open source C++ FIX engine.
 
 We love QuickFIX.  We have been contributors nearly since its
 conception and use it heavily in our products and consulting.
