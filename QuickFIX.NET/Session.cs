@@ -616,79 +616,79 @@ namespace QuickFix
         {
             try
             {
-                if (this.IgnorePossDupResendRequests && resendReq.Header.IsSetField(Tags.PossDupFlag))
-                {
-                    return;
-                }
-                int begSeqNo = resendReq.GetInt(Fields.Tags.BeginSeqNo);
-                int endSeqNo = resendReq.GetInt(Fields.Tags.EndSeqNo);
-                this.Log.OnEvent("Got resend request from " + begSeqNo + " to " + endSeqNo);
-
-                if ((endSeqNo == 999999) || (endSeqNo == 0))
-                {
-                    endSeqNo = state_.GetNextSenderMsgSeqNum() - 1;
-                }
-
-                if (!PersistMessages)
-                {
-                    endSeqNo++;
-                    int next = state_.GetNextSenderMsgSeqNum();
-                    if (endSeqNo > next)
-                        endSeqNo = next;
-                    GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
-                    return;
-                }
-
-                List<string> messages = new List<string>();
-                state_.Get(begSeqNo, endSeqNo, messages);
-                int current = begSeqNo;
-                int begin = 0;
                 int msgSeqNum = 0;
-                foreach (string msgStr in messages)
+                if (!(this.IgnorePossDupResendRequests && resendReq.Header.IsSetField(Tags.PossDupFlag)))
                 {
-                    Message msg = new Message(msgStr);
-                    msgSeqNum = msg.Header.GetInt(Tags.MsgSeqNum);
+                    int begSeqNo = resendReq.GetInt(Fields.Tags.BeginSeqNo);
+                    int endSeqNo = resendReq.GetInt(Fields.Tags.EndSeqNo);
+                    this.Log.OnEvent("Got resend request from " + begSeqNo + " to " + endSeqNo);
 
-                    if ((current != msgSeqNum) && begin == 0)
+                    if ((endSeqNo == 999999) || (endSeqNo == 0))
                     {
-                        begin = current;
+                        endSeqNo = state_.GetNextSenderMsgSeqNum() - 1;
                     }
 
-                    if (IsAdminMessage(msg))
+                    if (!PersistMessages)
                     {
-                        if (begin == 0)
+                        endSeqNo++;
+                        int next = state_.GetNextSenderMsgSeqNum();
+                        if (endSeqNo > next)
+                            endSeqNo = next;
+                        GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
+                        return;
+                    }
+
+                    List<string> messages = new List<string>();
+                    state_.Get(begSeqNo, endSeqNo, messages);
+                    int current = begSeqNo;
+                    int begin = 0;
+                    foreach (string msgStr in messages)
+                    {
+                        Message msg = new Message(msgStr);
+                        msgSeqNum = msg.Header.GetInt(Tags.MsgSeqNum);
+
+                        if ((current != msgSeqNum) && begin == 0)
                         {
-                            begin = msgSeqNum;
+                            begin = current;
                         }
-                    }
-                    else
-                    {
-                        
-                        initializeResendFields(msg);
-                        if (begin != 0)
+
+                        if (IsAdminMessage(msg))
                         {
-                            GenerateSequenceReset(resendReq, begin, msgSeqNum);
+                            if (begin == 0)
+                            {
+                                begin = msgSeqNum;
+                            }
                         }
-                        Send(msg.ToString());
-                        begin = 0;
+                        else
+                        {
+
+                            initializeResendFields(msg);
+                            if (begin != 0)
+                            {
+                                GenerateSequenceReset(resendReq, begin, msgSeqNum);
+                            }
+                            Send(msg.ToString());
+                            begin = 0;
+                        }
+                        current = msgSeqNum + 1;
                     }
-                    current = msgSeqNum + 1;
-                }
 
-                if (begin != 0)
-                {
-                    GenerateSequenceReset(resendReq, begin, msgSeqNum + 1);
-                }
-
-                if (endSeqNo > msgSeqNum) {
-                    endSeqNo = endSeqNo + 1;
-                    int next = state_.GetNextSenderMsgSeqNum();
-                    if (endSeqNo > next) {
-                        endSeqNo = next;
+                    if (begin != 0)
+                    {
+                        GenerateSequenceReset(resendReq, begin, msgSeqNum + 1);
                     }
-                    GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
-                }
 
+                    if (endSeqNo > msgSeqNum)
+                    {
+                        endSeqNo = endSeqNo + 1;
+                        int next = state_.GetNextSenderMsgSeqNum();
+                        if (endSeqNo > next)
+                        {
+                            endSeqNo = next;
+                        }
+                        GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
+                    }
+                }
                 msgSeqNum = resendReq.Header.GetInt(Tags.MsgSeqNum);
                 if (!IsTargetTooHigh(msgSeqNum) && !IsTargetTooLow(msgSeqNum))
                 {
