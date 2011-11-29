@@ -1,5 +1,12 @@
 [![QuickFIX/N][1]][0]
 
+
+For tutorials on how to use QuickFIX/n, see the `tutorial` folder at the root
+of this project or visit the [website][2].
+
+This README is about setting up your system to do QuickFIX/n
+development.
+
 System Setup
 ------------
 This project requires MSBuild, NUnit, Ruby (1.9.2), and xsltproc.
@@ -131,3 +138,4 @@ with shotgun, simply run shotgun at the top directory:
 
 [0]: http://quickfixn.org
 [1]: http://quickfixn.org/images/qfn-logo/QuickFIX-n_logo-small.png
+[2]: http://quickfixn.org/tutorial/creating-an-application
