@@ -393,6 +393,20 @@ QuickFIX Settings
   </tr>
 
   <tr>
+    <td class='setting'>LogonTimeout</td>
+    <td class='description'>Number of seconds to wait for a logon response before disconnecting.</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'>10</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>LogoutTimeout</td>
+    <td class='description'>Number of seconds to wait for a logout response before disconnecting.</td>
+    <td class='valid'>Positive integer</td>
+    <td class='default'>2</td>
+  </tr>
+
+  <tr>
     <td class='setting'>SocketConnectPort</td>
     <td class='description'>Socket port for connecting to a session.  Only used for initiators.</td>
     <td class='valid'>Positive integer</td>
