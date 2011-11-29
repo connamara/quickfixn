@@ -20,9 +20,9 @@ We will try to address new issues as quickly as possible.
 Mailing List
 ------------
 
-Our [mailing list][2] is free, public, and easily searchable. 
+Our [mailing list][2] is free, public, and easily searchable.
 Sign up [here][2] or send an email to: 
-[quickfixn+subscribe@googlegroups.com][3] to subscribe.
+[quickfixn-subscribe@lists.quickfixn.com][3] to subscribe.
 
 
 Commercial Support
@@ -45,6 +45,6 @@ best of both build and buy.
 
 [0]: http://connamara.com
 [1]: /images/Connamara-Logo.png
-[2]: https://groups.google.com/forum/?hl=en#!forum/quickfixn
+[2]: http://lists.quickfixn.com/listinfo.cgi/quickfixn-quickfixn.com
 [3]: mailto:quickfixn+subscribe@googlegroups.com
 [4]: https://github.com/connamara/quickfixn/issues
