@@ -513,5 +513,33 @@ namespace UnitTests
 
             Assert.AreEqual("W", Message.GetMsgType(msgStr));
         }
+
+        [Test]
+        public void RepeatingGroupFieldOrder()
+        {
+            QuickFix.FIX44.MarketDataRequest msg = new QuickFix.FIX44.MarketDataRequest();
+            msg.MDReqID = new MDReqID("fooMdReqID");
+            msg.SubscriptionRequestType = new SubscriptionRequestType('1');
+            msg.MarketDepth = new MarketDepth(0);
+
+            QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup entryTypesGroup = new QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup();
+            entryTypesGroup.MDEntryType = new MDEntryType('0');
+            msg.AddGroup(entryTypesGroup);
+            entryTypesGroup.MDEntryType = new MDEntryType('1');
+            msg.AddGroup(entryTypesGroup);
+
+            QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup symGroup = new QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup();
+            symGroup.Symbol = new Symbol("FOO1");
+            symGroup.SecurityID = new SecurityID("secid1");
+            msg.AddGroup(symGroup);
+            symGroup.Symbol = new Symbol("FOO2");
+            symGroup.SecurityID = new SecurityID("secid2");
+            msg.AddGroup(symGroup);
+
+            string msgString = msg.ToString();
+            string expected = String.Join(Message.SOH, new string[] { "146=2", "55=FOO1", "48=secid1", "55=FOO2", "48=secid2" });
+
+            StringAssert.Contains(expected, msgString);
+        }
     }
 }
