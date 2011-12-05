@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using QuickFix;
+using QuickFix.Fields;
 
 namespace UnitTests
 {
@@ -156,15 +157,94 @@ namespace UnitTests
             string beginString = Message.ExtractBeginString(msgStr);
 
             Message message = f.Create(beginString, msgType.Obj);
-            message.FromString(
-                msgStr,
-                true,
-                dd,
-                dd);
-
-            // Session.Next(message)
+            message.FromString(msgStr, true, dd, dd);
 
             dd.Validate(message, beginString, msgType.Obj);
+        }
+
+        [Test]
+        public void ValidateDateAndTimeFields()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            string[] msgFields = { "8=FIX.4.4", "9=104", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                     "55=sym", "268=1", "269=0", "272=20111012", "273=22:15:30.444", "10=19" };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "W";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd);
+
+            Assert.DoesNotThrow(delegate { dd.Validate(message, beginString, msgType); });
+        }
+
+        [Test]
+        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
+        public void ValidateDateTime_Invalid()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            // intentionally invalid SendingTime (52/DateTime)
+            string[] msgFields = { "8=FIX.4.4", "9=91", "35=W", "34=3", "49=sender", "52=20110909", "56=target",
+                                     "55=sym", "268=1", "269=0", "272=20111012", "273=22:15:30.444", "10=51" };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "W";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd);
+
+            // this should throw
+            dd.Validate(message, beginString, msgType);
+        }
+
+        [Test]
+        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
+        public void ValidateDateOnly_Invalid()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            // intentionally invalid MDEntryDate (272/DateOnly)
+            string[] msgFields = { "8=FIX.4.4", "9=117", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                     "55=sym", "268=1", "269=0", "272=20111012-22:15:30.444", "273=22:15:30.444", "10=175" };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "W";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd);
+
+            // this should throw
+            dd.Validate(message, beginString, msgType);
+        }
+
+        [Test]
+        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
+        public void ValidateTimeOnly_Invalid()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            // intentionally invalid MDEntryTime (272/TimeOnly)
+            string[] msgFields = { "8=FIX.4.4", "9=113", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                     "55=sym", "268=1", "269=0", "272=20111012", "273=20111012-22:15:30.444", "10=200" };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "W";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd);
+
+            // this should throw
+            dd.Validate(message, beginString, msgType);
         }
     }
 }

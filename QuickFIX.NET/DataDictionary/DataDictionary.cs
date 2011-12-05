@@ -213,15 +213,18 @@ namespace QuickFix.DataDictionary
                 else if (type.Equals(typeof(Fields.CharField)))
                     Fields.Converters.CharConverter.Convert(field.ToString());
                 else if (type.Equals(typeof(Fields.DateTimeField)))
-                    Fields.Converters.DateTimeConverter.Convert(field.ToString());
+                    Fields.Converters.DateTimeConverter.ConvertToDateTime(field.ToString());
                 else if (type.Equals(typeof(Fields.IntField)))
                     Fields.Converters.IntConverter.Convert(field.ToString());
                 else if (type.Equals(typeof(Fields.DecimalField)))
                     Fields.Converters.DecimalConverter.Convert(field.ToString());
                 else if (type.Equals(typeof(Fields.BooleanField)))
                     Fields.Converters.BoolConverter.Convert(field.ToString());
-                else
-                    return;
+                else if (type.Equals(typeof(Fields.DateOnlyField)))
+                    Fields.Converters.DateTimeConverter.ConvertToDateOnly(field.ToString());
+                else if (type.Equals(typeof(Fields.TimeOnlyField)))
+                    Fields.Converters.DateTimeConverter.ConvertToTimeOnly(field.ToString());
+                return;
 
             }
             catch (FieldConvertError e)

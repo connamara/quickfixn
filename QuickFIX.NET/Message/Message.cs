@@ -279,7 +279,7 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME totally bogus
+        /// FIXME works, but implementation is shady
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
@@ -290,7 +290,7 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME totally bogus
+        /// FIXME works, but implementation is shady
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
