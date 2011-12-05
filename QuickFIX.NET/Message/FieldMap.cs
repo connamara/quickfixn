@@ -275,7 +275,7 @@ namespace QuickFix
                 if (fld.GetType() == typeof(DateTimeField))
                     return ((DateTimeField)(fld)).Obj;
                 else
-                    return DateTimeConverter.Convert(fld.ToString());
+                    return DateTimeConverter.ConvertToDateTime(fld.ToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {

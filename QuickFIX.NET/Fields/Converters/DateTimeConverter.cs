@@ -14,14 +14,16 @@ namespace QuickFix.Fields.Converters
         public const string TIME_ONLY_FORMAT_WITH_MILLISECONDS = "{0:HH:mm:ss.fff}";
         public const string TIME_ONLY_FORMAT_WITHOUT_MILLISECONDS = "{0:HH:mm:ss}";
         public static string[] DATE_TIME_FORMATS = { "yyyyMMdd-HH:mm:ss.fff", "yyyyMMdd-HH:mm:ss" };
+        public static string[] DATE_ONLY_FORMATS = { "yyyyMMdd" };
+        public static string[] TIME_ONLY_FORMATS = { "HH:mm:ss.fff", "HH:mm:ss" };
         public static DateTimeStyles DATE_TIME_STYLES = DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal;
         public static CultureInfo DATE_TIME_CULTURE_INFO = CultureInfo.InvariantCulture;
 
         /// <summary>
         /// Convert string to DateTime
         /// </summary>
-        /// <exception cref="BadConversionException"/>
-        public static System.DateTime Convert(string str)
+        /// <exception cref="FieldConvertError"/>
+        public static System.DateTime ConvertToDateTime(string str)
         {
             try
             {
@@ -32,7 +34,29 @@ namespace QuickFix.Fields.Converters
                 throw new FieldConvertError("Could not convert string (" + str + ") to DateTime: " + e.Message, e);
             }
         }
-       
+
+        /// <summary>
+        /// Check if string is DateOnly and, if yes, convert to DateTime
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        /// <exception cref="FieldConvertError"/>
+        public static System.DateTime ConvertToDateOnly(string str)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        /// <summary>
+        /// Check if string is TimeOnly and, if yes, convert to DateTime
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        /// <exception cref="FieldConvertError"/>
+        public static System.DateTime ConvertToTimeOnly(string str)
+        {
+            throw new System.NotImplementedException();
+        }
+
         /// <summary>
         /// Convert DateTime to string in FIX Format
         /// </summary>

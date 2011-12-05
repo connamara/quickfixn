@@ -52,8 +52,8 @@ namespace QuickFix.DataDictionary
                 case "MONTHYEAR": return typeof(Fields.StringField);
                 case "DAYOFMONTH": return typeof(Fields.StringField);
                 case "UTCDATE": return typeof(Fields.DateTimeField);
-                case "UTCDATEONLY": return typeof(Fields.DateTimeField);
-                case "UTCTIMEONLY": return typeof(Fields.DateTimeField);
+                case "UTCDATEONLY": return typeof(Fields.DateOnlyField);
+                case "UTCTIMEONLY": return typeof(Fields.TimeOnlyField);
                 case "NUMINGROUP": return typeof(Fields.IntField);
                 case "PERCENTAGE": return typeof(Fields.DecimalField);
                 case "SEQNUM": return typeof(Fields.IntField);

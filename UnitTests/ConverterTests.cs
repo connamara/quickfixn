@@ -61,24 +61,52 @@ namespace UnitTests
         [Test]
         public void DateTimeConverterTest()
         {
-            Assert.That(DateTimeConverter.Convert("20100912-04:22:01.000"), Is.EqualTo(new DateTime(2010, 9, 12, 4, 22, 01, DateTimeKind.Utc)));
-
+            // DateTime types to string
             Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05)), Is.EqualTo("20021201-11:03:05.000"));
-
             Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("20021201-11:03:05.321"));
-
             Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321), false), Is.EqualTo("20021201-11:03:05"));
             Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321), true), Is.EqualTo("20021201-11:03:05.321"));
+
+            // 2 valid string-to-DateTime formats
+            Assert.That(DateTimeConverter.ConvertToDateTime("20100912-04:22:01"), Is.EqualTo(new DateTime(2010, 9, 12, 4, 22, 01, DateTimeKind.Utc)));
+            Assert.That(DateTimeConverter.ConvertToDateTime("20100912-04:22:01.123"), Is.EqualTo(new DateTime(2010, 9, 12, 4, 22, 01, 123, DateTimeKind.Utc)));
+
+            // invalid string-to-DateTime formats
+            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToDateTime(""); });
+            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToDateTime("20021201"); });
+            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToDateTime("20021201-11:03"); });
+        }
+
+        [Test]
+        public void DateOnlyConverterTest()
+        {
+            // DateTime types to string
             Assert.That(DateTimeConverter.ConvertDateOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("20021201"));
+
+            // string-to-DateTime but time is zero
+            Assert.That(DateTimeConverter.ConvertToDateOnly("20100912"), Is.EqualTo(new DateTime(2010, 9, 12, 0, 0, 0, DateTimeKind.Utc)));
+
+            // invalid string-to-DateTime formats
+            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToDateOnly(""); });
+            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToDateOnly("20021201-11:03:00"); });
+        }
+
+        [Test]
+        public void TimeOnlyConverterTest()
+        {
+            // DateTime types to string
+            Assert.That(DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05)), Is.EqualTo("11:03:05.000"));
             Assert.That(DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("11:03:05.321"));
             Assert.That(DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321), false), Is.EqualTo("11:03:05"));
             Assert.That(DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321), true), Is.EqualTo("11:03:05.321"));
 
-            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.Convert(""); });
-            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.Convert("20021201"); });
-            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.Convert("20021201-11:03"); });
+            // 2 valid string-to-DateTime formats, set date to Jan 1
+            Assert.That(DateTimeConverter.ConvertToTimeOnly("04:22:01"), Is.EqualTo(new DateTime(1980, 1, 1, 4, 22, 01, DateTimeKind.Utc)));
+            Assert.That(DateTimeConverter.ConvertToTimeOnly("04:22:01.123"), Is.EqualTo(new DateTime(1980, 1, 1, 4, 22, 01, 123, DateTimeKind.Utc)));
+
+            // invalid string-to-DateTime formats
+            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToTimeOnly(""); });
+            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToTimeOnly("20021201-11:03:00"); });
         }
-
-
     }
 }
