@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using QuickFix.Fields;
 
 namespace QuickFix
 {
@@ -61,6 +62,11 @@ namespace QuickFix
         {
             get { return _delim; }
             private set { _delim = value; }
+        }
+
+        public override string CalculateString()
+        {
+            return base.CalculateString(new StringBuilder(), new int[] { _delim });
         }
 
         #region Private Members

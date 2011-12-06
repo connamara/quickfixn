@@ -515,7 +515,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void RepeatingGroupFieldOrder()
+        public void RepeatingGroup_DelimiterFieldFirst()
         {
             QuickFix.FIX44.MarketDataRequest msg = new QuickFix.FIX44.MarketDataRequest();
             msg.MDReqID = new MDReqID("fooMdReqID");
