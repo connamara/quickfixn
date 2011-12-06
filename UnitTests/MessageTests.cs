@@ -503,7 +503,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void TestGetMsgType()
+        public void GetMsgTypeTest()
         {
             string[] msgFields = { "8=FIX.4.4", "9=104", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
                                      "55=sym", "268=1", "269=0", "272=20111012", "273=22:15:30.444", "10=19" };
