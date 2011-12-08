@@ -4083,14 +4083,12 @@ namespace QuickFix.Fields
     /// <summary>
     /// MDEntryDate Field
     /// </summary>/
-    public sealed class MDEntryDate : DateTimeField
+    public sealed class MDEntryDate : DateOnlyField
     {
         public MDEntryDate()
             :base(Tags.MDEntryDate) {}
         public MDEntryDate(DateTime val)
             :base(Tags.MDEntryDate, val) {}
-        public MDEntryDate(DateTime val, bool showMilliseconds)
-	    :base(Tags.MDEntryDate, val, showMilliseconds) {}
 
     }
 
@@ -4098,14 +4096,12 @@ namespace QuickFix.Fields
     /// <summary>
     /// MDEntryTime Field
     /// </summary>/
-    public sealed class MDEntryTime : DateTimeField
+    public sealed class MDEntryTime : TimeOnlyField
     {
         public MDEntryTime()
             :base(Tags.MDEntryTime) {}
         public MDEntryTime(DateTime val)
             :base(Tags.MDEntryTime, val) {}
-        public MDEntryTime(DateTime val, bool showMilliseconds)
-	    :base(Tags.MDEntryTime, val, showMilliseconds) {}
 
     }
 
@@ -7919,14 +7915,12 @@ namespace QuickFix.Fields
     /// <summary>
     /// TotalVolumeTradedDate Field
     /// </summary>/
-    public sealed class TotalVolumeTradedDate : DateTimeField
+    public sealed class TotalVolumeTradedDate : DateOnlyField
     {
         public TotalVolumeTradedDate()
             :base(Tags.TotalVolumeTradedDate) {}
         public TotalVolumeTradedDate(DateTime val)
             :base(Tags.TotalVolumeTradedDate, val) {}
-        public TotalVolumeTradedDate(DateTime val, bool showMilliseconds)
-	    :base(Tags.TotalVolumeTradedDate, val, showMilliseconds) {}
 
     }
 
@@ -7934,14 +7928,12 @@ namespace QuickFix.Fields
     /// <summary>
     /// TotalVolumeTradedTime Field
     /// </summary>/
-    public sealed class TotalVolumeTradedTime : DateTimeField
+    public sealed class TotalVolumeTradedTime : TimeOnlyField
     {
         public TotalVolumeTradedTime()
             :base(Tags.TotalVolumeTradedTime) {}
         public TotalVolumeTradedTime(DateTime val)
             :base(Tags.TotalVolumeTradedTime, val) {}
-        public TotalVolumeTradedTime(DateTime val, bool showMilliseconds)
-	    :base(Tags.TotalVolumeTradedTime, val, showMilliseconds) {}
 
     }
 
@@ -24041,14 +24033,12 @@ namespace QuickFix.Fields
     /// <summary>
     /// ComplexEventStartTime Field
     /// </summary>/
-    public sealed class ComplexEventStartTime : DateTimeField
+    public sealed class ComplexEventStartTime : TimeOnlyField
     {
         public ComplexEventStartTime()
             :base(Tags.ComplexEventStartTime) {}
         public ComplexEventStartTime(DateTime val)
             :base(Tags.ComplexEventStartTime, val) {}
-        public ComplexEventStartTime(DateTime val, bool showMilliseconds)
-	    :base(Tags.ComplexEventStartTime, val, showMilliseconds) {}
 
     }
 
@@ -24056,14 +24046,12 @@ namespace QuickFix.Fields
     /// <summary>
     /// ComplexEventEndTime Field
     /// </summary>/
-    public sealed class ComplexEventEndTime : DateTimeField
+    public sealed class ComplexEventEndTime : TimeOnlyField
     {
         public ComplexEventEndTime()
             :base(Tags.ComplexEventEndTime) {}
         public ComplexEventEndTime(DateTime val)
             :base(Tags.ComplexEventEndTime, val) {}
-        public ComplexEventEndTime(DateTime val, bool showMilliseconds)
-	    :base(Tags.ComplexEventEndTime, val, showMilliseconds) {}
 
     }
 

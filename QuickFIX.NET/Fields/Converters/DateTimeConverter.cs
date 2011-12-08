@@ -43,7 +43,14 @@ namespace QuickFix.Fields.Converters
         /// <exception cref="FieldConvertError"/>
         public static System.DateTime ConvertToDateOnly(string str)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                return System.DateTime.ParseExact(str, DATE_ONLY_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+            }
+            catch (System.Exception e)
+            {
+                throw new FieldConvertError("Could not convert string (" + str + ") to DateOnly: " + e.Message, e);
+            }
         }
 
         /// <summary>
@@ -54,7 +61,14 @@ namespace QuickFix.Fields.Converters
         /// <exception cref="FieldConvertError"/>
         public static System.DateTime ConvertToTimeOnly(string str)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                return System.DateTime.ParseExact(str, TIME_ONLY_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+            }
+            catch (System.Exception e)
+            {
+                throw new FieldConvertError("Could not convert string (" + str + ") to TimeOnly: " + e.Message, e);
+            }
         }
 
         /// <summary>

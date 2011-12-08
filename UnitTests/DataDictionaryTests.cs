@@ -143,6 +143,28 @@ namespace UnitTests
         }
 
         [Test]
+        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
+        public void ValidateWrongType()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            string[] msgFields = {"8=FIX.4.4", "9=120", "35=D", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                   "11=clordid", "55=sym", "54=1", "60=20110909-09:09:09.999", "40=1", 
+                                   "38=failboat", // should be a decimal
+                                   "10=64"};
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "D";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd);
+
+            dd.Validate(message, beginString, msgType);
+        }
+
+        [Test]
         public void ValidateWithRepeatingGroupTest()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX42.xml");
@@ -160,6 +182,31 @@ namespace UnitTests
             message.FromString(msgStr, true, dd, dd);
 
             dd.Validate(message, beginString, msgType.Obj);
+        }
+
+        [Test]
+        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
+        public void ValidateWrongTypeInRepeatingGroup()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            string[] msgFields = {"8=FIX.4.4", "9=111", "35=V", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                      "262=mdreqid", "263=0", "264=5",
+                                      "267=1", // MDReqGrp
+                                        "269=failboat", // should be a char
+                                      "146=1", // InstrmtMDReqGrp
+                                        "55=sym",
+                                      "10=91"};
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "V";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd);
+
+            dd.Validate(message, beginString, msgType);
         }
 
         [Test]
