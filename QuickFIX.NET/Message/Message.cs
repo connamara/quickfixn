@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using QuickFix.Fields;
+using System.Text.RegularExpressions;
 
 namespace QuickFix
 {
@@ -108,20 +109,14 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Parse the MsgType from a FIX string
+        /// Parse the message type (tag 35) from a FIX string
         /// </summary>
-        /// <param name="msgstr">string of a FIX message</param>
-        /// <returns>MsgType object</returns>
-        public static MsgType IdentifyType(string msgstr)
+        /// <param name="fixstring">the FIX string to parse</param>
+        /// <returns>the message type as a MsgType object</returns>
+        /// <exception cref="MessageParseError">if 35 tag is missing or malformed</exception>
+        public static MsgType IdentifyType(string fixstring)
         {
-            int valbeg = msgstr.IndexOf("\u000135=") + 4;
-            if (valbeg.Equals(-1))
-                throw new MessageParseError("no tag 35 found in msg: " + msgstr);
-            int valend = msgstr.IndexOf("\u0001", valbeg);
-            if (valend.Equals(-1))
-                throw new MessageParseError("no SOH after tag 35 in msg: " + msgstr);
-
-            return (new MsgType(msgstr.Substring(valbeg, (valend - valbeg))));
+            return new MsgType(GetMsgType(fixstring));
         }
 
         public static StringField ExtractField(string msgstr, ref int pos, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
@@ -290,14 +285,18 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME works, but implementation is shady
+        /// Parse the message type (tag 35) from a FIX string
         /// </summary>
-        /// <param name="msg"></param>
-        /// <returns></returns>
-        public static string GetMsgType(string msg)
+        /// <param name="fixstring">the FIX string to parse</param>
+        /// <returns>message type</returns>
+        /// <exception cref="MessageParseError">if 35 tag is missing or malformed</exception>
+        public static string GetMsgType(string fixstring)
         {
-            Message FIXME = new Message(msg);
-            return FIXME.GetField(Tags.MsgType);
+            Match match = Regex.Match(fixstring, Message.SOH + "35=([0-9a-zA-Z]*)" + Message.SOH);
+            if (match.Success)
+                return match.Groups[1].Value;
+
+            throw new MessageParseError("missing or malformed tag 35 in msg: " + fixstring);
         }
 
         public static ApplVerID GetApplVerID(string beginString)
