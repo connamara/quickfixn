@@ -2370,12 +2370,12 @@
     <component name="YieldData" required="N" />
     <field name="TotNoAllocs" required="N" />
     <field name="LastFragment" required="N" />
-    <group name="NoAllocs" required="Y">
+    <group name="NoAllocs" required="N">
       <field name="AllocAccount" required="Y" />
       <field name="AllocAcctIDSource" required="N" />
       <field name="MatchStatus" required="N" />
       <field name="AllocPrice" required="N" />
-      <field name="AllocQty" required="Y" />
+      <field name="AllocQty" required="N" />
       <field name="IndividualAllocID" required="N" />
       <field name="ProcessCode" required="N" />
       <component name="NestedParties" required="N" />
