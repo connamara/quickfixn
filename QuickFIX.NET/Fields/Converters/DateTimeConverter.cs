@@ -63,7 +63,8 @@ namespace QuickFix.Fields.Converters
         {
             try
             {
-                return System.DateTime.ParseExact(str, TIME_ONLY_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+                System.DateTime d = System.DateTime.ParseExact(str, TIME_ONLY_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+                return new System.DateTime(1980, 1, 1, d.Hour, d.Minute, d.Second, d.Millisecond);
             }
             catch (System.Exception e)
             {
