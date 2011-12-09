@@ -210,6 +210,40 @@ namespace UnitTests
         }
 
         [Test]
+        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
+        public void ValidateWrongTypeInNestedRepeatingGroup()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            string[] msgFields = {"8=FIX.4.4", "9=185", "35=J", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                     "70=AllocID", "71=0", "626=1", "857=0", "54=1", "55=sym", "53=1", "6=5.5", "75=20110909-09:09:09.999",
+                                     "73=1", // NoOrders
+                                       "11=clordid",
+                                       "756=1", // NoNested2PartyIDs
+                                         "757=nested2partyid",
+                                         "759=failboat", // supposed to be a int
+                                     "10=48"};
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "J";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd);
+
+            try
+            {
+                dd.Validate(message, beginString, msgType);
+            }
+            catch (QuickFix.RequiredTagMissing e)
+            {
+                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.field);
+            }
+        }
+
+        [Test]
         public void ValidateDateAndTimeFields()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
