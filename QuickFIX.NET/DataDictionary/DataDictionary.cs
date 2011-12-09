@@ -164,16 +164,12 @@ namespace QuickFix.DataDictionary
 
         public void Iterate(FieldMap map, string msgType)
         {
-            Console.WriteLine("Iterate: " + msgType);
-
             DataDictionary.CheckHasNoRepeatedTags(map);
 
             // check non-group fields
             int lastField = 0;
             foreach (KeyValuePair<int, Fields.IField> kvp in map)
             {
-                Console.WriteLine("    Loop: " + kvp.Key);
-
                 Fields.IField field = kvp.Value;
                 if (lastField != 0 && field.Tag == lastField)
                     throw new RepeatedTag(lastField);
@@ -200,8 +196,6 @@ namespace QuickFix.DataDictionary
             // check contents of each group
             foreach (int groupTag in map.GetGroupTags())
             {
-                Console.WriteLine("    Loop-Group: " + groupTag);
-
                 for (int i = 1; i <= map.GroupCount(groupTag); i++)
                 {
                     Group g = map.GetGroup(i, groupTag);
@@ -213,15 +207,11 @@ namespace QuickFix.DataDictionary
 
         public void IterateGroup(Group group, DDGrp ddgroup, string msgType)
         {
-            Console.WriteLine("IterateGroup: " + group.Field);
-
             DataDictionary.CheckHasNoRepeatedTags(group);
 
             int lastField = 0;
             foreach(KeyValuePair<int, Fields.IField> kvp in group)
             {
-                Console.WriteLine("    Loop: "+kvp.Key);
-
                 Fields.IField field = kvp.Value;
                 if (lastField != 0 && field.Tag == lastField)
                     throw new RepeatedTag(lastField);
@@ -246,8 +236,6 @@ namespace QuickFix.DataDictionary
             // check contents of each nested group
             foreach (int groupTag in group.GetGroupTags())
             {
-                Console.WriteLine("    Loop-Group: " + groupTag);
-
                 for (int i = 1; i <= group.GroupCount(groupTag); i++)
                 {
                     Group g = group.GetGroup(i, groupTag);
