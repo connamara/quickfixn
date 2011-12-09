@@ -142,5 +142,22 @@ namespace UnitTests
             AllocStatus ass = new AllocStatus(AllocStatus.REVERSED);
             Assert.That(7, Is.EqualTo(ass.getValue()));
         }
+
+        [Test]
+        public void TimeOnlyFieldTest()
+        {
+            MDEntryDate d = new MDEntryDate(new DateTime(2011, 11, 30, 8, 9, 10, 555));
+            Assert.AreEqual("20111130", d.ToString());
+        }
+
+        [Test]
+        public void DateOnlyFieldTest()
+        {
+            MDEntryTime t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), true);
+            Assert.AreEqual("08:09:10.555", t.ToString());
+
+            t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), false);
+            Assert.AreEqual("08:09:10", t.ToString());
+        }
     }
 }
