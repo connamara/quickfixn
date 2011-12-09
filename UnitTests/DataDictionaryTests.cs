@@ -76,6 +76,18 @@ namespace UnitTests
         }
 
         [Test]
+        public void NestedGroupTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            QuickFix.DataDictionary.DDMap msgJ = dd.Messages["J"];
+
+            Assert.True(msgJ.IsGroup(73));
+            Assert.False(msgJ.IsGroup(756));
+            Assert.True(msgJ.GetGroup(73).IsGroup(756));
+        }
+
+        [Test]
         public void HeaderGroupTest()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
@@ -117,6 +129,19 @@ namespace UnitTests
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
             Assert.Throws(typeof(InvalidTagNumber),
                 delegate { dd.CheckValidTagNumber(999); });
+        }
+
+        [Test]
+        public void CheckIsInGroupTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            QuickFix.DataDictionary.DDGrp g = dd.Messages["B"].GetGroup(33);
+
+            QuickFix.Fields.Text textField = new QuickFix.Fields.Text("woot");
+            QuickFix.Fields.ClOrdID clOrdIdField = new QuickFix.Fields.ClOrdID("not woot");
+
+            Assert.DoesNotThrow(delegate() { dd.CheckIsInGroup(textField, g, "B"); });
+            Assert.Throws(typeof(TagNotDefinedForMessage), delegate { dd.CheckIsInGroup(clOrdIdField, g, "B"); });
         }
 
         [Test]
@@ -232,15 +257,7 @@ namespace UnitTests
             Message message = f.Create(beginString, msgType);
             message.FromString(msgStr, true, dd, dd);
 
-            try
-            {
-                dd.Validate(message, beginString, msgType);
-            }
-            catch (QuickFix.RequiredTagMissing e)
-            {
-                Console.WriteLine(e.ToString());
-                Console.WriteLine(e.field);
-            }
+            dd.Validate(message, beginString, msgType);
         }
 
         [Test]
@@ -259,7 +276,16 @@ namespace UnitTests
             Message message = f.Create(beginString, msgType);
             message.FromString(msgStr, true, dd, dd);
 
-            Assert.DoesNotThrow(delegate { dd.Validate(message, beginString, msgType); });
+            try
+            {
+                dd.Validate(message, beginString, msgType);
+            }
+            catch (QuickFix.TagException e)
+            {
+                Console.WriteLine(e.ToString());
+                Console.WriteLine(e.field);
+                throw;
+            }
         }
 
         [Test]

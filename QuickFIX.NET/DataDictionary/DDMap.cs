@@ -36,6 +36,11 @@ namespace QuickFix.DataDictionary
             return Groups[tag];
         }
 
+        /// <summary>
+        /// Same as GetGroup, just a more-general return type.
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <returns></returns>
         public IGroupSpec GetGroupSpec(int tag)
         {
             return Groups[tag];

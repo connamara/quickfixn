@@ -164,11 +164,16 @@ namespace QuickFix.DataDictionary
 
         public void Iterate(FieldMap map, string msgType)
         {
+            Console.WriteLine("Iterate: " + msgType);
+
             DataDictionary.CheckHasNoRepeatedTags(map);
 
+            // check non-group fields
             int lastField = 0;
             foreach (KeyValuePair<int, Fields.IField> kvp in map)
             {
+                Console.WriteLine("    Loop: " + kvp.Key);
+
                 Fields.IField field = kvp.Value;
                 if (lastField != 0 && field.Tag == lastField)
                     throw new RepeatedTag(lastField);
@@ -189,17 +194,84 @@ namespace QuickFix.DataDictionary
                         }
                     }
                 }
-
                 lastField = field.Tag;
+            }
+
+            // check contents of each group
+            foreach (int groupTag in map.GetGroupTags())
+            {
+                Console.WriteLine("    Loop-Group: " + groupTag);
+
+                for (int i = 1; i <= map.GroupCount(groupTag); i++)
+                {
+                    Group g = map.GetGroup(i, groupTag);
+                    DDGrp ddg = this.Messages[msgType].GetGroup(groupTag);
+                    IterateGroup(g, ddg, msgType);
+                }
             }
         }
 
+        public void IterateGroup(Group group, DDGrp ddgroup, string msgType)
+        {
+            Console.WriteLine("IterateGroup: " + group.Field);
+
+            DataDictionary.CheckHasNoRepeatedTags(group);
+
+            int lastField = 0;
+            foreach(KeyValuePair<int, Fields.IField> kvp in group)
+            {
+                Console.WriteLine("    Loop: "+kvp.Key);
+
+                Fields.IField field = kvp.Value;
+                if (lastField != 0 && field.Tag == lastField)
+                    throw new RepeatedTag(lastField);
+                CheckHasValue(field);
+
+                if (null != this.Version && this.Version.Length > 0)
+                {
+                    CheckValidFormat(field);
+
+                    if (ShouldCheckTag(field))
+                    {
+                        CheckValidTagNumber(field.Tag);
+                        CheckValue(field);
+
+                        CheckIsInGroup(field, ddgroup, msgType);
+                        CheckGroupCount(field, group, msgType);
+                    }
+                }
+                lastField = field.Tag;
+            }
+
+            // check contents of each nested group
+            foreach (int groupTag in group.GetGroupTags())
+            {
+                Console.WriteLine("    Loop-Group: " + groupTag);
+
+                for (int i = 1; i <= group.GroupCount(groupTag); i++)
+                {
+                    Group g = group.GetGroup(i, groupTag);
+                    DDGrp ddg = ddgroup.GetGroup(groupTag);
+                    IterateGroup(g, ddg, msgType);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Check that the field has a value (i.e. that there's something after the equal sign);
+        /// does nothing if configuration has "ValidateFieldsHaveValues=N".
+        /// </summary>
+        /// <param name="field"></param>
         public void CheckHasValue(Fields.IField field)
         {
             if (this.CheckFieldsHaveValues && (field.ToString().Length < 1))
                 throw new NoTagValue(field.Tag);
         }
 
+        /// <summary>
+        /// Check that the field contents match the DataDictionary-defined type
+        /// </summary>
+        /// <param name="field"></param>
         public void CheckValidFormat(Fields.IField field)
         {
             try
@@ -246,6 +318,10 @@ namespace QuickFix.DataDictionary
             return false;
         }
 
+        /// <summary>
+        /// Check that this tag is defined in the DataDictionary
+        /// </summary>
+        /// <param name="tag"></param>
         public void CheckValidTagNumber(int tag)
         {
             if (!FieldsByTag.ContainsKey(tag))
@@ -254,6 +330,10 @@ namespace QuickFix.DataDictionary
             }
         }
 
+        /// <summary>
+        /// If field is an enum, make sure the value is valid.
+        /// </summary>
+        /// <param name="field"></param>
         public void CheckValue(Fields.IField field)
         {
             DDField fld = FieldsByTag[field.Tag];
@@ -263,6 +343,11 @@ namespace QuickFix.DataDictionary
             }
         }
 
+        /// <summary>
+        /// Check that <paramref name="field"/> is supposed to be in the message type indicated by <paramref name="msgType"/>.
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="msgType"></param>
         public void CheckIsInMessage(Fields.IField field, string msgType)
         {
             DDMap dd;
@@ -273,7 +358,20 @@ namespace QuickFix.DataDictionary
         }
 
         /// <summary>
-        /// Check that the group's counter field is accurate
+        /// Check that <paramref name="field"/> is supposed to be in the group defined in <paramref name="ddgrp"/>
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="ddgrp"></param>
+        /// <param name="msgType">Message type that contains the group (included in exceptions thrown on failure)</param>
+        public void CheckIsInGroup(Fields.IField field, DDGrp ddgrp, string msgType)
+        {
+            if (ddgrp.IsField(field.Tag))
+                return;
+            throw new TagNotDefinedForMessage(field.Tag, msgType);
+        }
+
+        /// <summary>
+        /// If <paramref name="field"/> is a group-counter for <paramref name="msgType"/>, check that it is accurate, else do nothing.
         /// </summary>
         /// <param name="field">a group's counter field</param>
         /// <param name="map">the FieldMap that contains the group being checked</param>
@@ -298,6 +396,11 @@ namespace QuickFix.DataDictionary
             return false;
         }
 
+        /// <summary>
+        /// Determine if this is a field that should be checked for validity according to config
+        /// </summary>
+        /// <param name="field"></param>
+        /// <returns></returns>
         public bool ShouldCheckTag(Fields.IField field)
         {
             if (!this.CheckUserDefinedFields && (field.Tag >= Fields.Limits.USER_MIN))

@@ -540,6 +540,11 @@ namespace QuickFix
             return sb.ToString();
         }
 
+        /// <summary>
+        /// Get count of items in the repeating group
+        /// </summary>
+        /// <param name="fieldNo">the counter tag of the group</param>
+        /// <returns></returns>
         public int GroupCount(int fieldNo)
         {
             if(_groups.ContainsKey(fieldNo))
@@ -561,6 +566,16 @@ namespace QuickFix
             }
         
             return false;
+        }
+
+        /// <summary>
+        /// Return a List containing the counter tag for each group in this message.
+        /// (The returned List is a static copy.)
+        /// </summary>
+        /// <returns></returns>
+        public List<int> GetGroupTags()
+        {
+            return new List<int>(_groups.Keys);
         }
 
         #region Private Members
