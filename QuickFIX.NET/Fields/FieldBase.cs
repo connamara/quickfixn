@@ -46,7 +46,7 @@ namespace QuickFix.Fields
         #endregion
 
         /// <summary>
-        /// returns full fix string: tag=val
+        /// returns full fix string (e.g. "tag=val")
         /// </summary>
         public override string toStringField()
         {
@@ -56,7 +56,7 @@ namespace QuickFix.Fields
         }
 
         /// <summary>
-        /// returns formatted string for fix
+        /// returns field value formatted for fix
         /// </summary>
         public override string ToString()
         {

@@ -4102,6 +4102,8 @@ namespace QuickFix.Fields
             :base(Tags.MDEntryTime) {}
         public MDEntryTime(DateTime val)
             :base(Tags.MDEntryTime, val) {}
+        public MDEntryTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.MDEntryTime, val, showMilliseconds) {}
 
     }
 
@@ -7934,6 +7936,8 @@ namespace QuickFix.Fields
             :base(Tags.TotalVolumeTradedTime) {}
         public TotalVolumeTradedTime(DateTime val)
             :base(Tags.TotalVolumeTradedTime, val) {}
+        public TotalVolumeTradedTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.TotalVolumeTradedTime, val, showMilliseconds) {}
 
     }
 
@@ -24039,6 +24043,8 @@ namespace QuickFix.Fields
             :base(Tags.ComplexEventStartTime) {}
         public ComplexEventStartTime(DateTime val)
             :base(Tags.ComplexEventStartTime, val) {}
+        public ComplexEventStartTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.ComplexEventStartTime, val, showMilliseconds) {}
 
     }
 
@@ -24052,6 +24058,8 @@ namespace QuickFix.Fields
             :base(Tags.ComplexEventEndTime) {}
         public ComplexEventEndTime(DateTime val)
             :base(Tags.ComplexEventEndTime, val) {}
+        public ComplexEventEndTime(DateTime val, bool showMilliseconds)
+	    :base(Tags.ComplexEventEndTime, val, showMilliseconds) {}
 
     }
 

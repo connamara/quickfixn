@@ -45,7 +45,7 @@ namespace QuickFix.Fields
 {
 #{
     fields.map{|f|
-      if f[:cs_class] == "DateTimeField"
+      if ["DateTimeField","TimeOnlyField"].include? f[:cs_class]
        date_field_str f
       else  
        field_str f
