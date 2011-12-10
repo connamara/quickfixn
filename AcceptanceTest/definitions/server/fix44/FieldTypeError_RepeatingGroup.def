@@ -1,0 +1,15 @@
+# Reject message when field is the wrong type -- repeating group case
+
+iCONNECT
+# logon message and response
+I8=FIX.4.435=A34=149=TW52=<TIME>56=ISLD98=0108=2
+E8=FIX.4.49=6035=A34=149=ISLD52=00000000-00:00:00.00056=TW98=0108=210=0
+
+# Repeating group: reject because 447 (PartyIDSource) is a string not a char
+I8=FIX.4.435=D34=249=TW52=<TIME>56=ISLD11=clordid55=sym54=160=<TIME>38=540=1453=2448=partyid1447=B448=partyid2447=failboat
+E8=FIX.4.49=10935=334=249=ISLD52=00000000-00:00:00.00056=TW45=258=Incorrect data format for value371=447372=D373=610=0
+
+# logout message and response
+I8=FIX.4.435=534=349=TW52=<TIME>56=ISLD
+E8=FIX.4.49=4935=534=349=ISLD52=00000000-00:00:00.00056=TW10=0
+
