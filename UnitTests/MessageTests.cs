@@ -11,7 +11,7 @@ namespace UnitTests
     public class MessageTests
     {
         [Test]
-        public void IdentifyMsgTypeTest()
+        public void IdentifyTypeTest()
         {
             string msg1 = "\x01" + "35=A\x01";
             Assert.That(Message.IdentifyType(msg1).Obj, Is.EqualTo(new MsgType("A").Obj));
@@ -19,6 +19,13 @@ namespace UnitTests
             Assert.That(Message.IdentifyType(msg2).Obj, Is.EqualTo(new MsgType("A").Obj));
             string msg3 = "8=FIX4.2\x01" + "9=12\x01\x01" + "35=B\x01" + "10=031\x01";
             Assert.That(Message.IdentifyType(msg3).Obj, Is.EqualTo(new MsgType("B").Obj));
+
+            // no 35
+            string err1 = String.Join(Message.SOH, new string[] { "8=FIX.4.4", "49=Sender", "" });
+            Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(err1); });
+            // no SOH at end of 35
+            string err2 = String.Join(Message.SOH, new string[] { "8=FIX.4.4", "35=A" });
+            Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(err1); });
         }
 
         [Test]
@@ -508,10 +515,13 @@ namespace UnitTests
             string[] msgFields = { "8=FIX.4.4", "9=104", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
                                      "55=sym", "268=1", "269=0", "272=20111012", "273=22:15:30.444", "10=19" };
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
-
-            Console.WriteLine(msgStr);
-
             Assert.AreEqual("W", Message.GetMsgType(msgStr));
+
+            // invalid 35 value, let it ride
+            string[] msgFields2 = { "8=FIX.4.4", "9=68", "35=*", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                     "55=sym", "268=0", "10=9" };
+            string msgStr2 = String.Join(Message.SOH, msgFields2) + Message.SOH;
+            Assert.AreEqual("*", Message.GetMsgType(msgStr2));
         }
 
         [Test]
