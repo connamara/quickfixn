@@ -116,7 +116,18 @@ namespace QuickFix
         /// <exception cref="MessageParseError">if 35 tag is missing or malformed</exception>
         public static MsgType IdentifyType(string fixstring)
         {
-            return new MsgType(GetMsgType(fixstring));
+            //return new MsgType(GetMsgType(fixstring));
+
+            int valbeg = fixstring.IndexOf("\u000135=");
+            if (valbeg.Equals(-1))
+                throw new MessageParseError("no tag 35 found in msg: " + fixstring);
+            valbeg += 4;
+
+            int valend = fixstring.IndexOf("\u0001", valbeg);
+            if (valend.Equals(-1))
+                throw new MessageParseError("no SOH after tag 35 in msg: " + fixstring);
+
+            return (new MsgType(fixstring.Substring(valbeg, (valend - valbeg))));
         }
 
         public static StringField ExtractField(string msgstr, ref int pos, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
@@ -292,11 +303,16 @@ namespace QuickFix
         /// <exception cref="MessageParseError">if 35 tag is missing or malformed</exception>
         public static string GetMsgType(string fixstring)
         {
+            /*
             Match match = Regex.Match(fixstring, Message.SOH + "35=([0-9a-zA-Z]*)" + Message.SOH);
             if (match.Success)
                 return match.Groups[1].Value;
 
             throw new MessageParseError("missing or malformed tag 35 in msg: " + fixstring);
+             */
+
+            Message FIXME = new Message(fixstring);
+            return FIXME.Header.GetField(Tags.MsgType);
         }
 
         public static ApplVerID GetApplVerID(string beginString)
