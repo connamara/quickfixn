@@ -10,3 +10,5 @@ number above will be updated.
 
 * (patch) fix for #9 - fix broken Message.GetMsgType()
 * (patch) fix for #10 - repeating group serialization now puts delimiter first
+* (minor) fix for #5 - field-type checks for repeating groups
+                     - support for TimeOnly/DateOnly fields
