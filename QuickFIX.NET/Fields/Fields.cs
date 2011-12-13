@@ -214,11 +214,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// Currency Field
     /// </summary>/
-    public sealed class Currency : DecimalField
+    public sealed class Currency : StringField
     {
         public Currency()
             :base(Tags.Currency) {}
-        public Currency(Decimal val)
+        public Currency(string val)
             :base(Tags.Currency, val) {}
 
     }
@@ -2226,11 +2226,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// SettlCurrency Field
     /// </summary>/
-    public sealed class SettlCurrency : DecimalField
+    public sealed class SettlCurrency : StringField
     {
         public SettlCurrency()
             :base(Tags.SettlCurrency) {}
-        public SettlCurrency(Decimal val)
+        public SettlCurrency(string val)
             :base(Tags.SettlCurrency, val) {}
 
     }
@@ -2493,11 +2493,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// MiscFeeCurr Field
     /// </summary>/
-    public sealed class MiscFeeCurr : DecimalField
+    public sealed class MiscFeeCurr : StringField
     {
         public MiscFeeCurr()
             :base(Tags.MiscFeeCurr) {}
-        public MiscFeeCurr(Decimal val)
+        public MiscFeeCurr(string val)
             :base(Tags.MiscFeeCurr, val) {}
 
     }
@@ -4954,11 +4954,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// UnderlyingCurrency Field
     /// </summary>/
-    public sealed class UnderlyingCurrency : DecimalField
+    public sealed class UnderlyingCurrency : StringField
     {
         public UnderlyingCurrency()
             :base(Tags.UnderlyingCurrency) {}
-        public UnderlyingCurrency(Decimal val)
+        public UnderlyingCurrency(string val)
             :base(Tags.UnderlyingCurrency, val) {}
 
     }
@@ -7145,11 +7145,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// BenchmarkCurveCurrency Field
     /// </summary>/
-    public sealed class BenchmarkCurveCurrency : DecimalField
+    public sealed class BenchmarkCurveCurrency : StringField
     {
         public BenchmarkCurveCurrency()
             :base(Tags.BenchmarkCurveCurrency) {}
-        public BenchmarkCurveCurrency(Decimal val)
+        public BenchmarkCurveCurrency(string val)
             :base(Tags.BenchmarkCurveCurrency, val) {}
 
     }
@@ -8433,11 +8433,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// CashDistribCurr Field
     /// </summary>/
-    public sealed class CashDistribCurr : DecimalField
+    public sealed class CashDistribCurr : StringField
     {
         public CashDistribCurr()
             :base(Tags.CashDistribCurr) {}
-        public CashDistribCurr(Decimal val)
+        public CashDistribCurr(string val)
             :base(Tags.CashDistribCurr, val) {}
 
     }
@@ -8446,11 +8446,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// CommCurrency Field
     /// </summary>/
-    public sealed class CommCurrency : DecimalField
+    public sealed class CommCurrency : StringField
     {
         public CommCurrency()
             :base(Tags.CommCurrency) {}
-        public CommCurrency(Decimal val)
+        public CommCurrency(string val)
             :base(Tags.CommCurrency, val) {}
 
     }
@@ -9150,11 +9150,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// ContAmtCurr Field
     /// </summary>/
-    public sealed class ContAmtCurr : DecimalField
+    public sealed class ContAmtCurr : StringField
     {
         public ContAmtCurr()
             :base(Tags.ContAmtCurr) {}
-        public ContAmtCurr(Decimal val)
+        public ContAmtCurr(string val)
             :base(Tags.ContAmtCurr, val) {}
 
     }
@@ -9737,11 +9737,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// LegCurrency Field
     /// </summary>/
-    public sealed class LegCurrency : DecimalField
+    public sealed class LegCurrency : StringField
     {
         public LegCurrency()
             :base(Tags.LegCurrency) {}
-        public LegCurrency(Decimal val)
+        public LegCurrency(string val)
             :base(Tags.LegCurrency, val) {}
 
     }
@@ -11778,11 +11778,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// LegSettlCurrency Field
     /// </summary>/
-    public sealed class LegSettlCurrency : DecimalField
+    public sealed class LegSettlCurrency : StringField
     {
         public LegSettlCurrency()
             :base(Tags.LegSettlCurrency) {}
-        public LegSettlCurrency(Decimal val)
+        public LegSettlCurrency(string val)
             :base(Tags.LegSettlCurrency, val) {}
 
     }
@@ -11791,11 +11791,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// LegBenchmarkCurveCurrency Field
     /// </summary>/
-    public sealed class LegBenchmarkCurveCurrency : DecimalField
+    public sealed class LegBenchmarkCurveCurrency : StringField
     {
         public LegBenchmarkCurveCurrency()
             :base(Tags.LegBenchmarkCurveCurrency) {}
-        public LegBenchmarkCurveCurrency(Decimal val)
+        public LegBenchmarkCurveCurrency(string val)
             :base(Tags.LegBenchmarkCurveCurrency, val) {}
 
     }
@@ -12723,11 +12723,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// AllocSettlCurrency Field
     /// </summary>/
-    public sealed class AllocSettlCurrency : DecimalField
+    public sealed class AllocSettlCurrency : StringField
     {
         public AllocSettlCurrency()
             :base(Tags.AllocSettlCurrency) {}
-        public AllocSettlCurrency(Decimal val)
+        public AllocSettlCurrency(string val)
             :base(Tags.AllocSettlCurrency, val) {}
 
     }
@@ -13169,11 +13169,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// AllowableOneSidednessCurr Field
     /// </summary>/
-    public sealed class AllowableOneSidednessCurr : DecimalField
+    public sealed class AllowableOneSidednessCurr : StringField
     {
         public AllowableOneSidednessCurr()
             :base(Tags.AllowableOneSidednessCurr) {}
-        public AllowableOneSidednessCurr(Decimal val)
+        public AllowableOneSidednessCurr(string val)
             :base(Tags.AllowableOneSidednessCurr, val) {}
 
     }
@@ -15600,11 +15600,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// AgreementCurrency Field
     /// </summary>/
-    public sealed class AgreementCurrency : DecimalField
+    public sealed class AgreementCurrency : StringField
     {
         public AgreementCurrency()
             :base(Tags.AgreementCurrency) {}
-        public AgreementCurrency(Decimal val)
+        public AgreementCurrency(string val)
             :base(Tags.AgreementCurrency, val) {}
 
     }
@@ -15956,11 +15956,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// UnderlyingStrikeCurrency Field
     /// </summary>/
-    public sealed class UnderlyingStrikeCurrency : DecimalField
+    public sealed class UnderlyingStrikeCurrency : StringField
     {
         public UnderlyingStrikeCurrency()
             :base(Tags.UnderlyingStrikeCurrency) {}
-        public UnderlyingStrikeCurrency(Decimal val)
+        public UnderlyingStrikeCurrency(string val)
             :base(Tags.UnderlyingStrikeCurrency, val) {}
 
     }
@@ -15969,11 +15969,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// LegStrikeCurrency Field
     /// </summary>/
-    public sealed class LegStrikeCurrency : DecimalField
+    public sealed class LegStrikeCurrency : StringField
     {
         public LegStrikeCurrency()
             :base(Tags.LegStrikeCurrency) {}
-        public LegStrikeCurrency(Decimal val)
+        public LegStrikeCurrency(string val)
             :base(Tags.LegStrikeCurrency, val) {}
 
     }
@@ -16059,11 +16059,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// StrikeCurrency Field
     /// </summary>/
-    public sealed class StrikeCurrency : DecimalField
+    public sealed class StrikeCurrency : StringField
     {
         public StrikeCurrency()
             :base(Tags.StrikeCurrency) {}
-        public StrikeCurrency(Decimal val)
+        public StrikeCurrency(string val)
             :base(Tags.StrikeCurrency, val) {}
 
     }
@@ -19110,11 +19110,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// SideCurrency Field
     /// </summary>/
-    public sealed class SideCurrency : DecimalField
+    public sealed class SideCurrency : StringField
     {
         public SideCurrency()
             :base(Tags.SideCurrency) {}
-        public SideCurrency(Decimal val)
+        public SideCurrency(string val)
             :base(Tags.SideCurrency, val) {}
 
     }
@@ -19123,11 +19123,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// SideSettlCurrency Field
     /// </summary>/
-    public sealed class SideSettlCurrency : DecimalField
+    public sealed class SideSettlCurrency : StringField
     {
         public SideSettlCurrency()
             :base(Tags.SideSettlCurrency) {}
-        public SideSettlCurrency(Decimal val)
+        public SideSettlCurrency(string val)
             :base(Tags.SideSettlCurrency, val) {}
 
     }
@@ -20350,11 +20350,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// TradingCurrency Field
     /// </summary>/
-    public sealed class TradingCurrency : DecimalField
+    public sealed class TradingCurrency : StringField
     {
         public TradingCurrency()
             :base(Tags.TradingCurrency) {}
-        public TradingCurrency(Decimal val)
+        public TradingCurrency(string val)
             :base(Tags.TradingCurrency, val) {}
 
     }
@@ -20571,11 +20571,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// DerivativeStrikeCurrency Field
     /// </summary>/
-    public sealed class DerivativeStrikeCurrency : DecimalField
+    public sealed class DerivativeStrikeCurrency : StringField
     {
         public DerivativeStrikeCurrency()
             :base(Tags.DerivativeStrikeCurrency) {}
-        public DerivativeStrikeCurrency(Decimal val)
+        public DerivativeStrikeCurrency(string val)
             :base(Tags.DerivativeStrikeCurrency, val) {}
 
     }
@@ -21984,11 +21984,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// LegAllocSettlCurrency Field
     /// </summary>/
-    public sealed class LegAllocSettlCurrency : DecimalField
+    public sealed class LegAllocSettlCurrency : StringField
     {
         public LegAllocSettlCurrency()
             :base(Tags.LegAllocSettlCurrency) {}
-        public LegAllocSettlCurrency(Decimal val)
+        public LegAllocSettlCurrency(string val)
             :base(Tags.LegAllocSettlCurrency, val) {}
 
     }
@@ -24601,11 +24601,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// RiskLimitCurrency Field
     /// </summary>/
-    public sealed class RiskLimitCurrency : DecimalField
+    public sealed class RiskLimitCurrency : StringField
     {
         public RiskLimitCurrency()
             :base(Tags.RiskLimitCurrency) {}
-        public RiskLimitCurrency(Decimal val)
+        public RiskLimitCurrency(string val)
             :base(Tags.RiskLimitCurrency, val) {}
 
     }
@@ -25294,11 +25294,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// RelationshipRiskLimitCurrency Field
     /// </summary>/
-    public sealed class RelationshipRiskLimitCurrency : DecimalField
+    public sealed class RelationshipRiskLimitCurrency : StringField
     {
         public RelationshipRiskLimitCurrency()
             :base(Tags.RelationshipRiskLimitCurrency) {}
-        public RelationshipRiskLimitCurrency(Decimal val)
+        public RelationshipRiskLimitCurrency(string val)
             :base(Tags.RelationshipRiskLimitCurrency, val) {}
 
     }

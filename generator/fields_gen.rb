@@ -13,7 +13,7 @@ class FieldGen
         {:cs_class => 'CharField', :base_type=>'char'}
       when 'INT', 'NUMINGROUP', 'SEQNUM'
         {:cs_class => 'IntField', :base_type=>'int'}
-      when 'AMT', 'PERCENTAGE', 'CURRENCY', 'PRICE', 'QTY', 'PRICEOFFSET', 'LENGTH', 'FLOAT'
+      when 'AMT', 'PERCENTAGE', 'PRICE', 'QTY', 'PRICEOFFSET', 'LENGTH', 'FLOAT'
         {:cs_class => 'DecimalField', :base_type=>'Decimal'}
       when 'UTCTIMESTAMP', 'TZTIMESTAMP', 'TIME', 'DATE', 'UTCDATE'
         {:cs_class => 'DateTimeField', :base_type=>'DateTime'}
@@ -26,7 +26,7 @@ class FieldGen
       when 'STRING', 'MULTIPLEVALUESTRING',  'MULTIPLECHARVALUE', 
            'DATA', 'EXCHANGE', 'LOCALMKTDATE', 'MONTHYEAR', 'DAYOFMONTH', 
            'COUNTRY', 'TZTIMEONLY', 'MULTIPLESTRINGVALUE', 'XMLDATA',
-	   'LANGUAGE'
+	   'LANGUAGE', 'CURRENCY'
         {:cs_class => 'StringField', :base_type=>'string'}
       when nil 
         raise "field type is nil! #{field.inspect}"
