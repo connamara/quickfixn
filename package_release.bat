@@ -47,7 +47,7 @@ if %errorlevel% neq 0 echo "There was an error building QuickFIX/n" && exit /b %
 echo * Built QuickFIX/n.
 
 rem Copy files to temp directory
-rmdir /s /q tmp
+IF EXIST tmp rmdir /s /q tmp
 mkdir tmp
 mkdir tmp\%QF_DIR%
 mkdir tmp\%QF_DIR%\bin
@@ -64,7 +64,7 @@ echo * Copied files to tmp directory.
 
 rem Create ZIP
 set ZIP_NAME=%QF_DIR%.zip
-del /q %ZIP_NAME%
+IF EXIST %ZIP_NAME% del /q %ZIP_NAME%
 ruby scripts\create_zip.rb tmp/%QF_DIR% %ZIP_NAME%
 if %errorlevel% neq 0 echo "There was an error creating QuickFIX/n ZIP: %ZIP_NAME%" && exit /b %errorlevel%
 echo * Created zip.
