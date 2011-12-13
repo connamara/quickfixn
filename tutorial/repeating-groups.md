@@ -47,9 +47,9 @@ the index of the group:
 
 ```c#
 var sidesGrp1 = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
-sidesGrp1 = tcr.GetGroup(Tags.NoSides, 1);
+sidesGrp1 = tcr.GetGroup(1, Tags.NoSides);
 var sidesGrp2 = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
-sidesGrp2 = tcr.GetGroup(Tags.NoSides, 2);
+sidesGrp2 = tcr.GetGroup(2, Tags.NoSides);
 ```
 
 Group indexes start at `1`.  
@@ -60,7 +60,7 @@ To iterate the groups, we use a `for` loop with the value of the group field:
 var noSidesGrp = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
 for(int grpIndex = 1; grpIndex<= message.GetInt(Tags.NoSides); grpIndex += 1)
 {
-    noSidesGrp = message.GetGroup(Tags.NoSides, grpIndex);
+    noSidesGrp = message.GetGroup(grpIndex, Tags.NoSides);
 }
 ```
 
