@@ -491,5 +491,30 @@ namespace UnitTests
 
             Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.NEWORDERSINGLE].Count == 1);
         }
+
+        [Test]
+        public void TestDoesSessionExist()
+        {
+            QuickFix.SessionID invalidSessionID = new QuickFix.SessionID("FIX.4.2", "NOT_SENDER", "NOT_TARGET");
+            QuickFix.SessionID validSessionID = new QuickFix.SessionID("FIX.4.2", "SENDER", "TARGET");
+
+            Assert.That(QuickFix.Session.DoesSessionExist(invalidSessionID), Is.EqualTo(false));
+            Assert.That(QuickFix.Session.DoesSessionExist(validSessionID), Is.EqualTo(true));            
+        }
+
+        [Test]
+        public void TestSettingNextTargetMsgSeqNum()
+        {
+            session.NextTargetMsgSeqNum = 100;
+            Assert.That(session.NextTargetMsgSeqNum, Is.EqualTo(100));
+        }
+
+        [Test]
+        public void TestSettingNextSenderMsgSeqNum()
+        {
+            session.NextSenderMsgSeqNum = 200;
+            Assert.That(session.NextSenderMsgSeqNum, Is.EqualTo(200));
+        }
+
     }
 }
