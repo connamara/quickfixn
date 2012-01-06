@@ -105,6 +105,7 @@ namespace UnitTests
         QuickFix.SessionSettings settings = null;
         MockApplication application = null;
         QuickFix.Session session = null;
+        QuickFix.Session session2 = null;
         int seqNum = 1;
         Regex msRegex = new Regex(@"\.[\d]{1,3}$");
 
@@ -127,6 +128,14 @@ namespace UnitTests
                 new QuickFix.DataDictionaryProvider(),new QuickFix.SessionSchedule(config), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
             session.MaxLatency=120;
+
+            // must be set for an initiator
+            int heartBeatInterval = 10;
+
+            session2 = new QuickFix.Session(application, new QuickFix.MemoryStoreFactory(), new QuickFix.SessionID("FIX.4.2", "OTHER_SENDER", "OTHER_TARGET"),
+                new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), heartBeatInterval, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
+            session2.SetResponder(responder);
+            session2.MaxLatency = 120;
 
             seqNum = 1;
         }
@@ -490,6 +499,42 @@ namespace UnitTests
             SendTheMessage(msg);
 
             Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.NEWORDERSINGLE].Count == 1);
+        }
+
+        [Test]
+        public void TestDoesSessionExist()
+        {
+            QuickFix.SessionID invalidSessionID = new QuickFix.SessionID("FIX.4.2", "NOT_SENDER", "NOT_TARGET");
+            QuickFix.SessionID validSessionID = new QuickFix.SessionID("FIX.4.2", "SENDER", "TARGET");
+
+            Assert.That(QuickFix.Session.DoesSessionExist(invalidSessionID), Is.EqualTo(false));
+            Assert.That(QuickFix.Session.DoesSessionExist(validSessionID), Is.EqualTo(true));            
+        }
+
+        [Test]
+        public void TestSettingNextTargetMsgSeqNum()
+        {
+            session.NextTargetMsgSeqNum = 100;
+            Assert.That(session.NextTargetMsgSeqNum, Is.EqualTo(100));
+        }
+
+        [Test]
+        public void TestSettingNextSenderMsgSeqNum()
+        {
+            session.NextSenderMsgSeqNum = 200;
+            Assert.That(session.NextSenderMsgSeqNum, Is.EqualTo(200));
+        }
+
+        [Test]
+        public void TestGettingIsInitiator()
+        {
+            Assert.That(session2.IsInitiator, Is.EqualTo(true));
+        }
+
+        [Test]
+        public void TestGettingIsAcceptor()
+        {
+            Assert.That(session2.IsAcceptor, Is.EqualTo(false));
         }
     }
 }

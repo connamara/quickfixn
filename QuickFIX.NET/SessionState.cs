@@ -155,8 +155,8 @@ namespace QuickFix
         public SessionState(Log log, int heartBtInt)
         {
             log_ = log;
-            this.IsInitiator = (0 != heartBtInt);
             this.HeartBtInt = heartBtInt;
+            this.IsInitiator = (0 != heartBtInt);
             int now = System.Environment.TickCount;
             lastReceivedTimeTickCount_ = now;
             lastSentTimeTickCount_ = now;
