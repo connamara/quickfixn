@@ -29,6 +29,8 @@ namespace QuickFix
 
         // state
         public Log Log { get { return state_.Log; } }
+        public bool IsInitiator { get { return state_.IsInitiator; } }
+        public bool IsAcceptor { get { return !state_.IsInitiator; } }
         public bool IsEnabled { get { return state_.IsEnabled; } }
         public bool IsSessionTime { get { return schedule_.IsSessionTime(System.DateTime.UtcNow); } }
         public bool IsLoggedOn { get { return ReceivedLogon && SentLogon; } }
@@ -57,14 +59,34 @@ namespace QuickFix
         public bool SendLogoutBeforeTimeoutDisconnect { get; set; }
 
         /// <summary>
-        /// Returns the next expected outgoing sequence number
+        /// Gets or sets the next expected outgoing sequence number
         /// </summary>
-        public int NextSenderMsgSeqNum { get { return state_.GetNextSenderMsgSeqNum(); } }
+        public int NextSenderMsgSeqNum
+        {
+            get
+            {
+                return state_.GetNextSenderMsgSeqNum();
+            }
+            set
+            {
+                state_.SetNextSenderMsgSeqNum(value);
+            }
+        }
 
         /// <summary>
-        /// Returns the next expected incoming sequence number
+        /// Gets or sets the next expected incoming sequence number
         /// </summary>
-        public int NextTargetMsgSeqNum { get { return state_.GetNextTargetMsgSeqNum(); } }
+        public int NextTargetMsgSeqNum
+        {
+            get
+            {
+                return state_.GetNextTargetMsgSeqNum();
+            }
+            set
+            {
+                state_.SetNextTargetMsgSeqNum(value);
+            }
+        }
 
         /// <summary>
         /// Logon timeout in seconds
@@ -187,8 +209,10 @@ namespace QuickFix
             else
                 log = new NullLog();
 
-            state_ = new SessionState(log, heartBtInt);
-            state_.MessageStore = storeFactory.Create(sessID);
+            state_ = new SessionState(log, heartBtInt)
+            {
+                MessageStore = storeFactory.Create(sessID)
+            };
 
             this.PersistMessages = true;
             this.ResetOnDisconnect = false;
@@ -229,6 +253,16 @@ namespace QuickFix
                     result = null;
             }
             return result;
+        }
+
+        /// <summary>
+        /// Looks up a Session by its SessionID
+        /// </summary>
+        /// <param name="sessionID">the SessionID of the Session</param>
+        /// <returns>the true if Session exists, false otherwise</returns>
+        public static bool DoesSessionExist(SessionID sessionID)
+        {
+            return LookupSession(sessionID) == null ? false : true;
         }
 
         /// <summary>
