@@ -10,7 +10,7 @@ namespace QuickFix
 {
     /// <summary>
     /// Helper class for delegating message types for various FIX versions to
-    /// type-safe onMessage methods.
+    /// type-safe OnMessage methods.
     /// </summary>
     public abstract class MessageCracker
     {
