@@ -66,7 +66,7 @@ namespace QuickFix
             string senderDefaultApplVerId = "";
             if(defaultApplVerID != null)
                 senderDefaultApplVerId = defaultApplVerID.Obj;
-            
+
             Session session = new Session(
                 application_,
                 messageStoreFactory_,

@@ -29,6 +29,8 @@ namespace QuickFix
 
         // state
         public Log Log { get { return state_.Log; } }
+        public bool IsInitiator { get { return state_.IsInitiator; } }
+        public bool IsAcceptor { get { return !state_.IsInitiator; } }
         public bool IsEnabled { get { return state_.IsEnabled; } }
         public bool IsSessionTime { get { return schedule_.IsSessionTime(System.DateTime.UtcNow); } }
         public bool IsLoggedOn { get { return ReceivedLogon && SentLogon; } }
@@ -207,8 +209,10 @@ namespace QuickFix
             else
                 log = new NullLog();
 
-            state_ = new SessionState(log, heartBtInt);
-            state_.MessageStore = storeFactory.Create(sessID);
+            state_ = new SessionState(log, heartBtInt)
+            {
+                MessageStore = storeFactory.Create(sessID)
+            };
 
             this.PersistMessages = true;
             this.ResetOnDisconnect = false;
