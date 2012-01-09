@@ -105,63 +105,75 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Gets a boolean field
+        /// Gets a boolean field; saves its value into the parameter object, which is also the return value.
         /// </summary>
-        /// <param name="field"></param>
-        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
-        public void GetField(Fields.BooleanField field)
+        /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+        /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+        /// <returns><paramref name="field"/></returns>
+        public Fields.BooleanField GetField(Fields.BooleanField field)
         {
             field.Obj = GetBoolean(field.Tag);
+            return field;
         }
 
         /// <summary>
-        /// Gets a string field
+        /// Gets a string field; saves its value into the parameter object, which is also the return value.
         /// </summary>
-        /// <param name="field"></param>
-        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
-        public void GetField(Fields.StringField field)
+        /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+        /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+        /// <returns><paramref name="field"/></returns>
+        public Fields.StringField GetField(Fields.StringField field)
         {
             field.Obj = GetString(field.Tag);
+            return field;
         }
 
         /// <summary>
-        /// Gets a char field
+        /// Gets a char field; saves its value into the parameter object, which is also the return value.
         /// </summary>
-        /// <param name="field"></param>
-        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
-        public void GetField(Fields.CharField field)
+        /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+        /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+        /// <returns><paramref name="field"/></returns>
+        public Fields.CharField GetField(Fields.CharField field)
         {
             field.Obj = GetChar(field.Tag);
+            return field;
         }
 
         /// <summary>
-        /// Gets an int field
+        /// Gets a int field; saves its value into the parameter object, which is also the return value.
         /// </summary>
-        /// <param name="field"></param>
-        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
-        public void GetField(Fields.IntField field)
+        /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+        /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+        /// <returns><paramref name="field"/></returns>
+        public Fields.IntField GetField(Fields.IntField field)
         {
             field.Obj = GetInt(field.Tag);
+            return field;
         }
 
         /// <summary>
-        /// Gets a decimal field
+        /// Gets a decimal field; saves its value into the parameter object, which is also the return value.
         /// </summary>
-        /// <param name="field"></param>
-        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
-        public void GetField(Fields.DecimalField field)
+        /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+        /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+        /// <returns><paramref name="field"/></returns>
+        public Fields.DecimalField GetField(Fields.DecimalField field)
         {
             field.Obj = GetDecimal(field.Tag);
+            return field;
         }
 
         /// <summary>
-        /// Gets a datetime field
+        /// Gets a decimal field; saves its value into the parameter object, which is also the return value.
         /// </summary>
-        /// <param name="field"></param>
-        /// <exception cref="FieldNotFoundException">thrown if field isn't found</exception>
-        public void GetField(Fields.DateTimeField field)
+        /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+        /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+        /// <returns><paramref name="field"/></returns>
+        public Fields.DateTimeField GetField(Fields.DateTimeField field)
         {
             field.Obj = GetDateTime(field.Tag);
+            return field;
         }
 
         /// <summary>
