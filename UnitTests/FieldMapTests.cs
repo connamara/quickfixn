@@ -34,8 +34,10 @@ namespace UnitTests
             Assert.That('d', Is.EqualTo(refield.Obj));
             field.Obj = 'e';
             fieldmap.SetField(field);
-            fieldmap.GetField(refield);
+            CharField r = fieldmap.GetField(refield);
             Assert.That('e', Is.EqualTo(refield.Obj));
+
+            Assert.AreSame(refield, r);
         }
 
 
@@ -72,8 +74,10 @@ namespace UnitTests
             fieldmap.GetField(acct);
             Assert.That("hello", Is.EqualTo(acct.Obj));
             fieldmap.SetField(new Account("helloworld"));
-            fieldmap.GetField(acct);
+            StringField r = fieldmap.GetField(acct);
             Assert.That("helloworld", Is.EqualTo(acct.getValue()));
+
+            Assert.AreSame(r, acct);
         }
 
         [Test]
@@ -94,8 +98,10 @@ namespace UnitTests
             fieldmap.GetField(tt);
             Assert.That(new DateTime(2009, 12, 10), Is.EqualTo(tt.Obj));
             fieldmap.SetField(new TransactTime(new DateTime(2010, 12, 10)));
-            fieldmap.GetField(tt);
+            DateTimeField r = fieldmap.GetField(tt);
             Assert.That(new DateTime(2010, 12, 10), Is.EqualTo(tt.getValue()));
+
+            Assert.AreSame(r, tt);
         }
 
         [Test]
@@ -120,8 +126,10 @@ namespace UnitTests
             Assert.That(true, Is.EqualTo(refield.Obj));
             field.setValue(false);
             fieldmap.SetField(field);
-            fieldmap.GetField(refield);
+            BooleanField r = fieldmap.GetField(refield);
             Assert.That(false, Is.EqualTo(refield.Obj));
+
+            Assert.AreSame(r, refield);
         }
 
         [Test]
@@ -146,8 +154,10 @@ namespace UnitTests
             Assert.That(101, Is.EqualTo(refield.Obj));
             field.setValue(102);
             fieldmap.SetField(field);
-            fieldmap.GetField(refield);
+            IntField r = fieldmap.GetField(refield);
             Assert.That(102, Is.EqualTo(refield.Obj));
+
+            Assert.AreSame(r, refield);
         }
 
         [Test]
@@ -173,8 +183,10 @@ namespace UnitTests
             Assert.That(101.0001, Is.EqualTo(refield.Obj));
             field.setValue(new Decimal(101.0002));
             fieldmap.SetField(field);
-            fieldmap.GetField(refield);
+            DecimalField r = fieldmap.GetField(refield);
             Assert.That(101.0002, Is.EqualTo(refield.Obj));
+
+            Assert.AreSame(r, refield);
         }
 
         [Test]
