@@ -56,6 +56,13 @@ namespace UnitTests
             Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert("(1.2)"); });
             Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert(""); });
             Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert(null); });
+
+            // check for a different culture than en-XX 
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo( "tr-TR" );
+            Assert.That( DecimalConverter.Convert( "4332.33" ), Is.EqualTo( new Decimal( 4332.33 ) ) );
+            Assert.That( DecimalConverter.Convert( "-2.33" ), Is.EqualTo( new Decimal( -2.33 ) ) );
+            Assert.That( DecimalConverter.Convert( new Decimal( 4.23322 ) ), Is.EqualTo( "4.23322" ) );
+            Assert.That( DecimalConverter.Convert( new Decimal( -4.23322 ) ), Is.EqualTo( "-4.23322" ) );
         }
 
         [Test]

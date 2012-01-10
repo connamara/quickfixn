@@ -24,7 +24,7 @@ namespace QuickFix.Fields.Converters
                 if ((asciiValOfFirstChar < IntConverter.ASCII_ZERO) || (asciiValOfFirstChar > IntConverter.ASCII_NINE))
                     if (asciiValOfFirstChar != IntConverter.ASCII_MINUS)
                         throw new FieldConvertError("Could not convert string to decimal (" + d + "): The first character must be a digit or a minus sign");
-                return System.Convert.ToDecimal(d);
+                return System.Convert.ToDecimal( d, System.Globalization.CultureInfo.InvariantCulture );
             }
             catch (System.OverflowException e)
             {
@@ -45,7 +45,7 @@ namespace QuickFix.Fields.Converters
         /// </summary>
         public static string Convert(Decimal d)
         {
-            return d.ToString();
+            return d.ToString( System.Globalization.CultureInfo.InvariantCulture );
         }
 
     }
