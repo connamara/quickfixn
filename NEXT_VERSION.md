@@ -19,4 +19,4 @@ Changes since the last version:
 -------------------------------
 * (minor) Extended Session.cs to enable setting of NextTargetSequenceNum and NextSenderSequenceNum. (chrisbarker)
 * (minor) Extended Session.cs to implement static method DoesSessionExist(SessionID sessionID) as per QuickFIX. (chrisbarker)
-
+* (minor) Fixed issue #21. DecimalConverter is now culture-insensitive (harvinder)
