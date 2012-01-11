@@ -78,8 +78,6 @@ namespace QuickFix
                 new DefaultMessageFactory(),
                 senderDefaultApplVerId);
 
-            ConfigureSessionTime(session, settings);
-
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
                 session.SendRedundantResendRequests = settings.GetBool(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS);
             /** FIXME - implement optional settings
@@ -189,102 +187,5 @@ namespace QuickFix
             provider.AddApplicationDataDictionary(FixValues.ApplVerID.FromBeginString(sessionID.BeginString), dataDictionary);
         }
 
-        private void ConfigureSessionTime(Session session, Dictionary settings)
-        {
-
-            bool useLocalTime = false;
-            if (settings.Has(SessionSettings.USE_LOCAL_TIME))
-                useLocalTime = settings.GetBool(SessionSettings.USE_LOCAL_TIME);
-
-            System.DayOfWeek? startDay = null;
-            System.DayOfWeek? endDay = null;
-
-            try
-            {
-                startDay = settings.GetDay(SessionSettings.START_DAY);
-                endDay = settings.GetDay(SessionSettings.END_DAY);
-            }
-            catch (ConfigError)
-            {
-            }
-            catch (FieldConvertError e)
-            {
-                throw new ConfigError(e.Message);
-            }
-            
-
-            System.TimeSpan startTime = new System.TimeSpan();
-            System.TimeSpan endTime = new System.TimeSpan();
-            try
-            {
-                startTime = System.TimeSpan.Parse(settings.GetString( SessionSettings.START_TIME ));
-                endTime = System.TimeSpan.Parse(settings.GetString( SessionSettings.END_TIME ));
-            }
-            catch (FieldConvertError e)
-            {
-                throw new ConfigError(e.Message);
-            }
-            catch (System.FormatException e)
-            {
-                throw new ConfigError(e.Message);
-            }
-           
-            TimeRange sessionTimeRange = new TimeRange(startTime, endTime, startDay, endDay, useLocalTime);
-            
-            if( startDay >= 0 && endDay == null )
-                throw new ConfigError( "StartDay used without EndDay" );
-            if( endDay >= 0 && startDay == null )
-                throw new ConfigError( "EndDay used without StartDay" );
-            
-            
-            System.DayOfWeek? logonDay = startDay;
-            System.DayOfWeek? logoutDay = endDay;
-            try
-            {
-                logonDay = settings.GetDay( SessionSettings.LOGON_DAY );
-                logoutDay = settings.GetDay( SessionSettings.LOGOUT_DAY );
-            }
-            catch( ConfigError ) 
-            { }
-            catch( FieldConvertError e ) 
-            { 
-              throw new ConfigError( e.Message ); 
-            }
-
-            System.TimeSpan logonTime = startTime;
-            System.TimeSpan logoutTime = endTime;
-            try
-            {
-                logonTime = System.TimeSpan.Parse( settings.GetString( SessionSettings.LOGON_TIME ) );
-            }
-            catch( ConfigError)
-            { }
-            catch( FieldConvertError e ) 
-            {
-              throw new ConfigError( e.Message);
-            }
-
-            try
-            {
-                logoutTime = System.TimeSpan.Parse( settings.GetString( SessionSettings.LOGOUT_TIME ) );
-            }
-            catch( ConfigError )
-            { }
-            catch( FieldConvertError e )
-            {
-              throw new ConfigError( e.Message);
-            }
-
-            TimeRange logonTimeRange = new TimeRange(logonTime, logoutTime, logonDay, logoutDay, useLocalTime );
-
-            System.DateTime logonDateTime = System.Convert.ToDateTime(logonTime);
-            System.DateTime logoutDateTime = System.Convert.ToDateTime(logoutTime);
-            if (!sessionTimeRange.IsInRange(logonDateTime))
-            throw new ConfigError( "LogonTime must be between StartTime and EndTime" );
-            if (!sessionTimeRange.IsInRange(logoutDateTime))
-            throw new ConfigError( "LogoutTime must be between StartTime and EndTime" );
-            session.LogonTime = logonTimeRange;
-            
-        }
     }
 }
