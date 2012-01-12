@@ -98,7 +98,6 @@
     <Compile Include="SessionTest.cs" />
     <Compile Include="SettingsTest.cs" />
     <Compile Include="StringUTF8Tests.cs" />
-    <Compile Include="TimeRangeTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickFIX.NET\QuickFix.csproj">
