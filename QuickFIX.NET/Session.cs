@@ -177,6 +177,8 @@ namespace QuickFix
         public DataDictionary.DataDictionary SessionDataDictionary { get; private set; }
         public DataDictionary.DataDictionary ApplicationDataDictionary { get; private set; }
 
+        public TimeRange LogonTime { get; set; }
+
         /// <summary>
         /// Returns whether the Session has a Responder. This method is synchronized
         /// </summary>
@@ -484,6 +486,12 @@ namespace QuickFix
 
         public void Next(Message message)
         {
+            if (!IsSessionTime)
+            {
+                Reset();
+                return;
+            }
+
             Header header = message.Header;
             string msgType = "";
 
