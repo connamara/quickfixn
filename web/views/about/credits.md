@@ -20,3 +20,5 @@ Contributors
 - Grant Birchmeier
 - Kirk Kozel
 - Chris Busbey
+- Harvender Vasdev
+- Chris Barker
