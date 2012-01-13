@@ -8,7 +8,7 @@ namespace QuickFix
     /// Acceptor implementation - with threads
     /// Creates a ThreadedSocketReactor for every listening endpoint.
     /// </summary>
-    public class ThreadedSocketAcceptor : Acceptor
+    public class ThreadedSocketAcceptor : IAcceptor
     {
         class AcceptorSocketDescriptor
         {
@@ -264,21 +264,37 @@ namespace QuickFix
             /// FIXME Session.UnregisterSessions(GetSessions());
         }
 
+        /// <summary>
+        /// TODO: not yet implemented
+        /// </summary>
+        /// <returns></returns>
         public bool IsLoggedOn()
         {
             throw new System.NotImplementedException();
         }
 
+        /// <summary>
+        /// TODO: not yet implemented
+        /// </summary>
+        /// <returns></returns>
         public HashSet<SessionID> GetSessionIDs()
         {
             throw new System.NotImplementedException();
         }
 
+        /// <summary>
+        /// TODO: not yet implemented
+        /// </summary>
+        /// <returns></returns>
         public HashSet<Session> GetSessions()
         {
             throw new System.NotImplementedException();
         }
 
+        /// <summary>
+        /// TODO: not yet implemented
+        /// </summary>
+        /// <returns></returns>
         public Dictionary<SessionID, IPEndPoint> GetAcceptorAddresses()
         {
             throw new System.NotImplementedException();

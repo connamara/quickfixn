@@ -24,7 +24,7 @@ namespace SimpleAcceptor
                 Application app = new SimpleAcceptorApp();
                 MessageStoreFactory storeFactory = new FileStoreFactory(settings);
                 LogFactory logFactory = new FileLogFactory(settings);
-                Acceptor acceptor = new ThreadedSocketAcceptor(app, storeFactory, settings, logFactory);
+                IAcceptor acceptor = new ThreadedSocketAcceptor(app, storeFactory, settings, logFactory);
 
                 acceptor.Start();
                 Console.WriteLine("press <enter> to quit");
