@@ -532,6 +532,7 @@ namespace UnitTests
             msg.SubscriptionRequestType = new SubscriptionRequestType('1');
             msg.MarketDepth = new MarketDepth(0);
 
+            // this group is irrelevant to the test, but it's required in the message
             QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup entryTypesGroup = new QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup();
             entryTypesGroup.MDEntryType = new MDEntryType('0');
             msg.AddGroup(entryTypesGroup);
@@ -548,6 +549,43 @@ namespace UnitTests
 
             string msgString = msg.ToString();
             string expected = String.Join(Message.SOH, new string[] { "146=2", "55=FOO1", "48=secid1", "55=FOO2", "48=secid2" });
+
+            StringAssert.Contains(expected, msgString);
+        }
+
+        [Test]
+        public void RepeatingGroup_FieldOrder()
+        {
+            QuickFix.FIX44.MarketDataRequest msg = new QuickFix.FIX44.MarketDataRequest();
+            msg.MDReqID = new MDReqID("fooMdReqID");
+            msg.SubscriptionRequestType = new SubscriptionRequestType('1');
+            msg.MarketDepth = new MarketDepth(0);
+
+            // this group is irrelevant to the test, but it's required in the message
+            QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup entryTypesGroup = new QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup();
+            entryTypesGroup.MDEntryType = new MDEntryType('0');
+            msg.AddGroup(entryTypesGroup);
+            entryTypesGroup.MDEntryType = new MDEntryType('1');
+            msg.AddGroup(entryTypesGroup);
+
+            QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup symGroup = new QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup();
+            // spec order of fields is 55,65,48,22
+            symGroup.Symbol = new Symbol("FOO1");
+            symGroup.SymbolSfx = new SymbolSfx("sfx1");
+            symGroup.SecurityID = new SecurityID("secid1");
+            symGroup.SecurityIDSource = new SecurityIDSource("src1");
+            msg.AddGroup(symGroup);
+            symGroup.Symbol = new Symbol("FOO2");
+            symGroup.SymbolSfx = new SymbolSfx("sfx2");
+            symGroup.SecurityID = new SecurityID("secid2");
+            symGroup.SecurityIDSource = new SecurityIDSource("src2");
+            msg.AddGroup(symGroup);
+
+            string msgString = msg.ToString();
+            string expected = String.Join(Message.SOH, new string[] { "146=2",
+                "55=FOO1", "65=sfx1", "48=secid1", "22=src1",
+                "55=FOO2", "65=sfx2", "48=secid2", "22=src2",
+            });
 
             StringAssert.Contains(expected, msgString);
         }

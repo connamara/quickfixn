@@ -593,7 +593,7 @@ namespace QuickFix
         #region Private Members
         private SortedDictionary<int, Fields.IField> _fields; /// FIXME sorted dict is a hack to get quasi-correct field order
         private Dictionary<int, List<Group>> _groups;
-        private int[] _fieldOrder;
+        protected int[] _fieldOrder;
         #endregion
 
         #region Properties

@@ -21,3 +21,4 @@ Changes since the last version:
 * (minor) Extended Session.cs to implement static method DoesSessionExist(SessionID sessionID) as per QuickFIX. (chrisbarker)
 * (patch) Fixed issue #21 - DecimalConverter is now culture-insensitive (harvinder)
 * (minor) Fixed issue #22 - Sequence numbers not being reset (kkozel)
+* (patch) Repeating groups always write to default DD order. (gbirchmeier)
