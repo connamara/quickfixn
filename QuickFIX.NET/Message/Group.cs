@@ -66,7 +66,10 @@ namespace QuickFix
 
         public override string CalculateString()
         {
-            return base.CalculateString(new StringBuilder(), new int[] { _delim });
+            if (_fieldOrder == null)
+                return base.CalculateString(new StringBuilder(), new int[] { _delim });
+            else
+                return base.CalculateString(new StringBuilder(), _fieldOrder);
         }
 
         #region Private Members

@@ -160,7 +160,8 @@ namespace UnitTests
 
             n.FromString(s, true, dd, dd);
 
-            //verify that FromString didn't correct the counter (if these fail, check if MessageTests::FromString_DoNotCorrectCounter() passes)
+            //verify that FromString didn't correct the counter
+            //HEY YOU, READ THIS NOW: if these fail, first check if MessageTests::FromString_DoNotCorrectCounter() passes
             Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());  
             StringAssert.Contains("386=3", n.ToString());
 
