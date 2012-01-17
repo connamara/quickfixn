@@ -22,3 +22,4 @@ Changes since the last version:
 * (patch) Fixed issue #21 - DecimalConverter is now culture-insensitive (harvinder)
 * (minor) Fixed issue #22 - Sequence numbers not being reset (kkozel)
 * (patch) Repeating groups always write to default DD order. (gbirchmeier)
+* (minor) Fixed issue #16 - added GetSessionID methods to IAcceptor and IInitiator (gbirchmeier)
