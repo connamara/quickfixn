@@ -31,16 +31,10 @@ namespace QuickFix
         bool IsLoggedOn();
 
         /// <summary>
-        /// Get the SessionIDs managed by this Acceptor
+        /// Get the SessionIDs for the sessions managed by this acceptor.
         /// </summary>
-        /// <returns>the SessionIDs managed by this Acceptor</returns>
+        /// <returns>the SessionIDs for the sessions managed by this acceptor</returns>
         HashSet<SessionID> GetSessionIDs();
-
-        /// <summary>
-        /// Get the Sessions managed by this Acceptor
-        /// </summary>
-        /// <returns>the Sessions managed by this Acceptor</returns>
-        HashSet<Session> GetSessions();
 
         /// <summary>
         /// Get accepted socket end points
@@ -55,6 +49,5 @@ namespace QuickFix
     /// </summary>
     [System.Obsolete("Use IAcceptor instead")]
     public interface Acceptor : IAcceptor
-    {
-    }
+    { }
 }
