@@ -235,5 +235,15 @@ namespace QuickFix
         }
 
         #endregion
+
+
+        /// <summary>
+        /// Get the SessionIDs for the sessions managed by this initiator.
+        /// </summary>
+        /// <returns>the SessionIDs for the sessions managed by this initiator</returns>
+        public HashSet<SessionID> GetSessionIDs()
+        {
+            return new HashSet<SessionID>(sessions_.Keys);
+        }
     }
 }

@@ -35,5 +35,11 @@ namespace QuickFix
         /// </summary>
         /// <returns>true if the session is logged on, false otherwise</returns>
         bool IsLoggedOn();
+
+        /// <summary>
+        /// Get the SessionIDs for the sessions managed by this initiator.
+        /// </summary>
+        /// <returns>the SessionIDs for the sessions managed by this initiator</returns>
+        HashSet<SessionID> GetSessionIDs();
     }
 }

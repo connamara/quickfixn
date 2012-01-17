@@ -274,21 +274,12 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// TODO: not yet implemented
+        /// Get the SessionIDs for the sessions managed by this acceptor.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>the SessionIDs for the sessions managed by this acceptor</returns>
         public HashSet<SessionID> GetSessionIDs()
         {
-            throw new System.NotImplementedException();
-        }
-
-        /// <summary>
-        /// TODO: not yet implemented
-        /// </summary>
-        /// <returns></returns>
-        public HashSet<Session> GetSessions()
-        {
-            throw new System.NotImplementedException();
+            return new HashSet<SessionID>(sessions_.Keys);
         }
 
         /// <summary>
