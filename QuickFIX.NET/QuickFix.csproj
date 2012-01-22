@@ -165,7 +165,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <None Include="CreateNugetPackage.bat" />
+    <None Include="CreateAndPushNugetPackage.bat" />
     <None Include="QuickFixN.nuspec" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
