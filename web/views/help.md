@@ -1,28 +1,25 @@
 Get Help
 ========
 
-We offer a free mailing list and commerical support for QuickFIX/n.
+Mailing List
+------------
 
-Issues are tracked in our [github repository][4].
+Our [mailing list][2] is free, public, and easily searchable.
+It's the preferred method of user support from the QF/n team.
+
+Sign up [here][2] or send an email to: 
+[quickfixn-subscribe@lists.quickfixn.com][3] to subscribe.
 
 
-Issues
-------
+Bugs and Issues
+---------------
 
-Issues can be submitted by anyone through our [github repository][4].
+Bugs and issues can be submitted by anyone through our [github repository][4].
 
 Please provide sample code, logs, and a description of the problem when
 the issue is submitted.
 
 We will try to address new issues as quickly as possible.
-
-
-Mailing List
-------------
-
-Our [mailing list][2] is free, public, and easily searchable.
-Sign up [here][2] or send an email to: 
-[quickfixn-subscribe@lists.quickfixn.com][3] to subscribe.
 
 
 Commercial Support
@@ -48,3 +45,4 @@ best of both build and buy.
 [2]: http://lists.quickfixn.com/listinfo.cgi/quickfixn-quickfixn.com
 [3]: mailto:quickfixn+subscribe@googlegroups.com
 [4]: https://github.com/connamara/quickfixn/issues
+
