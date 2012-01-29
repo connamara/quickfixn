@@ -1,0 +1,25 @@
+# makes sure engine is sending the correct BeginString in application messages for a FIX5 connection
+
+iCONNECT
+# logon message and response
+I8=FIXT.1.135=A34=149=TW52=<TIME>56=ISLD98=0108=21137=7
+E8=FIXT.1.19=6735=A34=149=ISLD52=00000000-00:00:00.00056=TW98=0108=21137=710=0
+
+#------------------------
+# begin message exchange
+#------------------------
+
+#Send news and receive echo
+I8=FIXT.1.135=B34=249=TW52=<TIME>56=ISLD148=FOO33=0
+E8=FIXT.1.135=B34=249=ISLD52=00000000-00:00:00.00056=TW33=0148=FOO
+
+#------------------------
+# end message exchange
+#------------------------
+
+# logout message and response
+I8=FIXT.1.135=534=349=TW52=<TIME>56=ISLD
+E8=FIXT.1.19=4935=534=349=ISLD52=00000000-00:00:00.00056=TW10=0
+
+eDISCONNECT
+
