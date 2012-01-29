@@ -24,6 +24,7 @@ class MessageGen
   end
 
   def self.gen_basemsg fixver, destdir
+    beginstring = fixver.match(/^FIX50/) ? "FIXT11" : fixver
 <<HERE
 // This is a generated file.  Don't edit it directly!
 
@@ -36,7 +37,7 @@ namespace QuickFix
             public Message()
                 : base()
             {
-                this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.#{fixver}));
+                this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.#{beginstring}));
             }
         }
     }

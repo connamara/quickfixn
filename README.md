@@ -84,7 +84,9 @@ An HTML report of the test results will then be available here:
 To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
 
     cd AcceptanceTests
-    runat.bat release 5001 definitions\server\fix42\14e_IncorrectEnumValue.def
+    runat.bat release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg
+
+(See acceptance_test.bat for the proper port numbers and config files to use in the above command.)
 
 The test results will then be available in AcceptanceTests\TestResults.xml and
 debug information will be available in the AcceptanceTests\log directory.

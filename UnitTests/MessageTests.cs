@@ -589,5 +589,14 @@ namespace UnitTests
 
             StringAssert.Contains(expected, msgString);
         }
+
+        [Test]
+        public void ToString_FIX50()
+        {
+            QuickFix.FIX50.News msg = new QuickFix.FIX50.News();
+            msg.Headline = new Headline("FOO");
+
+            StringAssert.StartsWith("8=FIXT.1.1" + Message.SOH, msg.ToString());
+        }
     }
 }
