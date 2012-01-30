@@ -16,19 +16,23 @@ echo ==QuickFIX/N Package release script==
 echo tag version: %TAG_VERSION%
 echo
 
+rem Update the assembly version
+ruby scripts\update_assembly_version.rb %TAG_VERSION% QuickFIX.NET\Properties\AssemblyInfo.cs
+echo * AssemblyInfo updated for new version number.
 
 rem Update downloads page - NOTE this must be done first
 ruby scripts\update_download_page.rb web/views/download.md %TAG_VERSION%
 if %errorlevel% neq 0 echo "There was an error uploading the downloads page" && exit /b %errorlevel%
 echo * Downloads page updated.
 
-rem commit the downloads page, so it will be part of the tag
-call git add web/views/download.md
-call git commit -m "Download page for version %TAG_VERSION%"
-echo * Downloads page committed.
+rem commit the downloads page and version file, so it will be part of the tag
+call git add web\views\download.md
+call git add QuickFIX.NET\Properties\AssemblyInfo.cs
+call git commit -m "Download page / version number for version %TAG_VERSION%"
+echo * Downloads page / version number committed.
 
 rem create the tag
-call git tag -a %TAG_VERSION% -m "Created a tag for version %TAG_VERSION%"
+call git tag -a %TAG_VERSION% -m "Release version %TAG_VERSION%"
 echo * Created tag.
 
 rem Get requested version
