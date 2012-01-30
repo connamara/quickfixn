@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>%author%</authors>
+    <owners>http://connamara.com/</owners>
+    <licenseUrl>https://raw.github.com/connamara/quickfixn/master/LICENSE</licenseUrl>
+    <projectUrl>http://quickfixn.org/</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>QuickFIX/n implements the FIX protocol on .NET</description>
+    <copyright>Copyright © quickfixengine.org 2001-2010</copyright>
+    <tags>QuickFix Trading FIX</tags>
+  </metadata>
+</package>
