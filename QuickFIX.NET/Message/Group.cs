@@ -69,7 +69,12 @@ namespace QuickFix
             if (_fieldOrder == null)
                 return base.CalculateString(new StringBuilder(), new int[] { _delim });
             else
-                return base.CalculateString(new StringBuilder(), _fieldOrder);
+                return base.CalculateString(new StringBuilder(), _fieldOrder); // 802 shouldn't be in _fieldOrder
+        }
+
+        public override string ToString()
+        {
+            return CalculateString();
         }
 
         #region Private Members

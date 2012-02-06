@@ -84,6 +84,7 @@
     <Compile Include="FileLogTests.cs" />
     <Compile Include="FileStoreTests.cs" />
     <Compile Include="GenMessageTest.cs" />
+    <Compile Include="GroupTests.cs" />
     <Compile Include="HiPerfTimer.cs" />
     <Compile Include="MemoryStoreTest.cs" />
     <Compile Include="MessageCrackerTests.cs" />
