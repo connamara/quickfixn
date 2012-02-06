@@ -122,11 +122,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// BodyLength Field
     /// </summary>/
-    public sealed class BodyLength : DecimalField
+    public sealed class BodyLength : IntField
     {
         public BodyLength()
             :base(Tags.BodyLength) {}
-        public BodyLength(Decimal val)
+        public BodyLength(int val)
             :base(Tags.BodyLength, val) {}
 
     }
@@ -1741,11 +1741,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// SecureDataLen Field
     /// </summary>/
-    public sealed class SecureDataLen : DecimalField
+    public sealed class SecureDataLen : IntField
     {
         public SecureDataLen()
             :base(Tags.SecureDataLen) {}
-        public SecureDataLen(Decimal val)
+        public SecureDataLen(int val)
             :base(Tags.SecureDataLen, val) {}
 
     }
@@ -1780,11 +1780,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// SignatureLength Field
     /// </summary>/
-    public sealed class SignatureLength : DecimalField
+    public sealed class SignatureLength : IntField
     {
         public SignatureLength()
             :base(Tags.SignatureLength) {}
-        public SignatureLength(Decimal val)
+        public SignatureLength(int val)
             :base(Tags.SignatureLength, val) {}
 
     }
@@ -1811,11 +1811,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// RawDataLength Field
     /// </summary>/
-    public sealed class RawDataLength : DecimalField
+    public sealed class RawDataLength : IntField
     {
         public RawDataLength()
             :base(Tags.RawDataLength) {}
-        public RawDataLength(Decimal val)
+        public RawDataLength(int val)
             :base(Tags.RawDataLength, val) {}
 
     }
@@ -3747,11 +3747,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// XmlDataLen Field
     /// </summary>/
-    public sealed class XmlDataLen : DecimalField
+    public sealed class XmlDataLen : IntField
     {
         public XmlDataLen()
             :base(Tags.XmlDataLen) {}
-        public XmlDataLen(Decimal val)
+        public XmlDataLen(int val)
             :base(Tags.XmlDataLen, val) {}
 
     }
@@ -5475,11 +5475,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedIssuerLen Field
     /// </summary>/
-    public sealed class EncodedIssuerLen : DecimalField
+    public sealed class EncodedIssuerLen : IntField
     {
         public EncodedIssuerLen()
             :base(Tags.EncodedIssuerLen) {}
-        public EncodedIssuerLen(Decimal val)
+        public EncodedIssuerLen(int val)
             :base(Tags.EncodedIssuerLen, val) {}
 
     }
@@ -5501,11 +5501,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedSecurityDescLen Field
     /// </summary>/
-    public sealed class EncodedSecurityDescLen : DecimalField
+    public sealed class EncodedSecurityDescLen : IntField
     {
         public EncodedSecurityDescLen()
             :base(Tags.EncodedSecurityDescLen) {}
-        public EncodedSecurityDescLen(Decimal val)
+        public EncodedSecurityDescLen(int val)
             :base(Tags.EncodedSecurityDescLen, val) {}
 
     }
@@ -5527,11 +5527,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedListExecInstLen Field
     /// </summary>/
-    public sealed class EncodedListExecInstLen : DecimalField
+    public sealed class EncodedListExecInstLen : IntField
     {
         public EncodedListExecInstLen()
             :base(Tags.EncodedListExecInstLen) {}
-        public EncodedListExecInstLen(Decimal val)
+        public EncodedListExecInstLen(int val)
             :base(Tags.EncodedListExecInstLen, val) {}
 
     }
@@ -5553,11 +5553,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedTextLen Field
     /// </summary>/
-    public sealed class EncodedTextLen : DecimalField
+    public sealed class EncodedTextLen : IntField
     {
         public EncodedTextLen()
             :base(Tags.EncodedTextLen) {}
-        public EncodedTextLen(Decimal val)
+        public EncodedTextLen(int val)
             :base(Tags.EncodedTextLen, val) {}
 
     }
@@ -5579,11 +5579,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedSubjectLen Field
     /// </summary>/
-    public sealed class EncodedSubjectLen : DecimalField
+    public sealed class EncodedSubjectLen : IntField
     {
         public EncodedSubjectLen()
             :base(Tags.EncodedSubjectLen) {}
-        public EncodedSubjectLen(Decimal val)
+        public EncodedSubjectLen(int val)
             :base(Tags.EncodedSubjectLen, val) {}
 
     }
@@ -5605,11 +5605,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedHeadlineLen Field
     /// </summary>/
-    public sealed class EncodedHeadlineLen : DecimalField
+    public sealed class EncodedHeadlineLen : IntField
     {
         public EncodedHeadlineLen()
             :base(Tags.EncodedHeadlineLen) {}
-        public EncodedHeadlineLen(Decimal val)
+        public EncodedHeadlineLen(int val)
             :base(Tags.EncodedHeadlineLen, val) {}
 
     }
@@ -5631,11 +5631,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedAllocTextLen Field
     /// </summary>/
-    public sealed class EncodedAllocTextLen : DecimalField
+    public sealed class EncodedAllocTextLen : IntField
     {
         public EncodedAllocTextLen()
             :base(Tags.EncodedAllocTextLen) {}
-        public EncodedAllocTextLen(Decimal val)
+        public EncodedAllocTextLen(int val)
             :base(Tags.EncodedAllocTextLen, val) {}
 
     }
@@ -5657,11 +5657,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedUnderlyingIssuerLen Field
     /// </summary>/
-    public sealed class EncodedUnderlyingIssuerLen : DecimalField
+    public sealed class EncodedUnderlyingIssuerLen : IntField
     {
         public EncodedUnderlyingIssuerLen()
             :base(Tags.EncodedUnderlyingIssuerLen) {}
-        public EncodedUnderlyingIssuerLen(Decimal val)
+        public EncodedUnderlyingIssuerLen(int val)
             :base(Tags.EncodedUnderlyingIssuerLen, val) {}
 
     }
@@ -5683,11 +5683,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedUnderlyingSecurityDescLen Field
     /// </summary>/
-    public sealed class EncodedUnderlyingSecurityDescLen : DecimalField
+    public sealed class EncodedUnderlyingSecurityDescLen : IntField
     {
         public EncodedUnderlyingSecurityDescLen()
             :base(Tags.EncodedUnderlyingSecurityDescLen) {}
-        public EncodedUnderlyingSecurityDescLen(Decimal val)
+        public EncodedUnderlyingSecurityDescLen(int val)
             :base(Tags.EncodedUnderlyingSecurityDescLen, val) {}
 
     }
@@ -6014,11 +6014,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// MaxMessageSize Field
     /// </summary>/
-    public sealed class MaxMessageSize : DecimalField
+    public sealed class MaxMessageSize : IntField
     {
         public MaxMessageSize()
             :base(Tags.MaxMessageSize) {}
-        public MaxMessageSize(Decimal val)
+        public MaxMessageSize(int val)
             :base(Tags.MaxMessageSize, val) {}
 
     }
@@ -6974,11 +6974,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedListStatusTextLen Field
     /// </summary>/
-    public sealed class EncodedListStatusTextLen : DecimalField
+    public sealed class EncodedListStatusTextLen : IntField
     {
         public EncodedListStatusTextLen()
             :base(Tags.EncodedListStatusTextLen) {}
-        public EncodedListStatusTextLen(Decimal val)
+        public EncodedListStatusTextLen(int val)
             :base(Tags.EncodedListStatusTextLen, val) {}
 
     }
@@ -10703,11 +10703,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedLegIssuerLen Field
     /// </summary>/
-    public sealed class EncodedLegIssuerLen : DecimalField
+    public sealed class EncodedLegIssuerLen : IntField
     {
         public EncodedLegIssuerLen()
             :base(Tags.EncodedLegIssuerLen) {}
-        public EncodedLegIssuerLen(Decimal val)
+        public EncodedLegIssuerLen(int val)
             :base(Tags.EncodedLegIssuerLen, val) {}
 
     }
@@ -10742,11 +10742,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedLegSecurityDescLen Field
     /// </summary>/
-    public sealed class EncodedLegSecurityDescLen : DecimalField
+    public sealed class EncodedLegSecurityDescLen : IntField
     {
         public EncodedLegSecurityDescLen()
             :base(Tags.EncodedLegSecurityDescLen) {}
-        public EncodedLegSecurityDescLen(Decimal val)
+        public EncodedLegSecurityDescLen(int val)
             :base(Tags.EncodedLegSecurityDescLen, val) {}
 
     }
@@ -19552,11 +19552,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// SecurityXMLLen Field
     /// </summary>/
-    public sealed class SecurityXMLLen : DecimalField
+    public sealed class SecurityXMLLen : IntField
     {
         public SecurityXMLLen()
             :base(Tags.SecurityXMLLen) {}
-        public SecurityXMLLen(Decimal val)
+        public SecurityXMLLen(int val)
             :base(Tags.SecurityXMLLen, val) {}
 
     }
@@ -20766,11 +20766,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// DerivativeEncodedIssuerLen Field
     /// </summary>/
-    public sealed class DerivativeEncodedIssuerLen : DecimalField
+    public sealed class DerivativeEncodedIssuerLen : IntField
     {
         public DerivativeEncodedIssuerLen()
             :base(Tags.DerivativeEncodedIssuerLen) {}
-        public DerivativeEncodedIssuerLen(Decimal val)
+        public DerivativeEncodedIssuerLen(int val)
             :base(Tags.DerivativeEncodedIssuerLen, val) {}
 
     }
@@ -20805,11 +20805,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// DerivativeEncodedSecurityDescLen Field
     /// </summary>/
-    public sealed class DerivativeEncodedSecurityDescLen : DecimalField
+    public sealed class DerivativeEncodedSecurityDescLen : IntField
     {
         public DerivativeEncodedSecurityDescLen()
             :base(Tags.DerivativeEncodedSecurityDescLen) {}
-        public DerivativeEncodedSecurityDescLen(Decimal val)
+        public DerivativeEncodedSecurityDescLen(int val)
             :base(Tags.DerivativeEncodedSecurityDescLen, val) {}
 
     }
@@ -20831,11 +20831,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// DerivativeSecurityXMLLen Field
     /// </summary>/
-    public sealed class DerivativeSecurityXMLLen : DecimalField
+    public sealed class DerivativeSecurityXMLLen : IntField
     {
         public DerivativeSecurityXMLLen()
             :base(Tags.DerivativeSecurityXMLLen) {}
-        public DerivativeSecurityXMLLen(Decimal val)
+        public DerivativeSecurityXMLLen(int val)
             :base(Tags.DerivativeSecurityXMLLen, val) {}
 
     }
@@ -21880,11 +21880,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedSymbolLen Field
     /// </summary>/
-    public sealed class EncodedSymbolLen : DecimalField
+    public sealed class EncodedSymbolLen : IntField
     {
         public EncodedSymbolLen()
             :base(Tags.EncodedSymbolLen) {}
-        public EncodedSymbolLen(Decimal val)
+        public EncodedSymbolLen(int val)
             :base(Tags.EncodedSymbolLen, val) {}
 
     }
@@ -22456,11 +22456,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedMktSegmDescLen Field
     /// </summary>/
-    public sealed class EncodedMktSegmDescLen : DecimalField
+    public sealed class EncodedMktSegmDescLen : IntField
     {
         public EncodedMktSegmDescLen()
             :base(Tags.EncodedMktSegmDescLen) {}
-        public EncodedMktSegmDescLen(Decimal val)
+        public EncodedMktSegmDescLen(int val)
             :base(Tags.EncodedMktSegmDescLen, val) {}
 
     }
@@ -22508,11 +22508,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncryptedPasswordLen Field
     /// </summary>/
-    public sealed class EncryptedPasswordLen : DecimalField
+    public sealed class EncryptedPasswordLen : IntField
     {
         public EncryptedPasswordLen()
             :base(Tags.EncryptedPasswordLen) {}
-        public EncryptedPasswordLen(Decimal val)
+        public EncryptedPasswordLen(int val)
             :base(Tags.EncryptedPasswordLen, val) {}
 
     }
@@ -22534,11 +22534,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncryptedNewPasswordLen Field
     /// </summary>/
-    public sealed class EncryptedNewPasswordLen : DecimalField
+    public sealed class EncryptedNewPasswordLen : IntField
     {
         public EncryptedNewPasswordLen()
             :base(Tags.EncryptedNewPasswordLen) {}
-        public EncryptedNewPasswordLen(Decimal val)
+        public EncryptedNewPasswordLen(int val)
             :base(Tags.EncryptedNewPasswordLen, val) {}
 
     }
@@ -23608,11 +23608,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// EncodedSecurityListDescLen Field
     /// </summary>/
-    public sealed class EncodedSecurityListDescLen : DecimalField
+    public sealed class EncodedSecurityListDescLen : IntField
     {
         public EncodedSecurityListDescLen()
             :base(Tags.EncodedSecurityListDescLen) {}
-        public EncodedSecurityListDescLen(Decimal val)
+        public EncodedSecurityListDescLen(int val)
             :base(Tags.EncodedSecurityListDescLen, val) {}
 
     }
@@ -25728,11 +25728,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// RelationshipRiskEncodedSecurityDescLen Field
     /// </summary>/
-    public sealed class RelationshipRiskEncodedSecurityDescLen : DecimalField
+    public sealed class RelationshipRiskEncodedSecurityDescLen : IntField
     {
         public RelationshipRiskEncodedSecurityDescLen()
             :base(Tags.RelationshipRiskEncodedSecurityDescLen) {}
-        public RelationshipRiskEncodedSecurityDescLen(Decimal val)
+        public RelationshipRiskEncodedSecurityDescLen(int val)
             :base(Tags.RelationshipRiskEncodedSecurityDescLen, val) {}
 
     }
@@ -25754,11 +25754,11 @@ namespace QuickFix.Fields
     /// <summary>
     /// RiskEncodedSecurityDescLen Field
     /// </summary>/
-    public sealed class RiskEncodedSecurityDescLen : DecimalField
+    public sealed class RiskEncodedSecurityDescLen : IntField
     {
         public RiskEncodedSecurityDescLen()
             :base(Tags.RiskEncodedSecurityDescLen) {}
-        public RiskEncodedSecurityDescLen(Decimal val)
+        public RiskEncodedSecurityDescLen(int val)
             :base(Tags.RiskEncodedSecurityDescLen, val) {}
 
     }
