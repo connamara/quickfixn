@@ -11,9 +11,9 @@ class FieldGen
     case field[:fldtype]
       when 'CHAR' 
         {:cs_class => 'CharField', :base_type=>'char'}
-      when 'INT', 'NUMINGROUP', 'SEQNUM'
+      when 'INT', 'NUMINGROUP', 'SEQNUM', 'LENGTH'
         {:cs_class => 'IntField', :base_type=>'int'}
-      when 'AMT', 'PERCENTAGE', 'PRICE', 'QTY', 'PRICEOFFSET', 'LENGTH', 'FLOAT'
+      when 'AMT', 'PERCENTAGE', 'PRICE', 'QTY', 'PRICEOFFSET', 'FLOAT'
         {:cs_class => 'DecimalField', :base_type=>'Decimal'}
       when 'UTCTIMESTAMP', 'TZTIMESTAMP', 'TIME', 'DATE', 'UTCDATE'
         {:cs_class => 'DateTimeField', :base_type=>'DateTime'}
