@@ -598,5 +598,45 @@ namespace UnitTests
 
             StringAssert.StartsWith("8=FIXT.1.1" + Message.SOH, msg.ToString());
         }
+
+        [Test]
+        public void RepeatingGroup_SubgroupCounterTagAppearsOnlyOnce()
+        {
+            // issue #11 bug, as reported by karabiberoglu's further-down post
+
+            QuickFix.FIX44.CollateralInquiry ci = new QuickFix.FIX44.CollateralInquiry();
+            ci.CollInquiryID = new QuickFix.Fields.CollInquiryID("CollateralInquiry");
+
+            // group
+            QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup noParty = new QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup();
+            noParty.PartyID = new QuickFix.Fields.PartyID("ABC");
+            noParty.PartyIDSource = new QuickFix.Fields.PartyIDSource(QuickFix.Fields.PartyIDSource.PROPRIETARY_CUSTOM_CODE);
+            noParty.PartyRole = new QuickFix.Fields.PartyRole(QuickFix.Fields.PartyRole.CLEARING_FIRM);
+
+            // group in group
+            QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup.NoPartySubIDsGroup noPartySub = new QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup.NoPartySubIDsGroup();
+            noPartySub.PartySubID = new QuickFix.Fields.PartySubID("subABC");
+            noPartySub.PartySubIDType = new QuickFix.Fields.PartySubIDType(QuickFix.Fields.PartySubIDType.FIRM);
+            noParty.AddGroup(noPartySub);
+            noPartySub.PartySubID = new QuickFix.Fields.PartySubID("subDEF");
+            noPartySub.PartySubIDType = new QuickFix.Fields.PartySubIDType(QuickFix.Fields.PartySubIDType.LOCATION);
+            noParty.AddGroup(noPartySub);
+
+            ci.AddGroup(noParty);
+
+            string msgString = ci.ToString();
+            string expected = String.Join(Message.SOH, new string[] {
+                "909=CollateralInquiry", // top-level fields (non-header)
+                "453=1", //NoPartyIDs
+                    "448=ABC","447=D","452=4",
+                    "802=2", //NoPartySubIDs
+                        "523=subABC","803=1",
+                        "523=subDEF","803=31",
+                "10="
+            });
+
+            Console.WriteLine(ci.ToString());
+            StringAssert.Contains(expected, msgString);
+        }
     }
 }
