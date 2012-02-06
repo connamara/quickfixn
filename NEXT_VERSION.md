@@ -26,3 +26,4 @@ Changes since the last version:
 * (patch) Fixed issue #35 - Proper BeginString for FIX5 messages (gbirchmeier)
 * (patch) Fixed issue #36 - update version number in release script (gbirchmeier)
 * (patch) Fixed issue #11 reopen - nested group's counter erroneously appearing twice (gbirchmeier)
+* (patch) Fixed issue #39 - "length" types generated as ints, was wrongly being generated as decimal (g0t4)
