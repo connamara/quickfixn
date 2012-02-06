@@ -23,5 +23,6 @@ Changes since the last version:
 * (minor) Fixed issue #22 - Sequence numbers not being reset (kkozel)
 * (patch) Repeating groups always write to default DD order. (gbirchmeier)
 * (minor) Fixed issue #16 - added GetSessionID methods to IAcceptor and IInitiator (gbirchmeier)
-* (patch) Proper BeginString for FIX5 messages (issue #35) (gbirchmeier)
-* (patch) update version number in release script (issue #36) (gbirchmeier)
+* (patch) Fixed issue #35 - Proper BeginString for FIX5 messages (gbirchmeier)
+* (patch) Fixed issue #36 - update version number in release script (gbirchmeier)
+* (patch) Fixed issue #11 reopen - nested group's counter erroneously appearing twice (gbirchmeier)
