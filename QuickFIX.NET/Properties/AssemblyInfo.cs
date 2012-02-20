@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("QuickFix")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("QuickFIX/n")]
+[assembly: AssemblyDescription("Open-source C# implementation of QuickFIX")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
+[assembly: AssemblyCompany("Connamara Systems, LLC and QuickFIX/n contributors")]
 [assembly: AssemblyProduct("QuickFix.Properties")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2009")]
+[assembly: AssemblyCopyright("© QuickFIXn.org 2011-now")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -30,4 +30,4 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 [assembly: AssemblyVersion("0.0.0.1")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("0.0.0.1")]
