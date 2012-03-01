@@ -163,12 +163,19 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME
+        /// All time args are in milliseconds
         /// </summary>
+        /// <param name="now">current system time in milliseconds</param>
+        /// <param name="lastReceivedTime">last received time in milliseconds</param>
+        /// <param name="logonTimeout">number of milliseconds to wait for a Logon from the counterparty</param>
         /// <returns></returns>
+        public static bool LogonTimedOut(int now, long logonTimeout, int lastReceivedTime)
+        {
+            return (now - lastReceivedTime) >= logonTimeout;
+        }
         public bool LogonTimedOut()
         {
-            return false;
+            return LogonTimedOut(System.Environment.TickCount, this.LogonTimeoutAsTickCount, this.LastReceivedTimeTickCount);
         }
 
         /// <summary>

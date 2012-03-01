@@ -25,6 +25,21 @@ namespace UnitTests
             now += heartBtIntMillis;
             Assert.True(SessionState.TimedOut(now, heartBtIntMillis, lastReceivedTime));
         }
+        
+        [Test]
+        public void LogonTimedOut()
+        {
+            int now = 1;
+            int logonTimeout = 5 * 1000;
+            int lastRecvTime = now;
+
+            now += 4000;
+            Assert.False(SessionState.LogonTimedOut(now, logonTimeout, lastRecvTime));
+            now += 1000;
+            Assert.True(SessionState.LogonTimedOut(now, logonTimeout, lastRecvTime));
+            now += 1;
+            Assert.True(SessionState.LogonTimedOut(now, logonTimeout, lastRecvTime));
+        }
 
         [Test]
         public void LogoutTimedOut()
