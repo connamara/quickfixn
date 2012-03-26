@@ -43,7 +43,6 @@ namespace QuickFix.Transport
         private Socket socket_ = null;
         private byte[] _readBuffer = new byte[512];
         private volatile bool shutdownRequested_ = false;
-        //private int lastConnectTickCount = 0;
         private DateTime lastConnectTimeDT = DateTime.MinValue;
         private int reconnectInterval_ = 30;
         private SocketSettings socketSettings_ = new SocketSettings();

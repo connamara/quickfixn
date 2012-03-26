@@ -183,9 +183,9 @@ namespace QuickFix
         /// <summary>
         /// All time args are in milliseconds
         /// </summary>
-        /// <param name="now">current system time</param>
+        /// <param name="now">current system datetime</param>
         /// <param name="heartBtIntMillis">heartbeat interval in milliseconds</param>
-        /// <param name="lastReceivedTime">last received time</param>
+        /// <param name="lastReceivedTime">last received datetime</param>
         /// <returns>true if timed out</returns>
         public static bool TimedOut(DateTime now, int heartBtIntMillis, DateTime lastReceivedTime)
         {
