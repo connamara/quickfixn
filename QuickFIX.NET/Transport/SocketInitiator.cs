@@ -43,7 +43,8 @@ namespace QuickFix.Transport
         private Socket socket_ = null;
         private byte[] _readBuffer = new byte[512];
         private volatile bool shutdownRequested_ = false;
-        private int lastConnectTickCount = 0;
+        //private int lastConnectTickCount = 0;
+        private DateTime lastConnectTimeDT = DateTime.MinValue;
         private int reconnectInterval_ = 30;
         private SocketSettings socketSettings_ = new SocketSettings();
         private Dictionary<SessionID, SocketInitiatorThread> threads_ = new Dictionary<SessionID, SocketInitiatorThread>();
@@ -160,12 +161,12 @@ namespace QuickFix.Transport
             while(!shutdownRequested_)
             {
                 int reconnectIntervalAsTicks = 1000 * reconnectInterval_;
-                int nowTickCount = Environment.TickCount;
+                DateTime nowDT = DateTime.Now;
 
-                if ((nowTickCount - lastConnectTickCount) >= reconnectIntervalAsTicks)
+                if (Convert.ToInt32(nowDT.Subtract(lastConnectTimeDT).TotalMilliseconds) >= reconnectIntervalAsTicks)
                 {
                     Connect();
-                    lastConnectTickCount = nowTickCount;
+                    lastConnectTimeDT = nowDT;
                 }
 
                 Thread.Sleep(1 * 1000);
