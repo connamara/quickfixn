@@ -159,10 +159,10 @@ namespace QuickFix.Transport
 
             while(!shutdownRequested_)
             {
-                int reconnectIntervalAsTicks = 1000 * reconnectInterval_;
+                double reconnectIntervalAsTicks = 1000 * reconnectInterval_;
                 DateTime nowDT = DateTime.Now;
 
-                if (Convert.ToInt32(nowDT.Subtract(lastConnectTimeDT).TotalMilliseconds) >= reconnectIntervalAsTicks)
+                if ((nowDT.Subtract(lastConnectTimeDT).TotalMilliseconds) >= reconnectIntervalAsTicks)
                 {
                     Connect();
                     lastConnectTimeDT = nowDT;

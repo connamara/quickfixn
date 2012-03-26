@@ -189,7 +189,7 @@ namespace QuickFix
         /// <returns>true if timed out</returns>
         public static bool TimedOut(DateTime now, int heartBtIntMillis, DateTime lastReceivedTime)
         {
-            int elapsed = Convert.ToInt32(now.Subtract(lastReceivedTime).TotalMilliseconds);
+            double elapsed = now.Subtract(lastReceivedTime).TotalMilliseconds;
             return elapsed >= (2.4 * heartBtIntMillis);
         }
         public bool TimedOut()
@@ -224,7 +224,7 @@ namespace QuickFix
         /// <returns>true if test request is needed</returns>
         public static bool NeedTestRequest(DateTime now, int heartBtIntMillis, DateTime lastReceivedTime, int testRequestCounter)
         {
-            int elapsedTickCount = Convert.ToInt32(now.Subtract(lastReceivedTime).TotalMilliseconds);
+            double elapsedTickCount = now.Subtract(lastReceivedTime).TotalMilliseconds;
             return elapsedTickCount >= (1.2 * ((testRequestCounter + 1) * heartBtIntMillis));
         }
         public bool NeedTestRequest()
@@ -242,8 +242,8 @@ namespace QuickFix
         /// <returns>true if heartbeat is needed</returns>
         public static bool NeedHeartbeat(DateTime now, int heartBtIntMillis, DateTime lastSentTime, int testRequestCounter)
         {
-            int elapsed = Convert.ToInt32(now.Subtract(lastSentTime).TotalMilliseconds);
-            return (elapsed >= heartBtIntMillis) && (0 == testRequestCounter);
+            double elapsed = now.Subtract(lastSentTime).TotalMilliseconds;
+            return (elapsed >= Convert.ToDouble(heartBtIntMillis)) && (0 == testRequestCounter);
         }
         public bool NeedHeartbeat()
         {
@@ -260,8 +260,8 @@ namespace QuickFix
         /// <returns>true if within heartbeat interval</returns>
         public static bool WithinHeartbeat(DateTime now, int heartBtIntMillis, DateTime lastSentTime, DateTime lastReceivedTime)
         {
-            return ((Convert.ToInt32(now.Subtract(lastSentTime).TotalMilliseconds)) < heartBtIntMillis)
-                && ((Convert.ToInt32(now.Subtract(lastReceivedTime).TotalMilliseconds)) < heartBtIntMillis);
+            return ((now.Subtract(lastSentTime).TotalMilliseconds) < Convert.ToDouble(heartBtIntMillis))
+                && ((now.Subtract(lastReceivedTime).TotalMilliseconds) < Convert.ToDouble(heartBtIntMillis));
         }
         public bool WithinHeartbeat()
         {
