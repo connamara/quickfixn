@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace QuickFix
 {
@@ -20,8 +21,8 @@ namespace QuickFix
         private int testRequestCounter_ = 0;
         private int heartBtInt_ = 0;
         private int heartBtIntAsTickCount_ = 0;
-        private int lastReceivedTimeTickCount_;
-        private int lastSentTimeTickCount_;
+        private DateTime lastReceivedTimeDT_ = DateTime.MinValue;
+        private DateTime lastSentTimeDT_ = DateTime.MinValue;
         private int logonTimeout_ = 10;
         private long logonTimeoutAsTickCount_ = 10 * 1000;
         private int logoutTimeout_ = 2;
@@ -110,16 +111,17 @@ namespace QuickFix
             get { lock (sync_) { return heartBtIntAsTickCount_; } }
         }
 
-        public int LastReceivedTimeTickCount
+        public DateTime LastReceivedTimeDT
         {
-            get { lock (sync_) { return lastReceivedTimeTickCount_; } }
-            set { lock (sync_) { lastReceivedTimeTickCount_ = value; } }
+            get { lock (sync_) { return lastReceivedTimeDT_; } }
+            set { lock (sync_) { lastReceivedTimeDT_ = value; } }
         }
 
-        public int LastSentTimeTickCount
+
+        public DateTime LastSentTimeDT
         {
-            get { lock (sync_) { return lastSentTimeTickCount_; } }
-            set { lock (sync_) { lastSentTimeTickCount_ = value; } }
+            get { lock (sync_) { return lastSentTimeDT_; } }
+            set { lock (sync_) { lastSentTimeDT_ = value; } }
         }
 
         public int LogonTimeout
@@ -158,112 +160,112 @@ namespace QuickFix
             this.HeartBtInt = heartBtInt;
             this.IsInitiator = (0 != heartBtInt);
             int now = System.Environment.TickCount;
-            lastReceivedTimeTickCount_ = now;
-            lastSentTimeTickCount_ = now;
+            lastReceivedTimeDT_ = DateTime.Now;
+            lastSentTimeDT_ = DateTime.Now;
         }
 
         /// <summary>
         /// All time args are in milliseconds
         /// </summary>
-        /// <param name="now">current system time in milliseconds</param>
-        /// <param name="lastReceivedTime">last received time in milliseconds</param>
+        /// <param name="now">current system time</param>
+        /// <param name="lastReceivedTime">last received time</param>
         /// <param name="logonTimeout">number of milliseconds to wait for a Logon from the counterparty</param>
         /// <returns></returns>
-        public static bool LogonTimedOut(int now, long logonTimeout, int lastReceivedTime)
+        public static bool LogonTimedOut(DateTime now, long logonTimeout, DateTime lastReceivedTime)
         {
-            return (now - lastReceivedTime) >= logonTimeout;
+            return (now.Subtract(lastReceivedTime).TotalMilliseconds) >= logonTimeout;
         }
         public bool LogonTimedOut()
         {
-            return LogonTimedOut(System.Environment.TickCount, this.LogonTimeoutAsTickCount, this.LastReceivedTimeTickCount);
+            return LogonTimedOut(DateTime.Now, this.LogonTimeoutAsTickCount, this.LastReceivedTimeDT);
         }
 
         /// <summary>
         /// All time args are in milliseconds
         /// </summary>
-        /// <param name="now">current system time in milliseconds</param>
+        /// <param name="now">current system time</param>
         /// <param name="heartBtIntMillis">heartbeat interval in milliseconds</param>
-        /// <param name="lastReceivedTime">last received time in milliseconds</param>
+        /// <param name="lastReceivedTime">last received time</param>
         /// <returns>true if timed out</returns>
-        public static bool TimedOut(int now, int heartBtIntMillis, int lastReceivedTime)
+        public static bool TimedOut(DateTime now, int heartBtIntMillis, DateTime lastReceivedTime)
         {
-            int elapsed = now - lastReceivedTime;
+            int elapsed = Convert.ToInt32(now.Subtract(lastReceivedTime).TotalMilliseconds);
             return elapsed >= (2.4 * heartBtIntMillis);
         }
         public bool TimedOut()
         {
-            return TimedOut(System.Environment.TickCount, this.HeartBtIntAsTickCount, this.LastReceivedTimeTickCount);
+            return TimedOut(DateTime.Now, this.HeartBtIntAsTickCount, this.LastReceivedTimeDT);
         }
 
         /// <summary>
         /// All time args are in milliseconds
         /// </summary>
-        /// <param name="now">current system time in milliseconds</param>
+        /// <param name="now">current system time</param>
         /// <param name="sentLogout">true if a Logout has been sent to the counterparty, otherwise false</param>
         /// <param name="logoutTimeout">number of milliseconds to wait for a Logout from the counterparty</param>
-        /// <param name="lastSentTime">last sent time in milliseconds</param>
+        /// <param name="lastSentTime">last sent time</param>
         /// <returns></returns>
-        public static bool LogoutTimedOut(int now, bool sentLogout, long logoutTimeout, int lastSentTime)
+        public static bool LogoutTimedOut(DateTime now, bool sentLogout, long logoutTimeout, DateTime lastSentTime)
         {
-            return sentLogout && ((now - lastSentTime) >= logoutTimeout);
+            return sentLogout && ((now.Subtract(lastSentTime).TotalMilliseconds) >= logoutTimeout);
         }
         public bool LogoutTimedOut()
         {
-            return LogoutTimedOut(System.Environment.TickCount, this.SentLogout, this.LogoutTimeoutAsTickCount, this.LastSentTimeTickCount);
+            return LogoutTimedOut(DateTime.Now, this.SentLogout, this.LogoutTimeoutAsTickCount, this.LastSentTimeDT);
         }
 
         /// <summary>
         /// All time args are in milliseconds
         /// </summary>
-        /// <param name="now">current system time in milliseconds</param>
+        /// <param name="now">current system time</param>
         /// <param name="heartBtIntMillis">heartbeat interval in milliseconds</param>
-        /// <param name="lastReceivedTime">last received time in milliseconds</param>
+        /// <param name="lastReceivedTime">last received time</param>
         /// <param name="testRequestCounter">test request counter</param>
         /// <returns>true if test request is needed</returns>
-        public static bool NeedTestRequest(int now, int heartBtIntMillis, int lastReceivedTime, int testRequestCounter)
+        public static bool NeedTestRequest(DateTime now, int heartBtIntMillis, DateTime lastReceivedTime, int testRequestCounter)
         {
-            int elapsedTickCount = now - lastReceivedTime;
+            int elapsedTickCount = Convert.ToInt32(now.Subtract(lastReceivedTime).TotalMilliseconds);
             return elapsedTickCount >= (1.2 * ((testRequestCounter + 1) * heartBtIntMillis));
         }
         public bool NeedTestRequest()
         {
-            return NeedTestRequest(System.Environment.TickCount, this.HeartBtIntAsTickCount, this.LastReceivedTimeTickCount, this.TestRequestCounter);
+            return NeedTestRequest(DateTime.Now, this.HeartBtIntAsTickCount, this.LastReceivedTimeDT, this.TestRequestCounter);
         }
 
         /// <summary>
         /// All time args are in milliseconds
         /// </summary>
-        /// <param name="now">current system time in milliseconds</param>
+        /// <param name="now">current system time</param>
         /// <param name="heartBtIntMillis">heartbeat interval in milliseconds</param>
-        /// <param name="lastSentTime">last sent time in milliseconds</param>
+        /// <param name="lastSentTime">last sent time</param>
         /// <param name="testRequestCounter">test request counter</param>
         /// <returns>true if heartbeat is needed</returns>
-        public static bool NeedHeartbeat(int now, int heartBtIntMillis, int lastSentTime, int testRequestCounter)
+        public static bool NeedHeartbeat(DateTime now, int heartBtIntMillis, DateTime lastSentTime, int testRequestCounter)
         {
-            int elapsed = now - lastSentTime;
+            int elapsed = Convert.ToInt32(now.Subtract(lastSentTime).TotalMilliseconds);
             return (elapsed >= heartBtIntMillis) && (0 == testRequestCounter);
         }
         public bool NeedHeartbeat()
         {
-            return NeedHeartbeat(System.Environment.TickCount, this.HeartBtIntAsTickCount, this.LastSentTimeTickCount, this.TestRequestCounter);
+            return NeedHeartbeat(DateTime.Now, this.HeartBtIntAsTickCount, this.LastSentTimeDT, this.TestRequestCounter);
         }
 
         /// <summary>
         /// All time args are in milliseconds
         /// </summary>
-        /// <param name="now">current system time in milliseconds</param>
+        /// <param name="now">current system time</param>
         /// <param name="heartBtIntMillis">heartbeat interval in milliseconds</param>
-        /// <param name="lastSentTime">last sent time in milliseconds</param>
-        /// <param name="lastReceivedTime">last received time in milliseconds</param>
+        /// <param name="lastSentTime">last sent time</param>
+        /// <param name="lastReceivedTime">last received time</param>
         /// <returns>true if within heartbeat interval</returns>
-        public static bool WithinHeartbeat(int now, int heartBtIntMillis, int lastSentTime, int lastReceivedTime)
+        public static bool WithinHeartbeat(DateTime now, int heartBtIntMillis, DateTime lastSentTime, DateTime lastReceivedTime)
         {
-            return ((now - lastSentTime) < heartBtIntMillis)
-                && ((now - lastReceivedTime) < heartBtIntMillis);
+            return ((Convert.ToInt32(now.Subtract(lastSentTime).TotalMilliseconds)) < heartBtIntMillis)
+                && ((Convert.ToInt32(now.Subtract(lastReceivedTime).TotalMilliseconds)) < heartBtIntMillis);
         }
         public bool WithinHeartbeat()
         {
-            return WithinHeartbeat(System.Environment.TickCount, this.HeartBtIntAsTickCount, this.LastSentTimeTickCount, this.LastReceivedTimeTickCount);
+            return WithinHeartbeat(DateTime.Now, this.HeartBtIntAsTickCount, this.LastSentTimeDT, this.LastReceivedTimeDT);
         }
 
         public ResendRange GetResendRange()
@@ -328,8 +330,8 @@ namespace QuickFix
             return new System.Text.StringBuilder("SessionState ")
                 .Append("[ Now=").Append(System.Environment.TickCount)
                 .Append(", HeartBtInt=").Append(this.HeartBtIntAsTickCount)
-                .Append(", LastSentTime=").Append(this.LastSentTimeTickCount)
-                .Append(", LastReceivedTime=").Append(this.LastReceivedTimeTickCount)
+                .Append(", LastSentTime=").Append(this.LastSentTimeDT.Ticks)
+                .Append(", LastReceivedTime=").Append(this.LastReceivedTimeDT.Ticks)
                 .Append(", TestRequestCounter=").Append(this.TestRequestCounter)
                 .Append(", WithinHeartbeat=").Append(WithinHeartbeat())
                 .Append(", NeedHeartbeat=").Append(NeedHeartbeat())

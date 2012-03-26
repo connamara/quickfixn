@@ -1,5 +1,6 @@
 ﻿﻿using System.Collections.Generic;
 using QuickFix.Fields;
+using System;
 
 namespace QuickFix
 {
@@ -863,7 +864,7 @@ namespace QuickFix
                 return false;
             }
 
-            state_.LastReceivedTimeTickCount = System.Environment.TickCount;
+            state_.LastReceivedTimeDT = DateTime.Now;
             state_.TestRequestCounter = 0;
 
             if (Message.IsAdminMsgType(msgType))
@@ -1099,7 +1100,7 @@ namespace QuickFix
                 logon.SetField(new Fields.ResetSeqNumFlag(true));
 
             InitializeHeader(logon);
-            state_.LastReceivedTimeTickCount = System.Environment.TickCount;
+            state_.LastReceivedTimeDT = DateTime.Now;
             state_.TestRequestCounter = 0;
             state_.SentLogon = true;
             return SendRaw(logon, 0);
@@ -1294,7 +1295,7 @@ namespace QuickFix
         /// <param name="m"></param>
         protected void InitializeHeader(Message m, int msgSeqNum)
         {
-            state_.LastSentTimeTickCount = System.Environment.TickCount;
+            state_.LastSentTimeDT = DateTime.Now;
             m.Header.SetField(new Fields.BeginString(this.SessionID.BeginString));
             m.Header.SetField(new Fields.SenderCompID(this.SessionID.SenderCompID));
             if (SessionID.IsSet(this.SessionID.SenderSubID))
