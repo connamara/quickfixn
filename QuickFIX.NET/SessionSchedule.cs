@@ -50,8 +50,16 @@ namespace QuickFix
         {
             if (StartTime.CompareTo(EndTime) < 0)
             {
-                return (time.CompareTo(StartTime) >= 0 &&
-                    time.CompareTo(EndTime) <= 0);
+                if (!WeeklySession)
+                {
+                    return (time.CompareTo(StartTime) >= 0 &&
+                        time.CompareTo(EndTime) <= 0);
+                }
+                else
+                {
+                    return (time.CompareTo(StartTime) >= 0 ||
+                        time.CompareTo(EndTime) <= 0);
+                }
             }
             else if (StartTime.CompareTo(EndTime) > 0)
             {
