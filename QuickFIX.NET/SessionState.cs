@@ -160,8 +160,8 @@ namespace QuickFix
             this.HeartBtInt = heartBtInt;
             this.IsInitiator = (0 != heartBtInt);
             int now = System.Environment.TickCount;
-            lastReceivedTimeDT_ = DateTime.Now;
-            lastSentTimeDT_ = DateTime.Now;
+            lastReceivedTimeDT_ = DateTime.UtcNow;
+            lastSentTimeDT_ = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace QuickFix
         }
         public bool LogonTimedOut()
         {
-            return LogonTimedOut(DateTime.Now, this.LogonTimeoutAsTickCount, this.LastReceivedTimeDT);
+            return LogonTimedOut(DateTime.UtcNow, this.LogonTimeoutAsTickCount, this.LastReceivedTimeDT);
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace QuickFix
         }
         public bool TimedOut()
         {
-            return TimedOut(DateTime.Now, this.HeartBtIntAsTickCount, this.LastReceivedTimeDT);
+            return TimedOut(DateTime.UtcNow, this.HeartBtIntAsTickCount, this.LastReceivedTimeDT);
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace QuickFix
         }
         public bool LogoutTimedOut()
         {
-            return LogoutTimedOut(DateTime.Now, this.SentLogout, this.LogoutTimeoutAsTickCount, this.LastSentTimeDT);
+            return LogoutTimedOut(DateTime.UtcNow, this.SentLogout, this.LogoutTimeoutAsTickCount, this.LastSentTimeDT);
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace QuickFix
         }
         public bool NeedTestRequest()
         {
-            return NeedTestRequest(DateTime.Now, this.HeartBtIntAsTickCount, this.LastReceivedTimeDT, this.TestRequestCounter);
+            return NeedTestRequest(DateTime.UtcNow, this.HeartBtIntAsTickCount, this.LastReceivedTimeDT, this.TestRequestCounter);
         }
 
         /// <summary>
@@ -247,7 +247,7 @@ namespace QuickFix
         }
         public bool NeedHeartbeat()
         {
-            return NeedHeartbeat(DateTime.Now, this.HeartBtIntAsTickCount, this.LastSentTimeDT, this.TestRequestCounter);
+            return NeedHeartbeat(DateTime.UtcNow, this.HeartBtIntAsTickCount, this.LastSentTimeDT, this.TestRequestCounter);
         }
 
         /// <summary>
@@ -265,7 +265,7 @@ namespace QuickFix
         }
         public bool WithinHeartbeat()
         {
-            return WithinHeartbeat(DateTime.Now, this.HeartBtIntAsTickCount, this.LastSentTimeDT, this.LastReceivedTimeDT);
+            return WithinHeartbeat(DateTime.UtcNow, this.HeartBtIntAsTickCount, this.LastSentTimeDT, this.LastReceivedTimeDT);
         }
 
         public ResendRange GetResendRange()
