@@ -17,7 +17,7 @@ namespace UnitTests
             //int now = 1;
             //int lastReceivedTime = now;
             int heartBtIntMillis = 60 * 1000;
-            System.DateTime now = System.DateTime.Now;
+            System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastReceivedTime = now;
 
 
@@ -37,7 +37,7 @@ namespace UnitTests
             int logonTimeout = 5 * 1000;
             //int lastRecvTime = now;
 
-            System.DateTime now = System.DateTime.Now;
+            System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastRecvTime = now;
 
             now = now.AddMilliseconds(4000);
@@ -56,7 +56,7 @@ namespace UnitTests
             int logoutTimeout = 2 * 1000;
             //int lastSentTime = now;
 
-            System.DateTime now = System.DateTime.Now;
+            System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastSentTime = now;
 
             now = now.AddMilliseconds(1000);
@@ -76,7 +76,7 @@ namespace UnitTests
             int heartBtIntMillis = 30 * 1000;
             int testRequestCounter = 0;
 
-            System.DateTime now = System.DateTime.Now;
+            System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastReceivedTime = now;
 
             //elapsedTickCount >= (1.2 * ((testRequestCounter + 1) * heartBtIntMillis))
@@ -101,7 +101,7 @@ namespace UnitTests
             int heartBtIntMillis = 60 * 1000;
             int testRequestCounter = 0;
 
-            System.DateTime now = System.DateTime.Now;
+            System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastSentTime = now;
 
             now = now.AddMilliseconds(heartBtIntMillis / 3);
@@ -127,7 +127,7 @@ namespace UnitTests
             //int lastReceivedTime = now;
             int heartBtIntMillis = 60 * 1000;
 
-            System.DateTime now = System.DateTime.Now;
+            System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastSentTime = now;
             System.DateTime lastReceivedTime = now;
 

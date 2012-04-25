@@ -864,7 +864,7 @@ namespace QuickFix
                 return false;
             }
 
-            state_.LastReceivedTimeDT = DateTime.Now;
+            state_.LastReceivedTimeDT = DateTime.UtcNow;
             state_.TestRequestCounter = 0;
 
             if (Message.IsAdminMsgType(msgType))
@@ -1100,7 +1100,7 @@ namespace QuickFix
                 logon.SetField(new Fields.ResetSeqNumFlag(true));
 
             InitializeHeader(logon);
-            state_.LastReceivedTimeDT = DateTime.Now;
+            state_.LastReceivedTimeDT = DateTime.UtcNow;
             state_.TestRequestCounter = 0;
             state_.SentLogon = true;
             return SendRaw(logon, 0);
@@ -1295,7 +1295,7 @@ namespace QuickFix
         /// <param name="m"></param>
         protected void InitializeHeader(Message m, int msgSeqNum)
         {
-            state_.LastSentTimeDT = DateTime.Now;
+            state_.LastSentTimeDT = DateTime.UtcNow;
             m.Header.SetField(new Fields.BeginString(this.SessionID.BeginString));
             m.Header.SetField(new Fields.SenderCompID(this.SessionID.SenderCompID));
             if (SessionID.IsSet(this.SessionID.SenderSubID))

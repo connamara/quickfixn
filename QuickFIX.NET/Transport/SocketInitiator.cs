@@ -160,7 +160,7 @@ namespace QuickFix.Transport
             while(!shutdownRequested_)
             {
                 double reconnectIntervalAsTicks = 1000 * reconnectInterval_;
-                DateTime nowDT = DateTime.Now;
+                DateTime nowDT = DateTime.UtcNow;
 
                 if ((nowDT.Subtract(lastConnectTimeDT).TotalMilliseconds) >= reconnectIntervalAsTicks)
                 {
