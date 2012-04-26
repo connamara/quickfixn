@@ -20,13 +20,13 @@ namespace QuickFix
         private string logoutReason_ = "";
         private int testRequestCounter_ = 0;
         private int heartBtInt_ = 0;
-        private int heartBtIntAsTickCount_ = 0;
+        private int heartBtIntAsMilliSecs_ = 0;
         private DateTime lastReceivedTimeDT_ = DateTime.MinValue;
         private DateTime lastSentTimeDT_ = DateTime.MinValue;
         private int logonTimeout_ = 10;
-        private long logonTimeoutAsTickCount_ = 10 * 1000;
+        private long logonTimeoutAsMilliSecs_ = 10 * 1000;
         private int logoutTimeout_ = 2;
-        private long logoutTimeoutAsTickCount_ = 2 * 1000;
+        private long logoutTimeoutAsMilliSecs_ = 2 * 1000;
         private ResendRange resendRange_ = new ResendRange(0,0);
         private Dictionary<int, Message> msgQueue = new Dictionary<int, Message>();
 
@@ -103,12 +103,12 @@ namespace QuickFix
         public int HeartBtInt
         {
             get { lock (sync_) { return heartBtInt_; } }
-            set { lock (sync_) { heartBtInt_ = value; heartBtIntAsTickCount_ = 1000 * value;  } }
+            set { lock (sync_) { heartBtInt_ = value; heartBtIntAsMilliSecs_ = 1000 * value;  } }
         }
 
-        public int HeartBtIntAsTickCount
+        public int HeartBtIntAsMilliSecs
         {
-            get { lock (sync_) { return heartBtIntAsTickCount_; } }
+            get { lock (sync_) { return heartBtIntAsMilliSecs_; } }
         }
 
         public DateTime LastReceivedTimeDT
@@ -127,23 +127,23 @@ namespace QuickFix
         public int LogonTimeout
         {
             get { lock (sync_) { return logonTimeout_; } }
-            set { lock (sync_) { logonTimeout_ = value; logonTimeoutAsTickCount_ = 1000 * value; } }
+            set { lock (sync_) { logonTimeout_ = value; logonTimeoutAsMilliSecs_ = 1000 * value; } }
         }
 
-        public long LogonTimeoutAsTickCount
+        public long LogonTimeoutAsMilliSecs
         {
-            get { lock (sync_) { return logonTimeoutAsTickCount_; } }
+            get { lock (sync_) { return logonTimeoutAsMilliSecs_; } }
         }
 
         public int LogoutTimeout
         {
             get { lock (sync_) { return logoutTimeout_; } }
-            set { lock (sync_) { logoutTimeout_ = value; logoutTimeoutAsTickCount_ = 1000 * value; } }
+            set { lock (sync_) { logoutTimeout_ = value; logoutTimeoutAsMilliSecs_ = 1000 * value; } }
         }
 
-        public long LogoutTimeoutAsTickCount
+        public long LogoutTimeoutAsMilliSecs
         {
-            get { lock (sync_) { return logoutTimeoutAsTickCount_; } }
+            get { lock (sync_) { return logoutTimeoutAsMilliSecs_; } }
         }
 
         private Dictionary<int, Message> MsgQueue
@@ -159,7 +159,6 @@ namespace QuickFix
             log_ = log;
             this.HeartBtInt = heartBtInt;
             this.IsInitiator = (0 != heartBtInt);
-            int now = System.Environment.TickCount;
             lastReceivedTimeDT_ = DateTime.UtcNow;
             lastSentTimeDT_ = DateTime.UtcNow;
         }
@@ -177,7 +176,7 @@ namespace QuickFix
         }
         public bool LogonTimedOut()
         {
-            return LogonTimedOut(DateTime.UtcNow, this.LogonTimeoutAsTickCount, this.LastReceivedTimeDT);
+            return LogonTimedOut(DateTime.UtcNow, this.LogonTimeoutAsMilliSecs, this.LastReceivedTimeDT);
         }
 
         /// <summary>
@@ -194,7 +193,7 @@ namespace QuickFix
         }
         public bool TimedOut()
         {
-            return TimedOut(DateTime.UtcNow, this.HeartBtIntAsTickCount, this.LastReceivedTimeDT);
+            return TimedOut(DateTime.UtcNow, this.HeartBtIntAsMilliSecs, this.LastReceivedTimeDT);
         }
 
         /// <summary>
@@ -211,7 +210,7 @@ namespace QuickFix
         }
         public bool LogoutTimedOut()
         {
-            return LogoutTimedOut(DateTime.UtcNow, this.SentLogout, this.LogoutTimeoutAsTickCount, this.LastSentTimeDT);
+            return LogoutTimedOut(DateTime.UtcNow, this.SentLogout, this.LogoutTimeoutAsMilliSecs, this.LastSentTimeDT);
         }
 
         /// <summary>
@@ -224,12 +223,12 @@ namespace QuickFix
         /// <returns>true if test request is needed</returns>
         public static bool NeedTestRequest(DateTime now, int heartBtIntMillis, DateTime lastReceivedTime, int testRequestCounter)
         {
-            double elapsedTickCount = now.Subtract(lastReceivedTime).TotalMilliseconds;
-            return elapsedTickCount >= (1.2 * ((testRequestCounter + 1) * heartBtIntMillis));
+            double elapsedMilliseconds = now.Subtract(lastReceivedTime).TotalMilliseconds;
+            return elapsedMilliseconds >= (1.2 * ((testRequestCounter + 1) * heartBtIntMillis));
         }
         public bool NeedTestRequest()
         {
-            return NeedTestRequest(DateTime.UtcNow, this.HeartBtIntAsTickCount, this.LastReceivedTimeDT, this.TestRequestCounter);
+            return NeedTestRequest(DateTime.UtcNow, this.HeartBtIntAsMilliSecs, this.LastReceivedTimeDT, this.TestRequestCounter);
         }
 
         /// <summary>
@@ -247,7 +246,7 @@ namespace QuickFix
         }
         public bool NeedHeartbeat()
         {
-            return NeedHeartbeat(DateTime.UtcNow, this.HeartBtIntAsTickCount, this.LastSentTimeDT, this.TestRequestCounter);
+            return NeedHeartbeat(DateTime.UtcNow, this.HeartBtIntAsMilliSecs, this.LastSentTimeDT, this.TestRequestCounter);
         }
 
         /// <summary>
@@ -265,7 +264,7 @@ namespace QuickFix
         }
         public bool WithinHeartbeat()
         {
-            return WithinHeartbeat(DateTime.UtcNow, this.HeartBtIntAsTickCount, this.LastSentTimeDT, this.LastReceivedTimeDT);
+            return WithinHeartbeat(DateTime.UtcNow, this.HeartBtIntAsMilliSecs, this.LastSentTimeDT, this.LastReceivedTimeDT);
         }
 
         public ResendRange GetResendRange()
@@ -328,10 +327,10 @@ namespace QuickFix
         public override string ToString()
         {
             return new System.Text.StringBuilder("SessionState ")
-                .Append("[ Now=").Append(System.Environment.TickCount)
-                .Append(", HeartBtInt=").Append(this.HeartBtIntAsTickCount)
-                .Append(", LastSentTime=").Append(this.LastSentTimeDT.Ticks)
-                .Append(", LastReceivedTime=").Append(this.LastReceivedTimeDT.Ticks)
+                .Append("[ Now=").Append(DateTime.UtcNow)
+                .Append(", HeartBtInt=").Append(this.HeartBtIntAsMilliSecs)
+                .Append(", LastSentTime=").Append(this.LastSentTimeDT)
+                .Append(", LastReceivedTime=").Append(this.LastReceivedTimeDT)
                 .Append(", TestRequestCounter=").Append(this.TestRequestCounter)
                 .Append(", WithinHeartbeat=").Append(WithinHeartbeat())
                 .Append(", NeedHeartbeat=").Append(NeedHeartbeat())

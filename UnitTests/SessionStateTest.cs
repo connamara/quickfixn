@@ -14,8 +14,6 @@ namespace UnitTests
         [Test]
         public void TimedOut()
         {
-            //int now = 1;
-            //int lastReceivedTime = now;
             int heartBtIntMillis = 60 * 1000;
             System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastReceivedTime = now;
@@ -33,9 +31,7 @@ namespace UnitTests
         [Test]
         public void LogonTimedOut()
         {
-            //int now = 1;
             int logonTimeout = 5 * 1000;
-            //int lastRecvTime = now;
 
             System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastRecvTime = now;
@@ -51,10 +47,8 @@ namespace UnitTests
         [Test]
         public void LogoutTimedOut()
         {
-            //int now = 1;
             bool sentLogout = true;
             int logoutTimeout = 2 * 1000;
-            //int lastSentTime = now;
 
             System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastSentTime = now;
@@ -71,15 +65,11 @@ namespace UnitTests
         [Test]
         public void NeedTestRequest()
         {
-            //int now = 1;
-            //int lastReceivedTime = now;
             int heartBtIntMillis = 30 * 1000;
             int testRequestCounter = 0;
 
             System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastReceivedTime = now;
-
-            //elapsedTickCount >= (1.2 * ((testRequestCounter + 1) * heartBtIntMillis))
 
             now = now.AddMilliseconds(heartBtIntMillis);
             Assert.False(SessionState.NeedTestRequest(now, heartBtIntMillis, lastReceivedTime, testRequestCounter));
@@ -96,8 +86,6 @@ namespace UnitTests
         [Test]
         public void NeedHeartbeat()
         {
-            //int now = 1;
-            //int lastSentTime = now;
             int heartBtIntMillis = 60 * 1000;
             int testRequestCounter = 0;
 
@@ -122,9 +110,6 @@ namespace UnitTests
         [Test]
         public void WithinHeartbeat()
         {
-            //int now = 1;
-            //int lastSentTime = now;
-            //int lastReceivedTime = now;
             int heartBtIntMillis = 60 * 1000;
 
             System.DateTime now = System.DateTime.UtcNow;
