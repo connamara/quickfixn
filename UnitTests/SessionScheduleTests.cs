@@ -138,7 +138,7 @@ namespace UnitTests
 
             //weekdays
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 7, 30, 0)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 15, 30, 0)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 30, 0)));
 
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 9, 59, 59)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 59, 59)));
