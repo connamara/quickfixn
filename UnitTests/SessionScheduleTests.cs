@@ -202,5 +202,27 @@ namespace UnitTests
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 6, 0, 22)));
 
         }
+        
+        [Test]
+        public void testWeeklySessionMultiDayHoursIssue59()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "00:30:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "01:00:00");
+
+            //only on monday-fri
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Thursday);
+
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            //weekdays
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2012, 04, 25, 7, 30, 0)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2012, 04, 27, 15, 30, 0)));
+
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2012, 04, 25, 9, 59, 59)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2012, 04, 28, 00, 59, 59)));
+        }
+
     }
 }
