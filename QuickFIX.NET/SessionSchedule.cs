@@ -14,45 +14,45 @@ namespace QuickFix
         {
             if (WeeklySession)
                 return CheckDay(time);
-	    else
+            else
                 return CheckTime(time.TimeOfDay);
         }
 
         private bool CheckDay(System.DateTime time)
         {
-	    if (StartDay < EndDay)
-	    {
-	        if (time.DayOfWeek < StartDay || time.DayOfWeek > EndDay)
-	        {
-		    return false;
-	        } else if (time.DayOfWeek < EndDay)
-                {
-                    return (StartDay < time.DayOfWeek) || (StartTime.CompareTo(time.TimeOfDay) <= 0);
-                } else
-		{
+          if (StartDay < EndDay)
+          {
+            if (time.DayOfWeek < StartDay || time.DayOfWeek > EndDay)
+            {
+              return false;
+            } else if (time.DayOfWeek < EndDay)
+            {
+              return (StartDay < time.DayOfWeek) || (StartTime.CompareTo(time.TimeOfDay) <= 0);
+            } else
+            {
 	            return (time.DayOfWeek < EndDay) || (EndTime.CompareTo(time.TimeOfDay) >= 0);
-		}
-            } 
+            }
+          } 
 
-	    if (EndDay < StartDay)
-	    {
-	        if (EndDay < time.DayOfWeek && time.DayOfWeek < StartDay)
-	        {
-		    return false;
-		} else if (time.DayOfWeek < StartDay)
-                {
-                    return (time.DayOfWeek < EndDay) || (EndTime.CompareTo(time.TimeOfDay) >= 0);
-                } else
-		{	
-                    return (time.DayOfWeek > StartDay) || (StartTime.CompareTo(time.TimeOfDay) <= 0);
-		}
-            } 
+          if (EndDay < StartDay)
+          {
+            if (EndDay < time.DayOfWeek && time.DayOfWeek < StartDay)
+            {
+              return false;
+            } else if (time.DayOfWeek < StartDay)
+            {
+              return (time.DayOfWeek < EndDay) || (EndTime.CompareTo(time.TimeOfDay) >= 0);
+            } else
+            {	
+              return (time.DayOfWeek > StartDay) || (StartTime.CompareTo(time.TimeOfDay) <= 0);
+            }
+          } 
 
-            //start day must be same as end day
-            if(StartTime >= EndTime)
-                return time.DayOfWeek!=StartDay || CheckTime(time.TimeOfDay);
-	    else
-                return time.DayOfWeek == StartDay && CheckTime(time.TimeOfDay);
+          //start day must be same as end day
+          if(StartTime >= EndTime)
+            return time.DayOfWeek!=StartDay || CheckTime(time.TimeOfDay);
+          else
+            return time.DayOfWeek == StartDay && CheckTime(time.TimeOfDay);
         }
 
         private bool CheckTime(System.TimeSpan time)
