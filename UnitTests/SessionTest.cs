@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
+using System.Threading;
 
 namespace UnitTests
 {
@@ -156,7 +157,7 @@ namespace UnitTests
             msg.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
             msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
             msg.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
-            msg.SetField(new QuickFix.Fields.HeartBtInt(30));
+            msg.SetField(new QuickFix.Fields.HeartBtInt(1));
             session.Next(msg);
         }
 
@@ -185,6 +186,12 @@ namespace UnitTests
             return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT) && 
                 responder.msgLookup[QuickFix.Fields.MsgType.REJECT].Count>0;
         }
+
+	public bool SENT_HEART_BEAT()
+	{
+            return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.HEARTBEAT) &&
+                responder.msgLookup[QuickFix.Fields.MsgType.HEARTBEAT].Count > 0;
+	}
 
         public bool SENT_BUSINESS_REJECT()
         {
@@ -312,6 +319,16 @@ namespace UnitTests
             Assert.That(SENT_LOGOUT());
             Assert.That(DISCONNECTED());
         }
+
+	[Test]
+	public void HeartBeatCheckAfterMessageProcess()
+	{
+	    Logon();
+	    Thread.Sleep(2000);
+
+            SendNOSMessage();
+            Assert.That(SENT_HEART_BEAT());
+	}
 
         [Test]
         public void NextResendRequestNoMessagePersist()
