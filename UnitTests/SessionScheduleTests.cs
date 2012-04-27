@@ -55,26 +55,82 @@ namespace UnitTests
         }
 
         [Test]
-        public void testWeeklySessionOneDay()
+        public void testWeeklySessionSameDayAllWeek()
         {
             QuickFix.Dictionary settings = new QuickFix.Dictionary();
             settings.SetString(QuickFix.SessionSettings.START_TIME, "00:00:00");
             settings.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
 
-            //only on monday
             settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
             settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Monday);
-
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+	    
+            //a sunday
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0)));
 
             //a monday
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 23, 59, 59)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 0)));
+
+            //a tuesday
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0)));
+        }
+
+        [Test]
+        public void testWeeklySessionSameDayMostWeek()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "05:00:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
+
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Monday);
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+	    
+            //a sunday
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0)));
+
+            //a monday
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 1)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 4, 0, 1)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 23, 59, 59)));
+
+            //a tuesday
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0)));
+        }
+
+        //admittedly contrived, but full coverage
+        [Test]
+        public void testWeeklySessionSameDayOneDay()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "00:00:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "05:00:00");
+
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Monday);
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+	    
+            //a sunday
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0)));
+
+            //a monday
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 1)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 4, 0, 1)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 59, 59)));
 
             //a tuesday
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0)));
         }
+
 
         [Test]
         public void testWeeklySessionMultiDay()
@@ -83,19 +139,23 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.START_TIME, "00:00:00");
             settings.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
 
-            //only on monday-fri
+            //only on monday-thur (note end time)
             settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
             settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
 
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
-            //a weekdays
+            //a monday
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 23, 59, 59)));
 
-            //a weekend
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0)));
+            // a thursday
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 20, 23, 59, 59)));
+
+            //a fri, sat, sun
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 23, 59, 59)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 0, 0, 0)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0)));
         }
 
         [Test]
@@ -105,19 +165,21 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.START_TIME, "00:00:00");
             settings.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
 
-            //only on wed-mon
+            //only on wed-sunday night
             settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Wednesday);
             settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Monday);
 
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
             //wed-monday
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 9, 43, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 20, 9, 43, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 9, 43, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 22, 9, 43, 0)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0)));
+
+            //monday
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0)));
 
             //tuesday
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0)));
@@ -136,12 +198,25 @@ namespace UnitTests
 
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
-            //weekdays
+            //Monday Scenarios
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 59, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 7, 30, 0)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 15, 30, 0)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 15, 30, 0)));
 
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 9, 59, 59)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 59, 59)));
+            //Midweek Scenarios
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 6, 59, 0)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 7, 30, 0)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 15, 30, 0)));
+
+            //Friday Scenarios
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 6, 59, 0)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 7, 30, 0)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 30, 0)));
+
+            //Weekend
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 6, 59, 0)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 7, 30, 0)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 15, 30, 0)));
         }
 
         [Test]
@@ -161,8 +236,9 @@ namespace UnitTests
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 15, 30, 0)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 30, 0)),"foo");
 
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 30, 59)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 22, 6, 59, 59)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 5, 30, 59)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 30, 59)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 6, 59, 59)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 7, 00, 1)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 15, 30, 0)));
         }
