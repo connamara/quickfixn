@@ -105,7 +105,7 @@ namespace UnitTests
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0)));
         }
 
-	//admittedly contrived, but full coverage
+        //admittedly contrived, but full coverage
         [Test]
         public void testWeeklySessionSameDayOneDay()
         {
@@ -149,10 +149,10 @@ namespace UnitTests
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0)));
 
-	    // a thursday
+            // a thursday
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 20, 23, 59, 59)));
 
-	    //a fri, sat, sun
+            //a fri, sat, sun
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 23, 59, 59)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 0, 0, 0)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0)));
@@ -178,7 +178,7 @@ namespace UnitTests
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 22, 9, 43, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0)));
 
-	    //monday
+            //monday
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0)));
 
             //tuesday
@@ -198,22 +198,22 @@ namespace UnitTests
 
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
-	    //Monday Scenarios
+            //Monday Scenarios
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 59, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 7, 30, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 15, 30, 0)));
 
-	    //Midweek Scenarios
+            //Midweek Scenarios
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 6, 59, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 7, 30, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 15, 30, 0)));
 
-	    //Friday Scenarios
+            //Friday Scenarios
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 6, 59, 0)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 7, 30, 0)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 30, 0)));
 
-	    //Weekend
+            //Weekend
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 6, 59, 0)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 7, 30, 0)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 15, 30, 0)));
