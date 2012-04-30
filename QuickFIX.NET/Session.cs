@@ -594,6 +594,7 @@ namespace QuickFix
             }
                     
 	    NextQueued();
+	    Next();
         }
 
         protected void NextLogon(Message logon)
