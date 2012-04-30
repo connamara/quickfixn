@@ -12,38 +12,47 @@ namespace QuickFix
 
         public bool IsSessionTime(System.DateTime time)
         {
-            return CheckTime(time.TimeOfDay) && CheckDay(time);
+            if (WeeklySession)
+                return CheckDay(time);
+            else
+                return CheckTime(time.TimeOfDay);
         }
 
         private bool CheckDay(System.DateTime time)
         {
-            if (!WeeklySession)
-                return true;
-
-            if (StartTime.CompareTo(EndTime) > 0)
+          if (StartDay < EndDay)
+          {
+            if (time.DayOfWeek < StartDay || time.DayOfWeek > EndDay)
             {
-                //if session goes over midnight and it's the start session day,
-                //make sure start day occurs in session
-                if (time.DayOfWeek == StartDay)
-                {
-                    return time.TimeOfDay.CompareTo(StartTime) >= 0;
-                }
-
-                //likewise, if day is the end part of a session, verify
-                //time occurs in session
-                System.DateTime yesterday = time.AddDays(-1);
-                if (yesterday.DayOfWeek == EndDay)
-                {
-                    return time.TimeOfDay.CompareTo(EndTime) <= 0;
-                }
+              return false;
+            } else if (time.DayOfWeek < EndDay)
+            {
+              return (StartDay < time.DayOfWeek) || (StartTime.CompareTo(time.TimeOfDay) <= 0);
+            } else
+            {
+	            return (time.DayOfWeek < EndDay) || (EndTime.CompareTo(time.TimeOfDay) >= 0);
             }
+          } 
 
-            if(StartDay <= EndDay)
-                return time.DayOfWeek.CompareTo(StartDay) >= 0 && 
-                    time.DayOfWeek.CompareTo(EndDay) <= 0; 
-            else
-                return time.DayOfWeek.CompareTo(EndDay) <=0 ||
-                    time.DayOfWeek.CompareTo(StartDay) >=0;
+          if (EndDay < StartDay)
+          {
+            if (EndDay < time.DayOfWeek && time.DayOfWeek < StartDay)
+            {
+              return false;
+            } else if (time.DayOfWeek < StartDay)
+            {
+              return (time.DayOfWeek < EndDay) || (EndTime.CompareTo(time.TimeOfDay) >= 0);
+            } else
+            {	
+              return (time.DayOfWeek > StartDay) || (StartTime.CompareTo(time.TimeOfDay) <= 0);
+            }
+          } 
+
+          //start day must be same as end day
+          if(StartTime >= EndTime)
+            return time.DayOfWeek!=StartDay || CheckTime(time.TimeOfDay);
+          else
+            return time.DayOfWeek == StartDay && CheckTime(time.TimeOfDay);
         }
 
         private bool CheckTime(System.TimeSpan time)
