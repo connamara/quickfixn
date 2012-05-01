@@ -122,7 +122,7 @@ namespace QuickFix
             }
             else
             {
-                socketEndPoint = new IPEndPoint(IPAddress.Any, port);
+                socketEndPoint = new IPEndPoint(IPAddress.IPv6Any, port);
             }
 
             if (dict.Has(SessionSettings.SOCKET_NODELAY))
