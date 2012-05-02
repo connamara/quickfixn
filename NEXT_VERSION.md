@@ -27,3 +27,7 @@ Changes since the last version:
 * (patch) Fixed issue #36 - update version number in release script (gbirchmeier)
 * (patch) Fixed issue #11 reopen - nested group's counter erroneously appearing twice (gbirchmeier)
 * (patch) Fixed issue #39 - "length" types generated as ints, was wrongly being generated as decimal (g0t4)
+* (patch) Fixed issue #44 - LogonTimedOut (mgatny)
+* (patch) Fixed issue #42 - Environment.TickCount bug (mjwood7)
+* (patch) Fixed issue #59 - Bug in determining whether we're inside a weeklong session (cbusbey)
+* (patch) Fixed issue #57 - Heartbeat not sent during constant traffic (cbusbey)
