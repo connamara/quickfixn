@@ -12,6 +12,15 @@ namespace SimpleAcceptor
         [STAThread]
         static void Main(string[] args)
         {
+            Console.WriteLine("=============");
+            Console.WriteLine("This is only an example program.");
+            Console.WriteLine("It's a simple server (e.g. Acceptor) app that will let clients (e.g. Initiators)");
+            Console.WriteLine("connect to it.  It will accept and display any application-level messages that it receives.");
+            Console.WriteLine("Connecting clients should set TargetCompID to 'SIMPLE' and SenderCompID to 'CLIENT1' or 'CLIENT2'.");
+            Console.WriteLine("Port is 5001.");
+            Console.WriteLine("(see simpleacc.cfg for configuration details)");
+            Console.WriteLine("=============");
+
             if (args.Length != 1)
             {
                 Console.WriteLine("usage: SimpleAcceptor CONFIG_FILENAME");
