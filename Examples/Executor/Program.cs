@@ -11,6 +11,10 @@ namespace Executor
         [STAThread]
         static void Main(string[] args)
         {
+            Console.WriteLine("=============");
+            Console.WriteLine("This is only an example program, meant to be used with the TradeClient example.");
+            Console.WriteLine("=============");
+
             if (args.Length != 1)
             {
                 Console.WriteLine("usage: Executor CONFIG_FILENAME");
