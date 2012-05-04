@@ -10,6 +10,15 @@ namespace TradeClient
         [STAThread]
         static void Main(string[] args)
         {
+            Console.WriteLine("=============");
+            Console.WriteLine("This is only an example program, meant to run against the Executor or SimpleAcceptor example programs.");
+            Console.WriteLine();
+            Console.WriteLine("                                                    ! ! !");
+            Console.WriteLine("              DO NOT USE THIS ON A COMMERCIAL FIX INTERFACE!  It won't work and it's a bad idea!");
+            Console.WriteLine("                                                    ! ! !");
+            Console.WriteLine();
+            Console.WriteLine("=============");
+
             if (args.Length != 1)
             {
                 System.Console.WriteLine("usage: TradeClient.exe CONFIG_FILENAME");
