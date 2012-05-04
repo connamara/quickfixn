@@ -5,11 +5,19 @@ These example applications demonstrate how to use the QuickFIX/n library to
 build your own FIX applications. There are 3 QuickFIX/N example applications:
 
 1. The SimpleAcceptor demonstrates a barebones acceptor application.
-2. The Trade Client is a command line client that sends orders.
-3. The Executor takes orders over a FIX session and executes them.
+2. The Executor takes orders over a FIX session and executes them.
+3. The TradeClient is a command line client that sends orders.
+   (NOT FOR USE WITH COMMERCIAL FIX INTERFACES!  It won't work!)
 
-The Trade Client and Executor can be configured to send and execute
+TradeClient and Executor can be configured to send and execute
 orders with each other.
+
+TradeClient can also be configured to connect to SimpleAcceptor,
+though TradeClient will not hear any application-level responses from
+SimpleAcceptor.
+
+Each app is meant to be run from its target dir, e.g. Examples\Executor\bin\Debug\.
+
 
 SimpleAcceptor
 ==============
@@ -59,6 +67,10 @@ TradeClient
 The TradeClient is a command line example that shows how to create different FIX 
 message types and versions. You can create new order singles, cancel order requests, 
 cancel replace requests, and market data requests. 
+
+DO NOT ATTEMPT TO CONNECT TRADECLIENT WITH A COMMERCIAL FIX INTERFACE!  It's a
+terrible idea and it will not work.  TradeClient is just an example, to give you a
+demonstration of how to complete certain tasks in your own application.
 
 TradeClient is configured with the tradeclient.cfg file.
 
