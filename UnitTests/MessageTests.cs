@@ -674,7 +674,7 @@ namespace UnitTests
             Assert.AreEqual(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
 
             // the test
-            QuickFix.FIX42.News.LinesOfTextGroup grp = null; // for return value
+            QuickFix.FIX42.News.LinesOfTextGroup grp = new QuickFix.FIX42.News.LinesOfTextGroup(); // for return value
 
             var rv1 = msg.GetGroup(1, grp);
             Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rv1);
