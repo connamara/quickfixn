@@ -250,6 +250,11 @@ namespace QuickFix
             return _groups[field][num - 1];
         }
 
+        public Group GetGroup(int num, Group group)
+        {
+            return null;
+        }
+
         /// <summary>
         /// Gets the integer value of a field
         /// </summary>
