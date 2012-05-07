@@ -232,11 +232,11 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Gets specific group instance
+        /// Gets an instance of a group
         /// </summary>
-        /// <param name="num">num of group (starting at 1)</param>
-        /// <param name="field">tag of group</param>
-        /// <returns>Group object</returns>
+        /// <param name="num">index of desired group (starting at 1)</param>
+        /// <param name="field">counter tag of repeating group</param>
+        /// <returns>retrieved group object</returns>
         /// <exception cref="FieldNotFoundException" />
         public Group GetGroup(int num, int field)
         {
@@ -250,9 +250,18 @@ namespace QuickFix
             return _groups[field][num - 1];
         }
 
+        /// <summary>
+        /// Gets an instance of a group
+        /// </summary>
+        /// <param name="num">index of desired group (starting at 1)</param>
+        /// <param name="group">this var's type is used to determine target group type; retrieved group will be assigned to this var</param>
+        /// <returns>retrieved group</returns>
+        /// <exception cref="FieldNotFoundException" />
         public Group GetGroup(int num, Group group)
         {
-            return null;
+            int tag = group.Field;
+            group = this.GetGroup(num, tag);
+            return group;
         }
 
         /// <summary>
