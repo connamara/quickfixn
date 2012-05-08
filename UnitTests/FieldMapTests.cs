@@ -360,20 +360,14 @@ namespace UnitTests
         [Test]
         public void AddGroupKeepTypeTest()
         {
-            Group g1 = new Group(100, 200);
-            Group g2 = new Group(100, 201);
+            // bug found during issue 56 - Group object was losing type after being added
             FieldMap fm = new FieldMap();
-            fm.AddGroup(g1);
-            fm.AddGroup(g2);
-            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
-            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
+            QuickFix.FIX42.News.LinesOfTextGroup linesGroup = new QuickFix.FIX42.News.LinesOfTextGroup();
+            linesGroup.Text = new QuickFix.Fields.Text("foo");
+            fm.AddGroup(linesGroup);
 
-            Assert.Throws(typeof(FieldNotFoundException),
-                delegate { fieldmap.GetGroup(0, 101); });
-            Assert.Throws(typeof(FieldNotFoundException),
-                delegate { fieldmap.GetGroup(3, 100); });
-            Assert.Throws(typeof(FieldNotFoundException),
-                delegate { fieldmap.GetGroup(1, 101); });
+            var rvGroup = fm.GetGroup(1, Tags.LinesOfText);
+            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rvGroup);
         }
     }
 }
