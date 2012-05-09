@@ -492,12 +492,12 @@ namespace QuickFix
                         fieldMap.AddGroup(grp, false);
                     }
 
-                    if (msgFactory == null)
-                        grp = new Group(grpNoFld.Tag, delim);
-                    else
-                    {
+                    if (msgFactory != null)
                         grp = msgFactory.Create(Message.ExtractBeginString(msgstr), Message.GetMsgType(msgstr), grpNoFld.Tag);
-                    }
+
+                    //If above failed, just use a generic Group.
+                    if (grp == null)
+                        grp = new Group(grpNoFld.Tag, delim);
                 }
                 else if (!dd.IsField(f.Tag))
                 {
