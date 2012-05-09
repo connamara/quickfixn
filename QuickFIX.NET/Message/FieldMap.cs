@@ -40,10 +40,15 @@ namespace QuickFix
         /// <returns>A copy of the given QuickFix.FieldMap</returns>
         public FieldMap(FieldMap src)
         {
+            CopyStateFrom(src);
+        }
+
+        internal void CopyStateFrom(FieldMap src)
+        {
             this._fieldOrder = src._fieldOrder;
-            
+
             this._fields = new SortedDictionary<int, Fields.IField>(src._fields);
-            
+
             this._groups = new Dictionary<int, List<Group>>();
             foreach (KeyValuePair<int, List<Group>> g in src._groups)
                 this._groups.Add(g.Key, new List<Group>(g.Value));
@@ -213,7 +218,8 @@ namespace QuickFix
         /// <param name="autoIncCounter">if true, auto-increment the counter, else leave it as-is</param>
         internal void AddGroup(Group grp, bool autoIncCounter)
         {
-            Group group = new Group(grp); // copy, in case user code reuses input object
+            // copy, in case user code reuses input object
+            Group group = grp.Clone();
 
             if (!_groups.ContainsKey(group.Field))
                 _groups.Add(group.Field, new List<Group>());
@@ -260,7 +266,7 @@ namespace QuickFix
         public Group GetGroup(int num, Group group)
         {
             int tag = group.Field;
-            group = this.GetGroup(num, tag);
+            group.CopyStateFrom(this.GetGroup(num, tag));
             return group;
         }
 
