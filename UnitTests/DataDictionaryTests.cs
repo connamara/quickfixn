@@ -9,6 +9,7 @@ namespace UnitTests
     [TestFixture]
     public class DataDictionaryTests
     {
+        private QuickFix.IMessageFactory _defaultMsgFactory = new QuickFix.DefaultMessageFactory();
 
         [Test]
         public void VersionTest()
@@ -158,7 +159,7 @@ namespace UnitTests
                 + "60=20111011-15:06:23.103" + nul
                 + "10=35" + nul;
 
-            n.FromString(s, true, dd, dd);
+            n.FromString(s, true, dd, dd, _defaultMsgFactory);
 
             //verify that FromString didn't correct the counter
             //HEY YOU, READ THIS NOW: if these fail, first check if MessageTests::FromString_DoNotCorrectCounter() passes
@@ -185,7 +186,7 @@ namespace UnitTests
             string beginString = "FIX.4.4";
 
             Message message = f.Create(beginString, msgType);
-            message.FromString(msgStr, true, dd, dd);
+            message.FromString(msgStr, true, dd, dd, f);
 
             dd.Validate(message, beginString, msgType);
         }
@@ -205,7 +206,7 @@ namespace UnitTests
             string beginString = Message.ExtractBeginString(msgStr);
 
             Message message = f.Create(beginString, msgType.Obj);
-            message.FromString(msgStr, true, dd, dd);
+            message.FromString(msgStr, true, dd, dd, f);
 
             dd.Validate(message, beginString, msgType.Obj);
         }
@@ -230,7 +231,7 @@ namespace UnitTests
             string beginString = "FIX.4.4";
 
             Message message = f.Create(beginString, msgType);
-            message.FromString(msgStr, true, dd, dd);
+            message.FromString(msgStr, true, dd, dd, f);
 
             dd.Validate(message, beginString, msgType);
         }
@@ -256,7 +257,7 @@ namespace UnitTests
             string beginString = "FIX.4.4";
 
             Message message = f.Create(beginString, msgType);
-            message.FromString(msgStr, true, dd, dd);
+            message.FromString(msgStr, true, dd, dd, f);
 
             dd.Validate(message, beginString, msgType);
         }
@@ -275,7 +276,7 @@ namespace UnitTests
             string beginString = "FIX.4.4";
 
             Message message = f.Create(beginString, msgType);
-            message.FromString(msgStr, true, dd, dd);
+            message.FromString(msgStr, true, dd, dd, f);
 
             try
             {
@@ -305,7 +306,7 @@ namespace UnitTests
             string beginString = "FIX.4.4";
 
             Message message = f.Create(beginString, msgType);
-            message.FromString(msgStr, true, dd, dd);
+            message.FromString(msgStr, true, dd, dd, f);
 
             // this should throw
             dd.Validate(message, beginString, msgType);
@@ -327,7 +328,7 @@ namespace UnitTests
             string beginString = "FIX.4.4";
 
             Message message = f.Create(beginString, msgType);
-            message.FromString(msgStr, true, dd, dd);
+            message.FromString(msgStr, true, dd, dd, f);
 
             // this should throw
             dd.Validate(message, beginString, msgType);
@@ -349,7 +350,7 @@ namespace UnitTests
             string beginString = "FIX.4.4";
 
             Message message = f.Create(beginString, msgType);
-            message.FromString(msgStr, true, dd, dd);
+            message.FromString(msgStr, true, dd, dd, f);
 
             // this should throw
             dd.Validate(message, beginString, msgType);

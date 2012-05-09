@@ -463,7 +463,8 @@ namespace QuickFix
                     msgStr,
                     this.ValidateLengthAndChecksum,
                     this.SessionDataDictionary,
-                    this.ApplicationDataDictionary);
+                    this.ApplicationDataDictionary,
+                    this.msgFactory_);
 
                 Next(message);
             }

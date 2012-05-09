@@ -10,6 +10,8 @@ namespace UnitTests
     [TestFixture]
     public class MessageTests
     {
+        private IMessageFactory _defaultMsgFactory = new DefaultMessageFactory();
+
         [Test]
         public void IdentifyTypeTest()
         {
@@ -73,7 +75,7 @@ namespace UnitTests
             Message msg = new Message();
             try
             {
-                msg.FromString(str1, true, null, null);
+                msg.FromString(str1, true, null, null, _defaultMsgFactory);
             }
             catch (InvalidMessage e)
             {
@@ -90,7 +92,7 @@ namespace UnitTests
             Message msg = new Message();
             try
             {
-                msg.FromString(str1, true, null, null);
+                msg.FromString(str1, true, null, null, _defaultMsgFactory);
             }
             catch (InvalidMessage e)
             {
@@ -133,7 +135,7 @@ namespace UnitTests
             Message msg = new Message();
             try
             {
-                msg.FromString(str1, true, null, null);
+                msg.FromString(str1, true, null, null, _defaultMsgFactory);
             }
             catch (InvalidMessage e)
             {
@@ -263,7 +265,7 @@ namespace UnitTests
             var msg = new QuickFix.FIX44.ExecutionReport();
             var dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
-            msg.FromString(data, false, dd, dd);
+            msg.FromString(data, false, dd, dd, _defaultMsgFactory);
 
             var grp = msg.GetGroup(1, Tags.NoPartyIDs);
             Assert.That(grp.GetString(Tags.PartyID), Is.EqualTo("AAA35791"));
@@ -285,7 +287,7 @@ namespace UnitTests
             var msg = new QuickFix.FIX44.ExecutionReport();
             var dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
-            msg.FromString(data, false, dd, dd);
+            msg.FromString(data, false, dd, dd, _defaultMsgFactory);
 
             var subGrp = msg.GetGroup(1, Tags.NoPartyIDs).GetGroup(1, Tags.NoPartySubIDs);
             Assert.That(subGrp.GetString(Tags.PartySubID), Is.EqualTo("OHAI123"));
@@ -303,7 +305,7 @@ namespace UnitTests
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
             var nos = new QuickFix.FIX44.Logon();
-            nos.FromString(data, false, dd, dd);
+            nos.FromString(data, false, dd, dd, _defaultMsgFactory);
             Group hops = nos.Header.GetGroup(1, Tags.NoHops);
             Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("FOO"));
             hops = nos.Header.GetGroup(2, Tags.NoHops);
@@ -339,7 +341,7 @@ namespace UnitTests
                 + "38=5.5\x01" + "40=1\x01" + "54=1\x01" + "55=ibm\x01" + "59=1\x01" + "60=20110901-13:41:31.804\x01"
                 + "377=Y\x01" + "201=1\x01"
                 + "10=63\x01";
-            n.FromString(s, true, dd, dd);
+            n.FromString(s, true, dd, dd, _defaultMsgFactory);
 
             // string values are good?
             Assert.AreEqual("Y", n.SolicitedFlag.ToString()); //bool, 377
@@ -421,7 +423,7 @@ namespace UnitTests
                 + "60=20111011-15:06:23.103" + nul
                 + "10=35" + nul;
 
-            n.FromString(s, true, dd, dd);
+            n.FromString(s, true, dd, dd, _defaultMsgFactory);
             Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());
             StringAssert.Contains("386=3", n.ToString()); //don't correct it to 2, you bastard
         }
@@ -434,7 +436,7 @@ namespace UnitTests
             Message msg = new Message();
             try
             {
-                msg.FromString(str1, true, null, null);
+                msg.FromString(str1, true, null, null, _defaultMsgFactory);
             }
             catch (InvalidMessage e)
             {
@@ -648,17 +650,17 @@ namespace UnitTests
             string[] msgFields = { "8=FIX.4.2", "9=87", "35=B", "34=3", "49=CLIENT1", "52=20111012-22:15:55.474", "56=EXECUTOR", "148=AAAAAAA", "33=2", "58=L1", "58=L2", "10=016" };
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
             QuickFix.FIX42.News msg = new QuickFix.FIX42.News();
-            msg.FromString(msgStr, false, dd, dd);
+            msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
             Assert.AreEqual(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
 
             // the test
             var grp1 = msg.GetGroup(1, Tags.LinesOfText);
             Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(grp1);
-            Assert.AreEqual("L1", (grp1 as QuickFix.FIX42.News.LinesOfTextGroup).Text);
+            Assert.AreEqual("L1", (grp1 as QuickFix.FIX42.News.LinesOfTextGroup).Text.Obj);
 
             var grp2 = msg.GetGroup(2, Tags.LinesOfText);
             Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(grp2);
-            Assert.AreEqual("L1", (grp2 as QuickFix.FIX42.News.LinesOfTextGroup).Text);
+            Assert.AreEqual("L2", (grp2 as QuickFix.FIX42.News.LinesOfTextGroup).Text.Obj);
         }
 
         [Test]
@@ -670,21 +672,21 @@ namespace UnitTests
             string[] msgFields = { "8=FIX.4.2", "9=87", "35=B", "34=3", "49=CLIENT1", "52=20111012-22:15:55.474", "56=EXECUTOR", "148=AAAAAAA", "33=2", "58=L1", "58=L2", "10=016" };
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
             QuickFix.FIX42.News msg = new QuickFix.FIX42.News();
-            msg.FromString(msgStr, false, dd, dd);
+            msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
             Assert.AreEqual(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
 
             // the test
             QuickFix.FIX42.News.LinesOfTextGroup grp = new QuickFix.FIX42.News.LinesOfTextGroup(); // for return value
 
             var rv1 = msg.GetGroup(1, grp);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rv1);
-            Assert.AreEqual("L1", grp.Text);
             Assert.AreSame(rv1, grp);
+            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rv1);
+            Assert.AreEqual("L1", grp.Text.Obj);
 
             var rv2 = msg.GetGroup(2, grp);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rv2);
-            Assert.AreEqual("L2", grp.Text);
             Assert.AreSame(rv2, grp);
+            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rv2);
+            Assert.AreEqual("L2", grp.Text.Obj);
         }
 
     }
