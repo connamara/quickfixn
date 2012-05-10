@@ -302,11 +302,20 @@ namespace QuickFix
             }
             public class NoPartyListResponseTypesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.PartyListResponseType, 0};
+            
                 public NoPartyListResponseTypesGroup() 
                   :base( Tags.NoPartyListResponseTypes, Tags.PartyListResponseType, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.PartyListResponseType, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoPartyListResponseTypesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.PartyListResponseType PartyListResponseType
                 { 
                     get 
@@ -342,11 +351,20 @@ namespace QuickFix
             }
             public class NoPartyIDsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0};
+            
                 public NoPartyIDsGroup() 
                   :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoPartyIDsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
@@ -473,11 +491,20 @@ namespace QuickFix
                 }
                             public class NoPartySubIDsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
+                
                     public NoPartySubIDsGroup() 
                       :base( Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoPartySubIDsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
@@ -545,11 +572,20 @@ namespace QuickFix
             }
             public class NoRequestedPartyRolesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.RequestedPartyRole, 0};
+            
                 public NoRequestedPartyRolesGroup() 
                   :base( Tags.NoRequestedPartyRoles, Tags.RequestedPartyRole, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.RequestedPartyRole, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoRequestedPartyRolesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.RequestedPartyRole RequestedPartyRole
                 { 
                     get 
@@ -585,11 +621,20 @@ namespace QuickFix
             }
             public class NoPartyRelationshipsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.PartyRelationship, 0};
+            
                 public NoPartyRelationshipsGroup() 
                   :base( Tags.NoPartyRelationships, Tags.PartyRelationship, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.PartyRelationship, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoPartyRelationshipsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.PartyRelationship PartyRelationship
                 { 
                     get 

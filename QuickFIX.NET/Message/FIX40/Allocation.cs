@@ -872,11 +872,20 @@ namespace QuickFix
             }
             public class NoOrdersGroup : Group
             {
+                public static int[] fieldOrder = {Tags.ClOrdID, Tags.OrderID, Tags.ListID, Tags.WaveNo, 0};
+            
                 public NoOrdersGroup() 
                   :base( Tags.NoOrders, Tags.ClOrdID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.ClOrdID, Tags.OrderID, Tags.ListID, Tags.WaveNo, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoOrdersGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.ClOrdID ClOrdID
                 { 
                     get 
@@ -1005,11 +1014,20 @@ namespace QuickFix
             }
             public class NoExecsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.ExecID, Tags.LastShares, Tags.LastPx, Tags.LastMkt, 0};
+            
                 public NoExecsGroup() 
                   :base( Tags.NoExecs, Tags.ExecID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.ExecID, Tags.LastShares, Tags.LastPx, Tags.LastMkt, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoExecsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.ExecID ExecID
                 { 
                     get 
@@ -1138,11 +1156,20 @@ namespace QuickFix
             }
             public class NoMiscFeesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
+            
                 public NoMiscFeesGroup() 
                   :base( Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoMiscFeesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
                 { 
                     get 
@@ -1240,11 +1267,20 @@ namespace QuickFix
             }
             public class NoAllocsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocShares, Tags.ProcessCode, Tags.ExecBroker, Tags.ClientID, Tags.Commission, Tags.CommType, Tags.NoDlvyInst, 0};
+            
                 public NoAllocsGroup() 
                   :base( Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocShares, Tags.ProcessCode, Tags.ExecBroker, Tags.ClientID, Tags.Commission, Tags.CommType, Tags.NoDlvyInst, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoAllocsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.AllocAccount AllocAccount
                 { 
                     get 
@@ -1495,11 +1531,20 @@ namespace QuickFix
                 }
                             public class NoDlvyInstGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.BrokerOfCredit, Tags.DlvyInst, 0};
+                
                     public NoDlvyInstGroup() 
                       :base( Tags.NoDlvyInst, Tags.BrokerOfCredit, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.BrokerOfCredit, Tags.DlvyInst, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoDlvyInstGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.BrokerOfCredit BrokerOfCredit
                     { 
                         get 

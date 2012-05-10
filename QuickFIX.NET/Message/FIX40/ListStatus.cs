@@ -182,11 +182,20 @@ namespace QuickFix
             }
             public class NoOrdersGroup : Group
             {
+                public static int[] fieldOrder = {Tags.ClOrdID, Tags.CumQty, Tags.CxlQty, Tags.AvgPx, 0};
+            
                 public NoOrdersGroup() 
                   :base( Tags.NoOrders, Tags.ClOrdID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.ClOrdID, Tags.CumQty, Tags.CxlQty, Tags.AvgPx, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoOrdersGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.ClOrdID ClOrdID
                 { 
                     get 

@@ -932,11 +932,20 @@ namespace QuickFix
             }
             public class NoBidDescriptorsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.BidDescriptorType, Tags.BidDescriptor, Tags.SideValueInd, Tags.LiquidityValue, Tags.LiquidityNumSecurities, Tags.LiquidityPctLow, Tags.LiquidityPctHigh, Tags.EFPTrackingError, Tags.FairValue, Tags.OutsideIndexPct, Tags.ValueOfFutures, 0};
+            
                 public NoBidDescriptorsGroup() 
                   :base( Tags.NoBidDescriptors, Tags.BidDescriptorType, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.BidDescriptorType, Tags.BidDescriptor, Tags.SideValueInd, Tags.LiquidityValue, Tags.LiquidityNumSecurities, Tags.LiquidityPctLow, Tags.LiquidityPctHigh, Tags.EFPTrackingError, Tags.FairValue, Tags.OutsideIndexPct, Tags.ValueOfFutures, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoBidDescriptorsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.BidDescriptorType BidDescriptorType
                 { 
                     get 
@@ -1282,11 +1291,20 @@ namespace QuickFix
             }
             public class NoBidComponentsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.ListID, Tags.Side, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.NetGrossInd, Tags.SettlmntTyp, Tags.FutSettDate, Tags.Account, 0};
+            
                 public NoBidComponentsGroup() 
                   :base( Tags.NoBidComponents, Tags.ListID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.ListID, Tags.Side, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.NetGrossInd, Tags.SettlmntTyp, Tags.FutSettDate, Tags.Account, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoBidComponentsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.ListID ListID
                 { 
                     get 

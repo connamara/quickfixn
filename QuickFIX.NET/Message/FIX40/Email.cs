@@ -271,11 +271,20 @@ namespace QuickFix
             }
             public class LinesOfTextGroup : Group
             {
+                public static int[] fieldOrder = {Tags.Text, 0};
+            
                 public LinesOfTextGroup() 
                   :base( Tags.LinesOfText, Tags.Text, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.Text, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new LinesOfTextGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.Text Text
                 { 
                     get 
