@@ -767,11 +767,20 @@ namespace QuickFix
             }
             public class NoMDEntriesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.MDEntryType, Tags.MDEntryPx, Tags.Currency, Tags.MDEntrySize, Tags.MDEntryDate, Tags.MDEntryTime, Tags.TickDirection, Tags.MDMkt, Tags.TradingSessionID, Tags.QuoteCondition, Tags.TradeCondition, Tags.MDEntryOriginator, Tags.LocationID, Tags.DeskID, Tags.OpenCloseSettleFlag, Tags.TimeInForce, Tags.ExpireDate, Tags.ExpireTime, Tags.MinQty, Tags.ExecInst, Tags.SellerDays, Tags.OrderID, Tags.QuoteEntryID, Tags.MDEntryBuyer, Tags.MDEntrySeller, Tags.NumberOfOrders, Tags.MDEntryPositionNo, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
+            
                 public NoMDEntriesGroup() 
                   :base( Tags.NoMDEntries, Tags.MDEntryType, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.MDEntryType, Tags.MDEntryPx, Tags.Currency, Tags.MDEntrySize, Tags.MDEntryDate, Tags.MDEntryTime, Tags.TickDirection, Tags.MDMkt, Tags.TradingSessionID, Tags.QuoteCondition, Tags.TradeCondition, Tags.MDEntryOriginator, Tags.LocationID, Tags.DeskID, Tags.OpenCloseSettleFlag, Tags.TimeInForce, Tags.ExpireDate, Tags.ExpireTime, Tags.MinQty, Tags.ExecInst, Tags.SellerDays, Tags.OrderID, Tags.QuoteEntryID, Tags.MDEntryBuyer, Tags.MDEntrySeller, Tags.NumberOfOrders, Tags.MDEntryPositionNo, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoMDEntriesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.MDEntryType MDEntryType
                 { 
                     get 

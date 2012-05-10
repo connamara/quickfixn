@@ -178,11 +178,20 @@ namespace QuickFix
             }
             public class NoCompIDsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.RefCompID, Tags.RefSubID, Tags.LocationID, Tags.DeskID, Tags.StatusValue, Tags.StatusText, 0};
+            
                 public NoCompIDsGroup() 
                   :base( Tags.NoCompIDs, Tags.RefCompID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.RefCompID, Tags.RefSubID, Tags.LocationID, Tags.DeskID, Tags.StatusValue, Tags.StatusText, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoCompIDsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.RefCompID RefCompID
                 { 
                     get 

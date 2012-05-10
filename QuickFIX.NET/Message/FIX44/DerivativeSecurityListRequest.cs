@@ -1761,11 +1761,20 @@ namespace QuickFix
             }
             public class NoUnderlyingSecurityAltIDGroup : Group
             {
+                public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
+            
                 public NoUnderlyingSecurityAltIDGroup() 
                   :base( Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingSecurityAltID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoUnderlyingSecurityAltIDGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                 { 
                     get 
@@ -1832,11 +1841,20 @@ namespace QuickFix
             }
             public class NoUnderlyingStipsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.UnderlyingStipType, Tags.UnderlyingStipValue, 0};
+            
                 public NoUnderlyingStipsGroup() 
                   :base( Tags.NoUnderlyingStips, Tags.UnderlyingStipType, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.UnderlyingStipType, Tags.UnderlyingStipValue, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoUnderlyingStipsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
                 { 
                     get 

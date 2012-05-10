@@ -368,11 +368,20 @@ namespace QuickFix
             }
             public class NoSecurityTypesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.SecurityType, Tags.Product, Tags.CFICode, 0};
+            
                 public NoSecurityTypesGroup() 
                   :base( Tags.NoSecurityTypes, Tags.SecurityType, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.SecurityType, Tags.Product, Tags.CFICode, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoSecurityTypesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.SecurityType SecurityType
                 { 
                     get 

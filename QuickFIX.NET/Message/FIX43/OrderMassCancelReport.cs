@@ -2600,11 +2600,20 @@ namespace QuickFix
             }
             public class NoAffectedOrdersGroup : Group
             {
+                public static int[] fieldOrder = {Tags.OrigClOrdID, Tags.AffectedOrderID, Tags.AffectedSecondaryOrderID, 0};
+            
                 public NoAffectedOrdersGroup() 
                   :base( Tags.NoAffectedOrders, Tags.OrigClOrdID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.OrigClOrdID, Tags.AffectedOrderID, Tags.AffectedSecondaryOrderID, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoAffectedOrdersGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.OrigClOrdID OrigClOrdID
                 { 
                     get 
@@ -2702,11 +2711,20 @@ namespace QuickFix
             }
             public class NoSecurityAltIDGroup : Group
             {
+                public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
+            
                 public NoSecurityAltIDGroup() 
                   :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoSecurityAltIDGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
@@ -2773,11 +2791,20 @@ namespace QuickFix
             }
             public class NoUnderlyingSecurityAltIDGroup : Group
             {
+                public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
+            
                 public NoUnderlyingSecurityAltIDGroup() 
                   :base( Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingSecurityAltID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoUnderlyingSecurityAltIDGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                 { 
                     get 

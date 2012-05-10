@@ -430,11 +430,20 @@ namespace QuickFix
             }
             public class NoRoutingIDsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.RoutingType, Tags.RoutingID, 0};
+            
                 public NoRoutingIDsGroup() 
                   :base( Tags.NoRoutingIDs, Tags.RoutingType, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.RoutingType, Tags.RoutingID, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoRoutingIDsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.RoutingType RoutingType
                 { 
                     get 
@@ -501,11 +510,20 @@ namespace QuickFix
             }
             public class NoRelatedSymGroup : Group
             {
+                public static int[] fieldOrder = {Tags.RelatdSym, Tags.SymbolSfx, Tags.SecurityID, Tags.IDSource, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDay, Tags.PutOrCall, Tags.StrikePrice, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, 0};
+            
                 public NoRelatedSymGroup() 
                   :base( Tags.NoRelatedSym, Tags.RelatdSym, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.RelatdSym, Tags.SymbolSfx, Tags.SecurityID, Tags.IDSource, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDay, Tags.PutOrCall, Tags.StrikePrice, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoRelatedSymGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.RelatdSym RelatdSym
                 { 
                     get 
@@ -1099,11 +1117,20 @@ namespace QuickFix
             }
             public class LinesOfTextGroup : Group
             {
+                public static int[] fieldOrder = {Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
+            
                 public LinesOfTextGroup() 
                   :base( Tags.LinesOfText, Tags.Text, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new LinesOfTextGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.Text Text
                 { 
                     get 

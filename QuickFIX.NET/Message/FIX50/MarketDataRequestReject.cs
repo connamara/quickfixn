@@ -209,11 +209,20 @@ namespace QuickFix
             }
             public class NoAltMDSourceGroup : Group
             {
+                public static int[] fieldOrder = {Tags.AltMDSourceID, 0};
+            
                 public NoAltMDSourceGroup() 
                   :base( Tags.NoAltMDSource, Tags.AltMDSourceID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.AltMDSourceID, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoAltMDSourceGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.AltMDSourceID AltMDSourceID
                 { 
                     get 

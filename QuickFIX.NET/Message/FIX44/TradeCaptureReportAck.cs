@@ -2445,11 +2445,20 @@ namespace QuickFix
             }
             public class NoSecurityAltIDGroup : Group
             {
+                public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
+            
                 public NoSecurityAltIDGroup() 
                   :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoSecurityAltIDGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
@@ -2516,11 +2525,20 @@ namespace QuickFix
             }
             public class NoEventsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.EventType, Tags.EventDate, Tags.EventPx, Tags.EventText, 0};
+            
                 public NoEventsGroup() 
                   :base( Tags.NoEvents, Tags.EventType, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.EventType, Tags.EventDate, Tags.EventPx, Tags.EventText, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoEventsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.EventType EventType
                 { 
                     get 
@@ -2649,11 +2667,20 @@ namespace QuickFix
             }
             public class NoTrdRegTimestampsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.TrdRegTimestamp, Tags.TrdRegTimestampType, Tags.TrdRegTimestampOrigin, 0};
+            
                 public NoTrdRegTimestampsGroup() 
                   :base( Tags.NoTrdRegTimestamps, Tags.TrdRegTimestamp, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.TrdRegTimestamp, Tags.TrdRegTimestampType, Tags.TrdRegTimestampOrigin, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoTrdRegTimestampsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.TrdRegTimestamp TrdRegTimestamp
                 { 
                     get 
@@ -2751,11 +2778,20 @@ namespace QuickFix
             }
             public class NoLegsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.LegSymbol, Tags.LegSymbolSfx, Tags.LegSecurityID, Tags.LegSecurityIDSource, Tags.NoLegSecurityAltID, Tags.LegProduct, Tags.LegCFICode, Tags.LegSecurityType, Tags.LegSecuritySubType, Tags.LegMaturityMonthYear, Tags.LegMaturityDate, Tags.LegCouponPaymentDate, Tags.LegIssueDate, Tags.LegRepoCollateralSecurityType, Tags.LegRepurchaseTerm, Tags.LegRepurchaseRate, Tags.LegFactor, Tags.LegCreditRating, Tags.LegInstrRegistry, Tags.LegCountryOfIssue, Tags.LegStateOrProvinceOfIssue, Tags.LegLocaleOfIssue, Tags.LegRedemptionDate, Tags.LegStrikePrice, Tags.LegStrikeCurrency, Tags.LegOptAttribute, Tags.LegContractMultiplier, Tags.LegCouponRate, Tags.LegSecurityExchange, Tags.LegIssuer, Tags.EncodedLegIssuerLen, Tags.EncodedLegIssuer, Tags.LegSecurityDesc, Tags.EncodedLegSecurityDescLen, Tags.EncodedLegSecurityDesc, Tags.LegRatioQty, Tags.LegSide, Tags.LegCurrency, Tags.LegPool, Tags.LegDatedDate, Tags.LegContractSettlMonth, Tags.LegInterestAccrualDate, Tags.LegQty, Tags.LegSwapType, Tags.NoLegStipulations, Tags.LegPositionEffect, Tags.LegCoveredOrUncovered, Tags.NoNestedPartyIDs, Tags.LegRefID, Tags.LegPrice, Tags.LegSettlType, Tags.LegSettlDate, Tags.LegLastPx, 0};
+            
                 public NoLegsGroup() 
                   :base( Tags.NoLegs, Tags.LegSymbol, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.LegSymbol, Tags.LegSymbolSfx, Tags.LegSecurityID, Tags.LegSecurityIDSource, Tags.NoLegSecurityAltID, Tags.LegProduct, Tags.LegCFICode, Tags.LegSecurityType, Tags.LegSecuritySubType, Tags.LegMaturityMonthYear, Tags.LegMaturityDate, Tags.LegCouponPaymentDate, Tags.LegIssueDate, Tags.LegRepoCollateralSecurityType, Tags.LegRepurchaseTerm, Tags.LegRepurchaseRate, Tags.LegFactor, Tags.LegCreditRating, Tags.LegInstrRegistry, Tags.LegCountryOfIssue, Tags.LegStateOrProvinceOfIssue, Tags.LegLocaleOfIssue, Tags.LegRedemptionDate, Tags.LegStrikePrice, Tags.LegStrikeCurrency, Tags.LegOptAttribute, Tags.LegContractMultiplier, Tags.LegCouponRate, Tags.LegSecurityExchange, Tags.LegIssuer, Tags.EncodedLegIssuerLen, Tags.EncodedLegIssuer, Tags.LegSecurityDesc, Tags.EncodedLegSecurityDescLen, Tags.EncodedLegSecurityDesc, Tags.LegRatioQty, Tags.LegSide, Tags.LegCurrency, Tags.LegPool, Tags.LegDatedDate, Tags.LegContractSettlMonth, Tags.LegInterestAccrualDate, Tags.LegQty, Tags.LegSwapType, Tags.NoLegStipulations, Tags.LegPositionEffect, Tags.LegCoveredOrUncovered, Tags.NoNestedPartyIDs, Tags.LegRefID, Tags.LegPrice, Tags.LegSettlType, Tags.LegSettlDate, Tags.LegLastPx, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoLegsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.LegSymbol LegSymbol
                 { 
                     get 
@@ -4401,11 +4437,20 @@ namespace QuickFix
                 }
                             public class NoLegSecurityAltIDGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.LegSecurityAltID, Tags.LegSecurityAltIDSource, 0};
+                
                     public NoLegSecurityAltIDGroup() 
                       :base( Tags.NoLegSecurityAltID, Tags.LegSecurityAltID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.LegSecurityAltID, Tags.LegSecurityAltIDSource, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoLegSecurityAltIDGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
                     { 
                         get 
@@ -4472,11 +4517,20 @@ namespace QuickFix
                 }
                 public class NoLegStipulationsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.LegStipulationType, Tags.LegStipulationValue, 0};
+                
                     public NoLegStipulationsGroup() 
                       :base( Tags.NoLegStipulations, Tags.LegStipulationType, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.LegStipulationType, Tags.LegStipulationValue, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoLegStipulationsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.LegStipulationType LegStipulationType
                     { 
                         get 
@@ -4543,11 +4597,20 @@ namespace QuickFix
                 }
                 public class NoNestedPartyIDsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.NestedPartyID, Tags.NestedPartyIDSource, Tags.NestedPartyRole, Tags.NoNestedPartySubIDs, 0};
+                
                     public NoNestedPartyIDsGroup() 
                       :base( Tags.NoNestedPartyIDs, Tags.NestedPartyID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.NestedPartyID, Tags.NestedPartyIDSource, Tags.NestedPartyRole, Tags.NoNestedPartySubIDs, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoNestedPartyIDsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.NestedPartyID NestedPartyID
                     { 
                         get 
@@ -4674,11 +4737,20 @@ namespace QuickFix
                     }
                                     public class NoNestedPartySubIDsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.NestedPartySubID, Tags.NestedPartySubIDType, 0};
+                    
                         public NoNestedPartySubIDsGroup() 
                           :base( Tags.NoNestedPartySubIDs, Tags.NestedPartySubID, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.NestedPartySubID, Tags.NestedPartySubIDType, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoNestedPartySubIDsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.NestedPartySubID NestedPartySubID
                         { 
                             get 
@@ -4747,11 +4819,20 @@ namespace QuickFix
             }
             public class NoAllocsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocAcctIDSource, Tags.AllocSettlCurrency, Tags.IndividualAllocID, Tags.NoNested2PartyIDs, Tags.AllocQty, 0};
+            
                 public NoAllocsGroup() 
                   :base( Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocAcctIDSource, Tags.AllocSettlCurrency, Tags.IndividualAllocID, Tags.NoNested2PartyIDs, Tags.AllocQty, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoAllocsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.AllocAccount AllocAccount
                 { 
                     get 
@@ -4940,11 +5021,20 @@ namespace QuickFix
                 }
                             public class NoNested2PartyIDsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.Nested2PartyID, Tags.Nested2PartyIDSource, Tags.Nested2PartyRole, Tags.NoNested2PartySubIDs, 0};
+                
                     public NoNested2PartyIDsGroup() 
                       :base( Tags.NoNested2PartyIDs, Tags.Nested2PartyID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.Nested2PartyID, Tags.Nested2PartyIDSource, Tags.Nested2PartyRole, Tags.NoNested2PartySubIDs, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoNested2PartyIDsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.Nested2PartyID Nested2PartyID
                     { 
                         get 
@@ -5071,11 +5161,20 @@ namespace QuickFix
                     }
                                     public class NoNested2PartySubIDsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.Nested2PartySubID, Tags.Nested2PartySubIDType, 0};
+                    
                         public NoNested2PartySubIDsGroup() 
                           :base( Tags.NoNested2PartySubIDs, Tags.Nested2PartySubID, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.Nested2PartySubID, Tags.Nested2PartySubIDType, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoNested2PartySubIDsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.Nested2PartySubID Nested2PartySubID
                         { 
                             get 
