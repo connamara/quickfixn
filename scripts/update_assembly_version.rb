@@ -9,7 +9,7 @@ def print_usage_and_die
 end
 
 def is_correct_pattern? ver
-  return ver.match(/^[\d]+[.][\d]+[.][\d]+$/)
+  return ver.match(/^v[\d]+[.][\d]+[.][\d]+$/)
 end
 
 if ARGV[0].nil? or ARGV[1].nil?
@@ -19,6 +19,7 @@ end
 
 
 vers = ARGV[0]
+vers[/^v/m]="" #chops the leading v
 assemblypath = ARGV[1]
 
 if not is_correct_pattern? vers
