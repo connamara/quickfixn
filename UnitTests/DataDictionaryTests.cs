@@ -354,5 +354,25 @@ namespace UnitTests
             // this should throw
             dd.Validate(message, beginString, msgType);
         }
+        
+        [Test]
+        public void Issue37()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+
+            System.Collections.Generic.Dictionary<string, bool> check263 = new Dictionary<string, bool>();
+            string[] reqYes = { "V", "e", "g" };
+            string[] reqNo = { "AH", "a", "c", "w", "x", "z", "AD", "AQ", "AE", "AR", "AN", "AP", "BB" };
+
+            foreach (string s in reqYes)
+            {
+                Assert.True(dd.Messages[s].ReqFields.Contains(263), "expected true for '" + s + "'");
+            }
+
+            foreach (string s in reqNo)
+            {
+                Assert.False(dd.Messages[s].ReqFields.Contains(263), "expected false for '" + s + "'");
+            }
+        }
     }
 }
