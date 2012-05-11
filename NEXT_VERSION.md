@@ -6,11 +6,9 @@ This is a running list of changes for the changelog of the next version.
 Upon the next release, the items below will be copied to the release notes.
 
 For each change, please indicate the issue number (if any), and how the
-change should affect the version level (e.g. patch/minor/major):
+change should affect the version level (e.g. patch/minor/major).
 
-* **Patch version Z (x.y.Z)** MUST be incremented if only backwards compatible bug fixes are introduced. A bug fix is defined as an internal change that fixes incorrect behavior.
-* **Minor version Y (x.Y.z)** MUST be incremented if new, backwards compatible functionality is introduced to the public API. It MUST be incremented if any public API functionality is marked as deprecated. It MAY be incremented if substantial new functionality or improvements are introduced within the private code. It MAY include patch level changes. Patch version MUST be reset to 0 when minor version is incremented.
-* **Major version X (X.y.z)** MUST be incremented if any backwards incompatible changes are introduced to the public API. It MAY include minor and patch level changes. Patch and minor version MUST be reset to 0 when major version is incremented.
+(For Semantic Versioning number rules, see http://semver.org)
 
 Don't forget to note the contributor's name or git handle!
 
@@ -31,3 +29,5 @@ Changes since the last version:
 * (patch) Fixed issue #42 - Environment.TickCount bug (mjwood7)
 * (patch) Fixed issue #59 - Bug in determining whether we're inside a weeklong session (cbusbey)
 * (patch) Fixed issue #57 - Heartbeat not sent during constant traffic (cbusbey)
+* (patch) Fixed issue #47 - Missing values in PartyRole enum (gbirchmeier)
+* (minor) Fixed issue #37 - Deprecate DDField.Required, because it makes no sense (zakev/gbirchmeier)
