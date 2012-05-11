@@ -3,7 +3,7 @@
 def print_usage_and_die
   puts "Usage: ruby update_assembly_version.rb version assembly_filepath"
   puts "Parameters:"
-  puts "    version: Where version is a string \"n.n.n\" (e.g. 2.0.143)"
+  puts "    version: Where version is a string \"vn.n.n\" (e.g. v2.0.143)"
   puts "    assembly_filepath: Path to a VisualStudio AssemblyInfo.cs file"
   exit(1)
 end
@@ -19,7 +19,7 @@ end
 
 
 vers = ARGV[0]
-vers[/^v/m]="" #chops the leading v
+vers.sub!(/^v/,"") #remove the leading v
 assemblypath = ARGV[1]
 
 if not is_correct_pattern? vers
