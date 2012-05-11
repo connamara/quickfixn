@@ -20,9 +20,11 @@ namespace QuickFix.DataDictionary
         public String Name;
         public HashSet<String> Enums;
         public String FixFldType;
-        public Boolean Required = false;
         public Type FieldType;
 
+        [System.Obsolete("DDField.Required field is not used anymore. Insead of it use DDMap.ReqFields", true)]
+            public Boolean Required = false;
+            
         public Boolean HasEnums()
         {
             return Enums.Count > 0;
