@@ -20,8 +20,18 @@ namespace QuickFix.DataDictionary
         public String Name;
         public HashSet<String> Enums;
         public String FixFldType;
-        public Boolean Required = false;
         public Type FieldType;
+
+        /// <summary>
+        /// This field deprecated because it makes no sense; being required is not a quality of the field,
+        /// but a quality of the message that contains the field.
+        /// </summary>
+        [Obsolete("Always false.  Use the containing message's DDMap.ReqFields instead.")]
+        public Boolean Required
+        {
+            get { return false; }
+            set { }
+        }
 
         public Boolean HasEnums()
         {
