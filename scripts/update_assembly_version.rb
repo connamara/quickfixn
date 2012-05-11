@@ -18,8 +18,7 @@ end
 
 
 
-vers = ARGV[0]
-vers.sub!(/^v/,"") #remove the leading v
+vers = ARGV[0].sub(/^v/,"") #remove the leading v
 assemblypath = ARGV[1]
 
 if not is_correct_pattern? vers
