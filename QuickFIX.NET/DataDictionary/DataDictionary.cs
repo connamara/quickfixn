@@ -496,7 +496,6 @@ namespace QuickFix.DataDictionary
                     DDField fld = FieldsByName[childNode.Attributes["name"].Value];
                     if (childNode.Attributes["required"].Value == "Y")
                     {
-                        fld.Required = true;
                         ddmap.ReqFields.Add(fld.Tag);
                     }
                     if (!ddmap.IsField(fld.Tag))
@@ -516,7 +515,6 @@ namespace QuickFix.DataDictionary
                     DDGrp grp = new DDGrp();
                     if (childNode.Attributes["required"].Value == "Y")
                     {
-                        fld.Required = true;
                         ddmap.ReqFields.Add(fld.Tag);
                         grp.Required = true;
                     }
