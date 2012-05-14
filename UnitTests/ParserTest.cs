@@ -49,15 +49,15 @@ namespace UnitTests
             parser.AddToStream(fixMsg1 + fixMsg2 + fixMsg3);
 
             string readFixMsg1;
-            Assert.True(parser.ReadFixMessage(out readFixMsg1));
+            Assert.True(parser.ReadFixMessage(out readFixMsg1, true));
             Assert.AreEqual(fixMsg1, readFixMsg1);
 
             string readFixMsg2;
-            Assert.True(parser.ReadFixMessage(out readFixMsg2));
+            Assert.True(parser.ReadFixMessage(out readFixMsg2, true));
             Assert.AreEqual(fixMsg2, readFixMsg2);
 
             string readFixMsg3;
-            Assert.True(parser.ReadFixMessage(out readFixMsg3));
+            Assert.True(parser.ReadFixMessage(out readFixMsg3, true));
             Assert.AreEqual(fixMsg3, readFixMsg3);
         }
 
@@ -71,10 +71,10 @@ namespace UnitTests
             parser.AddToStream(partFixMsg1);
 
             string readPartFixMsg;
-            Assert.False(parser.ReadFixMessage(out readPartFixMsg));
+            Assert.False(parser.ReadFixMessage(out readPartFixMsg, true));
 
             parser.AddToStream(partFixMsg2);
-            Assert.True(parser.ReadFixMessage(out readPartFixMsg));
+            Assert.True(parser.ReadFixMessage(out readPartFixMsg, true));
             Assert.AreEqual(partFixMsg1 + partFixMsg2, readPartFixMsg);
         }
 
@@ -87,10 +87,10 @@ namespace UnitTests
             parser.AddToStream(fixMsg);
 
             string readFixMsg;
-            Assert.Throws<QuickFix.MessageParseError>(delegate { parser.ReadFixMessage(out readFixMsg); });
+            Assert.Throws<QuickFix.MessageParseError>(delegate { parser.ReadFixMessage(out readFixMsg, true); });
             
             // nothing thrown now because the previous call removes bad data from buffer:
-            Assert.DoesNotThrow(delegate { parser.ReadFixMessage(out readFixMsg); });
+            Assert.DoesNotThrow(delegate { parser.ReadFixMessage(out readFixMsg, true); });
         }
     }
 }

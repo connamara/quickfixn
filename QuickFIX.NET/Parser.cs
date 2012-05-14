@@ -13,7 +13,7 @@ namespace QuickFix
             buffer_ += data;
         }
 
-        public bool ReadFixMessage(out string msg)
+        public bool ReadFixMessage(out string msg, bool ValidateLengthAndChecksum)
         {
             msg = "";
             
@@ -55,9 +55,12 @@ namespace QuickFix
                     return false;
                 pos += 1;
 
+               if (ValidateLengthAndChecksumTEST)
+                {
                 if ((msgBodyEnd - msgBodyStart) != length)
                     throw new MessageParseError("Invalid body length");
-
+                }
+                
                 msg = buffer_.Substring(0, pos);
                 buffer_ = buffer_.Remove(0, pos);
                 return true;
