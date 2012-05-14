@@ -113,7 +113,7 @@ namespace QuickFix
         {
             try
             {
-                return parser_.ReadFixMessage(out msg);
+                return parser_.ReadFixMessage(out msg, qfSession_.ValidateLengthAndChecksum);
             }
             catch(MessageParseError e)
             {
