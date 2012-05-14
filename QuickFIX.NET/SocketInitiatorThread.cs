@@ -106,7 +106,7 @@ namespace QuickFix
         private void ProcessStream()
         {
             string msg;
-            while (parser_.ReadFixMessage(out msg))
+            while (parser_.ReadFixMessage(out msg, session_.ValidateLengthAndChecksum))
                 session_.Next(msg);
         }
 
