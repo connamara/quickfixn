@@ -16,3 +16,5 @@ Don't forget to note the contributor's name or git handle!
 Changes since the last version:
 -------------------------------
 * (major/minor/patch) desc of fixed issue (contributor)
+
+* (patch) issue #82 - add stacktraces to certain disconnect logging messages (gbirchmeier)
