@@ -30,7 +30,13 @@ namespace QuickFix
             session_ = session;
             socketEndPoint_ = socketEndPoint;
             parser_ = new Parser();
-            socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            if (socketEndPoint.AddressFamily == AddressFamily.InterNetwork)
+                socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            else
+            {
+                socket_ = new Socket(AddressFamily.InterNetworkV6, SocketType.Stream, ProtocolType.Tcp);
+                socket_.SetSocketOption(SocketOptionLevel.IPv6, (SocketOptionName)23, 10);
+            }
             socket_.NoDelay = socketSettings.SocketNodelay;
             session_ = session;
         }
