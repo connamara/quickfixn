@@ -590,7 +590,7 @@ namespace QuickFix
             catch (RejectLogon e)
             {
                 GenerateLogout(e.Message);
-                Disconnect(e.Message);
+                Disconnect(e.ToString());
             }
                     
 	    NextQueued();
