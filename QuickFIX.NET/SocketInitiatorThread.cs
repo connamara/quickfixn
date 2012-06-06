@@ -87,7 +87,7 @@ namespace QuickFix
                 {
                     // for lack of a better idea, do what the general exception does
                     if (null != session_)
-                        session_.Disconnect(e.Message);
+                        session_.Disconnect(e.ToString());
                     else
                         Disconnect();
                 }
@@ -96,7 +96,7 @@ namespace QuickFix
             catch (System.Exception e)
             {
                 if (null != session_)
-                    session_.Disconnect(e.Message);
+                    session_.Disconnect(e.ToString());
                 else
                     Disconnect();
                 return false;
