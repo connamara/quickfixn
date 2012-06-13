@@ -24,8 +24,8 @@ namespace QuickFix
         /// </summary>
         /// <param name="beginString">the FIX version (e.g. "FIX.4.2")</param>
         /// <param name="msgType">message type of the enclosing message (e.g. "D" for a NewOrderSingle</param>
-        /// <param name="correspondingFieldID">the fieldID of the field in the group</param>
+        /// <param name="groupCounterTag">the tag of the group's counter field</param>
         /// <returns>group, or null if the group can't be created</returns>
-        Group Create(string beginString, string msgType, int correspondingFieldID);
+        Group Create(string beginString, string msgType, int groupCounterTag);
     }
 }

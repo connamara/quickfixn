@@ -31,6 +31,10 @@ namespace QuickFix
         public Message Create(string beginString, string msgType)
         {
             IMessageFactory f = null;
+
+            // FIXME: This is a hack.  FIXT11 could mean 50 or 50sp1 or 50sp2.
+            // We need some way to choose which 50 version it is.
+            // Choosing 50 here is not adequate.
             if (beginString.Equals(FixValues.BeginString.FIXT11))
             {
                 if (!Message.IsAdminMsgType(msgType))
@@ -51,13 +55,16 @@ namespace QuickFix
             return f.Create(beginString, msgType);
         }
 
-        public Group Create(string beginString, string msgType, int correspondingFieldID)
+        public Group Create(string beginString, string msgType, int groupCounterTag)
         {
+            // FIXME: This is a hack.  FIXT11 could mean 50 or 50sp1 or 50sp2.
+            // We need some way to choose which 50 version it is.
+            // Choosing 50 here is not adequate.
+            if(beginString.Equals(FixValues.BeginString.FIXT11))
+                return _factories[FixValues.BeginString.FIX50].Create(beginString,msgType,groupCounterTag);
+
             if (_factories.ContainsKey(beginString))
-            {
-                IMessageFactory f = _factories[beginString];
-                return f.Create(beginString, msgType, correspondingFieldID);
-            }
+                return _factories[beginString].Create(beginString, msgType, groupCounterTag);
 
             throw new UnsupportedVersion(beginString);
         }
