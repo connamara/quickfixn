@@ -518,7 +518,6 @@ namespace QuickFix
 
                 if (this.SessionID.IsFIXT && !Message.IsAdminMsgType(msgType))
                 {
-
                     DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, ApplicationDataDictionary, beginString, msgType);
                 }
                 else
