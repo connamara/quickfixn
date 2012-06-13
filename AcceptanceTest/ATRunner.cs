@@ -32,7 +32,7 @@ namespace AcceptanceTest
                 acceptor.Start();
                 while (true)
                 {
-                    System.Console.WriteLine("o hai");
+                    System.Console.WriteLine("o hai "+System.DateTime.Now.ToString());
                     System.Threading.Thread.Sleep(1000);
 
                     // for tests of logout

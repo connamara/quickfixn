@@ -83,7 +83,7 @@ An HTML report of the test results will then be available here:
 
 To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
 
-    cd AcceptanceTests
+    cd AcceptanceTest
     runat.bat release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg
 
 (See acceptance_test.bat for the proper port numbers and config files to use in the above command.)
@@ -94,12 +94,11 @@ debug information will be available in the AcceptanceTests\log directory.
 To run a test with the debugger, 
 
   1. Open the solution file in Visual Studio
-  2. Right click on "AcceptanceTest" project
-  3. Open the "properties" tab
-  4. Click "Debug" on the left hand nav bar
-  5. Set "Command line arguments" to "cfg\at.cfg"
-  6. Set the working folder to "... AcceptanceTest"
-  7. Save the properties
+  2. Right click on "AcceptanceTest" project and choose "Properties" from the menu
+  3. Click "Debug" on the left hand nav bar
+  4. Set "Command line arguments" to the relevant "cfg\at_XX.cfg" for your test
+  5. Set the working directory to "[yourpath]\quickfixn\AcceptanceTest"
+  6. Save the properties
   7. Right click the "AcceptanceTest" project, go to Debug -> Start New Instance
   8. In command terminal, go into "AcceptanceTest" directory
   9. Run: `ruby Runner.rb 127.0.0.1 5001 definitions\server\fix42\YourTestName.def`

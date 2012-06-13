@@ -1438,11 +1438,20 @@ namespace QuickFix
             }
             public class NoMiscFeesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
+            
                 public NoMiscFeesGroup() 
                   :base( Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoMiscFeesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
                 { 
                     get 

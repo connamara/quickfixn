@@ -399,11 +399,20 @@ namespace QuickFix
             }
             public class NoOrdersGroup : Group
             {
+                public static int[] fieldOrder = {Tags.ClOrdID, Tags.ListSeqNo, Tags.SettlInstMode, Tags.ClientID, Tags.ExecBroker, Tags.Account, Tags.NoAllocs, Tags.SettlmntTyp, Tags.FutSettDate, Tags.HandlInst, Tags.ExecInst, Tags.MinQty, Tags.MaxFloor, Tags.ExDestination, Tags.NoTradingSessions, Tags.ProcessCode, Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.IDSource, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDay, Tags.PutOrCall, Tags.StrikePrice, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, Tags.PrevClosePx, Tags.Side, Tags.SideValueInd, Tags.LocateReqd, Tags.TransactTime, Tags.OrderQty, Tags.CashOrderQty, Tags.OrdType, Tags.Price, Tags.StopPx, Tags.Currency, Tags.ComplianceID, Tags.SolicitedFlag, Tags.IOIid, Tags.QuoteID, Tags.TimeInForce, Tags.EffectiveTime, Tags.ExpireDate, Tags.ExpireTime, Tags.GTBookingInst, Tags.Commission, Tags.CommType, Tags.Rule80A, Tags.ForexReq, Tags.SettlCurrency, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, Tags.FutSettDate2, Tags.OrderQty2, Tags.OpenClose, Tags.CoveredOrUncovered, Tags.CustomerOrFirm, Tags.MaxShow, Tags.PegDifference, Tags.DiscretionInst, Tags.DiscretionOffset, Tags.ClearingFirm, Tags.ClearingAccount, 0};
+            
                 public NoOrdersGroup() 
                   :base( Tags.NoOrders, Tags.ClOrdID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.ClOrdID, Tags.ListSeqNo, Tags.SettlInstMode, Tags.ClientID, Tags.ExecBroker, Tags.Account, Tags.NoAllocs, Tags.SettlmntTyp, Tags.FutSettDate, Tags.HandlInst, Tags.ExecInst, Tags.MinQty, Tags.MaxFloor, Tags.ExDestination, Tags.NoTradingSessions, Tags.ProcessCode, Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.IDSource, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDay, Tags.PutOrCall, Tags.StrikePrice, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, Tags.PrevClosePx, Tags.Side, Tags.SideValueInd, Tags.LocateReqd, Tags.TransactTime, Tags.OrderQty, Tags.CashOrderQty, Tags.OrdType, Tags.Price, Tags.StopPx, Tags.Currency, Tags.ComplianceID, Tags.SolicitedFlag, Tags.IOIid, Tags.QuoteID, Tags.TimeInForce, Tags.EffectiveTime, Tags.ExpireDate, Tags.ExpireTime, Tags.GTBookingInst, Tags.Commission, Tags.CommType, Tags.Rule80A, Tags.ForexReq, Tags.SettlCurrency, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, Tags.FutSettDate2, Tags.OrderQty2, Tags.OpenClose, Tags.CoveredOrUncovered, Tags.CustomerOrFirm, Tags.MaxShow, Tags.PegDifference, Tags.DiscretionInst, Tags.DiscretionOffset, Tags.ClearingFirm, Tags.ClearingAccount, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoOrdersGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.ClOrdID ClOrdID
                 { 
                     get 
@@ -2700,11 +2709,20 @@ namespace QuickFix
                 }
                             public class NoAllocsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocShares, 0};
+                
                     public NoAllocsGroup() 
                       :base( Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocShares, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoAllocsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.AllocAccount AllocAccount
                     { 
                         get 
@@ -2771,11 +2789,20 @@ namespace QuickFix
                 }
                 public class NoTradingSessionsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.TradingSessionID, 0};
+                
                     public NoTradingSessionsGroup() 
                       :base( Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.TradingSessionID, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoTradingSessionsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.TradingSessionID TradingSessionID
                     { 
                         get 

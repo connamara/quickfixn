@@ -242,11 +242,20 @@ namespace QuickFix
             }
             public class NoApplIDsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.RefApplID, Tags.ApplNewSeqNum, Tags.RefApplLastSeqNum, 0};
+            
                 public NoApplIDsGroup() 
                   :base( Tags.NoApplIDs, Tags.RefApplID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.RefApplID, Tags.ApplNewSeqNum, Tags.RefApplLastSeqNum, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoApplIDsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.RefApplID RefApplID
                 { 
                     get 

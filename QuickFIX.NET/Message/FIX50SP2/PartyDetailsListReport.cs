@@ -426,11 +426,20 @@ namespace QuickFix
             }
             public class NoPartyListGroup : Group
             {
+                public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, Tags.NoPartyAltIDs, Tags.NoContextPartyIDs, Tags.NoRiskLimits, Tags.NoRelatedPartyIDs, 0};
+            
                 public NoPartyListGroup() 
                   :base( Tags.NoPartyList, Tags.PartyID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, Tags.NoPartyAltIDs, Tags.NoContextPartyIDs, Tags.NoRiskLimits, Tags.NoRelatedPartyIDs, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoPartyListGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
@@ -681,11 +690,20 @@ namespace QuickFix
                 }
                             public class NoPartySubIDsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
+                
                     public NoPartySubIDsGroup() 
                       :base( Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoPartySubIDsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
@@ -752,11 +770,20 @@ namespace QuickFix
                 }
                 public class NoPartyAltIDsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.PartyAltID, Tags.PartyAltIDSource, Tags.NoPartyAltSubIDs, 0};
+                
                     public NoPartyAltIDsGroup() 
                       :base( Tags.NoPartyAltIDs, Tags.PartyAltID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.PartyAltID, Tags.PartyAltIDSource, Tags.NoPartyAltSubIDs, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoPartyAltIDsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.PartyAltID PartyAltID
                     { 
                         get 
@@ -852,11 +879,20 @@ namespace QuickFix
                     }
                                     public class NoPartyAltSubIDsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.PartyAltSubID, Tags.PartyAltSubIDType, 0};
+                    
                         public NoPartyAltSubIDsGroup() 
                           :base( Tags.NoPartyAltSubIDs, Tags.PartyAltSubID, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.PartyAltSubID, Tags.PartyAltSubIDType, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoPartyAltSubIDsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.PartyAltSubID PartyAltSubID
                         { 
                             get 
@@ -924,11 +960,20 @@ namespace QuickFix
                 }
                 public class NoContextPartyIDsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.ContextPartyID, Tags.ContextPartyIDSource, Tags.ContextPartyRole, Tags.NoContextPartySubIDs, 0};
+                
                     public NoContextPartyIDsGroup() 
                       :base( Tags.NoContextPartyIDs, Tags.ContextPartyID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.ContextPartyID, Tags.ContextPartyIDSource, Tags.ContextPartyRole, Tags.NoContextPartySubIDs, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoContextPartyIDsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.ContextPartyID ContextPartyID
                     { 
                         get 
@@ -1055,11 +1100,20 @@ namespace QuickFix
                     }
                                     public class NoContextPartySubIDsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.ContextPartySubID, Tags.ContextPartySubIDType, 0};
+                    
                         public NoContextPartySubIDsGroup() 
                           :base( Tags.NoContextPartySubIDs, Tags.ContextPartySubID, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.ContextPartySubID, Tags.ContextPartySubIDType, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoContextPartySubIDsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.ContextPartySubID ContextPartySubID
                         { 
                             get 
@@ -1127,11 +1181,20 @@ namespace QuickFix
                 }
                 public class NoRiskLimitsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.RiskLimitType, Tags.RiskLimitAmount, Tags.RiskLimitCurrency, Tags.RiskLimitPlatform, Tags.NoRiskInstruments, Tags.NoRiskWarningLevels, 0};
+                
                     public NoRiskLimitsGroup() 
                       :base( Tags.NoRiskLimits, Tags.RiskLimitType, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.RiskLimitType, Tags.RiskLimitAmount, Tags.RiskLimitCurrency, Tags.RiskLimitPlatform, Tags.NoRiskInstruments, Tags.NoRiskWarningLevels, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoRiskLimitsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.RiskLimitType RiskLimitType
                     { 
                         get 
@@ -1320,11 +1383,20 @@ namespace QuickFix
                     }
                                     public class NoRiskInstrumentsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.RiskInstrumentOperator, Tags.RiskSymbol, Tags.RiskSymbolSfx, Tags.RiskSecurityID, Tags.RiskSecurityIDSource, Tags.NoRiskSecurityAltID, Tags.RiskProduct, Tags.RiskProductComplex, Tags.RiskSecurityGroup, Tags.RiskCFICode, Tags.RiskSecurityType, Tags.RiskSecuritySubType, Tags.RiskMaturityMonthYear, Tags.RiskMaturityTime, Tags.RiskRestructuringType, Tags.RiskSeniority, Tags.RiskPutOrCall, Tags.RiskFlexibleIndicator, Tags.RiskCouponRate, Tags.RiskSecurityExchange, Tags.RiskSecurityDesc, Tags.RiskEncodedSecurityDescLen, Tags.RiskEncodedSecurityDesc, Tags.RiskInstrumentSettlType, Tags.RiskInstrumentMultiplier, 0};
+                    
                         public NoRiskInstrumentsGroup() 
                           :base( Tags.NoRiskInstruments, Tags.RiskInstrumentOperator, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.RiskInstrumentOperator, Tags.RiskSymbol, Tags.RiskSymbolSfx, Tags.RiskSecurityID, Tags.RiskSecurityIDSource, Tags.NoRiskSecurityAltID, Tags.RiskProduct, Tags.RiskProductComplex, Tags.RiskSecurityGroup, Tags.RiskCFICode, Tags.RiskSecurityType, Tags.RiskSecuritySubType, Tags.RiskMaturityMonthYear, Tags.RiskMaturityTime, Tags.RiskRestructuringType, Tags.RiskSeniority, Tags.RiskPutOrCall, Tags.RiskFlexibleIndicator, Tags.RiskCouponRate, Tags.RiskSecurityExchange, Tags.RiskSecurityDesc, Tags.RiskEncodedSecurityDescLen, Tags.RiskEncodedSecurityDesc, Tags.RiskInstrumentSettlType, Tags.RiskInstrumentMultiplier, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoRiskInstrumentsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.RiskInstrumentOperator RiskInstrumentOperator
                         { 
                             get 
@@ -2102,11 +2174,20 @@ namespace QuickFix
                         }
                                             public class NoRiskSecurityAltIDGroup : Group
                         {
+                            public static int[] fieldOrder = {Tags.RiskSecurityAltID, Tags.RiskSecurityAltIDSource, 0};
+                        
                             public NoRiskSecurityAltIDGroup() 
                               :base( Tags.NoRiskSecurityAltID, Tags.RiskSecurityAltID, fieldOrder)
                             {
                             }
-                            public static int[] fieldOrder = {Tags.RiskSecurityAltID, Tags.RiskSecurityAltIDSource, 0};
+                        
+                            public override Group Clone()
+                            {
+                                var clone = new NoRiskSecurityAltIDGroup();
+                                clone.CopyStateFrom(this);
+                                return clone;
+                            }
+                        
                                                     public QuickFix.Fields.RiskSecurityAltID RiskSecurityAltID
                             { 
                                 get 
@@ -2174,11 +2255,20 @@ namespace QuickFix
                     }
                     public class NoRiskWarningLevelsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.RiskWarningLevelPercent, Tags.RiskWarningLevelName, 0};
+                    
                         public NoRiskWarningLevelsGroup() 
                           :base( Tags.NoRiskWarningLevels, Tags.RiskWarningLevelPercent, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.RiskWarningLevelPercent, Tags.RiskWarningLevelName, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoRiskWarningLevelsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.RiskWarningLevelPercent RiskWarningLevelPercent
                         { 
                             get 
@@ -2246,11 +2336,20 @@ namespace QuickFix
                 }
                 public class NoRelatedPartyIDsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.RelatedPartyID, Tags.RelatedPartyIDSource, Tags.RelatedPartyRole, Tags.NoRelatedPartySubIDs, Tags.NoRelatedPartyAltIDs, Tags.NoRelatedContextPartyIDs, Tags.NoRelationshipRiskLimits, Tags.NoPartyRelationships, 0};
+                
                     public NoRelatedPartyIDsGroup() 
                       :base( Tags.NoRelatedPartyIDs, Tags.RelatedPartyID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.RelatedPartyID, Tags.RelatedPartyIDSource, Tags.RelatedPartyRole, Tags.NoRelatedPartySubIDs, Tags.NoRelatedPartyAltIDs, Tags.NoRelatedContextPartyIDs, Tags.NoRelationshipRiskLimits, Tags.NoPartyRelationships, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoRelatedPartyIDsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.RelatedPartyID RelatedPartyID
                     { 
                         get 
@@ -2501,11 +2600,20 @@ namespace QuickFix
                     }
                                     public class NoRelatedPartySubIDsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.RelatedPartySubID, Tags.RelatedPartySubIDType, 0};
+                    
                         public NoRelatedPartySubIDsGroup() 
                           :base( Tags.NoRelatedPartySubIDs, Tags.RelatedPartySubID, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.RelatedPartySubID, Tags.RelatedPartySubIDType, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoRelatedPartySubIDsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.RelatedPartySubID RelatedPartySubID
                         { 
                             get 
@@ -2572,11 +2680,20 @@ namespace QuickFix
                     }
                     public class NoRelatedPartyAltIDsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.RelatedPartyAltID, Tags.RelatedPartyAltIDSource, Tags.NoRelatedPartyAltSubIDs, 0};
+                    
                         public NoRelatedPartyAltIDsGroup() 
                           :base( Tags.NoRelatedPartyAltIDs, Tags.RelatedPartyAltID, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.RelatedPartyAltID, Tags.RelatedPartyAltIDSource, Tags.NoRelatedPartyAltSubIDs, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoRelatedPartyAltIDsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.RelatedPartyAltID RelatedPartyAltID
                         { 
                             get 
@@ -2672,11 +2789,20 @@ namespace QuickFix
                         }
                                             public class NoRelatedPartyAltSubIDsGroup : Group
                         {
+                            public static int[] fieldOrder = {Tags.RelatedPartyAltSubID, Tags.RelatedPartyAltSubIDType, 0};
+                        
                             public NoRelatedPartyAltSubIDsGroup() 
                               :base( Tags.NoRelatedPartyAltSubIDs, Tags.RelatedPartyAltSubID, fieldOrder)
                             {
                             }
-                            public static int[] fieldOrder = {Tags.RelatedPartyAltSubID, Tags.RelatedPartyAltSubIDType, 0};
+                        
+                            public override Group Clone()
+                            {
+                                var clone = new NoRelatedPartyAltSubIDsGroup();
+                                clone.CopyStateFrom(this);
+                                return clone;
+                            }
+                        
                                                     public QuickFix.Fields.RelatedPartyAltSubID RelatedPartyAltSubID
                             { 
                                 get 
@@ -2744,11 +2870,20 @@ namespace QuickFix
                     }
                     public class NoRelatedContextPartyIDsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.RelatedContextPartyID, Tags.RelatedContextPartyIDSource, Tags.RelatedContextPartyRole, Tags.NoRelatedContextPartySubIDs, 0};
+                    
                         public NoRelatedContextPartyIDsGroup() 
                           :base( Tags.NoRelatedContextPartyIDs, Tags.RelatedContextPartyID, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.RelatedContextPartyID, Tags.RelatedContextPartyIDSource, Tags.RelatedContextPartyRole, Tags.NoRelatedContextPartySubIDs, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoRelatedContextPartyIDsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.RelatedContextPartyID RelatedContextPartyID
                         { 
                             get 
@@ -2875,11 +3010,20 @@ namespace QuickFix
                         }
                                             public class NoRelatedContextPartySubIDsGroup : Group
                         {
+                            public static int[] fieldOrder = {Tags.RelatedContextPartySubID, Tags.RelatedContextPartySubIDType, 0};
+                        
                             public NoRelatedContextPartySubIDsGroup() 
                               :base( Tags.NoRelatedContextPartySubIDs, Tags.RelatedContextPartySubID, fieldOrder)
                             {
                             }
-                            public static int[] fieldOrder = {Tags.RelatedContextPartySubID, Tags.RelatedContextPartySubIDType, 0};
+                        
+                            public override Group Clone()
+                            {
+                                var clone = new NoRelatedContextPartySubIDsGroup();
+                                clone.CopyStateFrom(this);
+                                return clone;
+                            }
+                        
                                                     public QuickFix.Fields.RelatedContextPartySubID RelatedContextPartySubID
                             { 
                                 get 
@@ -2947,11 +3091,20 @@ namespace QuickFix
                     }
                     public class NoRelationshipRiskLimitsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.RelationshipRiskLimitType, Tags.RelationshipRiskLimitAmount, Tags.RelationshipRiskLimitCurrency, Tags.RelationshipRiskLimitPlatform, Tags.NoRelationshipRiskInstruments, Tags.NoRelationshipRiskWarningLevels, 0};
+                    
                         public NoRelationshipRiskLimitsGroup() 
                           :base( Tags.NoRelationshipRiskLimits, Tags.RelationshipRiskLimitType, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.RelationshipRiskLimitType, Tags.RelationshipRiskLimitAmount, Tags.RelationshipRiskLimitCurrency, Tags.RelationshipRiskLimitPlatform, Tags.NoRelationshipRiskInstruments, Tags.NoRelationshipRiskWarningLevels, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoRelationshipRiskLimitsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.RelationshipRiskLimitType RelationshipRiskLimitType
                         { 
                             get 
@@ -3140,11 +3293,20 @@ namespace QuickFix
                         }
                                             public class NoRelationshipRiskInstrumentsGroup : Group
                         {
+                            public static int[] fieldOrder = {Tags.RelationshipRiskInstrumentOperator, Tags.RelationshipRiskSymbol, Tags.RelationshipRiskSymbolSfx, Tags.RelationshipRiskSecurityID, Tags.RelationshipRiskSecurityIDSource, Tags.NoRelationshipRiskSecurityAltID, Tags.RelationshipRiskProduct, Tags.RelationshipRiskProductComplex, Tags.RelationshipRiskSecurityGroup, Tags.RelationshipRiskCFICode, Tags.RelationshipRiskSecurityType, Tags.RelationshipRiskSecuritySubType, Tags.RelationshipRiskMaturityMonthYear, Tags.RelationshipRiskMaturityTime, Tags.RelationshipRiskRestructuringType, Tags.RelationshipRiskSeniority, Tags.RelationshipRiskPutOrCall, Tags.RelationshipRiskFlexibleIndicator, Tags.RelationshipRiskCouponRate, Tags.RelationshipRiskSecurityExchange, Tags.RelationshipRiskSecurityDesc, Tags.RelationshipRiskEncodedSecurityDescLen, Tags.RelationshipRiskEncodedSecurityDesc, Tags.RelationshipRiskInstrumentSettlType, Tags.RelationshipRiskInstrumentMultiplier, 0};
+                        
                             public NoRelationshipRiskInstrumentsGroup() 
                               :base( Tags.NoRelationshipRiskInstruments, Tags.RelationshipRiskInstrumentOperator, fieldOrder)
                             {
                             }
-                            public static int[] fieldOrder = {Tags.RelationshipRiskInstrumentOperator, Tags.RelationshipRiskSymbol, Tags.RelationshipRiskSymbolSfx, Tags.RelationshipRiskSecurityID, Tags.RelationshipRiskSecurityIDSource, Tags.NoRelationshipRiskSecurityAltID, Tags.RelationshipRiskProduct, Tags.RelationshipRiskProductComplex, Tags.RelationshipRiskSecurityGroup, Tags.RelationshipRiskCFICode, Tags.RelationshipRiskSecurityType, Tags.RelationshipRiskSecuritySubType, Tags.RelationshipRiskMaturityMonthYear, Tags.RelationshipRiskMaturityTime, Tags.RelationshipRiskRestructuringType, Tags.RelationshipRiskSeniority, Tags.RelationshipRiskPutOrCall, Tags.RelationshipRiskFlexibleIndicator, Tags.RelationshipRiskCouponRate, Tags.RelationshipRiskSecurityExchange, Tags.RelationshipRiskSecurityDesc, Tags.RelationshipRiskEncodedSecurityDescLen, Tags.RelationshipRiskEncodedSecurityDesc, Tags.RelationshipRiskInstrumentSettlType, Tags.RelationshipRiskInstrumentMultiplier, 0};
+                        
+                            public override Group Clone()
+                            {
+                                var clone = new NoRelationshipRiskInstrumentsGroup();
+                                clone.CopyStateFrom(this);
+                                return clone;
+                            }
+                        
                                                     public QuickFix.Fields.RelationshipRiskInstrumentOperator RelationshipRiskInstrumentOperator
                             { 
                                 get 
@@ -3922,11 +4084,20 @@ namespace QuickFix
                             }
                                                     public class NoRelationshipRiskSecurityAltIDGroup : Group
                             {
+                                public static int[] fieldOrder = {Tags.RelationshipRiskSecurityAltID, Tags.RelationshipRiskSecurityAltIDSource, 0};
+                            
                                 public NoRelationshipRiskSecurityAltIDGroup() 
                                   :base( Tags.NoRelationshipRiskSecurityAltID, Tags.RelationshipRiskSecurityAltID, fieldOrder)
                                 {
                                 }
-                                public static int[] fieldOrder = {Tags.RelationshipRiskSecurityAltID, Tags.RelationshipRiskSecurityAltIDSource, 0};
+                            
+                                public override Group Clone()
+                                {
+                                    var clone = new NoRelationshipRiskSecurityAltIDGroup();
+                                    clone.CopyStateFrom(this);
+                                    return clone;
+                                }
+                            
                                                             public QuickFix.Fields.RelationshipRiskSecurityAltID RelationshipRiskSecurityAltID
                                 { 
                                     get 
@@ -3994,11 +4165,20 @@ namespace QuickFix
                         }
                         public class NoRelationshipRiskWarningLevelsGroup : Group
                         {
+                            public static int[] fieldOrder = {Tags.RelationshipRiskWarningLevelPercent, Tags.RelationshipRiskWarningLevelName, 0};
+                        
                             public NoRelationshipRiskWarningLevelsGroup() 
                               :base( Tags.NoRelationshipRiskWarningLevels, Tags.RelationshipRiskWarningLevelPercent, fieldOrder)
                             {
                             }
-                            public static int[] fieldOrder = {Tags.RelationshipRiskWarningLevelPercent, Tags.RelationshipRiskWarningLevelName, 0};
+                        
+                            public override Group Clone()
+                            {
+                                var clone = new NoRelationshipRiskWarningLevelsGroup();
+                                clone.CopyStateFrom(this);
+                                return clone;
+                            }
+                        
                                                     public QuickFix.Fields.RelationshipRiskWarningLevelPercent RelationshipRiskWarningLevelPercent
                             { 
                                 get 
@@ -4066,11 +4246,20 @@ namespace QuickFix
                     }
                     public class NoPartyRelationshipsGroup : Group
                     {
+                        public static int[] fieldOrder = {Tags.PartyRelationship, 0};
+                    
                         public NoPartyRelationshipsGroup() 
                           :base( Tags.NoPartyRelationships, Tags.PartyRelationship, fieldOrder)
                         {
                         }
-                        public static int[] fieldOrder = {Tags.PartyRelationship, 0};
+                    
+                        public override Group Clone()
+                        {
+                            var clone = new NoPartyRelationshipsGroup();
+                            clone.CopyStateFrom(this);
+                            return clone;
+                        }
+                    
                                             public QuickFix.Fields.PartyRelationship PartyRelationship
                         { 
                             get 
