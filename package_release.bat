@@ -18,6 +18,7 @@ echo
 
 rem Update the assembly version
 ruby scripts\update_assembly_version.rb %TAG_VERSION% QuickFIX.NET\Properties\AssemblyInfo.cs
+if %errorlevel% neq 0 echo "update_assembly_version.rb failed" && exit /b %errorlevel%
 echo * AssemblyInfo updated for new version number.
 
 rem Update downloads page - NOTE this must be done first

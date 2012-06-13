@@ -103,6 +103,14 @@ To run a test with the debugger,
   8. In command terminal, go into "AcceptanceTest" directory
   9. Run: `ruby Runner.rb 127.0.0.1 5001 definitions\server\fix42\YourTestName.def`
 
+Automated Build Server
+----------------------
+We have an automated build server that builds and runs all unit and acceptance tests after code changes.
+
+You can see the current build status here:
+
+http://quickfixbuild.connamara.com/job/quickfix-n/
+
 
 Website
 -------
