@@ -77,7 +77,7 @@ namespace QuickFix
         public Message(string msgstr, DataDictionary.DataDictionary dataDictionary, bool validate)
             : this()
         {
-            FromString(msgstr, validate, dataDictionary, dataDictionary);
+            FromString(msgstr, validate, dataDictionary, dataDictionary, null);
         }
 
         public Message(string msgstr, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, bool validate)
@@ -85,9 +85,9 @@ namespace QuickFix
         {
             FromStringHeader(msgstr);
             if(IsAdmin())
-                FromString(msgstr, validate, sessionDataDictionary, sessionDataDictionary);
+                FromString(msgstr, validate, sessionDataDictionary, sessionDataDictionary, null);
             else
-                FromString(msgstr, validate, sessionDataDictionary, appDD);
+                FromString(msgstr, validate, sessionDataDictionary, appDD, null);
         }
 
         public Message(Message src)
@@ -356,6 +356,21 @@ namespace QuickFix
         /// <param name="appDD"></param>
         public void FromString(string msgstr, bool validate, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
         {
+            FromString(msgstr, validate, sessionDD, appDD, null);
+        }
+ 
+
+        /// <summary>
+        /// Creates a Message from a FIX string
+        /// </summary>
+        /// <param name="msgstr"></param>
+        /// <param name="validate"></param>
+        /// <param name="sessionDD"></param>
+        /// <param name="appDD"></param>
+        /// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
+        public void FromString(string msgstr, bool validate,
+            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
+        {
             Clear();
 
             string msgType = "";
@@ -395,7 +410,7 @@ namespace QuickFix
 
                     if ((null != sessionDD) && sessionDD.Header.IsGroup(f.Tag))
                     {
-                        pos = SetGroup(f, msgstr, pos, this.Header, sessionDD.Header.GetGroupSpec(f.Tag), sessionDD, appDD);
+                        pos = SetGroup(f, msgstr, pos, this.Header, sessionDD.Header.GetGroupSpec(f.Tag), sessionDD, appDD, msgFactory);
                     }
                 }
                 else if (IsTrailerField(f.Tag, sessionDD))
@@ -407,7 +422,7 @@ namespace QuickFix
 
                     if ((null != sessionDD) && sessionDD.Trailer.IsGroup(f.Tag))
                     {
-                        pos = SetGroup(f, msgstr, pos, this.Trailer, sessionDD.Trailer.GetGroup(f.Tag), sessionDD, appDD);
+                        pos = SetGroup(f, msgstr, pos, this.Trailer, sessionDD.Trailer.GetGroup(f.Tag), sessionDD, appDD, msgFactory);
                     }
                 }
                 else
@@ -428,7 +443,7 @@ namespace QuickFix
                     
                     if((null != msgMap) && (msgMap.IsGroup(f.Tag)))
                     {
-                        pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroupSpec(f.Tag), sessionDD, appDD);
+                        pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroupSpec(f.Tag), sessionDD, appDD, msgFactory);
                     }
                 }
             }
@@ -439,7 +454,28 @@ namespace QuickFix
             }
         }
 
-        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
+
+        [System.Obsolete("Use the version that takes an IMessageFactory instead")]
+        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
+            DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
+        {
+            return SetGroup(grpNoFld, msgstr, pos, fieldMap, dd, sessionDataDictionary, appDD, null);
+        }
+
+
+        /// <summary>
+        /// Constructs a group and stores it in this Message object
+        /// </summary>
+        /// <param name="grpNoFld"></param>
+        /// <param name="msgstr"></param>
+        /// <param name="pos"></param>
+        /// <param name="fieldMap"></param>
+        /// <param name="dd"></param>
+        /// <param name="sessionDataDictionary"></param>
+        /// <param name="appDD"></param>
+        /// <param name="msgFactory">if this is null, then this method will use the generic Group class constructor</param>
+        /// <returns></returns>
+        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
         {
             int delim = dd.Delim;
             int grpPos = pos;
@@ -455,7 +491,13 @@ namespace QuickFix
                     {
                         fieldMap.AddGroup(grp, false);
                     }
-                    grp = new Group(grpNoFld.Tag, delim);
+
+                    if (msgFactory != null)
+                        grp = msgFactory.Create(Message.ExtractBeginString(msgstr), Message.GetMsgType(msgstr), grpNoFld.Tag);
+
+                    //If above failed, just use a generic Group.
+                    if (grp == null)
+                        grp = new Group(grpNoFld.Tag, delim);
                 }
                 else if (!dd.IsField(f.Tag))
                 {
@@ -468,7 +510,7 @@ namespace QuickFix
                 grp.SetField(f);
                 if(dd.IsGroup(f.Tag))
                 {
-                    pos = SetGroup(f, msgstr, pos, grp, dd.GetGroupSpec(f.Tag), sessionDataDictionary, appDD);
+                    pos = SetGroup(f, msgstr, pos, grp, dd.GetGroupSpec(f.Tag), sessionDataDictionary, appDD, msgFactory);
                 }
             }
             

@@ -337,11 +337,20 @@ namespace QuickFix
             }
             public class NoRelatedSymGroup : Group
             {
+                public static int[] fieldOrder = {Tags.RelatdSym, Tags.SymbolSfx, Tags.SecurityID, Tags.IDSource, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDay, Tags.PutOrCall, Tags.StrikePrice, Tags.OptAttribute, Tags.SecurityExchange, Tags.Issuer, Tags.SecurityDesc, 0};
+            
                 public NoRelatedSymGroup() 
                   :base( Tags.NoRelatedSym, Tags.RelatdSym, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.RelatdSym, Tags.SymbolSfx, Tags.SecurityID, Tags.IDSource, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDay, Tags.PutOrCall, Tags.StrikePrice, Tags.OptAttribute, Tags.SecurityExchange, Tags.Issuer, Tags.SecurityDesc, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoRelatedSymGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.RelatdSym RelatdSym
                 { 
                     get 
@@ -749,11 +758,20 @@ namespace QuickFix
             }
             public class LinesOfTextGroup : Group
             {
+                public static int[] fieldOrder = {Tags.Text, 0};
+            
                 public LinesOfTextGroup() 
                   :base( Tags.LinesOfText, Tags.Text, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.Text, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new LinesOfTextGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.Text Text
                 { 
                     get 

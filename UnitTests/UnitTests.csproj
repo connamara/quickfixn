@@ -78,6 +78,7 @@
     <Compile Include="ConfigTests.cs" />
     <Compile Include="ConverterTests.cs" />
     <Compile Include="DataDictionaryTests.cs" />
+    <Compile Include="DefaultMessageFactoryTests.cs" />
     <Compile Include="DictionaryTest.cs" />
     <Compile Include="FieldMapTests.cs" />
     <Compile Include="FieldTests.cs" />

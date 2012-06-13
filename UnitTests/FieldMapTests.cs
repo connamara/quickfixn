@@ -8,19 +8,14 @@ using QuickFix.Fields;
 
 namespace UnitTests
 {
-    public class MockFieldMap : FieldMap
-    {
-        public MockFieldMap() { }
-        public MockFieldMap(int[] fo) : base(fo) { }
-    }
 
     [TestFixture]
     public class FieldMapTests
     {
-        private MockFieldMap fieldmap;
+        private FieldMap fieldmap;
         public FieldMapTests()
         {
-            this.fieldmap = new MockFieldMap();
+            this.fieldmap = new FieldMap();
         }
 
         [Test]
@@ -240,7 +235,7 @@ namespace UnitTests
         public void SimpleFieldOrderTest()
         {
             int[] fieldord = { 10, 11, 12, 13, 200 };
-            MockFieldMap fm = new MockFieldMap(fieldord);
+            FieldMap fm = new FieldMap(fieldord);
             Assert.That(fm.FieldOrder, Is.EqualTo(fieldord));
         }
 
@@ -253,7 +248,7 @@ namespace UnitTests
 
             g1.SetField(new StringField(200, "delim!"));
 
-            MockFieldMap fm = new MockFieldMap();
+            FieldMap fm = new FieldMap();
             fm.AddGroup(g1);
             Assert.AreEqual(1, fm.GetInt(100));
 
@@ -268,7 +263,7 @@ namespace UnitTests
         {
             Group g1 = new Group(100, 200);
             Group g2 = new Group(100, 201);
-            MockFieldMap fm = new MockFieldMap();
+            FieldMap fm = new FieldMap();
             fm.AddGroup(g1);
             fm.AddGroup(g2);
             Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
@@ -287,7 +282,7 @@ namespace UnitTests
         {
             Group g1 = new Group(100, 200);
             Group g2 = new Group(100, 201);
-            MockFieldMap fm = new MockFieldMap();
+            FieldMap fm = new FieldMap();
             fm.AddGroup(g1);
             fm.AddGroup(g2);
             Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
@@ -313,7 +308,7 @@ namespace UnitTests
         {
             Group g1 = new Group(100, 200);
             Group g2 = new Group(100, 201);
-            MockFieldMap fm = new MockFieldMap();
+            FieldMap fm = new FieldMap();
             fm.AddGroup(g1);
             fm.AddGroup(g2);
             Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
@@ -336,7 +331,7 @@ namespace UnitTests
         [Test]
         public void IsFieldSetTest()
         {
-            MockFieldMap fieldmap = new MockFieldMap();
+            FieldMap fieldmap = new FieldMap();
             BooleanField field = new BooleanField(200, true);
             Assert.That(fieldmap.IsSetField(field), Is.EqualTo(false));
             Assert.That(fieldmap.IsSetField(field.Tag), Is.EqualTo(false));
@@ -348,7 +343,7 @@ namespace UnitTests
         [Test]
         public void ClearAndIsEmptyTest()
         {
-            MockFieldMap fieldmap = new MockFieldMap();
+            FieldMap fieldmap = new FieldMap();
             BooleanField field = new BooleanField(200, true);
             Assert.That(fieldmap.IsEmpty(), Is.EqualTo(true));
             fieldmap.SetField(field);
@@ -360,6 +355,19 @@ namespace UnitTests
             Assert.That(fieldmap.IsEmpty(), Is.EqualTo(false));
             fieldmap.Clear();
             Assert.That(fieldmap.IsEmpty(), Is.EqualTo(true));
+        }
+
+        [Test]
+        public void AddGroupKeepTypeTest()
+        {
+            // bug found during issue 56 - Group object was losing type after being added
+            FieldMap fm = new FieldMap();
+            QuickFix.FIX42.News.LinesOfTextGroup linesGroup = new QuickFix.FIX42.News.LinesOfTextGroup();
+            linesGroup.Text = new QuickFix.Fields.Text("foo");
+            fm.AddGroup(linesGroup);
+
+            var rvGroup = fm.GetGroup(1, Tags.LinesOfText);
+            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rvGroup);
         }
     }
 }

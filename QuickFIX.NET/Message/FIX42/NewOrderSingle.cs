@@ -2234,11 +2234,20 @@ namespace QuickFix
             }
             public class NoAllocsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocShares, 0};
+            
                 public NoAllocsGroup() 
                   :base( Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocShares, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoAllocsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.AllocAccount AllocAccount
                 { 
                     get 
@@ -2305,11 +2314,20 @@ namespace QuickFix
             }
             public class NoTradingSessionsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.TradingSessionID, 0};
+            
                 public NoTradingSessionsGroup() 
                   :base( Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.TradingSessionID, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoTradingSessionsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.TradingSessionID TradingSessionID
                 { 
                     get 

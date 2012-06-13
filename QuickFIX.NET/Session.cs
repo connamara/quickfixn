@@ -463,7 +463,8 @@ namespace QuickFix
                     msgStr,
                     this.ValidateLengthAndChecksum,
                     this.SessionDataDictionary,
-                    this.ApplicationDataDictionary);
+                    this.ApplicationDataDictionary,
+                    this.msgFactory_);
 
                 Next(message);
             }
@@ -517,7 +518,6 @@ namespace QuickFix
 
                 if (this.SessionID.IsFIXT && !Message.IsAdminMsgType(msgType))
                 {
-
                     DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, ApplicationDataDictionary, beginString, msgType);
                 }
                 else
