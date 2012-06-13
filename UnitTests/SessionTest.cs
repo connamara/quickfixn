@@ -17,6 +17,8 @@ namespace UnitTests
         public Dictionary<string, Queue<QuickFix.Message>> msgLookup = new Dictionary<string, Queue<QuickFix.Message>>();
         public Queue<QuickFix.Message> dups = new Queue<QuickFix.Message>();
 
+        private QuickFix.IMessageFactory _defaultMsgFactory = new QuickFix.DefaultMessageFactory();
+
         public bool disconnected = false;
 
         public bool Send(string msgStr)
@@ -25,7 +27,8 @@ namespace UnitTests
             string beginString = QuickFix.Message.ExtractBeginString(msgStr);
 
             QuickFix.Message message = messageFactory.Create(beginString, msgType.Obj);
-            message.FromString(msgStr, false, new QuickFix.DataDictionary.DataDictionary(), new QuickFix.DataDictionary.DataDictionary());
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            message.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
 
             if (!msgLookup.ContainsKey(msgType.getValue()))
                 msgLookup.Add(msgType.getValue(), new Queue<QuickFix.Message>());

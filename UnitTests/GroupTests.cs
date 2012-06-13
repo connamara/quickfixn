@@ -40,5 +40,21 @@ namespace UnitTests
             //Console.WriteLine(msgString);
             StringAssert.Contains(expected, msgString);
         }
+
+        [Test]
+        public void GroupClone()
+        {
+            QuickFix.FIX42.News.LinesOfTextGroup linesGroup = new QuickFix.FIX42.News.LinesOfTextGroup();
+            linesGroup.Text = new QuickFix.Fields.Text("foo");
+            linesGroup.EncodedText = new QuickFix.Fields.EncodedText("bar");
+
+            QuickFix.FIX42.News.LinesOfTextGroup clone = linesGroup.Clone() as QuickFix.FIX42.News.LinesOfTextGroup;
+
+            Assert.AreEqual(linesGroup.Text.Obj, clone.Text.Obj);
+            Assert.AreEqual(linesGroup.EncodedText.Obj, clone.EncodedText.Obj);
+            Assert.AreEqual(linesGroup.Delim, clone.Delim);
+            Assert.AreEqual(linesGroup.Field, clone.Field);
+            Assert.AreEqual(linesGroup.FieldOrder, clone.FieldOrder);
+        }
     }
 }

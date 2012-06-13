@@ -2133,11 +2133,20 @@ namespace QuickFix
             }
             public class NoUnderlyingSecurityAltIDGroup : Group
             {
+                public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
+            
                 public NoUnderlyingSecurityAltIDGroup() 
                   :base( Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingSecurityAltID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoUnderlyingSecurityAltIDGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                 { 
                     get 
@@ -2204,11 +2213,20 @@ namespace QuickFix
             }
             public class NoUnderlyingStipsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.UnderlyingStipType, Tags.UnderlyingStipValue, 0};
+            
                 public NoUnderlyingStipsGroup() 
                   :base( Tags.NoUnderlyingStips, Tags.UnderlyingStipType, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.UnderlyingStipType, Tags.UnderlyingStipValue, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoUnderlyingStipsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
                 { 
                     get 
@@ -2275,11 +2293,20 @@ namespace QuickFix
             }
             public class NoUndlyInstrumentPartiesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.UndlyInstrumentPartyID, Tags.UndlyInstrumentPartyIDSource, Tags.UndlyInstrumentPartyRole, Tags.NoUndlyInstrumentPartySubIDs, 0};
+            
                 public NoUndlyInstrumentPartiesGroup() 
                   :base( Tags.NoUndlyInstrumentParties, Tags.UndlyInstrumentPartyID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.UndlyInstrumentPartyID, Tags.UndlyInstrumentPartyIDSource, Tags.UndlyInstrumentPartyRole, Tags.NoUndlyInstrumentPartySubIDs, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoUndlyInstrumentPartiesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.UndlyInstrumentPartyID UndlyInstrumentPartyID
                 { 
                     get 
@@ -2406,11 +2433,20 @@ namespace QuickFix
                 }
                             public class NoUndlyInstrumentPartySubIDsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.UndlyInstrumentPartySubID, Tags.UndlyInstrumentPartySubIDType, 0};
+                
                     public NoUndlyInstrumentPartySubIDsGroup() 
                       :base( Tags.NoUndlyInstrumentPartySubIDs, Tags.UndlyInstrumentPartySubID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.UndlyInstrumentPartySubID, Tags.UndlyInstrumentPartySubIDType, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoUndlyInstrumentPartySubIDsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.UndlyInstrumentPartySubID UndlyInstrumentPartySubID
                     { 
                         get 

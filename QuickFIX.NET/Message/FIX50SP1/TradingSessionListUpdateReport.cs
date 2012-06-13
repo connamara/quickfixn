@@ -234,11 +234,20 @@ namespace QuickFix
             }
             public class NoTradingSessionsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.SecurityExchange, Tags.TradSesMethod, Tags.TradSesMode, Tags.UnsolicitedIndicator, Tags.TradSesStatus, Tags.TradSesStatusRejReason, Tags.TradSesStartTime, Tags.TradSesOpenTime, Tags.TradSesPreCloseTime, Tags.TradSesCloseTime, Tags.TradSesEndTime, Tags.TotalVolumeTraded, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, Tags.MarketID, Tags.MarketSegmentID, Tags.TradingSessionDesc, Tags.NoOrdTypeRules, Tags.NoTimeInForceRules, Tags.NoExecInstRules, Tags.NoMatchRules, Tags.NoMDFeedTypes, 0};
+            
                 public NoTradingSessionsGroup() 
                   :base( Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.SecurityExchange, Tags.TradSesMethod, Tags.TradSesMode, Tags.UnsolicitedIndicator, Tags.TradSesStatus, Tags.TradSesStatusRejReason, Tags.TradSesStartTime, Tags.TradSesOpenTime, Tags.TradSesPreCloseTime, Tags.TradSesCloseTime, Tags.TradSesEndTime, Tags.TotalVolumeTraded, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, Tags.MarketID, Tags.MarketSegmentID, Tags.TradingSessionDesc, Tags.NoOrdTypeRules, Tags.NoTimeInForceRules, Tags.NoExecInstRules, Tags.NoMatchRules, Tags.NoMDFeedTypes, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoTradingSessionsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.TradingSessionID TradingSessionID
                 { 
                     get 
@@ -1016,11 +1025,20 @@ namespace QuickFix
                 }
                             public class NoOrdTypeRulesGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.OrdType, 0};
+                
                     public NoOrdTypeRulesGroup() 
                       :base( Tags.NoOrdTypeRules, Tags.OrdType, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.OrdType, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoOrdTypeRulesGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.OrdType OrdType
                     { 
                         get 
@@ -1056,11 +1074,20 @@ namespace QuickFix
                 }
                 public class NoTimeInForceRulesGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.TimeInForce, 0};
+                
                     public NoTimeInForceRulesGroup() 
                       :base( Tags.NoTimeInForceRules, Tags.TimeInForce, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.TimeInForce, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoTimeInForceRulesGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.TimeInForce TimeInForce
                     { 
                         get 
@@ -1096,11 +1123,20 @@ namespace QuickFix
                 }
                 public class NoExecInstRulesGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.ExecInstValue, 0};
+                
                     public NoExecInstRulesGroup() 
                       :base( Tags.NoExecInstRules, Tags.ExecInstValue, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.ExecInstValue, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoExecInstRulesGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.ExecInstValue ExecInstValue
                     { 
                         get 
@@ -1136,11 +1172,20 @@ namespace QuickFix
                 }
                 public class NoMatchRulesGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.MatchAlgorithm, Tags.MatchType, 0};
+                
                     public NoMatchRulesGroup() 
                       :base( Tags.NoMatchRules, Tags.MatchAlgorithm, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.MatchAlgorithm, Tags.MatchType, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoMatchRulesGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.MatchAlgorithm MatchAlgorithm
                     { 
                         get 
@@ -1207,11 +1252,20 @@ namespace QuickFix
                 }
                 public class NoMDFeedTypesGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.MDFeedType, Tags.MarketDepth, Tags.MDBookType, 0};
+                
                     public NoMDFeedTypesGroup() 
                       :base( Tags.NoMDFeedTypes, Tags.MDFeedType, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.MDFeedType, Tags.MarketDepth, Tags.MDBookType, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoMDFeedTypesGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.MDFeedType MDFeedType
                     { 
                         get 

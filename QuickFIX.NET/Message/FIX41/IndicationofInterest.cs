@@ -899,11 +899,20 @@ namespace QuickFix
             }
             public class NoIOIQualifiersGroup : Group
             {
+                public static int[] fieldOrder = {Tags.IOIQualifier, 0};
+            
                 public NoIOIQualifiersGroup() 
                   :base( Tags.NoIOIQualifiers, Tags.IOIQualifier, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.IOIQualifier, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoIOIQualifiersGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.IOIQualifier IOIQualifier
                 { 
                     get 

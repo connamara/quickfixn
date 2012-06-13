@@ -1866,11 +1866,20 @@ namespace QuickFix
             }
             public class NoSecurityAltIDGroup : Group
             {
+                public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
+            
                 public NoSecurityAltIDGroup() 
                   :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoSecurityAltIDGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
@@ -1937,11 +1946,20 @@ namespace QuickFix
             }
             public class NoSidesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.Side, Tags.OrderID, Tags.SecondaryOrderID, Tags.ClOrdID, Tags.NoPartyIDs, Tags.Account, Tags.AccountType, Tags.ProcessCode, Tags.OddLot, Tags.NoClearingInstructions, Tags.ClearingFeeIndicator, Tags.TradeInputSource, Tags.TradeInputDevice, Tags.Currency, Tags.ComplianceID, Tags.SolicitedFlag, Tags.OrderCapacity, Tags.OrderRestrictions, Tags.CustOrderCapacity, Tags.TransBkdTime, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.Commission, Tags.CommType, Tags.CommCurrency, Tags.FundRenewWaiv, Tags.GrossTradeAmt, Tags.NumDaysInterest, Tags.ExDate, Tags.AccruedInterestRate, Tags.AccruedInterestAmt, Tags.Concession, Tags.TotalTakedown, Tags.NetMoney, Tags.SettlCurrAmt, Tags.SettlCurrency, Tags.SettlCurrFxRate, Tags.SettlCurrFxRateCalc, Tags.PositionEffect, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, Tags.MultiLegReportingType, Tags.NoContAmts, Tags.NoMiscFees, 0};
+            
                 public NoSidesGroup() 
                   :base( Tags.NoSides, Tags.Side, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.Side, Tags.OrderID, Tags.SecondaryOrderID, Tags.ClOrdID, Tags.NoPartyIDs, Tags.Account, Tags.AccountType, Tags.ProcessCode, Tags.OddLot, Tags.NoClearingInstructions, Tags.ClearingFeeIndicator, Tags.TradeInputSource, Tags.TradeInputDevice, Tags.Currency, Tags.ComplianceID, Tags.SolicitedFlag, Tags.OrderCapacity, Tags.OrderRestrictions, Tags.CustOrderCapacity, Tags.TransBkdTime, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.Commission, Tags.CommType, Tags.CommCurrency, Tags.FundRenewWaiv, Tags.GrossTradeAmt, Tags.NumDaysInterest, Tags.ExDate, Tags.AccruedInterestRate, Tags.AccruedInterestAmt, Tags.Concession, Tags.TotalTakedown, Tags.NetMoney, Tags.SettlCurrAmt, Tags.SettlCurrency, Tags.SettlCurrFxRate, Tags.SettlCurrFxRateCalc, Tags.PositionEffect, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, Tags.MultiLegReportingType, Tags.NoContAmts, Tags.NoMiscFees, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoSidesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.Side Side
                 { 
                     get 
@@ -3339,11 +3357,20 @@ namespace QuickFix
                 }
                             public class NoPartyIDsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.PartySubID, 0};
+                
                     public NoPartyIDsGroup() 
                       :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.PartySubID, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoPartyIDsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.PartyID PartyID
                     { 
                         get 
@@ -3472,11 +3499,20 @@ namespace QuickFix
                 }
                 public class NoClearingInstructionsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.ClearingInstruction, 0};
+                
                     public NoClearingInstructionsGroup() 
                       :base( Tags.NoClearingInstructions, Tags.ClearingInstruction, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.ClearingInstruction, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoClearingInstructionsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.ClearingInstruction ClearingInstruction
                     { 
                         get 
@@ -3512,11 +3548,20 @@ namespace QuickFix
                 }
                 public class NoContAmtsGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.ContAmtType, Tags.ContAmtValue, Tags.ContAmtCurr, 0};
+                
                     public NoContAmtsGroup() 
                       :base( Tags.NoContAmts, Tags.ContAmtType, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.ContAmtType, Tags.ContAmtValue, Tags.ContAmtCurr, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoContAmtsGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.ContAmtType ContAmtType
                     { 
                         get 
@@ -3614,11 +3659,20 @@ namespace QuickFix
                 }
                 public class NoMiscFeesGroup : Group
                 {
+                    public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
+                
                     public NoMiscFeesGroup() 
                       :base( Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
                     {
                     }
-                    public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
+                
+                    public override Group Clone()
+                    {
+                        var clone = new NoMiscFeesGroup();
+                        clone.CopyStateFrom(this);
+                        return clone;
+                    }
+                
                                     public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
                     { 
                         get 

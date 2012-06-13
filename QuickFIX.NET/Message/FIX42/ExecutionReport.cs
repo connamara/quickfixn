@@ -2893,11 +2893,20 @@ namespace QuickFix
             }
             public class NoContraBrokersGroup : Group
             {
+                public static int[] fieldOrder = {Tags.ContraBroker, Tags.ContraTrader, Tags.ContraTradeQty, Tags.ContraTradeTime, 0};
+            
                 public NoContraBrokersGroup() 
                   :base( Tags.NoContraBrokers, Tags.ContraBroker, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.ContraBroker, Tags.ContraTrader, Tags.ContraTradeQty, Tags.ContraTradeTime, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoContraBrokersGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.ContraBroker ContraBroker
                 { 
                     get 

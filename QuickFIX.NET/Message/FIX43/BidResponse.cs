@@ -110,11 +110,20 @@ namespace QuickFix
             }
             public class NoBidComponentsGroup : Group
             {
+                public static int[] fieldOrder = {Tags.Commission, Tags.CommType, Tags.CommCurrency, Tags.FundRenewWaiv, Tags.ListID, Tags.Country, Tags.Side, Tags.Price, Tags.PriceType, Tags.FairValue, Tags.NetGrossInd, Tags.SettlmntTyp, Tags.FutSettDate, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
+            
                 public NoBidComponentsGroup() 
                   :base( Tags.NoBidComponents, Tags.Commission, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.Commission, Tags.CommType, Tags.CommCurrency, Tags.FundRenewWaiv, Tags.ListID, Tags.Country, Tags.Side, Tags.Price, Tags.PriceType, Tags.FairValue, Tags.NetGrossInd, Tags.SettlmntTyp, Tags.FutSettDate, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoBidComponentsGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.Commission Commission
                 { 
                     get 

@@ -1141,11 +1141,20 @@ namespace QuickFix
             }
             public class NoTickRulesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.StartTickPriceRange, Tags.EndTickPriceRange, Tags.TickIncrement, Tags.TickRuleType, 0};
+            
                 public NoTickRulesGroup() 
                   :base( Tags.NoTickRules, Tags.StartTickPriceRange, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.StartTickPriceRange, Tags.EndTickPriceRange, Tags.TickIncrement, Tags.TickRuleType, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoTickRulesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.StartTickPriceRange StartTickPriceRange
                 { 
                     get 
@@ -1274,11 +1283,20 @@ namespace QuickFix
             }
             public class NoLotTypeRulesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.LotType, Tags.MinLotSize, 0};
+            
                 public NoLotTypeRulesGroup() 
                   :base( Tags.NoLotTypeRules, Tags.LotType, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.LotType, Tags.MinLotSize, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoLotTypeRulesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.LotType LotType
                 { 
                     get 
@@ -1345,11 +1363,20 @@ namespace QuickFix
             }
             public class NoOrdTypeRulesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.OrdType, 0};
+            
                 public NoOrdTypeRulesGroup() 
                   :base( Tags.NoOrdTypeRules, Tags.OrdType, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.OrdType, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoOrdTypeRulesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.OrdType OrdType
                 { 
                     get 
@@ -1385,11 +1412,20 @@ namespace QuickFix
             }
             public class NoTimeInForceRulesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.TimeInForce, 0};
+            
                 public NoTimeInForceRulesGroup() 
                   :base( Tags.NoTimeInForceRules, Tags.TimeInForce, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.TimeInForce, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoTimeInForceRulesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.TimeInForce TimeInForce
                 { 
                     get 
@@ -1425,11 +1461,20 @@ namespace QuickFix
             }
             public class NoExecInstRulesGroup : Group
             {
+                public static int[] fieldOrder = {Tags.ExecInstValue, 0};
+            
                 public NoExecInstRulesGroup() 
                   :base( Tags.NoExecInstRules, Tags.ExecInstValue, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.ExecInstValue, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoExecInstRulesGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.ExecInstValue ExecInstValue
                 { 
                     get 

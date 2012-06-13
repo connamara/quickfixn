@@ -46,6 +46,11 @@ namespace QuickFix
             Delim = src.Delim;
         }
 
+        virtual public Group Clone()
+        {
+            return new Group(this);
+        }
+
         /// <summary>
         /// Tag of the group's counter field
         /// </summary>

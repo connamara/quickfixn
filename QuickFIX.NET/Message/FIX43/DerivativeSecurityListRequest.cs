@@ -1358,11 +1358,20 @@ namespace QuickFix
             }
             public class NoUnderlyingSecurityAltIDGroup : Group
             {
+                public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
+            
                 public NoUnderlyingSecurityAltIDGroup() 
                   :base( Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingSecurityAltID, fieldOrder)
                 {
                 }
-                public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
+            
+                public override Group Clone()
+                {
+                    var clone = new NoUnderlyingSecurityAltIDGroup();
+                    clone.CopyStateFrom(this);
+                    return clone;
+                }
+            
                             public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                 { 
                     get 
