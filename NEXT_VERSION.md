@@ -18,3 +18,4 @@ Changes since the last version:
 * (major/minor/patch) desc of fixed issue (contributor)
 
 * (patch) issue #82 - add stacktraces to certain disconnect logging messages (gbirchmeier)
+* (minor) issue #56 - make engine create concrete group types instead of generic Group objects (gbirchmeier)
