@@ -11,6 +11,7 @@ namespace QuickFix
         public System.DayOfWeek EndDay {get; private set;}
 
         public bool UseLocalTime { get; private set; }
+        public System.TimeZoneInfo TimeZone { get; private set; }
 
         public bool IsSessionTime(System.DateTime time)
         {
@@ -18,10 +19,15 @@ namespace QuickFix
             if (time.Kind != expectedKind)
                 throw new System.ArgumentException(expectedKind + " time was expected", "time");
 
+            System.DateTime adjusted =
+                TimeZone == null
+                    ? time
+                    : System.TimeZoneInfo.ConvertTimeFromUtc(time, TimeZone);
+
             if (WeeklySession)
-                return CheckDay(time);
+                return CheckDay(adjusted);
             else
-                return CheckTime(time.TimeOfDay);
+                return CheckTime(adjusted.TimeOfDay);
         }
 
         private bool CheckDay(System.DateTime time)
@@ -104,6 +110,17 @@ namespace QuickFix
             if (settings.Has(SessionSettings.USE_LOCAL_TIME))
             {
                 UseLocalTime = settings.GetBool(SessionSettings.USE_LOCAL_TIME);
+            }
+
+            if (settings.Has(SessionSettings.TIME_ZONE))
+            {
+                if (UseLocalTime)
+                {
+                    throw new ConfigError(
+                        SessionSettings.TIME_ZONE + " conflicts with " + SessionSettings.USE_LOCAL_TIME);
+                }
+                string id = settings.GetString(SessionSettings.TIME_ZONE);
+                TimeZone = System.TimeZoneInfo.FindSystemTimeZoneById(id);
             }
 
             try
