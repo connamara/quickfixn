@@ -33,7 +33,7 @@ namespace QuickFix
         public bool IsInitiator { get { return state_.IsInitiator; } }
         public bool IsAcceptor { get { return !state_.IsInitiator; } }
         public bool IsEnabled { get { return state_.IsEnabled; } }
-        public bool IsSessionTime { get { return schedule_.IsSessionTime(System.DateTime.UtcNow); } }
+        public bool IsSessionTime { get { return schedule_.IsSessionTime(schedule_.UseLocalTime ? DateTime.Now : DateTime.UtcNow); } }
         public bool IsLoggedOn { get { return ReceivedLogon && SentLogon; } }
         public bool SentLogon { get { return state_.SentLogon; } }
         public bool ReceivedLogon { get { return state_.ReceivedLogon; } }

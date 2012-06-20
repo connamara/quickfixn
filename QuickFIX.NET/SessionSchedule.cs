@@ -10,8 +10,14 @@ namespace QuickFix
         public System.DayOfWeek StartDay { get; private set; }
         public System.DayOfWeek EndDay {get; private set;}
 
+        public bool UseLocalTime { get; private set; }
+
         public bool IsSessionTime(System.DateTime time)
         {
+            System.DateTimeKind expectedKind = UseLocalTime ? System.DateTimeKind.Local : System.DateTimeKind.Utc;
+            if (time.Kind != expectedKind)
+                throw new System.ArgumentException(expectedKind + " time was expected", "time");
+
             if (WeeklySession)
                 return CheckDay(time);
             else
@@ -93,6 +99,11 @@ namespace QuickFix
                 StartDay = settings.GetDay(SessionSettings.START_DAY);
                 EndDay = settings.GetDay(SessionSettings.END_DAY);
                 WeeklySession = true;
+            }
+
+            if (settings.Has(SessionSettings.USE_LOCAL_TIME))
+            {
+                UseLocalTime = settings.GetBool(SessionSettings.USE_LOCAL_TIME);
             }
 
             try
