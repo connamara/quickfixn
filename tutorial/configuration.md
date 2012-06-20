@@ -251,6 +251,23 @@ QuickFIX Settings
     </td>
     <td class='default'>N</td>
   </tr>
+  
+  <tr>
+    <td class='setting'>UseLocalTime</td>
+    <td class='description'>Specifies whether to use local machine time for session schedule (StartTime and EndTime).</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
+  
+  <tr>
+    <td class='setting'>TimeZone</td>
+    <td class='description'>Specifies time zone id used for session schedule. Cannot be used with UseLocalTime. Supplied id will be passed to <a href="http://msdn.microsoft.com/en-us/library/system.timezoneinfo.findsystemtimezonebyid.aspx">TimeZoneInfo.FindSystemTimeZoneById</a>.</td>
+    <td class='valid'>Any time zone id supported on target system.</td>
+    <td class='default'>-</td>
+  </tr>
 </table>
 
 
