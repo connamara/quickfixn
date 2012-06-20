@@ -278,5 +278,45 @@ namespace UnitTests
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 6, 0, 22)));
 
         }
+
+        [Test]
+        public void testInvalidTimeZone()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "06:00:23");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "00:12:00");
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Doh");
+
+            Assert.Throws(typeof (TimeZoneNotFoundException), delegate { new QuickFix.SessionSchedule(settings); });
+        }
+
+        [Test]
+        public void testLocalTimeTimeZoneConflict()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "06:00:23");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "00:12:00");
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Doh");
+            settings.SetString(QuickFix.SessionSettings.USE_LOCAL_TIME, "Y");
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time");
+
+            Assert.Throws(typeof (QuickFix.ConfigError), delegate { new QuickFix.SessionSchedule(settings); });
+        }
+
+        [Test]
+        public void testTimeZone()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "09:30:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "16:00:00");
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time");
+
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 13, 29, 59)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 13, 30, 0)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 20, 0, 0)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 20, 0, 1)));
+        }
     }
 }

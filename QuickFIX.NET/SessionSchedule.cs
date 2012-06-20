@@ -15,14 +15,15 @@ namespace QuickFix
 
         public bool IsSessionTime(System.DateTime time)
         {
-            System.DateTimeKind expectedKind = UseLocalTime ? System.DateTimeKind.Local : System.DateTimeKind.Utc;
-            if (time.Kind != expectedKind)
-                throw new System.ArgumentException(expectedKind + " time was expected", "time");
+            if (time.Kind == System.DateTimeKind.Local)
+                throw new System.ArgumentException("Only UTC time is supported", "time");
 
             System.DateTime adjusted =
-                TimeZone == null
-                    ? time
-                    : System.TimeZoneInfo.ConvertTimeFromUtc(time, TimeZone);
+                UseLocalTime
+                    ? time.ToLocalTime()
+                    : TimeZone == null
+                          ? time
+                          : System.TimeZoneInfo.ConvertTimeFromUtc(time, TimeZone);
 
             if (WeeklySession)
                 return CheckDay(adjusted);
