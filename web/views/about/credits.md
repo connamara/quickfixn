@@ -22,3 +22,6 @@ Contributors
 - Chris Busbey
 - Harvender Vasdev
 - Chris Barker
+- Wesley McClure
+- Alex Martsynkevich
+- Matt Wood
