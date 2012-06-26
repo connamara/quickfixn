@@ -10,12 +10,25 @@ namespace QuickFix
         public System.DayOfWeek StartDay { get; private set; }
         public System.DayOfWeek EndDay {get; private set;}
 
+        public bool UseLocalTime { get; private set; }
+        public System.TimeZoneInfo TimeZone { get; private set; }
+
         public bool IsSessionTime(System.DateTime time)
         {
+            if (time.Kind == System.DateTimeKind.Local)
+                throw new System.ArgumentException("Only UTC time is supported", "time");
+
+            System.DateTime adjusted =
+                UseLocalTime
+                    ? time.ToLocalTime()
+                    : TimeZone == null
+                          ? time
+                          : System.TimeZoneInfo.ConvertTimeFromUtc(time, TimeZone);
+
             if (WeeklySession)
-                return CheckDay(time);
+                return CheckDay(adjusted);
             else
-                return CheckTime(time.TimeOfDay);
+                return CheckTime(adjusted.TimeOfDay);
         }
 
         private bool CheckDay(System.DateTime time)
@@ -93,6 +106,22 @@ namespace QuickFix
                 StartDay = settings.GetDay(SessionSettings.START_DAY);
                 EndDay = settings.GetDay(SessionSettings.END_DAY);
                 WeeklySession = true;
+            }
+
+            if (settings.Has(SessionSettings.USE_LOCAL_TIME))
+            {
+                UseLocalTime = settings.GetBool(SessionSettings.USE_LOCAL_TIME);
+            }
+
+            if (settings.Has(SessionSettings.TIME_ZONE))
+            {
+                if (UseLocalTime)
+                {
+                    throw new ConfigError(
+                        SessionSettings.TIME_ZONE + " conflicts with " + SessionSettings.USE_LOCAL_TIME);
+                }
+                string id = settings.GetString(SessionSettings.TIME_ZONE);
+                TimeZone = System.TimeZoneInfo.FindSystemTimeZoneById(id);
             }
 
             try
