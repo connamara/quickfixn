@@ -264,8 +264,8 @@ QuickFIX Settings
   
   <tr>
     <td class='setting'>TimeZone</td>
-    <td class='description'>Specifies time zone id used for session schedule. Cannot be used with UseLocalTime. Supplied id will be passed to <a href="http://msdn.microsoft.com/en-us/library/system.timezoneinfo.findsystemtimezonebyid.aspx">TimeZoneInfo.FindSystemTimeZoneById</a>.</td>
-    <td class='valid'>Any time zone id supported on target system.</td>
+    <td class='description'>Specifies time zone ID used for session schedule. Cannot be used with UseLocalTime. Supplied ID will be passed to <a href="http://msdn.microsoft.com/en-us/library/system.timezoneinfo.findsystemtimezonebyid.aspx">TimeZoneInfo.FindSystemTimeZoneById</a>.  (See <a href="http://stackoverflow.com/questions/7908343/list-of-timezone-ids-for-use-with-findtimezonebyid-in-c">here</a> for how to get a list of valid IDs on your system.)</td>
+    <td class='valid'>Any time zone ID supported on target system.</td>
     <td class='default'>-</td>
   </tr>
 </table>
