@@ -1,3 +1,16 @@
+REM reset script vars that this script uses
+REM (in case the environment has them inexplicably set already)
+set RESULT40=
+set RESULT41=
+set RESULT42=
+set RESULT43=
+set RESULT44=
+set RESULT50=
+set RESULT50SP1=
+set RESULT50SP2=
+set RESULTMISC=
+set RETURNVALUE=
+
 pushd AcceptanceTest
     del TestResult.xml AcceptanceTests_40.html AcceptanceTests_41.xml AcceptanceTests_42.xml AcceptanceTests_43.xml AcceptanceTests_44.xml AcceptanceTests_Misc.html
     call runat release 5001 definitions/server/fix40/*.def cfg/at_40.cfg
@@ -13,7 +26,7 @@ pushd AcceptanceTest
     
     call pause
     call runat release 5003 definitions/server/fix42/*.def cfg/at_42.cfg
-	if ERRORLEVEL 1 set RESULT42=1
+    if ERRORLEVEL 1 set RESULT42=1
     echo "42 tests result: %RESULT42%"
     xsltproc.exe -o AcceptanceTests_42.html at.xsl TestResult.xml
 
