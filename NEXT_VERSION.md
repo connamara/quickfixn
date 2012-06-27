@@ -20,3 +20,4 @@ Changes since the last version:
 * (patch) issue #82 - add stacktraces to certain disconnect logging messages (gbirchmeier)
 * (minor) issue #56 - make engine create concrete group types instead of generic Group objects (gbirchmeier)
 * (minor) issues #60/#87 - add config settings for UseLocalTime and TimeZone (martsyn)
+* (patch) issue #73 - conflicting directory lettercase with MessageFactory classes (gbirchmeier)
