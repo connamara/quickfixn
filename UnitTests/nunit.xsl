@@ -7,7 +7,7 @@
 <xsl:template match="test-results">
 	<html>
 		<body>
-			<h2>QuickFIX.NET Unit Tests</h2>
+			<h2>QuickFIX/n Unit Tests</h2>
 			<xsl:variable name="total" select="@total + @not-run" />
    			<xsl:variable name="success" select="@total - @failures - @errors" />
     			<table border="0" cellspacing="2" cellpadding="2">
