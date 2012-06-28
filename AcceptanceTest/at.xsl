@@ -5,7 +5,7 @@
 		xmlns:msxsl="urn:schemas-microsoft-com:xslt">
 <xsl:output method="html" indent="yes" />
 <xsl:template match="at">
-	<html><body><h2>QuickFIX.NET Acceptance Tests</h2>
+	<html><body><h2>QuickFIX/n Acceptance Tests</h2>
 		<table border="0" cellspacing="2" cellpadding="2">
 			<xsl:for-each select="results">
 				<xsl:variable name="success" select="@total - @failures" />
