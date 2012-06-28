@@ -1,13 +1,13 @@
-QuickFIX.NET.suo
-QuickFIX.NET/bin/*
-QuickFIX.NET/obj/*
+QuickFIXn.suo
+QuickFIXn/bin/*
+QuickFIXn/obj/*
 UnitTests/bin/*
 UnitTests/obj/*
 PerformanceTests/bin/*
 PerformanceTests/obj/*
 *.user
 UnitTests/TestResult.xml
-QuickFIX.NET.sln.cache
+QuickFIXn.sln.cache
 ChangeLog
 *.swp
 AcceptanceTest/AcceptanceTests*.html

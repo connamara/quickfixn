@@ -17,7 +17,7 @@ echo tag version: %TAG_VERSION%
 echo
 
 rem Update the assembly version
-ruby scripts\update_assembly_version.rb %TAG_VERSION% QuickFIX.NET\Properties\AssemblyInfo.cs
+ruby scripts\update_assembly_version.rb %TAG_VERSION% QuickFIXn\Properties\AssemblyInfo.cs
 if %errorlevel% neq 0 echo "update_assembly_version.rb failed" && exit /b %errorlevel%
 echo * AssemblyInfo updated for new version number.
 
@@ -28,7 +28,7 @@ echo * Downloads page updated.
 
 rem commit the downloads page and version file, so it will be part of the tag
 call git add web\views\download.md
-call git add QuickFIX.NET\Properties\AssemblyInfo.cs
+call git add QuickFIXn\Properties\AssemblyInfo.cs
 call git commit -m "Download page / version number for version %TAG_VERSION%"
 echo * Downloads page / version number committed.
 
@@ -58,7 +58,7 @@ mkdir tmp\%QF_DIR%
 mkdir tmp\%QF_DIR%\bin
 mkdir tmp\%QF_DIR%\spec
 mkdir tmp\%QF_DIR%\config
-copy QuickFIX.NET\bin\Release\QuickFix.dll tmp\%QF_DIR%\bin
+copy QuickFIXn\bin\Release\QuickFix.dll tmp\%QF_DIR%\bin
 xcopy spec tmp\%QF_DIR%\spec /e /y
 copy config\sample_acceptor.cfg tmp\%QF_DIR%\config\
 copy config\sample_initiator.cfg tmp\%QF_DIR%\config\
