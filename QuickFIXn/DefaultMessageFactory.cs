@@ -14,7 +14,7 @@ namespace QuickFix
     /// </summary>
     public class DefaultMessageFactory : IMessageFactory
     {
-        private readonly Dictionary<string, IMessageFactory> _factories = new Dictionary<string, IMessageFactory>();
+        protected readonly Dictionary<string, IMessageFactory> _factories = new Dictionary<string, IMessageFactory>();
 
         public DefaultMessageFactory()
         {
