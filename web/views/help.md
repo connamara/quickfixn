@@ -8,7 +8,7 @@ Our [mailing list][2] is free, public, and easily searchable.
 It's the preferred method of user support from the QF/n team.
 
 Sign up [here][2] or send an email to: 
-[quickfixn-subscribe@lists.quickfixn.com](quickfixn-subscribe@lists.quickfixn.com) to subscribe.
+[quickfixn-subscribe@lists.quickfixn.com](mailto:quickfixn-subscribe@lists.quickfixn.com) to subscribe.
 
 Please subscribe before you send a mail to the list, else your request for help will not be sent out.
 
