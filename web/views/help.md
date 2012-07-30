@@ -8,7 +8,7 @@ Our [mailing list][2] is free, public, and easily searchable.
 It's the preferred method of user support from the QF/n team.
 
 Sign up [here][2] or send an email to: 
-[quickfixn-subscribe@lists.quickfixn.com][3] to subscribe.
+[quickfixn-subscribe@lists.quickfixn.com](quickfixn-subscribe@lists.quickfixn.com) to subscribe.
 
 Please subscribe before you send a mail to the list, else your request for help will not be sent out.
 
@@ -22,7 +22,7 @@ Bugs and issues can be submitted by anyone through our github repository issues 
 **It is for bugs and issues and is only monitored by a few people.**
 **If you need help, please join the mailing list as described above and you'll be able to send your question to the entire community.**
 
-With that said, here is our [github repository issues list][4].
+With that said, here is our [github repository issues list](https://github.com/connamara/quickfixn/issues).
 
 Please provide sample code, logs, and a description of the problem when
 the issue is submitted.
@@ -52,6 +52,4 @@ best of both build and buy.
 [0]: http://connamara.com
 [1]: /images/Connamara-Logo.png
 [2]: http://lists.quickfixn.com/listinfo.cgi/quickfixn-quickfixn.com
-[3]: mailto:quickfixn+subscribe@googlegroups.com
-[4]: https://github.com/connamara/quickfixn/issues
 
