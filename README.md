@@ -18,7 +18,7 @@ You can get Ruby from rubyinstall.org/downloads
 
 Code Generation
 ---------------
-To generate the code from Data Dictionaries, you need Ruby/JRuby (http://jruby.org/download) and the Nokogiri gem:
+To generate the code from Data Dictionaries, you need Ruby and the Nokogiri gem:
 
     gem install nokogiri
     ruby generator/generate.rb
