@@ -30,7 +30,7 @@ namespace QuickFix
                     int bytesRead = tcpClient_.Client.Receive(readBuffer_);
                     if (bytesRead < 1)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
-                    parser_.AddToStream(ref readBuffer_, bytesRead);
+                    parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
                 }
                 else if (null != qfSession_)
                 {
