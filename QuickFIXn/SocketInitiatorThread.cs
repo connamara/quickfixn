@@ -66,7 +66,7 @@ namespace QuickFix
                     int bytesRead = socket_.Receive(readBuffer_);
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
-                    parser_.AddToStream(ref readBuffer_, bytesRead);
+                    parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
                 }
                 else if (null != session_)
                 {
