@@ -72,8 +72,7 @@ namespace QuickFix.Fields
         {
             if (_changed)
                 makeStringFields();
-
-            return _stringField.Length + 1; // +1 for SOH
+            return System.Text.Encoding.UTF8.GetByteCount(_stringField) + 1; // +1 for SOH
         }
 
         /// <summary>
@@ -85,9 +84,10 @@ namespace QuickFix.Fields
                 makeStringFields();
 
             int sum = 0;
-            foreach (char c in _stringField)
+            byte[] array = System.Text.Encoding.UTF8.GetBytes(_stringField);
+            foreach (byte b in array)
             {
-                sum += (int)c;
+                sum += b;
             }
             return (sum + 1); // +1 for SOH
         }
