@@ -30,7 +30,7 @@ These are specified in the config file.
 ```
 SenderCompID=CONNAMARA
 TargetCompID=CBOE
-BeginString=FIX4.4
+BeginString=FIX.4.4
 ```
 
 There are a few patterns to gather the session.  We can grab the `SessionID` when it is created and cache it:
