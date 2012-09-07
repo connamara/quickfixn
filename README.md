@@ -21,7 +21,7 @@ Code Generation
 To generate the code from Data Dictionaries, you need Ruby and the Nokogiri gem:
 
     gem install nokogiri
-    ruby generator/generate.rb
+    generate.bat
 
 
 Build
