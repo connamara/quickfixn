@@ -183,6 +183,12 @@ namespace QuickFix
         /// </summary>
         public bool HasResponder { get { lock (sync_) { return null != responder_; } } }
 
+        /// <summary>
+        /// Returns whether the Sessions will allow ResetSequence messages sent as
+        /// part of a resend request (PossDup=Y) to omit the OrigSendingTime
+        /// </summary>
+        public bool RequiresOrigSendingTime { get; set; }
+
         #endregion
 
         /// FIXME
@@ -225,6 +231,7 @@ namespace QuickFix
             this.MaxMessagesInResendRequest = 0;
             this.SendLogoutBeforeTimeoutDisconnect = false;
             this.IgnorePossDupResendRequests = false;
+            this.RequiresOrigSendingTime = true;
 
             if (!IsSessionTime)
                 Reset();
@@ -980,6 +987,12 @@ namespace QuickFix
         /// FIXME
         protected bool DoPossDup(Message msg)
         {
+            int msgType = msg.Header.GetInt(Fields.Tags.MsgType);
+            if (msgType == 4 && RequiresOrigSendingTime == false )
+            {
+                return true;
+            }
+
             if (!msg.Header.IsSetField(Fields.Tags.OrigSendingTime))
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING, Fields.Tags.OrigSendingTime);
@@ -1201,6 +1214,7 @@ namespace QuickFix
         {
             return GenerateReject(message, reason, 0);
         }
+
         public bool GenerateReject(Message message, FixValues.SessionRejectReason reason, int field)
         {
             string beginString = this.SessionID.BeginString;
