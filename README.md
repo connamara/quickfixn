@@ -13,7 +13,7 @@ This project requires the following:
 
 **To build**
 
-* [Ruby (1.9.2)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
+* [Ruby (1.9.2 recommended)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
 * Microsoft .NET Framework 3.5 or higher
 
 **To run tests**
