@@ -20,7 +20,7 @@ This project requires the following:
 
 * [NUnit](http://nunit.org)
 * xsltproc (can be gotten via cygwin, or by installing libxslt (which requires libxml2 and zlib)).
-  * xsltproc is only used for pretty-formatting the test output.  If you don't mind the error messages, you can ignore it.  ([We may get rid of this dependency.](https://github.com/connamara/quickfixn/issues/104)).
+  * xsltproc is only used for pretty-formatting the test output.  If you don't mind the error messages that appear because it's not found, you can ignore it.  ([We may get rid of this dependency.](https://github.com/connamara/quickfixn/issues/104)).
 
 
 Code Generation
