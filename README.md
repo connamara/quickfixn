@@ -1,27 +1,34 @@
-[![QuickFIX/N][1]][0]
+[![QuickFIX/N][1]](http://quickfixn.org)
 
 
 For tutorials on how to use QuickFIX/n, see the `tutorial` folder at the root
-of this project or visit the [website][2].
+of this project or visit the [website](http://quickfixn.org/tutorial/creating-an-application).
 
 This README is about setting up your system to do QuickFIX/n
 development.
 
 System Setup
 ------------
-This project requires MSBuild, NUnit, Ruby (1.9.2), and xsltproc.
+This project requires the following:
 
-You can get xsltproc via cygwin, or by installing libxslt (which requires
-libxml2 and zlib).
+**To build**
 
-You can get Ruby from rubyinstall.org/downloads
+* [Ruby (1.9.2 recommended)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
+* Visual Studio 2010 or higher
+
+**To run tests**
+
+* [NUnit](http://nunit.org)
+* xsltproc (can be gotten via cygwin, or by installing libxslt (which requires libxml2 and zlib)).
+  * xsltproc is only used for pretty-formatting the test output.  If you don't mind the error messages that appear because it's not found, you can ignore it.  ([We may get rid of this dependency.](https://github.com/connamara/quickfixn/issues/104)).
+
 
 Code Generation
 ---------------
-To generate the code from Data Dictionaries, you need Ruby and the Nokogiri gem:
+To regenerate the message and field class source from the Data Dictionaries, you need Ruby and the Nokogiri gem:
 
     gem install nokogiri
-    ruby generator/generate.rb
+    generate.bat
 
 
 Build
@@ -40,9 +47,10 @@ from a Visual Studio cmd shell, this should not be a problem.  However, if you
 run it from some other shell (e.g. cygwin), you may need to append something
 like:
 
-    C:\WINDOWS\Microsoft.NET\Framework\v3.5
+    C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319
 
-to your PATH environment variable.
+to your PATH environment variable.  (Note, this build tools dir does not mean that the project
+will build for .NET 4.0; these are merely the build tools that come with VS 2010.)
 
 
 Unit Tests
@@ -50,6 +58,9 @@ Unit Tests
 To run the NUnit tests, run:
 
     unit_test.bat
+
+(This script expects nunit-console.exe to be on your PATH.  You may have to append
+something like `C:\Program Files\NUnit 2.6.1\bin` to your PATH environment variable.)
 
 An HTML report of the test results will then be available here:
 
@@ -59,7 +70,7 @@ To run a Unit Test in the debugger (not sure if it works in VS Express):
 
 1. Right-click UnitTests project, click 'Properties'
 2. Go to Debug tab
-3. Change Start Action to 'Start external program: C:\Program Files\NUnit-2.5.9.10348\bin\net-2.0\nunit.exe'
+3. Change Start Action to 'Start external program: C:\Program Files\NUnit 2.6.1\bin\nunit.exe'
    (change the path to what is appropriate for your system)
 4. Set your 'Command line arguments' to 'C:\dev\quickfixn\UnitTests\bin\Debug\UnitTests.dll'
    (change the path to what is appropriate for your system)
@@ -147,4 +158,3 @@ with shotgun, simply run shotgun at the top directory:
 
 [0]: http://quickfixn.org
 [1]: http://quickfixn.org/images/qfn-logo/QuickFIX-n_logo-small.png
-[2]: http://quickfixn.org/tutorial/creating-an-application
