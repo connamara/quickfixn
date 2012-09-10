@@ -10,7 +10,7 @@ namespace QuickFix
     /// Establishes sessions with FIX servers and manages the associated sessions.
     /// The class AbstractInitiator contains a default base implementation.
     /// </summary>
-    public interface IInitiator
+    public interface IInitiator : IDisposable
     {
         bool IsStopped { get; }
 

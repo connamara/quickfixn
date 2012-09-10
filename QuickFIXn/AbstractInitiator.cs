@@ -108,6 +108,17 @@ namespace QuickFix
                 session.Logon();
         }
 
+        public void Dispose()
+        {
+            lock (sync_)
+            {
+                foreach (SessionID sessionID in disconnected_)
+                {
+                    Session.LookupSession(sessionID).Dispose();
+                }
+            }
+        }
+
         public bool IsLoggedOn()
         {
             lock (sync_)

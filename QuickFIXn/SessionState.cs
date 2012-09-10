@@ -392,6 +392,12 @@ namespace QuickFix
             lock (sync_) { this.MessageStore.Refresh(); }
         }
 
+        public void Dispose() {
+            if (log_         != null) { log_        .Dispose(); }
+            if (MessageStore != null) { MessageStore.Dispose(); }
+        }
+
         #endregion
+
     }
 }

@@ -4,7 +4,7 @@ namespace QuickFix
     /// <summary>
     /// Session log for messages and events
     /// </summary>
-    public interface Log
+    public interface Log : System.IDisposable
     {
         /// <summary>
         /// Clears the log and removes any persistent log data
