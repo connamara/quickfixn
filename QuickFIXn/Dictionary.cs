@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace QuickFix
 {
@@ -104,7 +105,10 @@ namespace QuickFix
         {
             try
             {
-                return Convert.ToDouble(GetString(key));
+                NumberFormatInfo provider = new NumberFormatInfo( );
+                provider.NumberDecimalSeparator = ".";
+                provider.NumberGroupSeparator = ",";
+                return Convert.ToDouble(GetString(key), provider);
             }
             catch (FormatException)
             {
@@ -160,7 +164,10 @@ namespace QuickFix
 
         public void SetDouble(string key, double val)
         {
-            SetString(key, Convert.ToString(val));
+            NumberFormatInfo provider = new NumberFormatInfo();
+            provider.NumberDecimalSeparator = ".";
+            provider.NumberGroupSeparator = ",";
+            SetString(key, Convert.ToString(val, provider));
         }
 
         public void SetBool(string key, bool val)

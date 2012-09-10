@@ -146,3 +146,205 @@ message.SetField(new StringField(AWESOME_FIELD, "ohai"));
 const int AWESOME_FIELD = 9006;
 contraBrokersGrp.SetField(new StringField(AWESOME_FIELD, "ohai"));
 ```
+
+If you need to implement custom FIX Message type and you want receiving type safe messages then use Custom MessageFactory.
+1.	Create you new FIX Message (Your new message must also exists in XML FIX Dictionary)
+```c#
+public class YourNewFIXMessageType : Message
+{
+        public const string MsgType = "BAHH";
+        public YourNewFIXMessageType()
+			: base()
+        {
+            this.Header.SetField(new MsgType("BAHH"));
+        }
+		
+        #region Text
+        public Text Text
+        {
+            get
+            {
+                Text val = new Text();
+                GetField(val);
+                return val;
+            }
+            set { SetField(value); }
+        }
+
+        public void Set(Text value)
+        {
+            this.Text = value;
+        }
+        public Text Get(Text value)
+        {
+            GetField(value);
+            return value;
+        }
+        public bool IsSet(Text field)
+        {
+            return IsSetField(field);
+        }
+        public bool IsSetText()
+        {
+            return IsSetField(Tags.Text);
+        }
+        #endregion    
+		
+        #region NoYourGrp
+        public NoYourGrp NoYourGrp
+        {
+            get
+            {
+                NoYourGrp val = new NoYourGrp();
+                GetField(val);
+                return val;
+            }
+            set { SetField(value); }
+        }
+
+        public void Set(NoYourGrp value)
+        {
+            this.NoYourGrp = value;
+        }
+        public NoYourGrp Get(NoYourGrp value)
+        {
+            GetField(value);
+            return value;
+        }
+        public bool IsSet(NoYourGrp field)
+        {
+            return IsSetNoYourGrp();
+        }
+        public bool IsSetNoYourGrp()
+        {
+            return IsSetField(YourTags.NoYourGrp);
+        }
+        #endregion 		
+		
+        #region NoYourGrpGroup
+        public class NoYourGrpGroup : Group
+        {
+            public static int[] fieldOrder = {
+                                                 Tags.Text, 0
+                                             };
+            public NoYourGrpGroup() : base(YourTags.NoYourGrp, fieldOrder) { }
+
+            #region Text
+            public Text Text
+            {
+                get
+                {
+                    Text val = new Text();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(Text value)
+            {
+                this.Text = value;
+            }
+            public Text Get(Text value)
+            {
+                GetField(value);
+                return value;
+            }
+            public bool IsSet(Text field)
+            {
+                return IsSetField(field);
+            }
+            public bool IsSetText()
+            {
+                return IsSetField(Tags.Text);
+            }
+            #endregion        
+        }
+        #endregion
+    }
+}		
+```
+	
+2.	Create class:  YourMessageFactory
+```c#
+using MessageFactory = QuickFix.FIX44.MessageFactory;
+public class YourMessageFactory : MessageFactory, IMessageFactory
+{
+	#region Implementation of IMessageFactory
+
+    public new Message Create(string beginString, string msgType)
+    {
+		switch (msgType)
+		{
+			case YourNewFIXMessageType.MsgType:
+				return new YourNewFIXMessageType ();
+		}
+		return base.Create(beginString, msgType);
+	}
+
+	public new Group Create(string beginString, string msgType, int groupCounterTag)
+	{
+		if (YourNewFIXMessageType.MsgType.Equals(msgType))
+		{
+			switch (groupCounterTag)
+			{
+				case YourTags.NoYourGrp: return new YourNewFIXMessageType.NoYourGrpGroup();
+			}
+		}
+		return base.Create(beginString, msgType, groupCounterTag);		
+	}
+	#endregion
+}
+```
+
+3.	Create class: YourDefaultMessageFactory
+```c#
+public class YourDefaultMessageFactory : DefaultMessageFactory
+{
+	public YourDefaultMessageFactory()
+    {
+		// If you use custom message in FIX 4.2 dictionary then assign YourMessageFactory over default 4.2 MessageFactory
+        _factories[BeginString.FIX42] = new YourMessageFactory();
+    }
+}
+```
+
+4.	Now use YourDefaultMessageFactory in Application
+```c#
+public class YourApplication : MessageCracker, Application
+...
+	SessionSettings settings = new SessionSettings(args[0]);
+	Application myApp = new MyQuickFixApp();
+	MessageStoreFactory storeFactory = new FileStoreFactory(settings);
+	LogFactory logFactory = new FileLogFactory(settings);
+	YourDefaultMessageFactory messageFactory = new YourDefaultMessageFactory();
+	ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(
+		myApp,
+		storeFactory,
+		settings,
+		logFactory,
+		messageFactory);
+...
+   #region MessageCracker
+	
+	public new void Crack(Message message, SessionID sessionID)
+	{
+		switch (message.Header.GetField(Tags.MsgType))
+		{
+			case YourNewFIXMessageType.MsgType:
+				OnMessage((YourNewFIXMessageType)message, sessionID);
+				break;
+			default:
+				base.Crack(message, sessionID);
+				break;
+		}
+	}
+	
+
+	public void OnMessage(YourNewFIXMessageType message, SessionID sessionID)
+	{
+		// Do your magic
+	}
+	#endregion
+```
+
