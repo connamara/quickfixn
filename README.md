@@ -14,7 +14,7 @@ This project requires the following:
 **To build**
 
 * [Ruby (1.9.2 recommended)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
-* Microsoft .NET Framework 3.5 or higher
+* Visual Studio 2010 or higher
 
 **To run tests**
 
@@ -47,9 +47,10 @@ from a Visual Studio cmd shell, this should not be a problem.  However, if you
 run it from some other shell (e.g. cygwin), you may need to append something
 like:
 
-    C:\WINDOWS\Microsoft.NET\Framework\v3.5
+    C:\WINDOWS\Microsoft.NET\Framework\v4.0.30319
 
-to your PATH environment variable.
+to your PATH environment variable.  (Note, this build tools dir does not mean that the project
+will build for .NET 4.0; these are merely the build tools that come with VS 2010.)
 
 
 Unit Tests
