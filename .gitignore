@@ -26,3 +26,4 @@ Examples/SimpleAcceptor/obj/*
 .DS_Store
 upload_to_s3.rb
 *~
+*.suo
