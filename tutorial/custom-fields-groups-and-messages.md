@@ -40,11 +40,11 @@ A Data Dictionary defines all FIX **Messages**:
 ```
 <messages>
   <message name="Heartbeat" msgtype="0" msgcat="admin">
-    <field name="TestReqID" required="N"/>
+	<field name="TestReqID" required="N"/>
   </message>
   <message name="Logon" msgtype="A" msgcat="admin">
-    <field name="EncryptMethod" required="Y"/>
-    <field name="HeartBtInt" required="Y"/>
+	<field name="EncryptMethod" required="Y"/>
+	<field name="HeartBtInt" required="Y"/>
 ...
 ```
 
@@ -59,8 +59,8 @@ And a Data Dictionary defines all FIX **Groups** within a Message:
   <field name="ResetSeqNumFlag" required="N"/>
   <field name="MaxMessageSize" required="N"/>
   <group name="NoMsgTypes" required="N">
-    <field name="RefMsgType" required="N"/>
-    <field name="MsgDirection" required="N"/>
+	<field name="RefMsgType" required="N"/>
+	<field name="MsgDirection" required="N"/>
   </group>
 </message>
 ```
@@ -107,17 +107,36 @@ section of the document, then to a Group:
 ...
   <field name="ExecBroker" required="N"/>
   <group name="NoContraBrokers" required="N">
-    <field name="ContraBroker" required="N"/>
-    <field name="ContraTrader" required="N"/>
-    <field name="ContraTradeQty" required="N"/>
-    <field name="ContraTradeTime" required="N"/>
-    <field name="AwesomeField" required="N"/>
+	<field name="ContraBroker" required="N"/>
+	<field name="ContraTrader" required="N"/>
+	<field name="ContraTradeQty" required="N"/>
+	<field name="ContraTradeTime" required="N"/>
+	<field name="AwesomeField" required="N"/>
   </group>
 ...
 ```
 
 **The custom group would not work correctly without specifying this in our Data
 Dictionary.**
+
+
+Custom **Messages** are used when parties have their own custom messages. We will 
+create new message with `AwesomeField` from above:
+
+```
+<message name="YourNewFIXMessageType" msgcat="app" msgtype="YNFM">
+  <field name="Text" required="N"/>
+  <group name="NoAwesomeFieldGrp" required="N">
+	<field name="AwesomeField" required="N"/>
+  </group>
+</message>
+...
+<field number="35" name="MsgType" type="STRING">
+...
+	<value enum="YNFM" description="YOURNEWFIXMESSAGETYPE" />
+</field>
+<field name="NoAwesomeFieldGrp" number="9007" type="NUMINGROUP" />
+```
 
 In Code
 -------
@@ -145,4 +164,235 @@ message.SetField(new StringField(AWESOME_FIELD, "ohai"));
 ```c#
 const int AWESOME_FIELD = 9006;
 contraBrokersGrp.SetField(new StringField(AWESOME_FIELD, "ohai"));
+```
+
+The hard but type safe way is to use **Custom MessageFactory**. In that way you can 
+receive and send type safe custom messages.  
+
+1. Create your new FIX Message
+-------
+```c#
+public static class YourTags
+{
+	public const int AWESOME_FIELD = 9006;
+	public const int NoAwesomeFieldGrp = 9007;
+}
+
+public class NoAwesomeFieldGrp : IntField
+{
+	public NoAwesomeFieldGrp(int value)
+		: base(YourTags.NoAwesomeFieldGrp, value)
+	{
+	}
+
+	public NoAwesomeFieldGrp()
+		: base(YourTags.NoAwesomeFieldGrp)
+	{
+	}
+}
+
+public class AwesomeField : StringField
+{
+	public AwesomeField()
+		:base(YourTags.AWESOME_FIELD) {}
+	public Text(string val)
+		:base(YourTags.AWESOME_FIELD, val) {}
+}
+
+public class YourNewFIXMessageType : Message
+{
+		public const string MsgType = "YNFM";
+		public YourNewFIXMessageType()
+			: base()
+		{
+			this.Header.SetField(new MsgType("YNFM"));
+		}
+
+		#region Text
+		public Text Text
+		{
+			get
+			{
+				Text val = new Text();
+				GetField(val);
+				return val;
+			}
+			set { SetField(value); }
+		}
+
+		public void Set(Text value)
+		{
+			this.Text = value;
+		}
+		public Text Get(Text value)
+		{
+			GetField(value);
+			return value;
+		}
+		public bool IsSet(Text field)
+		{
+			return IsSetField(field);
+		}
+		public bool IsSetText()
+		{
+			return IsSetField(Tags.Text);
+		}
+		#endregion    
+
+		#region NoAwesomeFieldGrp
+		public NoAwesomeFieldGrp NoAwesomeFieldGrp
+		{
+			get
+			{
+				NoAwesomeFieldGrp val = new NoAwesomeFieldGrp();
+				GetField(val);
+				return val;
+			}
+			set { SetField(value); }
+		}
+
+		public void Set(NoAwesomeFieldGrp value)
+		{
+			this.NoAwesomeFieldGrp = value;
+		}
+		public NoAwesomeFieldGrp Get(NoAwesomeFieldGrp value)
+		{
+			GetField(value);
+			return value;
+		}
+		public bool IsSet(NoAwesomeFieldGrp field)
+		{
+			return IsSetNoAwesomeFieldGrp();
+		}
+		public bool IsSetNoAwesomeFieldGrp()
+		{
+			return IsSetField(YourTags.NoAwesomeFieldGrp);
+		}
+		#endregion      
+
+		#region NoAwesomeFieldGrpGroup
+		public class NoAwesomeFieldGrpGroup : Group
+		{
+			public static int[] fieldOrder = {
+												 YourTags.AWESOME_FIELD, 0
+											 };
+			public NoAwesomeFieldGrpGroup() : base(YourTags.NoAwesomeFieldGrp, YourTags.AWESOME_FIELD, fieldOrder) { }
+
+			#region AwesomeField
+			public AwesomeField AwesomeField
+			{
+				get
+				{
+					AwesomeField val = new AwesomeField();
+					GetField(val);
+					return val;
+				}
+				set { SetField(value); }
+			}
+
+			public void Set(AwesomeField value)
+			{
+				this.AwesomeField = value;
+			}
+			public AwesomeField Get(AwesomeField value)
+			{
+				GetField(value);
+				return value;
+			}
+			public bool IsSet(AwesomeField field)
+			{
+				return IsSetField(field);
+			}
+			public bool IsSetAwesomeField()
+			{
+				return IsSetField(YourTags.AWESOME_FIELD);
+			}
+			#endregion        
+		}
+		#endregion
+	}
+}
+```
+**Your new message must also exists in XML FIX Dictionary (see above)**
+
+2. Create class: YourMessageFactory
+```c#
+using MessageFactory = QuickFix.FIX44.MessageFactory;
+public class YourMessageFactory : MessageFactory, IMessageFactory
+{
+	#region Implementation of IMessageFactory
+
+	public new Message Create(string beginString, string msgType)
+	{
+		switch (msgType)
+		{
+			case YourNewFIXMessageType.MsgType:
+				return new YourNewFIXMessageType ();
+		}
+		return base.Create(beginString, msgType);
+	}
+
+	public new Group Create(string beginString, string msgType, int groupCounterTag)
+	{
+		if (YourNewFIXMessageType.MsgType.Equals(msgType))
+		{
+			switch (groupCounterTag)
+			{
+				case YourTags.NoAwesomeFieldGrp: return new YourNewFIXMessageType.NoAwesomeFieldGrpGroup();
+			}
+		}
+		return base.Create(beginString, msgType, groupCounterTag);      
+	}
+	#endregion
+}
+```
+
+3. Create class: YourDefaultMessageFactory
+```c#
+public class YourDefaultMessageFactory : DefaultMessageFactory
+{
+	public YourDefaultMessageFactory()
+	{
+		// If you use custom message in FIX 4.2 dictionary then assign YourMessageFactory over default 4.2 MessageFactory
+		_factories[BeginString.FIX42] = new YourMessageFactory();
+	}
+}
+```
+
+4. Now use YourDefaultMessageFactory in Application
+```c#
+public class YourApplication : MessageCracker, Application
+...
+	SessionSettings settings = new SessionSettings(args[0]);
+	Application myApp = new MyQuickFixApp();
+	MessageStoreFactory storeFactory = new FileStoreFactory(settings);
+	LogFactory logFactory = new FileLogFactory(settings);
+	YourDefaultMessageFactory messageFactory = new YourDefaultMessageFactory();
+	ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(
+		myApp,
+		storeFactory,
+		settings,
+		logFactory,
+		messageFactory);
+...
+#region MessageCracker
+
+ public new void Crack(Message message, SessionID sessionID)
+ {
+	 switch (message.Header.GetField(Tags.MsgType))
+	 {
+		 case YourNewFIXMessageType.MsgType:
+			 OnMessage((YourNewFIXMessageType)message, sessionID);
+			 break;
+		 default:
+			 base.Crack(message, sessionID);
+			 break;
+	 }
+ }
+
+ public void OnMessage(YourNewFIXMessageType message, SessionID sessionID)
+ {
+	 // Do your magic
+ }
+ #endregion
 ```
