@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 
 namespace QuickFix
 {
@@ -104,7 +105,7 @@ namespace QuickFix
         {
             try
             {
-                return Convert.ToDouble(GetString(key));
+                return Convert.ToDouble(GetString(key), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             }
             catch (FormatException)
             {
@@ -160,7 +161,7 @@ namespace QuickFix
 
         public void SetDouble(string key, double val)
         {
-            SetString(key, Convert.ToString(val));
+            SetString(key, Convert.ToString(val, System.Globalization.CultureInfo.InvariantCulture.NumberFormat));
         }
 
         public void SetBool(string key, bool val)

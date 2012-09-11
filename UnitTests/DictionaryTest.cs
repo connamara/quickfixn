@@ -6,6 +6,12 @@ namespace UnitTests
     [TestFixture]
     public class DictionaryTest
     {
+        [TearDown]
+        public void Teardown()
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+        }
+
         [Test]
         public void SetGetString()
         {
@@ -32,15 +38,35 @@ namespace UnitTests
         }
 
         [Test]
-        public void SetGetDouble()
+        public void SetDouble()
         {
+            // make sure that QF/n uses the invariant culture, no matter what the current culture is
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
+
             QuickFix.Dictionary d = new QuickFix.Dictionary();
             d.SetDouble("DOUBLEKEY1", 12.3);
             d.SetDouble("DOUBLEKEY2", 987362.987362);
+
+            Assert.AreEqual("12.3", d.GetString("DOUBLEKEY1"));
+            Assert.AreEqual("987362.987362", d.GetString("DOUBLEKEY2"));
+        }
+
+        [Test]
+        public void GetDouble()
+        {
+            // make sure that QF/n uses the invariant culture, no matter what the current culture is
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
+
+            QuickFix.Dictionary d = new QuickFix.Dictionary();
+            d.SetString("DOUBLEKEY1","12.3");
+            d.SetString("DOUBLEKEY2", "987362.987362");
             d.SetString("BADDOUBLEKEY", "AB12.3");
+            d.SetString("FOREIGNFORMAT", "44,44");
+
             Assert.That(d.GetDouble("DOUBLEKEY1"), Is.EqualTo(12.3));
             Assert.That(d.GetDouble("DOUBLEKEY2"), Is.EqualTo(987362.987362));
             Assert.Throws<ConfigError>(delegate { d.GetDouble("DOUBLEKEY3"); });
+            Assert.Throws<ConfigError>(delegate { d.GetDouble("BADDOUBLEKEY"); });
             Assert.Throws<ConfigError>(delegate { d.GetDouble("BADDOUBLEKEY"); });
         }
 
