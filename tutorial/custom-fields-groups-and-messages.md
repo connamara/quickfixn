@@ -195,7 +195,7 @@ public class AwesomeField : StringField
 {
 	public AwesomeField()
 		:base(YourTags.AWESOME_FIELD) {}
-	public Text(string val)
+	public AwesomeField(string val)
 		:base(YourTags.AWESOME_FIELD, val) {}
 }
 
