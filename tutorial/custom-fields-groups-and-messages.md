@@ -170,6 +170,7 @@ The hard but type safe way is to use **Custom MessageFactory**. In that way you 
 receive and send type safe custom messages.  
 
 1. Create your new FIX Message
+
 ```c#
 public static class YourTags
 {
@@ -312,9 +313,11 @@ public class YourNewFIXMessageType : Message
 	}
 }
 ```
+
 **Your new message must also exists in XML FIX Dictionary (see above)**
 
 2. Create class: YourMessageFactory
+
 ```c#
 using MessageFactory = QuickFix.FIX44.MessageFactory;
 public class YourMessageFactory : MessageFactory, IMessageFactory
@@ -347,6 +350,7 @@ public class YourMessageFactory : MessageFactory, IMessageFactory
 ```
 
 3. Create class: YourDefaultMessageFactory
+
 ```c#
 public class YourDefaultMessageFactory : DefaultMessageFactory
 {
@@ -359,6 +363,7 @@ public class YourDefaultMessageFactory : DefaultMessageFactory
 ```
 
 4. Now use YourDefaultMessageFactory in Application
+
 ```c#
 public class YourApplication : MessageCracker, Application
 ...
