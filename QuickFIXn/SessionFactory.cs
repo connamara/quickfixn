@@ -26,6 +26,7 @@ namespace QuickFix
             application_ = app;
             messageStoreFactory_ = storeFactory;
             logFactory_ = logFactory;
+            messageFactory_ = messageFactory;
         }
 
         public Session Create(SessionID sessionID, QuickFix.Dictionary settings)
