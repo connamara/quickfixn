@@ -170,7 +170,6 @@ The hard but type safe way is to use **Custom MessageFactory**. In that way you 
 receive and send type safe custom messages.  
 
 1. Create your new FIX Message
--------
 ```c#
 public static class YourTags
 {
