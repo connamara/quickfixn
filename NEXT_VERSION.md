@@ -22,4 +22,5 @@ Changes since the last version:
 * (minor) issues #60/#87 - add config settings for UseLocalTime and TimeZone (martsyn)
 * (patch) issue #73 - conflicting directory lettercase with MessageFactory classes (gbirchmeier)
 * (patch) issue #43 - Change occurrences of "QuickFIX.NET" to "QuickFIXn" (dir name, sln name, scripts) (gbirchmeier)
-* (patch) issue #58 - convert sln to vs2010
+* (patch) issue #58 - convert sln to vs2010 (gbirchmeier)
+* (patch) issue #90 - Dictionary.Get/SetDouble was not using invariant culture (formator/gbirchmeier)
