@@ -1,7 +1,7 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Collections.Generic;
 
 namespace QuickFix
 {
@@ -31,13 +31,15 @@ namespace QuickFix
         private LinkedList<ClientHandlerThread> clientThreads_ = new LinkedList<ClientHandlerThread>();
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
+        private string debugLogFilePath_;
 
         #endregion
 
-        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, string debugLogFilePath)
         {
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
+            debugLogFilePath_ = debugLogFilePath;
         }
 
         public void Start()
@@ -78,7 +80,7 @@ namespace QuickFix
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++);
+                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, debugLogFilePath_);
                     lock (sync_)
                     {
                         clientThreads_.AddLast(t);
@@ -108,12 +110,12 @@ namespace QuickFix
 
         private void ShutdownClientHandlerThreads()
         {
-            lock(sync_)
+            lock (sync_)
             {
-                if(State.SHUTDOWN_COMPLETE != state_) 
+                if (State.SHUTDOWN_COMPLETE != state_)
                 {
                     this.Log("shutting down...");
-                    while(clientThreads_.Count > 0)
+                    while (clientThreads_.Count > 0)
                     {
                         ClientHandlerThread t = clientThreads_.First.Value;
                         clientThreads_.RemoveFirst();
@@ -122,7 +124,7 @@ namespace QuickFix
                         {
                             t.Join();
                         }
-                        catch(System.Exception e)
+                        catch (System.Exception e)
                         {
                             t.Log("Error shutting down: " + e.Message);
                         }
