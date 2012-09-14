@@ -7,7 +7,7 @@ namespace AcceptanceTest
     {
         public event System.Action StopMeEvent;
 
-        private HashSet<KeyValuePair<string,SessionID>> clOrdIDs_ = new HashSet<KeyValuePair<string,SessionID>>();
+        private HashSet<KeyValuePair<string, SessionID>> clOrdIDs_ = new HashSet<KeyValuePair<string, SessionID>>();
         private FileLog log_;
 
         public ATApplication(FileLog debugLog)
@@ -25,7 +25,7 @@ namespace AcceptanceTest
             ProcessNOS(nos, sessionID);
         }
 
-        public void OnMessage(QuickFix.FIX42.NewOrderSingle nos, SessionID sessionID) 
+        public void OnMessage(QuickFix.FIX42.NewOrderSingle nos, SessionID sessionID)
         {
             ProcessNOS(nos, sessionID);
         }
@@ -70,19 +70,19 @@ namespace AcceptanceTest
             Message echo = new Message(message);
             Session.SendToTarget(echo, sessionID);
         }
-        
+
         protected void ProcessNOS(Message message, SessionID sessionID)
         {
             Message echo = new Message(message);
- 
-                bool possResend = false;
-                if (message.Header.IsSetField(QuickFix.Fields.Tags.PossResend))
-                    possResend = message.Header.GetBoolean(QuickFix.Fields.Tags.PossResend);
 
-                KeyValuePair<string, SessionID> pair = new KeyValuePair<string, SessionID>(message.GetField(QuickFix.Fields.Tags.ClOrdID), sessionID);
-                if (possResend && clOrdIDs_.Contains(pair))
-                    return;
-                clOrdIDs_.Add(pair);
+            bool possResend = false;
+            if (message.Header.IsSetField(QuickFix.Fields.Tags.PossResend))
+                possResend = message.Header.GetBoolean(QuickFix.Fields.Tags.PossResend);
+
+            KeyValuePair<string, SessionID> pair = new KeyValuePair<string, SessionID>(message.GetField(QuickFix.Fields.Tags.ClOrdID), sessionID);
+            if (possResend && clOrdIDs_.Contains(pair))
+                return;
+            clOrdIDs_.Add(pair);
 
             Session.SendToTarget(echo, sessionID);
         }
@@ -112,9 +112,9 @@ namespace AcceptanceTest
         {
             Session session = Session.LookupSession(sessionID);
             if (null != session)
-                session.Reset();
+                session.Reset("OnCreate");
         }
-        
+
         public void OnLogout(SessionID sessionID)
         {
             clOrdIDs_.Clear();
