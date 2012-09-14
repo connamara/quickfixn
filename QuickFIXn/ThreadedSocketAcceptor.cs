@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading;
 using System.Net;
 
 namespace QuickFix
@@ -13,7 +12,7 @@ namespace QuickFix
         class AcceptorSocketDescriptor
         {
             #region Properties
-            
+
             public ThreadedSocketReactor SocketReactor
             {
                 get { return socketReactor_; }
@@ -24,7 +23,7 @@ namespace QuickFix
                 get { return socketEndPoint_; }
             }
 
-            #endregion 
+            #endregion
 
             #region Private Members
 
@@ -34,10 +33,10 @@ namespace QuickFix
 
             #endregion
 
-            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings)
+            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, string debugLogFilePath)
             {
                 socketEndPoint_ = socketEndPoint;
-                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings);
+                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, debugLogFilePath);
             }
 
             public void AcceptSession(Session session)
@@ -45,9 +44,9 @@ namespace QuickFix
                 acceptedSessions_[session.SessionID] = session;
             }
 
-            public Dictionary<SessionID, Session> GetAcceptedSessions() 
+            public Dictionary<SessionID, Session> GetAcceptedSessions()
             {
-                return new Dictionary<SessionID,Session>(acceptedSessions_);
+                return new Dictionary<SessionID, Session>(acceptedSessions_);
             }
         }
 
@@ -88,14 +87,14 @@ namespace QuickFix
         #region Private Methods
 
         private void CreateSessions(SessionSettings settings)
-	    {
-            foreach(SessionID sessionID in settings.GetSessions())
-		    {
+        {
+            foreach (SessionID sessionID in settings.GetSessions())
+            {
                 QuickFix.Dictionary dict = settings.Get(sessionID);
                 string connectionType = dict.GetString(SessionSettings.CONNECTION_TYPE);
-               
-                if("acceptor".Equals(connectionType))
-			    {
+
+                if ("acceptor".Equals(connectionType))
+                {
                     AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(settings, sessionID);
                     Session session = sessionFactory_.Create(sessionID, dict);
                     descriptor.AcceptSession(session);
@@ -103,7 +102,7 @@ namespace QuickFix
                 }
             }
 
-            if(0 == socketDescriptorForAddress_.Count)
+            if (0 == socketDescriptorForAddress_.Count)
                 throw new ConfigError("No acceptor sessions found in SessionSettings.");
         }
 
@@ -130,10 +129,16 @@ namespace QuickFix
                 socketSettings.SocketNodelay = dict.GetBool(SessionSettings.SOCKET_NODELAY);
             }
 
+            string debugLogFilePath = "log";
+            if (dict.Has(SessionSettings.DEBUG_LOGFILE_PATH))
+            {
+                debugLogFilePath = dict.GetString(SessionSettings.DEBUG_LOGFILE_PATH);
+            }
+
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, debugLogFilePath);
                 socketDescriptorForAddress_[socketEndPoint] = descriptor;
             }
 
@@ -167,13 +172,13 @@ namespace QuickFix
 
         private void LogoutAllSessions(bool force)
         {
-            foreach(Session session in sessions_.Values)
+            foreach (Session session in sessions_.Values)
             {
                 try
                 {
                     session.Logout();
                 }
-                catch(System.Exception e)
+                catch (System.Exception e)
                 {
                     /// FIXME logError(session.getSessionID(), "Error during logout", e);
                     System.Console.WriteLine("Error during logout of Session " + session.SessionID + ": " + e.Message);
@@ -189,7 +194,7 @@ namespace QuickFix
                         if (session.IsLoggedOn)
                             session.Disconnect("Forcibly disconnecting session");
                     }
-                    catch(System.Exception e)
+                    catch (System.Exception e)
                     {
                         /// FIXME logError(session.getSessionID(), "Error during disconnect", e);
                         System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
@@ -211,23 +216,23 @@ namespace QuickFix
             int start = System.Environment.TickCount;
             HashSet<Session> sessions = new HashSet<Session>(sessions_.Values);
             while(sessions.Count > 0)
-		    {
+            {
                 Thread.Sleep(100);
                 
                 int elapsed = System.Environment.TickCount - start;
                 Iterator<Session> sessionItr = loggedOnSessions.iterator();
                 while (sessionItr.hasNext())
-			    {
+                {
                     Session session = sessionItr.next();
                     if (elapsed >= session.getLogoutTimeout() * 1000L)
-				    {
-					    session.disconnect("Logout timeout, force disconnect", false);
-					    sessionItr.remove();
+                    {
+                        session.disconnect("Logout timeout, force disconnect", false);
+                        sessionItr.remove();
                     }
                 }
                 // Be sure we don't look forever
                 if (elapsed > 60000)
-			    {
+                {
                     log.warn("Stopping session logout wait after 1 minute");
                     break;
                 }
@@ -241,7 +246,7 @@ namespace QuickFix
 
         public void Start()
         {
-            lock(sync_)
+            lock (sync_)
             {
                 if (!isStarted_)
                 {

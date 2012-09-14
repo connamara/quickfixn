@@ -17,9 +17,9 @@ namespace QuickFix
         private long id_;
         private FileLog log_;
 
-        public ClientHandlerThread(TcpClient tcpClient, long clientId)
+        public ClientHandlerThread(TcpClient tcpClient, long clientId, string debugLogFilePath)
         {
-            log_ = new FileLog("log", new SessionID("ClientHandlerThread", clientId.ToString(), "Debug")); /// FIXME
+            log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
             tcpClient_ = tcpClient;
             id_ = clientId;
             socketReader_ = new SocketReader(tcpClient_, this);
