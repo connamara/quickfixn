@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -47,6 +48,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbLog.cs" />
+    <Compile Include="DbLogFactory.cs" />
+    <Compile Include="DbStore.cs" />
+    <Compile Include="DbStoreFactory.cs" />
     <Compile Include="IAcceptor.cs" />
     <Compile Include="Application.cs" />
     <Compile Include="Applications\FIX4Application.cs" />
