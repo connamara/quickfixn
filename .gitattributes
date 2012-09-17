@@ -1,0 +1,6 @@
+# Make all the C# source be crlf
+QuickFIXn/* text eol=crlf
+UnitTests/* text eol=crlf
+Examples/* text eol=crlf
+*.cs text eol=crlf
+*.bat text eol=crlf
