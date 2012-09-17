@@ -10,17 +10,23 @@ namespace QuickFix
         protected Application application_;
         protected MessageStoreFactory messageStoreFactory_;
         protected LogFactory logFactory_;
+        protected IMessageFactory messageFactory_;
         protected Dictionary<string,DataDictionary.DataDictionary> dictionariesByPath_ = new Dictionary<string,DataDictionary.DataDictionary>();
 
         public SessionFactory(Application app, MessageStoreFactory storeFactory)
-            : this(app, storeFactory, null)
+            : this(app, storeFactory, null, null)
         { }
 
         public SessionFactory(Application app, MessageStoreFactory storeFactory, LogFactory logFactory)
+            : this(app, storeFactory, logFactory, null)
+        { }
+
+        public SessionFactory(Application app, MessageStoreFactory storeFactory, LogFactory logFactory, IMessageFactory messageFactory)
         {
             application_ = app;
             messageStoreFactory_ = storeFactory;
             logFactory_ = logFactory;
+            messageFactory_ = messageFactory;
         }
 
         public Session Create(SessionID sessionID, QuickFix.Dictionary settings)
@@ -75,7 +81,7 @@ namespace QuickFix
                 new SessionSchedule(settings),
                 heartBtInt,
                 logFactory_,
-                new DefaultMessageFactory(),
+                messageFactory_ ?? new DefaultMessageFactory(),
                 senderDefaultApplVerId);
 
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
