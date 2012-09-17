@@ -27,8 +27,8 @@ namespace UnitTests
             dd.Load("../../../spec/fix/FIX44.xml");
             Assert.That(dd.FieldsByTag[1].Name, Is.EqualTo("Account"));
             Assert.That(dd.FieldsByName["Account"].Tag, Is.EqualTo(1));
-            Assert.That(dd.FieldsByTag[1].Enums.Count, Is.EqualTo(0));
-            Assert.That(dd.FieldsByTag[QuickFix.Fields.Tags.StatusValue].Enums.Count, Is.EqualTo(4));
+            Assert.That(dd.FieldsByTag[1].EnumDict.Count, Is.EqualTo(0));
+            Assert.That(dd.FieldsByTag[QuickFix.Fields.Tags.StatusValue].EnumDict.Count, Is.EqualTo(4));
         }
 
         [Test]
@@ -47,9 +47,9 @@ namespace UnitTests
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
-            Assert.AreEqual(typeof (Dictionary<string, string>), dd.FieldsByTag[945].Enums.GetType());
-            Assert.That("COMPLETED", Is.EqualTo(dd.FieldsByTag[945].Enums["2"]));
-            Assert.AreNotEqual("HEARTBEAT", dd.FieldsByTag[35].Enums["A"]);
+            Assert.AreEqual(typeof (Dictionary<string, string>), dd.FieldsByTag[945].EnumDict.GetType());
+            Assert.That("COMPLETED", Is.EqualTo(dd.FieldsByTag[945].EnumDict["2"]));
+            Assert.AreNotEqual("HEARTBEAT", dd.FieldsByTag[35].EnumDict["A"]);
         }
 
         [Test]
