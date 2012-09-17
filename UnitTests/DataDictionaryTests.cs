@@ -364,5 +364,13 @@ namespace UnitTests
             // this should throw
             dd.Validate(message, beginString, msgType);
         }
+
+        [Test]
+        public void DuplicateEnumsDoesNotThrow()
+        {
+            // If this test throws, it failed.
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/test/FIX43_dup_enum.xml");
+        }
     }
 }
