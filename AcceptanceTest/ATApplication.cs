@@ -112,7 +112,7 @@ namespace AcceptanceTest
         {
             Session session = Session.LookupSession(sessionID);
             if (null != session)
-                session.Reset("OnCreate");
+                session.Reset();
         }
 
         public void OnLogout(SessionID sessionID)

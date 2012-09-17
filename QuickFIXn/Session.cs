@@ -892,6 +892,12 @@ namespace QuickFix
         {
         }
 
+        [Obsolete]
+        public void Reset()
+        {
+            this.Reset("");
+        }
+        
         public void Reset(string reason)
         {
             GenerateLogout();
