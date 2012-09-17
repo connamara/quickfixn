@@ -461,7 +461,7 @@ namespace QuickFix.DataDictionary
 					string description = String.Empty;
 					if (enumEl.Attributes["description"] != null)
 						description = enumEl.Attributes["description"].Value;
-					enums.Add(enumEl.Attributes["enum"].Value, description);
+					enums[enumEl.Attributes["enum"].Value] = description;
 				}
 			}
 			return new DDField(tag, name, enums, fldType);
