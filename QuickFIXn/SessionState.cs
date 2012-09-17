@@ -382,11 +382,12 @@ namespace QuickFix
             lock (sync_) { return this.MessageStore.GetCreationTime(); }
         }
 
-        void MessageStore.Reset()
+        [Obsolete]
+        public void Reset()
         {
-            throw new InvalidOperationException("Use Reset(string reason) instead!");
+            this.Reset("");
         }
-
+        
         public void Reset(string reason)
         {
             lock (sync_)
