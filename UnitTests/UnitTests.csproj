@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="ConfigTests.cs" />
     <Compile Include="ConverterTests.cs" />
+    <Compile Include="CustomMessageFactoryTests.cs" />
     <Compile Include="DataDictionaryTests.cs" />
     <Compile Include="DefaultMessageFactoryTests.cs" />
     <Compile Include="DictionaryTest.cs" />
