@@ -325,7 +325,7 @@ namespace QuickFix.DataDictionary
 		public void CheckValue(Fields.IField field)
 		{
 			DDField fld = FieldsByTag[field.Tag];
-			if (fld.HasEnums() && !fld.Enums.ContainsKey(field.ToString()))
+			if (fld.HasEnums() && !fld.EnumDict.ContainsKey(field.ToString()))
 			{
 				throw new IncorrectTagValue(field.Tag);
 			}
@@ -418,7 +418,7 @@ namespace QuickFix.DataDictionary
 		}
 
 		public Boolean FieldHasValue(int tag, String val) {
-			return FieldsByTag[tag].Enums.ContainsKey(val);
+			return FieldsByTag[tag].EnumDict.ContainsKey(val);
 		}
 
 		private void setVersionInfo(XmlDocument doc) {

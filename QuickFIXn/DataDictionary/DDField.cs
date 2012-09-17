@@ -7,20 +7,61 @@ namespace QuickFix.DataDictionary
 {
     public class DDField
     {
+        /// <summary>
+        /// Represents field data from a DataDictionary file.
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="name"></param>
+        /// <param name="enums">dictionary of enum=>description values</param>
+        /// <param name="fixFldType"></param>
         public DDField(int tag, String name, Dictionary<String, String> enums, String fixFldType)
         {
             this.Tag = tag;
             this.Name = name;
-            this.Enums = enums;
+            this.EnumDict = enums;
             this.FixFldType = fixFldType;
             this.FieldType = FieldTypeFromFix(this.FixFldType);
         }
 
+        /// <summary>
+        /// Converter used only by the obsolete constructor and Enums attribute.
+        /// </summary>
+        private static Dictionary<string,string> HashSetToDict(HashSet<String> enums)
+        {
+            Dictionary<String, String> dict = new Dictionary<string, string>();
+            foreach (String s in enums)
+                dict[s] = "";
+            return dict;
+        }
+
+        /// <summary>
+        /// Old version of constructor.  Discarded in favor of version that takes Dictionary instead of HashSet
+        /// (so that enum desc strings can be preserved).
+        /// </summary>
+        [Obsolete("Use DDField(int,String,Dictionary<String,String>,string) instead")]
+        public DDField(int tag, String name, HashSet<String> enums, String fixFldType)
+            : this(tag, name, HashSetToDict(enums), fixFldType)
+        { }
+
+        //TODO in version 2.0 - these probably shouldn't be public writable
         public int Tag;
         public String Name;
-        public Dictionary<String, String> Enums;
+        public Dictionary<String, String> EnumDict;
         public String FixFldType;
         public Type FieldType;
+
+        /// <summary>
+        /// Replaced by EnumDict, which preserves the enum's description.
+        /// This attribute is a wrapper around EnumDict for backward-compatibility only.
+        /// The getter constructs a new HashSet, so is probably inefficient.
+        /// The setter sets EnumDict where all values are empty string.
+        /// </summary>
+        [Obsolete("Use EnumDict instead.  See this property's doc comments.")]
+        public HashSet<String> Enums
+        {
+            get { return new HashSet<String>(EnumDict.Keys); }
+            set { EnumDict = HashSetToDict(value); }
+        }
 
         /// <summary>
         /// This field deprecated because it makes no sense; being required is not a quality of the field,
@@ -35,7 +76,7 @@ namespace QuickFix.DataDictionary
 
         public Boolean HasEnums()
         {
-            return Enums.Count > 0;
+            return EnumDict.Count > 0;
         }
 
         public Type FieldTypeFromFix(String type)
