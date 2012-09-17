@@ -7,7 +7,7 @@ namespace QuickFix.DataDictionary
 {
     public class DDField
     {
-        public DDField(int tag, String name, HashSet<String> enums, String fixFldType)
+        public DDField(int tag, String name, Dictionary<String, String> enums, String fixFldType)
         {
             this.Tag = tag;
             this.Name = name;
@@ -18,7 +18,7 @@ namespace QuickFix.DataDictionary
 
         public int Tag;
         public String Name;
-        public HashSet<String> Enums;
+        public Dictionary<String, String> Enums;
         public String FixFldType;
         public Type FieldType;
 

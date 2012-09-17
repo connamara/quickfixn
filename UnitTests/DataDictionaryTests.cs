@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using QuickFix;
-using QuickFix.Fields;
 
 namespace UnitTests
 {
@@ -41,6 +40,16 @@ namespace UnitTests
             Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "CONNECTED"), Is.EqualTo(false));
             Assert.False(dd.FieldsByTag[1].HasEnums());
             Assert.True(dd.FieldsByTag[945].HasEnums());
+        }
+
+        [Test]
+        public void FieldHasDescriptionTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            Assert.AreEqual(typeof (Dictionary<string, string>), dd.FieldsByTag[945].Enums.GetType());
+            Assert.That("COMPLETED", Is.EqualTo(dd.FieldsByTag[945].Enums["2"]));
+            Assert.AreNotEqual("HEARTBEAT", dd.FieldsByTag[35].Enums["A"]);
         }
 
         [Test]
