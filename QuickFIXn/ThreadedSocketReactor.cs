@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System;
 
 namespace QuickFix
 {
@@ -35,6 +36,12 @@ namespace QuickFix
 
         #endregion
 
+        [Obsolete]
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
+            : this( serverSocketEndPoint, socketSettings, "log")
+        {
+        }
+        
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, string debugLogFilePath)
         {
             socketSettings_ = socketSettings;

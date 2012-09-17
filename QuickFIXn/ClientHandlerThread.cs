@@ -1,5 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Threading;
+using System;
 
 namespace QuickFix
 {
@@ -17,6 +18,12 @@ namespace QuickFix
         private long id_;
         private FileLog log_;
 
+        [Obsolete]
+        public ClientHandlerThread(TcpClient tcpClient, long clientId)
+            : this(tcpClient, clientId, "log")
+        {
+        }
+        
         public ClientHandlerThread(TcpClient tcpClient, long clientId, string debugLogFilePath)
         {
             log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));

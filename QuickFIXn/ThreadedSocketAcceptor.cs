@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Net;
+using System;
 
 namespace QuickFix
 {
@@ -33,6 +34,12 @@ namespace QuickFix
 
             #endregion
 
+            [Obsolete]
+            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings)
+                : this(socketEndPoint, socketSettings, "log")
+            {
+            }
+            
             public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, string debugLogFilePath)
             {
                 socketEndPoint_ = socketEndPoint;
