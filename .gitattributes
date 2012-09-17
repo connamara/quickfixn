@@ -2,5 +2,6 @@
 QuickFIXn/* text eol=crlf
 UnitTests/* text eol=crlf
 Examples/* text eol=crlf
+generator/*rb text eol=crlf
 *.cs text eol=crlf
 *.bat text eol=crlf
