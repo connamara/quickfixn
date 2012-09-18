@@ -24,4 +24,4 @@ Changes since the last version:
 * (patch) issue #43 - Change occurrences of "QuickFIX.NET" to "QuickFIXn" (dir name, sln name, scripts) (gbirchmeier)
 * (patch) issue #58 - convert sln to vs2010 (gbirchmeier)
 * (patch) issue #90 - Dictionary.Get/SetDouble was not using invariant culture (formator/gbirchmeier)
-* (minor) pr #108/#115 - add DD class support for enum descriptions (formator/gbirchmeier)
+* (minor) pr #108/#117 - add DD class support for enum descriptions (formator/gbirchmeier)
