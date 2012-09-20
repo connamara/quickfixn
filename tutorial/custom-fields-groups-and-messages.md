@@ -68,10 +68,23 @@ And a Data Dictionary defines all FIX **Groups** within a Message:
 Customizing Our Data Dictionary
 -------------------------------
 
-Adding a custom field to a message is two steps.  For this example, we
-will add field 9006, `AwesomeField`, which is a `String`.
+Adding custom fields to existing messages
+=========================================
 
-First, we add it to the Fields section of the Data Dictionary:
+Many counterparties' customizations are limited to only adding custom fields to existing FIX messages.
+
+**Create the field:**
+
+If your counterparty is adding a already-existing field to a message that doesn't
+normally use it, then your field should already be defined, and you can skip this step.
+
+If the counterparty has created this field, then you must define it.
+Here, we'll add a new string field called `AwesomeField` as tag 9006.
+
+**Note: your new field must have a name and tag unique from all other fields in your Data Dictionary.
+
+To do this, we would go to the `fields` section of the Data Dictionary,
+and add a new `field` entry for the new `AwesomeField` field.
 
 ```
 <fields>
@@ -83,7 +96,12 @@ First, we add it to the Fields section of the Data Dictionary:
 </fields>
 ```
 
-Then, we add it to our messages:
+That's it!  Your field can now be used in other messages.
+
+**Add the field to a message:**
+
+If the field is *not* being added in a repeating group,
+then your altered message will look like this:
 
 ```
 <message name="ExecutionReport" msgtype="8" msgcat="app">
@@ -97,9 +115,15 @@ Then, we add it to our messages:
 </message>
 ```
 
-Custom **Groups** are especially important to get right in our Data
-Dictionary. Using `AwesomeField` from above, we add it to the Fields
-section of the document, then to a Group:
+If the field *is* being added to a repeating group,
+then you must add it inside the appropriate `group` tag.
+In the following excerpt, we add it to the `NoContraBrokers` group.
+
+* **Note 1:** If your group is not specified correctly, your message will be rejected
+or interpreted incorrectly.
+* **Note 2:** For FIX 4.0-4.4, the order of fields inside a repeating group is important.
+Make sure the position of your field matches that of the actual message to be received,
+or your message will be rejected.
 
 ```
 <message name="ExecutionReport" msgtype="8" msgcat="app">
@@ -116,8 +140,87 @@ section of the document, then to a Group:
 ...
 ```
 
-**The custom group would not work correctly without specifying this in our Data
-Dictionary.**
+Adding new messages types
+=========================
+
+Some counterparies add entirely new message types to FIX.
+
+To add a new message type to the Data Dictionary, there are two steps:
+
+1. Add a new message definition to the `messages` section.
+2. Add a new corresponding entry to the `MsgType` field within the `fields` section
+
+For example, here is how you'd add a new message type called `CoolMessage`
+that contains 3 fields (1 of which is required, the others mandatory):
+
+    * **Note:** The msgtype and name (both are strings) must be unique from all other messages.
+
+```
+<messages>
+  ...
+  <message name="CoolMessage" msgcat="app" msgtype="xCM">
+    <field name="Currency" required="N"/>
+    <field name="Text" required="N"/>
+    <field name="Account" required="Y"/>
+  </message>
+  ...
+</messages>
+...
+<fields>
+  ...
+  <field number='35' name='MsgType' type='STRING'>
+    ...
+    <value enum='xCM' description='COOLMESSAGE'/>
+  </field>
+  ...
+</fields>
+```
+
+Adding new groups
+=================
+
+Groups are a little more nuanced than other parts of the Data Dictionary.
+
+A group is defined within a message, with the `group` tag.  The first child
+element of the `group` tag is the group-counter tag, followed by the
+other fields in the group in the order in which they should appear in
+the message.
+
+Don't forget to define the group counter field in the `fields` section!
+By convention, the field usually starts with "No", e.g. if the group is called
+"NeatGroup", the counter field would be called "NoNeatGroups" (though this is
+not mandatory).
+
+* **Note 1:** If your group is not specified correctly, your message will be rejected
+or interpreted incorrectly.
+* **Note 2:** For FIX 4.0-4.4, the order of fields inside a repeating group is important.
+Make sure the position of your field matches that of the actual message to be received,
+or your message will be rejected.
+
+Here is how you would add a new group 'BrandNewGroup' to the message 'CoolMessage' that
+created in the previous section:
+
+```
+<messages>
+  ...
+  <message name="CoolMessage" msgcat="app" msgtype="CM">
+    <field name="Currency" required="N"/>
+    <field name="Text" required="N"/>
+    <field name="Account" required="Y"/>
+    <group name="NoBrandNewGroups" required="N">
+      <field name="ExecID" required="Y"/>
+      <field name="OrderID" required="N"/>
+      <!-- ... maybe other fields ... -->
+    </group>
+  </message>
+  ...
+</messages>
+...
+<fields>
+  ...
+  <field number='9876' name='NoBrandNewGroups' type='NUMINGROUP'/>
+</fields>
+```
 
 In Code
 -------
