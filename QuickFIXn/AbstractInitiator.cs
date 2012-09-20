@@ -25,10 +25,14 @@ namespace QuickFix
         #endregion
 
         public AbstractInitiator(Application application, MessageStoreFactory storeFactory, SessionSettings settings)
-            : this(application, storeFactory, settings, null)
+            : this(application, storeFactory, settings, null, null)
         { }
 
-        public AbstractInitiator(Application app, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory)
+        public AbstractInitiator(Application application, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory)
+            : this(application, storeFactory, settings, null, null)
+        { }
+
+        public AbstractInitiator(Application app, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory, IMessageFactory messageFactory)
         {
             settings_ = settings;
 
@@ -36,7 +40,7 @@ namespace QuickFix
             if (0 == definedSessions.Count)
                 throw new ConfigError("No sessions defined");
 
-            SessionFactory factory = new SessionFactory(app, storeFactory, logFactory);
+            SessionFactory factory = new SessionFactory(app, storeFactory, logFactory, messageFactory);
             foreach (SessionID sessionID in definedSessions)
             {
                 Dictionary dict = settings.Get(sessionID);
