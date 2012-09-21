@@ -11,9 +11,6 @@ namespace QuickFix
             QuickFix.Dictionary currentSection = null;
 
             string line = null;
-            int indexOfEq;
-            string key;
-            string value;
             while ((line = conf.ReadLine()) != null)
             {
                 line = line.Trim();
@@ -27,10 +24,8 @@ namespace QuickFix
                 }
                 else if (IsKeyValue(line) && currentSection != null)
                 {
-                    indexOfEq = line.IndexOf('=');
-                    key = line.Substring(0, indexOfEq).Trim();
-                    value = line.Substring(indexOfEq + 1).Trim();
-                    currentSection.SetString(key, value);
+                    string[] kv = line.Split(new char[]{'='}, 2);
+                    currentSection.SetString(kv[0].Trim(), kv[1].Trim());
                 }
             }
         }
