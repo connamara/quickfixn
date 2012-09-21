@@ -8,13 +8,11 @@ using QuickFix.Fields;
 namespace QuickFix
 {
     /// <summary>
-    /// The default factory for creating FIX message instances. Create subclasses
-    /// of this factory for generating custom messages using nonstandard message
-    /// types.
+    /// The default factory for creating FIX message instances.
     /// </summary>
     public class DefaultMessageFactory : IMessageFactory
     {
-        protected readonly Dictionary<string, IMessageFactory> _factories = new Dictionary<string, IMessageFactory>();
+        private readonly Dictionary<string, IMessageFactory> _factories = new Dictionary<string, IMessageFactory>();
 
         public DefaultMessageFactory()
         {
