@@ -22,11 +22,10 @@ namespace QuickFix
                 {
                     currentSection = Add(new Dictionary(SplitSection(line)));
                 }
-                else if (IsKeyValue(line))
+                else if (IsKeyValue(line) && currentSection != null)
                 {
-                    string[] kv = line.Split('=');
-                    if (currentSection != null)
-                        currentSection.SetString(kv[0].Trim(), kv[1].Trim());
+                    string[] kv = line.Split(new char[]{'='}, 2);
+                    currentSection.SetString(kv[0].Trim(), kv[1].Trim());
                 }
             }
         }
@@ -69,8 +68,8 @@ namespace QuickFix
         public LinkedList<QuickFix.Dictionary> Get(string sectionName)
         {
             LinkedList<QuickFix.Dictionary> result = new LinkedList<Dictionary>();
-            foreach(QuickFix.Dictionary dict in sections_)
-                if(sectionName == dict.Name)
+            foreach (QuickFix.Dictionary dict in sections_)
+                if (sectionName == dict.Name)
                     result.AddLast(dict);
             return result;
         }
