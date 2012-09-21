@@ -26,7 +26,7 @@ namespace QuickFix
             application_ = app;
             messageStoreFactory_ = storeFactory;
             logFactory_ = logFactory;
-            messageFactory_ = messageFactory;
+            messageFactory_ = messageFactory ?? new DefaultMessageFactory();
         }
 
         public Session Create(SessionID sessionID, QuickFix.Dictionary settings)
@@ -81,7 +81,7 @@ namespace QuickFix
                 new SessionSchedule(settings),
                 heartBtInt,
                 logFactory_,
-                messageFactory_ ?? new DefaultMessageFactory(),
+                messageFactory_,
                 senderDefaultApplVerId);
 
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
