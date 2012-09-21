@@ -8,7 +8,7 @@ using QuickFix.Fields;
 namespace QuickFix
 {
     /// <summary>
-    /// The default factory for creating FIX message instances.
+    /// The default factory for creating FIX message instances.  (In the v2.0 release, this class should be made sealed.)
     /// </summary>
     public class DefaultMessageFactory : IMessageFactory
     {
