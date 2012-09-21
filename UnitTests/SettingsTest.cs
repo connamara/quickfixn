@@ -43,7 +43,7 @@ namespace UnitTests
 
             LinkedList<QuickFix.Dictionary> nero = settings.Get("NERO");
             Assert.That(nero.Count, Is.EqualTo(1));
-            Assert.That(nero.First.Value.Count, Is.EqualTo(4));
+            Assert.That(nero.First.Value.Count, Is.EqualTo(5));
             Assert.That(nero.First.Value.GetString("WINDIR"), Is.EqualTo("D:\\This Is\\A-Directory\\Connamara\\"));
             Assert.That(nero.First.Value.GetString("UNIXDIR"), Is.EqualTo("/home/mgatny/This Is/A Directory/ok/"));
             Assert.That(nero.First.Value.GetString("WINFILE"), Is.EqualTo("D:\\Program Files\\Tomcat 4.1\\webapps\\mgatny\\WEB-INF\\connamara.cfg"));
