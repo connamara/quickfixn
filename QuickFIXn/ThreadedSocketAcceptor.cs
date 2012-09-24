@@ -4,6 +4,8 @@ using System;
 
 namespace QuickFix
 {
+    // TODO v2.0 - consider changing to internal
+
     /// <summary>
     /// Acceptor implementation - with threads
     /// Creates a ThreadedSocketReactor for every listening endpoint.
@@ -33,17 +35,11 @@ namespace QuickFix
             private Dictionary<SessionID, Session> acceptedSessions_ = new Dictionary<SessionID, Session>();
 
             #endregion
-
-            [Obsolete]
-            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings)
-                : this(socketEndPoint, socketSettings, "log")
-            {
-            }
             
-            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, string debugLogFilePath)
+            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
             {
                 socketEndPoint_ = socketEndPoint;
-                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, debugLogFilePath);
+                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict);
             }
 
             public void AcceptSession(Session session)
@@ -136,16 +132,10 @@ namespace QuickFix
                 socketSettings.SocketNodelay = dict.GetBool(SessionSettings.SOCKET_NODELAY);
             }
 
-            string debugLogFilePath = "log";
-            if (dict.Has(SessionSettings.DEBUG_LOGFILE_PATH))
-            {
-                debugLogFilePath = dict.GetString(SessionSettings.DEBUG_LOGFILE_PATH);
-            }
-
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, debugLogFilePath);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
                 socketDescriptorForAddress_[socketEndPoint] = descriptor;
             }
 
