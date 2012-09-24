@@ -1,5 +1,5 @@
-﻿using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace QuickFix
 {
@@ -10,8 +10,8 @@ namespace QuickFix
     public class SessionSettings
     {
         #region Public Constants
-        
-        public const string BEGINSTRING  = "BeginString";
+
+        public const string BEGINSTRING = "BeginString";
         public const string SENDERCOMPID = "SenderCompID";
         public const string SENDERSUBID = "SenderSubID";
         public const string SENDERLOCID = "SenderLocationID";
@@ -42,7 +42,7 @@ namespace QuickFix
         public const string RESET_ON_LOGOUT = "ResetOnLogout";
         public const string RESET_ON_DISCONNECT = "ResetOnDisconnect";
         public const string VALIDATE_FIELDS_OUT_OF_ORDER = "ValidateFieldsOutOfOrder";
-        public const string VALIDATE_FIELDS_HAVE_VALUES  = "ValidateFieldsHaveValues";
+        public const string VALIDATE_FIELDS_HAVE_VALUES = "ValidateFieldsHaveValues";
         public const string VALIDATE_USER_DEFINED_FIELDS = "ValidateUserDefinedFields";
         public const string DATA_DICTIONARY = "DataDictionary";
         public const string TRANSPORT_DATA_DICTIONARY = "TransportDataDictionary";
@@ -57,14 +57,25 @@ namespace QuickFix
         public const string SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT = "SendLogoutBeforeDisconnectFromTimeout";
         public const string SOCKET_NODELAY = "SocketNodelay";
         public const string IGNORE_POSSDUP_RESEND_REQUESTS = "IgnorePossDupResendRequests";
+        public const string DB_LOG_CONNECTION = "DbLogConnection";
+        public const string DB_LOG_MESSAGE_COMMANDTEXT = "DbLogMessageCommandText";
+        public const string DB_LOG_EVENT_COMMANDTEXT = "DbLogEventCommandText";
+        public const string DB_STORE_CONNECTION = "DbStoreConnection";
+        public const string DB_STORE_GETMESSAGE_COMMANDTEXT = "DbStoreGetMessageCommandText";
+        public const string DB_STORE_SETMESSAGE_COMMANDTEXT = "DbStoreSetMessageCommandText";
+        public const string DB_STORE_CLEARMESSAGES_COMMANDTEXT = "DbStoreClearMessagesCommandText";
+        public const string DB_STORE_CREATESESSION_COMMANDTEXT = "DbStoreCreateSessionCommandText";
+        public const string DB_STORE_GETSESSION_COMMANDTEXT = "DbStoreGetSessionCommandText";
+        public const string DB_STORE_UPDATESESSION_COMMANDTEXT = "DbStoreUpdateSessionCommandText";
+
 
         #endregion
 
         #region Private Members
-        
+
         private QuickFix.Dictionary defaults_ = new QuickFix.Dictionary();
         private System.Collections.Generic.Dictionary<SessionID, QuickFix.Dictionary> settings_ = new Dictionary<SessionID, Dictionary>();
-        
+
         #endregion
 
         #region Constructors
@@ -76,7 +87,7 @@ namespace QuickFix
                 FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read);
                 Load(new StreamReader(fs));
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 throw new ConfigError("File " + file + " not found (" + e.Message + ")");
             }
@@ -163,7 +174,7 @@ namespace QuickFix
             foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in settings_)
                 entry.Value.Merge(defaults_);
         }
-        
+
         public void Set(SessionID sessionID, QuickFix.Dictionary settings)
         {
             if (Has(sessionID))
