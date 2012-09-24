@@ -32,21 +32,21 @@ namespace QuickFix
         private LinkedList<ClientHandlerThread> clientThreads_ = new LinkedList<ClientHandlerThread>();
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
-        private string debugLogFilePath_;
+        private QuickFix.Dictionary sessionDict_;
 
         #endregion
 
         [Obsolete]
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
-            : this( serverSocketEndPoint, socketSettings, "log")
+            : this( serverSocketEndPoint, socketSettings, null)
         {
         }
         
-        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, string debugLogFilePath)
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
         {
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
-            debugLogFilePath_ = debugLogFilePath;
+            sessionDict_ = sessionDict;
         }
 
         public void Start()
@@ -69,7 +69,7 @@ namespace QuickFix
                     }
                     catch (System.Exception e)
                     {
-                        this.Log("Eror while closing server socket: " + e.Message);
+                        this.Log("Error while closing server socket: " + e.Message);
                     }
                 }
             }
@@ -87,7 +87,7 @@ namespace QuickFix
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, debugLogFilePath_);
+                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_);
                     lock (sync_)
                     {
                         clientThreads_.AddLast(t);

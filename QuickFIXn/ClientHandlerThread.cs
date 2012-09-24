@@ -4,6 +4,8 @@ using System;
 
 namespace QuickFix
 {
+    // TODO v2.0 - consider changing to internal
+
     /// <summary>
     /// Created by a ThreadedSocketReactor to handle a client connection.
     /// Each ClientHandlerThread has a SocketReader which reads
@@ -18,15 +20,28 @@ namespace QuickFix
         private long id_;
         private FileLog log_;
 
-        [Obsolete]
+        [Obsolete("Use the other constructor")]
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
-            : this(tcpClient, clientId, "log")
-        {
-        }
+            : this(tcpClient, clientId, new QuickFix.Dictionary())
+        { }
         
-        public ClientHandlerThread(TcpClient tcpClient, long clientId, string debugLogFilePath)
+        /// <summary>
+        /// Creates a ClientHandlerThread
+        /// </summary>
+        /// <param name="tcpClient"></param>
+        /// <param name="clientId"></param>
+        /// <param name="debugLogFilePath">path where thread log will go</param>
+        public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
         {
+            string debugLogFilePath = "log";
+            if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
+                debugLogFilePath = settingsDict.GetString(SessionSettings.DEBUG_FILE_LOG_PATH);
+            else if (settingsDict.Has(SessionSettings.FILE_LOG_PATH))
+                debugLogFilePath = settingsDict.GetString(SessionSettings.FILE_LOG_PATH);
+
+            // FIXME - do something more flexible than hardcoding a filelog
             log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
+
             tcpClient_ = tcpClient;
             id_ = clientId;
             socketReader_ = new SocketReader(tcpClient_, this);
