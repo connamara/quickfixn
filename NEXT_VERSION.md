@@ -26,4 +26,4 @@ Changes since the last version:
 * (patch) issue #90 - Dictionary.Get/SetDouble was not using invariant culture (formator/gbirchmeier)
 * (minor) pr #108/#117 - add DD class support for enum descriptions (formator/gbirchmeier)
 * (patch) pr #111/#120 - settings file can have = signs in value (ligu/gbirchmeier)
-* (minor) pr #113/#121 - config setting DebugLogFilePath (ligu/gbirchmeier)
+* (minor) pr #113/#122 - config setting DebugLogFilePath (ligu/gbirchmeier)
