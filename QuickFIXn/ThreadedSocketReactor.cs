@@ -6,6 +6,8 @@ using System;
 
 namespace QuickFix
 {
+    // TODO v2.0 - consider changing to internal
+
     /// <summary>
     /// Handles incoming connections on a single endpoint. When a socket connection
     /// is accepted, a ClientHandlerThread is created to handle the connection
@@ -36,11 +38,10 @@ namespace QuickFix
 
         #endregion
 
-        [Obsolete]
+        [Obsolete("Use the other constructor")]
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
-            : this( serverSocketEndPoint, socketSettings, null)
-        {
-        }
+            : this(serverSocketEndPoint, socketSettings, null)
+        { }
         
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
         {
