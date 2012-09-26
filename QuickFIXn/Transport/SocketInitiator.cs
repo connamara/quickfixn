@@ -65,6 +65,15 @@ namespace QuickFix.Transport
             logFactory_ = logFactory;
         }
 
+        public SocketInitiator(Application application, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory, IMessageFactory messageFactory)
+            : base(application, storeFactory, settings, logFactory, messageFactory)
+        {
+            app_ = application;
+            storeFactory_ = storeFactory;
+            settings_ = settings;
+            logFactory_ = logFactory;
+        }
+
         public static void SocketInitiatorThreadStart(object socketInitiatorThread)
         {
             SocketInitiatorThread t = socketInitiatorThread as SocketInitiatorThread;
