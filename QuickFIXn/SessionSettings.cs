@@ -1,5 +1,5 @@
-﻿using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace QuickFix
 {
@@ -10,8 +10,8 @@ namespace QuickFix
     public class SessionSettings
     {
         #region Public Constants
-        
-        public const string BEGINSTRING  = "BeginString";
+
+        public const string BEGINSTRING = "BeginString";
         public const string SENDERCOMPID = "SenderCompID";
         public const string SENDERSUBID = "SenderSubID";
         public const string SENDERLOCID = "SenderLocationID";
@@ -36,13 +36,14 @@ namespace QuickFix
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
         public const string RECONNECT_INTERVAL = "ReconnectInterval";
         public const string FILE_LOG_PATH = "FileLogPath";
+        public const string DEBUG_FILE_LOG_PATH = "DebugFileLogPath";
         public const string FILE_STORE_PATH = "FileStorePath";
         public const string REFRESH_ON_LOGON = "RefreshOnLogon";
         public const string RESET_ON_LOGON = "ResetOnLogon";
         public const string RESET_ON_LOGOUT = "ResetOnLogout";
         public const string RESET_ON_DISCONNECT = "ResetOnDisconnect";
         public const string VALIDATE_FIELDS_OUT_OF_ORDER = "ValidateFieldsOutOfOrder";
-        public const string VALIDATE_FIELDS_HAVE_VALUES  = "ValidateFieldsHaveValues";
+        public const string VALIDATE_FIELDS_HAVE_VALUES = "ValidateFieldsHaveValues";
         public const string VALIDATE_USER_DEFINED_FIELDS = "ValidateUserDefinedFields";
         public const string DATA_DICTIONARY = "DataDictionary";
         public const string TRANSPORT_DATA_DICTIONARY = "TransportDataDictionary";
@@ -61,10 +62,10 @@ namespace QuickFix
         #endregion
 
         #region Private Members
-        
+
         private QuickFix.Dictionary defaults_ = new QuickFix.Dictionary();
         private System.Collections.Generic.Dictionary<SessionID, QuickFix.Dictionary> settings_ = new Dictionary<SessionID, Dictionary>();
-        
+
         #endregion
 
         #region Constructors
@@ -76,7 +77,7 @@ namespace QuickFix
                 FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read);
                 Load(new StreamReader(fs));
             }
-            catch(System.Exception e)
+            catch (System.Exception e)
             {
                 throw new ConfigError("File " + file + " not found (" + e.Message + ")");
             }
@@ -163,7 +164,7 @@ namespace QuickFix
             foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in settings_)
                 entry.Value.Merge(defaults_);
         }
-        
+
         public void Set(SessionID sessionID, QuickFix.Dictionary settings)
         {
             if (Has(sessionID))
