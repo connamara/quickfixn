@@ -70,6 +70,10 @@ namespace QuickFix
             : this(new SessionFactory(application, storeFactory, logFactory), settings)
         { }
 
+        public ThreadedSocketAcceptor(Application application, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory, IMessageFactory messageFactory)
+            : this(new SessionFactory(application, storeFactory, logFactory, messageFactory), settings)
+        { }
+
         public ThreadedSocketAcceptor(SessionFactory sessionFactory, SessionSettings settings)
         {
             settings_ = settings;
