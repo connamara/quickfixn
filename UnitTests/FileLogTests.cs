@@ -10,40 +10,23 @@ namespace UnitTests
     class FileLogTests
     {
         QuickFix.FileLog log;
-        QuickFix.SessionSettings settings;
-        QuickFix.SessionID sessionID;
 
         [SetUp]
         public void setup()
-        {
-            if(System.IO.Directory.Exists("log"))
-                System.IO.Directory.Delete("log",true);
-
-            sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP","TARGETCOMP");
-
-            QuickFix.Dictionary config = new QuickFix.Dictionary();
-            config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
-            config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, "log");
-
-            settings = new QuickFix.SessionSettings();
-            settings.Set(sessionID,config);
-   
-            QuickFix.FileLogFactory factory = new QuickFix.FileLogFactory(settings);
-            log = (QuickFix.FileLog)factory.Create(sessionID);
-        }
+        { }
 
         [TearDown]
         public void teardown()
         {
-            log.Dispose();
-            
+            if (log != null)
+                log.Dispose();
         }
 
         [Test]
         public void testPrefix()
         {
             QuickFix.SessionID someSessionID = new QuickFix.SessionID("FIX.4.4", "sender", "target");
-            QuickFix.SessionID someSessionIDWithQualifier = new QuickFix.SessionID("FIX.4.3", "sender", "target","foo");
+            QuickFix.SessionID someSessionIDWithQualifier = new QuickFix.SessionID("FIX.4.3", "sender", "target", "foo");
 
             Assert.AreEqual("FIX.4.4-sender-target", QuickFix.FileLog.Prefix(someSessionID));
             Assert.AreEqual("FIX.4.3-sender-target-foo", QuickFix.FileLog.Prefix(someSessionIDWithQualifier));
@@ -60,14 +43,43 @@ namespace UnitTests
         }
 
         [Test]
-        public void testGenerateFileName()
+        public void testGeneratedFileName()
         {
+            if (System.IO.Directory.Exists("log"))
+                System.IO.Directory.Delete("log", true);
+
+            QuickFix.SessionID sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
+            QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
+
+            QuickFix.Dictionary config = new QuickFix.Dictionary();
+            config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
+            config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, "log");
+
+            settings.Set(sessionID, config);
+
+            QuickFix.FileLogFactory factory = new QuickFix.FileLogFactory(settings);
+            log = (QuickFix.FileLog)factory.Create(sessionID);
+
             log.OnEvent("some event");
             log.OnIncoming("some incoming");
             log.OnOutgoing("some outgoing");
 
             Assert.That(System.IO.File.Exists("log/FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log"));
             Assert.That(System.IO.File.Exists("log/FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log"));
+        }
+
+        [Test]
+        public void testThrowsIfNoConfig()
+        {
+            QuickFix.SessionID sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
+            QuickFix.Dictionary config = new QuickFix.Dictionary();
+            config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
+            QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
+            settings.Set(sessionID, config);
+
+            QuickFix.FileLogFactory factory = new QuickFix.FileLogFactory(settings);
+
+            Assert.Throws<QuickFix.ConfigError>(delegate { factory.Create(sessionID); });
         }
     }
 }
