@@ -6,7 +6,7 @@ namespace QuickFix
     /// <summary>
     /// Used by the session communications code. Not intended to be used by applications.
     /// </summary>
-    public class SessionState : MessageStore
+    public class SessionState
     {
         #region Private Members
 
