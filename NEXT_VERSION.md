@@ -28,4 +28,5 @@ Changes since the last version:
 * (patch) pr #111/#120 - settings file can have = signs in value (ligu/gbirchmeier)
 * (minor) issue #91 - support for custom message factories (formator)
 * (minor) pr #113/#122 - config setting DebugLogFilePath (ligu/gbirchmeier)
+* (minor) pr #110 - session reset logged to eventlog (ligu)
 
