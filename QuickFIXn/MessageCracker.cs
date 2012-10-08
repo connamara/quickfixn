@@ -5,6 +5,7 @@ using System.Text;
 
 using QuickFix.Fields;
 using System.Reflection;
+using System.Linq.Expressions;
 
 namespace QuickFix
 {
@@ -14,24 +15,51 @@ namespace QuickFix
     /// </summary>
     public abstract class MessageCracker
     {
-        private Dictionary<Type, MethodInfo> _handlerMethods = new Dictionary<Type, MethodInfo>();
+        private Dictionary<Type, Action<Message, SessionID>> _callCache = new Dictionary<Type, Action<Message, SessionID>>();
 
         public MessageCracker()
         {
-            initialize(this);
+            Initialize(this);
         }
 
-        private void initialize(Object messageHandler)
+        private void Initialize(Object messageHandler)
         {
             Type handlerType = messageHandler.GetType();
 
-            MethodInfo[] methods = handlerType.GetMethods();
+            MethodInfo[] methods = handlerType.GetMethods(BindingFlags.Public | BindingFlags.Instance);
+
             foreach (MethodInfo m in methods)
             {
-                if (IsHandlerMethod(m))
-                {
-                    _handlerMethods[m.GetParameters()[0].ParameterType] = m;
-                }
+                TryBuildCallCache(m);
+            }
+        }
+
+        /// <summary>
+        /// build  a complied expression tree - much faster than calling MethodInfo.Invoke
+        /// </summary>
+        /// <param name="m"></param>
+        private void TryBuildCallCache(MethodInfo m)
+        {
+            if (IsHandlerMethod(m))
+            {
+                var parameters = m.GetParameters();
+
+                var expParamMessage = parameters[0];
+
+                var expParamSessionId = parameters[1];
+
+                var messageParam = Expression.Parameter(typeof(Message), "message");
+
+                var sessionParam = Expression.Parameter(typeof(SessionID), "sessionID");
+
+                var instance = Expression.Constant(this);
+
+                var methodCall = Expression.Call(instance, m, Expression.Convert(messageParam, expParamMessage.ParameterType), Expression.Convert(sessionParam, expParamSessionId.ParameterType));
+
+                var action = Expression.Lambda<Action<Message, SessionID>>(methodCall, messageParam, sessionParam).Compile();
+
+                _callCache[expParamMessage.ParameterType] = action;
+
             }
         }
 
@@ -55,12 +83,19 @@ namespace QuickFix
         public void Crack(Message message, SessionID sessionID)
         {
             Type messageType = message.GetType();
-            MethodInfo handler = null;
 
-            if (_handlerMethods.TryGetValue(messageType, out handler))
-                handler.Invoke(this, new object[] { message, sessionID });
+            Action<Message, SessionID> onMessage = null;
+
+            if (_callCache.TryGetValue(messageType, out onMessage))
+            {
+                onMessage(message, sessionID);
+
+            }
             else
+            {
                 throw new UnsupportedMessageType();
+            }
+
         }
     }
 }
