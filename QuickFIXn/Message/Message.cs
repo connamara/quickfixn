@@ -105,7 +105,7 @@ namespace QuickFix
 
         public static bool IsAdminMsgType(string msgType)
         {
-            return msgType.Length == 1 && "0A12345h".IndexOf(msgType) != -1;
+            return msgType.Length == 1 && "0A12345n".IndexOf(msgType) != -1;
         }
 
         /// <summary>
