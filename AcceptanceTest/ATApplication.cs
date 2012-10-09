@@ -111,8 +111,10 @@ namespace AcceptanceTest
         public void OnCreate(SessionID sessionID)
         {
             Session session = Session.LookupSession(sessionID);
+
+            // Hey QF/J users, don't do this in a real app.
             if (null != session)
-                session.Reset();
+                session.Reset("AT Session Reset");
         }
 
         public void OnLogout(SessionID sessionID)
