@@ -1,4 +1,4 @@
-﻿﻿using System;
+using System;
 using System.Collections.Generic;
 using QuickFix.Fields;
 
@@ -37,6 +37,17 @@ namespace QuickFix
         public bool IsLoggedOn { get { return ReceivedLogon && SentLogon; } }
         public bool SentLogon { get { return state_.SentLogon; } }
         public bool ReceivedLogon { get { return state_.ReceivedLogon; } }
+        public bool IsNewSession
+        {
+            get
+            {
+                var creationTime = this.state_.GetCreationTime();
+                var lastEndTime = this.schedule_.LastEndTime(DateTime.UtcNow).ToUniversalTime();
+
+                return !creationTime.HasValue || creationTime.Value.ToUniversalTime() <= lastEndTime;
+            }
+        }
+
 
         /// <summary>
         /// Session setting for heartbeat interval (in seconds)
@@ -226,7 +237,7 @@ namespace QuickFix
             this.SendLogoutBeforeTimeoutDisconnect = false;
             this.IgnorePossDupResendRequests = false;
 
-            if (!IsSessionTime)
+            if (!IsSessionTime || IsNewSession)
                 Reset("Out of SessionTime at construction");
 
             lock (sessions_)
@@ -897,7 +908,7 @@ namespace QuickFix
         {
             this.Reset("(unspecified reason)");
         }
-        
+
         public void Reset(string reason)
         {
             GenerateLogout();

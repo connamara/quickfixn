@@ -35,7 +35,7 @@ namespace QuickFix
         /// Get the session creation time
         /// </summary>
         /// <returns>the session creation time</returns>
-        System.DateTime GetCreationTime();
+        System.DateTime? GetCreationTime();
 
         /// <summary>
         /// Reset the message store. Sequence numbers are set back to 1 and stored
