@@ -41,8 +41,8 @@ namespace QuickFix
         {
             get
             {
-                var creationTime = this.state_.GetCreationTime();
-                var lastEndTime = this.schedule_.LastEndTime(DateTime.UtcNow).ToUniversalTime();
+                DateTime? creationTime = this.state_.GetCreationTime();
+                DateTime lastEndTime = this.schedule_.LastEndTime(DateTime.UtcNow).ToUniversalTime();
 
                 return !creationTime.HasValue || creationTime.Value.ToUniversalTime() <= lastEndTime;
             }
