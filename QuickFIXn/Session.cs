@@ -550,7 +550,7 @@ namespace QuickFix
             {
                 if (null != e.InnerException)
                     this.Log.OnEvent(e.InnerException.Message);
-                GenerateReject(message, e.sessionRejectReason, e.field);
+                GenerateReject(message, e.sessionRejectReason, e.Field);
             }
             catch (UnsupportedVersion)
             {
