@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace QuickFix
@@ -377,7 +377,7 @@ namespace QuickFix
             lock (sync_) { this.MessageStore.IncrNextTargetMsgSeqNum(); }
         }
 
-        public System.DateTime GetCreationTime()
+        public System.DateTime? GetCreationTime()
         {
             lock (sync_) { return this.MessageStore.GetCreationTime(); }
         }
@@ -405,3 +405,4 @@ namespace QuickFix
         #endregion
     }
 }
+
