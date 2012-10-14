@@ -32,8 +32,7 @@ namespace QuickFix
 
         private MemoryStore cache_ = new MemoryStore();
 
-        System.Collections.Generic.Dictionary<int, MsgDef> offsets_ =
-            new Dictionary<int, MsgDef>();
+        System.Collections.Generic.Dictionary<int, MsgDef> offsets_ = new Dictionary<int, MsgDef>();
 
         public static string Prefix(SessionID sessionID)
         {
