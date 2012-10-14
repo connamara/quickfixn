@@ -489,7 +489,26 @@ namespace QuickFix.DataDictionary
 			parseMsgEl(doc.SelectSingleNode("//trailer"), Trailer);
 		}
 
-		private void parseMsgEl(XmlNode node, DDMap ddmap)
+        /// <summary>
+        /// Implied null third componentRequired parameter
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="ddmap"></param>
+        private void parseMsgEl(XmlNode node, DDMap ddmap)
+        {
+            parseMsgEl(node, ddmap, null);
+        }
+
+        /// <summary>
+        /// Parse a message element
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="ddmap"></param>
+        /// <param name="componentRequired">
+        /// If non-null, parsing is inside a component that is required (true) or not (false).
+        /// If null, parser is not inside a component.
+        /// </param>
+		private void parseMsgEl(XmlNode node, DDMap ddmap, bool? componentRequired)
 		{
 			if (!node.HasChildNodes) { return; }
 			foreach (XmlNode childNode in node.ChildNodes)
@@ -497,7 +516,8 @@ namespace QuickFix.DataDictionary
 				if( childNode.Name == "field" )
 				{
 					DDField fld = FieldsByName[childNode.Attributes["name"].Value];
-					if (childNode.Attributes["required"].Value == "Y")
+					if (childNode.Attributes["required"].Value == "Y"
+                        && (componentRequired==null || componentRequired.Value==true))
 					{
 						ddmap.ReqFields.Add(fld.Tag);
 					}
@@ -516,7 +536,8 @@ namespace QuickFix.DataDictionary
 				{
 					DDField fld = FieldsByName[childNode.Attributes["name"].Value];
 					DDGrp grp = new DDGrp();
-					if (childNode.Attributes["required"].Value == "Y")
+					if (childNode.Attributes["required"].Value == "Y"
+                        && (componentRequired == null || componentRequired.Value == true))
 					{
 						ddmap.ReqFields.Add(fld.Tag);
 						grp.Required = true;
@@ -529,12 +550,13 @@ namespace QuickFix.DataDictionary
 					parseMsgEl(childNode, grp);
 					ddmap.Groups.Add(fld.Tag, grp);
 				}
-				else if(childNode.Name == "component")
-				{
-					String name = childNode.Attributes["name"].Value;
-					XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + name + "']");
-					parseMsgEl(compNode, ddmap);
-				}
+                else if (childNode.Name == "component")
+                {
+                    String name = childNode.Attributes["name"].Value;
+                    XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + name + "']");
+                    bool? compRequired = (childNode.Attributes["required"].Value == "Y");
+                    parseMsgEl(compNode, ddmap, compRequired);
+                }
 			}
 		}
 	}

@@ -105,6 +105,10 @@ namespace AcceptanceTest
                 Echo(msg, sessionID);
         }
 
+        public void OnMessage(QuickFix.FIX44.TradeCaptureReportRequest msg, SessionID sessionID)
+        {
+            // do nothing, just swallow it.
+        }
 
         #region Application Methods
 
