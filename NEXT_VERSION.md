@@ -30,3 +30,5 @@ Changes since the last version:
 * (minor) pr #113/#122 - config setting DebugLogFilePath (ligu/gbirchmeier)
 * (minor) pr #110 - session reset logged to eventlog (ligu)
 * (patch) issue #93 - bugfix: change 'h' to 'n' in Message.IsAdminMsgType (gbirchmeier)
+* (patch) issue #98 - bugfix: required fields inside components are erroneously causing the component to be treated as required (gbirchmeier)
+
