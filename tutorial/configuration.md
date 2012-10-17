@@ -566,10 +566,25 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>DebugFileLogPath</td>
-    <td class='description'>Directory to store ThreadedClientAcceptor thread logs.
+    <td class='description'>Directory to store ThreadedClientAcceptor thread logs.</td>
     <td class='valid'>Valid directory for storing files, must have write access</td>
     <td class='default'>Value of <tt>FileLogPath</tt> if present, else "log".</td>
   </tr>
+
+  <tr>
+    <td class='setting'>FileLogRotateOnNewSession</td>
+    <td class='description'>When set to 'Y', rotates the FileLog from a previous session for archiving at the start of each session.</td>
+    <td class='valid'>'Y' or 'N' (without quotes).</td>
+    <td class='default'>If not specified, defaults to 'N'.</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>FileLogRotateNumToKeep</td>
+    <td class='description'>Number of archived logs to keep before deleting. Requires that FileLogRotateOnNewSession be set to 'Y'.</td>
+    <td class='valid'>An Integer. Example: '1' (without quotes).</td>
+    <td class='default'>If not specified, defaults to '1'.</td>
+  </tr>
+
 </table>
 
 

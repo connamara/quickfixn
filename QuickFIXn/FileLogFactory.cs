@@ -22,7 +22,19 @@ namespace QuickFix
         /// <returns></returns>
         public Log Create(SessionID sessionID)
         {
-            return new FileLog(settings_.Get(sessionID).GetString(SessionSettings.FILE_LOG_PATH), sessionID);
+            Dictionary sessionSettings = settings_.Get(sessionID);
+            bool RotateLog = false; //default if undefined
+            int NumDaysToKeep = 1; //default if undefined
+
+            if (sessionSettings.Has(SessionSettings.FILE_LOG_ROTATE_ON_NEW_SESSION))
+                RotateLog = sessionSettings.GetBool(SessionSettings.FILE_LOG_ROTATE_ON_NEW_SESSION);
+
+            if (sessionSettings.Has(SessionSettings.FILE_LOG_ROTATE_NUM_TO_KEEP))
+                NumDaysToKeep = sessionSettings.GetInt(SessionSettings.FILE_LOG_ROTATE_NUM_TO_KEEP);
+
+
+
+            return new FileLog(sessionSettings.GetString(SessionSettings.FILE_LOG_PATH), sessionID, RotateLog, NumDaysToKeep);
         }
 
         #endregion

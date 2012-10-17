@@ -1,4 +1,5 @@
 ﻿
+using System.Collections.Generic;
 namespace QuickFix
 {
     /// <summary>
@@ -14,18 +15,18 @@ namespace QuickFix
         private string messageLogFileName_;
         private string eventLogFileName_;
 
-        public FileLog(string fileLogPath)
+        public FileLog(string fileLogPath, bool DoRotateLog, int NumDaysToKeep)
         {
-            Init(fileLogPath, "GLOBAL");
+            Init(fileLogPath, "GLOBAL", DoRotateLog, NumDaysToKeep);
         }
 
-        public FileLog(string fileLogPath, SessionID sessionID)
+        public FileLog(string fileLogPath, SessionID sessionID, bool DoRotateLog, int NumDaysToKeep)
         {
-            Init(fileLogPath, Prefix(sessionID));
-        }   
-        
+            Init(fileLogPath, Prefix(sessionID), DoRotateLog, NumDaysToKeep);
+        }
 
-        private void Init(string fileLogPath, string prefix)
+
+        private void Init(string fileLogPath, string prefix, bool DoRotateLog, int NumDaysToKeep)
         {
             if (!System.IO.Directory.Exists(fileLogPath))
                 System.IO.Directory.CreateDirectory(fileLogPath);
@@ -33,11 +34,53 @@ namespace QuickFix
             messageLogFileName_ = System.IO.Path.Combine(fileLogPath, prefix + ".messages.current.log");
             eventLogFileName_ = System.IO.Path.Combine(fileLogPath, prefix + ".event.current.log");
 
+            if (DoRotateLog)
+                RotateLog(new string[] { messageLogFileName_, eventLogFileName_ }, NumDaysToKeep);
+
             messageLog_ = new System.IO.StreamWriter(messageLogFileName_,true);
             eventLog_ = new System.IO.StreamWriter(eventLogFileName_,true);
 
             messageLog_.AutoFlush = true;
             eventLog_.AutoFlush = true;
+        }
+
+        /// <summary>
+        /// Attempt to rotate logs. 
+        /// Returns null string if successful, error string if otherwise.
+        /// Doesn't use filesystem creationtime due to file tunneling.
+        /// </summary>
+        /// <param name="LogFileNames"></param>
+        /// <param name="NumDaysToKeep"></param>
+        /// <returns></returns>
+        private static string RotateLog(string[] LogFileNames, int NumDaysToKeep)
+        {
+            try
+            {
+                foreach (string fn in LogFileNames)
+                {
+                    if (System.IO.File.Exists(fn))
+                        System.IO.File.Move(fn, fn + System.DateTime.UtcNow.ToString(".MMddyyyy-HHmmssffff"));
+
+
+                    System.IO.FileInfo fiLog = new System.IO.FileInfo(fn);
+                    List<System.IO.FileInfo> oldLogs = new List<System.IO.FileInfo>();
+
+                    if (NumDaysToKeep < 0) NumDaysToKeep = 0;
+
+                    foreach (string f in System.IO.Directory.GetFiles(fiLog.DirectoryName, fiLog.Name + ".*", System.IO.SearchOption.TopDirectoryOnly))
+                        oldLogs.Add(new System.IO.FileInfo(System.IO.Path.Combine(fiLog.DirectoryName, f)));
+
+                    oldLogs.Sort((a, b) => a.LastWriteTimeUtc.CompareTo(b.LastWriteTimeUtc));
+
+                    for (int i = 0; ((oldLogs.Count > NumDaysToKeep) && (i <= (oldLogs.Count - NumDaysToKeep) - 1)); i++)
+                        oldLogs[i].Delete();
+
+                }
+            }
+            catch (System.Exception e1)
+            { return e1.Message; }
+
+            return null;
         }
 
         public static string Prefix(SessionID sessionID)
