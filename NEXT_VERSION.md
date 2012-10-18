@@ -31,4 +31,4 @@ Changes since the last version:
 * (minor) pr #110 - session reset logged to eventlog (ligu)
 * (patch) issue #93 - bugfix: change 'h' to 'n' in Message.IsAdminMsgType (gbirchmeier)
 * (patch) issue #98 - bugfix: required fields inside components are erroneously causing the component to be treated as required (gbirchmeier)
-
+# (minor) issue #22 - bugfix: seq nums not being reset when restarting application after session StartTime (ligu)
