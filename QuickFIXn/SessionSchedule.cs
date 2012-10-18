@@ -32,9 +32,14 @@ namespace QuickFix
                 return CheckTime(adjusted.TimeOfDay);
         }
 
+        /// <summary>
+        /// Return the latest EndTime (in UTC) before time.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public DateTime LastEndTime(DateTime time)
         {
-            if (time.Kind == DateTimeKind.Local)
+            if (time.Kind != DateTimeKind.Utc)
                 throw new ArgumentException("Only UTC time is supported", "time");
 
             DateTime adjusted =
@@ -54,7 +59,7 @@ namespace QuickFix
             else if (adjusted.TimeOfDay < EndTime)
                 daysBack = 1;
 
-            return adjusted.Date + new TimeSpan(-daysBack, 0, 0, 0) + EndTime;
+            return (adjusted.Date + new TimeSpan(-daysBack, 0, 0, 0) + EndTime).ToUniversalTime();
         }
 
         private bool CheckDay(System.DateTime time)

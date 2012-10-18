@@ -196,7 +196,6 @@ namespace QuickFix
 
         #endregion
 
-        /// FIXME
         public Session(
             Application app, MessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
             SessionSchedule sessionSchedule, int heartBtInt, LogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
