@@ -2,6 +2,8 @@
 
 namespace QuickFix
 {
+    /// FIXME v2 - property-ize all of these get/set functions
+
     /// <summary>
     /// Used by a Session to store and retrieve messages for resend purposes
     /// </summary>
@@ -31,11 +33,11 @@ namespace QuickFix
         void IncrNextSenderMsgSeqNum();
         void IncrNextTargetMsgSeqNum();
 
-        /// <summary>
-        /// Get the session creation time
-        /// </summary>
-        /// <returns>the session creation time</returns>
-        System.DateTime? GetCreationTime();
+
+        System.DateTime? CreationTime { get; }
+
+        [System.Obsolete("use CreationTime instead")]
+        System.DateTime GetCreationTime();
 
         /// <summary>
         /// Reset the message store. Sequence numbers are set back to 1 and stored

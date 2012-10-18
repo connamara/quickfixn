@@ -58,10 +58,20 @@ namespace QuickFix
         public void IncrNextTargetMsgSeqNum()
         { ++nextTargetMsgSeqNum_; }
 
-        public System.DateTime? GetCreationTime()
+        public System.DateTime? CreationTime
         {
-            return creationTime;
+            get
+            {
+                return creationTime;
+            }
         }
+
+        [System.Obsolete("Use CreationTime instead")]
+        public DateTime GetCreationTime()
+        {
+            throw new NotImplementedException();
+        }
+
 
         public void Reset()
         {

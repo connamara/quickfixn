@@ -218,14 +218,23 @@ namespace QuickFix
             writer.Flush();
         }
 
-        public DateTime? GetCreationTime()
+        public DateTime? CreationTime
         {
-            if (System.IO.File.Exists(seqNumsFileName_))
+            get
             {
-                return System.IO.File.GetCreationTimeUtc(seqNumsFileName_);
+                if (System.IO.File.Exists(seqNumsFileName_))
+                {
+                    return System.IO.File.GetCreationTimeUtc(seqNumsFileName_);
+                }
+                else
+                    return null;
             }
-            else
-                return null;
+        }
+
+        [System.Obsolete("Use CreationTime instead")]
+        public DateTime GetCreationTime()
+        {
+            throw new NotImplementedException();
         }
 
         public void Reset()
