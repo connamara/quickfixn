@@ -237,8 +237,10 @@ namespace QuickFix
             this.SendLogoutBeforeTimeoutDisconnect = false;
             this.IgnorePossDupResendRequests = false;
 
-            if (!IsSessionTime || IsNewSession)
+            if (!IsSessionTime)
                 Reset("Out of SessionTime at construction");
+            else if (IsNewSession)
+                Reset("New session");
 
             lock (sessions_)
             {
