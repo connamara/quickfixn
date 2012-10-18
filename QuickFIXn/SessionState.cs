@@ -377,9 +377,12 @@ namespace QuickFix
             lock (sync_) { this.MessageStore.IncrNextTargetMsgSeqNum(); }
         }
 
-        public System.DateTime? GetCreationTime()
+        public System.DateTime? CreationTime
         {
-            lock (sync_) { return this.MessageStore.GetCreationTime(); }
+            get
+            {
+                lock (sync_) { return this.MessageStore.CreationTime; }
+            }
         }
 
         [Obsolete("Use Reset(reason) instead.")]

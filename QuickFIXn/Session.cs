@@ -41,7 +41,7 @@ namespace QuickFix
         {
             get
             {
-                DateTime? creationTime = this.state_.GetCreationTime();
+                DateTime? creationTime = this.state_.CreationTime;
                 DateTime lastEndTime = this.schedule_.LastEndTime(DateTime.UtcNow).ToUniversalTime();
 
                 return !creationTime.HasValue || creationTime.Value.ToUniversalTime() <= lastEndTime;
