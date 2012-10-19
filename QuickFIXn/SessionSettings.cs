@@ -76,6 +76,7 @@ namespace QuickFix
             {
                 FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read);
                 Load(new StreamReader(fs));
+                fs.Close();
             }
             catch (System.Exception e)
             {
