@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace QuickFix
@@ -14,7 +13,7 @@ namespace QuickFix
         {
             public long index { get; private set; }
             public int size { get; private set; }
-            
+
             public MsgDef(long index, int size)
             {
                 this.index = index;
@@ -33,16 +32,15 @@ namespace QuickFix
 
         private MemoryStore cache_ = new MemoryStore();
 
-        System.Collections.Generic.Dictionary<int, MsgDef> offsets_ = 
-            new Dictionary<int, MsgDef>();
+        System.Collections.Generic.Dictionary<int, MsgDef> offsets_ = new Dictionary<int, MsgDef>();
 
         public static string Prefix(SessionID sessionID)
         {
             System.Text.StringBuilder prefix = new System.Text.StringBuilder(sessionID.BeginString)
                 .Append('-').Append(sessionID.SenderCompID);
-            if(SessionID.IsSet(sessionID.SenderSubID))
+            if (SessionID.IsSet(sessionID.SenderSubID))
                 prefix.Append('_').Append(sessionID.SenderSubID);
-            if(SessionID.IsSet(sessionID.SenderLocationID))
+            if (SessionID.IsSet(sessionID.SenderLocationID))
                 prefix.Append('_').Append(sessionID.SenderLocationID);
             prefix.Append('-').Append(sessionID.TargetCompID);
             if (SessionID.IsSet(sessionID.TargetSubID))
@@ -90,13 +88,13 @@ namespace QuickFix
             if (headerFile_ != null)
                 headerFile_.Close();
 
-            if(System.IO.File.Exists(seqNumsFileName_))
+            if (System.IO.File.Exists(seqNumsFileName_))
                 System.IO.File.Delete(seqNumsFileName_);
 
-            if(System.IO.File.Exists(headerFileName_))
+            if (System.IO.File.Exists(headerFileName_))
                 System.IO.File.Delete(headerFileName_);
 
-            if(System.IO.File.Exists(msgFileName_))
+            if (System.IO.File.Exists(msgFileName_))
                 System.IO.File.Delete(msgFileName_);
         }
 
@@ -120,7 +118,7 @@ namespace QuickFix
                 }
             }
 
-            if(System.IO.File.Exists(seqNumsFileName_))
+            if (System.IO.File.Exists(seqNumsFileName_))
             {
                 using (System.IO.StreamReader seqNumReader = new System.IO.StreamReader(seqNumsFileName_))
                 {
@@ -141,9 +139,9 @@ namespace QuickFix
 
         public void Get(int startSeqNum, int endSeqNum, List<string> messages)
         {
-            for(int i = startSeqNum; i<=endSeqNum; i++)
+            for (int i = startSeqNum; i <= endSeqNum; i++)
             {
-                if(offsets_.ContainsKey(i))
+                if (offsets_.ContainsKey(i))
                 {
                     msgFile_.Seek(offsets_[i].index, System.IO.SeekOrigin.Begin);
                     byte[] msgBytes = new byte[offsets_[i].size];
@@ -168,7 +166,7 @@ namespace QuickFix
             headerFile_.WriteLine(b.ToString());
             headerFile_.Flush();
 
-            offsets_[msgSeqNum] = new MsgDef(offset,size);
+            offsets_[msgSeqNum] = new MsgDef(offset, size);
 
             msgFile_.Write(msgBytes, 0, size);
             msgFile_.Flush();
@@ -215,11 +213,25 @@ namespace QuickFix
         {
             seqNumsFile_.Seek(0, System.IO.SeekOrigin.Begin);
             System.IO.StreamWriter writer = new System.IO.StreamWriter(seqNumsFile_);
-            
+
             writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10"));
             writer.Flush();
         }
 
+        public DateTime? CreationTime
+        {
+            get
+            {
+                if (System.IO.File.Exists(seqNumsFileName_))
+                {
+                    return System.IO.File.GetCreationTimeUtc(seqNumsFileName_);
+                }
+                else
+                    return null;
+            }
+        }
+
+        [System.Obsolete("Use CreationTime instead")]
         public DateTime GetCreationTime()
         {
             throw new NotImplementedException();

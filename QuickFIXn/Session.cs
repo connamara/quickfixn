@@ -1,4 +1,4 @@
-﻿﻿using System;
+using System;
 using System.Collections.Generic;
 using QuickFix.Fields;
 
@@ -37,6 +37,17 @@ namespace QuickFix
         public bool IsLoggedOn { get { return ReceivedLogon && SentLogon; } }
         public bool SentLogon { get { return state_.SentLogon; } }
         public bool ReceivedLogon { get { return state_.ReceivedLogon; } }
+        public bool IsNewSession
+        {
+            get
+            {
+                DateTime? creationTime = this.state_.CreationTime;
+                DateTime lastEndTime = this.schedule_.LastEndTime(DateTime.UtcNow).ToUniversalTime();
+
+                return !creationTime.HasValue || creationTime.Value.ToUniversalTime() <= lastEndTime;
+            }
+        }
+
 
         /// <summary>
         /// Session setting for heartbeat interval (in seconds)
@@ -185,7 +196,6 @@ namespace QuickFix
 
         #endregion
 
-        /// FIXME
         public Session(
             Application app, MessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
             SessionSchedule sessionSchedule, int heartBtInt, LogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
@@ -228,6 +238,8 @@ namespace QuickFix
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime at construction");
+            else if (IsNewSession)
+                Reset("New session");
 
             lock (sessions_)
             {
@@ -897,7 +909,7 @@ namespace QuickFix
         {
             this.Reset("(unspecified reason)");
         }
-        
+
         public void Reset(string reason)
         {
             GenerateLogout();
