@@ -318,5 +318,100 @@ namespace UnitTests
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 20, 0, 0, DateTimeKind.Utc)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 20, 0, 1, DateTimeKind.Utc)));
         }
+
+        [Test]
+        public void testLastEndTime_takesUtcOnly()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "09:30:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "16:00:00");
+
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            Assert.Throws<ArgumentException>(
+                delegate { sched.LastEndTime(new DateTime(2012, 10, 18, 12, 00, 00, DateTimeKind.Local)); });
+            Assert.Throws<ArgumentException>(
+                delegate { sched.LastEndTime(new DateTime(2012, 10, 18, 12, 00, 00, DateTimeKind.Unspecified)); });
+        }
+
+        [Test]
+        public void testLastEndTime_DailySessions()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "09:30:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "16:00:00");
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            DateTime thisDayEnd = new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc);
+            DateTime prevDayEnd = new DateTime(2012, 10, 17, 16, 00, 00, DateTimeKind.Utc);
+
+            // before starttime
+            Assert.AreEqual(prevDayEnd, sched.LastEndTime(new DateTime(2012, 10, 18, 08, 00, 00, DateTimeKind.Utc)));
+            // during session
+            Assert.AreEqual(prevDayEnd, sched.LastEndTime(new DateTime(2012, 10, 18, 08, 00, 00, DateTimeKind.Utc)));
+            // equals endtime
+            Assert.AreEqual(thisDayEnd, sched.LastEndTime(thisDayEnd));
+            // after endtime
+            Assert.AreEqual(thisDayEnd, sched.LastEndTime(new DateTime(2012, 10, 18, 17, 00, 00, DateTimeKind.Utc)));
+
+            // ==========
+            // Settings file is specified in a zone (est, -5)
+            settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "04:30:00"); // 09:30:00 utc
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "11:00:00");   // 16:00:00 utc
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
+            sched = new QuickFix.SessionSchedule(settings);
+
+            // before starttime
+            Assert.AreEqual(prevDayEnd, sched.LastEndTime(new DateTime(2012, 10, 18, 08, 00, 00, DateTimeKind.Utc)));
+            // during session
+            Assert.AreEqual(prevDayEnd, sched.LastEndTime(new DateTime(2012, 10, 18, 10, 00, 00, DateTimeKind.Utc)));
+            // equals endtime
+            Assert.AreEqual(thisDayEnd, sched.LastEndTime(thisDayEnd));
+            // after endtime
+            Assert.AreEqual(thisDayEnd, sched.LastEndTime(new DateTime(2012, 10, 18, 17, 00, 00, DateTimeKind.Utc)));
+        }
+
+        [Test]
+        public void testLastEndTime_WeeklySessions()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "09:30:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "16:00:00");
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            DateTime thisWeekEnd = new DateTime(2012, 10, 19, 16, 00, 00, DateTimeKind.Utc);
+            DateTime prevWeekEnd = new DateTime(2012, 10, 12, 16, 00, 00, DateTimeKind.Utc);
+
+            // before starttime
+            Assert.AreEqual(prevWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 15, 08, 00, 00, DateTimeKind.Utc)));
+            // during session
+            Assert.AreEqual(prevWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 17, 08, 00, 00, DateTimeKind.Utc)));
+            // equals endtime
+            Assert.AreEqual(thisWeekEnd, sched.LastEndTime(thisWeekEnd));
+            // after endtime
+            Assert.AreEqual(thisWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 19, 17, 00, 00, DateTimeKind.Utc)));
+
+            // ==========
+            // Settings file is specified in a zone (est, -5)
+            settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "04:30:00"); // 09:30:00 utc
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "11:00:00");   // 16:00:00 utc
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
+            sched = new QuickFix.SessionSchedule(settings);
+
+            // before starttime
+            Assert.AreEqual(prevWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 15, 08, 00, 00, DateTimeKind.Utc)));
+            // during session
+            Assert.AreEqual(prevWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 17, 08, 00, 00, DateTimeKind.Utc)));
+            // equals endtime
+            Assert.AreEqual(thisWeekEnd, sched.LastEndTime(thisWeekEnd));
+            // after endtime
+            Assert.AreEqual(thisWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 19, 17, 00, 00, DateTimeKind.Utc)));
+        }
     }
 }
