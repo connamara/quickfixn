@@ -25,3 +25,5 @@ Contributors
 - Wesley McClure
 - Alex Martsynkevich
 - Matt Wood
+- Laszlo Ligart
+- Ervin Marguc
