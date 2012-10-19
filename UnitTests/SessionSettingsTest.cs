@@ -291,5 +291,15 @@ namespace UnitTests
             Assert.That(id.TargetSubID, Is.EqualTo("HedgeFund"));
             Assert.That(id.TargetLocationID, Is.EqualTo("NYC"));
         }
+
+        [Test]
+        public void SettingsFileRelease()
+        {
+            string f = "../../foo_config.cfg";
+            new SessionSettings(f);
+
+            // if the file is still locked, this will throw an exception
+            new SessionSettings(f);
+        }
     }
 }
