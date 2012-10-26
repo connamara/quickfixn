@@ -12,7 +12,7 @@ namespace QuickFix
     /// of 1 and ending when the session is reset. The Session could span many sequential
     /// connections (it cannot operate on multiple connections simultaneously).
     /// </summary>
-    public partial class Session
+    public partial class Session : IDisposable
     {
         #region Private Members
 
@@ -1486,6 +1486,10 @@ namespace QuickFix
                     Persist(message, messageString);
                 return Send(messageString);
             }
+        }
+
+        public void Dispose() {
+            if (state_ != null) { state_.Dispose(); }
         }
     }
 }

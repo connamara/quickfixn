@@ -20,6 +20,9 @@ namespace QuickFix
         public void OnEvent(string s)
         { }
 
+        public void Dispose()
+        { }
+
         #endregion
     }
 }

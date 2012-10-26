@@ -58,6 +58,9 @@ namespace QuickFix
             }
         }
 
+        public void Dispose()
+        { }
+
         #endregion
     }
 }

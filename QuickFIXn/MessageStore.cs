@@ -7,7 +7,7 @@ namespace QuickFix
     /// <summary>
     /// Used by a Session to store and retrieve messages for resend purposes
     /// </summary>
-    public interface MessageStore
+    public interface MessageStore : System.IDisposable
     {
         /// <summary>
         /// Get messages within sequence number range (inclusive). Used for
