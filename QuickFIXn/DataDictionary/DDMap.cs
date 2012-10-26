@@ -45,6 +45,8 @@ namespace QuickFix.DataDictionary
         {
             return Groups[tag];
         }
+
+        public string MessageName { get; set; }
     }
 
     public class DDGrp : DDMap, IGroupSpec

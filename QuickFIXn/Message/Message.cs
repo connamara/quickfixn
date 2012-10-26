@@ -46,15 +46,24 @@ namespace QuickFix
     /// </summary>
     public class Message : FieldMap
     {
+
+        public bool FixMessageDescriptorEnabled = false;
+
+
         public const string SOH = "\u0001";
         private int field_ = 0;
         private bool validStructure_;
-        
+
+
+        private FixMessageDescriptor _descriptor;
+        private GroupFixFieldInfo _currentGroupField;
+
+
         #region Properties
 
         public Header Header { get; private set; }
         public Trailer Trailer { get; private set; }
-        
+
         #endregion
 
         #region Constructors
@@ -72,7 +81,7 @@ namespace QuickFix
 
         public Message(string msgstr, bool validate)
             : this(msgstr, null, null, validate)
-        {  }
+        { }
 
         public Message(string msgstr, DataDictionary.DataDictionary dataDictionary, bool validate)
             : this()
@@ -84,7 +93,7 @@ namespace QuickFix
             : this()
         {
             FromStringHeader(msgstr);
-            if(IsAdmin())
+            if (IsAdmin())
                 FromString(msgstr, validate, sessionDataDictionary, sessionDataDictionary, null);
             else
                 FromString(msgstr, validate, sessionDataDictionary, appDD, null);
@@ -96,7 +105,7 @@ namespace QuickFix
             this.Header = new Header(src.Header);
             this.Trailer = new Trailer(src.Trailer);
             this.validStructure_ = src.validStructure_;
-            this.field_= src.field_;
+            this.field_ = src.field_;
         }
 
         #endregion
@@ -127,7 +136,7 @@ namespace QuickFix
                 int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
                 pos = tagend + 1;
                 int fieldvalend = msgstr.IndexOf("\u0001", pos);
-                StringField field =  new StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
+                StringField field = new StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
 
                 /** TODO data dict stuff
                 if (((null != sessionDD) && sessionDD.IsDataField(field.Tag)) || ((null != appDD) && appDD.IsDataField(field.Tag)))
@@ -329,17 +338,17 @@ namespace QuickFix
         public bool FromStringHeader(string msgstr)
         {
             Clear();
-            
+
             int pos = 0;
             int count = 0;
-            while(pos < msgstr.Length)
+            while (pos < msgstr.Length)
             {
                 StringField f = ExtractField(msgstr, ref pos);
-                
-                if((count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
+
+                if ((count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
                     return false;
-                
-                if(IsHeaderField(f.Tag))
+
+                if (IsHeaderField(f.Tag))
                     this.Header.SetField(f, false);
                 else
                     break;
@@ -358,7 +367,7 @@ namespace QuickFix
         {
             FromString(msgstr, validate, sessionDD, appDD, null);
         }
- 
+
 
         /// <summary>
         /// Creates a Message from a FIX string
@@ -378,12 +387,21 @@ namespace QuickFix
             bool expectingBody = true;
             int count = 0;
             int pos = 0;
-	        DataDictionary.IFieldMapSpec msgMap = null;
+            DataDictionary.IFieldMapSpec msgMap = null;
 
+            if (FixMessageDescriptorEnabled)
+            {
+                _descriptor = new FixMessageDescriptor();
+
+                if (appDD != null)
+                    _descriptor.FixVersion = appDD.Version;
+
+            }
             while (pos < msgstr.Length)
             {
                 StringField f = ExtractField(msgstr, ref pos, sessionDD, appDD);
-                
+
+
                 if (validate && (count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
                     throw new InvalidMessage("Header fields out of order");
 
@@ -402,15 +420,60 @@ namespace QuickFix
                         if (appDD != null)
                         {
                             msgMap = appDD.GetMapForMessage(msgType);
+
+                            if (FixMessageDescriptorEnabled)
+                            {
+                                QuickFix.DataDictionary.DDMap map = null;
+
+                                if (appDD != null && appDD.Messages.TryGetValue(f.Obj, out map))
+                                {
+                                    _descriptor.MessageType = map.MessageName;
+
+                                }
+                            }
                         }
-		            }
+                    }
 
                     if (!this.Header.SetField(f, false))
                         this.Header.RepeatedTags.Add(f);
 
+
+
                     if ((null != sessionDD) && sessionDD.Header.IsGroup(f.Tag))
                     {
+                        if (FixMessageDescriptorEnabled)
+                        {
+                            _currentGroupField = new GroupFixFieldInfo();
+
+                            _currentGroupField.Tag = f.Tag;
+
+                            DataDictionary.DDField field = null;
+
+                            if (sessionDD != null && sessionDD.FieldsByTag.TryGetValue(f.Tag, out field))
+                            {
+                                _currentGroupField.Name = field.Name;
+                            }
+
+                            _currentGroupField.Value = f.getValue();
+
+                            _currentGroupField.EnumValue = GetEnumValueFromField(f, field);
+
+                            _descriptor.Fields.Add(_currentGroupField);
+                        }
+
                         pos = SetGroup(f, msgstr, pos, this.Header, sessionDD.Header.GetGroupSpec(f.Tag), sessionDD, appDD, msgFactory);
+
+
+
+
+                    }
+                    else
+                    {
+                        if (FixMessageDescriptorEnabled)
+                        {
+                            AddFixFieldInfo(f, sessionDD);
+
+                        }
                     }
                 }
                 else if (IsTrailerField(f.Tag, sessionDD))
@@ -422,7 +485,38 @@ namespace QuickFix
 
                     if ((null != sessionDD) && sessionDD.Trailer.IsGroup(f.Tag))
                     {
+                        if (FixMessageDescriptorEnabled)
+                        {
+
+                            _currentGroupField = new GroupFixFieldInfo();
+
+                            _currentGroupField.Tag = f.Tag;
+
+                            DataDictionary.DDField field = null;
+
+                            if (sessionDD.FieldsByTag.TryGetValue(f.Tag, out field))
+                            {
+                                _currentGroupField.Name = field.Name;
+                            }
+
+                            _currentGroupField.Value = f.getValue();
+
+                            _currentGroupField.EnumValue = GetEnumValueFromField(f, field);
+
+                            _descriptor.Fields.Add(_currentGroupField);
+
+                        }
+
                         pos = SetGroup(f, msgstr, pos, this.Trailer, sessionDD.Trailer.GetGroup(f.Tag), sessionDD, appDD, msgFactory);
+
+
+                    }
+                    else
+                    {
+                        if (FixMessageDescriptorEnabled)
+                        {
+                            AddFixFieldInfo(f, sessionDD);
+                        }
                     }
                 }
                 else
@@ -435,15 +529,48 @@ namespace QuickFix
                     }
 
                     expectingHeader = false;
+
                     if (!SetField(f, false))
                     {
                         this.RepeatedTags.Add(f);
                     }
 
-                    
-                    if((null != msgMap) && (msgMap.IsGroup(f.Tag)))
+                    if ((null != msgMap) && (msgMap.IsGroup(f.Tag)))
                     {
+                        if (FixMessageDescriptorEnabled)
+                        {
+                            _currentGroupField = new GroupFixFieldInfo();
+
+
+                            _currentGroupField.Tag = f.Tag;
+
+
+                            DataDictionary.DDField field = null;
+
+                            if (sessionDD != null && sessionDD.FieldsByTag.TryGetValue(f.Tag, out field))
+                            {
+                                _currentGroupField.Name = field.Name;
+                            }
+
+                            _currentGroupField.Value = f.getValue();
+
+                            _currentGroupField.EnumValue = GetEnumValueFromField(f, field);
+
+                            _descriptor.Fields.Add(_currentGroupField);
+
+                        }
                         pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroupSpec(f.Tag), sessionDD, appDD, msgFactory);
+
+
+                    }
+                    else
+                    {
+                        if (FixMessageDescriptorEnabled)
+                        {
+                            AddFixFieldInfo(f, appDD);
+
+                        }
+
                     }
                 }
             }
@@ -454,6 +581,61 @@ namespace QuickFix
             }
         }
 
+        private string GetEnumValueFromField(StringField f, DataDictionary.DDField field)
+        {
+            if (field == null || !field.HasEnums())
+                return null;
+            else
+            {
+                string enumValue = string.Empty;
+
+                string[] values = f.getValue().Split(' ');
+
+                StringBuilder sb = new StringBuilder();
+
+                foreach (string val in values)
+                {
+                    if (field.EnumDict.TryGetValue(val, out enumValue))
+                    {
+                        sb.AppendFormat("{0}, ", enumValue);
+
+                    }
+                }
+
+                string res = sb.ToString();
+
+                if (!string.IsNullOrEmpty(res))
+                {
+                    res = res.TrimEnd(' ', ',');
+
+                }
+
+                return res;
+            }
+        }
+
+
+        private void AddFixFieldInfo(StringField f, DataDictionary.DataDictionary dic)
+        {
+
+            FixFieldInfo fi = new FixFieldInfo();
+
+            fi.Tag = f.Tag;
+
+            DataDictionary.DDField field = null;
+
+            if (dic != null && dic.FieldsByTag != null && dic.FieldsByTag.TryGetValue(f.Tag, out field))
+            {
+                fi.Name = field.Name;
+            }
+
+            fi.Value = f.getValue();
+
+            fi.EnumValue = GetEnumValueFromField(f, field);
+
+            _descriptor.Fields.Add(fi);
+
+        }
 
         [System.Obsolete("Use the version that takes an IMessageFactory instead")]
         protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
@@ -507,13 +689,72 @@ namespace QuickFix
                     }
                     return grpPos;
                 }
+
                 grp.SetField(f);
-                if(dd.IsGroup(f.Tag))
+
+
+                if (dd.IsGroup(f.Tag))
                 {
+
+                    if (FixMessageDescriptorEnabled)
+                    {
+                        var oldCurrField = _currentGroupField;
+
+                        _currentGroupField = new GroupFixFieldInfo();
+
+                        _currentGroupField.Tag = f.Tag;
+
+                        DataDictionary.DDField field = null;
+
+                        if (appDD != null && appDD.FieldsByTag.TryGetValue(f.Tag, out field))
+                        {
+                            _currentGroupField.Name = field.Name;
+                        }
+                        else if (sessionDataDictionary != null && sessionDataDictionary.FieldsByTag.TryGetValue(f.Tag, out field))
+                        {
+                            _currentGroupField.Name = field.Name;
+                        }
+                        _currentGroupField.Value = f.getValue();
+
+                        _currentGroupField.EnumValue = GetEnumValueFromField(f, field);
+
+                        oldCurrField.Fields.Add(_currentGroupField);
+                    }
+
                     pos = SetGroup(f, msgstr, pos, grp, dd.GetGroupSpec(f.Tag), sessionDataDictionary, appDD, msgFactory);
+
+
+                }
+                else
+                {
+                    if (FixMessageDescriptorEnabled)
+                    {
+                        FixFieldInfo fi = new FixFieldInfo();
+
+                        fi.Tag = f.Tag;
+
+                        DataDictionary.DDField field = null;
+
+                        if (appDD != null && appDD.FieldsByTag.TryGetValue(f.Tag, out field))
+                        {
+                            _currentGroupField.Name = field.Name;
+                        }
+                        else if (sessionDataDictionary != null && sessionDataDictionary.FieldsByTag.TryGetValue(f.Tag, out field))
+                        {
+                            _currentGroupField.Name = field.Name;
+                        }
+
+                        fi.Value = f.getValue();
+
+                        fi.EnumValue = GetEnumValueFromField(f, field);
+
+                        _currentGroupField.Fields.Add(fi);
+
+                    }
+
                 }
             }
-            
+
             return grpPos;
         }
 
@@ -637,31 +878,31 @@ namespace QuickFix
             this.Header.RemoveField(Tags.DeliverToCompID);
             this.Header.RemoveField(Tags.DeliverToSubID);
 
-            if(header.IsSetField(Tags.OnBehalfOfCompID))
+            if (header.IsSetField(Tags.OnBehalfOfCompID))
             {
                 string onBehalfOfCompID = header.GetField(Tags.OnBehalfOfCompID);
-                if(onBehalfOfCompID.Length > 0)
+                if (onBehalfOfCompID.Length > 0)
                     this.Header.SetField(new DeliverToCompID(onBehalfOfCompID));
             }
 
-            if(header.IsSetField(Tags.OnBehalfOfSubID))
+            if (header.IsSetField(Tags.OnBehalfOfSubID))
             {
-                string onBehalfOfSubID = header.GetField(  Tags.OnBehalfOfSubID);
-                if(onBehalfOfSubID.Length > 0)
+                string onBehalfOfSubID = header.GetField(Tags.OnBehalfOfSubID);
+                if (onBehalfOfSubID.Length > 0)
                     this.Header.SetField(new DeliverToSubID(onBehalfOfSubID));
             }
 
-            if(header.IsSetField(Tags.DeliverToCompID))
+            if (header.IsSetField(Tags.DeliverToCompID))
             {
                 string deliverToCompID = header.GetField(Tags.DeliverToCompID);
-                if(deliverToCompID.Length > 0)
+                if (deliverToCompID.Length > 0)
                     this.Header.SetField(new OnBehalfOfCompID(deliverToCompID));
             }
 
-            if(header.IsSetField(Tags.DeliverToSubID))
+            if (header.IsSetField(Tags.DeliverToSubID))
             {
                 string deliverToSubID = header.GetField(Tags.DeliverToSubID);
-                if(deliverToSubID.Length > 0)
+                if (deliverToSubID.Length > 0)
                     this.Header.SetField(new OnBehalfOfSubID(deliverToSubID));
             }
         }
@@ -676,7 +917,7 @@ namespace QuickFix
 
         public bool IsAdmin()
         {
-            if(!IsSetField(Tags.MsgType))
+            if (!IsSetField(Tags.MsgType))
                 return false;
             string msgType = this.Header.GetField(Tags.MsgType); /// FIXME
             return IsAdminMsgType(msgType);
@@ -688,6 +929,12 @@ namespace QuickFix
                 return false;
             string msgType = this.Header.GetField(Tags.MsgType); /// FIXME
             return !IsAdminMsgType(msgType);
+        }
+
+
+        public FixMessageDescriptor GetDescriptor()
+        {
+            return _descriptor;
         }
 
         /// <summary>
@@ -733,6 +980,10 @@ namespace QuickFix
 
         public override void Clear()
         {
+            _descriptor = null;
+
+            _currentGroupField = null;
+
             field_ = 0;
             this.Header.Clear();
             base.Clear();
@@ -752,4 +1003,54 @@ namespace QuickFix
             return this.Header.CalculateLength() + CalculateLength() + this.Trailer.CalculateLength();
         }
     }
+
+
+    public class FixMessageDescriptor
+    {
+        public string FixVersion { get; set; }
+        public string MessageType { get; set; }
+        public List<FixFieldInfo> Fields { get; private set; }
+
+        public FixMessageDescriptor()
+        {
+            Fields = new List<FixFieldInfo>();
+
+        }
+    }
+
+    public class FixFieldInfo
+    {
+        public int Tag { get; set; }
+        public string Name { get; set; }
+        public string Value { get; set; }
+        public string EnumValue { get; set; }
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendFormat("{0}({1})={2}", Name, Tag, Value);
+
+            if (!string.IsNullOrEmpty(EnumValue))
+            {
+                sb.AppendFormat(" ({0})", EnumValue);
+            }
+
+            return sb.ToString();
+        }
+    }
+
+    public class GroupFixFieldInfo : FixFieldInfo
+    {
+        public List<FixFieldInfo> Fields { get; private set; }
+
+        public GroupFixFieldInfo()
+        {
+            Fields = new List<FixFieldInfo>();
+
+        }
+
+
+    }
+
+
 }
