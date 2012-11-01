@@ -355,11 +355,16 @@ namespace UnitTests
             Assert.AreEqual(thisDayEnd, sched.LastEndTime(new DateTime(2012, 10, 18, 17, 00, 00, DateTimeKind.Utc)));
 
             // ==========
+            // Timezone specific
+            string timezoneid = "Eastern Standard Time";
+            TimeZoneInfo timezone = System.TimeZoneInfo.FindSystemTimeZoneById(timezoneid);
+            DateTime starttime = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(2012, 10, 18, 9, 30, 00, DateTimeKind.Utc), timezone);
+            DateTime endtime = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc), timezone);
             // Settings file is specified in a zone (est, -5)
             settings = new QuickFix.Dictionary();
-            settings.SetString(QuickFix.SessionSettings.START_TIME, "04:30:00"); // 09:30:00 utc
-            settings.SetString(QuickFix.SessionSettings.END_TIME, "11:00:00");   // 16:00:00 utc
-            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
+            settings.SetString(QuickFix.SessionSettings.START_TIME, starttime.ToString("hh:mm:ss"));
+            settings.SetString(QuickFix.SessionSettings.END_TIME, endtime.ToString( "hh:mm:ss"));
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, timezoneid);
             sched = new QuickFix.SessionSchedule(settings);
 
             // before starttime
@@ -395,11 +400,17 @@ namespace UnitTests
             Assert.AreEqual(thisWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 19, 17, 00, 00, DateTimeKind.Utc)));
 
             // ==========
+            // Timezone specific
+            string timezoneid = "Eastern Standard Time";
+            TimeZoneInfo timezone = System.TimeZoneInfo.FindSystemTimeZoneById(timezoneid);
+            DateTime starttime = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(2012, 10, 18, 9, 30, 00, DateTimeKind.Utc), timezone);
+            DateTime endtime = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc), timezone);
+
             // Settings file is specified in a zone (est, -5)
             settings = new QuickFix.Dictionary();
-            settings.SetString(QuickFix.SessionSettings.START_TIME, "04:30:00"); // 09:30:00 utc
-            settings.SetString(QuickFix.SessionSettings.END_TIME, "11:00:00");   // 16:00:00 utc
-            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
+            settings.SetString(QuickFix.SessionSettings.START_TIME, starttime.ToString("hh:mm:ss"));
+            settings.SetString(QuickFix.SessionSettings.END_TIME, endtime.ToString("hh:mm:ss"));
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, timezoneid); //-5
             settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
             settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
             sched = new QuickFix.SessionSchedule(settings);
