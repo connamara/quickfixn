@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Threading;
 using System;
+using Common.Logging;
 
 namespace QuickFix
 {
@@ -19,6 +20,7 @@ namespace QuickFix
         private SocketReader socketReader_;
         private long id_;
         private FileLog log_;
+        private ILog logger_;
 
         [Obsolete("Use the other constructor")]
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
@@ -33,14 +35,15 @@ namespace QuickFix
         /// <param name="debugLogFilePath">path where thread log will go</param>
         public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
         {
-            string debugLogFilePath = "log";
             if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
-                debugLogFilePath = settingsDict.GetString(SessionSettings.DEBUG_FILE_LOG_PATH);
-            else if (settingsDict.Has(SessionSettings.FILE_LOG_PATH))
-                debugLogFilePath = settingsDict.GetString(SessionSettings.FILE_LOG_PATH);
+            {
+                // Support for old debug log only when DEBUG_FILE_LOG_PATH is set in settings
+                string debugLogFilePath = settingsDict.GetString(SessionSettings.DEBUG_FILE_LOG_PATH);
+                log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
+            }
 
-            // FIXME - do something more flexible than hardcoding a filelog
-            log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
+            // Support for Common.Logging
+            logger_ = LogManager.GetCurrentClassLogger();
 
             tcpClient_ = tcpClient;
             id_ = clientId;
@@ -85,10 +88,15 @@ namespace QuickFix
             this.Log("shutdown");
         }
 
-        /// FIXME do real logging
         public void Log(string s)
         {
-            log_.OnEvent(s);
+            Log(s, null);
+        }
+
+        public void Log(string s, Exception ex)
+        {
+            if (log_ != null) log_.OnEvent(s);
+            logger_.Debug(m => m("Cliend Id: {0}; {1}", id_, s), ex);
         }
 
         #region Responder Members

@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System;
+using Common.Logging;
 
 namespace QuickFix
 {
@@ -35,6 +36,7 @@ namespace QuickFix
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
         private QuickFix.Dictionary sessionDict_;
+        private ILog logger_;
 
         #endregion
 
@@ -45,6 +47,8 @@ namespace QuickFix
         
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
         {
+            // Support for Common.Logging
+            logger_ = LogManager.GetCurrentClassLogger();
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
             sessionDict_ = sessionDict;
@@ -70,7 +74,7 @@ namespace QuickFix
                     }
                     catch (System.Exception e)
                     {
-                        this.Log("Error while closing server socket: " + e.Message);
+                        this.Log("Error while closing server socket: " + e.Message, e);
                     }
                 }
             }
@@ -100,7 +104,7 @@ namespace QuickFix
                 catch (System.Exception e)
                 {
                     if (State.RUNNING == ReactorState)
-                        this.Log("Error accepting connection: " + e.Message);
+                        this.Log("Error accepting connection: " + e.Message, e);
                 }
             }
             ShutdownClientHandlerThreads();
@@ -134,7 +138,7 @@ namespace QuickFix
                         }
                         catch (System.Exception e)
                         {
-                            t.Log("Error shutting down: " + e.Message);
+                            t.Log("Error shutting down: " + e.Message, e);
                         }
                     }
                     state_ = State.SHUTDOWN_COMPLETE;
@@ -143,12 +147,24 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME do real logging
+        /// Log by using Common.Logging
         /// </summary>
         /// <param name="s"></param>
         private void Log(string s)
         {
-            System.Console.WriteLine(s);
+            // System.Console.WriteLine(s);
+            logger_.Debug(s);
         }
+
+        /// <summary>
+        /// Log by using Common.Logging
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="ex">Exception</param>
+        private void Log(string s, Exception ex)
+        {
+            logger_.Debug(s, ex);
+        }
+
     }
 }
