@@ -225,6 +225,7 @@ namespace QuickFix
                 MessageStore = storeFactory.Create(sessID)
             };
 
+            //Default values
             this.PersistMessages = true;
             this.ResetOnDisconnect = false;
             this.SendRedundantResendRequests = false;
@@ -235,6 +236,7 @@ namespace QuickFix
             this.MaxMessagesInResendRequest = 0;
             this.SendLogoutBeforeTimeoutDisconnect = false;
             this.IgnorePossDupResendRequests = false;
+            this.CheckLatency = true;
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime at construction");
@@ -862,7 +864,7 @@ namespace QuickFix
                     }
                 }
 
-                if (CheckLatency && !IsGoodTime(msg))
+                if (!IsGoodTime(msg))
                 {
                     this.Log.OnEvent("Sending time accuracy problem");
                     GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
@@ -1007,7 +1009,7 @@ namespace QuickFix
             var sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
 
             System.TimeSpan tmSpan = origSendingTime - sendingTime;
-            if (tmSpan.TotalSeconds > 0)
+            if (tmSpan.TotalSeconds > 0) //FIXME should we validate against checkLatency here or not?
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
                 GenerateLogout();
@@ -1367,6 +1369,11 @@ namespace QuickFix
 
         protected bool IsGoodTime(Message msg)
         {
+            if (!CheckLatency)
+            {
+                return true;
+            }
+
             var sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
             System.TimeSpan tmSpan = System.DateTime.UtcNow - sendingTime;
             if (System.Math.Abs(tmSpan.TotalSeconds) > MaxLatency)
