@@ -987,7 +987,7 @@ namespace QuickFix
         /// FIXME
         protected bool DoPossDup(Message msg)
         {
-            string msgType = msg.Header.GetField(Fields.Tags.MsgType);
+            string msgType = msg.Header.GetField(Fields.Tags.MsgType); 
             if (msgType.Equals("4") && RequiresOrigSendingTime == false)
             {
                 return true;
