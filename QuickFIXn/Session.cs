@@ -12,7 +12,7 @@ namespace QuickFix
     /// of 1 and ending when the session is reset. The Session could span many sequential
     /// connections (it cannot operate on multiple connections simultaneously).
     /// </summary>
-    public partial class Session
+    public partial class d
     {
         #region Private Members
 
@@ -985,19 +985,24 @@ namespace QuickFix
         }
 
         /// FIXME
+        /// Perform validation on a message where the field PossDupFlag is present, and set to Y.
         protected bool DoPossDup(Message msg)
         {
+            //workaround which allows SequenceReset messages to omit the PossDupFlag for conformance with some exchanges
             string msgType = msg.Header.GetField(Fields.Tags.MsgType); 
             if (msgType.Equals("4") && RequiresOrigSendingTime == false)
             {
                 return true;
             }
 
+            //ensure messages have the OrigSendingTime set, else fail validation
             if (!msg.Header.IsSetField(Fields.Tags.OrigSendingTime))
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING, Fields.Tags.OrigSendingTime);
                 return false;
             }
+
+            //ensure sendingTime is later than OrigSendingTime, else fail validation and logout
             var origSendingTime = msg.Header.GetDateTime(Fields.Tags.OrigSendingTime);
             var sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
 
@@ -1008,6 +1013,7 @@ namespace QuickFix
                 GenerateLogout();
                 return false;
             }
+
             return true;
         }
 
