@@ -237,6 +237,7 @@ namespace QuickFix
             this.SendLogoutBeforeTimeoutDisconnect = false;
             this.IgnorePossDupResendRequests = false;
             this.CheckLatency = true;
+            this.MaxLatency = 120;
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime at construction");
@@ -1009,7 +1010,7 @@ namespace QuickFix
             var sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
 
             System.TimeSpan tmSpan = origSendingTime - sendingTime;
-            if (tmSpan.TotalSeconds > 0) //FIXME should we validate against checkLatency here or not?
+            if (tmSpan.TotalSeconds > 0) //FIXME should we validate against checkLatency here or not? What about MaxLatency ?
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
                 GenerateLogout();
