@@ -12,7 +12,7 @@ namespace QuickFix
     /// of 1 and ending when the session is reset. The Session could span many sequential
     /// connections (it cannot operate on multiple connections simultaneously).
     /// </summary>
-    public partial class d
+    public partial class Session
     {
         #region Private Members
 
@@ -990,7 +990,7 @@ namespace QuickFix
         {
             //workaround which allows SequenceReset messages to omit the PossDupFlag for conformance with some exchanges
             string msgType = msg.Header.GetField(Fields.Tags.MsgType); 
-            if (msgType.Equals("4") && RequiresOrigSendingTime == false)
+            if (msgType == Fields.MsgType.SEQUENCE_RESET && RequiresOrigSendingTime == false)
             {
                 return true;
             }
