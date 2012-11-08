@@ -92,8 +92,7 @@ namespace QuickFix
         [Obsolete("Use Debug method")]
         public void Log(string s)
         {
-            if (log_ != null) log_.OnEvent(s);
-            Debug(s, null);
+            Debug(s);
         }
 
         public void Debug(string s)
@@ -102,7 +101,9 @@ namespace QuickFix
         }
 
         public void Debug(string s, Exception ex)
-        {            
+        {
+            // Support old debugging function
+            if (log_ != null) log_.OnEvent(s);
             logger_.Debug(m => m("Cliend Id: {0}; {1}", id_, s), ex);
         }
 
