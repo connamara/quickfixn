@@ -74,7 +74,7 @@ namespace QuickFix
                     }
                     catch (System.Exception e)
                     {
-                        this.Log("Error while closing server socket: " + e.Message, e);
+                        this.Debug("Error while closing server socket: " + e.Message, e);
                     }
                 }
             }
@@ -98,13 +98,13 @@ namespace QuickFix
                         clientThreads_.AddLast(t);
                     }
                     // FIXME set the client thread's exception handler here
-                    t.Log("connected");
+                    t.Debug("connected");
                     t.Start();
                 }
                 catch (System.Exception e)
                 {
                     if (State.RUNNING == ReactorState)
-                        this.Log("Error accepting connection: " + e.Message, e);
+                        this.Debug("Error accepting connection: " + e.Message, e);
                 }
             }
             ShutdownClientHandlerThreads();
@@ -126,7 +126,7 @@ namespace QuickFix
             {
                 if (State.SHUTDOWN_COMPLETE != state_)
                 {
-                    this.Log("shutting down...");
+                    this.Debug("shutting down...");
                     while (clientThreads_.Count > 0)
                     {
                         ClientHandlerThread t = clientThreads_.First.Value;
@@ -138,7 +138,7 @@ namespace QuickFix
                         }
                         catch (System.Exception e)
                         {
-                            t.Log("Error shutting down: " + e.Message, e);
+                            t.Debug("Error shutting down: " + e.Message, e);
                         }
                     }
                     state_ = State.SHUTDOWN_COMPLETE;
@@ -147,24 +147,22 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Log by using Common.Logging
+        /// Debug by using Common.Logging
         /// </summary>
         /// <param name="s"></param>
-        private void Log(string s)
+        private void Debug(string s)
         {
-            // System.Console.WriteLine(s);
             logger_.Debug(s);
         }
 
         /// <summary>
-        /// Log by using Common.Logging
+        /// Debug by using Common.Logging
         /// </summary>
         /// <param name="s"></param>
         /// <param name="ex">Exception</param>
-        private void Log(string s, Exception ex)
+        private void Debug(string s, Exception ex)
         {
             logger_.Debug(s, ex);
         }
-
     }
 }

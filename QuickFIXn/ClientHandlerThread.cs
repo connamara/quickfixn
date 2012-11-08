@@ -35,9 +35,10 @@ namespace QuickFix
         /// <param name="debugLogFilePath">path where thread log will go</param>
         public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
         {
+            // Support for old debug log only when DEBUG_FILE_LOG_PATH is set in settings
+            // TODO:  v2.0 - consider using Commons Logging instead of this old debugging
             if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
             {
-                // Support for old debug log only when DEBUG_FILE_LOG_PATH is set in settings
                 string debugLogFilePath = settingsDict.GetString(SessionSettings.DEBUG_FILE_LOG_PATH);
                 log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
             }
@@ -58,7 +59,7 @@ namespace QuickFix
 
         public void Shutdown(string reason)
         {
-            Log("shutdown requested: " + reason);
+            Debug("shutdown requested: " + reason);
             isShutdownRequested_ = true;
         }
 
@@ -85,17 +86,23 @@ namespace QuickFix
                 }
             }
 
-            this.Log("shutdown");
+            this.Debug("shutdown");
         }
 
+        [Obsolete("Use Debug method")]
         public void Log(string s)
         {
-            Log(s, null);
+            if (log_ != null) log_.OnEvent(s);
+            Debug(s, null);
         }
 
-        public void Log(string s, Exception ex)
+        public void Debug(string s)
         {
-            if (log_ != null) log_.OnEvent(s);
+            Debug(s, null);
+        }
+
+        public void Debug(string s, Exception ex)
+        {            
             logger_.Debug(m => m("Cliend Id: {0}; {1}", id_, s), ex);
         }
 
