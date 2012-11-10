@@ -1,0 +1,19 @@
+# Reject message when field is the wrong type -- nested-group case
+
+iCONNECT
+# logon message and response
+I8=FIX.4.435=A34=149=TW52=<TIME>56=ISLD98=0108=2
+E8=FIX.4.49=6035=A34=149=ISLD52=00000000-00:00:00.00056=TW98=0108=210=0
+
+I8=FIX.4.435=AD34=249=TW52=<TIME>56=ISLD568=tradereqid569=0
+
+#Send news and receive echo
+#(basically, force an echo to ensure that above was not rejected)
+I8=FIX.4.435=B34=349=TW52=<TIME>56=ISLD148=FOO33=0
+E8=FIX.4.435=B34=249=ISLD52=00000000-00:00:00.00056=TW33=0148=FOO
+
+
+# logout message and response
+I8=FIX.4.435=534=449=TW52=<TIME>56=ISLD
+E8=FIX.4.49=4935=534=349=ISLD52=00000000-00:00:00.00056=TW10=0
+

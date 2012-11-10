@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using QuickFix;
-using QuickFix.Fields;
 
 namespace UnitTests
 {
@@ -28,8 +27,8 @@ namespace UnitTests
             dd.Load("../../../spec/fix/FIX44.xml");
             Assert.That(dd.FieldsByTag[1].Name, Is.EqualTo("Account"));
             Assert.That(dd.FieldsByName["Account"].Tag, Is.EqualTo(1));
-            Assert.That(dd.FieldsByTag[1].Enums.Count, Is.EqualTo(0));
-            Assert.That(dd.FieldsByTag[QuickFix.Fields.Tags.StatusValue].Enums.Count, Is.EqualTo(4));
+            Assert.That(dd.FieldsByTag[1].EnumDict.Count, Is.EqualTo(0));
+            Assert.That(dd.FieldsByTag[QuickFix.Fields.Tags.StatusValue].EnumDict.Count, Is.EqualTo(4));
         }
 
         [Test]
@@ -41,6 +40,16 @@ namespace UnitTests
             Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "CONNECTED"), Is.EqualTo(false));
             Assert.False(dd.FieldsByTag[1].HasEnums());
             Assert.True(dd.FieldsByTag[945].HasEnums());
+        }
+
+        [Test]
+        public void FieldHasDescriptionTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            Assert.AreEqual(typeof (Dictionary<string, string>), dd.FieldsByTag[945].EnumDict.GetType());
+            Assert.That("COMPLETED", Is.EqualTo(dd.FieldsByTag[945].EnumDict["2"]));
+            Assert.AreNotEqual("HEARTBEAT", dd.FieldsByTag[35].EnumDict["A"]);
         }
 
         [Test]
@@ -285,7 +294,7 @@ namespace UnitTests
             catch (QuickFix.TagException e)
             {
                 Console.WriteLine(e.ToString());
-                Console.WriteLine(e.field);
+                Console.WriteLine(e.Field);
                 throw;
             }
         }
@@ -354,6 +363,64 @@ namespace UnitTests
 
             // this should throw
             dd.Validate(message, beginString, msgType);
+        }
+
+        [Test]
+        public void DuplicateEnumsDoesNotThrow()
+        {
+            // If this test throws, it failed.
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/test/FIX43_dup_enum.xml");
+        }
+
+        [Test]
+        public void OptionalComponentRequiredField()
+        {
+            // issue #98 - message erroneously rejected because DD says that
+            //   component-required field is missing even though component is not present
+
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            string[] msgFields = { "8=FIX.4.4", "9=77", "35=AD", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                     "568=tradereqid", "569=0", "10=109" };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "AD";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd, f);
+
+            dd.Validate(message, beginString, msgType);
+        }
+
+        [Test]
+        public void RequiredComponentRequiredField()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            string[] msgFields = { "8=FIX.4.4", "9=76", "35=7", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                     "2=AdvId", "5=N", "4=B", "53=1", "10=138" };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "7";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd, f);
+
+            var ex = Assert.Throws<QuickFix.RequiredTagMissing>(delegate { dd.Validate(message, beginString, msgType); });
+            Assert.AreEqual(55, ex.Field);
+        }
+
+        [Test]
+        public void ComponentFieldsRequirements()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
+            Assert.False(dd.Messages["AD"].ReqFields.Contains(55));
+            Assert.True(dd.Messages["7"].ReqFields.Contains(55));
         }
     }
 }

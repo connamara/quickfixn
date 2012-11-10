@@ -1,10 +1,13 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using System.Collections.Generic;
+using System;
 
 namespace QuickFix
 {
+    // TODO v2.0 - consider changing to internal
+
     /// <summary>
     /// Handles incoming connections on a single endpoint. When a socket connection
     /// is accepted, a ClientHandlerThread is created to handle the connection
@@ -31,13 +34,20 @@ namespace QuickFix
         private LinkedList<ClientHandlerThread> clientThreads_ = new LinkedList<ClientHandlerThread>();
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
+        private QuickFix.Dictionary sessionDict_;
 
         #endregion
 
+        [Obsolete("Use the other constructor")]
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
+            : this(serverSocketEndPoint, socketSettings, null)
+        { }
+        
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
         {
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
+            sessionDict_ = sessionDict;
         }
 
         public void Start()
@@ -60,7 +70,7 @@ namespace QuickFix
                     }
                     catch (System.Exception e)
                     {
-                        this.Log("Eror while closing server socket: " + e.Message);
+                        this.Log("Error while closing server socket: " + e.Message);
                     }
                 }
             }
@@ -78,7 +88,7 @@ namespace QuickFix
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++);
+                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_);
                     lock (sync_)
                     {
                         clientThreads_.AddLast(t);
@@ -108,12 +118,12 @@ namespace QuickFix
 
         private void ShutdownClientHandlerThreads()
         {
-            lock(sync_)
+            lock (sync_)
             {
-                if(State.SHUTDOWN_COMPLETE != state_) 
+                if (State.SHUTDOWN_COMPLETE != state_)
                 {
                     this.Log("shutting down...");
-                    while(clientThreads_.Count > 0)
+                    while (clientThreads_.Count > 0)
                     {
                         ClientHandlerThread t = clientThreads_.First.Value;
                         clientThreads_.RemoveFirst();
@@ -122,7 +132,7 @@ namespace QuickFix
                         {
                             t.Join();
                         }
-                        catch(System.Exception e)
+                        catch (System.Exception e)
                         {
                             t.Log("Error shutting down: " + e.Message);
                         }

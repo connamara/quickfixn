@@ -8,6 +8,24 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
+###v1.3.0:
+* (patch) issue #82 - add stacktraces to certain disconnect logging messages (gbirchmeier)
+* (minor) issue #56 - make engine create concrete group types instead of generic Group objects (gbirchmeier)
+* (minor) issues #60/#87 - add config settings for UseLocalTime and TimeZone (martsyn)
+* (patch) issue #73 - conflicting directory lettercase with MessageFactory classes (gbirchmeier)
+* (patch) issue #43 - Change occurrences of "QuickFIX.NET" to "QuickFIXn" (dir name, sln name, scripts) (gbirchmeier)
+* (patch) issue #58 - convert sln to vs2010 (gbirchmeier)
+* (patch) issue #90 - Dictionary.Get/SetDouble was not using invariant culture (formator/gbirchmeier)
+* (minor) pr #108/#117 - add DD class support for enum descriptions (formator/gbirchmeier)
+* (patch) pr #111/#120 - settings file can have = signs in value (ligu/gbirchmeier)
+* (minor) issue #91 - support for custom message factories (formator)
+* (minor) pr #113/#122 - config setting DebugLogFilePath (ligu/gbirchmeier)
+* (minor) pr #110 - session reset logged to eventlog (ligu)
+* (patch) issue #93 - bugfix: change 'h' to 'n' in Message.IsAdminMsgType (gbirchmeier)
+* (patch) issue #98 - bugfix: required fields inside components are erroneously causing the component to be treated as required (gbirchmeier)
+* (minor) issue #22 - bugfix: seq nums not being reset when restarting application after session StartTime (ligu)
+* (patch) issue #49 - close config file after reading (gbirchmeier)
+
 ###v1.2.0:
 * (minor) Extended Session.cs to enable setting of NextTargetSequenceNum and NextSenderSequenceNum. (chrisbarker)
 * (minor) Extended Session.cs to implement static method DoesSessionExist(SessionID sessionID) as per QuickFIX. (chrisbarker)

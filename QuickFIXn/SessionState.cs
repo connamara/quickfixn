@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 
 namespace QuickFix
 {
     /// <summary>
     /// Used by the session communications code. Not intended to be used by applications.
     /// </summary>
-    public class SessionState : MessageStore
+    public class SessionState
     {
         #region Private Members
 
@@ -27,7 +27,7 @@ namespace QuickFix
         private long logonTimeoutAsMilliSecs_ = 10 * 1000;
         private int logoutTimeout_ = 2;
         private long logoutTimeoutAsMilliSecs_ = 2 * 1000;
-        private ResendRange resendRange_ = new ResendRange(0,0);
+        private ResendRange resendRange_ = new ResendRange(0, 0);
         private Dictionary<int, Message> msgQueue = new Dictionary<int, Message>();
 
         private Log log_;
@@ -103,7 +103,7 @@ namespace QuickFix
         public int HeartBtInt
         {
             get { lock (sync_) { return heartBtInt_; } }
-            set { lock (sync_) { heartBtInt_ = value; heartBtIntAsMilliSecs_ = 1000 * value;  } }
+            set { lock (sync_) { heartBtInt_ = value; heartBtIntAsMilliSecs_ = 1000 * value; } }
         }
 
         public int HeartBtIntAsMilliSecs
@@ -287,7 +287,7 @@ namespace QuickFix
         {
             return !(resendRange_.BeginSeqNo == 0 && resendRange_.EndSeqNo == 0);
         }
-        
+
         public void Queue(int msgSeqNum, Message msg)
         {
             MsgQueue.Add(msgSeqNum, msg);
@@ -295,12 +295,12 @@ namespace QuickFix
 
         public void ClearQueue()
         {
-           MsgQueue.Clear();
+            MsgQueue.Clear();
         }
 
         public QuickFix.Message Dequeue(int num)
         {
-            if(MsgQueue.ContainsKey(num))
+            if (MsgQueue.ContainsKey(num))
             {
                 QuickFix.Message msg = MsgQueue[num];
                 MsgQueue.Remove(num);
@@ -312,7 +312,7 @@ namespace QuickFix
         public Message Retrieve(int msgSeqNum)
         {
             Message msg = null;
-            if(MsgQueue.ContainsKey(msgSeqNum))
+            if (MsgQueue.ContainsKey(msgSeqNum))
             {
                 msg = MsgQueue[msgSeqNum];
                 MsgQueue.Remove(msgSeqNum);
@@ -337,7 +337,7 @@ namespace QuickFix
                 .Append(", NeedTestRequest=").Append(NeedTestRequest())
                 .Append(", ResendRange=").Append(GetResendRange())
                 .Append(" ]").ToString();
-            
+
         }
 
         #region MessageStore Members
@@ -377,14 +377,27 @@ namespace QuickFix
             lock (sync_) { this.MessageStore.IncrNextTargetMsgSeqNum(); }
         }
 
-        public System.DateTime GetCreationTime()
+        public System.DateTime? CreationTime
         {
-            lock (sync_) { return this.MessageStore.GetCreationTime(); }
+            get
+            {
+                lock (sync_) { return this.MessageStore.CreationTime; }
+            }
         }
 
+        [Obsolete("Use Reset(reason) instead.")]
         public void Reset()
         {
-            lock (sync_) { this.MessageStore.Reset(); }
+            this.Reset("(unspecified reason)");
+        }
+        
+        public void Reset(string reason)
+        {
+            lock (sync_)
+            {
+                this.MessageStore.Reset();
+                this.Log.OnEvent("Session reset: " + reason);
+            }
         }
 
         public void Refresh()
@@ -395,3 +408,4 @@ namespace QuickFix
         #endregion
     }
 }
+
