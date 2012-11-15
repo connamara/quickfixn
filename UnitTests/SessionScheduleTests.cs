@@ -371,6 +371,7 @@ namespace UnitTests
             Assert.AreEqual(prevDayEnd, sched.LastEndTime(new DateTime(2012, 10, 18, 08, 00, 00, DateTimeKind.Utc)));
             // during session
             Assert.AreEqual(prevDayEnd, sched.LastEndTime(new DateTime(2012, 10, 18, 10, 00, 00, DateTimeKind.Utc)));
+            Assert.AreEqual(prevDayEnd, sched.LastEndTime(new DateTime(2012, 10, 18, 13, 00, 00, DateTimeKind.Utc)));
             // equals endtime
             Assert.AreEqual(thisDayEnd, sched.LastEndTime(thisDayEnd));
             // after endtime
@@ -419,6 +420,7 @@ namespace UnitTests
             Assert.AreEqual(prevWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 15, 08, 00, 00, DateTimeKind.Utc)));
             // during session
             Assert.AreEqual(prevWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 17, 08, 00, 00, DateTimeKind.Utc)));
+            Assert.AreEqual(prevWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 17, 13, 00, 00, DateTimeKind.Utc)));
             // equals endtime
             Assert.AreEqual(thisWeekEnd, sched.LastEndTime(thisWeekEnd));
             // after endtime
