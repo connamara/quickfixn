@@ -35,19 +35,19 @@ namespace QuickFix
         /// <summary>
         /// Return the latest EndTime (in UTC) before time.
         /// </summary>
-        /// <param name="time"></param>
+        /// <param name="utctime"></param>
         /// <returns></returns>
-        public DateTime LastEndTime(DateTime time)
+        public DateTime LastEndTime(DateTime utctime)
         {
-            if (time.Kind != DateTimeKind.Utc)
+            if (utctime.Kind != DateTimeKind.Utc)
                 throw new ArgumentException("Only UTC time is supported", "time");
 
             DateTime adjusted =
                 UseLocalTime
-                    ? time.ToLocalTime()
+                    ? utctime.ToLocalTime()
                     : TimeZone == null
-                          ? time
-                          : TimeZoneInfo.ConvertTimeFromUtc(time, TimeZone);
+                          ? utctime
+                          : TimeZoneInfo.ConvertTimeFromUtc(utctime, TimeZone);
 
             int daysBack = 0;
             if (WeeklySession)
@@ -59,7 +59,12 @@ namespace QuickFix
             else if (adjusted.TimeOfDay < EndTime)
                 daysBack = 1;
 
-            return (adjusted.Date + new TimeSpan(-daysBack, 0, 0, 0) + EndTime).ToUniversalTime();
+            adjusted = adjusted.Date + new TimeSpan(-daysBack, 0, 0, 0) + EndTime;
+            return UseLocalTime
+                ? adjusted.ToUniversalTime()
+                : TimeZone == null
+                    ? adjusted
+                    : TimeZoneInfo.ConvertTimeToUtc(adjusted, TimeZone);
         }
 
         private bool CheckDay(System.DateTime time)
