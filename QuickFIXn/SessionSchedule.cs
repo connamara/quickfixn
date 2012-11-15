@@ -59,7 +59,12 @@ namespace QuickFix
             else if (adjusted.TimeOfDay < EndTime)
                 daysBack = 1;
 
-            return (adjusted.Date + new TimeSpan(-daysBack, 0, 0, 0) + EndTime).ToUniversalTime();
+            adjusted = adjusted.Date + new TimeSpan(-daysBack, 0, 0, 0) + EndTime;
+            return UseLocalTime
+                ? adjusted.ToUniversalTime() 
+                : TimeZone == null 
+                    ? adjusted 
+                    : TimeZoneInfo.ConvertTimeToUtc(adjusted, TimeZone);
         }
 
         private bool CheckDay(System.DateTime time)
