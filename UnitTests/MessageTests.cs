@@ -637,7 +637,7 @@ namespace UnitTests
                 "10="
             });
 
-            Console.WriteLine(ci.ToString());
+            //Console.WriteLine(ci.ToString());
             StringAssert.Contains(expected, msgString);
         }
 
@@ -689,5 +689,27 @@ namespace UnitTests
             Assert.AreEqual("L2", grp.Text.Obj);
         }
 
+        [Test]
+        public void MissingDelimiterField()
+        {
+            // issue 101
+
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+
+            // message is missing 703
+            string[] msgFields = { "8=FIX.4.4", "9=230", "35=AP", "34=3", "49=XXXXX", "52=20120731-14:06:37.848", "56=FixKevindemo",
+                "1=20050500001", "55=EURUSD", "453=0", "581=1", "702=1", "704=0", "705=20000", "710=634792896000000000", "715=20120802",
+                "721=P-DEA30E1PHC0IW7V", "730=1.22608", "731=1", "734=1.22608", "753=1", "708=20000", "10=030"
+            };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            QuickFix.FIX44.PositionReport msg = new QuickFix.FIX44.PositionReport();
+
+            QuickFix.TagException ex = Assert.Throws<QuickFix.TagException>(delegate { msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory); });
+
+            Assert.AreEqual(703, ex.Field);
+            Assert.AreEqual("Group counter 702 not followed by group entry delimiter 703", ex.Message);
+        }
     }
 }
