@@ -17,5 +17,6 @@ Changes since the last version:
 -------------------------------
 * (major/minor/patch) desc of fixed issue (contributor)
 
+* (patch) issue #143 - SessionSchedule issues and inadequate tests (formator/gbirchmeier/ligu)
 
 
