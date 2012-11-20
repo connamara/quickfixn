@@ -1,0 +1,24 @@
+# This is relevant to issue 146
+# Reject message when field is the wrong type -- nested-group case
+
+iCONNECT
+# logon message and response
+I8=FIX.4.435=A34=149=TW52=<TIME>56=ISLD98=0108=2
+E8=FIX.4.49=6035=A34=149=ISLD52=00000000-00:00:00.00056=TW98=0108=210=0
+
+# AP message has group 702, but first element does not start with 703.
+I8=FIX.4.435=AP34=249=TW52=<TIME>56=ISLD1=2005050000155=EURUSD453=0581=1702=1704=0705=20000710=634792896000000000715=20120802721=P-DEA30E1PHC0IW7V730=1.22608731=1734=1.22608753=1708=20000
+
+# rejected
+E8=FIX.4.435=334=249=ISLD52=whatever56=TW45=2371=702372=AP373=X58=Group 702's first entry does not start with delimiter 703
+
+#Send news and receive echo
+#(basically, force an echo to ensure that above was not rejected)
+I8=FIX.4.435=B34=349=TW52=<TIME>56=ISLD148=FOO33=0
+E8=FIX.4.435=B34=349=ISLD52=00000000-00:00:00.00056=TW33=0148=FOO
+
+
+# logout message and response
+I8=FIX.4.435=534=449=TW52=<TIME>56=ISLD
+E8=FIX.4.49=4935=434=349=ISLD52=00000000-00:00:00.00056=TW10=0
+

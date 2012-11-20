@@ -466,50 +466,67 @@ namespace QuickFix
         /// <summary>
         /// Constructs a group and stores it in this Message object
         /// </summary>
-        /// <param name="grpNoFld"></param>
-        /// <param name="msgstr"></param>
-        /// <param name="pos"></param>
-        /// <param name="fieldMap"></param>
-        /// <param name="dd"></param>
+        /// <param name="grpNoFld">the group's counter field</param>
+        /// <param name="msgstr">full message string</param>
+        /// <param name="pos">starting character position of group</param>
+        /// <param name="fieldMap">full message as FieldMap</param>
+        /// <param name="dd">group definition structure from dd</param>
         /// <param name="sessionDataDictionary"></param>
         /// <param name="appDD"></param>
-        /// <param name="msgFactory">if this is null, then this method will use the generic Group class constructor</param>
+        /// <param name="msgFactory">if null, then this method will use the generic Group class constructor</param>
         /// <returns></returns>
-        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
+        protected int SetGroup(
+            StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
+            DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
         {
-            int delim = dd.Delim;
+            int grpEntryDelimiterTag = dd.Delim;
             int grpPos = pos;
-            Group grp = null;
+            Group grp = null; // the group entry being constructed
 
             while (pos < msgstr.Length)
             {
                 grpPos = pos;
                 StringField f = ExtractField(msgstr, ref pos, sessionDataDictionary, appDD);
-                if (f.Tag == delim)
+                if (f.Tag == grpEntryDelimiterTag)
                 {
+                    // This is the start of a group entry.
+
                     if (grp != null)
                     {
+                        // We were already building an entry, so the delimiter means it's done.
                         fieldMap.AddGroup(grp, false);
                     }
 
+                    // Create a new group!
                     if (msgFactory != null)
                         grp = msgFactory.Create(Message.ExtractBeginString(msgstr), Message.GetMsgType(msgstr), grpNoFld.Tag);
 
-                    //If above failed, just use a generic Group.
+                    //If above failed (shouldn't ever happen), just use a generic Group.
                     if (grp == null)
-                        grp = new Group(grpNoFld.Tag, delim);
+                        grp = new Group(grpNoFld.Tag, grpEntryDelimiterTag);
                 }
                 else if (!dd.IsField(f.Tag))
                 {
+                    // This field is not in the group, thus the repeating group is done.
+
                     if (grp != null)
                     {
                         fieldMap.AddGroup(grp, false);
                     }
                     return grpPos;
                 }
+
+                if (grp == null)
+                {
+                    // This means we got into the group's fields without finding a delimiter tag.
+                    throw new GroupDelimiterTagException(grpNoFld.Tag, grpEntryDelimiterTag);
+                }
+
+                // f is just a field in our group entry.  Add it and iterate again.
                 grp.SetField(f);
                 if(dd.IsGroup(f.Tag))
                 {
+                    // f is a counter for a nested group.  Recurse!
                     pos = SetGroup(f, msgstr, pos, grp, dd.GetGroupSpec(f.Tag), sessionDataDictionary, appDD, msgFactory);
                 }
             }
