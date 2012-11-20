@@ -706,8 +706,8 @@ namespace UnitTests
 
             QuickFix.FIX44.PositionReport msg = new QuickFix.FIX44.PositionReport();
 
-            QuickFix.TagException ex = Assert.Throws<QuickFix.TagException>(delegate { msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory); });
-
+            QuickFix.GroupDelimiterTagException ex =
+                Assert.Throws<QuickFix.GroupDelimiterTagException>(delegate { msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory); });
             Assert.AreEqual(702, ex.Field);
             Assert.AreEqual("Group 702's first entry does not start with delimiter 703", ex.Message);
         }
