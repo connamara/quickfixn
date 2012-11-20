@@ -17,5 +17,5 @@ Changes since the last version:
 -------------------------------
 * (major/minor/patch) desc of fixed issue (contributor)
 
-
+* (minor) issue #101 - better exception for when group doesn't use proper delimiter
 
