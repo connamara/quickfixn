@@ -516,6 +516,12 @@ namespace QuickFix
                     return grpPos;
                 }
 
+                if (grp == null)
+                {
+                    // This means we got into the group's fields without finding a delimiter tag.
+                    throw new GroupDelimiterTagException(grpNoFld.Tag, grpEntryDelimiterTag);
+                }
+
                 // f is just a field in our group entry.  Add it and iterate again.
                 grp.SetField(f);
                 if(dd.IsGroup(f.Tag))
