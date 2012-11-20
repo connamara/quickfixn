@@ -708,8 +708,8 @@ namespace UnitTests
 
             QuickFix.TagException ex = Assert.Throws<QuickFix.TagException>(delegate { msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory); });
 
-            Assert.AreEqual(703, ex.Field);
-            Assert.AreEqual("Group counter 702 not followed by group entry delimiter 703", ex.Message);
+            Assert.AreEqual(702, ex.Field);
+            Assert.AreEqual("Group 702's first entry does not start with delimiter 703", ex.Message);
         }
     }
 }
