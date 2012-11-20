@@ -5,6 +5,9 @@ using System.Text;
 
 namespace QuickFix.DataDictionary
 {
+    /// <summary>
+    /// Represents the DD definition for a message type
+    /// </summary>
     public class DDMap : IFieldMapSpec
     {
         public Dictionary<int, DDField> Fields = new Dictionary<int, DDField>();
@@ -47,6 +50,9 @@ namespace QuickFix.DataDictionary
         }
     }
 
+    /// <summary>
+    /// Represents the DD definition for a group type
+    /// </summary>
     public class DDGrp : DDMap, IGroupSpec
     {
         public int NumFld { get; set; }

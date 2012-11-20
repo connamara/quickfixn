@@ -38,9 +38,10 @@ namespace QuickFix
                 if (!Message.IsAdminMsgType(msgType))
                     f = _factories[FixValues.BeginString.FIX50];
             }
-            
-            if(f != null)
+            if(f != null) // really, this should just be in the previous if-block
                 return f.Create(beginString, msgType);
+
+
 
             if (_factories.ContainsKey(beginString) == false)
             {
