@@ -1,3 +1,4 @@
+# This is relevant to issue 146
 # Reject message when field is the wrong type -- nested-group case
 
 iCONNECT
