@@ -31,6 +31,8 @@ namespace SimpleAcceptor
 
         public void FromAdmin(Message message, SessionID sessionID) 
         {
+            
+
             Console.WriteLine("IN:  " + message);
         }
 
