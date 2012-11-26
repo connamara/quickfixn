@@ -6,11 +6,15 @@ namespace TradeClient
 {
     public class TradeClientApp : QuickFix.MessageCracker, QuickFix.IApplication
     {
-        public enum FixVersion { FIX40, FIX41, FIX42, FIX43, FIX44, FIX50 }
+        Session _session = null;
 
-        #region Application interface overrides
+        #region IApplication interface overrides
 
-        public void OnCreate(SessionID sessionID) { }
+        public void OnCreate(SessionID sessionID)
+        {
+            _session = Session.LookupSession(sessionID);
+        }
+
         public void OnLogon(SessionID sessionID) { Console.WriteLine("Logon - " + sessionID.ToString()); }
         public void OnLogout(SessionID sessionID) { Console.WriteLine("Logout - " + sessionID.ToString()); }
 
@@ -55,19 +59,15 @@ namespace TradeClient
 
 
         #region MessageCracker handlers
-        public void OnMessage(QuickFix.FIX40.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
-        public void OnMessage(QuickFix.FIX41.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
-        public void OnMessage(QuickFix.FIX43.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
-        public void OnMessage(QuickFix.FIX44.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
-        public void OnMessage(QuickFix.FIX50.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
-        public void OnMessage(QuickFix.FIX42.ExecutionReport m, SessionID s) { Console.WriteLine("Received execution report"); }
+        public void OnMessage(QuickFix.FIX44.ExecutionReport m, SessionID s)
+        {
+            Console.WriteLine("Received execution report");
+        }
 
-        public void OnMessage(QuickFix.FIX42.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
-        public void OnMessage(QuickFix.FIX40.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
-        public void OnMessage(QuickFix.FIX41.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
-        public void OnMessage(QuickFix.FIX43.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
-        public void OnMessage(QuickFix.FIX44.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
-        public void OnMessage(QuickFix.FIX50.OrderCancelReject m, SessionID s) { Console.WriteLine("Received order cancel reject"); }
+        public void OnMessage(QuickFix.FIX44.OrderCancelReject m, SessionID s)
+        {
+            Console.WriteLine("Received order cancel reject");
+        }
         #endregion
 
 
@@ -98,6 +98,17 @@ namespace TradeClient
             Console.WriteLine("Program shutdown.");
         }
 
+        private void SendMessage(Message m)
+        {
+            if (_session != null)
+                _session.Send(m);
+            else
+            {
+                // This probably won't ever happen.
+                Console.WriteLine("Can't send message: session not created.");
+            }
+        }
+
         private char QueryAction()
         {
             Console.Write("\n"
@@ -126,172 +137,48 @@ namespace TradeClient
             return val;
         }
 
-        private FixVersion QueryVersion()
-        {
-            Console.WriteLine();
-            Console.WriteLine("1) FIX.4.0");
-            Console.WriteLine("2) FIX.4.1");
-            Console.WriteLine("3) FIX.4.2");
-            Console.WriteLine("4) FIX.4.3");
-            Console.WriteLine("5) FIX.4.4");
-            Console.WriteLine("6) FIXT1.1 (FIX.5.0)");
-            Console.Write("BeginString: ");
-
-            string line = Console.ReadLine().Trim();
-
-            switch (line)
-            {
-                case "1": return FixVersion.FIX40;
-                case "2": return FixVersion.FIX41;
-                case "3": return FixVersion.FIX42;
-                case "4": return FixVersion.FIX43;
-                case "5": return FixVersion.FIX44;
-                case "6": return FixVersion.FIX50;
-            }
-
-            throw new System.Exception("Invalid action");
-        }
-
         private void QueryEnterOrder()
         {
-            FixVersion v = QueryVersion();
             Console.WriteLine("\nNewOrderSingle");
 
-            Message m = null;
-            switch (v)
-            {
-                case FixVersion.FIX40:
-                    m = QueryNewOrderSingle40();
-                    break;
-                case FixVersion.FIX41:
-                    m = QueryNewOrderSingle41();
-                    break;
-                case FixVersion.FIX42:
-                    m = QueryNewOrderSingle42();
-                    break;
-                case FixVersion.FIX43:
-                    m = QueryNewOrderSingle43();
-                    break;
-                case FixVersion.FIX44:
-                    m = QueryNewOrderSingle44();
-                    break;
-                case FixVersion.FIX50:
-                    m = QueryNewOrderSingle50();
-                    break;
-                default:
-                    Console.WriteLine("not supported yet for version " + v.ToString());
-                    return;
-            }
+            QuickFix.FIX44.NewOrderSingle m = QueryNewOrderSingle44();
 
             if (m != null && QueryConfirm("Send order"))
             {
                 m.Header.GetField(Tags.BeginString);
 
-                QuickFix.Session.SendToTarget(m);
+                SendMessage(m);
             }
         }
 
         private void QueryCancelOrder()
         {
-            FixVersion v = QueryVersion();
             Console.WriteLine("\nOrderCancelRequest");
 
-            Message m = null;
-            switch (v)
-            {
-                case FixVersion.FIX40:
-                    m = QueryOrderCancelRequest40();
-                    break;
-                case FixVersion.FIX41:
-                    m = QueryOrderCancelRequest41();
-                    break;
-                case FixVersion.FIX42:
-                    m = QueryOrderCancelRequest42();
-                    break;
-                case FixVersion.FIX43:
-                    m = QueryOrderCancelRequest43();
-                    break;
-                case FixVersion.FIX44:
-                    m = QueryOrderCancelRequest44();
-                    break;
-                case FixVersion.FIX50:
-                    m = QueryOrderCancelRequest50();
-                    break;
-                default:
-                    Console.WriteLine("not supported yet for version " + v.ToString());
-                    return;
-            }
+            QuickFix.FIX44.OrderCancelRequest m = QueryOrderCancelRequest44();
 
             if (m != null && QueryConfirm("Cancel order"))
-                QuickFix.Session.SendToTarget(m);
+                SendMessage(m);
         }
 
         private void QueryReplaceOrder()
         {
-            FixVersion v = QueryVersion();
             Console.WriteLine("\nCancelReplaceRequest");
 
-            Message m = null;
-            switch (v)
-            {
-                case FixVersion.FIX40:
-                    m = QueryCancelReplaceRequest40();
-                    break;
-                case FixVersion.FIX41:
-                    m = QueryCancelReplaceRequest41();
-                    break;
-                case FixVersion.FIX42:
-                    m = QueryCancelReplaceRequest42();
-                    break;
-                case FixVersion.FIX43:
-                    m = QueryCancelReplaceRequest43();
-                    break;
-                case FixVersion.FIX44:
-                    m = QueryCancelReplaceRequest44();
-                    break;
-                case FixVersion.FIX50:
-                    m = QueryCancelReplaceRequest50();
-                    break; 
-                default:
-                    Console.WriteLine("not supported yet for version " + v.ToString());
-                    return;
-            }
+            QuickFix.FIX44.OrderCancelReplaceRequest m = QueryCancelReplaceRequest44();
 
             if (m != null && QueryConfirm("Send replace"))
-                QuickFix.Session.SendToTarget(m);
+                SendMessage(m);
         }
 
         private void QueryMarketDataRequest()
         {
-            FixVersion v = QueryVersion();
             Console.WriteLine("\nMarketDataRequest");
 
-            Message m = null;
-            switch (v)
-            {
-                case FixVersion.FIX40:
-                case FixVersion.FIX41:
-                    Console.WriteLine("FIX 4.0 and 4.1 don't have this message type.");
-                    break;
-                case FixVersion.FIX42:
-                    m = QueryMarketDataRequest42();
-                    break;
-                case FixVersion.FIX43:
-                    m = QueryMarketDataRequest43();
-                    break;
-                case FixVersion.FIX44:
-                    m = QueryMarketDataRequest44();
-                    break;
-                case FixVersion.FIX50:
-                    m = QueryMarketDataRequest50();
-                    break;
-                default:
-                    Console.WriteLine("not supported yet for version " + v.ToString());
-                    return;
-            }
+            QuickFix.FIX44.MarketDataRequest m = QueryMarketDataRequest44();
 
             if (m != null && QueryConfirm("Send market data request"))
-                QuickFix.Session.SendToTarget(m);
+                SendMessage(m);
         }
 
         private bool QueryConfirm(string query)
@@ -302,97 +189,7 @@ namespace TradeClient
             return (line[0].Equals('y') || line[0].Equals('Y'));
         }
 
-        #region QueryNewOrderSingleNN
-        private QuickFix.FIX40.NewOrderSingle QueryNewOrderSingle40()
-        {
-            QuickFix.Fields.OrdType ordType = null;
-
-            QuickFix.FIX40.NewOrderSingle newOrderSingle = new QuickFix.FIX40.NewOrderSingle(
-                QueryClOrdID(),
-                new HandlInst('1'),
-                QuerySymbol(),
-                QuerySide(),
-                QueryOrderQty(),
-                ordType = QueryOrdType());
-
-            newOrderSingle.Set(QueryTimeInForce());
-            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.Set(QueryPrice());
-            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.Set(QueryStopPx());
-
-            QueryHeader(newOrderSingle.Header);
-            return newOrderSingle;
-        }
-
-        private QuickFix.FIX41.NewOrderSingle QueryNewOrderSingle41()
-        {
-            QuickFix.Fields.OrdType ordType = null;
-
-            QuickFix.FIX41.NewOrderSingle newOrderSingle = new QuickFix.FIX41.NewOrderSingle(
-                QueryClOrdID(),
-                new HandlInst('1'),
-                QuerySymbol(),
-                QuerySide(),
-                ordType = QueryOrdType());
-
-            newOrderSingle.Set(QueryOrderQty());
-            newOrderSingle.Set(QueryTimeInForce());
-            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.Set(QueryPrice());
-            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.Set(QueryStopPx());
-
-            QueryHeader(newOrderSingle.Header);
-            return newOrderSingle;
-        }
-
-        private QuickFix.FIX42.NewOrderSingle QueryNewOrderSingle42()
-        {
-            QuickFix.Fields.OrdType ordType = null;
-
-            QuickFix.FIX42.NewOrderSingle newOrderSingle = new QuickFix.FIX42.NewOrderSingle(
-                QueryClOrdID(),
-                new HandlInst('1'),
-                QuerySymbol(),
-                QuerySide(),
-                new TransactTime(DateTime.Now),
-                ordType = QueryOrdType());
-
-            newOrderSingle.Set(QueryOrderQty());
-            newOrderSingle.Set(QueryTimeInForce());
-            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.Set(QueryPrice());
-            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.Set(QueryStopPx());
-
-            QueryHeader(newOrderSingle.Header);
-            return newOrderSingle;
-        }
-
-        private QuickFix.FIX43.NewOrderSingle QueryNewOrderSingle43()
-        {
-            QuickFix.Fields.OrdType ordType = null;
-
-            QuickFix.FIX43.NewOrderSingle newOrderSingle = new QuickFix.FIX43.NewOrderSingle(
-                QueryClOrdID(),
-                new HandlInst('1'),
-                QuerySymbol(),
-                QuerySide(),
-                new TransactTime(DateTime.Now),
-                ordType = QueryOrdType());
-
-            newOrderSingle.Set(QueryOrderQty());
-            newOrderSingle.Set(QueryTimeInForce());
-            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.Set(QueryPrice());
-            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.Set(QueryStopPx());
-
-            QueryHeader(newOrderSingle.Header);
-            return newOrderSingle;
-        }
-
+        #region Message creation functions
         private QuickFix.FIX44.NewOrderSingle QueryNewOrderSingle44()
         {
             QuickFix.Fields.OrdType ordType = null;
@@ -412,88 +209,7 @@ namespace TradeClient
             if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
                 newOrderSingle.Set(QueryStopPx());
 
-            QueryHeader(newOrderSingle.Header);
             return newOrderSingle;
-        }
-
-        private QuickFix.FIX50.NewOrderSingle QueryNewOrderSingle50()
-        {
-            QuickFix.Fields.OrdType ordType = null;
-
-            QuickFix.FIX50.NewOrderSingle newOrderSingle = new QuickFix.FIX50.NewOrderSingle(
-                QueryClOrdID(),
-                QuerySide(),
-                new TransactTime(DateTime.Now),
-                ordType = QueryOrdType());
-
-            newOrderSingle.Set(new HandlInst('1'));
-            newOrderSingle.Set(QuerySymbol());
-            newOrderSingle.Set(QueryOrderQty());
-            newOrderSingle.Set(QueryTimeInForce());
-            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.Set(QueryPrice());
-            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
-                newOrderSingle.Set(QueryStopPx());
-
-            QueryHeader(newOrderSingle.Header);
-            return newOrderSingle;
-        }
-        #endregion
-
-        #region QueryOrderCancelRequestNN
-        private QuickFix.FIX40.OrderCancelRequest QueryOrderCancelRequest40()
-        {
-            QuickFix.FIX40.OrderCancelRequest orderCancelRequest = new QuickFix.FIX40.OrderCancelRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
-                new CxlType(CxlType.FULL_REMAINING_QUANTITY),
-                QuerySymbol(),
-                QuerySide(),
-                QueryOrderQty());
-
-            QueryHeader(orderCancelRequest.Header);
-            return orderCancelRequest;
-        }
-
-        private QuickFix.FIX41.OrderCancelRequest QueryOrderCancelRequest41()
-        {
-            QuickFix.FIX41.OrderCancelRequest orderCancelRequest = new QuickFix.FIX41.OrderCancelRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
-                QuerySymbol(),
-                QuerySide());
-
-            orderCancelRequest.Set(QueryOrderQty());
-            QueryHeader(orderCancelRequest.Header);
-            return orderCancelRequest;
-        }
-
-        private QuickFix.FIX42.OrderCancelRequest QueryOrderCancelRequest42()
-        {
-            QuickFix.FIX42.OrderCancelRequest orderCancelRequest = new QuickFix.FIX42.OrderCancelRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
-                QuerySymbol(),
-                QuerySide(),
-                new TransactTime(DateTime.Now));
-
-            orderCancelRequest.Set(QueryOrderQty());
-            QueryHeader(orderCancelRequest.Header);
-            return orderCancelRequest;
-        }
-
-        private QuickFix.FIX43.OrderCancelRequest QueryOrderCancelRequest43()
-        {
-            QuickFix.FIX43.OrderCancelRequest orderCancelRequest = new QuickFix.FIX43.OrderCancelRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
-                QuerySymbol(),
-                QuerySide(),
-                new TransactTime(DateTime.Now));
-
-            orderCancelRequest.Set(QueryOrderQty());
-            QueryHeader(orderCancelRequest.Header);
-            return orderCancelRequest;
         }
 
         private QuickFix.FIX44.OrderCancelRequest QueryOrderCancelRequest44()
@@ -506,103 +222,7 @@ namespace TradeClient
                 new TransactTime(DateTime.Now));
 
             orderCancelRequest.Set(QueryOrderQty());
-            QueryHeader(orderCancelRequest.Header);
             return orderCancelRequest;
-        }
-
-        private QuickFix.FIX50.OrderCancelRequest QueryOrderCancelRequest50()
-        {
-            QuickFix.FIX50.OrderCancelRequest orderCancelRequest = new QuickFix.FIX50.OrderCancelRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
-                QuerySide(),
-                new TransactTime(DateTime.Now));
-
-            orderCancelRequest.Set(QuerySymbol());
-            orderCancelRequest.Set(QueryOrderQty());
-            QueryHeader(orderCancelRequest.Header);
-            return orderCancelRequest;
-        }
-        #endregion
-
-        #region QueryCancelReplaceRequestNN
-        private QuickFix.FIX40.OrderCancelReplaceRequest QueryCancelReplaceRequest40()
-        {
-            QuickFix.FIX40.OrderCancelReplaceRequest ocrr = new QuickFix.FIX40.OrderCancelReplaceRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
-                new HandlInst('1'),
-                QuerySymbol(),
-                QuerySide(),
-                QueryOrderQty(),
-                QueryOrdType());
-
-            if (QueryConfirm("New price"))
-                ocrr.Set(QueryPrice());
-            if (QueryConfirm("New quantity"))
-                ocrr.Set(QueryOrderQty());
-
-            QueryHeader(ocrr.Header);
-            return ocrr;
-        }
-
-        private QuickFix.FIX41.OrderCancelReplaceRequest QueryCancelReplaceRequest41()
-        {
-            QuickFix.FIX41.OrderCancelReplaceRequest ocrr = new QuickFix.FIX41.OrderCancelReplaceRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
-                new HandlInst('1'),
-                QuerySymbol(),
-                QuerySide(),
-                QueryOrdType());
-
-            if (QueryConfirm("New price"))
-                ocrr.Set(QueryPrice());
-            if (QueryConfirm("New quantity"))
-                ocrr.Set(QueryOrderQty());
-
-            QueryHeader(ocrr.Header);
-            return ocrr;
-        }
-
-        private QuickFix.FIX42.OrderCancelReplaceRequest QueryCancelReplaceRequest42()
-        {
-            QuickFix.FIX42.OrderCancelReplaceRequest ocrr = new QuickFix.FIX42.OrderCancelReplaceRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
-                new HandlInst('1'),
-                QuerySymbol(),
-                QuerySide(),
-                new TransactTime(DateTime.Now),
-                QueryOrdType());
-
-            if(QueryConfirm("New price"))
-                ocrr.Set( QueryPrice());
-            if(QueryConfirm("New quantity"))
-                ocrr.Set(QueryOrderQty());
-
-            QueryHeader(ocrr.Header);
-            return ocrr;
-        }
-
-        private QuickFix.FIX43.OrderCancelReplaceRequest QueryCancelReplaceRequest43()
-        {
-            QuickFix.FIX43.OrderCancelReplaceRequest ocrr = new QuickFix.FIX43.OrderCancelReplaceRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
-                new HandlInst('1'),
-                QuerySymbol(),
-                QuerySide(),
-                new TransactTime(DateTime.Now),
-                QueryOrdType());
-
-            if (QueryConfirm("New price"))
-                ocrr.Set(QueryPrice());
-            if (QueryConfirm("New quantity"))
-                ocrr.Set(QueryOrderQty());
-
-            QueryHeader(ocrr.Header);
-            return ocrr;
         }
 
         private QuickFix.FIX44.OrderCancelReplaceRequest QueryCancelReplaceRequest44()
@@ -621,74 +241,7 @@ namespace TradeClient
             if (QueryConfirm("New quantity"))
                 ocrr.Set(QueryOrderQty());
 
-            QueryHeader(ocrr.Header);
             return ocrr;
-        }
-
-        private QuickFix.FIX50.OrderCancelReplaceRequest QueryCancelReplaceRequest50()
-        {
-            QuickFix.FIX50.OrderCancelReplaceRequest ocrr = new QuickFix.FIX50.OrderCancelReplaceRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
-                QuerySide(),
-                new TransactTime(DateTime.Now),
-                QueryOrdType());
-
-            ocrr.Set(new HandlInst('1'));
-            ocrr.Set(QuerySymbol());
-            if (QueryConfirm("New price"))
-                ocrr.Set(QueryPrice());
-            if (QueryConfirm("New quantity"))
-                ocrr.Set(QueryOrderQty());
-
-            QueryHeader(ocrr.Header);
-            return ocrr;
-        }
-        #endregion
-
-        #region QueryMarketDataRequestNN
-        private QuickFix.FIX42.MarketDataRequest QueryMarketDataRequest42()
-        {
-            MDReqID mdReqID = new MDReqID( "MARKETDATAID" );
-            SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
-            MarketDepth marketDepth = new MarketDepth(0);
-
-            QuickFix.FIX42.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX42.MarketDataRequest.NoMDEntryTypesGroup();
-            marketDataEntryGroup.Set( new MDEntryType(MDEntryType.BID) );
-
-            QuickFix.FIX42.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX42.MarketDataRequest.NoRelatedSymGroup();
-            symbolGroup.Set(new Symbol("LNUX"));
-
-            QuickFix.FIX42.MarketDataRequest message = new QuickFix.FIX42.MarketDataRequest( mdReqID, subType, marketDepth );
-            message.AddGroup( marketDataEntryGroup );
-            message.AddGroup( symbolGroup );
-
-            QueryHeader( message.Header );
-
-            Console.WriteLine(message.ToString());
-            return message;
-        }
-
-        private QuickFix.FIX43.MarketDataRequest QueryMarketDataRequest43()
-        {
-            MDReqID mdReqID = new MDReqID("MARKETDATAID");
-            SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
-            MarketDepth marketDepth = new MarketDepth(0);
-
-            QuickFix.FIX43.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX43.MarketDataRequest.NoMDEntryTypesGroup();
-            marketDataEntryGroup.Set(new MDEntryType(MDEntryType.BID));
-
-            QuickFix.FIX43.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX43.MarketDataRequest.NoRelatedSymGroup();
-            symbolGroup.Set(new Symbol("LNUX"));
-
-            QuickFix.FIX43.MarketDataRequest message = new QuickFix.FIX43.MarketDataRequest(mdReqID, subType, marketDepth);
-            message.AddGroup(marketDataEntryGroup);
-            message.AddGroup(symbolGroup);
-
-            QueryHeader(message.Header);
-
-            Console.WriteLine(message.ToString());
-            return message;
         }
 
         private QuickFix.FIX44.MarketDataRequest QueryMarketDataRequest44()
@@ -707,35 +260,9 @@ namespace TradeClient
             message.AddGroup(marketDataEntryGroup);
             message.AddGroup(symbolGroup);
 
-            QueryHeader(message.Header);
-
-            Console.WriteLine(message.ToString());
-            return message;
-        }
-
-        private QuickFix.FIX50.MarketDataRequest QueryMarketDataRequest50()
-        {
-            MDReqID mdReqID = new MDReqID("MARKETDATAID");
-            SubscriptionRequestType subType = new SubscriptionRequestType(SubscriptionRequestType.SNAPSHOT);
-            MarketDepth marketDepth = new MarketDepth(0);
-
-            QuickFix.FIX50.MarketDataRequest.NoMDEntryTypesGroup marketDataEntryGroup = new QuickFix.FIX50.MarketDataRequest.NoMDEntryTypesGroup();
-            marketDataEntryGroup.Set(new MDEntryType(MDEntryType.BID));
-
-            QuickFix.FIX50.MarketDataRequest.NoRelatedSymGroup symbolGroup = new QuickFix.FIX50.MarketDataRequest.NoRelatedSymGroup();
-            symbolGroup.Set(new Symbol("LNUX"));
-
-            QuickFix.FIX50.MarketDataRequest message = new QuickFix.FIX50.MarketDataRequest(mdReqID, subType, marketDepth);
-            message.AddGroup(marketDataEntryGroup);
-            message.AddGroup(symbolGroup);
-
-            QueryHeader(message.Header);
-
-            Console.WriteLine(message.ToString());
             return message;
         }
         #endregion
-
 
         #region field query private methods
         private ClOrdID QueryClOrdID()
@@ -854,34 +381,6 @@ namespace TradeClient
             return new StopPx(Convert.ToDecimal(Console.ReadLine().Trim()));
         }
 
-        private void QueryHeader(Header h)
-        {
-            h.SetField(QuerySenderCompID());
-            h.SetField(QueryTargetCompID());
-            if (QueryConfirm("Use a TargetSubID"))
-                h.SetField(QueryTargetSubID());
-        }
-
-        private SenderCompID QuerySenderCompID()
-        {
-            Console.WriteLine();
-            Console.WriteLine("SenderCompID? ");
-            return new SenderCompID(Console.ReadLine().Trim());
-        }
-
-        private TargetCompID QueryTargetCompID()
-        {
-            Console.WriteLine();
-            Console.WriteLine("TargetCompID? ");
-            return new TargetCompID(Console.ReadLine().Trim());
-        }
-
-        private TargetSubID QueryTargetSubID()
-        {
-            Console.WriteLine();
-            Console.WriteLine("TargetSubID? ");
-            return new TargetSubID(Console.ReadLine().Trim());
-        }
         #endregion
     }
 }
