@@ -4,7 +4,7 @@ namespace QuickFix
     /// <summary>
     /// Creates a message store that stores messages in a file
     /// </summary>
-    public class FileLogFactory : LogFactory
+    public class FileLogFactory : ILogFactory
     {
         SessionSettings settings_;
 
@@ -20,7 +20,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="sessionID">session ID for the message store</param>
         /// <returns></returns>
-        public Log Create(SessionID sessionID)
+        public ILog Create(SessionID sessionID)
         {
             return new FileLog(settings_.Get(sessionID).GetString(SessionSettings.FILE_LOG_PATH), sessionID);
         }

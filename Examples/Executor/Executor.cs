@@ -8,7 +8,7 @@ using QuickFix.Fields;
 
 namespace Executor
 {
-    public class Executor : QuickFix.MessageCracker, QuickFix.Application
+    public class Executor : QuickFix.MessageCracker, QuickFix.IApplication
     {
         static readonly decimal DEFAULT_MARKET_PRICE = 10;
 
