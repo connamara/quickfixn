@@ -18,7 +18,7 @@ namespace QuickFix
 
         private static Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private object sync_ = new object();
-        private Responder responder_ = null;
+        private IResponder responder_ = null;
         private SessionSchedule schedule_;
         private SessionState state_;
         private IMessageFactory msgFactory_;
@@ -29,7 +29,7 @@ namespace QuickFix
         #region Properties
 
         // state
-        public Log Log { get { return state_.Log; } }
+        public ILog Log { get { return state_.Log; } }
         public bool IsInitiator { get { return state_.IsInitiator; } }
         public bool IsAcceptor { get { return !state_.IsInitiator; } }
         public bool IsEnabled { get { return state_.IsEnabled; } }
@@ -184,7 +184,7 @@ namespace QuickFix
         public ApplVerID targetDefaultApplVerID { get; set; }
         public string SenderDefaultApplVerID { get; set; }
         public SessionID SessionID { get; set; }
-        public Application Application { get; set; }
+        public IApplication Application { get; set; }
         public DataDictionaryProvider DataDictionaryProvider { get; set; }
         public DataDictionary.DataDictionary SessionDataDictionary { get; private set; }
         public DataDictionary.DataDictionary ApplicationDataDictionary { get; private set; }
@@ -197,8 +197,8 @@ namespace QuickFix
         #endregion
 
         public Session(
-            Application app, MessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
-            SessionSchedule sessionSchedule, int heartBtInt, LogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
+            IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
+            SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
         {
             this.Application = app;
             this.SessionID = sessID;
@@ -214,7 +214,7 @@ namespace QuickFix
             else
                 this.ApplicationDataDictionary = this.SessionDataDictionary;
 
-            Log log;
+            ILog log;
             if (null != logFactory)
                 log = logFactory.Create(sessID);
             else
@@ -888,7 +888,7 @@ namespace QuickFix
             return true;
         }
 
-        public void SetResponder(Responder responder)
+        public void SetResponder(IResponder responder)
         {
             if (!IsSessionTime)
                 Reset("Out of SessionTime at setting responder");

@@ -10,8 +10,8 @@ namespace UnitTests
         [Test]
         public void TestPersistMessages()
         {
-            Application app = new NullApplication();
-            MessageStoreFactory storeFactory = new MemoryStoreFactory();
+            IApplication app = new NullApplication();
+            IMessageStoreFactory storeFactory = new MemoryStoreFactory();
             SessionFactory factory = new SessionFactory(app, storeFactory);
 
             SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET");
@@ -34,8 +34,8 @@ namespace UnitTests
         [Test]
         public void ValidConfiguration()
         {
-            Application app = new NullApplication();
-            MessageStoreFactory storeFactory = new MemoryStoreFactory();
+            IApplication app = new NullApplication();
+            IMessageStoreFactory storeFactory = new MemoryStoreFactory();
             SessionFactory factory = new SessionFactory(app, storeFactory);
 
             SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET");
@@ -52,8 +52,8 @@ namespace UnitTests
         [Test]
         public void StartDayAndEndDayAreDifferent()
         {
-            Application app = new NullApplication();
-            MessageStoreFactory storeFactory = new MemoryStoreFactory();
+            IApplication app = new NullApplication();
+            IMessageStoreFactory storeFactory = new MemoryStoreFactory();
             SessionFactory factory = new SessionFactory(app, storeFactory);
 
             SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET");
@@ -72,8 +72,8 @@ namespace UnitTests
         [Test]
         public void TestExtendedSettings()
         {
-            Application app = new NullApplication();
-            MessageStoreFactory storeFactory = new MemoryStoreFactory();
+            IApplication app = new NullApplication();
+            IMessageStoreFactory storeFactory = new MemoryStoreFactory();
             SessionFactory factory = new SessionFactory(app, storeFactory);
 
             SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET");

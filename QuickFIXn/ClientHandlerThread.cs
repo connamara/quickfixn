@@ -11,7 +11,7 @@ namespace QuickFix
     /// Each ClientHandlerThread has a SocketReader which reads
     /// from the socket.
     /// </summary>
-    public class ClientHandlerThread : Responder
+    public class ClientHandlerThread : IResponder
     {
         private Thread thread_ = null;
         private volatile bool isShutdownRequested_ = false;

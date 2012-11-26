@@ -4,7 +4,7 @@ namespace QuickFix
     /// <summary>
     /// FIXME - needs to log sessionIDs, timestamps, etc.
     /// </summary>
-    public class ScreenLog : Log
+    public class ScreenLog : ILog
     {
         private object sync_ = new object();
         private SessionID sessionID_;

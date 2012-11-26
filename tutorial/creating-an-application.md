@@ -1,10 +1,10 @@
 Creating an Application
 =======================
 
-Creating a FIX application is easy; simply implement an `Application`:
+Creating a FIX application is easy; simply implement an `IApplication`:
 
 ```c#
-public class MyQuickFixApp : Application
+public class MyQuickFixApp : IApplication
 {
     public void FromApp(Message msg, SessionID sessionID) { }
     public void OnCreate(SessionID sessionID) { }
@@ -73,7 +73,7 @@ instantiate an `Acceptor`:
 ```c#
 using QuickFix;
 
-public class MyQuickFixApp : Application
+public class MyQuickFixApp : IApplication
 {
     public void FromApp(Message msg, SessionID sessionID) { }
     public void OnCreate(SessionID sessionID) { }
@@ -90,8 +90,8 @@ public class MyApp
     {
         SessionSettings settings = new SessionSettings(args[0]);
         Application myApp = new MyQuickFixApp();
-        MessageStoreFactory storeFactory = new FileStoreFactory(settings);
-        LogFactory logFactory = new FileLogFactory(settings);
+        IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
+        ILogFactory logFactory = new FileLogFactory(settings);
         ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(
             myApp,
             storeFactory,
@@ -116,12 +116,12 @@ highly recommended.**
 Switching this to an `Initiator` is as simple as swapping out the
 `ThreadedSocketAcceptor` class for the `SocketInitiator` class.
 
-The `MessageStore` keeps a record of all outgoing messages for FIX
+The `IMessageStore` keeps a record of all outgoing messages for FIX
 session level messaging.  We could implement our own store by
 implementing the `MessageStoreFactory` interface.
 
 There are a few options for logging, with file logger probably being the
 most useful.  We could also implement our own logger by implementing the
-`LogFactory` interface.
+`ILogFactory` interface.
 
 
