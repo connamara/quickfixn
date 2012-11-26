@@ -1,7 +1,7 @@
 ﻿
 namespace QuickFix
 {
-    public class ScreenLogFactory : LogFactory
+    public class ScreenLogFactory : ILogFactory
     {
         public const string SCREEN_LOG_SHOW_INCOMING = "ScreenLogShowIncoming";
         public const string SCREEN_LOG_SHOW_OUTGOING = "ScreenLogShowOutgoing";
@@ -26,7 +26,7 @@ namespace QuickFix
 
         #region LogFactory Members
 
-        public Log Create(SessionID sessionID)
+        public ILog Create(SessionID sessionID)
         {
             bool logIncoming = logIncoming_;
             bool logOutgoing = logOutgoing_;

@@ -1,7 +1,7 @@
 ﻿
 namespace QuickFix.Applications
 {
-    public class FIX5Application : Application
+    public class FIX5Application : IApplication
     {
         public void FromAdmin(Message message, SessionID sessionID)
         {

@@ -24,15 +24,15 @@ namespace QuickFix
 
         #endregion
 
-        public AbstractInitiator(Application app, MessageStoreFactory storeFactory, SessionSettings settings)
+        public AbstractInitiator(IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings)
             : this(app, storeFactory, settings, null, null)
         { }
 
-        public AbstractInitiator(Application app, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory)
+        public AbstractInitiator(IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
             : this(app, storeFactory, settings, logFactory, null)
         { }
 
-        public AbstractInitiator(Application app, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory, IMessageFactory messageFactory)
+        public AbstractInitiator(IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
         {
             settings_ = settings;
 

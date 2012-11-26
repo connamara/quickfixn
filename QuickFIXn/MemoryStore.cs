@@ -6,7 +6,7 @@ namespace QuickFix
     /// <summary>
     /// In-memory message store implementation
     /// </summary>
-    public class MemoryStore : MessageStore
+    public class MemoryStore : IMessageStore
     {
         #region Private Members
 

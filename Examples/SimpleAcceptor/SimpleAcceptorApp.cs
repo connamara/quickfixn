@@ -14,7 +14,7 @@ namespace SimpleAcceptor
     /// Note that this app is *NOT* a message cracker.
     /// </summary>
 
-    public class SimpleAcceptorApp : /*QuickFix.MessageCracker,*/ QuickFix.Application
+    public class SimpleAcceptorApp : /*QuickFix.MessageCracker,*/ QuickFix.IApplication
     {
         #region QuickFix.Application Methods
 
