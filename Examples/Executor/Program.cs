@@ -24,9 +24,9 @@ namespace Executor
             try
             {
                 SessionSettings settings = new SessionSettings(args[0]);
-                Application executorApp = new Executor();
-                MessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                LogFactory logFactory = new FileLogFactory(settings);
+                IApplication executorApp = new Executor();
+                IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
+                ILogFactory logFactory = new FileLogFactory(settings);
                 ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(executorApp, storeFactory, settings, logFactory);
 
                 acceptor.Start();

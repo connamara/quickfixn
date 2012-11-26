@@ -4,7 +4,7 @@ using QuickFix.Fields;
 
 namespace TradeClient
 {
-    public class TradeClientApp : QuickFix.MessageCracker, QuickFix.Application
+    public class TradeClientApp : QuickFix.MessageCracker, QuickFix.IApplication
     {
         public enum FixVersion { FIX40, FIX41, FIX42, FIX43, FIX44, FIX50 }
 

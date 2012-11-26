@@ -23,8 +23,8 @@ namespace AcceptanceTest
                 testApp.StopMeEvent += new System.Action(delegate() { _stopMe = true; });
                 
                 SessionSettings settings = new SessionSettings(args[0]);
-                MessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                LogFactory logFactory = null;
+                IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
+                ILogFactory logFactory = null;
                 if (settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose"))
                     logFactory = new FileLogFactory(settings);
                 acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, logFactory);
