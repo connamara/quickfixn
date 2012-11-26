@@ -62,15 +62,15 @@ namespace QuickFix
 
         #region Constructors
 
-        public ThreadedSocketAcceptor(Application application, MessageStoreFactory storeFactory, SessionSettings settings)
+        public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
             : this(new SessionFactory(application, storeFactory), settings)
         { }
 
-        public ThreadedSocketAcceptor(Application application, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory)
+        public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
             : this(new SessionFactory(application, storeFactory, logFactory), settings)
         { }
 
-        public ThreadedSocketAcceptor(Application application, MessageStoreFactory storeFactory, SessionSettings settings, LogFactory logFactory, IMessageFactory messageFactory)
+        public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
             : this(new SessionFactory(application, storeFactory, logFactory, messageFactory), settings)
         { }
 

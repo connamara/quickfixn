@@ -7,7 +7,7 @@ namespace QuickFix
     /// <summary>
     /// Handles a connection with an acceptor.
     /// </summary>
-    public class SocketInitiatorThread : Responder
+    public class SocketInitiatorThread : IResponder
     {
         public Session Session { get { return session_; } }
         public Transport.SocketInitiator Initiator { get { return initiator_; } }
