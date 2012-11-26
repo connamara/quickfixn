@@ -19,3 +19,4 @@ Changes since the last version:
 
 * (minor) issue #101 - better exception for when group doesn't use proper delimiter
 * (minor) issue #28 - rename interfaces to start with "I"
+* (patch) issue #128 - simplify/improve TradeClient example app
