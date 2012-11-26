@@ -1,6 +1,7 @@
 ﻿
 namespace QuickFix
 {
+    /// <summary>
     /// (Renamed per naming convention.)
     /// </summary>
     [System.Obsolete("Use IApplication instead.")]
