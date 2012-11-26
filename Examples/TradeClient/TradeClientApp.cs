@@ -6,9 +6,15 @@ namespace TradeClient
 {
     public class TradeClientApp : QuickFix.MessageCracker, QuickFix.IApplication
     {
+        Session _session = null;
+
         #region IApplication interface overrides
 
-        public void OnCreate(SessionID sessionID) { }
+        public void OnCreate(SessionID sessionID)
+        {
+            _session = Session.LookupSession(sessionID);
+        }
+
         public void OnLogon(SessionID sessionID) { Console.WriteLine("Logon - " + sessionID.ToString()); }
         public void OnLogout(SessionID sessionID) { Console.WriteLine("Logout - " + sessionID.ToString()); }
 
@@ -92,6 +98,17 @@ namespace TradeClient
             Console.WriteLine("Program shutdown.");
         }
 
+        private void SendMessage(Message m)
+        {
+            if (_session != null)
+                _session.Send(m);
+            else
+            {
+                // This probably won't ever happen.
+                Console.WriteLine("Can't send message: session not created.");
+            }
+        }
+
         private char QueryAction()
         {
             Console.Write("\n"
@@ -130,7 +147,7 @@ namespace TradeClient
             {
                 m.Header.GetField(Tags.BeginString);
 
-                QuickFix.Session.SendToTarget(m);
+                SendMessage(m);
             }
         }
 
@@ -141,7 +158,7 @@ namespace TradeClient
             QuickFix.FIX44.OrderCancelRequest m = QueryOrderCancelRequest44();
 
             if (m != null && QueryConfirm("Cancel order"))
-                QuickFix.Session.SendToTarget(m);
+                SendMessage(m);
         }
 
         private void QueryReplaceOrder()
@@ -151,7 +168,7 @@ namespace TradeClient
             QuickFix.FIX44.OrderCancelReplaceRequest m = QueryCancelReplaceRequest44();
 
             if (m != null && QueryConfirm("Send replace"))
-                QuickFix.Session.SendToTarget(m);
+                SendMessage(m);
         }
 
         private void QueryMarketDataRequest()
@@ -161,7 +178,7 @@ namespace TradeClient
             QuickFix.FIX44.MarketDataRequest m = QueryMarketDataRequest44();
 
             if (m != null && QueryConfirm("Send market data request"))
-                QuickFix.Session.SendToTarget(m);
+                SendMessage(m);
         }
 
         private bool QueryConfirm(string query)
@@ -192,7 +209,6 @@ namespace TradeClient
             if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
                 newOrderSingle.Set(QueryStopPx());
 
-            QueryHeader(newOrderSingle.Header);
             return newOrderSingle;
         }
 
@@ -206,7 +222,6 @@ namespace TradeClient
                 new TransactTime(DateTime.Now));
 
             orderCancelRequest.Set(QueryOrderQty());
-            QueryHeader(orderCancelRequest.Header);
             return orderCancelRequest;
         }
 
@@ -226,7 +241,6 @@ namespace TradeClient
             if (QueryConfirm("New quantity"))
                 ocrr.Set(QueryOrderQty());
 
-            QueryHeader(ocrr.Header);
             return ocrr;
         }
 
@@ -246,9 +260,6 @@ namespace TradeClient
             message.AddGroup(marketDataEntryGroup);
             message.AddGroup(symbolGroup);
 
-            QueryHeader(message.Header);
-
-            Console.WriteLine(message.ToString());
             return message;
         }
         #endregion
@@ -370,34 +381,6 @@ namespace TradeClient
             return new StopPx(Convert.ToDecimal(Console.ReadLine().Trim()));
         }
 
-        private void QueryHeader(Header h)
-        {
-            h.SetField(QuerySenderCompID());
-            h.SetField(QueryTargetCompID());
-            if (QueryConfirm("Use a TargetSubID"))
-                h.SetField(QueryTargetSubID());
-        }
-
-        private SenderCompID QuerySenderCompID()
-        {
-            Console.WriteLine();
-            Console.WriteLine("SenderCompID? ");
-            return new SenderCompID(Console.ReadLine().Trim());
-        }
-
-        private TargetCompID QueryTargetCompID()
-        {
-            Console.WriteLine();
-            Console.WriteLine("TargetCompID? ");
-            return new TargetCompID(Console.ReadLine().Trim());
-        }
-
-        private TargetSubID QueryTargetSubID()
-        {
-            Console.WriteLine();
-            Console.WriteLine("TargetSubID? ");
-            return new TargetSubID(Console.ReadLine().Trim());
-        }
         #endregion
     }
 }
