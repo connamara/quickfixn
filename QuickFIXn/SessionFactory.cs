@@ -7,21 +7,21 @@ namespace QuickFix
     /// </summary>
     public class SessionFactory
     {
-        protected Application application_;
-        protected MessageStoreFactory messageStoreFactory_;
-        protected LogFactory logFactory_;
+        protected IApplication application_;
+        protected IMessageStoreFactory messageStoreFactory_;
+        protected ILogFactory logFactory_;
         protected IMessageFactory messageFactory_;
         protected Dictionary<string,DataDictionary.DataDictionary> dictionariesByPath_ = new Dictionary<string,DataDictionary.DataDictionary>();
 
-        public SessionFactory(Application app, MessageStoreFactory storeFactory)
+        public SessionFactory(IApplication app, IMessageStoreFactory storeFactory)
             : this(app, storeFactory, null, null)
         { }
 
-        public SessionFactory(Application app, MessageStoreFactory storeFactory, LogFactory logFactory)
+        public SessionFactory(IApplication app, IMessageStoreFactory storeFactory, ILogFactory logFactory)
             : this(app, storeFactory, logFactory, null)
         { }
 
-        public SessionFactory(Application app, MessageStoreFactory storeFactory, LogFactory logFactory, IMessageFactory messageFactory)
+        public SessionFactory(IApplication app, IMessageStoreFactory storeFactory, ILogFactory logFactory, IMessageFactory messageFactory)
         {
             application_ = app;
             messageStoreFactory_ = storeFactory;

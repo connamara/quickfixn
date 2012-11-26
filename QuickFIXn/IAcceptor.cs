@@ -44,8 +44,7 @@ namespace QuickFix
     }
 
     /// <summary>
-    /// Deprecated due to violation of naming convention; will be removed in next major release.
-    /// It is replaced by IAcceptor, from which it directly derives.
+    /// (Renamed per naming convention.)
     /// </summary>
     [System.Obsolete("Use IAcceptor instead")]
     public interface Acceptor : IAcceptor

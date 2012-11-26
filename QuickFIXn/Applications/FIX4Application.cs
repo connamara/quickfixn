@@ -1,7 +1,7 @@
 ﻿
 namespace QuickFix.Applications
 {
-    public class FIX4Application : Application
+    public class FIX4Application : IApplication
     {
         public FIX4Application() { }
 
