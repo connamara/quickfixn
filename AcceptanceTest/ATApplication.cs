@@ -3,7 +3,7 @@ using QuickFix;
 
 namespace AcceptanceTest
 {
-    public class ATApplication : MessageCracker, Application
+    public class ATApplication : MessageCracker, IApplication
     {
         public event System.Action StopMeEvent;
 
