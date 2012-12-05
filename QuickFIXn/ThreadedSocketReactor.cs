@@ -36,7 +36,7 @@ namespace QuickFix
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
         private QuickFix.Dictionary sessionDict_;
-        private ILog logger_;
+        private Common.Logging.ILog logger_;
 
         #endregion
 

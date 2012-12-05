@@ -20,7 +20,7 @@ namespace QuickFix
         private SocketReader socketReader_;
         private long id_;
         private FileLog log_;
-        private ILog logger_;
+        private Common.Logging.ILog logger_;
 
         [Obsolete("Use the other constructor")]
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
