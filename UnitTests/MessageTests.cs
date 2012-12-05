@@ -720,7 +720,6 @@ namespace UnitTests
             var dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
 
-            // message is missing 703
             string[] msgFields = { "8=FIX.4.4", "9=332", "35=W", "34=2", "49=MA", "52=20121024-12:21:42.170", "56=xxxx",
                 "22=4", "48=BE0932900518", "55=[N/A]", "262=1b145288-9c9a-4911-a084-7341c69d3e6b", "762=EURO_EUR", "268=2", 
                 "269=0", "270=97.625", "15=EUR", "271=1246000", "272=20121024", "273=07:30:47", "276=I", "282=BEARGB21XXX", "299=15478575", 
@@ -734,6 +733,52 @@ namespace UnitTests
             QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup gentry1 = (QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup)msg.GetGroup(1, new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup());
             Assert.AreEqual(new DateTime(2012, 10, 24), gentry1.MDEntryDate);
             Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30,47), gentry1.MDEntryTime);
+        }
+
+        [Test]
+        public void SendDateOnlyTimeOnlyConvertProblem()
+        {
+            // issue 135
+            QuickFix.FIX44.MarketDataSnapshotFullRefresh msg = new QuickFix.FIX44.MarketDataSnapshotFullRefresh();
+            msg.MDReqID = new MDReqID("1b145288-9c9a-4911-a084-7341c69d3e6b");
+            msg.Symbol = new Symbol("[N/A]");
+            msg.SecurityIDSource = new SecurityIDSource(SecurityIDSource.ISIN_NUMBER);
+            msg.SecurityID = new SecurityID("BE0932900518");
+            msg.SecuritySubType = new SecuritySubType("EURO_EUR");
+            msg.NoMDEntries = new NoMDEntries(2);
+            QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup grp =
+                new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup();
+            grp.MDEntryType = new MDEntryType(MDEntryType.BID);
+            grp.MDEntryPx = new MDEntryPx((decimal)97.625);
+            grp.Currency = new Currency("EUR");
+            grp.MDEntrySize = new MDEntrySize(1246000);
+            grp.MDEntryDate = new MDEntryDate(new DateTime(2012, 10, 24));
+            grp.MDEntryTime = new MDEntryTime(new DateTime(1, 1, 1, 7, 30, 47), false);
+            grp.QuoteCondition = new QuoteCondition(QuoteCondition.NON_FIRM);
+            grp.MDEntryOriginator = new MDEntryOriginator("BEARGB21XXX");
+            grp.QuoteEntryID = new QuoteEntryID("15478575");
+            msg.AddGroup(grp);
+
+            grp = new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup();
+            grp.MDEntryType = new MDEntryType(MDEntryType.OFFER);
+            grp.MDEntryPx = new MDEntryPx((decimal)108.08);
+            grp.Currency = new Currency("EUR");
+            grp.MDEntrySize = new MDEntrySize(884000);
+            grp.MDEntryDate = new MDEntryDate(new DateTime(2012, 10, 24));
+            grp.MDEntryTime = new MDEntryTime(new DateTime(1, 1, 1, 7, 30, 47), false);
+            grp.QuoteCondition = new QuoteCondition(QuoteCondition.NON_FIRM);
+            grp.MDEntryOriginator = new MDEntryOriginator("BEARGB21XXX");
+            grp.QuoteEntryID = new QuoteEntryID("15467902");
+            msg.AddGroup(grp);
+
+            string msgString = msg.ToString();
+
+            string expected = String.Join(Message.SOH, new string[] { "35=W", "22=4", "48=BE0932900518", "55=[N/A]", "262=1b145288-9c9a-4911-a084-7341c69d3e6b", "762=EURO_EUR", "268=2", 
+                "269=0", "270=97.625", "15=EUR", "271=1246000", "272=20121024", "273=07:30:47", "276=I", "282=BEARGB21XXX", "299=15478575", 
+                "269=1", "270=108.08", "15=EUR", "271=884000", "272=20121024", "273=07:30:47", "276=I", "282=BEARGB21XXX", "299=15467902"
+            });
+
+            StringAssert.Contains(expected, msgString);
         }
 
     }
