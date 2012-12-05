@@ -30,9 +30,9 @@ namespace SimpleAcceptor
             try
             {
                 SessionSettings settings = new SessionSettings(args[0]);
-                Application app = new SimpleAcceptorApp();
-                MessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                LogFactory logFactory = new FileLogFactory(settings);
+                IApplication app = new SimpleAcceptorApp();
+                IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
+                ILogFactory logFactory = new FileLogFactory(settings);
                 IAcceptor acceptor = new ThreadedSocketAcceptor(app, storeFactory, settings, logFactory);
 
                 acceptor.Start();

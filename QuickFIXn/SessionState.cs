@@ -30,13 +30,13 @@ namespace QuickFix
         private ResendRange resendRange_ = new ResendRange(0, 0);
         private Dictionary<int, Message> msgQueue = new Dictionary<int, Message>();
 
-        private Log log_;
+        private ILog log_;
 
         #endregion
 
         #region Unsynchronized Properties
 
-        public MessageStore MessageStore
+        public IMessageStore MessageStore
         { get; set; }
 
         public bool IsInitiator
@@ -45,7 +45,7 @@ namespace QuickFix
         public bool ShouldSendLogon
         { get { return IsInitiator && !SentLogon; } }
 
-        public Log Log
+        public ILog Log
         { get { return log_; } }
 
         #endregion
@@ -154,7 +154,7 @@ namespace QuickFix
 
         #endregion
 
-        public SessionState(Log log, int heartBtInt)
+        public SessionState(ILog log, int heartBtInt)
         {
             log_ = log;
             this.HeartBtInt = heartBtInt;

@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace UnitTests
 {
-    class MockResponder : QuickFix.Responder
+    class MockResponder : QuickFix.IResponder
     {
 
         #region Responder Members
@@ -55,7 +55,7 @@ namespace UnitTests
         #endregion
     }
 
-    class MockApplication : QuickFix.Application
+    class MockApplication : QuickFix.IApplication
     {
         public System.Exception fromAppException = null;
         public System.Exception fromAdminException = null;

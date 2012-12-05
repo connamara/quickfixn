@@ -23,7 +23,7 @@ inside `FromApp`:
 ```c#
 using QuickFix;
 
-public class MyApplication : MessageCracker, Application
+public class MyApplication : MessageCracker, IApplication
 {
     public void FromApp(Message msg, SessionID sessionID)
     {
@@ -59,7 +59,7 @@ Putting it all together, a full application with type safe orders
 looks like this:
 
 ```c#
-public class MyApplication : MessageCracker, Application
+public class MyApplication : MessageCracker, IApplication
 {
     public void OnMessage(
         QuickFix.FIX42.NewOrderSingle ord,
@@ -107,7 +107,7 @@ properties and extra boilerplate logic is required:
 
 ```c#
 // NOT RECOMMENDED
-public class MyApplication : Application
+public class MyApplication : IApplication
 {
     public void FromApp(Message msg, SessionID sessionID)
     {

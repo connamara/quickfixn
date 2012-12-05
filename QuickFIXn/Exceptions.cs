@@ -279,12 +279,28 @@ namespace QuickFix
 
     }
 
-
     public class RepeatingGroupCountMismatch : TagException
     {
         public RepeatingGroupCountMismatch(int tag)
             :base(tag, FixValues.SessionRejectReason.INCORRECT_NUM_IN_GROUP_COUNT_FOR_REPEATING_GROUP)
         {}
+    }
+
+    public class OtherTagException : TagException
+    {
+        public OtherTagException(string msg, int tag)
+            : base(msg, tag)
+        { }
+    }
+
+    /// <summary>
+    /// For when a received message has a group that doesn't start its entries with the delimiter tag
+    /// </summary>
+    public class GroupDelimiterTagException : OtherTagException
+    {
+        public GroupDelimiterTagException(int counterTag, int delimiterTag)
+            : base(string.Format("Group {0}'s first entry does not start with delimiter {1}", counterTag,delimiterTag), counterTag)
+        { }
     }
 
     #endregion
