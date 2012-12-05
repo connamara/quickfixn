@@ -711,5 +711,30 @@ namespace UnitTests
             Assert.AreEqual(702, ex.Field);
             Assert.AreEqual("Group 702's first entry does not start with delimiter 703", ex.Message);
         }
+
+        [Test]
+        public void DateOnlyTimeOnlyConvertProblem()
+        {
+            // issue 135
+
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+
+            // message is missing 703
+            string[] msgFields = { "8=FIX.4.4", "9=332", "35=W", "34=2", "49=MA", "52=20121024-12:21:42.170", "56=xxxx",
+                "22=4", "48=BE0932900518", "55=[N/A]", "262=1b145288-9c9a-4911-a084-7341c69d3e6b", "762=EURO_EUR", "268=2", 
+                "269=0", "270=97.625", "15=EUR", "271=1246000", "272=20121024", "273=07:30:47", "276=I", "282=BEARGB21XXX", "299=15478575", 
+                "269=1", "270=108.08", "15=EUR", "271=884000", "272=20121024", "273=07:30:47", "276=I", "282=BEARGB21XXX", "299=15467902", "10=77"
+            };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            QuickFix.FIX44.MarketDataSnapshotFullRefresh msg = new QuickFix.FIX44.MarketDataSnapshotFullRefresh();
+
+            msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
+            QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup gentry1 = (QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup)msg.GetGroup(1, new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup());
+            Assert.AreEqual(new DateTime(2012, 10, 24), gentry1.MDEntryDate);
+            Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30,47), gentry1.MDEntryTime);
+        }
+
     }
 }

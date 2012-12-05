@@ -100,6 +100,45 @@ namespace UnitTests
         }
 
         [Test]
+        public void DateOnlyFieldTest()
+        {
+            fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
+            MDEntryDate ed = new MDEntryDate();
+            fieldmap.GetField(ed);
+            Assert.AreEqual(new DateTime(2009, 12, 10), ed.Obj);
+
+            // public Fields.DateOnlyField GetField(Fields.TimeOnlyField field) does not exist
+            /*
+            fieldmap.SetField(new MDEntryDate(new DateTime(2010, 12, 10)));
+            DateOnlyField r = fieldmap.GetField(ed);
+            Assert.AreEqual(new DateTime(2010, 12, 10), ed.getValue());
+            
+            Assert.AreSame(r, ed);
+             * */
+            Assert.AreEqual("20091210", ed.ToString());
+        }
+
+        [Test]
+        public void TimeOnlyFieldTest()
+        {
+            // TimeOnlyField should use TimeSpan 
+            fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(1, 1, 1, 1, 2, 3), false));
+            MDEntryTime et = new MDEntryTime();
+            fieldmap.GetField(et);
+            Assert.AreEqual(new DateTime(1, 1, 1, 1, 2, 3).TimeOfDay, et.Obj);
+
+            // public Fields.TimeOnlyField GetField(Fields.TimeOnlyField field) does not exist
+            /*
+            fieldmap.SetField(new MDEntryTime(new DateTime(1, 1, 1, 1, 2, 5)));
+            TimeOnlyField r = fieldmap.GetField(et);
+            Assert.AreEqual(new DateTime(1, 1, 1, 1, 2, 5), et.getValue());
+
+            Assert.AreSame(r, et);
+            */
+            Assert.AreEqual("07:30:47", et.ToString());
+        }
+
+        [Test]
         public void GetDateTimeTest()
         {
             fieldmap.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
@@ -110,6 +149,26 @@ namespace UnitTests
                     delegate { fieldmap.GetDateTime(99900); });
         }
 
+        [Test]
+        public void GetDateOnlyTest()
+        {
+            fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
+            // fieldmap.GetDateOnly doesn not exist
+            Assert.AreEqual(fieldmap.GetDateTime(Tags.MDEntryDate), new DateTime(2009, 12, 10));
+            fieldmap.SetField(new StringField(233, "20091211"));
+            Assert.AreEqual(fieldmap.GetDateTime(233), new DateTime(2009, 12, 11));
+        }
+
+        [Test]
+        public void GetTimeOnlyTest()
+        {
+            // TimeOnlyField should use TimeSpan 
+            fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(2009, 12, 10, 1, 2, 3)));
+            // fieldmap.GetTimeOnly doesn not exist
+            Assert.AreEqual(fieldmap.GetDateTime(Tags.MDEntryTime), new DateTime(2009, 12, 10, 1, 2, 3));
+            fieldmap.SetField(new StringField(233, "07:30:47"));
+            Assert.AreEqual(fieldmap.GetDateTime(233), new DateTime(2009, 12, 11, 7, 30, 47));
+        }
 
         [Test]
         public void BooleanFieldTest()
