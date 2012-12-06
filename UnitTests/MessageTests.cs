@@ -731,8 +731,9 @@ namespace UnitTests
 
             msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
             QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup gentry1 = (QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup)msg.GetGroup(1, new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup());
-            Assert.AreEqual(new DateTime(2012, 10, 24), gentry1.MDEntryDate);
-            Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30,47), gentry1.MDEntryTime);
+            Assert.AreEqual(new DateTime(2012, 10, 24), gentry1.MDEntryDate.getValue());
+            Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30, 47).TimeOfDay, gentry1.MDEntryTime.getValue().TimeOfDay);
+            Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30, 47), gentry1.MDEntryDate.getValue() + gentry1.MDEntryTime.getValue().TimeOfDay);
         }
 
         [Test]
