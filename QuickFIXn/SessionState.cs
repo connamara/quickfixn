@@ -277,10 +277,11 @@ namespace QuickFix
             MessageStore.Get(begSeqNo, endSeqNo, messages);
         }
 
-        public void SetResendRange(int begin, int end)
+        public void SetResendRange(int begin, int end, int chunkEnd=-1)
         {
             resendRange_.BeginSeqNo = begin;
             resendRange_.EndSeqNo = end;
+            resendRange_.ChunkEndSeqNo = chunkEnd == -1 ? end : chunkEnd;
         }
 
         public bool ResendRequested()
