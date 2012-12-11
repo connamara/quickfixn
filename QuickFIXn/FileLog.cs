@@ -15,18 +15,23 @@ namespace QuickFix
         private string messageLogFileName_;
         private string eventLogFileName_;
 
-        public FileLog(string fileLogPath, bool DoRotateLog, int NumDaysToKeep)
+        [System.Obsolete("Use FileLog constructor with log rotation options instead")]
+        public FileLog(string fileLogPath)
         {
-            Init(fileLogPath, "GLOBAL", DoRotateLog, NumDaysToKeep);
+            Init(fileLogPath, "GLOBAL", false, -1);
         }
 
-        public FileLog(string fileLogPath, SessionID sessionID, bool DoRotateLog, int NumDaysToKeep)
+        public FileLog(string fileLogPath, bool DoRotateLog, int RotateLogNumToKeep)
         {
-            Init(fileLogPath, Prefix(sessionID), DoRotateLog, NumDaysToKeep);
+            Init(fileLogPath, "GLOBAL", DoRotateLog, RotateLogNumToKeep);
         }
 
+        public FileLog(string fileLogPath, SessionID sessionID, bool DoRotateLog, int RotateLogNumToKeep)
+        {
+            Init(fileLogPath, Prefix(sessionID), DoRotateLog, RotateLogNumToKeep);
+        }
 
-        private void Init(string fileLogPath, string prefix, bool DoRotateLog, int NumDaysToKeep)
+        private void Init(string fileLogPath, string prefix, bool DoRotateLog, int RotateLogNumToKeep)
         {
             if (!System.IO.Directory.Exists(fileLogPath))
                 System.IO.Directory.CreateDirectory(fileLogPath);
@@ -35,7 +40,7 @@ namespace QuickFix
             eventLogFileName_ = System.IO.Path.Combine(fileLogPath, prefix + ".event.current.log");
 
             if (DoRotateLog)
-                RotateLog(new string[] { messageLogFileName_, eventLogFileName_ }, NumDaysToKeep);
+                RotateLog(new string[] { messageLogFileName_, eventLogFileName_ }, RotateLogNumToKeep);
 
             messageLog_ = new System.IO.StreamWriter(messageLogFileName_,true);
             eventLog_ = new System.IO.StreamWriter(eventLogFileName_,true);
@@ -50,9 +55,9 @@ namespace QuickFix
         /// Doesn't use filesystem creationtime due to file tunneling.
         /// </summary>
         /// <param name="LogFileNames"></param>
-        /// <param name="NumDaysToKeep"></param>
+        /// <param name="RotateLogNumToKeep"></param>
         /// <returns></returns>
-        private static string RotateLog(string[] LogFileNames, int NumDaysToKeep)
+        private static string RotateLog(string[] LogFileNames, int RotateLogNumToKeep)
         {
             try
             {
@@ -65,14 +70,14 @@ namespace QuickFix
                     System.IO.FileInfo fiLog = new System.IO.FileInfo(fn);
                     List<System.IO.FileInfo> oldLogs = new List<System.IO.FileInfo>();
 
-                    if (NumDaysToKeep < 0) NumDaysToKeep = 0;
+                    if (RotateLogNumToKeep < 0) RotateLogNumToKeep = 0;
 
                     foreach (string f in System.IO.Directory.GetFiles(fiLog.DirectoryName, fiLog.Name + ".*", System.IO.SearchOption.TopDirectoryOnly))
                         oldLogs.Add(new System.IO.FileInfo(System.IO.Path.Combine(fiLog.DirectoryName, f)));
 
                     oldLogs.Sort((a, b) => a.LastWriteTimeUtc.CompareTo(b.LastWriteTimeUtc));
 
-                    for (int i = 0; ((oldLogs.Count > NumDaysToKeep) && (i <= (oldLogs.Count - NumDaysToKeep) - 1)); i++)
+                    for (int i = 0; ((oldLogs.Count > RotateLogNumToKeep) && (i <= (oldLogs.Count - RotateLogNumToKeep) - 1)); i++)
                         oldLogs[i].Delete();
 
                 }

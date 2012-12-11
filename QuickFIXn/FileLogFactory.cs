@@ -24,17 +24,17 @@ namespace QuickFix
         {
             Dictionary sessionSettings = settings_.Get(sessionID);
             bool RotateLog = false; //default if undefined
-            int NumDaysToKeep = 1; //default if undefined
+            int RotateLogNumToKeep = 1; //default if undefined
 
             if (sessionSettings.Has(SessionSettings.FILE_LOG_ROTATE_ON_NEW_SESSION))
                 RotateLog = sessionSettings.GetBool(SessionSettings.FILE_LOG_ROTATE_ON_NEW_SESSION);
 
             if (sessionSettings.Has(SessionSettings.FILE_LOG_ROTATE_NUM_TO_KEEP))
-                NumDaysToKeep = sessionSettings.GetInt(SessionSettings.FILE_LOG_ROTATE_NUM_TO_KEEP);
+                RotateLogNumToKeep = sessionSettings.GetInt(SessionSettings.FILE_LOG_ROTATE_NUM_TO_KEEP);
 
 
 
-            return new FileLog(sessionSettings.GetString(SessionSettings.FILE_LOG_PATH), sessionID, RotateLog, NumDaysToKeep);
+            return new FileLog(sessionSettings.GetString(SessionSettings.FILE_LOG_PATH), sessionID, RotateLog, RotateLogNumToKeep);
         }
 
         #endregion
