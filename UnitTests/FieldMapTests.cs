@@ -100,6 +100,36 @@ namespace UnitTests
         }
 
         [Test]
+        public void DateOnlyFieldTest()
+        {
+            fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
+            MDEntryDate ed = new MDEntryDate();
+            fieldmap.GetField(ed);
+            Assert.AreEqual(new DateTime(2009, 12, 10), ed.Obj);
+            fieldmap.SetField(new MDEntryDate(new DateTime(2010, 12, 10)));
+            DateOnlyField r = fieldmap.GetField(ed);
+            Assert.AreEqual(new DateTime(2010, 12, 10), ed.getValue());            
+            
+            Assert.AreSame(r, ed);
+            Assert.AreEqual("20101210", ed.ToString());
+        }
+
+        [Test]
+        public void TimeOnlyFieldTest()
+        {            
+            fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(1, 1, 1, 1, 2, 3), false));
+            MDEntryTime et = new MDEntryTime();
+            fieldmap.GetField(et);
+            Assert.AreEqual(new DateTime(1, 1, 1, 1, 2, 3).TimeOfDay, et.Obj.TimeOfDay);
+            fieldmap.SetField(new MDEntryTime(new DateTime(1, 1, 1, 1, 2, 5)));
+            TimeOnlyField r = fieldmap.GetField(et);
+            Assert.AreEqual(new DateTime(1, 1, 1, 1, 2, 5).TimeOfDay, et.getValue().TimeOfDay);
+            
+            Assert.AreSame(r, et);
+            Assert.AreEqual("01:02:05.000", et.ToString());
+        }
+
+        [Test]
         public void GetDateTimeTest()
         {
             fieldmap.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
@@ -110,6 +140,23 @@ namespace UnitTests
                     delegate { fieldmap.GetDateTime(99900); });
         }
 
+        [Test]
+        public void GetDateOnlyTest()
+        {
+            fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
+            Assert.AreEqual(new DateTime(2009, 12, 10), fieldmap.GetDateTime(Tags.MDEntryDate));
+            fieldmap.SetField(new StringField(233, "20091211"));
+            Assert.AreEqual(new DateTime(2009, 12, 11), fieldmap.GetDateOnly(233));
+        }
+
+        [Test]
+        public void GetTimeOnlyTest()
+        {
+            fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(2009, 12, 10, 1, 2, 3)));
+            Assert.AreEqual(new DateTime(2009, 12, 10, 1, 2, 3).TimeOfDay, fieldmap.GetDateTime(Tags.MDEntryTime).TimeOfDay);
+            fieldmap.SetField(new StringField(233, "07:30:47"));
+            Assert.AreEqual(new DateTime(2009, 12, 11, 7, 30, 47).TimeOfDay, fieldmap.GetTimeOnly(233).TimeOfDay);
+        }
 
         [Test]
         public void BooleanFieldTest()

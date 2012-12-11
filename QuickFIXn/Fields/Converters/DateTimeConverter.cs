@@ -73,6 +73,25 @@ namespace QuickFix.Fields.Converters
         }
 
         /// <summary>
+        /// Check if string is TimeOnly and, if yes, convert to TimeSpan
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        /// <exception cref="FieldConvertError"/>
+        public static System.TimeSpan ConvertToTimeSpan(string str)
+        {
+            try
+            {
+                System.DateTime d = ConvertToTimeOnly(str);
+                return new System.TimeSpan(d.Hour, d.Minute, d.Second, d.Millisecond);
+            }
+            catch (System.Exception e)
+            {
+                throw new FieldConvertError("Could not convert string (" + str + ") to TimeSpan: " + e.Message, e);
+            }
+        }
+
+        /// <summary>
         /// Convert DateTime to string in FIX Format
         /// </summary>
         /// <param name="dt">the DateTime to convert</param>

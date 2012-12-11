@@ -169,7 +169,7 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Gets a decimal field; saves its value into the parameter object, which is also the return value.
+        /// Gets a datetime field; saves its value into the parameter object, which is also the return value.
         /// </summary>
         /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
         /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
@@ -177,6 +177,30 @@ namespace QuickFix
         public Fields.DateTimeField GetField(Fields.DateTimeField field)
         {
             field.Obj = GetDateTime(field.Tag);
+            return field;
+        }
+
+        /// <summary>
+        /// Gets a date only field; saves its value into the parameter object, which is also the return value.
+        /// </summary>
+        /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+        /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+        /// <returns><paramref name="field"/></returns>
+        public Fields.DateOnlyField GetField(Fields.DateOnlyField field)
+        {
+            field.Obj = GetDateOnly(field.Tag);
+            return field;
+        }
+
+        /// <summary>
+        /// Gets a time only field; saves its value into the parameter object, which is also the return value.
+        /// </summary>
+        /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+        /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+        /// <returns><paramref name="field"/></returns>
+        public Fields.TimeOnlyField GetField(Fields.TimeOnlyField field)
+        {
+            field.Obj = GetTimeOnly(field.Tag);
             return field;
         }
 
@@ -303,10 +327,53 @@ namespace QuickFix
             try
             {
                 Fields.IField fld = _fields[tag];
-                if (fld.GetType() == typeof(DateTimeField))
+                Type fldTyp = fld.GetType();
+                if (fldTyp == typeof(DateTimeField))
                     return ((DateTimeField)(fld)).Obj;
+                if (fldTyp == typeof(DateOnlyField))
+                    return GetDateOnly(tag);
+                if (fldTyp == typeof(TimeOnlyField))
+                    return GetTimeOnly(tag);
                 else
                     return DateTimeConverter.ConvertToDateTime(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
+        }
+
+        /// <summary>
+        /// Gets the DateOnly value of a field
+        /// </summary>
+        /// <param name="tag">the FIX tag</param>
+        /// <returns>the DateTime value</returns>
+        /// <exception cref="FieldNotFoundException" />
+        public System.DateTime GetDateOnly(int tag)
+        {
+            try
+            {
+                Fields.IField fld = _fields[tag];                
+                return DateTimeConverter.ConvertToDateOnly(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
+        }
+
+        /// <summary>
+        /// Gets the TimeOnly value of a field
+        /// </summary>
+        /// <param name="tag">the FIX tag</param>
+        /// <returns>the DateTime value</returns>
+        /// <exception cref="FieldNotFoundException" />
+        public System.DateTime GetTimeOnly(int tag)
+        {
+            try
+            {
+                Fields.IField fld = _fields[tag];
+                return DateTimeConverter.ConvertToTimeOnly(fld.ToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
