@@ -20,3 +20,4 @@ Changes since the last version:
 * (minor) issue #101 - better exception for when group doesn't use proper delimiter (gbirchmeier)
 * (minor) issue #28 - rename interfaces to start with "I" (gbirchmeier)
 * (patch) issue #128 - simplify/improve TradeClient example app (gbirchmeier)
+* (minor) issue #135 - fix DateOnly/TimeOnly field support (formator)
