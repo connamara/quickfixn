@@ -17,6 +17,7 @@ Changes since the last version:
 -------------------------------
 * (major/minor/patch) desc of fixed issue (contributor)
 
+* (patch) issue #134 - if DD field/group/component is missing "required" attribute, treat it as "required=N" (gbirchmeier)
 * (minor) issue #101 - better exception for when group doesn't use proper delimiter (gbirchmeier)
 * (minor) issue #28 - rename interfaces to start with "I" (gbirchmeier)
 * (patch) issue #128 - simplify/improve TradeClient example app (gbirchmeier)
