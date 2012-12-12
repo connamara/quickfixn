@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This dictionary lacks 'required' attributes for fields and components.
+  Per issue 134, the lack of 'required' should imply 'required=N'.
+-->
+<fix minor="9" major="9">
+  <header/>
+  <trailer/>
+  <messages>
+    <message name="MagicMessage" msgtype="magic" msgcat="app">
+      <field name="MundaneField" required="Y"/>
+      <field name="MagicField"/>
+      <component name="MagicComponent"/>
+      <group name="NoMagicGroups">
+        <field name="Delim"/>
+        <field name="Blah"/>
+      </group>
+    </message>
+  </messages>
+
+  <components>
+    <component name="MagicComponent">
+      <field name="MagicComponentField"/>
+    </component>
+  </components>
+
+  <fields>
+    <field number="1111" name="MundaneField" type="STRING"/>
+    <field number="5555" name="MagicField" type="STRING"/>
+    <field number="5556" name="MagicComponentField" type="STRING"/>
+    <field number="6660" name="NoMagicGroups" type="NUMINGROUP"/>
+    <field number="6661" name="Delim" type="STRING"/>
+    <field number="6662" name="Blah" type="STRING"/>
+  </fields>
+</fix>
