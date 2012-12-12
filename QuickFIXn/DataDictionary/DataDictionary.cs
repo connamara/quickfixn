@@ -510,24 +510,24 @@ namespace QuickFix.DataDictionary
         /// </param>
 		private void parseMsgEl(XmlNode node, DDMap ddmap, bool? componentRequired)
 		{
-            ///* 
+            /* 
             // This code is great for debugging DD parsing issues.
             string s = "+ " + node.Name;
             if (node.Attributes["name"] != null)
                 s += " | " + node.Attributes["name"].Value;
             Console.WriteLine(s);
-            //*/
+            */
 
 			if (!node.HasChildNodes) { return; }
 			foreach (XmlNode childNode in node.ChildNodes)
 			{
-                ///*
+                /*
                 // Continuation of code that's great for debugging DD parsing issues.
                 s = "    + " + childNode.Name;
                 if (node.Attributes["name"] != null)
                     s += " | " + childNode.Attributes["name"].Value;
                 Console.WriteLine(s);
-                //*/
+                */
 
 				if( childNode.Name == "field" )
 				{
