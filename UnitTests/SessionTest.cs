@@ -481,10 +481,10 @@ namespace UnitTests
             QuickFix.FIX42.SequenceReset reset = new QuickFix.FIX42.SequenceReset();
             reset.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
             reset.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
-            reset.SetField(new QuickFix.FIX42.Fields.GapFillFlag(true));
+            reset.SetField(new QuickFix.Fields.GapFillFlag(true));
 
             reset.Header.SetField(new QuickFix.Fields.MsgSeqNum(2));
-            reset.SetField(new QuickFix.FIX42.Fields.NewSeqNo(2501));
+            reset.SetField(new QuickFix.Fields.NewSeqNo(2501));
             session.Next(reset);
 
             order.Header.SetField(new QuickFix.Fields.MsgSeqNum(2501));
@@ -499,7 +499,7 @@ namespace UnitTests
 
             // Jump forward to the end of the resend chunk with a fillgap reset message
             reset.Header.SetField(new QuickFix.Fields.MsgSeqNum(2502));
-            reset.SetField(new QuickFix.FIX42.Fields.NewSeqNo(5001));
+            reset.SetField(new QuickFix.Fields.NewSeqNo(5001));
             session.Next(reset);
 
             order.Header.SetField(new QuickFix.Fields.MsgSeqNum(5001));
