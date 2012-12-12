@@ -422,5 +422,17 @@ namespace UnitTests
             Assert.False(dd.Messages["AD"].ReqFields.Contains(55));
             Assert.True(dd.Messages["7"].ReqFields.Contains(55));
         }
+
+        [Test]
+        public void Issue134_RequiredIsOptional()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/test/required_is_optional.xml");
+            Assert.True(dd.Messages["magic"].ReqFields.Contains(1111));  //base required field
+            Assert.False(dd.Messages["magic"].ReqFields.Contains(5555)); //base optional field
+            Assert.False(dd.Messages["magic"].ReqFields.Contains(5556)); //component optional field
+
+            Assert.False(dd.Messages["magic"].Groups[6660].Required); // group isn't required
+            Assert.False(dd.Messages["magic"].Groups[6660].ReqFields.Contains(6662)); // group optional field
+        }
     }
 }

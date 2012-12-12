@@ -510,23 +510,40 @@ namespace QuickFix.DataDictionary
         /// </param>
 		private void parseMsgEl(XmlNode node, DDMap ddmap, bool? componentRequired)
 		{
+            /* 
+            // This code is great for debugging DD parsing issues.
+            string s = "+ " + node.Name;
+            if (node.Attributes["name"] != null)
+                s += " | " + node.Attributes["name"].Value;
+            Console.WriteLine(s);
+            */
+
 			if (!node.HasChildNodes) { return; }
 			foreach (XmlNode childNode in node.ChildNodes)
 			{
+                /*
+                // Continuation of code that's great for debugging DD parsing issues.
+                s = "    + " + childNode.Name;
+                if (node.Attributes["name"] != null)
+                    s += " | " + childNode.Attributes["name"].Value;
+                Console.WriteLine(s);
+                */
+
 				if( childNode.Name == "field" )
 				{
 					DDField fld = FieldsByName[childNode.Attributes["name"].Value];
-					if (childNode.Attributes["required"].Value == "Y"
-                        && (componentRequired==null || componentRequired.Value==true))
-					{
-						ddmap.ReqFields.Add(fld.Tag);
-					}
+                    XmlAttribute req = childNode.Attributes["required"];
+                    if (req != null && req.Value == "Y"
+                        && (componentRequired == null || componentRequired.Value == true))
+                    {
+                        ddmap.ReqFields.Add(fld.Tag);
+                    }
 					if (!ddmap.IsField(fld.Tag))
 					{
 						ddmap.Fields.Add(fld.Tag, fld);
 					}
 
-					// if first field in group, make it the DELIM <3 FIX
+					// if first field in group, make it the DELIM
 					if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == 0))
 					{
 						((DDGrp)ddmap).Delim = fld.Tag;
@@ -536,7 +553,8 @@ namespace QuickFix.DataDictionary
 				{
 					DDField fld = FieldsByName[childNode.Attributes["name"].Value];
 					DDGrp grp = new DDGrp();
-					if (childNode.Attributes["required"].Value == "Y"
+                    XmlAttribute req = childNode.Attributes["required"];
+                    if (req != null && req.Value == "Y"
                         && (componentRequired == null || componentRequired.Value == true))
 					{
 						ddmap.ReqFields.Add(fld.Tag);
@@ -554,7 +572,8 @@ namespace QuickFix.DataDictionary
                 {
                     String name = childNode.Attributes["name"].Value;
                     XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + name + "']");
-                    bool? compRequired = (childNode.Attributes["required"].Value == "Y");
+                    XmlAttribute req = childNode.Attributes["required"];
+                    bool? compRequired = (req != null && req.Value == "Y");
                     parseMsgEl(compNode, ddmap, compRequired);
                 }
 			}
