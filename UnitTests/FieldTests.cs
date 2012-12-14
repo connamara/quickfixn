@@ -103,6 +103,15 @@ namespace UnitTests
         }
 
         [Test]
+        public void StringFieldTest_NonAscii()
+        {
+            // technically, non-ascii shouldn't be in a StringField, but sometimes it happens, so let's not freak out.
+            StringField obj = new StringField(359, "olé!");
+            Assert.AreEqual(839, obj.getTotal()); // sum of all bytes in "359=olé!"+nul
+            Assert.AreEqual(10, obj.getLength()); // 7 single-byte chars + 1 double=byte char + nul = 10 bytes
+        }
+
+        [Test]
         public void DefaultValTest()
         {
             BooleanField bf = new BooleanField(110);
