@@ -43,6 +43,57 @@ namespace UnitTests
         }
 
         [Test]
+        public void testLogRotation()
+        {
+            string logDir = "log";
+            if (System.IO.Directory.Exists(logDir))
+                System.IO.Directory.Delete(logDir, true);
+
+            QuickFix.SessionID sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
+            QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
+
+            QuickFix.Dictionary config = new QuickFix.Dictionary();
+            config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
+            config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, logDir);
+
+            int NumLogsToRotate = 5;
+            config.SetString(QuickFix.SessionSettings.FILE_LOG_ROTATE_NUM_TO_KEEP, NumLogsToRotate.ToString());
+            config.SetString(QuickFix.SessionSettings.FILE_LOG_ROTATE_ON_NEW_SESSION, "Y");
+
+            settings.Set(sessionID, config);
+
+            string timeStampMinute = System.DateTime.UtcNow.ToString("MMddyyyy-HHmm");
+
+            for (int i = 0; i < NumLogsToRotate; i++)
+            {
+                QuickFix.FileLogFactory factory = new QuickFix.FileLogFactory(settings);
+                log = (QuickFix.FileLog)factory.Create(sessionID);
+
+                log.OnEvent("some event");
+                log.OnIncoming("some incoming");
+                log.OnOutgoing("some outgoing");
+
+                Assert.That(System.IO.File.Exists(logDir+"/FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log"));
+                Assert.That(System.IO.File.Exists(logDir+"/FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log"));
+                log.Dispose();
+                
+            }
+
+                       
+
+            Assert.That(System.IO.Directory.GetFiles(logDir,
+                String.Format("FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log.{0}*",timeStampMinute),
+                System.IO.SearchOption.TopDirectoryOnly)
+                .Count().Equals(NumLogsToRotate-1));
+
+            Assert.That(System.IO.Directory.GetFiles(logDir,
+                String.Format("FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log.{0}*", timeStampMinute),
+                System.IO.SearchOption.TopDirectoryOnly)
+                .Count().Equals(NumLogsToRotate-1));
+
+        }
+
+        [Test]
         public void testGeneratedFileName()
         {
             if (System.IO.Directory.Exists("log"))
@@ -66,6 +117,7 @@ namespace UnitTests
 
             Assert.That(System.IO.File.Exists("log/FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log"));
             Assert.That(System.IO.File.Exists("log/FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log"));
+
         }
 
         [Test]

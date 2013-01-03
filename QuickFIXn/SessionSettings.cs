@@ -58,6 +58,8 @@ namespace QuickFix
         public const string SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT = "SendLogoutBeforeDisconnectFromTimeout";
         public const string SOCKET_NODELAY = "SocketNodelay";
         public const string IGNORE_POSSDUP_RESEND_REQUESTS = "IgnorePossDupResendRequests";
+        public const string FILE_LOG_ROTATE_ON_NEW_SESSION = "FileLogRotateOnNewSession";
+        public const string FILE_LOG_ROTATE_NUM_TO_KEEP = "FileLogRotateNumToKeep";
 
         #endregion
 
