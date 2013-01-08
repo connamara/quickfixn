@@ -59,6 +59,15 @@ namespace QuickFix
         public const string SOCKET_NODELAY = "SocketNodelay";
         public const string IGNORE_POSSDUP_RESEND_REQUESTS = "IgnorePossDupResendRequests";
 
+
+        public const string SSL_VALIDATE_SERVER_CERTIFICATE = "SSLValidateServerCertificate";
+        public const string SSL_CHECK_CERTIFICATE_REVOCATION = "SSLCheckCertificateRevocation";		 
+        public const string SSL_CERTIFICATE_PATH = "SSLCertificatePath";
+        public const string SSL_CERTIFICATE_PASSWORD = "SSLCertificatePassword";
+        public const string SSL_PROTOCOLS = "SSLProtocols";
+        public const string SSL_HOSTNAME = "SSLHostname";
+
+
         #endregion
 
         #region Private Members

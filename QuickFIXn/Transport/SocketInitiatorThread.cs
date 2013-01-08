@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using System.IO;
 
 namespace QuickFix
 {
@@ -17,10 +18,11 @@ namespace QuickFix
         private Thread thread_ = null;
         private byte[] readBuffer_ = new byte[BUF_SIZE];
         private Parser parser_;
-        private Socket socket_;
+        protected Stream stream_;
         private Transport.SocketInitiator initiator_;
         private Session session_;
         private IPEndPoint socketEndPoint_;
+        protected SocketSettings socketSettings_;
         private bool isDisconnectRequested_ = false;
 
         public SocketInitiatorThread(Transport.SocketInitiator initiator, Session session, IPEndPoint socketEndPoint, SocketSettings socketSettings)
@@ -30,9 +32,8 @@ namespace QuickFix
             session_ = session;
             socketEndPoint_ = socketEndPoint;
             parser_ = new Parser();
-            socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket_.NoDelay = socketSettings.SocketNodelay;
             session_ = session;
+            socketSettings_ = socketSettings;
         }
 
         public void Start()
@@ -53,28 +54,48 @@ namespace QuickFix
 
         public void Connect()
         {
-            socket_.Connect(socketEndPoint_);
+            stream_ = SetupStream();
             session_.SetResponder(this);
+        }
+
+        /// <summary>
+        /// Setups/Connect to the other party.
+        /// Override this in order to setup other types of streams with other settings
+        /// </summary>
+        /// <returns>Stream representing the (network)connection to the other party</returns>
+        protected virtual Stream SetupStream()
+        {
+            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socket.NoDelay = socketSettings_.SocketNodelay;
+            socket.Connect(socketEndPoint_);
+            return new NetworkStream(socket, ownsSocket: true);
         }
 
         public bool Read()
         {
             try
             {
-                if (socket_.Poll(1000000, SelectMode.SelectRead)) // one-second timeout
+                stream_.ReadTimeout = 1000; // one-second timeout
+                int maxCount = readBuffer_.Length;
+
+                try
                 {
-                    int bytesRead = socket_.Receive(readBuffer_);
+                    int bytesRead = stream_.Read(readBuffer_, 0, maxCount);
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
                     parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
                 }
-                else if (null != session_)
+                catch (System.IO.IOException ex) // Timeout
                 {
-                    session_.Next();
-                }
-                else
-                {
-                    throw new QuickFIXException("Initiator timed out while reading socket");
+                    var inner = ex.InnerException as SocketException;
+                    if (null != session_ && inner != null && inner.SocketErrorCode == SocketError.TimedOut)
+                    {
+                        session_.Next();
+                    }
+                    else
+                    {
+                        throw new QuickFIXException("Initiator timed out while reading socket", ex);
+                    }
                 }
             
                 ProcessStream();
@@ -115,14 +136,14 @@ namespace QuickFix
         public bool Send(string data)
         {
             byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
-            int bytesSent = socket_.Send(rawData);
-            return bytesSent > 0;
+            stream_.Write(rawData, 0, rawData.Length);
+            return true;
         }
 
         public void Disconnect()
         {
             isDisconnectRequested_ = true;
-            socket_.Close();
+            stream_.Close();
         }
 
         #endregion

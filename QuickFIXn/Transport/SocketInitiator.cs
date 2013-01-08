@@ -20,28 +20,13 @@ namespace QuickFix.Transport
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
         public const string RECONNECT_INTERVAL  = "ReconnectInterval";
 
-        #region Properties
-        
-        public bool Connected
-        {
-            get
-            {
-                if (null == socket_)
-                    return false;
-                return socket_.Connected;
-            }
-        }
-
-        #endregion
-
         #region Private Members
         
         private IApplication app_;
         private SessionSettings settings_;
         private IMessageStoreFactory storeFactory_;
         private ILogFactory logFactory_;
-        private Socket socket_ = null;
-        private byte[] _readBuffer = new byte[512];
+        //private Socket socket_ = null;
         private volatile bool shutdownRequested_ = false;
         private DateTime lastConnectTimeDT = DateTime.MinValue;
         private int reconnectInterval_ = 30;
@@ -81,7 +66,7 @@ namespace QuickFix.Transport
             {
                 t.Connect();
                 t.Initiator.SetConnected(t.Session.SessionID);
-                t.Session.Log.OnEvent("Connection succeeded");
+                     t.Session.Log.OnEvent("Connection succeeded");
                 t.Session.Next();
                 while (t.Read())
                 { }
@@ -131,9 +116,15 @@ namespace QuickFix.Transport
 
             try
             {
-                IPAddress[] addrs = Dns.GetHostAddresses(settings.GetString(hostKey));
+                socketSettings_.HostName = settings.GetString(hostKey);
+
+                IPAddress[] addrs = Dns.GetHostAddresses(socketSettings_.HostName);
                 int port = System.Convert.ToInt32(settings.GetLong(portKey));
                 sessionToHostNum_[sessionID] = ++num;
+
+                //Setup socket settings based on current section
+                ConfigureSocketSettings(settings);
+
                 return new IPEndPoint(addrs[0], port);
             }
             catch (System.Exception e)
@@ -156,9 +147,41 @@ namespace QuickFix.Transport
             }
             catch (System.Exception)
             { }
-            if (settings.Get().Has(SessionSettings.SOCKET_NODELAY))
+
+                // Don't know if this is required in order to handle settings in the general section
+                ConfigureSocketSettings(settings.Get());              
+        }
+
+        private void ConfigureSocketSettings(Dictionary dictionary)
+        {
+            if (dictionary.Has(SessionSettings.SOCKET_NODELAY))
             {
-                socketSettings_.SocketNodelay = settings.Get().GetBool(SessionSettings.SOCKET_NODELAY);
+                socketSettings_.SocketNodelay = dictionary.GetBool(SessionSettings.SOCKET_NODELAY);
+            }
+
+            if (dictionary.Has(SessionSettings.SSL_HOSTNAME))
+                socketSettings_.HostName = dictionary.GetString(SessionSettings.SSL_HOSTNAME);
+
+            if (dictionary.Has(SessionSettings.SSL_CERTIFICATE_PATH))
+                socketSettings_.CertificatePath = dictionary.GetString(SessionSettings.SSL_CERTIFICATE_PATH);
+
+            if (dictionary.Has(SessionSettings.SSL_CERTIFICATE_PASSWORD))
+                socketSettings_.CertificatePassword = dictionary.GetString(SessionSettings.SSL_CERTIFICATE_PASSWORD);
+
+            if (dictionary.Has(SessionSettings.SSL_VALIDATE_SERVER_CERTIFICATE))
+                socketSettings_.ValidateServerCertificate = dictionary.GetBool(SessionSettings.SSL_VALIDATE_SERVER_CERTIFICATE);
+
+            if (dictionary.Has(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION))
+                socketSettings_.CheckCertificateRevocation = dictionary.GetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION);
+
+            if (dictionary.Has(SessionSettings.SSL_PROTOCOLS))
+            {
+                var protocolString = dictionary.GetString(SessionSettings.SSL_PROTOCOLS);
+                System.Security.Authentication.SslProtocols protocol;
+
+                // Try to parse enum while ignoring case
+                if (Enum.TryParse<System.Security.Authentication.SslProtocols>(protocolString, true, out protocol))
+                    socketSettings_.SslProtocol = protocol;
             }
         }
 
@@ -189,8 +212,6 @@ namespace QuickFix.Transport
         protected override void OnStop()
         {
             shutdownRequested_ = true;
-            if (null != socket_)
-                socket_.Close();
         }
 
         protected override void DoConnect(SessionID sessionID, Dictionary settings)
@@ -207,7 +228,13 @@ namespace QuickFix.Transport
                 SetPending(sessionID);
                 session.Log.OnEvent("Connecting to " + socketEndPoint.Address + " on port " + socketEndPoint.Port);
 
-                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings_);
+                // Create a Ssl-SocketInitiatorThread if a certificate is given
+                SocketInitiatorThread t;
+                if(!string.IsNullOrEmpty(socketSettings_.CertificatePath))
+                    t = new SslSocketInitiatorThread(this, session, socketEndPoint, socketSettings_);
+                else
+                    t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings_);
+                
                 t.Start();
                 AddThread(t);
 
