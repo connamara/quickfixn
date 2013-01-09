@@ -27,3 +27,4 @@ Contributors
 - Matt Wood
 - Laszlo Ligart
 - Ervin Marguc
+- Bjorn Andersson
