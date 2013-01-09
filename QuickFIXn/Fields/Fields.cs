@@ -10066,7 +10066,11 @@ namespace QuickFix.Fields
         public const string EXACT_MATCH_PLUS_TWO_BADGES = "A4";
         public const string EXACT_MATCH_PLUS_EXECUTION_TIME = "A5";
         public const string COMPARED_RECORDS_RESULTING_FROM_STAMPED_ADVISORIES_OR_SPECIALIST_ACCEPTS = "AQ";
-        public const string SUMMARIZED_MATCH_USING_A1_TO_A5 = "S5";
+        public const string SUMMARIZED_MATCH_USING_A1 = "S1";
+        public const string SUMMARIZED_MATCH_USING_A2 = "S2";
+        public const string SUMMARIZED_MATCH_USING_A3 = "S3";
+        public const string SUMMARIZED_MATCH_USING_A4 = "S4";
+        public const string SUMMARIZED_MATCH_USING_A5 = "S5";
         public const string EXACT_MATCH_MINUS_BADGES_AND_EXECUTION_TIME = "M1";
         public const string SUMMARIZED_MATCH_MINUS_BADGES_AND_TIMES = "M2";
         public const string OCS_LOCKED_IN = "MT";
