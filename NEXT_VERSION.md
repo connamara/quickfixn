@@ -22,4 +22,5 @@ Changes since the last version:
 * (patch) issue #128 - simplify/improve TradeClient example app (gbirchmeier)
 * (minor) issue #135 - fix DateOnly/TimeOnly field support (formator)
 * (patch) issue #134 - if DD field/group/component is missing "required" attribute, treat it as "required=N" (gbirchmeier)
+* (patch) issue #114 - enum dupe-check script; corrections to FIX43 tag 574/MatchType (gbirchmeier)
 
