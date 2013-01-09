@@ -3846,16 +3846,20 @@
       <value enum="A4" description="EXACT_MATCH_PLUS_TWO_BADGES" />
       <value enum="A5" description="EXACT_MATCH_PLUS_EXECUTION_TIME" />
       <value enum="AQ" description="COMPARED_RECORDS_RESULTING_FROM_STAMPED_ADVISORIES_OR_SPECIALIST_ACCEPTS" />
-      <value description="SUMMARIZED_MATCH_USING_A1_TO_A5" enum="S5" />
+      <value enum="S1" description="SUMMARIZED_MATCH_USING_A1" />
+      <value enum="S2" description="SUMMARIZED_MATCH_USING_A2" />
+      <value enum="S3" description="SUMMARIZED_MATCH_USING_A3" />
+      <value enum="S4" description="SUMMARIZED_MATCH_USING_A4" />
+      <value enum="S5" description="SUMMARIZED_MATCH_USING_A5" />
       <value enum="M1" description="EXACT_MATCH_MINUS_BADGES_AND_EXECUTION_TIME" />
       <value enum="M2" description="SUMMARIZED_MATCH_MINUS_BADGES_AND_TIMES" />
       <value enum="MT" description="OCS_LOCKED_IN" />
-      <value description="ACT_M1_MATCH" enum="M1" />
-      <value description="ACT_M2_MATCH" enum="M2" />
+      <value enum="M1" description="ACT_M1_MATCH"/>
+      <value enum="M2" description="ACT_M2_MATCH" />
       <value enum="M3" description="ACT_ACCEPTED_TRADE" />
       <value enum="M4" description="ACT_DEFAULT_TRADE" />
-      <value description="ACT_DEFAULT_AFTER_M2" enum="M5" />
-      <value description="ACT_M6_MATCH" enum="M6" />
+      <value enum="M5" description="ACT_DEFAULT_AFTER_M2" />
+      <value enum="M6" description="ACT_M6_MATCH" />
       <value enum="MT" description="NON_ACT" />
     </field>
     <field number="575" name="OddLot" type="BOOLEAN" />
