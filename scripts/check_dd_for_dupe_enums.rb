@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'nokogiri'
 
 # Script to check issue #114 (duplicate enum values in DDs)
