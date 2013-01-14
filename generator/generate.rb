@@ -1,5 +1,6 @@
 $LOAD_PATH << File.dirname(__FILE__)
 
+require 'rubygems'
 require 'fix_dictionary'
 require 'fields_gen'
 require 'messages_gen'
