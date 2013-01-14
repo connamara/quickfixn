@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
+using System.Threading;
 
 namespace UnitTests
 {
@@ -67,6 +68,7 @@ namespace UnitTests
             Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.seqnums"));
             Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.body"));
             Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.header"));
+            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.session"));
         }
 
         [Test]
@@ -110,28 +112,14 @@ namespace UnitTests
         [Test]
         public void resetTest()
         {
+            // seq nums reset
             store.SetNextTargetMsgSeqNum(5);
             store.SetNextSenderMsgSeqNum(4);
             store.Reset();
-
             Assert.AreEqual(1, store.GetNextTargetMsgSeqNum());
             Assert.AreEqual(1, store.GetNextSenderMsgSeqNum());
 
-            rebuildStore();
-            Assert.AreEqual(1, store.GetNextTargetMsgSeqNum());
-            Assert.AreEqual(1, store.GetNextSenderMsgSeqNum());
-
-            store.SetNextTargetMsgSeqNum(5);
-            store.SetNextSenderMsgSeqNum(6);
-
-            Assert.AreEqual(5, store.GetNextTargetMsgSeqNum());
-            Assert.AreEqual(6, store.GetNextSenderMsgSeqNum());
-
-            rebuildStore();
-
-            Assert.AreEqual(5, store.GetNextTargetMsgSeqNum());
-            Assert.AreEqual(6, store.GetNextSenderMsgSeqNum());
-
+            // Check that messages do not persist after reset
             store.Set(1, "dude");
             store.Set(2, "pude");
             store.Set(3, "ok");
@@ -142,25 +130,20 @@ namespace UnitTests
             var msgs = new List<string>();
             store.Get(2, 3, msgs);
             Assert.That(msgs,Is.Empty);
+        }
 
+        [Test]
+        public void CreationTimeTest()
+        {
+            DateTime d1 = store.CreationTime.Value;
             rebuildStore();
-            store.Get(2, 3, msgs);
-            Assert.That(msgs, Is.Empty);
+            DateTime d2 = store.CreationTime.Value;
+            Util.UtcDateTimeSerializerTests.AssertHackyDateTimeEquality(d1, d2);
 
-            store.Set(1, "dude");
-            store.Set(2, "pude");
-            store.Set(3, "ok");
-            store.Set(4, "ohai");
-
-            store.Get(2, 3, msgs);
-            var expected = new List<string>() { "pude", "ok" };
-
-            Assert.AreEqual(expected, msgs);
-
-            rebuildStore();
-
-            msgs = new List<string>();
-            store.Get(2, 3, msgs);
+            Thread.Sleep(1000);
+            store.Reset();
+            DateTime d3 = store.CreationTime.Value;
+            Assert.AreEqual(-1, DateTimeOffset.Compare(d1, d3)); // e.g. d1 is earlier than d3
         }
 
 
@@ -185,6 +168,5 @@ namespace UnitTests
 
             Assert.AreEqual(expected, msgs);
         }
-        
     }
 }

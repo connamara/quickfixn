@@ -105,6 +105,7 @@
     <Compile Include="SessionTest.cs" />
     <Compile Include="SettingsTest.cs" />
     <Compile Include="StringUTF8Tests.cs" />
+    <Compile Include="Util\UtcDateTimeSerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\QuickFIXn\QuickFix.csproj">
