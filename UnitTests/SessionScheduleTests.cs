@@ -298,7 +298,7 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.END_TIME, "00:12:00");
             settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Doh");
             settings.SetString(QuickFix.SessionSettings.USE_LOCAL_TIME, "Y");
-            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time");
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "America/Detroit");
 
             Assert.Throws(typeof (QuickFix.ConfigError), delegate { new QuickFix.SessionSchedule(settings); });
         }
@@ -309,7 +309,7 @@ namespace UnitTests
             QuickFix.Dictionary settings = new QuickFix.Dictionary();
             settings.SetString(QuickFix.SessionSettings.START_TIME, "09:30:00");
             settings.SetString(QuickFix.SessionSettings.END_TIME, "16:00:00");
-            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time");
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "America/Detroit");
 
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
@@ -359,7 +359,7 @@ namespace UnitTests
             settings = new QuickFix.Dictionary();
             settings.SetString(QuickFix.SessionSettings.START_TIME, "04:30:00"); // 09:30:00 utc
             settings.SetString(QuickFix.SessionSettings.END_TIME, "11:00:00");   // 16:00:00 utc
-            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "America/Detroit"); //-5
             sched = new QuickFix.SessionSchedule(settings);
 
             // before starttime
@@ -399,7 +399,7 @@ namespace UnitTests
             settings = new QuickFix.Dictionary();
             settings.SetString(QuickFix.SessionSettings.START_TIME, "04:30:00"); // 09:30:00 utc
             settings.SetString(QuickFix.SessionSettings.END_TIME, "11:00:00");   // 16:00:00 utc
-            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "America/Detroit"); //-5
             settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
             settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
             sched = new QuickFix.SessionSchedule(settings);
