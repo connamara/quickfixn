@@ -29,6 +29,7 @@ namespace QuickFix
         #region Properties
 
         // state
+        public IMessageStore MessageStore { get { return state_.MessageStore; } }
         public ILog Log { get { return state_.Log; } }
         public bool IsInitiator { get { return state_.IsInitiator; } }
         public bool IsAcceptor { get { return !state_.IsInitiator; } }
