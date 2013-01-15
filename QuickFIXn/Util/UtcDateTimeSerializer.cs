@@ -11,7 +11,7 @@ namespace QuickFix.Util
     /// </summary>
     public static class UtcDateTimeSerializer
     {
-        private const string FORMAT = "yyyyMMdd-HHmmss.ffffff K";
+        private const string FORMAT = "yyyyMMdd-HH:mm:ss.ffffff K";
 
         /// <summary>
         /// Not for use by client apps.
