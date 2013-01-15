@@ -642,7 +642,7 @@ namespace UnitTests
             sched = new QuickFix.SessionSchedule(settings);
 
             DateTime d3 = new DateTime(2013, 01, 15, 03, 00, 00, DateTimeKind.Utc);
-            DateTime d3expected = new DateTime(2013, 01, 14, 10, 00, 00, DateTimeKind.Local);
+            DateTime d3expected = new DateTime(2013, 01, 14, 22, 00, 00, DateTimeKind.Unspecified);
             DateTime d3actual = sched.AdjustUtcDateTime(d3);
             Util.UtcDateTimeSerializerTests.AssertHackyDateTimeEquality(d3expected, d3actual);
 
@@ -653,8 +653,8 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-4 in June
             sched = new QuickFix.SessionSchedule(settings);
 
-            DateTime d4 = new DateTime(2013, 01, 15, 03, 00, 00, DateTimeKind.Utc);
-            DateTime d4expected = new DateTime(2013, 06, 14, 11, 00, 00, DateTimeKind.Local);
+            DateTime d4 = new DateTime(2013, 06, 15, 03, 00, 00, DateTimeKind.Utc);
+            DateTime d4expected = new DateTime(2013, 06, 14, 23, 00, 00, DateTimeKind.Unspecified);
             DateTime d4actual = sched.AdjustUtcDateTime(d4);
             Util.UtcDateTimeSerializerTests.AssertHackyDateTimeEquality(d4expected, d4actual);
 
@@ -662,7 +662,7 @@ namespace UnitTests
             settings = new QuickFix.Dictionary();
             settings.SetString(QuickFix.SessionSettings.START_TIME, "04:30:00"); // 09:30:00 utc
             settings.SetString(QuickFix.SessionSettings.END_TIME, "11:00:00");   // 16:00:00 utc
-            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
+            settings.SetString(QuickFix.SessionSettings.USE_LOCAL_TIME, "Y");
             sched = new QuickFix.SessionSchedule(settings);
 
             DateTime d5 = new DateTime(2013, 01, 15, 16, 00, 00, DateTimeKind.Utc);
