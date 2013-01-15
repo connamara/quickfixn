@@ -14,17 +14,78 @@ namespace QuickFix
         public bool UseLocalTime { get; private set; }
         public System.TimeZoneInfo TimeZone { get; private set; }
 
-        public bool IsSessionTime(System.DateTime time)
+
+        public class SessionRange
         {
-            if (time.Kind == System.DateTimeKind.Local)
+            public SessionRange(DateTime start, DateTime end) { Start = start; End = end; IsValid = true; }
+            public SessionRange(bool isValid) { IsValid = isValid; }
+            public bool IsValid { get; private set; }
+            public DateTime Start { get; private set; }
+            public DateTime End { get; private set; }
+
+            const string STRING_FORMAT = "yyyyMMdd-HH:mm:ss";
+            public override string ToString()
+            {
+                if (IsValid)
+                    return String.Format("SessionRange[{0} to {1}]", Start.ToString(STRING_FORMAT), End.ToString(STRING_FORMAT));
+                else
+                    return "SessionRange[invalid]";
+            }
+        }
+
+        public SessionRange GetSessionRange(DateTime d)
+        {
+            if (WeeklySession)
+            {
+
+            }
+            return new SessionRange(false);
+        }
+
+        /// <summary>
+        /// Determines if d1 and d2 fall within the same session.
+        /// </summary>
+        /// <param name="utc1"></param>
+        /// <param name="utc2"></param>
+        /// <returns></returns>
+        public bool IsSameSession(System.DateTime utc1, DateTime utc2)
+        {
+            if (utc1.Kind == System.DateTimeKind.Local)
+                throw new System.ArgumentException("Only UTC time is supported", "d1");
+            if (utc2.Kind == System.DateTimeKind.Local)
+                throw new System.ArgumentException("Only UTC time is supported", "d2");
+            
+
+
+            // fill in here
+
+            return false;
+        }
+
+        /// <summary>
+        /// Convert the parameter to its equivalent datetime in the config file's stated timezone
+        /// </summary>
+        /// <param name="utc"></param>
+        /// <returns></returns>
+        public DateTime AdjustUtcDateTime(DateTime utc)
+        {
+            if (utc.Kind != System.DateTimeKind.Utc)
                 throw new System.ArgumentException("Only UTC time is supported", "time");
 
-            System.DateTime adjusted =
-                UseLocalTime
-                    ? time.ToLocalTime()
-                    : TimeZone == null
-                          ? time
-                          : System.TimeZoneInfo.ConvertTimeFromUtc(time, TimeZone);
+            if(UseLocalTime)
+                return utc.ToLocalTime();
+            else if (TimeZone==null)
+                return utc;
+            else
+                return System.TimeZoneInfo.ConvertTimeFromUtc(utc, TimeZone);
+        }
+
+        public bool IsSessionTime(System.DateTime utc)
+        {
+            if (utc.Kind != System.DateTimeKind.Utc)
+                throw new System.ArgumentException("Only UTC time is supported", "time");
+
+            System.DateTime adjusted = AdjustUtcDateTime(utc);
 
             if (WeeklySession)
                 return CheckDay(adjusted);
@@ -35,19 +96,14 @@ namespace QuickFix
         /// <summary>
         /// Return the latest EndTime (in UTC) before time.
         /// </summary>
-        /// <param name="time"></param>
+        /// <param name="utc"></param>
         /// <returns></returns>
-        public DateTime LastEndTime(DateTime time)
+        public DateTime LastEndTime(DateTime utc)
         {
-            if (time.Kind != DateTimeKind.Utc)
+            if (utc.Kind != DateTimeKind.Utc)
                 throw new ArgumentException("Only UTC time is supported", "time");
 
-            DateTime adjusted =
-                UseLocalTime
-                    ? time.ToLocalTime()
-                    : TimeZone == null
-                          ? time
-                          : TimeZoneInfo.ConvertTimeFromUtc(time, TimeZone);
+            DateTime adjusted = AdjustUtcDateTime(utc);
 
             int daysBack = 0;
             if (WeeklySession)
