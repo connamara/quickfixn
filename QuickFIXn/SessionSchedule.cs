@@ -23,6 +23,13 @@ namespace QuickFix
             public DateTime Start { get; private set; }
             public DateTime End { get; private set; }
 
+            public bool Contains(DateTime d)
+            {
+                return (IsValid == true
+                    && (DateTime.Compare(this.Start, d) <= 0)
+                    && (DateTime.Compare(d, this.End) <= 0));
+            }
+
             const string STRING_FORMAT = "yyyyMMdd-HH:mm:ss";
             public override string ToString()
             {
@@ -85,16 +92,16 @@ namespace QuickFix
         /// <returns></returns>
         public bool IsSameSession(System.DateTime utc1, DateTime utc2)
         {
-            if (utc1.Kind == System.DateTimeKind.Local)
-                throw new System.ArgumentException("Only UTC time is supported", "d1");
-            if (utc2.Kind == System.DateTimeKind.Local)
-                throw new System.ArgumentException("Only UTC time is supported", "d2");
-            
+            if (utc1.Kind != System.DateTimeKind.Utc)
+                throw new System.ArgumentException("Only UTC time is supported", "utc1");
+            if (utc2.Kind != System.DateTimeKind.Utc)
+                throw new System.ArgumentException("Only UTC time is supported", "utc2");
 
+            DateTime a1 = AdjustUtcDateTime(utc1);
+            DateTime a2 = AdjustUtcDateTime(utc2);
 
-            // fill in here
-
-            return false;
+            SessionRange sr = GetSessionRange(a1);
+            return sr.Contains(a2);
         }
 
         /// <summary>
