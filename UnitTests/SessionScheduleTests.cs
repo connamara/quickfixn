@@ -459,14 +459,14 @@ namespace UnitTests
             sched = new QuickFix.SessionSchedule(settings);
 
             Assert.True(sched.IsSameSession(
-                new DateTime(2012, 10, 18, 09, 30, 00, DateTimeKind.Utc),
-                new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc)));
+                new DateTime(2012, 12, 18, 09, 30, 00, DateTimeKind.Utc),
+                new DateTime(2012, 12, 18, 16, 00, 00, DateTimeKind.Utc)));
             Assert.True(sched.IsSameSession(
-                new DateTime(2012, 10, 18, 09, 31, 00, DateTimeKind.Utc),
-                new DateTime(2012, 10, 18, 15, 59, 00, DateTimeKind.Utc)));
+                new DateTime(2012, 12, 18, 09, 31, 00, DateTimeKind.Utc),
+                new DateTime(2012, 12, 18, 15, 59, 00, DateTimeKind.Utc)));
             Assert.False(sched.IsSameSession(
-                new DateTime(2012, 10, 18, 10, 00, 00, DateTimeKind.Utc),
-                new DateTime(2012, 10, 19, 10, 00, 00, DateTimeKind.Utc)));
+                new DateTime(2012, 12, 18, 10, 00, 00, DateTimeKind.Utc),
+                new DateTime(2012, 12, 19, 10, 00, 00, DateTimeKind.Utc)));
         }
 
         [Test]
@@ -500,15 +500,16 @@ namespace UnitTests
             settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
             sched = new QuickFix.SessionSchedule(settings);
 
+            // Jan 14 is Monday, Jan 18 is Friday
             Assert.True(sched.IsSameSession(
-                new DateTime(2012, 10, 15, 09, 30, 00, DateTimeKind.Utc),
-                new DateTime(2012, 10, 19, 16, 00, 00, DateTimeKind.Utc)));
+                new DateTime(2013, 01, 14, 09, 30, 00, DateTimeKind.Utc),
+                new DateTime(2013, 01, 18, 16, 00, 00, DateTimeKind.Utc)));
             Assert.True(sched.IsSameSession(
-                new DateTime(2012, 10, 16, 09, 31, 00, DateTimeKind.Utc),
-                new DateTime(2012, 10, 18, 15, 59, 00, DateTimeKind.Utc)));
+                new DateTime(2013, 01, 14, 09, 31, 00, DateTimeKind.Utc),
+                new DateTime(2013, 01, 18, 15, 59, 00, DateTimeKind.Utc)));
             Assert.False(sched.IsSameSession(
-                new DateTime(2012, 10, 16, 12, 00, 00, DateTimeKind.Utc),
-                new DateTime(2012, 10, 23, 10, 00, 00, DateTimeKind.Utc)));
+                new DateTime(2013, 01, 15, 12, 00, 00, DateTimeKind.Utc),
+                new DateTime(2013, 01, 22, 10, 00, 00, DateTimeKind.Utc)));
         }
 
         [Test]
