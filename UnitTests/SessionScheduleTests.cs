@@ -520,17 +520,15 @@ namespace UnitTests
             QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
 
             Assert.AreEqual("SessionRange[20121101-09:30:00 to 20121101-16:00:00]",
-                sched.GetSessionRange(new DateTime(2012, 11, 01, 09, 30, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 11, 01, 09, 30, 00, DateTimeKind.Utc))).ToString());
             Assert.AreEqual("SessionRange[20121101-09:30:00 to 20121101-16:00:00]",
-                sched.GetSessionRange(new DateTime(2012, 11, 01, 16, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 11, 01, 16, 00, 00, DateTimeKind.Utc))).ToString());
             Assert.AreEqual("SessionRange[20010501-09:30:00 to 20010501-16:00:00]",
-                sched.GetSessionRange(new DateTime(2001, 05, 01, 14, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2001, 05, 01, 14, 00, 00, DateTimeKind.Utc))).ToString());
             // 8am is not within a session
             Assert.AreEqual("SessionRange[invalid]",
-                sched.GetSessionRange(new DateTime(2001, 05, 01, 08, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2001, 05, 01, 08, 00, 00, DateTimeKind.Utc))).ToString());
 
-
-            Console.WriteLine("====================");
             // ==========
             // Settings file is specified in a zone (est, -5)
             settings = new QuickFix.Dictionary();
@@ -573,7 +571,7 @@ namespace UnitTests
             // Oct 15 and 22 are Mondays, 19 and 26 are Fridays
             Assert.AreEqual("SessionRange[20121015-09:30:00 to 20121019-16:00:00]",
                 sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 15, 09, 30, 00, DateTimeKind.Utc))).ToString());
-            Assert.AreEqual("SessionRange[20121015-09:30:00 to 20121015-16:00:00]",
+            Assert.AreEqual("SessionRange[20121015-09:30:00 to 20121019-16:00:00]",
                 sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 19, 04, 00, 00, DateTimeKind.Utc))).ToString());
             // Jan 1 2001 is a Monday
             Assert.AreEqual("SessionRange[20010101-09:30:00 to 20010105-16:00:00]",
@@ -593,12 +591,12 @@ namespace UnitTests
             sched = new QuickFix.SessionSchedule(settings);
 
             // Oct 15 and 22 are Mondays, 19 and 26 are Fridays
-            Assert.AreEqual("SessionRange[20121015-09:30:00 to 20121019-16:00:00]",
+            Assert.AreEqual("SessionRange[20121015-04:30:00 to 20121019-11:00:00]",
                 sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 15, 09, 30, 00, DateTimeKind.Utc))).ToString());
-            Assert.AreEqual("SessionRange[20121015-09:30:00 to 20121015-16:00:00]",
+            Assert.AreEqual("SessionRange[20121015-04:30:00 to 20121019-11:00:00]",
                 sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 19, 04, 00, 00, DateTimeKind.Utc))).ToString());
             // Jan 1 2001 is a Monday
-            Assert.AreEqual("SessionRange[20010101-09:30:00 to 20010105-16:00:00]",
+            Assert.AreEqual("SessionRange[20010101-04:30:00 to 20010105-11:00:00]",
                 sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2001, 01, 03, 14, 00, 00, DateTimeKind.Utc))).ToString());
             // this one's a little before the session
             Assert.AreEqual("SessionRange[invalid]",
@@ -614,7 +612,7 @@ namespace UnitTests
             sched = new QuickFix.SessionSchedule(settings);
 
             // Oct 15 and 22 are Mondays, 19 and 26 are Fridays
-            Assert.AreEqual("SessionRange[20121019-09:30:00 to 20121022-16:00:00]",
+            Assert.AreEqual("SessionRange[20121019-16:00:00 to 20121022-09:30:00]",
                 sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 20, 12, 00, 00, DateTimeKind.Utc))).ToString());
         }
 
