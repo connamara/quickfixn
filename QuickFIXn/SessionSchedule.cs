@@ -42,24 +42,6 @@ namespace QuickFix
         /// <returns></returns>
         public SessionRange GetSessionRange(DateTime d)
         {
-            Console.WriteLine("d    : " + d.ToString("yyyyMMdd-HH:mm:ss"));
-
-            if (!WeeklySession)
-            {
-                DateTime start = new DateTime(d.Year, d.Month, d.Day, StartTime.Hours, StartTime.Minutes, StartTime.Seconds, d.Kind);
-                if (DateTime.Compare(start, d) > 0) // start is later than d
-                    start = start.AddDays(-1);
-                DateTime end = new DateTime(d.Year, d.Month, d.Day, EndTime.Hours, EndTime.Minutes, EndTime.Seconds, d.Kind);
-                if (DateTime.Compare(d, end) > 0) // d is later than end
-                    end = end.AddDays(1);
-
-                // if d is outside of the session times, then start/end will span more than a day
-                if ((end - start).TotalHours > 24)
-                    return new SessionRange(false);
-                else
-                    return new SessionRange(start, end);
-            }
-
             if (WeeklySession)
             {
                 DateTime start = new DateTime(d.Year, d.Month, d.Day, StartTime.Hours, StartTime.Minutes, StartTime.Seconds, d.Kind);
@@ -75,9 +57,20 @@ namespace QuickFix
                     end = end.AddDays(7);
 
                 // if d is outside of the session times, then start/end will span more than a week
-                if ((end - start).TotalDays > 7)
-                    return new SessionRange(false);
-                else
+                if ((end - start).TotalDays <= 7)
+                    return new SessionRange(start, end);
+            }
+            else
+            {
+                DateTime start = new DateTime(d.Year, d.Month, d.Day, StartTime.Hours, StartTime.Minutes, StartTime.Seconds, d.Kind);
+                if (DateTime.Compare(start, d) > 0) // start is later than d
+                    start = start.AddDays(-1);
+                DateTime end = new DateTime(d.Year, d.Month, d.Day, EndTime.Hours, EndTime.Minutes, EndTime.Seconds, d.Kind);
+                if (DateTime.Compare(d, end) > 0) // d is later than end
+                    end = end.AddDays(1);
+
+                // if d is outside of the session times, then start/end will span more than a day
+                if ((end - start).TotalHours <= 24)
                     return new SessionRange(start, end);
             }
 
