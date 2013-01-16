@@ -33,11 +33,40 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Get the start/end DateTimes that the input falls within.
+        /// The range will be represented in the timezone specified in the config file.
+        /// (Return value will have IsValid=false if the input does not fall within a session.)
+        /// </summary>
+        /// <param name="d">a time assumed to be in the config-file's timezone</param>
+        /// <returns></returns>
         public SessionRange GetSessionRange(DateTime d)
         {
+//            Console.WriteLine("start: " + start.ToString("yyyyMMdd-HH:mm:ss zzz" + " " + start.Kind.ToString()));
+            Console.WriteLine("d    : " + d.ToString("yyyyMMdd-HH:mm:ss"));
+//            Console.WriteLine("compare: " + DateTime.Compare(start, d));
+
+            
+            if(!WeeklySession){
+                DateTime end = new DateTime(d.Year, d.Month, d.Day, EndTime.Hours, EndTime.Minutes, EndTime.Seconds, d.Kind);
+                if (DateTime.Compare(d,end) > 0)
+                    end = end.AddDays(1);
+                DateTime start = new DateTime(d.Year, d.Month, d.Day, StartTime.Hours, StartTime.Minutes, StartTime.Seconds, d.Kind);
+                if (DateTime.Compare(start, d) > 0)
+                    start = start.AddDays(-1);
+
+                Console.WriteLine(new SessionRange(start, end).ToString());
+
+                // if d is outside of the session times, then the difference between start and end will be greater than a day
+                if ((end - start).TotalHours > 24)
+                    return new SessionRange(false);
+                else
+                    return new SessionRange(start, end);
+            }
+
             if (WeeklySession)
             {
-
+                return new SessionRange(false);
             }
             return new SessionRange(false);
         }

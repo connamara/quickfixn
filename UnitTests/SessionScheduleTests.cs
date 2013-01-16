@@ -522,13 +522,15 @@ namespace UnitTests
             Assert.AreEqual("SessionRange[20121101-09:30:00 to 20121101-16:00:00]",
                 sched.GetSessionRange(new DateTime(2012, 11, 01, 09, 30, 00, DateTimeKind.Utc)).ToString());
             Assert.AreEqual("SessionRange[20121101-09:30:00 to 20121101-16:00:00]",
-                sched.GetSessionRange(new DateTime(2012, 11, 01, 04, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(new DateTime(2012, 11, 01, 16, 00, 00, DateTimeKind.Utc)).ToString());
             Assert.AreEqual("SessionRange[20010501-09:30:00 to 20010501-16:00:00]",
                 sched.GetSessionRange(new DateTime(2001, 05, 01, 14, 00, 00, DateTimeKind.Utc)).ToString());
             // 8am is not within a session
             Assert.AreEqual("SessionRange[invalid]",
                 sched.GetSessionRange(new DateTime(2001, 05, 01, 08, 00, 00, DateTimeKind.Utc)).ToString());
 
+
+            Console.WriteLine("====================");
             // ==========
             // Settings file is specified in a zone (est, -5)
             settings = new QuickFix.Dictionary();
@@ -537,15 +539,15 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
             sched = new QuickFix.SessionSchedule(settings);
 
-            Assert.AreEqual("SessionRange[20121101-09:30:00 to 20121101-16:00:00]",
-                sched.GetSessionRange(new DateTime(2012, 11, 01, 09, 30, 00, DateTimeKind.Utc)).ToString());
-            Assert.AreEqual("SessionRange[20121101-09:30:00 to 20121101-16:00:00]",
-                sched.GetSessionRange(new DateTime(2012, 11, 01, 04, 00, 00, DateTimeKind.Utc)).ToString());
-            Assert.AreEqual("SessionRange[20010501-09:30:00 to 20010501-16:00:00]",
-                sched.GetSessionRange(new DateTime(2001, 05, 01, 14, 00, 00, DateTimeKind.Utc)).ToString());
+            Assert.AreEqual("SessionRange[20121201-04:30:00 to 20121201-11:00:00]",
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 12, 01, 09, 30, 00, DateTimeKind.Utc))).ToString());
+            Assert.AreEqual("SessionRange[20121201-04:30:00 to 20121201-11:00:00]",
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 12, 01, 16, 00, 00, DateTimeKind.Utc))).ToString());
+            Assert.AreEqual("SessionRange[20010201-04:30:00 to 20010201-11:00:00]",
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2001, 02, 01, 14, 00, 00, DateTimeKind.Utc))).ToString());
             // 8am is not within a session
             Assert.AreEqual("SessionRange[invalid]",
-                sched.GetSessionRange(new DateTime(2001, 05, 01, 08, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2001, 02, 01, 08, 00, 00, DateTimeKind.Utc))).ToString());
 
             // ================
             // Check that still works when session spans a day break
@@ -554,8 +556,8 @@ namespace UnitTests
             settings.SetString(QuickFix.SessionSettings.END_TIME, "09:30:00");
             sched = new QuickFix.SessionSchedule(settings);
 
-            Assert.AreEqual("SessionRange[20121101-16:30:00 to 20121102-09:30:00]",
-                sched.GetSessionRange(new DateTime(2012, 11, 01, 17, 30, 00, DateTimeKind.Utc)).ToString());
+            Assert.AreEqual("SessionRange[20121101-16:00:00 to 20121102-09:30:00]",
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 11, 01, 17, 30, 00, DateTimeKind.Utc))).ToString());
         }
 
         [Test]
@@ -570,15 +572,15 @@ namespace UnitTests
 
             // Oct 15 and 22 are Mondays, 19 and 26 are Fridays
             Assert.AreEqual("SessionRange[20121015-09:30:00 to 20121019-16:00:00]",
-                sched.GetSessionRange(new DateTime(2012, 10, 15, 09, 30, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 15, 09, 30, 00, DateTimeKind.Utc))).ToString());
             Assert.AreEqual("SessionRange[20121015-09:30:00 to 20121015-16:00:00]",
-                sched.GetSessionRange(new DateTime(2012, 10, 19, 04, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 19, 04, 00, 00, DateTimeKind.Utc))).ToString());
             // Jan 1 2001 is a Monday
             Assert.AreEqual("SessionRange[20010101-09:30:00 to 20010105-16:00:00]",
-                sched.GetSessionRange(new DateTime(2001, 01, 03, 14, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2001, 01, 03, 14, 00, 00, DateTimeKind.Utc))).ToString());
             // this one's a little before the session
             Assert.AreEqual("SessionRange[invalid]",
-                sched.GetSessionRange(new DateTime(2012, 10, 15, 08, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 15, 08, 00, 00, DateTimeKind.Utc))).ToString());
 
             // ==========
             // Settings file is specified in a zone (est, -5)
@@ -592,15 +594,15 @@ namespace UnitTests
 
             // Oct 15 and 22 are Mondays, 19 and 26 are Fridays
             Assert.AreEqual("SessionRange[20121015-09:30:00 to 20121019-16:00:00]",
-                sched.GetSessionRange(new DateTime(2012, 10, 15, 09, 30, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 15, 09, 30, 00, DateTimeKind.Utc))).ToString());
             Assert.AreEqual("SessionRange[20121015-09:30:00 to 20121015-16:00:00]",
-                sched.GetSessionRange(new DateTime(2012, 10, 19, 04, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 19, 04, 00, 00, DateTimeKind.Utc))).ToString());
             // Jan 1 2001 is a Monday
             Assert.AreEqual("SessionRange[20010101-09:30:00 to 20010105-16:00:00]",
-                sched.GetSessionRange(new DateTime(2001, 01, 03, 14, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2001, 01, 03, 14, 00, 00, DateTimeKind.Utc))).ToString());
             // this one's a little before the session
             Assert.AreEqual("SessionRange[invalid]",
-                sched.GetSessionRange(new DateTime(2012, 10, 15, 08, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 15, 08, 00, 00, DateTimeKind.Utc))).ToString());
 
             // ===========
             // Check that still works when session spans a weekend break
@@ -613,7 +615,7 @@ namespace UnitTests
 
             // Oct 15 and 22 are Mondays, 19 and 26 are Fridays
             Assert.AreEqual("SessionRange[20121019-09:30:00 to 20121022-16:00:00]",
-                sched.GetSessionRange(new DateTime(2012, 10, 20, 12, 00, 00, DateTimeKind.Utc)).ToString());
+                sched.GetSessionRange(sched.AdjustUtcDateTime(new DateTime(2012, 10, 20, 12, 00, 00, DateTimeKind.Utc))).ToString());
         }
 
         [Test]
