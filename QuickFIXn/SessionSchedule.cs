@@ -104,6 +104,33 @@ namespace QuickFix
             return sr.Contains(a2);
         }
 
+
+        /// <summary>
+        /// Returns true if testtime is in a different and newer session than old time
+        /// (or more explicitly: oldtime &lt;= some EndTime &lt; testtime)
+        /// </summary>
+        /// <param name="oldtime_utc"></param>
+        /// <param name="testtime_utc"></param>
+        /// <returns></returns>
+        public bool IsNewSession(DateTime oldtime_utc, DateTime testtime_utc)
+        {
+            if (oldtime_utc.Kind != System.DateTimeKind.Utc)
+                throw new System.ArgumentException("Only UTC time is supported", "oldtime");
+            if (testtime_utc.Kind != System.DateTimeKind.Utc)
+                throw new System.ArgumentException("Only UTC time is supported", "testtime");
+
+            DateTime old = AdjustUtcDateTime(oldtime_utc);
+            DateTime test = AdjustUtcDateTime(testtime_utc);
+
+            if (DateTime.Compare(old, test) < 0) // old is earlier than test
+            {
+                DateTime nextend = NextEndTime(oldtime_utc);
+                return (DateTime.Compare(old, nextend) <= 0) && (DateTime.Compare(nextend, test) < 0);
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Convert the parameter to its equivalent datetime in the config file's stated timezone
         /// </summary>
@@ -136,6 +163,38 @@ namespace QuickFix
         }
 
         /// <summary>
+        /// Get the next endtime that is equal to or after d.
+        /// The return value will be represented in the timezone specified in the config file.
+        /// </summary>
+        /// <param name="d">a utc time (raises an ArgumentException if not utc)</param>
+        /// <returns></returns>
+        public DateTime NextEndTime(DateTime utc)
+        {
+            if (utc.Kind != DateTimeKind.Utc)
+                throw new ArgumentException("Only UTC time is supported", "time");
+
+            DateTime d = AdjustUtcDateTime(utc);
+            DateTime end = DateTime.MinValue;
+
+            if (WeeklySession)
+            {
+                end = new DateTime(d.Year, d.Month, d.Day, EndTime.Hours, EndTime.Minutes, EndTime.Seconds, d.Kind);
+                while (end.DayOfWeek != EndDay)
+                    end = end.AddDays(1);
+                if (DateTime.Compare(d, end) > 0) // d is later than end
+                    end = end.AddDays(7);
+            }
+            else
+            {
+                end = new DateTime(d.Year, d.Month, d.Day, EndTime.Hours, EndTime.Minutes, EndTime.Seconds, d.Kind);
+                if (DateTime.Compare(d, end) > 0) // d is later than end
+                    end = end.AddDays(1);
+            }
+
+            return end;
+        }
+
+        /// <summary>
         /// Return the latest EndTime (in UTC) before time.
         /// </summary>
         /// <param name="utc"></param>
@@ -160,6 +219,11 @@ namespace QuickFix
             return (adjusted.Date + new TimeSpan(-daysBack, 0, 0, 0) + EndTime).ToUniversalTime();
         }
 
+        /// <summary>
+        /// return true if time falls within StartTime/EndTime
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         private bool CheckDay(System.DateTime time)
         {
             if (StartDay < EndDay)
@@ -201,6 +265,11 @@ namespace QuickFix
                 return time.DayOfWeek == StartDay && CheckTime(time.TimeOfDay);
         }
 
+        /// <summary>
+        /// Return true if time is between StartDay:StartTime and EndDay:EndTime
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         private bool CheckTime(System.TimeSpan time)
         {
             if (StartTime.CompareTo(EndTime) < 0)

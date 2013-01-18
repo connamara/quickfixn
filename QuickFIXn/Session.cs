@@ -42,9 +42,8 @@ namespace QuickFix
             get
             {
                 DateTime? creationTime = this.state_.CreationTime;
-                DateTime lastEndTime = this.schedule_.LastEndTime(DateTime.UtcNow).ToUniversalTime();
-
-                return !creationTime.HasValue || creationTime.Value.ToUniversalTime() <= lastEndTime;
+                return creationTime.HasValue == false
+                    || this.schedule_.IsNewSession(creationTime.Value, DateTime.UtcNow);
             }
         }
 
@@ -237,7 +236,7 @@ namespace QuickFix
             this.IgnorePossDupResendRequests = false;
 
             if (!IsSessionTime)
-                Reset("Out of SessionTime at construction");
+                Reset("Out of SessionTime (Session construction)");
             else if (IsNewSession)
                 Reset("New session");
 
@@ -395,7 +394,7 @@ namespace QuickFix
 
             if (!IsSessionTime)
             {
-                Reset("Out of SessionTime at next");
+                Reset("Out of SessionTime (Session.Next())");
                 return;
             }
 
@@ -500,7 +499,7 @@ namespace QuickFix
         {
             if (!IsSessionTime)
             {
-                Reset("Out of SessionTime at next message");
+                Reset("Out of SessionTime (Session.Next(message))");
                 return;
             }
 
@@ -891,7 +890,7 @@ namespace QuickFix
         public void SetResponder(IResponder responder)
         {
             if (!IsSessionTime)
-                Reset("Out of SessionTime at setting responder");
+                Reset("Out of SessionTime (Session.SetResponder)");
 
             lock (sync_)
             {
