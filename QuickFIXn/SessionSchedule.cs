@@ -73,10 +73,10 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Get the next endtime that is equal to or after d.
+        /// Get the next endtime that is equal to or after the input.
         /// The return value will be represented in the timezone specified in the config file.
         /// </summary>
-        /// <param name="d">a utc time (raises an ArgumentException if not utc)</param>
+        /// <param name="utc">a utc time (raises an ArgumentException if not utc)</param>
         /// <returns></returns>
         public DateTime NextEndTime(DateTime utc)
         {
