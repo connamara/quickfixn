@@ -9,6 +9,8 @@ namespace UnitTests
     [TestFixture]
     class SessionScheduleTests
     {
+        const string FMT = "yyyyMMdd-HH:mm:ss";
+
         [Test]
         public void testRequiredArgs()
         {
@@ -412,6 +414,205 @@ namespace UnitTests
             Assert.AreEqual(thisWeekEnd, sched.LastEndTime(thisWeekEnd));
             // after endtime
             Assert.AreEqual(thisWeekEnd, sched.LastEndTime(new DateTime(2012, 10, 19, 17, 00, 00, DateTimeKind.Utc)));
+        }
+
+        [Test]
+        public void testNextEndTime_takesUtcOnly()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "09:30:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "16:00:00");
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            DateTime local = new DateTime(2001, 1, 1, 1, 1, 1, DateTimeKind.Local);
+            DateTime none = new DateTime(2001, 1, 1, 1, 1, 1, DateTimeKind.Unspecified);
+
+            Assert.Throws<ArgumentException>(delegate { sched.NextEndTime(local); });
+            Assert.Throws<ArgumentException>(delegate { sched.NextEndTime(none); });
+        }
+
+        [Test]
+        public void testNextEndTime_Daily()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "09:30:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "16:00:00");
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            Assert.AreEqual("20121018-16:00:00",
+                sched.NextEndTime(new DateTime(2012, 10, 18, 15, 59, 59, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20121018-16:00:00",
+                sched.NextEndTime(new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20121019-16:00:00",
+                sched.NextEndTime(new DateTime(2012, 10, 18, 16, 00, 01, DateTimeKind.Utc)).ToString(FMT));
+
+            // ==========
+            // Settings file is specified in a zone (est, -5)
+            settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "04:30:00"); // 09:30:00 utc
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "11:00:00");   // 16:00:00 utc
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
+            sched = new QuickFix.SessionSchedule(settings);
+
+            Assert.AreEqual("20121218-11:00:00",
+                sched.NextEndTime(new DateTime(2012, 12, 18, 15, 59, 59, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20121218-11:00:00",
+                sched.NextEndTime(new DateTime(2012, 12, 18, 16, 00, 00, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20121219-11:00:00",
+                sched.NextEndTime(new DateTime(2012, 12, 18, 16, 00, 01, DateTimeKind.Utc)).ToString(FMT));
+
+            // ==========
+            // Time zone during Daylight Savings
+            settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "05:30:00"); // 09:30:00 utc
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "12:00:00");   // 16:00:00 utc
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-4 for DST
+            sched = new QuickFix.SessionSchedule(settings);
+
+            Assert.AreEqual("20120618-12:00:00",
+                sched.NextEndTime(new DateTime(2012, 06, 18, 15, 59, 59, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20120618-12:00:00",
+                sched.NextEndTime(new DateTime(2012, 06, 18, 16, 00, 00, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20120619-12:00:00",
+                sched.NextEndTime(new DateTime(2012, 06, 18, 16, 00, 01, DateTimeKind.Utc)).ToString(FMT));
+        }
+
+        [Test]
+        public void testNextEndTime_Weekly()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "09:30:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "16:00:00");
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            // Oct 15 and 22 are Mondays, 19 and 26 are Fridays
+            Assert.AreEqual("20121019-16:00:00",
+                sched.NextEndTime(new DateTime(2012, 10, 19, 15, 59, 59, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20121019-16:00:00",
+                sched.NextEndTime(new DateTime(2012, 10, 19, 16, 00, 00, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20121026-16:00:00",
+                sched.NextEndTime(new DateTime(2012, 10, 19, 16, 00, 01, DateTimeKind.Utc)).ToString(FMT));
+
+            // ==========
+            // Settings file is specified in a zone (est, -5)
+            settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "04:30:00"); // 09:30:00 utc
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "11:00:00");   // 16:00:00 utc
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
+            sched = new QuickFix.SessionSchedule(settings);
+
+            // Dec 14 and 21 are Fridays
+            Assert.AreEqual("20121214-11:00:00",
+                sched.NextEndTime(new DateTime(2012, 12, 14, 15, 59, 59, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20121214-11:00:00",
+                sched.NextEndTime(new DateTime(2012, 12, 14, 16, 00, 00, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20121221-11:00:00",
+                sched.NextEndTime(new DateTime(2012, 12, 14, 16, 00, 01, DateTimeKind.Utc)).ToString(FMT));
+
+            // ==========
+            // Time zone during Daylight Savings
+            settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "05:30:00"); // 09:30:00 utc
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "12:00:00");   // 16:00:00 utc
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-4 for DST
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
+            sched = new QuickFix.SessionSchedule(settings);
+
+            // June 15 and 22 are Fridays
+            Assert.AreEqual("20120615-12:00:00",
+                sched.NextEndTime(new DateTime(2012, 06, 15, 15, 59, 59, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20120615-12:00:00",
+                sched.NextEndTime(new DateTime(2012, 06, 15, 16, 00, 00, DateTimeKind.Utc)).ToString(FMT));
+            Assert.AreEqual("20120622-12:00:00",
+                sched.NextEndTime(new DateTime(2012, 06, 15, 16, 00, 01, DateTimeKind.Utc)).ToString(FMT));
+
+        }
+
+        [Test]
+        public void testIsNewSession_takesUtcOnly()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "09:30:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "16:00:00");
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            DateTime local = new DateTime(2001, 1, 1, 1, 1, 1, DateTimeKind.Local);
+            DateTime utc = new DateTime(2001, 1, 1, 1, 1, 1, DateTimeKind.Utc);
+            DateTime none = new DateTime(2001, 1, 1, 1, 1, 1, DateTimeKind.Unspecified);
+
+            Assert.Throws<ArgumentException>(delegate { sched.IsNewSession(local, utc); });
+            Assert.Throws<ArgumentException>(delegate { sched.IsNewSession(utc, local); });
+            Assert.Throws<ArgumentException>(delegate { sched.IsNewSession(none, utc); });
+            Assert.Throws<ArgumentException>(delegate { sched.IsNewSession(utc, none); });
+        }
+
+        [Test]
+        public void testIsNewSession_Daily()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "09:30:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "16:00:00");
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 10, 18, 15, 59, 58, DateTimeKind.Utc),
+                new DateTime(2012, 10, 18, 15, 59, 59, DateTimeKind.Utc)));
+            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 10, 18, 15, 59, 59, DateTimeKind.Utc),
+                new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc)));
+            Assert.True(sched.IsNewSession(
+                new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc),
+                new DateTime(2012, 10, 18, 16, 00, 01, DateTimeKind.Utc)));
+            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 10, 18, 16, 00, 01, DateTimeKind.Utc),
+                new DateTime(2012, 10, 18, 16, 00, 02, DateTimeKind.Utc)));
+
+            // ==========
+            // Settings file is specified in a zone (est, -5)
+            settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "04:30:00"); // 09:30:00 utc
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "11:00:00");   // 16:00:00 utc
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-5
+            sched = new QuickFix.SessionSchedule(settings);
+
+            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 12, 18, 15, 59, 58, DateTimeKind.Utc),
+                new DateTime(2012, 12, 18, 15, 59, 59, DateTimeKind.Utc)));
+            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 12, 18, 15, 59, 59, DateTimeKind.Utc),
+                new DateTime(2012, 12, 18, 16, 00, 00, DateTimeKind.Utc)));
+            Assert.True(sched.IsNewSession(
+                new DateTime(2012, 12, 18, 16, 00, 00, DateTimeKind.Utc),
+                new DateTime(2012, 12, 18, 16, 00, 01, DateTimeKind.Utc)));
+            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 12, 18, 16, 00, 01, DateTimeKind.Utc),
+                new DateTime(2012, 12, 18, 16, 00, 02, DateTimeKind.Utc)));
+
+            // ==========
+            // Time zone during Daylight savings
+            settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "05:30:00"); // 09:30:00 utc
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "12:00:00");   // 16:00:00 utc
+            settings.SetString(QuickFix.SessionSettings.TIME_ZONE, "Eastern Standard Time"); //-4 during dst
+            sched = new QuickFix.SessionSchedule(settings);
+
+            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 06, 18, 15, 59, 58, DateTimeKind.Utc),
+                new DateTime(2012, 06, 18, 15, 59, 59, DateTimeKind.Utc)));
+            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 06, 18, 15, 59, 59, DateTimeKind.Utc),
+                new DateTime(2012, 06, 18, 16, 00, 00, DateTimeKind.Utc)));
+            Assert.True(sched.IsNewSession(
+                new DateTime(2012, 06, 18, 16, 00, 00, DateTimeKind.Utc),
+                new DateTime(2012, 06, 18, 16, 00, 01, DateTimeKind.Utc)));
+            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 06, 18, 16, 00, 01, DateTimeKind.Utc),
+                new DateTime(2012, 06, 18, 16, 00, 02, DateTimeKind.Utc)));
         }
 
         [Test]
