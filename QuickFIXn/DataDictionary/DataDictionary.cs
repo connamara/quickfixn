@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 
@@ -32,15 +33,25 @@ namespace QuickFix.DataDictionary
 			CheckUserDefinedFields = true;
 		}
 
-		/// <summary>
-		/// Initialize a data dictionary from a file path
-		/// </summary>
-		/// <param name="path"></param>
-		public DataDictionary(String path)
-			:this()
-		{
-			Load(path);
-		}
+        /// <summary>
+        /// Initialize a data dictionary from a file path
+        /// </summary>
+        /// <param name="path"></param>
+        public DataDictionary(String path)
+            : this()
+        {
+            Load(path);
+        }
+
+        /// <summary>
+        /// Initialize a data dictionary from a Stream
+        /// </summary>
+        /// <param name="stream">Stream from which to read XML data dictionary</param>
+        public DataDictionary(Stream stream)
+            : this()
+        {
+            Load(stream);
+        }
 
 		/// <summary>
 		/// Copy a data dictionary
@@ -406,16 +417,29 @@ namespace QuickFix.DataDictionary
 			return Trailer.IsField(tag);
 		}
 
-		public void Load(String path) {
-			XmlDocument doc = new XmlDocument();
-			RootDoc = doc;
-			doc.Load(path);
-			setVersionInfo(doc);
-			parseFields(doc);
-			parseMessages(doc);
-			parseHeader(doc);
-			parseTrailer(doc);
-		}
+        public void Load(String path)
+        {
+            XmlDocument doc = new XmlDocument();
+            RootDoc = doc;
+            doc.Load(path);
+            setVersionInfo(doc);
+            parseFields(doc);
+            parseMessages(doc);
+            parseHeader(doc);
+            parseTrailer(doc);
+        }
+
+        public void Load(Stream stream)
+        {
+            XmlDocument doc = new XmlDocument();
+            RootDoc = doc;
+            doc.Load(stream);
+            setVersionInfo(doc);
+            parseFields(doc);
+            parseMessages(doc);
+            parseHeader(doc);
+            parseTrailer(doc);
+        }
 
 		public Boolean FieldHasValue(int tag, String val) {
 			return FieldsByTag[tag].EnumDict.ContainsKey(val);
