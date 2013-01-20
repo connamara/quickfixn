@@ -128,7 +128,7 @@
     <Compile Include="ThreadedSocketReactor.cs" />
     <Compile Include="Transport\SocketInitiator.cs" />
     <Compile Include="Transport\SocketInitiatorThread.cs" />
-    <Compile Include="Transport\SslSocketInitiatorThread.cs" />
+    <Compile Include="Transport\StreamFactory.cs" />
     <Compile Include="Values.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

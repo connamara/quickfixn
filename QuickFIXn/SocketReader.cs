@@ -1,37 +1,40 @@
 ﻿using System.Net.Sockets;
+using System.IO;
+using System;
 
 namespace QuickFix
 {
+
     /// <summary>
     /// TODO merge with SocketInitiatorThread
     /// </summary>
     public class SocketReader
     {
         public const int BUF_SIZE = 4096;
-        private byte[] readBuffer_ = new byte[BUF_SIZE];
+        byte[] readBuffer_ = new byte[BUF_SIZE];
         private Parser parser_ = new Parser();
-        private Session qfSession_ = null;
+        private Session qfSession_; //will be null when initialized
+        private Stream stream_;     //will be null when initialized
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
 
-        public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
+        public SocketReader(TcpClient tcpClient, SocketSettings settings, ClientHandlerThread responder)
         {
             tcpClient_ = tcpClient;
             responder_ = responder;
+
+            stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
         }
+
 
         /// <summary> FIXME </summary>
         public void Read()
         {
             try
             {
-                if (tcpClient_.Client.Poll(1000000, SelectMode.SelectRead)) // one-second timeout
-                {
-                    int bytesRead = tcpClient_.Client.Receive(readBuffer_);
-                    if (bytesRead < 1)
-                        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+                int bytesRead = ReadSome(readBuffer_, timeoutMilliseconds: 1000);
+                if (bytesRead > 0)
                     parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
-                }
                 else if (null != qfSession_)
                 {
                     qfSession_.Next();
@@ -50,7 +53,44 @@ namespace QuickFix
             }
         }
 
-        public void OnMessageFound(string msg)
+        protected virtual int ReadSome(byte[] buffer, int timeoutMilliseconds)
+        {
+            try
+            {
+                stream_.ReadTimeout = timeoutMilliseconds; // one-second timeout
+                int bytesRead = stream_.Read(buffer, 0, buffer.Length);
+                if (0 == bytesRead)
+                    throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+                parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+            }
+            catch (System.IO.IOException ex) // Timeout
+            {
+                var inner = ex.InnerException as SocketException;
+                if (inner != null && inner.SocketErrorCode == SocketError.TimedOut)
+                {
+                    // Nothing read 
+                    return 0;
+                }
+                else if (inner != null)
+                {
+                    throw inner; //rethrow SocketException part (which we have exception logic for)
+                }
+                else
+                    throw; //rethrow original exception
+            }
+
+            // old socket code (which can't support SSL)
+            //if (tcpClient_.Client.Poll(timeoutMS*1000, SelectMode.SelectRead)) 
+            //{
+            //    int bytesRead = tcpClient_.Client.Receive(readBuffer_);
+            //    if (bytesRead < 1)
+            //        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+            //    return bytesRead;
+            //}
+            return 0;
+        }
+
+        protected void OnMessageFound(string msg)
         {
             ///Message fixMessage;
 
@@ -157,12 +197,17 @@ namespace QuickFix
 		    return true;
 	    }
 
-        public void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
+        protected void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
         {
             bool disconnectNeeded = true;
             string reason = cause.Message;
 
             System.Exception realCause = cause;
+
+            // Unwrap socket exceptions from IOException in order for code below to work
+            if (realCause is IOException && realCause.InnerException is SocketException)
+                realCause = realCause.InnerException;
+
             /** TODO
             if(cause is FIXMessageDecoder.DecodeError && cause.InnerException != null)
                 realCause = cause.getCause();
@@ -214,6 +259,13 @@ namespace QuickFix
         private void Log(string s)
         {
             responder_.Log(s);
+        }
+
+        public int Send(string data)
+        {
+            byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
+            stream_.Write(rawData, 0, rawData.Length);
+            return rawData.Length;            
         }
     }
 }
