@@ -65,10 +65,7 @@ namespace QuickFix
         /// <returns>Stream representing the (network)connection to the other party</returns>
         protected virtual Stream SetupStream()
         {
-            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.NoDelay = socketSettings_.SocketNodelay;
-            socket.Connect(socketEndPoint_);
-            return new NetworkStream(socket, ownsSocket: true);
+            return QuickFix.Transport.StreamFactory.CreateClientStream(socketEndPoint_, socketSettings_, session_.Log);
         }
 
         public bool Read()

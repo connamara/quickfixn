@@ -61,7 +61,8 @@ namespace QuickFix
 
 
         public const string SSL_VALIDATE_SERVER_CERTIFICATE = "SSLValidateServerCertificate";
-        public const string SSL_CHECK_CERTIFICATE_REVOCATION = "SSLCheckCertificateRevocation";		 
+        public const string SSL_CHECK_CERTIFICATE_REVOCATION = "SSLCheckCertificateRevocation";
+        public const string SSL_CA_CERTIFICATE_PATH = "SSLCACertificatePath";
         public const string SSL_CERTIFICATE_PATH = "SSLCertificatePath";
         public const string SSL_CERTIFICATE_PASSWORD = "SSLCertificatePassword";
         public const string SSL_PROTOCOLS = "SSLProtocols";
