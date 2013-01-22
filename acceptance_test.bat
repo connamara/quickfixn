@@ -79,6 +79,7 @@ pushd AcceptanceTest
 
     call pause
     ruby at_xml_to_nunit_xml.rb template.xml.erb AcceptanceTests_*.xml > AcceptanceTests_All.xml
+    type AcceptanceTests_All.xml
 popd
 
 echo ""
