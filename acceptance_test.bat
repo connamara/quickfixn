@@ -76,10 +76,6 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULTMISC=1
     echo "Misc tests result: %RESULTMISC%"
     copy TestResult.xml AcceptanceTests_Misc.xml
-
-    call pause
-    ruby at_xml_to_nunit_xml.rb template.xml.erb AcceptanceTests_*.xml > AcceptanceTests_All.xml
-    type AcceptanceTests_All.xml
 popd
 
 echo ""
