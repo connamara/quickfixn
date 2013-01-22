@@ -12,8 +12,7 @@ set RESULTMISC=
 set RETURNVALUE=
 
 pushd AcceptanceTest
-    del AcceptanceTests_40.html AcceptanceTests_41.html AcceptanceTests_42.html AcceptanceTests_43.html AcceptanceTests_44.html AcceptanceTests_Misc.html
-    del AcceptanceTests_40.xml AcceptanceTests_41.xml AcceptanceTests_42.xml AcceptanceTests_43.xml AcceptanceTests_44.xml AcceptanceTests_Misc.xml
+    del AcceptanceTests_*.xml
 
     call pause
     del TestResult.xml
@@ -21,7 +20,6 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULT40=1
     echo "40 tests result: %RESULT40%"
     copy TestResult.xml AcceptanceTests_40.xml
-    xsltproc.exe -o AcceptanceTests_40.html at.xsl TestResult.xml
 
     call pause
     del TestResult.xml
@@ -29,7 +27,6 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULT41=1
     echo "41 tests result: %RESULT41%"
     copy TestResult.xml AcceptanceTests_41.xml
-    xsltproc.exe -o AcceptanceTests_41.html at.xsl TestResult.xml
     
     call pause
     del TestResult.xml
@@ -37,7 +34,6 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULT42=1
     echo "42 tests result: %RESULT42%"
     copy TestResult.xml AcceptanceTests_42.xml
-    xsltproc.exe -o AcceptanceTests_42.html at.xsl TestResult.xml
 
     call pause    
     del TestResult.xml
@@ -45,7 +41,6 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULT43=1
     echo "43 tests result: %RESULT43%"
     copy TestResult.xml AcceptanceTests_43.xml
-    xsltproc.exe -o AcceptanceTests_43.html at.xsl TestResult.xml
     
     call pause
     del TestResult.xml
@@ -53,7 +48,6 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULT44=1
     echo "44 tests result: %RESULT44%"
     copy TestResult.xml AcceptanceTests_44.xml
-    xsltproc.exe -o AcceptanceTests_44.html at.xsl TestResult.xml
     
     call pause
     del TestResult.xml
@@ -61,7 +55,6 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULT50=1
     echo "50 tests result: %RESULT50%"
     copy TestResult.xml AcceptanceTests_50.xml
-    xsltproc.exe -o AcceptanceTests_50.html at.xsl TestResult.xml
     
     call pause
     del TestResult.xml
@@ -69,7 +62,6 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULT50SP1=1
     echo "50 SP1 tests result: %RESULT50SP1%"
     copy TestResult.xml AcceptanceTests_50_SP1.xml
-    xsltproc.exe -o AcceptanceTests_50_SP1.html at.xsl TestResult.xml
     
     call pause
     del TestResult.xml
@@ -77,7 +69,6 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULT50SP2=1
     echo "50 SP2 tests result: %RESULT50SP2%"
     copy TestResult.xml AcceptanceTests_50_SP2.xml
-    xsltproc.exe -o AcceptanceTests_50_SP2.html at.xsl TestResult.xml
 	
     call pause
     del TestResult.xml
@@ -85,7 +76,9 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULTMISC=1
     echo "Misc tests result: %RESULTMISC%"
     copy TestResult.xml AcceptanceTests_Misc.xml
-    xsltproc.exe -o AcceptanceTests_Misc.html at.xsl TestResult.xml
+
+    call pause
+    ruby at_xml_to_nunit_xml.rb template.xml.erb AcceptanceTests_*.xml > AcceptanceTests_All.xml
 popd
 
 echo ""
