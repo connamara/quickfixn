@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results name="QuickFIX/n AcceptanceTests" total="<%=suite.total%>" errors="<%=suite.errors%>" failures="<%=suite.failures%>" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="<%=Time.now.strftime("%Y-%m-%d")%>" time="<%=Time.now.strftime("%H:%M:%S")%>">
+    <!--
+    <environment nunit-version="2.5.10.11092" clr-version="2.0.50727.3643" os-version="Microsoft Windows NT 5.1.2600 Service Pack 3" platform="Win32NT" cwd="C:\jenkins\workspace\quickfix-n\UnitTests\bin\Release" machine-name="LEELA" user="buildbot" user-domain="LEELA" />
+    <culture-info current-culture="en-US" current-uiculture="en-US" />
+    -->
+    <test-suite type="Assembly" name="QuickFIX/n AcceptanceTests" executed="True" result="<%=suite.result%>" success="<%=suite.success%>" time="0.000" asserts="<%=suite.asserts%>">
+        <results>
+            <test-suite type="Namespace" name="AcceptanceTests" executed="True" result="<%=suite.result%>" success="<%=suite.success%>" time="0.000" asserts="<%=suite.asserts%>">
+                <results>
+                    <% suite.fixtures.each do |fixture| %>
+                        <test-suite type="TestFixture" name="<%=fixture.name%>" executed="True" result="<%=fixture.result%>" success="<%=fixture.success%>" time="0.000" asserts="<%=fixture.asserts%>">
+                            <results>
+                                <% fixture.cases.each do |testcase| %>
+                                    <test-case name="AcceptanceTests.<%=fixture.name%>.<%=testcase.name%>" executed="True" result="<%=testcase.result%>" success="<%=testcase.success%>" time="0.000" asserts="1" />
+                                <% end %>
+                            </results>
+                        </test-suite>
+                    <% end %>
+                </results>
+            </test-suite>
+        </results>
+    </test-suite>
+</test-results>
+
