@@ -37,7 +37,7 @@ namespace QuickFix.Util
                     System.Globalization.DateTimeStyles.AdjustToUniversal);
                 return d;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return DateTime.MinValue;
             }
