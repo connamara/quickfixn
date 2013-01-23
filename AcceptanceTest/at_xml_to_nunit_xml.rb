@@ -108,13 +108,13 @@ end
 end # module QuickFIXn
 
 if $0 == __FILE__
-    unless ARGV.size > 1
-        puts "usage: #{$0} ERB_FILE XML_FILE..." unless ARGV.size > 1
+    unless ARGV.size > 0
+        puts "usage: #{$0} ERB_FILE [XML_FILE...]"
         raise SystemExit.new(2)
     end
     require 'erb'
     template = ARGV.shift
-    xml_files = Array.new(ARGV)
+    xml_files = (ARGV.empty?) ? Dir.glob("AcceptanceTests_*.xml") : Array.new(ARGV)
     suite = QuickFIXn::Suite::create_from_acceptance_test_xml_list(xml_files)
     erb = ERB.new(File.read(template))
     puts erb.result(binding)
