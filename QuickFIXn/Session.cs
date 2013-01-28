@@ -387,6 +387,10 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// There's no message to process, but check the session state to see if there's anything to do
+        /// (e.g. send heartbeat, logout at end of session, etc)
+        /// </summary>
         public void Next()
         {
             if (!HasResponder)
@@ -394,9 +398,15 @@ namespace QuickFix
 
             if (!IsSessionTime)
             {
-                Reset("Out of SessionTime (Session.Next())");
+                if(IsInitiator==false)
+                    Reset("Out of SessionTime (Session.Next())", "Message received outside of session time");
+                else
+                    Reset("Out of SessionTime (Session.Next())");
                 return;
             }
+
+            if (IsNewSession)
+                state_.Reset("New session (detected in Next())");
 
             if (!IsEnabled)
             {
@@ -460,6 +470,10 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Process a message (in string form) from the counterparty
+        /// </summary>
+        /// <param name="msgStr"></param>
         public void Next(string msgStr)
         {
             try
@@ -495,13 +509,20 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Process a message from the counterparty. (TODO: consider changing this method to private in v2.0.)
+        /// </summary>
+        /// <param name="message"></param>
         public void Next(Message message)
         {
             if (!IsSessionTime)
             {
-                Reset("Out of SessionTime (Session.Next(message))");
+                Reset("Out of SessionTime (Session.Next(message))", "Message received outside of session time");
                 return;
             }
+
+            if (IsNewSession)
+                state_.Reset("New session (detected in Next(Message))");
 
             Header header = message.Header;
             string msgType = "";
@@ -537,7 +558,6 @@ namespace QuickFix
                 }
 
 
-                //End Refactor
                 if (MsgType.LOGON.Equals(msgType))
                     NextLogon(message);
                 else if (MsgType.HEARTBEAT.Equals(msgType))
@@ -909,11 +929,25 @@ namespace QuickFix
             this.Reset("(unspecified reason)");
         }
 
-        public void Reset(string reason)
+        /// <summary>
+        /// Send a logout, disconnect, and reset session state
+        /// </summary>
+        /// <param name="loggedReason">reason for the reset (for the log)</param>
+        public void Reset(string loggedReason)
         {
-            GenerateLogout();
+            Reset(loggedReason, null);
+        }
+
+        /// <summary>
+        /// Send a logout, disconnect, and reset session state
+        /// </summary>
+        /// <param name="loggedReason">reason for the reset (for the log)</param>
+        /// <param name="logoutMessage">message to put in the Logout message's Text field (ignored if null/empty string)</param>
+        public void Reset(string loggedReason, string logoutMessage)
+        {
+            GenerateLogout(logoutMessage);
             Disconnect("Resetting...");
-            state_.Reset(reason);
+            state_.Reset(loggedReason);
         }
 
         private void initializeResendFields(Message message)
@@ -1154,26 +1188,46 @@ namespace QuickFix
             return SendRaw(testRequest, 0);
         }
 
+        /// <summary>
+        /// Send a basic Logout message
+        /// </summary>
+        /// <returns></returns>
         public bool GenerateLogout()
         {
-            return GenerateLogout(null, "");
+            return GenerateLogout(null, null);
         }
 
+        /// <summary>
+        /// Send a Logout message
+        /// </summary>
+        /// <param name="text">written into the Text field</param>
+        /// <returns></returns>
         private bool GenerateLogout(string text)
         {
             return GenerateLogout(null, text);
         }
 
+        /// <summary>
+        /// Send a Logout message
+        /// </summary>
+        /// <param name="other">used to fill MsgSeqNum field, if configuration requires it</param>
+        /// <returns></returns>
         private bool GenerateLogout(Message other)
         {
-            return GenerateLogout(other, "");
+            return GenerateLogout(other, null);
         }
 
+        /// <summary>
+        /// Send a Logout message
+        /// </summary>
+        /// <param name="other">used to fill MsgSeqNum field, if configuration requires it; ignored if null</param>
+        /// <param name="text">written into the Text field; ignored if empty/null</param>
+        /// <returns></returns>
         private bool GenerateLogout(Message other, string text)
         {
             Message logout = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGOUT);
             InitializeHeader(logout);
-            if (text.Length > 0)
+            if (text != null && text.Length > 0)
                 logout.SetField(new Fields.Text(text));
             if (other != null && this.EnableLastMsgSeqNumProcessed)
             {
