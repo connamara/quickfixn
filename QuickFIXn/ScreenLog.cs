@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace QuickFix
 {
     /// <summary>
@@ -11,13 +12,21 @@ namespace QuickFix
         private bool logIncoming_;
         private bool logOutgoing_;
         private bool logEvent_;
+        private bool logDebug_;
 
+        [Obsolete]
         public ScreenLog(SessionID sessionID, bool logIncoming, bool logOutgoing, bool logEvent)
+            : this(sessionID, logIncoming, logOutgoing, logEvent, false)
+        {
+        }
+        
+        public ScreenLog(SessionID sessionID, bool logIncoming, bool logOutgoing, bool logEvent, bool logDebug)
         {
             sessionID_   = sessionID;
             logIncoming_ = logIncoming;
             logOutgoing_ = logOutgoing;
             logEvent_    = logEvent;
+            logDebug_    = logDebug;
         }
 
         #region Log Members
@@ -58,6 +67,18 @@ namespace QuickFix
             }
         }
 
+        public void OnDebug(string s)
+        {
+            if (!logEvent_)
+                return;
+
+            lock (sync_)
+            {
+                System.Console.WriteLine("<debug> " + s);
+            }
+        }
         #endregion
+
+
     }
 }

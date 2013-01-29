@@ -35,19 +35,28 @@ namespace QuickFix
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
         private QuickFix.Dictionary sessionDict_;
+        private ILog log_;
 
         #endregion
 
-        [Obsolete("Use the other constructor")]
+        [Obsolete("Use another constructor")]
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
-            : this(serverSocketEndPoint, socketSettings, null)
+            : this(serverSocketEndPoint, socketSettings, (ILog)null)
         { }
-        
+
+        [Obsolete("Use another constructor")]
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
         {
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
             sessionDict_ = sessionDict;
+        }
+
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, ILog log)
+        {
+            socketSettings_ = socketSettings;
+            tcpListener_ = new TcpListener(serverSocketEndPoint);
+            log_ = log;
         }
 
         public void Start()
@@ -88,7 +97,7 @@ namespace QuickFix
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_);
+                    ClientHandlerThread t = log_ == null ? new ClientHandlerThread(client, nextClientId_++, sessionDict_) : new ClientHandlerThread(client, nextClientId_++, log_);
                     lock (sync_)
                     {
                         clientThreads_.AddLast(t);
