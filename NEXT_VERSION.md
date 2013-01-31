@@ -25,4 +25,5 @@ Changes since the last version:
 * (patch) issue #114 - enum dupe-check script; corrections to FIX43 tag 574/MatchType (gbirchmeier)
 * (patch) scripts and fixes for experimental Mono support (mgatny)
 * (minor) issue #97 - tolerance for non-ASCII (e.g. UTF-8) characters (andbjorn/gbirchmeier)
+* (patch) issues #139/#144/#151 - session schedule problems (gbirchmeier/formator)
 
