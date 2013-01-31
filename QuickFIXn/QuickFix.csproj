@@ -127,6 +127,7 @@
     <Compile Include="StringUTF8.cs" />
     <Compile Include="ThreadedSocketReactor.cs" />
     <Compile Include="Transport\SocketInitiator.cs" />
+    <Compile Include="Util\UtcDateTimeSerializer.cs" />
     <Compile Include="Values.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
