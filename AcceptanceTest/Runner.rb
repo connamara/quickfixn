@@ -107,7 +107,7 @@ begin
   print "<at>\n"
   newarray.each do
     | v |
-    file = File.open(v, "r")
+    file = File.open(v, "rb")
     process = createProcess(file, ARGV[0], ARGV[1])
     if process.nil? then
       print "  <test name='", v,  "' result='", "failure' >\n"
