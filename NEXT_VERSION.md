@@ -23,4 +23,5 @@ Changes since the last version:
 * (minor) issue #135 - fix DateOnly/TimeOnly field support (formator)
 * (patch) issue #134 - if DD field/group/component is missing "required" attribute, treat it as "required=N" (gbirchmeier)
 * (patch) issue #114 - enum dupe-check script; corrections to FIX43 tag 574/MatchType (gbirchmeier)
+* (patch) scripts and fixes for experimental Mono support (mgatny)
 
