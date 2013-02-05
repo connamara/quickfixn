@@ -73,8 +73,7 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Get the next endtime that is equal to or after the input.
-        /// The return value will be represented in the timezone specified in the config file.
+        /// Get the next endtime (in config file's timezone) that is equal to or after the input.
         /// </summary>
         /// <param name="utc">a utc time (raises an ArgumentException if not utc)</param>
         /// <returns></returns>
@@ -104,6 +103,7 @@ namespace QuickFix
             return end;
         }
 
+        // TODO: consider removing this function in v2.0, as it's not used.
         /// <summary>
         /// Return the latest EndTime (in UTC) before time.
         /// </summary>
@@ -114,19 +114,17 @@ namespace QuickFix
             if (utc.Kind != DateTimeKind.Utc)
                 throw new ArgumentException("Only UTC time is supported", "time");
 
-            DateTime adjusted = AdjustUtcDateTime(utc);
-
-            int daysBack = 0;
+            DateTime n = NextEndTime(utc);
             if (WeeklySession)
-            {
-                daysBack = (7 - (int)EndDay + (int)adjusted.DayOfWeek) % 7;
-                if (daysBack == 0 && adjusted.TimeOfDay < EndTime)
-                    daysBack = 7;
-            }
-            else if (adjusted.TimeOfDay < EndTime)
-                daysBack = 1;
+                n = n.AddDays(-7);
+            else
+                n = n.AddDays(-1);
 
-            return (adjusted.Date + new TimeSpan(-daysBack, 0, 0, 0) + EndTime).ToUniversalTime();
+            if (UseLocalTime)
+                return n.ToUniversalTime();
+            if (TimeZone != null)
+                return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(n, this.TimeZone.Id, "UTC");
+            return n;
         }
 
         /// <summary>
