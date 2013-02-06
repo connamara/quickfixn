@@ -45,14 +45,14 @@ namespace QuickFix
 
             tcpClient_ = tcpClient;
             id_ = clientId;
-            socketReader_ = new SocketReader(tcpClient_, this);
+            socketReader_ = new SocketReader(tcpClient_, this, log_);
         }
 
         public ClientHandlerThread(TcpClient tcpClient, long clientId, ILog log)
         {
             tcpClient_ = tcpClient;
             id_ = clientId;
-            socketReader_ = new SocketReader(tcpClient_, this);
+            socketReader_ = new SocketReader(tcpClient_, this, log);
             log_ = log;
         }
 
@@ -64,7 +64,7 @@ namespace QuickFix
 
         public void Shutdown(string reason)
         {
-            Log("shutdown requested: " + reason);
+            log_.OnEvent("shutdown requested: " + reason);
             isShutdownRequested_ = true;
         }
 
@@ -91,13 +91,7 @@ namespace QuickFix
                 }
             }
 
-            this.Log("shutdown");
-        }
-
-        /// FIXME do real logging
-        public void Log(string s)
-        {
-            log_.OnEvent(s);
+            log_.OnEvent("shutdown");
         }
 
         #region Responder Members

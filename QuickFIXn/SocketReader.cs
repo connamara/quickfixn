@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using System;
 
 namespace QuickFix
 {
@@ -13,11 +14,20 @@ namespace QuickFix
         private Session qfSession_ = null;
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
+        private ILog log_;
 
+        [Obsolete("Use another constructor")]
         public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
         {
             tcpClient_ = tcpClient;
             responder_ = responder;
+        }
+
+        public SocketReader(TcpClient tcpClient, ClientHandlerThread responder, ILog log)
+        {
+            tcpClient_ = tcpClient;
+            responder_ = responder;
+            log_ = log;
         }
 
         /// <summary> FIXME </summary>
@@ -61,7 +71,7 @@ namespace QuickFix
                     qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg));
                     if (null == qfSession_)
                     {
-                        this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        this.log_.OnEvent("ERROR: Disconnecting; received message for unknown session: " + msg);
                         DisconnectClient();
                         return;
                     }
@@ -78,7 +88,8 @@ namespace QuickFix
                 }
                 catch (System.Exception e)
                 {
-                    this.Log("Error on Session '" + qfSession_.SessionID + "': " + e.ToString());
+                    this.log_.OnEvent("Error on Session '" + qfSession_.SessionID + "': " + e.Message);
+                    this.log_.OnDebug(e.ToString());
                 }
             }
             catch (InvalidMessage e)
@@ -97,12 +108,12 @@ namespace QuickFix
             {
                 if (Fields.MsgType.LOGON.Equals(Message.GetMsgType(msg)))
                 {
-                    this.Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
+                    this.log_.OnEvent("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
                     DisconnectClient();
                 }
                 else
                 {
-                    this.Log("ERROR: Invalid message: " + e.Message);
+                    this.log_.OnEvent("ERROR: Invalid message: " + e.Message);
                 }
             }
             catch (InvalidMessage)
@@ -196,7 +207,7 @@ namespace QuickFix
                 disconnectNeeded = false;
             }
 
-            this.Log("SocketReader Error: " + reason);
+            quickFixSession.Log.OnEvent("SocketReader Error: " + reason);
 
             if (disconnectNeeded)
             {
@@ -207,13 +218,5 @@ namespace QuickFix
             }
         }
 
-        /// <summary>
-        /// FIXME do proper logging
-        /// </summary>
-        /// <param name="s"></param>
-        private void Log(string s)
-        {
-            responder_.Log(s);
-        }
     }
 }

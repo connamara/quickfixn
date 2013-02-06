@@ -165,7 +165,7 @@ namespace QuickFix
                 foreach (AcceptorSocketDescriptor socketDescriptor in socketDescriptorForAddress_.Values)
                 {
                     socketDescriptor.SocketReactor.Start();
-                    /// FIXME log_.Info("Listening for connections on " + socketDescriptor.getAddress());
+                    socketDescriptor.SocketReactor.Log.OnEvent("Listening for connections on " + socketDescriptor.Address.ToString());
                 }
             }
         }
@@ -177,7 +177,7 @@ namespace QuickFix
                 foreach (AcceptorSocketDescriptor socketDescriptor in socketDescriptorForAddress_.Values)
                 {
                     socketDescriptor.SocketReactor.Shutdown();
-                    /// FIXME log_.Info("No longer accepting connections on " + socketDescriptor.getAddress());
+                    socketDescriptor.SocketReactor.Log.OnEvent("No longer accepting connections on " + socketDescriptor.Address.ToString());
                 }
             }
         }
@@ -192,8 +192,8 @@ namespace QuickFix
                 }
                 catch (System.Exception e)
                 {
-                    /// FIXME logError(session.getSessionID(), "Error during logout", e);
-                    System.Console.WriteLine("Error during logout of Session " + session.SessionID + ": " + e.Message);
+                    session.Log.OnEvent("Error during logout of Session " + session.SessionID + ": " + e.Message);
+                    session.Log.OnDebug(e.ToString());
                 }
             }
 
@@ -208,8 +208,8 @@ namespace QuickFix
                     }
                     catch (System.Exception e)
                     {
-                        /// FIXME logError(session.getSessionID(), "Error during disconnect", e);
-                        System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
+                        session.Log.OnEvent("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
+                        session.Log.OnDebug(e.ToString());
                     }
                 }
             }
