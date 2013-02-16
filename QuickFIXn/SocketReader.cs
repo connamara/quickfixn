@@ -18,6 +18,12 @@ namespace QuickFix
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
 
+        [Obsolete("Use other constructor")]
+        public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
+            : this(tcpClient,  new SocketSettings(), responder )
+        {
+        }
+
         public SocketReader(TcpClient tcpClient, SocketSettings settings, ClientHandlerThread responder)
         {
             tcpClient_ = tcpClient;
@@ -44,11 +50,11 @@ namespace QuickFix
             }
             catch (MessageParseError e)
             {
-                HandleException(qfSession_, e, tcpClient_);
+                HandleExceptionInternal(qfSession_, e, tcpClient_);
             }
             catch (System.Exception e)
             {
-                HandleException(qfSession_, e, tcpClient_);
+                HandleExceptionInternal(qfSession_, e, tcpClient_);
                 throw e;
             }
         }
@@ -62,6 +68,7 @@ namespace QuickFix
                 if (0 == bytesRead)
                     throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
                 parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                return bytesRead;
             }
             catch (System.IO.IOException ex) // Timeout
             {
@@ -87,10 +94,16 @@ namespace QuickFix
             //        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
             //    return bytesRead;
             //}
-            return 0;
+            // return 0;
         }
 
-        protected void OnMessageFound(string msg)
+        [Obsolete("This should be made private")]
+        public void OnMessageFound(string msg)
+        {
+            OnMessageFoundInternal(msg);
+        }
+
+        protected void OnMessageFoundInternal(string msg)
         {
             ///Message fixMessage;
 
@@ -166,7 +179,7 @@ namespace QuickFix
         {
             string msg;
             while (ReadMessage(out msg))
-                OnMessageFound(msg);
+                OnMessageFoundInternal(msg);
         }
 
         protected static void DisconnectClient(TcpClient client)
@@ -197,7 +210,13 @@ namespace QuickFix
 		    return true;
 	    }
 
-        protected void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
+        [Obsolete("This should be made private/protected")]
+        public void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
+        {
+            HandleExceptionInternal(quickFixSession, cause, client);
+        }
+
+        private void HandleExceptionInternal(Session quickFixSession, System.Exception cause, TcpClient client)
         {
             bool disconnectNeeded = true;
             string reason = cause.Message;

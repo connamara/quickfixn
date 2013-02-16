@@ -5,3 +5,5 @@ Examples/* text eol=crlf
 generator/*rb text eol=crlf
 *.cs text eol=crlf
 *.bat text eol=crlf
+*.csproj text eol=crlf
+

@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading;
 using System.IO;
+using System;
 
 namespace QuickFix
 {
@@ -10,7 +11,10 @@ namespace QuickFix
     /// </summary>
     public class SocketInitiatorThread : IResponder
     {
+        //[Obsolete("Use SessionID instead, otherwise all access to Session must be syncronized")]
         public Session Session { get { return session_; } }
+
+        public SessionID SessionID { get { return session_.SessionID; } }
         public Transport.SocketInitiator Initiator { get { return initiator_; } }
 
         public const int BUF_SIZE = 512;
@@ -68,40 +72,59 @@ namespace QuickFix
             return QuickFix.Transport.StreamFactory.CreateClientStream(socketEndPoint_, socketSettings_, session_.Log);
         }
 
+        /// <summary>
+        /// Reads data and returns true while everyting is ok (used in loop <c>while(Read()){}</c>
+        /// </summary>
+        [Obsolete("Use Run instead")]
         public bool Read()
         {
+            Run();
+            return false;
+        }
+
+        public void Run()
+        {
+            // Perform all session management in another thread
+            // since we are only writing to the stream there is no problem with doing this
+            var sessionThread = new Thread((object o) =>
+                    {
+                        try
+                        {
+                            while (true)
+                            {
+                                Thread.Sleep(1000);
+
+                                lock (session_)
+                                    session_.Next();
+                            }
+                        }
+                        catch (ThreadAbortException)
+                        {
+                            return;
+                        }
+                    });
+
+            session_.Next();
             try
             {
-                stream_.ReadTimeout = 1000; // one-second timeout
-                int maxCount = readBuffer_.Length;
+                sessionThread.Start();
 
-                try
+                while (true)
                 {
+                    // SslStream don't play nice with timeouts so we never timeout and perform session management on another thread
+                    int maxCount = readBuffer_.Length;
                     int bytesRead = stream_.Read(readBuffer_, 0, maxCount);
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+
                     parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                    ProcessStream();
                 }
-                catch (System.IO.IOException ex) // Timeout
-                {
-                    var inner = ex.InnerException as SocketException;
-                    if (null != session_ && inner != null && inner.SocketErrorCode == SocketError.TimedOut)
-                    {
-                        session_.Next();
-                    }
-                    else
-                    {
-                        throw new QuickFIXException("Initiator timed out while reading socket", ex);
-                    }
-                }
-            
-                ProcessStream();
-                return true;
             }
-            catch(System.ObjectDisposedException e)
+            catch (System.ObjectDisposedException e)
             {
                 // this exception means socket_ is already closed when poll() is called
-                if(isDisconnectRequested_==false)
+                if (isDisconnectRequested_ == false)
                 {
                     // for lack of a better idea, do what the general exception does
                     if (null != session_)
@@ -109,7 +132,6 @@ namespace QuickFix
                     else
                         Disconnect();
                 }
-                return false;                    
             }
             catch (System.Exception e)
             {
@@ -117,7 +139,11 @@ namespace QuickFix
                     session_.Disconnect(e.ToString());
                 else
                     Disconnect();
-                return false;
+            }
+            finally
+            {
+                sessionThread.Abort();
+                sessionThread.Join();
             }
         }
 
@@ -125,7 +151,10 @@ namespace QuickFix
         {
             string msg;
             while (parser_.ReadFixMessage(out msg))
-                session_.Next(msg);
+            {
+                lock (session_)
+                    session_.Next(msg);
+            }
         }
 
         #region Responder Members
@@ -140,7 +169,8 @@ namespace QuickFix
         public void Disconnect()
         {
             isDisconnectRequested_ = true;
-            stream_.Close();
+            if (stream_ != null)
+                stream_.Close();
         }
 
         #endregion
