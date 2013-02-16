@@ -556,5 +556,21 @@ namespace UnitTests
         {
             Assert.That(session2.IsAcceptor, Is.EqualTo(false));
         }
+
+        [Test]
+        public void TestMessageStoreAccessor()
+        {
+            List<string> messages = new List<string>();
+
+            messages.Clear();
+            session.MessageStore.Get(0, 100, messages);
+            Assert.That(messages.Count, Is.EqualTo(0));
+
+            Logon();
+
+            messages.Clear();
+            session.MessageStore.Get(0, 100, messages);
+            Assert.That(messages.Count, Is.EqualTo(1)); // logon response
+        }
     }
 }
