@@ -65,20 +65,18 @@ namespace QuickFix.Transport
             try
             {
                 t.Connect();
-                t.Initiator.SetConnected(t.Session.SessionID);
+                t.Initiator.SetConnected(t.SessionID);
                 t.Session.Log.OnEvent("Connection succeeded");
-                t.Session.Next();
-                while (t.Read())
-                { }
+                t.Run();
                 if (t.Initiator.IsStopped)
                     t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
+                t.Initiator.SetDisconnected(t.SessionID);
             }
             catch (SocketException e)
             {
                 t.Session.Log.OnEvent("Connection failed: " + e.Message);
                 t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
+                t.Initiator.SetDisconnected(t.SessionID);
             }
         }
         
@@ -86,7 +84,7 @@ namespace QuickFix.Transport
         {
             lock (sync_)
             {
-                threads_[thread.Session.SessionID] = thread;
+                threads_[thread.SessionID] = thread;
             }
         }
 
@@ -95,7 +93,7 @@ namespace QuickFix.Transport
             lock (sync_)
             {
                 thread.Join();
-                threads_.Remove(thread.Session.SessionID);
+                threads_.Remove(thread.SessionID);
             }
         }
 
@@ -116,12 +114,12 @@ namespace QuickFix.Transport
 
             try
             {
-                socketSettings_.HostName = settings.GetString(hostKey);
-
-                IPAddress[] addrs = Dns.GetHostAddresses(socketSettings_.HostName);
+                var hostName = settings.GetString(hostKey);
+                IPAddress[] addrs = Dns.GetHostAddresses(hostName);
                 int port = System.Convert.ToInt32(settings.GetLong(portKey));
                 sessionToHostNum_[sessionID] = ++num;
 
+                socketSettings_.ServerCommonName = hostName;
                 return new IPEndPoint(addrs[0], port);
             }
             catch (System.Exception e)

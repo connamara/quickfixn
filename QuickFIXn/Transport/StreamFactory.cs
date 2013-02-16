@@ -11,8 +11,19 @@ using System.Net;
 
 namespace QuickFix.Transport
 {
+    /// <summary>
+    /// Streamfactory is resposible for initiating <see cref="T:System.IO.Stream"/> for communication.
+    /// If any SSL setup is required it is performed here
+    /// </summary>
     public static class StreamFactory
     {
+        /// <summary>
+        /// Connect to the specified endpoint and return a stream that can be used to communicate with it. (for initiator)
+        /// </summary>
+        /// <param name="endpoint">The endpoint.</param>
+        /// <param name="settings">The socket settings.</param>
+        /// <param name="logger">Logger to use.</param>
+        /// <returns>an opened and initiated stream which can be read and written to</returns>
         public static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILog logger)
         {
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -29,14 +40,20 @@ namespace QuickFix.Transport
             return stream;
         }
 
+        /// <summary>
+        /// Initiate communication to the remote client and return a stream that can be used to communicate with it. (for acceptor)
+        /// </summary>
+        /// <param name="tcpClient">The TCP client.</param>
+        /// <param name="settings">The socket settings.</param>
+        /// <param name="logger">Logger to use.</param>
+        /// <returns>an opened and initiated stream which can be read and written to</returns>
+        /// <exception cref="System.ArgumentException">tcp client must be connected in order to get stream;tcpClient</exception>
         public static Stream CreateServerStream(TcpClient tcpClient, SocketSettings settings, ILog logger)
         {
             if (tcpClient.Connected == false)
                 throw new ArgumentException("tcp client must be connected in order to get stream", "tcpClient");
 
-            //TODO: Add SL
             Stream stream = tcpClient.GetStream();
-
             if (settings.UseSSL)
             {
                 stream = new SSLStreamFactory(logger, settings)
@@ -48,7 +65,7 @@ namespace QuickFix.Transport
 
 
         /// <summary>
-        /// The SSLClientStreamFactory is responsible for setting up a SSLStream in client mode
+        /// The SSLClientStreamFactory is responsible for setting up a SSLStream in either client or server mode
         /// </summary>
         private sealed class SSLStreamFactory
         {
@@ -63,6 +80,11 @@ namespace QuickFix.Transport
                 socketSettings_ = settings;
             }
 
+            /// <summary>
+            /// Creates a SslStream in client mode and authenticate.
+            /// </summary>
+            /// <param name="innerStream">The stream to use for the actual (ssl encrypted) communication.</param>
+            /// <returns>a ssl enabled stream</returns>
             public Stream CreateClientStreamAndAuthenticate(Stream innerStream)
             {
                 var sslStream = new SslStream(innerStream,
@@ -74,7 +96,7 @@ namespace QuickFix.Transport
                 {
                     // Setup secure SSL Communication
                     var clientCertificates = GetClientCertificates();
-                    sslStream.AuthenticateAsClient(socketSettings_.HostName,
+                    sslStream.AuthenticateAsClient(socketSettings_.ServerCommonName,
                         clientCertificates,
                         socketSettings_.SslProtocol,
                         socketSettings_.CheckCertificateRevocation);
@@ -88,6 +110,11 @@ namespace QuickFix.Transport
                 return sslStream;
             }
 
+            /// <summary>
+            /// Creates a SslStream in server mode and authenticate.
+            /// </summary>
+            /// <param name="innerStream">The stream to use for the actual (ssl encrypted) communication.</param>
+            /// <returns>a ssl enabled stream</returns>
             public Stream CreateServerStreamAndAuthenticate(Stream innerStream)
             {
                 var sslStream = new SslStream(innerStream,
@@ -116,8 +143,7 @@ namespace QuickFix.Transport
                 return sslStream;
             }
 
-
-            X509CertificateCollection GetClientCertificates()
+            private X509CertificateCollection GetClientCertificates()
             {
                 X509CertificateCollection certificates = new X509Certificate2Collection();
 
@@ -129,13 +155,22 @@ namespace QuickFix.Transport
                 return certificates;
             }
 
-            public bool ValidateServerCertificate(object sender,
+
+            /// <summary>
+            /// Perform validation of the servers certificate. (the initiator validates the server/acceptors certificate)
+            /// </summary>
+            /// <param name="sender">The sender.</param>
+            /// <param name="certificate">The certificate.</param>
+            /// <param name="chain">The chain.</param>
+            /// <param name="sslPolicyErrors">The SSL policy errors.</param>
+            /// <returns><c>true</c>true if the certificate </returns>
+            private bool ValidateServerCertificate(object sender,
                       X509Certificate certificate,
                       X509Chain chain,
                       SslPolicyErrors sslPolicyErrors)
             {
-                // Unknown server certificate, only accept if we should not validate it
-                if (socketSettings_.ValidateServerCertificate == false)
+                // Accept without looking at if the certificat is valid if validation is disabled
+                if (socketSettings_.ValidateCertificates == false)
                     return true;
 
                 if (sslPolicyErrors != SslPolicyErrors.None)
@@ -144,19 +179,34 @@ namespace QuickFix.Transport
                     return false;
                 }
 
+                // Validate enchanced key usage
+                if (!ContainsEchangedKeyUsage(certificate, serverAuthenticationOid))
+                {
+                    log_.OnEvent("Server certificate is not intended for server authentication: It is missing enhanced key usage " + serverAuthenticationOid);
+                    return false;
+                }
+
                 return true;
             }
 
-            public bool ValidateClientCertificate(object sender,
+            /// <summary>
+            /// Perform validation of a a client certificate.(the acceptor validates the client/initiators certificate)
+            /// </summary>
+            /// <param name="sender">The sender.</param>
+            /// <param name="certificate">The certificate.</param>
+            /// <param name="chain">The chain.</param>
+            /// <param name="sslPolicyErrors">The SSL policy errors.</param>
+            /// <returns><c>true</c>true if the certificate </returns>
+            private bool ValidateClientCertificate(object sender,
                     X509Certificate certificate,
                     X509Chain chain,
                     SslPolicyErrors sslPolicyErrors)
             {
-                // Invalid certificate, only accept if we should not validate it
-                if (socketSettings_.ValidateServerCertificate == false)
+                // Accept without looking at if the certificat is valid if validation is disabled
+                if (socketSettings_.ValidateCertificates == false)
                     return true;
 
-                // If CA Certficiate is specifed then validate agains the CA certificate
+                // If CA Certficiate is specifed then validate agains the CA certificate, otherwise it is validated against the installed certificates
                 if (!string.IsNullOrEmpty(socketSettings_.CACertificatePath))
                 {
                     X509Chain chain0 = new X509Chain();
@@ -184,7 +234,7 @@ namespace QuickFix.Transport
                 // Validate enchanced key usage
                 if (!ContainsEchangedKeyUsage(certificate, clientAuthenticationOid))
                 {
-                    log_.OnEvent("Client certificate is not intended for client authentication: It is missing enchancheded key usage " + clientAuthenticationOid);
+                    log_.OnEvent("Client certificate is not intended for client authentication: It is missing enhanced key usage " + clientAuthenticationOid);
                     return false;
                 }
 

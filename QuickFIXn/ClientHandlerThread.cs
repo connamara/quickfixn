@@ -22,10 +22,16 @@ namespace QuickFix
 
         [Obsolete("Use the other constructor")]
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
-            : this(tcpClient, clientId, new QuickFix.Dictionary(), new SocketSettings())
+            : this(tcpClient, clientId, new QuickFix.Dictionary())
         { }
 
-        
+
+        [Obsolete("Use the other constructor")]
+        public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
+            : this(tcpClient, clientId, settingsDict, new SocketSettings())
+        {
+        }
+
         /// <summary>
         /// Creates a ClientHandlerThread
         /// </summary>

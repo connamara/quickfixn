@@ -126,7 +126,7 @@ namespace QuickFix
                 IPAddress[] addrs = Dns.GetHostAddresses(host);
                 socketEndPoint = new IPEndPoint(addrs[0], port);
                 // Set hostname (if it is not already configured)
-                socketSettings.HostName = socketSettings.HostName ?? host;
+                socketSettings.ServerCommonName = socketSettings.ServerCommonName ?? host;
             }
             else
             {
