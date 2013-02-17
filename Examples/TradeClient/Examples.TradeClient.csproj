@@ -62,6 +62,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\QuickFixn-TestClient.pfx">
+      <Link>QuickFixn-TestClient.pfx</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
     <None Include="tradeclient.cfg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

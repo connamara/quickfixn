@@ -122,11 +122,11 @@ namespace QuickFix
             if (dictionary.Has(SessionSettings.SSL_SERVERNAME))
                 ServerCommonName = dictionary.GetString(SessionSettings.SSL_SERVERNAME);
 
-            if (dictionary.Has(SessionSettings.SSL_CA_CERTIFICATE_PATH))
-                CACertificatePath = dictionary.GetString(SessionSettings.SSL_CA_CERTIFICATE_PATH);
+            if (dictionary.Has(SessionSettings.SSL_CA_CERTIFICATE))
+                CACertificatePath = dictionary.GetString(SessionSettings.SSL_CA_CERTIFICATE);
 
-            if (dictionary.Has(SessionSettings.SSL_CERTIFICATE_PATH))
-                CertificatePath = dictionary.GetString(SessionSettings.SSL_CERTIFICATE_PATH);
+            if (dictionary.Has(SessionSettings.SSL_CERTIFICATE))
+                CertificatePath = dictionary.GetString(SessionSettings.SSL_CERTIFICATE);
 
             if (dictionary.Has(SessionSettings.SSL_CERTIFICATE_PASSWORD))
                 CertificatePassword = dictionary.GetString(SessionSettings.SSL_CERTIFICATE_PASSWORD);

@@ -651,11 +651,16 @@ QuickFIX Settings
   </tr>
 
   <tr>
-    <td class='setting'>SSLCertificatePath</td>
-    <td class='description'>Path to SSL certificate (containing a private key).
+    <td class='setting'>SSLCertificate</td>
+    <td class='description'>Specifies which SSL certificate (containing a private key) to use.	
 	Required for acceptor, but not for initiator unless client certificates are used.
+	The certificate can be loaded either from a pfx file or from the current users personal certificate store.
 	</td>
-    <td class='valid'>path to a .pfx-file to which read access is required</td>
+    <td class='valid'>
+		<div>Path to a .pfx-file to which read access is granted</div>
+		<div>Distinguished name (ex: CN=CertName) of a certificate in the current users personal certificate store</div>
+		<div>Subject name (ex: CertName) of a certificate in the current users personal certificate store</div>
+	</td>
     <td class='default'>-</td>
   </tr>
   
@@ -677,15 +682,18 @@ QuickFIX Settings
   </tr>
   
   <tr>
-    <td class='setting'>SSLCACertificatePath</td>
+    <td class='setting'>SSLCACertificate</td>
     <td class='description'>
-		Path to Certificate Authority certificate used by acceptor to validate client certificates.
+		Specified the Certificate Authority certificate used by acceptor to validate client certificates.
 		If no path is specified then all certificates installed on the computers certificate store 
 		(under "Trusted Root Certificates") are used.
+		The certificate can be loaded either from a file or from the current users personal certificate store.
 	</td>
-    <td class='valid'>Path to a .cer file specifying the public key of the CA which 
-	should have issued all client certificate.      
-    </td>
+    <td class='valid'>
+		<div>Path to a .cer- or .pfx-file to which read access is granted</div>
+		<div>Distinguished name (ex: CN=CertName) of a certificate in the current users personal certificate store</div>
+		<div>Subject name (ex: CertName) of a certificate in the current users personal certificate store</div>
+	</td>
     <td class='default'></td>
   </tr>
   
