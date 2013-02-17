@@ -67,7 +67,9 @@ namespace QuickFix.Transport
                 t.Connect();
                 t.Initiator.SetConnected(t.SessionID);
                 t.Session.Log.OnEvent("Connection succeeded");
-                t.Run();
+                t.Session.Next();
+                while (t.Read())
+                { }
                 if (t.Initiator.IsStopped)
                     t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.SessionID);

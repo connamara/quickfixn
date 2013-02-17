@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading;
 using System.IO;
 using System;
+using System.Diagnostics;
 
 namespace QuickFix
 {
@@ -58,6 +59,8 @@ namespace QuickFix
 
         public void Connect()
         {
+            Debug.Assert(stream_ == null);
+
             stream_ = SetupStream();
             session_.SetResponder(this);
         }
@@ -72,53 +75,27 @@ namespace QuickFix
             return QuickFix.Transport.StreamFactory.CreateClientStream(socketEndPoint_, socketSettings_, session_.Log);
         }
 
-        /// <summary>
-        /// Reads data and returns true while everyting is ok (used in loop <c>while(Read()){}</c>
-        /// </summary>
-        [Obsolete("Use Run instead")]
         public bool Read()
         {
-            Run();
-            return false;
-        }
-
-        public void Run()
-        {
-            // Perform all session management in another thread
-            // since we are only writing to the stream there is no problem with doing this
-            var sessionThread = new Thread((object o) =>
-                    {
-                        try
-                        {
-                            while (true)
-                            {
-                                Thread.Sleep(1000);
-
-                                lock (session_)
-                                    session_.Next();
-                            }
-                        }
-                        catch (ThreadAbortException)
-                        {
-                            return;
-                        }
-                    });
-
-            session_.Next();
             try
             {
-                sessionThread.Start();
-
                 while (true)
                 {
                     // SslStream don't play nice with timeouts so we never timeout and perform session management on another thread
-                    int maxCount = readBuffer_.Length;
-                    int bytesRead = stream_.Read(readBuffer_, 0, maxCount);
-                    if (0 == bytesRead)
-                        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+                    int bytesRead = ReadSome(readBuffer_, 10000);
+                    if (bytesRead > 0)
+                        parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                    else if (null != session_)
+                    {
+                        session_.Next();
+                    }
+                    else
+                    {
+                        throw new QuickFIXException("Initiator timed out while reading socket");
+                    }
 
-                    parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
                     ProcessStream();
+                    return true;
                 }
             }
             catch (System.ObjectDisposedException e)
@@ -140,20 +117,76 @@ namespace QuickFix
                 else
                     Disconnect();
             }
-            finally
+            return false;
+        }
+
+        /// <summary>
+        /// Keep a handle to the current outstanding read request (if any)
+        /// </summary>
+        private IAsyncResult currentReadRequest_;
+        /// <summary>
+        /// Reads data from the network into the specified buffer.
+        /// It will wait up to the specified number of milliseconds for data to arrive,
+        /// if no data has arrived after the specified number of milliseconds then the function returns 0
+        /// </summary>
+        /// <param name="buffer">The buffer.</param>
+        /// <param name="timeoutMilliseconds">The timeout milliseconds.</param>
+        /// <returns>The number of bytes read into the buffer</returns>
+        /// <exception cref="System.Net.Sockets.SocketException">On connection reset</exception>
+        protected int ReadSome(byte[] buffer, int timeoutMilliseconds)
+        {
+            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketReader any changes here should 
+            // also be performed there
+            try
             {
-                sessionThread.Abort();
-                sessionThread.Join();
+                // Begin read if it is not already started
+                if (currentReadRequest_ == null)
+                    currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, callback: null, state: null);
+
+                // Wait for it to complete (given timeout)
+                currentReadRequest_.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
+
+                if (currentReadRequest_.IsCompleted)
+                {
+                    // Make sure to set currentReadRequest_ to before retreiving result 
+                    // so a new read can be started next time even if an exception is thrown
+                    var request = currentReadRequest_;
+                    currentReadRequest_ = null;
+
+                    int bytesRead = stream_.EndRead(request);
+                    if (0 == bytesRead)
+                        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+
+                    return bytesRead;
+                }
+                else
+                    return 0;
+            }
+            catch (System.IO.IOException ex) // Timeout
+            {
+                var inner = ex.InnerException as SocketException;
+                if (inner != null && inner.SocketErrorCode == SocketError.TimedOut)
+                {
+                    // Nothing read 
+                    return 0;
+                }
+                else if (inner != null)
+                {
+                    throw inner; //rethrow SocketException part (which we have exception logic for)
+                }
+                else
+                    throw; //rethrow original exception
             }
         }
+
+
 
         private void ProcessStream()
         {
             string msg;
             while (parser_.ReadFixMessage(out msg))
             {
-                lock (session_)
-                    session_.Next(msg);
+                session_.Next(msg);
             }
         }
 

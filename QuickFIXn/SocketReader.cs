@@ -18,9 +18,14 @@ namespace QuickFix
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
 
+        /// <summary>
+        /// Keep a handle to the current outstanding read request (if any)
+        /// </summary>
+        private IAsyncResult currentReadRequest_;
+
         [Obsolete("Use other constructor")]
         public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
-            : this(tcpClient,  new SocketSettings(), responder )
+            : this(tcpClient, new SocketSettings(), responder)
         {
         }
 
@@ -28,10 +33,8 @@ namespace QuickFix
         {
             tcpClient_ = tcpClient;
             responder_ = responder;
-
             stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
         }
-
 
         /// <summary> FIXME </summary>
         public void Read()
@@ -59,16 +62,43 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Reads data from the network into the specified buffer.
+        /// It will wait up to the specified number of milliseconds for data to arrive,
+        /// if no data has arrived after the specified number of milliseconds then the function returns 0
+        /// </summary>
+        /// <param name="buffer">The buffer.</param>
+        /// <param name="timeoutMilliseconds">The timeout milliseconds.</param>
+        /// <returns>The number of bytes read into the buffer</returns>
+        /// <exception cref="System.Net.Sockets.SocketException">On connection reset</exception>
         protected virtual int ReadSome(byte[] buffer, int timeoutMilliseconds)
         {
+            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketReader any changes here should 
+            // also be performed there
             try
             {
-                stream_.ReadTimeout = timeoutMilliseconds; // one-second timeout
-                int bytesRead = stream_.Read(buffer, 0, buffer.Length);
-                if (0 == bytesRead)
-                    throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
-                parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
-                return bytesRead;
+                // Begin read if it is not already started
+                if (currentReadRequest_ == null)
+                    currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, callback: null, state: null);
+
+                // Wait for it to complete (given timeout)
+                currentReadRequest_.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
+
+                if (currentReadRequest_.IsCompleted)
+                {
+                    // Make sure to set currentReadRequest_ to before retreiving result 
+                    // so a new read can be started next time even if an exception is thrown
+                    var request = currentReadRequest_;
+                    currentReadRequest_ = null;
+
+                    int bytesRead = stream_.EndRead(request);
+                    if (0 == bytesRead)
+                        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+
+                    return bytesRead;
+                }
+                else
+                    return 0;
             }
             catch (System.IO.IOException ex) // Timeout
             {
@@ -85,16 +115,6 @@ namespace QuickFix
                 else
                     throw; //rethrow original exception
             }
-
-            // old socket code (which can't support SSL)
-            //if (tcpClient_.Client.Poll(timeoutMS*1000, SelectMode.SelectRead)) 
-            //{
-            //    int bytesRead = tcpClient_.Client.Receive(readBuffer_);
-            //    if (bytesRead < 1)
-            //        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
-            //    return bytesRead;
-            //}
-            // return 0;
         }
 
         [Obsolete("This should be made private")]
@@ -168,7 +188,7 @@ namespace QuickFix
             {
                 return parser_.ReadFixMessage(out msg);
             }
-            catch(MessageParseError e)
+            catch (MessageParseError e)
             {
                 msg = "";
                 throw e;
@@ -194,21 +214,21 @@ namespace QuickFix
         }
 
         protected bool HandleNewSession(string msg)
-	    {
-		    if(qfSession_.HasResponder)
-		    {
+        {
+            if (qfSession_.HasResponder)
+            {
                 qfSession_.Log.OnIncoming(msg);
                 qfSession_.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + tcpClient_.Client.RemoteEndPoint + ")");
-			    qfSession_ = null;
+                qfSession_ = null;
                 DisconnectClient();
-			    return false;
-		    }
-		    qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
+                return false;
+            }
+            qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
             /// FIXME do this here? qfSession_.HeartBtInt = QuickFix.Fields.Converters.IntConverter.Convert(message.GetField(Fields.Tags.HeartBtInt)); /// FIXME
-		    qfSession_.Log.OnEvent(qfSession_.SessionID +" Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");
-		    qfSession_.SetResponder(responder_);
-		    return true;
-	    }
+            qfSession_.Log.OnEvent(qfSession_.SessionID + " Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");
+            qfSession_.SetResponder(responder_);
+            return true;
+        }
 
         [Obsolete("This should be made private/protected")]
         public void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
@@ -246,7 +266,7 @@ namespace QuickFix
                 disconnectNeeded = true;
             }
             */
-            else if(realCause is MessageParseError)
+            else if (realCause is MessageParseError)
             {
                 reason = "Protocol handler exception: " + cause;
                 if (quickFixSession == null)
@@ -284,7 +304,7 @@ namespace QuickFix
         {
             byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
             stream_.Write(rawData, 0, rawData.Length);
-            return rawData.Length;            
+            return rawData.Length;
         }
     }
 }
