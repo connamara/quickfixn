@@ -913,7 +913,9 @@ namespace QuickFix
 
         public void Reset(string reason)
         {
-            GenerateLogout();
+            if (this.IsLoggedOn)
+                GenerateLogout();
+
             Disconnect("Resetting...");
             state_.Reset(reason);
         }
