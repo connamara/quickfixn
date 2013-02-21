@@ -11,6 +11,7 @@ QuickFIXn.sln.cache
 ChangeLog
 *.swp
 AcceptanceTest/AcceptanceTests*.html
+AcceptanceTest/AcceptanceTests*.xml
 AcceptanceTest/TestResult.xml
 AcceptanceTest/bin/Debug/*
 AcceptanceTest/bin/Release/*
