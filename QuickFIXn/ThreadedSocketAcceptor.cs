@@ -122,19 +122,19 @@ namespace QuickFix
             IPEndPoint socketEndPoint;
             if (dict.Has(SessionSettings.SOCKET_ACCEPT_HOST))
             {
-                string host = dict.GetString(SessionSettings.SOCKET_ACCEPT_HOST);
+                string host = dict.GetString(SessionSettings.SOCKET_ACCEPT_HOST);                
                 IPAddress[] addrs = Dns.GetHostAddresses(host);
                 socketEndPoint = new IPEndPoint(addrs[0], port);
+                // Set hostname (if it is not already configured)
+                socketSettings.ServerCommonName = socketSettings.ServerCommonName ?? host;
             }
             else
             {
                 socketEndPoint = new IPEndPoint(IPAddress.Any, port);
             }
 
-            if (dict.Has(SessionSettings.SOCKET_NODELAY))
-            {
-                socketSettings.SocketNodelay = dict.GetBool(SessionSettings.SOCKET_NODELAY);
-            }
+            socketSettings.Configure(dict);
+            
 
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))

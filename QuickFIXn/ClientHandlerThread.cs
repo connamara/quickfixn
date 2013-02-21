@@ -24,14 +24,21 @@ namespace QuickFix
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
             : this(tcpClient, clientId, new QuickFix.Dictionary())
         { }
-        
+
+
+        [Obsolete("Use the other constructor")]
+        public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
+            : this(tcpClient, clientId, settingsDict, new SocketSettings())
+        {
+        }
+
         /// <summary>
         /// Creates a ClientHandlerThread
         /// </summary>
         /// <param name="tcpClient"></param>
         /// <param name="clientId"></param>
         /// <param name="debugLogFilePath">path where thread log will go</param>
-        public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
+        public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings)
         {
             string debugLogFilePath = "log";
             if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
@@ -44,7 +51,7 @@ namespace QuickFix
 
             tcpClient_ = tcpClient;
             id_ = clientId;
-            socketReader_ = new SocketReader(tcpClient_, this);
+            socketReader_ = new SocketReader(tcpClient_, socketSettings, this);
         }
 
         public void Start()
@@ -91,13 +98,20 @@ namespace QuickFix
             log_.OnEvent(s);
         }
 
+        /// <summary>
+        /// Provide StreamReader with access to the log
+        /// </summary>
+        /// <returns></returns>
+        internal ILog GetLog()
+        {
+            return log_;
+        }
+
         #region Responder Members
 
         public bool Send(string data)
         {
-            byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
-            int bytesSent = tcpClient_.Client.Send(rawData);
-            return bytesSent > 0;
+            return socketReader_.Send(data) > 0;
         }
 
         public void Disconnect()

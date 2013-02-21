@@ -20,28 +20,13 @@ namespace QuickFix.Transport
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
         public const string RECONNECT_INTERVAL  = "ReconnectInterval";
 
-        #region Properties
-        
-        public bool Connected
-        {
-            get
-            {
-                if (null == socket_)
-                    return false;
-                return socket_.Connected;
-            }
-        }
-
-        #endregion
-
         #region Private Members
         
         private IApplication app_;
         private SessionSettings settings_;
         private IMessageStoreFactory storeFactory_;
         private ILogFactory logFactory_;
-        private Socket socket_ = null;
-        private byte[] _readBuffer = new byte[512];
+        //private Socket socket_ = null;
         private volatile bool shutdownRequested_ = false;
         private DateTime lastConnectTimeDT = DateTime.MinValue;
         private int reconnectInterval_ = 30;
@@ -80,20 +65,26 @@ namespace QuickFix.Transport
             try
             {
                 t.Connect();
-                t.Initiator.SetConnected(t.Session.SessionID);
+                t.Initiator.SetConnected(t.SessionID);
                 t.Session.Log.OnEvent("Connection succeeded");
                 t.Session.Next();
                 while (t.Read())
                 { }
                 if (t.Initiator.IsStopped)
                     t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
+                t.Initiator.SetDisconnected(t.SessionID);
             }
-            catch (SocketException e)
+            catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
+            {
+                t.Session.Log.OnEvent("Connection failed: " + ex.Message);
+                t.Initiator.RemoveThread(t);
+                t.Initiator.SetDisconnected(t.SessionID);
+            }
+            catch (SocketException e) 
             {
                 t.Session.Log.OnEvent("Connection failed: " + e.Message);
                 t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
+                t.Initiator.SetDisconnected(t.SessionID);
             }
         }
         
@@ -101,7 +92,7 @@ namespace QuickFix.Transport
         {
             lock (sync_)
             {
-                threads_[thread.Session.SessionID] = thread;
+                threads_[thread.SessionID] = thread;
             }
         }
 
@@ -110,7 +101,7 @@ namespace QuickFix.Transport
             lock (sync_)
             {
                 thread.Join();
-                threads_.Remove(thread.Session.SessionID);
+                threads_.Remove(thread.SessionID);
             }
         }
 
@@ -131,9 +122,12 @@ namespace QuickFix.Transport
 
             try
             {
-                IPAddress[] addrs = Dns.GetHostAddresses(settings.GetString(hostKey));
+                var hostName = settings.GetString(hostKey);
+                IPAddress[] addrs = Dns.GetHostAddresses(hostName);
                 int port = System.Convert.ToInt32(settings.GetLong(portKey));
                 sessionToHostNum_[sessionID] = ++num;
+
+                socketSettings_.ServerCommonName = hostName;
                 return new IPEndPoint(addrs[0], port);
             }
             catch (System.Exception e)
@@ -156,11 +150,10 @@ namespace QuickFix.Transport
             }
             catch (System.Exception)
             { }
-            if (settings.Get().Has(SessionSettings.SOCKET_NODELAY))
-            {
-                socketSettings_.SocketNodelay = settings.Get().GetBool(SessionSettings.SOCKET_NODELAY);
-            }
-        }
+
+            // Don't know if this is required in order to handle settings in the general section
+            socketSettings_.Configure(settings.Get());
+        }       
 
         protected override void OnStart()
         {
@@ -189,8 +182,6 @@ namespace QuickFix.Transport
         protected override void OnStop()
         {
             shutdownRequested_ = true;
-            if (null != socket_)
-                socket_.Close();
         }
 
         protected override void DoConnect(SessionID sessionID, Dictionary settings)
@@ -207,7 +198,11 @@ namespace QuickFix.Transport
                 SetPending(sessionID);
                 session.Log.OnEvent("Connecting to " + socketEndPoint.Address + " on port " + socketEndPoint.Port);
 
-                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings_);
+                //Setup socket settings based on current section
+                socketSettings_.Configure(settings);
+
+                // Create a Ssl-SocketInitiatorThread if a certificate is given
+                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings_);                
                 t.Start();
                 AddThread(t);
 
