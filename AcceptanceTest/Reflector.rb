@@ -29,7 +29,14 @@ class Reflector < Array
   def processFile(messages)
     lineNum = 0
     messages.each_line do
-      | line |
+      | fooline |
+
+      #utf = String.new(fooline)
+      #puts "UTF8: " + utf.force_encoding("UTF-8")
+
+      line = fooline.force_encoding("ASCII-8BIT")
+      #puts "ASCI: " + line
+
       lineNum += 1
       line.chomp!
       if line.empty? then

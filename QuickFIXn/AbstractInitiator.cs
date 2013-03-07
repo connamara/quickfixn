@@ -178,8 +178,13 @@ namespace QuickFix
                 foreach(SessionID sessionID in disconnectedSessions)
                 {
                     Session session = Session.LookupSession(sessionID);
-                    if(session.IsEnabled && session.IsSessionTime)
-                        DoConnect(sessionID, settings_.Get(sessionID));
+                    if (session.IsEnabled)
+                    {
+                        if (session.IsNewSession)
+                            session.Reset("New session");
+                        if (session.IsSessionTime)
+                            DoConnect(sessionID, settings_.Get(sessionID));
+                    }
                 }
             }
         }
