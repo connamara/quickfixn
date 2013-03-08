@@ -5,8 +5,6 @@ The latest version of QuickFIX/n is v1.3.0
 
 You can download it [here] (http://quickfixn.s3.amazonaws.com/quickfixn-v1.3.0.zip)
 
-**New!** Prerelease v1.4.0**beta2** is released for testing.  [Download it here.](http://quickfixn.s3.amazonaws.com/quickfixn-v1.4.0beta2.zip)
-
 Source Code
 -----------
 View the code on [github] [0]
