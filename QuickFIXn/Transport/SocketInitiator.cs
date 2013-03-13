@@ -36,10 +36,6 @@ namespace QuickFix.Transport
 
         #region Private Members
         
-        private IApplication app_;
-        private SessionSettings settings_;
-        private IMessageStoreFactory storeFactory_;
-        private ILogFactory logFactory_;
         private Socket socket_ = null;
         private byte[] _readBuffer = new byte[512];
         private volatile bool shutdownRequested_ = false;
@@ -54,24 +50,30 @@ namespace QuickFix.Transport
 
         public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
             : this(application, storeFactory, settings, null)
-        { }
+		{
+		}
 
         public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
-            : base(application, storeFactory, settings, logFactory)
+			: this(application, storeFactory, settings, logFactory, null)
         {
-            app_ = application;
-            storeFactory_ = storeFactory;
-            settings_ = settings;
-            logFactory_ = logFactory;
         }
 
         public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
-            : base(application, storeFactory, settings, logFactory, messageFactory)
+			: this(new SessionFactory(application, storeFactory, logFactory, messageFactory), settings)
         {
-            app_ = application;
-            storeFactory_ = storeFactory;
-            settings_ = settings;
-            logFactory_ = logFactory;
+		}
+
+		public SocketInitiator(SessionFactory sessionFactory, SessionSettings settings)
+			: base(sessionFactory, settings)
+		{
+		}
+
+		/// <summary>
+		/// Resets last reconenct try time so that engine tries to connect immediatelly
+		/// </summary>
+		public void ResetReconnectTime()
+		{
+			lastConnectTimeDT = DateTime.MinValue;
         }
 
         public static void SocketInitiatorThreadStart(object socketInitiatorThread)
@@ -84,7 +86,8 @@ namespace QuickFix.Transport
                 t.Session.Log.OnEvent("Connection succeeded");
                 t.Session.Next();
                 while (t.Read())
-                { }
+				{
+				}
                 if (t.Initiator.IsStopped)
                     t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.Session.SessionID);
@@ -155,7 +158,8 @@ namespace QuickFix.Transport
                 reconnectInterval_ = Convert.ToInt32(settings.Get().GetLong(SessionSettings.RECONNECT_INTERVAL));
             }
             catch (System.Exception)
-            { }
+			{
+			}
             if (settings.Get().Has(SessionSettings.SOCKET_NODELAY))
             {
                 socketSettings_.SocketNodelay = settings.Get().GetBool(SessionSettings.SOCKET_NODELAY);
@@ -166,7 +170,7 @@ namespace QuickFix.Transport
         {
             shutdownRequested_ = false;
 
-            while(!shutdownRequested_)
+			while (!shutdownRequested_)
             {
                 double reconnectIntervalAsMilliseconds = 1000 * reconnectInterval_;
                 DateTime nowDT = DateTime.UtcNow;
