@@ -495,6 +495,7 @@ namespace QuickFix
                     {
                         // We were already building an entry, so the delimiter means it's done.
                         fieldMap.AddGroup(grp, false);
+						grp = null;
                     }
 
                     // Create a new group!
