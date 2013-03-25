@@ -399,7 +399,7 @@ namespace QuickFix
 
             if (!IsSessionTime)
             {
-                if(IsInitiator==false)
+                if (IsInitiator == false)
                     Reset("Out of SessionTime (Session.Next())", "Message received outside of session time");
                 else
                     Reset("Out of SessionTime (Session.Next())");
@@ -632,7 +632,7 @@ namespace QuickFix
             {
                 this.Log.OnDebug(e.ToString());
                 GenerateLogout(e.Message);
-                Disconnect(e.ToString());
+                Disconnect(e.Message);
             }
 
             NextQueued();

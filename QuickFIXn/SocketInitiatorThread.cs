@@ -1,5 +1,5 @@
-﻿using System.Net.Sockets;
-using System.Net;
+﻿using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 
 namespace QuickFix
@@ -76,27 +76,33 @@ namespace QuickFix
                 {
                     throw new QuickFIXException("Initiator timed out while reading socket");
                 }
-            
+
                 ProcessStream();
                 return true;
             }
-            catch(System.ObjectDisposedException e)
+            catch (System.ObjectDisposedException e)
             {
                 // this exception means socket_ is already closed when poll() is called
-                if(isDisconnectRequested_==false)
+                if (isDisconnectRequested_ == false)
                 {
                     // for lack of a better idea, do what the general exception does
                     if (null != session_)
-                        session_.Disconnect(e.ToString());
+                    {
+                        session_.Log.OnDebug(e.ToString());
+                        session_.Disconnect(e.Message);
+                    }
                     else
                         Disconnect();
                 }
-                return false;                    
+                return false;
             }
             catch (System.Exception e)
             {
                 if (null != session_)
-                    session_.Disconnect(e.ToString());
+                {
+                    session_.Log.OnDebug(e.ToString());
+                    session_.Disconnect(e.Message);
+                }
                 else
                     Disconnect();
                 return false;

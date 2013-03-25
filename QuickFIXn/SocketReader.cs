@@ -1,5 +1,5 @@
-﻿using System.Net.Sockets;
-using System;
+﻿using System;
+using System.Net.Sockets;
 
 namespace QuickFix
 {
@@ -126,7 +126,7 @@ namespace QuickFix
             {
                 return parser_.ReadFixMessage(out msg);
             }
-            catch(MessageParseError e)
+            catch (MessageParseError e)
             {
                 msg = "";
                 throw e;
@@ -152,26 +152,27 @@ namespace QuickFix
         }
 
         protected bool HandleNewSession(string msg)
-	    {
-		    if(qfSession_.HasResponder)
-		    {
+        {
+            if (qfSession_.HasResponder)
+            {
                 qfSession_.Log.OnIncoming(msg);
                 qfSession_.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + tcpClient_.Client.RemoteEndPoint + ")");
-			    qfSession_ = null;
+                qfSession_ = null;
                 DisconnectClient();
-			    return false;
-		    }
-		    qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
+                return false;
+            }
+            qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
             /// FIXME do this here? qfSession_.HeartBtInt = QuickFix.Fields.Converters.IntConverter.Convert(message.GetField(Fields.Tags.HeartBtInt)); /// FIXME
-		    qfSession_.Log.OnEvent(qfSession_.SessionID +" Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");
-		    qfSession_.SetResponder(responder_);
-		    return true;
-	    }
+            qfSession_.Log.OnEvent(qfSession_.SessionID + " Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");
+            qfSession_.SetResponder(responder_);
+            return true;
+        }
 
         public void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
         {
             bool disconnectNeeded = true;
             string reason = cause.Message;
+            string debug = cause.ToString();
 
             System.Exception realCause = cause;
             /** TODO
@@ -193,7 +194,7 @@ namespace QuickFix
                 disconnectNeeded = true;
             }
             */
-            else if(realCause is MessageParseError)
+            else if (realCause is MessageParseError)
             {
                 reason = "Protocol handler exception: " + cause;
                 if (quickFixSession == null)
@@ -203,11 +204,12 @@ namespace QuickFix
             }
             else
             {
-                reason = cause.ToString();
+                reason = cause.Message;
                 disconnectNeeded = false;
             }
 
             quickFixSession.Log.OnEvent("SocketReader Error: " + reason);
+            quickFixSession.Log.OnDebug(debug);
 
             if (disconnectNeeded)
             {
