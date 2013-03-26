@@ -23,6 +23,8 @@ namespace QuickFix
             get { lock (sync_) { return state_; } }
         }
 
+        public ILog Log { get; private set; }
+
         #endregion
 
         #region Private Members
@@ -38,16 +40,24 @@ namespace QuickFix
 
         #endregion
 
-        [Obsolete("Use the other constructor")]
+        [Obsolete("Use another constructor")]
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
-            : this(serverSocketEndPoint, socketSettings, null)
+            : this(serverSocketEndPoint, socketSettings, (ILog)null)
         { }
-        
+
+        [Obsolete("Use another constructor")]
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
         {
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
             sessionDict_ = sessionDict;
+        }
+
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, ILog log)
+        {
+            socketSettings_ = socketSettings;
+            tcpListener_ = new TcpListener(serverSocketEndPoint);
+            Log = log;
         }
 
         public void Start()
@@ -70,7 +80,8 @@ namespace QuickFix
                     }
                     catch (System.Exception e)
                     {
-                        this.Log("Error while closing server socket: " + e.Message);
+                        Log.OnEvent("Error while closing server socket: " + e.Message);
+                        Log.OnDebug(e.ToString());
                     }
                 }
             }
@@ -88,19 +99,22 @@ namespace QuickFix
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_);
+                    ClientHandlerThread t = Log == null ? new ClientHandlerThread(client, nextClientId_++, sessionDict_) : new ClientHandlerThread(client, nextClientId_++, Log);
                     lock (sync_)
                     {
                         clientThreads_.AddLast(t);
                     }
                     // FIXME set the client thread's exception handler here
-                    t.Log("connected");
+                    Log.OnEvent("connected");
                     t.Start();
                 }
                 catch (System.Exception e)
                 {
                     if (State.RUNNING == ReactorState)
-                        this.Log("Error accepting connection: " + e.Message);
+                    {
+                        Log.OnEvent("Error accepting connection: " + e.Message);
+                        Log.OnDebug(e.ToString());
+                    }
                 }
             }
             ShutdownClientHandlerThreads();
@@ -122,7 +136,7 @@ namespace QuickFix
             {
                 if (State.SHUTDOWN_COMPLETE != state_)
                 {
-                    this.Log("shutting down...");
+                    Log.OnEvent("shutting down...");
                     while (clientThreads_.Count > 0)
                     {
                         ClientHandlerThread t = clientThreads_.First.Value;
@@ -134,21 +148,13 @@ namespace QuickFix
                         }
                         catch (System.Exception e)
                         {
-                            t.Log("Error shutting down: " + e.Message);
+                            Log.OnEvent("Error shutting down: " + e.Message);
+                            Log.OnDebug(e.ToString());
                         }
                     }
                     state_ = State.SHUTDOWN_COMPLETE;
                 }
             }
-        }
-
-        /// <summary>
-        /// FIXME do real logging
-        /// </summary>
-        /// <param name="s"></param>
-        private void Log(string s)
-        {
-            System.Console.WriteLine(s);
         }
     }
 }

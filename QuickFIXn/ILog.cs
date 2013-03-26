@@ -34,5 +34,11 @@ namespace QuickFix
         /// </summary>
         /// <param name="s">event description</param>
         void OnEvent(string s);
+
+        /// <summary>
+        /// Logs a debug message
+        /// </summary>
+        /// <param name="s">message</param>
+        void OnDebug(string s);
     }
 }

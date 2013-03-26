@@ -20,6 +20,11 @@ namespace QuickFix
         public void OnEvent(string s)
         { }
 
+        public void OnDebug(string s)
+        { }
+
         #endregion
+
+
     }
 }

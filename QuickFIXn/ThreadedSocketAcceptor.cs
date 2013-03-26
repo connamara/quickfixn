@@ -35,11 +35,18 @@ namespace QuickFix
             private Dictionary<SessionID, Session> acceptedSessions_ = new Dictionary<SessionID, Session>();
 
             #endregion
-            
+
+            [Obsolete("Use another constructor")]
             public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
             {
                 socketEndPoint_ = socketEndPoint;
                 socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict);
+            }
+
+            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, ILog log)
+            {
+                socketEndPoint_ = socketEndPoint;
+                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, log);
             }
 
             public void AcceptSession(Session session)
@@ -102,8 +109,8 @@ namespace QuickFix
 
                 if ("acceptor".Equals(connectionType))
                 {
-                    AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(settings, sessionID);
                     Session session = sessionFactory_.Create(sessionID, dict);
+                    AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(settings, sessionID, session.Log);
                     descriptor.AcceptSession(session);
                     sessions_[sessionID] = session;
                 }
@@ -113,7 +120,7 @@ namespace QuickFix
                 throw new ConfigError("No acceptor sessions found in SessionSettings.");
         }
 
-        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(SessionSettings settings, SessionID sessionID)
+        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(SessionSettings settings, SessionID sessionID, ILog log)
         {
             QuickFix.Dictionary dict = settings_.Get(sessionID);
             int port = System.Convert.ToInt32(dict.GetLong(SessionSettings.SOCKET_ACCEPT_PORT));
@@ -139,7 +146,11 @@ namespace QuickFix
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
+                if( dict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
+                    descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
+                else
+                    descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, log);
+                
                 socketDescriptorForAddress_[socketEndPoint] = descriptor;
             }
 
@@ -154,7 +165,7 @@ namespace QuickFix
                 foreach (AcceptorSocketDescriptor socketDescriptor in socketDescriptorForAddress_.Values)
                 {
                     socketDescriptor.SocketReactor.Start();
-                    /// FIXME log_.Info("Listening for connections on " + socketDescriptor.getAddress());
+                    socketDescriptor.SocketReactor.Log.OnEvent("Listening for connections on " + socketDescriptor.Address.ToString());
                 }
             }
         }
@@ -166,7 +177,7 @@ namespace QuickFix
                 foreach (AcceptorSocketDescriptor socketDescriptor in socketDescriptorForAddress_.Values)
                 {
                     socketDescriptor.SocketReactor.Shutdown();
-                    /// FIXME log_.Info("No longer accepting connections on " + socketDescriptor.getAddress());
+                    socketDescriptor.SocketReactor.Log.OnEvent("No longer accepting connections on " + socketDescriptor.Address.ToString());
                 }
             }
         }
@@ -181,8 +192,8 @@ namespace QuickFix
                 }
                 catch (System.Exception e)
                 {
-                    /// FIXME logError(session.getSessionID(), "Error during logout", e);
-                    System.Console.WriteLine("Error during logout of Session " + session.SessionID + ": " + e.Message);
+                    session.Log.OnEvent("Error during logout of Session " + session.SessionID + ": " + e.Message);
+                    session.Log.OnDebug(e.ToString());
                 }
             }
 
@@ -197,8 +208,8 @@ namespace QuickFix
                     }
                     catch (System.Exception e)
                     {
-                        /// FIXME logError(session.getSessionID(), "Error during disconnect", e);
-                        System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
+                        session.Log.OnEvent("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
+                        session.Log.OnDebug(e.ToString());
                     }
                 }
             }
