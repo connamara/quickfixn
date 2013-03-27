@@ -47,6 +47,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositeLogFactory.cs" />
+    <Compile Include="CompositeLog.cs" />
     <Compile Include="DataDictionary\IFieldMapSpec.cs" />
     <Compile Include="DataDictionary\IGroupSpec.cs" />
     <Compile Include="IAcceptor.cs" />
