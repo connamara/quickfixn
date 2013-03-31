@@ -243,30 +243,10 @@ namespace QuickFix.Transport
             /// <param name="certificate">The certificate.</param>
             /// <param name="chain">The chain.</param>
             /// <param name="sslPolicyErrors">The SSL policy errors.</param>
-            /// <returns><c>true</c>true if the certificate </returns>
-            private bool ValidateServerCertificate(object sender,
-                      X509Certificate certificate,
-                      X509Chain chain,
-                      SslPolicyErrors sslPolicyErrors)
-            {
-                // Accept without looking at if the certificat is valid if validation is disabled
-                if (socketSettings_.ValidateCertificates == false)
-                    return true;
-
-                if (sslPolicyErrors != SslPolicyErrors.None)
-                {
-                    log_.OnEvent("Server certificate was not recognized as a valid certificate: " + sslPolicyErrors);
-                    return false;
-                }
-
-                // Validate enchanced key usage
-                if (!ContainsEchangedKeyUsage(certificate, serverAuthenticationOid))
-                {
-                    log_.OnEvent("Server certificate is not intended for server authentication: It is missing enhanced key usage " + serverAuthenticationOid);
-                    return false;
-                }
-
-                return true;
+            /// <returns> <c>true</c> if the certificate should be treated as trusted; otherwise <c>false</c> </returns>
+            private bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+            {    
+                return VerifyRemoteCertificate(certificate, sslPolicyErrors, serverAuthenticationOid);
             }
 
             /// <summary>
@@ -276,15 +256,35 @@ namespace QuickFix.Transport
             /// <param name="certificate">The certificate.</param>
             /// <param name="chain">The chain.</param>
             /// <param name="sslPolicyErrors">The SSL policy errors.</param>
-            /// <returns><c>true</c>true if the certificate </returns>
-            private bool ValidateClientCertificate(object sender,
-                    X509Certificate certificate,
-                    X509Chain chain,
-                    SslPolicyErrors sslPolicyErrors)
+            /// <returns> <c>true</c> if the certificate should be treated as trusted; otherwise <c>false</c> </returns>
+            private bool ValidateClientCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+            {
+                return VerifyRemoteCertificate(certificate, sslPolicyErrors, clientAuthenticationOid);
+            }
+
+            /// <summary>
+            /// Perform certificate validation common for both server and client.
+            /// </summary>
+            /// <param name="certificate">The remtoe certificate to validate.</param>
+            /// <param name="sslPolicyErrors">The SSL policy errors supplied by .Net.</param>
+            /// <param name="enhancedKeyUsage">Enhanced key usage, which the remote computers certificate should contain.</param>
+            /// <returns> <c>true</c> if the certificate should be treated as trusted; otherwise <c>false</c> </returns>
+            private bool VerifyRemoteCertificate(X509Certificate certificate, SslPolicyErrors sslPolicyErrors, string enhancedKeyUsage)
             {
                 // Accept without looking at if the certificat is valid if validation is disabled
                 if (socketSettings_.ValidateCertificates == false)
                     return true;
+
+                // Validate enchanced key usage
+                if (!ContainsEchangedKeyUsage(certificate, enhancedKeyUsage))
+                {
+                    if(enhancedKeyUsage == clientAuthenticationOid)
+                        log_.OnEvent("Remote certificate is not intended for client authentication: It is missing enhanced key usage " + enhancedKeyUsage);
+                    else
+                        log_.OnEvent("Remote certificate is not intended for server authentication: It is missing enhanced key usage " + enhancedKeyUsage);
+
+                    return false;
+                }
 
                 // If CA Certficiate is specifed then validate agains the CA certificate, otherwise it is validated against the installed certificates
                 if (!string.IsNullOrEmpty(socketSettings_.CACertificatePath))
@@ -293,29 +293,22 @@ namespace QuickFix.Transport
                     chain0.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
                     // add all your extra certificate chain
 
-                    chain0.ChainPolicy.ExtraStore.Add(StreamFactory.LoadCertificate(socketSettings_.CACertificatePath,null));
+                    chain0.ChainPolicy.ExtraStore.Add(StreamFactory.LoadCertificate(socketSettings_.CACertificatePath, null));
                     chain0.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
                     bool isValid = chain0.Build((X509Certificate2)certificate);
 
                     // If the certificate is valid then reset the sslPolicyErrors.RemoteCertificateChainErrors status
-                    if (isValid && sslPolicyErrors == SslPolicyErrors.RemoteCertificateChainErrors)
-                        sslPolicyErrors = SslPolicyErrors.None;
+                    if (isValid)
+                        sslPolicyErrors &= ~SslPolicyErrors.RemoteCertificateChainErrors;
                     // If the certificate could not be validated against CA, then set the SslPolicyErrors.RemoteCertificateChainErrors
-                    else if (isValid == false)
+                    else //if (isValid == false)
                         sslPolicyErrors |= SslPolicyErrors.RemoteCertificateChainErrors;
                 }
 
                 // Any basic authentication check failed, do after checking CA
                 if (sslPolicyErrors != SslPolicyErrors.None)
                 {
-                    log_.OnEvent("Client certificate was not recognized as a valid certificate: " + sslPolicyErrors);
-                    return false;
-                }
-
-                // Validate enchanced key usage
-                if (!ContainsEchangedKeyUsage(certificate, clientAuthenticationOid))
-                {
-                    log_.OnEvent("Client certificate is not intended for client authentication: It is missing enhanced key usage " + clientAuthenticationOid);
+                    log_.OnEvent("Remote certificate was not recognized as a valid certificate: " + sslPolicyErrors);
                     return false;
                 }
 
