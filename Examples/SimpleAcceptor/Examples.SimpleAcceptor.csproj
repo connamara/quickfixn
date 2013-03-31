@@ -61,8 +61,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\QuickFixn-TestClient.pfx">
-      <Link>QuickFixn-TestClient.pfx</Link>
+    <None Include="..\QuickFixn-TestCA.cer">
+      <Link>QuickFixn-TestCA.cer</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\QuickFixn-TestServer.pfx">
+      <Link>QuickFixn-TestServer.pfx</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="app.config">
