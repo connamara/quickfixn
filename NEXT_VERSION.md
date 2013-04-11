@@ -17,4 +17,5 @@ Changes since the last version:
 -------------------------------
 * (major/minor/patch) desc of fixed issue (contributor)
 
+* (patch) pr #181 - add null checks to SessionID constructor (roji)
 
