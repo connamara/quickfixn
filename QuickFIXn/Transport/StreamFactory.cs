@@ -78,9 +78,32 @@ namespace QuickFix.Transport
         {
             X509Certificate2 certificate;
 
-            if(_certificateCache.TryGetValue(name, out certificate))
-                return certificate;
+            // TODO: Change to _certificateCache to ConcurrentDictorionary once we start targeting .NET 4
+            // Then remove this lock and use GetOrAdd function of concurrent dictionary
+            //  certificate = _certificateCache.GetOrAdd(name, (key) => LoadCertificateInner(name, password));
+            lock (_certificateCache)
+            {
+                if (_certificateCache.TryGetValue(name, out certificate))
+                    return certificate;
 
+                certificate = LoadCertificateInner(name, password);
+
+                if (certificate != null)
+                    _certificateCache.Add(name, certificate);
+
+                return certificate;
+            }
+        }
+
+        /// <summary>
+        /// Perform the actual loading of a certificate
+        /// </summary>
+        /// <param name="name">The certificate path or DistinguishedName/subjectname if it should be loaded from the personal certificate store.</param>
+        /// <param name="password">The certificate password.</param>
+        /// <returns>The specified certificate, or null if no certificate is found</returns>
+        private static X509Certificate2 LoadCertificateInner(string name, string password)
+        {
+            X509Certificate2 certificate;
 
             // If no extension is found try to get from certificate store
             if (!File.Exists(name))
@@ -89,15 +112,11 @@ namespace QuickFix.Transport
             }
             else
             {
-                if(password != null)
+                if (password != null)
                     certificate = new X509Certificate2(name, password);
                 else
                     certificate = new X509Certificate2(name);
             }
-
-            if(certificate != null)
-                _certificateCache.Add(name, certificate);
-
             return certificate;
         }
 
@@ -122,7 +141,7 @@ namespace QuickFix.Transport
                 // currentCerts.Find(X509FindType.FindBySubjectDistinguishedName, certName, true);
                 X509Certificate2Collection currentCerts = certCollection.Find(X509FindType.FindByTimeValid, DateTime.Now, false);
 
-                if(certName.Contains("CN="))
+                if (certName.Contains("CN="))
                     currentCerts = currentCerts.Find(X509FindType.FindBySubjectDistinguishedName, certName, false);
                 else
                     currentCerts = currentCerts.Find(X509FindType.FindBySubjectName, certName, false);
@@ -232,7 +251,7 @@ namespace QuickFix.Transport
                 else
                 {
                     return new X509Certificate2Collection();
-                }                
+                }
             }
 
 
@@ -245,7 +264,7 @@ namespace QuickFix.Transport
             /// <param name="sslPolicyErrors">The SSL policy errors.</param>
             /// <returns> <c>true</c> if the certificate should be treated as trusted; otherwise <c>false</c> </returns>
             private bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
-            {    
+            {
                 return VerifyRemoteCertificate(certificate, sslPolicyErrors, serverAuthenticationOid);
             }
 
@@ -278,7 +297,7 @@ namespace QuickFix.Transport
                 // Validate enchanced key usage
                 if (!ContainsEchangedKeyUsage(certificate, enhancedKeyUsage))
                 {
-                    if(enhancedKeyUsage == clientAuthenticationOid)
+                    if (enhancedKeyUsage == clientAuthenticationOid)
                         log_.OnEvent("Remote certificate is not intended for client authentication: It is missing enhanced key usage " + enhancedKeyUsage);
                     else
                         log_.OnEvent("Remote certificate is not intended for server authentication: It is missing enhanced key usage " + enhancedKeyUsage);
