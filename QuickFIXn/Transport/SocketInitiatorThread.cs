@@ -82,7 +82,7 @@ namespace QuickFix
                 while (true)
                 {
                     // SslStream don't play nice with timeouts so we never timeout and perform session management on another thread
-                    int bytesRead = ReadSome(readBuffer_, 10000);
+                    int bytesRead = ReadSome(readBuffer_, 1000);
                     if (bytesRead > 0)
                         parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
                     else if (null != session_)
