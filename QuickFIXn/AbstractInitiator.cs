@@ -60,7 +60,6 @@ namespace QuickFix
         {
             isStopped_ = false;
             OnConfigure(settings_);
-            OnInitialize(settings_);
             thread_ = new Thread(new ThreadStart(OnStart));
             thread_.Start();
         }
@@ -129,15 +128,13 @@ namespace QuickFix
         #region Virtual Methods
 
         /// <summary>
-        /// Implemented to configure acceptor
+        /// Override this to configure additional implemenation-specific settings
         /// </summary>
         /// <param name="settings"></param>
         protected virtual void OnConfigure(SessionSettings settings)
         { }
-        /// <summary>
-        /// Implemented to initialize initiator
-        /// </summary>
-        /// <param name="settings"></param>
+
+        [System.Obsolete("This method's intended purpose is unclear.  Don't use it.")]
         protected virtual void OnInitialize(SessionSettings settings)
         { }
 
