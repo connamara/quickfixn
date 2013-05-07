@@ -34,6 +34,10 @@ namespace TradeClient
                 QuickFix.IMessageStoreFactory storeFactory = new QuickFix.FileStoreFactory(settings);
                 QuickFix.ILogFactory logFactory = new QuickFix.ScreenLogFactory(settings);
                 QuickFix.Transport.SocketInitiator initiator = new QuickFix.Transport.SocketInitiator(application, storeFactory, settings, logFactory);
+
+                // this is a developer-test kludge.  do not emulate.
+                application.MyInitiator = initiator;
+
                 initiator.Start();
                 application.Run();
                 initiator.Stop();
