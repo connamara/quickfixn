@@ -50,8 +50,6 @@
     <Compile Include="DataDictionary\IFieldMapSpec.cs" />
     <Compile Include="DataDictionary\IGroupSpec.cs" />
     <Compile Include="IAcceptor.cs" />
-    <Compile Include="Applications\FIX4Application.cs" />
-    <Compile Include="Applications\FIX5Application.cs" />
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />
     <Compile Include="DataDictionary\DataDictionary.cs" />
