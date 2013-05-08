@@ -36,10 +36,6 @@ namespace QuickFix.Transport
 
         #region Private Members
         
-        private IApplication app_;
-        private SessionSettings settings_;
-        private IMessageStoreFactory storeFactory_;
-        private ILogFactory logFactory_;
         private Socket socket_ = null;
         private byte[] _readBuffer = new byte[512];
         private volatile bool shutdownRequested_ = false;
@@ -58,21 +54,11 @@ namespace QuickFix.Transport
 
         public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
             : base(application, storeFactory, settings, logFactory)
-        {
-            app_ = application;
-            storeFactory_ = storeFactory;
-            settings_ = settings;
-            logFactory_ = logFactory;
-        }
+        { }
 
         public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
             : base(application, storeFactory, settings, logFactory, messageFactory)
-        {
-            app_ = application;
-            storeFactory_ = storeFactory;
-            settings_ = settings;
-            logFactory_ = logFactory;
-        }
+        { }
 
         public static void SocketInitiatorThreadStart(object socketInitiatorThread)
         {

@@ -53,8 +53,6 @@ namespace QuickFix
             }
         }
 
-        private SessionSettings settings_;
-        private SessionFactory sessionFactory_;
         private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private Dictionary<IPEndPoint, AcceptorSocketDescriptor> socketDescriptorForAddress_ = new Dictionary<IPEndPoint, AcceptorSocketDescriptor>();
         private bool isStarted_ = false;
@@ -76,12 +74,9 @@ namespace QuickFix
 
         public ThreadedSocketAcceptor(SessionFactory sessionFactory, SessionSettings settings)
         {
-            settings_ = settings;
-            sessionFactory_ = sessionFactory;
-
             try
             {
-                CreateSessions(settings_);
+                CreateSessions(settings, sessionFactory);
             }
             catch (System.Exception e)
             {
@@ -93,7 +88,7 @@ namespace QuickFix
 
         #region Private Methods
 
-        private void CreateSessions(SessionSettings settings)
+        private void CreateSessions(SessionSettings settings, SessionFactory sessionFactory)
         {
             foreach (SessionID sessionID in settings.GetSessions())
             {
@@ -103,7 +98,7 @@ namespace QuickFix
                 if ("acceptor".Equals(connectionType))
                 {
                     AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(settings, sessionID);
-                    Session session = sessionFactory_.Create(sessionID, dict);
+                    Session session = sessionFactory.Create(sessionID, dict);
                     descriptor.AcceptSession(session);
                     sessions_[sessionID] = session;
                 }
@@ -115,7 +110,7 @@ namespace QuickFix
 
         private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(SessionSettings settings, SessionID sessionID)
         {
-            QuickFix.Dictionary dict = settings_.Get(sessionID);
+            QuickFix.Dictionary dict = settings.Get(sessionID);
             int port = System.Convert.ToInt32(dict.GetLong(SessionSettings.SOCKET_ACCEPT_PORT));
             SocketSettings socketSettings = new SocketSettings();
 
