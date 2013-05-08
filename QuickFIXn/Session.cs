@@ -334,17 +334,29 @@ namespace QuickFix
             }
         }
 
+        // TODO for v2 - rename, make internal
+        /// <summary>
+        /// Sets some internal state variables.  Despite the name, it does do anything to make a logon occur.
+        /// </summary>
         public void Logon()
         {
             state_.IsEnabled = true;
             state_.LogoutReason = "";
         }
 
+        // TODO for v2 - rename, make internal
+        /// <summary>
+        /// Sets some internal state variables.  Despite the name, it does not cause a logout to occur.
+        /// </summary>
         public void Logout()
         {
             Logout("");
         }
 
+        // TODO for v2 - rename, make internal
+        /// <summary>
+        /// Sets some internal state variables.  Despite the name, it does not cause a logout to occur.
+        /// </summary>
         public void Logout(string reason)
         {
             state_.IsEnabled = false;
