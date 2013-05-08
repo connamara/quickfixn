@@ -13,7 +13,7 @@ This project requires the following:
 
 **To build**
 
-* [Ruby (1.9.2 recommended)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
+* [Ruby (1.9.3 recommended)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
 * Visual Studio 2010 or higher
 
 **To run tests**
@@ -128,8 +128,7 @@ Website
 
 The website is a small Ruby Sinatra application.
 
-For development, you should install Ruby 1.9.2 and the bundler gem then
-bundle:
+For development, install gems with bundler:
 
     gem install bundler
     bundle
