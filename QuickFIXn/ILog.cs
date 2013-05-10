@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace QuickFix
 {
     /// <summary>
@@ -10,7 +11,7 @@ namespace QuickFix
     /// <summary>
     /// Session log for messages and events
     /// </summary>
-    public interface ILog
+    public interface ILog : IDisposable
     {
         /// <summary>
         /// Clears the log and removes any persistent log data

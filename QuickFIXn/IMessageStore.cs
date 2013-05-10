@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 
 namespace QuickFix
 {
@@ -13,7 +14,7 @@ namespace QuickFix
     /// <summary>
     /// Used by a Session to store and retrieve messages for resend purposes
     /// </summary>
-    public interface IMessageStore
+    public interface IMessageStore : IDisposable
     {
         /// <summary>
         /// Get messages within sequence number range (inclusive). Used for
