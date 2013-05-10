@@ -19,7 +19,10 @@ namespace UnitTests
         public void teardown()
         {
             if (log != null)
+            {
                 log.Dispose();
+                log = null;
+            }
         }
 
         [Test]
