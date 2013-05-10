@@ -82,6 +82,9 @@ namespace QuickFix
         public void Refresh()
         { }
 
+        public void Dispose()
+        { }
+
         #endregion
     }
 }
