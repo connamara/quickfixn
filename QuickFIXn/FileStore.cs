@@ -8,7 +8,7 @@ namespace QuickFix
     /// <summary>
     /// File store implementation
     /// </summary>
-    public class FileStore : IMessageStore, IDisposable
+    public class FileStore : IMessageStore
     {
         private class MsgDef
         {

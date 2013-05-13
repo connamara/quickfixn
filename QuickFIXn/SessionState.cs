@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 namespace QuickFix
 {
+    // v2 TODO - consider making this internal
     /// <summary>
     /// Used by the session communications code. Not intended to be used by applications.
     /// </summary>
-    public class SessionState
+    public class SessionState : IDisposable
     {
         #region Private Members
 
@@ -340,7 +341,7 @@ namespace QuickFix
 
         }
 
-        #region MessageStore Members
+        #region MessageStore-manipulating Members
 
         public bool Set(int msgSeqNum, string msg)
         {
@@ -406,6 +407,12 @@ namespace QuickFix
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            if (log_ != null) { log_.Dispose(); }
+            if (MessageStore != null) { MessageStore.Dispose(); }
+        }
     }
 }
 
