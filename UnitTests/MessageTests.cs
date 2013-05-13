@@ -782,5 +782,24 @@ namespace UnitTests
             StringAssert.Contains(expected, msgString);
         }
 
+        [Test]
+        public void MessageHasDecimalWithNoLeadingZero()
+        {
+            // issue 160
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+
+            string[] msgFields = { "8=FIX.4.4", "9=122", "35=8", "34=2", "49=sender", "52=20121024-12:21:42.170", "56=target",
+                "37=orderid", "17=execid", "150=0", "39=0",
+                "55=ibm", "228=.23", // Instrument component; 228 is a float type in the spec
+                "54=1", "151=1", "14=1", "6=1", "10=45"
+            };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
+            msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
+
+            Assert.AreEqual(0.23, msg.Factor.getValue());
+        }
     }
 }
