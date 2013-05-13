@@ -28,3 +28,4 @@ Contributors
 - Laszlo Ligart
 - Ervin Marguc
 - Bjorn Andersson
+- Christian Jungers
