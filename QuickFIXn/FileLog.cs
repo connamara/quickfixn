@@ -65,7 +65,7 @@ namespace QuickFix
         private void DisposedCheck()
         {
             if (_disposed)
-                throw new System.InvalidOperationException("Object has been disposed.");
+                throw new System.ObjectDisposedException(this.GetType().Name);
         }
 
         #region Log Members
