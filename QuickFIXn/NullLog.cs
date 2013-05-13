@@ -6,7 +6,7 @@ namespace QuickFix
     /// </summary>
     public class NullLog : ILog
     {
-        #region Log Members
+        #region ILog Members
 
         public void Clear()
         { }
@@ -18,6 +18,9 @@ namespace QuickFix
         { }
 
         public void OnEvent(string s)
+        { }
+
+        public void Dispose()
         { }
 
         #endregion

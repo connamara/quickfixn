@@ -5,6 +5,13 @@ namespace QuickFix
 {
     public abstract class AbstractInitiator : IInitiator
     {
+        // from constructor
+        private IApplication _app = null;
+        private IMessageStoreFactory _storeFactory = null;
+        private SessionSettings _settings = null;
+        private ILogFactory _logFactory = null;
+        private IMessageFactory _msgFactory = null;
+
         private object sync_ = new object();
         private Dictionary<SessionID,Session> sessions_ = new Dictionary<SessionID, Session>();
         private HashSet<SessionID> sessionIDs_ = new HashSet<SessionID>();
@@ -12,7 +19,6 @@ namespace QuickFix
         private HashSet<SessionID> connected_ = new HashSet<SessionID>();
         private HashSet<SessionID> disconnected_ = new HashSet<SessionID>();
         private bool isStopped_ = true;
-        private SessionSettings settings_;
         private Thread thread_;
 
         #region Properties
@@ -32,43 +38,54 @@ namespace QuickFix
             : this(app, storeFactory, settings, logFactory, null)
         { }
 
-        public AbstractInitiator(IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
+        public AbstractInitiator(
+            IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
         {
-            settings_ = settings;
+            _app = app;
+            _storeFactory = storeFactory;
+            _settings = settings;
+            _logFactory = logFactory;
+            _msgFactory = messageFactory;
 
-            HashSet<SessionID> definedSessions = settings.GetSessions();
+            HashSet<SessionID> definedSessions = _settings.GetSessions();
             if (0 == definedSessions.Count)
                 throw new ConfigError("No sessions defined");
-
-            SessionFactory factory = new SessionFactory(app, storeFactory, logFactory, messageFactory);
-            foreach (SessionID sessionID in definedSessions)
-            {
-                Dictionary dict = settings.Get(sessionID);
-                if ("initiator".Equals(dict.GetString(SessionSettings.CONNECTION_TYPE)))
-                {
-                    sessionIDs_.Add(sessionID);
-                    sessions_[sessionID] = factory.Create(sessionID, dict);
-                    SetDisconnected(sessionID);
-                }
-            }
-
-            if (0 == sessions_.Count)
-                throw new ConfigError("No sessions defined for initiator");
         }
 
         public void Start()
         {
+            // create all sessions
+            SessionFactory factory = new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
+            foreach (SessionID sessionID in _settings.GetSessions())
+            {
+                Dictionary dict = _settings.Get(sessionID);
+                sessionIDs_.Add(sessionID);
+                sessions_[sessionID] = factory.Create(sessionID, dict);
+                SetDisconnected(sessionID);
+            }
+
+            if (0 == sessions_.Count)
+                throw new ConfigError("No sessions defined for initiator");
+
+            // start it up
             isStopped_ = false;
-            OnConfigure(settings_);
+            OnConfigure(_settings);
             thread_ = new Thread(new ThreadStart(OnStart));
             thread_.Start();
         }
 
+        /// <summary>
+        /// Logout existing session and close connection.  Attempt graceful disconnect first.
+        /// </summary>
         public void Stop()
         {
             Stop(false);
         }
 
+        /// <summary>
+        /// Logout existing session and close connection
+        /// </summary>
+        /// <param name="force">If true, terminate immediately.  </param>
         public void Stop(bool force)
         {
             if (IsStopped)
@@ -91,6 +108,7 @@ namespace QuickFix
 
             if (!force)
             {
+                // TODO change this duration to always exceed LogoutTimeout setting
                 for (int second = 0; (second < 10) && IsLoggedOn(); ++second)
                     Thread.Sleep(1000);
             }
@@ -104,11 +122,22 @@ namespace QuickFix
 
             isStopped_ = true;
             OnStop();
+
+            // Give OnStop() time to finish its business
             thread_.Join(5000);
             thread_ = null;
 
-            foreach (Session session in enabledSessions)
-                session.Logon();
+            // dispose all sessions and clear all session sets
+            lock (sync_)
+            {
+                foreach (Session s in sessions_.Values)
+                    s.Dispose();
+            }
+            sessions_.Clear();
+            sessionIDs_.Clear();
+            pending_.Clear();
+            connected_.Clear();
+            disconnected_.Clear();
         }
 
         public bool IsLoggedOn()
@@ -180,7 +209,7 @@ namespace QuickFix
                         if (session.IsNewSession)
                             session.Reset("New session");
                         if (session.IsSessionTime)
-                            DoConnect(sessionID, settings_.Get(sessionID));
+                            DoConnect(sessionID, _settings.Get(sessionID));
                     }
                 }
             }

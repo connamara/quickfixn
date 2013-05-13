@@ -14,6 +14,8 @@ namespace QuickFix
         private string messageLogFileName_;
         private string eventLogFileName_;
 
+        private bool _disposed = false;
+
         public FileLog(string fileLogPath)
         {
             Init(fileLogPath, "GLOBAL");
@@ -60,10 +62,18 @@ namespace QuickFix
             return prefix.ToString();
         }
 
+        private void DisposedCheck()
+        {
+            if (_disposed)
+                throw new System.InvalidOperationException("Object has been disposed.");
+        }
+
         #region Log Members
 
         public void Clear()
         {
+            DisposedCheck();
+
             lock (sync_)
             {
                 messageLog_.Close();
@@ -79,6 +89,8 @@ namespace QuickFix
 
         public void OnIncoming(string msg)
         {
+            DisposedCheck();
+
             lock (sync_)
             {
                 messageLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : " + msg);
@@ -87,6 +99,8 @@ namespace QuickFix
 
         public void OnOutgoing(string msg)
         {
+            DisposedCheck();
+
             lock (sync_)
             {
                 messageLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : " + msg);
@@ -95,6 +109,8 @@ namespace QuickFix
 
         public void OnEvent(string s)
         {
+            DisposedCheck();
+
             lock (sync_)
             {
                 eventLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : "+ s);
@@ -107,8 +123,13 @@ namespace QuickFix
 
         public void Dispose()
         {
-            messageLog_.Close();
-            eventLog_.Close();
+            if (messageLog_ != null) { messageLog_.Close(); }
+            if (eventLog_ != null) { eventLog_.Close(); }
+
+            messageLog_ = null;
+            eventLog_ = null;
+
+            _disposed = true;
         }
 
         #endregion

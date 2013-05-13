@@ -1,12 +1,16 @@
 ﻿using System;
 using QuickFix;
 using QuickFix.Fields;
+using System.Collections.Generic;
 
 namespace TradeClient
 {
     public class TradeClientApp : QuickFix.MessageCracker, QuickFix.IApplication
     {
         Session _session = null;
+
+        // This variable is a kludge for developer test purposes.  Don't do this on a production application.
+        public IInitiator MyInitiator = null;
 
         #region IApplication interface overrides
 
@@ -86,7 +90,27 @@ namespace TradeClient
                         QueryReplaceOrder();
                     else if (action == '4')
                         QueryMarketDataRequest();
-                    else if (action == '5')
+                    else if (action == 'g')
+                    {
+                        if (this.MyInitiator.IsStopped)
+                        {
+                            Console.WriteLine("Restarting initiator...");
+                            this.MyInitiator.Start();
+                        }
+                        else
+                            Console.WriteLine("Already started.");
+                    }
+                    else if (action == 'x')
+                    {
+                        if (this.MyInitiator.IsStopped)
+                            Console.WriteLine("Already stopped.");
+                        else
+                        {
+                            Console.WriteLine("Stopping initiator...");
+                            this.MyInitiator.Stop();
+                        }
+                    }
+                    else if (action == 'q' || action == 'Q')
                         break;
                 }
                 catch (System.Exception e)
@@ -111,30 +135,23 @@ namespace TradeClient
 
         private char QueryAction()
         {
+            // Commands 'g' and 'x' are intentionally hidden.
             Console.Write("\n"
                 + "1) Enter Order\n"
                 + "2) Cancel Order\n"
                 + "3) Replace Order\n"
                 + "4) Market data test\n"
-                + "5) Quit\n"
+                + "Q) Quit\n"
                 + "Action: "
             );
 
-            string line = Console.ReadLine().Trim();
-            if (line.Length != 1)
+            HashSet<string> validActions = new HashSet<string>("1,2,3,4,q,Q,g,x".Split(','));
+
+            string cmd = Console.ReadLine().Trim();
+            if (cmd.Length != 1 || validActions.Contains(cmd) == false)
                 throw new System.Exception("Invalid action");
 
-            char val = line[0];
-            switch (val)
-            {
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5': break;
-                default: throw new System.Exception("Invalid action");
-            }
-            return val;
+            return cmd.ToCharArray()[0];
         }
 
         private void QueryEnterOrder()

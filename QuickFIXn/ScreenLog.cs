@@ -20,7 +20,7 @@ namespace QuickFix
             logEvent_    = logEvent;
         }
 
-        #region Log Members
+        #region ILog Members
 
         public void Clear()
         { }
@@ -57,6 +57,9 @@ namespace QuickFix
                 System.Console.WriteLine("<event> " + s);
             }
         }
+
+        public void Dispose()
+        { }
 
         #endregion
     }
