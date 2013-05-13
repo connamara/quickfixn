@@ -206,5 +206,11 @@ namespace QuickFix.Transport
         }
 
         #endregion
+
+        protected override void Dispose(bool disposing)
+        {
+            // nothing additional to do for this subclass
+            base.Dispose(disposing);
+        }
     }
 }

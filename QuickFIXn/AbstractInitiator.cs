@@ -13,7 +13,8 @@ namespace QuickFix
         private IMessageFactory _msgFactory = null;
 
         private object sync_ = new object();
-        private Dictionary<SessionID,Session> sessions_ = new Dictionary<SessionID, Session>();
+        private bool _disposed = false;
+        private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private HashSet<SessionID> sessionIDs_ = new HashSet<SessionID>();
         private HashSet<SessionID> pending_ = new HashSet<SessionID>();
         private HashSet<SessionID> connected_ = new HashSet<SessionID>();
@@ -22,7 +23,7 @@ namespace QuickFix
         private Thread thread_;
 
         #region Properties
-        
+
         public bool IsStopped
         {
             get { return isStopped_; }
@@ -54,6 +55,9 @@ namespace QuickFix
 
         public void Start()
         {
+            if (_disposed)
+                throw new System.ObjectDisposedException(this.GetType().Name);
+
             // create all sessions
             SessionFactory factory = new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
             foreach (SessionID sessionID in _settings.GetSessions())
@@ -88,6 +92,9 @@ namespace QuickFix
         /// <param name="force">If true, terminate immediately.  </param>
         public void Stop(bool force)
         {
+            if (_disposed)
+                throw new System.ObjectDisposedException(this.GetType().Name);
+
             if (IsStopped)
                 return;
 
@@ -198,10 +205,10 @@ namespace QuickFix
 
         protected void Connect()
         {
-            lock(sync_)
+            lock (sync_)
             {
                 HashSet<SessionID> disconnectedSessions = new HashSet<SessionID>(disconnected_);
-                foreach(SessionID sessionID in disconnectedSessions)
+                foreach (SessionID sessionID in disconnectedSessions)
                 {
                     Session session = Session.LookupSession(sessionID);
                     if (session.IsEnabled)
@@ -279,6 +286,23 @@ namespace QuickFix
         public HashSet<SessionID> GetSessionIDs()
         {
             return new HashSet<SessionID>(sessions_.Keys);
+        }
+
+        /// <summary>
+        /// Any subclasses of AbstractInitiator should override this if they have resources to dispose
+        /// that aren't already covered in its OnStop() handler.
+        /// Any override should call base.Dispose(disposing).
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            this.Stop();
+            _disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }
