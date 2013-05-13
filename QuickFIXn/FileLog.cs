@@ -123,8 +123,8 @@ namespace QuickFix
 
         public void Dispose()
         {
-            if (messageLog_ != null) { messageLog_.Close(); }
-            if (eventLog_ != null) { eventLog_.Close(); }
+            if (messageLog_ != null) { messageLog_.Dispose(); }
+            if (eventLog_ != null) { eventLog_.Dispose(); }
 
             messageLog_ = null;
             eventLog_ = null;
