@@ -19,4 +19,5 @@ Changes since the last version:
 
 * (patch) pr #181 - add null checks to SessionID constructor (roji)
 * (minor) issue #48 - IInitiator.Stop() must release resources (jungers42/gbirchmeier)
+* (patch) issue #160 - floats without leading zeros (e.g. ".23") now parsed properly (gbirchmeier)
 
