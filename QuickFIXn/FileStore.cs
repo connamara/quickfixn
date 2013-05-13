@@ -292,9 +292,9 @@ namespace QuickFix
 
         public void Dispose()
         {
-            seqNumsFile_.Close();
-            msgFile_.Close();
-            headerFile_.Close();
+            seqNumsFile_.Dispose();
+            msgFile_.Dispose();
+            headerFile_.Dispose();
         }
 
         #endregion
