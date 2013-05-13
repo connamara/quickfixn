@@ -384,6 +384,23 @@ namespace UnitTests
         }
 
         [Test]
+        public void TestCheckLatency()
+        {
+            //CheckLatency should default to Y
+            Assert.That(session.CheckLatency);
+
+            //Send message with old sendingTime
+            //Assert essage gets rejected
+
+            //Send message with normal sendingTime
+            //Assert message gets accepted
+
+            session.CheckLatency = false;
+
+            //Send message with old sendingTime
+            //Assert message gets accepted 
+        }
+        [Test]
         public void TestMillisecondsInOrigSendingTimeStamp()
         {
             // MS in timestamp should default to Y

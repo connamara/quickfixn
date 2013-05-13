@@ -86,23 +86,22 @@ namespace QuickFix
 
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
                 session.SendRedundantResendRequests = settings.GetBool(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS);
+
             /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.CHECK_COMPID))
                 session.SetCheckCompId(settings.GetBool(SessionSettings.CHECK_COMPID));
-            if (settings.Has(SessionSettings.CHECK_LATENCY))
-                session.SetCheckLatency(settings.GetBool(SessionSettings.CHECK_LATENCY));
-            if (settings.Has(SessionSettings.MAX_LATENCY))
-                session.SetMaxLatency(settings.GetLong(SessionSettings.MAX_LATENCY));
              */
+            if (settings.Has(SessionSettings.MAX_LATENCY))
+                session.MaxLatency = settings.GetInt(SessionSettings.MAX_LATENCY);             
             if (settings.Has(SessionSettings.LOGON_TIMEOUT))
                 session.LogonTimeout = settings.GetInt(SessionSettings.LOGON_TIMEOUT);
             if (settings.Has(SessionSettings.LOGOUT_TIMEOUT))
                 session.LogoutTimeout = settings.GetInt(SessionSettings.LOGOUT_TIMEOUT);
             
-            // FIXME to get from config if available
-            session.MaxLatency = 120;
-            session.CheckLatency = true;
 
+
+            if (settings.Has(SessionSettings.CHECK_LATENCY))
+                session.CheckLatency = settings.GetBool(SessionSettings.CHECK_LATENCY);
             if (settings.Has(SessionSettings.RESET_ON_LOGON))
                 session.ResetOnLogon = settings.GetBool(SessionSettings.RESET_ON_LOGON);
             if (settings.Has(SessionSettings.RESET_ON_LOGOUT))
