@@ -20,7 +20,7 @@ namespace QuickFix
         void Start();
 
         /// <summary>
-        /// Logout existing session and close connection
+        /// Logout existing session and close connection.  All open resources are released.
         /// </summary>
         void Stop();
 
