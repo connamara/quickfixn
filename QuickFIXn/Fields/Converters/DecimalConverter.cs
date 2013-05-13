@@ -10,6 +10,8 @@ namespace QuickFix.Fields.Converters
     /// </summary>
     public static class DecimalConverter
     {
+        private const int ASCII_DECIMALPOINT = 46;
+
         /// <summary>
         /// convert string to decimal
         /// </summary>
@@ -22,8 +24,8 @@ namespace QuickFix.Fields.Converters
                     throw new FieldConvertError("The argument string cannot be null or empty");
                 int asciiValOfFirstChar = System.Convert.ToInt32(d[0]);
                 if ((asciiValOfFirstChar < IntConverter.ASCII_ZERO) || (asciiValOfFirstChar > IntConverter.ASCII_NINE))
-                    if (asciiValOfFirstChar != IntConverter.ASCII_MINUS)
-                        throw new FieldConvertError("Could not convert string to decimal (" + d + "): The first character must be a digit or a minus sign");
+                    if (asciiValOfFirstChar != IntConverter.ASCII_MINUS && asciiValOfFirstChar != ASCII_DECIMALPOINT)
+                        throw new FieldConvertError("Could not convert string to decimal (" + d + "): The first character must be a digit, decimal point, or minus sign");
                 return System.Convert.ToDecimal( d, System.Globalization.CultureInfo.InvariantCulture );
             }
             catch (System.OverflowException e)
