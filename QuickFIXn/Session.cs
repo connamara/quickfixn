@@ -231,6 +231,8 @@ namespace QuickFix
                 MessageStore = storeFactory.Create(sessID)
             };
 
+            // Configuration defaults.
+            // Will be overridden by the SessionFactory with values in the user's configuration.
             this.PersistMessages = true;
             this.ResetOnDisconnect = false;
             this.SendRedundantResendRequests = false;
@@ -859,6 +861,7 @@ namespace QuickFix
         {
             return Verify(message, true, true);
         }
+
         public bool Verify(Message msg, bool checkTooHigh, bool checkTooLow)
         {
             int msgSeqNum = 0;
@@ -1056,7 +1059,7 @@ namespace QuickFix
         protected void DoPossDup(Message msg)
         {
             // If config RequiresOrigSendingTime=N, then tolerate SequenceReset messages that lack OrigSendingTime (issue #102).
-            // (This field doesn't really make sense in this case, so some parties omit it, even though spec requires it.)
+            // (This field doesn't really make sense in this message, so some parties omit it, even though spec requires it.)
             string msgType = msg.Header.GetField(Fields.Tags.MsgType); 
             if (msgType == Fields.MsgType.SEQUENCE_RESET && RequiresOrigSendingTime == false)
                 return;
