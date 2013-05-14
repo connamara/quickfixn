@@ -1033,7 +1033,7 @@ namespace QuickFix
             GenerateResendRequest(beginString, msgSeqNum);
         }
 
-        protected bool DoTargetTooLow(Message msg, int msgSeqNum)
+        protected void DoTargetTooLow(Message msg, int msgSeqNum)
         {
             bool possDupFlag = false;
             if (msg.Header.IsSetField(Fields.Tags.PossDupFlag))
@@ -1046,40 +1046,38 @@ namespace QuickFix
                 throw new QuickFIXException(err);
             }
 
-            return DoPossDup(msg);
+            DoPossDup(msg);
         }
 
-        /// FIXME
-        /// Perform validation on a message where the field PossDupFlag is present, and set to Y.
-        protected bool DoPossDup(Message msg)
+        /// <summary>
+        /// Validates a message where PossDupFlag=Y
+        /// </summary>
+        /// <param name="msg"></param>
+        protected void DoPossDup(Message msg)
         {
-            //workaround which allows SequenceReset messages to omit the PossDupFlag for conformance with some exchanges
+            // If config RequiresOrigSendingTime=N, then tolerate SequenceReset messages that lack OrigSendingTime (issue #102).
+            // (This field doesn't really make sense in this case, so some parties omit it, even though spec requires it.)
             string msgType = msg.Header.GetField(Fields.Tags.MsgType); 
             if (msgType == Fields.MsgType.SEQUENCE_RESET && RequiresOrigSendingTime == false)
-            {
-                return true;
-            }
+                return;
 
-            //ensure messages have the OrigSendingTime set, else fail validation
+            // Reject if messages don't have OrigSendingTime set
             if (!msg.Header.IsSetField(Fields.Tags.OrigSendingTime))
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING, Fields.Tags.OrigSendingTime);
-                return false;
+                return;
             }
 
-            //ensure sendingTime is later than OrigSendingTime, else fail validation and logout
-            var origSendingTime = msg.Header.GetDateTime(Fields.Tags.OrigSendingTime);
-            var sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
-
+            // Ensure sendingTime is later than OrigSendingTime, else reject and logout
+            DateTime origSendingTime = msg.Header.GetDateTime(Fields.Tags.OrigSendingTime);
+            DateTime sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
             System.TimeSpan tmSpan = origSendingTime - sendingTime;
+
             if (tmSpan.TotalSeconds > 0)
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
                 GenerateLogout();
-                return false;
             }
-
-            return true;
         }
 
         protected void GenerateBusinessMessageReject(Message message, int err, int field)
