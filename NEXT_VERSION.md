@@ -23,4 +23,5 @@ Changes since the last version:
 * (patch) issue #187 - make IInitiator implement IDisposable (gbirchmeier)
 * (minor) pr #178 - can now load DD from a stream instead of a file (robsonj)
 * (patch) issue #183 - Session.Reset should only logout if already logged in (ligu)
+* (minor) issue #102 - allow SequenceReset/PossDup messages to omit tag 122 (thomasfleming/gbirchmeier)
 
