@@ -958,7 +958,8 @@ namespace QuickFix
         /// <param name="logoutMessage">message to put in the Logout message's Text field (ignored if null/empty string)</param>
         public void Reset(string loggedReason, string logoutMessage)
         {
-            GenerateLogout(logoutMessage);
+            if(this.IsLoggedOn)
+                GenerateLogout(logoutMessage);
             Disconnect("Resetting...");
             state_.Reset(loggedReason);
         }
