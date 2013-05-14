@@ -194,6 +194,12 @@ namespace QuickFix
         /// </summary>
         public bool HasResponder { get { lock (sync_) { return null != responder_; } } }
 
+        /// <summary>
+        /// Returns whether the Sessions will allow ResetSequence messages sent as
+        /// part of a resend request (PossDup=Y) to omit the OrigSendingTime
+        /// </summary>
+        public bool RequiresOrigSendingTime { get; set; }
+
         #endregion
 
         public Session(
@@ -235,6 +241,7 @@ namespace QuickFix
             this.MaxMessagesInResendRequest = 0;
             this.SendLogoutBeforeTimeoutDisconnect = false;
             this.IgnorePossDupResendRequests = false;
+            this.RequiresOrigSendingTime = true;
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime (Session construction)");
@@ -1043,13 +1050,24 @@ namespace QuickFix
         }
 
         /// FIXME
+        /// Perform validation on a message where the field PossDupFlag is present, and set to Y.
         protected bool DoPossDup(Message msg)
         {
+            //workaround which allows SequenceReset messages to omit the PossDupFlag for conformance with some exchanges
+            string msgType = msg.Header.GetField(Fields.Tags.MsgType); 
+            if (msgType == Fields.MsgType.SEQUENCE_RESET && RequiresOrigSendingTime == false)
+            {
+                return true;
+            }
+
+            //ensure messages have the OrigSendingTime set, else fail validation
             if (!msg.Header.IsSetField(Fields.Tags.OrigSendingTime))
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING, Fields.Tags.OrigSendingTime);
                 return false;
             }
+
+            //ensure sendingTime is later than OrigSendingTime, else fail validation and logout
             var origSendingTime = msg.Header.GetDateTime(Fields.Tags.OrigSendingTime);
             var sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
 
@@ -1060,6 +1078,7 @@ namespace QuickFix
                 GenerateLogout();
                 return false;
             }
+
             return true;
         }
 
@@ -1286,6 +1305,7 @@ namespace QuickFix
         {
             return GenerateReject(message, reason, 0);
         }
+
         public bool GenerateReject(Message message, FixValues.SessionRejectReason reason, int field)
         {
             string beginString = this.SessionID.BeginString;
