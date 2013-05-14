@@ -190,11 +190,11 @@ namespace UnitTests
                 responder.msgLookup[QuickFix.Fields.MsgType.REJECT].Count>0;
         }
 
-	public bool SENT_HEART_BEAT()
-	{
+	    public bool SENT_HEART_BEAT()
+	    {
             return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.HEARTBEAT) &&
                 responder.msgLookup[QuickFix.Fields.MsgType.HEARTBEAT].Count > 0;
-	}
+	    }
 
         public bool SENT_BUSINESS_REJECT()
         {
