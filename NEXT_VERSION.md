@@ -21,4 +21,5 @@ Changes since the last version:
 * (minor) issue #48 - IInitiator.Stop() must release resources (jungers42/gbirchmeier)
 * (patch) issue #160 - floats without leading zeros (e.g. ".23") now parsed properly (gbirchmeier)
 * (patch) issue #187 - make IInitiator implement IDisposable (gbirchmeier)
+* (minor) pr #178 - can now load DD from a stream instead of a file (robsonj)
 

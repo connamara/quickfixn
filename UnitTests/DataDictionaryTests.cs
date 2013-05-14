@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
 using QuickFix;
 
@@ -30,6 +31,18 @@ namespace UnitTests
             Assert.That(dd.FieldsByTag[1].EnumDict.Count, Is.EqualTo(0));
             Assert.That(dd.FieldsByTag[QuickFix.Fields.Tags.StatusValue].EnumDict.Count, Is.EqualTo(4));
         }
+
+		[Test]
+		public void LoadFieldsFromStreamTest()
+		{
+			QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+			Stream stream = new FileStream("../../../spec/fix/FIX44.xml", FileMode.Open, FileAccess.Read);
+			dd.Load(stream);
+			Assert.That(dd.FieldsByTag[1].Name, Is.EqualTo("Account"));
+			Assert.That(dd.FieldsByName["Account"].Tag, Is.EqualTo(1));
+			Assert.That(dd.FieldsByTag[1].EnumDict.Count, Is.EqualTo(0));
+			Assert.That(dd.FieldsByTag[QuickFix.Fields.Tags.StatusValue].EnumDict.Count, Is.EqualTo(4));
+		}
 
         [Test]
         public void FieldHasValueTest()
