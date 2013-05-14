@@ -30,3 +30,5 @@ Contributors
 - Bjorn Andersson
 - Christian Jungers
 - Jonathan M Robson
+- Thomas Fleming
+
