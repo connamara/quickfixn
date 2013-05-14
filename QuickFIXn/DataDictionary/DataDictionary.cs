@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.XPath;
 
@@ -41,6 +42,15 @@ namespace QuickFix.DataDictionary
 		{
 			Load(path);
 		}
+
+        /// <summary>
+        /// Initialize a data dictionary from a stream
+        /// </summary>
+        /// <param name="stream"></param>
+        public DataDictionary(Stream stream)
+        {
+            Load(stream);
+        }
 
 		/// <summary>
 		/// Copy a data dictionary
@@ -406,10 +416,17 @@ namespace QuickFix.DataDictionary
 			return Trailer.IsField(tag);
 		}
 
-		public void Load(String path) {
+		public void Load(String path)
+		{
+			var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
+			Load(stream);
+		}
+
+		public void Load(Stream stream)
+		{
 			XmlDocument doc = new XmlDocument();
 			RootDoc = doc;
-			doc.Load(path);
+			doc.Load(stream);
 			setVersionInfo(doc);
 			parseFields(doc);
 			parseMessages(doc);
