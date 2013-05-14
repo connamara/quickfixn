@@ -1026,7 +1026,7 @@ namespace QuickFix
             GenerateResendRequest(beginString, msgSeqNum);
         }
 
-        protected bool DoTargetTooLow(Message msg, int msgSeqNum)
+        protected void DoTargetTooLow(Message msg, int msgSeqNum)
         {
             bool possDupFlag = false;
             if (msg.Header.IsSetField(Fields.Tags.PossDupFlag))
@@ -1039,28 +1039,30 @@ namespace QuickFix
                 throw new QuickFIXException(err);
             }
 
-            return DoPossDup(msg);
+            DoPossDup(msg);
         }
 
-        /// FIXME
-        protected bool DoPossDup(Message msg)
+        /// <summary>
+        /// Validates a message where PossDupFlag=Y
+        /// </summary>
+        /// <param name="msg"></param>
+        protected void DoPossDup(Message msg)
         {
             if (!msg.Header.IsSetField(Fields.Tags.OrigSendingTime))
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING, Fields.Tags.OrigSendingTime);
-                return false;
+                return;
             }
-            var origSendingTime = msg.Header.GetDateTime(Fields.Tags.OrigSendingTime);
-            var sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
 
+            DateTime origSendingTime = msg.Header.GetDateTime(Fields.Tags.OrigSendingTime);
+            DateTime sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
             System.TimeSpan tmSpan = origSendingTime - sendingTime;
+
             if (tmSpan.TotalSeconds > 0)
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
                 GenerateLogout();
-                return false;
             }
-            return true;
         }
 
         protected void GenerateBusinessMessageReject(Message message, int err, int field)
