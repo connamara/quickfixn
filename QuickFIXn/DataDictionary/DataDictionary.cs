@@ -48,6 +48,7 @@ namespace QuickFix.DataDictionary
         /// </summary>
         /// <param name="stream"></param>
         public DataDictionary(Stream stream)
+            :this()
         {
             Load(stream);
         }
