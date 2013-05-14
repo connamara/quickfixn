@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Threading;
 using System;
+using Common.Logging;
 
 namespace QuickFix
 {
@@ -19,6 +20,7 @@ namespace QuickFix
         private SocketReader socketReader_;
         private long id_;
         private FileLog log_;
+        private Common.Logging.ILog logger_;
 
         [Obsolete("Use the other constructor")]
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
@@ -33,14 +35,16 @@ namespace QuickFix
         /// <param name="debugLogFilePath">path where thread log will go</param>
         public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
         {
-            string debugLogFilePath = "log";
+            // Support for old debug log only when DEBUG_FILE_LOG_PATH is set in settings
+            // TODO:  v2.0 - consider using Commons Logging instead of this old debugging
             if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
-                debugLogFilePath = settingsDict.GetString(SessionSettings.DEBUG_FILE_LOG_PATH);
-            else if (settingsDict.Has(SessionSettings.FILE_LOG_PATH))
-                debugLogFilePath = settingsDict.GetString(SessionSettings.FILE_LOG_PATH);
+            {
+                string debugLogFilePath = settingsDict.GetString(SessionSettings.DEBUG_FILE_LOG_PATH);
+                log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
+            }
 
-            // FIXME - do something more flexible than hardcoding a filelog
-            log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
+            // Support for Common.Logging
+            logger_ = LogManager.GetCurrentClassLogger();
 
             tcpClient_ = tcpClient;
             id_ = clientId;
@@ -55,7 +59,7 @@ namespace QuickFix
 
         public void Shutdown(string reason)
         {
-            Log("shutdown requested: " + reason);
+            Debug("shutdown requested: " + reason);
             isShutdownRequested_ = true;
         }
 
@@ -82,13 +86,25 @@ namespace QuickFix
                 }
             }
 
-            this.Log("shutdown");
+            this.Debug("shutdown");
         }
 
-        /// FIXME do real logging
+        [Obsolete("Use Debug method")]
         public void Log(string s)
         {
-            log_.OnEvent(s);
+            Debug(s);
+        }
+
+        public void Debug(string s)
+        {
+            Debug(s, null);
+        }
+
+        public void Debug(string s, Exception ex)
+        {
+            // Support old debugging function
+            if (log_ != null) log_.OnEvent(s);
+            logger_.Debug(m => m("Cliend Id: {0}; {1}", id_, s), ex);
         }
 
         #region Responder Members

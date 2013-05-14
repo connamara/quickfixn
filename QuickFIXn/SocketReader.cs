@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
 
 namespace QuickFix
 {
@@ -61,7 +62,7 @@ namespace QuickFix
                     qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg));
                     if (null == qfSession_)
                     {
-                        this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        this.Debug("ERROR: Disconnecting; received message for unknown session: " + msg);
                         DisconnectClient();
                         return;
                     }
@@ -78,7 +79,7 @@ namespace QuickFix
                 }
                 catch (System.Exception e)
                 {
-                    this.Log("Error on Session '" + qfSession_.SessionID + "': " + e.ToString());
+                    this.Debug("Error on Session '" + qfSession_.SessionID + "': " + e.ToString(), e);
                 }
             }
             catch (InvalidMessage e)
@@ -97,16 +98,18 @@ namespace QuickFix
             {
                 if (Fields.MsgType.LOGON.Equals(Message.GetMsgType(msg)))
                 {
-                    this.Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
+                    this.Debug("ERROR: Invalid LOGON message, disconnecting: " + e.Message, e);
                     DisconnectClient();
                 }
                 else
                 {
-                    this.Log("ERROR: Invalid message: " + e.Message);
+                    this.Debug("ERROR: Invalid message: " + e.Message, e);
                 }
             }
-            catch (InvalidMessage)
-            { }
+            catch (InvalidMessage ex)
+            {
+                this.Debug("ERROR: Invalid message", ex);
+            }
         }
 
         protected bool ReadMessage(out string msg)
@@ -196,7 +199,7 @@ namespace QuickFix
                 disconnectNeeded = false;
             }
 
-            this.Log("SocketReader Error: " + reason);
+            this.Debug("SocketReader Error: " + reason, cause);
 
             if (disconnectNeeded)
             {
@@ -208,12 +211,23 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME do proper logging
+        /// Debug by using Common.Logging
         /// </summary>
         /// <param name="s"></param>
-        private void Log(string s)
+        private void Debug(string s)
         {
-            responder_.Log(s);
+            responder_.Debug(s);
         }
+
+        /// <summary>
+        /// Debug by using Common.Logging
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="ex">Exception</param>
+        private void Debug(string s, Exception ex)
+        {
+            responder_.Debug(s, ex);
+        }
+
     }
 }
