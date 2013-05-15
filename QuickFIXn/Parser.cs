@@ -62,9 +62,6 @@ namespace QuickFix
                     return false;
                 pos += 1;
 
-                if(length != (msgBodyEnd - msgBodyStart))
-                    throw new MessageParseError("Invalid body length. Calculated:" + (msgBodyEnd - msgBodyStart) + " expected:" + length);
-
                 msg = Substring(buffer_, 0, pos);
                 buffer_ = Remove(buffer_, pos);
                 return true;
