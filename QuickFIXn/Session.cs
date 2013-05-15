@@ -589,6 +589,7 @@ namespace QuickFix
                         return;
                     state_.IncrNextTargetMsgSeqNum();
                 }
+
             }
             catch (TagException e)
             {
@@ -892,6 +893,13 @@ namespace QuickFix
                         this.Log.OnEvent("ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.EndSeqNo + " has been satisfied.");
                         state_.SetResendRange(0, 0);
                     }
+                    else if (msgSeqNum >= range.ChunkEndSeqNo)
+                    {
+                        this.Log.OnEvent("Chunked ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.ChunkEndSeqNo + " has been satisfied.");
+                        int newChunkEndSeqNo = Math.Min(range.EndSeqNo, range.ChunkEndSeqNo + this.MaxMessagesInResendRequest);
+                        GenerateResendRequestRange(msg.Header.GetField(Fields.Tags.BeginString), range.ChunkEndSeqNo + 1, newChunkEndSeqNo);
+                        range.ChunkEndSeqNo = newChunkEndSeqNo;
+                    }
                 }
 
                 if (CheckLatency && !IsGoodTime(msg))
@@ -1117,34 +1125,27 @@ namespace QuickFix
         protected bool GenerateResendRequest(string beginString, int msgSeqNum)
         {
             int beginSeqNum = state_.GetNextTargetMsgSeqNum();
-            int endSeqNum = msgSeqNum - 1;
+            int endRangeSeqNum = msgSeqNum - 1;
+            int endChunkSeqNum;
             if (this.MaxMessagesInResendRequest > 0)
             {
-                int counter = beginSeqNum;
-                while (counter <= endSeqNum)
-                {
-                    int end = counter + this.MaxMessagesInResendRequest - 1;
-                    if (end > endSeqNum)
-                        end = endSeqNum;
-
-                    if (!GenerateResendRequestRange(beginString, counter, end))
-                        return false;
-
-                    counter += this.MaxMessagesInResendRequest;
-                }
+                endChunkSeqNum = Math.Min(endRangeSeqNum, beginSeqNum + this.MaxMessagesInResendRequest - 1);
             }
             else
             {
                 if (beginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
-                    endSeqNum = 0;
+                    endRangeSeqNum = 0;
                 else if (beginString.CompareTo(FixValues.BeginString.FIX41) <= 0)
-                    endSeqNum = 999999;
-                if (!GenerateResendRequestRange(beginString, beginSeqNum, endSeqNum))
-                {
-                    return false;
-                }
+                    endRangeSeqNum = 999999;
+                endChunkSeqNum = endRangeSeqNum;
             }
-            state_.SetResendRange(beginSeqNum, endSeqNum);
+
+            if (!GenerateResendRequestRange(beginString, beginSeqNum, endChunkSeqNum))
+            {
+                return false;
+            }
+
+            state_.SetResendRange(beginSeqNum, endRangeSeqNum, endChunkSeqNum);
             return true;
         }
 
