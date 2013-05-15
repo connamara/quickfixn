@@ -28,7 +28,7 @@ namespace QuickFix
         private long logonTimeoutAsMilliSecs_ = 10 * 1000;
         private int logoutTimeout_ = 2;
         private long logoutTimeoutAsMilliSecs_ = 2 * 1000;
-        private ResendRange resendRange_ = new ResendRange(0, 0);
+        private ResendRange resendRange_ = new ResendRange();
         private Dictionary<int, Message> msgQueue = new Dictionary<int, Message>();
 
         private ILog log_;
