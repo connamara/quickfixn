@@ -7,14 +7,18 @@
         public int ChunkEndSeqNo { get; set; }
 
         public ResendRange()
-            : this(0, 0)
-        { }
-
-        public ResendRange(int begin, int end, int chunkEnd=-1)
         {
-            BeginSeqNo = begin;
-            EndSeqNo = end;
-            ChunkEndSeqNo = chunkEnd == -1 ? EndSeqNo : chunkEnd;
+            BeginSeqNo = 0;
+            EndSeqNo = 0;
+            ChunkEndSeqNo = -1;
+        }
+
+        [System.Obsolete("Not used, so probably get rid of this in v2")]
+        public ResendRange(int begin, int end)
+        {
+            BeginSeqNo = 0;
+            EndSeqNo = 0;
+            ChunkEndSeqNo = -1;
         }
 
         public override string ToString()
