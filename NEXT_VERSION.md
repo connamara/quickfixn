@@ -25,4 +25,5 @@ Changes since the last version:
 * (patch) issue #183 - Session.Reset should only logout if already logged in (ligu)
 * (patch) issue #40 - remove redundant/misplaced body length check in parser (gbirchmeier)
 * (minor) pr #180 - new CompositeLogFactory (roji)
+* (patch) issue #179 - bug in parsing groups when message factory is null (klmcwhirter/TomasVetrovsky/gbirchmeier)
 
