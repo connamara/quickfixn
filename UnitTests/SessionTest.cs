@@ -599,5 +599,47 @@ namespace UnitTests
             session.MessageStore.Get(0, 100, messages);
             Assert.That(messages.Count, Is.EqualTo(1)); // logon response
         }
+
+        [Test]
+        public void TestRequiresOrigSendingTime_Y()
+        {
+            // Under default configuration, session should reject a ResendRequest that lacks OrigSendingTime unset
+
+            // Check default is as expected
+            Assert.That(session.RequiresOrigSendingTime, Is.EqualTo(true));
+
+            Logon();
+
+            QuickFix.FIX42.SequenceReset sr = new QuickFix.FIX42.SequenceReset(new QuickFix.Fields.NewSeqNo(5));
+            sr.GapFillFlag = new QuickFix.Fields.GapFillFlag(true);
+            sr.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
+
+            sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum--)); // so it triggers DoTargetTooLow code
+
+            SendTheMessage(sr);
+
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.REJECT].Count == 1);
+            QuickFix.FIX42.Reject rej = responder.msgLookup[QuickFix.Fields.MsgType.REJECT].Peek() as QuickFix.FIX42.Reject;
+            Assert.That(rej.SessionRejectReason.getValue(), Is.EqualTo(QuickFix.Fields.SessionRejectReason.REQUIRED_TAG_MISSING));
+        }
+
+        [Test]
+        public void TestRequiresOrigSendingTime_N()
+        {
+            // Under OrigSendingTime=N, session will allow ResendRequest that lacks OrigSendingTime
+            session.RequiresOrigSendingTime = false;
+
+            Logon();
+
+            QuickFix.FIX42.SequenceReset sr = new QuickFix.FIX42.SequenceReset(new QuickFix.Fields.NewSeqNo(5));
+            sr.GapFillFlag = new QuickFix.Fields.GapFillFlag(true);
+            sr.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
+
+            sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum--)); // so it triggers DoTargetTooLow code
+
+            SendTheMessage(sr);
+
+            Assert.False(responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT));
+        }
     }
 }

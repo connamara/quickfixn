@@ -194,6 +194,12 @@ namespace QuickFix
         /// </summary>
         public bool HasResponder { get { lock (sync_) { return null != responder_; } } }
 
+        /// <summary>
+        /// Returns whether the Sessions will allow ResetSequence messages sent as
+        /// part of a resend request (PossDup=Y) to omit the OrigSendingTime
+        /// </summary>
+        public bool RequiresOrigSendingTime { get; set; }
+
         #endregion
 
         public Session(
@@ -225,6 +231,8 @@ namespace QuickFix
                 MessageStore = storeFactory.Create(sessID)
             };
 
+            // Configuration defaults.
+            // Will be overridden by the SessionFactory with values in the user's configuration.
             this.PersistMessages = true;
             this.ResetOnDisconnect = false;
             this.SendRedundantResendRequests = false;
@@ -235,6 +243,7 @@ namespace QuickFix
             this.MaxMessagesInResendRequest = 0;
             this.SendLogoutBeforeTimeoutDisconnect = false;
             this.IgnorePossDupResendRequests = false;
+            this.RequiresOrigSendingTime = true;
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime (Session construction)");
@@ -853,6 +862,7 @@ namespace QuickFix
         {
             return Verify(message, true, true);
         }
+
         public bool Verify(Message msg, bool checkTooHigh, bool checkTooLow)
         {
             int msgSeqNum = 0;
@@ -1056,12 +1066,20 @@ namespace QuickFix
         /// <param name="msg"></param>
         protected void DoPossDup(Message msg)
         {
+            // If config RequiresOrigSendingTime=N, then tolerate SequenceReset messages that lack OrigSendingTime (issue #102).
+            // (This field doesn't really make sense in this message, so some parties omit it, even though spec requires it.)
+            string msgType = msg.Header.GetField(Fields.Tags.MsgType); 
+            if (msgType == Fields.MsgType.SEQUENCE_RESET && RequiresOrigSendingTime == false)
+                return;
+
+            // Reject if messages don't have OrigSendingTime set
             if (!msg.Header.IsSetField(Fields.Tags.OrigSendingTime))
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING, Fields.Tags.OrigSendingTime);
                 return;
             }
 
+            // Ensure sendingTime is later than OrigSendingTime, else reject and logout
             DateTime origSendingTime = msg.Header.GetDateTime(Fields.Tags.OrigSendingTime);
             DateTime sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
             System.TimeSpan tmSpan = origSendingTime - sendingTime;
@@ -1289,6 +1307,7 @@ namespace QuickFix
         {
             return GenerateReject(message, reason, 0);
         }
+
         public bool GenerateReject(Message message, FixValues.SessionRejectReason reason, int field)
         {
             string beginString = this.SessionID.BeginString;
