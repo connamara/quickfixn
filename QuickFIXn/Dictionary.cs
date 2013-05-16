@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 namespace QuickFix
 {
@@ -12,7 +11,7 @@ namespace QuickFix
 
         private string name_;
         private System.Collections.Generic.Dictionary<string, string> data_ = new System.Collections.Generic.Dictionary<string, string>();
-    
+
         #endregion
 
         #region Properties
@@ -22,7 +21,7 @@ namespace QuickFix
             get { return name_; }
             private set { name_ = value; }
         }
-        
+
         public int Count
         {
             get { return data_.Count; }
@@ -35,21 +34,21 @@ namespace QuickFix
         {
             get { return Count; }
         }
-        
+
         #endregion
-        
+
         public Dictionary()
         { }
 
         public Dictionary(string name)
-            : this(name, new System.Collections.Generic.Dictionary<string,string>())
+            : this(name, new System.Collections.Generic.Dictionary<string, string>())
         { }
 
         public Dictionary(Dictionary d)
             : this(d.name_, d.data_)
         { }
 
-        public Dictionary(string name, System.Collections.Generic.Dictionary<string,string> data)
+        public Dictionary(string name, System.Collections.Generic.Dictionary<string, string> data)
         {
             name_ = name;
             data_ = new System.Collections.Generic.Dictionary<string, string>(data);
@@ -71,13 +70,15 @@ namespace QuickFix
 
         public int GetInt(string key)
         {
+            string value = null;
             try
             {
-                return Convert.ToInt32(GetString(key));
+                value = GetString(key);
+                return Convert.ToInt32(value);
             }
             catch (FormatException)
             {
-                throw new ConfigError("Incorrect data type");
+                throw new ConfigError(string.Format("Incorrect int32 value '{1}' for key '{0}'", key, value));
             }
             catch (QuickFIXException)
             {
@@ -87,15 +88,17 @@ namespace QuickFix
 
         public long GetLong(string key)
         {
+            string value = null;
             try
             {
-                return Convert.ToInt64(GetString(key));
+                value = GetString(key);
+                return Convert.ToInt64(value);
             }
-            catch(FormatException)
+            catch (FormatException)
             {
-                throw new ConfigError("Incorrect data type");
+                throw new ConfigError(string.Format("Incorrect int64 value '{1}' for key '{0}'", key, value));
             }
-            catch(QuickFIXException)
+            catch (QuickFIXException)
             {
                 throw new ConfigError("No value for key: " + key);
             }
@@ -103,13 +106,15 @@ namespace QuickFix
 
         public double GetDouble(string key)
         {
+            string value = null;
             try
             {
-                return Convert.ToDouble(GetString(key), System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
+                value = GetString(key);
+                return Convert.ToDouble(value, System.Globalization.CultureInfo.InvariantCulture.NumberFormat);
             }
             catch (FormatException)
             {
-                throw new ConfigError("Incorrect data type");
+                throw new ConfigError(string.Format("Incorrect double value '{1}' for key '{0}'", key, value));
             }
             catch (QuickFIXException)
             {
@@ -119,13 +124,15 @@ namespace QuickFix
 
         public bool GetBool(string key)
         {
+            string value = null;
             try
             {
-                return Fields.Converters.BoolConverter.Convert(GetString(key));
+                value = GetString(key);
+                return Fields.Converters.BoolConverter.Convert(value);
             }
             catch (FormatException)
             {
-                throw new ConfigError("Incorrect data type");
+                throw new ConfigError(string.Format("Incorrect bool value '{1}' for key '{0}'", key, value));
             }
             catch (QuickFIXException)
             {
@@ -136,7 +143,7 @@ namespace QuickFix
         public System.DayOfWeek GetDay(string key)
         {
             string abbr = GetString(key).Substring(0, 2).ToUpper();
-            switch(abbr)
+            switch (abbr)
             {
                 case "SU": return System.DayOfWeek.Sunday;
                 case "MO": return System.DayOfWeek.Monday;
@@ -171,7 +178,7 @@ namespace QuickFix
 
         public void SetDay(string key, System.DayOfWeek val)
         {
-            switch(val)
+            switch (val)
             {
                 case System.DayOfWeek.Sunday: SetString(key, "SU"); break;
                 case System.DayOfWeek.Monday: SetString(key, "MO"); break;
@@ -192,7 +199,7 @@ namespace QuickFix
         public void Merge(Dictionary toMerge)
         {
             foreach (System.Collections.Generic.KeyValuePair<string, string> entry in toMerge.data_)
-                if(!data_.ContainsKey(entry.Key))
+                if (!data_.ContainsKey(entry.Key))
                     data_[entry.Key] = entry.Value;
         }
 

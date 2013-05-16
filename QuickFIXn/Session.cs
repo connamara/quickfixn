@@ -420,7 +420,7 @@ namespace QuickFix
 
             if (!IsSessionTime)
             {
-                if(IsInitiator==false)
+                if (IsInitiator == false)
                     Reset("Out of SessionTime (Session.Next())", "Message received outside of session time");
                 else
                     Reset("Out of SessionTime (Session.Next())");
@@ -518,14 +518,17 @@ namespace QuickFix
             catch (InvalidMessage e)
             {
                 this.Log.OnEvent(e.Message);
+                this.Log.OnDebug(e.ToString());
 
                 try
                 {
                     if (MsgType.LOGON.Equals(Message.IdentifyType(msgStr)))
                         Disconnect("Logon message is not valid");
                 }
-                catch (MessageParseError)
-                { }
+                catch (MessageParseError mpe)
+                {
+                    this.Log.OnDebug(mpe.ToString());
+                }
 
                 throw e;
             }
@@ -602,12 +605,16 @@ namespace QuickFix
             }
             catch (TagException e)
             {
+                this.Log.OnDebug(e.ToString());
+
                 if (null != e.InnerException)
                     this.Log.OnEvent(e.InnerException.Message);
                 GenerateReject(message, e.sessionRejectReason, e.Field);
             }
-            catch (UnsupportedVersion)
+            catch (UnsupportedVersion e)
             {
+                this.Log.OnDebug(e.ToString());
+
                 if (MsgType.LOGOUT.Equals(msgType))
                 {
                     NextLogout(message);
@@ -621,11 +628,13 @@ namespace QuickFix
             catch (UnsupportedMessageType e)
             {
                 this.Log.OnEvent("Unsupported message type: " + e.Message);
+                this.Log.OnDebug(e.ToString());
                 GenerateBusinessMessageReject(message, Fields.BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, 0);
             }
             catch (FieldNotFoundException e)
             {
                 this.Log.OnEvent("Rejecting invalid message, field not found: " + e.Message);
+                this.Log.OnDebug(e.ToString());
                 if ((SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0) && (message.IsApp()))
                 {
                     GenerateBusinessMessageReject(message, Fields.BusinessRejectReason.CONDITIONALLY_REQUIRED_FIELD_MISSING, e.Field);
@@ -643,8 +652,9 @@ namespace QuickFix
             }
             catch (RejectLogon e)
             {
+                this.Log.OnDebug(e.ToString());
                 GenerateLogout(e.Message);
-                Disconnect(e.ToString());
+                Disconnect(e.Message);
             }
 
             NextQueued();
@@ -795,6 +805,7 @@ namespace QuickFix
             catch (System.Exception e)
             {
                 this.Log.OnEvent("ERROR during resend request " + e.Message);
+                this.Log.OnDebug(e.ToString());
             }
         }
 
@@ -923,6 +934,7 @@ namespace QuickFix
             catch (System.Exception e)
             {
                 this.Log.OnEvent("Verify failed: " + e.Message);
+                this.Log.OnDebug(e.ToString());
                 Disconnect("Verify failed: " + e.Message);
                 return false;
             }
@@ -1298,8 +1310,10 @@ namespace QuickFix
                     heartbeat.Header.SetField(new Fields.LastMsgSeqNumProcessed(testRequest.Header.GetInt(Tags.MsgSeqNum)));
                 }
             }
-            catch (FieldNotFoundException)
-            { }
+            catch (FieldNotFoundException e)
+            {
+                this.Log.OnDebug(e.ToString());
+            }
             return SendRaw(heartbeat, 0);
         }
 
@@ -1330,8 +1344,10 @@ namespace QuickFix
                     msgSeqNum = message.Header.GetInt(Fields.Tags.MsgSeqNum);
                     reject.SetField(new Fields.RefSeqNum(msgSeqNum));
                 }
-                catch (System.Exception)
-                { }
+                catch (System.Exception e)
+                {
+                    this.Log.OnDebug(e.ToString());
+                }
             }
 
             if (beginString.CompareTo(FixValues.BeginString.FIX42) >= 0)

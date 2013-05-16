@@ -23,6 +23,11 @@ namespace QuickFix
         public void Dispose()
         { }
 
+        public void OnDebug(string s)
+        { }
+
         #endregion
+
+
     }
 }
