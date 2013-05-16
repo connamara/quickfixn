@@ -30,5 +30,8 @@ Contributors
 - Bjorn Andersson
 - Christian Jungers
 - Jonathan M Robson
+- Shay Rojansky
+- Kevin McWhirter
+- Tomas Vetrovsky
 - Thomas Fleming
 
