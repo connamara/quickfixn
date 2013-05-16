@@ -104,7 +104,7 @@ namespace QuickFix
 
                 if ("acceptor".Equals(connectionType))
                 {
-                    Session session = sessionFactory_.Create(sessionID, dict);
+                    Session session = sessionFactory.Create(sessionID, dict);
                     AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(settings, sessionID, session.Log);
                     descriptor.AcceptSession(session);
                     sessions_[sessionID] = session;
