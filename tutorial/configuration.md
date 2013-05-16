@@ -268,6 +268,15 @@ QuickFIX Settings
     <td class='valid'>Any time zone ID supported on target system.</td>
     <td class='default'>-</td>
   </tr>
+
+  <tr>
+    <td class='setting'>RequiresOrigSendingTime</td>
+    <td class='description'>If N, do not reject SequenceReset/PossDup messages that lack OrigSendingTime</td>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
 </table>
 
 
