@@ -471,15 +471,42 @@ namespace UnitTests
             //  2->2501
             //  2502->5001
             //  5002->5005
-            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count == 3);
+
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count == 1);
             QuickFix.Message msg = responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Dequeue();
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(2));
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(2501));
 
+            // Jump forward to the end of the resend chunk with a fillgap reset message
+            QuickFix.FIX42.SequenceReset reset = new QuickFix.FIX42.SequenceReset();
+            reset.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
+            reset.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
+            reset.SetField(new QuickFix.Fields.GapFillFlag(true));
+
+            reset.Header.SetField(new QuickFix.Fields.MsgSeqNum(2));
+            reset.SetField(new QuickFix.Fields.NewSeqNo(2501));
+            session.Next(reset);
+
+            order.Header.SetField(new QuickFix.Fields.MsgSeqNum(2501));
+            session.Next(order);
+
+            // Should have triggered next resend (2502->5001), check this
+            Console.WriteLine(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count);
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count == 1);
             msg = responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Dequeue();
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(2502));
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(5001));
 
+            // Jump forward to the end of the resend chunk with a fillgap reset message
+            reset.Header.SetField(new QuickFix.Fields.MsgSeqNum(2502));
+            reset.SetField(new QuickFix.Fields.NewSeqNo(5001));
+            session.Next(reset);
+
+            order.Header.SetField(new QuickFix.Fields.MsgSeqNum(5001));
+            session.Next(order);   // Triggers next resend (5002->5005)
+
+            Console.WriteLine(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count);
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count == 1);
             msg = responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Dequeue();
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(5002));
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(5004));
