@@ -26,5 +26,6 @@ Changes since the last version:
 * (patch) issue #40 - remove redundant/misplaced body length check in parser (gbirchmeier)
 * (minor) pr #180 - new CompositeLogFactory (roji)
 * (patch) issue #179 - bug in parsing groups when message factory is null (klmcwhirter/TomasVetrovsky/gbirchmeier)
+* (minor) issue #102 - allow SequenceReset/PossDup messages to omit tag 122 (thomasfleming/gbirchmeier)
 * (patch) issue #153 - Chunked resends are now sent "on-demand" instead of all-at-once (roji)
 
