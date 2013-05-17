@@ -36,16 +36,16 @@ namespace QuickFix
         private LinkedList<ClientHandlerThread> clientThreads_ = new LinkedList<ClientHandlerThread>();
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
-        private QuickFix.Dictionary sessionDict_;
+        private QuickFix.Dictionary sessionDict_; // remove in v2, as only needed for deprecated DebugFileLogPath setting
 
         #endregion
 
-        [Obsolete("Use another constructor")]
+        [Obsolete("Not used.  Will probably be removed in v2.")]
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
             : this(serverSocketEndPoint, socketSettings, (ILog)null)
         { }
 
-        [Obsolete("Use another constructor")]
+        [Obsolete("This constructor is needed for the DebugFileLogPath config setting, which is being removed.")] // v2
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
         {
             socketSettings_ = socketSettings;
@@ -53,11 +53,17 @@ namespace QuickFix
             sessionDict_ = sessionDict;
         }
 
+        /// <summary>
+        /// Create a ThreadedSocketReactor.
+        /// </summary>
+        /// <param name="serverSocketEndPoint"></param>
+        /// <param name="socketSettings"></param>
+        /// <param name="log">Can be null, in which case no logging will be performed.</param>
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, ILog log)
         {
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
-            Log = log;
+            Log = (log == null) ? NullLog.GetInstance() : log;
         }
 
         public void Start()
@@ -99,13 +105,28 @@ namespace QuickFix
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = Log == null ? new ClientHandlerThread(client, nextClientId_++, sessionDict_) : new ClientHandlerThread(client, nextClientId_++, Log);
+
+                    ClientHandlerThread t = null;
+                    if (sessionDict_ != null)
+                    {
+                        // this if only needed for deprecated DebugFileLogPath setting - remove in v2
+#pragma warning disable 618
+                        t = new ClientHandlerThread(client, nextClientId_++, sessionDict_);
+#pragma warning restore 618
+                    }
+                    else
+                    {
+                        t = new ClientHandlerThread(client, nextClientId_++, Log);
+                    }
+
+
                     lock (sync_)
                     {
                         clientThreads_.AddLast(t);
                     }
-                    // FIXME set the client thread's exception handler here
+
                     Log.OnEvent("connected");
+
                     t.Start();
                 }
                 catch (System.Exception e)
@@ -137,6 +158,7 @@ namespace QuickFix
                 if (State.SHUTDOWN_COMPLETE != state_)
                 {
                     Log.OnEvent("shutting down...");
+
                     while (clientThreads_.Count > 0)
                     {
                         ClientHandlerThread t = clientThreads_.First.Value;

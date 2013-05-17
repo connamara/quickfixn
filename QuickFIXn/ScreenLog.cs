@@ -72,7 +72,7 @@ namespace QuickFix
 
         public void OnDebug(string s)
         {
-            if (!logEvent_)
+            if (!logDebug_)
                 return;
 
             lock (sync_)

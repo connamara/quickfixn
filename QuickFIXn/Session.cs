@@ -224,7 +224,7 @@ namespace QuickFix
             if (null != logFactory)
                 log = logFactory.Create(sessID);
             else
-                log = new NullLog();
+                log = NullLog.GetInstance();
 
             state_ = new SessionState(log, heartBtInt)
             {

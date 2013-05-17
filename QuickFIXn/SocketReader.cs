@@ -3,6 +3,8 @@ using System.Net.Sockets;
 
 namespace QuickFix
 {
+    // v2 consider changing to internal
+
     /// <summary>
     /// TODO merge with SocketInitiatorThread
     /// </summary>
@@ -16,21 +18,26 @@ namespace QuickFix
         private ClientHandlerThread responder_;
         private ILog log_;
 
-        [Obsolete("Use another constructor")]
+        [Obsolete("Not used.  Will probably be removed in v2.")]
         public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
         {
             tcpClient_ = tcpClient;
             responder_ = responder;
         }
 
+        /// <summary>
+        /// Create a SocketReader.
+        /// </summary>
+        /// <param name="tcpClient"></param>
+        /// <param name="responder"></param>
+        /// <param name="log">If null, won't log.</param>
         public SocketReader(TcpClient tcpClient, ClientHandlerThread responder, ILog log)
         {
             tcpClient_ = tcpClient;
             responder_ = responder;
-            log_ = log;
+            log_ = (log == null) ? NullLog.GetInstance() : log;
         }
 
-        /// <summary> FIXME </summary>
         public void Read()
         {
             try

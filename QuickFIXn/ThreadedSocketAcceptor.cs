@@ -4,10 +4,8 @@ using System;
 
 namespace QuickFix
 {
-    // TODO v2.0 - consider changing to internal
-
     /// <summary>
-    /// Acceptor implementation - with threads
+    /// Acceptor implementation - with threads.
     /// Creates a ThreadedSocketReactor for every listening endpoint.
     /// </summary>
     public class ThreadedSocketAcceptor : IAcceptor
@@ -36,7 +34,7 @@ namespace QuickFix
 
             #endregion
 
-            [Obsolete("Use another constructor")]
+            [Obsolete("This constructor is needed for the DebugFileLogPath config setting, which is being removed.")] // v2
             public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
             {
                 socketEndPoint_ = socketEndPoint;
@@ -67,6 +65,13 @@ namespace QuickFix
 
         #region Constructors
 
+        /// <summary>
+        /// Create a ThreadedSocketAcceptor.  Note: with this constructor, you will not have any logs.
+        /// Consider using another constructor and supplying an ILogFactory.
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="storeFactory"></param>
+        /// <param name="settings"></param>
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
             : this(new SessionFactory(application, storeFactory), settings)
         { }
@@ -142,7 +147,10 @@ namespace QuickFix
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
             {
                 if( dict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
+                    // DebugFileLogPath is a setting that should not be used anymore.  Remove this condition in v2.
+#pragma warning disable 618
                     descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
+#pragma warning restore 618
                 else
                     descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, log);
                 

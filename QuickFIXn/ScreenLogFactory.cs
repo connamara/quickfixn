@@ -24,7 +24,14 @@ namespace QuickFix
             : this(logIncoming, logOutgoing, logEvent, false)
         {
         }
-        
+
+        /// <summary>
+        /// Create a ScreenLogFactory
+        /// </summary>
+        /// <param name="logIncoming"></param>
+        /// <param name="logOutgoing"></param>
+        /// <param name="logEvent"></param>
+        /// <param name="logDebug">If true, show extra debugging information for each session unless session has explicity disabled it</param>
         public ScreenLogFactory(bool logIncoming, bool logOutgoing, bool logEvent, bool logDebug)
         {
             logIncoming_ = logIncoming;

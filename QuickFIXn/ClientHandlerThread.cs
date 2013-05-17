@@ -20,18 +20,12 @@ namespace QuickFix
         private long id_;
         private ILog log_;
 
-        [Obsolete("Use another constructor")]
+        [Obsolete("Not used.  Will probably be removed in v2.")]
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
             : this(tcpClient, clientId, new QuickFix.Dictionary())
         { }
-        
-        /// <summary>
-        /// Creates a ClientHandlerThread
-        /// </summary>
-        /// <param name="tcpClient"></param>
-        /// <param name="clientId"></param>
-        /// <param name="debugLogFilePath">path where thread log will go</param>
-        [Obsolete("Use another constructor")]
+
+        [Obsolete("This constructor is needed for the DebugFileLogPath config setting, which is being removed.")] // v2
         public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
         {
             string debugLogFilePath = "log";
@@ -48,12 +42,18 @@ namespace QuickFix
             socketReader_ = new SocketReader(tcpClient_, this, log_);
         }
 
+        /// <summary>
+        /// Create a ClientHandlerThread.
+        /// </summary>
+        /// <param name="tcpClient"></param>
+        /// <param name="clientId"></param>
+        /// <param name="log">If null, then will not log</param>
         public ClientHandlerThread(TcpClient tcpClient, long clientId, ILog log)
         {
             tcpClient_ = tcpClient;
             id_ = clientId;
             socketReader_ = new SocketReader(tcpClient_, this, log);
-            log_ = log;
+            log_ = (log == null) ? NullLog.GetInstance() : log;
         }
 
         public void Start()

@@ -20,24 +20,31 @@ namespace QuickFix
 
         private bool _disposed = false;
 
-        [Obsolete("Use another constructor")]
+        [Obsolete("Not needed.  Will probably be removed in v2.")]
         public FileLog(string fileLogPath)
             : this(fileLogPath, false)
         {
         }
-        
+
+        [Obsolete("Not needed.  Will probably be removed in v2.")]
         public FileLog(string fileLogPath, bool logDebug)
         {
             logDebug_ = logDebug;
             Init(fileLogPath, "GLOBAL");
         }
 
-        [Obsolete("Use another constructor")]
+        [Obsolete("Not needed.  Will probably be removed in v2.")]
         public FileLog(string fileLogPath, SessionID sessionID)
             : this(fileLogPath, sessionID, false)
         {
         }
         
+        /// <summary>
+        /// Creates a FileLog
+        /// </summary>
+        /// <param name="fileLogPath">directory where log will be put</param>
+        /// <param name="sessionID">ID of session that is being logged</param>
+        /// <param name="logDebug">whether to include extra debug details in the log</param>
         public FileLog(string fileLogPath, SessionID sessionID, bool logDebug)
         {
             logDebug_ = logDebug;
