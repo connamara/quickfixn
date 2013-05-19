@@ -51,6 +51,7 @@ namespace QuickFix
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
             sessionDict_ = sessionDict;
+            Log = NullLog.GetInstance();
         }
 
         /// <summary>
