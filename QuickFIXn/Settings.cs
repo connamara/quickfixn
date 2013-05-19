@@ -26,6 +26,13 @@ namespace QuickFix
                 {
                     string[] kv = line.Split(new char[]{'='}, 2);
                     currentSection.SetString(kv[0].Trim(), kv[1].Trim());
+
+                    // the following checks should be removed for v2
+                    if (kv[0] == SessionSettings.DEBUG_FILE_LOG_PATH)
+                    {
+                        System.Console.WriteLine("WARNING: The config setting '" + SessionSettings.DEBUG_FILE_LOG_PATH + "' is deprecated.");
+                        System.Console.WriteLine("         Please use '" + SessionSettings.EXTRA_DEBUG_LOGGING + "' instead.  See the docs.");
+                    }
                 }
             }
         }

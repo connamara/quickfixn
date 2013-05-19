@@ -4,10 +4,8 @@ using System;
 
 namespace QuickFix
 {
-    // TODO v2.0 - consider changing to internal
-
     /// <summary>
-    /// Acceptor implementation - with threads
+    /// Acceptor implementation - with threads.
     /// Creates a ThreadedSocketReactor for every listening endpoint.
     /// </summary>
     public class ThreadedSocketAcceptor : IAcceptor
@@ -35,11 +33,18 @@ namespace QuickFix
             private Dictionary<SessionID, Session> acceptedSessions_ = new Dictionary<SessionID, Session>();
 
             #endregion
-            
+
+            [Obsolete("This constructor is needed for the DebugFileLogPath config setting, which is being removed.")] // v2
             public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
             {
                 socketEndPoint_ = socketEndPoint;
                 socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict);
+            }
+
+            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, ILog log)
+            {
+                socketEndPoint_ = socketEndPoint;
+                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, log);
             }
 
             public void AcceptSession(Session session)
@@ -60,6 +65,13 @@ namespace QuickFix
 
         #region Constructors
 
+        /// <summary>
+        /// Create a ThreadedSocketAcceptor.  Note: with this constructor, you will not have any logs.
+        /// Consider using another constructor and supplying an ILogFactory.
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="storeFactory"></param>
+        /// <param name="settings"></param>
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
             : this(new SessionFactory(application, storeFactory), settings)
         { }
@@ -97,8 +109,8 @@ namespace QuickFix
 
                 if ("acceptor".Equals(connectionType))
                 {
-                    AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(settings, sessionID);
                     Session session = sessionFactory.Create(sessionID, dict);
+                    AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(settings, sessionID, session.Log);
                     descriptor.AcceptSession(session);
                     sessions_[sessionID] = session;
                 }
@@ -108,7 +120,7 @@ namespace QuickFix
                 throw new ConfigError("No acceptor sessions found in SessionSettings.");
         }
 
-        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(SessionSettings settings, SessionID sessionID)
+        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(SessionSettings settings, SessionID sessionID, ILog log)
         {
             QuickFix.Dictionary dict = settings.Get(sessionID);
             int port = System.Convert.ToInt32(dict.GetLong(SessionSettings.SOCKET_ACCEPT_PORT));
@@ -134,7 +146,14 @@ namespace QuickFix
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
+                if( dict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
+                    // DebugFileLogPath is a setting that should not be used anymore.  Remove this condition in v2.
+#pragma warning disable 618
+                    descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
+#pragma warning restore 618
+                else
+                    descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, log);
+                
                 socketDescriptorForAddress_[socketEndPoint] = descriptor;
             }
 
@@ -149,7 +168,7 @@ namespace QuickFix
                 foreach (AcceptorSocketDescriptor socketDescriptor in socketDescriptorForAddress_.Values)
                 {
                     socketDescriptor.SocketReactor.Start();
-                    /// FIXME log_.Info("Listening for connections on " + socketDescriptor.getAddress());
+                    socketDescriptor.SocketReactor.Log.OnEvent("Listening for connections on " + socketDescriptor.Address.ToString());
                 }
             }
         }
@@ -161,7 +180,7 @@ namespace QuickFix
                 foreach (AcceptorSocketDescriptor socketDescriptor in socketDescriptorForAddress_.Values)
                 {
                     socketDescriptor.SocketReactor.Shutdown();
-                    /// FIXME log_.Info("No longer accepting connections on " + socketDescriptor.getAddress());
+                    socketDescriptor.SocketReactor.Log.OnEvent("No longer accepting connections on " + socketDescriptor.Address.ToString());
                 }
             }
         }
@@ -176,8 +195,8 @@ namespace QuickFix
                 }
                 catch (System.Exception e)
                 {
-                    /// FIXME logError(session.getSessionID(), "Error during logout", e);
-                    System.Console.WriteLine("Error during logout of Session " + session.SessionID + ": " + e.Message);
+                    session.Log.OnEvent("Error during logout of Session " + session.SessionID + ": " + e.Message);
+                    session.Log.OnDebug(e.ToString());
                 }
             }
 
@@ -192,8 +211,8 @@ namespace QuickFix
                     }
                     catch (System.Exception e)
                     {
-                        /// FIXME logError(session.getSessionID(), "Error during disconnect", e);
-                        System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
+                        session.Log.OnEvent("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
+                        session.Log.OnDebug(e.ToString());
                     }
                 }
             }

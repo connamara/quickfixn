@@ -18,19 +18,14 @@ namespace QuickFix
         private TcpClient tcpClient_;
         private SocketReader socketReader_;
         private long id_;
-        private FileLog log_;
+        private ILog log_;
 
-        [Obsolete("Use the other constructor")]
+        [Obsolete("Not used.  Will probably be removed in v2.")]
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
             : this(tcpClient, clientId, new QuickFix.Dictionary())
         { }
-        
-        /// <summary>
-        /// Creates a ClientHandlerThread
-        /// </summary>
-        /// <param name="tcpClient"></param>
-        /// <param name="clientId"></param>
-        /// <param name="debugLogFilePath">path where thread log will go</param>
+
+        [Obsolete("This constructor is needed for the DebugFileLogPath config setting, which is being removed.")] // v2
         public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
         {
             string debugLogFilePath = "log";
@@ -44,7 +39,21 @@ namespace QuickFix
 
             tcpClient_ = tcpClient;
             id_ = clientId;
-            socketReader_ = new SocketReader(tcpClient_, this);
+            socketReader_ = new SocketReader(tcpClient_, this, log_);
+        }
+
+        /// <summary>
+        /// Create a ClientHandlerThread.
+        /// </summary>
+        /// <param name="tcpClient"></param>
+        /// <param name="clientId"></param>
+        /// <param name="log">If null, then will not log</param>
+        public ClientHandlerThread(TcpClient tcpClient, long clientId, ILog log)
+        {
+            tcpClient_ = tcpClient;
+            id_ = clientId;
+            socketReader_ = new SocketReader(tcpClient_, this, log);
+            log_ = (log == null) ? NullLog.GetInstance() : log;
         }
 
         public void Start()
@@ -55,7 +64,7 @@ namespace QuickFix
 
         public void Shutdown(string reason)
         {
-            Log("shutdown requested: " + reason);
+            log_.OnEvent("shutdown requested: " + reason);
             isShutdownRequested_ = true;
         }
 
@@ -82,13 +91,7 @@ namespace QuickFix
                 }
             }
 
-            this.Log("shutdown");
-        }
-
-        /// FIXME do real logging
-        public void Log(string s)
-        {
-            log_.OnEvent(s);
+            log_.OnEvent("shutdown");
         }
 
         #region Responder Members

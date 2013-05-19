@@ -43,6 +43,13 @@ namespace QuickFix
                 log.OnEvent(s);
         }
 
+        public void OnDebug(string s)
+        {
+            DisposedCheck();
+            foreach (var log in logs_)
+                log.OnEvent(s);
+        }
+
         public void Dispose()
         {
             _disposed = true;

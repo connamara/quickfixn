@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace QuickFix
 {
     /// <summary>
@@ -10,19 +11,43 @@ namespace QuickFix
 
         private System.IO.StreamWriter messageLog_;
         private System.IO.StreamWriter eventLog_;
+        private System.IO.StreamWriter debugLog_;
 
         private string messageLogFileName_;
         private string eventLogFileName_;
+        private string debugLogFileName_;
+        private bool logDebug_;
 
         private bool _disposed = false;
 
+        [Obsolete("Not needed.  Will probably be removed in v2.")]
         public FileLog(string fileLogPath)
+            : this(fileLogPath, false)
         {
+        }
+
+        [Obsolete("Not needed.  Will probably be removed in v2.")]
+        public FileLog(string fileLogPath, bool logDebug)
+        {
+            logDebug_ = logDebug;
             Init(fileLogPath, "GLOBAL");
         }
 
+        [Obsolete("Not needed.  Will probably be removed in v2.")]
         public FileLog(string fileLogPath, SessionID sessionID)
+            : this(fileLogPath, sessionID, false)
         {
+        }
+        
+        /// <summary>
+        /// Creates a FileLog
+        /// </summary>
+        /// <param name="fileLogPath">directory where log will be put</param>
+        /// <param name="sessionID">ID of session that is being logged</param>
+        /// <param name="logDebug">whether to include extra debug details in the log</param>
+        public FileLog(string fileLogPath, SessionID sessionID, bool logDebug)
+        {
+            logDebug_ = logDebug;
             Init(fileLogPath, Prefix(sessionID));
         }   
         
@@ -40,6 +65,13 @@ namespace QuickFix
 
             messageLog_.AutoFlush = true;
             eventLog_.AutoFlush = true;
+
+            if (logDebug_)
+            {
+                debugLogFileName_ = System.IO.Path.Combine(fileLogPath, prefix + ".debug.current.log");
+                debugLog_ = new System.IO.StreamWriter(debugLogFileName_, true);
+                debugLog_.AutoFlush = true;
+            }
         }
 
         public static string Prefix(SessionID sessionID)
@@ -84,6 +116,13 @@ namespace QuickFix
 
                 messageLog_.AutoFlush = true;
                 eventLog_.AutoFlush = true;
+
+                if (logDebug_)
+                {
+                    debugLog_.Close();
+                    debugLog_ = new System.IO.StreamWriter(debugLogFileName_, false);
+                    debugLog_.AutoFlush = true;
+                }
             }
         }
 
@@ -117,6 +156,17 @@ namespace QuickFix
             }
         }
 
+        public void OnDebug(string s)
+        {
+            if (!logDebug_)
+                return;
+            
+            lock (sync_)
+            {
+                debugLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : " + s);
+            }
+        }
+
         #endregion
 
         #region IDisposable Members
@@ -133,5 +183,8 @@ namespace QuickFix
         }
 
         #endregion
+
+
+
     }
 }

@@ -22,7 +22,13 @@ namespace QuickFix
         /// <returns></returns>
         public ILog Create(SessionID sessionID)
         {
-            return new FileLog(settings_.Get(sessionID).GetString(SessionSettings.FILE_LOG_PATH), sessionID);
+            Dictionary dict = settings_.Get(sessionID);
+            
+            return new FileLog(
+                dict.GetString(SessionSettings.FILE_LOG_PATH),
+                sessionID,
+                dict.Has(SessionSettings.EXTRA_DEBUG_LOGGING) ? dict.GetBool(SessionSettings.EXTRA_DEBUG_LOGGING) : false
+            );
         }
 
         #endregion

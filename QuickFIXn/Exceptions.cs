@@ -47,7 +47,7 @@ namespace QuickFix
             : base("Could not convert field: " + msg, innerException)
         { }
     }
-    
+
     /// <summary>
     /// Session cannot be found for specified action
     /// </summary>
@@ -79,7 +79,7 @@ namespace QuickFix
             : base("Unsupported Version: " + msg)
         { }
 
-        public UnsupportedVersion(string msg, System.Exception innerException) 
+        public UnsupportedVersion(string msg, System.Exception innerException)
             : base("Unsupported Version: " + msg, innerException)
         { }
     }
@@ -206,6 +206,15 @@ namespace QuickFix
             this._field = field;
             this.sessionRejectReason = reason;
         }
+
+        public override string ToString()
+        {
+            return string.Format("Field: '{0}', SessionRejectReason: '{1}', Exception: {2}",
+                _field,
+                sessionRejectReason == null ? "(null)" : string.Format("{0}:{1}", sessionRejectReason.Value, sessionRejectReason.Description),
+                base.ToString()
+            );
+        }
     }
     /// <summary>
     /// Tag is not in the correct order
@@ -235,7 +244,8 @@ namespace QuickFix
     {
         public string msgType;
 
-        public TagNotDefinedForMessage(int field, string msgType) : base(field, FixValues.SessionRejectReason.TAG_NOT_DEFINED_FOR_THIS_MESSAGE_TYPE)
+        public TagNotDefinedForMessage(int field, string msgType)
+            : base(field, FixValues.SessionRejectReason.TAG_NOT_DEFINED_FOR_THIS_MESSAGE_TYPE)
         {
             this.msgType = msgType;
         }
@@ -267,7 +277,7 @@ namespace QuickFix
     public class IncorrectDataFormat : TagException
     {
         public IncorrectDataFormat(int field, System.Exception innerException)
-            : base(field, FixValues.SessionRejectReason.INCORRECT_DATA_FORMAT_FOR_VALUE, innerException) 
+            : base(field, FixValues.SessionRejectReason.INCORRECT_DATA_FORMAT_FOR_VALUE, innerException)
         { }
     }
 
@@ -282,8 +292,8 @@ namespace QuickFix
     public class RepeatingGroupCountMismatch : TagException
     {
         public RepeatingGroupCountMismatch(int tag)
-            :base(tag, FixValues.SessionRejectReason.INCORRECT_NUM_IN_GROUP_COUNT_FOR_REPEATING_GROUP)
-        {}
+            : base(tag, FixValues.SessionRejectReason.INCORRECT_NUM_IN_GROUP_COUNT_FOR_REPEATING_GROUP)
+        { }
     }
 
     public class OtherTagException : TagException
@@ -299,7 +309,7 @@ namespace QuickFix
     public class GroupDelimiterTagException : OtherTagException
     {
         public GroupDelimiterTagException(int counterTag, int delimiterTag)
-            : base(string.Format("Group {0}'s first entry does not start with delimiter {1}", counterTag,delimiterTag), counterTag)
+            : base(string.Format("Group {0}'s first entry does not start with delimiter {1}", counterTag, delimiterTag), counterTag)
         { }
     }
 

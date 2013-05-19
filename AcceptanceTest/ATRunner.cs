@@ -15,7 +15,7 @@ namespace AcceptanceTest
                 System.Environment.Exit(2);
             }
 
-            FileLog debugLog = new FileLog("log", new SessionID("AT", "Application", "Debug")); 
+            FileLog debugLog = new FileLog("log", new SessionID("AT", "Application", "Debug"), false);
             ThreadedSocketAcceptor acceptor = null;
             try
             {

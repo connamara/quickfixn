@@ -23,6 +23,8 @@ namespace QuickFix
             get { lock (sync_) { return state_; } }
         }
 
+        public ILog Log { get; private set; }
+
         #endregion
 
         #region Private Members
@@ -34,20 +36,35 @@ namespace QuickFix
         private LinkedList<ClientHandlerThread> clientThreads_ = new LinkedList<ClientHandlerThread>();
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
-        private QuickFix.Dictionary sessionDict_;
+        private QuickFix.Dictionary sessionDict_; // remove in v2, as only needed for deprecated DebugFileLogPath setting
 
         #endregion
 
-        [Obsolete("Use the other constructor")]
+        [Obsolete("Not used.  Will probably be removed in v2.")]
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
-            : this(serverSocketEndPoint, socketSettings, null)
+            : this(serverSocketEndPoint, socketSettings, (ILog)null)
         { }
-        
+
+        [Obsolete("This constructor is needed for the DebugFileLogPath config setting, which is being removed.")] // v2
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
         {
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
             sessionDict_ = sessionDict;
+            Log = NullLog.GetInstance();
+        }
+
+        /// <summary>
+        /// Create a ThreadedSocketReactor.
+        /// </summary>
+        /// <param name="serverSocketEndPoint"></param>
+        /// <param name="socketSettings"></param>
+        /// <param name="log">Can be null, in which case no logging will be performed.</param>
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, ILog log)
+        {
+            socketSettings_ = socketSettings;
+            tcpListener_ = new TcpListener(serverSocketEndPoint);
+            Log = (log == null) ? NullLog.GetInstance() : log;
         }
 
         public void Start()
@@ -70,7 +87,8 @@ namespace QuickFix
                     }
                     catch (System.Exception e)
                     {
-                        this.Log("Error while closing server socket: " + e.Message);
+                        Log.OnEvent("Error while closing server socket: " + e.Message);
+                        Log.OnDebug(e.ToString());
                     }
                 }
             }
@@ -88,19 +106,37 @@ namespace QuickFix
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_);
+
+                    ClientHandlerThread t = null;
+                    if (sessionDict_ != null)
+                    {
+                        // this if only needed for deprecated DebugFileLogPath setting - remove in v2
+#pragma warning disable 618
+                        t = new ClientHandlerThread(client, nextClientId_++, sessionDict_);
+#pragma warning restore 618
+                    }
+                    else
+                    {
+                        t = new ClientHandlerThread(client, nextClientId_++, Log);
+                    }
+
+
                     lock (sync_)
                     {
                         clientThreads_.AddLast(t);
                     }
-                    // FIXME set the client thread's exception handler here
-                    t.Log("connected");
+
+                    Log.OnEvent("connected");
+
                     t.Start();
                 }
                 catch (System.Exception e)
                 {
                     if (State.RUNNING == ReactorState)
-                        this.Log("Error accepting connection: " + e.Message);
+                    {
+                        Log.OnEvent("Error accepting connection: " + e.Message);
+                        Log.OnDebug(e.ToString());
+                    }
                 }
             }
             ShutdownClientHandlerThreads();
@@ -122,7 +158,8 @@ namespace QuickFix
             {
                 if (State.SHUTDOWN_COMPLETE != state_)
                 {
-                    this.Log("shutting down...");
+                    Log.OnEvent("shutting down...");
+
                     while (clientThreads_.Count > 0)
                     {
                         ClientHandlerThread t = clientThreads_.First.Value;
@@ -134,21 +171,13 @@ namespace QuickFix
                         }
                         catch (System.Exception e)
                         {
-                            t.Log("Error shutting down: " + e.Message);
+                            Log.OnEvent("Error shutting down: " + e.Message);
+                            Log.OnDebug(e.ToString());
                         }
                     }
                     state_ = State.SHUTDOWN_COMPLETE;
                 }
             }
-        }
-
-        /// <summary>
-        /// FIXME do real logging
-        /// </summary>
-        /// <param name="s"></param>
-        private void Log(string s)
-        {
-            System.Console.WriteLine(s);
         }
     }
 }
