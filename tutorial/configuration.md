@@ -574,7 +574,14 @@ QuickFIX Settings
   </tr>
 
   <tr>
-    <td class='setting'>DebugFileLogPath</td>
+    <td class='setting'>ExtraDebugLogging</td>
+    <td class='description'>Whether to include extra debugging information in the logs</td>
+    <td class='valid'><div>Y</div><div>N</div></td>
+    <td class='default'>N</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>DebugFileLogPath <span style="color: red">Deprecated</span></td>
     <td class='description'>Directory to store ThreadedClientAcceptor thread logs.
     <td class='valid'>Valid directory for storing files, must have write access</td>
     <td class='default'>Value of <tt>FileLogPath</tt> if present, else "log".</td>
