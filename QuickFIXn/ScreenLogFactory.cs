@@ -58,8 +58,8 @@ namespace QuickFix
                     logOutgoing = dict.GetBool(SCREEN_LOG_SHOW_OUTGOING);
                 if (dict.Has(SCREEN_LOG_SHOW_EVENTS))
                     logEvent = dict.GetBool(SCREEN_LOG_SHOW_EVENTS);
-                if (dict.Has(SessionSettings.DEBUG))
-                    logDebug = dict.GetBool(SessionSettings.DEBUG);
+                if (dict.Has(SessionSettings.EXTRA_DEBUG_LOGGING))
+                    logDebug = dict.GetBool(SessionSettings.EXTRA_DEBUG_LOGGING);
             }
 
             return new ScreenLog(sessionID, logIncoming, logOutgoing, logEvent, logDebug);

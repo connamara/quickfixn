@@ -27,7 +27,7 @@ namespace QuickFix
             return new FileLog(
                 dict.GetString(SessionSettings.FILE_LOG_PATH),
                 sessionID,
-                dict.Has(SessionSettings.DEBUG) ? dict.GetBool(SessionSettings.DEBUG) : false
+                dict.Has(SessionSettings.EXTRA_DEBUG_LOGGING) ? dict.GetBool(SessionSettings.EXTRA_DEBUG_LOGGING) : false
             );
         }
 
