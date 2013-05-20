@@ -839,5 +839,29 @@ namespace UnitTests
 
             Assert.False(partyGroup.IsSetNoPartySubIDs());
         }
+
+        [Test]
+        public void IsAdmin_IsApp()
+        {
+            // issue 173
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX42.xml");
+
+            string[] newsFields = { "8=FIX4.2", "9=5", "35=B", "10=133" };
+            string newsStr = String.Join(Message.SOH, newsFields) + Message.SOH;
+            QuickFix.FIX42.News news = new QuickFix.FIX42.News();
+            news.FromString(newsStr, true, dd, dd, _defaultMsgFactory);
+
+            string[] hbFields = { "8=FIX.4.2", "9=16", "35=0", "34=3", "49=TW", "10=1" };
+            string hbStr = String.Join(Message.SOH, hbFields) + Message.SOH;
+            QuickFix.FIX42.Heartbeat heartbeat = new QuickFix.FIX42.Heartbeat();
+            heartbeat.FromString(hbStr, true, dd, dd, _defaultMsgFactory);
+
+            Assert.False(news.IsAdmin());
+            //Assert.True(news.IsApp());
+
+            //Assert.True(heartbeat.IsAdmin());
+            Assert.False(heartbeat.IsApp());
+        }
     }
 }
