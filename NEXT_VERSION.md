@@ -30,4 +30,5 @@ Changes since the last version:
 * (patch) issue #153 - Chunked resends are now sent "on-demand" instead of all-at-once (roji)
 * (patch) issue #173 - bug in Message.IsAdmin/IsApp (TomasVetrovsky/gbirchmeier)
 * (patch) issue #166 - FIX44 spec missing PutOrCall and UnderlyingPutOrCall (gbirchmeier)
+* (patch) corrections/updates to FIX44 spec based on diff with QF/j version (gbirchmeier)
 
