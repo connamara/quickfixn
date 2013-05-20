@@ -52,6 +52,19 @@ namespace UnitTests
             disconnected = true;
         }
 
+        public void DumpMsgLookup()
+        {
+            Console.WriteLine("Responder dump:");
+            foreach (string key in msgLookup.Keys)
+            {
+                Console.WriteLine(String.Format("  {0}: count {1}", key, msgLookup[key].Count));
+                foreach (QuickFix.Message m in msgLookup[key])
+                {
+                    Console.WriteLine("  - " + m.ToString());
+                }
+            }
+        }
+
         #endregion
     }
 
@@ -202,6 +215,24 @@ namespace UnitTests
                 responder.msgLookup[QuickFix.Fields.MsgType.BUSINESS_MESSAGE_REJECT].Count > 0;
         }
 
+        public bool SENT_BUSINESS_REJECT(int reason)
+        {
+            if (!SENT_BUSINESS_REJECT())
+                return false;
+
+            QuickFix.Message msg = responder.msgLookup[QuickFix.Fields.MsgType.BUSINESS_MESSAGE_REJECT].First();
+
+            if (!msg.IsSetField(QuickFix.Fields.Tags.BusinessRejectReason))
+                return false;
+
+            QuickFix.Fields.BusinessRejectReason reasonField = new QuickFix.Fields.BusinessRejectReason();
+            msg.GetField(reasonField);
+            if (reasonField.getValue() != reason)
+                return false;
+
+            return true;
+        }
+
         public bool SENT_LOGOUT()
         {
             return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.LOGOUT) &&
@@ -287,7 +318,7 @@ namespace UnitTests
             Logon();
             SendNOSMessage();
 
-            Assert.That(SENT_REJECT(QuickFix.Fields.SessionRejectReason.REQUIRED_TAG_MISSING,61));
+            Assert.That(SENT_BUSINESS_REJECT(QuickFix.Fields.BusinessRejectReason.CONDITIONALLY_REQUIRED_FIELD_MISSING));
         }
 
 
