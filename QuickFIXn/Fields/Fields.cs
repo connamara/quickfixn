@@ -4922,6 +4922,10 @@ namespace QuickFix.Fields
         public UnderlyingPutOrCall(int val)
             :base(Tags.UnderlyingPutOrCall, val) {}
 
+
+        // Field Enumerations
+        public const int PUT = 0;
+        public const int CALL = 1;
     }
 
 

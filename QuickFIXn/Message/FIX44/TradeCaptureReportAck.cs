@@ -924,6 +924,37 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.MaturityDate);
             }
+            public QuickFix.Fields.PutOrCall PutOrCall
+            { 
+                get 
+                {
+                    QuickFix.Fields.PutOrCall val = new QuickFix.Fields.PutOrCall();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+            
+            public void Set(QuickFix.Fields.PutOrCall val) 
+            { 
+                this.PutOrCall = val;
+            }
+            
+            public QuickFix.Fields.PutOrCall Get(QuickFix.Fields.PutOrCall val) 
+            { 
+                GetField(val);
+                return val;
+            }
+            
+            public bool IsSet(QuickFix.Fields.PutOrCall val) 
+            { 
+                return IsSetPutOrCall();
+            }
+            
+            public bool IsSetPutOrCall() 
+            { 
+                return IsSetField(Tags.PutOrCall);
+            }
             public QuickFix.Fields.CouponPaymentDate CouponPaymentDate
             { 
                 get 
