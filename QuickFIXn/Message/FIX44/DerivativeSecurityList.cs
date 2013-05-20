@@ -459,6 +459,37 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.UnderlyingMaturityDate);
             }
+            public QuickFix.Fields.UnderlyingPutOrCall UnderlyingPutOrCall
+            { 
+                get 
+                {
+                    QuickFix.Fields.UnderlyingPutOrCall val = new QuickFix.Fields.UnderlyingPutOrCall();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+            
+            public void Set(QuickFix.Fields.UnderlyingPutOrCall val) 
+            { 
+                this.UnderlyingPutOrCall = val;
+            }
+            
+            public QuickFix.Fields.UnderlyingPutOrCall Get(QuickFix.Fields.UnderlyingPutOrCall val) 
+            { 
+                GetField(val);
+                return val;
+            }
+            
+            public bool IsSet(QuickFix.Fields.UnderlyingPutOrCall val) 
+            { 
+                return IsSetUnderlyingPutOrCall();
+            }
+            
+            public bool IsSetUnderlyingPutOrCall() 
+            { 
+                return IsSetField(Tags.UnderlyingPutOrCall);
+            }
             public QuickFix.Fields.UnderlyingCouponPaymentDate UnderlyingCouponPaymentDate
             { 
                 get 
@@ -1799,7 +1830,7 @@ namespace QuickFix
             }
             public class NoRelatedSymGroup : Group
             {
-                public static int[] fieldOrder = {Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.SecurityIDSource, Tags.NoSecurityAltID, Tags.Product, Tags.CFICode, Tags.SecurityType, Tags.SecuritySubType, Tags.MaturityMonthYear, Tags.MaturityDate, Tags.CouponPaymentDate, Tags.IssueDate, Tags.RepoCollateralSecurityType, Tags.RepurchaseTerm, Tags.RepurchaseRate, Tags.Factor, Tags.CreditRating, Tags.InstrRegistry, Tags.CountryOfIssue, Tags.StateOrProvinceOfIssue, Tags.LocaleOfIssue, Tags.RedemptionDate, Tags.StrikePrice, Tags.StrikeCurrency, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, Tags.Pool, Tags.ContractSettlMonth, Tags.CPProgram, Tags.CPRegType, Tags.NoEvents, Tags.DatedDate, Tags.InterestAccrualDate, Tags.Currency, Tags.ExpirationCycle, Tags.DeliveryForm, Tags.PctAtRisk, Tags.NoInstrAttrib, Tags.NoLegs, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
+                public static int[] fieldOrder = {Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.SecurityIDSource, Tags.NoSecurityAltID, Tags.Product, Tags.CFICode, Tags.SecurityType, Tags.SecuritySubType, Tags.MaturityMonthYear, Tags.MaturityDate, Tags.PutOrCall, Tags.CouponPaymentDate, Tags.IssueDate, Tags.RepoCollateralSecurityType, Tags.RepurchaseTerm, Tags.RepurchaseRate, Tags.Factor, Tags.CreditRating, Tags.InstrRegistry, Tags.CountryOfIssue, Tags.StateOrProvinceOfIssue, Tags.LocaleOfIssue, Tags.RedemptionDate, Tags.StrikePrice, Tags.StrikeCurrency, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, Tags.Pool, Tags.ContractSettlMonth, Tags.CPProgram, Tags.CPRegType, Tags.NoEvents, Tags.DatedDate, Tags.InterestAccrualDate, Tags.Currency, Tags.ExpirationCycle, Tags.DeliveryForm, Tags.PctAtRisk, Tags.NoInstrAttrib, Tags.NoLegs, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
             
                 public NoRelatedSymGroup() 
                   :base( Tags.NoRelatedSym, Tags.Symbol, fieldOrder)
@@ -2153,6 +2184,37 @@ namespace QuickFix
                 public bool IsSetMaturityDate() 
                 { 
                     return IsSetField(Tags.MaturityDate);
+                }
+                public QuickFix.Fields.PutOrCall PutOrCall
+                { 
+                    get 
+                    {
+                        QuickFix.Fields.PutOrCall val = new QuickFix.Fields.PutOrCall();
+                        GetField(val);
+                        return val;
+                    }
+                    set { SetField(value); }
+                }
+                
+                public void Set(QuickFix.Fields.PutOrCall val) 
+                { 
+                    this.PutOrCall = val;
+                }
+                
+                public QuickFix.Fields.PutOrCall Get(QuickFix.Fields.PutOrCall val) 
+                { 
+                    GetField(val);
+                    return val;
+                }
+                
+                public bool IsSet(QuickFix.Fields.PutOrCall val) 
+                { 
+                    return IsSetPutOrCall();
+                }
+                
+                public bool IsSetPutOrCall() 
+                { 
+                    return IsSetField(Tags.PutOrCall);
                 }
                 public QuickFix.Fields.CouponPaymentDate CouponPaymentDate
                 { 
