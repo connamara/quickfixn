@@ -930,10 +930,17 @@ namespace QuickFix
             state_.LastReceivedTimeDT = DateTime.UtcNow;
             state_.TestRequestCounter = 0;
 
-            if (Message.IsAdminMsgType(msgType))
-                this.Application.FromAdmin(msg, this.SessionID);
-            else
-                this.Application.FromApp(msg, this.SessionID);
+            try
+            {
+                if (Message.IsAdminMsgType(msgType))
+                    this.Application.FromAdmin(msg, this.SessionID);
+                else
+                    this.Application.FromApp(msg, this.SessionID);
+            }
+            catch (Exception e)
+            {
+                this.Log.OnEvent("Application generated an exception: " + e.Message);
+            }
 
             return true;
         }
