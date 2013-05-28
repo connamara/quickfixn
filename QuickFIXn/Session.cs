@@ -930,16 +930,35 @@ namespace QuickFix
             state_.LastReceivedTimeDT = DateTime.UtcNow;
             state_.TestRequestCounter = 0;
 
-            try
+            if (Message.IsAdminMsgType(msgType))
             {
-                if (Message.IsAdminMsgType(msgType))
+                try
+                {
                     this.Application.FromAdmin(msg, this.SessionID);
-                else
-                    this.Application.FromApp(msg, this.SessionID);
+                }
+                catch (RejectLogon)
+                {
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    this.Log.OnEvent("Application threw an exception from FromAdmin: " + e.Message);
+                }
             }
-            catch (Exception e)
+            else
             {
-                this.Log.OnEvent("Application generated an exception: " + e.Message);
+                try
+                {
+                    this.Application.FromApp(msg, this.SessionID);
+                }
+                catch (Exception e)
+                {
+                    if (e is FieldNotFoundException ||
+                        e is UnsupportedMessageType ||
+                        e is TagException)
+                        throw;
+                    this.Log.OnEvent("Application threw an exception from FromApp: " + e.Message);
+                }
             }
 
             return true;
