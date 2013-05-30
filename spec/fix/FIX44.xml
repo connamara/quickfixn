@@ -3248,7 +3248,7 @@
     </group>
     <component name="PositionQty" required="Y" />
     <component name="PositionAmountData" required="Y" />
-    <field name="RegistStatus" required="N" />   RegNonRegInd
+    <field name="RegistStatus" required="N" />
     <field name="DeliveryDate" required="N" />   
     <field name="Text" required="N" />   
     <field name="EncodedTextLen" required="N" />
@@ -3667,6 +3667,7 @@
       <field name="SecuritySubType" required="N" />
       <field name="MaturityMonthYear" required="N" />
       <field name="MaturityDate" required="N" />
+      <field name="PutOrCall" required="N" />
       <field name="CouponPaymentDate" required="N" />
       <field name="IssueDate" required="N" />
       <field name="RepoCollateralSecurityType" required="N" />
@@ -3719,6 +3720,7 @@
       <field name="UnderlyingSecuritySubType" required="N" />
       <field name="UnderlyingMaturityMonthYear" required="N" />
       <field name="UnderlyingMaturityDate" required="N" />
+      <field name="UnderlyingPutOrCall" required="N" />
       <field name="UnderlyingCouponPaymentDate" required="N" />
       <field name="UnderlyingIssueDate" required="N" />
       <field name="UnderlyingRepoCollateralSecurityType" required="N" />
@@ -4372,6 +4374,10 @@
       <value enum="7" description="OTHER" />
       <value enum="8" description="INCORRECT_ALLOCATED_QUANTITY" />
       <value enum="9" description="CALCULATION_DIFFERENCE" />
+      <value enum="10" description="UNKNOWN_OR_STALE_EXEC_ID"/>
+      <value enum="11" description="MISMATCHED_DATA_VALUE"/>
+      <value enum="12" description="UNKNOWN_CLORDID"/>
+      <value enum="13" description="WAREHOUSE_REQUEST_REJECTED"/>
     </field>
     <field number="89" name="Signature" type="DATA" />
     <field number="90" name="SecureDataLen" type="LENGTH" />
@@ -4495,6 +4501,9 @@
       <value enum="7" description="OTHER" />
       <value enum="8" description="MARKUP" />
       <value enum="9" description="CONSUMPTION_TAX" />
+      <value enum="10" description="PER_TRANSACTION"/>
+      <value enum="11" description="CONVERSION"/>
+      <value enum="12" description="AGENT"/>
     </field>
     <field number="140" name="PrevClosePx" type="PRICE" />
     <field number="141" name="ResetSeqNumFlag" type="BOOLEAN" />
@@ -4687,6 +4696,10 @@
     <field number="198" name="SecondaryOrderID" type="STRING" />
     <field number="199" name="NoIOIQualifiers" type="NUMINGROUP" />
     <field number="200" name="MaturityMonthYear" type="MONTHYEAR" />
+    <field number="201" name="PutOrCall" type="INT">
+      <value enum="0" description="PUT"/>
+      <value enum="1" description="CALL"/>
+    </field>
     <field number="202" name="StrikePrice" type="PRICE" />
     <field number="203" name="CoveredOrUncovered" type="INT">
       <value enum="0" description="COVERED" />
@@ -5047,6 +5060,7 @@
       <value enum="7" description="INVALID_BID_ASK_SPREAD" />
       <value enum="8" description="INVALID_PRICE" />
       <value enum="9" description="NOT_AUTHORIZED_TO_QUOTE_SECURITY" />
+      <value enum="99" description="OTHER" />
     </field>
     <field number="301" name="QuoteResponseLevel" type="INT">
       <value enum="0" description="NO_ACKNOWLEDGEMENT" />
@@ -5068,6 +5082,10 @@
     <field number="311" name="UnderlyingSymbol" type="STRING" />
     <field number="312" name="UnderlyingSymbolSfx" type="STRING" />
     <field number="313" name="UnderlyingMaturityMonthYear" type="MONTHYEAR" />
+    <field number="315" name="UnderlyingPutOrCall" type="INT">
+      <value enum="0" description="PUT"/>
+      <value enum="1" description="CALL"/>
+    </field>
     <field number="316" name="UnderlyingStrikePrice" type="PRICE" />
     <field number="317" name="UnderlyingOptAttribute" type="CHAR" />
     <field number="318" name="UnderlyingCurrency" type="CURRENCY" />
@@ -5357,6 +5375,8 @@
       <value enum="7" description="TED_PRICE" />
       <value enum="8" description="TED_YIELD" />
       <value enum="9" description="YIELD" />
+      <value enum="10" description="FIXED_CABINET_TRADE_PRICE"/>
+      <value enum="11" description="VARIABLE_CABINET_TRADE_PRICE"/>
     </field>
     <field number="424" name="DayOrderQty" type="QTY" />
     <field number="425" name="DayCumQty" type="QTY" />
@@ -5537,10 +5557,14 @@
       <value enum="7" description="FEDWIRE" />
       <value enum="8" description="DIRECT_CREDIT" />
       <value enum="9" description="ACH_CREDIT" />
+      <value enum="10" description="BPAY"/>
+      <value enum="11" description="HIGH_VALUE_CLEARING_SYSTEM"/>
+      <value enum="12" description="REINVEST_IN_FUND"/>
     </field>
     <field number="478" name="CashDistribCurr" type="CURRENCY" />
     <field number="479" name="CommCurrency" type="CURRENCY" />
     <field number="480" name="CancellationRights" type="CHAR">
+      <value enum="Y" description="YES"/>
       <value enum="N" description="NO_EXECUTION_ONLY" />
       <value enum="M" description="NO_WAIVER_AGREEMENT" />
       <value enum="O" description="NO_INSTITUTIONAL" />
@@ -5587,6 +5611,12 @@
       <value enum="7" description="FEDWIRE" />
       <value enum="8" description="DEBIT_CARD" />
       <value enum="9" description="DIRECT_DEBIT" />
+      <value enum="10" description="DIRECT_CREDIT"/>
+      <value enum="11" description="CREDIT_CARD"/>
+      <value enum="12" description="ACH_DEBIT"/>
+      <value enum="13" description="ACH_CREDIT"/>
+      <value enum="14" description="BPAY"/>
+      <value enum="15" description="HIGH_VALUE_CLEARING_SYSTEM"/>
     </field>
     <field number="493" name="RegistAcctType" type="STRING" />
     <field number="494" name="Designation" type="STRING" />
@@ -5685,6 +5715,10 @@
       <value enum="7" description="CUSTODIAN_UNDER_GIFTS_TO_MINORS_ACT" />
       <value enum="8" description="TRUSTS" />
       <value enum="9" description="FIDUCIARIES" />
+      <value enum="10" description="NETWORKING_SUB_ACCOUNT"/>
+      <value enum="11" description="NON_PROFIT_ORGANIZATION"/>
+      <value enum="12" description="CORPORATE_BODY"/>
+      <value enum="13" description="NOMINEE"/>
     </field>
     <field number="523" name="PartySubID" type="STRING" />
     <field number="524" name="NestedPartyID" type="STRING" />
@@ -5738,6 +5772,7 @@
       <value enum="4" description="INVALID_OR_UNKNOWN_CFICODE" />
       <value enum="5" description="INVALID_OR_UNKNOWN_SECURITY_TYPE" />
       <value enum="6" description="INVALID_OR_UNKNOWN_TRADING_SESSION" />
+      <value enum="99" description="OTHER" />
     </field>
     <field number="533" name="TotalAffectedOrders" type="INT" />
     <field number="534" name="NoAffectedOrders" type="INT" />
@@ -5848,6 +5883,10 @@
       <value enum="7" description="EXCLUDE_FROM_CENTRAL_COUNTERPARTY" />
       <value enum="8" description="MANUAL_MODE" />
       <value enum="9" description="AUTOMATIC_POSTING_MODE" />
+      <value enum="10" description="AUTOMATIC_GIVE_UP_MODE"/>
+      <value enum="11" description="QUALIFIED_SERVICE_REPRESENTATIVE"/>
+      <value enum="12" description="CUSTOMER_TRADE"/>
+      <value enum="13" description="SELF_CLEARING"/>
     </field>
     <field number="578" name="TradeInputSource" type="STRING" />
     <field number="579" name="TradeInputDevice" type="STRING" />
@@ -5908,7 +5947,7 @@
     <field number="601" name="LegSymbolSfx" type="STRING" />
     <field number="602" name="LegSecurityID" type="STRING" />
     <field number="603" name="LegSecurityIDSource" type="STRING" />
-    <field number="604" name="NoLegSecurityAltID" type="STRING" />
+    <field number="604" name="NoLegSecurityAltID" type="NUMINGROUP" />
     <field number="605" name="LegSecurityAltID" type="STRING" />
     <field number="606" name="LegSecurityAltIDSource" type="STRING" />
     <field number="607" name="LegProduct" type="INT" />
@@ -5989,6 +6028,8 @@
       <value enum="7" description="NO_MATCH_FOR_INQUIRY" />
       <value enum="8" description="NO_MARKET_FOR_INSTRUMENT" />
       <value enum="9" description="NO_INVENTORY" />
+      <value enum="10" description="PASS"/>
+      <value enum="99" description="OTHER"/>
     </field>
     <field number="659" name="SideComplianceID" type="STRING" />
     <field number="660" name="AcctIDSource" type="INT">
@@ -5997,6 +6038,7 @@
       <value enum="3" description="TFM" />
       <value enum="4" description="OMGEO" />
       <value enum="5" description="DTCC_CODE" />
+      <value enum="99" description="OTHER"/>
     </field>
     <field number="661" name="AllocAcctIDSource" type="INT" />
     <field number="662" name="BenchmarkPrice" type="PRICE" />
@@ -6057,6 +6099,7 @@
       <value enum="7" description="TED_PRICE" />
       <value enum="8" description="TED_YIELD" />
       <value enum="9" description="YIELD_SPREAD" />
+      <value enum="10" description="YIELD"/>
     </field>
     <field number="693" name="QuoteRespID" type="STRING" />
     <field number="694" name="QuoteRespType" type="INT">
@@ -6152,6 +6195,7 @@
     <field number="723" name="PosMaintResult" type="INT">
       <value enum="0" description="SUCCESSFUL_COMPLETION_NO_WARNINGS_OR_ERRORS" />
       <value enum="1" description="REJECTED" />
+      <value enum="99" description="OTHER"/>
     </field>
     <field number="724" name="PosReqType" type="INT">
       <value enum="0" description="POSITIONS" />
@@ -6215,6 +6259,7 @@
       <value enum="5" description="INVALID_DESTINATION_REQUESTED" />
       <value enum="8" description="TRADEREQUESTTYPE_NOT_SUPPORTED" />
       <value enum="9" description="UNAUTHORIZED_FOR_TRADE_CAPTURE_REPORT_REQUEST" />
+      <value enum="10" description="YIELD"/>
     </field>
     <field number="750" name="TradeRequestStatus" type="INT">
       <value enum="0" description="ACCEPTED" />
@@ -6227,6 +6272,7 @@
       <value enum="2" description="UNKNOWN_INSTRUMENT" />
       <value enum="3" description="UNAUTHORIZED_TO_REPORT_TRADES" />
       <value enum="4" description="INVALID_TRADE_TYPE" />
+      <value enum="10" description="YIELD"/>
     </field>
     <field number="752" name="SideMultiLegReportingType" type="INT">
       <value enum="1" description="SINGLE_SECURITY" />
@@ -6267,6 +6313,7 @@
     <field number="774" name="ConfirmRejReason" type="INT">
       <value enum="1" description="MISMATCHED_ACCOUNT" />
       <value enum="2" description="MISSING_SETTLEMENT_INSTRUCTIONS" />
+      <value enum="99" description="OTHER" />
     </field>
     <field number="775" name="BookingType" type="INT">
       <value enum="0" description="REGULAR_BOOKING" />
@@ -6307,6 +6354,7 @@
       <value enum="0" description="UNABLE_TO_PROCESS_REQUEST" />
       <value enum="1" description="UNKNOWN_ACCOUNT" />
       <value enum="2" description="NO_MATCHING_SETTLEMENT_INSTRUCTIONS_FOUND" />
+      <value enum="99" description="OTHER" />
     </field>
     <field number="793" name="SecondaryAllocID" type="STRING" />
     <field number="794" name="AllocReportType" type="INT">
@@ -6397,6 +6445,7 @@
       <value enum="7" description="BUNCHED_TRADE" />
       <value enum="8" description="LATE_BUNCHED_TRADE" />
       <value enum="9" description="PRIOR_REFERENCE_PRICE_TRADE" />
+      <value enum="10" description="AFTER_HOURS_TRADE" />
     </field>
     <field number="829" name="TrdSubType" type="INT" />
     <field number="830" name="TransferReason" type="STRING" />
@@ -6505,6 +6554,7 @@
       <value enum="2" description="CALL" />
       <value enum="3" description="TENDER" />
       <value enum="4" description="SINKING_FUND_CALL" />
+      <value enum="99" description="OTHER" />
     </field>
     <field number="866" name="EventDate" type="LOCALMKTDATE" />
     <field number="867" name="EventPx" type="PRICE" />
@@ -6521,6 +6571,20 @@
       <value enum="7" description="STEPPED_COUPON" />
       <value enum="8" description="COUPON_PERIOD" />
       <value enum="9" description="WHEN_AND_IF_ISSUED" />
+      <value enum="10" description="ORIGINAL_ISSUE_DISCOUNT"/>
+      <value enum="11" description="CALLABLE_PUTTABLE"/>
+      <value enum="12" description="ESCROWED_TO_MATURITY"/>
+      <value enum="13" description="ESCROWED_TO_REDEMPTION_DATE"/>
+      <value enum="14" description="PRE_REFUNDED"/>
+      <value enum="15" description="IN_DEFAULT"/>
+      <value enum="16" description="UNRATED"/>
+      <value enum="17" description="TAXABLE"/>
+      <value enum="18" description="INDEXED"/>
+      <value enum="19" description="SUBJECT_TO_ALTERNATIVE_MINIMUM_TAX"/>
+      <value enum="20" description="ORIGINAL_ISSUE_DISCOUNT_PRICE"/>
+      <value enum="21" description="CALLABLE_BELOW_MATURITY_VALUE"/>
+      <value enum="22" description="CALLABLE_WITHOUT_NOTICE_BY_MAIL_TO_HOLDER_UNLESS_REGISTERED"/>
+      <value enum="99" description="TEXT"/>
     </field>
     <field number="872" name="InstrAttribValue" type="STRING" />
     <field number="873" name="DatedDate" type="LOCALMKTDATE" />
@@ -6596,6 +6660,7 @@
       <value enum="3" description="INSUFFICIENT_COLLATERAL" />
       <value enum="4" description="INVALID_TYPE_OF_COLLATERAL" />
       <value enum="5" description="EXCESSIVE_SUBSTITUTION" />
+      <value enum="99" description="OTHER" />
     </field>
     <field number="907" name="CollAsgnRefID" type="STRING" />
     <field number="908" name="CollRptID" type="STRING" />
