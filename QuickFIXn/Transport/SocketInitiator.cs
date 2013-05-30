@@ -37,7 +37,6 @@ namespace QuickFix.Transport
         #region Private Members
         
         private Socket socket_ = null;
-        private byte[] _readBuffer = new byte[512];
         private volatile bool shutdownRequested_ = false;
         private DateTime lastConnectTimeDT = DateTime.MinValue;
         private int reconnectInterval_ = 30;
