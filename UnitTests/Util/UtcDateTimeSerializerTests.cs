@@ -9,7 +9,7 @@ using QuickFix.Util;
 namespace UnitTests.Util
 {
     [TestFixture]
-    class UtcDateTimeSerializerTests
+    public class UtcDateTimeSerializerTests
     {
         /// <summary>
         /// A little precision is lost in the serialization, so exact equality doesn't happen.

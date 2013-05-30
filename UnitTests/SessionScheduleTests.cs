@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace UnitTests
 {
     [TestFixture]
-    class SessionScheduleTests
+    public class SessionScheduleTests
     {
         #region Properties
         /// <summary>
