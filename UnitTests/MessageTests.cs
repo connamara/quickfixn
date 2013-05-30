@@ -27,7 +27,7 @@ namespace UnitTests
             Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(err1); });
             // no SOH at end of 35
             string err2 = String.Join(Message.SOH, new string[] { "8=FIX.4.4", "35=A" });
-            Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(err1); });
+            Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(err2); });
         }
 
         [Test]
