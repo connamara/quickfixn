@@ -104,7 +104,6 @@ namespace UnitTests
         [Test]
         public void TCRGroupCTORTest()
         {
-            QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
             int[] expFieldOrder = new int[] {
                     54, 37, 198, 11, 526, 66, 453, 1, 660, 581, 81, 575, 576,
                     635, 578, 579, 821, 15, 376, 377, 528, 529, 582, 40, 18, 483,
