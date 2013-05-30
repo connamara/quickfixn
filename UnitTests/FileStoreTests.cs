@@ -8,7 +8,7 @@ using System.Threading;
 namespace UnitTests
 {
     [TestFixture]
-    class FileStoreTests
+    public class FileStoreTests
     {
         QuickFix.FileStore store;
         QuickFix.FileStoreFactory factory;
