@@ -1722,6 +1722,8 @@ namespace QuickFix.Fields
         public const int OTHER_99 = 99;
         public const int OTHER = 7;
         public const int INCORRECT_AVERAGE_PRICE = 2;
+        public const int UNKNOWN_OR_STALE_EXEC_ID = 10;
+        public const int MISMATCHED_DATA_VALUE = 11;
     }
 
 
@@ -4922,6 +4924,10 @@ namespace QuickFix.Fields
         public UnderlyingPutOrCall(int val)
             :base(Tags.UnderlyingPutOrCall, val) {}
 
+
+        // Field Enumerations
+        public const int PUT = 0;
+        public const int CALL = 1;
     }
 
 
@@ -8427,6 +8433,7 @@ namespace QuickFix.Fields
         public const int DIRECT_CREDIT = 8;
         public const int ACH_CREDIT = 9;
         public const int FEDWIRE = 7;
+        public const int HIGH_VALUE_CLEARING_SYSTEM = 11;
     }
 
 
@@ -10136,6 +10143,7 @@ namespace QuickFix.Fields
         public const int EXCLUDE_FROM_CENTRAL_COUNTERPARTY = 7;
         public const int MANUAL_MODE = 8;
         public const int AUTOMATIC_POSTING_MODE = 9;
+        public const int QUALIFIED_SERVICE_REPRESENTATIVE = 11;
     }
 
 
@@ -12925,6 +12933,7 @@ namespace QuickFix.Fields
         public const int OTHER = 99;
         public const int UNAUTHORIZED_ROR_TRADE_CAPTURE_REPORT_REQUEST = 9;
         public const int UNAUTHORIZED_FOR_TRADE_CAPTURE_REPORT_REQUEST = 9;
+        public const int YIELD = 10;
     }
 
 
@@ -12965,6 +12974,7 @@ namespace QuickFix.Fields
         public const int INVALID_TRADE_TYPE = 4;
         public const int OTHER = 99;
         public const int INVALID_PARTY_INFORMATION = 1;
+        public const int YIELD = 10;
     }
 
 
@@ -14931,6 +14941,8 @@ namespace QuickFix.Fields
         public const int INSTRUMENT_PRICE_PRECISION = 27;
         public const int INSTRUMENT_STRIKE_PRICE = 28;
         public const int TRADEABLE_INDICATOR = 29;
+        public const int ORIGINAL_ISSUE_DISCOUNT_PRICE = 20;
+        public const int TEXT = 99;
     }
 
 

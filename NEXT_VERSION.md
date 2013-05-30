@@ -28,4 +28,7 @@ Changes since the last version:
 * (patch) issue #179 - bug in parsing groups when message factory is null (klmcwhirter/TomasVetrovsky/gbirchmeier)
 * (minor) issue #102 - allow SequenceReset/PossDup messages to omit tag 122 (thomasfleming/gbirchmeier)
 * (patch) issue #153 - Chunked resends are now sent "on-demand" instead of all-at-once (roji)
+* (patch) issue #173 - bug in Message.IsAdmin/IsApp (TomasVetrovsky/gbirchmeier)
+* (patch) issue #166 - FIX44 spec missing PutOrCall and UnderlyingPutOrCall (gbirchmeier)
+* (patch) corrections/updates to FIX44 spec based on diff with QF/j version (gbirchmeier)
 
