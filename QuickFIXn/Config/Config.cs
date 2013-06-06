@@ -10,10 +10,6 @@ namespace QuickFix.Config
     public class Config
     {
         public Config(string configFileName)
-        {
-            _configFileName = configFileName;
-        }
-
-        private string _configFileName;
+        { }
     }
 }

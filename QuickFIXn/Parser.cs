@@ -38,15 +38,12 @@ namespace QuickFix
             pos = 0;
 
             int length = 0;
-            int msgBodyStart = 0;
-            int msgBodyEnd = 0;
 
             try
             {
                 if (!ExtractLength(out length, out pos, buffer_))
                     return false;
 
-                msgBodyStart = pos;
                 pos += length;
                 if (buffer_.Length < pos)
                     return false;
@@ -54,7 +51,6 @@ namespace QuickFix
                 pos = IndexOf(buffer_, "\x01" + "10=", pos - 1);
                 if (-1 == pos)
                     return false;
-                msgBodyEnd = pos + 1;
                 pos += 4;
 
                 pos = IndexOf(buffer_, "\x01", pos);
@@ -83,7 +79,6 @@ namespace QuickFix
 
         public bool ExtractLength(out int length, out int pos, byte[] buf)
         {
-            string bufferString = System.Text.Encoding.UTF8.GetString(buf);
             length = 0;
             pos = 0;
 

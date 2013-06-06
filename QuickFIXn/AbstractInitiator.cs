@@ -53,13 +53,23 @@ namespace QuickFix
                 throw new ConfigError("No sessions defined");
         }
 
-        public void Start()
+        /// <summary>
+        /// Starts the specified factory.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <exception cref="System.ObjectDisposedException"></exception>
+        /// <exception cref="ConfigError">No sessions defined for initiator</exception>
+        /// <remarks>
+        /// Decura, new method
+        /// </remarks>
+        public void Start(SessionFactory factory)
         {
             if (_disposed)
                 throw new System.ObjectDisposedException(this.GetType().Name);
 
             // create all sessions
-            SessionFactory factory = new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
+            if (factory == null)
+                factory = new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
             foreach (SessionID sessionID in _settings.GetSessions())
             {
                 Dictionary dict = _settings.Get(sessionID);
@@ -76,6 +86,19 @@ namespace QuickFix
             OnConfigure(_settings);
             thread_ = new Thread(new ThreadStart(OnStart));
             thread_.Start();
+        }
+
+        /// <summary>
+        /// Starts a connection with a remote acceptor
+        /// </summary>
+        /// <exception cref="System.ObjectDisposedException"></exception>
+        /// <exception cref="ConfigError">No sessions defined for initiator</exception>
+        /// <remarks>
+        /// Decura, modified, removed all the code and calls the Start method passing null
+        /// </remarks>
+        public void Start()
+        {
+            Start(null);
         }
 
         /// <summary>

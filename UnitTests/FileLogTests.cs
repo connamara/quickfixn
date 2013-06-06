@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace UnitTests
 {
     [TestFixture]
-    class FileLogTests
+    public class FileLogTests
     {
         QuickFix.FileLog log;
 
