@@ -706,18 +706,21 @@ namespace QuickFix
         /// FIXME less operator new
         /// </summary>
         /// <param name="sessionID"></param>
+        /// <remarks>
+        /// Decura, modified all the SubId to use the string.IsNullOrEmpty as the value can also be null
+        /// </remarks>
         public void SetSessionID(SessionID sessionID)
         {
             this.Header.SetField(new BeginString(sessionID.BeginString));
             this.Header.SetField(new SenderCompID(sessionID.SenderCompID));
-            if (sessionID.SenderSubID != SessionID.NOT_SET)
+            if (!string.IsNullOrEmpty(sessionID.SenderSubID))
                 this.Header.SetField(new SenderSubID(sessionID.SenderSubID));
-            if (sessionID.SenderLocationID != SessionID.NOT_SET)
+            if (!string.IsNullOrEmpty(sessionID.SenderLocationID))
                 this.Header.SetField(new SenderLocationID(sessionID.SenderLocationID));
             this.Header.SetField(new TargetCompID(sessionID.TargetCompID));
-            if (sessionID.TargetSubID != SessionID.NOT_SET)
+            if (!string.IsNullOrEmpty(sessionID.TargetSubID))
                 this.Header.SetField(new TargetSubID(sessionID.TargetSubID));
-            if (sessionID.TargetLocationID != SessionID.NOT_SET)
+            if (!string.IsNullOrEmpty(sessionID.TargetLocationID))
                 this.Header.SetField(new TargetLocationID(sessionID.TargetLocationID));
         }
 
