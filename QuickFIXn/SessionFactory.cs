@@ -127,6 +127,8 @@ namespace QuickFix
             if (settings.Has(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM))
                 session.SetValidateLengthAndChecksum(settings.GetBool(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM));
             */
+            if (settings.Has(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME))
+                session.RequiresOrigSendingTime = settings.GetBool(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME);
 
             return session;
         }

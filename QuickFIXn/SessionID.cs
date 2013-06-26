@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace QuickFix
 {
     /// <summary>
@@ -87,6 +89,12 @@ namespace QuickFix
 
         public SessionID(string beginString, string senderCompID, string senderSubID, string senderLocationID, string targetCompID, string targetSubID, string targetLocationID, string sessionQualifier)
         {
+            if (beginString == null)
+              throw new ArgumentNullException("beginString");
+            if (senderCompID == null)
+              throw new ArgumentNullException("senderCompID");
+            if (targetCompID == null)
+              throw new ArgumentNullException("targetCompID");
             beginString_ = beginString;
             senderCompID_ = senderCompID;
             senderSubID_ = senderSubID;

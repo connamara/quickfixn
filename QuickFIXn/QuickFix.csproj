@@ -47,11 +47,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompositeLogFactory.cs" />
+    <Compile Include="CompositeLog.cs" />
     <Compile Include="DataDictionary\IFieldMapSpec.cs" />
     <Compile Include="DataDictionary\IGroupSpec.cs" />
     <Compile Include="IAcceptor.cs" />
-    <Compile Include="Applications\FIX4Application.cs" />
-    <Compile Include="Applications\FIX5Application.cs" />
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />
     <Compile Include="DataDictionary\DataDictionary.cs" />
@@ -127,6 +127,7 @@
     <Compile Include="StringUTF8.cs" />
     <Compile Include="ThreadedSocketReactor.cs" />
     <Compile Include="Transport\SocketInitiator.cs" />
+    <Compile Include="Util\UtcDateTimeSerializer.cs" />
     <Compile Include="Values.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

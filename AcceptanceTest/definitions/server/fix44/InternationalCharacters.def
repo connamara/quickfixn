@@ -1,0 +1,25 @@
+# International chars in test
+
+# for reference:
+# http://en.wikipedia.org/wiki/UTF-8
+# http://vim.wikia.com/wiki/Entering_special_characters
+# http://vimdoc.sourceforge.net/htmldoc/digraph.html
+
+iCONNECT
+# logon message and response
+I8=FIX.4.435=A34=149=TW52=<TIME>56=ISLD98=0108=2
+E8=FIX.4.49=6035=A34=149=ISLD52=00000000-00:00:00.00056=TW98=0108=210=0
+
+# for reference:
+# http://en.wikipedia.org/wiki/UTF-8
+# http://vim.wikia.com/wiki/Entering_special_characters
+# http://vimdoc.sourceforge.net/htmldoc/digraph.html
+
+#Send news with intl chars and receive echo
+I8=FIX.4.435=B34=249=TW52=<TIME>56=ISLD347=UTF-8148=ole!359=olé!33=0
+E8=FIX.4.49=8335=B34=249=ISLD52=00000000-00:00:00.00056=TW347=UTF-833=0148=ole!359=olé!10=69
+
+# logout message and response
+I8=FIX.4.435=534=349=TW52=<TIME>56=ISLD
+E8=FIX.4.49=4935=534=349=ISLD52=00000000-00:00:00.00056=TW10=0
+

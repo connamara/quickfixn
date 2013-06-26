@@ -17,7 +17,6 @@ namespace QuickFix
         private volatile bool isShutdownRequested_ = false;
         private TcpClient tcpClient_;
         private SocketReader socketReader_;
-        private long id_;
         private FileLog log_;
 
         [Obsolete("Use the other constructor")]
@@ -43,7 +42,6 @@ namespace QuickFix
             log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
 
             tcpClient_ = tcpClient;
-            id_ = clientId;
             socketReader_ = new SocketReader(tcpClient_, this);
         }
 

@@ -5,18 +5,25 @@ namespace QuickFix
 {
     public abstract class AbstractInitiator : IInitiator
     {
+        // from constructor
+        private IApplication _app = null;
+        private IMessageStoreFactory _storeFactory = null;
+        private SessionSettings _settings = null;
+        private ILogFactory _logFactory = null;
+        private IMessageFactory _msgFactory = null;
+
         private object sync_ = new object();
-        private Dictionary<SessionID,Session> sessions_ = new Dictionary<SessionID, Session>();
+        private bool _disposed = false;
+        private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private HashSet<SessionID> sessionIDs_ = new HashSet<SessionID>();
         private HashSet<SessionID> pending_ = new HashSet<SessionID>();
         private HashSet<SessionID> connected_ = new HashSet<SessionID>();
         private HashSet<SessionID> disconnected_ = new HashSet<SessionID>();
         private bool isStopped_ = true;
-        private SessionSettings settings_;
         private Thread thread_;
 
         #region Properties
-        
+
         public bool IsStopped
         {
             get { return isStopped_; }
@@ -32,46 +39,62 @@ namespace QuickFix
             : this(app, storeFactory, settings, logFactory, null)
         { }
 
-        public AbstractInitiator(IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
+        public AbstractInitiator(
+            IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
         {
-            settings_ = settings;
+            _app = app;
+            _storeFactory = storeFactory;
+            _settings = settings;
+            _logFactory = logFactory;
+            _msgFactory = messageFactory;
 
-            HashSet<SessionID> definedSessions = settings.GetSessions();
+            HashSet<SessionID> definedSessions = _settings.GetSessions();
             if (0 == definedSessions.Count)
                 throw new ConfigError("No sessions defined");
-
-            SessionFactory factory = new SessionFactory(app, storeFactory, logFactory, messageFactory);
-            foreach (SessionID sessionID in definedSessions)
-            {
-                Dictionary dict = settings.Get(sessionID);
-                if ("initiator".Equals(dict.GetString(SessionSettings.CONNECTION_TYPE)))
-                {
-                    sessionIDs_.Add(sessionID);
-                    sessions_[sessionID] = factory.Create(sessionID, dict);
-                    SetDisconnected(sessionID);
-                }
-            }
-
-            if (0 == sessions_.Count)
-                throw new ConfigError("No sessions defined for initiator");
         }
 
         public void Start()
         {
+            if (_disposed)
+                throw new System.ObjectDisposedException(this.GetType().Name);
+
+            // create all sessions
+            SessionFactory factory = new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
+            foreach (SessionID sessionID in _settings.GetSessions())
+            {
+                Dictionary dict = _settings.Get(sessionID);
+                sessionIDs_.Add(sessionID);
+                sessions_[sessionID] = factory.Create(sessionID, dict);
+                SetDisconnected(sessionID);
+            }
+
+            if (0 == sessions_.Count)
+                throw new ConfigError("No sessions defined for initiator");
+
+            // start it up
             isStopped_ = false;
-            OnConfigure(settings_);
-            OnInitialize(settings_);
+            OnConfigure(_settings);
             thread_ = new Thread(new ThreadStart(OnStart));
             thread_.Start();
         }
 
+        /// <summary>
+        /// Logout existing session and close connection.  Attempt graceful disconnect first.
+        /// </summary>
         public void Stop()
         {
             Stop(false);
         }
 
+        /// <summary>
+        /// Logout existing session and close connection
+        /// </summary>
+        /// <param name="force">If true, terminate immediately.  </param>
         public void Stop(bool force)
         {
+            if (_disposed)
+                throw new System.ObjectDisposedException(this.GetType().Name);
+
             if (IsStopped)
                 return;
 
@@ -92,6 +115,7 @@ namespace QuickFix
 
             if (!force)
             {
+                // TODO change this duration to always exceed LogoutTimeout setting
                 for (int second = 0; (second < 10) && IsLoggedOn(); ++second)
                     Thread.Sleep(1000);
             }
@@ -105,11 +129,22 @@ namespace QuickFix
 
             isStopped_ = true;
             OnStop();
+
+            // Give OnStop() time to finish its business
             thread_.Join(5000);
             thread_ = null;
 
-            foreach (Session session in enabledSessions)
-                session.Logon();
+            // dispose all sessions and clear all session sets
+            lock (sync_)
+            {
+                foreach (Session s in sessions_.Values)
+                    s.Dispose();
+            }
+            sessions_.Clear();
+            sessionIDs_.Clear();
+            pending_.Clear();
+            connected_.Clear();
+            disconnected_.Clear();
         }
 
         public bool IsLoggedOn()
@@ -129,15 +164,13 @@ namespace QuickFix
         #region Virtual Methods
 
         /// <summary>
-        /// Implemented to configure acceptor
+        /// Override this to configure additional implemenation-specific settings
         /// </summary>
         /// <param name="settings"></param>
         protected virtual void OnConfigure(SessionSettings settings)
         { }
-        /// <summary>
-        /// Implemented to initialize initiator
-        /// </summary>
-        /// <param name="settings"></param>
+
+        [System.Obsolete("This method's intended purpose is unclear.  Don't use it.")]
         protected virtual void OnInitialize(SessionSettings settings)
         { }
 
@@ -172,14 +205,19 @@ namespace QuickFix
 
         protected void Connect()
         {
-            lock(sync_)
+            lock (sync_)
             {
                 HashSet<SessionID> disconnectedSessions = new HashSet<SessionID>(disconnected_);
-                foreach(SessionID sessionID in disconnectedSessions)
+                foreach (SessionID sessionID in disconnectedSessions)
                 {
                     Session session = Session.LookupSession(sessionID);
-                    if(session.IsEnabled && session.IsSessionTime)
-                        DoConnect(sessionID, settings_.Get(sessionID));
+                    if (session.IsEnabled)
+                    {
+                        if (session.IsNewSession)
+                            session.Reset("New session");
+                        if (session.IsSessionTime)
+                            DoConnect(sessionID, _settings.Get(sessionID));
+                    }
                 }
             }
         }
@@ -248,6 +286,23 @@ namespace QuickFix
         public HashSet<SessionID> GetSessionIDs()
         {
             return new HashSet<SessionID>(sessions_.Keys);
+        }
+
+        /// <summary>
+        /// Any subclasses of AbstractInitiator should override this if they have resources to dispose
+        /// that aren't already covered in its OnStop() handler.
+        /// Any override should call base.Dispose(disposing).
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            this.Stop();
+            _disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
         }
     }
 }

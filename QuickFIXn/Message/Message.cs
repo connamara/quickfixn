@@ -495,6 +495,7 @@ namespace QuickFix
                     {
                         // We were already building an entry, so the delimiter means it's done.
                         fieldMap.AddGroup(grp, false);
+                        grp = null; // prepare for new Group
                     }
 
                     // Create a new group!
@@ -693,18 +694,12 @@ namespace QuickFix
 
         public bool IsAdmin()
         {
-            if(!IsSetField(Tags.MsgType))
-                return false;
-            string msgType = this.Header.GetField(Tags.MsgType); /// FIXME
-            return IsAdminMsgType(msgType);
+            return this.Header.IsSetField(Tags.MsgType) && IsAdminMsgType(this.Header.GetField(Tags.MsgType));
         }
 
         public bool IsApp()
         {
-            if (!IsSetField(Tags.MsgType))
-                return false;
-            string msgType = this.Header.GetField(Tags.MsgType); /// FIXME
-            return !IsAdminMsgType(msgType);
+            return this.Header.IsSetField(Tags.MsgType) && !IsAdminMsgType(this.Header.GetField(Tags.MsgType));
         }
 
         /// <summary>

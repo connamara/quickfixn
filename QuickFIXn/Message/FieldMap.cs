@@ -262,7 +262,8 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Gets an instance of a group
+        /// Gets an instance of a group.  Note: use GetGroup(int,Group) if you want
+        /// your group as the proper subtype (e.g. NoPartyIDsGroup instead of the generic Group)
         /// </summary>
         /// <param name="num">index of desired group (starting at 1)</param>
         /// <param name="field">counter tag of repeating group</param>

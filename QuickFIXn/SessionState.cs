@@ -3,10 +3,11 @@ using System.Collections.Generic;
 
 namespace QuickFix
 {
+    // v2 TODO - consider making this internal
     /// <summary>
     /// Used by the session communications code. Not intended to be used by applications.
     /// </summary>
-    public class SessionState
+    public class SessionState : IDisposable
     {
         #region Private Members
 
@@ -27,7 +28,7 @@ namespace QuickFix
         private long logonTimeoutAsMilliSecs_ = 10 * 1000;
         private int logoutTimeout_ = 2;
         private long logoutTimeoutAsMilliSecs_ = 2 * 1000;
-        private ResendRange resendRange_ = new ResendRange(0, 0);
+        private ResendRange resendRange_ = new ResendRange();
         private Dictionary<int, Message> msgQueue = new Dictionary<int, Message>();
 
         private ILog log_;
@@ -277,10 +278,11 @@ namespace QuickFix
             MessageStore.Get(begSeqNo, endSeqNo, messages);
         }
 
-        public void SetResendRange(int begin, int end)
+        public void SetResendRange(int begin, int end, int chunkEnd=-1)
         {
             resendRange_.BeginSeqNo = begin;
             resendRange_.EndSeqNo = end;
+            resendRange_.ChunkEndSeqNo = chunkEnd == -1 ? end : chunkEnd;
         }
 
         public bool ResendRequested()
@@ -340,7 +342,7 @@ namespace QuickFix
 
         }
 
-        #region MessageStore Members
+        #region MessageStore-manipulating Members
 
         public bool Set(int msgSeqNum, string msg)
         {
@@ -406,6 +408,12 @@ namespace QuickFix
         }
 
         #endregion
+
+        public void Dispose()
+        {
+            if (log_ != null) { log_.Dispose(); }
+            if (MessageStore != null) { MessageStore.Dispose(); }
+        }
     }
 }
 

@@ -60,10 +60,8 @@ namespace QuickFix
 
         public System.DateTime? CreationTime
         {
-            get
-            {
-                return creationTime;
-            }
+            get { return creationTime; }
+            internal set { creationTime = value; }
         }
 
         [System.Obsolete("Use CreationTime instead")]
@@ -82,6 +80,9 @@ namespace QuickFix
         }
 
         public void Refresh()
+        { }
+
+        public void Dispose()
         { }
 
         #endregion

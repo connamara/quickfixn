@@ -27,7 +27,7 @@ namespace UnitTests
             Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(err1); });
             // no SOH at end of 35
             string err2 = String.Join(Message.SOH, new string[] { "8=FIX.4.4", "35=A" });
-            Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(err1); });
+            Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(err2); });
         }
 
         [Test]
@@ -864,5 +864,86 @@ namespace UnitTests
             StringAssert.Contains(expected, msgString);
         }
 
+        [Test]
+        public void MessageHasDecimalWithNoLeadingZero()
+        {
+            // issue 160
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+
+            string[] msgFields = { "8=FIX.4.4", "9=122", "35=8", "34=2", "49=sender", "52=20121024-12:21:42.170", "56=target",
+                "37=orderid", "17=execid", "150=0", "39=0",
+                "55=ibm", "228=.23", // Instrument component; 228 is a float type in the spec
+                "54=1", "151=1", "14=1", "6=1", "10=45"
+            };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
+            msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
+
+            Assert.AreEqual(0.23, msg.Factor.getValue());
+        }
+
+        [Test]
+        public void FromString_Groups_NoFactory()
+        {
+            // issue 179
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+
+            string[] msgFields = {
+                // header
+                "8=FIX.4.4","9=638", "35=8", "34=360", "49=BLPTSOX", "52=20130321-15:21:23", "56=THINKTSOX", "57=6804469", "128=ZERO",
+                // non-group body fields
+                "6=122.255", "11=61101189", "14=1990000", "15=GBP", "17=VCON:20130321:50018:5:12", "22=4", "31=122.255", "32=1990000",
+                "37=116", "38=1990000", "39=2", "48=GB0032452392", "54=1", "55=[N/A]", "60=20130321-15:21:23", "64=20130322", "75=20130321",
+                "106=UK TSY 4 1/4% 2036", "118=2436321.85", "150=F", "151=0", "157=15", "159=3447.35", "192=0", "198=3739:20130321:50018:5",
+                "223=0.0425", "228=1", "236=0.0291371041", "238=0", "381=2432874.5", "423=1", "470=GB", "541=20360307",
+                // NoPartyIDs
+                "453=6",
+                "448=VCON", "447=D", "452=1", "802=1", "523=14", "803=4",
+                "448=TFOLIO:6804469", "447=D", "452=12",
+                "448=TFOLIO", "447=D", "452=11",
+                "448=THINKFOLIO LTD", "447=D", "452=13",
+                "448=SXT", "447=D", "452=16",
+                "448=TFOLIO:6804469", "447=D", "452=36",
+                "10=152"
+            };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
+            msg.FromString(msgStr, true, dd, dd, null); // <-- null factory!
+
+            Console.WriteLine(msg.ToString());
+
+            QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup partyGroup = new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup();
+            msg.GetGroup(2, partyGroup);
+
+            Assert.False(partyGroup.IsSetNoPartySubIDs());
+        }
+
+        [Test]
+        public void IsAdmin_IsApp()
+        {
+            // issue 173
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX42.xml");
+
+            string[] newsFields = { "8=FIX4.2", "9=5", "35=B", "10=133" };
+            string newsStr = String.Join(Message.SOH, newsFields) + Message.SOH;
+            QuickFix.FIX42.News news = new QuickFix.FIX42.News();
+            news.FromString(newsStr, true, dd, dd, _defaultMsgFactory);
+
+            string[] hbFields = { "8=FIX.4.2", "9=16", "35=0", "34=3", "49=TW", "10=1" };
+            string hbStr = String.Join(Message.SOH, hbFields) + Message.SOH;
+            QuickFix.FIX42.Heartbeat heartbeat = new QuickFix.FIX42.Heartbeat();
+            heartbeat.FromString(hbStr, true, dd, dd, _defaultMsgFactory);
+
+            Assert.False(news.IsAdmin());
+            //Assert.True(news.IsApp());
+
+            //Assert.True(heartbeat.IsAdmin());
+            Assert.False(heartbeat.IsApp());
+        }
     }
 }

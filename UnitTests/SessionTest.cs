@@ -52,6 +52,19 @@ namespace UnitTests
             disconnected = true;
         }
 
+        public void DumpMsgLookup()
+        {
+            Console.WriteLine("Responder dump:");
+            foreach (string key in msgLookup.Keys)
+            {
+                Console.WriteLine(String.Format("  {0}: count {1}", key, msgLookup[key].Count));
+                foreach (QuickFix.Message m in msgLookup[key])
+                {
+                    Console.WriteLine("  - " + m.ToString());
+                }
+            }
+        }
+
         #endregion
     }
 
@@ -190,16 +203,34 @@ namespace UnitTests
                 responder.msgLookup[QuickFix.Fields.MsgType.REJECT].Count>0;
         }
 
-	public bool SENT_HEART_BEAT()
-	{
+	    public bool SENT_HEART_BEAT()
+	    {
             return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.HEARTBEAT) &&
                 responder.msgLookup[QuickFix.Fields.MsgType.HEARTBEAT].Count > 0;
-	}
+	    }
 
         public bool SENT_BUSINESS_REJECT()
         {
             return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.BUSINESS_MESSAGE_REJECT) &&
                 responder.msgLookup[QuickFix.Fields.MsgType.BUSINESS_MESSAGE_REJECT].Count > 0;
+        }
+
+        public bool SENT_BUSINESS_REJECT(int reason)
+        {
+            if (!SENT_BUSINESS_REJECT())
+                return false;
+
+            QuickFix.Message msg = responder.msgLookup[QuickFix.Fields.MsgType.BUSINESS_MESSAGE_REJECT].First();
+
+            if (!msg.IsSetField(QuickFix.Fields.Tags.BusinessRejectReason))
+                return false;
+
+            QuickFix.Fields.BusinessRejectReason reasonField = new QuickFix.Fields.BusinessRejectReason();
+            msg.GetField(reasonField);
+            if (reasonField.getValue() != reason)
+                return false;
+
+            return true;
         }
 
         public bool SENT_LOGOUT()
@@ -287,7 +318,7 @@ namespace UnitTests
             Logon();
             SendNOSMessage();
 
-            Assert.That(SENT_REJECT(QuickFix.Fields.SessionRejectReason.REQUIRED_TAG_MISSING,61));
+            Assert.That(SENT_BUSINESS_REJECT(QuickFix.Fields.BusinessRejectReason.CONDITIONALLY_REQUIRED_FIELD_MISSING));
         }
 
 
@@ -471,15 +502,42 @@ namespace UnitTests
             //  2->2501
             //  2502->5001
             //  5002->5005
-            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count == 3);
+
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count == 1);
             QuickFix.Message msg = responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Dequeue();
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(2));
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(2501));
 
+            // Jump forward to the end of the resend chunk with a fillgap reset message
+            QuickFix.FIX42.SequenceReset reset = new QuickFix.FIX42.SequenceReset();
+            reset.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
+            reset.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
+            reset.SetField(new QuickFix.Fields.GapFillFlag(true));
+
+            reset.Header.SetField(new QuickFix.Fields.MsgSeqNum(2));
+            reset.SetField(new QuickFix.Fields.NewSeqNo(2501));
+            session.Next(reset);
+
+            order.Header.SetField(new QuickFix.Fields.MsgSeqNum(2501));
+            session.Next(order);
+
+            // Should have triggered next resend (2502->5001), check this
+            Console.WriteLine(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count);
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count == 1);
             msg = responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Dequeue();
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(2502));
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(5001));
 
+            // Jump forward to the end of the resend chunk with a fillgap reset message
+            reset.Header.SetField(new QuickFix.Fields.MsgSeqNum(2502));
+            reset.SetField(new QuickFix.Fields.NewSeqNo(5001));
+            session.Next(reset);
+
+            order.Header.SetField(new QuickFix.Fields.MsgSeqNum(5001));
+            session.Next(order);   // Triggers next resend (5002->5005)
+
+            Console.WriteLine(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count);
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count == 1);
             msg = responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Dequeue();
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(5002));
             Assert.That(msg.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(5004));
@@ -571,6 +629,48 @@ namespace UnitTests
             messages.Clear();
             session.MessageStore.Get(0, 100, messages);
             Assert.That(messages.Count, Is.EqualTo(1)); // logon response
+        }
+
+        [Test]
+        public void TestRequiresOrigSendingTime_Y()
+        {
+            // Under default configuration, session should reject a ResendRequest that lacks OrigSendingTime unset
+
+            // Check default is as expected
+            Assert.That(session.RequiresOrigSendingTime, Is.EqualTo(true));
+
+            Logon();
+
+            QuickFix.FIX42.SequenceReset sr = new QuickFix.FIX42.SequenceReset(new QuickFix.Fields.NewSeqNo(5));
+            sr.GapFillFlag = new QuickFix.Fields.GapFillFlag(true);
+            sr.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
+
+            sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum--)); // so it triggers DoTargetTooLow code
+
+            SendTheMessage(sr);
+
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.REJECT].Count == 1);
+            QuickFix.FIX42.Reject rej = responder.msgLookup[QuickFix.Fields.MsgType.REJECT].Peek() as QuickFix.FIX42.Reject;
+            Assert.That(rej.SessionRejectReason.getValue(), Is.EqualTo(QuickFix.Fields.SessionRejectReason.REQUIRED_TAG_MISSING));
+        }
+
+        [Test]
+        public void TestRequiresOrigSendingTime_N()
+        {
+            // Under OrigSendingTime=N, session will allow ResendRequest that lacks OrigSendingTime
+            session.RequiresOrigSendingTime = false;
+
+            Logon();
+
+            QuickFix.FIX42.SequenceReset sr = new QuickFix.FIX42.SequenceReset(new QuickFix.Fields.NewSeqNo(5));
+            sr.GapFillFlag = new QuickFix.Fields.GapFillFlag(true);
+            sr.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
+
+            sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum--)); // so it triggers DoTargetTooLow code
+
+            SendTheMessage(sr);
+
+            Assert.False(responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT));
         }
     }
 }

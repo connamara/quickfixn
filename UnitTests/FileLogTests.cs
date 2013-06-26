@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace UnitTests
 {
     [TestFixture]
-    class FileLogTests
+    public class FileLogTests
     {
         QuickFix.FileLog log;
 
@@ -19,7 +19,10 @@ namespace UnitTests
         public void teardown()
         {
             if (log != null)
+            {
                 log.Dispose();
+                log = null;
+            }
         }
 
         [Test]

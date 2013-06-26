@@ -10,6 +10,18 @@ namespace UnitTests
     [TestFixture]
     public class ConverterTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+        }
+
         [Test]
         public void BoolConverterTest()
         {
@@ -63,6 +75,14 @@ namespace UnitTests
             Assert.That( DecimalConverter.Convert( "-2.33" ), Is.EqualTo( new Decimal( -2.33 ) ) );
             Assert.That( DecimalConverter.Convert( new Decimal( 4.23322 ) ), Is.EqualTo( "4.23322" ) );
             Assert.That( DecimalConverter.Convert( new Decimal( -4.23322 ) ), Is.EqualTo( "-4.23322" ) );
+        }
+
+        [Test]
+        public void DecimalConverter_WithoutLeadingTrailingZeros()
+        {
+            Assert.That(DecimalConverter.Convert("23."), Is.EqualTo(new Decimal(23)));
+            Assert.That(DecimalConverter.Convert(".23"), Is.EqualTo(new Decimal(0.23)));
+            Assert.That(DecimalConverter.Convert("-.23"), Is.EqualTo(new Decimal(-0.23)));
         }
 
         [Test]

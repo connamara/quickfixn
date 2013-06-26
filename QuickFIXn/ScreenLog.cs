@@ -7,20 +7,18 @@ namespace QuickFix
     public class ScreenLog : ILog
     {
         private object sync_ = new object();
-        private SessionID sessionID_;
         private bool logIncoming_;
         private bool logOutgoing_;
         private bool logEvent_;
 
         public ScreenLog(SessionID sessionID, bool logIncoming, bool logOutgoing, bool logEvent)
         {
-            sessionID_   = sessionID;
             logIncoming_ = logIncoming;
             logOutgoing_ = logOutgoing;
             logEvent_    = logEvent;
         }
 
-        #region Log Members
+        #region ILog Members
 
         public void Clear()
         { }
@@ -57,6 +55,9 @@ namespace QuickFix
                 System.Console.WriteLine("<event> " + s);
             }
         }
+
+        public void Dispose()
+        { }
 
         #endregion
     }
