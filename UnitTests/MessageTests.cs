@@ -591,6 +591,88 @@ namespace UnitTests
 
             StringAssert.Contains(expected, msgString);
         }
+        
+                [Test]
+        public void RepeatingGroup_FieldOrderOnReload()
+        {
+            #region Original message
+            string msgStr = String.Join(Message.SOH, new string[]
+                {
+                    "8=FIX.4.4",
+                    "9=544",
+                    "35=R",
+                    "34=6",
+                    "49=DEVDEV",
+                    "52=20130225-10:44:59.149",
+                    "56=DEVENT_UAT",
+                    "131=11407",
+                    "528=A",
+                    "20644=11407",
+                    "146=1",
+                    "55=Mar13 AC 160",
+                    "461=OXXXXX",
+                    "167=MLEG",
+                    "20167=C",
+                    "711=1",
+                    "311=VOD LN",
+                    "309=VOD.L",
+                    "305=5",
+                    "318=GBp",
+                    "810=162.6545",
+                    "20880=3",
+                    "21633=1",
+                    "303=1",
+                    "537=1",
+                    "38=1000",
+                    "15=GBp",
+                    "1=DEVENT-AM",
+                    "555=1",
+                    "600=VOD160C3.L",
+                    "602=VOD160C3.L",
+                    "603=5",
+                    "608=CASPS",
+                    "609=OPT",
+                    "610=201303",
+                    "611=20130315",
+                    "612=160",
+                    "614=1000",
+                    "616=XLIF",
+                    "623=1",
+                    "624=1",
+                    "556=GBp",
+                    "1358=1",
+                    "1420=1",
+                    "687=1000",
+                    "587=0",
+                    "654=12256",
+                    "20203=2",
+                    "20265=0",
+                    "21193=P",
+                    "692=2",
+                    "40=1",
+                    "60=20130225-10:44:55.753",
+                    "453=2",
+                    "448=Axel Leikiscu",
+                    "447=D",
+                    "452=11",
+                    "448=DEVENT-AM",
+                    "447=D",
+                    "452=13",
+                    "59=0",
+                    "10=039",
+                    ""
+                });
+            #endregion
+
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+            var msgFactory = new QuickFix.FIX44.MessageFactory();
+
+            Message msg = new Message();
+            msg.FromString(msgStr, true, dd, dd, msgFactory);
+            string msgString = msg.ToString();           
+            Assert.That(msgString , Is.EqualTo(msgStr));
+        }    
 
         [Test]
         public void ToString_FIX50()
