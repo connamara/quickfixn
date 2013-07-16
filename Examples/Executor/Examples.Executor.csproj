@@ -89,6 +89,30 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\QuickFIXn\Message\FIX40\QuickFix.FIX40.csproj">
+      <Project>{dd15ebb0-b22b-012f-b4c9-0019b945714e}</Project>
+      <Name>QuickFix.FIX40</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QuickFIXn\Message\FIX41\QuickFix.FIX41.csproj">
+      <Project>{4e3125c0-b22c-012f-b4c9-0019b945714e}</Project>
+      <Name>QuickFix.FIX41</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QuickFIXn\Message\FIX42\QuickFix.FIX42.csproj">
+      <Project>{5985acf0-b22c-012f-b4c9-0019b945714e}</Project>
+      <Name>QuickFix.FIX42</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QuickFIXn\Message\FIX43\QuickFix.FIX43.csproj">
+      <Project>{622d5210-b22c-012f-b4c9-0019b945714e}</Project>
+      <Name>QuickFix.FIX43</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QuickFIXn\Message\FIX44\QuickFix.FIX44.csproj">
+      <Project>{627caca0-b22c-012f-b4c9-0019b945714e}</Project>
+      <Name>QuickFix.FIX44</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\QuickFIXn\Message\FIX50\QuickFix.FIX50.csproj">
+      <Project>{62c37b70-b22c-012f-b4c9-0019b945714e}</Project>
+      <Name>QuickFix.FIX50</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj">
       <Project>{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}</Project>
       <Name>QuickFix</Name>

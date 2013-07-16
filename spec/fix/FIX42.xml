@@ -2606,7 +2606,10 @@
     <field number="431" name="ListOrderStatus" type="INT"/>
     <field number="432" name="ExpireDate" type="LOCALMKTDATE"/>
     <field number="433" name="ListExecInstType" type="CHAR"/>
-    <field number="434" name="CxlRejResponseTo" type="CHAR"/>
+    <field number="434" name="CxlRejResponseTo" type="CHAR">
+      <value enum="1" description="ORDER_CANCEL_REQUEST" />
+      <value enum="2" description="ORDER_CANCEL_REPLACE_REQUEST" />
+    </field>
     <field number="435" name="UnderlyingCouponRate" type="FLOAT"/>
     <field number="436" name="UnderlyingContractMultiplier" type="FLOAT"/>
     <field number="437" name="ContraTradeQty" type="QTY"/>

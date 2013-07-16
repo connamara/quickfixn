@@ -13,7 +13,7 @@ namespace UnitTests
         [Test]
         public void IntFieldTest()
         {
-            IntField field = new IntField(Tags.AdvTransType, 500);
+            IntField field = new IntField(QuickFix.FIX40.Tags.AdvTransType, 500);
             Assert.That(field.getValue(), Is.EqualTo(500));
             Assert.That(field.Tag, Is.EqualTo(5));
             Assert.That(field.ToString(), Is.EqualTo("500"));
@@ -136,36 +136,36 @@ namespace UnitTests
         [Test]
         public void AccountFieldTest()
         {
-            Account acct = new Account("iiiD4");
+            QuickFix.FIX40.Fields.Account acct = new QuickFix.FIX40.Fields.Account("iiiD4");
             Assert.That("iiiD4", Is.EqualTo(acct.Obj));
-            Assert.That(Tags.Account, Is.EqualTo(acct.Tag));
+            Assert.That(QuickFix.FIX40.Tags.Account, Is.EqualTo(acct.Tag));
         }
 
         [Test]
         public void EnumFieldTest()
         {
-            CommType ct = new CommType(CommType.PER_UNIT);
+            QuickFix.FIX44.Fields.CommType ct = new QuickFix.FIX44.Fields.CommType(QuickFix.FIX44.Fields.CommType.PER_UNIT);
             Assert.That('1', Is.EqualTo(ct.getValue()));
-            ExecInst ei = new ExecInst(ExecInst.STRICT_LIMIT);
+            QuickFix.FIX44.Fields.ExecInst ei = new QuickFix.FIX44.Fields.ExecInst(QuickFix.FIX44.Fields.ExecInst.STRICT_LIMIT);
             Assert.That("b", Is.EqualTo(ei.getValue()));
-            AllocStatus ass = new AllocStatus(AllocStatus.REVERSED);
+            QuickFix.FIX50.Fields.AllocStatus ass = new QuickFix.FIX50.Fields.AllocStatus(QuickFix.FIX50.Fields.AllocStatus.REVERSED);
             Assert.That(7, Is.EqualTo(ass.getValue()));
         }
 
         [Test]
         public void DateOnlyFieldTest()
         {
-            MDEntryDate d = new MDEntryDate(new DateTime(2011, 11, 30, 8, 9, 10, 555));
+            QuickFix.FIX44.Fields.MDEntryDate d = new QuickFix.FIX44.Fields.MDEntryDate(new DateTime(2011, 11, 30, 8, 9, 10, 555));
             Assert.AreEqual("20111130", d.ToString());
         }
 
         [Test]
         public void TimeOnlyFieldTest()
         {
-            MDEntryTime t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), true);
+            QuickFix.FIX42.Fields.MDEntryTime t = new QuickFix.FIX42.Fields.MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), true);
             Assert.AreEqual("08:09:10.555", t.ToString());
 
-            t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), false);
+            t = new QuickFix.FIX42.Fields.MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), false);
             Assert.AreEqual("08:09:10", t.ToString());
         }
 

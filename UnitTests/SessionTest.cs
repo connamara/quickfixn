@@ -291,8 +291,8 @@ namespace UnitTests
 
         public bool SENT_NOS()
         {
-            return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.NEWORDERSINGLE) &&
-                responder.msgLookup[QuickFix.Fields.MsgType.NEWORDERSINGLE].Count > 0;
+            return responder.msgLookup.ContainsKey(QuickFix.FIX40.NewOrderSingle.MsgType) &&
+                responder.msgLookup[QuickFix.FIX40.NewOrderSingle.MsgType].Count > 0;
         }
 
         public bool DISCONNECTED()
@@ -329,12 +329,12 @@ namespace UnitTests
         public void SendNOSMessage()
         {
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
-                new QuickFix.Fields.ClOrdID("1"),
-                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
-                new QuickFix.Fields.Symbol("IBM"),
-                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
-                new QuickFix.Fields.TransactTime(),
-                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+                new QuickFix.FIX42.Fields.ClOrdID("1"),
+                new QuickFix.FIX42.Fields.HandlInst(QuickFix.FIX42.Fields.HandlInst.MANUAL_ORDER_BEST_EXECUTION),
+                new QuickFix.FIX42.Fields.Symbol("IBM"),
+                new QuickFix.FIX42.Fields.Side(QuickFix.FIX42.Fields.Side.BUY),
+                new QuickFix.FIX42.Fields.TransactTime(),
+                new QuickFix.FIX42.Fields.OrdType(QuickFix.FIX42.Fields.OrdType.LIMIT));
 
             order.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
@@ -443,12 +443,12 @@ namespace UnitTests
             // Engineer a gap fill at the beginning of a re-send range, in the middle, and at the end
             Logon(); //seq 1
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
-                new QuickFix.Fields.ClOrdID("1"),
-                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
-                new QuickFix.Fields.Symbol("IBM"),
-                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
-                new QuickFix.Fields.TransactTime(),
-                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+                new QuickFix.FIX42.Fields.ClOrdID("1"),
+                new QuickFix.FIX42.Fields.HandlInst(QuickFix.FIX42.Fields.HandlInst.MANUAL_ORDER_BEST_EXECUTION),
+                new QuickFix.FIX42.Fields.Symbol("IBM"),
+                new QuickFix.FIX42.Fields.Side(QuickFix.FIX42.Fields.Side.BUY),
+                new QuickFix.FIX42.Fields.TransactTime(),
+                new QuickFix.FIX42.Fields.OrdType(QuickFix.FIX42.Fields.OrdType.LIMIT));
 
             order.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.TargetCompID));
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.SenderCompID));
@@ -484,7 +484,7 @@ namespace UnitTests
             responder.msgLookup.Clear();
             SendResendRequest(1, 100);
 
-            Assert.AreEqual(responder.GetCount(QuickFix.Fields.MsgType.NEWORDERSINGLE), orderCount);
+            Assert.AreEqual(responder.GetCount(QuickFix.FIX42.NewOrderSingle.MsgType), orderCount);
             Assert.AreEqual(responder.GetCount(QuickFix.Fields.MsgType.SEQUENCE_RESET), gapStarts.Length);
 
             int count = -1;
@@ -595,19 +595,19 @@ namespace UnitTests
 
             // NOS
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
-                new QuickFix.Fields.ClOrdID("1"),
-                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
-                new QuickFix.Fields.Symbol("IBM"),
-                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
-                new QuickFix.Fields.TransactTime(),
-                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+                new QuickFix.FIX42.Fields.ClOrdID("1"),
+                new QuickFix.FIX42.Fields.HandlInst(QuickFix.FIX42.Fields.HandlInst.MANUAL_ORDER_BEST_EXECUTION),
+                new QuickFix.FIX42.Fields.Symbol("IBM"),
+                new QuickFix.FIX42.Fields.Side(QuickFix.FIX42.Fields.Side.BUY),
+                new QuickFix.FIX42.Fields.TransactTime(),
+                new QuickFix.FIX42.Fields.OrdType(QuickFix.FIX42.Fields.OrdType.LIMIT));
 
             order.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
             order.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
             session.Send(order);
 
-            msg = responder.msgLookup[QuickFix.Fields.MsgType.NEW_ORDER_D].Last();
+            msg = responder.msgLookup[QuickFix.FIX42.NewOrderSingle.MsgType].Last();
             lastSeqNumProcessed = msg.Header.GetInt(QuickFix.Fields.Tags.LastMsgSeqNumProcessed);
             Assert.That(lastSeqNumProcessed == 1);
         }
@@ -624,12 +624,12 @@ namespace UnitTests
 
             // NOS
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
-                new QuickFix.Fields.ClOrdID("1"),
-                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
-                new QuickFix.Fields.Symbol("IBM"),
-                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
-                new QuickFix.Fields.TransactTime(),
-                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+                new QuickFix.FIX42.Fields.ClOrdID("1"),
+                new QuickFix.FIX42.Fields.HandlInst(QuickFix.FIX42.Fields.HandlInst.MANUAL_ORDER_BEST_EXECUTION),
+                new QuickFix.FIX42.Fields.Symbol("IBM"),
+                new QuickFix.FIX42.Fields.Side(QuickFix.FIX42.Fields.Side.BUY),
+                new QuickFix.FIX42.Fields.TransactTime(),
+                new QuickFix.FIX42.Fields.OrdType(QuickFix.FIX42.Fields.OrdType.LIMIT));
 
             order.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
@@ -694,12 +694,12 @@ namespace UnitTests
 
             // NOS
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
-                new QuickFix.Fields.ClOrdID("1"),
-                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
-                new QuickFix.Fields.Symbol("IBM"),
-                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
-                new QuickFix.Fields.TransactTime(),
-                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+                new QuickFix.FIX42.Fields.ClOrdID("1"),
+                new QuickFix.FIX42.Fields.HandlInst(QuickFix.FIX42.Fields.HandlInst.MANUAL_ORDER_BEST_EXECUTION),
+                new QuickFix.FIX42.Fields.Symbol("IBM"),
+                new QuickFix.FIX42.Fields.Side(QuickFix.FIX42.Fields.Side.BUY),
+                new QuickFix.FIX42.Fields.TransactTime(),
+                new QuickFix.FIX42.Fields.OrdType(QuickFix.FIX42.Fields.OrdType.LIMIT));
 
             order.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
@@ -707,7 +707,7 @@ namespace UnitTests
             // This will generate resend requests
             session.Send(order);
 
-            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.NEWORDERSINGLE].Count == 1);
+            Assert.That(responder.msgLookup[QuickFix.FIX42.NewOrderSingle.MsgType].Count == 1);
 
             QuickFix.Message msg = new QuickFix.FIX42.ResendRequest(
                 new QuickFix.Fields.BeginSeqNo(1),
@@ -715,7 +715,7 @@ namespace UnitTests
             msg.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
             SendTheMessage(msg);
 
-            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.NEWORDERSINGLE].Count == 1);
+            Assert.That(responder.msgLookup[QuickFix.FIX42.NewOrderSingle.MsgType].Count == 1);
         }
 
         [Test]
@@ -816,12 +816,12 @@ namespace UnitTests
         {
             Logon();
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
-                 new QuickFix.Fields.ClOrdID("1"),
-                 new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
-                 new QuickFix.Fields.Symbol("IBM"),
-                 new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
-                 new QuickFix.Fields.TransactTime(),
-                 new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+                 new QuickFix.FIX42.Fields.ClOrdID("1"),
+                 new QuickFix.FIX42.Fields.HandlInst(QuickFix.FIX42.Fields.HandlInst.MANUAL_ORDER_BEST_EXECUTION),
+                 new QuickFix.FIX42.Fields.Symbol("IBM"),
+                 new QuickFix.FIX42.Fields.Side(QuickFix.FIX42.Fields.Side.BUY),
+                 new QuickFix.FIX42.Fields.TransactTime(),
+                 new QuickFix.FIX42.Fields.OrdType(QuickFix.FIX42.Fields.OrdType.LIMIT));
 
             application.doNotSendException = new QuickFix.DoNotSend();
             session.Send(order);
@@ -833,17 +833,17 @@ namespace UnitTests
         {
             Logon();
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
-                 new QuickFix.Fields.ClOrdID("1"),
-                 new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
-                 new QuickFix.Fields.Symbol("IBM"),
-                 new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
-                 new QuickFix.Fields.TransactTime(),
-                 new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+                 new QuickFix.FIX42.Fields.ClOrdID("1"),
+                 new QuickFix.FIX42.Fields.HandlInst(QuickFix.FIX42.Fields.HandlInst.MANUAL_ORDER_BEST_EXECUTION),
+                 new QuickFix.FIX42.Fields.Symbol("IBM"),
+                 new QuickFix.FIX42.Fields.Side(QuickFix.FIX42.Fields.Side.BUY),
+                 new QuickFix.FIX42.Fields.TransactTime(),
+                 new QuickFix.FIX42.Fields.OrdType(QuickFix.FIX42.Fields.OrdType.LIMIT));
 
             session.Send(order);
             Assert.True(SENT_NOS());
 
-            responder.msgLookup.Remove(QuickFix.Fields.MsgType.NEWORDERSINGLE);
+            responder.msgLookup.Remove(QuickFix.FIX42.NewOrderSingle.MsgType);
             application.doNotSendException = new QuickFix.DoNotSend();
 
             SendResendRequest(1, 0);
@@ -862,12 +862,12 @@ namespace UnitTests
 
             Logon();
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
-                new QuickFix.Fields.ClOrdID("1"),
-                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
-                new QuickFix.Fields.Symbol("IBM"),
-                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
-                new QuickFix.Fields.TransactTime(),
-                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+                new QuickFix.FIX42.Fields.ClOrdID("1"),
+                new QuickFix.FIX42.Fields.HandlInst(QuickFix.FIX42.Fields.HandlInst.MANUAL_ORDER_BEST_EXECUTION),
+                new QuickFix.FIX42.Fields.Symbol("IBM"),
+                new QuickFix.FIX42.Fields.Side(QuickFix.FIX42.Fields.Side.BUY),
+                new QuickFix.FIX42.Fields.TransactTime(),
+                new QuickFix.FIX42.Fields.OrdType(QuickFix.FIX42.Fields.OrdType.LIMIT));
 
             order.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
@@ -877,19 +877,19 @@ namespace UnitTests
 
             Assert.That(mockApp.InterceptedMessageTypes.Count, Is.EqualTo(2));
             Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.LOGON));
-            Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.NEWORDERSINGLE));
+            Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.FIX42.NewOrderSingle.MsgType));
         }
 
         [Test]
         public void TestRequireLogon()
         {
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
-                new QuickFix.Fields.ClOrdID("1"),
-                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
-                new QuickFix.Fields.Symbol("IBM"),
-                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
-                new QuickFix.Fields.TransactTime(),
-                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+                new QuickFix.FIX42.Fields.ClOrdID("1"),
+                new QuickFix.FIX42.Fields.HandlInst(QuickFix.FIX42.Fields.HandlInst.MANUAL_ORDER_BEST_EXECUTION),
+                new QuickFix.FIX42.Fields.Symbol("IBM"),
+                new QuickFix.FIX42.Fields.Side(QuickFix.FIX42.Fields.Side.BUY),
+                new QuickFix.FIX42.Fields.TransactTime(),
+                new QuickFix.FIX42.Fields.OrdType(QuickFix.FIX42.Fields.OrdType.LIMIT));
             // This should cause disconnect, because first message is something other than a logon.
             SendTheMessage(order);
             Assert.That(DISCONNECTED());

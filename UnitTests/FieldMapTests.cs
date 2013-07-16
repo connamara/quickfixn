@@ -5,6 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
+using QuickFix.FIX40.Fields;
 
 namespace UnitTests
 {
@@ -79,7 +80,7 @@ namespace UnitTests
         public void GetStringTest()
         {
             fieldmap.SetField(new Account("hello"));
-            Assert.That(fieldmap.GetString(QuickFix.Fields.Tags.Account), Is.EqualTo("hello"));
+            Assert.That(fieldmap.GetString(QuickFix.FIX40.Tags.Account), Is.EqualTo("hello"));
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetString(99900); });
         }
@@ -88,7 +89,7 @@ namespace UnitTests
         public void DateTimeFieldTest()
         {
 
-            fieldmap.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
+            fieldmap.SetField(new DateTimeField(QuickFix.FIX40.Tags.TransactTime, new DateTime(2009, 12, 10)));
             TransactTime tt = new TransactTime();
             fieldmap.GetField(tt);
             Assert.That(new DateTime(2009, 12, 10), Is.EqualTo(tt.Obj));
@@ -102,11 +103,11 @@ namespace UnitTests
         [Test]
         public void DateOnlyFieldTest()
         {
-            fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
-            MDEntryDate ed = new MDEntryDate();
+            fieldmap.SetField(new DateOnlyField(QuickFix.FIX44.Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
+            QuickFix.FIX44.Fields.MDEntryDate ed = new QuickFix.FIX44.Fields.MDEntryDate();
             fieldmap.GetField(ed);
             Assert.AreEqual(new DateTime(2009, 12, 10), ed.Obj);
-            fieldmap.SetField(new MDEntryDate(new DateTime(2010, 12, 10)));
+            fieldmap.SetField(new QuickFix.FIX44.Fields.MDEntryDate(new DateTime(2010, 12, 10)));
             DateOnlyField r = fieldmap.GetField(ed);
             Assert.AreEqual(new DateTime(2010, 12, 10), ed.getValue());            
             
@@ -117,11 +118,11 @@ namespace UnitTests
         [Test]
         public void TimeOnlyFieldTest()
         {            
-            fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(1, 1, 1, 1, 2, 3), false));
-            MDEntryTime et = new MDEntryTime();
+            fieldmap.SetField(new TimeOnlyField(QuickFix.FIX43.Tags.MDEntryTime, new DateTime(1, 1, 1, 1, 2, 3), false));
+            QuickFix.FIX43.Fields.MDEntryTime et = new QuickFix.FIX43.Fields.MDEntryTime();
             fieldmap.GetField(et);
             Assert.AreEqual(new DateTime(1, 1, 1, 1, 2, 3).TimeOfDay, et.Obj.TimeOfDay);
-            fieldmap.SetField(new MDEntryTime(new DateTime(1, 1, 1, 1, 2, 5)));
+            fieldmap.SetField(new QuickFix.FIX43.Fields.MDEntryTime(new DateTime(1, 1, 1, 1, 2, 5)));
             TimeOnlyField r = fieldmap.GetField(et);
             Assert.AreEqual(new DateTime(1, 1, 1, 1, 2, 5).TimeOfDay, et.getValue().TimeOfDay);
             
@@ -132,8 +133,8 @@ namespace UnitTests
         [Test]
         public void GetDateTimeTest()
         {
-            fieldmap.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
-            Assert.That(fieldmap.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
+            fieldmap.SetField(new DateTimeField(QuickFix.FIX40.Tags.TransactTime, new DateTime(2009, 12, 10)));
+            Assert.That(fieldmap.GetDateTime(QuickFix.FIX40.Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
             fieldmap.SetField(new StringField(233, "20091211-12:12:44"));
             Assert.That(fieldmap.GetDateTime(233), Is.EqualTo(new DateTime(2009, 12, 11, 12, 12, 44)));
             Assert.Throws(typeof(FieldNotFoundException),
@@ -143,8 +144,8 @@ namespace UnitTests
         [Test]
         public void GetDateOnlyTest()
         {
-            fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
-            Assert.AreEqual(new DateTime(2009, 12, 10), fieldmap.GetDateTime(Tags.MDEntryDate));
+            fieldmap.SetField(new DateOnlyField(QuickFix.FIX43.Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
+            Assert.AreEqual(new DateTime(2009, 12, 10), fieldmap.GetDateTime(QuickFix.FIX43.Tags.MDEntryDate));
             fieldmap.SetField(new StringField(233, "20091211"));
             Assert.AreEqual(new DateTime(2009, 12, 11), fieldmap.GetDateOnly(233));
         }
@@ -152,8 +153,8 @@ namespace UnitTests
         [Test]
         public void GetTimeOnlyTest()
         {
-            fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(2009, 12, 10, 1, 2, 3)));
-            Assert.AreEqual(new DateTime(2009, 12, 10, 1, 2, 3).TimeOfDay, fieldmap.GetDateTime(Tags.MDEntryTime).TimeOfDay);
+            fieldmap.SetField(new TimeOnlyField(QuickFix.FIX43.Tags.MDEntryTime, new DateTime(2009, 12, 10, 1, 2, 3)));
+            Assert.AreEqual(new DateTime(2009, 12, 10, 1, 2, 3).TimeOfDay, fieldmap.GetDateTime(QuickFix.FIX43.Tags.MDEntryTime).TimeOfDay);
             fieldmap.SetField(new StringField(233, "07:30:47"));
             Assert.AreEqual(new DateTime(2009, 12, 11, 7, 30, 47).TimeOfDay, fieldmap.GetTimeOnly(233).TimeOfDay);
         }
@@ -410,10 +411,10 @@ namespace UnitTests
             // bug found during issue 56 - Group object was losing type after being added
             FieldMap fm = new FieldMap();
             QuickFix.FIX42.News.LinesOfTextGroup linesGroup = new QuickFix.FIX42.News.LinesOfTextGroup();
-            linesGroup.Text = new QuickFix.Fields.Text("foo");
+            linesGroup.Text = new Text("foo");
             fm.AddGroup(linesGroup);
 
-            var rvGroup = fm.GetGroup(1, Tags.LinesOfText);
+            var rvGroup = fm.GetGroup(1, QuickFix.FIX42.Tags.LinesOfText);
             Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rvGroup);
         }
     }

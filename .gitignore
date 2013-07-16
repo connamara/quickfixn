@@ -1,6 +1,7 @@
 QuickFIXn.suo
 QuickFIXn/bin/*
 QuickFIXn/obj/*
+QuickFIXn/Message/*/obj/
 UnitTests/bin/*
 UnitTests/obj/*
 PerformanceTests/bin/*
@@ -29,3 +30,5 @@ Examples/SimpleAcceptor/obj/*
 upload_to_s3.rb
 *~
 *.suo
+_ReSharper.*/*
+.vs/*

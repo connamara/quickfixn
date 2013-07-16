@@ -58,6 +58,10 @@
     <Compile Include="TradeClientApp.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\QuickFIXn\Message\FIX44\QuickFix.FIX44.csproj">
+      <Project>{627caca0-b22c-012f-b4c9-0019b945714e}</Project>
+      <Name>QuickFix.FIX44</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj">
       <Project>{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}</Project>
       <Name>QuickFix</Name>

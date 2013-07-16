@@ -3694,7 +3694,7 @@
    <component name='EvntGrp' required='N' />
    <field name='DatedDate' required='N' />
    <field name='InterestAccrualDate' required='N' />
-   <field name='SecurityStatus' required='N' />
+   <field name='SecurityStatus_' required='N' />
    <field name='SettleOnOpenFlag' required='N' />
    <field name='InstrmtAssignmentMethod' required='N' />
    <field name='StrikeMultiplier' required='N' />
@@ -9245,7 +9245,7 @@
   <field number='962' name='SideTimeInForce' type='UTCTIMESTAMP' />
   <field number='963' name='MDReportID' type='INT' />
   <field number='964' name='SecurityReportID' type='INT' />
-  <field number='965' name='SecurityStatus' type='STRING'>
+  <field number='965' name='SecurityStatus_' type='STRING'>
    <value enum='1' description='ACTIVE' />
    <value enum='2' description='INACTIVE' />
   </field>

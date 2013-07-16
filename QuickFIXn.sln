@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix", "QuickFIXn\QuickFix.csproj", "{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{186A72D8-5A70-4DD0-BABF-E3BB3BA9F419}"
@@ -12,6 +14,22 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Executor", "Examples\Executor\Examples.Executor.csproj", "{ADF1BD8E-6149-4D77-89E0-B2B775248139}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.SimpleAcceptor", "Examples\SimpleAcceptor\Examples.SimpleAcceptor.csproj", "{59FC3768-2D8E-4CD2-88B8-C3972BA3ACA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix.FIX40", "QuickFIXn\Message\FIX40\QuickFix.FIX40.csproj", "{DD15EBB0-B22B-012F-B4C9-0019B945714E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix.FIX41", "QuickFIXn\Message\FIX41\QuickFix.FIX41.csproj", "{4E3125C0-B22C-012F-B4C9-0019B945714E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix.FIX42", "QuickFIXn\Message\FIX42\QuickFix.FIX42.csproj", "{5985ACF0-B22C-012F-B4C9-0019B945714E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix.FIX43", "QuickFIXn\Message\FIX43\QuickFix.FIX43.csproj", "{622D5210-B22C-012F-B4C9-0019B945714E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix.FIX44", "QuickFIXn\Message\FIX44\QuickFix.FIX44.csproj", "{627CACA0-B22C-012F-B4C9-0019B945714E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix.FIX50", "QuickFIXn\Message\FIX50\QuickFix.FIX50.csproj", "{62C37B70-B22C-012F-B4C9-0019B945714E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix.FIX50SP1", "QuickFIXn\Message\FIX50SP1\QuickFix.FIX50SP1.csproj", "{119506E5-C552-49CD-923B-847AEB592FF2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix.FIX50SP2", "QuickFIXn\Message\FIX50SP2\QuickFix.FIX50SP2.csproj", "{E3FB654C-C9AB-4701-8912-511ACA2CC0B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +61,38 @@ Global
 		{59FC3768-2D8E-4CD2-88B8-C3972BA3ACA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59FC3768-2D8E-4CD2-88B8-C3972BA3ACA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59FC3768-2D8E-4CD2-88B8-C3972BA3ACA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD15EBB0-B22B-012F-B4C9-0019B945714E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD15EBB0-B22B-012F-B4C9-0019B945714E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD15EBB0-B22B-012F-B4C9-0019B945714E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD15EBB0-B22B-012F-B4C9-0019B945714E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E3125C0-B22C-012F-B4C9-0019B945714E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E3125C0-B22C-012F-B4C9-0019B945714E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E3125C0-B22C-012F-B4C9-0019B945714E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E3125C0-B22C-012F-B4C9-0019B945714E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5985ACF0-B22C-012F-B4C9-0019B945714E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5985ACF0-B22C-012F-B4C9-0019B945714E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5985ACF0-B22C-012F-B4C9-0019B945714E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5985ACF0-B22C-012F-B4C9-0019B945714E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{622D5210-B22C-012F-B4C9-0019B945714E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{622D5210-B22C-012F-B4C9-0019B945714E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{622D5210-B22C-012F-B4C9-0019B945714E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{622D5210-B22C-012F-B4C9-0019B945714E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{627CACA0-B22C-012F-B4C9-0019B945714E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{627CACA0-B22C-012F-B4C9-0019B945714E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{627CACA0-B22C-012F-B4C9-0019B945714E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{627CACA0-B22C-012F-B4C9-0019B945714E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62C37B70-B22C-012F-B4C9-0019B945714E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62C37B70-B22C-012F-B4C9-0019B945714E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62C37B70-B22C-012F-B4C9-0019B945714E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62C37B70-B22C-012F-B4C9-0019B945714E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{119506E5-C552-49CD-923B-847AEB592FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{119506E5-C552-49CD-923B-847AEB592FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{119506E5-C552-49CD-923B-847AEB592FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{119506E5-C552-49CD-923B-847AEB592FF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3FB654C-C9AB-4701-8912-511ACA2CC0B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3FB654C-C9AB-4701-8912-511ACA2CC0B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3FB654C-C9AB-4701-8912-511ACA2CC0B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3FB654C-C9AB-4701-8912-511ACA2CC0B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

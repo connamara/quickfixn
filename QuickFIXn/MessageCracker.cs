@@ -13,24 +13,53 @@ namespace QuickFix
     /// Helper class for delegating message types for various FIX versions to
     /// type-safe OnMessage methods.
     /// </summary>
-    public abstract class MessageCracker
+    public class MessageCracker
     {
-        private Dictionary<Type, Action<Message, SessionID>> _callCache = new Dictionary<Type, Action<Message, SessionID>>();
+        private readonly Dictionary<Type, Action<Message, SessionID>> _callCache = new Dictionary<Type, Action<Message, SessionID>>();
 
-        public MessageCracker()
+        /// <summary>
+        /// When false messagess without proper OnMessage will throw UnsupportedException
+        /// When true they are ignored
+        /// </summary>
+        public bool IgnoreUnhandledMessages { get; set; }
+
+        /// <summary>
+        /// Used when inheriting MessageCracker
+        /// </summary>
+        /// <param name="ignoreUnhandledMessages"></param>
+        protected MessageCracker(bool ignoreUnhandledMessages = false)
         {
+            IgnoreUnhandledMessages = ignoreUnhandledMessages;
             Initialize(this);
         }
 
-        private void Initialize(Object messageHandler)
+        /// <summary>
+        /// Used when using MessageCracker as a helper class
+        /// </summary>
+        /// <param name="messageHandler"></param>
+        /// <param name="ignoreUnhandledMessages"></param>
+        public MessageCracker(object messageHandler, bool ignoreUnhandledMessages = false)
+        {
+            if (messageHandler == null)
+                throw new ArgumentNullException(nameof(messageHandler), nameof(messageHandler) + " cannot be null");
+
+            IgnoreUnhandledMessages = ignoreUnhandledMessages;
+            Initialize(messageHandler);
+        }
+
+        private void Initialize(object messageHandler)
         {
             Type handlerType = messageHandler.GetType();
 
-            MethodInfo[] methods = handlerType.GetMethods(BindingFlags.Public | BindingFlags.Instance);
+            // Include private and protected methods
+            // The MessageCracker shouldn't force the message handler (OnMessage methods) to be public
+            var bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.NonPublic;
+
+            MethodInfo[] methods = handlerType.GetMethods(bindingFlags);
 
             foreach (MethodInfo m in methods)
             {
-                TryBuildCallCache(m);
+                TryBuildCallCache(m, messageHandler);
             }
         }
 
@@ -38,7 +67,7 @@ namespace QuickFix
         /// build  a complied expression tree - much faster than calling MethodInfo.Invoke
         /// </summary>
         /// <param name="m"></param>
-        private void TryBuildCallCache(MethodInfo m)
+        private void TryBuildCallCache(MethodInfo m, object messageHandler)
         {
             if (IsHandlerMethod(m))
             {
@@ -52,7 +81,7 @@ namespace QuickFix
 
                 var sessionParam = Expression.Parameter(typeof(SessionID), "sessionID");
 
-                var instance = Expression.Constant(this);
+                var instance = Expression.Constant(messageHandler);
 
                 var methodCall = Expression.Call(instance, m, Expression.Convert(messageParam, expParamMessage.ParameterType), Expression.Convert(sessionParam, expParamSessionId.ParameterType));
 
@@ -63,17 +92,15 @@ namespace QuickFix
             }
         }
 
-
-        static public bool IsHandlerMethod(MethodInfo m)
+        public static bool IsHandlerMethod(MethodInfo m)
         {
-            return (m.IsPublic == true
-                && m.Name.Equals("OnMessage")
+            return (
+                m.Name.Equals("OnMessage")
                 && m.GetParameters().Length == 2
                 && m.GetParameters()[0].ParameterType.IsSubclassOf(typeof(QuickFix.Message))
                 && typeof(QuickFix.SessionID).IsAssignableFrom(m.GetParameters()[1].ParameterType)
                 && m.ReturnType == typeof(void));
         }
-
 
         /// <summary>
         /// Process ("crack") a FIX message and call the registered handlers for that type, if any
@@ -92,7 +119,10 @@ namespace QuickFix
             }
             else
             {
-                throw new UnsupportedMessageType();
+                if (!IgnoreUnhandledMessages)
+                {
+                    throw new UnsupportedMessageType();
+                }
             }
         }
     }

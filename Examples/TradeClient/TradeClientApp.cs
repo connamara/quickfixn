@@ -1,6 +1,7 @@
 ﻿using System;
 using QuickFix;
-using QuickFix.Fields;
+using QuickFix.FIX44;
+using QuickFix.FIX44.Fields;
 using System.Collections.Generic;
 
 namespace TradeClient
@@ -63,12 +64,12 @@ namespace TradeClient
 
 
         #region MessageCracker handlers
-        public void OnMessage(QuickFix.FIX44.ExecutionReport m, SessionID s)
+        private void OnMessage(QuickFix.FIX44.ExecutionReport m, SessionID s)
         {
             Console.WriteLine("Received execution report");
         }
 
-        public void OnMessage(QuickFix.FIX44.OrderCancelReject m, SessionID s)
+        private void OnMessage(QuickFix.FIX44.OrderCancelReject m, SessionID s)
         {
             Console.WriteLine("Received order cancel reject");
         }
@@ -209,7 +210,7 @@ namespace TradeClient
         #region Message creation functions
         private QuickFix.FIX44.NewOrderSingle QueryNewOrderSingle44()
         {
-            QuickFix.Fields.OrdType ordType = null;
+            QuickFix.FIX44.Fields.OrdType ordType = null;
 
             QuickFix.FIX44.NewOrderSingle newOrderSingle = new QuickFix.FIX44.NewOrderSingle(
                 QueryClOrdID(),

@@ -26,7 +26,7 @@ namespace QuickFix
             application_ = app;
             messageStoreFactory_ = storeFactory;
             logFactory_ = logFactory;
-            messageFactory_ = messageFactory ?? new DefaultMessageFactory();
+            messageFactory_ = messageFactory;
         }
 
         public Session Create(SessionID sessionID, QuickFix.Dictionary settings)
@@ -38,9 +38,6 @@ namespace QuickFix
             if ("acceptor".Equals(connectionType) && settings.Has(SessionSettings.SESSION_QUALIFIER))
                 throw new ConfigError("SessionQualifier cannot be used with acceptor.");
 
-            bool useDataDictionary = true;
-            if (settings.Has(SessionSettings.USE_DATA_DICTIONARY))
-                useDataDictionary = settings.GetBool(SessionSettings.USE_DATA_DICTIONARY);
 
             QuickFix.Fields.ApplVerID defaultApplVerID = null;
             if (sessionID.IsFIXT)
@@ -50,16 +47,25 @@ namespace QuickFix
                     throw new ConfigError("ApplVerID is required for FIXT transport");
                 }
                 defaultApplVerID = Message.GetApplVerID(settings.GetString(SessionSettings.DEFAULT_APPLVERID));
-                
             }
 
+            // Use the supplied message factory or choose one from the DefaultMessageFactory based on the session's FIX version
+            IMessageFactory messageFactory = messageFactory_ ?? DefaultMessageFactory.CreateMessageFactory(sessionID.BeginString, sessionID.IsFIXT ? defaultApplVerID.getValue() : null);
+
             DataDictionaryProvider dd = new DataDictionaryProvider();
+
+            bool useDataDictionary = true;
+            if (settings.Has(SessionSettings.USE_DATA_DICTIONARY))
+                useDataDictionary = settings.GetBool(SessionSettings.USE_DATA_DICTIONARY);
+
             if (useDataDictionary)
             {
+                DataDictionary.DataDictionary embeddedDataDictionary = messageFactory.DataDictionary;
+
                 if (sessionID.IsFIXT)
-                    ProcessFixTDataDictionaries(sessionID, settings, dd);
+                    ProcessFixTDataDictionaries(sessionID, settings, dd, embeddedDataDictionary);
                 else
-                    ProcessFixDataDictionary(sessionID, settings, dd);
+                    ProcessFixDataDictionary(sessionID, settings, dd, embeddedDataDictionary);
             }
 
             int heartBtInt = 0;
@@ -81,7 +87,7 @@ namespace QuickFix
                 new SessionSchedule(settings),
                 heartBtInt,
                 logFactory_,
-                messageFactory_,
+                messageFactory ?? (new DefaultMessageFactory()),
                 senderDefaultApplVerId);
 
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
@@ -128,7 +134,7 @@ namespace QuickFix
             return session;
         }
 
-        protected DataDictionary.DataDictionary createDataDictionary(SessionID sessionID, QuickFix.Dictionary settings, string settingsKey, string beginString)
+        protected DataDictionary.DataDictionary createDataDictionary(SessionID sessionID, QuickFix.Dictionary settings, string settingsKey, string beginString, DataDictionary.DataDictionary embeddedDataDictionary)
         {
             DataDictionary.DataDictionary dd;
             string path;
@@ -137,11 +143,24 @@ namespace QuickFix
             else
                 path = beginString.Replace(".", "") + ".xml";
 
-            if (!dictionariesByPath_.TryGetValue(path, out dd))
+
+            if (path.ToLower() == "<internal>")
             {
-                dd = new DataDictionary.DataDictionary(path);
-                dictionariesByPath_[path] = dd;
+                if (embeddedDataDictionary == null)
+                {
+                    throw new ConfigError("MessageFactory doesn't contain a FIX Dictionary");
+                }
+                dd = embeddedDataDictionary;
             }
+            else
+            {
+                if (!dictionariesByPath_.TryGetValue(path, out dd))
+                {
+                    dd = new DataDictionary.DataDictionary(path);
+                    dictionariesByPath_[path] = dd;
+                }
+            }
+
 
             DataDictionary.DataDictionary ddCopy = new DataDictionary.DataDictionary(dd);
 
@@ -155,9 +174,9 @@ namespace QuickFix
             return ddCopy;
         }
 
-        protected void ProcessFixTDataDictionaries(SessionID sessionID, Dictionary settings, DataDictionaryProvider provider)
+        protected void ProcessFixTDataDictionaries(SessionID sessionID, Dictionary settings, DataDictionaryProvider provider, DataDictionary.DataDictionary embeddedDataDictionary)
         {
-            provider.AddTransportDataDictionary(sessionID.BeginString, createDataDictionary(sessionID, settings, SessionSettings.TRANSPORT_DATA_DICTIONARY, sessionID.BeginString));
+            provider.AddTransportDataDictionary(sessionID.BeginString, createDataDictionary(sessionID, settings, SessionSettings.TRANSPORT_DATA_DICTIONARY, sessionID.BeginString, embeddedDataDictionary));
     
             foreach (KeyValuePair<string, string> setting in settings)
             {
@@ -166,7 +185,7 @@ namespace QuickFix
                     if (setting.Key.Equals(SessionSettings.APP_DATA_DICTIONARY, System.StringComparison.CurrentCultureIgnoreCase))
                     {
                         Fields.ApplVerID applVerId = Message.GetApplVerID(settings.GetString(SessionSettings.DEFAULT_APPLVERID));
-                        DataDictionary.DataDictionary dd = createDataDictionary(sessionID, settings, SessionSettings.APP_DATA_DICTIONARY, sessionID.BeginString);
+                        DataDictionary.DataDictionary dd = createDataDictionary(sessionID, settings, SessionSettings.APP_DATA_DICTIONARY, sessionID.BeginString, embeddedDataDictionary);
                         provider.AddApplicationDataDictionary(applVerId.Obj, dd);
                     }
                     else
@@ -176,16 +195,16 @@ namespace QuickFix
                             throw new System.ArgumentException(string.Format("Malformed {0} : {1}", SessionSettings.APP_DATA_DICTIONARY, setting.Key));
 
                         string beginStringQualifier = setting.Key.Substring(offset);
-                        DataDictionary.DataDictionary dd = createDataDictionary(sessionID, settings, setting.Key, beginStringQualifier);
+                        DataDictionary.DataDictionary dd = createDataDictionary(sessionID, settings, setting.Key, beginStringQualifier, embeddedDataDictionary);
                         provider.AddApplicationDataDictionary(Message.GetApplVerID(beginStringQualifier).Obj, dd);
                     }
                 }
             }
         }
 
-        protected void ProcessFixDataDictionary(SessionID sessionID, Dictionary settings, DataDictionaryProvider provider)
+        protected void ProcessFixDataDictionary(SessionID sessionID, Dictionary settings, DataDictionaryProvider provider, DataDictionary.DataDictionary embeddedDataDictionary)
         {
-            DataDictionary.DataDictionary dataDictionary = createDataDictionary(sessionID, settings, SessionSettings.DATA_DICTIONARY, sessionID.BeginString);
+            DataDictionary.DataDictionary dataDictionary = createDataDictionary(sessionID, settings, SessionSettings.DATA_DICTIONARY, sessionID.BeginString, embeddedDataDictionary);
             provider.AddTransportDataDictionary(sessionID.BeginString, dataDictionary);
             provider.AddApplicationDataDictionary(FixValues.ApplVerID.FromBeginString(sessionID.BeginString), dataDictionary);
         }

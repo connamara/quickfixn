@@ -75,7 +75,10 @@ namespace UnitTests
             public bool CrackedNews42 { get; set; }
             public bool CrackedNews44 { get; set; }
 
-            public void OnMessage(QuickFix.FIX42.News msg, SessionID s) { CrackedNews42 = true; }
+            // Alsos tests that private OnMessage are found by MessageCracker.IsHandlerMethod when
+            // the cracker inherits from MessageCracker
+            private void OnMessage(QuickFix.FIX42.News msg, SessionID s) { CrackedNews42 = true; }
+
             public void OnMessage(QuickFix.FIX44.News msg, SessionID s) { CrackedNews44 = true; }
         }
 
@@ -95,6 +98,39 @@ namespace UnitTests
             mc.Crack(new QuickFix.FIX44.News(), _DummySessionID);
             Assert.IsFalse(tc.CrackedNews42);
             Assert.IsTrue(tc.CrackedNews44);
+        }
+
+
+        public class TestExternalCracker
+        {
+          public bool CrackedNews42 { get; set; }
+          public bool CrackedNews44 { get; set; }
+
+          // Alsos tests that private OnMessage are found by MessageCracker.IsHandlerMethod when
+          // the cracker inherits from MessageCracker
+          private void OnMessage(QuickFix.FIX42.News msg, SessionID s) { CrackedNews42 = true; }
+
+          public void OnMessage(QuickFix.FIX44.News msg, SessionID s) { CrackedNews44 = true; }
+        }
+
+
+        [Test]
+        public void GoldenExternalPath()
+        {
+          TestExternalCracker tec = new TestExternalCracker();
+
+          MessageCracker mc = new MessageCracker(tec);
+
+          mc.Crack(new QuickFix.FIX42.News(), _DummySessionID);
+          Assert.IsTrue(tec.CrackedNews42);
+          Assert.IsFalse(tec.CrackedNews44);
+
+        // reset and do the opposite
+        tec.CrackedNews42 = false;
+
+          mc.Crack(new QuickFix.FIX44.News(), _DummySessionID);
+          Assert.IsFalse(tec.CrackedNews42);
+          Assert.IsTrue(tec.CrackedNews44);
         }
 
         [Test]

@@ -6,114 +6,112 @@ require 'fields_gen'
 require 'messages_gen'
 require 'proj_gen'
 require 'message_factory_gen'
+require 'message_types_gen'
+require 'securerandom'
 
 class Generator  
-  def self.generate
+  def self.generate   
     generator = Generator.new
-    generator.generate_csproj
-    generator.generate_message_factories
-    generator.generate_fields
-    generator.generate_messages
+    
+    generator.generate_project('dd15ebb0-b22b-012f-b4c9-0019b945714e', 'FIX40',    nil, nil)
+    generator.generate_project('4e3125c0-b22c-012f-b4c9-0019b945714e', 'FIX41',    nil, nil)
+    generator.generate_project('5985acf0-b22c-012f-b4c9-0019b945714e', 'FIX42',    nil, nil)
+    generator.generate_project('622d5210-b22c-012f-b4c9-0019b945714e', 'FIX43',    nil, nil)
+    generator.generate_project('627caca0-b22c-012f-b4c9-0019b945714e', 'FIX44',    nil, nil)
+    generator.generate_project('62c37b70-b22c-012f-b4c9-0019b945714e', 'FIX50',    nil, nil)
+    generator.generate_project('119506e5-c552-49cd-923b-847aeb592ff2', 'FIX50SP1', nil, nil)
+    generator.generate_project('e3fb654c-c9ab-4701-8912-511aca2cc0b2', 'FIX50SP2', nil, nil)
+	
+	generator.generate_derivatives_projects()
   end
   
-  def initialize
-    @fix40 = FIXDictionary.load spec('FIX40')
-    @fix41 = FIXDictionary.load spec('FIX41')
-    @fix42 = FIXDictionary.load spec('FIX42')
-    @fix43 = FIXDictionary.load spec('FIX43')
-    @fix44 = FIXDictionary.load spec('FIX44')
-    @fix50 = FIXDictionary.load spec('FIX50')
-    @fix50sp1 = FIXDictionary.load spec('FIX50SP1')
-    @fix50sp2 = FIXDictionary.load spec('FIX50SP2')
-    @src_path = File.join File.dirname(__FILE__), '..', 'QuickFIXn'
+  def generate_derivatives_projects
+    Dir[specbase + "/*/"].each { |fd| 
+	  Dir[fd + "/*.xml"].each { |fs|
+	    specpath = File.join(fd, File.basename(fs))
+		fixver=File.basename(fs,File.extname(fs))		 	
+	    generate_project(SecureRandom.uuid, fixver, fd.split('/')[-1], specpath) 
+      } 
+	}
   end
 
-  def spec fixver
-    File.join File.dirname(__FILE__), "..", "spec", "fix", "#{fixver}.xml"
+  def specbase
+    File.join File.dirname(__FILE__), "..", "spec", "fix"
+  end
+  
+  def spec_file_path fixver
+    File.join specbase, "#{fixver}.xml"
   end
     
-  def generate_fields
-    fields_path = File.join(@src_path, 'Fields', 'Fields.cs')
-    tags_path = File.join(@src_path, 'Fields', 'FieldTags.cs')
-    FieldGen.generate(agg_fields, fields_path, tags_path)
-  end
+  def generate_project proj_uuid, fixver, fixbasever, specpath
 
-  def agg_fields
-    field_names = (@fix40.fields.keys + @fix41.fields.keys +
-        @fix42.fields.keys + @fix43.fields.keys +
-        @fix44.fields.keys + @fix50.fields.keys +
-        @fix50sp1.fields.keys + @fix50sp2.fields.keys).uniq
-    field_names.map {|fn| get_field_def(fn) }
-  end
+    puts 'Generating project for ' + fixver + ' messages'
 
-  def get_field_def fld_name
-    # we give priority to latest fix version
-    fld = merge_field_defs(
-      @fix50sp2.fields[fld_name],
-      @fix50sp1.fields[fld_name],
-      @fix50.fields[fld_name],
-      @fix44.fields[fld_name],
-      @fix43.fields[fld_name],
-      @fix42.fields[fld_name],
-      @fix41.fields[fld_name],
-      @fix40.fields[fld_name]
-    )
+   if fixbasever == nil
+     fixbasever = fixver
+    end
+
+	src_path = File.join File.dirname(__FILE__), '..', 'QuickFIXn'
+	
+	if specpath == nil
+		specpath = spec_file_path(fixver)
+	end
+	
+	puts "loading #{fixver} specs from #{specpath}"
+    fixspec = FIXDictionary.load(specpath)
+		
+    # Generate csproj
+    CSProjGen.generate(src_path, [ {:version=>fixver, :baseversion=>fixbasever, :messages=>fixspec.messages, :uuid=>proj_uuid} ])
+	
+    # Generate messages
+    msgs_path = File.join(src_path, 'Message')
+    MessageGen.generate(fixspec.messages,  msgs_path, fixver, fixbasever)
+
+	fields_to_exclude = get_excluded_fields 
+	
+    # Generate Fields.cs and FieldTags.cs
+    # TODO: Add namespace
+    field_names =  fixspec.fields.keys
+	
+	# Generate tags before exclusion
+	tags = field_names.map {|fn| fixspec.fields[fn]}
+	
+	field_names = field_names - fields_to_exclude
+
+	# Generate fields after exclusion
+    fields = field_names.map {|fn| fixspec.fields[fn]}
+	
+    fields_path = File.join(src_path, 'Message', fixver, 'Fields.cs')
+    tags_path = File.join(src_path, 'Message', fixver, 'FieldTags.cs')    
+	
+    FieldGen.generate(fixver, fields, fields_path, tags, tags_path)
+	
+    # Generate message factory
+    MessageFactoryGen.generate(fixspec.messages, msgs_path, fixver, fixbasever)
     
-    raise "couldn't find field! #{fld}" if fld.nil?
-    fld
-  end
+    # Generate message types
+    MessageTypesGen.generate(fixspec.messages, msgs_path, fixver)
 
-  def merge_field_defs *alldefs
-    defs = alldefs.reject {|d| d.nil?}
-    return nil if defs.empty?
-    fld = defs.first
-    
-    vals = defs.map { |d| d[:values] }.reject { |d| d.nil? }.flatten
-    return fld if vals.empty?
-    vals = vals.inject([]) {|saved, v| saved << v unless saved.detect {|u| u[:desc] == v[:desc]}; saved}
-    fld[:values] = vals
-    fld
   end
+  
+  def get_excluded_fields
+  
+	src_path = File.join File.dirname(__FILE__), '..', 'QuickFIXn', 'Fields', 'Fields.cs'
+	
+	#fields = Set.new File.foreach(src_path).select { |line| line.index (/public sealed class .+ : .+Field/) }.map { |classdef| classdef.gsub(/^(.*public sealed class).+(: .+Field.*$)/, '') }
+	fields = File.foreach(src_path).select { |line| line.index (/public sealed class .+ : .+Field/) }
+	fields = fields.map { |classdef| classdef.gsub(/^(.*public sealed class) /, '') }
+	fields = fields.map { |classdef| classdef.gsub(/(: .+Field.*$)/, '') }
+	fields = fields.map { |classdef| classdef.strip! }
 
-  def generate_messages
-    msgs_path = File.join(@src_path, 'Message')
-    MessageGen.generate(@fix40.messages,  msgs_path, 'FIX40')
-    MessageGen.generate(@fix41.messages,  msgs_path, 'FIX41')
-    MessageGen.generate(@fix42.messages,  msgs_path, 'FIX42')
-    MessageGen.generate(@fix43.messages,  msgs_path, 'FIX43')
-    MessageGen.generate(@fix44.messages,  msgs_path, 'FIX44')
-    MessageGen.generate(@fix50.messages,  msgs_path, 'FIX50')
-    MessageGen.generate(@fix50sp1.messages,  msgs_path, 'FIX50SP1')
-    MessageGen.generate(@fix50sp2.messages,  msgs_path, 'FIX50SP2')
+	fields = fields - ["MsgType" ,"ApplVerID"]
+	
+    #puts fields.to_a
+	
+	fields
+  
   end
-
-  def generate_csproj
-    csproj_path = File.join(@src_path, 'FixMessages.csproj')
-    CSProjGen.generate(
-      csproj_path,
-      [
-        {:version=>'FIX40', :messages=>@fix40.messages},
-        {:version=>'FIX41', :messages=>@fix41.messages},
-        {:version=>'FIX42', :messages=>@fix42.messages},
-        {:version=>'FIX43', :messages=>@fix43.messages},
-        {:version=>'FIX44', :messages=>@fix44.messages},
-        {:version=>'FIX50', :messages=>@fix50.messages}
-      ]
-    )
-  end
-
-  def generate_message_factories
-    msgs_path = File.join(@src_path, 'Message')
-    MessageFactoryGen.generate(@fix40.messages,  msgs_path, 'FIX40')
-    MessageFactoryGen.generate(@fix41.messages,  msgs_path, 'FIX41')
-    MessageFactoryGen.generate(@fix42.messages,  msgs_path, 'FIX42')
-    MessageFactoryGen.generate(@fix43.messages,  msgs_path, 'FIX43')
-    MessageFactoryGen.generate(@fix44.messages,  msgs_path, 'FIX44')
-    MessageFactoryGen.generate(@fix50.messages,  msgs_path, 'FIX50')
-    MessageFactoryGen.generate(@fix50sp1.messages,  msgs_path, 'FIX50SP1')
-    MessageFactoryGen.generate(@fix50sp2.messages,  msgs_path, 'FIX50SP2')
-  end
+  
 end
-
 
 Generator.generate

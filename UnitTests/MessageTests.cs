@@ -4,13 +4,23 @@ using System.Linq;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
+using QuickFix.FIX44.Fields;
+using BeginString = QuickFix.Fields.BeginString;
+using MsgType = QuickFix.Fields.MsgType;
+using SenderCompID = QuickFix.Fields.SenderCompID;
+using SenderLocationID = QuickFix.Fields.SenderLocationID;
+using SenderSubID = QuickFix.Fields.SenderSubID;
+using TargetCompID = QuickFix.Fields.TargetCompID;
+using TargetLocationID = QuickFix.Fields.TargetLocationID;
+using TargetSubID = QuickFix.Fields.TargetSubID;
 
 namespace UnitTests
 {
     [TestFixture]
     public class MessageTests
     {
-        private IMessageFactory _defaultMsgFactory = new DefaultMessageFactory();
+        //private IMessageFactory _defaultMsgFactory = new DefaultMessageFactory();
+        private IMessageFactory _defaultMsgFactory = new QuickFix.FIX42.MessageFactory();
 
         [Test]
         public void IdentifyTypeTest()
@@ -190,14 +200,14 @@ namespace UnitTests
         {
             Assert.That(Message.IsHeaderField(Tags.BeginString), Is.EqualTo(true));
             Assert.That(Message.IsHeaderField(Tags.TargetCompID), Is.EqualTo(true));
-            Assert.That(Message.IsHeaderField(Tags.Account), Is.EqualTo(false));
+            Assert.That(Message.IsHeaderField(QuickFix.FIX40.Tags.Account), Is.EqualTo(false));
         }
 
         [Test]
         public void IsTrailerFieldTest()
         {
             Assert.That(Message.IsTrailerField(Tags.CheckSum), Is.EqualTo(true));
-            Assert.That(Message.IsTrailerField(Tags.Price), Is.EqualTo(false));
+            Assert.That(Message.IsTrailerField(QuickFix.FIX40.Tags.Price), Is.EqualTo(false));
         }
 
         [Test]
@@ -242,7 +252,7 @@ namespace UnitTests
             var noTradingSessions = new QuickFix.FIX42.NewOrderSingle.NoTradingSessionsGroup();
             noTradingSessions.SetField(new StringField(336, "OHHAI"));
             nos.AddGroup(noTradingSessions);
-            var noTradingSessionsRE = nos.GetGroup(1, Tags.NoTradingSessions);
+            var noTradingSessionsRE = nos.GetGroup(1, QuickFix.FIX42.Tags.NoTradingSessions);
             Assert.That(noTradingSessionsRE.GetString(336), Is.EqualTo("OHHAI"));
 
             var nos2 = new QuickFix.FIX42.NewOrderSingle();
@@ -267,10 +277,10 @@ namespace UnitTests
             dd.Load("../../../spec/fix/FIX44.xml");
             msg.FromString(data, false, dd, dd, _defaultMsgFactory);
 
-            var grp = msg.GetGroup(1, Tags.NoPartyIDs);
-            Assert.That(grp.GetString(Tags.PartyID), Is.EqualTo("AAA35791"));
-            grp = msg.GetGroup(3, Tags.NoPartyIDs);
-            Assert.That(grp.GetString(Tags.PartyID), Is.EqualTo("FIX11"));
+            var grp = msg.GetGroup(1, QuickFix.FIX43.Tags.NoPartyIDs);
+            Assert.That(grp.GetString(QuickFix.FIX43.Tags.PartyID), Is.EqualTo("AAA35791"));
+            grp = msg.GetGroup(3, QuickFix.FIX43.Tags.NoPartyIDs);
+            Assert.That(grp.GetString(QuickFix.FIX43.Tags.PartyID), Is.EqualTo("FIX11"));
         }
 
         [Test]
@@ -289,8 +299,8 @@ namespace UnitTests
             dd.Load("../../../spec/fix/FIX44.xml");
             msg.FromString(data, false, dd, dd, _defaultMsgFactory);
 
-            var subGrp = msg.GetGroup(1, Tags.NoPartyIDs).GetGroup(1, Tags.NoPartySubIDs);
-            Assert.That(subGrp.GetString(Tags.PartySubID), Is.EqualTo("OHAI123"));
+            var subGrp = msg.GetGroup(1, QuickFix.FIX43.Tags.NoPartyIDs).GetGroup(1, QuickFix.FIX44.Tags.NoPartySubIDs);
+            Assert.That(subGrp.GetString(QuickFix.FIX43.Tags.PartySubID), Is.EqualTo("OHAI123"));
         }
 
 
@@ -306,10 +316,10 @@ namespace UnitTests
             dd.Load("../../../spec/fix/FIX44.xml");
             var nos = new QuickFix.FIX44.Logon();
             nos.FromString(data, false, dd, dd, _defaultMsgFactory);
-            Group hops = nos.Header.GetGroup(1, Tags.NoHops);
-            Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("FOO"));
-            hops = nos.Header.GetGroup(2, Tags.NoHops);
-            Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("BAR"));
+            Group hops = nos.Header.GetGroup(1, QuickFix.FIX44.Tags.NoHops);
+            Assert.That(hops.GetString(QuickFix.FIX44.Tags.HopCompID), Is.EqualTo("FOO"));
+            hops = nos.Header.GetGroup(2, QuickFix.FIX44.Tags.NoHops);
+            Assert.That(hops.GetString(QuickFix.FIX44.Tags.HopCompID), Is.EqualTo("BAR"));
         }
 
         [Test]
@@ -366,17 +376,17 @@ namespace UnitTests
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX42.xml");
 
-            QuickFix.FIX42.News news = new QuickFix.FIX42.News(new QuickFix.Fields.Headline("Foo headline"));
+            QuickFix.FIX42.News news = new QuickFix.FIX42.News(new QuickFix.FIX42.Fields.Headline("Foo headline"));
 
             QuickFix.FIX42.News.LinesOfTextGroup group1 = new QuickFix.FIX42.News.LinesOfTextGroup();
             group1.Text = new QuickFix.Fields.Text("line1");
-            group1.EncodedTextLen = new QuickFix.Fields.EncodedTextLen(3);
-            group1.EncodedText = new QuickFix.Fields.EncodedText("aaa");
+            group1.EncodedTextLen = new QuickFix.FIX42.Fields.EncodedTextLen(3);
+            group1.EncodedText = new QuickFix.FIX42.Fields.EncodedText("aaa");
             news.AddGroup(group1);
 
             QuickFix.FIX42.News.LinesOfTextGroup group2 = new QuickFix.FIX42.News.LinesOfTextGroup();
             group2.Text = new QuickFix.Fields.Text("line2");
-            group2.EncodedText = new QuickFix.Fields.EncodedText("bbb");
+            group2.EncodedText = new QuickFix.FIX42.Fields.EncodedText("bbb");
             news.AddGroup(group2);
 
             string raw = news.ToString();
@@ -393,7 +403,7 @@ namespace UnitTests
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX42.xml");
 
-            QuickFix.FIX42.News news = new QuickFix.FIX42.News(new QuickFix.Fields.Headline("Foo headline"));
+            QuickFix.FIX42.News news = new QuickFix.FIX42.News(new QuickFix.FIX42.Fields.Headline("Foo headline"));
 
             QuickFix.FIX42.News.LinesOfTextGroup group = new QuickFix.FIX42.News.LinesOfTextGroup();
             group.Text = new QuickFix.Fields.Text("line1");
@@ -530,23 +540,23 @@ namespace UnitTests
         public void RepeatingGroup_DelimiterFieldFirst()
         {
             QuickFix.FIX44.MarketDataRequest msg = new QuickFix.FIX44.MarketDataRequest();
-            msg.MDReqID = new MDReqID("fooMdReqID");
-            msg.SubscriptionRequestType = new SubscriptionRequestType('1');
-            msg.MarketDepth = new MarketDepth(0);
+            msg.MDReqID = new QuickFix.FIX44.Fields.MDReqID("fooMdReqID");
+            msg.SubscriptionRequestType = new QuickFix.FIX44.Fields.SubscriptionRequestType('1');
+            msg.MarketDepth = new QuickFix.FIX44.Fields.MarketDepth(0);
 
             // this group is irrelevant to the test, but it's required in the message
             QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup entryTypesGroup = new QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup();
-            entryTypesGroup.MDEntryType = new MDEntryType('0');
+            entryTypesGroup.MDEntryType = new QuickFix.FIX44.Fields.MDEntryType('0');
             msg.AddGroup(entryTypesGroup);
-            entryTypesGroup.MDEntryType = new MDEntryType('1');
+            entryTypesGroup.MDEntryType = new QuickFix.FIX44.Fields.MDEntryType('1');
             msg.AddGroup(entryTypesGroup);
 
             QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup symGroup = new QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup();
-            symGroup.Symbol = new Symbol("FOO1");
-            symGroup.SecurityID = new SecurityID("secid1");
+            symGroup.Symbol = new QuickFix.FIX44.Fields.Symbol("FOO1");
+            symGroup.SecurityID = new QuickFix.FIX44.Fields.SecurityID("secid1");
             msg.AddGroup(symGroup);
-            symGroup.Symbol = new Symbol("FOO2");
-            symGroup.SecurityID = new SecurityID("secid2");
+            symGroup.Symbol = new QuickFix.FIX44.Fields.Symbol("FOO2");
+            symGroup.SecurityID = new QuickFix.FIX44.Fields.SecurityID("secid2");
             msg.AddGroup(symGroup);
 
             string msgString = msg.ToString();
@@ -559,28 +569,28 @@ namespace UnitTests
         public void RepeatingGroup_FieldOrder()
         {
             QuickFix.FIX44.MarketDataRequest msg = new QuickFix.FIX44.MarketDataRequest();
-            msg.MDReqID = new MDReqID("fooMdReqID");
-            msg.SubscriptionRequestType = new SubscriptionRequestType('1');
-            msg.MarketDepth = new MarketDepth(0);
+            msg.MDReqID = new QuickFix.FIX44.Fields.MDReqID("fooMdReqID");
+            msg.SubscriptionRequestType = new QuickFix.FIX44.Fields.SubscriptionRequestType('1');
+            msg.MarketDepth = new QuickFix.FIX44.Fields.MarketDepth(0);
 
             // this group is irrelevant to the test, but it's required in the message
             QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup entryTypesGroup = new QuickFix.FIX44.MarketDataRequest.NoMDEntryTypesGroup();
-            entryTypesGroup.MDEntryType = new MDEntryType('0');
+            entryTypesGroup.MDEntryType = new QuickFix.FIX44.Fields.MDEntryType('0');
             msg.AddGroup(entryTypesGroup);
-            entryTypesGroup.MDEntryType = new MDEntryType('1');
+            entryTypesGroup.MDEntryType = new QuickFix.FIX44.Fields.MDEntryType('1');
             msg.AddGroup(entryTypesGroup);
 
             QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup symGroup = new QuickFix.FIX44.MarketDataRequest.NoRelatedSymGroup();
             // spec order of fields is 55,65,48,22
-            symGroup.Symbol = new Symbol("FOO1");
-            symGroup.SymbolSfx = new SymbolSfx("sfx1");
-            symGroup.SecurityID = new SecurityID("secid1");
-            symGroup.SecurityIDSource = new SecurityIDSource("src1");
+            symGroup.Symbol = new QuickFix.FIX44.Fields.Symbol("FOO1");
+            symGroup.SymbolSfx = new QuickFix.FIX44.Fields.SymbolSfx("sfx1");
+            symGroup.SecurityID = new QuickFix.FIX44.Fields.SecurityID("secid1");
+            symGroup.SecurityIDSource = new QuickFix.FIX44.Fields.SecurityIDSource("src1");
             msg.AddGroup(symGroup);
-            symGroup.Symbol = new Symbol("FOO2");
-            symGroup.SymbolSfx = new SymbolSfx("sfx2");
-            symGroup.SecurityID = new SecurityID("secid2");
-            symGroup.SecurityIDSource = new SecurityIDSource("src2");
+            symGroup.Symbol = new QuickFix.FIX44.Fields.Symbol("FOO2");
+            symGroup.SymbolSfx = new QuickFix.FIX44.Fields.SymbolSfx("sfx2");
+            symGroup.SecurityID = new QuickFix.FIX44.Fields.SecurityID("secid2");
+            symGroup.SecurityIDSource = new QuickFix.FIX44.Fields.SecurityIDSource("src2");
             msg.AddGroup(symGroup);
 
             string msgString = msg.ToString();
@@ -596,7 +606,7 @@ namespace UnitTests
         public void ToString_FIX50()
         {
             QuickFix.FIX50.News msg = new QuickFix.FIX50.News();
-            msg.Headline = new Headline("FOO");
+            msg.Headline = new QuickFix.FIX50.Fields.Headline("FOO");
 
             StringAssert.StartsWith("8=FIXT.1.1" + Message.SOH, msg.ToString());
         }
@@ -607,21 +617,21 @@ namespace UnitTests
             // issue #11 bug, as reported by karabiberoglu's further-down post
 
             QuickFix.FIX44.CollateralInquiry ci = new QuickFix.FIX44.CollateralInquiry();
-            ci.CollInquiryID = new QuickFix.Fields.CollInquiryID("CollateralInquiry");
+            ci.CollInquiryID = new QuickFix.FIX44.Fields.CollInquiryID("CollateralInquiry");
 
             // group
             QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup noParty = new QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup();
-            noParty.PartyID = new QuickFix.Fields.PartyID("ABC");
-            noParty.PartyIDSource = new QuickFix.Fields.PartyIDSource(QuickFix.Fields.PartyIDSource.PROPRIETARY_CUSTOM_CODE);
-            noParty.PartyRole = new QuickFix.Fields.PartyRole(QuickFix.Fields.PartyRole.CLEARING_FIRM);
+            noParty.PartyID = new QuickFix.FIX44.Fields.PartyID("ABC");
+            noParty.PartyIDSource = new QuickFix.FIX44.Fields.PartyIDSource(QuickFix.FIX44.Fields.PartyIDSource.PROPRIETARY_CUSTOM_CODE);
+            noParty.PartyRole = new QuickFix.FIX44.Fields.PartyRole(QuickFix.FIX44.Fields.PartyRole.CLEARING_FIRM);
 
             // group in group
             QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup.NoPartySubIDsGroup noPartySub = new QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup.NoPartySubIDsGroup();
-            noPartySub.PartySubID = new QuickFix.Fields.PartySubID("subABC");
-            noPartySub.PartySubIDType = new QuickFix.Fields.PartySubIDType(QuickFix.Fields.PartySubIDType.FIRM);
+            noPartySub.PartySubID = new QuickFix.FIX44.Fields.PartySubID("subABC");
+            noPartySub.PartySubIDType = new QuickFix.FIX44.Fields.PartySubIDType(QuickFix.FIX50.Fields.PartySubIDType.FIRM);
             noParty.AddGroup(noPartySub);
-            noPartySub.PartySubID = new QuickFix.Fields.PartySubID("subDEF");
-            noPartySub.PartySubIDType = new QuickFix.Fields.PartySubIDType(QuickFix.Fields.PartySubIDType.LOCATION);
+            noPartySub.PartySubID = new QuickFix.FIX44.Fields.PartySubID("subDEF");
+            noPartySub.PartySubIDType = new QuickFix.FIX44.Fields.PartySubIDType(QuickFix.FIX50.Fields.PartySubIDType.LOCATION);
             noParty.AddGroup(noPartySub);
 
             ci.AddGroup(noParty);
@@ -651,14 +661,14 @@ namespace UnitTests
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
             QuickFix.FIX42.News msg = new QuickFix.FIX42.News();
             msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
-            Assert.AreEqual(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
+            Assert.AreEqual(2, msg.GroupCount(QuickFix.FIX42.Tags.LinesOfText)); // for sanity
 
             // the test
-            var grp1 = msg.GetGroup(1, Tags.LinesOfText);
+            var grp1 = msg.GetGroup(1, QuickFix.FIX42.Tags.LinesOfText);
             Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(grp1);
             Assert.AreEqual("L1", (grp1 as QuickFix.FIX42.News.LinesOfTextGroup).Text.Obj);
 
-            var grp2 = msg.GetGroup(2, Tags.LinesOfText);
+            var grp2 = msg.GetGroup(2, QuickFix.FIX42.Tags.LinesOfText);
             Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(grp2);
             Assert.AreEqual("L2", (grp2 as QuickFix.FIX42.News.LinesOfTextGroup).Text.Obj);
         }
@@ -673,7 +683,7 @@ namespace UnitTests
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
             QuickFix.FIX42.News msg = new QuickFix.FIX42.News();
             msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
-            Assert.AreEqual(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
+            Assert.AreEqual(2, msg.GroupCount(QuickFix.FIX42.Tags.LinesOfText)); // for sanity
 
             // the test
             QuickFix.FIX42.News.LinesOfTextGroup grp = new QuickFix.FIX42.News.LinesOfTextGroup(); // for return value
@@ -738,7 +748,7 @@ namespace UnitTests
         {
             // issue 135
             QuickFix.FIX44.MarketDataSnapshotFullRefresh msg = new QuickFix.FIX44.MarketDataSnapshotFullRefresh();
-            msg.MDReqID = new MDReqID("1b145288-9c9a-4911-a084-7341c69d3e6b");
+            msg.MDReqID = new QuickFix.FIX44.Fields.MDReqID("1b145288-9c9a-4911-a084-7341c69d3e6b");
             msg.Symbol = new Symbol("[N/A]");
             msg.SecurityIDSource = new SecurityIDSource(SecurityIDSource.ISIN_NUMBER);
             msg.SecurityID = new SecurityID("BE0932900518");
@@ -864,6 +874,8 @@ namespace UnitTests
         [Test]
         public void issue95()
         {
+            IMessageFactory fix44MsgFactory = new QuickFix.FIX44.MessageFactory();
+
             // Parser screws up on triple-nested groups.  Contributes to ResendRequest failures.
             string msgStr = String.Join(Message.SOH, new string[]{
                 "8=FIX.4.4","9=999","35=R","34=6","49=sendercompid","52=20130225-10:44:59.149","56=targetcompid", //headers
@@ -875,11 +887,13 @@ namespace UnitTests
                 "10=999",""
             });
 
-            var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            // Use embedded DataDictionary
+            var dd = fix44MsgFactory.DataDictionary;
+                //new QuickFix.DataDictionary.DataDictionary();
+            //dd.Load("../../../spec/fix/FIX44.xml");
 
             Message msg = new Message();
-            msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
+            msg.FromString(msgStr, false, dd, dd, fix44MsgFactory);
 
             // make sure no fields were dropped in parsing
             Assert.AreEqual(msgStr.Length, msg.ToString().Length);
@@ -900,14 +914,14 @@ namespace UnitTests
             var allocAccountType = new AllocAccountType(AllocAccountType.HOUSE_TRADER);
             message.SetFields(new IField[] { allocAccount, allocAccountType, allocId });
 
-            Assert.AreEqual(true, message.IsSetField(Tags.AllocID));
-            Assert.AreEqual("123456", message.GetField(Tags.AllocID));
+            Assert.AreEqual(true, message.IsSetField(QuickFix.FIX44.Tags.AllocID));
+            Assert.AreEqual("123456", message.GetField(QuickFix.FIX44.Tags.AllocID));
 
-            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccount));
-            Assert.AreEqual("QuickFixAccount", message.GetField(Tags.AllocAccount));
+            Assert.AreEqual(true, message.IsSetField(QuickFix.FIX44.Tags.AllocAccount));
+            Assert.AreEqual("QuickFixAccount", message.GetField(QuickFix.FIX44.Tags.AllocAccount));
 
-            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccountType));
-            Assert.AreEqual(AllocAccountType.HOUSE_TRADER, message.GetInt(Tags.AllocAccountType));
+            Assert.AreEqual(true, message.IsSetField(QuickFix.FIX44.Tags.AllocAccountType));
+            Assert.AreEqual(AllocAccountType.HOUSE_TRADER, message.GetInt(QuickFix.FIX44.Tags.AllocAccountType));
         }
     }
 }

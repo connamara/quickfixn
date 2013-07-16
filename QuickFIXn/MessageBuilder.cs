@@ -13,13 +13,13 @@ namespace QuickFix
         private DataDictionary.DataDictionary _appDD;
         private IMessageFactory _msgFactory;
 
-        private QuickFix.Fields.MsgType _msgType;
+        private QuickFix.Fields.StringField _msgType;
         private string _beginString;
 
         private Message _message;
 
         public string OriginalString { get { return _msgStr; } }
-        public QuickFix.Fields.MsgType MsgType { get { return _msgType; } }
+        public QuickFix.Fields.StringField MsgType { get { return _msgType; } }
         public string BeginString { get { return _beginString; } }
 
         internal MessageBuilder(

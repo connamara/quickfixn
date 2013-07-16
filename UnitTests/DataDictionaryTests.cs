@@ -29,7 +29,7 @@ namespace UnitTests
             Assert.That(dd.FieldsByTag[1].Name, Is.EqualTo("Account"));
             Assert.That(dd.FieldsByName["Account"].Tag, Is.EqualTo(1));
             Assert.That(dd.FieldsByTag[1].EnumDict.Count, Is.EqualTo(0));
-            Assert.That(dd.FieldsByTag[QuickFix.Fields.Tags.StatusValue].EnumDict.Count, Is.EqualTo(4));
+            Assert.That(dd.FieldsByTag[QuickFix.FIX44.Tags.StatusValue].EnumDict.Count, Is.EqualTo(4));
         }
 
 		[Test]
@@ -41,7 +41,7 @@ namespace UnitTests
 			Assert.That(dd.FieldsByTag[1].Name, Is.EqualTo("Account"));
 			Assert.That(dd.FieldsByName["Account"].Tag, Is.EqualTo(1));
 			Assert.That(dd.FieldsByTag[1].EnumDict.Count, Is.EqualTo(0));
-			Assert.That(dd.FieldsByTag[QuickFix.Fields.Tags.StatusValue].EnumDict.Count, Is.EqualTo(4));
+			Assert.That(dd.FieldsByTag[QuickFix.FIX44.Tags.StatusValue].EnumDict.Count, Is.EqualTo(4));
 		}
 
         [Test]
@@ -49,8 +49,8 @@ namespace UnitTests
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
-            Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "1"), Is.EqualTo(true));
-            Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "CONNECTED"), Is.EqualTo(false));
+            Assert.That(dd.FieldHasValue(QuickFix.FIX44.Tags.StatusValue, "1"), Is.EqualTo(true));
+            Assert.That(dd.FieldHasValue(QuickFix.FIX44.Tags.StatusValue, "CONNECTED"), Is.EqualTo(false));
             Assert.False(dd.FieldsByTag[1].HasEnums());
             Assert.True(dd.FieldsByTag[945].HasEnums());
         }
@@ -161,7 +161,7 @@ namespace UnitTests
             QuickFix.DataDictionary.DDGrp g = dd.Messages["B"].GetGroup(33);
 
             QuickFix.Fields.Text textField = new QuickFix.Fields.Text("woot");
-            QuickFix.Fields.ClOrdID clOrdIdField = new QuickFix.Fields.ClOrdID("not woot");
+            QuickFix.FIX44.Fields.ClOrdID clOrdIdField = new QuickFix.FIX44.Fields.ClOrdID("not woot");
 
             Assert.DoesNotThrow(delegate() { dd.CheckIsInGroup(textField, g, "B"); });
             Assert.Throws(typeof(TagNotDefinedForMessage), delegate { dd.CheckIsInGroup(clOrdIdField, g, "B"); });

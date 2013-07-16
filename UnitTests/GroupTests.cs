@@ -16,17 +16,17 @@ namespace UnitTests
             // issue #11 bug, as reported by karabiberoglu's further-down post
 
             QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup noParty = new QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup();
-            noParty.PartyID = new QuickFix.Fields.PartyID("ABC");
-            noParty.PartyIDSource = new QuickFix.Fields.PartyIDSource(QuickFix.Fields.PartyIDSource.PROPRIETARY_CUSTOM_CODE);
-            noParty.PartyRole = new QuickFix.Fields.PartyRole(QuickFix.Fields.PartyRole.CLEARING_FIRM);
+            noParty.PartyID = new QuickFix.FIX44.Fields.PartyID("ABC");
+            noParty.PartyIDSource = new QuickFix.FIX44.Fields.PartyIDSource(QuickFix.FIX44.Fields.PartyIDSource.PROPRIETARY_CUSTOM_CODE);
+            noParty.PartyRole = new QuickFix.FIX44.Fields.PartyRole(QuickFix.FIX44.Fields.PartyRole.CLEARING_FIRM);
 
             // group in group
             QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup.NoPartySubIDsGroup noPartySub = new QuickFix.FIX44.CollateralInquiry.NoPartyIDsGroup.NoPartySubIDsGroup();
-            noPartySub.PartySubID = new QuickFix.Fields.PartySubID("subABC");
-            noPartySub.PartySubIDType = new QuickFix.Fields.PartySubIDType(QuickFix.Fields.PartySubIDType.FIRM);
+            noPartySub.PartySubID = new QuickFix.FIX44.Fields.PartySubID("subABC");
+            noPartySub.PartySubIDType = new QuickFix.FIX44.Fields.PartySubIDType(QuickFix.FIX50.Fields.PartySubIDType.FIRM);
             noParty.AddGroup(noPartySub);
-            noPartySub.PartySubID = new QuickFix.Fields.PartySubID("subDEF");
-            noPartySub.PartySubIDType = new QuickFix.Fields.PartySubIDType(QuickFix.Fields.PartySubIDType.LOCATION);
+            noPartySub.PartySubID = new QuickFix.FIX44.Fields.PartySubID("subDEF");
+            noPartySub.PartySubIDType = new QuickFix.FIX44.Fields.PartySubIDType(QuickFix.FIX50.Fields.PartySubIDType.LOCATION);
             noParty.AddGroup(noPartySub);
 
             string msgString = noParty.ToString();
@@ -46,7 +46,7 @@ namespace UnitTests
         {
             QuickFix.FIX42.News.LinesOfTextGroup linesGroup = new QuickFix.FIX42.News.LinesOfTextGroup();
             linesGroup.Text = new QuickFix.Fields.Text("foo");
-            linesGroup.EncodedText = new QuickFix.Fields.EncodedText("bar");
+            linesGroup.EncodedText = new QuickFix.FIX42.Fields.EncodedText("bar");
 
             QuickFix.FIX42.News.LinesOfTextGroup clone = linesGroup.Clone() as QuickFix.FIX42.News.LinesOfTextGroup;
 
