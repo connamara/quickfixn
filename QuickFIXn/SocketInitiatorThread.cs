@@ -1,5 +1,7 @@
-﻿using System.Net.Sockets;
+﻿using System;
 using System.Net;
+using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 
 namespace QuickFix
@@ -23,16 +25,41 @@ namespace QuickFix
         private IPEndPoint socketEndPoint_;
         private bool isDisconnectRequested_ = false;
 
-        public SocketInitiatorThread(Transport.SocketInitiator initiator, Session session, IPEndPoint socketEndPoint, SocketSettings socketSettings)
+		/// <summary>
+		/// The encoding to use for encoding outgoing and decode incoming FIX messages.
+		/// </summary>
+	    private readonly Encoding messageEncoding_;
+
+		/// <summary>
+		/// </summary>
+		/// <param name="initiator"></param>
+		/// <param name="session"></param>
+		/// <param name="socketEndPoint"></param>
+		/// <param name="socketSettings"></param>
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public SocketInitiatorThread(Transport.SocketInitiator initiator, Session session, IPEndPoint socketEndPoint, SocketSettings socketSettings)
+			: this(initiator, session, socketEndPoint, socketSettings, Encoding.UTF8)
+		{
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="initiator"></param>
+		/// <param name="session"></param>
+		/// <param name="socketEndPoint"></param>
+		/// <param name="socketSettings"></param>
+		/// <param name="messageEncoding">The encoding to use for encoding outgoing and decoding incoming FIX messages.</param>
+        public SocketInitiatorThread(Transport.SocketInitiator initiator, Session session, IPEndPoint socketEndPoint, SocketSettings socketSettings, Encoding messageEncoding)
         {
             isDisconnectRequested_ = false;
             initiator_ = initiator;
             session_ = session;
             socketEndPoint_ = socketEndPoint;
-            parser_ = new Parser();
+			parser_ = new Parser(messageEncoding);
             socket_ = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket_.NoDelay = socketSettings.SocketNodelay;
             session_ = session;
+	        messageEncoding_ = messageEncoding;
         }
 
         public void Start()
@@ -114,7 +141,7 @@ namespace QuickFix
 
         public bool Send(string data)
         {
-            byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
+            byte[] rawData = messageEncoding_.GetBytes(data);
             int bytesSent = socket_.Send(rawData);
             return bytesSent > 0;
         }

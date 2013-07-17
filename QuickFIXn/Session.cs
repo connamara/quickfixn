@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
+
 using QuickFix.Fields;
 
 namespace QuickFix
@@ -23,6 +25,11 @@ namespace QuickFix
         private SessionState state_;
         private IMessageFactory msgFactory_;
         private static readonly HashSet<string> AdminMsgTypes = new HashSet<string>() { "0", "A", "1", "2", "3", "4", "5" };
+
+		/// <summary>
+		/// The encoding to use for encoding outgoing and decoding incoming FIX messages for this session.
+		/// </summary>
+	    private readonly Encoding messageEncoding_;
 
         #endregion
 
@@ -202,9 +209,30 @@ namespace QuickFix
 
         #endregion
 
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public Session(
+			IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
+			SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
+			: this(app, storeFactory, sessID, dataDictProvider, sessionSchedule, heartBtInt, logFactory, msgFactory, senderDefaultApplVerID, Encoding.UTF8)
+		{
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="app"></param>
+		/// <param name="storeFactory"></param>
+		/// <param name="sessID"></param>
+		/// <param name="dataDictProvider"></param>
+		/// <param name="sessionSchedule"></param>
+		/// <param name="heartBtInt"></param>
+		/// <param name="logFactory"></param>
+		/// <param name="msgFactory"></param>
+		/// <param name="senderDefaultApplVerID"></param>
+		/// <param name="messageEncoding">The encoding to use for encoding outgoing and decoding incoming FIX messages for this session.</param>
         public Session(
             IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
-            SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
+            SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID,
+			Encoding messageEncoding)
         {
             this.Application = app;
             this.SessionID = sessID;
@@ -257,6 +285,8 @@ namespace QuickFix
 
             this.Application.OnCreate(this.SessionID);
             this.Log.OnEvent("Created session");
+
+			messageEncoding_ = messageEncoding;
         }
 
         #region Static Methods
@@ -511,7 +541,8 @@ namespace QuickFix
                     this.ValidateLengthAndChecksum,
                     this.SessionDataDictionary,
                     this.ApplicationDataDictionary,
-                    this.msgFactory_);
+                    this.msgFactory_,
+					messageEncoding_);
 
                 Next(message);
             }
@@ -740,7 +771,7 @@ namespace QuickFix
                     int begin = 0;
                     foreach (string msgStr in messages)
                     {
-                        Message msg = new Message(msgStr);
+						Message msg = new Message(msgStr, messageEncoding_);
                         msgSeqNum = msg.Header.GetInt(Tags.MsgSeqNum);
 
                         if ((current != msgSeqNum) && begin == 0)
@@ -763,7 +794,7 @@ namespace QuickFix
                             {
                                 GenerateSequenceReset(resendReq, begin, msgSeqNum);
                             }
-                            Send(msg.ToString());
+                            Send(msg.ToString(messageEncoding_));
                             begin = 0;
                         }
                         current = msgSeqNum + 1;
@@ -1105,7 +1136,7 @@ namespace QuickFix
             }
             else
             {
-                reject = msgFactory_.Create(this.SessionID.BeginString, MsgType.REJECT);
+				reject = msgFactory_.Create(this.SessionID.BeginString, MsgType.REJECT);
                 char[] reasonArray = reason.ToLower().ToCharArray();
                 reasonArray[0] = char.ToUpper(reasonArray[0]);
                 reason = new string(reasonArray);
@@ -1122,7 +1153,7 @@ namespace QuickFix
 
         protected bool GenerateResendRequestRange(string beginString, int startSeqNum, int endSeqNum)
         {
-            Message resendRequest = msgFactory_.Create(beginString, MsgType.RESEND_REQUEST);
+			Message resendRequest = msgFactory_.Create(beginString, MsgType.RESEND_REQUEST);
 
             resendRequest.SetField(new Fields.BeginSeqNo(startSeqNum));
             resendRequest.SetField(new Fields.EndSeqNo(endSeqNum));
@@ -1173,7 +1204,7 @@ namespace QuickFix
         /// <returns></returns>
         protected bool GenerateLogon()
         {
-            Message logon = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGON);
+			Message logon = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGON);
             logon.SetField(new Fields.EncryptMethod(0));
             logon.SetField(new Fields.HeartBtInt(state_.HeartBtInt));
 
@@ -1200,7 +1231,7 @@ namespace QuickFix
         /// <returns></returns>
         protected bool GenerateLogon(Message otherLogon)
         {
-            Message logon = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGON);
+			Message logon = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGON);
             logon.SetField(new Fields.EncryptMethod(0));
             if (this.SessionID.IsFIXT)
                 logon.SetField(new Fields.DefaultApplVerID(this.SenderDefaultApplVerID));
@@ -1217,7 +1248,7 @@ namespace QuickFix
 
         public bool GenerateTestRequest(string id)
         {
-            Message testRequest = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.TEST_REQUEST);
+			Message testRequest = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.TEST_REQUEST);
             InitializeHeader(testRequest);
             testRequest.SetField(new Fields.TestReqID(id));
             return SendRaw(testRequest, 0);
@@ -1260,7 +1291,7 @@ namespace QuickFix
         /// <returns></returns>
         private bool GenerateLogout(Message other, string text)
         {
-            Message logout = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGOUT);
+			Message logout = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGOUT);
             InitializeHeader(logout);
             if (text != null && text.Length > 0)
                 logout.SetField(new Fields.Text(text));
@@ -1281,14 +1312,14 @@ namespace QuickFix
 
         public bool GenerateHeartbeat()
         {
-            Message heartbeat = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.HEARTBEAT);
+			Message heartbeat = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.HEARTBEAT);
             InitializeHeader(heartbeat);
             return SendRaw(heartbeat, 0);
         }
 
         public bool GenerateHeartbeat(Message testRequest)
         {
-            Message heartbeat = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.HEARTBEAT);
+			Message heartbeat = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.HEARTBEAT);
             InitializeHeader(heartbeat);
             try
             {
@@ -1312,7 +1343,7 @@ namespace QuickFix
         {
             string beginString = this.SessionID.BeginString;
 
-            Message reject = msgFactory_.Create(beginString, Fields.MsgType.REJECT);
+			Message reject = msgFactory_.Create(beginString, Fields.MsgType.REJECT);
             reject.ReverseRoute(message.Header);
             InitializeHeader(reject);
 
@@ -1468,7 +1499,7 @@ namespace QuickFix
         private void GenerateSequenceReset(Message receivedMessage, int beginSeqNo, int endSeqNo)
         {
             string beginString = this.SessionID.BeginString;
-            Message sequenceReset = msgFactory_.Create(beginString, Fields.MsgType.SEQUENCE_RESET);
+			Message sequenceReset = msgFactory_.Create(beginString, Fields.MsgType.SEQUENCE_RESET);
             InitializeHeader(sequenceReset);
             int newSeqNo = endSeqNo;
             sequenceReset.Header.SetField(new PossDupFlag(true));
@@ -1570,7 +1601,7 @@ namespace QuickFix
                     this.Application.ToApp(message, this.SessionID);
                 }
 
-                string messageString = message.ToString();
+                string messageString = message.ToString(messageEncoding_);
                 if (0 == seqNum)
                     Persist(message, messageString);
                 return Send(messageString);

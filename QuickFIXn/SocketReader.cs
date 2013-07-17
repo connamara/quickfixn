@@ -1,4 +1,6 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
+using System.Text;
 
 namespace QuickFix
 {
@@ -9,15 +11,22 @@ namespace QuickFix
     {
         public const int BUF_SIZE = 4096;
         private byte[] readBuffer_ = new byte[BUF_SIZE];
-        private Parser parser_ = new Parser();
+        private readonly Parser parser_;
         private Session qfSession_ = null;
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
 
-        public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
+		: this(tcpClient, responder, Encoding.UTF8)
+		{
+		}
+
+        public SocketReader(TcpClient tcpClient, ClientHandlerThread responder, Encoding messageEncoding)
         {
             tcpClient_ = tcpClient;
             responder_ = responder;
+	        parser_ = new Parser(messageEncoding);
         }
 
         /// <summary> FIXME </summary>

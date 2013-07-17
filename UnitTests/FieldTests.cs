@@ -111,6 +111,21 @@ namespace UnitTests
             Assert.AreEqual(10, obj.getLength()); // 7 single-byte chars + 1 double=byte char + nul = 10 bytes
         }
 
+		[Test]
+		public void StringFieldTest_DifferentEncodings()
+		{
+			// If a sender uses a different encoding than the receiver this could cause incorrect message lengths and checksums.
+			StringField obj = new StringField(359, "£");
+
+			// UTF-8 encoding used for length and checksum calculation.
+			Assert.AreEqual(580, obj.getTotal(Encoding.UTF8));
+			Assert.AreEqual(7, obj.getLength(Encoding.UTF8));
+
+			// ISO-8859-1 encoding used for length and checksum calculation.
+			Assert.AreEqual(386, obj.getTotal(Encoding.GetEncoding("ISO-8859-1")));
+			Assert.AreEqual(6, obj.getLength(Encoding.GetEncoding("ISO-8859-1")));
+		}
+
         [Test]
         public void DefaultValTest()
         {

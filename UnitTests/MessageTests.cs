@@ -830,7 +830,7 @@ namespace UnitTests
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
 
             QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
-            msg.FromString(msgStr, true, dd, dd, null); // <-- null factory!
+            msg.FromString(msgStr, true, dd, dd, (IMessageFactory)null); // <-- null factory!
 
             Console.WriteLine(msg.ToString());
 
