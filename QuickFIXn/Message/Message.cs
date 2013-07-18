@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using QuickFix.Fields;
@@ -641,11 +642,23 @@ namespace QuickFix
             {
                 int receivedBodyLength = this.Header.GetInt(Tags.BodyLength);
 				if (BodyLength(encoding) != receivedBodyLength)
-					throw new InvalidMessage("Expected BodyLength=" + BodyLength(encoding) + ", Received BodyLength=" + receivedBodyLength);
+					throw new InvalidMessage(
+						string.Format(
+							CultureInfo.InvariantCulture,
+							"Expected BodyLength={0} (using encoding {1}), Received BodyLength={2}",
+							BodyLength(encoding),
+							encoding.BodyName,
+							receivedBodyLength));
 
                 int receivedCheckSum = this.Trailer.GetInt(Tags.CheckSum);
 				if (CheckSum(encoding) != receivedCheckSum)
-					throw new InvalidMessage("Expected CheckSum=" + CheckSum(encoding) + ", Received CheckSum=" + receivedCheckSum);
+					throw new InvalidMessage(
+						string.Format(
+							CultureInfo.InvariantCulture,
+							"Expected CheckSum={0} (using encoding {1}), Received CheckSum={2}",
+							CheckSum(encoding),
+							encoding.BodyName,
+							receivedCheckSum));
             }
             catch (FieldNotFoundException e)
             {

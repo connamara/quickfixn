@@ -33,6 +33,11 @@ namespace QuickFix
 
         private MemoryStore cache_ = new MemoryStore();
 
+		/// <summary>
+		/// The encoding to use for encoding outgoing and decoding incoming messages.
+		/// </summary>
+		private readonly Encoding _messageEncoding;
+
         System.Collections.Generic.Dictionary<int, MsgDef> offsets_ = new Dictionary<int, MsgDef>();
 
         public static string Prefix(SessionID sessionID)
@@ -55,7 +60,27 @@ namespace QuickFix
             return prefix.ToString();
         }
 
+		[Obsolete("Use the version that takes an encoding as well.")]
         public FileStore(string path, SessionID sessionID)
+			: this(path, sessionID, Encoding.UTF8)
+        {
+        }
+
+	    /// <summary>
+	    /// Initializes a new instance of the <see cref="FileStore"/> class.
+	    /// </summary>
+	    /// <param name="path">
+	    /// The path to the file store.
+	    /// </param>
+	    /// <param name="sessionID">
+	    /// The identifier of the FIX protocol session.
+	    /// </param>
+	    /// <param name="messageEncoding">
+	    /// The encoding to use.
+	    /// </param>
+	    public FileStore(string path, SessionID sessionID, Encoding messageEncoding)
+	    {
+		    _messageEncoding = messageEncoding;
         {
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
@@ -183,7 +208,7 @@ namespace QuickFix
                     byte[] msgBytes = new byte[offsets_[i].size];
                     msgFile_.Read(msgBytes, 0, msgBytes.Length);
 
-                    messages.Add(Encoding.UTF8.GetString(msgBytes));
+                    messages.Add(_messageEncoding.GetString(msgBytes));
                 }
             }
 
@@ -200,7 +225,7 @@ namespace QuickFix
             msgFile_.Seek(0, System.IO.SeekOrigin.End);
 
             long offset = msgFile_.Position;
-            byte[] msgBytes = Encoding.UTF8.GetBytes(msg);
+            byte[] msgBytes = _messageEncoding.GetBytes(msg);
             int size = msgBytes.Length;
 
             StringBuilder b = new StringBuilder();

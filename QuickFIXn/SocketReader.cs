@@ -16,6 +16,11 @@ namespace QuickFix
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
 
+		/// <summary>
+		/// The encoding to use for encoding outgoing and decoding incoming messages.
+		/// </summary>
+		private readonly Encoding messageEncoding_;
+
 		[Obsolete("Use the version that takes an encoding as well.")]
 		public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
 		: this(tcpClient, responder, Encoding.UTF8)
@@ -25,7 +30,9 @@ namespace QuickFix
         public SocketReader(TcpClient tcpClient, ClientHandlerThread responder, Encoding messageEncoding)
         {
             tcpClient_ = tcpClient;
-            responder_ = responder;
+			responder_ = responder;
+			messageEncoding_ = messageEncoding;
+
 	        parser_ = new Parser(messageEncoding);
         }
 
@@ -67,7 +74,7 @@ namespace QuickFix
             {
                 if (null == qfSession_)
                 {
-                    qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg));
+                    qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg, messageEncoding_));
                     if (null == qfSession_)
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 
 using QuickFix.Fields;
@@ -234,6 +235,8 @@ namespace QuickFix
             SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID,
 			Encoding messageEncoding)
         {
+			messageEncoding_ = messageEncoding;
+
             this.Application = app;
             this.SessionID = sessID;
             this.DataDictionaryProvider = new DataDictionaryProvider(dataDictProvider);
@@ -285,8 +288,9 @@ namespace QuickFix
 
             this.Application.OnCreate(this.SessionID);
             this.Log.OnEvent("Created session");
-
-			messageEncoding_ = messageEncoding;
+			this.Log.OnEvent(
+				string.Format(
+					CultureInfo.InvariantCulture, "Using encoding: {0} ('{1}')", messageEncoding.BodyName, messageEncoding.EncodingName));
         }
 
         #region Static Methods
@@ -1556,7 +1560,7 @@ namespace QuickFix
                 }
                 else
                 {
-                    Next(msg.ToString());
+                    Next(msg.ToString(messageEncoding_));
                 }
                 return true;
             }
