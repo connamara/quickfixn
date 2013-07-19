@@ -28,7 +28,7 @@ namespace QuickFix
         /// Check whether any sessions are logged on
         /// </summary>
         /// <returns>true if any session is logged on, else false</returns>
-        bool IsLoggedOn();
+        bool IsLoggedOn { get; }
 
         /// <summary>
         /// Get the SessionIDs for the sessions managed by this acceptor.
