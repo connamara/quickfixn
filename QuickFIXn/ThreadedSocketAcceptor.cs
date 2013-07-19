@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System;
 
@@ -273,15 +274,7 @@ namespace QuickFix
         {
             get
             {
-                foreach (Session session in sessions_.Values)
-                {
-                    if (session.IsLoggedOn)
-                    {
-                        return true;
-                    }
-                }
-
-                return false;
+                return sessions_.Values.Any(session => session.IsLoggedOn);
             }
         }
 
