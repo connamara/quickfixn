@@ -153,14 +153,14 @@ namespace UnitTests
         }
 
         [Test]
-        public void TimeOnlyFieldTest()
+        public void DateOnlyFieldTest()
         {
             MDEntryDate d = new MDEntryDate(new DateTime(2011, 11, 30, 8, 9, 10, 555));
             Assert.AreEqual("20111130", d.ToString());
         }
 
         [Test]
-        public void DateOnlyFieldTest()
+        public void TimeOnlyFieldTest()
         {
             MDEntryTime t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), true);
             Assert.AreEqual("08:09:10.555", t.ToString());
