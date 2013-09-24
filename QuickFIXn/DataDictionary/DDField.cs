@@ -20,7 +20,7 @@ namespace QuickFix.DataDictionary
             this.Name = name;
             this.EnumDict = enums;
             this.FixFldType = fixFldType;
-            this.FieldType = FieldTypeFromFix(this.FixFldType);
+            this.FieldType = FieldTypeFromFix(this.FixFldType, out this.IsMultipleEnumValues);
         }
 
         /// <summary>
@@ -49,6 +49,7 @@ namespace QuickFix.DataDictionary
         public Dictionary<String, String> EnumDict;
         public String FixFldType;
         public Type FieldType;
+        public bool IsMultipleEnumValues;
 
         /// <summary>
         /// Replaced by EnumDict, which preserves the enum's description.
@@ -79,8 +80,10 @@ namespace QuickFix.DataDictionary
             return EnumDict.Count > 0;
         }
 
-        public Type FieldTypeFromFix(String type)
+        public Type FieldTypeFromFix(String type, out bool multipleEnumValues )
         {
+            multipleEnumValues = false;
+
             switch (type)
             {
                 case "STRING": return typeof(Fields.StringField);
@@ -90,9 +93,9 @@ namespace QuickFix.DataDictionary
                 case "AMT": return typeof(Fields.DecimalField);
                 case "QTY": return typeof(Fields.DecimalField);
                 case "CURRENCY": return typeof(Fields.StringField);
-                case "MULTIPLEVALUESTRING": return typeof(Fields.StringField);
-                case "MULTIPLESTRINGVALUE": return typeof(Fields.StringField);
-                case "MULTIPLECHARVALUE": return typeof(Fields.StringField);
+                case "MULTIPLEVALUESTRING": multipleEnumValues = true; return typeof( Fields.StringField );
+                case "MULTIPLESTRINGVALUE": multipleEnumValues = true; return typeof( Fields.StringField );
+                case "MULTIPLECHARVALUE": multipleEnumValues = true; return typeof( Fields.StringField );
                 case "EXCHANGE": return typeof(Fields.StringField);
                 case "UTCTIMESTAMP": return typeof(Fields.DateTimeField);
                 case "BOOLEAN": return typeof(Fields.BooleanField);
