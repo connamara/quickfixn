@@ -447,5 +447,48 @@ namespace UnitTests
             Assert.False(dd.Messages["magic"].Groups[6660].Required); // group isn't required
             Assert.False(dd.Messages["magic"].Groups[6660].ReqFields.Contains(6662)); // group optional field
         }
+
+        [Test] // Issue #66
+        public void ValidateMultipleValueStringType()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary( "../../../spec/fix/FIX44.xml" );
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            string[] msgFields = {"8=FIX.4.4", "9=99", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                   "55=sym",
+                                   "268=1", "269=0", "270=123.23", "271=2", "277=A B", 
+                                   "10=213"};
+            string msgStr = String.Join( Message.SOH, msgFields ) + Message.SOH;
+
+            string msgType = "W";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create( beginString, msgType );
+            message.FromString( msgStr, true, dd, dd );
+
+            dd.Validate( message, beginString, msgType );
+        }
+
+        [Test] // Issue #66
+        [ExpectedException( typeof( QuickFix.IncorrectTagValue ) )]
+        public void ValidateMultipleValueStringType_Invalid()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary( "../../../spec/fix/FIX44.xml" );
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            string[] msgFields = {"8=FIX.4.4", "9=99", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                   "55=sym",
+                                   "268=1", "269=0", "270=123.23", "271=2", "277=A 1", 
+                                   "10=196"};
+            string msgStr = String.Join( Message.SOH, msgFields ) + Message.SOH;
+
+            string msgType = "W";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create( beginString, msgType );
+            message.FromString( msgStr, true, dd, dd );
+
+            dd.Validate( message, beginString, msgType );
+        }
     }
 }
