@@ -337,7 +337,7 @@ namespace QuickFix.DataDictionary
 		{
 			DDField fld = FieldsByTag[ field.Tag ];
             if( fld.HasEnums() )
-                if( fld.IsMultipleEnumValues )
+                if( fld.IsMultipleValueFieldWithEnums )
                 {
                     string [] splitted = field.ToString().Split( ' ' );
 
