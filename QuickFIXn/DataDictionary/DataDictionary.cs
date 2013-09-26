@@ -336,17 +336,17 @@ namespace QuickFix.DataDictionary
 		public void CheckValue(Fields.IField field)
 		{
 			DDField fld = FieldsByTag[ field.Tag ];
-            if( fld.HasEnums() )
-                if( fld.IsMultipleValueFieldWithEnums )
-                {
-                    string [] splitted = field.ToString().Split( ' ' );
+			if( fld.HasEnums() )
+				if( fld.IsMultipleValueFieldWithEnums )
+				{
+					string [] splitted = field.ToString().Split( ' ' );
 
-                    foreach( string value in splitted )
-                        if( !fld.EnumDict.ContainsKey( value ) )
-                            throw new IncorrectTagValue( field.Tag );
-                }
-                else if( !fld.EnumDict.ContainsKey( field.ToString() ) )
-                    throw new IncorrectTagValue( field.Tag );
+					foreach( string value in splitted )
+						if( !fld.EnumDict.ContainsKey( value ) )
+							throw new IncorrectTagValue( field.Tag );
+				}
+				else if( !fld.EnumDict.ContainsKey( field.ToString() ) )
+					throw new IncorrectTagValue( field.Tag );
 		}
 
 		/// <summary>
