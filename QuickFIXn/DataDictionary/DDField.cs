@@ -92,7 +92,7 @@ namespace QuickFix.DataDictionary
             return FieldTypeFromFix(type, out discardedVar);
         }
         
-        public Type FieldTypeFromFix(String type, out bool multipleValueFieldWithEnums )
+        private Type FieldTypeFromFix(String type, out bool multipleValueFieldWithEnums )
         {
             multipleValueFieldWithEnums = false;
 
