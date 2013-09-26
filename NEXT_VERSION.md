@@ -31,4 +31,5 @@ Changes since the last version:
 * (patch) issue #173 - bug in Message.IsAdmin/IsApp (TomasVetrovsky/gbirchmeier)
 * (patch) issue #166 - FIX44 spec missing PutOrCall and UnderlyingPutOrCall (gbirchmeier)
 * (patch) corrections/updates to FIX44 spec based on diff with QF/j version (gbirchmeier)
+* (minor) issue #66 - correct validation of multiple-value-string fields (harvinder)
 
