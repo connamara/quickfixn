@@ -116,7 +116,7 @@ namespace QuickFix
             if (!force)
             {
                 // TODO change this duration to always exceed LogoutTimeout setting
-                for (int second = 0; (second < 10) && IsLoggedOn(); ++second)
+                for (int second = 0; (second < 10) && IsLoggedOn; ++second)
                     Thread.Sleep(1000);
             }
 
@@ -147,18 +147,21 @@ namespace QuickFix
             disconnected_.Clear();
         }
 
-        public bool IsLoggedOn()
+        public bool IsLoggedOn
         {
-            lock (sync_)
+            get
             {
-                foreach (SessionID sessionID in connected_)
+                lock (sync_)
                 {
-                    if (Session.LookupSession(sessionID).IsLoggedOn)
-                        return true;
+                    foreach (SessionID sessionID in connected_)
+                    {
+                        if (Session.LookupSession(sessionID).IsLoggedOn)
+                            return true;
+                    }
                 }
-            }
 
-            return false;
+                return false;
+            }
         }
 
         #region Virtual Methods
