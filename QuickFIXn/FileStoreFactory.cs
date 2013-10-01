@@ -26,7 +26,8 @@ namespace QuickFix
         /// <returns></returns>
         public IMessageStore Create(SessionID sessionID)
         {
-            return new FileStore(settings_.Get(sessionID).GetString(SessionSettings.FILE_STORE_PATH), sessionID);
+			var messageEncoding = settings_.Get().GetEncoding(SessionSettings.MESSAGE_ENCODING);
+	        return new FileStore(settings_.Get(sessionID).GetString(SessionSettings.FILE_STORE_PATH), sessionID, messageEncoding);
         }
 
         #endregion

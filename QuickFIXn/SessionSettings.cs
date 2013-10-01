@@ -60,6 +60,11 @@ namespace QuickFix
         public const string IGNORE_POSSDUP_RESEND_REQUESTS = "IgnorePossDupResendRequests";
         public const string RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME = "RequiresOrigSendingTime";
 
+		/// <summary>
+		/// The key that can be used to look up the message encoding specified in the configuration file.
+		/// </summary>
+	    public const string MESSAGE_ENCODING = "MessageEncoding";
+
         #endregion
 
         #region Private Members

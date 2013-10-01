@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace QuickFix.Fields
 {
@@ -21,14 +22,34 @@ namespace QuickFix.Fields
         /// </summary>
         public abstract override string ToString();
 
+		/// <summary>
+		/// length of formatted field (including tag=val\001)
+		/// </summary>
+		/// <remarks>
+		/// Uses the default UTF-8 encoding.
+		/// </remarks>
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public abstract int getLength();
+
         /// <summary>
         /// length of formatted field (including tag=val\001)
         /// </summary>
-        public abstract int getLength();
+		/// <param name="encoding">The encoding to use for calculating the length of the formatted field.</param>
+        public abstract int getLength(Encoding encoding);
+
+		/// <summary>
+		/// checksum
+		/// </summary>
+		/// <remarks>
+		/// Uses the default UTF-8 encoding.
+		/// </remarks>
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public abstract int getTotal();
 
         /// <summary>
         /// checksum
-        /// </summary>
-        public abstract int getTotal();
+		/// </summary>
+		/// <param name="encoding">The encoding to use for calculating the checksum.</param>
+		public abstract int getTotal(Encoding encoding);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text;
 
 namespace QuickFix
 {
@@ -148,6 +149,62 @@ namespace QuickFix
                 default: throw new ConfigError("Illegal value " + GetString(key) + " for " + key);
             }
         }
+
+		/// <summary>
+		/// Gets the encoding.
+		/// </summary>
+		/// <param name="key">The key that specifies for which to use the encoding.</param>
+		/// <returns>An encoding.</returns>
+		public Encoding GetEncoding(string key)
+		{
+			var result = Encoding.UTF8;
+
+			try
+			{
+				var encoding = GetString(key);
+				switch (encoding)
+				{
+					case "ASCII":
+						result = Encoding.ASCII;
+						break;
+					case "BigEndianUnicode":
+						result = Encoding.BigEndianUnicode;
+						break;
+					case "UTF32":
+						result = Encoding.UTF32;
+						break;
+					case "Unicode":
+						result = Encoding.Unicode;
+						break;
+					case "UTF7":
+						result = Encoding.UTF7;
+						break;
+					case "UTF8":
+						result = Encoding.UTF8;
+						break;
+					default:
+						if (!string.IsNullOrEmpty(encoding))
+						{
+							try
+							{
+								result = Encoding.GetEncoding(encoding);
+							}
+							catch
+							{
+								// TODO: Log or trace a warning?
+							}
+						}
+
+						break;
+				}
+			}
+			catch
+			{
+				// TODO: Log or trace a warning?
+			}
+
+			return result;
+		}
 
         public void SetString(string key, string val)
         {

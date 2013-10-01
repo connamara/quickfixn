@@ -7,23 +7,64 @@ namespace QuickFix
 {
     public class ByteSizeString
     {
-        public ByteSizeString(byte[] buf, int sz)
-        {
-            this._str = new byte[sz];
-            for (int i = 0; i < sz; i++)
-                _str[i] = buf[i];
-        }
+		/// <summary>
+		/// The encoding to use.
+		/// </summary>
+		private readonly Encoding _encoding;
 
-        public ByteSizeString(byte[] buf, int pos, int sz)
-        {
-            this._str = new byte[sz];
-            for (int i = 0; i < sz; i++)
-                _str[i] = buf[i+pos];
-        }
+		[Obsolete("Use the version that takes an encoding as well.")]
+        public ByteSizeString(byte[] buf, int sz)
+			: this(buf, 0, sz)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ByteSizeString"/> class.
+		/// </summary>
+		/// <param name="buf">
+		/// </param>
+		/// <param name="sz">
+		/// </param>
+		/// <param name="encoding">
+		/// The encoding to use.
+		/// </param>
+		public ByteSizeString(byte[] buf, int sz, Encoding encoding)
+			: this(buf, 0, sz, encoding)
+		{
+		}
+
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public ByteSizeString(byte[] buf, int pos, int sz)
+			: this(buf, pos, sz, Encoding.UTF8)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ByteSizeString"/> class.
+		/// </summary>
+		/// <param name="buf">
+		/// </param>
+		/// <param name="pos">
+		/// </param>
+		/// <param name="sz">
+		/// </param>
+		/// <param name="encoding">
+		/// The encoding to use.
+		/// </param>
+		public ByteSizeString(byte[] buf, int pos, int sz, Encoding encoding)
+		{
+			_encoding = encoding;
+
+			_str = new byte[sz];
+			for (var i = 0; i < sz; i++)
+			{
+				_str[i] = buf[i + pos];
+			}
+		}
 
         public override string ToString()
         {
-            return Encoding.UTF8.GetString(_str);
+			return _encoding.GetString(_str);
         }
 
         public int IndexOf( byte nextchar, int pos )
@@ -59,7 +100,7 @@ namespace QuickFix
         {
             int start = pos;
             pos = IndexOf(SOH, start);
-            ByteSizeString ret = new ByteSizeString(_str, start, pos - start);
+	        ByteSizeString ret = new ByteSizeString(_str, start, pos - start, _encoding);
             pos += 1;
             return ret;
         }

@@ -192,7 +192,8 @@ namespace QuickFix.Transport
                 SetPending(sessionID);
                 session.Log.OnEvent("Connecting to " + socketEndPoint.Address + " on port " + socketEndPoint.Port);
 
-                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings_);
+	            var messageEncoding = settings.GetEncoding(SessionSettings.MESSAGE_ENCODING);
+	            SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings_, messageEncoding);
                 t.Start();
                 AddThread(t);
 

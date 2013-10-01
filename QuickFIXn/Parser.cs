@@ -1,11 +1,40 @@
+using System;
+using System.Text;
+
 namespace QuickFix
 {
     /// <summary>
     /// </summary>
     public class Parser
     {
+		/// <summary>
+		/// The encoding to use for encoding outgoing and decoding incoming messages.
+		/// </summary>
+	    private readonly Encoding _messageEncoding;
+
         private byte[] buffer_ = new byte[512];
         int usedBufferLength = 0;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Parser"/> class.
+		/// </summary>
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public Parser()
+			: this(Encoding.UTF8)
+		{
+		}
+
+	    /// <summary>
+	    /// Initializes a new instance of the <see cref="Parser"/> class.
+	    /// </summary>
+	    /// <param name="messageEncoding">
+		/// The encoding to use for encoding outgoing and decoding incoming messages.
+	    /// </param>
+	    public Parser(Encoding messageEncoding)
+		{
+			_messageEncoding = messageEncoding;
+		}
+
         public void AddToStream(ref byte[] data, int bytesAdded)
         {
             if (buffer_.Length < usedBufferLength + bytesAdded)
@@ -16,7 +45,7 @@ namespace QuickFix
 
         public void AddToStream(string data)
         {
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
+			byte[] bytes = _messageEncoding.GetBytes(data);
             AddToStream(ref bytes, bytes.Length);
 
         }
@@ -74,7 +103,7 @@ namespace QuickFix
 
         public bool ExtractLength(out int length, out int pos, string buf)
         {
-            return ExtractLength(out length, out pos, System.Text.Encoding.UTF8.GetBytes(buf));
+            return ExtractLength(out length, out pos, _messageEncoding.GetBytes(buf));
         }
 
         public bool ExtractLength(out int length, out int pos, byte[] buf)
@@ -118,7 +147,7 @@ namespace QuickFix
 
         private int IndexOf(byte[] arrayToSearchThrough, string stringPatternToFind, int offset)
         {
-            byte[] patternToFind = System.Text.Encoding.UTF8.GetBytes(stringPatternToFind);
+			byte[] patternToFind = _messageEncoding.GetBytes(stringPatternToFind);
             if (patternToFind.Length > arrayToSearchThrough.Length)
                 return -1;
             for (int i = offset; i <= arrayToSearchThrough.Length - patternToFind.Length; i++)
@@ -151,7 +180,7 @@ namespace QuickFix
         {
             byte[] returnByte = new byte[length];
             System.Buffer.BlockCopy(array, startIndex, returnByte, 0, length);
-            return System.Text.Encoding.UTF8.GetString(returnByte);
+			return _messageEncoding.GetString(returnByte);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.Net.Sockets;
+﻿using System;
+using System.Net.Sockets;
+using System.Text;
 
 namespace QuickFix
 {
@@ -9,15 +11,29 @@ namespace QuickFix
     {
         public const int BUF_SIZE = 4096;
         private byte[] readBuffer_ = new byte[BUF_SIZE];
-        private Parser parser_ = new Parser();
+        private readonly Parser parser_;
         private Session qfSession_ = null;
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
 
-        public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
+		/// <summary>
+		/// The encoding to use for encoding outgoing and decoding incoming messages.
+		/// </summary>
+		private readonly Encoding messageEncoding_;
+
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
+		: this(tcpClient, responder, Encoding.UTF8)
+		{
+		}
+
+        public SocketReader(TcpClient tcpClient, ClientHandlerThread responder, Encoding messageEncoding)
         {
             tcpClient_ = tcpClient;
-            responder_ = responder;
+			responder_ = responder;
+			messageEncoding_ = messageEncoding;
+
+	        parser_ = new Parser(messageEncoding);
         }
 
         /// <summary> FIXME </summary>
@@ -58,7 +74,7 @@ namespace QuickFix
             {
                 if (null == qfSession_)
                 {
-                    qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg));
+                    qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg, messageEncoding_));
                     if (null == qfSession_)
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);

@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using System.Text;
 using System.Threading;
 using System;
 
@@ -18,6 +19,11 @@ namespace QuickFix
         private TcpClient tcpClient_;
         private SocketReader socketReader_;
         private FileLog log_;
+
+		/// <summary>
+		/// The encoding to use for encoding outgoing FIX protocol messages.
+		/// </summary>
+	    private readonly Encoding messageEncoding_;
 
         [Obsolete("Use the other constructor")]
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
@@ -42,7 +48,9 @@ namespace QuickFix
             log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
 
             tcpClient_ = tcpClient;
-            socketReader_ = new SocketReader(tcpClient_, this);
+
+			messageEncoding_ = settingsDict.GetEncoding(SessionSettings.MESSAGE_ENCODING);
+			socketReader_ = new SocketReader(tcpClient_, this, messageEncoding_);
         }
 
         public void Start()
@@ -93,7 +101,7 @@ namespace QuickFix
 
         public bool Send(string data)
         {
-            byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
+			byte[] rawData = messageEncoding_.GetBytes(data);
             int bytesSent = tcpClient_.Client.Send(rawData);
             return bytesSent > 0;
         }

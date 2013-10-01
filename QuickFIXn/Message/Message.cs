@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using QuickFix.Fields;
@@ -66,29 +67,73 @@ namespace QuickFix
             this.validStructure_ = true;
         }
 
-        public Message(string msgstr)
-            : this(msgstr, true)
-        { }
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public Message(string msgstr)
+			: this(msgstr, true)
+		{ }
 
-        public Message(string msgstr, bool validate)
-            : this(msgstr, null, null, validate)
-        {  }
+		/// <summary>
+		/// </summary>
+		/// <param name="msgstr"></param>
+		/// <param name="encoding">The encoding of the given message string.</param>
+		public Message(string msgstr, Encoding encoding)
+			: this(msgstr, true, encoding)
+		{ }
 
-        public Message(string msgstr, DataDictionary.DataDictionary dataDictionary, bool validate)
-            : this()
-        {
-            FromString(msgstr, validate, dataDictionary, dataDictionary, null);
-        }
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public Message(string msgstr, bool validate)
+			: this(msgstr, null, null, validate)
+		{ }
 
-        public Message(string msgstr, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, bool validate)
-            : this()
-        {
-            FromStringHeader(msgstr);
-            if(IsAdmin())
-                FromString(msgstr, validate, sessionDataDictionary, sessionDataDictionary, null);
-            else
-                FromString(msgstr, validate, sessionDataDictionary, appDD, null);
-        }
+		/// <summary>
+		/// </summary>
+		/// <param name="msgstr"></param>
+		/// <param name="validate"></param>
+		/// <param name="encoding">The encoding of the given message string.</param>
+		public Message(string msgstr, bool validate, Encoding encoding)
+			: this(msgstr, null, null, validate, encoding)
+		{ }
+
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public Message(string msgstr, DataDictionary.DataDictionary dataDictionary, bool validate)
+			: this(msgstr, dataDictionary, validate, Encoding.UTF8)
+		{
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="msgstr"></param>
+		/// <param name="dataDictionary"></param>
+		/// <param name="validate"></param>
+		/// <param name="encoding">The encoding of the given message string.</param>
+		public Message(string msgstr, DataDictionary.DataDictionary dataDictionary, bool validate, Encoding encoding)
+			: this()
+		{
+			FromString(msgstr, validate, dataDictionary, dataDictionary, null, encoding);
+		}
+
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public Message(string msgstr, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, bool validate)
+			: this(msgstr, sessionDataDictionary, appDD, validate, Encoding.UTF8)
+		{
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="msgstr"></param>
+		/// <param name="sessionDataDictionary"></param>
+		/// <param name="appDD"></param>
+		/// <param name="validate"></param>
+		/// <param name="encoding">The encoding of the given message string.</param>
+		public Message(string msgstr, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, bool validate, Encoding encoding)
+			: this()
+		{
+			FromStringHeader(msgstr);
+			if (IsAdmin())
+				FromString(msgstr, validate, sessionDataDictionary, sessionDataDictionary, null, encoding);
+			else
+				FromString(msgstr, validate, sessionDataDictionary, appDD, null, encoding);
+		}
 
         public Message(Message src)
             : base(src)
@@ -278,11 +323,23 @@ namespace QuickFix
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
+		[Obsolete("Use the version that takes an encoding as well.")]
         public static SessionID GetReverseSessionID(string msg)
         {
-            Message FIXME = new Message(msg);
-            return GetReverseSessionID(FIXME);
+	        return GetReverseSessionID(msg, Encoding.UTF8);
         }
+
+		/// <summary>
+		/// FIXME works, but implementation is shady
+		/// </summary>
+		/// <param name="msg"></param>
+		/// <param name="encoding">The encoding that is used in the given message.</param>
+		/// <returns></returns>
+		public static SessionID GetReverseSessionID(string msg, Encoding encoding)
+		{
+			Message FIXME = new Message(msg, encoding);
+			return GetReverseSessionID(FIXME);
+		}
 
         /// <summary>
         /// Parse the message type (tag 35) from a FIX string
@@ -347,6 +404,19 @@ namespace QuickFix
             return true;
         }
 
+		/// <summary>
+		/// Creates a Message from a FIX string
+		/// </summary>
+		/// <param name="msgstr"></param>
+		/// <param name="validate"></param>
+		/// <param name="sessionDD"></param>
+		/// <param name="appDD"></param>
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public void FromString(string msgstr, bool validate, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
+		{
+			FromString(msgstr, validate, sessionDD, appDD, null, Encoding.UTF8);
+		}
+
         /// <summary>
         /// Creates a Message from a FIX string
         /// </summary>
@@ -354,11 +424,26 @@ namespace QuickFix
         /// <param name="validate"></param>
         /// <param name="sessionDD"></param>
         /// <param name="appDD"></param>
-        public void FromString(string msgstr, bool validate, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
+		/// <param name="encoding">The encoding to use for validating the message.</param>
+		public void FromString(string msgstr, bool validate, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, Encoding encoding)
         {
-            FromString(msgstr, validate, sessionDD, appDD, null);
+	        FromString(msgstr, validate, sessionDD, appDD, null, encoding);
         }
- 
+
+		/// <summary>
+		/// Creates a Message from a FIX string
+		/// </summary>
+		/// <param name="msgstr"></param>
+		/// <param name="validate"></param>
+		/// <param name="sessionDD"></param>
+		/// <param name="appDD"></param>
+		/// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public void FromString(string msgstr, bool validate,
+			DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
+		{
+			FromString(msgstr, validate, sessionDD, appDD, msgFactory, Encoding.UTF8);
+		}
 
         /// <summary>
         /// Creates a Message from a FIX string
@@ -368,8 +453,9 @@ namespace QuickFix
         /// <param name="sessionDD"></param>
         /// <param name="appDD"></param>
         /// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
+        /// <param name="encoding">The encoding to use for validating the message.</param>
         public void FromString(string msgstr, bool validate,
-            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
+            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory, Encoding encoding)
         {
             Clear();
 
@@ -450,7 +536,7 @@ namespace QuickFix
 
             if (validate)
             {
-                Validate();
+                Validate(encoding);
             }
         }
 
@@ -541,17 +627,38 @@ namespace QuickFix
             return validStructure_;
         }
 
-        public void Validate()
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public void Validate()
+		{
+			Validate(Encoding.UTF8);
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="encoding">The encoding to use for validating the message.</param>
+        public void Validate(Encoding encoding)
         {
             try
             {
                 int receivedBodyLength = this.Header.GetInt(Tags.BodyLength);
-                if (BodyLength() != receivedBodyLength)
-                    throw new InvalidMessage("Expected BodyLength=" + BodyLength() + ", Received BodyLength=" + receivedBodyLength);
+				if (BodyLength(encoding) != receivedBodyLength)
+					throw new InvalidMessage(
+						string.Format(
+							CultureInfo.InvariantCulture,
+							"Expected BodyLength={0} (using encoding {1}), Received BodyLength={2}",
+							BodyLength(encoding),
+							encoding.BodyName,
+							receivedBodyLength));
 
                 int receivedCheckSum = this.Trailer.GetInt(Tags.CheckSum);
-                if (CheckSum() != receivedCheckSum)
-                    throw new InvalidMessage("Expected CheckSum=" + CheckSum() + ", Received CheckSum=" + receivedCheckSum);
+				if (CheckSum(encoding) != receivedCheckSum)
+					throw new InvalidMessage(
+						string.Format(
+							CultureInfo.InvariantCulture,
+							"Expected CheckSum={0} (using encoding {1}), Received CheckSum={2}",
+							CheckSum(encoding),
+							encoding.BodyName,
+							receivedCheckSum));
             }
             catch (FieldNotFoundException e)
             {
@@ -684,12 +791,22 @@ namespace QuickFix
             }
         }
 
-        public int CheckSum()
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public int CheckSum()
+		{
+			return CheckSum(Encoding.UTF8);
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="encoding">The encoding to use for calculating the checksum.</param>
+		/// <returns></returns>
+        public int CheckSum(Encoding encoding)
         {
             return (
-                (this.Header.CalculateTotal()
-                + CalculateTotal()
-                + this.Trailer.CalculateTotal()) % 256);
+				(this.Header.CalculateTotal(encoding)
+				+ CalculateTotal(encoding)
+				+ this.Trailer.CalculateTotal(encoding)) % 256);
         }
 
         public bool IsAdmin()
@@ -751,17 +868,37 @@ namespace QuickFix
             this.Trailer.Clear();
         }
 
-        public override string ToString()
+		[Obsolete("Use the version that takes an encoding as well.")]
+		public override string ToString()
+		{
+			return this.ToString(Encoding.UTF8);
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="encoding">The encoding to use for calculating the checksum and the length of the message.</param>
+		/// <returns></returns>
+        public string ToString(Encoding encoding)
         {
-            this.Header.SetField(new BodyLength(BodyLength()), true);
-            this.Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
+            this.Header.SetField(new BodyLength(BodyLength(encoding)), true);
+			this.Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum(encoding))), true);
 
             return this.Header.CalculateString() + CalculateString() + this.Trailer.CalculateString();
         }
 
-        protected int BodyLength()
+		[Obsolete("Use the version that takes an encoding as well.")]
+		protected int BodyLength()
+		{
+			return BodyLength(Encoding.UTF8);
+		}
+
+		/// <summary>
+		/// </summary>
+		/// <param name="encoding">The encoding to use for calculating the length of the body.</param>
+		/// <returns></returns>
+        protected int BodyLength(Encoding encoding)
         {
-            return this.Header.CalculateLength() + CalculateLength() + this.Trailer.CalculateLength();
+			return this.Header.CalculateLength(encoding) + CalculateLength(encoding) + this.Trailer.CalculateLength(encoding);
         }
     }
 }
