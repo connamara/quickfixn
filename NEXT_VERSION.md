@@ -33,4 +33,5 @@ Changes since the last version:
 * (patch) corrections/updates to FIX44 spec based on diff with QF/j version (gbirchmeier)
 * (minor) issue #66 - correct validation of multiple-value-string fields (harvinder)
 * (patch) pr #125 - MessageCracker optimization (unclepaul84)
+* (minor) pr #220/#235 - IIinitiator/IAcceptor.IsLoggedOn method changed to property (vbfox/gbirchmeier)
 

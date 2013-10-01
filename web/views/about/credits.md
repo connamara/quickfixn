@@ -36,3 +36,4 @@ Contributors
 - Thomas Fleming
 - Harvinder Vasdev
 - Paul Kotlyar
+- Julien Roncaglia
