@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System;
 
@@ -181,7 +182,7 @@ namespace QuickFix
                 }
             }
 
-            if (force && IsLoggedOn())
+            if (force && IsLoggedOn)
             {
                 foreach (Session session in sessions_.Values)
                 {
@@ -266,12 +267,15 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// TODO: not yet implemented
+        /// Check whether any sessions are logged on
         /// </summary>
-        /// <returns></returns>
-        public bool IsLoggedOn()
+        /// <returns>true if any session is logged on, else false</returns>
+        public bool IsLoggedOn
         {
-            throw new System.NotImplementedException();
+            get
+            {
+                return sessions_.Values.Any(session => session.IsLoggedOn);
+            }
         }
 
         /// <summary>
