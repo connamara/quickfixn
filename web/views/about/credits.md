@@ -35,3 +35,4 @@ Contributors
 - Tomas Vetrovsky
 - Thomas Fleming
 - Harvinder Vasdev
+- Paul Kotlyar
