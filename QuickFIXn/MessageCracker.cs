@@ -89,13 +89,11 @@ namespace QuickFix
             if (_callCache.TryGetValue(messageType, out onMessage))
             {
                 onMessage(message, sessionID);
-
             }
             else
             {
                 throw new UnsupportedMessageType();
             }
-
         }
     }
 }
