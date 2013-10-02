@@ -863,5 +863,29 @@ namespace UnitTests
             //Assert.True(heartbeat.IsAdmin());
             Assert.False(heartbeat.IsApp());
         }
+
+        [Test]
+        public void issue95()
+        {
+            // Parser screws up on triple-nested groups.  Contributes to ResendRequest failures.
+            string msgStr = String.Join(Message.SOH, new string[]{
+                "8=FIX.4.4","9=199","35=R","34=6","49=sendercompid","52=20130225-10:44:59.149","56=targetcompid", //headers
+                    "131=quotereqid",
+                    "146=1", // NoRelatedSym
+                        "55=ABC","65=symbolsfx", // group
+                        "711=1", // NoUnderlyings
+                            "311=underlyingsymbol","312=underlyingsymbolsfx",
+                            "457=1", // NoUnderlyingSecurityAltID
+                                "458=underlyingsecurityaltid","459=underlyingsecurityaltidsource", //group
+                ""
+            });
+
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+
+            Message msg = new Message();
+            msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
+            Assert.AreEqual(msgStr, msg.ToString());
+        }
     }
 }
