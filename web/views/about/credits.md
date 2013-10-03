@@ -37,3 +37,5 @@ Contributors
 - Harvinder Vasdev
 - Paul Kotlyar
 - Julien Roncaglia
+- Abderraouf Elgasser
+
