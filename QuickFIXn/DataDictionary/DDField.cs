@@ -117,7 +117,7 @@ namespace QuickFix.DataDictionary
                 case "PRICEOFFSET": return typeof(Fields.DecimalField);
                 case "MONTHYEAR": return typeof(Fields.StringField);
                 case "DAYOFMONTH": return typeof(Fields.StringField);
-                case "UTCDATE": return typeof(Fields.DateTimeField);
+                case "UTCDATE": return typeof(Fields.DateOnlyField);
                 case "UTCDATEONLY": return typeof(Fields.DateOnlyField);
                 case "UTCTIMEONLY": return typeof(Fields.TimeOnlyField);
                 case "NUMINGROUP": return typeof(Fields.IntField);

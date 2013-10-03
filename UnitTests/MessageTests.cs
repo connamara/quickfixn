@@ -884,9 +884,6 @@ namespace UnitTests
             Message msg = new Message();
             msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
 
-            Console.WriteLine(msgStr);
-            Console.WriteLine(msg.ToString());
-
             // make sure no fields were dropped in parsing
             Assert.AreEqual(msgStr.Length, msg.ToString().Length);
 
