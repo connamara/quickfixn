@@ -74,23 +74,23 @@ HERE
         lines << indent + "    switch (correspondingFieldID)"
         lines << indent + "    {"
 
-	m[:groups].each {|g| 			
-		gen_method_group_groups(m,fixver,g,"",lines,indent)	
-    	}
+        m[:groups].each {|g|
+          gen_method_group_groups(m,fixver,g,"",lines,indent)
+        }
 
         lines << indent + "    }"
         lines << indent + "}"
-	lines << ""
+        lines << ""
       end
     }
     lines.join("\n")
   end
   
   def self.gen_method_group_groups(message,fixver,thisgroup,path,lines,indent)
-	lines << indent + "        case QuickFix.Fields.Tags.#{thisgroup[:name]}: return new QuickFix.#{fixver}.#{message[:name]}#{path}.#{thisgroup[:name]}Group();"
+    lines << indent + "        case QuickFix.Fields.Tags.#{thisgroup[:name]}: return new QuickFix.#{fixver}.#{message[:name]}#{path}.#{thisgroup[:name]}Group();"
   
-	thisgroup[:groups].each {|g| 
-		gen_method_group_groups(message,fixver,g,"#{path}.#{thisgroup[:name]}Group",lines,indent);			
-	}
+    thisgroup[:groups].each {|g| 
+      gen_method_group_groups(message,fixver,g,"#{path}.#{thisgroup[:name]}Group",lines,indent);
+    }
   end  
 end
