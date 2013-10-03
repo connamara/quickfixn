@@ -35,4 +35,5 @@ Changes since the last version:
 * (patch) pr #125 - MessageCracker optimization (unclepaul84)
 * (minor) pr #220/#235 - IIinitiator/IAcceptor.IsLoggedOn method changed to property (vbfox/gbirchmeier)
 * (patch) issue #95 - deep-level repeating groups getting mangled in resend-requests (aelgasser)
+* (patch) issue #204) - concurrency issue in Message.ToString (gbirchmeier)
 
