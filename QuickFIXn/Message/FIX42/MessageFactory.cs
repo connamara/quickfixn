@@ -114,6 +114,7 @@ namespace QuickFix
                     switch (correspondingFieldID)
                     {
                         case QuickFix.Fields.Tags.NoQuoteSets: return new QuickFix.FIX42.MassQuote.NoQuoteSetsGroup();
+                        case QuickFix.Fields.Tags.NoQuoteEntries: return new QuickFix.FIX42.MassQuote.NoQuoteSetsGroup.NoQuoteEntriesGroup();
                     }
                 }
 
@@ -130,6 +131,7 @@ namespace QuickFix
                     switch (correspondingFieldID)
                     {
                         case QuickFix.Fields.Tags.NoQuoteSets: return new QuickFix.FIX42.QuoteAcknowledgement.NoQuoteSetsGroup();
+                        case QuickFix.Fields.Tags.NoQuoteEntries: return new QuickFix.FIX42.QuoteAcknowledgement.NoQuoteSetsGroup.NoQuoteEntriesGroup();
                     }
                 }
 
@@ -207,6 +209,7 @@ namespace QuickFix
                         case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX42.Allocation.NoOrdersGroup();
                         case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX42.Allocation.NoExecsGroup();
                         case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX42.Allocation.NoAllocsGroup();
+                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX42.Allocation.NoAllocsGroup.NoMiscFeesGroup();
                     }
                 }
 
@@ -232,6 +235,8 @@ namespace QuickFix
                     switch (correspondingFieldID)
                     {
                         case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX42.NewOrderList.NoOrdersGroup();
+                        case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX42.NewOrderList.NoOrdersGroup.NoAllocsGroup();
+                        case QuickFix.Fields.Tags.NoTradingSessions: return new QuickFix.FIX42.NewOrderList.NoOrdersGroup.NoTradingSessionsGroup();
                     }
                 }
 
