@@ -863,5 +863,38 @@ namespace UnitTests
             //Assert.True(heartbeat.IsAdmin());
             Assert.False(heartbeat.IsApp());
         }
+
+        [Test]
+        public void issue95()
+        {
+            // Parser screws up on triple-nested groups.  Contributes to ResendRequest failures.
+            string msgStr = String.Join(Message.SOH, new string[]{
+                "8=FIX.4.4","9=999","35=R","34=6","49=sendercompid","52=20130225-10:44:59.149","56=targetcompid", //headers
+                    "131=quotereqid",
+                    "146=1", // NoRelatedSym
+                        "55=ABC","65=CD","48=securityid","22=1", // group
+                        "711=1", // NoUnderlyings
+                            "311=underlyingsymbol","312=WI","309=underlyingsecurityid","305=1",
+                "10=999",""
+            });
+
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+
+            Message msg = new Message();
+            msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
+
+            Console.WriteLine(msgStr);
+            Console.WriteLine(msg.ToString());
+
+            // make sure no fields were dropped in parsing
+            Assert.AreEqual(msgStr.Length, msg.ToString().Length);
+
+            // make sure repeating groups are not rearranged
+            // 1 level deep
+            StringAssert.Contains(String.Join(Message.SOH, new string[] { "55=ABC", "65=CD", "48=securityid", "22=1" }), msg.ToString());
+            // 2 levels deep
+            StringAssert.Contains(String.Join(Message.SOH, new string[] { "311=underlyingsymbol", "312=WI", "309=underlyingsecurityid", "305=1" }), msg.ToString());
+        }
     }
 }
