@@ -740,7 +740,8 @@ namespace QuickFix
                     int begin = 0;
                     foreach (string msgStr in messages)
                     {
-                        Message msg = new Message(msgStr);
+                        Message msg = new Message();
+                        msg.FromString(msgStr, true, this.SessionDataDictionary, this.ApplicationDataDictionary, msgFactory_);
                         msgSeqNum = msg.Header.GetInt(Tags.MsgSeqNum);
 
                         if ((current != msgSeqNum) && begin == 0)
