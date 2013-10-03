@@ -751,12 +751,16 @@ namespace QuickFix
             this.Trailer.Clear();
         }
 
+        private Object lock_ToString = new Object();
         public override string ToString()
         {
-            this.Header.SetField(new BodyLength(BodyLength()), true);
-            this.Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
+            lock (lock_ToString)
+            {
+                this.Header.SetField(new BodyLength(BodyLength()), true);
+                this.Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
 
-            return this.Header.CalculateString() + CalculateString() + this.Trailer.CalculateString();
+                return this.Header.CalculateString() + CalculateString() + this.Trailer.CalculateString();
+            }
         }
 
         protected int BodyLength()
