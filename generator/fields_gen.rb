@@ -15,9 +15,9 @@ class FieldGen
         {:cs_class => 'IntField', :base_type=>'int'}
       when 'AMT', 'PERCENTAGE', 'PRICE', 'QTY', 'PRICEOFFSET', 'FLOAT'
         {:cs_class => 'DecimalField', :base_type=>'Decimal'}
-      when 'UTCTIMESTAMP', 'TZTIMESTAMP', 'TIME', 'DATE', 'UTCDATE'
+      when 'UTCTIMESTAMP', 'TZTIMESTAMP', 'TIME'
         {:cs_class => 'DateTimeField', :base_type=>'DateTime'}
-      when 'UTCDATEONLY'
+      when 'UTCDATEONLY','UTCDATE','DATE'
         {:cs_class => 'DateOnlyField', :base_type=>'DateTime'}
       when 'UTCTIMEONLY'
         {:cs_class => 'TimeOnlyField', :base_type=>'DateTime'}
