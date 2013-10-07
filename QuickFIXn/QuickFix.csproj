@@ -17,6 +17,7 @@
     </FileUpgradeFlags>
     <OldToolsVersion>3.5</OldToolsVersion>
     <UpgradeBackupLocation />
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -123,10 +124,11 @@
     <Compile Include="SocketInitiatorThread.cs" />
     <Compile Include="SocketReader.cs" />
     <Compile Include="SocketSettings.cs" />
-    <Compile Include="ThreadedSocketAcceptor.cs" />
     <Compile Include="StringUTF8.cs" />
+    <Compile Include="ThreadedSocketAcceptor.cs" />
     <Compile Include="ThreadedSocketReactor.cs" />
     <Compile Include="Transport\SocketInitiator.cs" />
+    <Compile Include="Transport\StreamFactory.cs" />
     <Compile Include="Util\UtcDateTimeSerializer.cs" />
     <Compile Include="Values.cs" />
   </ItemGroup>

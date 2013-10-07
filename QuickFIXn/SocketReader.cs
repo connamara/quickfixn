@@ -1,23 +1,39 @@
 ﻿using System.Net.Sockets;
+using System.IO;
+using System;
 
 namespace QuickFix
 {
+
     /// <summary>
     /// TODO merge with SocketInitiatorThread
     /// </summary>
     public class SocketReader
     {
         public const int BUF_SIZE = 4096;
-        private byte[] readBuffer_ = new byte[BUF_SIZE];
+        byte[] readBuffer_ = new byte[BUF_SIZE];
         private Parser parser_ = new Parser();
-        private Session qfSession_ = null;
+        private Session qfSession_; //will be null when initialized
+        private Stream stream_;     //will be null when initialized
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
 
+        /// <summary>
+        /// Keep a handle to the current outstanding read request (if any)
+        /// </summary>
+        private IAsyncResult currentReadRequest_;
+
+        [Obsolete("Use other constructor")]
         public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
+            : this(tcpClient, new SocketSettings(), responder)
+        {
+        }
+
+        public SocketReader(TcpClient tcpClient, SocketSettings settings, ClientHandlerThread responder)
         {
             tcpClient_ = tcpClient;
             responder_ = responder;
+            stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
         }
 
         /// <summary> FIXME </summary>
@@ -25,13 +41,9 @@ namespace QuickFix
         {
             try
             {
-                if (tcpClient_.Client.Poll(1000000, SelectMode.SelectRead)) // one-second timeout
-                {
-                    int bytesRead = tcpClient_.Client.Receive(readBuffer_);
-                    if (bytesRead < 1)
-                        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
-                    parser_.AddToStream(ref readBuffer_, bytesRead);
-                }
+                int bytesRead = ReadSome(readBuffer_, timeoutMilliseconds: 1000);
+                if (bytesRead > 0)
+                    parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
                 else if (null != qfSession_)
                 {
                     qfSession_.Next();
@@ -41,16 +53,77 @@ namespace QuickFix
             }
             catch (MessageParseError e)
             {
-                HandleException(qfSession_, e, tcpClient_);
+                HandleExceptionInternal(qfSession_, e, tcpClient_);
             }
             catch (System.Exception e)
             {
-                HandleException(qfSession_, e, tcpClient_);
+                HandleExceptionInternal(qfSession_, e, tcpClient_);
                 throw e;
             }
         }
 
+        /// <summary>
+        /// Reads data from the network into the specified buffer.
+        /// It will wait up to the specified number of milliseconds for data to arrive,
+        /// if no data has arrived after the specified number of milliseconds then the function returns 0
+        /// </summary>
+        /// <param name="buffer">The buffer.</param>
+        /// <param name="timeoutMilliseconds">The timeout milliseconds.</param>
+        /// <returns>The number of bytes read into the buffer</returns>
+        /// <exception cref="System.Net.Sockets.SocketException">On connection reset</exception>
+        protected virtual int ReadSome(byte[] buffer, int timeoutMilliseconds)
+        {
+            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketReader any changes here should 
+            // also be performed there
+            try
+            {
+                // Begin read if it is not already started
+                if (currentReadRequest_ == null)
+                    currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, callback: null, state: null);
+
+                // Wait for it to complete (given timeout)
+                currentReadRequest_.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
+
+                if (currentReadRequest_.IsCompleted)
+                {
+                    // Make sure to set currentReadRequest_ to before retreiving result 
+                    // so a new read can be started next time even if an exception is thrown
+                    var request = currentReadRequest_;
+                    currentReadRequest_ = null;
+
+                    int bytesRead = stream_.EndRead(request);
+                    if (0 == bytesRead)
+                        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+
+                    return bytesRead;
+                }
+                else
+                    return 0;
+            }
+            catch (System.IO.IOException ex) // Timeout
+            {
+                var inner = ex.InnerException as SocketException;
+                if (inner != null && inner.SocketErrorCode == SocketError.TimedOut)
+                {
+                    // Nothing read 
+                    return 0;
+                }
+                else if (inner != null)
+                {
+                    throw inner; //rethrow SocketException part (which we have exception logic for)
+                }
+                else
+                    throw; //rethrow original exception
+            }
+        }
+
+        [Obsolete("This should be made private")]
         public void OnMessageFound(string msg)
+        {
+            OnMessageFoundInternal(msg);
+        }
+
+        protected void OnMessageFoundInternal(string msg)
         {
             ///Message fixMessage;
 
@@ -115,7 +188,7 @@ namespace QuickFix
             {
                 return parser_.ReadFixMessage(out msg);
             }
-            catch(MessageParseError e)
+            catch (MessageParseError e)
             {
                 msg = "";
                 throw e;
@@ -126,7 +199,7 @@ namespace QuickFix
         {
             string msg;
             while (ReadMessage(out msg))
-                OnMessageFound(msg);
+                OnMessageFoundInternal(msg);
         }
 
         protected static void DisconnectClient(TcpClient client)
@@ -141,28 +214,39 @@ namespace QuickFix
         }
 
         protected bool HandleNewSession(string msg)
-	    {
-		    if(qfSession_.HasResponder)
-		    {
+        {
+            if (qfSession_.HasResponder)
+            {
                 qfSession_.Log.OnIncoming(msg);
                 qfSession_.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + tcpClient_.Client.RemoteEndPoint + ")");
-			    qfSession_ = null;
+                qfSession_ = null;
                 DisconnectClient();
-			    return false;
-		    }
-		    qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
+                return false;
+            }
+            qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
             /// FIXME do this here? qfSession_.HeartBtInt = QuickFix.Fields.Converters.IntConverter.Convert(message.GetField(Fields.Tags.HeartBtInt)); /// FIXME
-		    qfSession_.Log.OnEvent(qfSession_.SessionID +" Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");
-		    qfSession_.SetResponder(responder_);
-		    return true;
-	    }
+            qfSession_.Log.OnEvent(qfSession_.SessionID + " Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");
+            qfSession_.SetResponder(responder_);
+            return true;
+        }
 
+        [Obsolete("This should be made private/protected")]
         public void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
+        {
+            HandleExceptionInternal(quickFixSession, cause, client);
+        }
+
+        private void HandleExceptionInternal(Session quickFixSession, System.Exception cause, TcpClient client)
         {
             bool disconnectNeeded = true;
             string reason = cause.Message;
 
             System.Exception realCause = cause;
+
+            // Unwrap socket exceptions from IOException in order for code below to work
+            if (realCause is IOException && realCause.InnerException is SocketException)
+                realCause = realCause.InnerException;
+
             /** TODO
             if(cause is FIXMessageDecoder.DecodeError && cause.InnerException != null)
                 realCause = cause.getCause();
@@ -182,7 +266,7 @@ namespace QuickFix
                 disconnectNeeded = true;
             }
             */
-            else if(realCause is MessageParseError)
+            else if (realCause is MessageParseError)
             {
                 reason = "Protocol handler exception: " + cause;
                 if (quickFixSession == null)
@@ -214,6 +298,13 @@ namespace QuickFix
         private void Log(string s)
         {
             responder_.Log(s);
+        }
+
+        public int Send(string data)
+        {
+            byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
+            stream_.Write(rawData, 0, rawData.Length);
+            return rawData.Length;
         }
     }
 }
