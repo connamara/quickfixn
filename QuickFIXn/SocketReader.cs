@@ -8,7 +8,7 @@ namespace QuickFix
     /// <summary>
     /// TODO merge with SocketInitiatorThread
     /// </summary>
-    public class SocketReader
+    public class SocketReader : IDisposable
     {
         public const int BUF_SIZE = 4096;
         byte[] readBuffer_ = new byte[BUF_SIZE];
@@ -53,11 +53,11 @@ namespace QuickFix
             }
             catch (MessageParseError e)
             {
-                HandleExceptionInternal(qfSession_, e, tcpClient_);
+                HandleExceptionInternal(qfSession_, e);
             }
             catch (System.Exception e)
             {
-                HandleExceptionInternal(qfSession_, e, tcpClient_);
+                HandleExceptionInternal(qfSession_, e);
                 throw e;
             }
         }
@@ -202,6 +202,7 @@ namespace QuickFix
                 OnMessageFoundInternal(msg);
         }
 
+        [Obsolete("Static function can't close stream properly")]
         protected static void DisconnectClient(TcpClient client)
         {
             client.Client.Close();
@@ -210,7 +211,8 @@ namespace QuickFix
 
         protected void DisconnectClient()
         {
-            DisconnectClient(tcpClient_);
+            stream_.Close();
+            tcpClient_.Close();
         }
 
         protected bool HandleNewSession(string msg)
@@ -233,10 +235,10 @@ namespace QuickFix
         [Obsolete("This should be made private/protected")]
         public void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
         {
-            HandleExceptionInternal(quickFixSession, cause, client);
+            HandleExceptionInternal(quickFixSession, cause);
         }
 
-        private void HandleExceptionInternal(Session quickFixSession, System.Exception cause, TcpClient client)
+        private void HandleExceptionInternal(Session quickFixSession, System.Exception cause)
         {
             bool disconnectNeeded = true;
             string reason = cause.Message;
@@ -254,9 +256,9 @@ namespace QuickFix
             if (realCause is System.Net.Sockets.SocketException)
             {
                 if (quickFixSession != null && quickFixSession.IsEnabled)
-                    reason = "Socket exception (" + client.Client.RemoteEndPoint + "): " + cause.Message;
+                    reason = "Socket exception (" + tcpClient_.Client.RemoteEndPoint + "): " + cause.Message;
                 else
-                    reason = "Socket (" + client.Client.RemoteEndPoint + "): " + cause.Message;
+                    reason = "Socket (" + tcpClient_.Client.RemoteEndPoint + "): " + cause.Message;
                 disconnectNeeded = true;
             }
             /** TODO
@@ -287,7 +289,7 @@ namespace QuickFix
                 if (null != quickFixSession && quickFixSession.HasResponder)
                     quickFixSession.Disconnect(reason);
                 else
-                    DisconnectClient(client);
+                    DisconnectClient();
             }
         }
 
@@ -305,6 +307,21 @@ namespace QuickFix
             byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
             stream_.Write(rawData, 0, rawData.Length);
             return rawData.Length;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                stream_.Dispose();
+                tcpClient_.Close();
+            }
         }
     }
 }
