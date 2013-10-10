@@ -77,23 +77,20 @@ namespace QuickFix
         {
             try
             {
-                while (true)
+                int bytesRead = ReadSome(readBuffer_, 1000);
+                if (bytesRead > 0)
+                    parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                else if (null != session_)
                 {
-                    int bytesRead = ReadSome(readBuffer_, 1000);
-                    if (bytesRead > 0)
-                        parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
-                    else if (null != session_)
-                    {
-                        session_.Next();
-                    }
-                    else
-                    {
-                        throw new QuickFIXException("Initiator timed out while reading socket");
-                    }
-
-                    ProcessStream();
-                    return true;
+                    session_.Next();
                 }
+                else
+                {
+                    throw new QuickFIXException("Initiator timed out while reading socket");
+                }
+
+                ProcessStream();
+                return true;
             }
             catch (System.ObjectDisposedException e)
             {
@@ -199,7 +196,7 @@ namespace QuickFix
         {
             isDisconnectRequested_ = true;
             if (stream_ != null)
-              stream_.Close();
+                stream_.Close();
         }
 
         #endregion
