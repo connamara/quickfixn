@@ -15,7 +15,6 @@ namespace QuickFix
     {
         private Thread thread_ = null;
         private volatile bool isShutdownRequested_ = false;
-        private TcpClient tcpClient_;
         private SocketReader socketReader_;
         private long id_;
         private FileLog log_;
@@ -49,9 +48,8 @@ namespace QuickFix
             // FIXME - do something more flexible than hardcoding a filelog
             log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
 
-            tcpClient_ = tcpClient;
             id_ = clientId;
-            socketReader_ = new SocketReader(tcpClient_, socketSettings, this);
+            socketReader_ = new SocketReader(tcpClient, socketSettings, this);
         }
 
         public void Start()
@@ -117,8 +115,7 @@ namespace QuickFix
         public void Disconnect()
         {
             Shutdown("Disconnected");
-            tcpClient_.Client.Close();
-            tcpClient_.Close();
+            socketReader_.Dispose();
         }
 
         #endregion
