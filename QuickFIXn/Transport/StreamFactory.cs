@@ -294,8 +294,8 @@ namespace QuickFix.Transport
                 if (socketSettings_.ValidateCertificates == false)
                     return true;
 
-                // Validate enchanced key usage
-                if (!ContainsEchangedKeyUsage(certificate, enhancedKeyUsage))
+                // Validate enhanced key usage
+                if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage))
                 {
                     if (enhancedKeyUsage == clientAuthenticationOid)
                         log_.OnEvent("Remote certificate is not intended for client authentication: It is missing enhanced key usage " + enhancedKeyUsage);
@@ -336,12 +336,12 @@ namespace QuickFix.Transport
             }
 
             /// <summary>
-            /// Check if the given certificate contains the given enchanced key usage Oid
+            /// Check if the given certificate contains the given enhanced key usage Oid
             /// </summary>
             /// <param name="certificate">X509 certificate</param>
-            /// <param name="enchanchedKeyOid">the oid to check if it is specified</param>
+            /// <param name="enhancedKeyOid">the oid to check if it is specified</param>
             /// <returns><c>true</c> if the oid is specified as an enhanced key usage; otherwise <c>false</c></returns>
-            private static bool ContainsEchangedKeyUsage(X509Certificate certificate, string enchanchedKeyOid)
+            private static bool ContainsEnhancedKeyUsage(X509Certificate certificate, string enhancedKeyOid)
             {
                 X509Certificate2 cert2 = certificate as X509Certificate2;
 
@@ -355,7 +355,7 @@ namespace QuickFix.Transport
                         var keyUsage = (X509EnhancedKeyUsageExtension)extension;
                         foreach (var oid in keyUsage.EnhancedKeyUsages)
                         {
-                            if (oid.Value == enchanchedKeyOid)
+                            if (oid.Value == enhancedKeyOid)
                                 return true;
                         }
                     }
