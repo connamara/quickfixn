@@ -34,4 +34,8 @@ Contributors
 - Kevin McWhirter
 - Tomas Vetrovsky
 - Thomas Fleming
+- Harvinder Vasdev
+- Paul Kotlyar
+- Julien Roncaglia
+- Abderraouf Elgasser
 

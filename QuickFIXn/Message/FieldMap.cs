@@ -598,7 +598,10 @@ namespace QuickFix
 
         public virtual string CalculateString()
         {
-            return CalculateString(new StringBuilder(), new int[0]);
+            if( FieldOrder != null )
+                return CalculateString(new StringBuilder(), FieldOrder);
+            else
+                return CalculateString(new StringBuilder(), new int[0]);
         }
 
         public virtual string CalculateString(StringBuilder sb, int[] preFields)

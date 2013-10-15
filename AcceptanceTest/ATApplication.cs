@@ -55,6 +55,11 @@ namespace AcceptanceTest
             Echo(message, sessionID);
         }
 
+        public void OnMessage(QuickFix.FIX44.QuoteRequest message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
         public void OnMessage(QuickFix.FIX50.NewOrderSingle nos, SessionID sessionID)
         {
             ProcessNOS(nos, sessionID);
@@ -116,7 +121,7 @@ namespace AcceptanceTest
         {
             Session session = Session.LookupSession(sessionID);
 
-            // Hey QF/J users, don't do this in a real app.
+            // Hey QF/N users, don't do this in a real app.
             if (null != session)
                 session.Reset("AT Session Reset");
         }
@@ -135,6 +140,7 @@ namespace AcceptanceTest
             {
                 string msgType = message.Header.GetField(QuickFix.Fields.Tags.MsgType);
                 log_.OnEvent("Got message " + msgType);
+                System.Console.WriteLine("===got message " + msgType);
                 Crack(message, sessionID);
             }
             catch (QuickFix.UnsupportedMessageType)

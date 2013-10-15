@@ -41,7 +41,7 @@ type TestResult.xml
 goto quit
 
 :usage
-echo "Usage: runat [release | debug] [TESTFILE...]"
+echo "Usage: runat [release | debug] [port] [TESTFILE...]"
 set RESULT=1
 
 :quit
