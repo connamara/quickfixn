@@ -81,7 +81,7 @@ normally use it, then your field should already be defined, and you can skip thi
 If the counterparty has created this field, then you must define it.
 Here, we'll add a new string field called `AwesomeField` as tag 9006.
 
-**Note: your new field must have a name and tag unique from all other fields in your Data Dictionary.
+**Note:** your new field must have a name and tag unique from all other fields in your Data Dictionary.
 
 To do this, we would go to the `fields` section of the Data Dictionary,
 and add a new `field` entry for the new `AwesomeField` field.
@@ -153,7 +153,7 @@ To add a new message type to the Data Dictionary, there are two steps:
 For example, here is how you'd add a new message type called `CoolMessage`
 that contains 3 fields (1 of which is required, the others mandatory):
 
-    * **Note:** The msgtype and name (both are strings) must be unique from all other messages.
+**Note:** The msgtype and name (both are strings) must be unique from all other messages.
 
 ```
 <messages>

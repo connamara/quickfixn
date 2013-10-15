@@ -1,0 +1,19 @@
+# Issue 95 - resend requests mangle messages with 3-level-deep repeating groups
+
+iCONNECT
+# logon message and response
+I8=FIX.4.435=A34=149=TW52=<TIME>56=ISLD98=0108=2
+E8=FIX.4.49=6035=A34=149=ISLD52=00000000-00:00:00.00056=TW98=0108=210=0
+
+#Send QuoteRequest with nested groups and receive echo
+I8=FIX.4.435=R34=249=TW52=<TIME>56=ISLD131=quotereqid146=155=ABC65=CD48=securityid22=1711=1311=underlyingsymbol312=WI309=underlyingsecurityid305=1
+E8=FIX.4.49=16735=R34=249=ISLD52=<TIME>56=TW131=quotereqid146=155=ABC65=CD48=securityid22=1711=1311=underlyingsymbol312=WI309=underlyingsecurityid305=110=0
+
+#Send ResendRequest so test app resends the QuoteRequest
+I8=FIX.4.435=234=349=TW52=<TIME>56=ISLD7=216=2
+E8=FIX.4.49=19835=R34=243=Y49=ISLD52=<TIME>56=TW122=<TIME>131=quotereqid146=155=ABC65=CD48=securityid22=1711=1311=underlyingsymbol312=WI309=underlyingsecurityid305=110=0
+
+# logout message and response
+I8=FIX.4.435=534=449=TW52=<TIME>56=ISLD
+E8=FIX.4.49=4935=534=349=ISLD52=00000000-00:00:00.00056=TW10=0
+

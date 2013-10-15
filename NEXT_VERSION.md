@@ -31,4 +31,10 @@ Changes since the last version:
 * (patch) issue #173 - bug in Message.IsAdmin/IsApp (TomasVetrovsky/gbirchmeier)
 * (patch) issue #166 - FIX44 spec missing PutOrCall and UnderlyingPutOrCall (gbirchmeier)
 * (patch) corrections/updates to FIX44 spec based on diff with QF/j version (gbirchmeier)
+* (minor) issue #66 - correct validation of multiple-value-string fields (harvinder)
+* (patch) pr #125 - MessageCracker optimization (unclepaul84)
+* (minor) pr #220/#235 - IIinitiator/IAcceptor.IsLoggedOn method changed to property (vbfox/gbirchmeier)
+* (patch) issue #95 - deep-level repeating groups getting mangled in resend-requests (aelgasser)
+* (patch) issue #204 - concurrency issue in Message.ToString (gbirchmeier)
+* (patch) issue #175 - correct some date fields to be generated/validated as DateOnlyField types
 
