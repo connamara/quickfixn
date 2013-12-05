@@ -583,11 +583,10 @@ QuickFIX Settings
 </table>
 
 
-</div>
-
 <a name='ssl'></a>
 
 <h2>SSL</h2>
+
 
 <table>
   <tr>
@@ -611,40 +610,41 @@ QuickFIX Settings
     <td class='setting'>SSLServerName</td>
     <td class='description'>
       The expected certificate name of the server (usually same as DNS name).
-      Only used for initiator
+      Only used for initiators.
     </td>
-    <td class='valid'>-</td>
-    <td class='default'>defaults to SOCKET_CONNECT_HOST</td>
+    <td class='valid'>string</td>
+    <td class='default'>defaults to value of SocketConnectHost</td>
   </tr>
 
   <tr>
     <td class='setting'>SSLProtocols</td>
     <td class='description'>
-      Determine the SSLProtocols to use.
-      Default means either SSL3 or TLS.
+      Specifies the SSLProtocol to use (according to the C# SslProtocols enum).
       If .NET 4.5 is used there are more valid values.
-      Refer to http://msdn.microsoft.com/en-us/library/system.security.authentication.sslprotocols.aspx for a complete list of valid values.
+      Refer to <a href="http://msdn.microsoft.com/en-us/library/system.security.authentication.sslprotocols.aspx">this MSDN page</a>
+      for a complete list of valid values.
     </td>
     <td class='valid'>
       <div>Ssl2</div>
       <div>Ssl3</div>
       <div>Tls</div>
       <div>Default</div>
+      <div>Any other valid SslProtocols enum value</div>
     </td>
-    <td class='default'>Default (TLS or SSL3)</td>
+    <td class='default'>Default</td>
   </tr>
 
   <tr>
     <td class='setting'>SSLValidateCertificates</td>
     <td class='description'>
-      Determine if ssl certificates should be validated.
+      Determine if SSL certificates should be validated.<br/>
       <b>NOTE:</b> setting the value to N is a security risk.
       As part of the validation the certificate will be matched against certificates 
       in the oerating systems certificate store, so if the server uses a certificate 
       not issued by a CA trusted by the operating system, then the certificate or the 
       certificate CA can be installed into the operating systems certificate store
       in order to trust the certificate.
-      Setting the value to N will also set SSLCheckCertificateRevocation to N.
+      <b>Setting the value to N will also set SSLCheckCertificateRevocation to N.</b>
     </td>
     <td class='valid'>
       <div>Y</div>
@@ -655,7 +655,10 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>SSLCheckCertificateRevocation</td>
-    <td class='description'>Determine if certificate revocation list (CRL) should be checked for SSL certificates.</td>
+    <td class='description'>
+      Determine if certificate revocation list (CRL) should be checked for SSL certificates.
+      Will be overridden to N if SSLValidateCertificates=N.
+    </td>
     <td class='valid'>
       <div>Y</div>
       <div>N</div>
@@ -671,9 +674,11 @@ QuickFIX Settings
       The certificate can be loaded either from a pfx file or from the current user's personal certificate store.
     </td>
     <td class='valid'>
-      <div>Path to a .pfx-file to which read access is granted</div>
-      <div>Distinguished name (ex: CN=CertName) of a certificate in the current user's personal certificate store</div>
-      <div>Subject name (ex: CertName) of a certificate in the current user's personal certificate store</div>
+      <ul>
+      <li>Path to a .pfx-file to which read access is granted</li>
+      <li>Distinguished name (ex: CN=CertName) of a certificate in the current user's personal certificate store</li>
+      <li>Subject name (ex: CertName) of a certificate in the current user's personal certificate store</li>
+      </ul>
     </td>
     <td class='default'>-</td>
   </tr>
@@ -681,7 +686,7 @@ QuickFIX Settings
   <tr>
     <td class='setting'>SSLCertificatePassword</td>
     <td class='description'>Password for the SSL certificate</td>
-    <td class='valid'></td>
+    <td class='valid'>string</td>
     <td class='default'>-</td>
   </tr>
 
@@ -704,13 +709,14 @@ QuickFIX Settings
       The certificate can be loaded either from a file or from the current user's personal certificate store.
     </td>
     <td class='valid'>
-      <div>Path to a .cer- or .pfx-file to which read access is granted</div>
-      <div>Distinguished name (ex: CN=CertName) of a certificate in the current user's personal certificate store</div>
-      <div>Subject name (ex: CertName) of a certificate in the current user's personal certificate store</div>
+      <ul>
+      <li>Path to a .cer- or .pfx-file to which read access is granted</li>
+      <li>Distinguished name (ex: CN=CertName) of a certificate in the current user's personal certificate store</li>
+      <li>Subject name (ex: CertName) of a certificate in the current user's personal certificate store</li>
+      </ul>
     </td>
-    <td class='default'></td>
+    <td class='default'>-</td>
   </tr>
-  
 </table>
 
 
