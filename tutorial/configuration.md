@@ -637,13 +637,10 @@ QuickFIX Settings
   <tr>
     <td class='setting'>SSLValidateCertificates</td>
     <td class='description'>
-      Determine if SSL certificates should be validated.<br/>
-      <b>NOTE:</b> setting the value to N is a security risk.
-      As part of the validation the certificate will be matched against certificates 
-      in the oerating systems certificate store, so if the server uses a certificate 
-      not issued by a CA trusted by the operating system, then the certificate or the 
-      certificate CA can be installed into the operating systems certificate store
-      in order to trust the certificate.
+      If Y, the remote party's certificate will be verified against the certificate
+      specified by the SSLCACertificate setting (or the operating system's list of trusted CAs if that
+      setting is not specified).<br/>
+      <b>NOTE:</b> setting the value to N is a security risk.<br/>
       <b>Setting the value to N will also set SSLCheckCertificateRevocation to N.</b>
     </td>
     <td class='valid'>
@@ -656,7 +653,8 @@ QuickFIX Settings
   <tr>
     <td class='setting'>SSLCheckCertificateRevocation</td>
     <td class='description'>
-      Determine if certificate revocation list (CRL) should be checked for SSL certificates.
+      Determine if certificate revocation list (CRL) should be used to check
+      if SSL certificates have been revoked.
       Will be overridden to N if SSLValidateCertificates=N.
     </td>
     <td class='valid'>
@@ -703,8 +701,8 @@ QuickFIX Settings
   <tr>
     <td class='setting'>SSLCACertificate</td>
     <td class='description'>
-      Specified the Certificate Authority certificate used by acceptor to validate client certificates.
-      If no path is specified then all certificates installed on the computers certificate store 
+      Specifies the CA certificate used by acceptor to validate client certificates.
+      If not specified, then all certificates installed on the computer's certificate store 
       (under "Trusted Root Certificates") are used.
       The certificate can be loaded either from a file or from the current user's personal certificate store.
     </td>
