@@ -244,6 +244,8 @@ namespace QuickFix
             this.SendLogoutBeforeTimeoutDisconnect = false;
             this.IgnorePossDupResendRequests = false;
             this.RequiresOrigSendingTime = true;
+            this.CheckLatency = true;
+            this.MaxLatency = 120;
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime (Session construction)");
@@ -913,7 +915,7 @@ namespace QuickFix
                     }
                 }
 
-                if (CheckLatency && !IsGoodTime(msg))
+                if (!IsGoodTime(msg))
                 {
                     this.Log.OnEvent("Sending time accuracy problem");
                     GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
@@ -1085,7 +1087,7 @@ namespace QuickFix
             DateTime sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
             System.TimeSpan tmSpan = origSendingTime - sendingTime;
 
-            if (tmSpan.TotalSeconds > 0)
+            if (tmSpan.TotalSeconds > 0) //TODO - should this validate against CheckLatency/MaxLatency?
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
                 GenerateLogout();
@@ -1457,6 +1459,9 @@ namespace QuickFix
 
         protected bool IsGoodTime(Message msg)
         {
+            if (!CheckLatency)
+                return true;
+
             var sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
             System.TimeSpan tmSpan = System.DateTime.UtcNow - sendingTime;
             if (System.Math.Abs(tmSpan.TotalSeconds) > MaxLatency)
