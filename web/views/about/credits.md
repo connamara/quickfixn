@@ -38,4 +38,5 @@ Contributors
 - Paul Kotlyar
 - Julien Roncaglia
 - Abderraouf Elgasser
+- Ryan Rastedt
 
