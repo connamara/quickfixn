@@ -256,7 +256,7 @@ namespace QuickFix
             seqNumsFile_.Seek(0, System.IO.SeekOrigin.Begin);
             System.IO.StreamWriter writer = new System.IO.StreamWriter(seqNumsFile_);
 
-            writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10"));
+            writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10") + "  ");
             writer.Flush();
         }
 
