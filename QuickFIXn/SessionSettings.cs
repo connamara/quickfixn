@@ -60,6 +60,17 @@ namespace QuickFix
         public const string IGNORE_POSSDUP_RESEND_REQUESTS = "IgnorePossDupResendRequests";
         public const string RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME = "RequiresOrigSendingTime";
 
+
+        public const string SSL_ENABLE = "SSLEnable";
+        public const string SSL_SERVERNAME = "SSLServerName";
+        public const string SSL_PROTOCOLS = "SSLProtocols";
+        public const string SSL_VALIDATE_CERTIFICATES = "SSLValidateCertificates";
+        public const string SSL_CHECK_CERTIFICATE_REVOCATION = "SSLCheckCertificateRevocation";
+        public const string SSL_CERTIFICATE = "SSLCertificate";
+        public const string SSL_CERTIFICATE_PASSWORD = "SSLCertificatePassword";
+        public const string SSL_REQUIRE_CLIENT_CERTIFICATE = "SSLRequireClientCertificate";
+        public const string SSL_CA_CERTIFICATE = "SSLCACertificate";
+
         #endregion
 
         #region Private Members

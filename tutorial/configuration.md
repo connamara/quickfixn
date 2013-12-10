@@ -22,6 +22,7 @@ QuickFIX Settings
 * [Storage](#storage)
 * [File Storage](#file)
 * [Logging](#logging)
+* [SSL](#ssl)
 * [Sample Settings File](#sample)
 
 <a name='session'> </a>
@@ -578,6 +579,141 @@ QuickFIX Settings
     <td class='description'>Directory to store ThreadedClientAcceptor thread logs.
     <td class='valid'>Valid directory for storing files, must have write access</td>
     <td class='default'>Value of <tt>FileLogPath</tt> if present, else "log".</td>
+  </tr>
+</table>
+
+
+<a name='ssl'></a>
+
+<h2>SSL</h2>
+
+
+<table>
+  <tr>
+    <th>Setting</th>
+    <th>Description</th>
+    <th>Valid Values</th>
+    <th>Default</th>
+  </tr>
+
+  <tr>
+    <td class='setting'>SSLEnable</td>
+    <td class='description'>Determine if SSL should be used.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y if SSLCertificatePath is specified, otherwise N</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SSLServerName</td>
+    <td class='description'>
+      The expected certificate name of the server (usually same as DNS name).
+      Only used for initiators.
+    </td>
+    <td class='valid'>string</td>
+    <td class='default'>defaults to value of SocketConnectHost</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SSLProtocols</td>
+    <td class='description'>
+      Specifies the SSLProtocol to use (according to the C# SslProtocols enum).
+      If .NET 4.5 is used there are more valid values.
+      Refer to <a href="http://msdn.microsoft.com/en-us/library/system.security.authentication.sslprotocols.aspx">this MSDN page</a>
+      for a complete list of valid values.
+    </td>
+    <td class='valid'>
+      <div>Ssl2</div>
+      <div>Ssl3</div>
+      <div>Tls</div>
+      <div>Default</div>
+      <div>Any other valid SslProtocols enum value</div>
+    </td>
+    <td class='default'>Default</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SSLValidateCertificates</td>
+    <td class='description'>
+      If Y, the remote party's certificate will be verified against the certificate
+      specified by the SSLCACertificate setting (or the operating system's list of trusted CAs if that
+      setting is not specified).<br/>
+      <b>NOTE:</b> setting the value to N is a security risk.<br/>
+      <b>Setting the value to N will also set SSLCheckCertificateRevocation to N.</b>
+    </td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SSLCheckCertificateRevocation</td>
+    <td class='description'>
+      Determine if certificate revocation list (CRL) should be used to check
+      if SSL certificates have been revoked.
+      Will be overridden to N if SSLValidateCertificates=N.
+    </td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SSLCertificate</td>
+    <td class='description'>
+      Specifies which SSL certificate (containing a private key) to use.
+      Required for acceptor, but not for initiator unless client certificates are used.
+      The certificate can be loaded either from a pfx file or from the current user's personal certificate store.
+    </td>
+    <td class='valid'>
+      <ul>
+      <li>Path to a .pfx-file to which read access is granted</li>
+      <li>Distinguished name (ex: CN=CertName) of a certificate in the current user's personal certificate store</li>
+      <li>Subject name (ex: CertName) of a certificate in the current user's personal certificate store</li>
+      </ul>
+    </td>
+    <td class='default'>-</td>
+  </tr>
+  
+  <tr>
+    <td class='setting'>SSLCertificatePassword</td>
+    <td class='description'>Password for the SSL certificate</td>
+    <td class='valid'>string</td>
+    <td class='default'>-</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SSLRequireClientCertificate</td>
+    <td class='description'>Determine if acceptor should require client certificates from all acceptors</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
+  
+  <tr>
+    <td class='setting'>SSLCACertificate</td>
+    <td class='description'>
+      Specifies the CA certificate used by acceptor to validate client certificates.
+      If not specified, then all certificates installed on the computer's certificate store 
+      (under "Trusted Root Certificates") are used.
+      The certificate can be loaded either from a file or from the current user's personal certificate store.
+    </td>
+    <td class='valid'>
+      <ul>
+      <li>Path to a .cer- or .pfx-file to which read access is granted</li>
+      <li>Distinguished name (ex: CN=CertName) of a certificate in the current user's personal certificate store</li>
+      <li>Subject name (ex: CertName) of a certificate in the current user's personal certificate store</li>
+      </ul>
+    </td>
+    <td class='default'>-</td>
   </tr>
 </table>
 
