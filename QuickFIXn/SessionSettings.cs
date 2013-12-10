@@ -25,7 +25,6 @@ namespace QuickFix
         public const string USE_LOCAL_TIME = "UseLocalTime";
         public const string TIME_ZONE = "TimeZone";
         public const string START_DAY = "StartDay";
-        public const string MAX_LATENCY = "MaxLatency";
         public const string END_DAY = "EndDay";
         public const string START_TIME = "StartTime";
         public const string END_TIME = "EndTime";
@@ -59,6 +58,8 @@ namespace QuickFix
         public const string SOCKET_NODELAY = "SocketNodelay";
         public const string IGNORE_POSSDUP_RESEND_REQUESTS = "IgnorePossDupResendRequests";
         public const string RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME = "RequiresOrigSendingTime";
+        public const string CHECK_LATENCY = "CheckLatency";
+        public const string MAX_LATENCY = "MaxLatency";
 
         #endregion
 
