@@ -37,4 +37,5 @@ Changes since the last version:
 * (patch) issue #95 - deep-level repeating groups getting mangled in resend-requests (aelgasser)
 * (patch) issue #204 - concurrency issue in Message.ToString (gbirchmeier)
 * (patch) issue #175 - correct some date fields to be generated/validated as DateOnlyField types (gbirchmeier)
+* (patch) pr #225 - fix for FileStore seqnum file corruption risk (roken)
 
