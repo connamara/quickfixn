@@ -29,11 +29,6 @@ namespace QuickFix.Transport
 
         #region Private Members
 
-        private IApplication app_;
-        private SessionSettings settings_;
-        private IMessageStoreFactory storeFactory_;
-        private ILogFactory logFactory_;
-        //private Socket socket_ = null;
         private volatile bool shutdownRequested_ = false;
         private DateTime lastConnectTimeDT = DateTime.MinValue;
         private int reconnectInterval_ = 30;
