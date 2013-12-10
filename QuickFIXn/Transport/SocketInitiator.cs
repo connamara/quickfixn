@@ -20,8 +20,15 @@ namespace QuickFix.Transport
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
         public const string RECONNECT_INTERVAL  = "ReconnectInterval";
 
+        #region Properties
+
+        [System.Obsolete("Has never worked.  Always returns false.  Will be removed.")]
+        public bool Connected { get { return false; } }
+
+        #endregion
+
         #region Private Members
-        
+
         private IApplication app_;
         private SessionSettings settings_;
         private IMessageStoreFactory storeFactory_;
