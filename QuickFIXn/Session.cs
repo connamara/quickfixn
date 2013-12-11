@@ -1087,7 +1087,7 @@ namespace QuickFix
             DateTime sendingTime = msg.Header.GetDateTime(Fields.Tags.SendingTime);
             System.TimeSpan tmSpan = origSendingTime - sendingTime;
 
-            if (tmSpan.TotalSeconds > 0) //TODO - should this validate against CheckLatency/MaxLatency?
+            if (tmSpan.TotalSeconds > 0)
             {
                 GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
                 GenerateLogout();
