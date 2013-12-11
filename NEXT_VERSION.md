@@ -17,4 +17,5 @@ Changes since the last version:
 -------------------------------
 * (major/minor/patch) desc of fixed issue (contributor)
 
+* (minor) #247 - support for CheckLatency/MaxLatency config settings (#247)
 

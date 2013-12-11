@@ -40,4 +40,6 @@ Contributors
 - Abderraouf Elgasser
 - Ryan Rastedt
 - Daniel Svensson
+- Ruann Viljoen
+
 
