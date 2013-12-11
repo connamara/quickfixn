@@ -30,6 +30,7 @@ What's New
 * (patch) issue #204 - concurrency issue in Message.ToString (gbirchmeier)
 * (patch) issue #175 - correct some date fields to be generated/validated as DateOnlyField types (gbirchmeier)
 * (patch) pr #225 - fix for FileStore seqnum file corruption risk (roken)
+* (minor) issue #18 - native SSL support (Daniel-Svensson)
 
 ###v1.4.0:
 * (minor) issue #101 - better exception for when group doesn't use proper delimiter (gbirchmeier)
