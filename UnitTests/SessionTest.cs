@@ -144,7 +144,7 @@ namespace UnitTests
             session = new QuickFix.Session(application, new QuickFix.MemoryStoreFactory(), sessionID, 
                 new QuickFix.DataDictionaryProvider(),new QuickFix.SessionSchedule(config), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
-            session.MaxLatency=120;
+            session.CheckLatency = false;
 
             // must be set for an initiator
             int heartBeatInterval = 10;
@@ -152,7 +152,7 @@ namespace UnitTests
             session2 = new QuickFix.Session(application, new QuickFix.MemoryStoreFactory(), new QuickFix.SessionID("FIX.4.2", "OTHER_SENDER", "OTHER_TARGET"),
                 new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), heartBeatInterval, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session2.SetResponder(responder);
-            session2.MaxLatency = 120;
+            session2.CheckLatency = false;
 
             seqNum = 1;
         }
