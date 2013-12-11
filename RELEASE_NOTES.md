@@ -8,6 +8,30 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
+###v1.5.0:
+* (patch) pr #181 - add null checks to SessionID constructor (roji)
+* (minor) issue #48 - IInitiator.Stop() must release resources (jungers42/gbirchmeier)
+* (patch) issue #160 - floats without leading zeros (e.g. ".23") now parsed properly (gbirchmeier)
+* (patch) issue #187 - make IInitiator implement IDisposable (gbirchmeier)
+* (minor) pr #178 - can now load DD from a stream instead of a file (robsonj)
+* (patch) issue #183 - Session.Reset should only logout if already logged in (ligu)
+* (patch) issue #40 - remove redundant/misplaced body length check in parser (gbirchmeier)
+* (minor) pr #180 - new CompositeLogFactory (roji)
+* (patch) issue #179 - bug in parsing groups when message factory is null (klmcwhirter/TomasVetrovsky/gbirchmeier)
+* (minor) issue #102 - allow SequenceReset/PossDup messages to omit tag 122 (thomasfleming/gbirchmeier)
+* (patch) issue #153 - Chunked resends are now sent "on-demand" instead of all-at-once (roji)
+* (patch) issue #173 - bug in Message.IsAdmin/IsApp (TomasVetrovsky/gbirchmeier)
+* (patch) issue #166 - FIX44 spec missing PutOrCall and UnderlyingPutOrCall (gbirchmeier)
+* (patch) corrections/updates to FIX44 spec based on diff with QF/j version (gbirchmeier)
+* (minor) issue #66 - correct validation of multiple-value-string fields (harvinder)
+* (patch) pr #125 - MessageCracker optimization (unclepaul84)
+* (minor) pr #220/#235 - IIinitiator/IAcceptor.IsLoggedOn method changed to property (vbfox/gbirchmeier)
+* (patch) issue #95 - deep-level repeating groups getting mangled in resend-requests (aelgasser)
+* (patch) issue #204 - concurrency issue in Message.ToString (gbirchmeier)
+* (patch) issue #175 - correct some date fields to be generated/validated as DateOnlyField types (gbirchmeier)
+* (patch) pr #225 - fix for FileStore seqnum file corruption risk (roken)
+* (minor) issue #18 - native SSL support (Daniel-Svensson)
+
 ###v1.4.0:
 * (minor) issue #101 - better exception for when group doesn't use proper delimiter (gbirchmeier)
 * (minor) issue #28 - rename interfaces to start with "I" (gbirchmeier)
@@ -18,7 +42,6 @@ What's New
 * (patch) scripts and fixes for experimental Mono support (mgatny)
 * (minor) issue #97 - tolerance for non-ASCII (e.g. UTF-8) characters (andbjorn/gbirchmeier)
 * (patch) issues #139/#144/#151 - session schedule problems (gbirchmeier/formator)
-
 
 ###v1.3.0:
 * (patch) issue #82 - add stacktraces to certain disconnect logging messages (gbirchmeier)
