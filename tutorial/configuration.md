@@ -273,6 +273,7 @@ QuickFIX Settings
   <tr>
     <td class='setting'>RequiresOrigSendingTime</td>
     <td class='description'>If N, do not reject SequenceReset/PossDup messages that lack OrigSendingTime</td>
+    <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
