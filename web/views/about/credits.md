@@ -39,4 +39,5 @@ Contributors
 - Julien Roncaglia
 - Abderraouf Elgasser
 - Ryan Rastedt
+- Daniel Svensson
 

@@ -1,5 +1,4 @@
-require 'zip/zip'
-require 'zip/zipfilesystem'
+require 'zip'
 
 if ARGV[0].nil? or ARGV[1].nil?
   puts "Usage: ruby create_zip.rb <SRC DIR> <DEST_ZIP_FILE>"
@@ -9,7 +8,7 @@ end
 src = File.join(Dir.pwd, ARGV[0])
 dest = File.join(Dir.pwd, ARGV[1])
 
-Zip::ZipFile.open(dest, 'w') do |zipfile|
+Zip::File.open(dest, 'w') do |zipfile|
     Dir["#{src}/**/**"].reject{|f|f==dest}.each do |file|
       zipfile.add(file.sub(src+'/',''),file)
     end
