@@ -89,11 +89,11 @@ namespace QuickFix
             /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.CHECK_COMPID))
                 session.SetCheckCompId(settings.GetBool(SessionSettings.CHECK_COMPID));
-            if (settings.Has(SessionSettings.CHECK_LATENCY))
-                session.SetCheckLatency(settings.GetBool(SessionSettings.CHECK_LATENCY));
-            if (settings.Has(SessionSettings.MAX_LATENCY))
-                session.SetMaxLatency(settings.GetLong(SessionSettings.MAX_LATENCY));
              */
+            if (settings.Has(SessionSettings.CHECK_LATENCY))
+                session.CheckLatency = settings.GetBool(SessionSettings.CHECK_LATENCY);
+            if (settings.Has(SessionSettings.MAX_LATENCY))
+                session.MaxLatency = settings.GetInt(SessionSettings.MAX_LATENCY);
             if (settings.Has(SessionSettings.LOGON_TIMEOUT))
                 session.LogonTimeout = settings.GetInt(SessionSettings.LOGON_TIMEOUT);
             if (settings.Has(SessionSettings.LOGOUT_TIMEOUT))
