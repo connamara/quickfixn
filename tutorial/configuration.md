@@ -391,6 +391,26 @@ QuickFIX Settings
     </td>
     <td class='default'>Y</td>
   </tr>
+
+  <tr>
+    <td class="setting">CheckLatency</td>
+    <td class="description">If Y, messages must be received from the counterparty within a defined number of seconds (see MaxLatency). It is useful to turn this off if a system uses localtime for its timestamps instead of GMT.</td>
+    <td class="valid">
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class="default">Y</td>
+  </tr>
+
+  <tr>
+    <td class="setting">MaxLatency</td>
+    <td class="description">If CheckLatency=Y, this defines the number of seconds latency allowed for a message to be processed.</td>
+    <td class="valid">
+      <div>positive integer</div>
+    </td>
+    <td class="default">120</td>
+  </tr>
+
 </table>
 
 <a name='initiator'></a>
