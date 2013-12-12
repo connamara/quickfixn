@@ -42,25 +42,28 @@ tcr.AddGroup(sidesGrp);
 Reading Groups
 --------------
 
-To read a group from a message, we supply the tag of the group field and
-the index of the group:
+To read a group from a message, we use GetGroup() and supply a reference
+to a new group object of the appropriate type.  The extracted group
+gets assigned to this parameter.
 
 ```c#
 var sidesGrp1 = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
-sidesGrp1 = tcr.GetGroup(1, Tags.NoSides);
+tcr.GetGroup(1, sidesGrp1);
+// sidesGrp1 now has all fields populated
 var sidesGrp2 = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
-sidesGrp2 = tcr.GetGroup(2, Tags.NoSides);
+tcr.GetGroup(2, sidesGrp2);
 ```
 
 Group indexes start at `1`.  
 
-To iterate the groups, we use a `for` loop with the value of the group field:
+To iterate the groups, we can use a `for` loop with the value of the group field:
 
 ```c#
 var noSidesGrp = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
 for(int grpIndex = 1; grpIndex<= message.GetInt(Tags.NoSides); grpIndex += 1)
 {
-    noSidesGrp = message.GetGroup(grpIndex, Tags.NoSides);
+    message.GetGroup(grpIndex, noSidesGrp);
+    // ...do stuff with noSidesGrp...
 }
 ```
 
