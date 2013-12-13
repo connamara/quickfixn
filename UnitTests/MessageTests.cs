@@ -642,9 +642,9 @@ namespace UnitTests
         }
 
         [Test]
-        public void issue56_GetGroup_type1()
+        public void issue56_GetGroup_by_tag_and_return()
         {
-            // boring message construction stuff
+            // setup
             var dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
             string[] msgFields = { "8=FIX.4.2", "9=87", "35=B", "34=3", "49=CLIENT1", "52=20111012-22:15:55.474", "56=EXECUTOR", "148=AAAAAAA", "33=2", "58=L1", "58=L2", "10=016" };
@@ -664,9 +664,9 @@ namespace UnitTests
         }
 
         [Test]
-        public void issue56_GetGroup_type2()
+        public void issue56_GetGroup_by_reference()
         {
-            // boring message construction stuff
+            // setup
             var dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
             string[] msgFields = { "8=FIX.4.2", "9=87", "35=B", "34=3", "49=CLIENT1", "52=20111012-22:15:55.474", "56=EXECUTOR", "148=AAAAAAA", "33=2", "58=L1", "58=L2", "10=016" };
@@ -678,14 +678,10 @@ namespace UnitTests
             // the test
             QuickFix.FIX42.News.LinesOfTextGroup grp = new QuickFix.FIX42.News.LinesOfTextGroup(); // for return value
 
-            var rv1 = msg.GetGroup(1, grp);
-            Assert.AreSame(rv1, grp);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rv1);
+            msg.GetGroup(1, grp);
             Assert.AreEqual("L1", grp.Text.Obj);
 
-            var rv2 = msg.GetGroup(2, grp);
-            Assert.AreSame(rv2, grp);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rv2);
+            msg.GetGroup(2, grp);
             Assert.AreEqual("L2", grp.Text.Obj);
         }
 
@@ -730,7 +726,8 @@ namespace UnitTests
             QuickFix.FIX44.MarketDataSnapshotFullRefresh msg = new QuickFix.FIX44.MarketDataSnapshotFullRefresh();
 
             msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
-            QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup gentry1 = (QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup)msg.GetGroup(1, new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup());
+            QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup gentry1 = new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup();
+            msg.GetGroup(1, gentry1);
             Assert.AreEqual(new DateTime(2012, 10, 24), gentry1.MDEntryDate.getValue());
             Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30, 47).TimeOfDay, gentry1.MDEntryTime.getValue().TimeOfDay);
             Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30, 47), gentry1.MDEntryDate.getValue() + gentry1.MDEntryTime.getValue().TimeOfDay);
