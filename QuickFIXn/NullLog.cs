@@ -1,9 +1,11 @@
-﻿
+﻿using System;
+
 namespace QuickFix
 {
     /// <summary>
     /// Log implementation that does not do anything
     /// </summary>
+    [Obsolete]
     public class NullLog : ILog
     {
         #region ILog Members

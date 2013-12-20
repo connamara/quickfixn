@@ -5,12 +5,13 @@ namespace QuickFix
     /// <summary>
     /// (Renamed per naming convention.)
     /// </summary>
-    [System.Obsolete("Use ILog instead.")]
+    [Obsolete("Use ILog instead.")]
     public interface Log : ILog { }
 
     /// <summary>
     /// Session log for messages and events
     /// </summary>
+    [Obsolete]
     public interface ILog : IDisposable
     {
         /// <summary>

@@ -1,6 +1,8 @@
-﻿
+﻿using System;
+
 namespace QuickFix
 {
+    [Obsolete]
     public class ScreenLogFactory : ILogFactory
     {
         public const string SCREEN_LOG_SHOW_INCOMING = "ScreenLogShowIncoming";

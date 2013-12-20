@@ -1,9 +1,11 @@
-﻿
+﻿using System;
+
 namespace QuickFix
 {
     /// <summary>
     /// FIXME - needs to log sessionIDs, timestamps, etc.
     /// </summary>
+    [Obsolete]
     public class ScreenLog : ILog
     {
         private object sync_ = new object();

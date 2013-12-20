@@ -1,9 +1,11 @@
-﻿
+﻿using System;
+
 namespace QuickFix
 {
     /// <summary>
     /// File log implementation
     /// </summary>
+    [Obsolete]
     public class FileLog : ILog, System.IDisposable
     {
         private object sync_ = new object();
