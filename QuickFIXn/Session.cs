@@ -190,9 +190,9 @@ namespace QuickFix
         public DataDictionary.DataDictionary ApplicationDataDictionary { get; private set; }
 
         /// <summary>
-        /// Returns whether the Session has a Responder. This method is synchronized
+        /// Returns whether the Session has a Responder.
         /// </summary>
-        public bool HasResponder { get { lock (sync_) { return null != responder_; } } }
+        public bool HasResponder { get { return null != responder_; } }
 
         /// <summary>
         /// Returns whether the Sessions will allow ResetSequence messages sent as

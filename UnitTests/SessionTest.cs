@@ -354,15 +354,15 @@ namespace UnitTests
             Assert.That(DISCONNECTED());
         }
 
-	[Test]
-	public void HeartBeatCheckAfterMessageProcess()
-	{
-	    Logon();
-	    Thread.Sleep(2000);
+	    [Test]
+	    public void HeartBeatCheckAfterMessageProcess()
+	    {
+	        Logon();
+	        Thread.Sleep(2000);
 
-            SendNOSMessage();
-            Assert.That(SENT_HEART_BEAT());
-	}
+                SendNOSMessage();
+                Assert.That(SENT_HEART_BEAT());
+	    }
 
         [Test]
         public void NextResendRequestNoMessagePersist()
