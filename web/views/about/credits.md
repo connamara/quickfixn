@@ -41,5 +41,6 @@ Contributors
 - Ryan Rastedt
 - Daniel Svensson
 - Ruann Viljoen
+- Andrey Kamyshanov
 
 
