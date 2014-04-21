@@ -22,8 +22,6 @@ namespace UnitTests
             System.DateTime now = System.DateTime.UtcNow;
             System.DateTime lastReceivedTime = now;
 
-
-
             now = now.AddMilliseconds(heartBtIntMillis);
             Assert.False(SessionState.TimedOut(now, heartBtIntMillis, lastReceivedTime));
             now = now.AddMilliseconds(heartBtIntMillis);
@@ -211,14 +209,12 @@ namespace UnitTests
             //wait till done and assert results
             Assert.True(setEvent.WaitOne(10000), "Get or Set hung/timed out during concurrent usage");
             Assert.True(getEvent.WaitOne(10000), "Get or Set hung/timed out during concurrent usage");
-            Assert.AreEqual(setTable, getTable, "Garbled data read  in concurrent set and get (like between resendrequest and send)");
+            Assert.AreEqual(setTable, getTable, "Garbled data read in concurrent set and get (like between resendrequest and send)");
             Assert.AreEqual(errorsTable.Count, 0, "IOException occured in concurrent set and get (like between resendrequest and send)");
 
             //Tear down filestore
             state.Dispose();
             store.Dispose();
-
         }
-
     }
 }
