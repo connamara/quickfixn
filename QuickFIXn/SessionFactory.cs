@@ -109,6 +109,8 @@ namespace QuickFix
                 session.ResetOnLogout = settings.GetBool(SessionSettings.RESET_ON_LOGOUT);
             if (settings.Has(SessionSettings.RESET_ON_DISCONNECT))
                 session.ResetOnDisconnect = settings.GetBool(SessionSettings.RESET_ON_DISCONNECT);
+            if (settings.Has(SessionSettings.SKIP_RESET_SEQ_NUM_FLAG))
+                session.SkipResetSeqNumFlag = settings.GetBool(SessionSettings.SKIP_RESET_SEQ_NUM_FLAG);
             if (settings.Has(SessionSettings.REFRESH_ON_LOGON))
                 session.RefreshOnLogon = settings.GetBool(SessionSettings.REFRESH_ON_LOGON);
             if (settings.Has(SessionSettings.PERSIST_MESSAGES))
