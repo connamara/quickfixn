@@ -20,5 +20,5 @@ Changes since the last version:
 
 * (minor) #247 - support for CheckLatency/MaxLatency config settings (ruaanviljoen)
 * (minor) #256 - bug in 247, defaults override config (akamyshanov)
-* (minor) #258 - make SessionState.Store (FileStore) be threadsafe in Get/Set (jacsuper)
+* (minor) #258 - threadsafe SessionState.Get/Set to fix garbled message issue (jacsuper)
 
