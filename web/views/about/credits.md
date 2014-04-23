@@ -42,5 +42,6 @@ Contributors
 - Daniel Svensson
 - Ruann Viljoen
 - Andrey Kamyshanov
+- Jac Steyn
 
 

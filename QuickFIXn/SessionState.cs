@@ -275,7 +275,10 @@ namespace QuickFix
 
         public void Get(int begSeqNo, int endSeqNo, List<string> messages)
         {
-            MessageStore.Get(begSeqNo, endSeqNo, messages);
+            lock (sync_)
+            {
+              MessageStore.Get(begSeqNo, endSeqNo, messages);
+            }
         }
 
         public void SetResendRange(int begin, int end, int chunkEnd=-1)
