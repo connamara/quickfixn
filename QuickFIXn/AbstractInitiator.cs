@@ -63,9 +63,14 @@ namespace QuickFix
             foreach (SessionID sessionID in _settings.GetSessions())
             {
                 Dictionary dict = _settings.Get(sessionID);
-                sessionIDs_.Add(sessionID);
-                sessions_[sessionID] = factory.Create(sessionID, dict);
-                SetDisconnected(sessionID);
+                string connectionType = dict.GetString(SessionSettings.CONNECTION_TYPE);
+
+                if ("initiator".Equals(connectionType))
+                {
+                    sessionIDs_.Add(sessionID);
+                    sessions_[sessionID] = factory.Create(sessionID, dict);
+                    SetDisconnected(sessionID);
+                }
             }
 
             if (0 == sessions_.Count)
