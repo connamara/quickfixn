@@ -660,6 +660,15 @@ namespace QuickFix
                 logon.GetField(resetSeqNumFlag);
             state_.ReceivedReset = resetSeqNumFlag.Obj;
 
+            if (state_.ReceivedReset)
+            {
+                this.Log.OnEvent("Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1");
+                if (!state_.SentReset)
+                {
+                    state_.Reset("Reseting because reset was requested by counterparty.");
+                }
+            }
+
             if (!state_.IsInitiator && this.ResetOnLogon)
                 state_.Reset("ResetOnLogon");
 
