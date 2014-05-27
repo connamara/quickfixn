@@ -72,6 +72,7 @@ namespace UnitTests
     {
         public System.Exception fromAppException = null;
         public System.Exception fromAdminException = null;
+        public QuickFix.DoNotSend doNotSendException = null;
 
         #region Application Members
 
@@ -87,6 +88,8 @@ namespace UnitTests
 
         public void ToApp(QuickFix.Message message, QuickFix.SessionID sessionId)
         {
+            if (doNotSendException != null)
+                throw doNotSendException;
             
         }
 
@@ -237,6 +240,12 @@ namespace UnitTests
         {
             return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.LOGOUT) &&
                 responder.msgLookup[QuickFix.Fields.MsgType.LOGOUT].Count > 0;
+        }
+
+        public bool SENT_NOS()
+        {
+            return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.NEWORDERSINGLE) &&
+                responder.msgLookup[QuickFix.Fields.MsgType.NEWORDERSINGLE].Count > 0;
         }
 
         public bool DISCONNECTED()
@@ -671,6 +680,21 @@ namespace UnitTests
             SendTheMessage(sr);
 
             Assert.False(responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT));
+        [Test]
+        public void TestToAppDoNotSend()
+        {
+            Logon();
+            QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
+                 new QuickFix.Fields.ClOrdID("1"),
+                 new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
+                 new QuickFix.Fields.Symbol("IBM"),
+                 new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
+                 new QuickFix.Fields.TransactTime(),
+                 new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+
+            application.doNotSendException = new QuickFix.DoNotSend();
+            session.Send(order);
+            Assert.False(SENT_NOS());
         }
     }
 }
