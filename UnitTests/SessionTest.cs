@@ -696,5 +696,27 @@ namespace UnitTests
             session.Send(order);
             Assert.False(SENT_NOS());
         }
+
+        [Test]
+        public void TestToAppResendDoNotSend()
+        {
+            Logon();
+            QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
+                 new QuickFix.Fields.ClOrdID("1"),
+                 new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
+                 new QuickFix.Fields.Symbol("IBM"),
+                 new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
+                 new QuickFix.Fields.TransactTime(),
+                 new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+
+            session.Send(order);
+            Assert.True(SENT_NOS());
+
+            responder.msgLookup.Remove(QuickFix.Fields.MsgType.NEWORDERSINGLE);
+            application.doNotSendException = new QuickFix.DoNotSend();
+
+            SendResendRequest(1, 0);
+            Assert.False(SENT_NOS());
+        }
     }
 }
