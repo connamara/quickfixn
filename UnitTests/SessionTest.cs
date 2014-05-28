@@ -680,6 +680,7 @@ namespace UnitTests
             SendTheMessage(sr);
 
             Assert.False(responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT));
+        }
         [Test]
         public void TestToAppDoNotSend()
         {
