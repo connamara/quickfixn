@@ -11,7 +11,7 @@ FIX44.NewOrderSingle order = new FIX44.NewOrderSingle(
     new TransactTime(DateTime.Now),
     new OrdType(OrdType.MARKET));
 
-Session.SendToTaget(order, sessionID);
+Session.SendToTarget(order, sessionID);
 ```
 
 First, we need to learn how to direct messages with Sessions.
