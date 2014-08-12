@@ -43,5 +43,5 @@ Contributors
 - Ruann Viljoen
 - Andrey Kamyshanov
 - Jac Steyn
-
+- Timothy Caro
 
