@@ -428,7 +428,7 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>ReconnectInterval</td>
-    <td class='description'>Time between reconnection attempts in seconds.  Only used for initiators.</td>
+    <td class='description'>Time between reconnection attempts in seconds.  Only used for initiators.  <b>NOTE: must be defined in DEFAULT section</b></td>
     <td class='valid'>Positive integer</td>
     <td class='default'>30</td>
   </tr>
