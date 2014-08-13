@@ -14,12 +14,14 @@ Don't forget to note the contributor's name or git handle
 and add their name to web/views/about/credits.md
 
 
-Changes since the last version:
--------------------------------
+Changes since the last version (oldest first):
+----------------------------------------------
 * (major/minor/patch) desc of fixed issue (contributor)
 
 * (minor) #247 - support for CheckLatency/MaxLatency config settings (ruaanviljoen)
 * (minor) #256 - bug in 247, defaults override config (akamyshanov)
 * (minor) #258 - threadsafe SessionState.Get/Set to fix garbled message issue (jacsuper)
 * (minor) #251 - restore the session type check in AbstractInitiator.Start (oract)
+* (minor) #266 - Session not explicitly handling DoNotSend from Application::ToApp (cbusbey)
+* (minor) #267 - Resent Messages not being relayed to Application::ToApp (cbusbey)
 
