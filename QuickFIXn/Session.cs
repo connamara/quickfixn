@@ -771,6 +771,11 @@ namespace QuickFix
                         {
 
                             initializeResendFields(msg);
+                            if(!ResendApproved(msg, SessionID)) 
+                            {
+                                continue;
+                            }
+
                             if (begin != 0)
                             {
                                 GenerateSequenceReset(resendReq, begin, msgSeqNum);
@@ -808,6 +813,19 @@ namespace QuickFix
             {
                 this.Log.OnEvent("ERROR during resend request " + e.Message);
             }
+        }
+        private bool ResendApproved(Message msg, SessionID sessionID)
+        {
+            try
+            {
+                Application.ToApp(msg, sessionID);
+            }
+            catch (DoNotSend)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         protected void NextLogout(Message logout)
@@ -1582,7 +1600,14 @@ namespace QuickFix
                 }
                 else
                 {
-                    this.Application.ToApp(message, this.SessionID);
+                    try
+                    {
+                        this.Application.ToApp(message, this.SessionID);
+                    }
+                    catch (DoNotSend)
+                    {
+                        return false;
+                    }
                 }
 
                 string messageString = message.ToString();
