@@ -13,7 +13,7 @@ namespace QuickFix
     /// Property setters are internal so they can be set in tests, otherwise the settings should
     /// be set using the <see cref="Configure"/> function
     /// </remarks>
-    public class SocketSettings
+    public class SocketSettings : ICloneable
     {
         public bool SocketNodelay = true;
 
@@ -165,6 +165,14 @@ namespace QuickFix
             }
         }
 
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
 
+        public SocketSettings Clone()
+        {
+            return (SocketSettings)MemberwiseClone();
+        }
     }
 }
