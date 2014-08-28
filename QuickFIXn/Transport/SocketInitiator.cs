@@ -54,6 +54,15 @@ namespace QuickFix.Transport
         public static void SocketInitiatorThreadStart(object socketInitiatorThread)
         {
             SocketInitiatorThread t = socketInitiatorThread as SocketInitiatorThread;
+            
+            // just in case
+            if (t == null) return;
+            Action<Exception> hanldeException = ex =>
+            {
+                t.Session.Log.OnEvent("Connection failed: " + ex.Message);
+                t.Initiator.RemoveThread(t);
+                t.Initiator.SetDisconnected(t.Session.SessionID);
+            };
             try
             {
                 t.Connect();
@@ -68,15 +77,19 @@ namespace QuickFix.Transport
             }
             catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
             {
-                t.Session.Log.OnEvent("Connection failed: " + ex.Message);
-                t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
+                hanldeException(ex);
             }
-            catch (SocketException e) 
+            catch (SocketException ex)
             {
-                t.Session.Log.OnEvent("Connection failed: " + e.Message);
-                t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
+                hanldeException(ex);
+            }
+            catch (System.Security.Authentication.AuthenticationException ex) // some certificate problems
+            {
+                hanldeException(ex);
+            }
+            catch (Exception ex) // a good idea not to crash the whole application if something happens here
+            {
+                hanldeException(ex);
             }
         }
         
