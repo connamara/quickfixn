@@ -336,13 +336,15 @@ namespace QuickFix
         /// <returns></returns>
         public bool Send(string message)
         {
+            IResponder responder;
             lock (sync_)
             {
                 if (null == responder_)
                     return false;
-                this.Log.OnOutgoing(message);
-                return responder_.Send(message);
+                responder = responder_;
             }
+            this.Log.OnOutgoing(message);
+            return responder.Send(message);
         }
 
         // TODO for v2 - rename, make internal
@@ -1575,6 +1577,8 @@ namespace QuickFix
 
         protected bool SendRaw(Message message, int seqNum)
         {
+            string messageString;
+
             lock (sync_)
             {
                 string msgType = message.Header.GetField(Fields.Tags.MsgType);
@@ -1590,7 +1594,7 @@ namespace QuickFix
                         Fields.ResetSeqNumFlag resetSeqNumFlag = new QuickFix.Fields.ResetSeqNumFlag(false);
                         if (message.IsSetField(resetSeqNumFlag))
                             message.GetField(resetSeqNumFlag);
-                        if (resetSeqNumFlag.getValue())
+                        if (resetSeqNumFlag.Obj)
                         {
                             state_.Reset("ResetSeqNumFlag");
                             message.Header.SetField(new Fields.MsgSeqNum(state_.GetNextSenderMsgSeqNum()));
@@ -1610,11 +1614,11 @@ namespace QuickFix
                     }
                 }
 
-                string messageString = message.ToString();
+                messageString = message.ToString();
                 if (0 == seqNum)
                     Persist(message, messageString);
-                return Send(messageString);
             }
+            return Send(messageString);
         }
 
         public void Dispose()
