@@ -1594,7 +1594,7 @@ namespace QuickFix
                         Fields.ResetSeqNumFlag resetSeqNumFlag = new QuickFix.Fields.ResetSeqNumFlag(false);
                         if (message.IsSetField(resetSeqNumFlag))
                             message.GetField(resetSeqNumFlag);
-                        if (resetSeqNumFlag.Obj)
+                        if (resetSeqNumFlag.getValue())
                         {
                             state_.Reset("ResetSeqNumFlag");
                             message.Header.SetField(new Fields.MsgSeqNum(state_.GetNextSenderMsgSeqNum()));
