@@ -6,7 +6,7 @@ namespace QuickFix
     {
         private byte[] buffer_ = new byte[512];
         int usedBufferLength = 0;
-        public void AddToStream(byte[] data, int bytesAdded)
+        public void AddToStream(ref byte[] data, int bytesAdded)
         {
             if (buffer_.Length < usedBufferLength + bytesAdded)
                 System.Array.Resize<byte>(ref buffer_, (usedBufferLength + bytesAdded));
@@ -17,7 +17,8 @@ namespace QuickFix
         public void AddToStream(string data)
         {
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
-            AddToStream(bytes, bytes.Length);
+            AddToStream(ref bytes, bytes.Length);
+
         }
         
 
