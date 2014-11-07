@@ -24,7 +24,8 @@ Changes since the last version (oldest first):
 * (patch) #251 - restore the session type check in AbstractInitiator.Start (oract)
 * (patch) #266 - Session not explicitly handling DoNotSend from Application::ToApp (cbusbey)
 * (patch) #267 - Resent Messages not being relayed to Application::ToApp (cbusbey)
-* (minor) #286 - FieldBase equals and hashcode (steffanu)
+* (minor) #286 - FieldBase.Equals() and .GetHashcode() (steffanu)
+* (patch) #287 - sync fix in Session class (steffanu)
 * (patch) #275 - SessionID.IsSet() should be used instead of !=SessionID.NOT_SET (akamyshanov)
 
 
