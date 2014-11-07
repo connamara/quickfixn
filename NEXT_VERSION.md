@@ -24,4 +24,6 @@ Changes since the last version (oldest first):
 * (patch) #251 - restore the session type check in AbstractInitiator.Start (oract)
 * (patch) #266 - Session not explicitly handling DoNotSend from Application::ToApp (cbusbey)
 * (patch) #267 - Resent Messages not being relayed to Application::ToApp (cbusbey)
+* (minor) #286 - FieldBase equals and hashcode (steffanu)
+
 
