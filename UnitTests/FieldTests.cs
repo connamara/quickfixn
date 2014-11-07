@@ -168,5 +168,22 @@ namespace UnitTests
             t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), false);
             Assert.AreEqual("08:09:10", t.ToString());
         }
+
+        [Test]
+        public void EqualsTest()
+        {
+            StringField a1 = new StringField(123, "a");
+            StringField aSame = a1;
+            StringField a2 = new StringField(123, "a");
+            StringField diffValue = new StringField(123, "b");
+            StringField diffTag = new StringField(999, "a");
+            IField diffType = new CharField(123, 'a');
+
+            Assert.True(a1.Equals(aSame));
+            Assert.True(a1.Equals(a2));
+            Assert.False(a1.Equals(diffValue));
+            Assert.False(a1.Equals(diffTag));
+            Assert.False(a1.Equals(diffType));
+        }
     }
 }
