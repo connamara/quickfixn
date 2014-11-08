@@ -121,7 +121,7 @@ namespace UnitTests
         [Test] // Issue #282 investigation
         public void ReadFixMessageWithMissingValues()
         {
-            string[] fixMsgFields1 = { "8=FIX.4.4", "9=19", "35=B", "148=", "33=0", "10=0" };
+            string[] fixMsgFields1 = { "8=FIX.4.4", "9=15", "35=B", "148=", "33=0", "10=0" };
             string fixMsg1 = String.Join("\x01", fixMsgFields1) + "\x01";
 
             Parser parser = new Parser();

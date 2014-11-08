@@ -710,14 +710,14 @@ namespace QuickFix
         {
             this.Header.SetField(new BeginString(sessionID.BeginString));
             this.Header.SetField(new SenderCompID(sessionID.SenderCompID));
-            if (sessionID.SenderSubID != SessionID.NOT_SET)
+            if (SessionID.IsSet(sessionID.SenderSubID))
                 this.Header.SetField(new SenderSubID(sessionID.SenderSubID));
-            if (sessionID.SenderLocationID != SessionID.NOT_SET)
+            if (SessionID.IsSet(sessionID.SenderLocationID))
                 this.Header.SetField(new SenderLocationID(sessionID.SenderLocationID));
             this.Header.SetField(new TargetCompID(sessionID.TargetCompID));
-            if (sessionID.TargetSubID != SessionID.NOT_SET)
+            if (SessionID.IsSet(sessionID.TargetSubID))
                 this.Header.SetField(new TargetSubID(sessionID.TargetSubID));
-            if (sessionID.TargetLocationID != SessionID.NOT_SET)
+            if (SessionID.IsSet(sessionID.TargetLocationID))
                 this.Header.SetField(new TargetLocationID(sessionID.TargetLocationID));
         }
 
