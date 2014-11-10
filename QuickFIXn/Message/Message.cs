@@ -19,14 +19,9 @@ namespace QuickFix
             : base(src)
         { }
 
-        public override string CalculateString()
+        protected override void CalculateString(StringBuilder sb, int[] preFields)
         {
-            return base.CalculateString(new StringBuilder(), HEADER_FIELD_ORDER);
-        }
-
-        public override string CalculateString(StringBuilder sb, int[] preFields)
-        {
-            return base.CalculateString(sb, HEADER_FIELD_ORDER);
+            base.CalculateString(sb, HEADER_FIELD_ORDER);
         }
     }
 
@@ -759,7 +754,11 @@ namespace QuickFix
                 this.Header.SetField(new BodyLength(BodyLength()), true);
                 this.Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
 
-                return this.Header.CalculateString() + CalculateString() + this.Trailer.CalculateString();
+                StringBuilder sb = new StringBuilder(256);
+                this.Header.CalculateString(sb);
+                this.CalculateString(sb);
+                this.Trailer.CalculateString(sb);
+                return sb.ToString();
             }
         }
 

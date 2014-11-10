@@ -596,13 +596,20 @@ namespace QuickFix
 
         public virtual string CalculateString()
         {
-            if( FieldOrder != null )
-                return CalculateString(new StringBuilder(), FieldOrder);
-            else
-                return CalculateString(new StringBuilder(), new int[0]);
+            StringBuilder sb = new StringBuilder();
+            CalculateString(sb);
+            return sb.ToString();
         }
 
-        public virtual string CalculateString(StringBuilder sb, int[] preFields)
+        public virtual void CalculateString(StringBuilder sb)
+        {
+            if (FieldOrder != null)
+                CalculateString(sb, FieldOrder);
+            else
+                CalculateString(sb, new int[0]);
+        }
+
+        protected virtual void CalculateString(StringBuilder sb, int[] preFields)
         {
             HashSet<int> groupCounterTags = new HashSet<int>(_groups.Keys);
             
@@ -615,7 +622,7 @@ namespace QuickFix
                     {
                         List<Group> glist = _groups[preField];
                         foreach (Group g in glist)
-                            sb.Append(g.CalculateString());
+                            g.CalculateString(sb);
                     }
                 }
             }
@@ -643,10 +650,8 @@ namespace QuickFix
                 sb.Append(Message.SOH);
 
                 foreach (Group group in groupList)
-                    sb.Append(group.CalculateString());
+                    group.CalculateString(sb);
             }
-
-            return sb.ToString();
         }
 
         /// <summary>

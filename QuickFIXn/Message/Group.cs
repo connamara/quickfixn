@@ -69,12 +69,12 @@ namespace QuickFix
             private set { _delim = value; }
         }
 
-        public override string CalculateString()
+        public override void CalculateString(StringBuilder sb)
         {
             if (_fieldOrder == null)
-                return base.CalculateString(new StringBuilder(), new int[] { _delim });
+                base.CalculateString(sb, new int[] { _delim });
             else
-                return base.CalculateString(new StringBuilder(), _fieldOrder); // 802 shouldn't be in _fieldOrder
+                base.CalculateString(sb, _fieldOrder); // 802 shouldn't be in _fieldOrder
         }
 
         public override string ToString()
