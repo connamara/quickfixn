@@ -65,20 +65,6 @@ namespace QuickFix.Fields
             return _stringVal;
         }
 
-        public override bool Equals(object obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-
-            FieldBase<T> f = (FieldBase<T>)obj;
-            return this.Tag == f.Tag && this.Obj.Equals(f.Obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return Tag ^ Obj.GetHashCode();
-        }
-
         /// <summary>
         /// Value equality test
         /// </summary>
