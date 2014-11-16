@@ -673,6 +673,8 @@ namespace QuickFix
 
             if (!state_.IsInitiator && this.ResetOnLogon)
                 state_.Reset("ResetOnLogon");
+            if (this.RefreshOnLogon)
+                Refresh();
 
             if (!Verify(logon, false, true))
                 return;
@@ -981,9 +983,9 @@ namespace QuickFix
             }
         }
 
-        /// FIXME
         public void Refresh()
         {
+            state_.Refresh();
         }
 
         [Obsolete("Use Reset(reason) instead.")]
