@@ -890,5 +890,24 @@ namespace UnitTests
             // 2 levels deep
             StringAssert.Contains(String.Join(Message.SOH, new string[] { "311=underlyingsymbol", "312=WI", "309=underlyingsecurityid", "305=1" }), msg.ToString());
         }
+
+        [Test]
+        public void SetFieldsTest()
+        {
+            var message = new Message();
+            var allocId = new AllocID("123456");
+            var allocAccount = new AllocAccount("QuickFixAccount");
+            var allocAccountType = new AllocAccountType(AllocAccountType.HOUSE_TRADER);
+            message.SetFields(new IField[] { allocAccount, allocAccountType, allocId });
+
+            Assert.AreEqual(true, message.IsSetField(Tags.AllocID));
+            Assert.AreEqual("123456", message.GetField(Tags.AllocID));
+
+            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccount));
+            Assert.AreEqual("QuickFixAccount", message.GetField(Tags.AllocAccount));
+
+            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccountType));
+            Assert.AreEqual(AllocAccountType.HOUSE_TRADER, message.GetInt(Tags.AllocAccountType));
+        }
     }
 }
