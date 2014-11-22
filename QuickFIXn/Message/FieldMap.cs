@@ -94,7 +94,7 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// set many fields once
+        /// set many fields at the same time
         /// </summary>
         public void SetFields(IEnumerable<Fields.IField> fields)
         {
