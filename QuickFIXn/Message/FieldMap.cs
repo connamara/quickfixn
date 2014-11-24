@@ -309,7 +309,7 @@ namespace QuickFix
                 if (fld.GetType() == typeof(IntField))
                     return ((IntField)fld).Obj;
                 else
-                    return IntConverter.Convert(fld.ToString());
+                    return IntConverter.Convert(fld.toStringFieldValue());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -336,7 +336,7 @@ namespace QuickFix
                 if (fldTyp == typeof(TimeOnlyField))
                     return GetTimeOnly(tag);
                 else
-                    return DateTimeConverter.ConvertToDateTime(fld.ToString());
+                    return DateTimeConverter.ConvertToDateTime(fld.toStringFieldValue());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -354,8 +354,8 @@ namespace QuickFix
         {
             try
             {
-                Fields.IField fld = _fields[tag];                
-                return DateTimeConverter.ConvertToDateOnly(fld.ToString());
+                Fields.IField fld = _fields[tag];
+                return DateTimeConverter.ConvertToDateOnly(fld.toStringFieldValue());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -374,7 +374,7 @@ namespace QuickFix
             try
             {
                 Fields.IField fld = _fields[tag];
-                return DateTimeConverter.ConvertToTimeOnly(fld.ToString());
+                return DateTimeConverter.ConvertToTimeOnly(fld.toStringFieldValue());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -396,7 +396,7 @@ namespace QuickFix
                 if (fld.GetType() == typeof(BooleanField))
                     return ((BooleanField)fld).Obj;
                 else
-                    return BoolConverter.Convert(fld.ToString());
+                    return BoolConverter.Convert(fld.toStringFieldValue());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -414,7 +414,7 @@ namespace QuickFix
         {
             try
             {
-                return _fields[tag].ToString();
+                return _fields[tag].toStringFieldValue();
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -436,7 +436,7 @@ namespace QuickFix
                 if (fld.GetType() == typeof(CharField))
                     return ((CharField)fld).Obj;
                 else
-                    return CharConverter.Convert(fld.ToString());
+                    return CharConverter.Convert(fld.toStringFieldValue());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -458,7 +458,7 @@ namespace QuickFix
                 if (fld.GetType() == typeof(DecimalField))
                     return ((DecimalField)fld).Obj;
                 else
-                    return DecimalConverter.Convert(fld.ToString());
+                    return DecimalConverter.Convert(fld.toStringFieldValue());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -514,7 +514,7 @@ namespace QuickFix
         public string GetField(int tag)
         {
             if (_fields.ContainsKey(tag))
-                return _fields[tag].ToString();
+                return _fields[tag].toStringFieldValue();
             else
                 throw new FieldNotFoundException(tag);
         }
@@ -633,7 +633,7 @@ namespace QuickFix
                     continue;
                 if (preFields.Contains(field.Tag))
                     continue; //already did this one
-                sb.Append(field.Tag.ToString() + "=" + field.ToString());
+                sb.Append(field.Tag.ToString() + "=" + field.toStringFieldValue());
                 sb.Append(Message.SOH);
             }
 

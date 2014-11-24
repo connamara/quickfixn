@@ -58,6 +58,16 @@ namespace QuickFix.Fields
         /// <summary>
         /// returns field value formatted for fix
         /// </summary>
+        public override string toStringFieldValue()
+        {
+            if (_changed)
+                makeStringFields();
+            return _stringVal;
+        }
+
+        /// <summary>
+        /// returns formatted string for debug output
+        /// </summary>
         public override string ToString()
         {
             if (_changed)

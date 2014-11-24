@@ -19,6 +19,11 @@ namespace QuickFix.Fields
         /// <summary>
         /// returns formatted string for fix
         /// </summary>
+        public abstract string toStringFieldValue();
+
+        /// <summary>
+        /// returns formatted string for debug output
+        /// </summary>
         public abstract override string ToString();
 
         /// <summary>
