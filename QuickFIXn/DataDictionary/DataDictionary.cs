@@ -263,7 +263,7 @@ namespace QuickFix.DataDictionary
 		/// <param name="field"></param>
 		public void CheckHasValue(Fields.IField field)
 		{
-			if (this.CheckFieldsHaveValues && (field.ValueToString().Length < 1))
+			if (this.CheckFieldsHaveValues && field.Empty)
 				throw new NoTagValue(field.Tag);
 		}
 

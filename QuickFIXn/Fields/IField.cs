@@ -10,6 +10,11 @@ namespace QuickFix.Fields
     {
         #region Properties
         public abstract int Tag { get; set; }
+
+        /// <summary>
+        /// True iff the value if of length 0.
+        /// </summary>
+        public abstract bool Empty { get; }
         #endregion
 
         /// <summary>

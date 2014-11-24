@@ -33,6 +33,19 @@ namespace QuickFix.Fields
         }
 
         /// <summary>
+        /// True iff the value if of length 0.
+        /// </summary>
+        public override bool Empty
+        {
+            get
+            {
+                if (_changed)
+                    makeStringFields();
+                return _stringVal.Length == 0;
+            }
+        }
+
+        /// <summary>
         /// the FIX tag number
         /// </summary>
         public override int Tag
