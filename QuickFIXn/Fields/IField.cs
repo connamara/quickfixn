@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace QuickFix.Fields
 {
@@ -14,12 +15,12 @@ namespace QuickFix.Fields
         /// <summary>
         /// returns full fix string: tag=val
         /// </summary>
-        public abstract string toStringField();
-
+        public abstract void AppendField(StringBuilder sb);
+       
         /// <summary>
-        /// returns formatted string for fix
+        /// returns field value formatted for fix
         /// </summary>
-        public abstract string toStringFieldValue();
+        public abstract string ValueToString();
 
         /// <summary>
         /// returns formatted string for debug output

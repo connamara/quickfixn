@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using NUnit.Framework;
 using QuickFix;
+using QuickFix.Fields;
 
 namespace UnitTests
 {
@@ -185,7 +187,7 @@ namespace UnitTests
 
             //verify that FromString didn't correct the counter
             //HEY YOU, READ THIS NOW: if these fail, first check if MessageTests::FromString_DoNotCorrectCounter() passes
-            Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());  
+            Assert.AreEqual("386=3", GetFixFieldString(n.NoTradingSessions));  
             StringAssert.Contains("386=3", n.ToString());
 
             Assert.Throws<QuickFix.RepeatingGroupCountMismatch>(delegate { dd.CheckGroupCount(n.NoTradingSessions, n, "D"); });
@@ -512,6 +514,13 @@ namespace UnitTests
 
             dd.CheckFieldsHaveValues = false;
             Assert.DoesNotThrow(delegate { dd.Validate(message, beginString, msgType); });
+        }
+
+        private string GetFixFieldString(IField f)
+        {
+            StringBuilder sb = new StringBuilder();
+            f.AppendField(sb);
+            return sb.ToString();
         }
     }
 }

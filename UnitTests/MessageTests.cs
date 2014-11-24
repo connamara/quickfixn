@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
@@ -424,7 +425,7 @@ namespace UnitTests
                 + "10=35" + nul;
 
             n.FromString(s, true, dd, dd, _defaultMsgFactory);
-            Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());
+            Assert.AreEqual("386=3", GetFixFieldString(n.NoTradingSessions));
             StringAssert.Contains("386=3", n.ToString()); //don't correct it to 2, you bastard
         }
 
@@ -889,6 +890,13 @@ namespace UnitTests
             StringAssert.Contains(String.Join(Message.SOH, new string[] { "55=ABC", "65=CD", "48=securityid", "22=1" }), msg.ToString());
             // 2 levels deep
             StringAssert.Contains(String.Join(Message.SOH, new string[] { "311=underlyingsymbol", "312=WI", "309=underlyingsecurityid", "305=1" }), msg.ToString());
+        }
+
+        private string GetFixFieldString(IField f)
+        {
+            StringBuilder sb = new StringBuilder();
+            f.AppendField(sb);
+            return sb.ToString();
         }
     }
 }

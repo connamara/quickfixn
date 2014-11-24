@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace QuickFix.Fields
 {
@@ -46,19 +47,20 @@ namespace QuickFix.Fields
         #endregion
 
         /// <summary>
-        /// returns full fix string (e.g. "tag=val")
+        /// Appends the full fix string (i.e., "tag=val") to the given StringBuilder.
         /// </summary>
-        public override string toStringField()
+        public override void AppendField(StringBuilder sb)
         {
             if (_changed.Equals(true))
                 makeStringFields();
-            return _stringField;
+            sb.Append(_stringField);
         }
 
         /// <summary>
-        /// returns field value formatted for fix
+        /// returns field value formatted for fix 
+        /// (separate from ToString, to facilitate finding non-debug references and also make it easier to change the signature later)
         /// </summary>
-        public override string toStringFieldValue()
+        public override string ValueToString()
         {
             if (_changed)
                 makeStringFields();
