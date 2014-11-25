@@ -89,17 +89,24 @@ namespace UnitTests
             /// from quickfix/j FieldTest.java
             /// </remarks>  
             StringField obj = new StringField(12, "VALUE");
-            Assert.That(obj.ToString(), Is.EqualTo("12=VALUE"));
+            Assert.That(GetFixFieldString(obj), Is.EqualTo("12=VALUE"));
             Assert.That(obj.getTotal(), Is.EqualTo(542));
             Assert.That(obj.getLength(), Is.EqualTo(9));
             obj.Obj = "VALUF"; // F = E+1
-            Assert.That(obj.ToString(), Is.EqualTo("12=VALUF"));
+            Assert.That(GetFixFieldString(obj), Is.EqualTo("12=VALUF"));
             Assert.That(obj.getTotal(), Is.EqualTo(543));
             Assert.That(obj.getLength(), Is.EqualTo(9));
             obj.Tag = 13; // 13 = 12+1
-            Assert.That(obj.ToString(), Is.EqualTo("13=VALUF"));
+            Assert.That(GetFixFieldString(obj), Is.EqualTo("13=VALUF"));
             Assert.That(obj.getTotal(), Is.EqualTo(544));
             Assert.That(obj.getLength(), Is.EqualTo(9));
+        }
+
+        private string GetFixFieldString(IField f)
+        {
+            StringBuilder sb = new StringBuilder();
+            f.AppendField(sb);
+            return sb.ToString();
         }
 
         [Test]
