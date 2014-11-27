@@ -518,9 +518,9 @@ namespace UnitTests
 
         private string GetFixFieldString(IField f)
         {
-            StringBuilder sb = new StringBuilder();
-            f.AppendField(sb);
-            return sb.ToString();
+            MemoryStream ms = new MemoryStream();
+            f.AppendField(ms);
+            return Encoding.UTF8.GetString(ms.ToArray());
         }
     }
 }

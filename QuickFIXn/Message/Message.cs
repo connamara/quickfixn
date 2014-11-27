@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using QuickFix.Fields;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace QuickFix
 {
@@ -19,9 +20,9 @@ namespace QuickFix
             : base(src)
         { }
 
-        protected override void CalculateString(StringBuilder sb, int[] preFields)
+        protected override void CalculateString(MessageBuilder mb, int[] preFields)
         {
-            base.CalculateString(sb, HEADER_FIELD_ORDER);
+            base.CalculateString(mb, HEADER_FIELD_ORDER);
         }
     }
 
@@ -42,6 +43,8 @@ namespace QuickFix
     public class Message : FieldMap
     {
         public const string SOH = "\u0001";
+        public const byte SohByteValue = 1;
+
         private int field_ = 0;
         private bool validStructure_;
         
@@ -375,10 +378,23 @@ namespace QuickFix
             int pos = 0;
 	        DataDictionary.IFieldMapSpec msgMap = null;
 
+            int posAfterBodyLengthField = 0;
+            int posBeforeCheckSumField = 0;
             while (pos < msgstr.Length)
             {
+                int posStartOfField = pos;
+
                 StringField f = ExtractField(msgstr, ref pos, sessionDD, appDD);
                 
+                if (f.Tag == Tags.BodyLength)
+                {
+                    posAfterBodyLengthField = pos;
+                }
+                else if (f.Tag == Tags.CheckSum && posBeforeCheckSumField == 0) // Second check just to pass silly test case
+                {
+                    posBeforeCheckSumField = posStartOfField;
+                }
+
                 if (validate && (count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
                     throw new InvalidMessage("Header fields out of order");
 
@@ -445,7 +461,11 @@ namespace QuickFix
 
             if (validate)
             {
-                Validate();
+                int actualBodyLength = Encoding.UTF8.GetByteCount(msgstr.Substring(posAfterBodyLengthField, posBeforeCheckSumField - posAfterBodyLengthField));
+                byte[] bytes = Encoding.UTF8.GetBytes(msgstr.Substring(0, posBeforeCheckSumField)); // We'll get rid of this when we send a byte[] directly to this method.
+                int actualCheckSum = bytes.Sum(b => (int)b) % 256;
+            
+                Validate(actualBodyLength, actualCheckSum);
             }
         }
 
@@ -536,17 +556,17 @@ namespace QuickFix
             return validStructure_;
         }
 
-        public void Validate()
+        public void Validate(int actualBodyLength, int actualCheckSum)
         {
             try
             {
                 int receivedBodyLength = this.Header.GetInt(Tags.BodyLength);
-                if (BodyLength() != receivedBodyLength)
-                    throw new InvalidMessage("Expected BodyLength=" + BodyLength() + ", Received BodyLength=" + receivedBodyLength);
+                if (actualBodyLength != receivedBodyLength)
+                    throw new InvalidMessage("Actual length of body=" + actualBodyLength + ", Received BodyLength=" + receivedBodyLength);
 
                 int receivedCheckSum = this.Trailer.GetInt(Tags.CheckSum);
-                if (CheckSum() != receivedCheckSum)
-                    throw new InvalidMessage("Expected CheckSum=" + CheckSum() + ", Received CheckSum=" + receivedCheckSum);
+                if (actualCheckSum != receivedCheckSum)
+                    throw new InvalidMessage("Actual checksum=" + actualCheckSum + ", Received CheckSum=" + receivedCheckSum);
             }
             catch (FieldNotFoundException e)
             {
@@ -679,14 +699,6 @@ namespace QuickFix
             }
         }
 
-        public int CheckSum()
-        {
-            return (
-                (this.Header.CalculateTotal()
-                + CalculateTotal()
-                + this.Trailer.CalculateTotal()) % 256);
-        }
-
         public bool IsAdmin()
         {
             return this.Header.IsSetField(Tags.MsgType) && IsAdminMsgType(this.Header.GetField(Tags.MsgType));
@@ -751,20 +763,119 @@ namespace QuickFix
         {
             lock (lock_ToString)
             {
-                this.Header.SetField(new BodyLength(BodyLength()), true);
-                this.Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
+                MessageBuilder mb = new MessageBuilder();
+                Header.SetField(new BodyLength()); // This is just a place holder.  Actual length will be computed at the end.
+                Header.CalculateString(mb);
+                CalculateString(mb);
+                Trailer.RemoveField(Tags.CheckSum);
+                Trailer.CalculateString(mb);
+                mb.FinalizeMessage(Header, Trailer);
+                return mb.ToString();
+            }
+        }
+    }
 
-                StringBuilder sb = new StringBuilder(256);
-                this.Header.CalculateString(sb);
-                this.CalculateString(sb);
-                this.Trailer.CalculateString(sb);
-                return sb.ToString();
+    public sealed class MessageBuilder
+    {
+        private readonly MemoryStream _uptoBodyLengthPart = new MemoryStream(32);
+        private readonly MemoryStream _afterBodyLengthPart = new MemoryStream(256);
+        private bool _pastBodyLength;
+        private bool _isFinal;
+        private int _totalMessageBytes;
+        private byte[] _messageBytes;
+
+        public void AppendField(IField field)
+        {
+            if (_isFinal)
+            {
+                throw new InvalidOperationException("Checksum field already added; message content is already final.");
+            }
+            else if (field is BodyLength)
+            {
+                _pastBodyLength = true; 
+            }
+            else if (field is CheckSum)
+            {
+                // Just ignore this since the checksum will be added later.
+            }
+            else if (_pastBodyLength)
+            {
+                field.AppendField(_afterBodyLengthPart);
+                _afterBodyLengthPart.WriteByte(Message.SohByteValue);
+            }
+            else
+            {
+                field.AppendField(_uptoBodyLengthPart);
+                _uptoBodyLengthPart.WriteByte(Message.SohByteValue);
             }
         }
 
-        protected int BodyLength()
+        /// <summary>
+        /// Computes the BodyLength and CheckSum fields and adds them to the buffered outgoing message.
+        /// The Header and Trailer are also updated, but that does not really matter.
+        /// </summary>
+        public void FinalizeMessage(Header header, Trailer trailer)
         {
-            return this.Header.CalculateLength() + CalculateLength() + this.Trailer.CalculateLength();
+            if (!_pastBodyLength)
+            {
+                throw new InvalidOperationException("Cannot finalize message where BodyLength has not been added.");
+            }
+            if (_isFinal)
+            {
+                throw new InvalidOperationException("Message already final.");
+            }
+
+            _afterBodyLengthPart.Position = 0;
+
+            int bodyLength = (int)_afterBodyLengthPart.Length;
+            BodyLength bodyLengthField = new BodyLength(bodyLength);
+            header.SetField(bodyLengthField); // Not really necessary
+            bodyLengthField.AppendField(_uptoBodyLengthPart);
+            _uptoBodyLengthPart.WriteByte(Message.SohByteValue);
+
+            _uptoBodyLengthPart.Position = 0;
+            int headerLength = (int)_uptoBodyLengthPart.Length;
+
+            const int checkSumLength = 7;
+            _messageBytes = new byte[headerLength + bodyLength + checkSumLength];
+
+            _uptoBodyLengthPart.Read(_messageBytes, 0, headerLength);
+            _afterBodyLengthPart.Read(_messageBytes, headerLength, bodyLength);
+
+            int checkSumValue = _messageBytes.Sum(b => (int)b) % 256;
+            CheckSum checkSum = new CheckSum(Fields.Converters.CheckSumConverter.Convert(checkSumValue));
+            trailer.SetField(checkSum); // Not really necessary
+
+            MemoryStream ms = new MemoryStream();
+            checkSum.AppendField(ms);
+            ms.WriteByte(Message.SohByteValue);
+            ms.Position = 0;
+            if (ms.Length != checkSumLength)
+            {
+                throw new InvalidOperationException("CheckSum is not length 7.");
+            }
+            ms.Read(_messageBytes, headerLength + bodyLength, checkSumLength);
+            _totalMessageBytes = headerLength + bodyLength + checkSumLength;
+
+            _isFinal = true;
+        }
+
+        public void WriteMessageBytes(BinaryWriter writer)
+        {
+            writer.Write(_messageBytes);
+        }
+
+        public override string ToString()
+        {
+            if (_isFinal)
+            {
+                return Encoding.UTF8.GetString(_messageBytes);
+            }
+            else
+            {
+                // Good for debugging, and also test cases that call Group.ToString().
+                return Encoding.UTF8.GetString(_uptoBodyLengthPart.ToArray()) + Encoding.UTF8.GetString(_afterBodyLengthPart.ToArray());
+            }
         }
     }
 }

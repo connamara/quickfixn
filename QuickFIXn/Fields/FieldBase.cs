@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace QuickFix.Fields
@@ -62,11 +63,11 @@ namespace QuickFix.Fields
         /// <summary>
         /// Appends the full fix string (i.e., "tag=val") to the given StringBuilder.
         /// </summary>
-        public override void AppendField(StringBuilder sb)
+        public override void AppendField(MemoryStream ms)
         {
             if (_changed.Equals(true))
                 makeStringFields();
-            sb.Append(_stringField);
+            ms.Write(_fieldByteArray, 0, _fieldByteArray.Length);
         }
 
         /// <summary>
@@ -109,33 +110,6 @@ namespace QuickFix.Fields
             return Tag ^ Obj.GetHashCode();
         }
 
-        /// <summary>
-        /// length of formatted field (including tag=val\001)
-        /// </summary>
-        public override int getLength()
-        {
-            if (_changed)
-                makeStringFields();
-            return System.Text.Encoding.UTF8.GetByteCount(_stringField) + 1; // +1 for SOH
-        }
-
-        /// <summary>
-        /// checksum
-        /// </summary>
-        public override int getTotal()
-        {
-            if (_changed)
-                makeStringFields();
-
-            int sum = 0;
-            byte[] array = System.Text.Encoding.UTF8.GetBytes(_stringField);
-            foreach (byte b in array)
-            {
-                sum += b;
-            }
-            return (sum + 1); // +1 for SOH
-        }
-
         protected abstract string makeString();
 
         /// <summary>
@@ -144,12 +118,12 @@ namespace QuickFix.Fields
         private void makeStringFields()
         {
             _stringVal = makeString();
-            _stringField = Tag + "=" + _stringVal;
+            _fieldByteArray =  Encoding.UTF8.GetBytes(Tag + "=" + _stringVal);
             _changed = false;
         }
 
         #region Private members
-        private string _stringField;
+        private byte[] _fieldByteArray;
         private bool _changed;
         private T _obj;
         private int _tag;

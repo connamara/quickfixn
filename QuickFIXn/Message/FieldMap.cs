@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using QuickFix.Fields;
@@ -537,79 +538,15 @@ namespace QuickFix
             return ((_fields.Count == 0) && (_groups.Count == 0));
         }
 
-        public int CalculateTotal()
-        {
-            int total = 0;
-            foreach (Fields.IField field in _fields.Values)
-            {
-                if (field.Tag != Fields.Tags.CheckSum)
-                    total += field.getTotal();
-            }
-
-            foreach (Fields.IField field in this.RepeatedTags)
-            {
-                if (field.Tag != Fields.Tags.CheckSum)
-                    total += field.getTotal();
-            }
-
-            foreach (List<Group> groupList in _groups.Values)
-            {
-                foreach (Group group in groupList)
-                    total += group.CalculateTotal();
-            }
-            return total;
-        }
-
-        public int CalculateLength()
-        {
-            int total = 0;
-            foreach (Fields.IField field in _fields.Values)
-            {
-                if (field != null
-                    && field.Tag != Tags.BeginString
-                    && field.Tag != Tags.BodyLength
-                    && field.Tag != Tags.CheckSum)
-                {
-                    total += field.getLength();
-                }
-            }
-
-            foreach (Fields.IField field in this.RepeatedTags)
-            {
-                if (field != null
-                    && field.Tag != Tags.BeginString
-                    && field.Tag != Tags.BodyLength
-                    && field.Tag != Tags.CheckSum)
-                {
-                    total += field.getLength();
-                }
-            }
-
-            foreach (List<Group> groupList in _groups.Values)
-            {
-                foreach (Group group in groupList)
-                    total += group.CalculateLength();
-            }
-    
-            return total;
-        }
-
-        public virtual string CalculateString()
-        {
-            StringBuilder sb = new StringBuilder();
-            CalculateString(sb);
-            return sb.ToString();
-        }
-
-        public virtual void CalculateString(StringBuilder sb)
+        public virtual void CalculateString(MessageBuilder mb)
         {
             if (FieldOrder != null)
-                CalculateString(sb, FieldOrder);
+                CalculateString(mb, FieldOrder);
             else
-                CalculateString(sb, new int[0]);
+                CalculateString(mb, new int[0]);
         }
 
-        protected virtual void CalculateString(StringBuilder sb, int[] preFields)
+        protected virtual void CalculateString(MessageBuilder mb, int[] preFields)
         {
             HashSet<int> groupCounterTags = new HashSet<int>(_groups.Keys);
             
@@ -617,13 +554,12 @@ namespace QuickFix
             {
                 if (IsSetField(preField))
                 {
-                    sb.Append(preField + "=" + GetField(preField));
-                    sb.Append(Message.SOH);
+                    mb.AppendField(_fields[preField]);
                     if (groupCounterTags.Contains(preField))
                     {
                         List<Group> glist = _groups[preField];
                         foreach (Group g in glist)
-                            g.CalculateString(sb);
+                            g.CalculateString(mb);
                     }
                 }
             }
@@ -634,8 +570,7 @@ namespace QuickFix
                     continue;
                 if (preFields.Contains(field.Tag))
                     continue; //already did this one
-                field.AppendField(sb);
-                sb.Append(Message.SOH);
+                mb.AppendField(field);
             }
 
             foreach(int counterTag in _groups.Keys)
@@ -647,11 +582,10 @@ namespace QuickFix
                 if (groupList.Count == 0)
                     continue; //probably unnecessary, but it doesn't hurt to check
 
-                _fields[counterTag].AppendField(sb);
-                sb.Append(Message.SOH);
+                mb.AppendField(_fields[counterTag]);
 
                 foreach (Group group in groupList)
-                    group.CalculateString(sb);
+                    group.CalculateString(mb);
             }
         }
 

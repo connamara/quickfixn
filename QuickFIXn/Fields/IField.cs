@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace QuickFix.Fields
@@ -20,7 +21,7 @@ namespace QuickFix.Fields
         /// <summary>
         /// returns full fix string: tag=val
         /// </summary>
-        public abstract void AppendField(StringBuilder sb);
+        public abstract void AppendField(MemoryStream ms);
        
         /// <summary>
         /// returns field value formatted for fix
@@ -32,14 +33,5 @@ namespace QuickFix.Fields
         /// </summary>
         public abstract override string ToString();
 
-        /// <summary>
-        /// length of formatted field (including tag=val\001)
-        /// </summary>
-        public abstract int getLength();
-
-        /// <summary>
-        /// checksum
-        /// </summary>
-        public abstract int getTotal();
     }
 }
