@@ -173,7 +173,7 @@ namespace QuickFix
         /// <param name="startSeqNum"></param>
         /// <param name="endSeqNum"></param>
         /// <param name="messages"></param>
-        public void Get(int startSeqNum, int endSeqNum, List<string> messages)
+        public void Get(int startSeqNum, int endSeqNum, List<byte[]> messages)
         {
             for (int i = startSeqNum; i <= endSeqNum; i++)
             {
@@ -183,7 +183,7 @@ namespace QuickFix
                     byte[] msgBytes = new byte[offsets_[i].size];
                     msgFile_.Read(msgBytes, 0, msgBytes.Length);
 
-                    messages.Add(Encoding.UTF8.GetString(msgBytes));
+                    messages.Add(msgBytes);
                 }
             }
 
@@ -195,13 +195,12 @@ namespace QuickFix
         /// <param name="msgSeqNum"></param>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public bool Set(int msgSeqNum, string msg)
+        public bool Set(int msgSeqNum, byte[] msg)
         {
             msgFile_.Seek(0, System.IO.SeekOrigin.End);
 
             long offset = msgFile_.Position;
-            byte[] msgBytes = Encoding.UTF8.GetBytes(msg);
-            int size = msgBytes.Length;
+            int size = msg.Length;
 
             StringBuilder b = new StringBuilder();
             b.Append(msgSeqNum).Append(",").Append(offset).Append(",").Append(size);
@@ -210,7 +209,7 @@ namespace QuickFix
 
             offsets_[msgSeqNum] = new MsgDef(offset, size);
 
-            msgFile_.Write(msgBytes, 0, size);
+            msgFile_.Write(msg, 0, size);
             msgFile_.Flush();
 
 

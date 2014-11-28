@@ -46,7 +46,7 @@ namespace QuickFix
             if (_factories.ContainsKey(beginString) == false)
             {
                 Message m = new Message();
-                m.Header.SetField(new StringField(QuickFix.Fields.Tags.MsgType, msgType));
+                m.Header.SetField(new MsgType(msgType));
                 return m;
             }
 

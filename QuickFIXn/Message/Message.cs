@@ -42,8 +42,10 @@ namespace QuickFix
     /// </summary>
     public class Message : FieldMap
     {
-        public const string SOH = "\u0001";
         public const byte SohByteValue = 1;
+        public const byte EqualsSignByteValue = (byte)'=';
+
+        public static readonly byte[] StartOfMsgTypeBytes = new byte[] { SohByteValue, (byte)'3', (byte)'5', EqualsSignByteValue };
 
         private int field_ = 0;
         private bool validStructure_;
@@ -64,21 +66,26 @@ namespace QuickFix
             this.validStructure_ = true;
         }
 
+        // For testing only.
         public Message(string msgstr)
+            : this(Encoding.ASCII.GetBytes(msgstr), true)
+        { }
+
+        public Message(byte[] msgstr)
             : this(msgstr, true)
         { }
 
-        public Message(string msgstr, bool validate)
+        public Message(byte[] msgstr, bool validate)
             : this(msgstr, null, null, validate)
         {  }
 
-        public Message(string msgstr, DataDictionary.DataDictionary dataDictionary, bool validate)
+        public Message(byte[] msgstr, DataDictionary.DataDictionary dataDictionary, bool validate)
             : this()
         {
             FromString(msgstr, validate, dataDictionary, dataDictionary, null);
         }
 
-        public Message(string msgstr, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, bool validate)
+        public Message(byte[] msgstr, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, bool validate)
             : this()
         {
             FromStringHeader(msgstr);
@@ -112,20 +119,20 @@ namespace QuickFix
         /// <param name="fixstring">the FIX string to parse</param>
         /// <returns>the message type as a MsgType object</returns>
         /// <exception cref="MessageParseError">if 35 tag is missing or malformed</exception>
-        public static MsgType IdentifyType(string fixstring)
+        public static MsgType IdentifyType(byte[] fixstring)
         {
             return new MsgType(GetMsgType(fixstring));
         }
 
-        public static StringField ExtractField(string msgstr, ref int pos, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
+        public static StringField ExtractField(byte[] msgstr, ref int pos, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
         {
             try
             {
-                int tagend = msgstr.IndexOf("=", pos);
-                int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
+                int tagend = ByteArray.IndexOf(msgstr, EqualsSignByteValue, pos);
+                int tag = Convert.ToInt32(Encoding.ASCII.GetString(msgstr, pos, tagend - pos));
                 pos = tagend + 1;
-                int fieldvalend = msgstr.IndexOf("\u0001", pos);
-                StringField field =  new StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
+                int fieldvalend = ByteArray.IndexOf(msgstr, SohByteValue, pos);
+                StringField field = new StringField(tag, Encoding.UTF8.GetString(msgstr, pos, fieldvalend - pos));
 
                 /** TODO data dict stuff
                 if (((null != sessionDD) && sessionDD.IsDataField(field.Tag)) || ((null != appDD) && appDD.IsDataField(field.Tag)))
@@ -167,12 +174,12 @@ namespace QuickFix
             }
         }
 
-        public static StringField ExtractField(string msgstr, ref int pos)
+        public static StringField ExtractField(byte[] msgstr, ref int pos)
         {
             return ExtractField(msgstr, ref pos, null, null);
         }
 
-        public static string ExtractBeginString(string msgstr)
+        public static string ExtractBeginString(byte[] msgstr)
         {
             int i = 0;
             return ExtractField(msgstr, ref i, null, null).Obj;
@@ -276,7 +283,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public static SessionID GetReverseSessionID(string msg)
+        public static SessionID GetReverseSessionID(byte[] msg)
         {
             Message FIXME = new Message(msg);
             return GetReverseSessionID(FIXME);
@@ -288,12 +295,17 @@ namespace QuickFix
         /// <param name="fixstring">the FIX string to parse</param>
         /// <returns>message type</returns>
         /// <exception cref="MessageParseError">if 35 tag is missing or malformed</exception>
-        public static string GetMsgType(string fixstring)
+        public static string GetMsgType(byte[] fixstring)
         {
-            Match match = Regex.Match(fixstring, Message.SOH + "35=([^" + Message.SOH + "]*)" + Message.SOH);
-            if (match.Success)
-                return match.Groups[1].Value;
-
+            int indexOfMsgType = ByteArray.IndexOf(fixstring, StartOfMsgTypeBytes, 0);
+            if (indexOfMsgType != -1)
+            {
+                int endOfFieldPos = ByteArray.IndexOf(fixstring, SohByteValue, indexOfMsgType + StartOfMsgTypeBytes.Length);
+                if (endOfFieldPos != -1)
+                {
+                    return Encoding.ASCII.GetString(fixstring, indexOfMsgType + StartOfMsgTypeBytes.Length, endOfFieldPos - indexOfMsgType - StartOfMsgTypeBytes.Length);
+                }
+            }
             throw new MessageParseError("missing or malformed tag 35 in msg: " + fixstring);
         }
 
@@ -324,7 +336,7 @@ namespace QuickFix
 
         #endregion
 
-        public bool FromStringHeader(string msgstr)
+        public bool FromStringHeader(byte[] msgstr)
         {
             Clear();
             
@@ -352,7 +364,7 @@ namespace QuickFix
         /// <param name="validate"></param>
         /// <param name="sessionDD"></param>
         /// <param name="appDD"></param>
-        public void FromString(string msgstr, bool validate, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
+        public void FromString(byte[] msgstr, bool validate, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
         {
             FromString(msgstr, validate, sessionDD, appDD, null);
         }
@@ -366,7 +378,7 @@ namespace QuickFix
         /// <param name="sessionDD"></param>
         /// <param name="appDD"></param>
         /// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
-        public void FromString(string msgstr, bool validate,
+        public void FromString(byte[] msgstr, bool validate,
             DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
         {
             Clear();
@@ -461,17 +473,15 @@ namespace QuickFix
 
             if (validate)
             {
-                int actualBodyLength = Encoding.UTF8.GetByteCount(msgstr.Substring(posAfterBodyLengthField, posBeforeCheckSumField - posAfterBodyLengthField));
-                byte[] bytes = Encoding.UTF8.GetBytes(msgstr.Substring(0, posBeforeCheckSumField)); // We'll get rid of this when we send a byte[] directly to this method.
-                int actualCheckSum = bytes.Sum(b => (int)b) % 256;
-            
+                int actualBodyLength = posBeforeCheckSumField - posAfterBodyLengthField;
+                int actualCheckSum = msgstr.Take(posBeforeCheckSumField).Sum(b => (int)b) % 256;            
                 Validate(actualBodyLength, actualCheckSum);
             }
         }
 
 
         [System.Obsolete("Use the version that takes an IMessageFactory instead")]
-        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
+        protected int SetGroup(StringField grpNoFld, byte[] msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
             DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
         {
             return SetGroup(grpNoFld, msgstr, pos, fieldMap, dd, sessionDataDictionary, appDD, null);
@@ -491,7 +501,7 @@ namespace QuickFix
         /// <param name="msgFactory">if null, then this method will use the generic Group class constructor</param>
         /// <returns></returns>
         protected int SetGroup(
-            StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
+            StringField grpNoFld, byte[] msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
             DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
         {
             int grpEntryDelimiterTag = dd.Delim;
@@ -761,6 +771,11 @@ namespace QuickFix
         private Object lock_ToString = new Object();
         public override string ToString()
         {
+            return Encoding.ASCII.GetString(ToBytes());
+        }
+
+        public byte[] ToBytes()
+        {
             lock (lock_ToString)
             {
                 MessageBuilder mb = new MessageBuilder();
@@ -770,7 +785,7 @@ namespace QuickFix
                 Trailer.RemoveField(Tags.CheckSum);
                 Trailer.CalculateString(mb);
                 mb.FinalizeMessage(Header, Trailer);
-                return mb.ToString();
+                return mb.ToBytes();
             }
         }
     }
@@ -860,9 +875,9 @@ namespace QuickFix
             _isFinal = true;
         }
 
-        public void WriteMessageBytes(BinaryWriter writer)
+        public byte[] ToBytes()
         {
-            writer.Write(_messageBytes);
+            return _messageBytes;
         }
 
         public override string ToString()

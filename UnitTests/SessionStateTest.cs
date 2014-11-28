@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using QuickFix;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Text;
 
 namespace UnitTests
 {
@@ -153,12 +155,12 @@ namespace UnitTests
             SessionState state = new SessionState(log, 1) {MessageStore = store};
 
             Hashtable errorsTable = Hashtable.Synchronized(new Hashtable());//used in more than 1 thread at a time
-            Hashtable setTable = new Hashtable(1000);//only used in 1 thread at a time
-            Hashtable getTable = new Hashtable(1000);//only used in 1 thread at a time
+            Dictionary<int, byte[]> setTable = new Dictionary<int, byte[]>();//only used in 1 thread at a time
+            Dictionary<int, byte[]> getTable = new Dictionary<int, byte[]>();//only used in 1 thread at a time
 
             //Synchronously populate 1000 messages
             for (int i = 1; i < 1000; i++) {
-                string msg = "msg" + i;
+                byte[] msg = Encoding.ASCII.GetBytes("msg" + i);
                 state.Set(i, msg);
                 setTable[i] = msg;
             }
@@ -170,7 +172,7 @@ namespace UnitTests
                 SessionState internalState = (SessionState)((object[])stateObject)[1];
                 for (int i = 1001; i < 2000; i++) {
                     try {
-                        internalState.Set(i, "msg" + i);
+                        internalState.Set(i, Encoding.ASCII.GetBytes("msg" + i));
                     }
                     catch (System.IO.IOException ex) {
                         errorsTable[ex.Message] = ex;
@@ -188,10 +190,10 @@ namespace UnitTests
                 SessionState internalState = (SessionState)((object[])stateObject)[1];
                 for (int i = 1; i < 1000; i++) {
                     try {
-                        List<string> lst = new List<string>(1);
+                        List<byte[]> lst = new List<byte[]>(1);
                         internalState.Get(i, i, lst);
                         if (lst.Count == 0) {
-                            getTable[i] = "nothing read";
+                            getTable[i] = Encoding.ASCII.GetBytes("nothing read");
                         }
                         else {
                             getTable[i] = lst[0];
@@ -209,7 +211,9 @@ namespace UnitTests
             //wait till done and assert results
             Assert.True(setEvent.WaitOne(10000), "Get or Set hung/timed out during concurrent usage");
             Assert.True(getEvent.WaitOne(10000), "Get or Set hung/timed out during concurrent usage");
-            Assert.AreEqual(setTable, getTable, "Garbled data read in concurrent set and get (like between resendrequest and send)");
+            Assert.AreEqual(string.Join(",", setTable.Values.Select(b => Encoding.ASCII.GetString(b)).ToArray()), 
+                string.Join(",", getTable.Values.Select(b => Encoding.ASCII.GetString(b)).ToArray()), 
+                "Garbled data read in concurrent set and get (like between resendrequest and send)");
             Assert.AreEqual(errorsTable.Count, 0, "IOException occured in concurrent set and get (like between resendrequest and send)");
 
             //Tear down filestore

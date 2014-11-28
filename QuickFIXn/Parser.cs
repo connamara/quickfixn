@@ -2,36 +2,33 @@ namespace QuickFix
 {
     /// <summary>
     /// </summary>
-    public class Parser
+    public sealed class Parser
     {
+        static readonly byte[] BeginStringFieldStartBytesStartOfMessage = new byte[] { (byte)'8', (byte)'=' };
+        static readonly byte[] BeginStringFieldStartBytes = new byte[] { Message.SohByteValue, (byte)'8', (byte)'=' };
+        static readonly byte[] LengthFieldStartBytes = new byte[] { Message.SohByteValue, (byte)'9', (byte)'=' };
+        static readonly byte[] CheckSumFieldStartBytes = new byte[] { Message.SohByteValue, (byte)'1', (byte)'0', (byte)'=' };
+
         private byte[] buffer_ = new byte[512];
-        int usedBufferLength = 0;
-        public void AddToStream(ref byte[] data, int bytesAdded)
+        private int usedBufferLength = 0;
+
+        public void AddToStream(byte[] data, int bytesAdded)
         {
             if (buffer_.Length < usedBufferLength + bytesAdded)
                 System.Array.Resize<byte>(ref buffer_, (usedBufferLength + bytesAdded));
             System.Buffer.BlockCopy(data, 0, buffer_, usedBufferLength , bytesAdded);
             usedBufferLength += bytesAdded;
-        }
+        }       
 
-        public void AddToStream(string data)
+        public bool ReadFixMessage(out byte[] msg)
         {
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
-            AddToStream(ref bytes, bytes.Length);
-
-        }
-        
-
-        public bool ReadFixMessage(out string msg)
-        {
-            msg = "";
-            
-            if(buffer_.Length < 2)
+            msg = new byte[0];
+            if (buffer_.Length < 2)
                 return false;
             
             int pos = 0;
-            pos = IndexOf(buffer_, "8=", 0);
-            if(-1 == pos)
+            pos = ByteArray.IndexOf(buffer_, BeginStringFieldStartBytesStartOfMessage, 0);
+            if (-1 == pos)
                 return false;
 
             buffer_ = Remove(buffer_, pos);
@@ -48,17 +45,19 @@ namespace QuickFix
                 if (buffer_.Length < pos)
                     return false;
            
-                pos = IndexOf(buffer_, "\x01" + "10=", pos - 1);
+                pos = ByteArray.IndexOf(buffer_, CheckSumFieldStartBytes, pos - 1);
                 if (-1 == pos)
                     return false;
                 pos += 4;
 
-                pos = IndexOf(buffer_, "\x01", pos);
+                pos = ByteArray.IndexOf(buffer_, Message.SohByteValue, pos);
                 if (-1 == pos)
                     return false;
                 pos += 1;
 
-                msg = Substring(buffer_, 0, pos);
+                msg = new byte[pos];
+                System.Buffer.BlockCopy(buffer_, 0, msg, 0, pos);
+
                 buffer_ = Remove(buffer_, pos);
                 return true;
             }
@@ -72,11 +71,6 @@ namespace QuickFix
             }
         }
 
-        public bool ExtractLength(out int length, out int pos, string buf)
-        {
-            return ExtractLength(out length, out pos, System.Text.Encoding.UTF8.GetBytes(buf));
-        }
-
         public bool ExtractLength(out int length, out int pos, byte[] buf)
         {
             length = 0;
@@ -85,21 +79,22 @@ namespace QuickFix
             if (buf.Length < 1)
                 return false;
 
-            int startPos = IndexOf(buf, "\x01" + "9=", 0);
+            int startPos = ByteArray.IndexOf(buf, LengthFieldStartBytes, 0);
             if(-1 == startPos)
                 return false;
             startPos +=3;
 
-            int endPos = IndexOf(buf, "\x01", startPos);
+            int endPos = ByteArray.IndexOf(buf, Message.SohByteValue, startPos);
             if(-1 == endPos)
                 return false;
 
-            string strLength = Substring(buf, startPos, endPos - startPos);
             try
             {
-                length = Fields.Converters.IntConverter.Convert(strLength);
-                if(length < 0)
+                length = Fields.Converters.IntConverter.Convert(System.Text.Encoding.ASCII.GetString(buf, startPos, endPos - startPos));
+                if (length < 0)
+                {
                     throw new MessageParseError("Invalid BodyLength (" + length + ")");
+                }
             }
             catch(FieldConvertError e)
             {
@@ -116,42 +111,12 @@ namespace QuickFix
             return false;
         }
 
-        private int IndexOf(byte[] arrayToSearchThrough, string stringPatternToFind, int offset)
-        {
-            byte[] patternToFind = System.Text.Encoding.UTF8.GetBytes(stringPatternToFind);
-            if (patternToFind.Length > arrayToSearchThrough.Length)
-                return -1;
-            for (int i = offset; i <= arrayToSearchThrough.Length - patternToFind.Length; i++)
-            {
-                bool found = true;
-                for (int j = 0; j < patternToFind.Length; j++)
-                {
-                    if (arrayToSearchThrough[i + j] != patternToFind[j])
-                    {
-                        found = false;
-                        break;
-                    }
-                }
-                if (found)
-                {
-                    return i;
-                }
-            }
-            return -1;
-        }
         private byte[] Remove(byte[] array, int count)
         {
             byte[] returnByte = new byte[array.Length - count];
             System.Buffer.BlockCopy(array, count, returnByte,0, array.Length - count);
             usedBufferLength -= count;
             return returnByte;
-        }
-
-        private string Substring(byte[] array, int startIndex, int length)
-        {
-            byte[] returnByte = new byte[length];
-            System.Buffer.BlockCopy(array, startIndex, returnByte, 0, length);
-            return System.Text.Encoding.UTF8.GetString(returnByte);
         }
     }
 }

@@ -21,7 +21,7 @@ namespace UnitTests
 
         public bool disconnected = false;
 
-        public bool Send(string msgStr)
+        public bool Send(byte[] msgStr)
         {
             QuickFix.Fields.MsgType msgType = QuickFix.Message.IdentifyType(msgStr);
             string beginString = QuickFix.Message.ExtractBeginString(msgStr);
@@ -627,7 +627,7 @@ namespace UnitTests
         [Test]
         public void TestMessageStoreAccessor()
         {
-            List<string> messages = new List<string>();
+            List<byte[]> messages = new List<byte[]>();
 
             messages.Clear();
             session.MessageStore.Get(0, 100, messages);
