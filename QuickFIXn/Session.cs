@@ -1624,6 +1624,11 @@ namespace QuickFix
         public void Dispose()
         {
             if (state_ != null) { state_.Dispose(); }
+			lock (sessions_)
+			{
+				sessions_.Remove(this.SessionID);
+			}
+
         }
     }
 }
