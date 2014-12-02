@@ -12,6 +12,7 @@ namespace QuickFix
         private ILogFactory _logFactory = null;
         private IMessageFactory _msgFactory = null;
 
+
         private object sync_ = new object();
         private bool _disposed = false;
         private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
@@ -21,6 +22,7 @@ namespace QuickFix
         private HashSet<SessionID> disconnected_ = new HashSet<SessionID>();
         private bool isStopped_ = true;
         private Thread thread_;
+		private SessionFactory sessionFactory_ = null;
 
         #region Properties
 
@@ -59,18 +61,11 @@ namespace QuickFix
                 throw new System.ObjectDisposedException(this.GetType().Name);
 
             // create all sessions
-            SessionFactory factory = new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
+            sessionFactory_ = new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
             foreach (SessionID sessionID in _settings.GetSessions())
             {
                 Dictionary dict = _settings.Get(sessionID);
-                string connectionType = dict.GetString(SessionSettings.CONNECTION_TYPE);
-
-                if ("initiator".Equals(connectionType))
-                {
-                    sessionIDs_.Add(sessionID);
-                    sessions_[sessionID] = factory.Create(sessionID, dict);
-                    SetDisconnected(sessionID);
-                }
+				AddSession(sessionID, dict);
             }
 
             if (0 == sessions_.Count)
@@ -82,6 +77,55 @@ namespace QuickFix
             thread_ = new Thread(new ThreadStart(OnStart));
             thread_.Start();
         }
+
+		/// <summary>
+		/// Add new session, either at start-up or as an ad-hoc operation
+		/// </summary>
+		/// <param name="sessionID">ID of new session<param>
+		/// <param name="dict">config settings for new session</param></param>
+		/// <returns>true if session added succesfully, false if session already exists or is of wrong type</returns>
+		public bool AddSession(SessionID sessionID, Dictionary dict)
+		{
+		    string connectionType = dict.GetString(SessionSettings.CONNECTION_TYPE);
+			if (!sessionIDs_.Contains(sessionID) && "initiator" == connectionType)
+			{
+				sessionIDs_.Add(sessionID);
+				sessions_[sessionID] = sessionFactory_.Create(sessionID, dict);
+				SetDisconnected(sessionID);
+				return true;
+			}
+			return false;
+		}
+
+		/// <summary>
+		/// Ad-hoc removal of an existing sssion
+		/// </summary>
+		/// <param name="sessionID">ID of session to be removed</param>
+		/// <param name="terminateActiveSession">true if sesion to be removed even if it has an active connection</param>
+		/// <returns>true if session removed or was already not present, false if could not be removed because of active connection</returns>
+		public bool RemoveSession(SessionID sessionID, bool terminateActiveSession)
+		{
+			if (sessionIDs_.Contains(sessionID))
+			{
+				Session session = sessions_[sessionID];
+				bool isDisconnected = false;
+				lock (sync_)
+				{
+					isDisconnected = IsDisconnected(sessionID);
+					if (!(isDisconnected || terminateActiveSession))
+						return false;
+					sessionIDs_.Remove(sessionID);
+					sessions_.Remove(sessionID);
+					SetDisconnected(sessionID);
+					disconnected_.Remove(sessionID);
+					OnRemove(sessionID);
+				}
+				if (!isDisconnected)
+					session.Reset("Session reconfigured(AbstractInitiator.RemoveSession)", "Session disabled");
+				session.Dispose();
+			}
+			return true;
+		}
 
         /// <summary>
         /// Logout existing session and close connection.  Attempt graceful disconnect first.
@@ -178,7 +222,15 @@ namespace QuickFix
         protected virtual void OnConfigure(SessionSettings settings)
         { }
 
-        [System.Obsolete("This method's intended purpose is unclear.  Don't use it.")]
+
+		/// <summary>
+		/// Override this to handle ad-hoc session removal
+		/// </summary>
+		/// <param name="sessionID">ID of session being remvoed</param>
+		protected virtual void OnRemove(SessionID sessionID)
+		{ }
+
+		[System.Obsolete("This method's intended purpose is unclear.  Don't use it.")]
         protected virtual void OnInitialize(SessionSettings settings)
         { }
 
@@ -254,9 +306,12 @@ namespace QuickFix
         {
             lock (sync_)
             {
-                pending_.Remove(sessionID);
-                connected_.Remove(sessionID);
-                disconnected_.Add(sessionID);
+				if (sessionIDs_.Contains(sessionID))
+				{
+					pending_.Remove(sessionID);
+					connected_.Remove(sessionID);
+					disconnected_.Add(sessionID);
+				}
             }
         }
 
