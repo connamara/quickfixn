@@ -67,7 +67,14 @@ namespace QuickFix.Fields
         {
             if (_changed.Equals(true))
                 makeStringFields();
-            ms.Write(_fieldByteArray, 0, _fieldByteArray.Length);
+
+            byte[] tagBytes = Encoding.ASCII.GetBytes(Tag.ToString());
+            ms.Write(tagBytes, 0, tagBytes.Length);
+
+            ms.WriteByte(Message.EqualsSignByteValue);
+
+            byte[] valueBytes = Encoding.UTF8.GetBytes(_stringVal);
+            ms.Write(valueBytes, 0, valueBytes.Length);
         }
 
         /// <summary>
@@ -118,12 +125,10 @@ namespace QuickFix.Fields
         private void makeStringFields()
         {
             _stringVal = makeString();
-            _fieldByteArray =  Encoding.UTF8.GetBytes(Tag + "=" + _stringVal);
             _changed = false;
         }
 
         #region Private members
-        private byte[] _fieldByteArray;
         private bool _changed;
         private T _obj;
         private int _tag;

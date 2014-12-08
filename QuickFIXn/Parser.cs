@@ -1,11 +1,10 @@
+using System.Text;
 namespace QuickFix
 {
     /// <summary>
     /// </summary>
     public sealed class Parser
     {
-        static readonly byte[] BeginStringFieldStartBytesStartOfMessage = new byte[] { (byte)'8', (byte)'=' };
-        static readonly byte[] BeginStringFieldStartBytes = new byte[] { Message.SohByteValue, (byte)'8', (byte)'=' };
         static readonly byte[] LengthFieldStartBytes = new byte[] { Message.SohByteValue, (byte)'9', (byte)'=' };
         static readonly byte[] CheckSumFieldStartBytes = new byte[] { Message.SohByteValue, (byte)'1', (byte)'0', (byte)'=' };
 
@@ -27,10 +26,9 @@ namespace QuickFix
                 return false;
             
             int pos = 0;
-            pos = ByteArray.IndexOf(buffer_, BeginStringFieldStartBytesStartOfMessage, 0);
+            pos = ByteArray.IndexOf(buffer_, Message.StartOfBeginStringBytes, 0);
             if (-1 == pos)
                 return false;
-
             buffer_ = Remove(buffer_, pos);
             pos = 0;
 
@@ -103,12 +101,6 @@ namespace QuickFix
 
             pos = endPos + 1;
             return true;
-        }
-
-        private bool Fail(string what)
-        {
-            System.Console.WriteLine("Parser failed: " + what);
-            return false;
         }
 
         private byte[] Remove(byte[] array, int count)

@@ -507,12 +507,13 @@ namespace QuickFix
             {
                 this.Log.OnIncoming(System.Text.Encoding.ASCII.GetString(msgStr));
 
-                MsgType msgType = Message.IdentifyType(msgStr);
+                string msgType = Message.GetMsgType(msgStr);
                 string beginString = Message.ExtractBeginString(msgStr);
 
-                Message message = msgFactory_.Create(beginString, msgType.Obj);
+                Message message = msgFactory_.Create(beginString, msgType);
                 message.FromString(
                     msgStr,
+                    msgType,
                     this.ValidateLengthAndChecksum,
                     this.SessionDataDictionary,
                     this.ApplicationDataDictionary,
@@ -526,7 +527,7 @@ namespace QuickFix
 
                 try
                 {
-                    if (MsgType.LOGON.Equals(Message.IdentifyType(msgStr)))
+                    if (MsgType.LOGON == Message.GetMsgType(msgStr))
                         Disconnect("Logon message is not valid");
                 }
                 catch (MessageParseError)
@@ -754,8 +755,9 @@ namespace QuickFix
                     int begin = 0;
                     foreach (byte[] msgStr in messages)
                     {
+                        string messageType = Message.GetMsgType(msgStr);
                         Message msg = new Message();
-                        msg.FromString(msgStr, true, this.SessionDataDictionary, this.ApplicationDataDictionary, msgFactory_);
+                        msg.FromString(msgStr, messageType, true, this.SessionDataDictionary, this.ApplicationDataDictionary, msgFactory_);
                         msgSeqNum = msg.Header.GetInt(Tags.MsgSeqNum);
 
                         if ((current != msgSeqNum) && begin == 0)
