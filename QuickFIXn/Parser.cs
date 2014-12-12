@@ -168,7 +168,7 @@ namespace QuickFix
             System.Buffer.BlockCopy(source, sourceOffset, destination, 0, bytesBeforeWrap);
             if (bytesBeforeWrap < bytesToCopy)
             {
-                System.Buffer.BlockCopy(source, 0, destination, bytesToCopy, bytesToCopy - bytesBeforeWrap);
+                System.Buffer.BlockCopy(source, 0, destination, bytesBeforeWrap, bytesToCopy - bytesBeforeWrap);
             }
         }
     }
