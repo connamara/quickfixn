@@ -67,7 +67,7 @@ namespace QuickFix
 
                 int readposAfterSkip = (readposAfterLength + length) % _buffer.Length;
 
-                if (_buffer[(readposAfterSkip - 1) % _buffer.Length] != SohByteValue)
+                if (_buffer[(readposAfterSkip + _buffer.Length - 1) % _buffer.Length] != SohByteValue)
                 {
                     throw new MessageParseError("SOH expected just before end of skipping " + length + " bytes.");
                 }
