@@ -341,7 +341,7 @@ namespace UnitTests
             string m2 = "987=pants\x01xxxxxxxxxxxxxxxxxxxxxx";
 
             Assert.AreEqual("FIX4.2", Message.ExtractBeginString(Encoding.ASCII.GetBytes(m1)));
-            Assert.AreEqual("pants", Message.ExtractBeginString(Encoding.ASCII.GetBytes(m2)));
+            Assert.Throws<QuickFix.MessageParseError>(delegate() { Message.ExtractBeginString(Encoding.ASCII.GetBytes(m2)); }, "Incorrect BeginString tag did not throw exception.");
         }
 
         [Test]

@@ -123,7 +123,7 @@ namespace QuickFix
             try
             {
                 int tag = 0;
-                while (msgstr[pos] != EqualsSignByteValue)
+                while (pos < msgstr.Length && msgstr[pos] != EqualsSignByteValue)
                 {
                     byte digit = msgstr[pos];
                     if (digit < '0' || digit > '9')
@@ -133,6 +133,11 @@ namespace QuickFix
                     }
                     tag = 10 * tag + digit - '0';
                     pos++;
+                }
+                if (pos == msgstr.Length)
+                {
+                    throw new MessageParseError("Error at position (" + pos + ") while parsing msg ("
+                                               + Encoding.UTF8.GetString(msgstr) + "): no equals sign found before end og message.");
                 }
                 pos++; // skip the equals sign
                 int fieldvalend = ByteArray.IndexOf(msgstr, SohByteValue, pos);
