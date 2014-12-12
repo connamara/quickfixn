@@ -226,13 +226,13 @@ namespace UnitTests
                 + "52=20111012-22:15:55.474" + nul + "56=EXECUTOR" + nul + "148=AAAAAAA" + nul
                 + "33=2" + nul + "58=L1" + nul + "58=L2" + nul + "10=016" + nul;
 
-            QuickFix.Fields.MsgType msgType = Message.IdentifyType(Encoding.ASCII.GetBytes(msgStr));
+            string msgType = Message.GetMsgType(Encoding.ASCII.GetBytes(msgStr));
             string beginString = Message.ExtractBeginString(Encoding.ASCII.GetBytes(msgStr));
 
-            Message message = f.Create(beginString, msgType.Obj);
+            Message message = f.Create(beginString, msgType);
             message.FromString(msgStr, true, dd, dd, f);
 
-            dd.Validate(message, beginString, msgType.Obj);
+            dd.Validate(message, beginString, msgType);
         }
 
         [Test]

@@ -1,94 +1,128 @@
+using System;
 using System.Text;
+
 namespace QuickFix
 {
     /// <summary>
     /// </summary>
     public sealed class Parser
     {
-        static readonly byte[] LengthFieldStartBytes = new byte[] { Message.SohByteValue, (byte)'9', (byte)'=' };
-        static readonly byte[] CheckSumFieldStartBytes = new byte[] { Message.SohByteValue, (byte)'1', (byte)'0', (byte)'=' };
+        private static readonly byte[] LengthFieldStartBytes = new byte[] { Message.SohByteValue, (byte)'9', (byte)'=' };
+        private static readonly byte[] CheckSumFieldStartBytes = new byte[] { (byte)'1', (byte)'0', (byte)'=' };
 
-        private byte[] buffer_ = new byte[512];
-        private int usedBufferLength = 0;
-
+        private byte[] _buffer = new byte[1];
+        private int _readpos;
+        private int _writepos;
+    
         public void AddToStream(byte[] data, int bytesAdded)
         {
-            if (buffer_.Length < usedBufferLength + bytesAdded)
-                System.Array.Resize<byte>(ref buffer_, (usedBufferLength + bytesAdded));
-            System.Buffer.BlockCopy(data, 0, buffer_, usedBufferLength , bytesAdded);
-            usedBufferLength += bytesAdded;
-        }       
+            int oldBufferSize = _buffer.Length;
+            int bytesInBuffer = (_writepos - _readpos + oldBufferSize) % oldBufferSize;
+
+            if (oldBufferSize <= bytesInBuffer + bytesAdded) // Notice that we cannot use the last byte.
+            {
+                byte[] newBuffer = new byte[Math.Max(bytesInBuffer + bytesAdded + 1, 2 * oldBufferSize)];
+                CopyFromCircularToLinear(_buffer, _readpos, bytesInBuffer, newBuffer, 0);
+                _buffer = newBuffer;
+                _readpos = 0;
+                _writepos = bytesInBuffer;
+            }
+
+            AddToBuffer(data, 0, bytesAdded);
+        }
 
         public bool ReadFixMessage(out byte[] msg)
         {
             msg = new byte[0];
-            if (buffer_.Length < 2)
-                return false;
-            
-            int pos = 0;
-            pos = ByteArray.IndexOf(buffer_, Message.StartOfBeginStringBytes, 0);
-            if (-1 == pos)
-                return false;
-            buffer_ = Remove(buffer_, pos);
-            pos = 0;
 
-            int length = 0;
+            int bytesInBuffer = (_writepos - _readpos + _buffer.Length) % _buffer.Length;
+
+            if (bytesInBuffer < 2)
+                return false;
+
+            int messageStartPos = ByteArray.IndexOfCircular(_buffer, _readpos, bytesInBuffer, Message.StartOfBeginStringBytes);
+            if (messageStartPos == -1)
+                return false;
+            _readpos = messageStartPos;
+
+            bytesInBuffer = (_writepos - _readpos + _buffer.Length) % _buffer.Length;
 
             try
             {
-                if (!ExtractLength(out length, out pos, buffer_))
+                int readposAfterLength;
+                int length;
+                if (!ExtractLength(out length, out readposAfterLength, _buffer, _readpos, bytesInBuffer))
                     return false;
 
-                pos += length;
-                if (buffer_.Length < pos)
+                if ((_writepos - readposAfterLength + _buffer.Length) % _buffer.Length < length)
                     return false;
-           
-                pos = ByteArray.IndexOf(buffer_, CheckSumFieldStartBytes, pos - 1);
-                if (-1 == pos)
+
+                int readposAfterSkip = (readposAfterLength + length) % _buffer.Length;
+
+                if (_buffer[(readposAfterSkip - 1) % _buffer.Length] != Message.SohByteValue)
+                {
+                    throw new MessageParseError("SOH expected just before end of skipping " + length + " bytes.");
+                }
+
+                int checkSumPos = ByteArray.IndexOfCircular(_buffer, readposAfterSkip, (_writepos - readposAfterSkip + _buffer.Length) % _buffer.Length, CheckSumFieldStartBytes);
+                if (checkSumPos == -1)
+                {
                     return false;
-                pos += 4;
-
-                pos = ByteArray.IndexOf(buffer_, Message.SohByteValue, pos);
-                if (-1 == pos)
+                }
+                int endOfCheckSumPos = ByteArray.IndexOfCircular(_buffer, checkSumPos, (_writepos - checkSumPos + _buffer.Length) % _buffer.Length, Message.SohByteValue);
+                if (endOfCheckSumPos == -1)
+                {
                     return false;
-                pos += 1;
+                }
 
-                msg = new byte[pos];
-                System.Buffer.BlockCopy(buffer_, 0, msg, 0, pos);
+                int newReadPos = (endOfCheckSumPos + 1) % _buffer.Length;
+                int messageLength = (newReadPos - _readpos + _buffer.Length) % _buffer.Length;
 
-                buffer_ = Remove(buffer_, pos);
+                msg = new byte[messageLength];
+                CopyFromCircularToLinear(_buffer, _readpos, messageLength, msg, 0);
+                _readpos = newReadPos;
                 return true;
             }
             catch (MessageParseError e)
             {
-                if ((length > 0) && (pos <= buffer_.Length))
-                    buffer_ = Remove(buffer_, pos);
-                else
-                    buffer_ = Remove(buffer_, buffer_.Length);
+                _readpos = _writepos;
                 throw e;
             }
         }
 
-        public bool ExtractLength(out int length, out int pos, byte[] buf)
+        public static bool ExtractLength(out int length, out int readpos, byte[] buf, int offset, int bytesInBuffer)
         {
             length = 0;
-            pos = 0;
+            readpos = 0;
 
-            if (buf.Length < 1)
+            if (bytesInBuffer < 1)
                 return false;
 
-            int startPos = ByteArray.IndexOf(buf, LengthFieldStartBytes, 0);
-            if(-1 == startPos)
+            int startPos = ByteArray.IndexOfCircular(buf, offset, bytesInBuffer, LengthFieldStartBytes);
+            if (startPos == -1)
+            {
                 return false;
-            startPos +=3;
+            }
+            startPos = (startPos + LengthFieldStartBytes.Length) % buf.Length;
 
-            int endPos = ByteArray.IndexOf(buf, Message.SohByteValue, startPos);
-            if(-1 == endPos)
+            int endPos = ByteArray.IndexOfCircular(buf, startPos, bytesInBuffer - LengthFieldStartBytes.Length, Message.SohByteValue);
+            if (endPos == -1)
+            {
                 return false;
+            }
 
             try
             {
-                length = Fields.Converters.IntConverter.Convert(System.Text.Encoding.ASCII.GetString(buf, startPos, endPos - startPos));
+                if (endPos < startPos)
+                {
+                    byte[] lengthBytes = new byte[(endPos - startPos + buf.Length) % buf.Length];
+                    CopyFromCircularToLinear(buf, startPos, endPos - startPos + buf.Length, lengthBytes, 0);
+                    length = Fields.Converters.IntConverter.Convert(System.Text.Encoding.ASCII.GetString(lengthBytes));
+                }
+                else
+                {
+                    length = Fields.Converters.IntConverter.Convert(System.Text.Encoding.ASCII.GetString(buf, startPos, endPos - startPos));
+                }
                 if (length < 0)
                 {
                     throw new MessageParseError("Invalid BodyLength (" + length + ")");
@@ -98,17 +132,34 @@ namespace QuickFix
             {
                 throw new MessageParseError(e.Message, e);
             }
-
-            pos = endPos + 1;
+            readpos = endPos + 1;
             return true;
         }
 
-        private byte[] Remove(byte[] array, int count)
+        private void AddToBuffer(byte[] data, int offset, int length)
         {
-            byte[] returnByte = new byte[array.Length - count];
-            System.Buffer.BlockCopy(array, count, returnByte,0, array.Length - count);
-            usedBufferLength -= count;
-            return returnByte;
+            int bufferSize = _buffer.Length;
+
+            int bytesToCopy1 = Math.Min(length, bufferSize - _writepos);
+            System.Buffer.BlockCopy(data, offset, _buffer, _writepos, bytesToCopy1);
+            _writepos = (_writepos + bytesToCopy1) % bufferSize;
+
+            int bytesToCopy2 = length - bytesToCopy1;
+            if (length > bytesToCopy1)
+            {
+                System.Buffer.BlockCopy(data, offset + bytesToCopy1, _buffer, _writepos, bytesToCopy2);
+                _writepos = (_writepos + bytesToCopy2) % bufferSize;
+            }
+        }
+
+        private static void CopyFromCircularToLinear(byte[] source, int sourceOffset, int bytesToCopy, byte[] destination, int destinationOffset)
+        {
+            int bytesBeforeWrap = Math.Min(bytesToCopy, source.Length - sourceOffset);
+            System.Buffer.BlockCopy(source, sourceOffset, destination, 0, bytesBeforeWrap);
+            if (bytesBeforeWrap < bytesToCopy)
+            {
+                System.Buffer.BlockCopy(source, 0, destination, bytesToCopy, bytesToCopy - bytesBeforeWrap);
+            }
         }
     }
 }

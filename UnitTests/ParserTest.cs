@@ -8,36 +8,33 @@ namespace UnitTests
     [TestFixture]
     public class ParserTest
     {
-        const string normalLength   = "8=FIX.4.2\x01" + "9=12\x01" + "35=A\x01" + " 108=30\x01" + "10=31\x01";
-        const string badLength      = "8=FIX.4.2\x01" + "9=A\x01"  + "35=A\x01" + "108=30\x01"  + "10=31\x01";
-        const string negativeLength = "8=FIX.4.2\x01" + "9=-1\x01" + "35=A\x01" + "108=30\x01"  + "10=31\x01";
-        const string incomplete_1   = "8=FIX.4.2";
-        const string incomplete_2   = "8=FIX.4.2\x01" + "9=12";
+        static byte[] normalLength   = Encoding.ASCII.GetBytes("8=FIX.4.2\x01" + "9=12\x01" + "35=A\x01" + " 108=30\x01" + "10=31\x01");
+        static byte[] badLength = Encoding.ASCII.GetBytes("8=FIX.4.2\x01" + "9=A\x01" + "35=A\x01" + "108=30\x01" + "10=31\x01");
+        static byte[] negativeLength = Encoding.ASCII.GetBytes("8=FIX.4.2\x01" + "9=-1\x01" + "35=A\x01" + "108=30\x01" + "10=31\x01");
+        static byte[] incomplete_1 = Encoding.ASCII.GetBytes("8=FIX.4.2");
+        static byte[] incomplete_2 = Encoding.ASCII.GetBytes("8=FIX.4.2\x01" + "9=12");
 
         [Test]
         public void ExtractLength()
         {
-            Parser parser = new Parser();
-
-            int len = 0;
-            int pos = 0;
-            Assert.True(parser.ExtractLength(out len, out pos, Encoding.ASCII.GetBytes(normalLength)));
+            int len;
+            int pos;
+            Assert.True(Parser.ExtractLength(out len, out pos, normalLength, 0, normalLength.Length));
             Assert.AreEqual(12, len);
             Assert.AreEqual(15, pos);
 
-            pos = 0;
-            Assert.Throws<QuickFix.MessageParseError>(delegate { parser.ExtractLength(out len, out pos, Encoding.ASCII.GetBytes(badLength)); });
+            Assert.Throws<QuickFix.MessageParseError>(delegate { Parser.ExtractLength(out len, out pos, badLength, 0, badLength.Length); });
 
             Assert.AreEqual(0, pos);
-            Assert.Throws<QuickFix.MessageParseError>(delegate { parser.ExtractLength(out len, out pos, Encoding.ASCII.GetBytes(negativeLength)); });
+            Assert.Throws<QuickFix.MessageParseError>(delegate { Parser.ExtractLength(out len, out pos, negativeLength, 0, negativeLength.Length); });
 
             Assert.AreEqual(0, pos);
-            parser.ExtractLength(out len, out pos, Encoding.ASCII.GetBytes(incomplete_1));
+            Parser.ExtractLength(out len, out pos, incomplete_1, 0, incomplete_1.Length);
 
-            parser.ExtractLength(out len, out pos, Encoding.ASCII.GetBytes(incomplete_2));
+            Parser.ExtractLength(out len, out pos, incomplete_2, 0, incomplete_2.Length);
             Assert.AreEqual(0, pos);
 
-            Assert.False(parser.ExtractLength(out len, out pos, Encoding.ASCII.GetBytes("")));
+            Assert.False(Parser.ExtractLength(out len, out pos, new byte[0], 0, 0));
         }
 
         [Test]

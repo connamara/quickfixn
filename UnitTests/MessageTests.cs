@@ -15,12 +15,12 @@ namespace UnitTests
 
         public static void FromString(this Message message, string msgstr, bool validate, QuickFix.DataDictionary.DataDictionary sessionDD, QuickFix.DataDictionary.DataDictionary appDD)
         {
-            message.FromString(Encoding.ASCII.GetBytes(msgstr), validate, sessionDD, appDD);
+            message.FromString(Encoding.ASCII.GetBytes(msgstr), Message.GetMsgType(Encoding.ASCII.GetBytes(msgstr)), validate, sessionDD, appDD);
         }
 
         public static void FromString(this Message message, string msgstr, bool validate, QuickFix.DataDictionary.DataDictionary sessionDD, QuickFix.DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
         {
-            message.FromString(Encoding.ASCII.GetBytes(msgstr), validate, sessionDD, appDD, msgFactory);
+            message.FromString(Encoding.ASCII.GetBytes(msgstr), Message.GetMsgType(Encoding.ASCII.GetBytes(msgstr)), validate, sessionDD, appDD, msgFactory);
         }
     }
 
@@ -33,18 +33,18 @@ namespace UnitTests
         public void IdentifyTypeTest()
         {
             string msg1 = "\x01" + "35=A\x01";
-            Assert.That(Message.IdentifyType(Encoding.ASCII.GetBytes(msg1)).Obj, Is.EqualTo(new MsgType("A").Obj));
+            Assert.That(Message.GetMsgType(Encoding.ASCII.GetBytes(msg1)), Is.EqualTo(new MsgType("A").Obj));
             string msg2 = "a;sldkfjadls;k\x01" + "35=A\x01" + "a;sldkfja;sdlfk";
-            Assert.That(Message.IdentifyType(Encoding.ASCII.GetBytes(msg2)).Obj, Is.EqualTo(new MsgType("A").Obj));
+            Assert.That(Message.GetMsgType(Encoding.ASCII.GetBytes(msg2)), Is.EqualTo(new MsgType("A").Obj));
             string msg3 = "8=FIX4.2\x01" + "9=12\x01\x01" + "35=B\x01" + "10=031\x01";
-            Assert.That(Message.IdentifyType(Encoding.ASCII.GetBytes(msg3)).Obj, Is.EqualTo(new MsgType("B").Obj));
+            Assert.That(Message.GetMsgType(Encoding.ASCII.GetBytes(msg3)), Is.EqualTo(new MsgType("B").Obj));
 
             // no 35
             string err1 = String.Join(TestingExtensions.SOH, new string[] { "8=FIX.4.4", "49=Sender", "" });
-            Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(Encoding.ASCII.GetBytes(err1)); });
+            Assert.Throws<MessageParseError>(delegate { Message.GetMsgType(Encoding.ASCII.GetBytes(err1)); });
             // no SOH at end of 35
             string err2 = String.Join(TestingExtensions.SOH, new string[] { "8=FIX.4.4", "35=A" });
-            Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(Encoding.ASCII.GetBytes(err2)); });
+            Assert.Throws<MessageParseError>(delegate { Message.GetMsgType(Encoding.ASCII.GetBytes(err2)); });
         }
 
         [Test]
