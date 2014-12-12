@@ -105,7 +105,9 @@ namespace QuickFix
             }
             startPos = (startPos + LengthFieldStartBytes.Length) % buf.Length;
 
-            int endPos = ByteArray.IndexOfCircular(buf, startPos, bytesInBuffer - LengthFieldStartBytes.Length, Message.SohByteValue);
+            int usedBytes = (startPos - offset + buf.Length) % buf.Length;
+
+            int endPos = ByteArray.IndexOfCircular(buf, startPos, bytesInBuffer - usedBytes, Message.SohByteValue);
             if (endPos == -1)
             {
                 return false;
