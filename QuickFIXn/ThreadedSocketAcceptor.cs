@@ -179,11 +179,13 @@ namespace QuickFix
 			Session session = null;
 			if (sessions_.TryGetValue(sessionID, out session))
 			{
+                if (session.IsLoggedOn && !terminateActiveSession)
+                    return false;
+                session.Disconnect("Disabled via dynamic config update");
 				foreach (AcceptorSocketDescriptor descriptor in socketDescriptorForAddress_.Values)
 					if (descriptor.RemoveSession(sessionID))
 						break;
 				sessions_.Remove(sessionID);
-				session.Reset("Session reconfigured(ThreadeSocketAcceptor.RemoveSession)", "Session disabled");
 				session.Dispose();
 			}
 			return true;

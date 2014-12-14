@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace QuickFix
@@ -37,7 +39,8 @@ namespace QuickFix
         }
         
         #endregion
-        
+
+        #region Public Methods 
         public Dictionary()
         { }
 
@@ -195,6 +198,42 @@ namespace QuickFix
                 if(!data_.ContainsKey(entry.Key))
                     data_[entry.Key] = entry.Value;
         }
+        #endregion
+
+        #region Public Overrides
+        /// <summary>
+        /// Test Dictionary objects for equality.
+        /// Dictionaries are deemed to be equal if their names and dictionary contents are the same
+        /// </summary>
+        /// <param name="other">Dictionary to compare against</param>
+        /// <returns>true if the two Dictionary objects are the same in terms of contents, else false</returns>
+        public override bool Equals(object other)
+        {
+            //Check whether the compared objects reference the same data. 
+            if (Object.ReferenceEquals(this, other))
+                return true;
+
+            //Check whether the compared object is null. 
+            if (Object.ReferenceEquals(other, null))
+                return false;
+
+            //Check whether the names and dictionary contents are the same 
+            var otherDict = (Dictionary)other;
+            return Name == otherDict.Name && Count == otherDict.Count && data_.SequenceEqual(otherDict.data_);
+        }
+
+        /// <summary>
+        /// Generate hash code for the Dictionary.
+        /// If Equals() returns true for a compared objects,  
+        /// then GetHashCode() must return the same value this object and the compared objects. 
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode()
+        {
+            int nameHash = Object.ReferenceEquals(Name, null) ? 1 : Name.GetHashCode();
+            return nameHash + 100 * Count;
+        }
+        #endregion
 
         #region IEnumerable Members
 
