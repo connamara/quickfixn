@@ -229,9 +229,10 @@ namespace QuickFix
         /// Add a group to message; the group counter is automatically incremented.
         /// </summary>
         /// <param name="group">group to add</param>
-        public void AddGroup(Group grp)
+        /// <param name="makeClone">set to make a clone of the passed group (set if reusing the input object)</param>
+        public void AddGroup(Group grp, bool makeClone = true)
         {
-            AddGroup(grp, true);
+            AddGroup(grp, true, makeClone);
         }
 
         /// <summary>
@@ -241,10 +242,18 @@ namespace QuickFix
         /// </summary>
         /// <param name="group">group to add</param>
         /// <param name="autoIncCounter">if true, auto-increment the counter, else leave it as-is</param>
-        internal void AddGroup(Group grp, bool autoIncCounter)
+        /// <param name="makeClone">set to make a clone of the passed group (set if reusing the input object)</param>
+        internal void AddGroup(Group grp, bool autoIncCounter, bool makeClone)
         {
-            // copy, in case user code reuses input object
-            Group group = grp.Clone();
+            Group group;
+            if (makeClone)
+            {
+                group = grp.Clone();
+            }
+            else
+            {
+                group = grp;                
+            }
 
             if (!_groups.ContainsKey(group.Field))
                 _groups.Add(group.Field, new List<Group>());
