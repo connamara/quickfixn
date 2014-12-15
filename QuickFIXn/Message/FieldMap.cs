@@ -229,10 +229,19 @@ namespace QuickFix
         /// Add a group to message; the group counter is automatically incremented.
         /// </summary>
         /// <param name="group">group to add</param>
-        /// <param name="makeClone">set to make a clone of the passed group (set if reusing the input object)</param>
-        public void AddGroup(Group grp, bool makeClone = true)
+        public void AddGroup(Group grp)
         {
-            AddGroup(grp, true, makeClone);
+            AddGroup(grp, true, true);
+        }
+
+        /// <summary>
+        /// Add a group to message; the group counter is automatically incremented.
+        /// Call this method instead of AddGroup to not make a clone of the passed group
+        /// </summary>
+        /// <param name="group">group to add</param>
+        public void AddGroupNoClone(Group grp)
+        {
+            AddGroup(grp, true, false);
         }
 
         /// <summary>

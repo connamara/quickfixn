@@ -539,7 +539,7 @@ namespace QuickFix
                     if (grp != null)
                     {
                         // We were already building an entry, so the delimiter means it's done.
-                        fieldMap.AddGroup(grp, false);
+                        fieldMap.AddGroup(grp, false, false);
                         grp = null; // prepare for new Group
                     }
 
@@ -557,7 +557,7 @@ namespace QuickFix
 
                     if (grp != null)
                     {
-                        fieldMap.AddGroup(grp, false);
+                        fieldMap.AddGroup(grp, false, false);
                     }
                     return grpPos;
                 }
