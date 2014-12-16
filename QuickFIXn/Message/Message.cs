@@ -350,29 +350,6 @@ namespace QuickFix
 
         #endregion
 
-#if false
-        public bool FromStringHeader(byte[] msgstr)
-        {
-            Clear();
-            
-            int pos = 0;
-            int count = 0;
-            while(pos < msgstr.Length)
-            {
-                StringField f = ExtractField(msgstr, ref pos);
-                
-                if((count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
-                    return false;
-                
-                if(IsHeaderField(f.Tag))
-                    this.Header.SetField(f, false);
-                else
-                    break;
-            }
-            return true;
-        }
-#endif
-
         /// <summary>
         /// Creates a Message from a FIX string
         /// </summary>

@@ -61,7 +61,7 @@ namespace QuickFix.Fields
         #endregion
 
         /// <summary>
-        /// Appends the full fix string (i.e., "tag=val") to the given StringBuilder.
+        /// Appends the full fix string (i.e., "tag=val") to the given MemoryStream.
         /// </summary>
         public override void AppendField(MemoryStream ms)
         {
@@ -79,7 +79,7 @@ namespace QuickFix.Fields
 
         /// <summary>
         /// returns field value formatted for fix 
-        /// (separate from ToString, to facilitate finding non-debug references and also make it easier to change the signature later)
+        /// (separate from ToString, to facilitate finding non-debug references and also make it easier to change the signature later if required)
         /// </summary>
         public override string ValueToString()
         {
