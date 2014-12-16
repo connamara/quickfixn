@@ -79,7 +79,9 @@ namespace QuickFix
             {
                 int bytesRead = ReadSome(readBuffer_, 1000);
                 if (bytesRead > 0)
+                {
                     parser_.AddToStream(readBuffer_, bytesRead);
+                }
                 else if (null != session_)
                 {
                     session_.Next();
@@ -176,7 +178,7 @@ namespace QuickFix
 
         private void ProcessStream()
         {
-            string msg;
+            byte[] msg;
             while (parser_.ReadFixMessage(out msg))
             {
                 session_.Next(msg);
@@ -185,9 +187,8 @@ namespace QuickFix
 
         #region Responder Members
 
-        public bool Send(string data)
+        public bool Send(byte[] rawData)
         {
-            byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
             stream_.Write(rawData, 0, rawData.Length);
             return true;
         }

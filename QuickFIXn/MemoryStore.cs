@@ -10,7 +10,7 @@ namespace QuickFix
     {
         #region Private Members
 
-        System.Collections.Generic.Dictionary<int, string> messages_;
+        System.Collections.Generic.Dictionary<int, byte[]> messages_;
         int nextSenderMsgSeqNum_;
         int nextTargetMsgSeqNum_;
         DateTime? creationTime;
@@ -19,11 +19,11 @@ namespace QuickFix
 
         public MemoryStore()
         {
-            messages_ = new System.Collections.Generic.Dictionary<int, string>();
+            messages_ = new System.Collections.Generic.Dictionary<int, byte[]>();
             Reset();
         }
 
-        public void Get(int begSeqNo, int endSeqNo, List<string> messages)
+        public void Get(int begSeqNo, int endSeqNo, List<byte[]> messages)
         {
             for (int current = begSeqNo; current <= endSeqNo; current++)
             {
@@ -34,7 +34,7 @@ namespace QuickFix
 
         #region MessageStore Members
 
-        public bool Set(int msgSeqNum, string msg)
+        public bool Set(int msgSeqNum, byte[] msg)
         {
             messages_[msgSeqNum] = msg;
             return true;

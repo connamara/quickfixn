@@ -263,7 +263,7 @@ namespace QuickFix.DataDictionary
 		/// <param name="field"></param>
 		public void CheckHasValue(Fields.IField field)
 		{
-			if (this.CheckFieldsHaveValues && (field.ToString().Length < 1))
+			if (this.CheckFieldsHaveValues && field.Empty)
 				throw new NoTagValue(field.Tag);
 		}
 
@@ -282,20 +282,20 @@ namespace QuickFix.DataDictionary
 				if (type.Equals(typeof(Fields.StringField)))
 					return;
 				else if (type.Equals(typeof(Fields.CharField)))
-					Fields.Converters.CharConverter.Convert(field.ToString());
+                    Fields.Converters.CharConverter.Convert(field.ValueToString());
 				else if (type.Equals(typeof(Fields.IntField)))
-					Fields.Converters.IntConverter.Convert(field.ToString());
+                    Fields.Converters.IntConverter.Convert(field.ValueToString());
 				else if (type.Equals(typeof(Fields.DecimalField)))
-					Fields.Converters.DecimalConverter.Convert(field.ToString());
+                    Fields.Converters.DecimalConverter.Convert(field.ValueToString());
 				else if (type.Equals(typeof(Fields.BooleanField)))
-					Fields.Converters.BoolConverter.Convert(field.ToString());
+                    Fields.Converters.BoolConverter.Convert(field.ValueToString());
 
 				else if (type.Equals(typeof(Fields.DateTimeField)))
-					Fields.Converters.DateTimeConverter.ConvertToDateTime(field.ToString());
+                    Fields.Converters.DateTimeConverter.ConvertToDateTime(field.ValueToString());
 				else if (type.Equals(typeof(Fields.DateOnlyField)))
-					Fields.Converters.DateTimeConverter.ConvertToDateOnly(field.ToString());
+                    Fields.Converters.DateTimeConverter.ConvertToDateOnly(field.ValueToString());
 				else if (type.Equals(typeof(Fields.TimeOnlyField)))
-					Fields.Converters.DateTimeConverter.ConvertToTimeOnly(field.ToString());
+                    Fields.Converters.DateTimeConverter.ConvertToTimeOnly(field.ValueToString());
 				return;
 
 			}

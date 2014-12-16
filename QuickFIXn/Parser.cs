@@ -5,11 +5,9 @@ namespace QuickFix
 {
     /// <summary>
     /// </summary>
-    public class Parser
+    public sealed class Parser
     {
-        private const byte SohByteValue = 1;
-        private static readonly byte[] StartOfBeginStringBytes = new byte[] { (byte)'8', (byte)'=' };
-        private static readonly byte[] LengthFieldStartBytes = new byte[] { SohByteValue, (byte)'9', (byte)'=' };
+        private static readonly byte[] LengthFieldStartBytes = new byte[] { Message.SohByteValue, (byte)'9', (byte)'=' };
         private static readonly byte[] CheckSumFieldStartBytes = new byte[] { (byte)'1', (byte)'0', (byte)'=' };
 
         private byte[] _buffer = new byte[1];
@@ -33,24 +31,22 @@ namespace QuickFix
             AddToBuffer(data, 0, bytesAdded);
         }
 
-        public void AddToStream(string data)
+        public bool ReadFixMessage(out byte[] msg)
         {
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
-            AddToStream(bytes, bytes.Length);
-        }
-        
+            msg = new byte[0];
 
-        public bool ReadFixMessage(out string msg)
-        {
-            msg = "";
             int bytesInBuffer = (_writepos - _readpos + _buffer.Length) % _buffer.Length;
 
             if (bytesInBuffer < 2)
+            {
                 return false;
+            }
 
-            int messageStartPos = ByteArray.IndexOfCircular(_buffer, _readpos, bytesInBuffer, StartOfBeginStringBytes);
+            int messageStartPos = ByteArray.IndexOfCircular(_buffer, _readpos, bytesInBuffer, Message.StartOfBeginStringBytes);
             if (messageStartPos == -1)
+            {
                 return false;
+            }
             _readpos = messageStartPos;
 
             bytesInBuffer = (_writepos - _readpos + _buffer.Length) % _buffer.Length;
@@ -67,7 +63,7 @@ namespace QuickFix
 
                 int readposAfterSkip = (readposAfterLength + length) % _buffer.Length;
 
-                if (_buffer[(readposAfterSkip + _buffer.Length - 1) % _buffer.Length] != SohByteValue)
+                if (_buffer[(readposAfterSkip + _buffer.Length - 1) % _buffer.Length] != Message.SohByteValue)
                 {
                     throw new MessageParseError("SOH expected just before end of skipping " + length + " bytes.");
                 }
@@ -77,7 +73,7 @@ namespace QuickFix
                 {
                     return false;
                 }
-                int endOfCheckSumPos = ByteArray.IndexOfCircular(_buffer, checkSumPos, (_writepos - checkSumPos + _buffer.Length) % _buffer.Length, SohByteValue);
+                int endOfCheckSumPos = ByteArray.IndexOfCircular(_buffer, checkSumPos, (_writepos - checkSumPos + _buffer.Length) % _buffer.Length, Message.SohByteValue);
                 if (endOfCheckSumPos == -1)
                 {
                     return false;
@@ -86,10 +82,8 @@ namespace QuickFix
                 int newReadPos = (endOfCheckSumPos + 1) % _buffer.Length;
                 int messageLength = (newReadPos - _readpos + _buffer.Length) % _buffer.Length;
 
-                byte[] msgBytes = new byte[messageLength];
-                CopyFromCircularToLinear(_buffer, _readpos, messageLength, msgBytes, 0);
-                msg = Encoding.UTF8.GetString(msgBytes);
-
+                msg = new byte[messageLength];
+                CopyFromCircularToLinear(_buffer, _readpos, messageLength, msg, 0);
                 _readpos = newReadPos;
                 return true;
             }
@@ -117,7 +111,7 @@ namespace QuickFix
 
             int usedBytes = (startPos - offset + buf.Length) % buf.Length;
 
-            int endPos = ByteArray.IndexOfCircular(buf, startPos, bytesInBuffer - usedBytes, SohByteValue);
+            int endPos = ByteArray.IndexOfCircular(buf, startPos, bytesInBuffer - usedBytes, Message.SohByteValue);
             if (endPos == -1)
             {
                 return false;

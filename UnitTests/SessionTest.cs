@@ -21,25 +21,25 @@ namespace UnitTests
 
         public bool disconnected = false;
 
-        public bool Send(string msgStr)
+        public bool Send(byte[] msgStr)
         {
-            QuickFix.Fields.MsgType msgType = QuickFix.Message.IdentifyType(msgStr);
+            string msgType = QuickFix.Message.GetMsgType(msgStr);
             string beginString = QuickFix.Message.ExtractBeginString(msgStr);
 
-            QuickFix.Message message = messageFactory.Create(beginString, msgType.Obj);
+            QuickFix.Message message = messageFactory.Create(beginString, msgType);
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            message.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
+            message.FromString(msgStr, msgType, false, dd, dd, _defaultMsgFactory);
 
-            if (!msgLookup.ContainsKey(msgType.getValue()))
-                msgLookup.Add(msgType.getValue(), new Queue<QuickFix.Message>());
+            if (!msgLookup.ContainsKey(msgType))
+                msgLookup.Add(msgType, new Queue<QuickFix.Message>());
 
-            msgLookup[msgType.getValue()].Enqueue(message);
+            msgLookup[msgType].Enqueue(message);
 
             QuickFix.Fields.PossDupFlag possDup = new QuickFix.Fields.PossDupFlag(false);
             if (message.Header.IsSetField(possDup))
                 message.Header.GetField(possDup);
 
-            if (possDup.getValue() && msgType.getValue()!= QuickFix.Fields.MsgType.SEQUENCE_RESET)
+            if (possDup.getValue() && msgType != QuickFix.Fields.MsgType.SEQUENCE_RESET)
             {
                 dups.Enqueue(message);
             }
@@ -627,7 +627,7 @@ namespace UnitTests
         [Test]
         public void TestMessageStoreAccessor()
         {
-            List<string> messages = new List<string>();
+            List<byte[]> messages = new List<byte[]>();
 
             messages.Clear();
             session.MessageStore.Get(0, 100, messages);

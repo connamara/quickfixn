@@ -273,7 +273,7 @@ namespace QuickFix
             return resendRange_;
         }
 
-        public void Get(int begSeqNo, int endSeqNo, List<string> messages)
+        public void Get(int begSeqNo, int endSeqNo, List<byte[]> messages)
         {
             lock (sync_)
             {
@@ -347,7 +347,7 @@ namespace QuickFix
 
         #region MessageStore-manipulating Members
 
-        public bool Set(int msgSeqNum, string msg)
+        public bool Set(int msgSeqNum, byte[] msg)
         {
             lock (sync_) { return this.MessageStore.Set(msgSeqNum, msg); }
         }
