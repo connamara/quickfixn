@@ -393,7 +393,7 @@ namespace UnitTests
         public void AssertMsInTag(string msgType, int tag, bool shouldHaveMs)
         {
             QuickFix.Message msg = responder.msgLookup[msgType].Last();
-            string sendingTime = msg.Header.GetField(tag);
+            string sendingTime = msg.Header.GetString(tag);
             Match m = msRegex.Match(sendingTime);
             Assert.That(m.Success == shouldHaveMs);
         }
