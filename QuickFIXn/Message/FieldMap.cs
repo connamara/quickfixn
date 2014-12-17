@@ -511,6 +511,7 @@ namespace QuickFix
         /// getField without a type defaults to returning a string
         /// </summary>
         /// <param name="tag">fix tag</param>
+        [Obsolete("Use GetString instead.")]
         public string GetField(int tag)
         {
             if (_fields.ContainsKey(tag))

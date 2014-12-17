@@ -48,7 +48,7 @@ namespace TradeClient
                 if (message.Header.IsSetField(QuickFix.Fields.Tags.PossDupFlag))
                 {
                     possDupFlag = QuickFix.Fields.Converters.BoolConverter.Convert(
-                        message.Header.GetField(QuickFix.Fields.Tags.PossDupFlag)); /// FIXME
+                        message.Header.GetString(QuickFix.Fields.Tags.PossDupFlag)); /// FIXME
                 }
                 if (possDupFlag)
                     throw new DoNotSend();
@@ -162,7 +162,7 @@ namespace TradeClient
 
             if (m != null && QueryConfirm("Send order"))
             {
-                m.Header.GetField(Tags.BeginString);
+                m.Header.GetString(Tags.BeginString);
 
                 SendMessage(m);
             }

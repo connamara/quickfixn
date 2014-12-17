@@ -555,8 +555,8 @@ namespace QuickFix
 
             try
             {
-                msgType = header.GetField(Fields.Tags.MsgType);
-                string beginString = header.GetField(Fields.Tags.BeginString);
+                msgType = header.GetString(Fields.Tags.MsgType);
+                string beginString = header.GetString(Fields.Tags.BeginString);
 
                 if (!beginString.Equals(this.SessionID.BeginString))
                     throw new UnsupportedVersion();
@@ -902,9 +902,9 @@ namespace QuickFix
 
             try
             {
-                msgType = msg.Header.GetField(Fields.Tags.MsgType);
-                string senderCompID = msg.Header.GetField(Fields.Tags.SenderCompID);
-                string targetCompID = msg.Header.GetField(Fields.Tags.TargetCompID);
+                msgType = msg.Header.GetString(Fields.Tags.MsgType);
+                string senderCompID = msg.Header.GetString(Fields.Tags.SenderCompID);
+                string targetCompID = msg.Header.GetString(Fields.Tags.TargetCompID);
 
                 if (!IsCorrectCompID(senderCompID, targetCompID))
                 {
@@ -939,7 +939,7 @@ namespace QuickFix
                     {
                         this.Log.OnEvent("Chunked ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.ChunkEndSeqNo + " has been satisfied.");
                         int newChunkEndSeqNo = Math.Min(range.EndSeqNo, range.ChunkEndSeqNo + this.MaxMessagesInResendRequest);
-                        GenerateResendRequestRange(msg.Header.GetField(Fields.Tags.BeginString), range.ChunkEndSeqNo + 1, newChunkEndSeqNo);
+                        GenerateResendRequestRange(msg.Header.GetString(Fields.Tags.BeginString), range.ChunkEndSeqNo + 1, newChunkEndSeqNo);
                         range.ChunkEndSeqNo = newChunkEndSeqNo;
                     }
                 }
@@ -1057,7 +1057,7 @@ namespace QuickFix
 
         protected void DoTargetTooHigh(Message msg, int msgSeqNum)
         {
-            string beginString = msg.Header.GetField(Fields.Tags.BeginString);
+            string beginString = msg.Header.GetString(Fields.Tags.BeginString);
 
             this.Log.OnEvent("MsgSeqNum too high, expecting " + state_.GetNextTargetMsgSeqNum() + " but received " + msgSeqNum);
             state_.Queue(msgSeqNum, msg);
@@ -1100,7 +1100,7 @@ namespace QuickFix
         {
             // If config RequiresOrigSendingTime=N, then tolerate SequenceReset messages that lack OrigSendingTime (issue #102).
             // (This field doesn't really make sense in this message, so some parties omit it, even though spec requires it.)
-            string msgType = msg.Header.GetField(Fields.Tags.MsgType); 
+            string msgType = msg.Header.GetString(Fields.Tags.MsgType); 
             if (msgType == Fields.MsgType.SEQUENCE_RESET && RequiresOrigSendingTime == false)
                 return;
 
@@ -1324,7 +1324,7 @@ namespace QuickFix
             InitializeHeader(heartbeat);
             try
             {
-                heartbeat.SetField(new Fields.TestReqID(testRequest.GetField(Fields.Tags.TestReqID)));
+                heartbeat.SetField(new Fields.TestReqID(testRequest.GetString(Fields.Tags.TestReqID)));
                 if (this.EnableLastMsgSeqNumProcessed)
                 {
                     heartbeat.Header.SetField(new Fields.LastMsgSeqNumProcessed(testRequest.Header.GetInt(Tags.MsgSeqNum)));
@@ -1350,7 +1350,7 @@ namespace QuickFix
 
             string msgType;
             if (message.Header.IsSetField(Fields.Tags.MsgType))
-                msgType = message.Header.GetField(Fields.Tags.MsgType);
+                msgType = message.Header.GetString(Fields.Tags.MsgType);
             else
                 msgType = "";
 
@@ -1581,7 +1581,7 @@ namespace QuickFix
 
             lock (sync_)
             {
-                string msgType = message.Header.GetField(Fields.Tags.MsgType);
+                string msgType = message.Header.GetString(Fields.Tags.MsgType);
 
                 InitializeHeader(message, seqNum);
 
