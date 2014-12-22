@@ -136,15 +136,13 @@ namespace QuickFix.Transport
         /// <param name="settings"></param>
         protected override void OnConfigure(SessionSettings settings)
         {
-            try
+            Dictionary dict = settings.Get();
+            if (dict.Has(SessionSettings.RECONNECT_INTERVAL))
             {
-                reconnectInterval_ = Convert.ToInt32(settings.Get().GetLong(SessionSettings.RECONNECT_INTERVAL));
+                reconnectInterval_ = Convert.ToInt32(dict.GetLong(SessionSettings.RECONNECT_INTERVAL));
             }
-            catch (System.Exception)
-            { }
-
             // Don't know if this is required in order to handle settings in the general section
-            socketSettings_.Configure(settings.Get());
+            socketSettings_.Configure(dict);
         }       
 
         protected override void OnStart()
