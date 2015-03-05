@@ -28,7 +28,7 @@ namespace QuickFix
         public ClientHandlerThread(TcpClient tcpClient, long clientId, ILogFactory logFactory, SocketSettings socketSettings)
         {
             // FIXME - this uses a mock session since there is no way to do non-session specific logging.
-            log_ = logFactory.Create(new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
+            log_ = logFactory != null ? logFactory.Create(new SessionID("ClientHandlerThread", clientId.ToString(), "Debug")) : new NullLog();
             id_ = clientId;
             socketReader_ = new SocketReader(tcpClient, socketSettings, this);
         }
