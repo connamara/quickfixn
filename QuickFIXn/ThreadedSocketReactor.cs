@@ -34,7 +34,7 @@ namespace QuickFix
         private LinkedList<ClientHandlerThread> clientThreads_ = new LinkedList<ClientHandlerThread>();
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
-        private QuickFix.Dictionary sessionDict_;
+        private ILogFactory logFactory_;
 
         #endregion
 
@@ -43,11 +43,11 @@ namespace QuickFix
             : this(serverSocketEndPoint, socketSettings, null)
         { }
         
-        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, ILogFactory logFactory)
         {
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
-            sessionDict_ = sessionDict;
+            logFactory_ = logFactory;
         }
 
         public void Start()
@@ -88,7 +88,7 @@ namespace QuickFix
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_);
+                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, logFactory_, socketSettings_);
                     lock (sync_)
                     {
                         clientThreads_.AddLast(t);

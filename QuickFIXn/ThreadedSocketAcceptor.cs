@@ -37,10 +37,10 @@ namespace QuickFix
 
             #endregion
             
-            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
+            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict, ILogFactory logFactory)
             {
                 socketEndPoint_ = socketEndPoint;
-                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict);
+                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, logFactory);
             }
 
             public void AcceptSession(Session session)
@@ -62,22 +62,22 @@ namespace QuickFix
         #region Constructors
 
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(new SessionFactory(application, storeFactory), settings)
+            : this(new SessionFactory(application, storeFactory), settings, new NullLog())
         { }
 
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
-            : this(new SessionFactory(application, storeFactory, logFactory), settings)
+            : this(new SessionFactory(application, storeFactory, logFactory), settings, logFactory)
         { }
 
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
-            : this(new SessionFactory(application, storeFactory, logFactory, messageFactory), settings)
+            : this(new SessionFactory(application, storeFactory, logFactory, messageFactory), settings, logFactory)
         { }
 
-        public ThreadedSocketAcceptor(SessionFactory sessionFactory, SessionSettings settings)
+        public ThreadedSocketAcceptor(SessionFactory sessionFactory, SessionSettings settings, ILogFactory logFactory)
         {
             try
             {
-                CreateSessions(settings, sessionFactory);
+                CreateSessions(settings, sessionFactory, logFactory);
             }
             catch (System.Exception e)
             {
@@ -89,7 +89,7 @@ namespace QuickFix
 
         #region Private Methods
 
-        private void CreateSessions(SessionSettings settings, SessionFactory sessionFactory)
+        private void CreateSessions(SessionSettings settings, SessionFactory sessionFactory, ILogFactory logFactory)
         {
             foreach (SessionID sessionID in settings.GetSessions())
             {
@@ -98,7 +98,7 @@ namespace QuickFix
 
                 if ("acceptor".Equals(connectionType))
                 {
-                    AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(settings, sessionID);
+                    AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(settings, sessionID, logFactory);
                     Session session = sessionFactory.Create(sessionID, dict);
                     descriptor.AcceptSession(session);
                     sessions_[sessionID] = session;
@@ -109,7 +109,7 @@ namespace QuickFix
                 throw new ConfigError("No acceptor sessions found in SessionSettings.");
         }
 
-        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(SessionSettings settings, SessionID sessionID)
+        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(SessionSettings settings, SessionID sessionID, ILogFactory logFactory)
         {
             QuickFix.Dictionary dict = settings.Get(sessionID);
             int port = System.Convert.ToInt32(dict.GetLong(SessionSettings.SOCKET_ACCEPT_PORT));
@@ -135,7 +135,7 @@ namespace QuickFix
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict, logFactory);
                 socketDescriptorForAddress_[socketEndPoint] = descriptor;
             }
 

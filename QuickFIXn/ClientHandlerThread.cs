@@ -17,19 +17,7 @@ namespace QuickFix
         private volatile bool isShutdownRequested_ = false;
         private SocketReader socketReader_;
         private long id_;
-        private FileLog log_;
-
-        [Obsolete("Don't use this constructor")]
-        public ClientHandlerThread(TcpClient tcpClient, long clientId)
-            : this(tcpClient, clientId, new QuickFix.Dictionary())
-        { }
-
-
-        [Obsolete("Don't use this constructor")]
-        public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
-            : this(tcpClient, clientId, settingsDict, new SocketSettings())
-        {
-        }
+        private ILog log_;
 
         /// <summary>
         /// Creates a ClientHandlerThread
@@ -37,17 +25,10 @@ namespace QuickFix
         /// <param name="tcpClient"></param>
         /// <param name="clientId"></param>
         /// <param name="debugLogFilePath">path where thread log will go</param>
-        public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings)
+        public ClientHandlerThread(TcpClient tcpClient, long clientId, ILogFactory logFactory, SocketSettings socketSettings)
         {
-            string debugLogFilePath = "log";
-            if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
-                debugLogFilePath = settingsDict.GetString(SessionSettings.DEBUG_FILE_LOG_PATH);
-            else if (settingsDict.Has(SessionSettings.FILE_LOG_PATH))
-                debugLogFilePath = settingsDict.GetString(SessionSettings.FILE_LOG_PATH);
-
-            // FIXME - do something more flexible than hardcoding a filelog
-            log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
-
+            // FIXME - this uses a mock session since there is no way to do non-session specific logging.
+            log_ = logFactory.Create(new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
             id_ = clientId;
             socketReader_ = new SocketReader(tcpClient, socketSettings, this);
         }
