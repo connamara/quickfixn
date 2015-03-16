@@ -69,12 +69,14 @@ namespace QuickFix.Transport
             catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
             {
                 t.Session.Log.OnEvent("Connection failed: " + ex.Message);
+                t.Disconnect();
                 t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.Session.SessionID);
             }
             catch (SocketException e) 
             {
                 t.Session.Log.OnEvent("Connection failed: " + e.Message);
+                t.Disconnect();
                 t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.Session.SessionID);
             }
@@ -92,7 +94,6 @@ namespace QuickFix.Transport
         {
             lock (sync_)
             {
-                thread.Join();
                 threads_.Remove(thread.Session.SessionID);
             }
         }

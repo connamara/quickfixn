@@ -45,15 +45,6 @@ namespace QuickFix
             thread_.Start(this);
         }
 
-        public void Join()
-        {
-            if (null == thread_)
-                return;
-            Disconnect();
-            thread_.Join(5000);
-            thread_ = null;
-        }
-
         public void Connect()
         {
             Debug.Assert(stream_ == null);
