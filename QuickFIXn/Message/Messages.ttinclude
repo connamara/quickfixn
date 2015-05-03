@@ -1,0 +1,28 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<# foreach(var m in parser.Messages)
+    {
+        manager.StartNewFile(m.Name + ".cs", "QuickFix", version);
+    #>
+using QuickFix.Fields;
+namespace QuickFix.<#=version#>
+{
+    public class <#=m.Name#> : Message
+    {
+        public const string MsgType = "<#=m.MessageType#>";
+
+        public <#=m.Name#>():base()
+        {
+            this.Header.SetField(new QuickFix.Fields.MsgType(MsgType));
+        }
+<#if(m.RequiredFields.Count > 0) {#>
+        public <#=m.Name#>(<#=m.RequiedFields.Select(f => string.Format("QuickFix.Fields.{0} a{0}", f.Name)).ToArray().Join(",\n\t")#>)
+        ):this()
+        {
+<#foreach(var f in m.RequiredFields) {#>
+<#}#>
+        }
+<#}#>
+    }
+}
+<# 
+}#>

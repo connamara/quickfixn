@@ -52,6 +52,16 @@
     <Compile Include="CompositeLog.cs" />
     <Compile Include="DataDictionary\IFieldMapSpec.cs" />
     <Compile Include="DataDictionary\IGroupSpec.cs" />
+    <Compile Include="Fields\Fields.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Fields.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Fields\FieldTags.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FieldTags.tt</DependentUpon>
+    </Compile>
     <Compile Include="IAcceptor.cs" />
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />
@@ -96,13 +106,1840 @@
     <Compile Include="Fields\DateTimeField.cs" />
     <Compile Include="Fields\DecimalField.cs" />
     <Compile Include="Fields\FieldBase.cs" />
-    <Compile Include="Fields\Fields.cs" />
-    <Compile Include="Fields\FieldTags.cs" />
     <Compile Include="Fields\IField.cs" />
     <Compile Include="Fields\IntField.cs" />
     <Compile Include="Fields\StringField.cs" />
     <Compile Include="Message\FieldMap.cs" />
     <Compile Include="Message\FieldNotFoundException.cs" />
+    <Compile Include="Message\FIX40.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FIX40.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\Advertisement.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\Allocation.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\AllocationACK.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\DontKnowTrade.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\Email.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\ExecutionReport.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\Heartbeat.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\IndicationofInterest.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\ListCancelRequest.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\ListExecute.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\ListStatus.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\ListStatusRequest.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\Logon.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\Logout.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\Message.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\MessageFactory.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\NewOrderList.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\NewOrderSingle.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\News.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\OrderCancelReject.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\OrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\OrderCancelRequest.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\OrderStatusRequest.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\Quote.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\QuoteRequest.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\Reject.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\ResendRequest.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\SequenceReset.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX40\TestRequest.cs">
+      <DependentUpon>FIX40.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FIX41.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\Advertisement.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\Allocation.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\AllocationACK.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\DontKnowTrade.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\Email.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\ExecutionReport.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\Heartbeat.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\IndicationofInterest.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\ListCancelRequest.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\ListExecute.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\ListStatus.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\ListStatusRequest.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\Logon.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\Logout.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\Message.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\MessageFactory.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\NewOrderList.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\NewOrderSingle.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\News.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\OrderCancelReject.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\OrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\OrderCancelRequest.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\OrderStatusRequest.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\Quote.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\QuoteRequest.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\Reject.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\ResendRequest.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\SequenceReset.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\SettlementInstructions.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX41\TestRequest.cs">
+      <DependentUpon>FIX41.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FIX42.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\Advertisement.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\Allocation.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\AllocationACK.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\BidRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\BidResponse.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\BusinessMessageReject.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\DontKnowTrade.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\Email.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\ExecutionReport.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\Heartbeat.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\IndicationofInterest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\ListCancelRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\ListExecute.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\ListStatus.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\ListStatusRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\ListStrikePrice.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\Logon.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\Logout.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\MarketDataIncrementalRefresh.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\MarketDataRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\MarketDataRequestReject.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\MarketDataSnapshotFullRefresh.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\MassQuote.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\Message.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\MessageFactory.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\NewOrderList.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\NewOrderSingle.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\News.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\OrderCancelReject.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\OrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\OrderCancelRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\OrderStatusRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\Quote.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\QuoteAcknowledgement.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\QuoteCancel.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\QuoteRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\QuoteStatusRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\Reject.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\ResendRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\SecurityDefinition.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\SecurityDefinitionRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\SecurityStatus.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\SecurityStatusRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\SequenceReset.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\SettlementInstructions.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\TestRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\TradingSessionStatus.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX42\TradingSessionStatusRequest.cs">
+      <DependentUpon>FIX42.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FIX43.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\Advertisement.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\Allocation.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\AllocationACK.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\BidRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\BidResponse.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\BusinessMessageReject.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\CrossOrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\CrossOrderCancelRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\DerivativeSecurityList.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\DerivativeSecurityListRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\DontKnowTrade.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\Email.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\ExecutionReport.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\Heartbeat.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\IndicationOfInterest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\ListCancelRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\ListExecute.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\ListStatus.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\ListStatusRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\ListStrikePrice.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\Logon.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\Logout.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\MarketDataIncrementalRefresh.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\MarketDataRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\MarketDataRequestReject.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\MarketDataSnapshotFullRefresh.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\MassQuote.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\MassQuoteAcknowledgement.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\Message.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\MessageFactory.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\MultilegOrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\NewOrderCross.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\NewOrderList.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\NewOrderMultileg.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\NewOrderSingle.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\News.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\OrderCancelReject.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\OrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\OrderCancelRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\OrderMassCancelReport.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\OrderMassCancelRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\OrderMassStatusRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\OrderStatusRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\Quote.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\QuoteCancel.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\QuoteRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\QuoteRequestReject.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\QuoteStatusReport.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\QuoteStatusRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\RegistrationInstructions.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\RegistrationInstructionsResponse.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\Reject.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\ResendRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\RFQRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\SecurityDefinition.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\SecurityDefinitionRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\SecurityList.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\SecurityListRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\SecurityStatus.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\SecurityStatusRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\SecurityTypeRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\SecurityTypes.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\SequenceReset.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\SettlementInstructions.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\TestRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\TradeCaptureReport.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\TradeCaptureReportRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\TradingSessionStatus.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX43\TradingSessionStatusRequest.cs">
+      <DependentUpon>FIX43.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FIX44.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\Advertisement.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\AllocationInstruction.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\AllocationInstructionAck.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\AllocationReport.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\AllocationReportAck.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\AssignmentReport.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\BidRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\BidResponse.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\BusinessMessageReject.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\CollateralAssignment.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\CollateralInquiry.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\CollateralInquiryAck.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\CollateralReport.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\CollateralRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\CollateralResponse.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\Confirmation.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\ConfirmationAck.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\ConfirmationRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\CrossOrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\CrossOrderCancelRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\DerivativeSecurityList.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\DerivativeSecurityListRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\DontKnowTrade.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\Email.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\ExecutionReport.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\Heartbeat.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\IndicationOfInterest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\ListCancelRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\ListExecute.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\ListStatus.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\ListStatusRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\ListStrikePrice.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\Logon.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\Logout.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\MarketDataIncrementalRefresh.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\MarketDataRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\MarketDataRequestReject.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\MarketDataSnapshotFullRefresh.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\MassQuote.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\MassQuoteAcknowledgement.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\Message.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\MessageFactory.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\MultilegOrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\NetworkStatusRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\NetworkStatusResponse.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\NewOrderCross.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\NewOrderList.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\NewOrderMultileg.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\NewOrderSingle.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\News.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\OrderCancelReject.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\OrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\OrderCancelRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\OrderMassCancelReport.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\OrderMassCancelRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\OrderMassStatusRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\OrderStatusRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\PositionMaintenanceReport.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\PositionMaintenanceRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\PositionReport.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\Quote.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\QuoteCancel.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\QuoteRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\QuoteRequestReject.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\QuoteResponse.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\QuoteStatusReport.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\QuoteStatusRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\RegistrationInstructions.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\RegistrationInstructionsResponse.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\Reject.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\RequestForPositions.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\RequestForPositionsAck.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\ResendRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\RFQRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SecurityDefinition.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SecurityDefinitionRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SecurityList.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SecurityListRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SecurityStatus.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SecurityStatusRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SecurityTypeRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SecurityTypes.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SequenceReset.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SettlementInstructionRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\SettlementInstructions.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\TestRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\TradeCaptureReport.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\TradeCaptureReportAck.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\TradeCaptureReportRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\TradeCaptureReportRequestAck.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\TradingSessionStatus.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\TradingSessionStatusRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\UserRequest.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX44\UserResponse.cs">
+      <DependentUpon>FIX44.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FIX50.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FIX50SP1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\AdjustedPositionReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\Advertisement.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\AllocationInstruction.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\AllocationInstructionAck.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\AllocationInstructionAlert.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\AllocationReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\AllocationReportAck.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ApplicationMessageReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ApplicationMessageRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ApplicationMessageRequestAck.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\AssignmentReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\BidRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\BidResponse.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\BusinessMessageReject.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\CollateralAssignment.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\CollateralInquiry.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\CollateralInquiryAck.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\CollateralReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\CollateralRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\CollateralResponse.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\Confirmation.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ConfirmationAck.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ConfirmationRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ContraryIntentionReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\CrossOrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\CrossOrderCancelRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\DerivativeSecurityList.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\DerivativeSecurityListRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\DerivativeSecurityListUpdateReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\DontKnowTrade.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\Email.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ExecutionAcknowledgement.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ExecutionReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\IOI.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ListCancelRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ListExecute.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ListStatus.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ListStatusRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\ListStrikePrice.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MarketDataIncrementalRefresh.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MarketDataRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MarketDataRequestReject.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MarketDataSnapshotFullRefresh.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MarketDefinition.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MarketDefinitionRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MarketDefinitionUpdateReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MassQuote.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MassQuoteAcknowledgement.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\Message.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MessageFactory.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\MultilegOrderCancelReplace.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\NetworkCounterpartySystemStatusRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\NetworkCounterpartySystemStatusResponse.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\NewOrderCross.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\NewOrderList.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\NewOrderMultileg.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\NewOrderSingle.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\News.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\OrderCancelReject.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\OrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\OrderCancelRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\OrderMassActionReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\OrderMassActionRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\OrderMassCancelReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\OrderMassCancelRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\OrderMassStatusRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\OrderStatusRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\PositionMaintenanceReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\PositionMaintenanceRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\PositionReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\Quote.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\QuoteCancel.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\QuoteRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\QuoteRequestReject.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\QuoteResponse.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\QuoteStatusReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\QuoteStatusRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\RegistrationInstructions.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\RegistrationInstructionsResponse.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\RequestForPositions.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\RequestForPositionsAck.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\RFQRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SecurityDefinition.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SecurityDefinitionRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SecurityDefinitionUpdateReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SecurityList.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SecurityListRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SecurityListUpdateReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SecurityStatus.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SecurityStatusRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SecurityTypeRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SecurityTypes.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SettlementInstructionRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SettlementInstructions.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\SettlementObligationReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\TradeCaptureReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\TradeCaptureReportAck.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\TradeCaptureReportRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\TradeCaptureReportRequestAck.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\TradingSessionList.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\TradingSessionListRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\TradingSessionListUpdateReport.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\TradingSessionStatus.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\TradingSessionStatusRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\UserNotification.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\UserRequest.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP1\UserResponse.cs">
+      <DependentUpon>FIX50SP1.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FIX50SP2.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\AdjustedPositionReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\Advertisement.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\AllocationInstruction.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\AllocationInstructionAck.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\AllocationInstructionAlert.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\AllocationReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\AllocationReportAck.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ApplicationMessageReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ApplicationMessageRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ApplicationMessageRequestAck.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\AssignmentReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\BidRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\BidResponse.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\BusinessMessageReject.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\CollateralAssignment.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\CollateralInquiry.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\CollateralInquiryAck.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\CollateralReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\CollateralRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\CollateralResponse.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\Confirmation.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ConfirmationAck.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ConfirmationRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ContraryIntentionReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\CrossOrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\CrossOrderCancelRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\DerivativeSecurityList.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\DerivativeSecurityListRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\DerivativeSecurityListUpdateReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\DontKnowTrade.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\Email.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ExecutionAcknowledgement.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ExecutionReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\IOI.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ListCancelRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ListExecute.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ListStatus.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ListStatusRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\ListStrikePrice.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MarketDataIncrementalRefresh.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MarketDataRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MarketDataRequestReject.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MarketDataSnapshotFullRefresh.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MarketDefinition.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MarketDefinitionRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MarketDefinitionUpdateReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MassQuote.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MassQuoteAcknowledgement.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\Message.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MessageFactory.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\MultilegOrderCancelReplace.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\NetworkCounterpartySystemStatusRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\NetworkCounterpartySystemStatusResponse.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\NewOrderCross.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\NewOrderList.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\NewOrderMultileg.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\NewOrderSingle.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\News.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\OrderCancelReject.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\OrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\OrderCancelRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\OrderMassActionReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\OrderMassActionRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\OrderMassCancelReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\OrderMassCancelRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\OrderMassStatusRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\OrderStatusRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\PartyDetailsListReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\PartyDetailsListRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\PositionMaintenanceReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\PositionMaintenanceRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\PositionReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\Quote.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\QuoteCancel.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\QuoteRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\QuoteRequestReject.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\QuoteResponse.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\QuoteStatusReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\QuoteStatusRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\RegistrationInstructions.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\RegistrationInstructionsResponse.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\RequestForPositions.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\RequestForPositionsAck.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\RFQRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SecurityDefinition.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SecurityDefinitionRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SecurityDefinitionUpdateReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SecurityList.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SecurityListRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SecurityListUpdateReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SecurityStatus.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SecurityStatusRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SecurityTypeRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SecurityTypes.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SettlementInstructionRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SettlementInstructions.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\SettlementObligationReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\StreamAssignmentReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\StreamAssignmentReportACK.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\StreamAssignmentRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\TradeCaptureReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\TradeCaptureReportAck.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\TradeCaptureReportRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\TradeCaptureReportRequestAck.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\TradingSessionList.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\TradingSessionListRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\TradingSessionListUpdateReport.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\TradingSessionStatus.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\TradingSessionStatusRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\UserNotification.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\UserRequest.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50SP2\UserResponse.cs">
+      <DependentUpon>FIX50SP2.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\AdjustedPositionReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\Advertisement.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\AllocationInstruction.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\AllocationInstructionAck.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\AllocationInstructionAlert.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\AllocationReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\AllocationReportAck.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\AssignmentReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\BidRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\BidResponse.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\BusinessMessageReject.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\CollateralAssignment.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\CollateralInquiry.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\CollateralInquiryAck.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\CollateralReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\CollateralRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\CollateralResponse.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\Confirmation.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\ConfirmationAck.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\ConfirmationRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\ContraryIntentionReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\CrossOrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\CrossOrderCancelRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\DerivativeSecurityList.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\DerivativeSecurityListRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\DontKnowTrade.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\Email.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\ExecutionAcknowledgement.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\ExecutionReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\IOI.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\ListCancelRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\ListExecute.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\ListStatus.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\ListStatusRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\ListStrikePrice.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\MarketDataIncrementalRefresh.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\MarketDataRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\MarketDataRequestReject.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\MarketDataSnapshotFullRefresh.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\MassQuote.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\MassQuoteAcknowledgement.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\Message.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\MessageFactory.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\MultilegOrderCancelReplace.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\NetworkCounterpartySystemStatusRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\NetworkCounterpartySystemStatusResponse.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\NewOrderCross.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\NewOrderList.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\NewOrderMultileg.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\NewOrderSingle.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\News.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\OrderCancelReject.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\OrderCancelReplaceRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\OrderCancelRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\OrderMassCancelReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\OrderMassCancelRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\OrderMassStatusRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\OrderStatusRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\PositionMaintenanceReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\PositionMaintenanceRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\PositionReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\Quote.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\QuoteCancel.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\QuoteRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\QuoteRequestReject.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\QuoteResponse.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\QuoteStatusReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\QuoteStatusRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\RegistrationInstructions.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\RegistrationInstructionsResponse.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\RequestForPositions.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\RequestForPositionsAck.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\RFQRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SecurityDefinition.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SecurityDefinitionRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SecurityDefinitionUpdateReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SecurityList.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SecurityListRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SecurityListUpdateReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SecurityStatus.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SecurityStatusRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SecurityTypeRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SecurityTypes.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SettlementInstructionRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\SettlementInstructions.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\TradeCaptureReport.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\TradeCaptureReportAck.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\TradeCaptureReportRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\TradeCaptureReportRequestAck.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\TradingSessionList.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\TradingSessionListRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\TradingSessionStatus.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\TradingSessionStatusRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\UserRequest.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIX50\UserResponse.cs">
+      <DependentUpon>FIX50.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIXT11.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>FIXT11.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIXT11\Heartbeat.cs">
+      <DependentUpon>FIXT11.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIXT11\Logon.cs">
+      <DependentUpon>FIXT11.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIXT11\Logout.cs">
+      <DependentUpon>FIXT11.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIXT11\Message.cs">
+      <DependentUpon>FIXT11.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIXT11\MessageFactory.cs">
+      <DependentUpon>FIXT11.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIXT11\Reject.cs">
+      <DependentUpon>FIXT11.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIXT11\ResendRequest.cs">
+      <DependentUpon>FIXT11.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIXT11\SequenceReset.cs">
+      <DependentUpon>FIXT11.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\FIXT11\TestRequest.cs">
+      <DependentUpon>FIXT11.txt4</DependentUpon>
+    </Compile>
+    <Compile Include="Message\Generate.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Generate.tt</DependentUpon>
+    </Compile>
     <Compile Include="Message\Group.cs" />
     <Compile Include="Message\Message.cs" />
     <Compile Include="NullApplication.cs" />
@@ -132,8 +1969,96 @@
     <Compile Include="Util\UtcDateTimeSerializer.cs" />
     <Compile Include="Values.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Fields\Fields.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Fields.cs</LastGenOutput>
+    </Content>
+    <Content Include="Fields\FieldTags.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>FieldTags.cs</LastGenOutput>
+    </Content>
+    <Content Include="Message\FIX40.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Generate.tt</DependentUpon>
+      <LastGenOutput>FIX40.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
+    </Content>
+    <Content Include="Message\FIX41.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Generate.tt</DependentUpon>
+      <LastGenOutput>FIX41.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
+    </Content>
+    <Content Include="Message\FIX42.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Generate.tt</DependentUpon>
+      <LastGenOutput>FIX42.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
+    </Content>
+    <Content Include="Message\FIX43.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Generate.tt</DependentUpon>
+      <LastGenOutput>FIX43.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
+    </Content>
+    <Content Include="Message\FIX44.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Generate.tt</DependentUpon>
+      <LastGenOutput>FIX44.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
+    </Content>
+    <Content Include="Message\FIX50.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Generate.tt</DependentUpon>
+      <LastGenOutput>FIX50.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
+    </Content>
+    <Content Include="Message\FIX50SP1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Generate.tt</DependentUpon>
+      <LastGenOutput>FIX50SP1.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
+    </Content>
+    <Content Include="Message\FIX50SP2.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Generate.tt</DependentUpon>
+      <LastGenOutput>FIX50SP2.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
+    </Content>
+    <Content Include="Message\FIXT11.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Generate.tt</DependentUpon>
+      <LastGenOutput>FIXT11.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
+    </Content>
+    <Content Include="Message\Generate.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Generate.cs</LastGenOutput>
+      <TransformOnBuild>True</TransformOnBuild>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Message\FIX40\FIX40.txt4" />
+    <None Include="Message\FIX41\FIX41.txt4" />
+    <None Include="Message\FIX42\FIX42.txt4" />
+    <None Include="Message\FIX43\FIX43.txt4" />
+    <None Include="Message\FIX44\FIX44.txt4" />
+    <None Include="Message\FIX50SP1\FIX50SP1.txt4" />
+    <None Include="Message\FIX50SP2\FIX50SP2.txt4" />
+    <None Include="Message\FIX50\FIX50.txt4" />
+    <None Include="Message\FIXT11\FIXT11.txt4" />
+    <None Include="Message\Message.ttinclude" />
+    <None Include="Message\MessageFactory.ttinclude" />
+    <None Include="Message\Messages.ttinclude" />
+    <None Include="Template\SpecParser.ttinclude" />
+    <None Include="Template\TemplateFileManagerV2.1.ttinclude" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="FixMessages.csproj" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

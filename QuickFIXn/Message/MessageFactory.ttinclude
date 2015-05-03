@@ -1,0 +1,25 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+ <#manager.StartNewFile("MessageFactory.cs", "QuickFix", version);#>
+namespace QuickFix.<#=version#>
+{
+    public class MessageFactory : IMessageFactory
+    {
+        public QuickFix.Message Create(string beginString, string msgType)
+        {
+            switch(msgType)
+            {
+<# foreach(var m in parser.Messages)
+   {#>
+                case <#=m.Name#>.MsgType: return new <#=m.Name#>();
+<#}#>
+            }
+
+            return new QuickFix.Message();
+        }
+
+        public Group Create(string beginString, string msgType, int correspondingFieldID)
+        {
+            return null;
+        }
+    }
+}

@@ -1,0 +1,27 @@
+﻿<#@ template  debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#
+    var manager = TemplateFileManager.Create(this);    
+    var path = Path.GetDirectoryName(Host.TemplateFile);
+    var parser = new Parser();
+    var version = "FIX41";
+    parser.Load(@"C:\GitHub\quickfixn\QuickFIXn\Message\..\..\spec\fix\FIX41.xml");#>
+    <#@ include file="Message.ttinclude" #>
+    <#@ include file="MessageFactory.ttinclude" #>
+    <#@ include file="Messages.ttinclude" #>
+<#
+    manager.Process();
+#> 
+<#@ include file="..\Template\SpecParser.ttinclude" #>
+<#@ include file="..\Template\TemplateFileManagerV2.1.ttinclude" #>
+
+
+

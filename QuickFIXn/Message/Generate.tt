@@ -1,0 +1,56 @@
+﻿<#@ template  debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#
+    var manager = TemplateFileManager.Create(this);    
+    var path = Path.GetDirectoryName(Host.TemplateFile);
+    var specPath = Path.Combine(path, "..\\..\\spec\\fix");
+    var specFiles = Directory.GetFiles(specPath, "*.xml");
+
+    foreach(var sf in specFiles)
+    {
+        var p = new Parser();
+        p.Load(sf);
+        var filePath = Path.Combine(path, p.Version);
+        manager.StartNewFile(p.Version + ".tt");//, "QuickFix", p.Version);
+    #>
+\<#@ template  debug="true" hostSpecific="true" \#>
+\<#@ output extension=".cs" \#>
+\<#@ Assembly Name="System.Core" \#>
+\<#@ Assembly Name="System.Windows.Forms" \#>
+\<#@ import namespace="System" \#>
+\<#@ import namespace="System.IO" \#>
+\<#@ import namespace="System.Diagnostics" \#>
+\<#@ import namespace="System.Linq" \#>
+\<#@ import namespace="System.Collections" \#>
+\<#@ import namespace="System.Collections.Generic" \#> 
+\<#
+    var manager = TemplateFileManager.Create(this);    
+    var path = Path.GetDirectoryName(Host.TemplateFile);
+    var parser = new Parser();
+    var version = "<#=p.Version#>";
+    parser.Load(@"<#=sf#>");\#>
+    \<#@ include file="Message.ttinclude" \#>
+    \<#@ include file="MessageFactory.ttinclude" \#>
+    \<#@ include file="Messages.ttinclude" \#>
+\<#
+    manager.Process();
+\#> 
+\<#@ include file="..\Template\SpecParser.ttinclude" \#>
+\<#@ include file="..\Template\TemplateFileManagerV2.1.ttinclude" \#>
+
+
+
+<#  }
+    manager.Process();
+#>
+
+<#@ include file="..\Template\SpecParser.ttinclude" #>
+<#@ include file="..\Template\TemplateFileManagerV2.1.ttinclude" #>

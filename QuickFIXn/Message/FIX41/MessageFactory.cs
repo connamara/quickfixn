@@ -1,99 +1,48 @@
-// This is a generated file.  Don't edit it directly!
-
-namespace QuickFix
+﻿namespace QuickFix.FIX41
 {
-    namespace FIX41
+    public class MessageFactory : IMessageFactory
     {
-        public class MessageFactory : IMessageFactory
+        public QuickFix.Message Create(string beginString, string msgType)
         {
-            public QuickFix.Message Create(string beginString, string msgType)
+            switch(msgType)
             {
-                switch (msgType)
-                {
-                    case QuickFix.FIX41.Heartbeat.MsgType: return new QuickFix.FIX41.Heartbeat();
-                    case QuickFix.FIX41.Logon.MsgType: return new QuickFix.FIX41.Logon();
-                    case QuickFix.FIX41.TestRequest.MsgType: return new QuickFix.FIX41.TestRequest();
-                    case QuickFix.FIX41.ResendRequest.MsgType: return new QuickFix.FIX41.ResendRequest();
-                    case QuickFix.FIX41.Reject.MsgType: return new QuickFix.FIX41.Reject();
-                    case QuickFix.FIX41.SequenceReset.MsgType: return new QuickFix.FIX41.SequenceReset();
-                    case QuickFix.FIX41.Logout.MsgType: return new QuickFix.FIX41.Logout();
-                    case QuickFix.FIX41.Advertisement.MsgType: return new QuickFix.FIX41.Advertisement();
-                    case QuickFix.FIX41.IndicationofInterest.MsgType: return new QuickFix.FIX41.IndicationofInterest();
-                    case QuickFix.FIX41.News.MsgType: return new QuickFix.FIX41.News();
-                    case QuickFix.FIX41.Email.MsgType: return new QuickFix.FIX41.Email();
-                    case QuickFix.FIX41.QuoteRequest.MsgType: return new QuickFix.FIX41.QuoteRequest();
-                    case QuickFix.FIX41.Quote.MsgType: return new QuickFix.FIX41.Quote();
-                    case QuickFix.FIX41.NewOrderSingle.MsgType: return new QuickFix.FIX41.NewOrderSingle();
-                    case QuickFix.FIX41.ExecutionReport.MsgType: return new QuickFix.FIX41.ExecutionReport();
-                    case QuickFix.FIX41.DontKnowTrade.MsgType: return new QuickFix.FIX41.DontKnowTrade();
-                    case QuickFix.FIX41.OrderCancelReplaceRequest.MsgType: return new QuickFix.FIX41.OrderCancelReplaceRequest();
-                    case QuickFix.FIX41.OrderCancelRequest.MsgType: return new QuickFix.FIX41.OrderCancelRequest();
-                    case QuickFix.FIX41.OrderCancelReject.MsgType: return new QuickFix.FIX41.OrderCancelReject();
-                    case QuickFix.FIX41.OrderStatusRequest.MsgType: return new QuickFix.FIX41.OrderStatusRequest();
-                    case QuickFix.FIX41.Allocation.MsgType: return new QuickFix.FIX41.Allocation();
-                    case QuickFix.FIX41.AllocationACK.MsgType: return new QuickFix.FIX41.AllocationACK();
-                    case QuickFix.FIX41.SettlementInstructions.MsgType: return new QuickFix.FIX41.SettlementInstructions();
-                    case QuickFix.FIX41.NewOrderList.MsgType: return new QuickFix.FIX41.NewOrderList();
-                    case QuickFix.FIX41.ListStatus.MsgType: return new QuickFix.FIX41.ListStatus();
-                    case QuickFix.FIX41.ListExecute.MsgType: return new QuickFix.FIX41.ListExecute();
-                    case QuickFix.FIX41.ListCancelRequest.MsgType: return new QuickFix.FIX41.ListCancelRequest();
-                    case QuickFix.FIX41.ListStatusRequest.MsgType: return new QuickFix.FIX41.ListStatusRequest();
-                }
-
-                return new QuickFix.Message();
+                case Heartbeat.MsgType: return new Heartbeat();
+                case Logon.MsgType: return new Logon();
+                case TestRequest.MsgType: return new TestRequest();
+                case ResendRequest.MsgType: return new ResendRequest();
+                case Reject.MsgType: return new Reject();
+                case SequenceReset.MsgType: return new SequenceReset();
+                case Logout.MsgType: return new Logout();
+                case Advertisement.MsgType: return new Advertisement();
+                case IndicationofInterest.MsgType: return new IndicationofInterest();
+                case News.MsgType: return new News();
+                case Email.MsgType: return new Email();
+                case QuoteRequest.MsgType: return new QuoteRequest();
+                case Quote.MsgType: return new Quote();
+                case NewOrderSingle.MsgType: return new NewOrderSingle();
+                case ExecutionReport.MsgType: return new ExecutionReport();
+                case DontKnowTrade.MsgType: return new DontKnowTrade();
+                case OrderCancelReplaceRequest.MsgType: return new OrderCancelReplaceRequest();
+                case OrderCancelRequest.MsgType: return new OrderCancelRequest();
+                case OrderCancelReject.MsgType: return new OrderCancelReject();
+                case OrderStatusRequest.MsgType: return new OrderStatusRequest();
+                case Allocation.MsgType: return new Allocation();
+                case AllocationACK.MsgType: return new AllocationACK();
+                case SettlementInstructions.MsgType: return new SettlementInstructions();
+                case NewOrderList.MsgType: return new NewOrderList();
+                case ListStatus.MsgType: return new ListStatus();
+                case ListExecute.MsgType: return new ListExecute();
+                case ListCancelRequest.MsgType: return new ListCancelRequest();
+                case ListStatusRequest.MsgType: return new ListStatusRequest();
             }
 
+            return new QuickFix.Message();
+        }
 
-            public Group Create(string beginString, string msgType, int correspondingFieldID)
-            {
-                if (QuickFix.FIX41.IndicationofInterest.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoIOIQualifiers: return new QuickFix.FIX41.IndicationofInterest.NoIOIQualifiersGroup();
-                    }
-                }
-
-                if (QuickFix.FIX41.News.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoRelatedSym: return new QuickFix.FIX41.News.NoRelatedSymGroup();
-                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX41.News.LinesOfTextGroup();
-                    }
-                }
-
-                if (QuickFix.FIX41.Email.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoRelatedSym: return new QuickFix.FIX41.Email.NoRelatedSymGroup();
-                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX41.Email.LinesOfTextGroup();
-                    }
-                }
-
-                if (QuickFix.FIX41.Allocation.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX41.Allocation.NoOrdersGroup();
-                        case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX41.Allocation.NoExecsGroup();
-                        case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX41.Allocation.NoAllocsGroup();
-                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX41.Allocation.NoAllocsGroup.NoMiscFeesGroup();
-                    }
-                }
-
-                if (QuickFix.FIX41.ListStatus.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX41.ListStatus.NoOrdersGroup();
-                    }
-                }
-
-                return null;
-            }
-
+        public Group Create(string beginString, string msgType, int correspondingFieldID)
+        {
+            return null;
         }
     }
 }
+    

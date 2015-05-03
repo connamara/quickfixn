@@ -1,12 +1,9 @@
-using System;
+﻿using System;
 
 namespace QuickFix.Fields
 {
-    /// <summary>
-    /// FIX Field Tag Values
-    /// </summary>/
     public static class Tags
-    {
+    {    
         public const int Account = 1;
         public const int AdvId = 2;
         public const int AdvRefID = 3;
@@ -1659,3 +1656,4 @@ namespace QuickFix.Fields
         public const int RiskEncodedSecurityDesc = 1621;
     }
 }
+

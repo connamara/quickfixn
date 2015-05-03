@@ -1,97 +1,47 @@
-// This is a generated file.  Don't edit it directly!
-
-namespace QuickFix
+﻿namespace QuickFix.FIX40
 {
-    namespace FIX40
+    public class MessageFactory : IMessageFactory
     {
-        public class MessageFactory : IMessageFactory
+        public QuickFix.Message Create(string beginString, string msgType)
         {
-            public QuickFix.Message Create(string beginString, string msgType)
+            switch(msgType)
             {
-                switch (msgType)
-                {
-                    case QuickFix.FIX40.Heartbeat.MsgType: return new QuickFix.FIX40.Heartbeat();
-                    case QuickFix.FIX40.Logon.MsgType: return new QuickFix.FIX40.Logon();
-                    case QuickFix.FIX40.TestRequest.MsgType: return new QuickFix.FIX40.TestRequest();
-                    case QuickFix.FIX40.ResendRequest.MsgType: return new QuickFix.FIX40.ResendRequest();
-                    case QuickFix.FIX40.Reject.MsgType: return new QuickFix.FIX40.Reject();
-                    case QuickFix.FIX40.SequenceReset.MsgType: return new QuickFix.FIX40.SequenceReset();
-                    case QuickFix.FIX40.Logout.MsgType: return new QuickFix.FIX40.Logout();
-                    case QuickFix.FIX40.Advertisement.MsgType: return new QuickFix.FIX40.Advertisement();
-                    case QuickFix.FIX40.IndicationofInterest.MsgType: return new QuickFix.FIX40.IndicationofInterest();
-                    case QuickFix.FIX40.News.MsgType: return new QuickFix.FIX40.News();
-                    case QuickFix.FIX40.Email.MsgType: return new QuickFix.FIX40.Email();
-                    case QuickFix.FIX40.QuoteRequest.MsgType: return new QuickFix.FIX40.QuoteRequest();
-                    case QuickFix.FIX40.Quote.MsgType: return new QuickFix.FIX40.Quote();
-                    case QuickFix.FIX40.NewOrderSingle.MsgType: return new QuickFix.FIX40.NewOrderSingle();
-                    case QuickFix.FIX40.ExecutionReport.MsgType: return new QuickFix.FIX40.ExecutionReport();
-                    case QuickFix.FIX40.DontKnowTrade.MsgType: return new QuickFix.FIX40.DontKnowTrade();
-                    case QuickFix.FIX40.OrderCancelReplaceRequest.MsgType: return new QuickFix.FIX40.OrderCancelReplaceRequest();
-                    case QuickFix.FIX40.OrderCancelRequest.MsgType: return new QuickFix.FIX40.OrderCancelRequest();
-                    case QuickFix.FIX40.OrderCancelReject.MsgType: return new QuickFix.FIX40.OrderCancelReject();
-                    case QuickFix.FIX40.OrderStatusRequest.MsgType: return new QuickFix.FIX40.OrderStatusRequest();
-                    case QuickFix.FIX40.Allocation.MsgType: return new QuickFix.FIX40.Allocation();
-                    case QuickFix.FIX40.AllocationACK.MsgType: return new QuickFix.FIX40.AllocationACK();
-                    case QuickFix.FIX40.NewOrderList.MsgType: return new QuickFix.FIX40.NewOrderList();
-                    case QuickFix.FIX40.ListStatus.MsgType: return new QuickFix.FIX40.ListStatus();
-                    case QuickFix.FIX40.ListExecute.MsgType: return new QuickFix.FIX40.ListExecute();
-                    case QuickFix.FIX40.ListCancelRequest.MsgType: return new QuickFix.FIX40.ListCancelRequest();
-                    case QuickFix.FIX40.ListStatusRequest.MsgType: return new QuickFix.FIX40.ListStatusRequest();
-                }
-
-                return new QuickFix.Message();
+                case Heartbeat.MsgType: return new Heartbeat();
+                case Logon.MsgType: return new Logon();
+                case TestRequest.MsgType: return new TestRequest();
+                case ResendRequest.MsgType: return new ResendRequest();
+                case Reject.MsgType: return new Reject();
+                case SequenceReset.MsgType: return new SequenceReset();
+                case Logout.MsgType: return new Logout();
+                case Advertisement.MsgType: return new Advertisement();
+                case IndicationofInterest.MsgType: return new IndicationofInterest();
+                case News.MsgType: return new News();
+                case Email.MsgType: return new Email();
+                case QuoteRequest.MsgType: return new QuoteRequest();
+                case Quote.MsgType: return new Quote();
+                case NewOrderSingle.MsgType: return new NewOrderSingle();
+                case ExecutionReport.MsgType: return new ExecutionReport();
+                case DontKnowTrade.MsgType: return new DontKnowTrade();
+                case OrderCancelReplaceRequest.MsgType: return new OrderCancelReplaceRequest();
+                case OrderCancelRequest.MsgType: return new OrderCancelRequest();
+                case OrderCancelReject.MsgType: return new OrderCancelReject();
+                case OrderStatusRequest.MsgType: return new OrderStatusRequest();
+                case Allocation.MsgType: return new Allocation();
+                case AllocationACK.MsgType: return new AllocationACK();
+                case NewOrderList.MsgType: return new NewOrderList();
+                case ListStatus.MsgType: return new ListStatus();
+                case ListExecute.MsgType: return new ListExecute();
+                case ListCancelRequest.MsgType: return new ListCancelRequest();
+                case ListStatusRequest.MsgType: return new ListStatusRequest();
             }
 
+            return new QuickFix.Message();
+        }
 
-            public Group Create(string beginString, string msgType, int correspondingFieldID)
-            {
-                if (QuickFix.FIX40.News.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.News.LinesOfTextGroup();
-                    }
-                }
-
-                if (QuickFix.FIX40.Email.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.Email.LinesOfTextGroup();
-                    }
-                }
-
-                if (QuickFix.FIX40.ExecutionReport.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.ExecutionReport.NoMiscFeesGroup();
-                    }
-                }
-
-                if (QuickFix.FIX40.Allocation.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.Allocation.NoOrdersGroup();
-                        case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX40.Allocation.NoExecsGroup();
-                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.Allocation.NoMiscFeesGroup();
-                        case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX40.Allocation.NoAllocsGroup();
-                        case QuickFix.Fields.Tags.NoDlvyInst: return new QuickFix.FIX40.Allocation.NoAllocsGroup.NoDlvyInstGroup();
-                    }
-                }
-
-                if (QuickFix.FIX40.ListStatus.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.ListStatus.NoOrdersGroup();
-                    }
-                }
-
-                return null;
-            }
-
+        public Group Create(string beginString, string msgType, int correspondingFieldID)
+        {
+            return null;
         }
     }
 }
+    
