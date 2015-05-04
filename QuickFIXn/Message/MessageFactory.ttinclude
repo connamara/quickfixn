@@ -19,6 +19,16 @@ namespace QuickFix.<#=version#>
 
         public Group Create(string beginString, string msgType, int correspondingFieldID)
         {
+<# foreach(var m in parser.Messages.Where(m => m.Groups.Count > 0))
+   {#>
+          if(QuickFix.<#=version#>.<#=m.Name#>.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              <#=string.Join("\n\t\t\t\t\t", m.GetGroupsByTag().Select(gbt => string.Format("case QuickFix.Fields.Tags.{0}: return new QuickFix.{1}.{2}();", gbt.Item1, version, gbt.Item2)).ToArray())#>
+              }
+          }
+<# }#>
             return null;
         }
     }

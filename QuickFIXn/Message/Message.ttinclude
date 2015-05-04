@@ -8,7 +8,7 @@ namespace QuickFix.<#=version#>
     {
         public Message() : base()
         {
-            this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.<#=version#>));
+            this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.<#=beginString#>));
         }
     }
 }

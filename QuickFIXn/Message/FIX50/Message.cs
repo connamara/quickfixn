@@ -4,7 +4,7 @@
     {
         public Message() : base()
         {
-            this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.FIX50));
+            this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.FIXT11));
         }
     }
 }

@@ -1982,60 +1982,60 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Generate.tt</DependentUpon>
       <LastGenOutput>FIX40.cs</LastGenOutput>
-      <TransformOnBuild>True</TransformOnBuild>
+      <TransformOnBuild>False</TransformOnBuild>
     </Content>
     <Content Include="Message\FIX41.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Generate.tt</DependentUpon>
       <LastGenOutput>FIX41.cs</LastGenOutput>
-      <TransformOnBuild>True</TransformOnBuild>
+      <TransformOnBuild>False</TransformOnBuild>
     </Content>
     <Content Include="Message\FIX42.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Generate.tt</DependentUpon>
       <LastGenOutput>FIX42.cs</LastGenOutput>
-      <TransformOnBuild>True</TransformOnBuild>
+      <TransformOnBuild>False</TransformOnBuild>
     </Content>
     <Content Include="Message\FIX43.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Generate.tt</DependentUpon>
       <LastGenOutput>FIX43.cs</LastGenOutput>
-      <TransformOnBuild>True</TransformOnBuild>
+      <TransformOnBuild>False</TransformOnBuild>
     </Content>
     <Content Include="Message\FIX44.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Generate.tt</DependentUpon>
       <LastGenOutput>FIX44.cs</LastGenOutput>
-      <TransformOnBuild>True</TransformOnBuild>
+      <TransformOnBuild>False</TransformOnBuild>
     </Content>
     <Content Include="Message\FIX50.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Generate.tt</DependentUpon>
       <LastGenOutput>FIX50.cs</LastGenOutput>
-      <TransformOnBuild>True</TransformOnBuild>
+      <TransformOnBuild>False</TransformOnBuild>
     </Content>
     <Content Include="Message\FIX50SP1.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Generate.tt</DependentUpon>
       <LastGenOutput>FIX50SP1.cs</LastGenOutput>
-      <TransformOnBuild>True</TransformOnBuild>
+      <TransformOnBuild>False</TransformOnBuild>
     </Content>
     <Content Include="Message\FIX50SP2.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Generate.tt</DependentUpon>
       <LastGenOutput>FIX50SP2.cs</LastGenOutput>
-      <TransformOnBuild>True</TransformOnBuild>
+      <TransformOnBuild>False</TransformOnBuild>
     </Content>
     <Content Include="Message\FIXT11.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Generate.tt</DependentUpon>
       <LastGenOutput>FIXT11.cs</LastGenOutput>
-      <TransformOnBuild>True</TransformOnBuild>
+      <TransformOnBuild>False</TransformOnBuild>
     </Content>
     <Content Include="Message\Generate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Generate.cs</LastGenOutput>
-      <TransformOnBuild>True</TransformOnBuild>
+      <TransformOnBuild>False</TransformOnBuild>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -2051,6 +2051,7 @@
     <None Include="Message\FIX50SP2\FIX50SP2.txt4" />
     <None Include="Message\FIX50\FIX50.txt4" />
     <None Include="Message\FIXT11\FIXT11.txt4" />
+    <None Include="Message\Groups.ttinclude" />
     <None Include="Message\Message.ttinclude" />
     <None Include="Message\MessageFactory.ttinclude" />
     <None Include="Message\Messages.ttinclude" />

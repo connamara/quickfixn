@@ -1,0 +1,35 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#
+Action<Group> OutputGroup = null;
+OutputGroup = new Action<Group>(g =>
+{
+#>
+        public class <#=g.Name#> : Group
+        {
+            public static int[] fieldOrder = {<#=string.Join(", ", g.Fields.Select(f => string.Format("Tags.{0}",f.Name)).ToArray())#>, 0};
+
+            public <#=g.Name#>() : base(Tags.<#=g.CountField.Name#>, Tags.<#=g.Fields[0].Name#>, fieldOrder)
+            {
+            }
+
+            public override Group Clone()
+            {
+                var clone = new <#=g.Name#>();
+                clone.CopyStateFrom(this);
+                return clone;
+            }
+<#foreach(var f in g.Fields)
+  {#>
+<#@ include file="MessageField.ttinclude" #>
+<#}#>
+
+<#
+foreach(var childGroup in g.Groups)
+{
+  OutputGroup(childGroup);
+}#>
+        }
+<#
+});
+OutputGroup(group);#>
+

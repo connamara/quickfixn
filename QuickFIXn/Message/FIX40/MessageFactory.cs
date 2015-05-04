@@ -40,6 +40,45 @@
 
         public Group Create(string beginString, string msgType, int correspondingFieldID)
         {
+          if(QuickFix.FIX40.News.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.News.LinesOfTextGroup();
+              }
+          }
+          if(QuickFix.FIX40.Email.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.Email.LinesOfTextGroup();
+              }
+          }
+          if(QuickFix.FIX40.ExecutionReport.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.ExecutionReport.NoMiscFeesGroup();
+              }
+          }
+          if(QuickFix.FIX40.Allocation.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.Allocation.NoOrdersGroup();
+					case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX40.Allocation.NoExecsGroup();
+					case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.Allocation.NoMiscFeesGroup();
+					case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX40.Allocation.NoAllocsGroup();
+					case QuickFix.Fields.Tags.NoDlvyInst: return new QuickFix.FIX40.Allocation.NoAllocsGroup.NoDlvyInstGroup();
+              }
+          }
+          if(QuickFix.FIX40.ListStatus.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.ListStatus.NoOrdersGroup();
+              }
+          }
             return null;
         }
     }

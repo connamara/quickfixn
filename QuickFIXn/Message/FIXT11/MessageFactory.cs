@@ -20,6 +20,13 @@
 
         public Group Create(string beginString, string msgType, int correspondingFieldID)
         {
+          if(QuickFix.FIXT11.Logon.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.NoMsgTypes: return new QuickFix.FIXT11.Logon.NoMsgTypesGroup();
+              }
+          }
             return null;
         }
     }

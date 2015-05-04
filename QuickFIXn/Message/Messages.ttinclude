@@ -1,6 +1,6 @@
 ﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
 <# foreach(var m in parser.Messages)
-    {
+   {
         manager.StartNewFile(m.Name + ".cs", "QuickFix", version);
     #>
 using QuickFix.Fields;
@@ -14,15 +14,26 @@ namespace QuickFix.<#=version#>
         {
             this.Header.SetField(new QuickFix.Fields.MsgType(MsgType));
         }
-<#if(m.RequiredFields.Count > 0) {#>
-        public <#=m.Name#>(<#=m.RequiedFields.Select(f => string.Format("QuickFix.Fields.{0} a{0}", f.Name)).ToArray().Join(",\n\t")#>)
-        ):this()
+<#if(m.RequiredFields.Count > 0)
+  {#>
+        public <#=m.Name#>(<#=string.Join(",\n\t\t\t\t", m.RequiredFields.Select(f => string.Format("QuickFix.Fields.{0} a{0}", f.Name)).ToArray())#>)
+               : this()
         {
-<#foreach(var f in m.RequiredFields) {#>
-<#}#>
+            <#=string.Join(";\n\t\t\t", m.RequiredFields.Select(f => string.Format("this.{0} = a{0}", f.Name)).ToArray())#>;
         }
+<#}#>
+
+<#foreach(var f in m.Fields)
+  {#>
+<#@ include file="MessageField.ttinclude" #>
+<#}#>
+
+<#foreach(var group in m.Groups)
+{#>
+<#@ include file="Groups.ttinclude" #>
 <#}#>
     }
 }
 <# 
 }#>
+

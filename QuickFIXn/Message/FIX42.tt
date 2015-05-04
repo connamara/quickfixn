@@ -13,6 +13,7 @@
     var path = Path.GetDirectoryName(Host.TemplateFile);
     var parser = new Parser();
     var version = "FIX42";
+    var beginString = "FIX42";
     parser.Load(@"C:\GitHub\quickfixn\QuickFIXn\Message\..\..\spec\fix\FIX42.xml");#>
     <#@ include file="Message.ttinclude" #>
     <#@ include file="MessageFactory.ttinclude" #>

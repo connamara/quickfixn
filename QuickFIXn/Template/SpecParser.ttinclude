@@ -102,6 +102,7 @@ public class Container
         Fields = new List<Field>();
         RequiredFields = new List<Field>();
         OptionalFields = new List<Field>();
+        Groups = new List<Group>();
         ProcessContainer(e, components, fields);
     }
 
@@ -109,13 +110,18 @@ public class Container
     {
         foreach(var child in e.Elements())
         {
-            if(e.Name.LocalName == "field")
+            if(child.Name.LocalName == "field")
             {
-                ProcessField(e, fields);
+                ProcessField(child, fields);
             }
-            else
+            else if(child.Name.LocalName == "component")
             {
-                ProcessComponent(e, components, fields);
+                var component = components.Elements().Where(el => el.Attribute("name").Value == child.Attribute("name").Value).First();
+                ProcessContainer(component, components, fields);
+            }
+            else if(child.Name.LocalName == "group")
+            {
+                ProcessGroup(child, components, fields);
             }
         }
     }
@@ -134,28 +140,35 @@ public class Container
         }
     }
 
-    private void ProcessComponent(XElement e, XElement components, Dictionary<string, Field> fields)
-    {
-        if(e.Element("group") != null)
-        {
-            ProcessGroup(e, components, fields);
-        }
-        else
-        {
-            ProcessContainer(e, components, fields);
-        }
-    }
-
     private void ProcessGroup(XElement e, XElement components, Dictionary<string, Field> fields)
     {
+        Groups.Add(new Group(e, components, fields));
+        var f = fields[e.Attribute("name").Value];
+        Fields.Add(f);
+        OptionalFields.Add(f);
     }
+
 }
 
 public class Group : Container
 {
+    public Field CountField {get;set;}
+    public string Name {get;set;}
     public Group(XElement e, XElement components, Dictionary<string, Field> fields)
         : base(e, components, fields)
     {
+        CountField = fields[e.Attribute("name").Value];
+        Name = CountField.Name + "Group";       
+    }
+
+    public IEnumerable<Tuple<string, string>> GetGroupsByTag(string parent)
+    {
+        var name = parent + "." + Name;
+        yield return Tuple.Create(CountField.Name, name);
+        foreach(var gbt in Groups.Select(g => g.GetGroupsByTag(name)).SelectMany(g => g))
+        {
+            yield return gbt;
+        }
     }
 }
 
@@ -169,12 +182,13 @@ public class Message : Container
     {
         Name = e.Attribute("name").Value;
         MessageType = e.Attribute("msgtype").Value;
-
-        
-        RequiredFields = new List<Field>();
-        OptionalFields = new List<Field>();
-        Groups = new List<Group>();
     }
+
+    public IEnumerable<Tuple<string, string>> GetGroupsByTag()
+    {
+        return Groups.Select(g => g.GetGroupsByTag(Name)).SelectMany(g => g);
+    }
+
 }
 
 public class Parser
@@ -183,6 +197,7 @@ public class Parser
     public List<Message> Messages {get;set;}
     
     public string Version {get;set;}
+    public string BeginString {get;set;}
 
     public Parser()
     {
@@ -192,6 +207,7 @@ public class Parser
     public void Load(string path)
     {
         Version = System.IO.Path.GetFileNameWithoutExtension(path);
+        BeginString = Version.StartsWith("FIX4") ? Version : "FIXT11";
         var doc = XDocument.Load(path);
         var newFields = doc.Root.Element("fields").Elements().Select(e => new Field(e)).ToList();
         foreach(var f in newFields)

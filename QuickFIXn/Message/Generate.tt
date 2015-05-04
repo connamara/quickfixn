@@ -36,6 +36,7 @@
     var path = Path.GetDirectoryName(Host.TemplateFile);
     var parser = new Parser();
     var version = "<#=p.Version#>";
+    var beginString = "<#=p.BeginString#>";
     parser.Load(@"<#=sf#>");\#>
     \<#@ include file="Message.ttinclude" \#>
     \<#@ include file="MessageFactory.ttinclude" \#>
@@ -54,3 +55,6 @@
 
 <#@ include file="..\Template\SpecParser.ttinclude" #>
 <#@ include file="..\Template\TemplateFileManagerV2.1.ttinclude" #>
+
+<#+
+#>

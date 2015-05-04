@@ -41,6 +41,46 @@
 
         public Group Create(string beginString, string msgType, int correspondingFieldID)
         {
+          if(QuickFix.FIX41.IndicationofInterest.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.NoIOIQualifiers: return new QuickFix.FIX41.IndicationofInterest.NoIOIQualifiersGroup();
+              }
+          }
+          if(QuickFix.FIX41.News.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.NoRelatedSym: return new QuickFix.FIX41.News.NoRelatedSymGroup();
+					case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX41.News.LinesOfTextGroup();
+              }
+          }
+          if(QuickFix.FIX41.Email.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.NoRelatedSym: return new QuickFix.FIX41.Email.NoRelatedSymGroup();
+					case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX41.Email.LinesOfTextGroup();
+              }
+          }
+          if(QuickFix.FIX41.Allocation.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX41.Allocation.NoOrdersGroup();
+					case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX41.Allocation.NoExecsGroup();
+					case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX41.Allocation.NoAllocsGroup();
+					case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX41.Allocation.NoAllocsGroup.NoMiscFeesGroup();
+              }
+          }
+          if(QuickFix.FIX41.ListStatus.MsgType.Equals(msgType))
+          {
+              switch(correspondingFieldID)
+              {
+              case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX41.ListStatus.NoOrdersGroup();
+              }
+          }
             return null;
         }
     }
