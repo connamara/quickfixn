@@ -1,0 +1,40 @@
+﻿<#@ template  debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Xml" #>
+<#@ Assembly Name="System.Xml.Linq" #>
+<#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+    var path = Path.GetDirectoryName(Host.ResolvePath("FieldTags.tt"));
+    var specPath = Path.Combine(path, "..\\..\\spec\\fix");
+    var specFiles = Directory.GetFiles(specPath, "*.xml");
+    var p = new Parser();
+    foreach(var sf in specFiles)
+    {
+        p.Load(sf);
+    }
+#>
+using System;
+
+namespace QuickFix.Fields
+{
+    public static class Tags
+    {    
+<#
+    foreach(var f in p.Fields.Values)
+    {#>
+        public const int <#=f.Name#> = <#=f.Tag#>;
+<#  }
+#>
+    }
+}
+
+<#@ include file="..\Template\SpecParser.ttinclude" #>

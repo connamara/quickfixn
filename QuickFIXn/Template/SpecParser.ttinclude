@@ -1,0 +1,218 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#+
+public class FieldType
+{
+    public string Class {get;set;}
+    public string BaseType {get;set;}
+
+    public FieldType(string c, string bt)
+    {
+        Class = c;
+        BaseType = bt;
+    }
+}
+
+public class FixEnum
+{
+    public string Name { get; set; }
+    public string Value { get; set; }
+
+    public string GetValueString(string type)
+    {
+        switch (type)
+        {
+            case "string": return string.Format("public const string {0} = \"{1}\"", Name, Value);
+            case "char": return string.Format("public const char {0} = '{1}'", Name, Value);
+            case "decimal": return string.Format("public const decimal {0} = {1}M", Name, Value);
+            case "int": return string.Format("public const int {0} = {1}", Name, Value);
+            case "bool": return string.Format("public const bool {0} = {1}", Name, Value == "Y" ? "true" : "false");
+            default: throw new ArgumentException("Unknown type", type);
+        }
+    }
+    public FixEnum(XElement en)
+    {
+        var attr = en.Attribute("enum");
+        if (attr != null) Value = attr.Value;
+        attr = en.Attribute("description");
+        if (attr != null) Name = Clean(attr.Value);
+    }
+
+    private static string Clean(string s)
+    {
+        if(char.IsDigit(s[0])) return "VAL_" + s;
+        return s;
+    }
+}
+
+public class Field
+{
+    public string Tag {get;set;}
+    public string Name {get;set;}
+    public string FIXType {get;set;}
+    public List<FixEnum> Enums {get;set;}
+
+    public FieldType FieldType
+    {
+        get
+        {
+            switch(FIXType)
+            {
+                case "CHAR": return new FieldType("CharField", "char");
+                case "INT":
+                case "NUMINGROUP":
+                case "SEQNUM":
+                case "LENGTH": return new FieldType("IntField", "int");
+                case "AMT":
+                case "PERCENTAGE":
+                case "PRICE":
+                case "QTY":
+                case "PRICEOFFSET":
+                case "FLOAT": return new FieldType("DecimalField", "decimal");
+                case "UTCTIMESTAMP":
+                case "T2TIMESTAMP":
+                case "TIME": return new FieldType("DateTimeField", "DateTime");
+                case "UTCDATEONLY":
+                case "UTCDATE":
+                case "DATE": return new FieldType("DateOnlyField", "DateTime");
+                case "UTCTIMEONLY": return new FieldType("TimeOnlyField", "DateTime");
+                case "BOOLEAN": return new FieldType("BooleanField", "bool");
+                default: return new FieldType("StringField", "string");
+            }
+        }
+    }
+
+    public Field(XElement e)
+    {
+        Tag = e.Attribute("number").Value;
+        Name = e.Attribute("name").Value;
+        FIXType = e.Attribute("type").Value;
+        Enums = e.Elements("value").Select(el => new FixEnum(el)).ToList();
+    }
+}
+
+public class Container
+{
+    public List<Field> Fields {get;set;}
+    public List<Field> RequiredFields {get;set;}
+    public List<Field> OptionalFields {get;set;}
+    public List<Group> Groups {get;set;}
+
+    public Container(XElement e, XElement components, Dictionary<string, Field> fields)
+    {
+        Fields = new List<Field>();
+        RequiredFields = new List<Field>();
+        OptionalFields = new List<Field>();
+        ProcessContainer(e, components, fields);
+    }
+
+    private void ProcessContainer(XElement e, XElement components, Dictionary<string, Field> fields)
+    {
+        foreach(var child in e.Elements())
+        {
+            if(e.Name.LocalName == "field")
+            {
+                ProcessField(e, fields);
+            }
+            else
+            {
+                ProcessComponent(e, components, fields);
+            }
+        }
+    }
+
+    private void ProcessField(XElement e, Dictionary<string, Field> fields)
+    {
+        var f = fields[e.Attribute("name").Value];
+        Fields.Add(f);
+        if(e.Attribute("required").Value == "Y")
+        {
+            RequiredFields.Add(f);
+        }
+        else
+        {
+            OptionalFields.Add(f);
+        }
+    }
+
+    private void ProcessComponent(XElement e, XElement components, Dictionary<string, Field> fields)
+    {
+        if(e.Element("group") != null)
+        {
+            ProcessGroup(e, components, fields);
+        }
+        else
+        {
+            ProcessContainer(e, components, fields);
+        }
+    }
+
+    private void ProcessGroup(XElement e, XElement components, Dictionary<string, Field> fields)
+    {
+    }
+}
+
+public class Group : Container
+{
+    public Group(XElement e, XElement components, Dictionary<string, Field> fields)
+        : base(e, components, fields)
+    {
+    }
+}
+
+public class Message : Container
+{
+    public string Name {get;set;}
+    public string MessageType {get;set;}
+
+    public Message(XElement e, XElement components, Dictionary<string, Field> fields)
+        : base(e, components, fields)
+    {
+        Name = e.Attribute("name").Value;
+        MessageType = e.Attribute("msgtype").Value;
+
+        
+        RequiredFields = new List<Field>();
+        OptionalFields = new List<Field>();
+        Groups = new List<Group>();
+    }
+}
+
+public class Parser
+{
+    public Dictionary<string, Field> Fields {get;set;}
+    public List<Message> Messages {get;set;}
+    
+    public string Version {get;set;}
+
+    public Parser()
+    {
+        Fields = new Dictionary<string, Field>();
+    }
+
+    public void Load(string path)
+    {
+        Version = System.IO.Path.GetFileNameWithoutExtension(path);
+        var doc = XDocument.Load(path);
+        var newFields = doc.Root.Element("fields").Elements().Select(e => new Field(e)).ToList();
+        foreach(var f in newFields)
+        {
+            if(Fields.ContainsKey(f.Name))
+            {
+                foreach(var e in Fields[f.Name].Enums)
+                {
+                    if(!f.Enums.Any(ee => ee.Name == e.Name))
+                    {
+                        f.Enums.Add(e);
+                    }
+                }
+            }
+
+            Fields[f.Name] = f;
+        }
+        var components = doc.Root.Element("components");
+        Messages = doc.Root.Element("messages").Elements()
+                  .Select(m => new Message(m, components, Fields))
+                  .ToList();
+     }
+}
+#>

@@ -1,0 +1,50 @@
+﻿<#@ template  debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Xml" #>
+<#@ Assembly Name="System.Xml.Linq" #>
+<#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Xml" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#
+    var path = Path.GetDirectoryName(Host.ResolvePath("Fields.tt"));
+    var specPath = Path.Combine(path, "..\\..\\spec\\fix");
+    var specFiles = Directory.GetFiles(specPath, "*.xml");
+    var p = new Parser();
+    foreach(var sf in specFiles)
+    {
+        p.Load(sf);
+    }
+#>
+using System;
+
+namespace QuickFix.Fields
+{
+<#
+    foreach(var f in p.Fields.Values)
+    {#>
+    public sealed class <#=f.Name#> : <#=f.FieldType.Class#>
+    {
+        public <#=f.Name#>(): base(Tags.<#=f.Name#>) { }
+        public <#=f.Name#>(<#=f.FieldType.BaseType#> val): base(Tags.<#=f.Name#>, val) { }
+<#
+        if(f.FieldType.Class == "DateTimeField" || f.FieldType.Class == "TimeOnlyField")
+        {#>
+        public <#=f.Name#>(<#=f.FieldType.BaseType#> val, bool showMilliseconds): base(Tags.<#=f.Name#>, val, showMilliseconds) { }
+<#      }#>
+<#      foreach(var e in f.Enums)
+        {#>
+        <#=e.GetValueString(f.FieldType.BaseType)#>;
+<#      }#>
+    }
+<#  }
+#>
+}
+
+<#@ include file="..\Template\SpecParser.ttinclude" #>
