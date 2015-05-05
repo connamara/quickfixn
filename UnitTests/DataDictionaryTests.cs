@@ -513,5 +513,34 @@ namespace UnitTests
             dd.CheckFieldsHaveValues = false;
             Assert.DoesNotThrow(delegate { dd.Validate(message, beginString, msgType); });
         }
+
+        [Test] // Issue #282 investigation. Tag 100 exists in the xml but there are no values set.
+        public void ValidateShouldCheckTagInExecutionReport()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX42.xml");
+            QuickFix.FIX42.MessageFactory f = new QuickFix.FIX42.MessageFactory();
+
+            string[] msgFields =
+            {
+                "8=FIX.4.2","9=142", "35=8","11=123",  "6=0","14=0","17=1", "20=0", "31=0","32=0", "34=100" ,"37=1","38=1000",
+                "39=0", "49=sender", "52=20110909-09:09:09.999","54=1","55=aapl", "56=target","151=0", "100=8", "150=0","10=209"
+            };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "8";
+            string beginString = "FIX.4.2";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd);
+
+            //Set CheckFieldsOutOfOrder since this is not the purpose of the test
+            dd.CheckFieldsOutOfOrder = false;
+            dd.CheckFieldsHaveValues = true;
+            
+            Assert.Throws<QuickFix.TagNotDefinedForMessage>(delegate { dd.Validate(message, beginString, msgType); });
+
+            dd.CheckFieldsHaveValues = false;
+            Assert.DoesNotThrow(delegate { dd.Validate(message, beginString, msgType); });
+        }
     }
 }
