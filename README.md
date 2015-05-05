@@ -27,10 +27,15 @@ Code Generation
 ---------------
 Code generation is now done using T4 Text Templates from within visual studio.
 For full generation run in this order:
+
 Fields/Fields.tt
+
 Fields/FieldTags.tt
+
 Message/generate.tt
+
 	Each tt that generate.tt creates
+
 
 Each FIX version will have its Message classes created in its own subfolder.
 
