@@ -409,9 +409,15 @@ namespace QuickFix.DataDictionary
 		/// <returns></returns>
 		public bool ShouldCheckTag(Fields.IField field)
 		{
-			if (!this.CheckUserDefinedFields && (field.Tag >= Fields.Limits.USER_MIN))
-				return false;
-			return true;
+            if (!CheckFieldsHaveValues)
+            {
+                return false;
+            }
+		    if (!this.CheckUserDefinedFields && (field.Tag >= Fields.Limits.USER_MIN))
+		    {
+		        return false;
+		    }
+		    return true;
 		}
 
 		public bool IsHeaderField(int tag)
