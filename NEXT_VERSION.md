@@ -28,5 +28,6 @@ Changes since the last version (oldest first):
 * (patch) #287 - sync fix in Session class (steffanu)
 * (patch) #275 - SessionID.IsSet() should be used instead of !=SessionID.NOT_SET (akamyshanov)
 * (patch) #297 - revert #287
+* (patch) #290 - support for RefreshOnLogon (martinadams)
 
 

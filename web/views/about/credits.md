@@ -46,4 +46,5 @@ Contributors
 - Jac Steyn
 - Timothy Caro
 - Steffan Ulfburg
+- Martin Adams
 
