@@ -119,7 +119,7 @@ namespace UnitTests
     {
         public HashSet<string> InterceptedMessageTypes = new HashSet<string>();
 
-       #region Application Members
+        #region Application Members
 
         public void ToAdmin(QuickFix.Message message, QuickFix.SessionID sessionID)
         {
@@ -768,18 +768,18 @@ namespace UnitTests
         {
             var mockApp = new MockApplicationExt();
             session = new QuickFix.Session(mockApp, new QuickFix.MemoryStoreFactory(), sessionID,
-             new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
+                new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
             session.CheckLatency = false;
 
             Logon();
             QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
-                 new QuickFix.Fields.ClOrdID("1"),
-                 new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
-                 new QuickFix.Fields.Symbol("IBM"),
-                 new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
-                 new QuickFix.Fields.TransactTime(),
-                 new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+                new QuickFix.Fields.ClOrdID("1"),
+                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
+                new QuickFix.Fields.Symbol("IBM"),
+                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
+                new QuickFix.Fields.TransactTime(),
+                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
 
             order.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
@@ -790,6 +790,6 @@ namespace UnitTests
             Assert.That(mockApp.InterceptedMessageTypes.Count, Is.EqualTo(2));
             Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.LOGON));
             Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.NEWORDERSINGLE));
-       }
+        }
     }
 }
