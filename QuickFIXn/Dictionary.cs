@@ -219,13 +219,21 @@ namespace QuickFix
 
             //Check whether the names and dictionary contents are the same 
             var otherDict = (Dictionary)other;
-            return Name == otherDict.Name && Count == otherDict.Count && data_.SequenceEqual(otherDict.data_);
+            if (Name != otherDict.Name || Count != otherDict.Count)
+                return false;
+
+            // Could use LINQ query here, but this is probably faster!
+            string otherDictValue = null;
+            foreach (var kvp in data_)
+                if (!otherDict.data_.TryGetValue(kvp.Key, out otherDictValue) || otherDictValue != kvp.Value)
+                    return false;
+            return true;
         }
 
         /// <summary>
         /// Generate hash code for the Dictionary.
-        /// If Equals() returns true for a compared objects,  
-        /// then GetHashCode() must return the same value this object and the compared objects. 
+        /// If Equals() returns true for a compared object,
+        /// then GetHashCode() must return the same value for this object and the compared object.
         /// </summary>
         /// <returns>hash code</returns>
         public override int GetHashCode()

@@ -41,22 +41,22 @@ namespace QuickFix
         /// </summary>
         /// <returns>a map of SessionIDs to EndPoints</returns>
         Dictionary<SessionID,IPEndPoint> GetAcceptorAddresses();
-		
-		/// <summary>
-		/// Add a new session after acceptor has been started
-		/// </summary>
-		/// <param name="sessionID">ID of session to be added</param>
-		/// <param name="dict">session settings</param>
-		/// <returns>>true if session added succesfully, false if session already exists or is of wrong type</returns>
-		bool AddSession(SessionID sessionID, QuickFix.Dictionary dict);
+        
+        /// <summary>
+        /// Add a new session after acceptor has been started
+        /// </summary>
+        /// <param name="sessionID">ID of session to be added</param>
+        /// <param name="dict">session settings</param>
+        /// <returns>>true if session added succesfully, false if session already exists or is of wrong type</returns>
+        bool AddSession(SessionID sessionID, QuickFix.Dictionary dict);
 
-		/// <summary>
-		/// Remove an existing session after acceptor has been started
-		/// </summary>
-		/// <param name="sessionID">ID of session to be removed</param>
-		/// <param name="terminateActiveSession">true if sesion to be removed even if it has an active connection</param>
-		/// <returns>true if session removed or was already not present, false if could not be removed because of active connection</returns>
-		bool RemoveSession(SessionID sessionID, bool terminateActiveSession);
+        /// <summary>
+        /// Remove an existing session after acceptor has been started
+        /// </summary>
+        /// <param name="sessionID">ID of session to be removed</param>
+        /// <param name="terminateActiveSession">true if sesion to be removed even if it has an active connection</param>
+        /// <returns>true if session removed or was already not present, false if could not be removed because of active connection</returns>
+        bool RemoveSession(SessionID sessionID, bool terminateActiveSession);
     }
 
     /// <summary>

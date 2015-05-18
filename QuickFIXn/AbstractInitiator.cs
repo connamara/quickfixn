@@ -110,27 +110,30 @@ namespace QuickFix
         /// <returns>true if session removed or was already not present, false if could not be removed because of active connection</returns>
         public bool RemoveSession(SessionID sessionID, bool terminateActiveSession)
         {
-            if (sessionIDs_.Contains(sessionID))
+            Session session = null;
+            bool disconnectRequired = false;
+            lock (sync_)
             {
-                Session session = sessions_[sessionID];
-                if (session.IsLoggedOn && !terminateActiveSession)
-                    return false;
-                bool disconnectRequired = false;
-                lock (sync_)
+                if (sessionIDs_.Contains(sessionID))
                 {
-                    sessionIDs_.Remove(sessionID);
+                    session = sessions_[sessionID];
+                    if (session.IsLoggedOn && !terminateActiveSession)
+                        return false;
+
                     sessions_.Remove(sessionID);
                     _settings.Remove(sessionID);
                     disconnectRequired = IsConnected(sessionID) || IsPending(sessionID);
                     if (disconnectRequired)
-                    SetDisconnected(sessionID);
+                        SetDisconnected(sessionID);
                     disconnected_.Remove(sessionID);
+                    sessionIDs_.Remove(sessionID);
                     OnRemove(sessionID);
                 }
-                if (disconnectRequired)
-                    session.Disconnect("Disabled via dynamic config update");
-                session.Dispose();
             }
+            if (disconnectRequired)
+                session.Disconnect("Removed dynamically");
+            if (session != null)
+                session.Dispose();
             return true;
         }
 
@@ -195,12 +198,13 @@ namespace QuickFix
             {
                 foreach (Session s in sessions_.Values)
                     s.Dispose();
+
+                sessions_.Clear();
+                sessionIDs_.Clear();
+                pending_.Clear();
+                connected_.Clear();
+                disconnected_.Clear();
             }
-            sessions_.Clear();
-            sessionIDs_.Clear();
-            pending_.Clear();
-            connected_.Clear();
-            disconnected_.Clear();
         }
 
         public bool IsLoggedOn
