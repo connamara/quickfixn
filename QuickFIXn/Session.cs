@@ -22,7 +22,6 @@ namespace QuickFix
         private SessionSchedule schedule_;
         private SessionState state_;
         private IMessageFactory msgFactory_;
-        private bool appDoesEarlyIntercept_;
         private static readonly HashSet<string> AdminMsgTypes = new HashSet<string>() { "0", "A", "1", "2", "3", "4", "5" };
 
         #endregion
@@ -212,7 +211,6 @@ namespace QuickFix
             this.DataDictionaryProvider = new DataDictionaryProvider(dataDictProvider);
             this.schedule_ = sessionSchedule;
             this.msgFactory_ = msgFactory;
-            appDoesEarlyIntercept_ = app is IApplicationExt;
 
             this.SenderDefaultApplVerID = senderDefaultApplVerID;
 
@@ -548,9 +546,6 @@ namespace QuickFix
                 Reset("Out of SessionTime (Session.Next(message))", "Message received outside of session time");
                 return;
             }
-
-            if (appDoesEarlyIntercept_)
-                ((IApplicationExt)Application).FromEarlyIntercept(message, this.SessionID);
 
             if (IsNewSession)
                 state_.Reset("New session (detected in Next(Message))");
