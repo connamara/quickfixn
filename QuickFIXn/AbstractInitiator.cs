@@ -12,7 +12,6 @@ namespace QuickFix
         private ILogFactory _logFactory = null;
         private IMessageFactory _msgFactory = null;
 
-
         private object sync_ = new object();
         private bool _disposed = false;
         private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
