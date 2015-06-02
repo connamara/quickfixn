@@ -1,9 +1,11 @@
-﻿
+﻿using System;
+
 namespace QuickFix
 {
     /// <summary>
     /// Creates a message store that stores messages in a file
     /// </summary>
+    [Obsolete]
     public class FileLogFactory : ILogFactory
     {
         SessionSettings settings_;

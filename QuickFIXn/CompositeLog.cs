@@ -1,9 +1,11 @@
-﻿
+﻿using System;
+
 namespace QuickFix
 {
     /// <summary>
     /// File log implementation
     /// </summary>
+    [Obsolete]
     internal class CompositeLog : ILog
     {
         private ILog[] logs_;

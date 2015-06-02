@@ -1,15 +1,17 @@
-﻿
+﻿using System;
+
 namespace QuickFix
 {
     /// <summary>
     /// (Renamed per naming convention.)
     /// </summary>
-    [System.Obsolete("Use ILogFactory instead.")]
+    [Obsolete("Use ILogFactory instead.")]
     public interface LogFactory : ILogFactory { }
 
     /// <summary>
     /// Used by a session to create a log implementation
     /// </summary>
+    [Obsolete]
     public interface ILogFactory
     {
         /// <summary>
