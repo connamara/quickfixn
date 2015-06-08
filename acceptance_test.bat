@@ -5,6 +5,7 @@ set RESULT41=
 set RESULT42=
 set RESULT43=
 set RESULT44=
+set RESULT44_NORESET=
 set RESULT50=
 set RESULT50SP1=
 set RESULT50SP2=
@@ -48,7 +49,14 @@ pushd AcceptanceTest
     if ERRORLEVEL 1 set RESULT44=1
     echo "44 tests result: %RESULT44%"
     copy TestResult.xml AcceptanceTests_44.xml
-    
+
+    call pause
+    del TestResult.xml
+    call runat release 5005 definitions/server/fix44noreset/*.def cfg/at_44_noreset.cfg
+    if ERRORLEVEL 1 set RESULT44_NORESET=1
+    echo "44 tests result: %RESULT44_NORESET%"
+    copy TestResult.xml AcceptanceTests_44_noreset.xml
+
     call pause
     del TestResult.xml
     call runat release 5006 definitions/server/fix50/*.def cfg/at_50.cfg
@@ -86,12 +94,14 @@ echo "    41: %RESULT41%"
 echo "    42: %RESULT42%"
 echo "    43: %RESULT43%"
 echo "    44: %RESULT44%"
+echo "  44nr: %RESULT44_NORESET%"
 echo "    50: %RESULT50%"
 echo "50 SP1: %RESULT50SP1%"
 echo "50 SP2: %RESULT50SP2%"
 echo "  MISC: %RESULTMISC%"
 
-set /a RETURNVALUE=RESULT40+RESULT41+RESULT42+RESULT43+RESULT44+RESULT50+RESULT50SP1+RESULT50SP2+RESULTMISC
+set /a RETURNVALUE=RESULT40+RESULT41+RESULT42+RESULT43+RESULT44+RESULT44_NORESET+RESULT50+RESULT50SP1+RESULT50SP2+RESULTMISC
 
 echo "Script returns: %RETURNVALUE%"
+echo "(0 means success)"
 exit /B %RETURNVALUE%

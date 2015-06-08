@@ -349,7 +349,7 @@ namespace QuickFix
 
         // TODO for v2 - rename, make internal
         /// <summary>
-        /// Sets some internal state variables.  Despite the name, it does do anything to make a logon occur.
+        /// Sets some internal state variables.  Despite the name, it does not do anything to make a logon occur.
         /// </summary>
         public void Logon()
         {
@@ -667,10 +667,10 @@ namespace QuickFix
 
             if (state_.ReceivedReset)
             {
-                this.Log.OnEvent("Logon contains ResetSeqNumFlag=Y, reseting sequence numbers to 1");
+                this.Log.OnEvent("Sequence numbers reset due to ResetSeqNumFlag=Y");
                 if (!state_.SentReset)
                 {
-                    state_.Reset("Reseting because reset was requested by counterparty.");
+                    state_.Reset("Reset requested by counterparty");
                 }
             }
 
@@ -684,7 +684,7 @@ namespace QuickFix
 
             if (!IsGoodTime(logon))
             {
-                this.Log.OnEvent("Logon had bad sending time");
+                this.Log.OnEvent("Logon has bad sending time");
                 Disconnect("bad sending time");
                 return;
             }
