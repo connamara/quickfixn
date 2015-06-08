@@ -1241,8 +1241,6 @@ namespace QuickFix
             logon.SetField(new Fields.EncryptMethod(0));
             if (this.SessionID.IsFIXT)
                 logon.SetField(new Fields.DefaultApplVerID(this.SenderDefaultApplVerID));
-            if (state_.ReceivedReset)
-                logon.SetField(new Fields.ResetSeqNumFlag(true));
             logon.SetField(new Fields.HeartBtInt(otherLogon.GetInt(Tags.HeartBtInt)));
             if (this.EnableLastMsgSeqNumProcessed)
                 logon.Header.SetField(new Fields.LastMsgSeqNumProcessed(otherLogon.Header.GetInt(Tags.MsgSeqNum)));
