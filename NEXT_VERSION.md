@@ -29,5 +29,5 @@ Changes since the last version (oldest first):
 * (patch) #275 - SessionID.IsSet() should be used instead of !=SessionID.NOT_SET (akamyshanov)
 * (patch) #297 - revert #287
 * (patch) #290 - support for RefreshOnLogon (martinadams)
-
+* (patch)  #80 - fixes to tag-141-related sequence resets (TomasVetrovsky,akamyshanov,gbirchmeier)
 
