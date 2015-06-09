@@ -166,6 +166,15 @@ namespace QuickFix.Transport
             }
         }
 
+        /// <summary>
+        /// Ad-hoc session removal
+        /// </summary>
+        /// <param name="sessionID">ID of session being remvoed</param>
+        protected override void OnRemove(SessionID sessionID)
+        {
+            sessionToHostNum_.Remove(sessionID);
+        }
+
         protected override bool OnPoll(double timeout)
         {
             throw new NotImplementedException("FIXME - SocketInitiator.OnPoll not implemented!");

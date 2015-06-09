@@ -48,6 +48,16 @@ namespace QuickFix
                 acceptedSessions_[session.SessionID] = session;
             }
 
+            /// <summary>
+            /// Remove a session from those tied to this socket.
+            /// </summary>
+            /// <param name="sessionID">ID of session to be removed</param>
+            /// <returns>true if session removed, false if not found</returns>
+            public bool RemoveSession(SessionID sessionID)
+            {
+                return acceptedSessions_.Remove(sessionID);
+            }
+
             public Dictionary<SessionID, Session> GetAcceptedSessions()
             {
                 return new Dictionary<SessionID, Session>(acceptedSessions_);
@@ -56,6 +66,7 @@ namespace QuickFix
 
         private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private Dictionary<IPEndPoint, AcceptorSocketDescriptor> socketDescriptorForAddress_ = new Dictionary<IPEndPoint, AcceptorSocketDescriptor>();
+        private SessionFactory sessionFactory_;
         private bool isStarted_ = false;
         private object sync_ = new object();
 
@@ -91,27 +102,19 @@ namespace QuickFix
 
         private void CreateSessions(SessionSettings settings, SessionFactory sessionFactory)
         {
+            sessionFactory_ = sessionFactory;
             foreach (SessionID sessionID in settings.GetSessions())
             {
                 QuickFix.Dictionary dict = settings.Get(sessionID);
-                string connectionType = dict.GetString(SessionSettings.CONNECTION_TYPE);
-
-                if ("acceptor".Equals(connectionType))
-                {
-                    AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(settings, sessionID);
-                    Session session = sessionFactory.Create(sessionID, dict);
-                    descriptor.AcceptSession(session);
-                    sessions_[sessionID] = session;
-                }
+                AddSession(sessionID, dict);
             }
 
             if (0 == socketDescriptorForAddress_.Count)
                 throw new ConfigError("No acceptor sessions found in SessionSettings.");
         }
 
-        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(SessionSettings settings, SessionID sessionID)
+        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(Dictionary dict)
         {
-            QuickFix.Dictionary dict = settings.Get(sessionID);
             int port = System.Convert.ToInt32(dict.GetLong(SessionSettings.SOCKET_ACCEPT_PORT));
             SocketSettings socketSettings = new SocketSettings();
 
@@ -140,6 +143,52 @@ namespace QuickFix
             }
 
             return descriptor;
+        }
+
+        /// <summary>
+        /// Add new session, either at start-up or as an ad-hoc operation
+        /// </summary>
+        /// <param name="sessionID">ID of new session<param>
+        /// <param name="dict">config settings for new session</param></param>
+        /// <returns>true if session added succesfully, false if session already exists or is of wrong type</returns>
+        public bool AddSession(SessionID sessionID, Dictionary dict)
+        {
+            if (!sessions_.ContainsKey(sessionID))
+            {
+                string connectionType = dict.GetString(SessionSettings.CONNECTION_TYPE);
+                if ("acceptor" == connectionType)
+                {
+                    AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(dict);
+                    Session session = sessionFactory_.Create(sessionID, dict);
+                    descriptor.AcceptSession(session);
+                    sessions_[sessionID] = session;
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Ad-hoc removal of an existing sssion
+        /// </summary>
+        /// <param name="sessionID">ID of session to be removed</param>
+        /// <param name="terminateActiveSession">true if sesion to be removed even if it has an active connection</param>
+        /// <returns>true if session removed or was already not present, false if could not be removed because of active connection</returns>
+        public bool RemoveSession(SessionID sessionID, bool terminateActiveSession)
+        {
+            Session session = null;
+            if (sessions_.TryGetValue(sessionID, out session))
+            {
+                if (session.IsLoggedOn && !terminateActiveSession)
+                    return false;
+                session.Disconnect("Disabled via dynamic config update");
+                foreach (AcceptorSocketDescriptor descriptor in socketDescriptorForAddress_.Values)
+                    if (descriptor.RemoveSession(sessionID))
+                        break;
+                sessions_.Remove(sessionID);
+                session.Dispose();
+            }
+            return true;
         }
 
         private void StartAcceptingConnections()

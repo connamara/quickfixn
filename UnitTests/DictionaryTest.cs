@@ -58,7 +58,7 @@ namespace UnitTests
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
 
             QuickFix.Dictionary d = new QuickFix.Dictionary();
-            d.SetString("DOUBLEKEY1","12.3");
+            d.SetString("DOUBLEKEY1", "12.3");
             d.SetString("DOUBLEKEY2", "987362.987362");
             d.SetString("BADDOUBLEKEY", "AB12.3");
             d.SetString("FOREIGNFORMAT", "44,44");
@@ -87,7 +87,7 @@ namespace UnitTests
         public void SetGetDay()
         {
             QuickFix.Dictionary d = new QuickFix.Dictionary();
-            
+
             d.SetString("DAY1", "SU");
             d.SetString("DAY2", "MO");
             d.SetString("DAY3", "TU");
@@ -118,7 +118,7 @@ namespace UnitTests
             Assert.That(d.GetDay("NEXTDAY6"), Is.EqualTo(System.DayOfWeek.Friday));
             Assert.That(d.GetDay("NEXTDAY7"), Is.EqualTo(System.DayOfWeek.Saturday));
         }
-        
+
         [Test]
         public void Merge()
         {
@@ -134,6 +134,33 @@ namespace UnitTests
             Assert.That(first.GetString("FIRSTKEY"), Is.EqualTo("FIRSTVALUE"));
             Assert.That(first.GetString("SECONDKEY"), Is.EqualTo("SECONDVALUE"));
             Assert.That(first.GetString("THIRDKEY"), Is.EqualTo("FIRST"));
+        }
+
+        [Test]
+        public void ValueEquality()
+        {
+            QuickFix.Dictionary first = new QuickFix.Dictionary("Name");
+            QuickFix.Dictionary second = new QuickFix.Dictionary("Name");
+            Assert.True(first.Equals(second));
+
+            first.SetString("THIRDKEY", "FIRST");
+            second.SetString("THIRDKEY", "SECOND");
+            Assert.False(first.Equals(second));
+
+            first.SetString("THIRDKEY", "SECOND");
+            Assert.True(first.Equals(second));
+
+            first.SetString("FIRSTKEY", "FIRSTVALUE");
+            second.SetString("SECONDKEY", "SECONDVALUE");
+            Assert.False(first.Equals(second));
+
+            first.SetString("SECONDKEY", "SECONDVALUE");
+            second.SetString("FIRSTKEY", "FIRSTVALUE");
+            Assert.True(first.Equals(second));
+
+            QuickFix.Dictionary third = new QuickFix.Dictionary("Name1");
+            QuickFix.Dictionary fourth = new QuickFix.Dictionary("Name2");
+            Assert.False(third.Equals(fourth));
         }
     }
 }
