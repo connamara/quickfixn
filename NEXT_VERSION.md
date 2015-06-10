@@ -30,4 +30,5 @@ Changes since the last version (oldest first):
 * (patch) #297 - revert #287
 * (patch) #290 - support for RefreshOnLogon (martinadams)
 * (patch)  #80 - fixes to tag-141-related sequence resets (TomasVetrovsky,akamyshanov,gbirchmeier)
+* (minor) #314 - New feature: add/remove sessions dynamically (martinadams)
 
