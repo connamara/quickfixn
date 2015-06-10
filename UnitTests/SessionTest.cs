@@ -112,8 +112,49 @@ namespace UnitTests
         public void OnLogon(QuickFix.SessionID sessionID)
         {
         }
-
         #endregion
+    }
+
+    class MockApplicationExt : QuickFix.IApplicationExt
+    {
+        public HashSet<string> InterceptedMessageTypes = new HashSet<string>();
+
+        #region Application Members
+
+        public void ToAdmin(QuickFix.Message message, QuickFix.SessionID sessionID)
+        {
+        }
+
+        public void FromAdmin(QuickFix.Message message, QuickFix.SessionID sessionID)
+        {
+        }
+
+        public void ToApp(QuickFix.Message message, QuickFix.SessionID sessionId)
+        {
+        }
+
+        public void FromApp(QuickFix.Message message, QuickFix.SessionID sessionID)
+        {
+        }
+
+        public void OnCreate(QuickFix.SessionID sessionID)
+        {
+        }
+
+        public void OnLogout(QuickFix.SessionID sessionID)
+        {
+        }
+
+        public void OnLogon(QuickFix.SessionID sessionID)
+        {
+        }
+
+        public void FromEarlyIntercept(QuickFix.Message message, QuickFix.SessionID sessionID)
+        {
+            InterceptedMessageTypes.Add(message.Header.GetString(QuickFix.Fields.Tags.MsgType));
+        }
+        #endregion
+
     }
 
     [TestFixture]
@@ -126,6 +167,7 @@ namespace UnitTests
         MockApplication application = null;
         QuickFix.Session session = null;
         QuickFix.Session session2 = null;
+        QuickFix.Dictionary config = null;
         int seqNum = 1;
         Regex msRegex = new Regex(@"\.[\d]{1,3}$");
 
@@ -137,7 +179,7 @@ namespace UnitTests
             application = new MockApplication();
             settings = new QuickFix.SessionSettings();
 
-            QuickFix.Dictionary config = new QuickFix.Dictionary();
+            config = new QuickFix.Dictionary();
             config.SetBool(QuickFix.SessionSettings.PERSIST_MESSAGES, false);
             config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
             config.SetString(QuickFix.SessionSettings.START_TIME, "00:00:00");
@@ -718,6 +760,36 @@ namespace UnitTests
 
             SendResendRequest(1, 0);
             Assert.False(SENT_NOS());
+        }
+
+
+        [Test]
+        public void TestApplicationExtension()
+        {
+            var mockApp = new MockApplicationExt();
+            session = new QuickFix.Session(mockApp, new QuickFix.MemoryStoreFactory(), sessionID,
+                new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
+            session.SetResponder(responder);
+            session.CheckLatency = false;
+
+            Logon();
+            QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
+                new QuickFix.Fields.ClOrdID("1"),
+                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
+                new QuickFix.Fields.Symbol("IBM"),
+                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
+                new QuickFix.Fields.TransactTime(),
+                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+
+            order.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.SenderCompID));
+            order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
+            order.Header.SetField(new QuickFix.Fields.MsgSeqNum(2));
+
+            session.Next(order);
+
+            Assert.That(mockApp.InterceptedMessageTypes.Count, Is.EqualTo(2));
+            Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.LOGON));
+            Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.NEWORDERSINGLE));
         }
     }
 }
