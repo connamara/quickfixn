@@ -169,7 +169,7 @@ namespace QuickFix.Transport
         /// <summary>
         /// Ad-hoc session removal
         /// </summary>
-        /// <param name="sessionID">ID of session being remvoed</param>
+        /// <param name="sessionID">ID of session being removed</param>
         protected override void OnRemove(SessionID sessionID)
         {
             sessionToHostNum_.Remove(sessionID);
