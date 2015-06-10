@@ -13,10 +13,11 @@ ChangeLog
 AcceptanceTest/AcceptanceTests*.html
 AcceptanceTest/AcceptanceTests*.xml
 AcceptanceTest/TestResult.xml
-AcceptanceTest/bin/Debug/*
-AcceptanceTest/bin/Release/*
+AcceptanceTest/bin/
+AcceptanceTest/obj/
 AcceptanceTest/log/
 AcceptanceTest/store/
+AcceptanceTest/cfg/at.cfg
 Examples/Executor/bin/*
 Examples/Executor/obj/*
 Examples/Executor/log/
