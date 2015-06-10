@@ -150,7 +150,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="sessionID">ID of new session<param>
         /// <param name="dict">config settings for new session</param></param>
-        /// <returns>true if session added succesfully, false if session already exists or is of wrong type</returns>
+        /// <returns>true if session added successfully, false if session already exists or is not an acceptor</returns>
         public bool AddSession(SessionID sessionID, Dictionary dict)
         {
             if (!sessions_.ContainsKey(sessionID))
@@ -169,11 +169,11 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Ad-hoc removal of an existing sssion
+        /// Ad-hoc removal of an existing session
         /// </summary>
         /// <param name="sessionID">ID of session to be removed</param>
-        /// <param name="terminateActiveSession">true if sesion to be removed even if it has an active connection</param>
-        /// <returns>true if session removed or was already not present, false if could not be removed because of active connection</returns>
+        /// <param name="terminateActiveSession">if true, force disconnection and removal of session even if it has an active connection</param>
+        /// <returns>true if session removed or not already present; false if could not be removed due to an active connection</returns>
         public bool RemoveSession(SessionID sessionID, bool terminateActiveSession)
         {
             Session session = null;
@@ -181,7 +181,7 @@ namespace QuickFix
             {
                 if (session.IsLoggedOn && !terminateActiveSession)
                     return false;
-                session.Disconnect("Disabled via dynamic config update");
+                session.Disconnect("Dynamic session removal");
                 foreach (AcceptorSocketDescriptor descriptor in socketDescriptorForAddress_.Values)
                     if (descriptor.RemoveSession(sessionID))
                         break;

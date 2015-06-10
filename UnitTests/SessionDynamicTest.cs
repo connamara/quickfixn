@@ -330,7 +330,7 @@ namespace UnitTests
             string dynamicCompID = "acc10";
             SendLogon(socket02, dynamicCompID);
             Assert.IsTrue(WaitForDisconnect(socket02), "Server failed to disconnect unconfigured CompID");
-            Assert.False(HasReceivedMessage(dynamicCompID), "Unexpected messaage received for unconfigured CompID");
+            Assert.False(HasReceivedMessage(dynamicCompID), "Unexpected message received for unconfigured CompID");
 
             // Add the dynamic acceptor and ensure that we can now log on
             var sessionID = CreateSessionID(dynamicCompID);
@@ -343,12 +343,12 @@ namespace UnitTests
             Assert.IsFalse(_acceptor.RemoveSession(sessionID, false), "Unexpected success removing active session");
             Assert.IsTrue(socket03.Connected, "Unexpected loss of connection");
 
-            // Ensure that forced attempt to remove session dynamic sesison succeeds, even though it is in logged on state
+            // Ensure that forced attempt to remove session dynamic session succeeds, even though it is in logged on state
             Assert.IsTrue(_acceptor.RemoveSession(sessionID, true), "Failed to remove active session");
             Assert.IsTrue(WaitForDisconnect(socket03), "Socket still connected after session removed");
             Assert.IsFalse(IsLoggedOn(dynamicCompID), "Session still logged on after being removed");
 
-            // Ensure that we can perform unforced removal of a dynamic sesion that is not logged on.
+            // Ensure that we can perform unforced removal of a dynamic session that is not logged on.
             string dynamicCompID2 = "acc20";
             var sessionID2 = CreateSessionID(dynamicCompID2);
             Assert.IsTrue(_acceptor.AddSession(sessionID2, CreateSessionConfig(dynamicCompID2, false)), "Failed to add dynamic session to acceptor");
@@ -383,12 +383,12 @@ namespace UnitTests
             Assert.IsFalse(_initiator.RemoveSession(sessionID, false), "Unexpected success removing active session");
             Assert.IsTrue(IsLoggedOn(dynamicCompID), "Unexpected logoff");
 
-            // Ensure that forced attempt to remove session dynamic sesison succeeds, even though it is in logged on state
+            // Ensure that forced attempt to remove session dynamic session succeeds, even though it is in logged on state
             Assert.IsTrue(_initiator.RemoveSession(sessionID, true), "Failed to remove active session");
             Assert.IsTrue(WaitForDisconnect(dynamicCompID), "Socket still connected after session removed");
             Assert.IsFalse(IsLoggedOn(dynamicCompID), "Session still logged on after being removed");
 
-            // Ensure that we can perform unforced removal of a dynamic sesion that is not logged on.
+            // Ensure that we can perform unforced removal of a dynamic session that is not logged on.
             string dynamicCompID2 = "ini20";
             var sessionID2 = CreateSessionID(dynamicCompID2);
             Assert.IsTrue(_initiator.AddSession(sessionID2, CreateSessionConfig(dynamicCompID2, true)), "Failed to add dynamic session to initiator");

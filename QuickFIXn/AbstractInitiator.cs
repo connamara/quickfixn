@@ -82,7 +82,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="sessionID">ID of new session<param>
         /// <param name="dict">config settings for new session</param></param>
-        /// <returns>true if session added succesfully, false if session already exists or is of wrong type</returns>
+        /// <returns>true if session added successfully, false if session already exists or is not an initiator</returns>
         public bool AddSession(SessionID sessionID, Dictionary dict)
         {
             if (dict.GetString(SessionSettings.CONNECTION_TYPE) == "initiator" && !sessionIDs_.Contains(sessionID))
@@ -102,11 +102,11 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Ad-hoc removal of an existing sssion
+        /// Ad-hoc removal of an existing session
         /// </summary>
         /// <param name="sessionID">ID of session to be removed</param>
-        /// <param name="terminateActiveSession">true if sesion to be removed even if it has an active connection</param>
-        /// <returns>true if session removed or was already not present, false if could not be removed because of active connection</returns>
+        /// <param name="terminateActiveSession">if true, force disconnection and removal of session even if it has an active connection</param>
+        /// <returns>true if session removed or not already present; false if could not be removed due to an active connection</returns>
         public bool RemoveSession(SessionID sessionID, bool terminateActiveSession)
         {
             Session session = null;
@@ -130,7 +130,7 @@ namespace QuickFix
                 }
             }
             if (disconnectRequired)
-                session.Disconnect("Removed dynamically");
+                session.Disconnect("Dynamic session removal");
             if (session != null)
                 session.Dispose();
             return true;
@@ -233,9 +233,10 @@ namespace QuickFix
         { }
 
         /// <summary>
-        /// Override this to handle ad-hoc session removal
+        /// Implement this to provide custom reaction behavior to an ad-hoc session removal.
+        /// (This is called after the session is removed.)
         /// </summary>
-        /// <param name="sessionID">ID of session being remvoed</param>
+        /// <param name="sessionID">ID of session that was removed</param>
         protected virtual void OnRemove(SessionID sessionID)
         { }
 

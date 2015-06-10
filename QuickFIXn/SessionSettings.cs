@@ -182,7 +182,7 @@ namespace QuickFix
         /// <summary>
         /// Remove existing session config from the settings
         /// </summary>
-        /// <param name="sessionID">ID of session for which config to be removed</param>
+        /// <param name="sessionID">ID of session for which config is to be removed</param>
         /// <returns>true if removed, false if config for the session does not exist</returns>
         public bool Remove(SessionID sessionID)
         {
