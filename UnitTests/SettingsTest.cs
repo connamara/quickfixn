@@ -50,5 +50,29 @@ namespace UnitTests
             Assert.That(nero.First.Value.GetString("stripspace"), Is.EqualTo("last spaces stripped"));
             Assert.That(nero.First.Value.GetString("EqualsInValue"), Is.EqualTo("We can have '=' in the value"));
         }
+
+        [Test]
+        public void CaseInsensitiveSectionName()
+        {
+            string configuration = @"[foo]
+one=uno
+two=dos
+[bar]
+what=huh";
+            Settings settings = new Settings(new System.IO.StringReader(configuration));
+
+            LinkedList<QuickFix.Dictionary> byLower = settings.Get("foo");
+            Assert.AreEqual(1, byLower.Count);
+            Assert.AreEqual(2, byLower.First.Value.Count);
+            Assert.AreEqual("uno", byLower.First.Value.GetString("one"));
+            Assert.AreEqual("dos", byLower.First.Value.GetString("two"));
+
+            // too lazy to write a QuickFix.Dictionary#Equals method (which would only be used by this test)
+            LinkedList<QuickFix.Dictionary> byUpper = settings.Get("FOO");
+            Assert.AreEqual(byLower.Count, byUpper.Count);
+            Assert.AreEqual(byLower.First.Value.Count, byUpper.First.Value.Count);
+            Assert.AreEqual(byUpper.First.Value.GetString("one"), byUpper.First.Value.GetString("one"));
+            Assert.AreEqual(byUpper.First.Value.GetString("two"), byUpper.First.Value.GetString("two"));
+        }
     }
 }

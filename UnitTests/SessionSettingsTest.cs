@@ -301,5 +301,25 @@ namespace UnitTests
             // if the file is still locked, this will throw an exception
             new SessionSettings(f);
         }
+
+        [Test]
+        public void CaseInsensitiveSectionName()
+        {
+            string configuration = new System.Text.StringBuilder()
+                    .AppendLine("[dEfAuLt]")
+                    .AppendLine("ConnectionType=initiator")
+                    .AppendLine("[sEsSiOn]")
+                    .AppendLine("BeginString=FIX.4.2")
+                    .AppendLine("SenderCompID=ISLD")
+                    .AppendLine("TargetCompID=TW")
+                    .ToString();
+            SessionSettings settings = new SessionSettings(new System.IO.StringReader(configuration));
+
+            Assert.That(settings.Get().GetString("ConnectionType"), Is.EqualTo("initiator"));
+
+            SessionID session = new SessionID("FIX.4.2", "ISLD", "TW");
+            Assert.That(settings.Get(session).GetString("ConnectionType"), Is.EqualTo("initiator"));
+            Assert.That(settings.Get(session).GetString("BeginString"), Is.EqualTo("FIX.4.2"));
+        }
     }
 }
