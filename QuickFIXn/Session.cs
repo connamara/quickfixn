@@ -212,7 +212,7 @@ namespace QuickFix
             this.DataDictionaryProvider = new DataDictionaryProvider(dataDictProvider);
             this.schedule_ = sessionSchedule;
             this.msgFactory_ = msgFactory;
-            appDoesEarlyIntercept_ = app is IApplicationExt;
+            this.appDoesEarlyIntercept_ = app is IApplicationExt;
 
             this.SenderDefaultApplVerID = senderDefaultApplVerID;
 
@@ -1625,6 +1625,11 @@ namespace QuickFix
         public void Dispose()
         {
             if (state_ != null) { state_.Dispose(); }
+            lock (sessions_)
+            {
+                sessions_.Remove(this.SessionID);
+            }
+
         }
     }
 }
