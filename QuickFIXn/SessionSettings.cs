@@ -179,6 +179,21 @@ namespace QuickFix
                 entry.Value.Merge(defaults_);
         }
 
+        /// <summary>
+        /// Remove existing session config from the settings
+        /// </summary>
+        /// <param name="sessionID">ID of session for which config is to be removed</param>
+        /// <returns>true if removed, false if config for the session does not exist</returns>
+        public bool Remove(SessionID sessionID)
+        {
+            return settings_.Remove(sessionID);
+        }
+
+        /// <summary>
+        /// Add new session config
+        /// </summary>
+        /// <param name="sessionID">ID of session for which to add config</param>
+        /// <param name="settings">session config</param>
         public void Set(SessionID sessionID, QuickFix.Dictionary settings)
         {
             if (Has(sessionID))
