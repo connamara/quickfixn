@@ -10,19 +10,26 @@ namespace UnitTests
         [Test]
         public void Load()
         {
-            string configuration = new System.Text.StringBuilder()
-                .AppendLine("[FOO]").AppendLine("bar=24").AppendLine("baz=moo")
-                .AppendLine("[OREN]").AppendLine("Nero=TW").AppendLine("#Nero=IGNOREME")
-                .AppendLine("# this is a comment")
-                .AppendLine("#[OREN]").AppendLine("#Nero=IGNOREME")
-                .AppendLine("[OREN]").AppendLine("ISLD=Nero").AppendLine("STUFF=./\\:")
-                .AppendLine("[NERO]").AppendLine("WINDIR=D:\\This Is\\A-Directory\\Connamara\\")
-                .AppendLine("WINFILE=D:\\Program Files\\Tomcat 4.1\\webapps\\mgatny\\WEB-INF\\connamara.cfg")
-                .AppendLine("UNIXDIR=/home/mgatny/This Is/A Directory/ok/")
-                .AppendLine("stripspace=last spaces stripped   ")
-                .AppendLine("#Nero=IGNOREME")
-                .AppendLine("EqualsInValue=We can have '=' in the value")
-                .ToString();
+            string configuration = @"[FOO]
+bar=24
+baz=moo
+[OREN]
+Nero=TW
+#Nero=IGNOREME
+# this is a comment
+#[OREN]
+#Nero=IGNOREME
+[OREN]
+ISLD=Nero
+STUFF=./\:
+[NERO]
+WINDIR=D:\This Is\A-Directory\Connamara\
+WINFILE=D:\Program Files\Tomcat 4.1\webapps\mgatny\WEB-INF\connamara.cfg
+UNIXDIR=/home/mgatny/This Is/A Directory/ok/
+stripspace=last spaces stripped   
+#Nero=IGNOREME
+EqualsInValue=We can have '=' in the value
+";
             Settings settings = new Settings(new System.IO.StringReader(configuration));
 
             LinkedList<QuickFix.Dictionary> foo = settings.Get("FOO");

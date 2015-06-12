@@ -305,14 +305,12 @@ namespace UnitTests
         [Test]
         public void CaseInsensitiveSectionName()
         {
-            string configuration = new System.Text.StringBuilder()
-                    .AppendLine("[dEfAuLt]")
-                    .AppendLine("ConnectionType=initiator")
-                    .AppendLine("[sEsSiOn]")
-                    .AppendLine("BeginString=FIX.4.2")
-                    .AppendLine("SenderCompID=ISLD")
-                    .AppendLine("TargetCompID=TW")
-                    .ToString();
+            string configuration = @"[dEfAuLt]
+ConnectionType=initiator
+[sEsSiOn]
+BeginString=FIX.4.2
+SenderCompID=ISLD
+TargetCompID=TW";
             SessionSettings settings = new SessionSettings(new System.IO.StringReader(configuration));
 
             Assert.That(settings.Get().GetString("ConnectionType"), Is.EqualTo("initiator"));
