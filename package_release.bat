@@ -41,11 +41,6 @@ call git checkout %TAG_VERSION%
 if %errorlevel% neq 0 echo "There was an error checking out QuickFIX/n %TAG_VERSION%" && exit /b %errorlevel%
 echo * Checked out tag.
 
-rem Generate code from dd
-ruby generator/generate.rb
-if %errorlevel% neq 0 echo "There was an error generating code from the data dictionaries" && exit /b %errorlevel%
-echo * Generated code.
-
 rem Build QuickFIX/n
 call build.bat
 if %errorlevel% neq 0 echo "There was an error building QuickFIX/n" && exit /b %errorlevel%

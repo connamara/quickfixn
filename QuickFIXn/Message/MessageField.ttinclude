@@ -1,0 +1,23 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+        public QuickFix.Fields.<#=f.Name#> <#=f.Name==m.Name ? f.Name + "Field" : f.Name#>
+        {
+            get
+            {
+                var val = new QuickFix.Fields.<#=f.Name#>();
+                GetField(val);
+                return val;
+            }
+            set { SetField(value); }
+        }
+
+        public void Set(QuickFix.Fields.<#=f.Name#> val) { this.<#=f.Name==m.Name ? f.Name + "Field" : f.Name#> = val; }
+
+        public QuickFix.Fields.<#=f.Name#> Get(QuickFix.Fields.<#=f.Name#> val)
+        {
+            GetField(val);
+            return val;
+        }
+
+        public bool IsSet(QuickFix.Fields.<#=f.Name#> val) { return IsSet<#=f.Name#>(); }
+
+        public bool IsSet<#=f.Name#>() { return IsSetField(Tags.<#=f.Name#>); }

@@ -25,11 +25,19 @@ This project requires the following:
 
 Code Generation
 ---------------
-To regenerate the message and field class source from the Data Dictionaries, you need Ruby and the Nokogiri gem:
+Code generation is now done using T4 Text Templates from within visual studio.
+For full generation run in this order:
 
-    gem install nokogiri
-    generate.bat
+Fields/Fields.tt
 
+Fields/FieldTags.tt
+
+Message/generate.tt
+
+	Each tt that generate.tt creates
+
+
+Each FIX version will have its Message classes created in its own subfolder.
 
 Build
 -----
