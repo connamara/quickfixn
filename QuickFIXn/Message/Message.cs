@@ -59,6 +59,7 @@ namespace QuickFix
         public const string SOH = "\u0001";
         private int field_ = 0;
         private bool validStructure_;
+        protected DataDictionary.DataDictionary dataDictionary_ = null;
 
         #region Properties
 
@@ -799,6 +800,71 @@ namespace QuickFix
         protected int BodyLength()
         {
             return this.Header.CalculateLength() + CalculateLength() + this.Trailer.CalculateLength();
+        }
+        protected bool InitializeXML(string url)
+        {
+            try
+            {
+                DataDictionary.DataDictionary p = new DataDictionary.DataDictionary(url);
+                dataDictionary_ = p;
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+        public string toXMLFields(FieldMap fields, int space)
+        {
+            StringBuilder s = new StringBuilder();
+            string name = string.Empty;
+
+            // fields
+            foreach (var f in fields)
+            {
+                
+               s.Append("<field ");
+               if ((dataDictionary_ != null) && ( dataDictionary_.FieldsByTag.ContainsKey(f.Key)))
+               {
+                   s.Append("name=\"" + dataDictionary_.FieldsByTag[f.Key].Name + "\" ");
+               }
+               s.Append("number=\"" + f.Key.ToString() + "\">");
+               s.Append("<![CDATA[" + f.Value.ToString() + "]]>");
+               s.Append("</field>");
+
+            }
+            // now groups
+            List<int> groupTags = fields.GetGroupTags();
+            foreach (int groupTag in groupTags)
+            {
+                for (int counter = 1; counter <= fields.GroupCount(groupTag); counter++)
+                {
+                    s.Append("<group>");
+                    s.Append( toXMLFields( fields.GetGroup(counter, groupTag), space+1));
+                    s.Append("</group>");
+                }
+            }
+            
+            return s.ToString();
+        }
+
+        public string toXML()
+        {
+            StringBuilder s = new StringBuilder();
+            s.AppendLine("<message>");
+            s.AppendLine("<header>");
+            s.AppendLine(toXMLFields(Header, 4));
+            s.AppendLine("</header>");
+            s.AppendLine("<body>");
+            s.AppendLine(toXMLFields(this, 4));
+            s.AppendLine("</body>");
+            s.AppendLine("<trailer>");
+            s.AppendLine(toXMLFields(Trailer, 4));
+            s.AppendLine("</trailer>");
+            s.AppendLine("</message>");
+            return s.ToString();
         }
     }
 }
