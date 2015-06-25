@@ -283,7 +283,7 @@ namespace QuickFix
 
         public void Refresh()
         {
-            throw new NotImplementedException();
+            
         }
 
         #endregion
