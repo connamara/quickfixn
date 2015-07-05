@@ -793,11 +793,6 @@ namespace QuickFix
                         current = msgSeqNum + 1;
                     }
 
-                    if (begin != 0)
-                    {
-                        GenerateSequenceReset(resendReq, begin, msgSeqNum + 1);
-                    }
-
                     if (endSeqNo > msgSeqNum)
                     {
                         endSeqNo = endSeqNo + 1;
@@ -806,7 +801,16 @@ namespace QuickFix
                         {
                             endSeqNo = next;
                         }
-                        GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
+                    }
+
+                    if (begin == 0)
+                    {
+                        begin = current;
+                    }
+
+                    if (endSeqNo > begin)
+                    {
+                        GenerateSequenceReset(resendReq, begin, endSeqNo);
                     }
                 }
                 msgSeqNum = resendReq.Header.GetInt(Tags.MsgSeqNum);
