@@ -793,14 +793,10 @@ namespace QuickFix
                         current = msgSeqNum + 1;
                     }
 
-                    if (endSeqNo > msgSeqNum)
+                    int nextSeqNum = state_.GetNextSenderMsgSeqNum();
+                    if (++endSeqNo > nextSeqNum)
                     {
-                        endSeqNo = endSeqNo + 1;
-                        int next = state_.GetNextSenderMsgSeqNum();
-                        if (endSeqNo > next)
-                        {
-                            endSeqNo = next;
-                        }
+                        endSeqNo = nextSeqNum;
                     }
 
                     if (begin == 0)
