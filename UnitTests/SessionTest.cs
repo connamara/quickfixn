@@ -405,15 +405,15 @@ namespace UnitTests
             Assert.That(DISCONNECTED());
         }
 
-	[Test]
-	public void HeartBeatCheckAfterMessageProcess()
-	{
-	    Logon();
-	    Thread.Sleep(2000);
+        [Test]
+        public void HeartBeatCheckAfterMessageProcess()
+        {
+            Logon();
+            Thread.Sleep(2000);
 
             SendNOSMessage();
             Assert.That(SENT_HEART_BEAT());
-	}
+        }
 
         [Test]
         public void NextResendRequestNoMessagePersist()
@@ -430,6 +430,30 @@ namespace UnitTests
             SendResendRequest(1, 4);
             Assert.That(SENT_RESEND());
             Assert.IsFalse(RESENT());
+        }
+
+        [Test]
+        public void TestResendSessionLevelReject()
+        {
+            Assert.False(session.ResendSessionLevelRejects); // check for correct default
+            Logon(); 
+
+            QuickFix.FIX42.Reject reject = new QuickFix.FIX42.Reject(
+                new QuickFix.Fields.RefSeqNum(10));
+
+            reject.Header.SetField(new QuickFix.Fields.TargetCompID(sessionID.TargetCompID));
+            reject.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.SenderCompID));
+            session.Send(reject);
+
+            responder.msgLookup.Clear();
+            session.ResendSessionLevelRejects = true;
+            SendResendRequest(1, 100);
+            Assert.That(responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT));
+
+            responder.msgLookup.Clear();
+            session.ResendSessionLevelRejects = false;
+            SendResendRequest(1, 100);
+            Assert.False(responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT));
         }
 
         public void AssertMsInTag(string msgType, int tag, bool shouldHaveMs)
