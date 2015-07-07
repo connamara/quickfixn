@@ -201,6 +201,12 @@ namespace QuickFix
         /// </summary>
         public bool RequiresOrigSendingTime { get; set; }
 
+        /// <summary>
+        /// Returns whether to use QuickFIX compatible group validation. This allows for a non-mandatory
+        /// delimiter when parsing groups, not exactly according to FIX standards but for compatibility
+        /// with standard QuickFIX. Note that the default should be False.
+        /// </summary>
+        public bool QuickFIXCompatibleGroups { get; set; }
         #endregion
 
         public Session(
@@ -248,6 +254,7 @@ namespace QuickFix
             this.RequiresOrigSendingTime = true;
             this.CheckLatency = true;
             this.MaxLatency = 120;
+            this.QuickFIXCompatibleGroups = false;
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime (Session construction)");
@@ -510,6 +517,8 @@ namespace QuickFix
                 string beginString = Message.ExtractBeginString(msgStr);
 
                 Message message = msgFactory_.Create(beginString, msgType.Obj);
+                message.QuickFIXCompatibleGroups = this.QuickFIXCompatibleGroups;
+
                 message.FromString(
                     msgStr,
                     this.ValidateLengthAndChecksum,

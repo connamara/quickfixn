@@ -51,7 +51,8 @@ namespace QuickFix
         private int field_ = 0;
         private bool validStructure_;
         protected DataDictionary.DataDictionary dataDictionary_ = null;
-        
+        public bool QuickFIXCompatibleGroups = false;
+
         #region Properties
 
         public Header Header { get; private set; }
@@ -489,7 +490,10 @@ namespace QuickFix
             {
                 grpPos = pos;
                 StringField f = ExtractField(msgstr, ref pos, sessionDataDictionary, appDD);
-                if (f.Tag == grpEntryDelimiterTag)
+                if ( // it's a delimiter
+                    (f.Tag == grpEntryDelimiterTag) ||
+                    // QUICKFIX compatibility - no delimiter but field belongs to group and already processed
+                    (QuickFIXCompatibleGroups && (dd.IsField(f.Tag) && (grp == null || grp.IsSetField(f)))))
                 {
                     // This is the start of a group entry.
 

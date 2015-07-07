@@ -125,6 +125,9 @@ namespace QuickFix
             if (settings.Has(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME))
                 session.RequiresOrigSendingTime = settings.GetBool(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME);
 
+            if (settings.Has(SessionSettings.QUICKFIX_COMPATIBLE_GROUPS))
+                session.QuickFIXCompatibleGroups = settings.GetBool(SessionSettings.QUICKFIX_COMPATIBLE_GROUPS);
+
             return session;
         }
 

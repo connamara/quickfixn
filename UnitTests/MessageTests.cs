@@ -454,7 +454,7 @@ namespace UnitTests
             header.SetField(new TargetLocationID("TARGETLOC"));
 
             msg.ReverseRoute(header);
-            
+
             Assert.That(msg.Header.GetString(Tags.BeginString), Is.EqualTo("FIX.4.2"));
             Assert.That(msg.Header.GetString(Tags.TargetCompID), Is.EqualTo("SENDER"));
             Assert.That(msg.Header.GetString(Tags.TargetSubID), Is.EqualTo("SENDERSUB"));
@@ -976,7 +976,7 @@ namespace UnitTests
 
 
             string xmlDoc = msg.toXML();
-            
+
             System.Diagnostics.Debug.Print(xmlDoc.ToString());
 
             XDocument doc = null;
@@ -989,22 +989,22 @@ namespace UnitTests
                 Assert.Fail("Badly formed XML generated: " + e.Message);
             }
 
-            
+
             var groups = doc.Descendants("message").Descendants("body").Elements("group")
-                .Select(group => 
+                .Select(group =>
                     new
                     {
                         numbers = group.Descendants("field").Attributes("number"),
                         values = group.Descendants("field")
                     })
-                    
+
                     .ToList();
             int ct = 0;
             foreach (var elem in groups)
             {
                 int number = 0;
                 Group group = msg.GetGroup(++ct, 453);
-                
+
                 var valueEnum = elem.values.GetEnumerator();
                 foreach (var numberEnum in elem.numbers)
                 {
@@ -1024,9 +1024,36 @@ namespace UnitTests
                         }
                     }
                 }
-             
-           
+
             }
+
+        }
+
+        [Test]
+        public void TestQuickFIXCompatibleGroups()
+        {
+            // allow QuickFIX compatible group parsing (note test MissingDelimiterField proves the reverse)
+
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load("../../../spec/fix/FIX44.xml");
+
+            // group 555 does not begin with 600
+            
+            string[] msgFields = { "8=FIX.4.4", "9=296", "35=8", "34=2", "49=XXXXX", "52=20150731-12:00:00.000", "56=CLIENT2",
+                "1=C", "11=T01", "17=123", "37=ST1", "39=0", "44=10000", "54=1", "55=CAD", "60=20150731-12:00:00.000",
+                "75=20150731", "109=BRK","150=0","167=F", "375=ABC", "423=0","555=1", "687=1","943=R1", "5296=1",
+                "5322=ABC","5442=MST1", "5444=1", "5474=S", "5475=MAR16", "5476=PRIV1",
+                "5477=PUB1", "5478=0","5479=0","5681=0","7931=0","10=43"
+            };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
+            msg.QuickFIXCompatibleGroups = true;            
+            Assert.DoesNotThrow(delegate { msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory); });
+
+            Group group = msg.GetGroup(1, 555);
+            Assert.IsNotNull(group, "Group should be created");
+
         }
     }
 }
