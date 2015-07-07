@@ -32,4 +32,5 @@ Changes since the last version (oldest first):
 * (patch)  #80 - fixes to tag-141-related sequence resets (TomasVetrovsky,akamyshanov,gbirchmeier)
 * (patch) #315 - make config file section headers be case-insensitive, for parity with QF/j (gbirchmeier)
 * (minor) #314 - New feature: add/remove sessions dynamically (martinadams)
+* (minor) #312 - New config option: can force session-level rejects to be resent (martinadams)
 
