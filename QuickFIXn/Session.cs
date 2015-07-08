@@ -730,6 +730,8 @@ namespace QuickFix
 
         protected void NextResendRequest(Message resendReq)
         {
+            if (!Verify(resendReq, false, false))
+                return;
             try
             {
                 int msgSeqNum = 0;
