@@ -190,8 +190,8 @@ namespace UnitTests
                 {
                     Message message = new Message(socketState._messageFragment);
                     socketState._messageFragment = string.Empty;
-                    string targetCompID = message.Header.GetField(QuickFix.Fields.Tags.TargetCompID);
-                    if (message.Header.GetField(QuickFix.Fields.Tags.MsgType) == QuickFix.Fields.MsgType.LOGON)
+                    string targetCompID = message.Header.GetString(QuickFix.Fields.Tags.TargetCompID);
+                    if (message.Header.GetString(QuickFix.Fields.Tags.MsgType) == QuickFix.Fields.MsgType.LOGON)
                         lock (_sessions)
                         {
                             _sessions[targetCompID] = socketState;
@@ -334,7 +334,7 @@ namespace UnitTests
 
             // Add the dynamic acceptor and ensure that we can now log on
             var sessionID = CreateSessionID(dynamicCompID);
-            Assert.IsTrue(_acceptor.AddSession(sessionID, CreateSessionConfig(dynamicCompID, false)), "Failed to add dynamic session to acceptor");
+            Assert.IsTrue(_acceptor.AddSession(sessionID, CreateSessionConfig(dynamicCompID, false), null), "Failed to add dynamic session to acceptor");
             var socket03 = ConnectToEngine();
             SendLogon(socket03, dynamicCompID);
             Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failed to logon dynamic acceptor session");
@@ -351,7 +351,7 @@ namespace UnitTests
             // Ensure that we can perform unforced removal of a dynamic session that is not logged on.
             string dynamicCompID2 = "acc20";
             var sessionID2 = CreateSessionID(dynamicCompID2);
-            Assert.IsTrue(_acceptor.AddSession(sessionID2, CreateSessionConfig(dynamicCompID2, false)), "Failed to add dynamic session to acceptor");
+            Assert.IsTrue(_acceptor.AddSession(sessionID2, CreateSessionConfig(dynamicCompID2, false), null), "Failed to add dynamic session to acceptor");
             Assert.IsTrue(_acceptor.RemoveSession(sessionID2, false), "Failed to remove inactive session");
 
             // Ensure that we can remove statically configured session
