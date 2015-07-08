@@ -791,5 +791,21 @@ namespace UnitTests
             Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.LOGON));
             Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.NEWORDERSINGLE));
         }
+
+        [Test]
+        public void TestRequireLogon()
+        {
+            QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
+                new QuickFix.Fields.ClOrdID("1"),
+                new QuickFix.Fields.HandlInst(QuickFix.Fields.HandlInst.MANUAL_ORDER),
+                new QuickFix.Fields.Symbol("IBM"),
+                new QuickFix.Fields.Side(QuickFix.Fields.Side.BUY),
+                new QuickFix.Fields.TransactTime(),
+                new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
+            // This should cause disconnect, because first message is something other than a logon.
+            SendTheMessage(order);
+            Assert.That(DISCONNECTED());
+        }
+
     }
 }

@@ -589,6 +589,8 @@ namespace QuickFix
 
                 if (MsgType.LOGON.Equals(msgType))
                     NextLogon(message);
+                else if (!IsLoggedOn)
+                    Disconnect(string.Format("Received msg type '{0}' when not logged on", msgType));
                 else if (MsgType.HEARTBEAT.Equals(msgType))
                     NextHeartbeat(message);
                 else if (MsgType.TEST_REQUEST.Equals(msgType))
