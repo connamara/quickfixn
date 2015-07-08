@@ -795,20 +795,20 @@ namespace QuickFix
                         current = msgSeqNum + 1;
                     }
 
-                    if (begin != 0)
+                    int nextSeqNum = state_.GetNextSenderMsgSeqNum();
+                    if (++endSeqNo > nextSeqNum)
                     {
-                        GenerateSequenceReset(resendReq, begin, msgSeqNum + 1);
+                        endSeqNo = nextSeqNum;
                     }
 
-                    if (endSeqNo > msgSeqNum)
+                    if (begin == 0)
                     {
-                        endSeqNo = endSeqNo + 1;
-                        int next = state_.GetNextSenderMsgSeqNum();
-                        if (endSeqNo > next)
-                        {
-                            endSeqNo = next;
-                        }
-                        GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
+                        begin = current;
+                    }
+
+                    if (endSeqNo > begin)
+                    {
+                        GenerateSequenceReset(resendReq, begin, endSeqNo);
                     }
                 }
                 msgSeqNum = resendReq.Header.GetInt(Tags.MsgSeqNum);
