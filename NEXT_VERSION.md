@@ -34,3 +34,5 @@ Changes since the last version (oldest first):
 * (minor) #314 - New feature: add/remove sessions dynamically (martinadams)
 * (patch) #273 - prevent non-logon message traffic unless fully logged on (martinadams)
 * (patch) #278 - fix for mis-sequenced gap fills in re-requested messages (martinadams)
+* (patch) #283 - fix to ensure IApplication.FromAdmin() gets called for received resend requests (martinadams)
+
