@@ -490,7 +490,7 @@ namespace UnitTests
             int count = -1;
             foreach (QuickFix.Message sequenceResestMsg in responder.msgLookup[QuickFix.Fields.MsgType.SEQUENCE_RESET])
             {
-                Assert.AreEqual(sequenceResestMsg.GetField(QuickFix.Fields.Tags.GapFillFlag), "Y");
+                Assert.AreEqual(sequenceResestMsg.GetString(QuickFix.Fields.Tags.GapFillFlag), "Y");
                 Assert.AreEqual(sequenceResestMsg.Header.GetInt(QuickFix.Fields.Tags.MsgSeqNum), gapStarts[++count]);
                 Assert.AreEqual(sequenceResestMsg.GetInt(QuickFix.Fields.Tags.NewSeqNo), gapEnds[count]);
             }
