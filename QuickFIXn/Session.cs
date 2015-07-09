@@ -153,6 +153,11 @@ namespace QuickFix
         public bool SendRedundantResendRequests { get; set; }
 
         /// <summary>
+        /// Whether to resend session level rejects (msg type '3') when servicing a resend request
+        /// </summary>
+        public bool ResendSessionLevelRejects { get; set; }
+
+        /// <summary>
         /// Whether to validate length and checksum of messages
         /// </summary>
         public bool ValidateLengthAndChecksum { get; set; }
@@ -238,6 +243,7 @@ namespace QuickFix
             this.PersistMessages = true;
             this.ResetOnDisconnect = false;
             this.SendRedundantResendRequests = false;
+            this.ResendSessionLevelRejects = false;
             this.ValidateLengthAndChecksum = true;
             this.CheckCompID = true;
             this.MillisecondsInTimeStamp = true;
@@ -771,7 +777,7 @@ namespace QuickFix
                             begin = current;
                         }
 
-                        if (IsAdminMessage(msg))
+                        if (IsAdminMessage(msg) && !(this.ResendSessionLevelRejects && msg.Header.GetString(Tags.MsgType) == MsgType.REJECT))
                         {
                             if (begin == 0)
                             {
