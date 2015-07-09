@@ -35,4 +35,5 @@ Changes since the last version (oldest first):
 * (patch) #273 - prevent non-logon message traffic unless fully logged on (martinadams)
 * (patch) #278 - fix for mis-sequenced gap fills in re-requested messages (martinadams)
 * (patch) #283 - fix to ensure IApplication.FromAdmin() gets called for received resend requests (martinadams)
+* (minor) #312 - New config option: can force session-level rejects to be resent (martinadams)
 
