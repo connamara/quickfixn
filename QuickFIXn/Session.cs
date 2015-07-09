@@ -502,6 +502,16 @@ namespace QuickFix
         /// <param name="msgStr"></param>
         public void Next(string msgStr)
         {
+            NextMessage(msgStr);
+            NextQueued();
+        }
+
+        /// <summary>
+        /// Process a message (in string form) from the counterparty
+        /// </summary>
+        /// <param name="msgStr"></param>
+        private void NextMessage(string msgStr)
+        {
             try
             {
                 this.Log.OnIncoming(msgStr);
@@ -654,7 +664,6 @@ namespace QuickFix
                 Disconnect(e.ToString());
             }
 
-            NextQueued();
             Next();
         }
 
@@ -710,7 +719,6 @@ namespace QuickFix
             else
             {
                 state_.IncrNextTargetMsgSeqNum();
-                NextQueued();
             }
 
             if (this.IsLoggedOn)
@@ -723,7 +731,6 @@ namespace QuickFix
                 return;
             GenerateHeartbeat(testRequest);
             state_.IncrNextTargetMsgSeqNum();
-            NextQueued();
         }
 
         protected void NextResendRequest(Message resendReq)
@@ -866,7 +873,6 @@ namespace QuickFix
             if (!Verify(heartbeat))
                 return;
             state_.IncrNextTargetMsgSeqNum();
-            NextQueued();
         }
 
         protected void NextSequenceReset(Message sequenceReset)
@@ -1563,14 +1569,12 @@ namespace QuickFix
                 }
                 else
                 {
-                    Next(msg.ToString());
+                    NextMessage(msg.ToString());
                 }
                 return true;
             }
             return false;
         }
-
-
 
         private bool IsAdminMessage(Message msg)
         {
