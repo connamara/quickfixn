@@ -153,6 +153,11 @@ namespace QuickFix
         public bool SendRedundantResendRequests { get; set; }
 
         /// <summary>
+        /// Whether to resend session level rejects (msg type '3') when servicing a resend request
+        /// </summary>
+        public bool ResendSessionLevelRejects { get; set; }
+
+        /// <summary>
         /// Whether to validate length and checksum of messages
         /// </summary>
         public bool ValidateLengthAndChecksum { get; set; }
@@ -238,6 +243,7 @@ namespace QuickFix
             this.PersistMessages = true;
             this.ResetOnDisconnect = false;
             this.SendRedundantResendRequests = false;
+            this.ResendSessionLevelRejects = false;
             this.ValidateLengthAndChecksum = true;
             this.CheckCompID = true;
             this.MillisecondsInTimeStamp = true;
@@ -570,6 +576,8 @@ namespace QuickFix
 
                 if (MsgType.LOGON.Equals(msgType))
                     NextLogon(message);
+                else if (!IsLoggedOn)
+                    Disconnect(string.Format("Received msg type '{0}' when not logged on", msgType));
                 else if (MsgType.HEARTBEAT.Equals(msgType))
                     NextHeartbeat(message);
                 else if (MsgType.TEST_REQUEST.Equals(msgType))
@@ -723,6 +731,8 @@ namespace QuickFix
 
         protected void NextResendRequest(Message resendReq)
         {
+            if (!Verify(resendReq, false, false))
+                return;
             try
             {
                 int msgSeqNum = 0;
@@ -762,7 +772,7 @@ namespace QuickFix
                             begin = current;
                         }
 
-                        if (IsAdminMessage(msg))
+                        if (IsAdminMessage(msg) && !(this.ResendSessionLevelRejects && msg.Header.GetString(Tags.MsgType) == MsgType.REJECT))
                         {
                             if (begin == 0)
                             {
@@ -788,20 +798,20 @@ namespace QuickFix
                         current = msgSeqNum + 1;
                     }
 
-                    if (begin != 0)
+                    int nextSeqNum = state_.GetNextSenderMsgSeqNum();
+                    if (++endSeqNo > nextSeqNum)
                     {
-                        GenerateSequenceReset(resendReq, begin, msgSeqNum + 1);
+                        endSeqNo = nextSeqNum;
                     }
 
-                    if (endSeqNo > msgSeqNum)
+                    if (begin == 0)
                     {
-                        endSeqNo = endSeqNo + 1;
-                        int next = state_.GetNextSenderMsgSeqNum();
-                        if (endSeqNo > next)
-                        {
-                            endSeqNo = next;
-                        }
-                        GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
+                        begin = current;
+                    }
+
+                    if (endSeqNo > begin)
+                    {
+                        GenerateSequenceReset(resendReq, begin, endSeqNo);
                     }
                 }
                 msgSeqNum = resendReq.Header.GetInt(Tags.MsgSeqNum);
