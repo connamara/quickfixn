@@ -286,20 +286,13 @@ namespace QuickFix
         {}
     }
 
-    public class OtherTagException : TagException
-    {
-        public OtherTagException(string msg, int tag)
-            : base(msg, tag)
-        { }
-    }
-
     /// <summary>
     /// For when a received message has a group that doesn't start its entries with the delimiter tag
     /// </summary>
-    public class GroupDelimiterTagException : OtherTagException
+    public class GroupDelimiterTagException : TagException
     {
         public GroupDelimiterTagException(int counterTag, int delimiterTag)
-            : base(string.Format("Group {0}'s first entry does not start with delimiter {1}", counterTag,delimiterTag), counterTag)
+            : base(string.Format("Group {0}'s first entry does not start with delimiter {1}", counterTag, delimiterTag), counterTag)
         { }
     }
 

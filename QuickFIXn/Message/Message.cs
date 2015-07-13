@@ -368,8 +368,12 @@ namespace QuickFix
         /// <param name="sessionDD"></param>
         /// <param name="appDD"></param>
         /// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
+        /// <param name="ignoreBody">(default false) if true, ignores all non-header non-trailer fields.
+        ///   Intended for callers that only need rejection-related information from the header.
+        ///   </param>
         public void FromString(string msgstr, bool validate,
-            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
+            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory,
+            bool ignoreBody=false)
         {
             Clear();
 
@@ -425,7 +429,7 @@ namespace QuickFix
                         pos = SetGroup(f, msgstr, pos, this.Trailer, sessionDD.Trailer.GetGroup(f.Tag), sessionDD, appDD, msgFactory);
                     }
                 }
-                else
+                else if (ignoreBody==false)
                 {
                     if (!expectingBody)
                     {
