@@ -51,6 +51,7 @@ namespace QuickFix
         public const string LOGON_TIMEOUT = "LogonTimeout";
         public const string LOGOUT_TIMEOUT = "LogoutTimeout";
         public const string SEND_REDUNDANT_RESENDREQUESTS = "SendRedundantResendRequests";
+        public const string RESEND_SESSION_LEVEL_REJECTS = "ResendSessionLevelRejects";
         public const string MILLISECONDS_IN_TIMESTAMP = "MillisecondsInTimeStamp";
         public const string ENABLE_LAST_MSG_SEQ_NUM_PROCESSED = "EnableLastMsgSeqNumProcessed";
         public const string MAX_MESSAGES_IN_RESEND_REQUEST = "MaxMessagesInResendRequest";
