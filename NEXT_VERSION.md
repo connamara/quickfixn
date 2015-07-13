@@ -36,4 +36,17 @@ Changes since the last version (oldest first):
 * (patch) #278 - fix for mis-sequenced gap fills in re-requested messages (martinadams)
 * (patch) #283 - fix to ensure IApplication.FromAdmin() gets called for received resend requests (martinadams)
 * (minor) #312 - New config option: can force session-level rejects to be resent (martinadams)
+* (minor) #270/#146 - Correct rejection behavior when msg groups do not use correct delimiter tag (gbirchmeier)
+
+
+NOTE: Breaking changes in next release
+---------------------------------------
+This version will have changes that will technically alter the public interface.
+However, most likely no one will be affected.  But just in case, here are the details:
+
+* **class `OtherTagException` was deleted.**  The class `GroupDelimiterTagException` used to
+  be descended from this class, but now descends directly from `TagException`.
+* **method `Session.Next(Message message)` was deleted.**  This should never have been public.
+  If you were using it and this is a problem for you, please contact us
+  via our [Contact Page](http://quickfixn.org/about/contact) and we'll see if we can help.
 
