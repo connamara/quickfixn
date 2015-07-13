@@ -529,7 +529,7 @@ namespace QuickFix
             if (IsNewSession)
                 state_.Reset("New session (detected in Next(Message))");
 
-            Message message = null; // declared here so caught exceptions can see it
+            Message message = null; // declared outside of try-block so that catch-blocks can use it
 
             try
             {
@@ -594,7 +594,7 @@ namespace QuickFix
 
                 try
                 {
-                    if (MsgType.LOGON.Equals(msgBuilder.MsgType))
+                    if (MsgType.LOGON.Equals(msgBuilder.MsgType.Obj))
                         Disconnect("Logon message is not valid");
                 }
                 catch (MessageParseError)
@@ -610,7 +610,7 @@ namespace QuickFix
             }
             catch (UnsupportedVersion)
             {
-                if (MsgType.LOGOUT.Equals(msgBuilder.MsgType))
+                if (MsgType.LOGOUT.Equals(msgBuilder.MsgType.Obj))
                 {
                     NextLogout(message);
                 }
@@ -628,14 +628,13 @@ namespace QuickFix
             catch (FieldNotFoundException e)
             {
                 this.Log.OnEvent("Rejecting invalid message, field not found: " + e.Message);
-                this.Log.OnEvent("stacktrace: " + e.StackTrace);
                 if ((SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0) && (message.IsApp()))
                 {
                     GenerateBusinessMessageReject(message, Fields.BusinessRejectReason.CONDITIONALLY_REQUIRED_FIELD_MISSING, e.Field);
                 }
                 else
                 {
-                    if (MsgType.LOGON.Equals(msgBuilder.MsgType))
+                    if (MsgType.LOGON.Equals(msgBuilder.MsgType.Obj))
                     {
                         this.Log.OnEvent("Required field missing from logon");
                         Disconnect("Required field missing from logon");
