@@ -30,7 +30,7 @@ namespace UnitTests
             noParty.AddGroup(noPartySub);
 
             string msgString = noParty.ToString();
-            string expected = String.Join(Message.SOH, new string[] {
+            string expected = String.Join(TestingExtensions.SOH, new string[] {
                 "448=ABC","447=D","452=4",
                 "802=2", //NoPartySubIDs
                     "523=subABC","803=1",

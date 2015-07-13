@@ -21,25 +21,25 @@ namespace UnitTests
 
         public bool disconnected = false;
 
-        public bool Send(string msgStr)
+        public bool Send(byte[] msgStr)
         {
-            QuickFix.Fields.MsgType msgType = QuickFix.Message.IdentifyType(msgStr);
+            string msgType = QuickFix.Message.GetMsgType(msgStr);
             string beginString = QuickFix.Message.ExtractBeginString(msgStr);
 
-            QuickFix.Message message = messageFactory.Create(beginString, msgType.Obj);
+            QuickFix.Message message = messageFactory.Create(beginString, msgType);
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            message.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
+            message.FromString(msgStr, msgType, false, dd, dd, _defaultMsgFactory);
 
-            if (!msgLookup.ContainsKey(msgType.getValue()))
-                msgLookup.Add(msgType.getValue(), new Queue<QuickFix.Message>());
+            if (!msgLookup.ContainsKey(msgType))
+                msgLookup.Add(msgType, new Queue<QuickFix.Message>());
 
-            msgLookup[msgType.getValue()].Enqueue(message);
+            msgLookup[msgType].Enqueue(message);
 
             QuickFix.Fields.PossDupFlag possDup = new QuickFix.Fields.PossDupFlag(false);
             if (message.Header.IsSetField(possDup))
                 message.Header.GetField(possDup);
 
-            if (possDup.getValue() && msgType.getValue()!= QuickFix.Fields.MsgType.SEQUENCE_RESET)
+            if (possDup.getValue() && msgType != QuickFix.Fields.MsgType.SEQUENCE_RESET)
             {
                 dups.Enqueue(message);
             }
@@ -490,7 +490,7 @@ namespace UnitTests
             int count = -1;
             foreach (QuickFix.Message sequenceResestMsg in responder.msgLookup[QuickFix.Fields.MsgType.SEQUENCE_RESET])
             {
-                Assert.AreEqual(sequenceResestMsg.GetField(QuickFix.Fields.Tags.GapFillFlag), "Y");
+                Assert.AreEqual(sequenceResestMsg.GetString(QuickFix.Fields.Tags.GapFillFlag), "Y");
                 Assert.AreEqual(sequenceResestMsg.Header.GetInt(QuickFix.Fields.Tags.MsgSeqNum), gapStarts[++count]);
                 Assert.AreEqual(sequenceResestMsg.GetInt(QuickFix.Fields.Tags.NewSeqNo), gapEnds[count]);
             }
@@ -523,7 +523,7 @@ namespace UnitTests
         public void AssertMsInTag(string msgType, int tag, bool shouldHaveMs)
         {
             QuickFix.Message msg = responder.msgLookup[msgType].Last();
-            string sendingTime = msg.Header.GetField(tag);
+            string sendingTime = msg.Header.GetString(tag);
             Match m = msRegex.Match(sendingTime);
             Assert.That(m.Success == shouldHaveMs);
         }
@@ -757,7 +757,7 @@ namespace UnitTests
         [Test]
         public void TestMessageStoreAccessor()
         {
-            List<string> messages = new List<string>();
+            List<byte[]> messages = new List<byte[]>();
 
             messages.Clear();
             session.MessageStore.Get(0, 100, messages);

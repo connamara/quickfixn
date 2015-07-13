@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using QuickFix.Fields;
@@ -69,17 +70,19 @@ namespace QuickFix
             private set { _delim = value; }
         }
 
-        public override string CalculateString()
+        public override void CalculateString(MessageBuilder mb)
         {
             if (_fieldOrder == null)
-                return base.CalculateString(new StringBuilder(), new int[] { _delim });
+                base.CalculateString(mb, new int[] { _delim });
             else
-                return base.CalculateString(new StringBuilder(), _fieldOrder); // 802 shouldn't be in _fieldOrder
+                base.CalculateString(mb, _fieldOrder); // 802 shouldn't be in _fieldOrder
         }
 
         public override string ToString()
         {
-            return CalculateString();
+            MessageBuilder mb = new MessageBuilder();
+            CalculateString(mb);
+            return mb.ToString();
         }
 
         #region Private Members

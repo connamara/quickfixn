@@ -37,10 +37,10 @@ namespace QuickFix
 
             #endregion
             
-            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
+            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict, ILogFactory logFactory)
             {
                 socketEndPoint_ = socketEndPoint;
-                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict);
+                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, logFactory);
             }
 
             public void AcceptSession(Session session)
@@ -73,22 +73,22 @@ namespace QuickFix
         #region Constructors
 
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(new SessionFactory(application, storeFactory), settings)
+            : this(new SessionFactory(application, storeFactory), settings, null)
         { }
 
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
-            : this(new SessionFactory(application, storeFactory, logFactory), settings)
+            : this(new SessionFactory(application, storeFactory, logFactory), settings, logFactory)
         { }
 
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
-            : this(new SessionFactory(application, storeFactory, logFactory, messageFactory), settings)
+            : this(new SessionFactory(application, storeFactory, logFactory, messageFactory), settings, logFactory)
         { }
 
-        public ThreadedSocketAcceptor(SessionFactory sessionFactory, SessionSettings settings)
+        public ThreadedSocketAcceptor(SessionFactory sessionFactory, SessionSettings settings, ILogFactory logFactory)
         {
             try
             {
-                CreateSessions(settings, sessionFactory);
+                CreateSessions(settings, sessionFactory, logFactory);
             }
             catch (System.Exception e)
             {
@@ -100,20 +100,20 @@ namespace QuickFix
 
         #region Private Methods
 
-        private void CreateSessions(SessionSettings settings, SessionFactory sessionFactory)
+        private void CreateSessions(SessionSettings settings, SessionFactory sessionFactory, ILogFactory logFactory)
         {
             sessionFactory_ = sessionFactory;
             foreach (SessionID sessionID in settings.GetSessions())
             {
                 QuickFix.Dictionary dict = settings.Get(sessionID);
-                AddSession(sessionID, dict);
+                AddSession(sessionID, dict, logFactory);
             }
 
             if (0 == socketDescriptorForAddress_.Count)
                 throw new ConfigError("No acceptor sessions found in SessionSettings.");
         }
 
-        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(Dictionary dict)
+        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(Dictionary dict, ILogFactory logFactory)
         {
             int port = System.Convert.ToInt32(dict.GetLong(SessionSettings.SOCKET_ACCEPT_PORT));
             SocketSettings socketSettings = new SocketSettings();
@@ -138,7 +138,7 @@ namespace QuickFix
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict, logFactory);
                 socketDescriptorForAddress_[socketEndPoint] = descriptor;
             }
 
@@ -151,14 +151,14 @@ namespace QuickFix
         /// <param name="sessionID">ID of new session<param>
         /// <param name="dict">config settings for new session</param></param>
         /// <returns>true if session added successfully, false if session already exists or is not an acceptor</returns>
-        public bool AddSession(SessionID sessionID, Dictionary dict)
+        public bool AddSession(SessionID sessionID, Dictionary dict, ILogFactory logFactory)
         {
             if (!sessions_.ContainsKey(sessionID))
             {
                 string connectionType = dict.GetString(SessionSettings.CONNECTION_TYPE);
                 if ("acceptor" == connectionType)
                 {
-                    AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(dict);
+                    AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(dict, logFactory);
                     Session session = sessionFactory_.Create(sessionID, dict);
                     descriptor.AcceptSession(session);
                     sessions_[sessionID] = session;

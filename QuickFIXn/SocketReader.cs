@@ -43,7 +43,7 @@ namespace QuickFix
             {
                 int bytesRead = ReadSome(readBuffer_, timeoutMilliseconds: 1000);
                 if (bytesRead > 0)
-                    parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                    parser_.AddToStream(readBuffer_, bytesRead);
                 else if (null != qfSession_)
                 {
                     qfSession_.Next();
@@ -118,12 +118,12 @@ namespace QuickFix
         }
 
         [Obsolete("This should be made private")]
-        public void OnMessageFound(string msg)
+        public void OnMessageFound(byte[] msg)
         {
             OnMessageFoundInternal(msg);
         }
 
-        protected void OnMessageFoundInternal(string msg)
+        protected void OnMessageFoundInternal(byte[] msg)
         {
             ///Message fixMessage;
 
@@ -134,7 +134,7 @@ namespace QuickFix
                     qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg));
                     if (null == qfSession_)
                     {
-                        this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        this.Log("ERROR: Disconnecting; received message for unknown session: " + System.Text.Encoding.ASCII.GetString(msg));
                         DisconnectClient();
                         return;
                     }
@@ -164,7 +164,7 @@ namespace QuickFix
             }
         }
 
-        protected void HandleBadMessage(string msg, System.Exception e)
+        protected void HandleBadMessage(byte[] msg, System.Exception e)
         {
             try
             {
@@ -182,7 +182,7 @@ namespace QuickFix
             { }
         }
 
-        protected bool ReadMessage(out string msg)
+        protected bool ReadMessage(out byte[] msg)
         {
             try
             {
@@ -190,14 +190,14 @@ namespace QuickFix
             }
             catch (MessageParseError e)
             {
-                msg = "";
+                msg = new byte[0];
                 throw e;
             }
         }
 
         protected void ProcessStream()
         {
-            string msg;
+            byte[] msg;
             while (ReadMessage(out msg))
                 OnMessageFoundInternal(msg);
         }
@@ -215,11 +215,11 @@ namespace QuickFix
             tcpClient_.Close();
         }
 
-        protected bool HandleNewSession(string msg)
+        protected bool HandleNewSession(byte[] msg)
         {
             if (qfSession_.HasResponder)
             {
-                qfSession_.Log.OnIncoming(msg);
+                qfSession_.Log.OnIncoming(System.Text.Encoding.ASCII.GetString(msg));
                 qfSession_.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + tcpClient_.Client.RemoteEndPoint + ")");
                 qfSession_ = null;
                 DisconnectClient();
@@ -302,9 +302,8 @@ namespace QuickFix
             responder_.Log(s);
         }
 
-        public int Send(string data)
+        public int Send(byte[] rawData)
         {
-            byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
             stream_.Write(rawData, 0, rawData.Length);
             return rawData.Length;
         }

@@ -18,7 +18,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="s">the raw FIX message data</param>
         /// <returns>true if successful, false if send operation failed</returns>
-        bool Send(string s);
+        bool Send(byte[] s);
 
         /// <summary>
         /// Disconnect the underlying connection

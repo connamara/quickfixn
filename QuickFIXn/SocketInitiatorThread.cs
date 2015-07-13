@@ -45,15 +45,6 @@ namespace QuickFix
             thread_.Start(this);
         }
 
-        public void Join()
-        {
-            if (null == thread_)
-                return;
-            Disconnect();
-            thread_.Join(5000);
-            thread_ = null;
-        }
-
         public void Connect()
         {
             Debug.Assert(stream_ == null);
@@ -79,7 +70,9 @@ namespace QuickFix
             {
                 int bytesRead = ReadSome(readBuffer_, 1000);
                 if (bytesRead > 0)
-                    parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                {
+                    parser_.AddToStream(readBuffer_, bytesRead);
+                }
                 else if (null != session_)
                 {
                     session_.Next();
@@ -176,7 +169,7 @@ namespace QuickFix
 
         private void ProcessStream()
         {
-            string msg;
+            byte[] msg;
             while (parser_.ReadFixMessage(out msg))
             {
                 session_.Next(msg);
@@ -185,9 +178,8 @@ namespace QuickFix
 
         #region Responder Members
 
-        public bool Send(string data)
+        public bool Send(byte[] rawData)
         {
-            byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
             stream_.Write(rawData, 0, rawData.Length);
             return true;
         }

@@ -120,14 +120,14 @@ namespace UnitTests
             Assert.AreEqual(1, store.GetNextSenderMsgSeqNum());
 
             // Check that messages do not persist after reset
-            store.Set(1, "dude");
-            store.Set(2, "pude");
-            store.Set(3, "ok");
-            store.Set(4, "ohai");
+            store.Set(1, Encoding.ASCII.GetBytes("dude"));
+            store.Set(2, Encoding.ASCII.GetBytes("pude"));
+            store.Set(3, Encoding.ASCII.GetBytes("ok"));
+            store.Set(4, Encoding.ASCII.GetBytes("ohai"));
 
             store.Reset();
 
-            var msgs = new List<string>();
+            var msgs = new List<byte[]>();
             store.Get(2, 3, msgs);
             Assert.That(msgs,Is.Empty);
         }
@@ -150,20 +150,20 @@ namespace UnitTests
         [Test]
         public void getTest()
         {
-            store.Set(1, "dude");
-            store.Set(2, "pude");
-            store.Set(3, "ok");
-            store.Set(4, "ohai");
+            store.Set(1, Encoding.ASCII.GetBytes("dude"));
+            store.Set(2, Encoding.ASCII.GetBytes("pude"));
+            store.Set(3, Encoding.ASCII.GetBytes("ok"));
+            store.Set(4, Encoding.ASCII.GetBytes("ohai"));
 
-            var msgs = new List<string>();
+            var msgs = new List<byte[]>();
             store.Get(2, 3, msgs);
-            var expected = new List<string>() { "pude", "ok" };
+            var expected = new List<byte[]>() { Encoding.ASCII.GetBytes("pude"), Encoding.ASCII.GetBytes("ok") };
 
             Assert.AreEqual(expected, msgs);
 
             rebuildStore();
 
-            msgs = new List<string>();
+            msgs = new List<byte[]>();
             store.Get(2, 3, msgs);
 
             Assert.AreEqual(expected, msgs);

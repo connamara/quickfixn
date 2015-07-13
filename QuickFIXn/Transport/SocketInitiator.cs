@@ -69,12 +69,14 @@ namespace QuickFix.Transport
             catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
             {
                 t.Session.Log.OnEvent("Connection failed: " + ex.Message);
+                t.Disconnect();
                 t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.Session.SessionID);
             }
             catch (SocketException e) 
             {
                 t.Session.Log.OnEvent("Connection failed: " + e.Message);
+                t.Disconnect();
                 t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.Session.SessionID);
             }
@@ -92,7 +94,6 @@ namespace QuickFix.Transport
         {
             lock (sync_)
             {
-                thread.Join();
                 threads_.Remove(thread.Session.SessionID);
             }
         }
@@ -120,7 +121,7 @@ namespace QuickFix.Transport
                 sessionToHostNum_[sessionID] = ++num;
 
                 socketSettings_.ServerCommonName = hostName;
-                return new IPEndPoint(addrs[0], port);
+                return new IPEndPoint(addrs.First(a => a.AddressFamily == AddressFamily.InterNetwork), port);
             }
             catch (System.Exception e)
             {
@@ -136,15 +137,13 @@ namespace QuickFix.Transport
         /// <param name="settings"></param>
         protected override void OnConfigure(SessionSettings settings)
         {
-            try
+            Dictionary dict = settings.Get();
+            if (dict.Has(SessionSettings.RECONNECT_INTERVAL))
             {
-                reconnectInterval_ = Convert.ToInt32(settings.Get().GetLong(SessionSettings.RECONNECT_INTERVAL));
+                reconnectInterval_ = Convert.ToInt32(dict.GetLong(SessionSettings.RECONNECT_INTERVAL));
             }
-            catch (System.Exception)
-            { }
-
             // Don't know if this is required in order to handle settings in the general section
-            socketSettings_.Configure(settings.Get());
+            socketSettings_.Configure(dict);
         }       
 
         protected override void OnStart()

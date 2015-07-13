@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 
 namespace QuickFix.Fields
 {
@@ -32,6 +34,19 @@ namespace QuickFix.Fields
         }
 
         /// <summary>
+        /// True iff the value if of length 0.
+        /// </summary>
+        public override bool Empty
+        {
+            get
+            {
+                if (_changed)
+                    makeStringFields();
+                return _stringVal.Length == 0;
+            }
+        }
+
+        /// <summary>
         /// the FIX tag number
         /// </summary>
         public override int Tag
@@ -46,17 +61,35 @@ namespace QuickFix.Fields
         #endregion
 
         /// <summary>
-        /// returns full fix string (e.g. "tag=val")
+        /// Appends the full fix string (i.e., "tag=val") to the given MemoryStream.
         /// </summary>
-        public override string toStringField()
+        public override void AppendField(MemoryStream ms)
         {
             if (_changed.Equals(true))
                 makeStringFields();
-            return _stringField;
+
+            byte[] tagBytes = Encoding.ASCII.GetBytes(Tag.ToString());
+            ms.Write(tagBytes, 0, tagBytes.Length);
+
+            ms.WriteByte(Message.EqualsSignByteValue);
+
+            byte[] valueBytes = Encoding.UTF8.GetBytes(_stringVal);
+            ms.Write(valueBytes, 0, valueBytes.Length);
         }
 
         /// <summary>
-        /// returns field value formatted for fix
+        /// returns field value formatted for fix 
+        /// (separate from ToString, to facilitate finding non-debug references and also make it easier to change the signature later if required)
+        /// </summary>
+        public override string ValueToString()
+        {
+            if (_changed)
+                makeStringFields();
+            return _stringVal;
+        }
+
+        /// <summary>
+        /// returns formatted string for debug output
         /// </summary>
         public override string ToString()
         {
@@ -84,33 +117,6 @@ namespace QuickFix.Fields
             return Tag ^ Obj.GetHashCode();
         }
 
-        /// <summary>
-        /// length of formatted field (including tag=val\001)
-        /// </summary>
-        public override int getLength()
-        {
-            if (_changed)
-                makeStringFields();
-            return System.Text.Encoding.UTF8.GetByteCount(_stringField) + 1; // +1 for SOH
-        }
-
-        /// <summary>
-        /// checksum
-        /// </summary>
-        public override int getTotal()
-        {
-            if (_changed)
-                makeStringFields();
-
-            int sum = 0;
-            byte[] array = System.Text.Encoding.UTF8.GetBytes(_stringField);
-            foreach (byte b in array)
-            {
-                sum += b;
-            }
-            return (sum + 1); // +1 for SOH
-        }
-
         protected abstract string makeString();
 
         /// <summary>
@@ -119,12 +125,10 @@ namespace QuickFix.Fields
         private void makeStringFields()
         {
             _stringVal = makeString();
-            _stringField = Tag + "=" + _stringVal;
             _changed = false;
         }
 
         #region Private members
-        private string _stringField;
         private bool _changed;
         private T _obj;
         private int _tag;

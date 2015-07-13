@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using QuickFix.Fields;
@@ -230,7 +231,17 @@ namespace QuickFix
         /// <param name="group">group to add</param>
         public void AddGroup(Group grp)
         {
-            AddGroup(grp, true);
+            AddGroup(grp, true, true);
+        }
+
+        /// <summary>
+        /// Add a group to message; the group counter is automatically incremented.
+        /// Call this method instead of AddGroup to not make a clone of the passed group
+        /// </summary>
+        /// <param name="group">group to add</param>
+        public void AddGroupNoClone(Group grp)
+        {
+            AddGroup(grp, true, false);
         }
 
         /// <summary>
@@ -240,10 +251,18 @@ namespace QuickFix
         /// </summary>
         /// <param name="group">group to add</param>
         /// <param name="autoIncCounter">if true, auto-increment the counter, else leave it as-is</param>
-        internal void AddGroup(Group grp, bool autoIncCounter)
+        /// <param name="makeClone">set to make a clone of the passed group (set if reusing the input object)</param>
+        internal void AddGroup(Group grp, bool autoIncCounter, bool makeClone)
         {
-            // copy, in case user code reuses input object
-            Group group = grp.Clone();
+            Group group;
+            if (makeClone)
+            {
+                group = grp.Clone();
+            }
+            else
+            {
+                group = grp;                
+            }
 
             if (!_groups.ContainsKey(group.Field))
                 _groups.Add(group.Field, new List<Group>());
@@ -309,7 +328,7 @@ namespace QuickFix
                 if (fld.GetType() == typeof(IntField))
                     return ((IntField)fld).Obj;
                 else
-                    return IntConverter.Convert(fld.ToString());
+                    return IntConverter.Convert(fld.ValueToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -336,7 +355,7 @@ namespace QuickFix
                 if (fldTyp == typeof(TimeOnlyField))
                     return GetTimeOnly(tag);
                 else
-                    return DateTimeConverter.ConvertToDateTime(fld.ToString());
+                    return DateTimeConverter.ConvertToDateTime(fld.ValueToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -354,8 +373,8 @@ namespace QuickFix
         {
             try
             {
-                Fields.IField fld = _fields[tag];                
-                return DateTimeConverter.ConvertToDateOnly(fld.ToString());
+                Fields.IField fld = _fields[tag];
+                return DateTimeConverter.ConvertToDateOnly(fld.ValueToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -374,7 +393,7 @@ namespace QuickFix
             try
             {
                 Fields.IField fld = _fields[tag];
-                return DateTimeConverter.ConvertToTimeOnly(fld.ToString());
+                return DateTimeConverter.ConvertToTimeOnly(fld.ValueToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -396,7 +415,7 @@ namespace QuickFix
                 if (fld.GetType() == typeof(BooleanField))
                     return ((BooleanField)fld).Obj;
                 else
-                    return BoolConverter.Convert(fld.ToString());
+                    return BoolConverter.Convert(fld.ValueToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -414,7 +433,7 @@ namespace QuickFix
         {
             try
             {
-                return _fields[tag].ToString();
+                return _fields[tag].ValueToString();
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -436,7 +455,7 @@ namespace QuickFix
                 if (fld.GetType() == typeof(CharField))
                     return ((CharField)fld).Obj;
                 else
-                    return CharConverter.Convert(fld.ToString());
+                    return CharConverter.Convert(fld.ValueToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -458,7 +477,7 @@ namespace QuickFix
                 if (fld.GetType() == typeof(DecimalField))
                     return ((DecimalField)fld).Obj;
                 else
-                    return DecimalConverter.Convert(fld.ToString());
+                    return DecimalConverter.Convert(fld.ValueToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
@@ -511,10 +530,11 @@ namespace QuickFix
         /// getField without a type defaults to returning a string
         /// </summary>
         /// <param name="tag">fix tag</param>
+        [Obsolete("Use GetString instead.")]
         public string GetField(int tag)
         {
             if (_fields.ContainsKey(tag))
-                return _fields[tag].ToString();
+                return _fields[tag].ValueToString();
             else
                 throw new FieldNotFoundException(tag);
         }
@@ -537,72 +557,15 @@ namespace QuickFix
             return ((_fields.Count == 0) && (_groups.Count == 0));
         }
 
-        public int CalculateTotal()
+        public virtual void CalculateString(MessageBuilder mb)
         {
-            int total = 0;
-            foreach (Fields.IField field in _fields.Values)
-            {
-                if (field.Tag != Fields.Tags.CheckSum)
-                    total += field.getTotal();
-            }
-
-            foreach (Fields.IField field in this.RepeatedTags)
-            {
-                if (field.Tag != Fields.Tags.CheckSum)
-                    total += field.getTotal();
-            }
-
-            foreach (List<Group> groupList in _groups.Values)
-            {
-                foreach (Group group in groupList)
-                    total += group.CalculateTotal();
-            }
-            return total;
-        }
-
-        public int CalculateLength()
-        {
-            int total = 0;
-            foreach (Fields.IField field in _fields.Values)
-            {
-                if (field != null
-                    && field.Tag != Tags.BeginString
-                    && field.Tag != Tags.BodyLength
-                    && field.Tag != Tags.CheckSum)
-                {
-                    total += field.getLength();
-                }
-            }
-
-            foreach (Fields.IField field in this.RepeatedTags)
-            {
-                if (field != null
-                    && field.Tag != Tags.BeginString
-                    && field.Tag != Tags.BodyLength
-                    && field.Tag != Tags.CheckSum)
-                {
-                    total += field.getLength();
-                }
-            }
-
-            foreach (List<Group> groupList in _groups.Values)
-            {
-                foreach (Group group in groupList)
-                    total += group.CalculateLength();
-            }
-    
-            return total;
-        }
-
-        public virtual string CalculateString()
-        {
-            if( FieldOrder != null )
-                return CalculateString(new StringBuilder(), FieldOrder);
+            if (FieldOrder != null)
+                CalculateString(mb, FieldOrder);
             else
-                return CalculateString(new StringBuilder(), new int[0]);
+                CalculateString(mb, new int[0]);
         }
 
-        public virtual string CalculateString(StringBuilder sb, int[] preFields)
+        protected virtual void CalculateString(MessageBuilder mb, int[] preFields)
         {
             HashSet<int> groupCounterTags = new HashSet<int>(_groups.Keys);
             
@@ -610,12 +573,12 @@ namespace QuickFix
             {
                 if (IsSetField(preField))
                 {
-                    sb.Append(preField + "=" + GetField(preField)).Append(Message.SOH);
+                    mb.AppendField(_fields[preField]);
                     if (groupCounterTags.Contains(preField))
                     {
                         List<Group> glist = _groups[preField];
                         foreach (Group g in glist)
-                            sb.Append(g.CalculateString());
+                            g.CalculateString(mb);
                     }
                 }
             }
@@ -626,8 +589,7 @@ namespace QuickFix
                     continue;
                 if (preFields.Contains(field.Tag))
                     continue; //already did this one
-                sb.Append(field.Tag.ToString() + "=" + field.ToString());
-                sb.Append(Message.SOH);
+                mb.AppendField(field);
             }
 
             foreach(int counterTag in _groups.Keys)
@@ -639,14 +601,11 @@ namespace QuickFix
                 if (groupList.Count == 0)
                     continue; //probably unnecessary, but it doesn't hurt to check
 
-                sb.Append(_fields[counterTag].toStringField());
-                sb.Append(Message.SOH);
+                mb.AppendField(_fields[counterTag]);
 
                 foreach (Group group in groupList)
-                    sb.Append(group.CalculateString());
+                    group.CalculateString(mb);
             }
-
-            return sb.ToString();
         }
 
         /// <summary>
