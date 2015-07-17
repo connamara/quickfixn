@@ -38,6 +38,7 @@ Changes since the last version (oldest first):
 * (patch) #283 - fix to ensure IApplication.FromAdmin() gets called for received resend requests (martinadams)
 * (minor) #312 - New config option: can force session-level rejects to be resent (martinadams)
 * (minor) #270/#146 - Correct rejection behavior when msg groups do not use correct delimiter tag (gbirchmeier)
+* (patch) #280 - fix to prevent StackOverflowException due to recursion (martinadams)
 
 
 NOTE: Breaking changes in next release
