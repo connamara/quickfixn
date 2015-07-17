@@ -31,7 +31,7 @@ namespace QuickFix
         private State state_ = State.RUNNING;
         private long nextClientId_ = 0;
         private Thread serverThread_ = null;
-        private LinkedList<ClientHandlerThread> clientThreads_ = new LinkedList<ClientHandlerThread>();
+        private Dictionary<long, ClientHandlerThread> clientThreads_ = new Dictionary<long, ClientHandlerThread>();
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
         private QuickFix.Dictionary sessionDict_;
@@ -89,9 +89,10 @@ namespace QuickFix
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
                     ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_);
+                    t.Exited += OnClientHandlerThreadExited;
                     lock (sync_)
                     {
-                        clientThreads_.AddLast(t);
+                        clientThreads_.Add(t.Id, t);
                     }
                     // FIXME set the client thread's exception handler here
                     t.Log("connected");
@@ -104,6 +105,20 @@ namespace QuickFix
                 }
             }
             ShutdownClientHandlerThreads();
+        }
+
+        public void OnClientHandlerThreadExited(object sender, ClientHandlerThread.ExitedEventArgs e)
+        {
+            lock(sync_)
+            {
+                ClientHandlerThread t = null;
+                if(clientThreads_.TryGetValue(e.ClientHandlerThread.Id, out t))
+                {
+                    clientThreads_.Remove(t.Id);
+                    t.Dispose();
+                    t = null;
+                }
+            }
         }
 
         /// <summary>
@@ -123,10 +138,10 @@ namespace QuickFix
                 if (State.SHUTDOWN_COMPLETE != state_)
                 {
                     this.Log("shutting down...");
-                    while (clientThreads_.Count > 0)
+
+                    foreach (ClientHandlerThread t in clientThreads_.Values)
                     {
-                        ClientHandlerThread t = clientThreads_.First.Value;
-                        clientThreads_.RemoveFirst();
+                        t.Exited -= OnClientHandlerThreadExited;
                         t.Shutdown("reactor is shutting down");
                         try
                         {
@@ -136,7 +151,9 @@ namespace QuickFix
                         {
                             t.Log("Error shutting down: " + e.Message);
                         }
+                        t.Dispose();
                     }
+                    clientThreads_.Clear();
                     state_ = State.SHUTDOWN_COMPLETE;
                 }
             }
