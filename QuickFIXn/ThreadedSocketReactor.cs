@@ -107,7 +107,7 @@ namespace QuickFix
             ShutdownClientHandlerThreads();
         }
 
-        public void OnClientHandlerThreadExited(object sender, ClientHandlerThread.ExitedEventArgs e)
+        internal void OnClientHandlerThreadExited(object sender, ClientHandlerThread.ExitedEventArgs e)
         {
             lock(sync_)
             {
