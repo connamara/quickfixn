@@ -14,7 +14,7 @@ namespace QuickFix
     /// </summary>
     public class ClientHandlerThread : IResponder, IDisposable
     {
-        public class ExitedEventArgs : EventArgs
+        internal class ExitedEventArgs : EventArgs
         {
             public ClientHandlerThread ClientHandlerThread { get; private set; }
 
@@ -24,8 +24,8 @@ namespace QuickFix
             }
         }
 
-        public delegate void ExitedEventHandler(object sender, ClientHandlerThread.ExitedEventArgs e);
-        public event ExitedEventHandler Exited;
+        internal delegate void ExitedEventHandler(object sender, ClientHandlerThread.ExitedEventArgs e);
+        internal event ExitedEventHandler Exited;
 
         public long Id { get; private set; }
 
