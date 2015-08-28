@@ -107,6 +107,7 @@
     <Compile Include="SessionTest.cs" />
     <Compile Include="SettingsTest.cs" />
     <Compile Include="StringUTF8Tests.cs" />
+    <Compile Include="ThreadedSocketAcceptorTests.cs" />
     <Compile Include="Util\UtcDateTimeSerializerTests.cs" />
   </ItemGroup>
   <ItemGroup>
