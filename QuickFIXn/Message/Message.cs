@@ -491,7 +491,7 @@ namespace QuickFix
             {
                 grpPos = pos;
                 StringField f = ExtractField(msgstr, ref pos, sessionDataDictionary, appDD);
-                if (f.Tag == grpEntryDelimiterTag)
+                if (f.Tag == grpEntryDelimiterTag || (dd.IsField(f.Tag) && (grp == null || grp.IsSetField(f.Tag))))
                 {
                     // This is the start of a group entry.
 
