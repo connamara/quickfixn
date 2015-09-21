@@ -182,7 +182,8 @@ namespace UnitTests
                     if (message.Header.GetField(QuickFix.Fields.Tags.MsgType) == QuickFix.Fields.MsgType.LOGOUT)
                         lock (_sessions)
                         {
-                            SendLogout(socketState._socket, message.Header.GetString( QuickFix.Fields.Tags.SenderCompID) );
+                            SendLogout(socketState._socket, targetCompID );
+                            _sessions.Remove( targetCompID );
                             Monitor.Pulse(_sessions);
                         }
                 }
@@ -211,6 +212,16 @@ namespace UnitTests
             msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(_senderSequenceNumber++));
             msg.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
             s.Send(Encoding.ASCII.GetBytes(msg.ToString()));
+        }
+
+        private bool WaitForSessionStatus(string acceptorCompId)
+        {
+            lock (_sessions)
+            {
+                if (!_sessions.ContainsKey(acceptorCompId))
+                    Monitor.Wait(_sessions, 10000);
+                return _sessions.ContainsKey(acceptorCompId);
+            }
         }
 
         private bool WaitForLogonStatus(string targetCompID)
@@ -342,6 +353,7 @@ namespace UnitTests
             //THEN - it should no longer be running
             Assert.IsTrue(WaitForDisconnect(socket01), "Failed to disconnect session");
             Assert.IsFalse( _loggedOnCompIDs.Contains( StaticAcceptorCompID ) );
+            Assert.IsFalse(_sessions.ContainsKey(StaticAcceptorCompID), "Failed to receive a logout message");
             Assert.IsFalse(acceptor.AreSocketsRunning);
             Assert.IsFalse( acceptor.IsLoggedOn );
         }
@@ -377,6 +389,7 @@ namespace UnitTests
             SendLogon(socket01, StaticAcceptorCompID);
             Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon static acceptor session");
             Assert.IsTrue(acceptor.IsLoggedOn);
+            Assert.IsTrue(WaitForSessionStatus(StaticAcceptorCompID), "Logon messages was not recevied");
         }
 
         [Test]
@@ -398,7 +411,9 @@ namespace UnitTests
             SendLogon(socket01, StaticAcceptorCompID);
             Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon static acceptor session");
             Assert.IsTrue(acceptor.IsLoggedOn);
+            Assert.IsTrue( WaitForSessionStatus( StaticAcceptorCompID ) );
         }
+
 
         [Test]
         public void TestCanRestartAcceptorAndCounterPartyCanLogonAfterCounterParttyLoggedOnThenAcceptorForceStopped()
