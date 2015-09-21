@@ -73,6 +73,21 @@ namespace QuickFix
             }
         }
 
+        private const int TenSecondsInTicks = 10000;
+
+        private void WaitForShutdown()
+        {
+            int start = Environment.TickCount;
+            while( State.SHUTDOWN_REQUESTED == _state && (Environment.TickCount - start) < TenSecondsInTicks)
+            {
+                new ManualResetEvent(false).WaitOne(100);
+            }
+            if( State.SHUTDOWN_REQUESTED == _state )
+            {
+                throw new ConnectionShutdownRequestedException();
+            }
+        }
+
         public void Shutdown()
         {
             lock (_sync)
@@ -92,6 +107,7 @@ namespace QuickFix
                     }
                 }
             }
+            WaitForShutdown();
         }
 
         private void AcceptTcpClientCallback( IAsyncResult ar )
