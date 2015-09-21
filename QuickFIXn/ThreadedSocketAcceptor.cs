@@ -184,6 +184,21 @@ namespace QuickFix
             }
         }
 
+        private void LogonAllSessions()
+        {
+            foreach (Session session in sessions_.Values)
+            {
+                try
+                {
+                    session.Logon();
+                }
+                catch (System.Exception e)
+                {
+                    LogEvent( session.Log, "Error during logon of Session " + session.SessionID + ": " + e.Message);
+                }
+            }
+        }
+
         private void LogoutAllSessions(bool force)
         {
             foreach (Session session in _sessions.Values)
