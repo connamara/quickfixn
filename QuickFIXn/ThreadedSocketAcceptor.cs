@@ -169,6 +169,21 @@ namespace QuickFix
             }
         }
 
+        private void LogonAllSessions()
+        {
+            foreach (Session session in _sessions.Values)
+            {
+                try
+                {
+                    session.Logon();
+                }
+                catch (System.Exception e)
+                {
+                    LogEvent( session.Log, "Error during logon of Session " + session.SessionID + ": " + e.Message);
+                }
+            }
+        }
+
         private void LogoutAllSessions(bool force)
         {
             foreach (Session session in _sessions.Values)
@@ -177,36 +192,33 @@ namespace QuickFix
                 {
                     session.Logout();
                 }
-                catch (Exception e)
+                catch (System.Exception e)
                 {
-                    session.Log.OnEvent($"Error during logout of Session {session.SessionID}: {e.Message}");
+                    LogEvent(session.Log, "Error during logout of Session " + session.SessionID + ": " + e.Message);
                 }
             }
 
             if (force && IsLoggedOn)
             {
-                foreach (Session session in _sessions.Values)
-                {
-                    try
-                    {
-                        if (session.IsLoggedOn)
-                            session.Disconnect("Forcibly disconnecting session");
-                    }
-                    catch (Exception e)
-                    {
-                        session.Log.OnEvent($"Error during disconnect of Session {session.SessionID}: {e.Message}");
-                    }
-                }
+                DisconnectSessions("Forcibly disconnecting session");
             }
 
             if (!force)
                 WaitForLogout();
         }
 
+        private static void LogEvent( ILog log, string message )
+        {
+            if( log != null )
+            {
+                log.OnEvent( message );
+            }
+        }
+
         private const int TenSecondsInTicks = 10000;
 
         /// <summary>
-        /// TODO implement WaitForLogout
+        /// FIXME
         /// </summary>
         private void WaitForLogout()
         {
@@ -218,7 +230,6 @@ namespace QuickFix
                     resetEvent.WaitOne( 100 );
             }
             }
-                
             DisconnectSessions("Logout timeout, force disconnect");
         }
 
@@ -233,8 +244,7 @@ namespace QuickFix
                     }
                 catch (System.Exception e)
                 {
-                    /// FIXME logError(session.getSessionID(), "Error during disconnect", e);
-                    System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
+                    LogEvent( session.Log, "Error during disconnect of Session " + session.SessionID + ": " + e.Message );
                 }
             }
         }
@@ -260,6 +270,7 @@ namespace QuickFix
             {
                 if (!_isStarted)
                 {
+                    LogonAllSessions();
                     StartAcceptingConnections();
                     _isStarted = true;
                 }
@@ -405,7 +416,7 @@ namespace QuickFix
         /// Any override should call base.Dispose(disposing).
         /// </summary>
         /// <param name="disposing"></param>
-        protected void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (_disposed) return;
             if (disposing)
@@ -432,7 +443,5 @@ namespace QuickFix
             Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        ~ThreadedSocketAcceptor() => Dispose(false);
     }
 }
