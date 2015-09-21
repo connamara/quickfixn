@@ -197,6 +197,21 @@ namespace QuickFix
             }
         }
 
+        private void LogonAllSessions()
+        {
+            foreach (Session session in sessions_.Values)
+            {
+                try
+                {
+                    session.Logon();
+                }
+                catch (System.Exception e)
+                {
+                    LogEvent( session.Log, "Error during logon of Session " + session.SessionID + ": " + e.Message);
+                }
+            }
+        }
+
         private void LogoutAllSessions(bool force)
         {
             foreach (Session session in sessions_.Values)
@@ -207,8 +222,7 @@ namespace QuickFix
                 }
                 catch (System.Exception e)
                 {
-                    /// FIXME logError(session.getSessionID(), "Error during logout", e);
-                    System.Console.WriteLine("Error during logout of Session " + session.SessionID + ": " + e.Message);
+                    LogEvent(session.Log, "Error during logout of Session " + session.SessionID + ": " + e.Message);
                 }
             }
 
@@ -219,6 +233,14 @@ namespace QuickFix
 
             if (!force)
                 WaitForLogout();
+        }
+
+        private static void LogEvent( ILog log, string message )
+        {
+            if( log != null )
+            {
+                log.OnEvent( message );
+            }
         }
 
         private const int TenSecondsInTicks = 10000;
@@ -236,7 +258,6 @@ namespace QuickFix
                     resetEvent.WaitOne( 100 );
             }
             }
-                
             DisconnectSessions("Logout timeout, force disconnect");
         }
 
@@ -251,8 +272,7 @@ namespace QuickFix
                     }
                 catch (System.Exception e)
                 {
-                    /// FIXME logError(session.getSessionID(), "Error during disconnect", e);
-                    System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
+                    LogEvent( session.Log, "Error during disconnect of Session " + session.SessionID + ": " + e.Message );
                 }
             }
         }
@@ -278,6 +298,7 @@ namespace QuickFix
             {
                 if (!isStarted_)
                 {
+                    LogonAllSessions();
                     StartAcceptingConnections();
                     isStarted_ = true;
                 }
