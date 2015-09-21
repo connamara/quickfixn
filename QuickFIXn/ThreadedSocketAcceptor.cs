@@ -2,11 +2,14 @@
 using System.Linq;
 using System.Net;
 using System;
+using System.Threading;
 using QuickFix.Logger;
 using QuickFix.Store;
 
 namespace QuickFix
 {
+    // TODO v2.0 - consider changing to internal
+
     /// <summary>
     /// Acceptor implementation - with threads
     /// Creates a ThreadedSocketReactor for every listening endpoint.
@@ -200,37 +203,37 @@ namespace QuickFix
                 WaitForLogout();
         }
 
+        private const int TenSecondsInTicks = 10000;
+
         /// <summary>
         /// TODO implement WaitForLogout
         /// </summary>
         private void WaitForLogout()
         {
-            /*
-            int start = System.Environment.TickCount;
-            HashSet<Session> sessions = new HashSet<Session>(sessions_.Values);
-            while(sessions.Count > 0)
+            int start = Environment.TickCount;
+            while (IsLoggedOn && (Environment.TickCount - start) < TenSecondsInTicks)
             {
                 Thread.Sleep(100);
+            }
                 
-                int elapsed = System.Environment.TickCount - start;
-                Iterator<Session> sessionItr = loggedOnSessions.iterator();
-                while (sessionItr.hasNext())
+            DisconnectSessions("Logout timeout, force disconnect");
+        }
+
+        private void DisconnectSessions(string disconnectMessage)
                 {
-                    Session session = sessionItr.next();
-                    if (elapsed >= session.getLogoutTimeout() * 1000L)
+            foreach (Session session in _sessions.Values)
                     {
-                        session.disconnect("Logout timeout, force disconnect", false);
-                        sessionItr.remove();
-                    }
-                }
-                // Be sure we don't look forever
-                if (elapsed > 60000)
+                try
                 {
-                    log.warn("Stopping session logout wait after 1 minute");
-                    break;
+                    if (session.IsLoggedOn)
+                        session.Disconnect(disconnectMessage);
+                    }
+                catch (System.Exception e)
+                {
+                    /// FIXME logError(session.getSessionID(), "Error during disconnect", e);
+                    System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
                 }
             }
-            */
         }
 
         private void DisposeSessions()
@@ -270,8 +273,15 @@ namespace QuickFix
             if (_disposed)
                 throw new ObjectDisposedException(GetType().Name);
 
-            StopAcceptingConnections();
-            LogoutAllSessions(force);
+            lock( _sync )
+            {
+                if( _isStarted )
+                {
+                    _isStarted = false;
+                    LogoutAllSessions(force);
+                    StopAcceptingConnections();
+                }
+            }
             DisposeSessions();
             _sessions.Clear();
             _isStarted = false;
@@ -289,6 +299,34 @@ namespace QuickFix
             get
             {
                 return _sessions.Values.Any(session => session.IsLoggedOn);
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is started.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is started; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsStarted
+        {
+            get
+            {
+                return _isStarted;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is started.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is started; otherwise, <c>false</c>.
+        /// </value>
+        public bool AreSocketsRunning
+        {
+            get
+            {
+                return _socketDescriptorForAddress.All( s => s.Value.SocketReactor.IsRunning );
             }
         }
 

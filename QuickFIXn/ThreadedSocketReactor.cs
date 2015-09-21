@@ -19,11 +19,25 @@ namespace QuickFix
 
         public State ReactorState
         {
-            get { lock (_sync) { return _state; } }
+            get { return _state; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is running.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is running; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsRunning
+        {
+            get
+            {
+                return ReactorState == State.RUNNING;
+            }
         }
 
         private readonly object _sync = new ();
-        private State _state = State.RUNNING;
+        private State _state = State.SHUTDOWN_COMPLETE;
         private long _nextClientId = 0;
         private Thread? _serverThread = null;
         private readonly Dictionary<long, ClientHandlerThread> _clientThreads = new ();
@@ -48,24 +62,14 @@ namespace QuickFix
 
         public void Start()
         {
-            lock (_sync)
+            lock( sync_ )
             {
-                if (_state == State.RUNNING && _serverThread is null)
+                if( State.SHUTDOWN_COMPLETE == state_ )
                 {
-                    if (State.SHUTDOWN_REQUESTED != _state)
-                    {
-                        try
-                        {
-                            _tcpListener.Start();
-                        }
-                        catch(Exception e)
-                        {
-                            LogError("Error starting listener", e);
-                            throw;
-                        }
-                    }
-                    _serverThread = new Thread(Run);
-                    _serverThread.Start();
+                    state_ = State.RUNNING;
+                    tcpListener_.Start();
+                    serverThread_ = new Thread( new ThreadStart( Run ) );
+                    serverThread_.Start();
                 }
             }
         }
@@ -74,65 +78,54 @@ namespace QuickFix
         {
             lock (_sync)
             {
-                if (State.RUNNING == _state)
+                if (IsRunning)
                 {
                     try
                     {
-                        _state = State.SHUTDOWN_REQUESTED;
-                        using (TcpClient killer = new TcpClient())
-                        {
-                            try
-                            {
-                                IPEndPoint killerEndPoint =  new IPEndPoint(IPAddress.Loopback, _serverSocketEndPoint.Port);
-                                killer.Connect(killerEndPoint);
-                            }
-                            catch (Exception e)
-                            {
-                                LogError("Tried to interrupt server socket but was already closed", e);
-                            }
-                        }
+                        tcpListener_.Server.Close();
+                        tcpListener_.Stop();
+                        state_ = State.SHUTDOWN_REQUESTED;
                     }
-                    catch (Exception e)
+                    catch (System.Exception e)
                     {
-                        LogError("Error while closing server socket", e);
+                        this.Log("Error while closing server socket: " + e.Message);
                     }
                 }
             }
         }
 
+        /// <summary>
+        /// TODO apply networking options, e.g. NO DELAY, LINGER, etc.
+        /// </summary>
         public void Run()
         {
-            while (State.RUNNING == ReactorState)
+            while (IsRunning)
             {
                 try
                 {
-                    TcpClient client = _tcpListener.AcceptTcpClient();
-                    if (State.RUNNING == ReactorState)
+                    if( !tcpListener_.Pending() )
                     {
-                        ApplySocketOptions(client, _socketSettings);
-                        ClientHandlerThread t = new ClientHandlerThread(
-                            client, _nextClientId++, _socketSettings, _acceptorSocketDescriptor, _nonSessionLog);
-                        t.Exited += OnClientHandlerThreadExited;
-                        lock (_sync)
-                        {
-                            _clientThreads.Add(t.Id, t);
-                        }
-
-                        t.Start();
+                        new ManualResetEvent(false).WaitOne(100);
+                        continue;
                     }
-                    else
+                    TcpClient client = tcpListener_.AcceptTcpClient();
+                    ApplySocketOptions(client, socketSettings_);
+                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_);
+                    t.Exited += OnClientHandlerThreadExited;
+                    lock (sync_)
                     {
-                        client.Dispose();
+                        clientThreads_.Add(t.Id, t);
                     }
+                    // FIXME set the client thread's exception handler here
+                    t.Log("connected");
+                    t.Start();
                 }
-                catch (Exception e)
+                catch (System.Exception e)
                 {
-                    if (State.RUNNING == ReactorState)
-                        LogError("Error accepting connection", e);
+                    if (IsRunning)
+                        this.Log("Error accepting connection: " + e.Message);
                 }
             }
-            _tcpListener.Server.Close();
-            _tcpListener.Stop();
             ShutdownClientHandlerThreads();
         }
 
