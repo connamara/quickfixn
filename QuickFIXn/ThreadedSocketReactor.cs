@@ -83,9 +83,12 @@ namespace QuickFix
         private void WaitForShutdown()
         {
             int start = Environment.TickCount;
-            while( State.SHUTDOWN_REQUESTED == state_ && (Environment.TickCount - start) < TenSecondsInTicks)
+            using( var resetEvent = new ManualResetEvent( false ) )
             {
-                new ManualResetEvent(false).WaitOne(100);
+                while( State.SHUTDOWN_REQUESTED == state_ && ( Environment.TickCount - start ) < TenSecondsInTicks )
+                {
+                    resetEvent.WaitOne( 100 );
+                }
             }
             if( State.SHUTDOWN_REQUESTED == state_ )
             {
@@ -119,31 +122,34 @@ namespace QuickFix
         /// </summary>
         public void Run()
         {
-            while (IsRunning)
+            using( var resetEvent = new ManualResetEvent( false ) )
             {
-                try
+                while( IsRunning )
                 {
-                    if( !tcpListener_.Pending() )
+                    try
                     {
-                        new ManualResetEvent(false).WaitOne(100);
-                        continue;
+                        if( !tcpListener_.Pending() )
+                        {
+                            resetEvent.WaitOne( 100 );
+                            continue;
+                        }
+                        TcpClient client = tcpListener_.AcceptTcpClient();
+                        ApplySocketOptions( client, socketSettings_ );
+                        ClientHandlerThread t = new ClientHandlerThread( client, nextClientId_++, sessionDict_, socketSettings_ );
+                        t.Exited += OnClientHandlerThreadExited;
+                        lock( sync_ )
+                        {
+                            clientThreads_.Add( t.Id, t );
+                        }
+                        // FIXME set the client thread's exception handler here
+                        t.Log( "connected" );
+                        t.Start();
                     }
-                    TcpClient client = tcpListener_.AcceptTcpClient();
-                    ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_);
-                    t.Exited += OnClientHandlerThreadExited;
-                    lock (sync_)
+                    catch( System.Exception e )
                     {
-                        clientThreads_.Add(t.Id, t);
+                        if( IsRunning )
+                            this.Log( "Error accepting connection: " + e.Message );
                     }
-                    // FIXME set the client thread's exception handler here
-                    t.Log("connected");
-                    t.Start();
-                }
-                catch (System.Exception e)
-                {
-                    if (IsRunning)
-                        this.Log("Error accepting connection: " + e.Message);
                 }
             }
             ShutdownClientHandlerThreads();

@@ -249,9 +249,12 @@ namespace QuickFix
         private void WaitForLogout()
         {
             int start = Environment.TickCount;
-            while (IsLoggedOn && (Environment.TickCount - start) < TenSecondsInTicks)
+            using( var resetEvent = new ManualResetEvent( false ) )
             {
-                Thread.Sleep( 100 );
+                while( IsLoggedOn && ( Environment.TickCount - start ) < TenSecondsInTicks )
+                {
+                    resetEvent.WaitOne( 100 );
+                }
             }
 
             DisconnectSessions("Logout timeout, force disconnect");
