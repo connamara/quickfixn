@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System;
+using System.Threading;
 
 namespace QuickFix
 {
@@ -213,57 +214,44 @@ namespace QuickFix
 
             if (force && IsLoggedOn)
             {
-                foreach (Session session in sessions_.Values)
-                {
-                    try
-                    {
-                        if (session.IsLoggedOn)
-                            session.Disconnect("Forcibly disconnecting session");
+                DisconnectSessions("Forcibly disconnecting session");
                     }
-                    catch (System.Exception e)
-                    {
-                        /// FIXME logError(session.getSessionID(), "Error during disconnect", e);
-                        System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
-                    }
-                }
-            }
 
             if (!force)
                 WaitForLogout();
         }
+
+        private const int TenSecondsInTicks = 10000;
 
         /// <summary>
         /// FIXME
         /// </summary>
         private void WaitForLogout()
         {
-            System.Console.WriteLine("TODO - ThreadedSocketAcceptor.WaitForLogout not implemented!");
-            /*
-            int start = System.Environment.TickCount;
-            HashSet<Session> sessions = new HashSet<Session>(sessions_.Values);
-            while(sessions.Count > 0)
+            int start = Environment.TickCount;
+            while (IsLoggedOn && (Environment.TickCount - start) < TenSecondsInTicks)
             {
                 Thread.Sleep(100);
+            }
                 
-                int elapsed = System.Environment.TickCount - start;
-                Iterator<Session> sessionItr = loggedOnSessions.iterator();
-                while (sessionItr.hasNext())
+            DisconnectSessions("Logout timeout, force disconnect");
+        }
+
+        private void DisconnectSessions(string disconnectMessage)
                 {
-                    Session session = sessionItr.next();
-                    if (elapsed >= session.getLogoutTimeout() * 1000L)
+            foreach (Session session in sessions_.Values)
                     {
-                        session.disconnect("Logout timeout, force disconnect", false);
-                        sessionItr.remove();
-                    }
-                }
-                // Be sure we don't look forever
-                if (elapsed > 60000)
+                try
                 {
-                    log.warn("Stopping session logout wait after 1 minute");
-                    break;
+                    if (session.IsLoggedOn)
+                        session.Disconnect(disconnectMessage);
+                    }
+                catch (System.Exception e)
+                {
+                    /// FIXME logError(session.getSessionID(), "Error during disconnect", e);
+                    System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
                 }
             }
-            */
         }
 
         private void DisposeSessions()
@@ -303,8 +291,15 @@ namespace QuickFix
             if (_disposed)
                 throw new ObjectDisposedException(GetType().Name);
 
+            lock( sync_ )
+            {
+                if( isStarted_ )
+                {
+                    isStarted_ = false;
+                    LogoutAllSessions(force);
             StopAcceptingConnections();
-            LogoutAllSessions(force);
+                }
+            }
             DisposeSessions();
             sessions_.Clear();
 
@@ -321,6 +316,34 @@ namespace QuickFix
             get
             {
                 return sessions_.Values.Any(session => session.IsLoggedOn);
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is started.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is started; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsStarted
+        {
+            get
+            {
+                return isStarted_;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is started.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is started; otherwise, <c>false</c>.
+        /// </value>
+        public bool AreSocketsRunning
+        {
+            get
+            {
+                return socketDescriptorForAddress_.All( s => s.Value.SocketReactor.IsRunning );
             }
         }
 
