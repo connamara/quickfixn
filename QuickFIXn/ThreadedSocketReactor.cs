@@ -20,7 +20,21 @@ namespace QuickFix
 
         public State ReactorState
         {
-            get { lock (sync_) { return state_; } }
+            get { return state_; }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is running.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is running; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsRunning
+        {
+            get
+            {
+                return ReactorState == State.RUNNING;
+            }
         }
 
         #endregion
@@ -28,7 +42,7 @@ namespace QuickFix
         #region Private Members
 
         private object sync_ = new object();
-        private State state_ = State.RUNNING;
+        private State state_ = State.SHUTDOWN_COMPLETE;
         private long nextClientId_ = 0;
         private Thread serverThread_ = null;
         private Dictionary<long, ClientHandlerThread> clientThreads_ = new Dictionary<long, ClientHandlerThread>();
@@ -52,21 +66,44 @@ namespace QuickFix
 
         public void Start()
         {
-            serverThread_ = new Thread(new ThreadStart(Run));
-            serverThread_.Start();
+            lock( sync_ )
+            {
+                if( State.SHUTDOWN_COMPLETE == state_ )
+                {
+                    state_ = State.RUNNING;
+                    tcpListener_.Start();
+                    serverThread_ = new Thread( new ThreadStart( Run ) );
+                    serverThread_.Start();
+                }
+            }
+        }
+
+        private const int TenSecondsInTicks = 10000;
+
+        private void WaitForShutdown()
+        {
+            int start = Environment.TickCount;
+            while( State.SHUTDOWN_REQUESTED == state_ && (Environment.TickCount - start) < TenSecondsInTicks)
+            {
+                new ManualResetEvent(false).WaitOne(100);
+            }
+            if( State.SHUTDOWN_REQUESTED == state_ )
+            {
+                throw new ConnectionShutdownRequestedException();
+            }
         }
 
         public void Shutdown()
         {
             lock (sync_)
             {
-                if (State.RUNNING == state_)
+                if (IsRunning)
                 {
                     try
                     {
-                        state_ = State.SHUTDOWN_REQUESTED;
                         tcpListener_.Server.Close();
                         tcpListener_.Stop();
+                        state_ = State.SHUTDOWN_REQUESTED;
                     }
                     catch (System.Exception e)
                     {
@@ -74,6 +111,7 @@ namespace QuickFix
                     }
                 }
             }
+            WaitForShutdown();
         }
 
         /// <summary>
@@ -81,11 +119,15 @@ namespace QuickFix
         /// </summary>
         public void Run()
         {
-            tcpListener_.Start();
-            while (State.RUNNING == ReactorState)
+            while (IsRunning)
             {
                 try
                 {
+                    if( !tcpListener_.Pending() )
+                    {
+                        new ManualResetEvent(false).WaitOne(100);
+                        continue;
+                    }
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
                     ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_);
@@ -100,7 +142,7 @@ namespace QuickFix
                 }
                 catch (System.Exception e)
                 {
-                    if (State.RUNNING == ReactorState)
+                    if (IsRunning)
                         this.Log("Error accepting connection: " + e.Message);
                 }
             }
