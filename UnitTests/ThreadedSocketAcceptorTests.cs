@@ -17,6 +17,7 @@ namespace UnitTests
         private const string Host = "127.0.0.1";
         private const int AcceptPort = 55101;
         private const string StaticAcceptorCompID = "acc01";
+        private const string StaticAcceptorCompID2 = "acc02";
         private const string ServerCompID = "dummy";
         private ThreadedSocketAcceptor _acceptor = null;
         private const string FIXMessageEnd = @"\x0110=\d{3}\x01";
@@ -116,6 +117,7 @@ namespace UnitTests
             SessionSettings settings = new SessionSettings();
 
             settings.Set(CreateSessionID(StaticAcceptorCompID), CreateSessionConfig());
+            settings.Set(CreateSessionID(StaticAcceptorCompID2), CreateSessionConfig());
             _acceptor = new ThreadedSocketAcceptor(application, storeFactory, settings, logFactory);
             return _acceptor;
         }
@@ -258,7 +260,6 @@ namespace UnitTests
             if (_acceptor != null)
                 _acceptor.Stop(true);
             _acceptor = null;
-
         }
 
         [Test]
@@ -308,6 +309,31 @@ namespace UnitTests
             //THEN - is be running
             Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon static acceptor session");
             Assert.IsTrue(acceptor.IsLoggedOn);
+
+            //CLEANUP - disconnect client connections
+            socket01.Disconnect(true);
+        }
+
+        [Test]
+        public void TestStartedAcceptorAndReceiveMultipleConnections()
+        {
+            //GIVEN - a started acceptor
+            var acceptor = CreateAcceptor();
+            acceptor.Start();
+            //WHEN - a connection is received
+            var socket01 = ConnectToEngine();
+            SendLogon(socket01, StaticAcceptorCompID);
+            var socket02 = ConnectToEngine();
+            SendLogon(socket02, StaticAcceptorCompID2);
+            //THEN - is be running
+            Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon static acceptor session:" + StaticAcceptorCompID);
+            Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID2), "Failed to logon static acceptor session:" + StaticAcceptorCompID2);
+            Assert.IsTrue(acceptor.IsLoggedOn);
+
+
+            //CLEANUP - disconnect client connections
+            socket02.Disconnect(true);
+            socket01.Disconnect(true);
         }
 
         [Test]
@@ -434,6 +460,9 @@ namespace UnitTests
             SendLogon(socket01, StaticAcceptorCompID);
             Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon static acceptor session");
             Assert.IsTrue(acceptor.IsLoggedOn);
+
+            //CLEANUP - disconnect client connections
+            socket01.Disconnect(true);
         }
     }
 }

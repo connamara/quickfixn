@@ -72,27 +72,8 @@ namespace QuickFix
                 {
                     state_ = State.RUNNING;
                     tcpListener_.Start();
-                    serverThread_ = new Thread( new ThreadStart( Run ) );
-                    serverThread_.Start();
+                    tcpListener_.BeginAcceptTcpClient(AcceptTcpClientCallback, tcpListener_);
                 }
-            }
-        }
-
-        private const int TenSecondsInTicks = 10000;
-
-        private void WaitForShutdown()
-        {
-            int start = Environment.TickCount;
-            using( var resetEvent = new ManualResetEvent( false ) )
-            {
-                while( State.SHUTDOWN_REQUESTED == state_ && ( Environment.TickCount - start ) < TenSecondsInTicks )
-                {
-                    resetEvent.WaitOne( 100 );
-                }
-            }
-            if( State.SHUTDOWN_REQUESTED == state_ )
-            {
-                throw new ConnectionShutdownRequestedException();
             }
         }
 
@@ -104,9 +85,10 @@ namespace QuickFix
                 {
                     try
                     {
+                        state_ = State.SHUTDOWN_REQUESTED;
                         tcpListener_.Server.Close();
                         tcpListener_.Stop();
-                        state_ = State.SHUTDOWN_REQUESTED;
+                        ShutdownClientHandlerThreads();
                     }
                     catch (System.Exception e)
                     {
@@ -114,45 +96,35 @@ namespace QuickFix
                     }
                 }
             }
-            WaitForShutdown();
         }
 
-        /// <summary>
-        /// TODO apply networking options, e.g. NO DELAY, LINGER, etc.
-        /// </summary>
-        public void Run()
+        private void AcceptTcpClientCallback( IAsyncResult ar )
         {
-            using( var resetEvent = new ManualResetEvent( false ) )
+            TcpListener listener = (TcpListener)ar.AsyncState;
+            try
             {
-                while( IsRunning )
+
+                TcpClient client = listener.EndAcceptTcpClient( ar );
+                ApplySocketOptions( client, socketSettings_ );
+                ClientHandlerThread t = new ClientHandlerThread( client, nextClientId_++, sessionDict_, socketSettings_ );
+                t.Exited += OnClientHandlerThreadExited;
+                lock( sync_ )
                 {
-                    try
-                    {
-                        if( !tcpListener_.Pending() )
-                        {
-                            resetEvent.WaitOne( 100 );
-                            continue;
-                        }
-                        TcpClient client = tcpListener_.AcceptTcpClient();
-                        ApplySocketOptions( client, socketSettings_ );
-                        ClientHandlerThread t = new ClientHandlerThread( client, nextClientId_++, sessionDict_, socketSettings_ );
-                        t.Exited += OnClientHandlerThreadExited;
-                        lock( sync_ )
-                        {
-                            clientThreads_.Add( t.Id, t );
-                        }
-                        // FIXME set the client thread's exception handler here
-                        t.Log( "connected" );
-                        t.Start();
-                    }
-                    catch( System.Exception e )
-                    {
-                        if( IsRunning )
-                            this.Log( "Error accepting connection: " + e.Message );
-                    }
+                    clientThreads_.Add( t.Id, t );
                 }
+                // FIXME set the client thread's exception handler here
+                t.Log( "connected" );
+                t.Start();
             }
-            ShutdownClientHandlerThreads();
+            catch( Exception e )
+            {
+                if (IsRunning)
+                    this.Log("Error accepting connection: " + e.Message);
+            }
+            if( IsRunning )
+            {
+                listener.BeginAcceptTcpClient( AcceptTcpClientCallback, listener );
+            }
         }
 
         internal void OnClientHandlerThreadExited(object sender, ClientHandlerThread.ExitedEventArgs e)
