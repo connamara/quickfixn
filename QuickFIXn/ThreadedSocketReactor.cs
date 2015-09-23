@@ -107,7 +107,6 @@ namespace QuickFix
                     }
                 }
             }
-            WaitForShutdown();
         }
 
         private void AcceptTcpClientCallback( IAsyncResult ar )
@@ -181,6 +180,8 @@ namespace QuickFix
         {
             lock (_sync)
             {
+                LogError("shutting down...");
+                
                 if (State.SHUTDOWN_COMPLETE != _state)
                 {
                     foreach (ClientHandlerThread t in _clientThreads.Values)
