@@ -62,14 +62,13 @@ namespace QuickFix
 
         public void Start()
         {
-            lock( sync_ )
+            lock( _sync )
             {
-                if( State.SHUTDOWN_COMPLETE == state_ )
+                if( State.SHUTDOWN_COMPLETE == _state )
                 {
-                    state_ = State.RUNNING;
-                    tcpListener_.Start();
-                    serverThread_ = new Thread( new ThreadStart( Run ) );
-                    serverThread_.Start();
+                    _state = State.RUNNING;
+                    _tcpListener.Start();
+                    _tcpListener.BeginAcceptTcpClient(AcceptTcpClientCallback, _tcpListener);
                 }
             }
         }
@@ -82,51 +81,45 @@ namespace QuickFix
                 {
                     try
                     {
-                        tcpListener_.Server.Close();
-                        tcpListener_.Stop();
-                        state_ = State.SHUTDOWN_REQUESTED;
+                        _state = State.SHUTDOWN_REQUESTED;
+                        _tcpListener.Server.Close();
+                        _tcpListener.Stop();
+                        ShutdownClientHandlerThreads();
                     }
                     catch (System.Exception e)
                     {
-                        this.Log("Error while closing server socket: " + e.Message);
+                        LogError("Error while closing server socket: " + e.Message);
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// TODO apply networking options, e.g. NO DELAY, LINGER, etc.
-        /// </summary>
-        public void Run()
+        private void AcceptTcpClientCallback( IAsyncResult ar )
         {
-            while (IsRunning)
+            TcpListener listener = (TcpListener)ar.AsyncState;
+            try
             {
-                try
+
+                TcpClient client = listener.EndAcceptTcpClient( ar );
+                ApplySocketOptions( client, _socketSettings );
+                ClientHandlerThread t = new ClientHandlerThread( client, _nextClientId++, _socketSettings, _acceptorSocketDescriptor, _nonSessionLog );
+                t.Exited += OnClientHandlerThreadExited;
+                lock( _sync )
                 {
-                    if( !tcpListener_.Pending() )
-                    {
-                        new ManualResetEvent(false).WaitOne(100);
-                        continue;
-                    }
-                    TcpClient client = tcpListener_.AcceptTcpClient();
-                    ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_);
-                    t.Exited += OnClientHandlerThreadExited;
-                    lock (sync_)
-                    {
-                        clientThreads_.Add(t.Id, t);
-                    }
-                    // FIXME set the client thread's exception handler here
-                    t.Log("connected");
-                    t.Start();
+                    _clientThreads.Add( t.Id, t );
                 }
-                catch (System.Exception e)
-                {
-                    if (IsRunning)
-                        this.Log("Error accepting connection: " + e.Message);
-                }
+                // FIXME set the client thread's exception handler here
+                t.Start();
             }
-            ShutdownClientHandlerThreads();
+            catch( Exception e )
+            {
+                if (IsRunning)
+                    LogError("Error accepting connection: " + e.Message);
+            }
+            if( IsRunning )
+            {
+                listener.BeginAcceptTcpClient( AcceptTcpClientCallback, listener );
+            }
         }
 
         internal void OnClientHandlerThreadExited(object sender, ClientHandlerThread.ExitedEventArgs e)
