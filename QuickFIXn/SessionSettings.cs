@@ -44,6 +44,7 @@ namespace QuickFix
         public const string VALIDATE_FIELDS_OUT_OF_ORDER = "ValidateFieldsOutOfOrder";
         public const string VALIDATE_FIELDS_HAVE_VALUES = "ValidateFieldsHaveValues";
         public const string VALIDATE_USER_DEFINED_FIELDS = "ValidateUserDefinedFields";
+        public const string VALIDATE_LENGTH_AND_CHECKSUM = "ValidateLengthAndChecksum";
         public const string DATA_DICTIONARY = "DataDictionary";
         public const string TRANSPORT_DATA_DICTIONARY = "TransportDataDictionary";
         public const string APP_DATA_DICTIONARY = "AppDataDictionary";
