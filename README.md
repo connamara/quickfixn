@@ -2,7 +2,7 @@
 
 
 For tutorials on how to use QuickFIX/n, see the `tutorial` folder at the root
-of this project or visit the [website](http://quickfixn.org/tutorial/creating-an-application).
+of this project or visit the [website](http://quickfixn.org/tutorial/creating-an-application.html).
 
 This README is about setting up your system to do QuickFIX/n
 development.
