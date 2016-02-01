@@ -1349,7 +1349,13 @@ namespace QuickFix
             return SendRaw(heartbeat, 0);
         }
 
-        internal bool GenerateReject(MessageBuilder msgBuilder, FixValues.SessionRejectReason reason, int field=0)
+
+        internal bool GenerateReject(MessageBuilder msgBuilder, FixValues.SessionRejectReason reason)
+        {
+            return GenerateReject(msgBuilder.RejectableMessage(), reason, 0);
+        }
+       
+        internal bool GenerateReject(MessageBuilder msgBuilder, FixValues.SessionRejectReason reason, int field)
         {
             return GenerateReject(msgBuilder.RejectableMessage(), reason, field);
         }
