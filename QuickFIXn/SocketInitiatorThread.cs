@@ -136,7 +136,7 @@ namespace QuickFix
             {
                 // Begin read if it is not already started
                 if (currentReadRequest_ == null)
-                    currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, callback: null, state: null);
+                    currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, null, null);
 
                 // Wait for it to complete (given timeout)
                 currentReadRequest_.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
