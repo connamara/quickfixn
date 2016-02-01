@@ -156,7 +156,7 @@ namespace QuickFix
                 try
                 {
                     SslProtocol = (System.Security.Authentication.SslProtocols)
-                        Enum.Parse(typeof(System.Security.Authentication.SslProtocols), protocolString, ignoreCase: true);
+                        Enum.Parse(typeof(System.Security.Authentication.SslProtocols), protocolString, true);
                 }
                 catch (Exception)
                 {

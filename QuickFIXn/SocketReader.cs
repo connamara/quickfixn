@@ -41,7 +41,7 @@ namespace QuickFix
         {
             try
             {
-                int bytesRead = ReadSome(readBuffer_, timeoutMilliseconds: 1000);
+                int bytesRead = ReadSome(readBuffer_, 1000);
                 if (bytesRead > 0)
                     parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
                 else if (null != qfSession_)
@@ -79,7 +79,7 @@ namespace QuickFix
             {
                 // Begin read if it is not already started
                 if (currentReadRequest_ == null)
-                    currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, callback: null, state: null);
+                    currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, null, null);
 
                 // Wait for it to complete (given timeout)
                 currentReadRequest_.AsyncWaitHandle.WaitOne(timeoutMilliseconds);

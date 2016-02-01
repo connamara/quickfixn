@@ -358,7 +358,20 @@ namespace QuickFix
         {
             FromString(msgstr, validate, sessionDD, appDD, null);
         }
- 
+
+        /// <summary>
+        /// Create a Message from a FIX string
+        /// </summary>
+        /// <param name="msgstr"></param>
+        /// <param name="validate"></param>
+        /// <param name="sessionDD"></param>
+        /// <param name="appDD"></param>
+        /// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
+        public void FromString(string msgstr, bool validate,
+            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
+        {
+            FromString(msgstr, validate, sessionDD, appDD, msgFactory, false);
+        }
 
         /// <summary>
         /// Creates a Message from a FIX string
@@ -373,7 +386,7 @@ namespace QuickFix
         ///   </param>
         public void FromString(string msgstr, bool validate,
             DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory,
-            bool ignoreBody=false)
+            bool ignoreBody)
         {
             Clear();
 
