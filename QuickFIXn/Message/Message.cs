@@ -358,7 +358,20 @@ namespace QuickFix
         {
             FromString(msgstr, validate, sessionDD, appDD, null);
         }
- 
+
+        /// <summary>
+        /// Create a Message from a FIX string
+        /// </summary>
+        /// <param name="msgstr"></param>
+        /// <param name="validate"></param>
+        /// <param name="sessionDD"></param>
+        /// <param name="appDD"></param>
+        /// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
+        public void FromString(string msgstr, bool validate,
+            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
+        {
+            FromString(msgstr, validate, sessionDD, appDD, msgFactory, false);
+        }
 
         /// <summary>
         /// Creates a Message from a FIX string
@@ -368,8 +381,12 @@ namespace QuickFix
         /// <param name="sessionDD"></param>
         /// <param name="appDD"></param>
         /// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
+        /// <param name="ignoreBody">(default false) if true, ignores all non-header non-trailer fields.
+        ///   Intended for callers that only need rejection-related information from the header.
+        ///   </param>
         public void FromString(string msgstr, bool validate,
-            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
+            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory,
+            bool ignoreBody)
         {
             Clear();
 
@@ -425,7 +442,7 @@ namespace QuickFix
                         pos = SetGroup(f, msgstr, pos, this.Trailer, sessionDD.Trailer.GetGroup(f.Tag), sessionDD, appDD, msgFactory);
                     }
                 }
-                else
+                else if (ignoreBody==false)
                 {
                     if (!expectingBody)
                     {

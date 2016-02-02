@@ -281,7 +281,12 @@ namespace QuickFix
             }
         }
 
-        public void SetResendRange(int begin, int end, int chunkEnd=-1)
+        public void SetResendRange(int begin, int end)
+        {
+            SetResendRange(begin, end, -1);
+        }
+
+        public void SetResendRange(int begin, int end, int chunkEnd)
         {
             resendRange_.BeginSeqNo = begin;
             resendRange_.EndSeqNo = end;

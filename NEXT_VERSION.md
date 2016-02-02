@@ -22,6 +22,7 @@ Changes since the last version (oldest first):
 * (patch) #256 - bug in 247, defaults override config (akamyshanov)
 * (patch) #258 - threadsafe SessionState.Get/Set to fix garbled message issue (jacsuper)
 * (patch) #251 - restore the session type check in AbstractInitiator.Start (oract)
+* (patch) #255 - release ClientHandlerThread resources on client disconnect (mgatny)
 * (patch) #266 - Session not explicitly handling DoNotSend from Application::ToApp (cbusbey)
 * (patch) #267 - Resent Messages not being relayed to Application::ToApp (cbusbey)
 * (minor) #286 - FieldBase.Equals() and .GetHashcode() (steffanu)
@@ -32,4 +33,22 @@ Changes since the last version (oldest first):
 * (patch)  #80 - fixes to tag-141-related sequence resets (TomasVetrovsky,akamyshanov,gbirchmeier)
 * (patch) #315 - make config file section headers be case-insensitive, for parity with QF/j (gbirchmeier)
 * (minor) #314 - New feature: add/remove sessions dynamically (martinadams)
+* (patch) #273 - prevent non-logon message traffic unless fully logged on (martinadams)
+* (patch) #278 - fix for mis-sequenced gap fills in re-requested messages (martinadams)
+* (patch) #283 - fix to ensure IApplication.FromAdmin() gets called for received resend requests (martinadams)
+* (minor) #312 - New config option: can force session-level rejects to be resent (martinadams)
+* (minor) #270/#146 - Correct rejection behavior when msg groups do not use correct delimiter tag (gbirchmeier)
+* (patch) #280 - fix to prevent StackOverflowException due to recursion (martinadams)
+
+
+NOTE: Breaking changes in next release
+---------------------------------------
+This version will have changes that will technically alter the public interface.
+However, most likely no one will be affected.  But just in case, here are the details:
+
+* **class `OtherTagException` was deleted.**  The class `GroupDelimiterTagException` used to
+  be descended from this class, but now descends directly from `TagException`.
+* **method `Session.Next(Message message)` was deleted.**  This should never have been public.
+  If you were using it and this is a problem for you, please contact us
+  via our [Contact Page](http://quickfixn.org/about/contact) and we'll see if we can help.
 
