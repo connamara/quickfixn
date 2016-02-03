@@ -64,7 +64,7 @@ namespace QuickFix
             foreach (SessionID sessionID in _settings.GetSessions())
             {
                 Dictionary dict = _settings.Get(sessionID);
-                AddSession(sessionID, dict);
+                CreateSession(sessionID, dict);
             }
 
             if (0 == sessions_.Count)
@@ -78,20 +78,40 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Add new session, either at start-up or as an ad-hoc operation
+        /// Add new session as an ad-hoc (dynamic) operation
         /// </summary>
         /// <param name="sessionID">ID of new session<param>
         /// <param name="dict">config settings for new session</param></param>
         /// <returns>true if session added successfully, false if session already exists or is not an initiator</returns>
         public bool AddSession(SessionID sessionID, Dictionary dict)
         {
+            lock (_settings)
+                if (!_settings.Has(sessionID)) // session won't be in settings if ad-hoc creation after startup
+                    _settings.Set(sessionID, dict); // need to to this here to merge in default config settings
+                else
+                    return false; // session already exists
+
+            if (CreateSession(sessionID, dict))
+                return true;
+
+            lock (_settings) // failed to create new session
+                _settings.Remove(sessionID);
+            return false;
+        }
+
+        /// <summary>
+        /// Create session, either at start-up or as an ad-hoc operation
+        /// </summary>
+        /// <param name="sessionID">ID of new session<param>
+        /// <param name="dict">config settings for new session</param></param>
+        /// <returns>true if session added successfully, false if session already exists or is not an initiator</returns>
+        private bool CreateSession(SessionID sessionID, Dictionary dict)
+        {
             if (dict.GetString(SessionSettings.CONNECTION_TYPE) == "initiator" && !sessionIDs_.Contains(sessionID))
             {
                 Session session = sessionFactory_.Create(sessionID, dict);
                 lock (sync_)
                 {
-                    if (!_settings.Has(sessionID))  // session won't be in settings if ad-hoc creation after startup
-                        _settings.Set(sessionID, dict);
                     sessionIDs_.Add(sessionID);
                     sessions_[sessionID] = session;
                     SetDisconnected(sessionID);
@@ -118,9 +138,7 @@ namespace QuickFix
                     session = sessions_[sessionID];
                     if (session.IsLoggedOn && !terminateActiveSession)
                         return false;
-
                     sessions_.Remove(sessionID);
-                    _settings.Remove(sessionID);
                     disconnectRequired = IsConnected(sessionID) || IsPending(sessionID);
                     if (disconnectRequired)
                         SetDisconnected(sessionID);
@@ -129,6 +147,8 @@ namespace QuickFix
                     OnRemove(sessionID);
                 }
             }
+            lock (_settings)
+                _settings.Remove(sessionID);
             if (disconnectRequired)
                 session.Disconnect("Dynamic session removal");
             if (session != null)

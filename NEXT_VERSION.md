@@ -39,6 +39,7 @@ Changes since the last version (oldest first):
 * (minor) #312 - New config option: can force session-level rejects to be resent (martinadams)
 * (minor) #270/#146 - Correct rejection behavior when msg groups do not use correct delimiter tag (gbirchmeier)
 * (patch) #280 - fix to prevent StackOverflowException due to recursion (martinadams)
+* (patch) #363 - fixes to new dynamic session functionality (martinadams)
 
 
 NOTE: Breaking changes in next release
