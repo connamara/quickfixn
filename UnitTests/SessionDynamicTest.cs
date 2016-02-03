@@ -66,6 +66,8 @@ namespace UnitTests
         const string FIXMessageEnd = @"\x0110=\d{3}\x01";
         const string FIXMessageDelimit = @"(8=FIX|\A).*?(" + FIXMessageEnd + @"|\z)";
 
+        const string LogPath = "log";
+
         SocketInitiator _initiator;
         ThreadedSocketAcceptor _acceptor;
         Dictionary<string, SocketState> _sessions;
@@ -80,10 +82,6 @@ namespace UnitTests
             settings.SetString(SessionSettings.START_TIME, "12:00:00");
             settings.SetString(SessionSettings.END_TIME, "12:00:00");
             settings.SetString(SessionSettings.HEARTBTINT, "300");
-            settings.SetString(SessionSettings.SOCKET_CONNECT_HOST, Host);
-            settings.SetString(SessionSettings.SOCKET_CONNECT_PORT, ConnectPort.ToString());
-            settings.SetString(SessionSettings.SOCKET_ACCEPT_HOST, Host);
-            settings.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort.ToString());
             return settings;
         }
 
@@ -113,14 +111,23 @@ namespace UnitTests
         {
             TestApplication application = new TestApplication(LogonCallback, LogoffCallback);
             IMessageStoreFactory storeFactory = new MemoryStoreFactory();
-            ILogFactory logFactory = new ScreenLogFactory(false, false, false);
             SessionSettings settings = new SessionSettings();
+            Dictionary defaults = new Dictionary();
+            defaults.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, LogPath);
+
+            // Put IP endpoint settings into default section to verify that that defaults get merged into
+            // session-specific settings not only for static sessions, but also for dynamic ones
+            defaults.SetString(SessionSettings.SOCKET_CONNECT_HOST, Host);
+            defaults.SetString(SessionSettings.SOCKET_CONNECT_PORT, ConnectPort.ToString());
+            defaults.SetString(SessionSettings.SOCKET_ACCEPT_HOST, Host);
+            defaults.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort.ToString());
+
+            settings.Set(defaults);
+            ILogFactory logFactory = new FileLogFactory(settings);
 
             if (initiator)
             {
-                Dictionary defaults = new Dictionary();
                 defaults.SetString(SessionSettings.RECONNECT_INTERVAL, "1");
-                settings.Set(defaults);
                 settings.Set(CreateSessionID(StaticInitiatorCompID), CreateSessionConfig(StaticInitiatorCompID, true));
                 _initiator = new SocketInitiator(application, storeFactory, settings, logFactory);
                 _initiator.Start();
@@ -299,6 +306,9 @@ namespace UnitTests
         {
             _sessions = new Dictionary<string, SocketState>();
             _loggedOnCompIDs = new HashSet<string>();
+
+            if (System.IO.Directory.Exists(LogPath))
+                System.IO.Directory.Delete(LogPath, true);
         }
 
         [TearDown]
@@ -313,6 +323,9 @@ namespace UnitTests
 
             _initiator = null;
             _acceptor = null;
+
+            if (System.IO.Directory.Exists(LogPath))
+                System.IO.Directory.Delete(LogPath, true);
         }
 
         [Test]
@@ -334,10 +347,14 @@ namespace UnitTests
 
             // Add the dynamic acceptor and ensure that we can now log on
             var sessionID = CreateSessionID(dynamicCompID);
-            Assert.IsTrue(_acceptor.AddSession(sessionID, CreateSessionConfig(dynamicCompID, false)), "Failed to add dynamic session to acceptor");
+            var sessionConfig = CreateSessionConfig(dynamicCompID, false);
+            Assert.IsTrue(_acceptor.AddSession(sessionID, sessionConfig), "Failed to add dynamic session to acceptor");
             var socket03 = ConnectToEngine();
             SendLogon(socket03, dynamicCompID);
             Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failed to logon dynamic acceptor session");
+
+            // Ensure that we can't add the same session again
+            Assert.IsFalse(_acceptor.AddSession(sessionID, sessionConfig), "Added dynamic session twice");
 
             // Now that dynamic acceptor is logged on, ensure that unforced attempt to remove session fails
             Assert.IsFalse(_acceptor.RemoveSession(sessionID, false), "Unexpected success removing active session");
@@ -359,6 +376,7 @@ namespace UnitTests
             Assert.IsTrue(_acceptor.RemoveSession(CreateSessionID(StaticAcceptorCompID), true), "Failed to remove active session");
             Assert.IsTrue(WaitForDisconnect(socket01), "Socket still connected after session removed");
             Assert.IsFalse(IsLoggedOn(StaticAcceptorCompID), "Session still logged on after being removed");
+
         }
 
         [Test]
@@ -374,10 +392,14 @@ namespace UnitTests
             // Add the dynamic initator and ensure that we can log on
             string dynamicCompID = "ini10";
             var sessionID = CreateSessionID(dynamicCompID);
-            Assert.IsTrue(_initiator.AddSession(sessionID, CreateSessionConfig(dynamicCompID, true)), "Failed to add dynamic session to initiator");
+            var sessionConfig = CreateSessionConfig(dynamicCompID, true);
+            Assert.IsTrue(_initiator.AddSession(sessionID, sessionConfig), "Failed to add dynamic session to initiator");
             Assert.IsTrue(WaitForLogonMessage(dynamicCompID), "Failed to get logon message for dynamic initiator session");
             SendInitiatorLogon(dynamicCompID);
             Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failed to logon dynamic initiator session");
+
+            // Ensure that we can't add the same session again
+            Assert.IsFalse(_initiator.AddSession(sessionID, sessionConfig), "Added dynamic session twice");
 
             // Now that dynamic initiator is logged on, ensure that unforced attempt to remove session fails
             Assert.IsFalse(_initiator.RemoveSession(sessionID, false), "Unexpected success removing active session");
@@ -402,6 +424,9 @@ namespace UnitTests
             Assert.IsTrue(_initiator.RemoveSession(CreateSessionID(StaticInitiatorCompID), true), "Failed to remove active session");
             Assert.IsTrue(WaitForDisconnect(StaticInitiatorCompID), "Socket still connected after session removed");
             Assert.IsFalse(IsLoggedOn(StaticInitiatorCompID), "Session still logged on after being removed");
+
+            // Check that log directory default setting has been effective
+            Assert.Greater(System.IO.Directory.GetFiles(LogPath, QuickFix.Values.BeginString_FIX42 + "*.log").Length, 0); 
         }
     }
 }
