@@ -301,14 +301,22 @@ namespace UnitTests
             s.Send(Encoding.ASCII.GetBytes(msg.ToString()));
         }
 
+        void ClearLogs()
+        {
+            if (System.IO.Directory.Exists(LogPath))
+                try
+                {
+                    System.IO.Directory.Delete(LogPath, true);
+                }
+                catch { }
+        }
+
         [SetUp]
         public void Setup()
         {
             _sessions = new Dictionary<string, SocketState>();
             _loggedOnCompIDs = new HashSet<string>();
-
-            if (System.IO.Directory.Exists(LogPath))
-                System.IO.Directory.Delete(LogPath, true);
+            ClearLogs();
         }
 
         [TearDown]
@@ -324,8 +332,8 @@ namespace UnitTests
             _initiator = null;
             _acceptor = null;
 
-            if (System.IO.Directory.Exists(LogPath))
-                System.IO.Directory.Delete(LogPath, true);
+            Thread.Sleep(500);
+            ClearLogs();
         }
 
         [Test]
