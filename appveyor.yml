@@ -1,0 +1,15 @@
+version: 1.0.{build}
+
+install:
+- cmd: >-
+    gem install nokogiri
+    
+    generate.bat
+build_script:
+- cmd: build.bat
+
+test_script:
+- cmd: >-
+    unit_test.bat
+    
+    acceptance_test.bat
