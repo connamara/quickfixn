@@ -316,20 +316,13 @@ namespace UnitTests
         {
             if (_listenSocket != null)
                 _listenSocket.Close();
-
             if (_initiator != null)
-            {
-                // Give any lingering engine initiator connect attempts time to fail, to avoid any race 
-                // conditions that might arise with the clean up activity that follows
-                Thread.Sleep(1000);
                 _initiator.Stop(true);
-            }
             if (_acceptor != null)
                 _acceptor.Stop(true);
 
             _initiator = null;
             _acceptor = null;
-            _listenSocket = null;
 
             if (System.IO.Directory.Exists(LogPath))
                 System.IO.Directory.Delete(LogPath, true);
