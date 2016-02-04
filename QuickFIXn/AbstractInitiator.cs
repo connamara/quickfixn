@@ -144,13 +144,13 @@ namespace QuickFix
                         SetDisconnected(sessionID);
                     disconnected_.Remove(sessionID);
                     sessionIDs_.Remove(sessionID);
-                    OnRemove(sessionID);
                 }
             }
             lock (_settings)
                 _settings.Remove(sessionID);
             if (disconnectRequired)
                 session.Disconnect("Dynamic session removal");
+            OnRemove(sessionID); // ensure session's reader thread is gone before we dispose session
             if (session != null)
                 session.Dispose();
             return true;
