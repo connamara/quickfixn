@@ -16,3 +16,8 @@ and add their name to web/views/about/credits.md
 
 Changes since the last version (oldest first):
 ----------------------------------------------
+
+Format:
+* (major/minor/patch) desc of fixed issue (contributor)
+
+
