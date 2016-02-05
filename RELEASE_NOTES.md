@@ -33,9 +33,9 @@ What's New
 * (patch) #280 - fix to prevent StackOverflowException due to recursion (martinadams)
 * (patch) #364 - remove accidental introduction of .NET 4.0 features (gbirchmeier)
 
-**NOTE: Breaking changes in release**
-This version will have changes that will technically alter the public interface.
-However, most likely no one will be affected.  But just in case, here are the details:
+**NOTE: Breaking changes in release**  
+This version has changes that technically alter the public interface.
+Most likely no one is affected.  But just in case, here are the details:
 
 * **class `OtherTagException` was deleted.**  The class `GroupDelimiterTagException` used to
   be descended from this class, but now descends directly from `TagException`.
