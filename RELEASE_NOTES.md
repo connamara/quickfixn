@@ -34,7 +34,7 @@ What's New
 * (patch) #364 - remove accidental introduction of .NET 4.0 features (gbirchmeier)
 
 **NOTE: Breaking changes in release**  
-This version will has changes that technically alter the public interface.
+This version has changes that technically alter the public interface.
 Most likely no one is affected.  But just in case, here are the details:
 
 * **class `OtherTagException` was deleted.**  The class `GroupDelimiterTagException` used to
