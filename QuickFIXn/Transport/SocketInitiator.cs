@@ -69,12 +69,17 @@ namespace QuickFix.Transport
             catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
             {
                 t.Session.Log.OnEvent("Connection failed: " + ex.Message);
-                t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
             }
             catch (SocketException e) 
             {
                 t.Session.Log.OnEvent("Connection failed: " + e.Message);
+            }
+            catch (Exception)
+            {
+                // It might be the logger ObjectDisposedException, so don't try to log!
+            }
+            finally
+            {
                 t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.Session.SessionID);
             }
