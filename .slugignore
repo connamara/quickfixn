@@ -1,0 +1,15 @@
+QuickFIXn
+AcceptanceTest
+spec
+Examples
+QuickFIXn.sln
+docs
+spec
+acceptance_test.bat
+generator
+unit_test.bat
+PerformanceTests
+UnitTests
+build.bat
+resources
+

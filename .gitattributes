@@ -1,0 +1,9 @@
+# Make all the C# source be crlf
+generator/*rb text eol=crlf
+*.cs text eol=crlf
+*.bat text eol=crlf
+*.csproj text eol=crlf
+*.sln text eol=crlf
+*.cfg text
+*.pfx binary
+*.cer binary
