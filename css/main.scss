@@ -53,6 +53,7 @@ $qfn-logo-small: url("/quickfixn/web/public/images/qfn-logo/QuickFIX-n_logo-smal
 
 // Import partials from `sass_dir` (defaults to `_sass`)
 @import
+        "blueprint/ie",
         "blueprint/screen",
         "base",
         "layout",
