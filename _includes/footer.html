@@ -1,0 +1,37 @@
+<div class="wrapper">
+
+  <footer class="site-footer">
+
+    <div>
+      <ul class="footer-nav-list">
+        <li><a href='{{ site.baseurl }}/'>Home</a></li>
+        <li><a href='{{ site.baseurl }}/tutorial/creating-an-application'>Documentation</a></li>
+        <li><a href='{{ site.baseurl }}/help'>Issues</a></li>
+        <li><a href='{{ site.baseurl }}/help'>Support</a></li>
+        <li><a href='{{ site.baseurl }}/help'>Mailing List</a></li>
+        <li><a href='{{ site.baseurl }}/about/contact'>Contact Us</a></li>
+        <li><a href='{{ site.baseurl }}/about/contribute'>Contribute</a></li>
+        <li><a href='{{ site.baseurl }}/about/about-us'>About</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <ul class="footer-nav-list">
+        <li><h2 class="footer-header">{{ site.title }}</h2></li>
+        {% if site.github_username %}
+        <li class="social-media">
+          {% include icon-github.html username=site.github_username %}
+        </li>
+        {% endif %}
+
+        {% if site.twitter_username %}
+        <li class="social-media">
+          {% include icon-twitter.html username=site.twitter_username %}
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+
+  </footer>
+
+</div>

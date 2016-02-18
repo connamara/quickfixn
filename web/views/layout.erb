@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+
+	<head>
+    <title><%= @title || "QuickFIX/n" %></title>
+    <%= stylesheet 'blueprint/screen' %>
+    <!--[if lt IE 8]>
+    <%= stylesheet 'blueprint/ie' %>
+    <![endif]-->
+    <%= stylesheet 'highlight' %>
+    <%= stylesheet 'layout' %>
+    <%= stylesheet 'http://fonts.googleapis.com/css?family=Droid+Sans+Mono', :remote=>true %>
+    <%= js 'highlight.pack' %>
+    <script type="text/javascript">
+      hljs.initHighlightingOnLoad();
+    </script>
+    
+	</head>
+	
+	<body lang="en">
+	  <div class="container">
+      <div id='header' class='span-24'>
+        <div id="top-logo">
+          <a href='/'><%= img 'qfn-logo/QuickFIX-n_logo-small.png', :alt=>"QuickFIX/n Logo" %></a>
+        </div>
+      </div>
+      <div id='mainnav' class='span-24'>
+        <%= nav_div('tutorial') %>
+            <span class='fonticon'>F</span><span class='navitem-text'>Docs</span>
+        </a>
+        <%= nav_div('download') %>
+          <span class='fonticon'>}</span><span class='navitem-text'>Download</span>
+        </a>
+        <%= nav_div('help') %>
+          <span class='fonticon'>U</span><span class='navitem-text'>Get Help</span>
+        </a>
+        <%= nav_div('about') %>
+          <span class='fonticon'>i</span><span class='navitem-text'>About</span>
+        </a>
+      </div>
+      <div id='main-content' class='prepend-1 span-14'>
+        <%= yield %>
+      </div>
+      <div class='span-7 last'>
+        <%= erb :side_nav %>
+      </div>
+      <div class='span-24'>
+        <%= erb :footer %>
+      </div>
+    </div>
+    <%= erb :clicky %>
+	</body>
+	
+</html>
