@@ -14,6 +14,13 @@ Pull requests (with tests) are appreciated. No pull request is too small. Please
 * Adding tests
 * Closing [issues](https://github.com/connamara/quickfixn/issues)
 
+
+## Before you contribute
+
+* Did you find a bug?  **Ensure the bug was not already reported** by searching on Github under [Issues](https://github.com/connamara/quickfixn/issues).
+* If you intend to add a new feature or change an existing one, suggest your change in the QuickFIX/n mailing list and start writing code.  Do not open an issue on GitHub until you have collected positive feedback about the change.
+* If possible, please refrain from changing public interface code.  We would like to limit breaking legacy code that uses the library as much as possible.
+
 ## Steps to Contribute:
 
 1. Fork the [official repository](https://github.com/connamara/quickfixn/tree/master).
