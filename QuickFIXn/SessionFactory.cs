@@ -137,7 +137,7 @@ namespace QuickFix
             if (settings.Has(settingsKey))
                 path = settings.GetString(settingsKey);
             else
-                path = beginString.Replace("\\.", "") + ".xml";
+                path = beginString.Replace(".", "") + ".xml";
 
             if (!dictionariesByPath_.TryGetValue(path, out dd))
             {
