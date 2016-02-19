@@ -1,5 +1,4 @@
 title: QuickFIX/n
 github_username: Connamara
-baseurl: /quickfixn
 kramdown:
   input: GFM
