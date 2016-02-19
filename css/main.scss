@@ -19,7 +19,7 @@ $spacing-unit:     20px;
 
 $text-color:       #111;
 $background-color: #fdfdfd;
-$background-image: url("/quickfixn/web/public/images/bg.png");
+$background-image: url("{{ site.github.url }}/web/public/images/bg.png");
 $brand-color:      #2a7ae2;
 
 $grey-color:       #828282;
@@ -31,10 +31,6 @@ $content-width:    1000px;
 
 $on-palm:          600px;
 $on-laptop:        800px;
-
-$qfn-logo-small: url("/quickfixn/web/public/images/qfn-logo/QuickFIX-n_logo-small.png");
-
-
 
 // Use media queries like this:
 // @include media-query($on-palm) {
