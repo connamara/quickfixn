@@ -47,6 +47,6 @@ that exhibits dramatically lower latencies and variance.
 [0]: http://quickfixengine.org
 [1]: http://quickfixj.org
 [2]: http://connamara.com
-[3]: /quickfixn/web/public/images/Connamara-Logo.png
+[3]: {{ site.github.url }}/web/public/images/Connamara-Logo.png
 [4]: https://github.com/connamara/quickfixn/blob/master/LICENSE
 [5]: http://fixprotocol.org
