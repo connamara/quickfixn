@@ -18,7 +18,7 @@ layout: default
     <div>
       <ul class="side-nav-list">
         {% for my_page in pages %}
-          <li class="side-nav-link"><a href="{{ my_page.url | prepend: site.baseurl }}">{{ my_page.menu_title }}</a></li>
+          <li class="side-nav-link"><a href="{{ my_page.url | prepend: site.github.url }}">{{ my_page.menu_title }}</a></li>
         {% endfor %}
       </ul>
     </div>
