@@ -94,6 +94,17 @@ namespace QuickFix
         }
 
         /// <summary>
+        /// set many fields at the same time
+        /// </summary>
+        public void SetFields(IEnumerable<Fields.IField> fields)
+        {
+            foreach (var field in fields)
+            {
+                _fields[field.Tag] = field;
+            }
+        }
+
+        /// <summary>
         /// Set field, with optional override check
         /// </summary>
         /// <param name="field"></param>
