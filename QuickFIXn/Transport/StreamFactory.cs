@@ -28,6 +28,14 @@ namespace QuickFix.Transport
         {
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.NoDelay = settings.SocketNodelay;
+            if (settings.SocketReceiveBufferSize.HasValue)
+            {
+                socket.ReceiveBufferSize = settings.SocketReceiveBufferSize.Value;
+            }
+            if (settings.SocketSendBufferSize.HasValue)
+            {
+                socket.SendBufferSize = settings.SocketSendBufferSize.Value;
+            }
             socket.Connect(endpoint);
             Stream stream = new NetworkStream(socket, true);
 
