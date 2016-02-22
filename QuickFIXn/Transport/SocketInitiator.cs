@@ -69,12 +69,17 @@ namespace QuickFix.Transport
             catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
             {
                 t.Session.Log.OnEvent("Connection failed: " + ex.Message);
-                t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
             }
             catch (SocketException e) 
             {
                 t.Session.Log.OnEvent("Connection failed: " + e.Message);
+            }
+            catch (Exception)
+            {
+                // It might be the logger ObjectDisposedException, so don't try to log!
+            }
+            finally
+            {
                 t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.Session.SessionID);
             }
@@ -90,10 +95,26 @@ namespace QuickFix.Transport
 
         private void RemoveThread(SocketInitiatorThread thread)
         {
-            lock (sync_)
+            RemoveThread(thread.Session.SessionID);
+        }
+
+        private void RemoveThread(SessionID sessionID)
+        {
+            // We can come in here on the thread being removed, and on another thread too in the case 
+            // of dynamic session removal, so make sure we won't deadlock...
+            if (Monitor.TryEnter(sync_))
             {
-                thread.Join();
-                threads_.Remove(thread.Session.SessionID);
+                SocketInitiatorThread thread = null;
+                if (threads_.TryGetValue(sessionID, out thread))
+                {
+                    try
+                    {
+                        thread.Join();
+                    }
+                    catch { }
+                    threads_.Remove(sessionID);
+                }
+                Monitor.Exit(sync_);
             }
         }
 
@@ -172,7 +193,7 @@ namespace QuickFix.Transport
         /// <param name="sessionID">ID of session being removed</param>
         protected override void OnRemove(SessionID sessionID)
         {
-            sessionToHostNum_.Remove(sessionID);
+            RemoveThread(sessionID);
         }
 
         protected override bool OnPoll(double timeout)
