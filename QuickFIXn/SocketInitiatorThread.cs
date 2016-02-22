@@ -50,7 +50,9 @@ namespace QuickFix
             if (null == thread_)
                 return;
             Disconnect();
-            thread_.Join(5000);
+            // Make sure session's socket reader thread doesn't try to do a Join on itself!
+            if (Thread.CurrentThread.ManagedThreadId != thread_.ManagedThreadId)
+                thread_.Join(2000);
             thread_ = null;
         }
 
