@@ -129,6 +129,14 @@ namespace QuickFix
         {
             client.LingerState = new LingerOption(false, 0);
             client.NoDelay = socketSettings.SocketNodelay;
+            if (socketSettings.SocketReceiveBufferSize.HasValue)
+            {
+                client.ReceiveBufferSize = socketSettings.SocketReceiveBufferSize.Value;
+            }
+            if (socketSettings.SocketSendBufferSize.HasValue)
+            {
+                client.SendBufferSize = socketSettings.SocketSendBufferSize.Value;
+            }
         }
 
         private void ShutdownClientHandlerThreads()
