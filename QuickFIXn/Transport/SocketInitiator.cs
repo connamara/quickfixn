@@ -57,7 +57,7 @@ namespace QuickFix.Transport
             
             // just in case
             if (t == null) return;
-            Action<Exception> hanldeException = ex =>
+            Action<Exception> handleException = ex =>
             {
                 t.Session.Log.OnEvent("Connection failed: " + ex.Message);
                 t.Initiator.RemoveThread(t);
@@ -77,19 +77,19 @@ namespace QuickFix.Transport
             }
             catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
             {
-                hanldeException(ex);
+                handleException(ex);
             }
             catch (SocketException ex)
             {
-                hanldeException(ex);
+                handleException(ex);
             }
             catch (System.Security.Authentication.AuthenticationException ex) // some certificate problems
             {
-                hanldeException(ex);
+                handleException(ex);
             }
             catch (Exception ex) // a good idea not to crash the whole application if something happens here
             {
-                hanldeException(ex);
+                handleException(ex);
             }
         }
         
