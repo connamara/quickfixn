@@ -45,4 +45,6 @@ Contributors
 - Andrey Kamyshanov
 - Jac Steyn
 - Timothy Caro
+- Steffan Ulfburg
+- Martin Adams
 

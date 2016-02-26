@@ -94,6 +94,17 @@ namespace QuickFix
         }
 
         /// <summary>
+        /// set many fields at the same time
+        /// </summary>
+        public void SetFields(IEnumerable<Fields.IField> fields)
+        {
+            foreach (var field in fields)
+            {
+                _fields[field.Tag] = field;
+            }
+        }
+
+        /// <summary>
         /// Set field, with optional override check
         /// </summary>
         /// <param name="field"></param>
@@ -546,7 +557,6 @@ namespace QuickFix
                     total += field.getTotal();
             }
 
-            // TODO not sure if repeated CheckSum should be included in the total
             foreach (Fields.IField field in this.RepeatedTags)
             {
                 if (field.Tag != Fields.Tags.CheckSum)
@@ -575,7 +585,6 @@ namespace QuickFix
                 }
             }
 
-            // TODO not sure if repeated BeginString/BodyLength/CheckSum should be counted
             foreach (Fields.IField field in this.RepeatedTags)
             {
                 if (field != null
@@ -632,7 +641,6 @@ namespace QuickFix
                 sb.Append(Message.SOH);
             }
 
-            //foreach (List<Group> groupList in _groups.Values)
             foreach(int counterTag in _groups.Keys)
             {
                 if (preFields.Contains(counterTag))

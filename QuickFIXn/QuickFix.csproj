@@ -67,6 +67,7 @@
     <Compile Include="FileStoreFactory.cs" />
     <Compile Include="FixValues.cs" />
     <Compile Include="IApplication.cs" />
+    <Compile Include="IApplicationExt.cs" />
     <Compile Include="IInitiator.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="ILogFactory.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="IResponder.cs" />
     <Compile Include="MemoryStore.cs" />
     <Compile Include="MemoryStoreFactory.cs" />
+    <Compile Include="MessageBuilder.cs" />
     <Compile Include="MessageCracker.cs" />
     <Compile Include="Config\Config.cs" />
     <Compile Include="Config\Settings.cs" />

@@ -117,5 +117,19 @@ namespace UnitTests
             Assert.True(parser.ReadFixMessage(out readFixMsg2));
             Assert.AreEqual(fixMsg2, readFixMsg2);
         }
+
+        [Test] // Issue #282 investigation
+        public void ReadFixMessageWithMissingValues()
+        {
+            string[] fixMsgFields1 = { "8=FIX.4.4", "9=15", "35=B", "148=", "33=0", "10=0" };
+            string fixMsg1 = String.Join("\x01", fixMsgFields1) + "\x01";
+
+            Parser parser = new Parser();
+            parser.AddToStream(fixMsg1);
+
+            string readFixMsg1;
+            Assert.True(parser.ReadFixMessage(out readFixMsg1));
+            Assert.AreEqual(fixMsg1, readFixMsg1);
+        }
     }
 }
