@@ -28,8 +28,16 @@ namespace QuickFix.Transport
         {
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socket.NoDelay = settings.SocketNodelay;
+            if (settings.SocketReceiveBufferSize.HasValue)
+            {
+                socket.ReceiveBufferSize = settings.SocketReceiveBufferSize.Value;
+            }
+            if (settings.SocketSendBufferSize.HasValue)
+            {
+                socket.SendBufferSize = settings.SocketSendBufferSize.Value;
+            }
             socket.Connect(endpoint);
-            Stream stream = new NetworkStream(socket, ownsSocket: true);
+            Stream stream = new NetworkStream(socket, true);
 
             if (settings.UseSSL)
             {
@@ -183,10 +191,7 @@ namespace QuickFix.Transport
             /// <returns>a ssl enabled stream</returns>
             public Stream CreateClientStreamAndAuthenticate(Stream innerStream)
             {
-                var sslStream = new SslStream(innerStream,
-                                                leaveInnerStreamOpen: false,
-                                                userCertificateValidationCallback: ValidateServerCertificate,
-                                                userCertificateSelectionCallback: SelectLocalCertificate);
+                var sslStream = new SslStream(innerStream, false, ValidateServerCertificate, SelectLocalCertificate);
 
                 try
                 {
@@ -213,10 +218,7 @@ namespace QuickFix.Transport
             /// <returns>a ssl enabled stream</returns>
             public Stream CreateServerStreamAndAuthenticate(Stream innerStream)
             {
-                var sslStream = new SslStream(innerStream,
-                                                leaveInnerStreamOpen: false,
-                                                userCertificateValidationCallback: ValidateClientCertificate,
-                                                userCertificateSelectionCallback: SelectLocalCertificate);
+                var sslStream = new SslStream(innerStream, false, ValidateClientCertificate, SelectLocalCertificate);
 
                 try
                 {

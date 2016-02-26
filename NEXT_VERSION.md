@@ -16,12 +16,8 @@ and add their name to web/views/about/credits.md
 
 Changes since the last version (oldest first):
 ----------------------------------------------
+
+Format:
 * (major/minor/patch) desc of fixed issue (contributor)
 
-* (minor) #247 - support for CheckLatency/MaxLatency config settings (ruaanviljoen)
-* (patch) #256 - bug in 247, defaults override config (akamyshanov)
-* (patch) #258 - threadsafe SessionState.Get/Set to fix garbled message issue (jacsuper)
-* (patch) #251 - restore the session type check in AbstractInitiator.Start (oract)
-* (patch) #266 - Session not explicitly handling DoNotSend from Application::ToApp (cbusbey)
-* (patch) #267 - Resent Messages not being relayed to Application::ToApp (cbusbey)
 

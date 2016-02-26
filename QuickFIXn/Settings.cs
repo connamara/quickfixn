@@ -24,7 +24,7 @@ namespace QuickFix
                 }
                 else if (IsKeyValue(line) && currentSection != null)
                 {
-                    string[] kv = line.Split(new char[]{'='}, 2);
+                    string[] kv = line.Split(new char[] { '=' }, 2);
                     currentSection.SetString(kv[0].Trim(), kv[1].Trim());
                 }
             }
@@ -65,11 +65,17 @@ namespace QuickFix
             return section;
         }
 
+        /// <summary>
+        /// Retrieve dictionaries by section name
+        /// (e.g. 'SESSION' would return a list containing each "[SESSION]" Dictionary)
+        /// </summary>
+        /// <param name="sectionName">(case is ignored)</param>
+        /// <returns></returns>
         public LinkedList<QuickFix.Dictionary> Get(string sectionName)
         {
             LinkedList<QuickFix.Dictionary> result = new LinkedList<Dictionary>();
             foreach (QuickFix.Dictionary dict in sections_)
-                if (sectionName == dict.Name)
+                if (sectionName.ToUpperInvariant() == dict.Name.ToUpperInvariant())
                     result.AddLast(dict);
             return result;
         }
