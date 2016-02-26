@@ -54,6 +54,7 @@ namespace QuickFix.Transport
         public static void SocketInitiatorThreadStart(object socketInitiatorThread)
         {
             SocketInitiatorThread t = socketInitiatorThread as SocketInitiatorThread;
+            if (t == null) return;
             try
             {
                 t.Connect();
@@ -73,6 +74,10 @@ namespace QuickFix.Transport
             catch (SocketException e) 
             {
                 t.Session.Log.OnEvent("Connection failed: " + e.Message);
+            }
+            catch (System.Security.Authentication.AuthenticationException ex) // some certificate problems
+            {
+                t.Session.Log.OnEvent("Connection failed (AuthenticationException): " + ex.Message);
             }
             catch (Exception)
             {
@@ -221,10 +226,11 @@ namespace QuickFix.Transport
                 session.Log.OnEvent("Connecting to " + socketEndPoint.Address + " on port " + socketEndPoint.Port);
 
                 //Setup socket settings based on current section
-                socketSettings_.Configure(settings);
+                var socketSettings = socketSettings_.Clone();
+                socketSettings.Configure(settings);
 
                 // Create a Ssl-SocketInitiatorThread if a certificate is given
-                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings_);                
+                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings);                
                 t.Start();
                 AddThread(t);
 
