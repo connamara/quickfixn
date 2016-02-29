@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Collections.Generic;
 
 namespace QuickFix
@@ -6,7 +7,7 @@ namespace QuickFix
     /// <summary>
     /// Accepts connections from FIX clients and manages the associated sessions.
     /// </summary>
-    public interface IAcceptor
+    public interface IAcceptor : IDisposable
     {
         /// <summary>
         /// Start accepting connections
