@@ -69,6 +69,7 @@ namespace QuickFix
         private Dictionary<IPEndPoint, AcceptorSocketDescriptor> socketDescriptorForAddress_ = new Dictionary<IPEndPoint, AcceptorSocketDescriptor>();
         private SessionFactory sessionFactory_;
         private bool isStarted_ = false;
+        private bool _disposed = false;
         private object sync_ = new object();
 
         #region Constructors
@@ -265,12 +266,23 @@ namespace QuickFix
             */
         }
 
+        private void DisposeSessions()
+        {
+            foreach (var session in sessions_.Values)
+            {
+                session.Dispose();
+            }
+        }
+
         #endregion
 
         #region Acceptor Members
 
         public void Start()
         {
+            if (_disposed)
+                throw new ObjectDisposedException(GetType().Name);
+
             lock (sync_)
             {
                 if (!isStarted_)
@@ -288,8 +300,14 @@ namespace QuickFix
 
         public void Stop(bool force)
         {
+            if (_disposed)
+                throw new ObjectDisposedException(GetType().Name);
+
             StopAcceptingConnections();
             LogoutAllSessions(force);
+            DisposeSessions();
+            sessions_.Clear();
+
             /// FIXME StopSessionTimer();
             /// FIXME Session.UnregisterSessions(GetSessions());
         }
@@ -373,5 +391,34 @@ namespace QuickFix
         }
 
         #endregion
+
+        /// <summary>
+        /// Any subclasses of ThreadedSocketAcceptor should override this if they have resources to dispose
+        /// Any override should call base.Dispose(disposing).
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            try
+            {
+                Stop();
+                _disposed = true;
+            }
+            catch (ObjectDisposedException)
+            {
+                // ignore
+            }
+        }
+
+        /// <summary>
+        /// Disposes created sessions
+        /// </summary>
+        /// <remarks>
+        /// To simply stop the acceptor without disposing sessions, use Stop() or Stop(bool)
+        /// </remarks>
+        public void Dispose()
+        {
+            Stop();
+        }
     }
 }
