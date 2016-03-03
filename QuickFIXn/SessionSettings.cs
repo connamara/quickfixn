@@ -22,6 +22,7 @@ namespace QuickFix
         public const string DEFAULT_APPLVERID = "DefaultApplVerID";
         public const string CONNECTION_TYPE = "ConnectionType";
         public const string USE_DATA_DICTIONARY = "UseDataDictionary";
+        public const string NON_STOP_SESSION = "NonStopSession";
         public const string USE_LOCAL_TIME = "UseLocalTime";
         public const string TIME_ZONE = "TimeZone";
         public const string START_DAY = "StartDay";
