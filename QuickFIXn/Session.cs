@@ -133,6 +133,12 @@ namespace QuickFix
         public bool RefreshOnLogon { get; set; }
 
         /// <summary>
+        /// Specifies whether ResetSeqNumFlag should be skipped following 
+        /// a sequence number reset.
+        /// </summary>
+        public bool SkipResetSeqNumFlag { get; set; }
+
+        /// <summary>
         /// Reset sequence numbers on logon request
         /// </summary>
         public bool ResetOnLogon { get; set; }
@@ -1041,7 +1047,8 @@ namespace QuickFix
 
         protected bool ShouldSendReset()
         {
-            return (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX41) >= 0)
+            return (!this.SkipResetSeqNumFlag)
+                && (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX41) >= 0)
                 && (this.ResetOnLogon || this.ResetOnLogout || this.ResetOnDisconnect)
                 && (state_.GetNextSenderMsgSeqNum() == 1)
                 && (state_.GetNextTargetMsgSeqNum() == 1);

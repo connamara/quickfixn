@@ -205,6 +205,16 @@ QuickFIX Settings
   </tr>
 
   <tr>
+    <td class='setting'>SkipResetSeqNumFlag</td>
+    <td class='description'>Specifies whether ResetSeqNumFlag should be skipped following a sequence number reset.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
+
+  <tr>
     <td class='setting'>RefreshOnLogon</td>
     <td class='description'>Determines if session state should be restored from persistence layer when logging on.  Useful for creating hot failover sessions.</td>
     <td class='valid'>
