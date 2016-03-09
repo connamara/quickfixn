@@ -225,6 +225,19 @@ namespace QuickFix
                 DisconnectClient();
                 return false;
             }
+            else if (qfSession_.ValidateAcceptorPort && qfSession_.ExpectedAcceptorPort > 0)
+            {
+                int localPort = ((System.Net.IPEndPoint)tcpClient_.Client.LocalEndPoint).Port;
+                if (localPort != qfSession_.ExpectedAcceptorPort)
+                {
+                    qfSession_.Log.OnIncoming(msg);
+                    qfSession_.Log.OnEvent("Logon attempted to invalid port " + localPort.ToString() + " from session " + qfSession_.SessionID);
+                    qfSession_ = null;
+                    DisconnectClient();
+                    return false;
+                }
+            }
+
             qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
             /// FIXME do this here? qfSession_.HeartBtInt = QuickFix.Fields.Converters.IntConverter.Convert(message.GetField(Fields.Tags.HeartBtInt)); /// FIXME
             qfSession_.Log.OnEvent(qfSession_.SessionID + " Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");

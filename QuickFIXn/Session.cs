@@ -184,6 +184,16 @@ namespace QuickFix
         public bool IgnorePossDupResendRequests { get; set; }
 
         /// <summary>
+        /// Validates the incoming TCP destination port for Acceptor sessions
+        /// </summary>
+        public bool ValidateAcceptorPort { get; set; }
+
+        /// <summary>
+        /// The expected acceptor port to be validated agianst if ValidateAcceptorPort=true
+        /// </summary>
+        public int ExpectedAcceptorPort { get; set; }
+
+        /// <summary>
         /// Sets a maximum number of messages to request in a resend request.
         /// </summary>
         public int MaxMessagesInResendRequest { get; set; }
@@ -254,6 +264,8 @@ namespace QuickFix
             this.RequiresOrigSendingTime = true;
             this.CheckLatency = true;
             this.MaxLatency = 120;
+            this.ValidateAcceptorPort = false;
+            this.ExpectedAcceptorPort = 0;
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime (Session construction)");

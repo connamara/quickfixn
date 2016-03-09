@@ -124,6 +124,11 @@ namespace QuickFix
                 session.ValidateLengthAndChecksum = settings.GetBool(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM);
             if (settings.Has(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME))
                 session.RequiresOrigSendingTime = settings.GetBool(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME);
+            if (settings.Has(SessionSettings.VALIDATE_ACCEPTOR_PORT) && settings.Has(SessionSettings.SOCKET_ACCEPT_PORT))
+            {
+                session.ValidateAcceptorPort = settings.GetBool(SessionSettings.VALIDATE_ACCEPTOR_PORT);
+                session.ExpectedAcceptorPort = settings.GetInt(SessionSettings.SOCKET_ACCEPT_PORT);
+            }
 
             return session;
         }
