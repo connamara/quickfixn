@@ -189,7 +189,7 @@ namespace QuickFix
         public bool ValidateAcceptorPort { get; set; }
 
         /// <summary>
-        /// The expected acceptor port to be validated agianst if ValidateAcceptorPort=true
+        /// The expected acceptor port to be validated against if ValidateAcceptorPort=true
         /// </summary>
         public int ExpectedAcceptorPort { get; set; }
 
