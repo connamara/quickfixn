@@ -285,6 +285,31 @@ namespace QuickFix
         }
 
         /// <summary>
+        /// Returns a basic SessionID from only the Version, Target and Sender tags
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static SessionID GetBasicReverseSessionID(Message msg)
+        {
+            return new SessionID(
+                GetFieldOrDefault(msg.Header, Tags.BeginString, null),
+                GetFieldOrDefault(msg.Header, Tags.TargetCompID, null),
+                GetFieldOrDefault(msg.Header, Tags.SenderCompID, null)
+            );
+        }
+
+        /// <summary>
+        /// FIXME works, but implementation is shady
+        /// </summary>
+        /// <param name="msg"></param>
+        /// <returns></returns>
+        public static SessionID GetBasicReverseSessionID(string msg)
+        {
+            Message FIXME = new Message(msg);
+            return GetBasicReverseSessionID(FIXME);
+        }
+
+        /// <summary>
         /// Parse the message type (tag 35) from a FIX string
         /// </summary>
         /// <param name="fixstring">the FIX string to parse</param>

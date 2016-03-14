@@ -132,6 +132,13 @@ namespace QuickFix
                 if (null == qfSession_)
                 {
                     qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg));
+
+                    if (null == qfSession_)
+                    {
+                        // If more complete QFn session (inc SubID tags etc) does not exist then perform session lookup using Version, TargetCompID and SenderCompID only
+                        qfSession_ = Session.LookupSession(Message.GetBasicReverseSessionID(msg));
+                    }
+                    
                     if (null == qfSession_)
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
