@@ -146,7 +146,7 @@ namespace QuickFix.Transport
                 sessionToHostNum_[sessionID] = ++num;
 
                 socketSettings_.ServerCommonName = hostName;
-                return new IPEndPoint(addrs[0], port);
+                return new IPEndPoint(addrs.First(a => a.AddressFamily == AddressFamily.InterNetwork), port);
             }
             catch (System.Exception e)
             {
