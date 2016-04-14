@@ -103,7 +103,7 @@ To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
 The test results will then be available in AcceptanceTests\TestResults.xml and
 debug information will be available in the AcceptanceTests\log directory.
 
-To run a test with the debugger, 
+To run a test with the debugger,
 
   1. Open the solution file in Visual Studio
   2. Right click on "AcceptanceTest" project and choose "Properties" from the menu
@@ -129,4 +129,4 @@ Licensing
 
 This software is available under the QuickFIX Software License. Please see the [LICENSE](LICENSE) for the terms specified by the QuickFIX Software License.
 
-[1]: http://quickfixn.org/images/qfn-logo/QuickFIX-n_logo-small.png
+[1]: http://quickfixn.org/web/public/images/qfn-logo/QuickFIX-n_logo-small.png
