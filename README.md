@@ -2,8 +2,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/ccu2yp2coad3oam0?svg=true)](https://ci.appveyor.com/project/cbusbey/quickfixn-jib50)
 
-For tutorials on how to use QuickFIX/n, see the `tutorial` folder at the root
-of this project or visit the [website](http://quickfixn.org/tutorial/creating-an-application.html).
+For tutorials on how to use QuickFIX/n, visit the [website](http://quickfixn.org/tutorial/creating-an-application.html).
 
 This README is about setting up your system to do QuickFIX/n
 development.
