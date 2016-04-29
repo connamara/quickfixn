@@ -225,23 +225,23 @@ namespace QuickFix
             int start = Environment.TickCount;
             using( var resetEvent = new ManualResetEvent( false ) )
             {
-            while (IsLoggedOn && (Environment.TickCount - start) < TenSecondsInTicks)
-            {
+                while (IsLoggedOn && (Environment.TickCount - start) < TenSecondsInTicks)
+                {
                     resetEvent.WaitOne( 100 );
-            }
+                }
             }
             DisconnectSessions("Logout timeout, force disconnect");
         }
 
         private void DisconnectSessions(string disconnectMessage)
-                {
+        {
             foreach (Session session in _sessions.Values)
-                    {
+            {
                 try
                 {
                     if (session.IsLoggedOn)
                         session.Disconnect(disconnectMessage);
-                    }
+                }
                 catch (System.Exception e)
                 {
                     LogEvent( session.Log, "Error during disconnect of Session " + session.SessionID + ": " + e.Message );
@@ -296,12 +296,8 @@ namespace QuickFix
                     StopAcceptingConnections();
                 }
             }
-            DisposeSessions();
-            _sessions.Clear();
-            _isStarted = false;
-
-            // FIXME StopSessionTimer();
-            // FIXME Session.UnregisterSessions(GetSessions());
+            /// FIXME StopSessionTimer();
+            /// FIXME Session.UnregisterSessions(GetSessions());
         }
 
         /// <summary>
@@ -418,20 +414,20 @@ namespace QuickFix
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed) return;
-            if (disposing)
+            if( _disposed ) return;
+            try
             {
-                try
-                {
-                    Stop();
-                }
-                catch (ObjectDisposedException)
-                {
-                    // ignore
-                }
+                Stop();
+                DisposeSessions();
+                _sessions.Clear();
+                _disposed = true;
             }
-            _disposed = true;
+            catch (ObjectDisposedException)
+            {
+                // ignore
+            }
         }
+        
         /// <summary>
         /// Disposes created sessions
         /// </summary>
@@ -440,8 +436,8 @@ namespace QuickFix
         /// </remarks>
         public void Dispose()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            Dispose( true );
+            GC.SuppressFinalize( this );
         }
     }
 }
