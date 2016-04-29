@@ -253,7 +253,7 @@ namespace QuickFix
             int start = Environment.TickCount;
             using( var resetEvent = new ManualResetEvent( false ) )
             {
-                while (IsLoggedOn && (Environment.TickCount - start) < TenSecondsInTicks)
+                while( IsLoggedOn && ( Environment.TickCount - start ) < TenSecondsInTicks )
                 {
                     resetEvent.WaitOne( 100 );
                 }
