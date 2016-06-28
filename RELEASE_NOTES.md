@@ -8,7 +8,7 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
-###v1.7.0:
+###v1.7.0 (Unreleased):
 * (patch) #276 - SSL Fixes (akamyshanov)
 * (minor) #292 - Allow To Set Several Fields At The Same Time (tix52)
 * (minor) #294 - Added SocketSendBufferSize and SocketReceiveBufferSize settings (staffanu)
