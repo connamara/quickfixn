@@ -8,6 +8,18 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
+###v1.7.0 (Unreleased):
+* (patch) #276 - SSL Fixes (akamyshanov)
+* (minor) #292 - Allow To Set Several Fields At The Same Time (tix52)
+* (minor) #294 - Added SocketSendBufferSize and SocketReceiveBufferSize settings (staffanu)
+* (patch) #295 - Use only ipv4 addresses returned by Dns.GetHostAddresses (staffanu)
+* (minor) #334 - Implement NonStopSession, for compatibility with quickfixj (staffanu)
+* (patch) #340 - TreadedSocketAcceptor does not dispose underlying sessions on stop bug (akamyshanov)
+* (minor) #356 - implement optional session setting ValidateLengthAndChecksum (dafanasiev)
+* (patch) #358 - BeginString not being transformed into the correct file name when no DataDictionary session setting is present. (Cooker1977)
+* (patch) #365 - fixes for dynamic session functionality (martinadams)
+* (patch) #380 - Website docs and cleanup (cbusbey)
+
 ###v1.6.0:
 * (patch) #362 - expanded CI to code genertion and acceptance tests (aswaney)
 * (minor) #247 - support for CheckLatency/MaxLatency config settings (ruaanviljoen)
