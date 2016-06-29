@@ -21,16 +21,10 @@ ruby scripts\update_assembly_version.rb %TAG_VERSION% QuickFIXn\Properties\Assem
 if %errorlevel% neq 0 echo "update_assembly_version.rb failed" && exit /b %errorlevel%
 echo * AssemblyInfo updated for new version number.
 
-rem Update downloads page - NOTE this must be done first
-ruby scripts\update_download_page.rb web/views/download.md %TAG_VERSION%
-if %errorlevel% neq 0 echo "There was an error uploading the downloads page" && exit /b %errorlevel%
-echo * Downloads page updated.
-
-rem commit the downloads page and version file, so it will be part of the tag
-call git add web\views\download.md
+rem commit the version file, so it will be part of the tag
 call git add QuickFIXn\Properties\AssemblyInfo.cs
-call git commit -m "Download page / version number for version %TAG_VERSION%"
-echo * Downloads page / version number committed.
+call git commit -m "version number for version %TAG_VERSION%"
+echo * Version number committed.
 
 rem create the tag
 call git tag -a %TAG_VERSION% -m "Release version %TAG_VERSION%"
