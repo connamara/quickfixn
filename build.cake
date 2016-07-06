@@ -1,6 +1,4 @@
-#tool "nuget:?package=NUnit.Runners&version=2.6.0"
-
-using System.Xml.Xsl;
+#tool "nuget:?package=NUnit.Runners&version=2.6.4"
 
 var target = Argument<string>("target", "Default");
 var buildTarget = Argument<string>("buildTarget", "Rebuild");
@@ -35,22 +33,12 @@ Task("Unit-Tests")
             Error(exception.Message);
         }
         
-        XsltProcessor("TestResult.xml", "../../nunit.xsl", "UnitTests.html");
+        XmlTransform(File("../../nunit.xsl"), File("TestResult.xml"), File("UnitTests.html"));
     }
 });
 
 Task("Default")
     .IsDependentOn("Unit-Tests");
-
-// As suggested here: https://github.com/connamara/quickfixn/issues/104
-public void XsltProcessor(string inputFile, string styleSheet, string outputFile)
-{
-    var xslTransform = new XslCompiledTransform();
-
-    xslTransform.Load(styleSheet);
-    
-    xslTransform.Transform(inputFile, outputFile);
-}
 
 class CurrentDirectory : IDisposable
 {
