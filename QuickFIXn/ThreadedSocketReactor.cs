@@ -81,7 +81,12 @@ namespace QuickFix
         /// </summary>
         public void Run()
         {
-            tcpListener_.Start();
+            lock (sync_)
+            {
+                if (State.SHUTDOWN_REQUESTED != state_)
+                    tcpListener_.Start();
+            }
+
             while (State.RUNNING == ReactorState)
             {
                 try
