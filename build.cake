@@ -22,16 +22,8 @@ Task("Unit-Tests")
     {
         DeleteFiles("TestResult.xml");
         DeleteFiles("UnitTests.html");
-        
-        try 
-        {
-            NUnit("UnitTests.dll");
-        } 
-        catch (Exception exception) 
-        {
-            // Report Nunit exit code -100 (unhandled exceptions in test assembly)
-            Error(exception.Message);
-        }
+
+        NUnit("UnitTests.dll");
         
         XmlTransform(File("../../nunit.xsl"), File("TestResult.xml"), File("UnitTests.html"));
     }
