@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.IO;
 using System;
+using System.Linq;
 
 namespace QuickFix
 {
@@ -10,6 +11,7 @@ namespace QuickFix
     /// </summary>
     public class SocketReader : IDisposable
     {
+        private readonly ISessionCollector _sessionCollector;
         public const int BUF_SIZE = 4096;
         byte[] readBuffer_ = new byte[BUF_SIZE];
         private Parser parser_ = new Parser();
@@ -30,7 +32,18 @@ namespace QuickFix
         }
 
         public SocketReader(TcpClient tcpClient, SocketSettings settings, ClientHandlerThread responder)
+            : this(tcpClient, settings, responder, null)
         {
+            
+        }
+
+        internal SocketReader(
+            TcpClient tcpClient,
+            SocketSettings settings,
+            ClientHandlerThread responder,
+            ISessionCollector sessionCollector)
+        {
+            _sessionCollector = sessionCollector;
             tcpClient_ = tcpClient;
             responder_ = responder;
             stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
@@ -133,6 +146,13 @@ namespace QuickFix
                     if (null == qfSession_)
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        DisconnectClient();
+                        return;
+                    }
+                    else if(!_sessionCollector.GetSessionIds().Any(id => id.Equals(qfSession_.SessionID)))
+                    {
+                        this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        qfSession_ = null;
                         DisconnectClient();
                         return;
                     }
