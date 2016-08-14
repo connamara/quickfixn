@@ -13,7 +13,7 @@ namespace QuickFix
     /// </summary>
     public class ThreadedSocketAcceptor : IAcceptor
     {
-        class AcceptorSocketDescriptor
+        class AcceptorSocketDescriptor : ISessionCollector
         {
             #region Properties
 
@@ -40,7 +40,7 @@ namespace QuickFix
             public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
             {
                 socketEndPoint_ = socketEndPoint;
-                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict);
+                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict, this);
             }
 
             public void AcceptSession(Session session)
@@ -61,6 +61,11 @@ namespace QuickFix
             public Dictionary<SessionID, Session> GetAcceptedSessions()
             {
                 return new Dictionary<SessionID, Session>(acceptedSessions_);
+            }
+
+            public IEnumerable<SessionID> GetSessionIds()
+            {
+                return acceptedSessions_.Select(kv => kv.Key).ToArray();
             }
         }
 

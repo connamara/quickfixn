@@ -75,6 +75,7 @@
     <Compile Include="IMessageStore.cs" />
     <Compile Include="IMessageStoreFactory.cs" />
     <Compile Include="IResponder.cs" />
+    <Compile Include="ISessionCollector.cs" />
     <Compile Include="MemoryStore.cs" />
     <Compile Include="MemoryStoreFactory.cs" />
     <Compile Include="MessageBuilder.cs" />

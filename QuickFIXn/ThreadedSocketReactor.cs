@@ -35,6 +35,7 @@ namespace QuickFix
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
         private QuickFix.Dictionary sessionDict_;
+        private readonly ISessionCollector _sessionCollector;
 
         #endregion
 
@@ -42,12 +43,18 @@ namespace QuickFix
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
             : this(serverSocketEndPoint, socketSettings, null)
         { }
-        
-        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
+
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings,
+            QuickFix.Dictionary sessionDict) : this(serverSocketEndPoint, socketSettings, sessionDict, null)
+        {
+            
+        }
+        internal ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict, ISessionCollector sessionCollector)
         {
             socketSettings_ = socketSettings;
             tcpListener_ = new TcpListener(serverSocketEndPoint);
             sessionDict_ = sessionDict;
+            _sessionCollector = sessionCollector;
         }
 
         public void Start()
@@ -93,7 +100,8 @@ namespace QuickFix
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
                     ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_);
+                    ClientHandlerThread t = 
+                        new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_, _sessionCollector);
                     t.Exited += OnClientHandlerThreadExited;
                     lock (sync_)
                     {
