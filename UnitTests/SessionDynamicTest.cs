@@ -58,9 +58,11 @@ namespace UnitTests
         const string Host = "127.0.0.1";
         const int ConnectPort = 55100;
         const int AcceptPort = 55101;
+        const int AcceptPort2 = 55102;
         const string ServerCompID = "dummy";
         const string StaticInitiatorCompID = "ini01";
         const string StaticAcceptorCompID = "acc01";
+        const string StaticAcceptorCompID2 = "acc02";
 
         const string FIXMessageEnd = @"\x0110=\d{3}\x01";
         const string FIXMessageDelimit = @"(8=FIX|\A).*?(" + FIXMessageEnd + @"|\z)";
@@ -105,7 +107,7 @@ namespace UnitTests
             }
         }
 
-        void StartEngine(bool initiator)
+        void StartEngine(bool initiator, bool twoSessions = false)
         {
             TestApplication application = new TestApplication(LogonCallback, LogoffCallback);
             IMessageStoreFactory storeFactory = new MemoryStoreFactory();
@@ -133,6 +135,18 @@ namespace UnitTests
             else
             {
                 settings.Set(CreateSessionID(StaticAcceptorCompID), CreateSessionConfig(StaticAcceptorCompID, false));
+
+                if (twoSessions)
+                {
+                    var id = CreateSessionID(StaticAcceptorCompID2);
+                    var conf = CreateSessionConfig(StaticAcceptorCompID2, false);
+
+                    conf.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort2.ToString());
+                    conf.SetString(SessionSettings.FILE_LOG_PATH, LogPath + "2");
+
+                    settings.Set(id, conf);
+                }
+
                 _acceptor = new ThreadedSocketAcceptor(application, storeFactory, settings, logFactory);
                 _acceptor.Start();
             }
@@ -214,8 +228,13 @@ namespace UnitTests
 
         Socket ConnectToEngine()
         {
+            return ConnectToEngine(AcceptPort);
+        }
+
+        Socket ConnectToEngine(int port)
+        {
             var address = IPAddress.Parse(Host);
-            var endpoint = new IPEndPoint(address, AcceptPort);
+            var endpoint = new IPEndPoint(address, port);
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
@@ -334,6 +353,37 @@ namespace UnitTests
 
             Thread.Sleep(500);
             ClearLogs();
+        }
+
+        [Test]
+        public void Different_Port_For_Acceptor_Dynamic_Test()
+        {
+            //create two sessions with two different SOCKET_ACCEPT_PORT
+            StartEngine(false, true);
+
+            // Ensure we can log on 1st session to 1st port
+            using (var socket11 = ConnectToEngine(AcceptPort))
+            {
+                Assert.IsTrue(socket11.Connected, "Failed to connect to 1st accept port");
+                SendLogon(socket11, StaticAcceptorCompID);
+                Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon 1st acceptor session");
+            }
+
+            // Ensure we can't log on 2nd session to 1st port
+            using(var socket12 = ConnectToEngine(AcceptPort))
+            {
+                Assert.IsTrue(socket12.Connected, "Failed to connect to 1st accept port");
+                SendLogon(socket12, StaticAcceptorCompID2);
+                Assert.IsTrue(WaitForDisconnect(socket12), "Server failed to disconnect 2nd CompID from 1st port");
+            }
+
+            // Ensure we can log on 2nd session to 2nd port
+            using (var socket22 = ConnectToEngine(AcceptPort))
+            {
+                Assert.IsTrue(socket22.Connected, "Failed to connect to 2nd accept port");
+                SendLogon(socket22, StaticAcceptorCompID);
+                Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon 2nd acceptor session");
+            }
         }
 
         [Test]
