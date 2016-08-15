@@ -378,11 +378,11 @@ namespace UnitTests
             }
 
             // Ensure we can log on 2nd session to 2nd port
-            using (var socket22 = ConnectToEngine(AcceptPort))
+            using (var socket22 = ConnectToEngine(AcceptPort2))
             {
                 Assert.IsTrue(socket22.Connected, "Failed to connect to 2nd accept port");
-                SendLogon(socket22, StaticAcceptorCompID);
-                Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon 2nd acceptor session");
+                SendLogon(socket22, StaticAcceptorCompID2);
+                Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID2), "Failed to logon 2nd acceptor session");
             }
         }
 
