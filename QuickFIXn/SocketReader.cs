@@ -149,7 +149,8 @@ namespace QuickFix
                         DisconnectClient();
                         return;
                     }
-                    else if(!_sessionCollector.GetSessionIds().Any(id => id.Equals(qfSession_.SessionID)))
+                    else if(_sessionCollector != null 
+                            && !_sessionCollector.GetSessionIds().Any(id => id.Equals(qfSession_.SessionID)))
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
                         qfSession_ = null;
