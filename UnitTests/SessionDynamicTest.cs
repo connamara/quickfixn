@@ -356,7 +356,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void Different_Port_For_Acceptor_Dynamic_Test()
+        public void DifferentPortForAcceptorTest()
         {
             //create two sessions with two different SOCKET_ACCEPT_PORT
             StartEngine(false, true);

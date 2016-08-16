@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace QuickFix
 {
-    internal interface ISessionCollector
+    internal interface IAssumedSessionSet
     {
         IEnumerable<SessionID> GetSessionIds();
     }

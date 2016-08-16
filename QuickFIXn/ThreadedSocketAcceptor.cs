@@ -13,7 +13,7 @@ namespace QuickFix
     /// </summary>
     public class ThreadedSocketAcceptor : IAcceptor
     {
-        class AcceptorSocketDescriptor : ISessionCollector
+        class AcceptorSocketDescriptor : IAssumedSessionSet
         {
             #region Properties
 
