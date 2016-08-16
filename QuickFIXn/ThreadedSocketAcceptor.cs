@@ -45,7 +45,10 @@ namespace QuickFix
 
             public void AcceptSession(Session session)
             {
-                acceptedSessions_[session.SessionID] = session;
+                lock (acceptedSessions_)
+                {
+                    acceptedSessions_[session.SessionID] = session;
+                }
             }
 
             /// <summary>
@@ -55,17 +58,26 @@ namespace QuickFix
             /// <returns>true if session removed, false if not found</returns>
             public bool RemoveSession(SessionID sessionID)
             {
-                return acceptedSessions_.Remove(sessionID);
+                lock (acceptedSessions_)
+                {
+                    return acceptedSessions_.Remove(sessionID);
+                }
             }
 
             public Dictionary<SessionID, Session> GetAcceptedSessions()
             {
-                return new Dictionary<SessionID, Session>(acceptedSessions_);
+                lock (acceptedSessions_)
+                {
+                    return new Dictionary<SessionID, Session>(acceptedSessions_);
+                }
             }
 
             public IEnumerable<SessionID> GetSessionIds()
             {
-                return acceptedSessions_.Select(kv => kv.Key).ToArray();
+                lock (acceptedSessions_)
+                {
+                    return acceptedSessions_.Select(kv => kv.Key).ToArray();
+                }
             }
         }
 
