@@ -59,7 +59,7 @@ namespace QuickFix
             
         }
 
-        internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings, ISessionCollector sessionCollector)
+        internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings, IAssumedSessionSet assumedSessionSet)
         {
             string debugLogFilePath = "log";
             if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
@@ -73,7 +73,7 @@ namespace QuickFix
             //log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
 
             this.Id = clientId;
-            socketReader_ = new SocketReader(tcpClient, socketSettings, this, sessionCollector);
+            socketReader_ = new SocketReader(tcpClient, socketSettings, this, assumedSessionSet);
         }
 
         public void Start()
