@@ -11,7 +11,6 @@ namespace QuickFix
     /// </summary>
     public class SocketReader : IDisposable
     {
-        private readonly IAssumedSessionSet assumedSessionSet_;
         public const int BUF_SIZE = 4096;
         byte[] readBuffer_ = new byte[BUF_SIZE];
         private Parser parser_ = new Parser();
@@ -19,6 +18,7 @@ namespace QuickFix
         private Stream stream_;     //will be null when initialized
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
+        private readonly AcceptorSocketDescriptor acceptorDescriptor_;
 
         /// <summary>
         /// Keep a handle to the current outstanding read request (if any)
@@ -41,11 +41,11 @@ namespace QuickFix
             TcpClient tcpClient,
             SocketSettings settings,
             ClientHandlerThread responder,
-            IAssumedSessionSet assumedSessionSet)
+            AcceptorSocketDescriptor acceptroDescriptor)
         {
-            assumedSessionSet_ = assumedSessionSet;
             tcpClient_ = tcpClient;
             responder_ = responder;
+            acceptorDescriptor_ = acceptroDescriptor;
             stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
         }
 
@@ -258,8 +258,8 @@ namespace QuickFix
 
         private bool IsAssumedSession(SessionID sessionID)
         {
-            return assumedSessionSet_ != null 
-                   && !assumedSessionSet_.GetSessionIds().Any(id => id.Equals(sessionID));
+            return acceptorDescriptor_ != null 
+                   && !acceptorDescriptor_.GetAcceptedSessions().Any(kv => kv.Key.Equals(sessionID));
         }
 
         private void HandleExceptionInternal(Session quickFixSession, System.Exception cause)
