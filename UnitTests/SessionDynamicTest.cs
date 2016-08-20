@@ -107,7 +107,12 @@ namespace UnitTests
             }
         }
 
-        void StartEngine(bool initiator, bool twoSessions = false)
+        void StartEngine(bool initiator)
+        {
+            StartEngine(initiator, false);
+        }
+
+        void StartEngine(bool initiator, bool twoSessions)
         {
             TestApplication application = new TestApplication(LogonCallback, LogoffCallback);
             IMessageStoreFactory storeFactory = new MemoryStoreFactory();
