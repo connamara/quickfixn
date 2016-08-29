@@ -15,6 +15,7 @@ namespace QuickFix
     /// </remarks>
     public class SocketSettings : ICloneable
     {
+        public int LogonTimeout;
         public bool SocketNodelay = true;
         public Nullable<int> SocketReceiveBufferSize;
         public Nullable<int> SocketSendBufferSize;
@@ -118,6 +119,9 @@ namespace QuickFix
         /// <param name="dictionary">the dictionary to read the settings from</param>
         public void Configure(QuickFix.Dictionary dictionary)
         {
+            if (dictionary.Has(SessionSettings.LOGON_TIMEOUT))
+                LogonTimeout = dictionary.GetInt(SessionSettings.LOGON_TIMEOUT);
+
             if (dictionary.Has(SessionSettings.SOCKET_NODELAY))
                 SocketNodelay = dictionary.GetBool(SessionSettings.SOCKET_NODELAY);
 

@@ -17,6 +17,8 @@ namespace QuickFix
         private Stream stream_;     //will be null when initialized
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
+        private DateTime _startTime;
+        private TimeSpan _logonTimeout;
 
         /// <summary>
         /// Keep a handle to the current outstanding read request (if any)
@@ -34,6 +36,9 @@ namespace QuickFix
             tcpClient_ = tcpClient;
             responder_ = responder;
             stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
+
+            _startTime = DateTime.Now;
+            _logonTimeout = TimeSpan.FromSeconds(Math.Max(10, settings.LogonTimeout));
         }
 
         /// <summary> FIXME </summary>
@@ -50,6 +55,9 @@ namespace QuickFix
                 }
 
                 ProcessStream();
+
+                if (qfSession_ == null && DateTime.Now - _startTime > _logonTimeout)
+                    throw new TimeoutException("Logon timeout");
             }
             catch (MessageParseError e)
             {
@@ -58,7 +66,7 @@ namespace QuickFix
             catch (System.Exception e)
             {
                 HandleExceptionInternal(qfSession_, e);
-                throw e;
+                throw;
             }
         }
 
@@ -191,7 +199,7 @@ namespace QuickFix
             catch (MessageParseError e)
             {
                 msg = "";
-                throw e;
+                throw;
             }
         }
 
@@ -271,15 +279,12 @@ namespace QuickFix
             else if (realCause is MessageParseError)
             {
                 reason = "Protocol handler exception: " + cause;
-                if (quickFixSession == null)
-                    disconnectNeeded = true;
-                else
-                    disconnectNeeded = false;
+                disconnectNeeded = quickFixSession == null;
             }
             else
             {
                 reason = cause.ToString();
-                disconnectNeeded = false;
+                disconnectNeeded = realCause is TimeoutException;
             }
 
             this.Log("SocketReader Error: " + reason);
