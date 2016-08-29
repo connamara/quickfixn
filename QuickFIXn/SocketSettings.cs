@@ -15,6 +15,14 @@ namespace QuickFix
         #region Socket Settings
 
         /// <summary>
+        /// Amount of seconds to wait for a login before timing out.
+        /// </summary>
+        /// <value>
+        /// The default is 0.
+        /// </value>
+        public int LogonTimeout;
+
+        /// <summary>
         /// Gets a value that specifies whether the <see cref="T:System.Net.Sockets.Socket"/> is using the Nagle algorithm.
         /// </summary>
         /// <value>
@@ -149,6 +157,7 @@ namespace QuickFix
             CheckCertificateRevocation = true;
             RequireClientCertificate = true;
             SocketNodelay = true;
+            LogonTimeout = 0;
         }
 
         /// <summary>
@@ -161,6 +170,9 @@ namespace QuickFix
         /// <param name="dictionary">the dictionary to read the settings from</param>
         public void Configure(QuickFix.Dictionary dictionary)
         {
+            if (dictionary.Has(SessionSettings.LOGON_TIMEOUT))
+                LogonTimeout = dictionary.GetInt(SessionSettings.LOGON_TIMEOUT);
+
             if (dictionary.Has(SessionSettings.SOCKET_NODELAY))
                 SocketNodelay = dictionary.GetBool(SessionSettings.SOCKET_NODELAY);
 
