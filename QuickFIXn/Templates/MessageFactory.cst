@@ -6,7 +6,7 @@ namespace QuickFix
         {
             public QuickFix.Message Create(string beginString, string msgType)
             {
-                switch(msgType)
+                switch (msgType)
                 {
 <#msgTypeCases#>
                 }
@@ -14,11 +14,13 @@ namespace QuickFix
                 return new QuickFix.Message();
             }
 
+
             public Group Create(string beginString, string msgType, int correspondingFieldID)
             {
 <#createMessageGroups#>
                 return null;
             }
+
         }
     }
 }
