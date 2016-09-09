@@ -1,0 +1,7 @@
+if (QuickFix.<#version#>.<#msgName#>.MsgType.Equals(msgType))
+{
+    switch (correspondingFieldID)
+    {
+<#msgGroupCases#>
+    }
+}
