@@ -192,7 +192,6 @@ namespace UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
         public void ValidateWrongType()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
@@ -210,7 +209,7 @@ namespace UnitTests
             Message message = f.Create(beginString, msgType);
             message.FromString(msgStr, true, dd, dd, f);
 
-            dd.Validate(message, beginString, msgType);
+            Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
         }
 
         [Test]
@@ -234,7 +233,6 @@ namespace UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
         public void ValidateWrongTypeInRepeatingGroup()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
@@ -255,11 +253,10 @@ namespace UnitTests
             Message message = f.Create(beginString, msgType);
             message.FromString(msgStr, true, dd, dd, f);
 
-            dd.Validate(message, beginString, msgType);
+            Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
         }
 
         [Test]
-        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
         public void ValidateWrongTypeInNestedRepeatingGroup()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
@@ -281,7 +278,7 @@ namespace UnitTests
             Message message = f.Create(beginString, msgType);
             message.FromString(msgStr, true, dd, dd, f);
 
-            dd.Validate(message, beginString, msgType);
+            Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
         }
 
         [Test]
@@ -313,7 +310,6 @@ namespace UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
         public void ValidateDateTime_Invalid()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
@@ -330,12 +326,10 @@ namespace UnitTests
             Message message = f.Create(beginString, msgType);
             message.FromString(msgStr, true, dd, dd, f);
 
-            // this should throw
-            dd.Validate(message, beginString, msgType);
+            Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
         }
 
         [Test]
-        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
         public void ValidateDateOnly_Invalid()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
@@ -352,12 +346,10 @@ namespace UnitTests
             Message message = f.Create(beginString, msgType);
             message.FromString(msgStr, true, dd, dd, f);
 
-            // this should throw
-            dd.Validate(message, beginString, msgType);
+            Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
         }
 
         [Test]
-        [ExpectedException(typeof(QuickFix.IncorrectDataFormat))]
         public void ValidateTimeOnly_Invalid()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX44.xml");
@@ -374,8 +366,7 @@ namespace UnitTests
             Message message = f.Create(beginString, msgType);
             message.FromString(msgStr, true, dd, dd, f);
 
-            // this should throw
-            dd.Validate(message, beginString, msgType);
+            Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
         }
 
         [Test]
@@ -470,7 +461,6 @@ namespace UnitTests
         }
 
         [Test] // Issue #66
-        [ExpectedException( typeof( QuickFix.IncorrectTagValue ) )]
         public void ValidateMultipleValueStringType_Invalid()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary( "../../../spec/fix/FIX44.xml" );
@@ -488,7 +478,7 @@ namespace UnitTests
             Message message = f.Create( beginString, msgType );
             message.FromString( msgStr, true, dd, dd );
 
-            dd.Validate( message, beginString, msgType );
+            Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectTagValue>());
         }
 
         [Test] // Issue #282 investigation
