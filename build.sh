@@ -6,7 +6,7 @@ NET_VERSION=$3
 
 [ -z $TARGET ] && TARGET=Rebuild
 [ -z $CONFIGURATION ] && CONFIGURATION=Release
-[ -z $NET_VERSION ] && NET_VERSION=v3.5
+[ -z $NET_VERSION ] && NET_VERSION=v4.5.2
 
 BUILD_CMD="xbuild QuickFIXn.sln /t:${TARGET} /p:Configuration=${CONFIGURATION};TargetFrameworkVersion=${NET_VERSION}"
 echo "Build command: $BUILD_CMD"
