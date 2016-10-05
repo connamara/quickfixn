@@ -92,7 +92,7 @@ An HTML report of the test results will then be available here:
 To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
 
     cd AcceptanceTest
-    runat.bat release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg
+    runat.ps1 release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg
 
 (See acceptance_test.bat for the proper port numbers and config files to use in the above command.)
 
