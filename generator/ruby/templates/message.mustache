@@ -1,0 +1,38 @@
+// This is a generated file.  Don't edit it directly!
+
+using QuickFix.Fields;
+namespace QuickFix
+{
+    namespace {{ version }}
+    {
+        public class {{ msgName }} : Message
+        {
+            public const string MsgType = "{{ msgType }}";
+
+            public {{ msgName }}() : base()
+            {
+                this.Header.SetField(new QuickFix.Fields.MsgType("{{ msgType }}"));
+            }
+
+            {{# hasConstructorArguments}}
+            public {{ msgName }}(
+                  {{# msgConstructorList}}
+                    {{ . }}
+                  {{/ msgConstructorList}}
+                ) : this()
+            {
+              {{# msgConstructorArguments}}
+                this.{{ . }} = a{{ . }};
+              {{/ msgConstructorArguments}}
+            }
+            {{/ hasConstructorArguments}}
+
+            {{# msgFields}}
+            {{> templates/field}}
+            {{/ msgFields}}
+            {{# msgGroups}}
+            {{> templates/group}}
+            {{/ msgGroups}}
+        }
+    }
+}

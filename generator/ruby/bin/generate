@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require_relative '../generator'
+
+PROJECT_ROOT = File.expand_path("./../../../../", __FILE__)
+
+Dir["#{PROJECT_ROOT}/spec/fix/*.xml"].each do |data_dictionary|
+  xdoc = Nokogiri::XML(File.read(data_dictionary))
+  dd   = DataDictionay.new(xdoc)
+  dd.save(ARGV[0] || "#{PROJECT_ROOT}/spec/tmp")
+end
