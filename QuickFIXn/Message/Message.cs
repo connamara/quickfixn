@@ -711,12 +711,14 @@ namespace QuickFix
                     this.Header.SetField(new DeliverToSubID(onBehalfOfSubID));
             }
 
-            if(header.IsSetField(Tags.DeliverToCompID))
-            {
-                string deliverToCompID = header.GetField(Tags.DeliverToCompID);
-                if(deliverToCompID.Length > 0)
-                    this.Header.SetField(new OnBehalfOfCompID(deliverToCompID));
-            }
+            // A.Chisholm 19-01-2017
+            // As we're a hub we want to reject from ourselves and not OBO the inbound DeliverToCompID
+            //if(header.IsSetField(Tags.DeliverToCompID))
+            //{
+            //    string deliverToCompID = header.GetField(Tags.DeliverToCompID);
+            //    if(deliverToCompID.Length > 0)
+            //        this.Header.SetField(new OnBehalfOfCompID(deliverToCompID));
+            //}
 
             if(header.IsSetField(Tags.DeliverToSubID))
             {
