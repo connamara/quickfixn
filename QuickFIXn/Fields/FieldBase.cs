@@ -13,7 +13,7 @@ namespace QuickFix.Fields
         /// </summary>
         /// <param name="tag">the FIX tag number</param>
         /// <param name="obj">the value of the field</param>
-        public FieldBase(int tag, T obj)
+        protected FieldBase(int tag, T obj)
         {
             _tag = tag;
             _obj = obj;
@@ -50,8 +50,8 @@ namespace QuickFix.Fields
         /// </summary>
         public override string toStringField()
         {
-            if (_changed.Equals(true))
-                makeStringFields();
+            if (_changed)
+                applyChange();
             return _stringField;
         }
 
@@ -61,7 +61,7 @@ namespace QuickFix.Fields
         public override string ToString()
         {
             if (_changed)
-                makeStringFields();
+                applyChange();
             return _stringVal;
         }
 
@@ -90,8 +90,8 @@ namespace QuickFix.Fields
         public override int getLength()
         {
             if (_changed)
-                makeStringFields();
-            return System.Text.Encoding.UTF8.GetByteCount(_stringField) + 1; // +1 for SOH
+                applyChange();
+            return _length;
         }
 
         /// <summary>
@@ -100,26 +100,30 @@ namespace QuickFix.Fields
         public override int getTotal()
         {
             if (_changed)
-                makeStringFields();
-
-            int sum = 0;
-            byte[] array = System.Text.Encoding.UTF8.GetBytes(_stringField);
-            foreach (byte b in array)
-            {
-                sum += b;
-            }
-            return (sum + 1); // +1 for SOH
+                applyChange();
+            return _checksum;
         }
 
         protected abstract string makeString();
 
         /// <summary>
         /// returns tag=val
+        /// calculates checksum and length
         /// </summary>
-        private void makeStringFields()
+        private void applyChange()
         {
             _stringVal = makeString();
             _stringField = Tag + "=" + _stringVal;
+
+            _checksum = 1;
+            byte[] array = System.Text.Encoding.UTF8.GetBytes(_stringField);
+            foreach (byte b in array)
+            {
+                _checksum += b;
+            }
+
+            _length = array.Length + 1; // +1 for SOH
+
             _changed = false;
         }
 
@@ -128,6 +132,8 @@ namespace QuickFix.Fields
         private bool _changed;
         private T _obj;
         private int _tag;
+        private int _checksum;
+        private int _length;
         private string _stringVal;
         #endregion
     }
