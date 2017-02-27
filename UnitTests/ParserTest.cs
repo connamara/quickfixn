@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
 using QuickFix;
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace UnitTests
 {
@@ -94,28 +96,33 @@ namespace UnitTests
             Assert.DoesNotThrow(delegate { parser.ReadFixMessage(out readFixMsg); });
         }
 
+        private static readonly Encoding EncodingOnTopOfDATAField = new UTF8Encoding(false); // can be anything that is able to represent the text to be transmitted, we'll just use UTF8
+        private const char SOH  = '\x01';
+
         [Test]
         public void ReadFixMessageWithNonAscii()
         {
-            string[] fixMsgFields1 = { "8=FIX.4.4", "9=19", "35=B", "148=Ole!", "33=0", "10=0" };
-            string fixMsg1 = String.Join("\x01", fixMsgFields1) + "\x01";
+            var strings = new[] { "Ole!", "Olé!", "あら", "漢字", "a" + SOH + "b" };
+            const int baseLen = 15;
 
-            Assert.AreEqual("é", "\x00E9");
-            Assert.AreEqual("é", "\xE9");
-
-            string[] fixMsgFields2 = { "8=FIX.4.4", "9=20", "35=B", "148=Olé!", "33=0", "10=0" };
-            string fixMsg2 = String.Join("\x01", fixMsgFields2) + "\x01";
-
+            List<string> fixMessages = new List<string> {};
             Parser parser = new Parser();
-            parser.AddToStream(fixMsg1 + fixMsg2);
 
-            string readFixMsg1;
-            Assert.True(parser.ReadFixMessage(out readFixMsg1));
-            Assert.AreEqual(fixMsg1, readFixMsg1);
-
-            string readFixMsg2;
-            Assert.True(parser.ReadFixMessage(out readFixMsg2));
-            Assert.AreEqual(fixMsg2, readFixMsg2);
+            foreach (var str in strings)
+            {
+                var bytes = EncodingOnTopOfDATAField.GetBytes(str);
+                int len = baseLen + bytes.Length;
+                string[] fixMsgFields2 = { "8=FIX.4.4", "9=" + len, "35=B", "148=" + Parser.EightBitTransparentEncoding.GetString(bytes), "33=0", "10=0" };
+                string fixMsg2 = String.Join("\x01", fixMsgFields2) + "\x01";
+                parser.AddToStream(fixMsg2);
+                fixMessages.Add(fixMsg2);
+            }
+            foreach (var fixMessage in fixMessages)
+            {
+                string readFixMsg1;
+                Assert.True(parser.ReadFixMessage(out readFixMsg1));
+                Assert.AreEqual(fixMessage, readFixMsg1);                
+            }
         }
 
         [Test] // Issue #282 investigation
