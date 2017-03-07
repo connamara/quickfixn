@@ -122,7 +122,12 @@ namespace UnitTests
             return _acceptor;
         }
 
-        private Socket ConnectToEngine( bool expectFailure = false)
+        private Socket ConnectToEngine()
+        {
+            return ConnectToEngine( false );
+        }
+
+        private Socket ConnectToEngine( bool expectFailure )
         {
             var address = IPAddress.Parse(Host);
             var endpoint = new IPEndPoint(address, AcceptPort);
