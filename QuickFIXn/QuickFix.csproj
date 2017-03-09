@@ -54,6 +54,7 @@
     <Compile Include="CompositeLog.cs" />
     <Compile Include="DataDictionary\IFieldMapSpec.cs" />
     <Compile Include="DataDictionary\IGroupSpec.cs" />
+    <Compile Include="Fields\Converters\TimeConversionPrecision.cs" />
     <Compile Include="IAcceptor.cs" />
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />
