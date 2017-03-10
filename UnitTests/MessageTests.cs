@@ -1030,15 +1030,14 @@ namespace UnitTests
         }
 
         [Test]
-        public void TestQuickFIXCompatibleGroups()
-        {
+        public void TestQuickFIXCompatibleGroups() {
             // allow QuickFIX compatible group parsing (note test MissingDelimiterField proves the reverse)
 
             var dd = new QuickFix.DataDictionary.DataDictionary();
             dd.Load("../../../spec/fix/FIX44.xml");
 
             // group 555 does not begin with 600
-            
+
             string[] msgFields = { "8=FIX.4.4", "9=296", "35=8", "34=2", "49=XXXXX", "52=20150731-12:00:00.000", "56=CLIENT2",
                 "1=C", "11=T01", "17=123", "37=ST1", "39=0", "44=10000", "54=1", "55=CAD", "60=20150731-12:00:00.000",
                 "75=20150731", "109=BRK","150=0","167=F", "375=ABC", "423=0","555=1", "687=1","943=R1", "5296=1",
@@ -1048,11 +1047,30 @@ namespace UnitTests
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
 
             QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
-            msg.QuickFIXCompatibleGroups = true;            
+            msg.QuickFIXCompatibleGroups = true;
             Assert.DoesNotThrow(delegate { msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory); });
 
             Group group = msg.GetGroup(1, 555);
             Assert.IsNotNull(group, "Group should be created");
+
+        }
+        [Test]
+        public void SetFieldsTest()
+        {
+            var message = new Message();
+            var allocId = new AllocID("123456");
+            var allocAccount = new AllocAccount("QuickFixAccount");
+            var allocAccountType = new AllocAccountType(AllocAccountType.HOUSE_TRADER);
+            message.SetFields(new IField[] { allocAccount, allocAccountType, allocId });
+
+            Assert.AreEqual(true, message.IsSetField(Tags.AllocID));
+            Assert.AreEqual("123456", message.GetField(Tags.AllocID));
+
+            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccount));
+            Assert.AreEqual("QuickFixAccount", message.GetField(Tags.AllocAccount));
+
+            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccountType));
+            Assert.AreEqual(AllocAccountType.HOUSE_TRADER, message.GetInt(Tags.AllocAccountType));
 
         }
     }

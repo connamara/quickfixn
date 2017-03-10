@@ -8,6 +8,53 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
+### v1.7.0: 
+* (patch) #276 - SSL Fixes (akamyshanov)
+* (minor) #292 - Allow To Set Several Fields At The Same Time (tix52)
+* (minor) #294 - Added SocketSendBufferSize and SocketReceiveBufferSize settings (staffanu)
+* (patch) #295 - Use only ipv4 addresses returned by Dns.GetHostAddresses (staffanu)
+* (minor) #334 - Implement NonStopSession, for compatibility with quickfixj (staffanu)
+* (patch) #340 - TreadedSocketAcceptor does not dispose underlying sessions on stop bug (akamyshanov)
+* (minor) #356 - implement optional session setting ValidateLengthAndChecksum (dafanasiev)
+* (patch) #358 - BeginString not being transformed into the correct file name when no DataDictionary session setting is present. (Cooker1977)
+* (patch) #365 - fixes for dynamic session functionality (martinadams)
+* (patch) #380 - Website docs and cleanup (cbusbey)
+
+###v1.6.0:
+* (patch) #362 - expanded CI to code genertion and acceptance tests (aswaney)
+* (minor) #247 - support for CheckLatency/MaxLatency config settings (ruaanviljoen)
+* (patch) #256 - bug in 247, defaults override config (akamyshanov)
+* (patch) #258 - threadsafe SessionState.Get/Set to fix garbled message issue (jacsuper)
+* (patch) #251 - restore the session type check in AbstractInitiator.Start (oract)
+* (patch) #255 - release ClientHandlerThread resources on client disconnect (mgatny)
+* (patch) #266 - Session not explicitly handling DoNotSend from Application::ToApp (cbusbey)
+* (patch) #267 - Resent Messages not being relayed to Application::ToApp (cbusbey)
+* (minor) #286 - FieldBase.Equals() and .GetHashcode() (steffanu)
+* (patch) #287 - sync fix in Session class (steffanu)
+* (patch) #275 - SessionID.IsSet() should be used instead of !=SessionID.NOT_SET (akamyshanov)
+* (patch) #297 - revert #287
+* (patch) #290 - support for RefreshOnLogon (martinadams)
+* (patch) #80  - fixes to tag-141-related sequence resets (TomasVetrovsky,akamyshanov,gbirchmeier)
+* (patch) #315 - make config file section headers be case-insensitive, for parity with QF/j (gbirchmeier)
+* (minor) #314 - New feature: add/remove sessions dynamically (martinadams)
+* (patch) #273 - prevent non-logon message traffic unless fully logged on (martinadams)
+* (patch) #278 - fix for mis-sequenced gap fills in re-requested messages (martinadams)
+* (patch) #283 - fix to ensure IApplication.FromAdmin() gets called for received resend requests (martinadams)
+* (minor) #312 - New config option: can force session-level rejects to be resent (martinadams)
+* (minor) #270/#146 - Correct rejection behavior when msg groups do not use correct delimiter tag (gbirchmeier)
+* (patch) #280 - fix to prevent StackOverflowException due to recursion (martinadams)
+* (patch) #364 - remove accidental introduction of .NET 4.0 features (gbirchmeier)
+
+**NOTE: Breaking changes in release**  
+This version has changes that technically alter the public interface.
+Most likely no one is affected.  But just in case, here are the details:
+
+* **class `OtherTagException` was deleted.**  The class `GroupDelimiterTagException` used to
+  be descended from this class, but now descends directly from `TagException`.
+* **method `Session.Next(Message message)` was deleted.**  This should never have been public.
+  If you were using it and this is a problem for you, please contact us
+  via our [Contact Page](http://quickfixn.org/about/contact) and we'll see if we can help.
+
 ###v1.5.0:
 * (patch) pr #181 - add null checks to SessionID constructor (roji)
 * (minor) issue #48 - IInitiator.Stop() must release resources (jungers42/gbirchmeier)

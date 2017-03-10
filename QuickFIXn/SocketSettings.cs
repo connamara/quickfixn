@@ -13,9 +13,11 @@ namespace QuickFix
     /// Property setters are internal so they can be set in tests, otherwise the settings should
     /// be set using the <see cref="Configure"/> function
     /// </remarks>
-    public class SocketSettings
+    public class SocketSettings : ICloneable
     {
         public bool SocketNodelay = true;
+        public Nullable<int> SocketReceiveBufferSize;
+        public Nullable<int> SocketSendBufferSize;
 
         #region SSL Settings
 
@@ -119,6 +121,12 @@ namespace QuickFix
             if (dictionary.Has(SessionSettings.SOCKET_NODELAY))
                 SocketNodelay = dictionary.GetBool(SessionSettings.SOCKET_NODELAY);
 
+            if (dictionary.Has(SessionSettings.SOCKET_RECEIVE_BUFFER_SIZE))
+                SocketReceiveBufferSize = dictionary.GetInt(SessionSettings.SOCKET_RECEIVE_BUFFER_SIZE);
+
+            if (dictionary.Has(SessionSettings.SOCKET_SEND_BUFFER_SIZE))
+                SocketSendBufferSize = dictionary.GetInt(SessionSettings.SOCKET_SEND_BUFFER_SIZE);
+
             if (dictionary.Has(SessionSettings.SSL_SERVERNAME))
                 ServerCommonName = dictionary.GetString(SessionSettings.SSL_SERVERNAME);
 
@@ -156,7 +164,7 @@ namespace QuickFix
                 try
                 {
                     SslProtocol = (System.Security.Authentication.SslProtocols)
-                        Enum.Parse(typeof(System.Security.Authentication.SslProtocols), protocolString, ignoreCase: true);
+                        Enum.Parse(typeof(System.Security.Authentication.SslProtocols), protocolString, true);
                 }
                 catch (Exception)
                 {
@@ -165,6 +173,14 @@ namespace QuickFix
             }
         }
 
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
 
+        public SocketSettings Clone()
+        {
+            return (SocketSettings)MemberwiseClone();
+        }
     }
 }

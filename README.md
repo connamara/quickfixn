@@ -1,8 +1,8 @@
 [![QuickFIX/N][1]](http://quickfixn.org)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/ccu2yp2coad3oam0?svg=true)](https://ci.appveyor.com/project/cbusbey/quickfixn-jib50)
 
-For tutorials on how to use QuickFIX/n, see the `tutorial` folder at the root
-of this project or visit the [website](http://quickfixn.org/tutorial/creating-an-application).
+For tutorials on how to use QuickFIX/n, visit the [website](http://quickfixn.org/tutorial/creating-an-application.html).
 
 This README is about setting up your system to do QuickFIX/n
 development.
@@ -19,9 +19,6 @@ This project requires the following:
 **To run tests**
 
 * [NUnit](http://nunit.org)
-* xsltproc (can be gotten via cygwin, or by installing libxslt (which requires libxml2 and zlib)).
-  * xsltproc is only used for pretty-formatting the test output.  If you don't mind the error messages that appear because it's not found, you can ignore it.  ([We may get rid of this dependency.](https://github.com/connamara/quickfixn/issues/104)).
-
 
 Code Generation
 ---------------
@@ -102,7 +99,7 @@ To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
 The test results will then be available in AcceptanceTests\TestResults.xml and
 debug information will be available in the AcceptanceTests\log directory.
 
-To run a test with the debugger, 
+To run a test with the debugger,
 
   1. Open the solution file in Visual Studio
   2. Right click on "AcceptanceTest" project and choose "Properties" from the menu
@@ -114,46 +111,18 @@ To run a test with the debugger,
   8. In command terminal, go into "AcceptanceTest" directory
   9. Run: `ruby Runner.rb 127.0.0.1 5001 definitions\server\fix42\YourTestName.def`
 
-Automated Build Server
-----------------------
-We have an automated build server that builds and runs all unit and acceptance tests after code changes.
-
-You can see the current build status here:
-
-http://quickfixbuild.connamara.com/job/quickfix-n/
-
-
-Website
+Credits
 -------
 
-The website is a small Ruby Sinatra application.
+![Connamara Systems](http://www.connamara.com/wp-content/uploads/2016/01/connamara_logo_dark.png)
 
-For development, install gems with bundler:
+QuickFIXn is maintained and funded by [Connamara Systems, llc](http://connamara.com).
 
-    gem install bundler
-    bundle
+The names and logos for Connamara Systems are trademarks of Connamara Systems, llc.
 
-Upon installing the gems, you can run this in the top directory to
-start the website:
+Licensing
+---------
 
-    thin start
+This software is available under the QuickFIX Software License. Please see the [LICENSE](LICENSE) for the terms specified by the QuickFIX Software License.
 
-`thin` automatically picks up the Rackfile `config.ru` in the top
-directory.
-
-Website specific files live in `/web`.
-
-The website also serves tutorial files from the `/tutorial` directory
-
-Markdown should be used for all tutorial files whenever possible, so
-that viewers of the source can easily read plain text documentation.
-
-For development purposes, you can install the `shotgun` web server;
-this will re-load the website on every request. To start the website
-with shotgun, simply run shotgun at the top directory:
-
-    shotgun -p 3002
-
-
-[0]: http://quickfixn.org
-[1]: http://quickfixn.org/images/qfn-logo/QuickFIX-n_logo-small.png
+[1]: http://quickfixn.org/web/public/images/qfn-logo/QuickFIX-n_logo-small.png

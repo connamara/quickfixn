@@ -22,6 +22,7 @@ namespace QuickFix
         public const string DEFAULT_APPLVERID = "DefaultApplVerID";
         public const string CONNECTION_TYPE = "ConnectionType";
         public const string USE_DATA_DICTIONARY = "UseDataDictionary";
+        public const string NON_STOP_SESSION = "NonStopSession";
         public const string USE_LOCAL_TIME = "UseLocalTime";
         public const string TIME_ZONE = "TimeZone";
         public const string START_DAY = "StartDay";
@@ -44,6 +45,7 @@ namespace QuickFix
         public const string VALIDATE_FIELDS_OUT_OF_ORDER = "ValidateFieldsOutOfOrder";
         public const string VALIDATE_FIELDS_HAVE_VALUES = "ValidateFieldsHaveValues";
         public const string VALIDATE_USER_DEFINED_FIELDS = "ValidateUserDefinedFields";
+        public const string VALIDATE_LENGTH_AND_CHECKSUM = "ValidateLengthAndChecksum";
         public const string DATA_DICTIONARY = "DataDictionary";
         public const string TRANSPORT_DATA_DICTIONARY = "TransportDataDictionary";
         public const string APP_DATA_DICTIONARY = "AppDataDictionary";
@@ -51,11 +53,14 @@ namespace QuickFix
         public const string LOGON_TIMEOUT = "LogonTimeout";
         public const string LOGOUT_TIMEOUT = "LogoutTimeout";
         public const string SEND_REDUNDANT_RESENDREQUESTS = "SendRedundantResendRequests";
+        public const string RESEND_SESSION_LEVEL_REJECTS = "ResendSessionLevelRejects";
         public const string MILLISECONDS_IN_TIMESTAMP = "MillisecondsInTimeStamp";
         public const string ENABLE_LAST_MSG_SEQ_NUM_PROCESSED = "EnableLastMsgSeqNumProcessed";
         public const string MAX_MESSAGES_IN_RESEND_REQUEST = "MaxMessagesInResendRequest";
         public const string SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT = "SendLogoutBeforeDisconnectFromTimeout";
         public const string SOCKET_NODELAY = "SocketNodelay";
+        public const string SOCKET_SEND_BUFFER_SIZE = "SocketSendBufferSize";
+        public const string SOCKET_RECEIVE_BUFFER_SIZE = "SocketReceiveBufferSize";
         public const string IGNORE_POSSDUP_RESEND_REQUESTS = "IgnorePossDupResendRequests";
         public const string RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME = "RequiresOrigSendingTime";
         public const string CHECK_LATENCY = "CheckLatency";

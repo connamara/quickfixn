@@ -54,6 +54,7 @@ namespace QuickFix.Transport
         public static void SocketInitiatorThreadStart(object socketInitiatorThread)
         {
             SocketInitiatorThread t = socketInitiatorThread as SocketInitiatorThread;
+            if (t == null) return;
             try
             {
                 t.Connect();
@@ -69,12 +70,21 @@ namespace QuickFix.Transport
             catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
             {
                 t.Session.Log.OnEvent("Connection failed: " + ex.Message);
-                t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
             }
             catch (SocketException e) 
             {
                 t.Session.Log.OnEvent("Connection failed: " + e.Message);
+            }
+            catch (System.Security.Authentication.AuthenticationException ex) // some certificate problems
+            {
+                t.Session.Log.OnEvent("Connection failed (AuthenticationException): " + ex.Message);
+            }
+            catch (Exception)
+            {
+                // It might be the logger ObjectDisposedException, so don't try to log!
+            }
+            finally
+            {
                 t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.Session.SessionID);
             }
@@ -90,10 +100,26 @@ namespace QuickFix.Transport
 
         private void RemoveThread(SocketInitiatorThread thread)
         {
-            lock (sync_)
+            RemoveThread(thread.Session.SessionID);
+        }
+
+        private void RemoveThread(SessionID sessionID)
+        {
+            // We can come in here on the thread being removed, and on another thread too in the case 
+            // of dynamic session removal, so make sure we won't deadlock...
+            if (Monitor.TryEnter(sync_))
             {
-                thread.Join();
-                threads_.Remove(thread.Session.SessionID);
+                SocketInitiatorThread thread = null;
+                if (threads_.TryGetValue(sessionID, out thread))
+                {
+                    try
+                    {
+                        thread.Join();
+                    }
+                    catch { }
+                    threads_.Remove(sessionID);
+                }
+                Monitor.Exit(sync_);
             }
         }
 
@@ -120,7 +146,7 @@ namespace QuickFix.Transport
                 sessionToHostNum_[sessionID] = ++num;
 
                 socketSettings_.ServerCommonName = hostName;
-                return new IPEndPoint(addrs[0], port);
+                return new IPEndPoint(addrs.First(a => a.AddressFamily == AddressFamily.InterNetwork), port);
             }
             catch (System.Exception e)
             {
@@ -172,7 +198,7 @@ namespace QuickFix.Transport
         /// <param name="sessionID">ID of session being removed</param>
         protected override void OnRemove(SessionID sessionID)
         {
-            sessionToHostNum_.Remove(sessionID);
+            RemoveThread(sessionID);
         }
 
         protected override bool OnPoll(double timeout)
@@ -200,10 +226,11 @@ namespace QuickFix.Transport
                 session.Log.OnEvent("Connecting to " + socketEndPoint.Address + " on port " + socketEndPoint.Port);
 
                 //Setup socket settings based on current section
-                socketSettings_.Configure(settings);
+                var socketSettings = socketSettings_.Clone();
+                socketSettings.Configure(settings);
 
                 // Create a Ssl-SocketInitiatorThread if a certificate is given
-                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings_);                
+                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings);                
                 t.Start();
                 AddThread(t);
 

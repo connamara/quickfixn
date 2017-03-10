@@ -1,5 +1,6 @@
 source "http://rubygems.org"
-gem "sinatra"
-gem "redcarpet", "~>2.0.0b5"
-gem "nokogiri"
-gem "thin", "~>1.2.11"
+gem "nokogiri", '1.5.0'
+gem 'mustache', '0.99.8'
+gem 'rubyzip', '~>1.2'
+gem 'aws-sdk', '~> 2'
+

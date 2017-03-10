@@ -11,6 +11,8 @@ namespace QuickFix
         public System.DayOfWeek StartDay { get; private set; }
         public System.DayOfWeek EndDay { get; private set; }
 
+        public bool NonStopSession { get; private set; }
+
         public bool UseLocalTime { get; private set; }
         public System.TimeZoneInfo TimeZone { get; private set; }
 
@@ -24,6 +26,11 @@ namespace QuickFix
         /// <returns></returns>
         public bool IsNewSession(DateTime oldtime_utc, DateTime testtime_utc)
         {
+            if (NonStopSession)
+            {
+                return false;
+            }
+
             if (oldtime_utc.Kind != System.DateTimeKind.Utc)
                 throw new System.ArgumentException("Only UTC time is supported", "oldtime");
             if (testtime_utc.Kind != System.DateTimeKind.Utc)
@@ -79,6 +86,11 @@ namespace QuickFix
         /// <returns></returns>
         public DateTime NextEndTime(DateTime utc)
         {
+            if (NonStopSession)
+            {
+                throw new NotSupportedException("NonStopSession");
+            }
+
             if (utc.Kind != DateTimeKind.Utc)
                 throw new ArgumentException("Only UTC time is supported", "time");
 
@@ -111,6 +123,11 @@ namespace QuickFix
         /// <returns></returns>
         public DateTime LastEndTime(DateTime utc)
         {
+            if (NonStopSession)
+            {
+                throw new NotSupportedException("NonStopSession");
+            }
+
             if (utc.Kind != DateTimeKind.Utc)
                 throw new ArgumentException("Only UTC time is supported", "time");
 
@@ -134,6 +151,10 @@ namespace QuickFix
         /// <returns></returns>
         private bool CheckDay(System.DateTime time)
         {
+            if (NonStopSession)
+            {
+                throw new InvalidOperationException("NonStopSession is set -- this should never be called.");
+            }
             if (StartDay < EndDay)
             {
                 if (time.DayOfWeek < StartDay || time.DayOfWeek > EndDay)
@@ -180,6 +201,11 @@ namespace QuickFix
         /// <returns></returns>
         private bool CheckTime(System.TimeSpan time)
         {
+            if (NonStopSession)
+            {
+                return true;
+            }
+
             if (StartTime.CompareTo(EndTime) < 0)
             {
                 return (time.CompareTo(StartTime) >= 0 &&
@@ -199,7 +225,14 @@ namespace QuickFix
         /// <param name="settings"></param>
         public SessionSchedule(QuickFix.Dictionary settings)
         {
-            this.WeeklySession = false;
+            if (settings.Has(SessionSettings.NON_STOP_SESSION))
+            {
+                NonStopSession = settings.GetBool(SessionSettings.NON_STOP_SESSION);
+            }
+            if (NonStopSession)
+            {
+                return;
+            }
 
             if (!settings.Has(SessionSettings.START_DAY) && settings.Has(SessionSettings.END_DAY))
             {

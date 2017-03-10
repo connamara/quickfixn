@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'aws/s3'
+require 'aws-sdk'
 
 if ARGV[0].nil? or ARGV[1].nil? or ARGV[2].nil?
   puts "Usage: ruby upload_to_s3.rb <ZIPFILE> <ACCESS_KEY> <SECRET_KEY>"
@@ -11,13 +11,16 @@ secret_key = ARGV[2]
 bucket = "quickfixn"
 file = File.join(Dir.pwd, ARGV.first)
 
-AWS::S3::Base.establish_connection!(
-	:access_key_id => access_key, 
-	:secret_access_key => secret_key)
+Aws.use_bundled_cert!
+s3 = Aws::S3::Resource.new(
+	access_key_id: access_key,
+	secret_access_key: secret_key,
+	region: 'us-east-1'
+)
 
-AWS::S3::S3Object.store(File.basename(file),
-	open(file),
-	bucket,
-	:access => :public_read)
-
-
+obj = s3.bucket(bucket).object(File.basename(file))
+if obj.upload_file(file)
+	puts "Uploaded #{file} to bucket #{bucket}"
+else
+	puts "Could not upload #{file} to bucket #{bucket}!"
+end
