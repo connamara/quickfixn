@@ -10,6 +10,6 @@ if "%2" == "" set CONFIGURATION=Release
 if "%3" == "" set NET_VERSION=v4.5
 if "%4" == "" set PLATFORM=x86
 
-set BUILD_CMD=MSBuild.exe QuickFIXn.sln /t:%TARGET% /p:Configuration=%CONFIGURATION%;TargetFrameworkVersion=%NET_VERSION%;Platform=%PLATFORM%
+set BUILD_CMD=C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild.exe QuickFIXn.sln /t:%TARGET% /p:Configuration=%CONFIGURATION%;TargetFrameworkVersion=%NET_VERSION%;Platform=%PLATFORM%
 echo Build command: %BUILD_CMD%
 %BUILD_CMD%

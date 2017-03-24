@@ -66,6 +66,7 @@ namespace QuickFix
         public const string CHECK_LATENCY = "CheckLatency";
         public const string MAX_LATENCY = "MaxLatency";
         public const string VALIDATE_ACCEPTOR_PORT = "ValidateAcceptorPort";
+        public const string VALIDATE_MSG_AGAINST_DATA_DICTIONARY = "ValidateMsgAgainstDataDictionary";
 
 
         public const string SSL_ENABLE = "SSLEnable";

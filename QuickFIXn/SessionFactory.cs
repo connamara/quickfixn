@@ -129,6 +129,8 @@ namespace QuickFix
                 session.ValidateAcceptorPort = settings.GetBool(SessionSettings.VALIDATE_ACCEPTOR_PORT);
                 session.ExpectedAcceptorPort = settings.GetInt(SessionSettings.SOCKET_ACCEPT_PORT);
             }
+            if (settings.Has(SessionSettings.VALIDATE_MSG_AGAINST_DATA_DICTIONARY))
+                session.ValidateMsgAgainstDataDictionary = settings.GetBool(SessionSettings.VALIDATE_MSG_AGAINST_DATA_DICTIONARY);
 
             return session;
         }

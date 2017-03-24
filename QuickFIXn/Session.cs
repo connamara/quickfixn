@@ -194,6 +194,11 @@ namespace QuickFix
         public int ExpectedAcceptorPort { get; set; }
 
         /// <summary>
+        /// Validate the FIX message against the session's Data Dictionary
+        /// </summary>
+        public bool ValidateMsgAgainstDataDictionary { get; set; }
+
+        /// <summary>
         /// Sets a maximum number of messages to request in a resend request.
         /// </summary>
         public int MaxMessagesInResendRequest { get; set; }
@@ -266,6 +271,7 @@ namespace QuickFix
             this.MaxLatency = 120;
             this.ValidateAcceptorPort = false;
             this.ExpectedAcceptorPort = 0;
+            this.ValidateMsgAgainstDataDictionary = true;
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime (Session construction)");
@@ -586,13 +592,16 @@ namespace QuickFix
                     }
                 }
 
-                if (this.SessionID.IsFIXT && !Message.IsAdminMsgType(msgType))
+                if (this.ValidateMsgAgainstDataDictionary)
                 {
-                    DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, ApplicationDataDictionary, beginString, msgType);
-                }
-                else
-                {
-                    this.SessionDataDictionary.Validate(message, beginString, msgType);
+                    if (this.SessionID.IsFIXT && !Message.IsAdminMsgType(msgType))
+                    {
+                        DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, ApplicationDataDictionary, beginString, msgType);
+                    }
+                    else
+                    {
+                        this.SessionDataDictionary.Validate(message, beginString, msgType);
+                    }
                 }
 
 
