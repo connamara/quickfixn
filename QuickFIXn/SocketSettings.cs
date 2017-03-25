@@ -19,6 +19,8 @@ namespace QuickFix
         public Nullable<int> SocketReceiveBufferSize;
         public Nullable<int> SocketSendBufferSize;
 
+        public Encoding Encoding { get; private set; }
+
         #region SSL Settings
 
         /// <summary>
@@ -106,6 +108,7 @@ namespace QuickFix
             SslProtocol = SslProtocols.Default;
             CheckCertificateRevocation = true;
             RequireClientCertificate = true;
+            Encoding = SessionFactory.DefaultEncoding;
         }
 
         /// <summary>
@@ -120,6 +123,9 @@ namespace QuickFix
         {
             if (dictionary.Has(SessionSettings.SOCKET_NODELAY))
                 SocketNodelay = dictionary.GetBool(SessionSettings.SOCKET_NODELAY);
+
+            if (dictionary.Has(SessionSettings.ENCODING))
+                Encoding = System.Text.Encoding.GetEncoding(dictionary.GetString(SessionSettings.ENCODING));
 
             if (dictionary.Has(SessionSettings.SOCKET_RECEIVE_BUFFER_SIZE))
                 SocketReceiveBufferSize = dictionary.GetInt(SessionSettings.SOCKET_RECEIVE_BUFFER_SIZE);

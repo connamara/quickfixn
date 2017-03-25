@@ -23,7 +23,7 @@ namespace QuickFix
 
         public override string ToString()
         {
-            return Encoding.UTF8.GetString(_str);
+            return SessionFactory.DefaultEncoding.GetString(_str);
         }
 
         public int IndexOf( byte nextchar, int pos )

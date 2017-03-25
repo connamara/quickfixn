@@ -189,7 +189,7 @@ namespace UnitTests
                     Monitor.Pulse(socketState._socket);
                 return;
             }
-            string msgText = Encoding.ASCII.GetString(socketState._rxBuffer, 0, bytesReceived);
+            string msgText = SessionFactory.DefaultEncoding.GetString(socketState._rxBuffer, 0, bytesReceived);
             foreach (Match m in Regex.Matches(msgText, FIXMessageDelimit))
             {
                 socketState._messageFragment += m.Value;
@@ -298,7 +298,8 @@ namespace UnitTests
             msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(1));
             msg.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
             msg.SetField(new QuickFix.Fields.HeartBtInt(300));
-            s.Send(Encoding.ASCII.GetBytes(msg.ToString()));
+            // Simple logon message, use default encoding
+            s.Send(SessionFactory.DefaultEncoding.GetBytes(msg.ToString()));
         }
 
         void ClearLogs()
