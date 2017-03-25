@@ -49,7 +49,9 @@ namespace QuickFix
         public const string SOH = "\u0001";
         private int field_ = 0;
         private bool validStructure_;
-        
+
+        public Encoding Encoding { get; set; }
+
         #region Properties
 
         public Header Header { get; private set; }
@@ -61,6 +63,7 @@ namespace QuickFix
 
         public Message()
         {
+            Encoding = SessionFactory.DefaultEncoding;
             this.Header = new Header();
             this.Trailer = new Trailer();
             this.validStructure_ = true;
@@ -93,6 +96,7 @@ namespace QuickFix
         public Message(Message src)
             : base(src)
         {
+            Encoding = src.Encoding;
             this.Header = new Header(src.Header);
             this.Trailer = new Trailer(src.Trailer);
             this.validStructure_ = src.validStructure_;
@@ -565,11 +569,11 @@ namespace QuickFix
             {
                 int receivedBodyLength = this.Header.GetInt(Tags.BodyLength);
                 if (BodyLength() != receivedBodyLength)
-                    throw new InvalidMessage("Expected BodyLength=" + BodyLength() + ", Received BodyLength=" + receivedBodyLength);
+                    throw new InvalidMessage("Expected BodyLength=" + BodyLength() + ", Received BodyLength=" + receivedBodyLength + ", Message.SeqNum=" + this.Header.GetInt(Tags.MsgSeqNum));
 
                 int receivedCheckSum = this.Trailer.GetInt(Tags.CheckSum);
                 if (CheckSum() != receivedCheckSum)
-                    throw new InvalidMessage("Expected CheckSum=" + CheckSum() + ", Received CheckSum=" + receivedCheckSum);
+                    throw new InvalidMessage("Expected CheckSum=" + CheckSum() + ", Received CheckSum=" + receivedCheckSum + ", Message.SeqNum=" + this.Header.GetInt(Tags.MsgSeqNum));
             }
             catch (FieldNotFoundException e)
             {
@@ -705,9 +709,9 @@ namespace QuickFix
         public int CheckSum()
         {
             return (
-                (this.Header.CalculateTotal()
-                + CalculateTotal()
-                + this.Trailer.CalculateTotal()) % 256);
+                (this.Header.CalculateTotal(Encoding)
+                + CalculateTotal(Encoding)
+                + this.Trailer.CalculateTotal(Encoding)) % 256);
         }
 
         public bool IsAdmin()
@@ -783,7 +787,7 @@ namespace QuickFix
 
         protected int BodyLength()
         {
-            return this.Header.CalculateLength() + CalculateLength() + this.Trailer.CalculateLength();
+            return this.Header.CalculateLength(Encoding) + CalculateLength(Encoding) + this.Trailer.CalculateLength(Encoding);
         }
     }
 }

@@ -19,6 +19,7 @@ namespace QuickFix
 
         private Message _message;
         private QuickFix.Fields.ApplVerID _defaultApplVerId;
+        private Encoding _encoding;
 
         public string OriginalString { get { return _msgStr; } }
         public QuickFix.Fields.MsgType MsgType { get { return _msgType; } }
@@ -34,7 +35,8 @@ namespace QuickFix
             bool validateLengthAndChecksum,
             DataDictionary.DataDictionary sessionDD,
             DataDictionary.DataDictionary appDD,
-            IMessageFactory msgFactory)
+            IMessageFactory msgFactory,
+            Encoding encoding)
         {
             _msgStr = msgStr;
             _defaultApplVerId = new ApplVerID(defaultApplVerId);
@@ -42,6 +44,7 @@ namespace QuickFix
             _sessionDD = sessionDD;
             _appDD = appDD;
             _msgFactory = msgFactory;
+            _encoding = encoding;
 
             _msgType = Message.IdentifyType(_msgStr);
             _beginString = Message.ExtractBeginString(_msgStr);
@@ -50,6 +53,7 @@ namespace QuickFix
         internal Message Build()
         {
             Message message = _msgFactory.Create(_beginString, _defaultApplVerId, _msgType.Obj);
+            message.Encoding = _encoding; //TODO: maybe add this to message constructor
             message.FromString(
                 _msgStr,
                 _validateLengthAndChecksum,
@@ -66,6 +70,7 @@ namespace QuickFix
                 return _message;
 
             Message message = _msgFactory.Create(_beginString, _msgType.Obj);
+            message.Encoding = _encoding;
             message.FromString(
                 _msgStr,
                 false,

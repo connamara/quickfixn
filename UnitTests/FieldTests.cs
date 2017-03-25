@@ -10,6 +10,8 @@ namespace UnitTests
     [TestFixture]
     public class FieldTests
     {
+        private static readonly Encoding _encoding = SessionFactory.DefaultEncoding;
+
         [Test]
         public void IntFieldTest()
         {
@@ -103,16 +105,16 @@ namespace UnitTests
             /// </remarks>  
             StringField obj = new StringField(12, "VALUE");
             Assert.That(obj.toStringField(), Is.EqualTo("12=VALUE"));
-            Assert.That(obj.getTotal(), Is.EqualTo(542));
-            Assert.That(obj.getLength(), Is.EqualTo(9));
+            Assert.That(obj.getTotal(_encoding), Is.EqualTo(542));
+            Assert.That(obj.getLength(_encoding), Is.EqualTo(9));
             obj.Obj = "VALUF"; // F = E+1
             Assert.That(obj.toStringField(), Is.EqualTo("12=VALUF"));
-            Assert.That(obj.getTotal(), Is.EqualTo(543));
-            Assert.That(obj.getLength(), Is.EqualTo(9));
+            Assert.That(obj.getTotal(_encoding), Is.EqualTo(543));
+            Assert.That(obj.getLength(_encoding), Is.EqualTo(9));
             obj.Tag = 13; // 13 = 12+1
             Assert.That(obj.toStringField(), Is.EqualTo("13=VALUF"));
-            Assert.That(obj.getTotal(), Is.EqualTo(544));
-            Assert.That(obj.getLength(), Is.EqualTo(9));
+            Assert.That(obj.getTotal(_encoding), Is.EqualTo(544));
+            Assert.That(obj.getLength(_encoding), Is.EqualTo(9));
         }
 
         [Test]
@@ -120,8 +122,8 @@ namespace UnitTests
         {
             // technically, non-ascii shouldn't be in a StringField, but sometimes it happens, so let's not freak out.
             StringField obj = new StringField(359, "olé!");
-            Assert.AreEqual(839, obj.getTotal()); // sum of all bytes in "359=olé!"+nul
-            Assert.AreEqual(10, obj.getLength()); // 7 single-byte chars + 1 double=byte char + nul = 10 bytes
+            Assert.AreEqual(839, obj.getTotal(_encoding)); // sum of all bytes in "359=olé!"+nul
+            Assert.AreEqual(10, obj.getLength(_encoding)); // 7 single-byte chars + 1 double=byte char + nul = 10 bytes
         }
 
         [Test]

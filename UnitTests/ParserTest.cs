@@ -1,12 +1,15 @@
 ﻿using NUnit.Framework;
 using QuickFix;
 using System;
+using System.Text;
 
 namespace UnitTests
 {
     [TestFixture]
     public class ParserTest
     {
+        private static readonly Encoding _encoding = SessionFactory.DefaultEncoding;
+
         const string normalLength   = "8=FIX.4.2\x01" + "9=12\x01" + "35=A\x01" + " 108=30\x01" + "10=31\x01";
         const string badLength      = "8=FIX.4.2\x01" + "9=A\x01"  + "35=A\x01" + "108=30\x01"  + "10=31\x01";
         const string negativeLength = "8=FIX.4.2\x01" + "9=-1\x01" + "35=A\x01" + "108=30\x01"  + "10=31\x01";
@@ -16,7 +19,7 @@ namespace UnitTests
         [Test]
         public void ExtractLength()
         {
-            Parser parser = new Parser();
+            Parser parser = new Parser(_encoding);
 
             int len = 0;
             int pos = 0;
@@ -46,7 +49,7 @@ namespace UnitTests
             const string fixMsg2 = "8=FIX.4.2\x01" + "9=17\x01" + "35=4\x01" + "36=88\x01"  + "123=Y\x01"  + "10=34\x01";
             const string fixMsg3 = "8=FIX.4.2\x01" + "9=19\x01" + "35=A\x01" + "108=30\x01" + "9710=8\x01" + "10=31\x01";
 
-            Parser parser = new Parser();
+            Parser parser = new Parser(_encoding);
             parser.AddToStream(fixMsg1 + fixMsg2 + fixMsg3);
 
             string readFixMsg1;
@@ -68,7 +71,7 @@ namespace UnitTests
             string partFixMsg1 = "8=FIX.4.2\x01" + "9=17\x01" + "35=4\x01" + "36=";
             string partFixMsg2 = "88\x01" + "123=Y\x01" + "10=34\x01";
 
-            Parser parser = new Parser();
+            Parser parser = new Parser(_encoding);
             parser.AddToStream(partFixMsg1);
 
             string readPartFixMsg;
@@ -84,7 +87,7 @@ namespace UnitTests
         {
             string fixMsg = "8=TEST\x01" + "9=TEST\x01" + "35=TEST\x01" + "49=SS1\x01" + "56=RORE\x01" + "34=3\x01" + "52=20050222-16:45:53\x01" + "10=TEST\x01";
 
-            Parser parser = new Parser();
+            Parser parser = new Parser(_encoding);
             parser.AddToStream(fixMsg);
 
             string readFixMsg;
@@ -106,7 +109,7 @@ namespace UnitTests
             string[] fixMsgFields2 = { "8=FIX.4.4", "9=20", "35=B", "148=Olé!", "33=0", "10=0" };
             string fixMsg2 = String.Join("\x01", fixMsgFields2) + "\x01";
 
-            Parser parser = new Parser();
+            Parser parser = new Parser(_encoding);
             parser.AddToStream(fixMsg1 + fixMsg2);
 
             string readFixMsg1;
@@ -124,7 +127,7 @@ namespace UnitTests
             string[] fixMsgFields1 = { "8=FIX.4.4", "9=15", "35=B", "148=", "33=0", "10=0" };
             string fixMsg1 = String.Join("\x01", fixMsgFields1) + "\x01";
 
-            Parser parser = new Parser();
+            Parser parser = new Parser(_encoding);
             parser.AddToStream(fixMsg1);
 
             string readFixMsg1;
