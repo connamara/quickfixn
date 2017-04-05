@@ -194,9 +194,19 @@ namespace QuickFix
         public int ExpectedAcceptorPort { get; set; }
 
         /// <summary>
-        /// Validate the FIX message against the session's Data Dictionary
+        /// Validate the FIX message body against the session's Data Dictionary
         /// </summary>
-        public bool ValidateMsgAgainstDataDictionary { get; set; }
+        public bool ValidateMsgBodyAgainstDataDictionary { get; set; }
+
+        /// <summary>
+        /// Validate the FIX message header against the session's Data Dictionary
+        /// </summary>
+        public bool ValidateMsgHdrAgainstDataDictionary { get; set; }
+
+        /// <summary>
+        /// Validate the FIX message trailer against the session's Data Dictionary
+        /// </summary>
+        public bool ValidateMsgTrlrAgainstDataDictionary { get; set; }
 
         /// <summary>
         /// Sets a maximum number of messages to request in a resend request.
@@ -271,7 +281,9 @@ namespace QuickFix
             this.MaxLatency = 120;
             this.ValidateAcceptorPort = false;
             this.ExpectedAcceptorPort = 0;
-            this.ValidateMsgAgainstDataDictionary = true;
+            this.ValidateMsgBodyAgainstDataDictionary = true;
+            this.ValidateMsgHdrAgainstDataDictionary = true;
+            this.ValidateMsgTrlrAgainstDataDictionary = true;
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime (Session construction)");
@@ -592,17 +604,26 @@ namespace QuickFix
                     }
                 }
 
-                if (this.ValidateMsgAgainstDataDictionary)
+                if (this.SessionID.IsFIXT && !Message.IsAdminMsgType(msgType))
                 {
-                    if (this.SessionID.IsFIXT && !Message.IsAdminMsgType(msgType))
+                    DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, ApplicationDataDictionary, beginString, msgType);
+                }
+                else
+                {
+                    // Original logic as per QFN 1.6
+                    if (this.ValidateMsgBodyAgainstDataDictionary && this.ValidateMsgHdrAgainstDataDictionary && this.ValidateMsgTrlrAgainstDataDictionary)
                     {
-                        DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, ApplicationDataDictionary, beginString, msgType);
+                        // Original logic as per QFN 1.6
+                        this.SessionDataDictionary.Validate(message, beginString, msgType);
                     }
                     else
                     {
-                        this.SessionDataDictionary.Validate(message, beginString, msgType);
+                        this.SessionDataDictionary.Validate(message, )
                     }
+
+                    
                 }
+                
 
 
                 if (MsgType.LOGON.Equals(msgType))

@@ -111,6 +111,36 @@ namespace QuickFix.DataDictionary
 			Validate(message, false, beginString, msgType);
 		}
 
+        public void Validate(Message message, DataDictionary sessionDataDict, DataDictionary appDataDict, string beginString, 
+            string msgType, bool validateBody, bool validateHeader, bool validateTrailer)
+        {
+            if ((null != sessionDataDict) && (null != sessionDataDict.Version))
+                if (!sessionDataDict.Version.Equals(beginString))
+                    throw new UnsupportedVersion();
+
+            if (((null != sessionDataDict) && sessionDataDict.CheckFieldsOutOfOrder) || ((null != appDataDict) && appDataDict.CheckFieldsOutOfOrder))
+            {
+                int field;
+                if (!message.HasValidStructure(out field))
+                    throw new TagOutOfOrder(field);
+            }
+
+            if ((null != appDataDict) && (null != appDataDict.Version))
+            {
+                appDataDict.CheckMsgType(msgType);
+                appDataDict.CheckHasRequired(message, msgType);
+            }
+
+            if (validateHeader)
+                sessionDataDict.Iterate(message.Header, msgType);
+            
+            if (validateTrailer)
+                sessionDataDict.Iterate(message.Trailer, msgType);
+
+            if (validateBody)             
+                appDataDict.Iterate(message, msgType);
+        }
+
 		/// <summary>
 		/// Validate the message body, with header and trailer fields being validated conditionally
 		/// </summary>
