@@ -618,7 +618,7 @@ namespace QuickFix
                     }
                     else
                     {
-                        this.SessionDataDictionary.Validate(message, )
+                        //this.SessionDataDictionary.Validate(message, )
                     }
 
                     
