@@ -979,9 +979,35 @@ namespace QuickFix
             state_.TestRequestCounter = 0;
 
             if (Message.IsAdminMsgType(msgType))
-                this.Application.FromAdmin(msg, this.SessionID);
+            {
+                try
+                {
+                    this.Application.FromAdmin(msg, this.SessionID);
+                }
+                catch (RejectLogon)
+                {
+                    throw;
+                }
+                catch (Exception e)
+                {
+                    this.Log.OnEvent("Application threw an exception from FromAdmin: " + e.Message);
+                }
+            }
             else
-                this.Application.FromApp(msg, this.SessionID);
+            {
+                try
+                {
+                    this.Application.FromApp(msg, this.SessionID);
+                }
+                catch (Exception e)
+                {
+                    if (e is FieldNotFoundException ||
+                        e is UnsupportedMessageType ||
+                        e is TagException)
+                        throw;
+                    this.Log.OnEvent("Application threw an exception from FromApp: " + e.Message);
+                }
+            }
 
             return true;
         }
