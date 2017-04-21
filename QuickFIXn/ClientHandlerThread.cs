@@ -61,7 +61,7 @@ namespace QuickFix
                 debugLogFilePath = settingsDict.GetString(SessionSettings.FILE_LOG_PATH);
 
             // FIXME - do something more flexible than hardcoding a filelog
-            log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", DateTime.UtcNow.Ticks.ToString(), "Debug"));
+            //log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", DateTime.UtcNow.Ticks.ToString(), "Debug"));
 
             this.Id = clientId;
             socketReader_ = new SocketReader(tcpClient, socketSettings, this);
@@ -75,7 +75,7 @@ namespace QuickFix
 
         public void Shutdown(string reason)
         {
-            Log("shutdown requested: " + reason);
+            //Log("shutdown requested: " + reason);
             isShutdownRequested_ = true;
         }
 
@@ -102,7 +102,7 @@ namespace QuickFix
                 }
             }
 
-            this.Log("shutdown");
+            //this.Log("shutdown");
             OnExited();
         }
 
@@ -115,7 +115,7 @@ namespace QuickFix
         /// FIXME do real logging
         public void Log(string s)
         {
-            log_.OnEvent(s);
+            //log_.OnEvent(s);
         }
 
         /// <summary>
