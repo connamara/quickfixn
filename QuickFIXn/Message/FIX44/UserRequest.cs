@@ -242,7 +242,6 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.RawData);
             }
-
         }
     }
 }

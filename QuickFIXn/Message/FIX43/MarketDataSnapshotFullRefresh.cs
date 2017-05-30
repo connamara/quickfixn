@@ -1308,7 +1308,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.SecurityAltID SecurityAltID
+                public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -1388,7 +1388,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.MDEntryType MDEntryType
+                public QuickFix.Fields.MDEntryType MDEntryType
                 { 
                     get 
                     {

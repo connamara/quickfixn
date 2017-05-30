@@ -333,7 +333,6 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.OrderQty);
             }
-
         }
     }
 }

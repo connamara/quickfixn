@@ -946,7 +946,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.BidDescriptorType BidDescriptorType
+                public QuickFix.Fields.BidDescriptorType BidDescriptorType
                 { 
                     get 
                     {
@@ -1305,7 +1305,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ListID ListID
+                public QuickFix.Fields.ListID ListID
                 { 
                     get 
                     {

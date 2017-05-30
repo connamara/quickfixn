@@ -2907,7 +2907,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ContraBroker ContraBroker
+                public QuickFix.Fields.ContraBroker ContraBroker
                 { 
                     get 
                     {
