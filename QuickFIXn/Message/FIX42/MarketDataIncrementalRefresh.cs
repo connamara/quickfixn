@@ -93,7 +93,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.MDUpdateAction MDUpdateAction
+                public QuickFix.Fields.MDUpdateAction MDUpdateAction
                 { 
                     get 
                     {

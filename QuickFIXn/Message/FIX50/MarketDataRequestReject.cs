@@ -223,7 +223,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.AltMDSourceID AltMDSourceID
+                public QuickFix.Fields.AltMDSourceID AltMDSourceID
                 { 
                     get 
                     {

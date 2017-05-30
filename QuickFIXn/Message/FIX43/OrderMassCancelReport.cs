@@ -2614,7 +2614,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.OrigClOrdID OrigClOrdID
+                public QuickFix.Fields.OrigClOrdID OrigClOrdID
                 { 
                     get 
                     {
@@ -2725,7 +2725,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.SecurityAltID SecurityAltID
+                public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -2805,7 +2805,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
+                public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                 { 
                     get 
                     {

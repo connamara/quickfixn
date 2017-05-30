@@ -2490,7 +2490,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.SecurityAltID SecurityAltID
+                public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -2570,7 +2570,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.EventType EventType
+                public QuickFix.Fields.EventType EventType
                 { 
                     get 
                     {
@@ -2712,7 +2712,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.TrdRegTimestamp TrdRegTimestamp
+                public QuickFix.Fields.TrdRegTimestamp TrdRegTimestamp
                 { 
                     get 
                     {
@@ -2823,7 +2823,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.LegSymbol LegSymbol
+                public QuickFix.Fields.LegSymbol LegSymbol
                 { 
                     get 
                     {
@@ -4466,7 +4466,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.LegLastPx);
                 }
-                            public class NoLegSecurityAltIDGroup : Group
+                public class NoLegSecurityAltIDGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.LegSecurityAltID, Tags.LegSecurityAltIDSource, 0};
                 
@@ -4482,7 +4482,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
+                    public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
                     { 
                         get 
                         {
@@ -4562,7 +4562,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.LegStipulationType LegStipulationType
+                    public QuickFix.Fields.LegStipulationType LegStipulationType
                     { 
                         get 
                         {
@@ -4642,7 +4642,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.NestedPartyID NestedPartyID
+                    public QuickFix.Fields.NestedPartyID NestedPartyID
                     { 
                         get 
                         {
@@ -4766,7 +4766,7 @@ namespace QuickFix
                     { 
                         return IsSetField(Tags.NoNestedPartySubIDs);
                     }
-                                    public class NoNestedPartySubIDsGroup : Group
+                    public class NoNestedPartySubIDsGroup : Group
                     {
                         public static int[] fieldOrder = {Tags.NestedPartySubID, Tags.NestedPartySubIDType, 0};
                     
@@ -4782,7 +4782,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.NestedPartySubID NestedPartySubID
+                        public QuickFix.Fields.NestedPartySubID NestedPartySubID
                         { 
                             get 
                             {
@@ -4846,7 +4846,9 @@ namespace QuickFix
                         }
                     
                     }
+                
                 }
+            
             }
             public class NoAllocsGroup : Group
             {
@@ -4864,7 +4866,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.AllocAccount AllocAccount
+                public QuickFix.Fields.AllocAccount AllocAccount
                 { 
                     get 
                     {
@@ -5050,7 +5052,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.AllocQty);
                 }
-                            public class NoNested2PartyIDsGroup : Group
+                public class NoNested2PartyIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.Nested2PartyID, Tags.Nested2PartyIDSource, Tags.Nested2PartyRole, Tags.NoNested2PartySubIDs, 0};
                 
@@ -5066,7 +5068,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.Nested2PartyID Nested2PartyID
+                    public QuickFix.Fields.Nested2PartyID Nested2PartyID
                     { 
                         get 
                         {
@@ -5190,7 +5192,7 @@ namespace QuickFix
                     { 
                         return IsSetField(Tags.NoNested2PartySubIDs);
                     }
-                                    public class NoNested2PartySubIDsGroup : Group
+                    public class NoNested2PartySubIDsGroup : Group
                     {
                         public static int[] fieldOrder = {Tags.Nested2PartySubID, Tags.Nested2PartySubIDType, 0};
                     
@@ -5206,7 +5208,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.Nested2PartySubID Nested2PartySubID
+                        public QuickFix.Fields.Nested2PartySubID Nested2PartySubID
                         { 
                             get 
                             {
@@ -5270,7 +5272,9 @@ namespace QuickFix
                         }
                     
                     }
+                
                 }
+            
             }
         }
     }

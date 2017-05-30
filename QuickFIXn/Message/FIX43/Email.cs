@@ -444,7 +444,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.RoutingType RoutingType
+                public QuickFix.Fields.RoutingType RoutingType
                 { 
                     get 
                     {
@@ -524,7 +524,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.Symbol Symbol
+                public QuickFix.Fields.Symbol Symbol
                 { 
                     get 
                     {
@@ -1547,7 +1547,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.EncodedSecurityDesc);
                 }
-                            public class NoSecurityAltIDGroup : Group
+                public class NoSecurityAltIDGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
                 
@@ -1563,7 +1563,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.SecurityAltID SecurityAltID
+                    public QuickFix.Fields.SecurityAltID SecurityAltID
                     { 
                         get 
                         {
@@ -1627,6 +1627,7 @@ namespace QuickFix
                     }
                 
                 }
+            
             }
             public class LinesOfTextGroup : Group
             {
@@ -1644,7 +1645,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.Text Text
+                public QuickFix.Fields.Text Text
                 { 
                     get 
                     {

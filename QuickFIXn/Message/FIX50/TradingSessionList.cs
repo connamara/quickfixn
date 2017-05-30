@@ -93,7 +93,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.TradingSessionID TradingSessionID
+                public QuickFix.Fields.TradingSessionID TradingSessionID
                 { 
                     get 
                     {

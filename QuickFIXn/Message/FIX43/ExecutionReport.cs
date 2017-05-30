@@ -4982,7 +4982,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.PartyID PartyID
+                public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -5124,7 +5124,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ContraBroker ContraBroker
+                public QuickFix.Fields.ContraBroker ContraBroker
                 { 
                     get 
                     {
@@ -5297,7 +5297,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.SecurityAltID SecurityAltID
+                public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -5377,7 +5377,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.StipulationType StipulationType
+                public QuickFix.Fields.StipulationType StipulationType
                 { 
                     get 
                     {
@@ -5457,7 +5457,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ContAmtType ContAmtType
+                public QuickFix.Fields.ContAmtType ContAmtType
                 { 
                     get 
                     {
@@ -5568,7 +5568,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.LegSymbol LegSymbol
+                public QuickFix.Fields.LegSymbol LegSymbol
                 { 
                     get 
                     {
@@ -6901,7 +6901,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.LegLastPx);
                 }
-                            public class NoLegSecurityAltIDGroup : Group
+                public class NoLegSecurityAltIDGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.LegSecurityAltID, Tags.LegSecurityAltIDSource, 0};
                 
@@ -6917,7 +6917,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
+                    public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
                     { 
                         get 
                         {
@@ -6997,7 +6997,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.NestedPartyID NestedPartyID
+                    public QuickFix.Fields.NestedPartyID NestedPartyID
                     { 
                         get 
                         {
@@ -7123,6 +7123,7 @@ namespace QuickFix
                     }
                 
                 }
+            
             }
         }
     }
