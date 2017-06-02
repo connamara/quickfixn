@@ -1,0 +1,26 @@
+namespace QuickFix
+{
+    namespace <#version#>
+    {
+        public class MessageFactory : IMessageFactory
+        {
+            public QuickFix.Message Create(string beginString, string msgType)
+            {
+                switch (msgType)
+                {
+<#msgTypeCases#>
+                }
+
+                return new QuickFix.Message();
+            }
+
+
+            public Group Create(string beginString, string msgType, int correspondingFieldID)
+            {
+<#createMessageGroups#>
+                return null;
+            }
+
+        }
+    }
+}
