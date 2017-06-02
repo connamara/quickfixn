@@ -25,6 +25,7 @@ Code Generation
 To regenerate the message and field class source from the Data Dictionaries, you need Ruby and the Nokogiri gem:
 
     gem install nokogiri
+    gem install mustache
     generate.bat
 
 

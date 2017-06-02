@@ -4,6 +4,8 @@ install:
 - cmd: >-
     gem install nokogiri -v 1.6.8.1
 
+    gem install mustache
+
     generate.bat
 build_script:
 - cmd: build.bat
