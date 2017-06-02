@@ -1,26 +1,29 @@
+using System.Text;
+
 namespace QuickFix
 {
     /// <summary>
     /// </summary>
     public class Parser
     {
+        public static readonly Encoding EightBitTransparentEncoding = Encoding.GetEncoding("iso-8859-1"); // we cannot use ASCII or UTF-8 etc., as they mangle bytes > 7F, which can be used in fields of type DATA
+
         private byte[] buffer_ = new byte[512];
         int usedBufferLength = 0;
-        public void AddToStream(ref byte[] data, int bytesAdded)
+
+        public void AddToStream(byte[] data, int offset, int count)
         {
-            if (buffer_.Length < usedBufferLength + bytesAdded)
-                System.Array.Resize<byte>(ref buffer_, (usedBufferLength + bytesAdded));
-            System.Buffer.BlockCopy(data, 0, buffer_, usedBufferLength , bytesAdded);
-            usedBufferLength += bytesAdded;
+            if (buffer_.Length < usedBufferLength + count)
+                System.Array.Resize<byte>(ref buffer_, (usedBufferLength + count));
+            System.Buffer.BlockCopy(data, offset, buffer_, usedBufferLength , count);
+            usedBufferLength += count;
         }
 
         public void AddToStream(string data)
         {
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
-            AddToStream(ref bytes, bytes.Length);
-
+            byte[] bytes = EightBitTransparentEncoding.GetBytes(data);
+            AddToStream(bytes, 0, bytes.Length);
         }
-        
 
         public bool ReadFixMessage(out string msg)
         {
@@ -74,7 +77,7 @@ namespace QuickFix
 
         public bool ExtractLength(out int length, out int pos, string buf)
         {
-            return ExtractLength(out length, out pos, System.Text.Encoding.UTF8.GetBytes(buf));
+            return ExtractLength(out length, out pos, EightBitTransparentEncoding.GetBytes(buf));
         }
 
         public bool ExtractLength(out int length, out int pos, byte[] buf)
@@ -118,7 +121,7 @@ namespace QuickFix
 
         private int IndexOf(byte[] arrayToSearchThrough, string stringPatternToFind, int offset)
         {
-            byte[] patternToFind = System.Text.Encoding.UTF8.GetBytes(stringPatternToFind);
+            byte[] patternToFind = EightBitTransparentEncoding.GetBytes(stringPatternToFind);
             if (patternToFind.Length > arrayToSearchThrough.Length)
                 return -1;
             for (int i = offset; i <= arrayToSearchThrough.Length - patternToFind.Length; i++)
@@ -141,6 +144,9 @@ namespace QuickFix
         }
         private byte[] Remove(byte[] array, int count)
         {
+            if (count == 0)
+                return array;
+
             byte[] returnByte = new byte[array.Length - count];
             System.Buffer.BlockCopy(array, count, returnByte,0, array.Length - count);
             usedBufferLength -= count;
@@ -151,7 +157,7 @@ namespace QuickFix
         {
             byte[] returnByte = new byte[length];
             System.Buffer.BlockCopy(array, startIndex, returnByte, 0, length);
-            return System.Text.Encoding.UTF8.GetString(returnByte);
+            return EightBitTransparentEncoding.GetString(returnByte);
         }
     }
 }
