@@ -2,7 +2,7 @@ public class {{ name }}Group : Group
 {
     public static int[] fieldOrder = {{= | | =}}{|= {{ }} =|{{# fields}}Tags.{{ name }}, {{/ fields}}0{{= | | =}}}|= {{ }} =|;
 
-    public {{ name }}Group()
+    public {{ name }}Group() 
       :base( Tags.{{ name }}, Tags.{{ first_field.name }}, fieldOrder)
     {
     }
