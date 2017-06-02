@@ -1,11 +1,16 @@
 #!/usr/bin/env ruby
 
 require_relative '../generator'
+require 'fileutils'
 
 PROJECT_ROOT = File.expand_path("./../../../../", __FILE__)
+DESTINATION = ARGV[0] || "#{PROJECT_ROOT}/QuickFIXn/Message"
 
 Dir["#{PROJECT_ROOT}/spec/fix/*.xml"].each do |data_dictionary|
   xdoc = Nokogiri::XML(File.read(data_dictionary))
   dd   = DataDictionay.new(xdoc)
-  dd.save(ARGV[0] || "#{PROJECT_ROOT}/spec/tmp")
+  dd.save(DESTINATION)
 end
+
+# remove FIX11 directory and contents (session-level code gen)
+FileUtils.rm_rf("#{DESTINATION}/FIX11")
