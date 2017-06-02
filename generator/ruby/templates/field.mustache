@@ -1,6 +1,6 @@
 public QuickFix.Fields.{{ name }} {{ name }}
-{
-    get
+{ 
+    get 
     {
         QuickFix.Fields.{{ name }} val = new QuickFix.Fields.{{ name }}();
         GetField(val);
@@ -9,23 +9,23 @@ public QuickFix.Fields.{{ name }} {{ name }}
     set { SetField(value); }
 }
 
-public void Set(QuickFix.Fields.{{ name }} val)
-{
+public void Set(QuickFix.Fields.{{ name }} val) 
+{ 
     this.{{ name }} = val;
 }
 
-public QuickFix.Fields.{{ name }} Get(QuickFix.Fields.{{ name }} val)
-{
+public QuickFix.Fields.{{ name }} Get(QuickFix.Fields.{{ name }} val) 
+{ 
     GetField(val);
     return val;
 }
 
-public bool IsSet(QuickFix.Fields.{{ name }} val)
-{
+public bool IsSet(QuickFix.Fields.{{ name }} val) 
+{ 
     return IsSet{{ name }}();
 }
 
-public bool IsSet{{ name }}()
-{
+public bool IsSet{{ name }}() 
+{ 
     return IsSetField(Tags.{{ name }});
 }
