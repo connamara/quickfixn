@@ -350,20 +350,11 @@ namespace QuickFix.Transport
                 if (cert2 == null)
                     cert2 = new X509Certificate2(certificate);
 
-                foreach (X509Extension extension in cert2.Extensions)
-                {
-                    if (extension is X509EnhancedKeyUsageExtension)
-                    {
-                        var keyUsage = (X509EnhancedKeyUsageExtension)extension;
-                        foreach (var oid in keyUsage.EnhancedKeyUsages)
-                        {
-                            if (oid.Value == enhancedKeyOid)
-                                return true;
-                        }
-                    }
-                }
-
-                return false;
+                X509Chain chain = new X509Chain();
+                chain.ChainPolicy.ApplicationPolicy.Add(new System.Security.Cryptography.Oid(enhancedKeyOid));
+                //this method just needs to check usage permissions, everything else is ignored
+                chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllFlags & ~X509VerificationFlags.IgnoreWrongUsage;
+                return chain.Build(cert2);
             }
 
 
