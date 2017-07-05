@@ -985,8 +985,6 @@ namespace QuickFix.Fields
         public const int Nested3PartySubIDType = 954;
         public const int LegContractSettlMonth = 955;
         public const int LegInterestAccrualDate = 956;
-        public const int OnBehalfOfCompIDPassthrough = 18115;
-        public const int MessageCount = 18888;
         public const int IOIID = 23;
         public const int NoLinesOfText = 33;
         public const int HaltReasonChar = 327;

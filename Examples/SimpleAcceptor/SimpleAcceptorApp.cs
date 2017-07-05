@@ -39,9 +39,16 @@ namespace SimpleAcceptor
             Console.WriteLine("OUT:  " + message);
         }
 
-        public void OnCreate(SessionID sessionID) { }
-        public void OnLogout(SessionID sessionID) { }
-        public void OnLogon(SessionID sessionID) { }
+        public void OnCreate(SessionID sessionID) 
+        { 
+        }
+        
+public void OnLogout(SessionID sessionID) { }
+        
+        public void OnLogon(SessionID sessionID) 
+        {
+            Console.WriteLine("OnLogon: {0}", sessionID.ToString());
+        }
         #endregion
     }
 }

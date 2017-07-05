@@ -196,17 +196,17 @@ namespace QuickFix
         /// <summary>
         /// Validate the FIX message body against the session's Data Dictionary
         /// </summary>
-        public bool ValidateMsgBodyAgainstDataDictionary { get; set; }
+        public bool ValidateBody { get; set; }
 
         /// <summary>
         /// Validate the FIX message header against the session's Data Dictionary
         /// </summary>
-        public bool ValidateMsgHdrAgainstDataDictionary { get; set; }
+        public bool ValidateHeader { get; set; }
 
         /// <summary>
         /// Validate the FIX message trailer against the session's Data Dictionary
         /// </summary>
-        public bool ValidateMsgTrlrAgainstDataDictionary { get; set; }
+        public bool ValidateTrailer { get; set; }
 
         /// <summary>
         /// Sets a maximum number of messages to request in a resend request.
@@ -281,9 +281,9 @@ namespace QuickFix
             this.MaxLatency = 120;
             this.ValidateAcceptorPort = false;
             this.ExpectedAcceptorPort = 0;
-            this.ValidateMsgBodyAgainstDataDictionary = true;
-            this.ValidateMsgHdrAgainstDataDictionary = true;
-            this.ValidateMsgTrlrAgainstDataDictionary = true;
+            this.ValidateBody = true;
+            this.ValidateHeader = true;
+            this.ValidateTrailer = true;
 
             if (!IsSessionTime)
                 Reset("Out of SessionTime (Session construction)");
@@ -611,17 +611,18 @@ namespace QuickFix
                 else
                 {
                     // Original logic as per QFN 1.6
-                    if (this.ValidateMsgBodyAgainstDataDictionary && this.ValidateMsgHdrAgainstDataDictionary && this.ValidateMsgTrlrAgainstDataDictionary)
+                    if (this.ValidateBody && this.ValidateHeader && this.ValidateTrailer)
                     {
                         // Original logic as per QFN 1.6
                         this.SessionDataDictionary.Validate(message, beginString, msgType);
                     }
                     else
                     {
-                        //this.SessionDataDictionary.Validate(message, )
+                        // A.Chisholm 06-03-2017
+                        // Logic updated to check Header, Body & Trailer independetly via config values.
+                        this.SessionDataDictionary.Validate(message, beginString, msgType,
+                            this.ValidateBody, this.ValidateHeader, this.ValidateTrailer);
                     }
-
-                    
                 }
                 
 

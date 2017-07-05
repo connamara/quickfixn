@@ -129,12 +129,12 @@ namespace QuickFix
                 session.ValidateAcceptorPort = settings.GetBool(SessionSettings.VALIDATE_ACCEPTOR_PORT);
                 session.ExpectedAcceptorPort = settings.GetInt(SessionSettings.SOCKET_ACCEPT_PORT);
             }
-            if (settings.Has(SessionSettings.VALIDATE_MSG_BODY_AGAINST_DATA_DICTIONARY))
-                session.ValidateMsgBodyAgainstDataDictionary = settings.GetBool(SessionSettings.VALIDATE_MSG_BODY_AGAINST_DATA_DICTIONARY);
-            if (settings.Has(SessionSettings.VALIDATE_MSG_HDR_AGAINST_DATA_DICTIONARY))
-                session.ValidateMsgHdrAgainstDataDictionary = settings.GetBool(SessionSettings.VALIDATE_MSG_HDR_AGAINST_DATA_DICTIONARY);
-            if (settings.Has(SessionSettings.VALIDATE_MSG_TRLR_AGAINST_DATA_DICTIONARY))
-                session.ValidateMsgTrlrAgainstDataDictionary = settings.GetBool(SessionSettings.VALIDATE_MSG_TRLR_AGAINST_DATA_DICTIONARY);
+            if (settings.Has(SessionSettings.VALIDATE_BODY))
+                session.ValidateBody = settings.GetBool(SessionSettings.VALIDATE_BODY);
+            if (settings.Has(SessionSettings.VALIDATE_HEADER))
+                session.ValidateHeader = settings.GetBool(SessionSettings.VALIDATE_HEADER);
+            if (settings.Has(SessionSettings.VALIDATE_TRAILER))
+                session.ValidateTrailer = settings.GetBool(SessionSettings.VALIDATE_TRAILER);
 
             return session;
         }

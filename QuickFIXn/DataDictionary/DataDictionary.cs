@@ -111,35 +111,55 @@ namespace QuickFix.DataDictionary
 			Validate(message, false, beginString, msgType);
 		}
 
-        public void Validate(Message message, DataDictionary sessionDataDict, DataDictionary appDataDict, string beginString, 
-            string msgType, bool validateBody, bool validateHeader, bool validateTrailer)
+        /// <summary>
+        /// Overloaded Validate() method written specifically for Iress' LSEHub to enable/disable validation for Header, Body and Trailer components independently.
+        /// A.Chisholm - 25/05/2017
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="beginString"></param>
+        /// <param name="msgType"></param>
+        /// <param name="validateBody"></param>
+        /// <param name="validateHeader"></param>
+        /// <param name="validateTrailer"></param>
+        public void Validate(Message message, string beginString, string msgType, bool validateBody, bool validateHeader, bool validateTrailer)
         {
+            DataDictionary sessionDataDict = this;
+
             if ((null != sessionDataDict) && (null != sessionDataDict.Version))
                 if (!sessionDataDict.Version.Equals(beginString))
                     throw new UnsupportedVersion();
 
-            if (((null != sessionDataDict) && sessionDataDict.CheckFieldsOutOfOrder) || ((null != appDataDict) && appDataDict.CheckFieldsOutOfOrder))
+            if (null != sessionDataDict && sessionDataDict.CheckFieldsOutOfOrder)
             {
                 int field;
                 if (!message.HasValidStructure(out field))
                     throw new TagOutOfOrder(field);
             }
 
-            if ((null != appDataDict) && (null != appDataDict.Version))
+            if ((null != sessionDataDict) && (null != sessionDataDict.Version))
             {
-                appDataDict.CheckMsgType(msgType);
-                appDataDict.CheckHasRequired(message, msgType);
+                sessionDataDict.CheckMsgType(msgType);
+                sessionDataDict.CheckHasRequired(message, msgType);
+            }
+
+            if (validateBody)
+            {
+                sessionDataDict.Iterate(message, msgType);
             }
 
             if (validateHeader)
+            {
                 sessionDataDict.Iterate(message.Header, msgType);
-            
-            if (validateTrailer)
-                sessionDataDict.Iterate(message.Trailer, msgType);
+            }
 
-            if (validateBody)             
-                appDataDict.Iterate(message, msgType);
+            if (validateTrailer)
+            {
+                sessionDataDict.Iterate(message.Trailer, msgType);
+            }
+
+            
         }
+
 
 		/// <summary>
 		/// Validate the message body, with header and trailer fields being validated conditionally
@@ -203,7 +223,7 @@ namespace QuickFix.DataDictionary
 			*/
 		}
 
-		public void Iterate(FieldMap map, string msgType)
+        public void Iterate(FieldMap map, string msgType)
 		{
 			DataDictionary.CheckHasNoRepeatedTags(map);
 

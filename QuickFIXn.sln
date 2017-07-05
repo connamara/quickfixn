@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix", "QuickFIXn\QuickFix.csproj", "{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.Executor", "Examples\Executor\Examples.Executor.csproj", "{ADF1BD8E-6149-4D77-89E0-B2B775248139}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.SimpleAcceptor", "Examples\SimpleAcceptor\Examples.SimpleAcceptor.csproj", "{59FC3768-2D8E-4CD2-88B8-C3972BA3ACA8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHarness", "TestHarness\TestHarness.csproj", "{A4F1F220-52AA-4906-B155-362D2BDC064B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +63,12 @@ Global
 		{59FC3768-2D8E-4CD2-88B8-C3972BA3ACA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59FC3768-2D8E-4CD2-88B8-C3972BA3ACA8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{59FC3768-2D8E-4CD2-88B8-C3972BA3ACA8}.Release|x86.ActiveCfg = Release|Any CPU
+		{A4F1F220-52AA-4906-B155-362D2BDC064B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4F1F220-52AA-4906-B155-362D2BDC064B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4F1F220-52AA-4906-B155-362D2BDC064B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A4F1F220-52AA-4906-B155-362D2BDC064B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4F1F220-52AA-4906-B155-362D2BDC064B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4F1F220-52AA-4906-B155-362D2BDC064B}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -66,9 +66,9 @@ namespace QuickFix
         public const string CHECK_LATENCY = "CheckLatency";
         public const string MAX_LATENCY = "MaxLatency";
         public const string VALIDATE_ACCEPTOR_PORT = "ValidateAcceptorPort";
-        public const string VALIDATE_MSG_BODY_AGAINST_DATA_DICTIONARY = "ValidateMsgBodyAgainstDataDictionary";
-        public const string VALIDATE_MSG_HDR_AGAINST_DATA_DICTIONARY = "ValidateMsgHdrAgainstDataDictionary";
-        public const string VALIDATE_MSG_TRLR_AGAINST_DATA_DICTIONARY = "ValidateMsgTrlrAgainstDataDictionary";
+        public const string VALIDATE_BODY = "ValidateBody";
+        public const string VALIDATE_HEADER = "ValidateHeader";
+        public const string VALIDATE_TRAILER = "ValidateTrailer";
 
 
         public const string SSL_ENABLE = "SSLEnable";

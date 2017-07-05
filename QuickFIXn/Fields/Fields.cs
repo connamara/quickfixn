@@ -16203,32 +16203,6 @@ namespace QuickFix.Fields
 
 
     /// <summary>
-    /// OnBehalfOfCompIDPassthrough Field
-    /// </summary>/
-    public sealed class OnBehalfOfCompIDPassthrough : StringField
-    {
-        public OnBehalfOfCompIDPassthrough()
-            :base(Tags.OnBehalfOfCompIDPassthrough) {}
-        public OnBehalfOfCompIDPassthrough(string val)
-            :base(Tags.OnBehalfOfCompIDPassthrough, val) {}
-
-    }
-
-
-    /// <summary>
-    /// MessageCount Field
-    /// </summary>/
-    public sealed class MessageCount : IntField
-    {
-        public MessageCount()
-            :base(Tags.MessageCount) {}
-        public MessageCount(int val)
-            :base(Tags.MessageCount, val) {}
-
-    }
-
-
-    /// <summary>
     /// IOIID Field
     /// </summary>/
     public sealed class IOIID : StringField
