@@ -73,6 +73,7 @@
     <Compile Include="CompositeLog.cs" />
     <Compile Include="DataDictionary\IFieldMapSpec.cs" />
     <Compile Include="DataDictionary\IGroupSpec.cs" />
+    <Compile Include="Fields\Converters\TimeConversionPrecision.cs" />
     <Compile Include="HttpServer.cs" />
     <Compile Include="IAcceptor.cs" />
     <Compile Include="ClientHandlerThread.cs" />
