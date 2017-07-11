@@ -814,7 +814,7 @@ namespace QuickFix
                     foreach (string msgStr in messages)
                     {
                         Message msg = new Message();
-                        msg.FromString(msgStr, true, this.SessionDataDictionary, this.ApplicationDataDictionary, msgFactory_);
+                        msg.FromString(msgStr, ValidateLengthAndChecksum, this.SessionDataDictionary, this.ApplicationDataDictionary, msgFactory_);
                         msgSeqNum = msg.Header.GetInt(Tags.MsgSeqNum);
 
                         if ((current != msgSeqNum) && begin == 0)
