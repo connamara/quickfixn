@@ -1013,8 +1013,8 @@ namespace QuickFix
             }
             catch (System.Exception e)
             {
-                this.Log.OnEvent("Verify failed: " + e.Message);
-                Disconnect("Verify failed: " + e.Message);
+                this.Log.OnEvent("Verify failed: " + e.Message + Environment.NewLine + "Message: " + msg.ToString());
+                Disconnect("Verify failed: " + e.Message + Environment.NewLine + "Message: " + msg.ToString()););
                 return false;
             }
 
