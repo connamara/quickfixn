@@ -1,0 +1,24 @@
+public class {{ name }}Group : Group
+{
+    public static int[] fieldOrder = {{= | | =}}{|= {{ }} =|{{# fields}}Tags.{{ name }}, {{/ fields}}0{{= | | =}}}|= {{ }} =|;
+
+    public {{ name }}Group() 
+      :base( Tags.{{ name }}, Tags.{{ first_field.name }}, fieldOrder)
+    {
+    }
+
+    public override Group Clone()
+    {
+        var clone = new {{ name }}Group();
+        clone.CopyStateFrom(this);
+        return clone;
+    }
+
+    {{# fields}}
+    {{> templates/field}}
+    {{/ fields}}
+    {{# groups}}
+    {{> templates/group}}
+    {{/ groups}}
+
+}

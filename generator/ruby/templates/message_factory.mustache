@@ -1,0 +1,41 @@
+// This is a generated file.  Don't edit it directly!
+
+namespace QuickFix
+{
+    namespace {{ version }}
+    {
+        public class MessageFactory : IMessageFactory
+        {
+            public QuickFix.Message Create(string beginString, string msgType)
+            {
+                switch (msgType)
+                {
+                {{# messages}}
+                    case QuickFix.{{ version }}.{{ name }}.MsgType: return new QuickFix.{{ version }}.{{ name }}();
+                {{/ messages}}
+                }
+
+                return new QuickFix.Message();
+            }
+
+
+            public Group Create(string beginString, string msgType, int correspondingFieldID)
+            {
+            {{# messages_with_groups}}
+                if (QuickFix.{{ version }}.{{ name }}.MsgType.Equals(msgType))
+                {
+                    switch (correspondingFieldID)
+                    {
+                    {{# groups}}
+                        case QuickFix.Fields.Tags.{{ name }}: return new QuickFix.{{ version }}.{{ parents }}.{{ name }}Group();
+                    {{/ groups}}
+                    }
+                }
+
+            {{/ messages_with_groups}}
+                return null;
+            }
+
+        }
+    }
+}

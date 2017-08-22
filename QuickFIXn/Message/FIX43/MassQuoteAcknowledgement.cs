@@ -378,7 +378,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.PartyID PartyID
+                public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -520,7 +520,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.QuoteSetID QuoteSetID
+                public QuickFix.Fields.QuoteSetID QuoteSetID
                 { 
                     get 
                     {
@@ -1667,7 +1667,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoQuoteEntries);
                 }
-                            public class NoUnderlyingSecurityAltIDGroup : Group
+                public class NoUnderlyingSecurityAltIDGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
                 
@@ -1683,7 +1683,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
+                    public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                     { 
                         get 
                         {
@@ -1763,7 +1763,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.QuoteEntryID QuoteEntryID
+                    public QuickFix.Fields.QuoteEntryID QuoteEntryID
                     { 
                         get 
                         {
@@ -3561,7 +3561,7 @@ namespace QuickFix
                     { 
                         return IsSetField(Tags.QuoteEntryRejectReason);
                     }
-                                    public class NoSecurityAltIDGroup : Group
+                    public class NoSecurityAltIDGroup : Group
                     {
                         public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
                     
@@ -3577,7 +3577,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.SecurityAltID SecurityAltID
+                        public QuickFix.Fields.SecurityAltID SecurityAltID
                         { 
                             get 
                             {
@@ -3641,7 +3641,9 @@ namespace QuickFix
                         }
                     
                     }
+                
                 }
+            
             }
         }
     }

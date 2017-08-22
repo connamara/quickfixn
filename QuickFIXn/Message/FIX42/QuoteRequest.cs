@@ -99,7 +99,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.Symbol Symbol
+                public QuickFix.Fields.Symbol Symbol
                 { 
                     get 
                     {

@@ -913,7 +913,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.IOIQualifier IOIQualifier
+                public QuickFix.Fields.IOIQualifier IOIQualifier
                 { 
                     get 
                     {

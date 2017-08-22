@@ -781,7 +781,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.MDEntryType MDEntryType
+                public QuickFix.Fields.MDEntryType MDEntryType
                 { 
                     get 
                     {

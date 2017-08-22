@@ -130,7 +130,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.Symbol Symbol
+                public QuickFix.Fields.Symbol Symbol
                 { 
                     get 
                     {
@@ -1308,7 +1308,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.TradingSessionSubID);
                 }
-                            public class NoSecurityAltIDGroup : Group
+                public class NoSecurityAltIDGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
                 
@@ -1324,7 +1324,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.SecurityAltID SecurityAltID
+                    public QuickFix.Fields.SecurityAltID SecurityAltID
                     { 
                         get 
                         {
@@ -1388,6 +1388,7 @@ namespace QuickFix
                     }
                 
                 }
+            
             }
         }
     }
