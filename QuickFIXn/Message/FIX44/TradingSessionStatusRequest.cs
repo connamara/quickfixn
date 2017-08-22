@@ -209,7 +209,6 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.SubscriptionRequestType);
             }
-
         }
     }
 }
