@@ -444,7 +444,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ClOrdID ClOrdID
+                public QuickFix.Fields.ClOrdID ClOrdID
                 { 
                     get 
                     {
@@ -723,7 +723,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.OrderBookingQty);
                 }
-                            public class NoNested2PartyIDsGroup : Group
+                public class NoNested2PartyIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.Nested2PartyID, Tags.Nested2PartyIDSource, Tags.Nested2PartyRole, Tags.NoNested2PartySubIDs, 0};
                 
@@ -739,7 +739,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.Nested2PartyID Nested2PartyID
+                    public QuickFix.Fields.Nested2PartyID Nested2PartyID
                     { 
                         get 
                         {
@@ -863,7 +863,7 @@ namespace QuickFix
                     { 
                         return IsSetField(Tags.NoNested2PartySubIDs);
                     }
-                                    public class NoNested2PartySubIDsGroup : Group
+                    public class NoNested2PartySubIDsGroup : Group
                     {
                         public static int[] fieldOrder = {Tags.Nested2PartySubID, Tags.Nested2PartySubIDType, 0};
                     
@@ -879,7 +879,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.Nested2PartySubID Nested2PartySubID
+                        public QuickFix.Fields.Nested2PartySubID Nested2PartySubID
                         { 
                             get 
                             {
@@ -943,7 +943,9 @@ namespace QuickFix
                         }
                     
                     }
+                
                 }
+            
             }
         }
     }

@@ -285,7 +285,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.RelatdSym RelatdSym
+                public QuickFix.Fields.RelatdSym RelatdSym
                 { 
                     get 
                     {
@@ -706,7 +706,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.Text Text
+                public QuickFix.Fields.Text Text
                 { 
                     get 
                     {

@@ -428,7 +428,6 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.ValidUntilTime);
             }
-
         }
     }
 }

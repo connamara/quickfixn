@@ -192,7 +192,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.RefCompID RefCompID
+                public QuickFix.Fields.RefCompID RefCompID
                 { 
                     get 
                     {
