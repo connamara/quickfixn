@@ -95,7 +95,7 @@ public class MyApp
     static void Main(string[] args)
     {
         SessionSettings settings = new SessionSettings(args[0]);
-        Application myApp = new MyQuickFixApp();
+        IApplication myApp = new MyQuickFixApp();
         IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
         ILogFactory logFactory = new FileLogFactory(settings);
         ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(
