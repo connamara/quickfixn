@@ -73,7 +73,7 @@ namespace UnitTests.Fields.Converters
             var dateTime = new DateTime(2017, 03, 05, 13, 22, 12, DateTimeKind.Utc);
 
             //WHEN - it is serialised to a string with microsecond precision
-            var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeConversionPrecision.Microsecond);
+            var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeStampPrecision.Microsecond);
 
             //THEN - the serialised string contains microseconds
             Assert.AreEqual("20170305-13:22:12.000000", serialisedDateTime);
@@ -86,7 +86,7 @@ namespace UnitTests.Fields.Converters
             var dateTime = new DateTime(2017, 03, 05, 13, 22, 12, 123, DateTimeKind.Utc);
 
             //WHEN - it is serialised to a string with microsecond precision
-            var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeConversionPrecision.Microsecond);
+            var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeStampPrecision.Microsecond);
 
             //THEN - the serialised string contains microseconds
             Assert.AreEqual("20170305-13:22:12.123000", serialisedDateTime);
@@ -99,7 +99,7 @@ namespace UnitTests.Fields.Converters
             var dateTime = new DateTime( 2017, 03, 05, 13, 22, 12, 123, DateTimeKind.Utc ) + new TimeSpan( 4560 );
 
             //WHEN - it is serialised to a string with microsecond precision
-            var serialisedDateTime = DateTimeConverter.Convert( dateTime, TimeConversionPrecision.Microsecond );
+            var serialisedDateTime = DateTimeConverter.Convert( dateTime, TimeStampPrecision.Microsecond );
 
             //THEN - the serialised string contains microseconds
             Assert.AreEqual("20170305-13:22:12.123456", serialisedDateTime);
@@ -112,7 +112,7 @@ namespace UnitTests.Fields.Converters
             var dateTime = new DateTime(2017, 03, 05, 13, 22, 12, 123, DateTimeKind.Utc) + new TimeSpan(4560);
 
             //WHEN - it is serialised to a string with millisecond precision
-            var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeConversionPrecision.Millisecond);
+            var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeStampPrecision.Millisecond);
 
             //THEN - the serialised string contains milliseconds
             Assert.AreEqual("20170305-13:22:12.123", serialisedDateTime);
@@ -138,7 +138,7 @@ namespace UnitTests.Fields.Converters
             var dateTime = new DateTime(2017, 03, 05, 13, 22, 12, 123, DateTimeKind.Utc) + new TimeSpan(4560);
 
             //WHEN - it is serialised to a string with second precision
-            var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeConversionPrecision.Second);
+            var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeStampPrecision.Second);
 
             //THEN - the serialised string contains seconds
             Assert.AreEqual("20170305-13:22:12", serialisedDateTime);
@@ -186,7 +186,7 @@ namespace UnitTests.Fields.Converters
             var dateTimeWithMicroseconds = new DateTime( timeWithMicroSeconds.Ticks, DateTimeKind.Utc );
 
             //WHEN - it is seralised with Microseconds
-            var serialisedDateTime = DateTimeConverter.ConvertTimeOnly(dateTimeWithMicroseconds, TimeConversionPrecision.Microsecond );
+            var serialisedDateTime = DateTimeConverter.ConvertTimeOnly(dateTimeWithMicroseconds, TimeStampPrecision.Microsecond );
 
             //THEN - the serialised time contains microseconds
             Assert.AreEqual("13:22:12.123456", serialisedDateTime);
@@ -228,7 +228,7 @@ namespace UnitTests.Fields.Converters
             var dateTimeWithMicroseconds = new DateTime(timeWithMicroSeconds.Ticks, DateTimeKind.Utc);
 
             //WHEN - it is seralised with Microseconds
-            var serialisedDateTime = DateTimeConverter.ConvertTimeOnly(dateTimeWithMicroseconds, TimeConversionPrecision.Microsecond);
+            var serialisedDateTime = DateTimeConverter.ConvertTimeOnly(dateTimeWithMicroseconds, TimeStampPrecision.Microsecond);
 
             //THEN - the serialised time contains microseconds
             Assert.AreEqual("13:22:12.123000", serialisedDateTime);
