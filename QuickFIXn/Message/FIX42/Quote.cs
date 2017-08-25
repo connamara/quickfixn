@@ -1201,6 +1201,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.Currency);
             }
+
         }
     }
 }

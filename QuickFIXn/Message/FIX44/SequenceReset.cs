@@ -83,6 +83,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.NewSeqNo);
             }
+
         }
     }
 }

@@ -3077,7 +3077,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.SecurityAltID SecurityAltID
+                            public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -3157,7 +3157,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.EventType EventType
+                            public QuickFix.Fields.EventType EventType
                 { 
                     get 
                     {
@@ -3330,7 +3330,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.InstrumentPartyID InstrumentPartyID
+                            public QuickFix.Fields.InstrumentPartyID InstrumentPartyID
                 { 
                     get 
                     {
@@ -3454,7 +3454,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoInstrumentPartySubIDs);
                 }
-                public class NoInstrumentPartySubIDsGroup : Group
+                            public class NoInstrumentPartySubIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.InstrumentPartySubID, Tags.InstrumentPartySubIDType, 0};
                 
@@ -3470,7 +3470,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.InstrumentPartySubID InstrumentPartySubID
+                                    public QuickFix.Fields.InstrumentPartySubID InstrumentPartySubID
                     { 
                         get 
                         {
@@ -3534,7 +3534,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
         }
     }

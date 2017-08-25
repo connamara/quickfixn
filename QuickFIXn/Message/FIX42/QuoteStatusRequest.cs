@@ -703,6 +703,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.TradingSessionID);
             }
+
         }
     }
 }
