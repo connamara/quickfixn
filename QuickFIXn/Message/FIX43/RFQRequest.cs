@@ -130,7 +130,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.Symbol Symbol
+                public QuickFix.Fields.Symbol Symbol
                 { 
                     get 
                     {
@@ -1324,7 +1324,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.SecurityAltID SecurityAltID
+                    public QuickFix.Fields.SecurityAltID SecurityAltID
                     { 
                         get 
                         {

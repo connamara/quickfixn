@@ -413,7 +413,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.PartyID PartyID
+                public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -553,7 +553,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.PartySubID PartySubID
+                    public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
                         {
@@ -634,7 +634,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.RegistDtls RegistDtls
+                public QuickFix.Fields.RegistDtls RegistDtls
                 { 
                     get 
                     {
@@ -898,7 +898,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.NestedPartyID NestedPartyID
+                    public QuickFix.Fields.NestedPartyID NestedPartyID
                     { 
                         get 
                         {
@@ -1038,7 +1038,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.NestedPartySubID NestedPartySubID
+                        public QuickFix.Fields.NestedPartySubID NestedPartySubID
                         { 
                             get 
                             {
@@ -1120,7 +1120,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.DistribPaymentMethod DistribPaymentMethod
+                public QuickFix.Fields.DistribPaymentMethod DistribPaymentMethod
                 { 
                     get 
                     {

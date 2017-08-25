@@ -444,7 +444,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ClOrdID ClOrdID
+                public QuickFix.Fields.ClOrdID ClOrdID
                 { 
                     get 
                     {
@@ -739,7 +739,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.Nested2PartyID Nested2PartyID
+                    public QuickFix.Fields.Nested2PartyID Nested2PartyID
                     { 
                         get 
                         {
@@ -879,7 +879,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.Nested2PartySubID Nested2PartySubID
+                        public QuickFix.Fields.Nested2PartySubID Nested2PartySubID
                         { 
                             get 
                             {

@@ -380,7 +380,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.RefMsgType RefMsgType
+                public QuickFix.Fields.RefMsgType RefMsgType
                 { 
                     get 
                     {

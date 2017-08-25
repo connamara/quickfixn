@@ -124,7 +124,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.Commission Commission
+                public QuickFix.Fields.Commission Commission
                 { 
                     get 
                     {

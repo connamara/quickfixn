@@ -1372,7 +1372,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
+                public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                 { 
                     get 
                     {

@@ -1372,7 +1372,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.SecurityAltID SecurityAltID
+                public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -1452,7 +1452,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.LegSymbol LegSymbol
+                public QuickFix.Fields.LegSymbol LegSymbol
                 { 
                     get 
                     {
@@ -2584,7 +2584,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
+                    public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
                     { 
                         get 
                         {
