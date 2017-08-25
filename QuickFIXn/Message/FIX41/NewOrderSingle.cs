@@ -1610,7 +1610,6 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.PegDifference);
             }
-
         }
     }
 }

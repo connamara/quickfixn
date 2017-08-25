@@ -1880,7 +1880,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.SecurityAltID SecurityAltID
+                public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -1960,7 +1960,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.Side Side
+                public QuickFix.Fields.Side Side
                 { 
                     get 
                     {
@@ -3371,7 +3371,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.PartyID PartyID
+                    public QuickFix.Fields.PartyID PartyID
                     { 
                         get 
                         {
@@ -3513,7 +3513,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.ClearingInstruction ClearingInstruction
+                    public QuickFix.Fields.ClearingInstruction ClearingInstruction
                     { 
                         get 
                         {
@@ -3562,7 +3562,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.ContAmtType ContAmtType
+                    public QuickFix.Fields.ContAmtType ContAmtType
                     { 
                         get 
                         {
@@ -3673,7 +3673,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
+                    public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
                     { 
                         get 
                         {
