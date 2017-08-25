@@ -24,8 +24,10 @@ Code Generation
 ---------------
 To regenerate the message and field class source from the Data Dictionaries, you need Ruby and the Nokogiri gem:
 
-    gem install nokogiri
+    gem install nokogiri -v 1.6.8.1
     generate.bat
+
+(Nokogiri versions 1.7+ require Ruby 2.0, so we must use this older version.)
 
 
 Build
