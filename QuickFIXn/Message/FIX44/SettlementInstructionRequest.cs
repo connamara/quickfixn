@@ -504,7 +504,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.PartyID PartyID
+                            public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -628,7 +628,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoPartySubIDs);
                 }
-                public class NoPartySubIDsGroup : Group
+                            public class NoPartySubIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
                 
@@ -644,7 +644,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.PartySubID PartySubID
+                                    public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
                         {
@@ -708,7 +708,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
         }
     }

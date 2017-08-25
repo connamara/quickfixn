@@ -440,7 +440,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.PartyID PartyID
+                            public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -688,7 +688,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoRelatedPartyIDs);
                 }
-                public class NoPartySubIDsGroup : Group
+                            public class NoPartySubIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
                 
@@ -704,7 +704,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.PartySubID PartySubID
+                                    public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
                         {
@@ -784,7 +784,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.PartyAltID PartyAltID
+                                    public QuickFix.Fields.PartyAltID PartyAltID
                     { 
                         get 
                         {
@@ -877,7 +877,7 @@ namespace QuickFix
                     { 
                         return IsSetField(Tags.NoPartyAltSubIDs);
                     }
-                    public class NoPartyAltSubIDsGroup : Group
+                                    public class NoPartyAltSubIDsGroup : Group
                     {
                         public static int[] fieldOrder = {Tags.PartyAltSubID, Tags.PartyAltSubIDType, 0};
                     
@@ -893,7 +893,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.PartyAltSubID PartyAltSubID
+                                            public QuickFix.Fields.PartyAltSubID PartyAltSubID
                         { 
                             get 
                             {
@@ -957,7 +957,6 @@ namespace QuickFix
                         }
                     
                     }
-                
                 }
                 public class NoContextPartyIDsGroup : Group
                 {
@@ -975,7 +974,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.ContextPartyID ContextPartyID
+                                    public QuickFix.Fields.ContextPartyID ContextPartyID
                     { 
                         get 
                         {
@@ -1099,7 +1098,7 @@ namespace QuickFix
                     { 
                         return IsSetField(Tags.NoContextPartySubIDs);
                     }
-                    public class NoContextPartySubIDsGroup : Group
+                                    public class NoContextPartySubIDsGroup : Group
                     {
                         public static int[] fieldOrder = {Tags.ContextPartySubID, Tags.ContextPartySubIDType, 0};
                     
@@ -1115,7 +1114,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.ContextPartySubID ContextPartySubID
+                                            public QuickFix.Fields.ContextPartySubID ContextPartySubID
                         { 
                             get 
                             {
@@ -1179,7 +1178,6 @@ namespace QuickFix
                         }
                     
                     }
-                
                 }
                 public class NoRiskLimitsGroup : Group
                 {
@@ -1197,7 +1195,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.RiskLimitType RiskLimitType
+                                    public QuickFix.Fields.RiskLimitType RiskLimitType
                     { 
                         get 
                         {
@@ -1383,7 +1381,7 @@ namespace QuickFix
                     { 
                         return IsSetField(Tags.NoRiskWarningLevels);
                     }
-                    public class NoRiskInstrumentsGroup : Group
+                                    public class NoRiskInstrumentsGroup : Group
                     {
                         public static int[] fieldOrder = {Tags.RiskInstrumentOperator, Tags.RiskSymbol, Tags.RiskSymbolSfx, Tags.RiskSecurityID, Tags.RiskSecurityIDSource, Tags.NoRiskSecurityAltID, Tags.RiskProduct, Tags.RiskProductComplex, Tags.RiskSecurityGroup, Tags.RiskCFICode, Tags.RiskSecurityType, Tags.RiskSecuritySubType, Tags.RiskMaturityMonthYear, Tags.RiskMaturityTime, Tags.RiskRestructuringType, Tags.RiskSeniority, Tags.RiskPutOrCall, Tags.RiskFlexibleIndicator, Tags.RiskCouponRate, Tags.RiskSecurityExchange, Tags.RiskSecurityDesc, Tags.RiskEncodedSecurityDescLen, Tags.RiskEncodedSecurityDesc, Tags.RiskInstrumentSettlType, Tags.RiskInstrumentMultiplier, 0};
                     
@@ -1399,7 +1397,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.RiskInstrumentOperator RiskInstrumentOperator
+                                            public QuickFix.Fields.RiskInstrumentOperator RiskInstrumentOperator
                         { 
                             get 
                             {
@@ -2174,7 +2172,7 @@ namespace QuickFix
                         { 
                             return IsSetField(Tags.RiskInstrumentMultiplier);
                         }
-                        public class NoRiskSecurityAltIDGroup : Group
+                                            public class NoRiskSecurityAltIDGroup : Group
                         {
                             public static int[] fieldOrder = {Tags.RiskSecurityAltID, Tags.RiskSecurityAltIDSource, 0};
                         
@@ -2190,7 +2188,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                            public QuickFix.Fields.RiskSecurityAltID RiskSecurityAltID
+                                                    public QuickFix.Fields.RiskSecurityAltID RiskSecurityAltID
                             { 
                                 get 
                                 {
@@ -2254,7 +2252,6 @@ namespace QuickFix
                             }
                         
                         }
-                    
                     }
                     public class NoRiskWarningLevelsGroup : Group
                     {
@@ -2272,7 +2269,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.RiskWarningLevelPercent RiskWarningLevelPercent
+                                            public QuickFix.Fields.RiskWarningLevelPercent RiskWarningLevelPercent
                         { 
                             get 
                             {
@@ -2336,7 +2333,6 @@ namespace QuickFix
                         }
                     
                     }
-                
                 }
                 public class NoRelatedPartyIDsGroup : Group
                 {
@@ -2354,7 +2350,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.RelatedPartyID RelatedPartyID
+                                    public QuickFix.Fields.RelatedPartyID RelatedPartyID
                     { 
                         get 
                         {
@@ -2602,7 +2598,7 @@ namespace QuickFix
                     { 
                         return IsSetField(Tags.NoPartyRelationships);
                     }
-                    public class NoRelatedPartySubIDsGroup : Group
+                                    public class NoRelatedPartySubIDsGroup : Group
                     {
                         public static int[] fieldOrder = {Tags.RelatedPartySubID, Tags.RelatedPartySubIDType, 0};
                     
@@ -2618,7 +2614,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.RelatedPartySubID RelatedPartySubID
+                                            public QuickFix.Fields.RelatedPartySubID RelatedPartySubID
                         { 
                             get 
                             {
@@ -2698,7 +2694,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.RelatedPartyAltID RelatedPartyAltID
+                                            public QuickFix.Fields.RelatedPartyAltID RelatedPartyAltID
                         { 
                             get 
                             {
@@ -2791,7 +2787,7 @@ namespace QuickFix
                         { 
                             return IsSetField(Tags.NoRelatedPartyAltSubIDs);
                         }
-                        public class NoRelatedPartyAltSubIDsGroup : Group
+                                            public class NoRelatedPartyAltSubIDsGroup : Group
                         {
                             public static int[] fieldOrder = {Tags.RelatedPartyAltSubID, Tags.RelatedPartyAltSubIDType, 0};
                         
@@ -2807,7 +2803,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                            public QuickFix.Fields.RelatedPartyAltSubID RelatedPartyAltSubID
+                                                    public QuickFix.Fields.RelatedPartyAltSubID RelatedPartyAltSubID
                             { 
                                 get 
                                 {
@@ -2871,7 +2867,6 @@ namespace QuickFix
                             }
                         
                         }
-                    
                     }
                     public class NoRelatedContextPartyIDsGroup : Group
                     {
@@ -2889,7 +2884,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.RelatedContextPartyID RelatedContextPartyID
+                                            public QuickFix.Fields.RelatedContextPartyID RelatedContextPartyID
                         { 
                             get 
                             {
@@ -3013,7 +3008,7 @@ namespace QuickFix
                         { 
                             return IsSetField(Tags.NoRelatedContextPartySubIDs);
                         }
-                        public class NoRelatedContextPartySubIDsGroup : Group
+                                            public class NoRelatedContextPartySubIDsGroup : Group
                         {
                             public static int[] fieldOrder = {Tags.RelatedContextPartySubID, Tags.RelatedContextPartySubIDType, 0};
                         
@@ -3029,7 +3024,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                            public QuickFix.Fields.RelatedContextPartySubID RelatedContextPartySubID
+                                                    public QuickFix.Fields.RelatedContextPartySubID RelatedContextPartySubID
                             { 
                                 get 
                                 {
@@ -3093,7 +3088,6 @@ namespace QuickFix
                             }
                         
                         }
-                    
                     }
                     public class NoRelationshipRiskLimitsGroup : Group
                     {
@@ -3111,7 +3105,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.RelationshipRiskLimitType RelationshipRiskLimitType
+                                            public QuickFix.Fields.RelationshipRiskLimitType RelationshipRiskLimitType
                         { 
                             get 
                             {
@@ -3297,7 +3291,7 @@ namespace QuickFix
                         { 
                             return IsSetField(Tags.NoRelationshipRiskWarningLevels);
                         }
-                        public class NoRelationshipRiskInstrumentsGroup : Group
+                                            public class NoRelationshipRiskInstrumentsGroup : Group
                         {
                             public static int[] fieldOrder = {Tags.RelationshipRiskInstrumentOperator, Tags.RelationshipRiskSymbol, Tags.RelationshipRiskSymbolSfx, Tags.RelationshipRiskSecurityID, Tags.RelationshipRiskSecurityIDSource, Tags.NoRelationshipRiskSecurityAltID, Tags.RelationshipRiskProduct, Tags.RelationshipRiskProductComplex, Tags.RelationshipRiskSecurityGroup, Tags.RelationshipRiskCFICode, Tags.RelationshipRiskSecurityType, Tags.RelationshipRiskSecuritySubType, Tags.RelationshipRiskMaturityMonthYear, Tags.RelationshipRiskMaturityTime, Tags.RelationshipRiskRestructuringType, Tags.RelationshipRiskSeniority, Tags.RelationshipRiskPutOrCall, Tags.RelationshipRiskFlexibleIndicator, Tags.RelationshipRiskCouponRate, Tags.RelationshipRiskSecurityExchange, Tags.RelationshipRiskSecurityDesc, Tags.RelationshipRiskEncodedSecurityDescLen, Tags.RelationshipRiskEncodedSecurityDesc, Tags.RelationshipRiskInstrumentSettlType, Tags.RelationshipRiskInstrumentMultiplier, 0};
                         
@@ -3313,7 +3307,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                            public QuickFix.Fields.RelationshipRiskInstrumentOperator RelationshipRiskInstrumentOperator
+                                                    public QuickFix.Fields.RelationshipRiskInstrumentOperator RelationshipRiskInstrumentOperator
                             { 
                                 get 
                                 {
@@ -4088,7 +4082,7 @@ namespace QuickFix
                             { 
                                 return IsSetField(Tags.RelationshipRiskInstrumentMultiplier);
                             }
-                            public class NoRelationshipRiskSecurityAltIDGroup : Group
+                                                    public class NoRelationshipRiskSecurityAltIDGroup : Group
                             {
                                 public static int[] fieldOrder = {Tags.RelationshipRiskSecurityAltID, Tags.RelationshipRiskSecurityAltIDSource, 0};
                             
@@ -4104,7 +4098,7 @@ namespace QuickFix
                                     return clone;
                                 }
                             
-                                public QuickFix.Fields.RelationshipRiskSecurityAltID RelationshipRiskSecurityAltID
+                                                            public QuickFix.Fields.RelationshipRiskSecurityAltID RelationshipRiskSecurityAltID
                                 { 
                                     get 
                                     {
@@ -4168,7 +4162,6 @@ namespace QuickFix
                                 }
                             
                             }
-                        
                         }
                         public class NoRelationshipRiskWarningLevelsGroup : Group
                         {
@@ -4186,7 +4179,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                            public QuickFix.Fields.RelationshipRiskWarningLevelPercent RelationshipRiskWarningLevelPercent
+                                                    public QuickFix.Fields.RelationshipRiskWarningLevelPercent RelationshipRiskWarningLevelPercent
                             { 
                                 get 
                                 {
@@ -4250,7 +4243,6 @@ namespace QuickFix
                             }
                         
                         }
-                    
                     }
                     public class NoPartyRelationshipsGroup : Group
                     {
@@ -4268,7 +4260,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.PartyRelationship PartyRelationship
+                                            public QuickFix.Fields.PartyRelationship PartyRelationship
                         { 
                             get 
                             {
@@ -4301,9 +4293,7 @@ namespace QuickFix
                         }
                     
                     }
-                
                 }
-            
             }
         }
     }

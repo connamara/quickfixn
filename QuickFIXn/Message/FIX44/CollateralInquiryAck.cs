@@ -3883,7 +3883,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.CollInquiryQualifier CollInquiryQualifier
+                            public QuickFix.Fields.CollInquiryQualifier CollInquiryQualifier
                 { 
                     get 
                     {
@@ -3932,7 +3932,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.PartyID PartyID
+                            public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -4056,7 +4056,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoPartySubIDs);
                 }
-                public class NoPartySubIDsGroup : Group
+                            public class NoPartySubIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
                 
@@ -4072,7 +4072,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.PartySubID PartySubID
+                                    public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
                         {
@@ -4136,7 +4136,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
             public class NoExecsGroup : Group
             {
@@ -4154,7 +4153,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.ExecID ExecID
+                            public QuickFix.Fields.ExecID ExecID
                 { 
                     get 
                     {
@@ -4203,7 +4202,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.TradeReportID TradeReportID
+                            public QuickFix.Fields.TradeReportID TradeReportID
                 { 
                     get 
                     {
@@ -4283,7 +4282,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.SecurityAltID SecurityAltID
+                            public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -4363,7 +4362,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.EventType EventType
+                            public QuickFix.Fields.EventType EventType
                 { 
                     get 
                     {
@@ -4505,7 +4504,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
+                            public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
                 { 
                     get 
                     {
@@ -4585,7 +4584,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.UnderlyingSymbol UnderlyingSymbol
+                            public QuickFix.Fields.UnderlyingSymbol UnderlyingSymbol
                 { 
                     get 
                     {
@@ -6042,7 +6041,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoUnderlyingStips);
                 }
-                public class NoUnderlyingSecurityAltIDGroup : Group
+                            public class NoUnderlyingSecurityAltIDGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
                 
@@ -6058,7 +6057,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
+                                    public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                     { 
                         get 
                         {
@@ -6138,7 +6137,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
+                                    public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
                     { 
                         get 
                         {
@@ -6202,7 +6201,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
         }
     }

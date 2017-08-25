@@ -285,7 +285,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.QuoteSetID QuoteSetID
+                            public QuickFix.Fields.QuoteSetID QuoteSetID
                 { 
                     get 
                     {
@@ -967,7 +967,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoQuoteEntries);
                 }
-                public class NoQuoteEntriesGroup : Group
+                            public class NoQuoteEntriesGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.QuoteEntryID, Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.IDSource, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDay, Tags.PutOrCall, Tags.StrikePrice, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, Tags.QuoteEntryRejectReason, 0};
                 
@@ -983,7 +983,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.QuoteEntryID QuoteEntryID
+                                    public QuickFix.Fields.QuoteEntryID QuoteEntryID
                     { 
                         get 
                         {
@@ -1636,7 +1636,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
         }
     }

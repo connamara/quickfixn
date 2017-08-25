@@ -2767,7 +2767,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.PartyID PartyID
+                            public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -2891,7 +2891,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoPartySubIDs);
                 }
-                public class NoPartySubIDsGroup : Group
+                            public class NoPartySubIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
                 
@@ -2907,7 +2907,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.PartySubID PartySubID
+                                    public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
                         {
@@ -2971,7 +2971,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
             public class NoSecurityAltIDGroup : Group
             {
@@ -2989,7 +2988,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.SecurityAltID SecurityAltID
+                            public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -3069,7 +3068,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.EventType EventType
+                            public QuickFix.Fields.EventType EventType
                 { 
                     get 
                     {
@@ -3211,7 +3210,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.InstrAttribType InstrAttribType
+                            public QuickFix.Fields.InstrAttribType InstrAttribType
                 { 
                     get 
                     {
@@ -3291,7 +3290,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.UnderlyingSymbol UnderlyingSymbol
+                            public QuickFix.Fields.UnderlyingSymbol UnderlyingSymbol
                 { 
                     get 
                     {
@@ -4748,7 +4747,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoUnderlyingStips);
                 }
-                public class NoUnderlyingSecurityAltIDGroup : Group
+                            public class NoUnderlyingSecurityAltIDGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
                 
@@ -4764,7 +4763,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
+                                    public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                     { 
                         get 
                         {
@@ -4844,7 +4843,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
+                                    public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
                     { 
                         get 
                         {
@@ -4908,7 +4907,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
             public class NoLegsGroup : Group
             {
@@ -4926,7 +4924,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.LegSymbol LegSymbol
+                            public QuickFix.Fields.LegSymbol LegSymbol
                 { 
                     get 
                     {
@@ -6228,7 +6226,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.LegInterestAccrualDate);
                 }
-                public class NoLegSecurityAltIDGroup : Group
+                            public class NoLegSecurityAltIDGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.LegSecurityAltID, Tags.LegSecurityAltIDSource, 0};
                 
@@ -6244,7 +6242,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
+                                    public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
                     { 
                         get 
                         {
@@ -6308,7 +6306,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
             public class NoDatesGroup : Group
             {
@@ -6326,7 +6323,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.TradeDate TradeDate
+                            public QuickFix.Fields.TradeDate TradeDate
                 { 
                     get 
                     {

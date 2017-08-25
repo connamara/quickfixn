@@ -302,6 +302,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.MarketSegmentID);
             }
+
         }
     }
 }

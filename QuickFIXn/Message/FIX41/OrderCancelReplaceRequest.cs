@@ -1581,6 +1581,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.LocateReqd);
             }
+
         }
     }
 }

@@ -1149,6 +1149,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.CashSettlAgentContactPhone);
             }
+
         }
     }
 }
