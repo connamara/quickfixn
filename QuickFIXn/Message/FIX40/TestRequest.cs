@@ -52,7 +52,6 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.TestReqID);
             }
-
         }
     }
 }

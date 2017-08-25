@@ -959,7 +959,6 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.EncodedText);
             }
-
         }
     }
 }

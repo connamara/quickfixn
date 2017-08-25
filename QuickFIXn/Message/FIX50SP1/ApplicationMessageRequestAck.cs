@@ -316,7 +316,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.RefApplID RefApplID
+                public QuickFix.Fields.RefApplID RefApplID
                 { 
                     get 
                     {

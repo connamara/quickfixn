@@ -5720,7 +5720,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ClOrdID ClOrdID
+                public QuickFix.Fields.ClOrdID ClOrdID
                 { 
                     get 
                     {
@@ -6015,7 +6015,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.Nested2PartyID Nested2PartyID
+                    public QuickFix.Fields.Nested2PartyID Nested2PartyID
                     { 
                         get 
                         {
@@ -6155,7 +6155,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.Nested2PartySubID Nested2PartySubID
+                        public QuickFix.Fields.Nested2PartySubID Nested2PartySubID
                         { 
                             get 
                             {
@@ -6237,7 +6237,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.LastQty LastQty
+                public QuickFix.Fields.LastQty LastQty
                 { 
                     get 
                     {
@@ -6503,7 +6503,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.SecurityAltID SecurityAltID
+                public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -6583,7 +6583,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.EventType EventType
+                public QuickFix.Fields.EventType EventType
                 { 
                     get 
                     {
@@ -6756,7 +6756,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.InstrumentPartyID InstrumentPartyID
+                public QuickFix.Fields.InstrumentPartyID InstrumentPartyID
                 { 
                     get 
                     {
@@ -6896,7 +6896,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.InstrumentPartySubID InstrumentPartySubID
+                    public QuickFix.Fields.InstrumentPartySubID InstrumentPartySubID
                     { 
                         get 
                         {
@@ -6977,7 +6977,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ComplexEventType ComplexEventType
+                public QuickFix.Fields.ComplexEventType ComplexEventType
                 { 
                     get 
                     {
@@ -7241,7 +7241,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.ComplexEventStartDate ComplexEventStartDate
+                    public QuickFix.Fields.ComplexEventStartDate ComplexEventStartDate
                     { 
                         get 
                         {
@@ -7350,7 +7350,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.ComplexEventStartTime ComplexEventStartTime
+                        public QuickFix.Fields.ComplexEventStartTime ComplexEventStartTime
                         { 
                             get 
                             {
@@ -7432,7 +7432,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.InstrAttribType InstrAttribType
+                public QuickFix.Fields.InstrAttribType InstrAttribType
                 { 
                     get 
                     {
@@ -7512,7 +7512,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.UnderlyingSymbol UnderlyingSymbol
+                public QuickFix.Fields.UnderlyingSymbol UnderlyingSymbol
                 { 
                     get 
                     {
@@ -9760,7 +9760,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
+                    public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                     { 
                         get 
                         {
@@ -9840,7 +9840,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
+                    public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
                     { 
                         get 
                         {
@@ -9920,7 +9920,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.UnderlyingInstrumentPartyID UnderlyingInstrumentPartyID
+                    public QuickFix.Fields.UnderlyingInstrumentPartyID UnderlyingInstrumentPartyID
                     { 
                         get 
                         {
@@ -10060,7 +10060,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.UnderlyingInstrumentPartySubID UnderlyingInstrumentPartySubID
+                        public QuickFix.Fields.UnderlyingInstrumentPartySubID UnderlyingInstrumentPartySubID
                         { 
                             get 
                             {
@@ -10142,7 +10142,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.LegSymbol LegSymbol
+                public QuickFix.Fields.LegSymbol LegSymbol
                 { 
                     get 
                     {
@@ -11832,7 +11832,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
+                    public QuickFix.Fields.LegSecurityAltID LegSecurityAltID
                     { 
                         get 
                         {
@@ -11913,7 +11913,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.PartyID PartyID
+                public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -12053,7 +12053,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.PartySubID PartySubID
+                    public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
                         {
@@ -12134,7 +12134,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.StipulationType StipulationType
+                public QuickFix.Fields.StipulationType StipulationType
                 { 
                     get 
                     {
@@ -12214,7 +12214,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.AllocAccount AllocAccount
+                public QuickFix.Fields.AllocAccount AllocAccount
                 { 
                     get 
                     {
@@ -13501,7 +13501,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.NestedPartyID NestedPartyID
+                    public QuickFix.Fields.NestedPartyID NestedPartyID
                     { 
                         get 
                         {
@@ -13641,7 +13641,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.NestedPartySubID NestedPartySubID
+                        public QuickFix.Fields.NestedPartySubID NestedPartySubID
                         { 
                             get 
                             {
@@ -13722,7 +13722,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
+                    public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
                     { 
                         get 
                         {
@@ -13864,7 +13864,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.ClearingInstruction ClearingInstruction
+                    public QuickFix.Fields.ClearingInstruction ClearingInstruction
                     { 
                         get 
                         {
@@ -13913,7 +13913,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.SettlInstSource SettlInstSource
+                    public QuickFix.Fields.SettlInstSource SettlInstSource
                     { 
                         get 
                         {
@@ -14022,7 +14022,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.SettlPartyID SettlPartyID
+                        public QuickFix.Fields.SettlPartyID SettlPartyID
                         { 
                             get 
                             {
@@ -14162,7 +14162,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                                                    public QuickFix.Fields.SettlPartySubID SettlPartySubID
+                            public QuickFix.Fields.SettlPartySubID SettlPartySubID
                             { 
                                 get 
                                 {
@@ -14245,7 +14245,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.PosAmtType PosAmtType
+                public QuickFix.Fields.PosAmtType PosAmtType
                 { 
                     get 
                     {
@@ -14356,7 +14356,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.RateSource RateSource
+                public QuickFix.Fields.RateSource RateSource
                 { 
                     get 
                     {

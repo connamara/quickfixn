@@ -570,7 +570,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.PartyID PartyID
+                public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -710,7 +710,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.PartySubID PartySubID
+                    public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
                         {
@@ -791,7 +791,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.AllocAccount AllocAccount
+                public QuickFix.Fields.AllocAccount AllocAccount
                 { 
                     get 
                     {
