@@ -207,7 +207,6 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.TradingSessionSubID);
             }
-
         }
     }
 }

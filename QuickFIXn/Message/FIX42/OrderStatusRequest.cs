@@ -800,7 +800,6 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.Side);
             }
-
         }
     }
 }
