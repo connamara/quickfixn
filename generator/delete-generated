@@ -1,0 +1,33 @@
+#!/usr/bin/env ruby
+
+require 'fileutils'
+
+FILE_ROOT = File.expand_path('../../QuickFIXn', __FILE__)
+
+puts "FILE_ROOT: #{FILE_ROOT}"
+
+files_to_delete = [
+  File.join(FILE_ROOT, 'FixMessages.csproj'),
+  File.join(FILE_ROOT, 'Fields/Fields.cs'),
+  File.join(FILE_ROOT, 'Fields/FieldTags.cs')
+]
+
+dir_pattern = File.join(FILE_ROOT, 'Message/FIX*')
+dirs_to_delete = Dir.glob(dir_pattern)
+
+
+puts '--Deleting generated code--'
+puts 'Files:'
+
+files_to_delete.each do |f|
+  puts "* Attempting to delete file: #{f}"
+  File.delete f
+end
+
+puts 'Dirs:'
+
+dirs_to_delete.each do |d|
+  puts "* Attempting to delete directory: #{d}/"
+  FileUtils.rm_r d
+end
+
