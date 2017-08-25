@@ -1165,7 +1165,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.ClOrdID ClOrdID
+                            public QuickFix.Fields.ClOrdID ClOrdID
                 { 
                     get 
                     {
@@ -1338,7 +1338,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.LastShares LastShares
+                            public QuickFix.Fields.LastShares LastShares
                 { 
                     get 
                     {
@@ -1480,7 +1480,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.AllocAccount AllocAccount
+                            public QuickFix.Fields.AllocAccount AllocAccount
                 { 
                     get 
                     {
@@ -2100,7 +2100,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoMiscFees);
                 }
-                public class NoMiscFeesGroup : Group
+                            public class NoMiscFeesGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
                 
@@ -2116,7 +2116,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
+                                    public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
                     { 
                         get 
                         {
@@ -2211,7 +2211,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
         }
     }

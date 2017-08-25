@@ -1680,6 +1680,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.MaxShow);
             }
+
         }
     }
 }

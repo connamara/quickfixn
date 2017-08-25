@@ -1,1 +1,1 @@
-ruby generator\ruby\bin\generate
+ruby generator\generate.rb
