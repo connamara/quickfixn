@@ -1137,6 +1137,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.Adjustment);
             }
+
         }
     }
 }

@@ -351,7 +351,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.SettlInstID SettlInstID
+                            public QuickFix.Fields.SettlInstID SettlInstID
                 { 
                     get 
                     {
@@ -1157,7 +1157,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.SettlCurrency);
                 }
-                public class NoPartyIDsGroup : Group
+                            public class NoPartyIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0};
                 
@@ -1173,7 +1173,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.PartyID PartyID
+                                    public QuickFix.Fields.PartyID PartyID
                     { 
                         get 
                         {
@@ -1297,7 +1297,7 @@ namespace QuickFix
                     { 
                         return IsSetField(Tags.NoPartySubIDs);
                     }
-                    public class NoPartySubIDsGroup : Group
+                                    public class NoPartySubIDsGroup : Group
                     {
                         public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
                     
@@ -1313,7 +1313,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.PartySubID PartySubID
+                                            public QuickFix.Fields.PartySubID PartySubID
                         { 
                             get 
                             {
@@ -1377,7 +1377,6 @@ namespace QuickFix
                         }
                     
                     }
-                
                 }
                 public class NoDlvyInstGroup : Group
                 {
@@ -1395,7 +1394,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.SettlInstSource SettlInstSource
+                                    public QuickFix.Fields.SettlInstSource SettlInstSource
                     { 
                         get 
                         {
@@ -1488,7 +1487,7 @@ namespace QuickFix
                     { 
                         return IsSetField(Tags.NoSettlPartyIDs);
                     }
-                    public class NoSettlPartyIDsGroup : Group
+                                    public class NoSettlPartyIDsGroup : Group
                     {
                         public static int[] fieldOrder = {Tags.SettlPartyID, Tags.SettlPartyIDSource, Tags.SettlPartyRole, Tags.NoSettlPartySubIDs, 0};
                     
@@ -1504,7 +1503,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                        public QuickFix.Fields.SettlPartyID SettlPartyID
+                                            public QuickFix.Fields.SettlPartyID SettlPartyID
                         { 
                             get 
                             {
@@ -1628,7 +1627,7 @@ namespace QuickFix
                         { 
                             return IsSetField(Tags.NoSettlPartySubIDs);
                         }
-                        public class NoSettlPartySubIDsGroup : Group
+                                            public class NoSettlPartySubIDsGroup : Group
                         {
                             public static int[] fieldOrder = {Tags.SettlPartySubID, Tags.SettlPartySubIDType, 0};
                         
@@ -1644,7 +1643,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                            public QuickFix.Fields.SettlPartySubID SettlPartySubID
+                                                    public QuickFix.Fields.SettlPartySubID SettlPartySubID
                             { 
                                 get 
                                 {
@@ -1708,11 +1707,8 @@ namespace QuickFix
                             }
                         
                         }
-                    
                     }
-                
                 }
-            
             }
         }
     }

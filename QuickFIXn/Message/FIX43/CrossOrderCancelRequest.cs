@@ -1287,7 +1287,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.Side Side
+                            public QuickFix.Fields.Side Side
                 { 
                     get 
                     {
@@ -1814,7 +1814,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.EncodedText);
                 }
-                public class NoPartyIDsGroup : Group
+                            public class NoPartyIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.PartySubID, 0};
                 
@@ -1830,7 +1830,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.PartyID PartyID
+                                    public QuickFix.Fields.PartyID PartyID
                     { 
                         get 
                         {
@@ -1956,7 +1956,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
             public class NoSecurityAltIDGroup : Group
             {
@@ -1974,7 +1973,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.SecurityAltID SecurityAltID
+                            public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {

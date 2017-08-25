@@ -316,7 +316,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.PartyListResponseType PartyListResponseType
+                            public QuickFix.Fields.PartyListResponseType PartyListResponseType
                 { 
                     get 
                     {
@@ -365,7 +365,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.PartyID PartyID
+                            public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -489,7 +489,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoPartySubIDs);
                 }
-                public class NoPartySubIDsGroup : Group
+                            public class NoPartySubIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
                 
@@ -505,7 +505,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.PartySubID PartySubID
+                                    public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
                         {
@@ -569,7 +569,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
             public class NoRequestedPartyRolesGroup : Group
             {
@@ -587,7 +586,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.RequestedPartyRole RequestedPartyRole
+                            public QuickFix.Fields.RequestedPartyRole RequestedPartyRole
                 { 
                     get 
                     {
@@ -636,7 +635,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.PartyRelationship PartyRelationship
+                            public QuickFix.Fields.PartyRelationship PartyRelationship
                 { 
                     get 
                     {

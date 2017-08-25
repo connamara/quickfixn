@@ -527,6 +527,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.Text);
             }
+
         }
     }
 }

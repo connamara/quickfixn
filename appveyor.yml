@@ -2,21 +2,11 @@ version: 1.0.{build}
 
 install:
 - cmd: >-
-    set PATH=C:\Ruby22\bin;%PATH%
-
-    gem install nokogiri
-
-    gem install mustache
+    gem install nokogiri -v 1.6.8.1
 
     generate.bat
-
 build_script:
 - cmd: build.bat
-
-before_test:
-  - ruby -v
-  - gem -v
-  - bundle -v
 
 test_script:
 - cmd: >-

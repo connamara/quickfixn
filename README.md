@@ -13,7 +13,7 @@ This project requires the following:
 
 **To build**
 
-* [Ruby (>=2.0.0 required)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
+* [Ruby (1.9.3 recommended)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
 * Visual Studio 2010 or higher
 
 **To run tests**
@@ -25,7 +25,6 @@ Code Generation
 To regenerate the message and field class source from the Data Dictionaries, you need Ruby and the Nokogiri gem:
 
     gem install nokogiri
-    gem install mustache
     generate.bat
 
 
