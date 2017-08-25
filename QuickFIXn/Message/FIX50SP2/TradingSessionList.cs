@@ -217,7 +217,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.TradingSessionID TradingSessionID
+                public QuickFix.Fields.TradingSessionID TradingSessionID
                 { 
                     get 
                     {
@@ -1070,7 +1070,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.OrdType OrdType
+                    public QuickFix.Fields.OrdType OrdType
                     { 
                         get 
                         {
@@ -1119,7 +1119,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.TimeInForce TimeInForce
+                    public QuickFix.Fields.TimeInForce TimeInForce
                     { 
                         get 
                         {
@@ -1168,7 +1168,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.ExecInstValue ExecInstValue
+                    public QuickFix.Fields.ExecInstValue ExecInstValue
                     { 
                         get 
                         {
@@ -1217,7 +1217,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.MatchAlgorithm MatchAlgorithm
+                    public QuickFix.Fields.MatchAlgorithm MatchAlgorithm
                     { 
                         get 
                         {
@@ -1297,7 +1297,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.MDFeedType MDFeedType
+                    public QuickFix.Fields.MDFeedType MDFeedType
                     { 
                         get 
                         {

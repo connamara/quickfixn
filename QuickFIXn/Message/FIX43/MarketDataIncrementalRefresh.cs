@@ -93,7 +93,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.MDUpdateAction MDUpdateAction
+                public QuickFix.Fields.MDUpdateAction MDUpdateAction
                 { 
                     get 
                     {
@@ -2434,7 +2434,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.SecurityAltID SecurityAltID
+                    public QuickFix.Fields.SecurityAltID SecurityAltID
                     { 
                         get 
                         {

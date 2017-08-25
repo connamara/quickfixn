@@ -413,7 +413,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ClOrdID ClOrdID
+                public QuickFix.Fields.ClOrdID ClOrdID
                 { 
                     get 
                     {
@@ -2723,7 +2723,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.AllocAccount AllocAccount
+                    public QuickFix.Fields.AllocAccount AllocAccount
                     { 
                         get 
                         {
@@ -2803,7 +2803,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.TradingSessionID TradingSessionID
+                    public QuickFix.Fields.TradingSessionID TradingSessionID
                     { 
                         get 
                         {

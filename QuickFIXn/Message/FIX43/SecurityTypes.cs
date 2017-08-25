@@ -382,7 +382,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.SecurityType SecurityType
+                public QuickFix.Fields.SecurityType SecurityType
                 { 
                     get 
                     {

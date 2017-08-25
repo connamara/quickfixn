@@ -166,6 +166,7 @@ HERE
     str << "    }"
     str << ""
     str << gen_msg_fields(grp[:fields], prepend_spaces+4)
+    str.last.lstrip!.prepend(' '*4) # hack to remove accidental extra whitespace on first line of that string
     str << gen_msg_groups(grp[:groups], prepend_spaces+4)
     str << "}"
     str.map {|s| ' '*prepend_spaces + s}.join("\n")

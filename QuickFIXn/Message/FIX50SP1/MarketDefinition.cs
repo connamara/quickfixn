@@ -1155,7 +1155,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.StartTickPriceRange StartTickPriceRange
+                public QuickFix.Fields.StartTickPriceRange StartTickPriceRange
                 { 
                     get 
                     {
@@ -1297,7 +1297,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.LotType LotType
+                public QuickFix.Fields.LotType LotType
                 { 
                     get 
                     {
@@ -1377,7 +1377,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.OrdType OrdType
+                public QuickFix.Fields.OrdType OrdType
                 { 
                     get 
                     {
@@ -1426,7 +1426,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.TimeInForce TimeInForce
+                public QuickFix.Fields.TimeInForce TimeInForce
                 { 
                     get 
                     {
@@ -1475,7 +1475,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ExecInstValue ExecInstValue
+                public QuickFix.Fields.ExecInstValue ExecInstValue
                 { 
                     get 
                     {
