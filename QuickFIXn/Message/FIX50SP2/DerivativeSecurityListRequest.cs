@@ -4565,7 +4565,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
+                            public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                 { 
                     get 
                     {
@@ -4645,7 +4645,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
+                            public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
                 { 
                     get 
                     {
@@ -4725,7 +4725,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.UnderlyingInstrumentPartyID UnderlyingInstrumentPartyID
+                            public QuickFix.Fields.UnderlyingInstrumentPartyID UnderlyingInstrumentPartyID
                 { 
                     get 
                     {
@@ -4849,7 +4849,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoUndlyInstrumentPartySubIDs);
                 }
-                public class NoUndlyInstrumentPartySubIDsGroup : Group
+                            public class NoUndlyInstrumentPartySubIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.UnderlyingInstrumentPartySubID, Tags.UnderlyingInstrumentPartySubIDType, 0};
                 
@@ -4865,7 +4865,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.UnderlyingInstrumentPartySubID UnderlyingInstrumentPartySubID
+                                    public QuickFix.Fields.UnderlyingInstrumentPartySubID UnderlyingInstrumentPartySubID
                     { 
                         get 
                         {
@@ -4929,7 +4929,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
             public class NoDerivativeSecurityAltIDGroup : Group
             {
@@ -4947,7 +4946,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.DerivativeSecurityAltID DerivativeSecurityAltID
+                            public QuickFix.Fields.DerivativeSecurityAltID DerivativeSecurityAltID
                 { 
                     get 
                     {
@@ -5027,7 +5026,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.DerivativeEventType DerivativeEventType
+                            public QuickFix.Fields.DerivativeEventType DerivativeEventType
                 { 
                     get 
                     {
@@ -5200,7 +5199,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                public QuickFix.Fields.DerivativeInstrumentPartyID DerivativeInstrumentPartyID
+                            public QuickFix.Fields.DerivativeInstrumentPartyID DerivativeInstrumentPartyID
                 { 
                     get 
                     {
@@ -5324,7 +5323,7 @@ namespace QuickFix
                 { 
                     return IsSetField(Tags.NoDerivativeInstrumentPartySubIDs);
                 }
-                public class NoDerivativeInstrumentPartySubIDsGroup : Group
+                            public class NoDerivativeInstrumentPartySubIDsGroup : Group
                 {
                     public static int[] fieldOrder = {Tags.DerivativeInstrumentPartySubID, Tags.DerivativeInstrumentPartySubIDType, 0};
                 
@@ -5340,7 +5339,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                    public QuickFix.Fields.DerivativeInstrumentPartySubID DerivativeInstrumentPartySubID
+                                    public QuickFix.Fields.DerivativeInstrumentPartySubID DerivativeInstrumentPartySubID
                     { 
                         get 
                         {
@@ -5404,7 +5403,6 @@ namespace QuickFix
                     }
                 
                 }
-            
             }
         }
     }

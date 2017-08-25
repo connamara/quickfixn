@@ -804,6 +804,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.LastMkt);
             }
+
         }
     }
 }
