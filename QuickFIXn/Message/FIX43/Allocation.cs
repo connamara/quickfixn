@@ -2221,7 +2221,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ClOrdID ClOrdID
+                public QuickFix.Fields.ClOrdID ClOrdID
                 { 
                     get 
                     {
@@ -2394,7 +2394,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.LastQty LastQty
+                public QuickFix.Fields.LastQty LastQty
                 { 
                     get 
                     {
@@ -2567,7 +2567,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.SecurityAltID SecurityAltID
+                public QuickFix.Fields.SecurityAltID SecurityAltID
                 { 
                     get 
                     {
@@ -2647,7 +2647,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.PartyID PartyID
+                public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -2789,7 +2789,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.AllocAccount AllocAccount
+                public QuickFix.Fields.AllocAccount AllocAccount
                 { 
                     get 
                     {
@@ -3549,7 +3549,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.NestedPartyID NestedPartyID
+                    public QuickFix.Fields.NestedPartyID NestedPartyID
                     { 
                         get 
                         {
@@ -3691,7 +3691,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
+                    public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
                     { 
                         get 
                         {

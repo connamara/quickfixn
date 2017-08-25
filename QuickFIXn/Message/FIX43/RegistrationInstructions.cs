@@ -382,7 +382,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.PartyID PartyID
+                public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -524,7 +524,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.RegistDetls RegistDetls
+                public QuickFix.Fields.RegistDetls RegistDetls
                 { 
                     get 
                     {
@@ -788,7 +788,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.NestedPartyID NestedPartyID
+                    public QuickFix.Fields.NestedPartyID NestedPartyID
                     { 
                         get 
                         {
@@ -931,7 +931,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.DistribPaymentMethod DistribPaymentMethod
+                public QuickFix.Fields.DistribPaymentMethod DistribPaymentMethod
                 { 
                     get 
                     {

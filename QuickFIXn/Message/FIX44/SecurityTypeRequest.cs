@@ -300,7 +300,6 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.SecuritySubType);
             }
-
         }
     }
 }

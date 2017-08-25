@@ -46,7 +46,7 @@ HERE
   end
 
   def self.gen_msg msg, fixver 
-<<HERE
+    s = <<HERE
 // This is a generated file.  Don't edit it directly!
 
 using QuickFix.Fields;
@@ -60,11 +60,19 @@ namespace QuickFix
 #{ctor(msg)}
 #{ctor_req(msg)}
 #{gen_msg_fields(msg[:fields], 12)}
-#{gen_msg_groups(msg[:groups], 12)}
+HERE
+
+    if msg[:groups].length > 0
+      s << gen_msg_groups(msg[:groups], 12)
+      s << "\n"
+    end
+
+    s += <<HERE2
         }
     }
 }
-HERE
+HERE2
+    s
   end
 
   def self.msgtype msg
@@ -166,6 +174,7 @@ HERE
     str << "    }"
     str << ""
     str << gen_msg_fields(grp[:fields], prepend_spaces+4)
+    str.last.lstrip!.prepend(' '*4) # hack to remove accidental extra whitespace on first line of that string
     str << gen_msg_groups(grp[:groups], prepend_spaces+4)
     str << "}"
     str.map {|s| ' '*prepend_spaces + s}.join("\n")

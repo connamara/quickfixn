@@ -1452,7 +1452,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
+                public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
                 { 
                     get 
                     {

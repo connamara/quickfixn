@@ -351,7 +351,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.SettlInstID SettlInstID
+                public QuickFix.Fields.SettlInstID SettlInstID
                 { 
                     get 
                     {
@@ -1173,7 +1173,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.PartyID PartyID
+                    public QuickFix.Fields.PartyID PartyID
                     { 
                         get 
                         {
@@ -1313,7 +1313,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.PartySubID PartySubID
+                        public QuickFix.Fields.PartySubID PartySubID
                         { 
                             get 
                             {
@@ -1394,7 +1394,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.SettlInstSource SettlInstSource
+                    public QuickFix.Fields.SettlInstSource SettlInstSource
                     { 
                         get 
                         {
@@ -1503,7 +1503,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.SettlPartyID SettlPartyID
+                        public QuickFix.Fields.SettlPartyID SettlPartyID
                         { 
                             get 
                             {
@@ -1643,7 +1643,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                                                    public QuickFix.Fields.SettlPartySubID SettlPartySubID
+                            public QuickFix.Fields.SettlPartySubID SettlPartySubID
                             { 
                                 get 
                                 {
