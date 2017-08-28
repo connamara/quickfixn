@@ -175,6 +175,7 @@ namespace UnitTests
         QuickFix.Dictionary config = null;
         int seqNum = 1;
         Regex msRegex = new Regex(@"\.[\d]{1,3}$");
+        Regex microsecondRegex = new Regex(@"\.[\d]{1,6}$");
 
         [SetUp]
         public void setup()
@@ -528,18 +529,26 @@ namespace UnitTests
             Assert.That(m.Success == shouldHaveMs);
         }
 
+        public void AssertMicrosecondsInTag(string msgType, int tag, bool shouldHaveMicrosecond)
+        {
+            QuickFix.Message msg = responder.msgLookup[msgType].Last();
+            string sendingTime = msg.Header.GetField(tag);
+            Match m = microsecondRegex.Match(sendingTime);
+            Assert.That(m.Success == shouldHaveMicrosecond);
+        }
+
         [Test]
         public void TestMillisecondsInSendingTimeStamp()
         {
             // MS in timestamp should default to Y
-            Assert.That(session.MillisecondsInTimeStamp);
+            Assert.That(session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Millisecond );
 
             // Ms should show up
             Logon();
             AssertMsInTag(QuickFix.Fields.MsgType.LOGON, QuickFix.Fields.Tags.SendingTime, true);
             
             // No ms
-            session.MillisecondsInTimeStamp = false;
+            session.TimeStampPrecision = QuickFix.Fields.Converters.TimeStampPrecision.Second;
             Logon();
             Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.LOGON].Count == 2);
             AssertMsInTag(QuickFix.Fields.MsgType.LOGON, QuickFix.Fields.Tags.SendingTime, false);
@@ -547,17 +556,42 @@ namespace UnitTests
             // Less than FIX42 - no ms in timestamp, even if you tell it to
             sessionID = new QuickFix.SessionID(QuickFix.FixValues.BeginString.FIX40, "SENDER", "TARGET");
             session.SessionID = sessionID;
-            session.MillisecondsInTimeStamp = true;
+            session.TimeStampPrecision = QuickFix.Fields.Converters.TimeStampPrecision.Millisecond;
             Logon40();
             Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.LOGON].Count == 3);
             AssertMsInTag(QuickFix.Fields.MsgType.LOGON, QuickFix.Fields.Tags.SendingTime, false);
         }
 
         [Test]
+        public void TestMicrosecondsInSendingTimeStamp()
+        {
+            // Microseconds in timestamp
+            session.TimeStampPrecision = QuickFix.Fields.Converters.TimeStampPrecision.Microsecond;
+
+            // Microseconds should show up
+            Logon();
+            AssertMicrosecondsInTag(QuickFix.Fields.MsgType.LOGON, QuickFix.Fields.Tags.SendingTime, true);
+
+            // Milliseconds in timestamp
+            session.TimeStampPrecision = QuickFix.Fields.Converters.TimeStampPrecision.Millisecond;
+            Logon();
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.LOGON].Count == 2);
+            AssertMsInTag(QuickFix.Fields.MsgType.LOGON, QuickFix.Fields.Tags.SendingTime, true);
+
+            // Less than FIX42 - no microseconds in timestamp, even if you tell it to
+            sessionID = new QuickFix.SessionID(QuickFix.FixValues.BeginString.FIX40, "SENDER", "TARGET");
+            session.SessionID = sessionID;
+            session.TimeStampPrecision =  QuickFix.Fields.Converters.TimeStampPrecision.Microsecond;
+            Logon40();
+            Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.LOGON].Count == 3);
+            AssertMicrosecondsInTag(QuickFix.Fields.MsgType.LOGON, QuickFix.Fields.Tags.SendingTime, false);
+        }
+
+        [Test]
         public void TestMillisecondsInOrigSendingTimeStamp()
         {
-            // MS in timestamp should default to Y
-            Assert.That(session.MillisecondsInTimeStamp);
+            // MS in timestamp should default 
+            Assert.That( session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Millisecond );
             
             // Logon first
             Logon();
@@ -565,18 +599,44 @@ namespace UnitTests
             // Do a resend request
             SendResendRequest(0, 2);
             AssertMsInTag(QuickFix.Fields.MsgType.SEQUENCERESET, QuickFix.Fields.Tags.OrigSendingTime, true);
-            
+
             // NO MS
-            session.MillisecondsInTimeStamp = false;
+            session.TimeStampPrecision = QuickFix.Fields.Converters.TimeStampPrecision.Second;
             SendResendRequest(0, 2);
             AssertMsInTag(QuickFix.Fields.MsgType.SEQUENCERESET, QuickFix.Fields.Tags.OrigSendingTime, false);
 
             // Less than FIX42 - no ms in timestamp, even if you tell it to
             sessionID = new QuickFix.SessionID(QuickFix.FixValues.BeginString.FIX40, "SENDER", "TARGET");
             session.SessionID = sessionID;
-            session.MillisecondsInTimeStamp = true;
+            session.TimeStampPrecision = QuickFix.Fields.Converters.TimeStampPrecision.Millisecond;
             SendResendRequest40(0, 2);
             AssertMsInTag(QuickFix.Fields.MsgType.SEQUENCERESET, QuickFix.Fields.Tags.OrigSendingTime, false);
+        }
+
+        [Test]
+        public void TestMicrosecondsInOrigSendingTimeStamp()
+        {
+            // Microsecond in timestamp 
+            session.TimeStampPrecision = QuickFix.Fields.Converters.TimeStampPrecision.Microsecond;
+
+            // Logon first
+            Logon();
+
+            // Do a resend request
+            SendResendRequest(0, 2);
+            AssertMicrosecondsInTag(QuickFix.Fields.MsgType.SEQUENCERESET, QuickFix.Fields.Tags.OrigSendingTime, true);
+
+            // NO MS
+            session.TimeStampPrecision = QuickFix.Fields.Converters.TimeStampPrecision.Second;
+            SendResendRequest(0, 2);
+            AssertMicrosecondsInTag(QuickFix.Fields.MsgType.SEQUENCERESET, QuickFix.Fields.Tags.OrigSendingTime, false);
+
+            // Less than FIX42 - no ms in timestamp, even if you tell it to
+            sessionID = new QuickFix.SessionID(QuickFix.FixValues.BeginString.FIX40, "SENDER", "TARGET");
+            session.SessionID = sessionID;
+            session.TimeStampPrecision = QuickFix.Fields.Converters.TimeStampPrecision.Microsecond;
+            SendResendRequest40(0, 2);
+            AssertMicrosecondsInTag(QuickFix.Fields.MsgType.SEQUENCERESET, QuickFix.Fields.Tags.OrigSendingTime, false);
         }
 
         [Test]

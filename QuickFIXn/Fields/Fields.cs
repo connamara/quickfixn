@@ -1,6 +1,7 @@
 // This is a generated file.  Don't edit it directly!
 
 using System;
+using QuickFix.Fields.Converters;
 
 namespace QuickFix.Fields
 {
@@ -1131,6 +1132,8 @@ namespace QuickFix.Fields
             :base(Tags.SendingTime, val) {}
         public SendingTime(DateTime val, bool showMilliseconds)
 	    :base(Tags.SendingTime, val, showMilliseconds) {}
+
+        public SendingTime( DateTime val, TimeStampPrecision timestampPrecision) : base( Tags.SendingTime, val, timestampPrecision) { }
 
     }
 
@@ -2267,6 +2270,8 @@ namespace QuickFix.Fields
         public OrigSendingTime(DateTime val, bool showMilliseconds)
 	    :base(Tags.OrigSendingTime, val, showMilliseconds) {}
 
+        public OrigSendingTime(DateTime val, TimeStampPrecision timeStampPrecision )
+            : base(Tags.OrigSendingTime, val, timeStampPrecision) { }
     }
 
 
