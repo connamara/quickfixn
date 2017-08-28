@@ -44,7 +44,6 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -55,7 +54,7 @@
     <Compile Include="CompositeLog.cs" />
     <Compile Include="DataDictionary\IFieldMapSpec.cs" />
     <Compile Include="DataDictionary\IGroupSpec.cs" />
-    <Compile Include="HttpServer.cs" />
+    <Compile Include="Fields\Converters\TimeStampPrecision.cs" />
     <Compile Include="IAcceptor.cs" />
     <Compile Include="ClientHandlerThread.cs" />
     <Compile Include="DataDictionaryProvider.cs" />

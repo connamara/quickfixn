@@ -29,3 +29,4 @@ Examples/SimpleAcceptor/obj/*
 upload_to_s3.rb
 *~
 *.suo
+.vs/

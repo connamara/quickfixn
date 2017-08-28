@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
+using QuickFix.Fields.Converters;
 
 namespace QuickFix
 {
@@ -149,6 +150,23 @@ namespace QuickFix
                 case "FR": return System.DayOfWeek.Friday;
                 case "SA": return System.DayOfWeek.Saturday;
                 default: throw new ConfigError("Illegal value " + GetString(key) + " for " + key);
+            }
+        }
+
+        public TimeStampPrecision GetTimeStampPrecision( string key )
+        {
+            string precision = GetString( key ).ToUpper();
+            switch( precision )
+            {
+                case "SECOND":
+                    return TimeStampPrecision.Second;
+                case "MILLISECOND":
+                case "MILLI":
+                    return TimeStampPrecision.Millisecond;
+                case "MICROSECOND":
+                case "MICRO":
+                    return TimeStampPrecision.Microsecond;
+                default: throw new ConfigError( "Illegal value " + GetString( key ) + " for " + key );
             }
         }
 

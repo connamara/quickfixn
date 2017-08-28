@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using System.Globalization;
 
 namespace QuickFix.Fields.Converters
@@ -8,16 +9,32 @@ namespace QuickFix.Fields.Converters
     /// </summary>
     public static class DateTimeConverter
     {
+        public const string DATE_TIME_FORMAT_WITH_MICROSECONDS = "{0:yyyyMMdd-HH:mm:ss.ffffff}";
         public const string DATE_TIME_FORMAT_WITH_MILLISECONDS = "{0:yyyyMMdd-HH:mm:ss.fff}";
         public const string DATE_TIME_FORMAT_WITHOUT_MILLISECONDS = "{0:yyyyMMdd-HH:mm:ss}";
         public const string DATE_ONLY_FORMAT = "{0:yyyyMMdd}";
+        public const string TIME_ONLY_FORMAT_WITH_MICROSECONDS = "{0:HH:mm:ss.ffffff}";
         public const string TIME_ONLY_FORMAT_WITH_MILLISECONDS = "{0:HH:mm:ss.fff}";
         public const string TIME_ONLY_FORMAT_WITHOUT_MILLISECONDS = "{0:HH:mm:ss}";
-        public static string[] DATE_TIME_FORMATS = { "yyyyMMdd-HH:mm:ss.fff", "yyyyMMdd-HH:mm:ss" };
+        public static string[] DATE_TIME_FORMATS = { "yyyyMMdd-HH:mm:ss.ffffff", "yyyyMMdd-HH:mm:ss.fff", "yyyyMMdd-HH:mm:ss" };
         public static string[] DATE_ONLY_FORMATS = { "yyyyMMdd" };
-        public static string[] TIME_ONLY_FORMATS = { "HH:mm:ss.fff", "HH:mm:ss" };
+        public static string[] TIME_ONLY_FORMATS = { "HH:mm:ss.ffffff", "HH:mm:ss.fff", "HH:mm:ss" };
         public static DateTimeStyles DATE_TIME_STYLES = DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal;
         public static CultureInfo DATE_TIME_CULTURE_INFO = CultureInfo.InvariantCulture;
+        private static IDictionary<TimeStampPrecision, string> DATE_TIME_PRECISION_TO_FORMAT = new Dictionary<TimeStampPrecision, string>
+        {
+            {TimeStampPrecision.Second, DATE_TIME_FORMAT_WITHOUT_MILLISECONDS},
+            {TimeStampPrecision.Millisecond, DATE_TIME_FORMAT_WITH_MILLISECONDS},
+            {TimeStampPrecision.Microsecond, DATE_TIME_FORMAT_WITH_MICROSECONDS},
+        };
+
+        private static IDictionary<TimeStampPrecision, string> TIME_ONLY_PRECISION_TO_FORMAT = new Dictionary<TimeStampPrecision, string>
+        {
+            {TimeStampPrecision.Second, TIME_ONLY_FORMAT_WITHOUT_MILLISECONDS},
+            {TimeStampPrecision.Millisecond, TIME_ONLY_FORMAT_WITH_MILLISECONDS},
+            {TimeStampPrecision.Microsecond, TIME_ONLY_FORMAT_WITH_MICROSECONDS},
+        };
+
 
         /// <summary>
         /// Convert string to DateTime
@@ -64,7 +81,7 @@ namespace QuickFix.Fields.Converters
             try
             {
                 System.DateTime d = System.DateTime.ParseExact(str, TIME_ONLY_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
-                return new System.DateTime(1980, 1, 1, d.Hour, d.Minute, d.Second, d.Millisecond);
+                return new System.DateTime(1980, 1, 1) + d.TimeOfDay;
             }
             catch (System.Exception e)
             {
@@ -83,7 +100,7 @@ namespace QuickFix.Fields.Converters
             try
             {
                 System.DateTime d = ConvertToTimeOnly(str);
-                return new System.TimeSpan(d.Hour, d.Minute, d.Second, d.Millisecond);
+                return d.TimeOfDay;
             }
             catch (System.Exception e)
             {
@@ -97,11 +114,22 @@ namespace QuickFix.Fields.Converters
         /// <param name="dt">the DateTime to convert</param>
         /// <param name="includeMilliseconds">if true, include milliseconds in the result</param>
         /// <returns>FIX-formatted DataTime</returns>
-        public static string Convert(System.DateTime dt, bool includeMilliseconds)
+        public static string Convert( System.DateTime dt, bool includeMilliseconds )
         {
-            if(includeMilliseconds)
-                return string.Format(DATE_TIME_FORMAT_WITH_MILLISECONDS, dt);
-            return string.Format(DATE_TIME_FORMAT_WITHOUT_MILLISECONDS, dt);
+            return includeMilliseconds ? Convert(dt, TimeStampPrecision.Millisecond): Convert( dt, TimeStampPrecision.Second );
+        }
+
+
+        /// <summary>
+        /// Converts the specified dt.
+        /// </summary>
+        /// <param name="dt">The dt.</param>
+        /// <param name="precision">The precision.</param>
+        /// <returns></returns>
+        public static string Convert(System.DateTime dt, TimeStampPrecision precision )
+        {
+            var format = DATE_TIME_PRECISION_TO_FORMAT[precision];
+            return string.Format(format, dt);
         }
 
         /// <summary>
@@ -124,11 +152,15 @@ namespace QuickFix.Fields.Converters
             return DateTimeConverter.ConvertTimeOnly(dt, true);
         }
 
-        public static string ConvertTimeOnly(System.DateTime dt, bool includeMilliseconds)
+        public static string ConvertTimeOnly( System.DateTime dt, bool includeMilliseconds )
         {
-            if (includeMilliseconds)
-                return string.Format(TIME_ONLY_FORMAT_WITH_MILLISECONDS, dt);
-            return string.Format(TIME_ONLY_FORMAT_WITHOUT_MILLISECONDS, dt);
+            return includeMilliseconds ? ConvertTimeOnly( dt, TimeStampPrecision.Millisecond ) : ConvertTimeOnly( dt, TimeStampPrecision.Second );
+        }
+
+        public static string ConvertTimeOnly(System.DateTime dt, TimeStampPrecision precision)
+        {
+            var format = TIME_ONLY_PRECISION_TO_FORMAT[precision];
+            return string.Format(format, dt);
         }
     }
 }
