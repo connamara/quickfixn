@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 using System.Threading;
 
 namespace UnitTests
 {
-    [TestFixture]
-    public class FileStoreTests
+    public class FileStoreTests : IDisposable
     {
         QuickFix.FileStore store;
         QuickFix.FileStoreFactory factory;
@@ -16,8 +15,7 @@ namespace UnitTests
         QuickFix.SessionSettings settings;
         QuickFix.SessionID sessionID;
 
-        [SetUp]
-        public void setup()
+        public FileStoreTests()
         {
             if (System.IO.Directory.Exists("store"))
                 System.IO.Directory.Delete("store", true);
@@ -37,7 +35,7 @@ namespace UnitTests
 
         void rebuildStore()
         {
-            if(store != null)
+            if (store != null)
             {
                 store.Dispose();
             }
@@ -45,79 +43,77 @@ namespace UnitTests
             store = (QuickFix.FileStore)factory.Create(sessionID);
         }
 
-
-        [TearDown]
-        public void teardown()
+        public void Dispose()
         {
             store.Dispose();
         }
 
-        [Test]
+        [Fact]
         public void testPrefixForSessionWithSubsAndLoc()
         {
             QuickFix.SessionID sessionIDWithSubsAndLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", "SENDERLOC", "TARGETCOMP", "TARGETSUB", "TARGETLOC");
-            Assert.That(QuickFix.FileStore.Prefix(sessionIDWithSubsAndLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB_SENDERLOC-TARGETCOMP_TARGETSUB_TARGETLOC"));
+            Assert.Equal("FIX.4.2-SENDERCOMP_SENDERSUB_SENDERLOC-TARGETCOMP_TARGETSUB_TARGETLOC", QuickFix.FileStore.Prefix(sessionIDWithSubsAndLocation));
 
             QuickFix.SessionID sessionIDWithSubsNoLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", "TARGETCOMP", "TARGETSUB");
-            Assert.That(QuickFix.FileStore.Prefix(sessionIDWithSubsNoLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB"));
+            Assert.Equal("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB", QuickFix.FileStore.Prefix(sessionIDWithSubsNoLocation));
         }
 
-        [Test]
+        [Fact]
         public void generateFileNamesTest()
         {
-            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.seqnums"));
-            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.body"));
-            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.header"));
-            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.session"));
+            Assert.True(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.seqnums"));
+            Assert.True(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.body"));
+            Assert.True(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.header"));
+            Assert.True(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.session"));
         }
 
-        [Test]
+        [Fact]
         public void getNextSenderMsgSeqNumTest()
         {
-            Assert.AreEqual(1, store.GetNextSenderMsgSeqNum());
+            Assert.Equal(1, store.GetNextSenderMsgSeqNum());
             store.SetNextSenderMsgSeqNum(5);
-            Assert.AreEqual(5, store.GetNextSenderMsgSeqNum());
+            Assert.Equal(5, store.GetNextSenderMsgSeqNum());
             rebuildStore();
-            Assert.AreEqual(5, store.GetNextSenderMsgSeqNum());
+            Assert.Equal(5, store.GetNextSenderMsgSeqNum());
         }
 
-        [Test]
+        [Fact]
         public void incNextSenderMsgSeqNumTest()
         {
             store.IncrNextSenderMsgSeqNum();
-            Assert.AreEqual(2, store.GetNextSenderMsgSeqNum());
+            Assert.Equal(2, store.GetNextSenderMsgSeqNum());
             rebuildStore();
-            Assert.AreEqual(2, store.GetNextSenderMsgSeqNum());
+            Assert.Equal(2, store.GetNextSenderMsgSeqNum());
         }
 
-        [Test]
+        [Fact]
         public void getNextTargetMsgSeqNumTest()
         {
-            Assert.AreEqual(1, store.GetNextTargetMsgSeqNum());
+            Assert.Equal(1, store.GetNextTargetMsgSeqNum());
             store.SetNextTargetMsgSeqNum(6);
-            Assert.AreEqual(6, store.GetNextTargetMsgSeqNum());
+            Assert.Equal(6, store.GetNextTargetMsgSeqNum());
             rebuildStore();
-            Assert.AreEqual(6, store.GetNextTargetMsgSeqNum());
+            Assert.Equal(6, store.GetNextTargetMsgSeqNum());
         }
 
-        [Test]
+        [Fact]
         public void incNextTargetMsgSeqNumTest()
         {
             store.IncrNextTargetMsgSeqNum();
-            Assert.AreEqual(2, store.GetNextTargetMsgSeqNum());
+            Assert.Equal(2, store.GetNextTargetMsgSeqNum());
             rebuildStore();
-            Assert.AreEqual(2, store.GetNextTargetMsgSeqNum());
+            Assert.Equal(2, store.GetNextTargetMsgSeqNum());
         }
 
-        [Test]
+        [Fact]
         public void resetTest()
         {
             // seq nums reset
             store.SetNextTargetMsgSeqNum(5);
             store.SetNextSenderMsgSeqNum(4);
             store.Reset();
-            Assert.AreEqual(1, store.GetNextTargetMsgSeqNum());
-            Assert.AreEqual(1, store.GetNextSenderMsgSeqNum());
+            Assert.Equal(1, store.GetNextTargetMsgSeqNum());
+            Assert.Equal(1, store.GetNextSenderMsgSeqNum());
 
             // Check that messages do not persist after reset
             store.Set(1, "dude");
@@ -129,10 +125,10 @@ namespace UnitTests
 
             var msgs = new List<string>();
             store.Get(2, 3, msgs);
-            Assert.That(msgs,Is.Empty);
+            Assert.Empty(msgs);
         }
 
-        [Test]
+        [Fact]
         public void CreationTimeTest()
         {
             DateTime d1 = store.CreationTime.Value;
@@ -143,11 +139,10 @@ namespace UnitTests
             Thread.Sleep(1000);
             store.Reset();
             DateTime d3 = store.CreationTime.Value;
-            Assert.AreEqual(-1, DateTimeOffset.Compare(d1, d3)); // e.g. d1 is earlier than d3
+            Assert.Equal(-1, DateTimeOffset.Compare(d1, d3)); // e.g. d1 is earlier than d3
         }
 
-
-        [Test]
+        [Fact]
         public void getTest()
         {
             store.Set(1, "dude");
@@ -159,14 +154,14 @@ namespace UnitTests
             store.Get(2, 3, msgs);
             var expected = new List<string>() { "pude", "ok" };
 
-            Assert.AreEqual(expected, msgs);
+            Assert.Equal(expected, msgs);
 
             rebuildStore();
 
             msgs = new List<string>();
             store.Get(2, 3, msgs);
 
-            Assert.AreEqual(expected, msgs);
+            Assert.Equal(expected, msgs);
         }
     }
 }

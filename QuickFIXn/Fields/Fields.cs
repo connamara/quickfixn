@@ -1132,8 +1132,8 @@ namespace QuickFix.Fields
             :base(Tags.SendingTime, val) {}
         public SendingTime(DateTime val, bool showMilliseconds)
 	    :base(Tags.SendingTime, val, showMilliseconds) {}
-
-        public SendingTime( DateTime val, TimeStampPrecision timestampPrecision) : base( Tags.SendingTime, val, timestampPrecision) { }
+        public SendingTime(DateTime val, TimeStampPrecision timeFormatPrecision)
+	    :base(Tags.SendingTime, val, timeFormatPrecision) {}
 
     }
 
@@ -2269,9 +2269,9 @@ namespace QuickFix.Fields
             :base(Tags.OrigSendingTime, val) {}
         public OrigSendingTime(DateTime val, bool showMilliseconds)
 	    :base(Tags.OrigSendingTime, val, showMilliseconds) {}
+        public OrigSendingTime(DateTime val, TimeStampPrecision precision)
+	    :base(Tags.OrigSendingTime, val, precision) {}
 
-        public OrigSendingTime(DateTime val, TimeStampPrecision timeStampPrecision )
-            : base(Tags.OrigSendingTime, val, timeStampPrecision) { }
     }
 
 

@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
+using Xunit;
+using Assert = Xunit.Assert;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class StringUTF8Tests
     {
-        [Test]
+        [Fact]
         public void NextTagTest()
         {
             byte[] str = new byte[5];
@@ -20,13 +20,13 @@ namespace UnitTests
             
             int pos = 0;
             int tag = utf8str.GetNextTag(ref pos);
-            Assert.That(pos, Is.EqualTo(3));
+            Assert.Equal(3, pos);
             ByteSizeString val = utf8str.GetNextValue(ref pos);
 
-            Assert.That(tag, Is.EqualTo(35));
-            Assert.That(pos, Is.EqualTo(5));
-            Assert.That(val.ByteArray, Is.EqualTo(Encoding.UTF8.GetBytes("8")));
-            Assert.That(val.ToString(), Is.EqualTo("8"));
+            Assert.Equal(35, tag);
+            Assert.Equal(5, pos);
+            Assert.Equal(val.ByteArray, Encoding.UTF8.GetBytes("8"));
+            Assert.Equal("8", val.ToString());
         }
     }
 }

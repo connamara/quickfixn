@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 using QuickFix;
 using QuickFix.Fields;
 using System.Reflection;
@@ -9,22 +9,10 @@ using System.Reflection;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class MessageCrackerTests
     {
         private readonly SessionID _DummySessionID = new SessionID("a","b","c");
-
-        [SetUp]
-        public void Setup()
-        {
-        }
-
-        [TearDown]
-        public void Teardown()
-        {
-        }
-
-
+        
         class TheseMightBeHandlerMethods
         {
             // This is a handler.
@@ -50,7 +38,7 @@ namespace UnitTests
             public int OnMessage(QuickFix.FIX42.MassQuote m, SessionID s) { return 0; }
         }
 
-        [Test]
+        [Fact]
         public void IsHandlerMethod()
         {
             MethodInfo[] methods = typeof(TheseMightBeHandlerMethods).GetMethods();
@@ -64,12 +52,10 @@ namespace UnitTests
                 }
             }
 
-            Assert.AreEqual(1, handlers.Count);
-            Assert.AreEqual(handlers[0].GetParameters()[0].ParameterType, typeof(QuickFix.FIX42.News));
+            Assert.Single(handlers);
+            Assert.Equal(typeof(QuickFix.FIX42.News), handlers[0].GetParameters()[0].ParameterType);
         }
-
-
-
+        
         public class TestCracker : MessageCracker
         {
             public bool CrackedNews42 { get; set; }
@@ -79,25 +65,25 @@ namespace UnitTests
             public void OnMessage(QuickFix.FIX44.News msg, SessionID s) { CrackedNews44 = true; }
         }
 
-        [Test]
+        [Fact]
         public void GoldenPath()
         {
             MessageCracker mc = new TestCracker();
             TestCracker tc = mc as TestCracker;
 
             mc.Crack(new QuickFix.FIX42.News(), _DummySessionID);
-            Assert.IsTrue(tc.CrackedNews42);
-            Assert.IsFalse(tc.CrackedNews44);
+            Assert.True(tc.CrackedNews42);
+            Assert.False(tc.CrackedNews44);
 
             // reset and do the opposite
             tc.CrackedNews42 = false;
 
             mc.Crack(new QuickFix.FIX44.News(), _DummySessionID);
-            Assert.IsFalse(tc.CrackedNews42);
-            Assert.IsTrue(tc.CrackedNews44);
+            Assert.False(tc.CrackedNews42);
+            Assert.True(tc.CrackedNews44);
         }
 
-        [Test]
+        [Fact]
         public void UnsupportedMessage()
         {
             MessageCracker mc = new TestCracker();

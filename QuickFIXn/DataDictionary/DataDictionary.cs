@@ -63,13 +63,22 @@ namespace QuickFix.DataDictionary
 			this.Messages = src.Messages;
 			this.FieldsByName = src.FieldsByName;
 			this.FieldsByTag = src.FieldsByTag;
-			if (null != src.MajorVersion)
+#if !NETSTANDARD1_6
+            if (null != src.MajorVersion)
 				this.MajorVersion = string.Copy(src.MajorVersion);
 			if (null != src.MinorVersion)
 				this.MinorVersion = string.Copy(src.MinorVersion);
 			if (null != src.Version)
 				this.Version = string.Copy(src.Version);
-			this.CheckFieldsHaveValues = src.CheckFieldsHaveValues;
+#else
+		    if (null != src.MajorVersion)
+		        this.MajorVersion = src.MajorVersion;
+		    if (null != src.MinorVersion)
+		        this.MinorVersion = src.MinorVersion;
+		    if (null != src.Version)
+		        this.Version = src.Version;
+#endif
+            this.CheckFieldsHaveValues = src.CheckFieldsHaveValues;
 			this.CheckFieldsOutOfOrder = src.CheckFieldsOutOfOrder;
 			this.CheckUserDefinedFields = src.CheckUserDefinedFields;
 			this.Header = src.Header;

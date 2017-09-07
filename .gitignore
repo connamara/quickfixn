@@ -30,3 +30,5 @@ upload_to_s3.rb
 *~
 *.suo
 .vs/
+artifacts/
+TestResult.xml

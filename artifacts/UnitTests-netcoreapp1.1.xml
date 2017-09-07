@@ -1,0 +1,338 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assemblies timestamp="09/07/2017 16:53:33">
+  <assembly name="UnitTests.dll" environment="64-bit .NET Standard [collection-per-class, non-parallel]" test-framework="xUnit.net 2.3.0.3769" run-date="2017-09-07" run-time="16:53:09" total="274" passed="274" failed="0" skipped="0" time="23.765" errors="0">
+    <errors />
+    <collection total="27" passed="27" failed="0" skipped="0" name="Test collection for UnitTests.FieldMapTests" time="0.173">
+      <test name="UnitTests.FieldMapTests.GetDateOnlyTest" type="UnitTests.FieldMapTests" method="GetDateOnlyTest" time="0.0710694" result="Pass" />
+      <test name="UnitTests.FieldMapTests.DateTimeFieldTest" type="UnitTests.FieldMapTests" method="DateTimeFieldTest" time="0.0057067" result="Pass" />
+      <test name="UnitTests.FieldMapTests.GetStringTest" type="UnitTests.FieldMapTests" method="GetStringTest" time="0.0084158" result="Pass" />
+      <test name="UnitTests.FieldMapTests.IsFieldSetTest" type="UnitTests.FieldMapTests" method="IsFieldSetTest" time="0.0019131" result="Pass" />
+      <test name="UnitTests.FieldMapTests.ClearAndIsEmptyTest" type="UnitTests.FieldMapTests" method="ClearAndIsEmptyTest" time="0.0109313" result="Pass" />
+      <test name="UnitTests.FieldMapTests.DateOnlyFieldTest" type="UnitTests.FieldMapTests" method="DateOnlyFieldTest" time="0.001463" result="Pass" />
+      <test name="UnitTests.FieldMapTests.GetDateTimeTest" type="UnitTests.FieldMapTests" method="GetDateTimeTest" time="0.0013359" result="Pass" />
+      <test name="UnitTests.FieldMapTests.DecimalFieldTest" type="UnitTests.FieldMapTests" method="DecimalFieldTest" time="0.0057237" result="Pass" />
+      <test name="UnitTests.FieldMapTests.SimpleFieldOrderTest" type="UnitTests.FieldMapTests" method="SimpleFieldOrderTest" time="0.0130596" result="Pass" />
+      <test name="UnitTests.FieldMapTests.ReplaceGroupTest" type="UnitTests.FieldMapTests" method="ReplaceGroupTest" time="0.0059832" result="Pass" />
+      <test name="UnitTests.FieldMapTests.TimeOnlyFieldTest" type="UnitTests.FieldMapTests" method="TimeOnlyFieldTest" time="0.0062551" result="Pass" />
+      <test name="UnitTests.FieldMapTests.BooleanFieldTest" type="UnitTests.FieldMapTests" method="BooleanFieldTest" time="0.0014969" result="Pass" />
+      <test name="UnitTests.FieldMapTests.StringFieldTest" type="UnitTests.FieldMapTests" method="StringFieldTest" time="0.000923" result="Pass" />
+      <test name="UnitTests.FieldMapTests.CharFieldTest" type="UnitTests.FieldMapTests" method="CharFieldTest" time="0.004731" result="Pass" />
+      <test name="UnitTests.FieldMapTests.GetDecimalTest" type="UnitTests.FieldMapTests" method="GetDecimalTest" time="0.0021394" result="Pass" />
+      <test name="UnitTests.FieldMapTests.RemoveGroupTest" type="UnitTests.FieldMapTests" method="RemoveGroupTest" time="0.0035986" result="Pass" />
+      <test name="UnitTests.FieldMapTests.IntFieldTest" type="UnitTests.FieldMapTests" method="IntFieldTest" time="0.0063131" result="Pass" />
+      <test name="UnitTests.FieldMapTests.GetCharTest" type="UnitTests.FieldMapTests" method="GetCharTest" time="0.0018065" result="Pass" />
+      <test name="UnitTests.FieldMapTests.GetIntTest" type="UnitTests.FieldMapTests" method="GetIntTest" time="0.0026446" result="Pass" />
+      <test name="UnitTests.FieldMapTests.FieldNotFoundTest" type="UnitTests.FieldMapTests" method="FieldNotFoundTest" time="0.0032043" result="Pass" />
+      <test name="UnitTests.FieldMapTests.SetFieldOverwriteTest" type="UnitTests.FieldMapTests" method="SetFieldOverwriteTest" time="0.0011311" result="Pass" />
+      <test name="UnitTests.FieldMapTests.GetBooleanTest" type="UnitTests.FieldMapTests" method="GetBooleanTest" time="0.0011637" result="Pass" />
+      <test name="UnitTests.FieldMapTests.AddGetGroupTest" type="UnitTests.FieldMapTests" method="AddGetGroupTest" time="0.0054888" result="Pass" />
+      <test name="UnitTests.FieldMapTests.AddGroupKeepTypeTest" type="UnitTests.FieldMapTests" method="AddGroupKeepTypeTest" time="0.0034431" result="Pass" />
+      <test name="UnitTests.FieldMapTests.GetTimeOnlyTest" type="UnitTests.FieldMapTests" method="GetTimeOnlyTest" time="0.0009157" result="Pass" />
+      <test name="UnitTests.FieldMapTests.GroupDelimTest" type="UnitTests.FieldMapTests" method="GroupDelimTest" time="0.0008501" result="Pass" />
+      <test name="UnitTests.FieldMapTests.DefaultFieldTest" type="UnitTests.FieldMapTests" method="DefaultFieldTest" time="0.000956" result="Pass" />
+    </collection>
+    <collection total="1" passed="1" failed="0" skipped="0" name="Test collection for UnitTests.ConfigTests" time="0.000">
+      <test name="UnitTests.ConfigTests.Test" type="UnitTests.ConfigTests" method="Test" time="0.0003833" result="Pass" />
+    </collection>
+    <collection total="18" passed="18" failed="0" skipped="0" name="Test collection for UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" time="0.008">
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertFromDateTimeWithSecondsToValidStringWithMicroSecondPrecision" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertFromDateTimeWithSecondsToValidStringWithMicroSecondPrecision" time="0.0005704" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertTimeWithMicroSecondsToDateTimeObject" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertTimeWithMicroSecondsToDateTimeObject" time="0.0009208" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertTimeWithMicroSecondsToTimeSpanObject" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertTimeWithMicroSecondsToTimeSpanObject" time="0.0009557" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertTimeSpanWithMilliSecondsToStringWithMicroseconds" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertTimeSpanWithMilliSecondsToStringWithMicroseconds" time="0.0003119" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertFromDateTimeWithMicrosecondsToValidStringWithMilliSecondPrecisionUsingOriginalMethod" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertFromDateTimeWithMicrosecondsToValidStringWithMilliSecondPrecisionUsingOriginalMethod" time="0.0002763" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertFromDateTimeWithMicrosecondsToValidStringWithMicroSecondPrecision" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertFromDateTimeWithMicrosecondsToValidStringWithMicroSecondPrecision" time="0.0002152" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertFromDateTimeWithMicrosecondsToValidStringWithSecondPrecision" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertFromDateTimeWithMicrosecondsToValidStringWithSecondPrecision" time="0.0002098" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertTimeWithMilliSecondsToTimeSpanObject" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertTimeWithMilliSecondsToTimeSpanObject" time="0.0006267" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertFromDateTimeWithMicrosecondsToValidStringWithSecondPrecisionUsingOriginalMethod" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertFromDateTimeWithMicrosecondsToValidStringWithSecondPrecisionUsingOriginalMethod" time="0.0002511" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertTimeSpanWithMicroSecondsToStringWithMilliSeconds" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertTimeSpanWithMicroSecondsToStringWithMilliSeconds" time="0.000301" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertTimeSpanWithMicroSecondsToStringWithSeconds" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertTimeSpanWithMicroSecondsToStringWithSeconds" time="0.0002754" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertFromDateTimeWithMicrosecondsToValidStringWithMilliSecondPrecision" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertFromDateTimeWithMicrosecondsToValidStringWithMilliSecondPrecision" time="0.0002117" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertFromDateTimeWithMillisecondsToValidStringWithMicroSecondPrecision" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertFromDateTimeWithMillisecondsToValidStringWithMicroSecondPrecision" time="0.0001784" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertTimeSpanWithMicroSecondsToStringWithMicroseconds" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertTimeSpanWithMicroSecondsToStringWithMicroseconds" time="0.0002469" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertTimeWithMilliSecondsToDateTimeObject" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertTimeWithMilliSecondsToDateTimeObject" time="0.0008603" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertFromDateTimeStringWithSecondsToValidDateTimeObject" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertFromDateTimeStringWithSecondsToValidDateTimeObject" time="0.0006418" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertFromDateTimeStringWithMillisecondsToValidDateTimeObject" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertFromDateTimeStringWithMillisecondsToValidDateTimeObject" time="0.0006239" result="Pass" />
+      <test name="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests.CanConvertFromDateTimeStringWithMicrosecondsToValidDateTimeObject" type="UnitTests.Fields.Converters.DateTimeConverterMicrosecondTests" method="CanConvertFromDateTimeStringWithMicrosecondsToValidDateTimeObject" time="0.0007807" result="Pass" />
+    </collection>
+    <collection total="2" passed="2" failed="0" skipped="0" name="Test collection for UnitTests.SettingsTest" time="0.012">
+      <test name="UnitTests.SettingsTest.Load" type="UnitTests.SettingsTest" method="Load" time="0.0103224" result="Pass" />
+      <test name="UnitTests.SettingsTest.CaseInsensitiveSectionName" type="UnitTests.SettingsTest" method="CaseInsensitiveSectionName" time="0.001181" result="Pass" />
+    </collection>
+    <collection total="5" passed="5" failed="0" skipped="0" name="Test collection for UnitTests.SessionFactoryTest" time="0.036">
+      <test name="UnitTests.SessionFactoryTest.StartDayAndEndDayAreDifferent" type="UnitTests.SessionFactoryTest" method="StartDayAndEndDayAreDifferent" time="0.021937" result="Pass" />
+      <test name="UnitTests.SessionFactoryTest.TestTimeStampPrecisionSettings" type="UnitTests.SessionFactoryTest" method="TestTimeStampPrecisionSettings" time="0.0088218" result="Pass" />
+      <test name="UnitTests.SessionFactoryTest.TestPersistMessages" type="UnitTests.SessionFactoryTest" method="TestPersistMessages" time="0.001349" result="Pass" />
+      <test name="UnitTests.SessionFactoryTest.ValidConfiguration" type="UnitTests.SessionFactoryTest" method="ValidConfiguration" time="0.0008959" result="Pass" />
+      <test name="UnitTests.SessionFactoryTest.TestExtendedSettings" type="UnitTests.SessionFactoryTest" method="TestExtendedSettings" time="0.0027634" result="Pass" />
+    </collection>
+    <collection total="5" passed="5" failed="0" skipped="0" name="Test collection for UnitTests.SessionIDTest" time="0.003">
+      <test name="UnitTests.SessionIDTest.TestNoLocationConstructor" type="UnitTests.SessionIDTest" method="TestNoLocationConstructor" time="0.0008959" result="Pass" />
+      <test name="UnitTests.SessionIDTest.TestNoLocationSubOrQualifierConstructor" type="UnitTests.SessionIDTest" method="TestNoLocationSubOrQualifierConstructor" time="0.0004021" result="Pass" />
+      <test name="UnitTests.SessionIDTest.TestNoLocationOrSubConstructor" type="UnitTests.SessionIDTest" method="TestNoLocationOrSubConstructor" time="0.0005202" result="Pass" />
+      <test name="UnitTests.SessionIDTest.TestAllFieldsConstructor" type="UnitTests.SessionIDTest" method="TestAllFieldsConstructor" time="0.000387" result="Pass" />
+      <test name="UnitTests.SessionIDTest.TestToString" type="UnitTests.SessionIDTest" method="TestToString" time="0.0005899" result="Pass" />
+    </collection>
+    <collection total="14" passed="14" failed="0" skipped="0" name="Test collection for UnitTests.FieldTests" time="0.013">
+      <test name="UnitTests.FieldTests.StringFieldTest_TotalAndLength" type="UnitTests.FieldTests" method="StringFieldTest_TotalAndLength" time="0.001813" result="Pass" />
+      <test name="UnitTests.FieldTests.EnumFieldTest" type="UnitTests.FieldTests" method="EnumFieldTest" time="0.000636" result="Pass" />
+      <test name="UnitTests.FieldTests.CharFieldTest" type="UnitTests.FieldTests" method="CharFieldTest" time="0.0004194" result="Pass" />
+      <test name="UnitTests.FieldTests.StringFieldTest_NonAscii" type="UnitTests.FieldTests" method="StringFieldTest_NonAscii" time="0.0003365" result="Pass" />
+      <test name="UnitTests.FieldTests.EqualsTest" type="UnitTests.FieldTests" method="EqualsTest" time="0.0011599" result="Pass" />
+      <test name="UnitTests.FieldTests.TimeOnlyFieldTest" type="UnitTests.FieldTests" method="TimeOnlyFieldTest" time="0.0006158" result="Pass" />
+      <test name="UnitTests.FieldTests.BooleanFieldTest" type="UnitTests.FieldTests" method="BooleanFieldTest" time="0.0005685" result="Pass" />
+      <test name="UnitTests.FieldTests.DateOnlyFieldTest" type="UnitTests.FieldTests" method="DateOnlyFieldTest" time="0.0003122" result="Pass" />
+      <test name="UnitTests.FieldTests.DefaultValTest" type="UnitTests.FieldTests" method="DefaultValTest" time="0.0013896" result="Pass" />
+      <test name="UnitTests.FieldTests.StringFieldTest" type="UnitTests.FieldTests" method="StringFieldTest" time="0.000454" result="Pass" />
+      <test name="UnitTests.FieldTests.DateTimeFieldTest" type="UnitTests.FieldTests" method="DateTimeFieldTest" time="0.00078" result="Pass" />
+      <test name="UnitTests.FieldTests.IntFieldTest" type="UnitTests.FieldTests" method="IntFieldTest" time="0.0012265" result="Pass" />
+      <test name="UnitTests.FieldTests.DecimalFieldTest" type="UnitTests.FieldTests" method="DecimalFieldTest" time="0.0027934" result="Pass" />
+      <test name="UnitTests.FieldTests.AccountFieldTest" type="UnitTests.FieldTests" method="AccountFieldTest" time="0.00074" result="Pass" />
+    </collection>
+    <collection total="7" passed="7" failed="0" skipped="0" name="Test collection for UnitTests.SessionStateTest" time="0.057">
+      <test name="UnitTests.SessionStateTest.LogoutTimedOut" type="UnitTests.SessionStateTest" method="LogoutTimedOut" time="0.0014658" result="Pass" />
+      <test name="UnitTests.SessionStateTest.WithinHeartbeat" type="UnitTests.SessionStateTest" method="WithinHeartbeat" time="0.001198" result="Pass" />
+      <test name="UnitTests.SessionStateTest.LogonTimedOut" type="UnitTests.SessionStateTest" method="LogonTimedOut" time="0.0008389" result="Pass" />
+      <test name="UnitTests.SessionStateTest.NeedTestRequest" type="UnitTests.SessionStateTest" method="NeedTestRequest" time="0.0008886" result="Pass" />
+      <test name="UnitTests.SessionStateTest.ThreadSafeSetAndGet" type="UnitTests.SessionStateTest" method="ThreadSafeSetAndGet" time="0.0505708" result="Pass" />
+      <test name="UnitTests.SessionStateTest.TimedOut" type="UnitTests.SessionStateTest" method="TimedOut" time="0.0007855" result="Pass" />
+      <test name="UnitTests.SessionStateTest.NeedHeartbeat" type="UnitTests.SessionStateTest" method="NeedHeartbeat" time="0.0015474" result="Pass" />
+    </collection>
+    <collection total="1" passed="1" failed="0" skipped="0" name="Test collection for UnitTests.ThreadedSocketAcceptorTests" time="0.060">
+      <test name="UnitTests.ThreadedSocketAcceptorTests.TestRecreation" type="UnitTests.ThreadedSocketAcceptorTests" method="TestRecreation" time="0.0602885" result="Pass" />
+    </collection>
+    <collection total="4" passed="4" failed="0" skipped="0" name="Test collection for UnitTests.FileLogTests" time="0.007">
+      <test name="UnitTests.FileLogTests.testGeneratedFileName" type="UnitTests.FileLogTests" method="testGeneratedFileName" time="0.0052593" result="Pass" />
+      <test name="UnitTests.FileLogTests.testPrefix" type="UnitTests.FileLogTests" method="testPrefix" time="0.0004001" result="Pass" />
+      <test name="UnitTests.FileLogTests.testPrefixForSubsAndLocation" type="UnitTests.FileLogTests" method="testPrefixForSubsAndLocation" time="0.0002703" result="Pass" />
+      <test name="UnitTests.FileLogTests.testThrowsIfNoConfig" type="UnitTests.FileLogTests" method="testThrowsIfNoConfig" time="0.0010399" result="Pass" />
+    </collection>
+    <collection total="8" passed="8" failed="0" skipped="0" name="Test collection for UnitTests.DictionaryTest" time="0.024">
+      <test name="UnitTests.DictionaryTest.GetDouble" type="UnitTests.DictionaryTest" method="GetDouble" time="0.0084606" result="Pass" />
+      <test name="UnitTests.DictionaryTest.ValueEquality" type="UnitTests.DictionaryTest" method="ValueEquality" time="0.0027291" result="Pass" />
+      <test name="UnitTests.DictionaryTest.SetGetBool" type="UnitTests.DictionaryTest" method="SetGetBool" time="0.0017079" result="Pass" />
+      <test name="UnitTests.DictionaryTest.SetGetLong" type="UnitTests.DictionaryTest" method="SetGetLong" time="0.0015582" result="Pass" />
+      <test name="UnitTests.DictionaryTest.SetGetDay" type="UnitTests.DictionaryTest" method="SetGetDay" time="0.0060116" result="Pass" />
+      <test name="UnitTests.DictionaryTest.SetDouble" type="UnitTests.DictionaryTest" method="SetDouble" time="0.0010213" result="Pass" />
+      <test name="UnitTests.DictionaryTest.Merge" type="UnitTests.DictionaryTest" method="Merge" time="0.0008168" result="Pass" />
+      <test name="UnitTests.DictionaryTest.SetGetString" type="UnitTests.DictionaryTest" method="SetGetString" time="0.0012437" result="Pass" />
+    </collection>
+    <collection total="32" passed="32" failed="0" skipped="0" name="Test collection for UnitTests.DataDictionaryTests" time="7.263">
+      <test name="UnitTests.DataDictionaryTests.ValidateDateAndTimeFields" type="UnitTests.DataDictionaryTests" method="ValidateDateAndTimeFields" time="0.4634771" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.RequiredComponentRequiredField" type="UnitTests.DataDictionaryTests" method="RequiredComponentRequiredField" time="0.220535" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ComponentSmokeTest" type="UnitTests.DataDictionaryTests" method="ComponentSmokeTest" time="0.3632645" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.CheckIsInGroupTest" type="UnitTests.DataDictionaryTests" method="CheckIsInGroupTest" time="0.3025941" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.DuplicateEnumsDoesNotThrow" type="UnitTests.DataDictionaryTests" method="DuplicateEnumsDoesNotThrow" time="0.0491398" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ValidateWrongType" type="UnitTests.DataDictionaryTests" method="ValidateWrongType" time="0.2850014" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ValidateMultipleValueStringType" type="UnitTests.DataDictionaryTests" method="ValidateMultipleValueStringType" time="0.3297925" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.HeaderTest" type="UnitTests.DataDictionaryTests" method="HeaderTest" time="0.293504" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ValidateWrongTypeInNestedRepeatingGroup" type="UnitTests.DataDictionaryTests" method="ValidateWrongTypeInNestedRepeatingGroup" time="0.2402656" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.TrailerTest" type="UnitTests.DataDictionaryTests" method="TrailerTest" time="0.4378796" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.CheckGroupCountTest" type="UnitTests.DataDictionaryTests" method="CheckGroupCountTest" time="0.0322725" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.Issue134_RequiredIsOptional" type="UnitTests.DataDictionaryTests" method="Issue134_RequiredIsOptional" time="0.0075397" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.VersionTest" type="UnitTests.DataDictionaryTests" method="VersionTest" time="0.3723076" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.FieldHasDescriptionTest" type="UnitTests.DataDictionaryTests" method="FieldHasDescriptionTest" time="0.2479202" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.GroupTest" type="UnitTests.DataDictionaryTests" method="GroupTest" time="0.2204889" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ValidateDateOnly_Invalid" type="UnitTests.DataDictionaryTests" method="ValidateDateOnly_Invalid" time="0.2179337" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ValidateTagSpecifiedWithoutAValue" type="UnitTests.DataDictionaryTests" method="ValidateTagSpecifiedWithoutAValue" time="0.0063966" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.OptionalComponentRequiredField" type="UnitTests.DataDictionaryTests" method="OptionalComponentRequiredField" time="0.2167286" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.LoadFieldsFromStreamTest" type="UnitTests.DataDictionaryTests" method="LoadFieldsFromStreamTest" time="0.2167324" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ValidateWithRepeatingGroupTest" type="UnitTests.DataDictionaryTests" method="ValidateWithRepeatingGroupTest" time="0.0127117" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ValidateDateTime_Invalid" type="UnitTests.DataDictionaryTests" method="ValidateDateTime_Invalid" time="0.2186598" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.CheckValidTagTest" type="UnitTests.DataDictionaryTests" method="CheckValidTagTest" time="0.2251061" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ReqFldTest" type="UnitTests.DataDictionaryTests" method="ReqFldTest" time="0.2133699" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ValidateTimeOnly_Invalid" type="UnitTests.DataDictionaryTests" method="ValidateTimeOnly_Invalid" time="0.218711" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ComponentFieldsRequirements" type="UnitTests.DataDictionaryTests" method="ComponentFieldsRequirements" time="0.2375078" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.HeaderGroupTest" type="UnitTests.DataDictionaryTests" method="HeaderGroupTest" time="0.2872273" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ValidateWrongTypeInRepeatingGroup" type="UnitTests.DataDictionaryTests" method="ValidateWrongTypeInRepeatingGroup" time="0.223494" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.ValidateMultipleValueStringType_Invalid" type="UnitTests.DataDictionaryTests" method="ValidateMultipleValueStringType_Invalid" time="0.2198751" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.LoadFieldsTest" type="UnitTests.DataDictionaryTests" method="LoadFieldsTest" time="0.2226514" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.NestedGroupTest" type="UnitTests.DataDictionaryTests" method="NestedGroupTest" time="0.2223877" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.FieldHasValueTest" type="UnitTests.DataDictionaryTests" method="FieldHasValueTest" time="0.2274785" result="Pass" />
+      <test name="UnitTests.DataDictionaryTests.BasicMessageTest" type="UnitTests.DataDictionaryTests" method="BasicMessageTest" time="0.2101197" result="Pass" />
+    </collection>
+    <collection total="10" passed="10" failed="0" skipped="0" name="Test collection for UnitTests.GenMessageTests" time="0.011">
+      <test name="UnitTests.GenMessageTests.TCRFieldSetterTypeSafeOldWayTest" type="UnitTests.GenMessageTests" method="TCRFieldSetterTypeSafeOldWayTest" time="0.001589" result="Pass" />
+      <test name="UnitTests.GenMessageTests.TCRGroupInGroupCTORTest" type="UnitTests.GenMessageTests" method="TCRGroupInGroupCTORTest" time="0.0007042" result="Pass" />
+      <test name="UnitTests.GenMessageTests.TCRFieldGetterTest" type="UnitTests.GenMessageTests" method="TCRFieldGetterTest" time="0.0009112" result="Pass" />
+      <test name="UnitTests.GenMessageTests.TCRGroupCTORTest" type="UnitTests.GenMessageTests" method="TCRGroupCTORTest" time="0.0006774" result="Pass" />
+      <test name="UnitTests.GenMessageTests.TCRReqFieldsCTORTest" type="UnitTests.GenMessageTests" method="TCRReqFieldsCTORTest" time="0.001685" result="Pass" />
+      <test name="UnitTests.GenMessageTests.TCRFieldPropertiesTest" type="UnitTests.GenMessageTests" method="TCRFieldPropertiesTest" time="0.0006594" result="Pass" />
+      <test name="UnitTests.GenMessageTests.TCRGroupFieldGetterSetterTest" type="UnitTests.GenMessageTests" method="TCRGroupFieldGetterSetterTest" time="0.0010018" result="Pass" />
+      <test name="UnitTests.GenMessageTests.TCRisSetTest" type="UnitTests.GenMessageTests" method="TCRisSetTest" time="0.0020299" result="Pass" />
+      <test name="UnitTests.GenMessageTests.TCRFieldGetterTypeSafeOldWayTest" type="UnitTests.GenMessageTests" method="TCRFieldGetterTypeSafeOldWayTest" time="0.0009599" result="Pass" />
+      <test name="UnitTests.GenMessageTests.TCRMsgTypeGetsSetTest" type="UnitTests.GenMessageTests" method="TCRMsgTypeGetsSetTest" time="0.0003823" result="Pass" />
+    </collection>
+    <collection total="24" passed="24" failed="0" skipped="0" name="Test collection for UnitTests.SessionScheduleTests" time="0.050">
+      <test name="UnitTests.SessionScheduleTests.testDailyIsSessionTimeWrapAround" type="UnitTests.SessionScheduleTests" method="testDailyIsSessionTimeWrapAround" time="0.0013298" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testLastEndTime_WeeklySessions" type="UnitTests.SessionScheduleTests" method="testLastEndTime_WeeklySessions" time="0.0038341" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testIsNewSession_Daily" type="UnitTests.SessionScheduleTests" method="testIsNewSession_Daily" time="0.0036753" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testWeeklySessionMultiDayOverlap" type="UnitTests.SessionScheduleTests" method="testWeeklySessionMultiDayOverlap" time="0.0012271" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testInvalidTimeZone" type="UnitTests.SessionScheduleTests" method="testInvalidTimeZone" time="0.0042379" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testLocalTimeTimeZoneConflict" type="UnitTests.SessionScheduleTests" method="testLocalTimeTimeZoneConflict" time="0.0010792" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testWeeklySessionMultiDayHoursOverlap" type="UnitTests.SessionScheduleTests" method="testWeeklySessionMultiDayHoursOverlap" time="0.0013064" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testWeeklySessionMultiDay" type="UnitTests.SessionScheduleTests" method="testWeeklySessionMultiDay" time="0.0011868" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testLastEndTime_takesUtcOnly" type="UnitTests.SessionScheduleTests" method="testLastEndTime_takesUtcOnly" time="0.0012174" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testLastEndTime_DailySessions" type="UnitTests.SessionScheduleTests" method="testLastEndTime_DailySessions" time="0.0018585" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testAdjustDateTime" type="UnitTests.SessionScheduleTests" method="testAdjustDateTime" time="0.0094964" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testWeeklySessionSameDayAllWeek" type="UnitTests.SessionScheduleTests" method="testWeeklySessionSameDayAllWeek" time="0.0014265" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testOptArgs" type="UnitTests.SessionScheduleTests" method="testOptArgs" time="0.0008313" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testDailyIsSessionTime" type="UnitTests.SessionScheduleTests" method="testDailyIsSessionTime" time="0.0010126" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testWeeklySessionSameDayMostWeek" type="UnitTests.SessionScheduleTests" method="testWeeklySessionSameDayMostWeek" time="0.0012482" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testTimeZone" type="UnitTests.SessionScheduleTests" method="testTimeZone" time="0.0010456" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testWeeklySessionMultiDayHours" type="UnitTests.SessionScheduleTests" method="testWeeklySessionMultiDayHours" time="0.001835" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testIsNewSession_takesUtcOnly" type="UnitTests.SessionScheduleTests" method="testIsNewSession_takesUtcOnly" time="0.0018622" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testNextEndTime_takesUtcOnly" type="UnitTests.SessionScheduleTests" method="testNextEndTime_takesUtcOnly" time="0.00118" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testNextEndTime_Daily" type="UnitTests.SessionScheduleTests" method="testNextEndTime_Daily" time="0.0024591" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testDailyIsSessionTimeAllDay" type="UnitTests.SessionScheduleTests" method="testDailyIsSessionTimeAllDay" time="0.0009845" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testRequiredArgs" type="UnitTests.SessionScheduleTests" method="testRequiredArgs" time="0.0021855" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testNextEndTime_Weekly" type="UnitTests.SessionScheduleTests" method="testNextEndTime_Weekly" time="0.0023209" result="Pass" />
+      <test name="UnitTests.SessionScheduleTests.testWeeklySessionSameDayOneDay" type="UnitTests.SessionScheduleTests" method="testWeeklySessionSameDayOneDay" time="0.0012671" result="Pass" />
+    </collection>
+    <collection total="6" passed="6" failed="0" skipped="0" name="Test collection for UnitTests.ParserTest" time="0.009">
+      <test name="UnitTests.ParserTest.ReadFixMessageWithBadLength" type="UnitTests.ParserTest" method="ReadFixMessageWithBadLength" time="0.0039249" result="Pass" />
+      <test name="UnitTests.ParserTest.ExtractLength" type="UnitTests.ParserTest" method="ExtractLength" time="0.002331" result="Pass" />
+      <test name="UnitTests.ParserTest.ReadPartialFixMessage" type="UnitTests.ParserTest" method="ReadPartialFixMessage" time="0.0005647" result="Pass" />
+      <test name="UnitTests.ParserTest.ReadFixMessageWithNonAscii" type="UnitTests.ParserTest" method="ReadFixMessageWithNonAscii" time="0.000716" result="Pass" />
+      <test name="UnitTests.ParserTest.ReadFixMessageWithMissingValues" type="UnitTests.ParserTest" method="ReadFixMessageWithMissingValues" time="0.000469" result="Pass" />
+      <test name="UnitTests.ParserTest.ReadCompleteFixMessages" type="UnitTests.ParserTest" method="ReadCompleteFixMessages" time="0.0005058" result="Pass" />
+    </collection>
+    <collection total="2" passed="2" failed="0" skipped="0" name="Test collection for UnitTests.SessionDynamicTest" time="6.090">
+      <test name="UnitTests.SessionDynamicTest.DynamicAcceptor" type="UnitTests.SessionDynamicTest" method="DynamicAcceptor" time="2.5714633" result="Pass" />
+      <test name="UnitTests.SessionDynamicTest.DynamicInitiator" type="UnitTests.SessionDynamicTest" method="DynamicInitiator" time="3.5183906" result="Pass" />
+    </collection>
+    <collection total="2" passed="2" failed="0" skipped="0" name="Test collection for UnitTests.DDFieldTests" time="0.081">
+      <test name="UnitTests.DDFieldTests.ObsoleteConstructor" type="UnitTests.DDFieldTests" method="ObsoleteConstructor" time="0.0231004" result="Pass" />
+      <test name="UnitTests.DDFieldTests.Constructor" type="UnitTests.DDFieldTests" method="Constructor" time="0.0578754" result="Pass" />
+    </collection>
+    <collection total="2" passed="2" failed="0" skipped="0" name="Test collection for UnitTests.Util.UtcDateTimeSerializerTests" time="0.001">
+      <test name="UnitTests.Util.UtcDateTimeSerializerTests.SomeDates" type="UnitTests.Util.UtcDateTimeSerializerTests" method="SomeDates" time="0.0010902" result="Pass" />
+      <test name="UnitTests.Util.UtcDateTimeSerializerTests.BackAndForth" type="UnitTests.Util.UtcDateTimeSerializerTests" method="BackAndForth" time="0.0002261" result="Pass" />
+    </collection>
+    <collection total="5" passed="5" failed="0" skipped="0" name="Test collection for UnitTests.PerformanceTests" time="3.179">
+      <test name="UnitTests.PerformanceTests.TestStructVsClass" type="UnitTests.PerformanceTests" method="TestStructVsClass" time="0.7627358" result="Pass" />
+      <test name="UnitTests.PerformanceTests.TestMessageParserIntegrity" type="UnitTests.PerformanceTests" method="TestMessageParserIntegrity" time="0.0031829" result="Pass" />
+      <test name="UnitTests.PerformanceTests.TestUTFByteEncoding" type="UnitTests.PerformanceTests" method="TestUTFByteEncoding" time="0.1392908" result="Pass" />
+      <test name="UnitTests.PerformanceTests.TestParsePerformance" type="UnitTests.PerformanceTests" method="TestParsePerformance" time="0.4705587" result="Pass" />
+      <test name="UnitTests.PerformanceTests.TestNewParser" type="UnitTests.PerformanceTests" method="TestNewParser" time="1.8036101" result="Pass" />
+    </collection>
+    <collection total="27" passed="27" failed="0" skipped="0" name="Test collection for UnitTests.SessionTest" time="2.160">
+      <test name="UnitTests.SessionTest.TestGapFillOnResend" type="UnitTests.SessionTest" method="TestGapFillOnResend" time="0.0325125" result="Pass" />
+      <test name="UnitTests.SessionTest.TestMaxMessagesInResendRequest" type="UnitTests.SessionTest" method="TestMaxMessagesInResendRequest" time="0.0120871" result="Pass" />
+      <test name="UnitTests.SessionTest.TestDoesSessionExist" type="UnitTests.SessionTest" method="TestDoesSessionExist" time="0.0007669" result="Pass" />
+      <test name="UnitTests.SessionTest.LogonReject" type="UnitTests.SessionTest" method="LogonReject" time="0.0050719" result="Pass" />
+      <test name="UnitTests.SessionTest.TestRequiresOrigSendingTime_N" type="UnitTests.SessionTest" method="TestRequiresOrigSendingTime_N" time="0.0028456" result="Pass" />
+      <test name="UnitTests.SessionTest.TestResendSessionLevelReject" type="UnitTests.SessionTest" method="TestResendSessionLevelReject" time="0.0055723" result="Pass" />
+      <test name="UnitTests.SessionTest.TestGettingIsInitiator" type="UnitTests.SessionTest" method="TestGettingIsInitiator" time="0.0005886" result="Pass" />
+      <test name="UnitTests.SessionTest.IncorrectTagValueReject" type="UnitTests.SessionTest" method="IncorrectTagValueReject" time="0.013426" result="Pass" />
+      <test name="UnitTests.SessionTest.UnsupportedMessageReject" type="UnitTests.SessionTest" method="UnsupportedMessageReject" time="0.0049339" result="Pass" />
+      <test name="UnitTests.SessionTest.TestIgnorePossDupInResendRequest" type="UnitTests.SessionTest" method="TestIgnorePossDupInResendRequest" time="0.0034286" result="Pass" />
+      <test name="UnitTests.SessionTest.TestMillisecondsInOrigSendingTimeStamp" type="UnitTests.SessionTest" method="TestMillisecondsInOrigSendingTimeStamp" time="0.0143486" result="Pass" />
+      <test name="UnitTests.SessionTest.TestSettingNextTargetMsgSeqNum" type="UnitTests.SessionTest" method="TestSettingNextTargetMsgSeqNum" time="0.0007093" result="Pass" />
+      <test name="UnitTests.SessionTest.TestSettingNextSenderMsgSeqNum" type="UnitTests.SessionTest" method="TestSettingNextSenderMsgSeqNum" time="0.0010456" result="Pass" />
+      <test name="UnitTests.SessionTest.TestRequiresOrigSendingTime_Y" type="UnitTests.SessionTest" method="TestRequiresOrigSendingTime_Y" time="0.0036232" result="Pass" />
+      <test name="UnitTests.SessionTest.TestToAppDoNotSend" type="UnitTests.SessionTest" method="TestToAppDoNotSend" time="0.0107457" result="Pass" />
+      <test name="UnitTests.SessionTest.TestMessageStoreAccessor" type="UnitTests.SessionTest" method="TestMessageStoreAccessor" time="0.0074571" result="Pass" />
+      <test name="UnitTests.SessionTest.TestMillisecondsInSendingTimeStamp" type="UnitTests.SessionTest" method="TestMillisecondsInSendingTimeStamp" time="0.0053525" result="Pass" />
+      <test name="UnitTests.SessionTest.TestGettingIsAcceptor" type="UnitTests.SessionTest" method="TestGettingIsAcceptor" time="0.001109" result="Pass" />
+      <test name="UnitTests.SessionTest.NextResendRequestNoMessagePersist" type="UnitTests.SessionTest" method="NextResendRequestNoMessagePersist" time="0.0036341" result="Pass" />
+      <test name="UnitTests.SessionTest.TestToAppResendDoNotSend" type="UnitTests.SessionTest" method="TestToAppResendDoNotSend" time="0.0036031" result="Pass" />
+      <test name="UnitTests.SessionTest.TestLastMsgSeqNumProcessed" type="UnitTests.SessionTest" method="TestLastMsgSeqNumProcessed" time="0.0035921" result="Pass" />
+      <test name="UnitTests.SessionTest.TestRequireLogon" type="UnitTests.SessionTest" method="TestRequireLogon" time="0.0023474" result="Pass" />
+      <test name="UnitTests.SessionTest.ConditionalTagMissingReject" type="UnitTests.SessionTest" method="ConditionalTagMissingReject" time="0.0048328" result="Pass" />
+      <test name="UnitTests.SessionTest.HeartBeatCheckAfterMessageProcess" type="UnitTests.SessionTest" method="HeartBeatCheckAfterMessageProcess" time="2.0037647" result="Pass" />
+      <test name="UnitTests.SessionTest.TestApplicationExtension" type="UnitTests.SessionTest" method="TestApplicationExtension" time="0.0039621" result="Pass" />
+      <test name="UnitTests.SessionTest.TestMicrosecondsInOrigSendingTimeStamp" type="UnitTests.SessionTest" method="TestMicrosecondsInOrigSendingTimeStamp" time="0.0048926" result="Pass" />
+      <test name="UnitTests.SessionTest.TestMicrosecondsInSendingTimeStamp" type="UnitTests.SessionTest" method="TestMicrosecondsInSendingTimeStamp" time="0.0042008" result="Pass" />
+    </collection>
+    <collection total="38" passed="38" failed="0" skipped="0" name="Test collection for UnitTests.MessageTests" time="2.308">
+      <test name="UnitTests.MessageTests.RepeatedTagDetection" type="UnitTests.MessageTests" method="RepeatedTagDetection" time="0.0015611" result="Pass" />
+      <test name="UnitTests.MessageTests.IsTrailerFieldTest" type="UnitTests.MessageTests" method="IsTrailerFieldTest" time="0.0003301" result="Pass" />
+      <test name="UnitTests.MessageTests.SetFieldsTest" type="UnitTests.MessageTests" method="SetFieldsTest" time="0.0013461" result="Pass" />
+      <test name="UnitTests.MessageTests.issue95" type="UnitTests.MessageTests" method="issue95" time="0.2122733" result="Pass" />
+      <test name="UnitTests.MessageTests.FromString_Groups_NoFactory" type="UnitTests.MessageTests" method="FromString_Groups_NoFactory" time="0.224196" result="Pass" />
+      <test name="UnitTests.MessageTests.ExtractStringTest" type="UnitTests.MessageTests" method="ExtractStringTest" time="0.0006988" result="Pass" />
+      <test name="UnitTests.MessageTests.MsgType" type="UnitTests.MessageTests" method="MsgType" time="0.0001362" result="Pass" />
+      <test name="UnitTests.MessageTests.TestGetSetSessionID" type="UnitTests.MessageTests" method="TestGetSetSessionID" time="0.0039899" result="Pass" />
+      <test name="UnitTests.MessageTests.EnumeratorTest" type="UnitTests.MessageTests" method="EnumeratorTest" time="0.0011093" result="Pass" />
+      <test name="UnitTests.MessageTests.NestedRepeatingGroupParseGroupTest" type="UnitTests.MessageTests" method="NestedRepeatingGroupParseGroupTest" time="0.2215878" result="Pass" />
+      <test name="UnitTests.MessageTests.RepeatingGroup" type="UnitTests.MessageTests" method="RepeatingGroup" time="0.0072139" result="Pass" />
+      <test name="UnitTests.MessageTests.issue56_GetGroup_by_tag_and_return" type="UnitTests.MessageTests" method="issue56_GetGroup_by_tag_and_return" time="0.2126524" result="Pass" />
+      <test name="UnitTests.MessageTests.HeaderGroupParsingTest" type="UnitTests.MessageTests" method="HeaderGroupParsingTest" time="0.2205139" result="Pass" />
+      <test name="UnitTests.MessageTests.MissingDelimiterField" type="UnitTests.MessageTests" method="MissingDelimiterField" time="0.2114797" result="Pass" />
+      <test name="UnitTests.MessageTests.IdentifyTypeTest" type="UnitTests.MessageTests" method="IdentifyTypeTest" time="0.0026917" result="Pass" />
+      <test name="UnitTests.MessageTests.FromStringTestWithNoDataDictionary" type="UnitTests.MessageTests" method="FromStringTestWithNoDataDictionary" time="0.0010584" result="Pass" />
+      <test name="UnitTests.MessageTests.SendDateOnlyTimeOnlyConvertProblem" type="UnitTests.MessageTests" method="SendDateOnlyTimeOnlyConvertProblem" time="0.0059755" result="Pass" />
+      <test name="UnitTests.MessageTests.GetMsgTypeTest" type="UnitTests.MessageTests" method="GetMsgTypeTest" time="0.0005967" result="Pass" />
+      <test name="UnitTests.MessageTests.FromString_DoNotCorrectCounter" type="UnitTests.MessageTests" method="FromString_DoNotCorrectCounter" time="0.0054484" result="Pass" />
+      <test name="UnitTests.MessageTests.AddGroupGetGroupTest" type="UnitTests.MessageTests" method="AddGroupGetGroupTest" time="0.0008162" result="Pass" />
+      <test name="UnitTests.MessageTests.ToStringFieldOrder" type="UnitTests.MessageTests" method="ToStringFieldOrder" time="0.0007935" result="Pass" />
+      <test name="UnitTests.MessageTests.IsAdmin_IsApp" type="UnitTests.MessageTests" method="IsAdmin_IsApp" time="0.008937" result="Pass" />
+      <test name="UnitTests.MessageTests.ToStringTest" type="UnitTests.MessageTests" method="ToStringTest" time="0.001238" result="Pass" />
+      <test name="UnitTests.MessageTests.RepeatingGroupParseGroupTest" type="UnitTests.MessageTests" method="RepeatingGroupParseGroupTest" time="0.2220188" result="Pass" />
+      <test name="UnitTests.MessageTests.MessageHasDecimalWithNoLeadingZero" type="UnitTests.MessageTests" method="MessageHasDecimalWithNoLeadingZero" time="0.2282837" result="Pass" />
+      <test name="UnitTests.MessageTests.ToString_FIX50" type="UnitTests.MessageTests" method="ToString_FIX50" time="0.0014722" result="Pass" />
+      <test name="UnitTests.MessageTests.RepeatingGroup_ReuseObject" type="UnitTests.MessageTests" method="RepeatingGroup_ReuseObject" time="0.004845" result="Pass" />
+      <test name="UnitTests.MessageTests.DateOnlyTimeOnlyConvertProblem" type="UnitTests.MessageTests" method="DateOnlyTimeOnlyConvertProblem" time="0.2270709" result="Pass" />
+      <test name="UnitTests.MessageTests.ExtractStringErrorsTest" type="UnitTests.MessageTests" method="ExtractStringErrorsTest" time="0.0020348" result="Pass" />
+      <test name="UnitTests.MessageTests.ReverseRoute" type="UnitTests.MessageTests" method="ReverseRoute" time="0.0018606" result="Pass" />
+      <test name="UnitTests.MessageTests.IsHeaderFieldTest" type="UnitTests.MessageTests" method="IsHeaderFieldTest" time="0.0004537" result="Pass" />
+      <test name="UnitTests.MessageTests.CheckSumTest" type="UnitTests.MessageTests" method="CheckSumTest" time="0.0005724" result="Pass" />
+      <test name="UnitTests.MessageTests.RepeatingGroup_FieldOrder" type="UnitTests.MessageTests" method="RepeatingGroup_FieldOrder" time="0.0024137" result="Pass" />
+      <test name="UnitTests.MessageTests.RepeatingGroup_DelimiterFieldFirst" type="UnitTests.MessageTests" method="RepeatingGroup_DelimiterFieldFirst" time="0.0026802" result="Pass" />
+      <test name="UnitTests.MessageTests.ExtractBeginString" type="UnitTests.MessageTests" method="ExtractBeginString" time="0.0008962" result="Pass" />
+      <test name="UnitTests.MessageTests.issue56_GetGroup_by_reference" type="UnitTests.MessageTests" method="issue56_GetGroup_by_reference" time="0.254539" result="Pass" />
+      <test name="UnitTests.MessageTests.ExtractFieldTypes" type="UnitTests.MessageTests" method="ExtractFieldTypes" time="0.0081861" result="Pass" />
+      <test name="UnitTests.MessageTests.RepeatingGroup_SubgroupCounterTagAppearsOnlyOnce" type="UnitTests.MessageTests" method="RepeatingGroup_SubgroupCounterTagAppearsOnlyOnce" time="0.0036952" result="Pass" />
+    </collection>
+    <collection total="3" passed="3" failed="0" skipped="0" name="Test collection for UnitTests.MessageCrackerTests" time="0.048">
+      <test name="UnitTests.MessageCrackerTests.IsHandlerMethod" type="UnitTests.MessageCrackerTests" method="IsHandlerMethod" time="0.0016287" result="Pass" />
+      <test name="UnitTests.MessageCrackerTests.GoldenPath" type="UnitTests.MessageCrackerTests" method="GoldenPath" time="0.043272" result="Pass" />
+      <test name="UnitTests.MessageCrackerTests.UnsupportedMessage" type="UnitTests.MessageCrackerTests" method="UnsupportedMessage" time="0.0031528" result="Pass" />
+    </collection>
+    <collection total="1" passed="1" failed="0" skipped="0" name="Test collection for UnitTests.MemoryStoreTests" time="0.001">
+      <test name="UnitTests.MemoryStoreTests.GetTest" type="UnitTests.MemoryStoreTests" method="GetTest" time="0.0010706" result="Pass" />
+    </collection>
+    <collection total="2" passed="2" failed="0" skipped="0" name="Test collection for UnitTests.GroupTests" time="0.003">
+      <test name="UnitTests.GroupTests.SubGroup" type="UnitTests.GroupTests" method="SubGroup" time="0.0015423" result="Pass" />
+      <test name="UnitTests.GroupTests.GroupClone" type="UnitTests.GroupTests" method="GroupClone" time="0.0012687" result="Pass" />
+    </collection>
+    <collection total="1" passed="1" failed="0" skipped="0" name="Test collection for UnitTests.StringUTF8Tests" time="0.003">
+      <test name="UnitTests.StringUTF8Tests.NextTagTest" type="UnitTests.StringUTF8Tests" method="NextTagTest" time="0.0030081" result="Pass" />
+    </collection>
+    <collection total="8" passed="8" failed="0" skipped="0" name="Test collection for UnitTests.ConverterTests" time="0.014">
+      <test name="UnitTests.ConverterTests.DecimalConverter_WithoutLeadingTrailingZeros" type="UnitTests.ConverterTests" method="DecimalConverter_WithoutLeadingTrailingZeros" time="0.0009531" result="Pass" />
+      <test name="UnitTests.ConverterTests.DateOnlyConverterTest" type="UnitTests.ConverterTests" method="DateOnlyConverterTest" time="0.001709" result="Pass" />
+      <test name="UnitTests.ConverterTests.IntConverterTest" type="UnitTests.ConverterTests" method="IntConverterTest" time="0.0026023" result="Pass" />
+      <test name="UnitTests.ConverterTests.BoolConverterTest" type="UnitTests.ConverterTests" method="BoolConverterTest" time="0.000892" result="Pass" />
+      <test name="UnitTests.ConverterTests.DateTimeConverterTest" type="UnitTests.ConverterTests" method="DateTimeConverterTest" time="0.0023774" result="Pass" />
+      <test name="UnitTests.ConverterTests.TimeOnlyConverterTest" type="UnitTests.ConverterTests" method="TimeOnlyConverterTest" time="0.0017115" result="Pass" />
+      <test name="UnitTests.ConverterTests.DecimalConverterTest" type="UnitTests.ConverterTests" method="DecimalConverterTest" time="0.003547" result="Pass" />
+      <test name="UnitTests.ConverterTests.CharConverterTest" type="UnitTests.ConverterTests" method="CharConverterTest" time="0.0006997" result="Pass" />
+    </collection>
+    <collection total="1" passed="1" failed="0" skipped="0" name="Test collection for UnitTests.DefaultMessageFactoryTests" time="0.222">
+      <test name="UnitTests.DefaultMessageFactoryTests.GroupCreateTest" type="UnitTests.DefaultMessageFactoryTests" method="GroupCreateTest" time="0.2215938" result="Pass" />
+    </collection>
+    <collection total="9" passed="9" failed="0" skipped="0" name="Test collection for UnitTests.SessionSettingsTest" time="0.019">
+      <test name="UnitTests.SessionSettingsTest.Validate" type="UnitTests.SessionSettingsTest" method="Validate" time="0.0041941" result="Pass" />
+      <test name="UnitTests.SessionSettingsTest.LoadSettingsWithDefaultSectionLast" type="UnitTests.SessionSettingsTest" method="LoadSettingsWithDefaultSectionLast" time="0.0031934" result="Pass" />
+      <test name="UnitTests.SessionSettingsTest.StripSpaces" type="UnitTests.SessionSettingsTest" method="StripSpaces" time="0.0010927" result="Pass" />
+      <test name="UnitTests.SessionSettingsTest.testExtendedSettings" type="UnitTests.SessionSettingsTest" method="testExtendedSettings" time="0.0018482" result="Pass" />
+      <test name="UnitTests.SessionSettingsTest.DuplicateSession" type="UnitTests.SessionSettingsTest" method="DuplicateSession" time="0.0008325" result="Pass" />
+      <test name="UnitTests.SessionSettingsTest.Load" type="UnitTests.SessionSettingsTest" method="Load" time="0.0030089" result="Pass" />
+      <test name="UnitTests.SessionSettingsTest.CaseInsensitiveSectionName" type="UnitTests.SessionSettingsTest" method="CaseInsensitiveSectionName" time="0.0003973" result="Pass" />
+      <test name="UnitTests.SessionSettingsTest.SettingsFileRelease" type="UnitTests.SessionSettingsTest" method="SettingsFileRelease" time="0.0013081" result="Pass" />
+      <test name="UnitTests.SessionSettingsTest.SettingsToString" type="UnitTests.SessionSettingsTest" method="SettingsToString" time="0.0029278" result="Pass" />
+    </collection>
+    <collection total="9" passed="9" failed="0" skipped="0" name="Test collection for UnitTests.FileStoreTests" time="1.056">
+      <test name="UnitTests.FileStoreTests.CreationTimeTest" type="UnitTests.FileStoreTests" method="CreationTimeTest" time="1.0112961" result="Pass" />
+      <test name="UnitTests.FileStoreTests.getNextSenderMsgSeqNumTest" type="UnitTests.FileStoreTests" method="getNextSenderMsgSeqNumTest" time="0.0050958" result="Pass" />
+      <test name="UnitTests.FileStoreTests.generateFileNamesTest" type="UnitTests.FileStoreTests" method="generateFileNamesTest" time="0.0041672" result="Pass" />
+      <test name="UnitTests.FileStoreTests.testPrefixForSessionWithSubsAndLoc" type="UnitTests.FileStoreTests" method="testPrefixForSessionWithSubsAndLoc" time="0.0027152" result="Pass" />
+      <test name="UnitTests.FileStoreTests.incNextTargetMsgSeqNumTest" type="UnitTests.FileStoreTests" method="incNextTargetMsgSeqNumTest" time="0.0059378" result="Pass" />
+      <test name="UnitTests.FileStoreTests.getTest" type="UnitTests.FileStoreTests" method="getTest" time="0.0049733" result="Pass" />
+      <test name="UnitTests.FileStoreTests.resetTest" type="UnitTests.FileStoreTests" method="resetTest" time="0.0128986" result="Pass" />
+      <test name="UnitTests.FileStoreTests.incNextSenderMsgSeqNumTest" type="UnitTests.FileStoreTests" method="incNextSenderMsgSeqNumTest" time="0.0042336" result="Pass" />
+      <test name="UnitTests.FileStoreTests.getNextTargetMsgSeqNumTest" type="UnitTests.FileStoreTests" method="getNextTargetMsgSeqNumTest" time="0.0044037" result="Pass" />
+    </collection>
+  </assembly>
+</assemblies>

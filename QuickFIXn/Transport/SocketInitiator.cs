@@ -141,7 +141,11 @@ namespace QuickFix.Transport
             try
             {
                 var hostName = settings.GetString(hostKey);
+#if !NETSTANDARD1_6
                 IPAddress[] addrs = Dns.GetHostAddresses(hostName);
+#else
+                IPAddress[] addrs = Dns.GetHostAddressesAsync(hostName).GetAwaiter().GetResult();
+#endif
                 int port = System.Convert.ToInt32(settings.GetLong(portKey));
                 sessionToHostNum_[sessionID] = ++num;
 
@@ -154,7 +158,7 @@ namespace QuickFix.Transport
             }
         }
 
-        #region Initiator Methods
+#region Initiator Methods
         
         /// <summary>
         /// handle other socket options like TCP_NO_DELAY here
@@ -242,7 +246,7 @@ namespace QuickFix.Transport
             }
         }
 
-        #endregion
+#endregion
 
         protected override void Dispose(bool disposing)
         {

@@ -1,139 +1,144 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
+using Xunit;
 using QuickFix;
 using QuickFix.Fields.Converters;
 
 namespace UnitTests
 {
-    [TestFixture]
-    public class ConverterTests
+    public class ConverterTests : IDisposable
     {
-        [SetUp]
-        public void SetUp()
+        public ConverterTests()
         {
+#if !NETCOREAPP1_1
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+#else
+            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+#endif
         }
 
-        [TearDown]
-        public void TearDown()
+        public void Dispose()
         {
+#if !NETCOREAPP1_1
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+#else
+            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+#endif
         }
 
-        [Test]
+        [Fact]
         public void BoolConverterTest()
         {
-            Assert.That(BoolConverter.Convert("Y"), Is.EqualTo(true));
-            Assert.That(BoolConverter.Convert("N"), Is.EqualTo(false));
-            Assert.That(BoolConverter.Convert(true), Is.EqualTo("Y"));
-            Assert.That(BoolConverter.Convert(false), Is.EqualTo("N"));
-            Assert.Throws(typeof(FieldConvertError),
-                delegate { BoolConverter.Convert("Z"); });
+            Assert.True(BoolConverter.Convert("Y"));
+            Assert.False(BoolConverter.Convert("N"));
+            Assert.Equal("Y", BoolConverter.Convert(true));
+            Assert.Equal("N", BoolConverter.Convert(false));
+            Assert.Throws<FieldConvertError>(delegate { BoolConverter.Convert("Z"); });
         }
 
-        [Test]
+        [Fact]
         public void CharConverterTest()
         {
-            Assert.That(CharConverter.Convert('A'), Is.EqualTo("A"));
-            Assert.That(CharConverter.Convert("B"), Is.EqualTo('B'));
-            Assert.Throws(typeof(FieldConvertError),
-                delegate { CharConverter.Convert("AB"); });
+            Assert.Equal("A", CharConverter.Convert('A'));
+            Assert.Equal('B', CharConverter.Convert("B"));
+            Assert.Throws<FieldConvertError>(delegate { CharConverter.Convert("AB"); });
         }
 
-        [Test]
+        [Fact]
         public void IntConverterTest()
         {
-            Assert.That(IntConverter.Convert(233), Is.EqualTo("233"));
-            Assert.That(IntConverter.Convert(-233), Is.EqualTo("-233"));
-            Assert.That(IntConverter.Convert("444556"), Is.EqualTo(444556));
+            Assert.Equal("233", IntConverter.Convert(233));
+            Assert.Equal("-233", IntConverter.Convert(-233));
+            Assert.Equal(444556, IntConverter.Convert("444556"));
 
-            Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert("+100"); });
-            Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert("(100)"); });
-            Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert("AB"); });
-            Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert("2.3234"); });
-            Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert(""); });
-            Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert(null); });
+            Assert.Throws<FieldConvertError>(delegate { IntConverter.Convert("+100"); });
+            Assert.Throws<FieldConvertError>(delegate { IntConverter.Convert("(100)"); });
+            Assert.Throws<FieldConvertError>(delegate { IntConverter.Convert("AB"); });
+            Assert.Throws<FieldConvertError>(delegate { IntConverter.Convert("2.3234"); });
+            Assert.Throws<FieldConvertError>(delegate { IntConverter.Convert(""); });
+            Assert.Throws<FieldConvertError>(delegate { IntConverter.Convert(null); });
         }
 
-        [Test]
+        [Fact]
         public void DecimalConverterTest()
         {
-            Assert.That(DecimalConverter.Convert(new Decimal(4.23322)), Is.EqualTo("4.23322"));
-            Assert.That(DecimalConverter.Convert(new Decimal(-4.23322)), Is.EqualTo("-4.23322"));
-            Assert.That(DecimalConverter.Convert("4332.33"), Is.EqualTo(new Decimal(4332.33)));
-            Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert("2.32a34"); });
-            Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert("+1.2"); });
-            Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert("(1.2)"); });
-            Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert(""); });
-            Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert(null); });
+            Assert.Equal("4.23322", DecimalConverter.Convert(4.23322M));
+            Assert.Equal("-4.23322", DecimalConverter.Convert(-4.23322M));
+            Assert.Equal(4332.33M, DecimalConverter.Convert("4332.33"));
+            Assert.Throws<FieldConvertError>(delegate { DecimalConverter.Convert("2.32a34"); });
+            Assert.Throws<FieldConvertError>(delegate { DecimalConverter.Convert("+1.2"); });
+            Assert.Throws<FieldConvertError>(delegate { DecimalConverter.Convert("(1.2)"); });
+            Assert.Throws<FieldConvertError>(delegate { DecimalConverter.Convert(""); });
+            Assert.Throws<FieldConvertError>(delegate { DecimalConverter.Convert(null); });
 
             // check for a different culture than en-XX 
+#if !NETCOREAPP1_1
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo( "tr-TR" );
-            Assert.That( DecimalConverter.Convert( "4332.33" ), Is.EqualTo( new Decimal( 4332.33 ) ) );
-            Assert.That( DecimalConverter.Convert( "-2.33" ), Is.EqualTo( new Decimal( -2.33 ) ) );
-            Assert.That( DecimalConverter.Convert( new Decimal( 4.23322 ) ), Is.EqualTo( "4.23322" ) );
-            Assert.That( DecimalConverter.Convert( new Decimal( -4.23322 ) ), Is.EqualTo( "-4.23322" ) );
+#else
+            System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("tr-TR");
+#endif
+            Assert.Equal(4332.33M, DecimalConverter.Convert("4332.33"));
+            Assert.Equal(DecimalConverter.Convert("-2.33"), -2.33M);
+            Assert.Equal("4.23322", DecimalConverter.Convert(4.23322M));
+            Assert.Equal("-4.23322", DecimalConverter.Convert(-4.23322M));
         }
 
-        [Test]
+        [Fact]
         public void DecimalConverter_WithoutLeadingTrailingZeros()
         {
-            Assert.That(DecimalConverter.Convert("23."), Is.EqualTo(new Decimal(23)));
-            Assert.That(DecimalConverter.Convert(".23"), Is.EqualTo(new Decimal(0.23)));
-            Assert.That(DecimalConverter.Convert("-.23"), Is.EqualTo(new Decimal(-0.23)));
+            Assert.Equal(23M, DecimalConverter.Convert("23."));
+            Assert.Equal(0.23M, DecimalConverter.Convert(".23"));
+            Assert.Equal(DecimalConverter.Convert("-.23"), -0.23M);
         }
 
-        [Test]
+        [Fact]
         public void DateTimeConverterTest()
         {
             // DateTime types to string
-            Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05)), Is.EqualTo("20021201-11:03:05.000"));
-            Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("20021201-11:03:05.321"));
-            Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321), false), Is.EqualTo("20021201-11:03:05"));
-            Assert.That(DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321), true), Is.EqualTo("20021201-11:03:05.321"));
+            Assert.Equal("20021201-11:03:05.000", DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05)));
+            Assert.Equal("20021201-11:03:05.321", DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321)));
+            Assert.Equal("20021201-11:03:05", DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321), false));
+            Assert.Equal("20021201-11:03:05.321", DateTimeConverter.Convert(new DateTime(2002, 12, 01, 11, 03, 05, 321), true));
 
             // 2 valid string-to-DateTime formats
-            Assert.That(DateTimeConverter.ConvertToDateTime("20100912-04:22:01"), Is.EqualTo(new DateTime(2010, 9, 12, 4, 22, 01, DateTimeKind.Utc)));
-            Assert.That(DateTimeConverter.ConvertToDateTime("20100912-04:22:01.123"), Is.EqualTo(new DateTime(2010, 9, 12, 4, 22, 01, 123, DateTimeKind.Utc)));
+            Assert.Equal(DateTimeConverter.ConvertToDateTime("20100912-04:22:01"), new DateTime(2010, 9, 12, 4, 22, 01, DateTimeKind.Utc));
+            Assert.Equal(DateTimeConverter.ConvertToDateTime("20100912-04:22:01.123"), new DateTime(2010, 9, 12, 4, 22, 01, 123, DateTimeKind.Utc));
 
             // invalid string-to-DateTime formats
-            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToDateTime(""); });
-            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToDateTime("20021201"); });
-            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToDateTime("20021201-11:03"); });
+            Assert.Throws<FieldConvertError>(delegate { DateTimeConverter.ConvertToDateTime(""); });
+            Assert.Throws<FieldConvertError>(delegate { DateTimeConverter.ConvertToDateTime("20021201"); });
+            Assert.Throws<FieldConvertError>(delegate { DateTimeConverter.ConvertToDateTime("20021201-11:03"); });
         }
 
-        [Test]
+        [Fact]
         public void DateOnlyConverterTest()
         {
             // DateTime types to string
-            Assert.That(DateTimeConverter.ConvertDateOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("20021201"));
+            Assert.Equal("20021201", DateTimeConverter.ConvertDateOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321)));
 
             // string-to-DateTime but time is zero
-            Assert.That(DateTimeConverter.ConvertToDateOnly("20100912"), Is.EqualTo(new DateTime(2010, 9, 12, 0, 0, 0, DateTimeKind.Utc)));
+            Assert.Equal(DateTimeConverter.ConvertToDateOnly("20100912"), new DateTime(2010, 9, 12, 0, 0, 0, DateTimeKind.Utc));
 
             // invalid string-to-DateTime formats
-            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToDateOnly(""); });
-            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToDateOnly("20021201-11:03:00"); });
+            Assert.Throws<FieldConvertError>(delegate { DateTimeConverter.ConvertToDateOnly(""); });
+            Assert.Throws<FieldConvertError>(delegate { DateTimeConverter.ConvertToDateOnly("20021201-11:03:00"); });
         }
 
-        [Test]
+        [Fact]
         public void TimeOnlyConverterTest()
         {
             // DateTime types to string
-            Assert.That(DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05)), Is.EqualTo("11:03:05.000"));
-            Assert.That(DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("11:03:05.321"));
-            Assert.That(DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321), false), Is.EqualTo("11:03:05"));
-            Assert.That(DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321), true), Is.EqualTo("11:03:05.321"));
+            Assert.Equal("11:03:05.000", DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05)));
+            Assert.Equal("11:03:05.321", DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321)));
+            Assert.Equal("11:03:05", DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321), false));
+            Assert.Equal("11:03:05.321", DateTimeConverter.ConvertTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321), true));
 
             // 2 valid string-to-DateTime formats, set date to Jan 1
-            Assert.That(DateTimeConverter.ConvertToTimeOnly("04:22:01"), Is.EqualTo(new DateTime(1980, 1, 1, 4, 22, 01, DateTimeKind.Utc)));
-            Assert.That(DateTimeConverter.ConvertToTimeOnly("04:22:01.123"), Is.EqualTo(new DateTime(1980, 1, 1, 4, 22, 01, 123, DateTimeKind.Utc)));
+            Assert.Equal(DateTimeConverter.ConvertToTimeOnly("04:22:01"), new DateTime(1980, 1, 1, 4, 22, 01, DateTimeKind.Utc));
+            Assert.Equal(DateTimeConverter.ConvertToTimeOnly("04:22:01.123"),new DateTime(1980, 1, 1, 4, 22, 01, 123, DateTimeKind.Utc));
 
             // invalid string-to-DateTime formats
-            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToTimeOnly(""); });
-            Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ConvertToTimeOnly("20021201-11:03:00"); });
+            Assert.Throws<FieldConvertError>(delegate { DateTimeConverter.ConvertToTimeOnly(""); });
+            Assert.Throws<FieldConvertError>(delegate { DateTimeConverter.ConvertToTimeOnly("20021201-11:03:00"); });
         }
     }
 }

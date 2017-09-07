@@ -93,9 +93,11 @@ namespace QuickFix
         {
             try
             {
-                FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read);
-                Load(new StreamReader(fs));
-                fs.Close();
+                using (FileStream fs = File.Open(file, FileMode.Open, FileAccess.Read))
+                using (var reader = new StreamReader(fs))
+                {
+                    Load(reader);
+                }
             }
             catch (System.Exception e)
             {

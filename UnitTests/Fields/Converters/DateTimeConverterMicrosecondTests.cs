@@ -1,13 +1,12 @@
 ﻿using System;
-using NUnit.Framework;
+using Xunit;
 using QuickFix.Fields.Converters;
 
 namespace UnitTests.Fields.Converters
 {
-    [TestFixture]
     public class DateTimeConverterMicrosecondTests
     {
-        [Test]
+        [Fact]
         public void CanConvertFromDateTimeStringWithMicrosecondsToValidDateTimeObject()
         {
             //GIVEN - a datetime string with microseconds
@@ -17,18 +16,18 @@ namespace UnitTests.Fields.Converters
             var convertedDateTime = DateTimeConverter.ConvertToDateTime( dateTimeStringWithMicroseconds );
 
             //THEN - the date time object is setup correctly
-            Assert.AreEqual( 2017, convertedDateTime.Year );
-            Assert.AreEqual(3, convertedDateTime.Month);
-            Assert.AreEqual(5, convertedDateTime.Day);
-            Assert.AreEqual( 13, convertedDateTime.Hour );
-            Assert.AreEqual(22, convertedDateTime.Minute);
-            Assert.AreEqual(12, convertedDateTime.Second);
-            Assert.AreEqual(123, convertedDateTime.Millisecond);
-            Assert.AreEqual( dateTimeStringWithMicroseconds, string.Format( DateTimeConverter.DATE_TIME_FORMAT_WITH_MICROSECONDS, convertedDateTime ) );
+            Assert.Equal( 2017, convertedDateTime.Year );
+            Assert.Equal(3, convertedDateTime.Month);
+            Assert.Equal(5, convertedDateTime.Day);
+            Assert.Equal( 13, convertedDateTime.Hour );
+            Assert.Equal(22, convertedDateTime.Minute);
+            Assert.Equal(12, convertedDateTime.Second);
+            Assert.Equal(123, convertedDateTime.Millisecond);
+            Assert.Equal( dateTimeStringWithMicroseconds, string.Format( DateTimeConverter.DATE_TIME_FORMAT_WITH_MICROSECONDS, convertedDateTime ) );
         }
 
 
-        [Test]
+        [Fact]
         public void CanConvertFromDateTimeStringWithMillisecondsToValidDateTimeObject()
         {
             //GIVEN - a datetime string with millisecond precision
@@ -38,16 +37,16 @@ namespace UnitTests.Fields.Converters
             var convertedDateTime = DateTimeConverter.ConvertToDateTime(dateTimeStringWithMillisecond);
 
             //THEN - the date time object is setup correctly
-            Assert.AreEqual(2017, convertedDateTime.Year);
-            Assert.AreEqual(3, convertedDateTime.Month);
-            Assert.AreEqual(5, convertedDateTime.Day);
-            Assert.AreEqual(13, convertedDateTime.Hour);
-            Assert.AreEqual(22, convertedDateTime.Minute);
-            Assert.AreEqual(12, convertedDateTime.Second);
-            Assert.AreEqual(123, convertedDateTime.Millisecond);
+            Assert.Equal(2017, convertedDateTime.Year);
+            Assert.Equal(3, convertedDateTime.Month);
+            Assert.Equal(5, convertedDateTime.Day);
+            Assert.Equal(13, convertedDateTime.Hour);
+            Assert.Equal(22, convertedDateTime.Minute);
+            Assert.Equal(12, convertedDateTime.Second);
+            Assert.Equal(123, convertedDateTime.Millisecond);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertFromDateTimeStringWithSecondsToValidDateTimeObject()
         {
             //GIVEN - a datetime string with second precision
@@ -57,16 +56,16 @@ namespace UnitTests.Fields.Converters
             var convertedDateTime = DateTimeConverter.ConvertToDateTime(dateTimeStringWithMillisecond);
 
             //THEN - the date time object is setup correctly
-            Assert.AreEqual(2017, convertedDateTime.Year);
-            Assert.AreEqual(3, convertedDateTime.Month);
-            Assert.AreEqual(5, convertedDateTime.Day);
-            Assert.AreEqual(13, convertedDateTime.Hour);
-            Assert.AreEqual(22, convertedDateTime.Minute);
-            Assert.AreEqual(12, convertedDateTime.Second);
-            Assert.AreEqual(0, convertedDateTime.Millisecond);
+            Assert.Equal(2017, convertedDateTime.Year);
+            Assert.Equal(3, convertedDateTime.Month);
+            Assert.Equal(5, convertedDateTime.Day);
+            Assert.Equal(13, convertedDateTime.Hour);
+            Assert.Equal(22, convertedDateTime.Minute);
+            Assert.Equal(12, convertedDateTime.Second);
+            Assert.Equal(0, convertedDateTime.Millisecond);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertFromDateTimeWithSecondsToValidStringWithMicroSecondPrecision()
         {
             //GIVEN - a datetime object with seconds
@@ -76,10 +75,10 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeStampPrecision.Microsecond);
 
             //THEN - the serialised string contains microseconds
-            Assert.AreEqual("20170305-13:22:12.000000", serialisedDateTime);
+            Assert.Equal("20170305-13:22:12.000000", serialisedDateTime);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertFromDateTimeWithMillisecondsToValidStringWithMicroSecondPrecision()
         {
             //GIVEN - a datetime object with milliseconds
@@ -89,10 +88,10 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeStampPrecision.Microsecond);
 
             //THEN - the serialised string contains microseconds
-            Assert.AreEqual("20170305-13:22:12.123000", serialisedDateTime);
+            Assert.Equal("20170305-13:22:12.123000", serialisedDateTime);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertFromDateTimeWithMicrosecondsToValidStringWithMicroSecondPrecision()
         {
             //GIVEN - a datetime object with microseconds
@@ -102,10 +101,10 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.Convert( dateTime, TimeStampPrecision.Microsecond );
 
             //THEN - the serialised string contains microseconds
-            Assert.AreEqual("20170305-13:22:12.123456", serialisedDateTime);
+            Assert.Equal("20170305-13:22:12.123456", serialisedDateTime);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertFromDateTimeWithMicrosecondsToValidStringWithMilliSecondPrecision()
         {
             //GIVEN - a datetime object with microseconds
@@ -115,10 +114,10 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeStampPrecision.Millisecond);
 
             //THEN - the serialised string contains milliseconds
-            Assert.AreEqual("20170305-13:22:12.123", serialisedDateTime);
+            Assert.Equal("20170305-13:22:12.123", serialisedDateTime);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertFromDateTimeWithMicrosecondsToValidStringWithMilliSecondPrecisionUsingOriginalMethod()
         {
             //GIVEN - a datetime object with microseconds
@@ -128,10 +127,10 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.Convert(dateTime);
 
             //THEN - the serialised string contains milliseconds
-            Assert.AreEqual("20170305-13:22:12.123", serialisedDateTime);
+            Assert.Equal("20170305-13:22:12.123", serialisedDateTime);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertFromDateTimeWithMicrosecondsToValidStringWithSecondPrecision()
         {
             //GIVEN - a datetime object with microseconds
@@ -141,10 +140,10 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.Convert(dateTime, TimeStampPrecision.Second);
 
             //THEN - the serialised string contains seconds
-            Assert.AreEqual("20170305-13:22:12", serialisedDateTime);
+            Assert.Equal("20170305-13:22:12", serialisedDateTime);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertFromDateTimeWithMicrosecondsToValidStringWithSecondPrecisionUsingOriginalMethod()
         {
             //GIVEN - a datetime object with microseconds
@@ -154,11 +153,11 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.Convert(dateTime, false);
 
             //THEN - the serialised string contains seconds
-            Assert.AreEqual("20170305-13:22:12", serialisedDateTime);
+            Assert.Equal("20170305-13:22:12", serialisedDateTime);
         }
 
 
-        [Test]
+        [Fact]
         public void CanConvertTimeWithMicroSecondsToDateTimeObject()
         {
             //GIVEN - a time string with microseconds
@@ -168,17 +167,17 @@ namespace UnitTests.Fields.Converters
             var convertedDateTime = DateTimeConverter.ConvertToTimeOnly(timeStringWithMicroseconds);
 
             //THEN - the date time object is setup correctly
-            Assert.AreEqual(1980, convertedDateTime.Year);
-            Assert.AreEqual(1, convertedDateTime.Month);
-            Assert.AreEqual(1, convertedDateTime.Day);
-            Assert.AreEqual(13, convertedDateTime.Hour);
-            Assert.AreEqual(22, convertedDateTime.Minute);
-            Assert.AreEqual(12, convertedDateTime.Second);
-            Assert.AreEqual(123, convertedDateTime.Millisecond);
-            Assert.AreEqual(timeStringWithMicroseconds, string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, convertedDateTime));
+            Assert.Equal(1980, convertedDateTime.Year);
+            Assert.Equal(1, convertedDateTime.Month);
+            Assert.Equal(1, convertedDateTime.Day);
+            Assert.Equal(13, convertedDateTime.Hour);
+            Assert.Equal(22, convertedDateTime.Minute);
+            Assert.Equal(12, convertedDateTime.Second);
+            Assert.Equal(123, convertedDateTime.Millisecond);
+            Assert.Equal(timeStringWithMicroseconds, string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, convertedDateTime));
         }
 
-        [Test]
+        [Fact]
         public void CanConvertTimeSpanWithMicroSecondsToStringWithMicroseconds()
         {
             //GIVEN - a time string with microseconds
@@ -189,10 +188,10 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.ConvertTimeOnly(dateTimeWithMicroseconds, TimeStampPrecision.Microsecond );
 
             //THEN - the serialised time contains microseconds
-            Assert.AreEqual("13:22:12.123456", serialisedDateTime);
+            Assert.Equal("13:22:12.123456", serialisedDateTime);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertTimeSpanWithMicroSecondsToStringWithSeconds()
         {
             //GIVEN - a time string with microseconds
@@ -203,10 +202,10 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.ConvertTimeOnly(dateTimeWithMicroseconds, false);
 
             //THEN - the serialised time contains microseconds
-            Assert.AreEqual("13:22:12", serialisedDateTime);
+            Assert.Equal("13:22:12", serialisedDateTime);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertTimeSpanWithMicroSecondsToStringWithMilliSeconds()
         {
             //GIVEN - a time string with microseconds
@@ -217,10 +216,10 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.ConvertTimeOnly(dateTimeWithMicroseconds);
 
             //THEN - the serialised time contains microseconds
-            Assert.AreEqual("13:22:12.123", serialisedDateTime);
+            Assert.Equal("13:22:12.123", serialisedDateTime);
         }
 
-        [Test]
+        [Fact]
         public void CanConvertTimeSpanWithMilliSecondsToStringWithMicroseconds()
         {
             //GIVEN - a time string with microseconds
@@ -231,11 +230,11 @@ namespace UnitTests.Fields.Converters
             var serialisedDateTime = DateTimeConverter.ConvertTimeOnly(dateTimeWithMicroseconds, TimeStampPrecision.Microsecond);
 
             //THEN - the serialised time contains microseconds
-            Assert.AreEqual("13:22:12.123000", serialisedDateTime);
+            Assert.Equal("13:22:12.123000", serialisedDateTime);
         }
 
 
-        [Test]
+        [Fact]
         public void CanConvertTimeWithMilliSecondsToDateTimeObject()
         {
             //GIVEN - a time string with microseconds
@@ -245,17 +244,17 @@ namespace UnitTests.Fields.Converters
             var convertedDateTime = DateTimeConverter.ConvertToTimeOnly(timeStringWithMilliseconds);
 
             //THEN - the date time object is setup correctly
-            Assert.AreEqual(1980, convertedDateTime.Year);
-            Assert.AreEqual(1, convertedDateTime.Month);
-            Assert.AreEqual(1, convertedDateTime.Day);
-            Assert.AreEqual(13, convertedDateTime.Hour);
-            Assert.AreEqual(22, convertedDateTime.Minute);
-            Assert.AreEqual(12, convertedDateTime.Second);
-            Assert.AreEqual(123, convertedDateTime.Millisecond);
-            Assert.AreEqual(timeStringWithMilliseconds + "000", string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, convertedDateTime));
+            Assert.Equal(1980, convertedDateTime.Year);
+            Assert.Equal(1, convertedDateTime.Month);
+            Assert.Equal(1, convertedDateTime.Day);
+            Assert.Equal(13, convertedDateTime.Hour);
+            Assert.Equal(22, convertedDateTime.Minute);
+            Assert.Equal(12, convertedDateTime.Second);
+            Assert.Equal(123, convertedDateTime.Millisecond);
+            Assert.Equal(timeStringWithMilliseconds + "000", string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, convertedDateTime));
         }
 
-        [Test]
+        [Fact]
         public void CanConvertTimeWithMicroSecondsToTimeSpanObject()
         {
             //GIVEN - a time string with microseconds
@@ -265,14 +264,14 @@ namespace UnitTests.Fields.Converters
             var convertedTime = DateTimeConverter.ConvertToTimeSpan(timeStringWithMicroseconds);
 
             //THEN - the date time object is setup correctly
-            Assert.AreEqual(13, convertedTime.Hours);
-            Assert.AreEqual(22, convertedTime.Minutes);
-            Assert.AreEqual(12, convertedTime.Seconds);
-            Assert.AreEqual(123, convertedTime.Milliseconds);
-            Assert.AreEqual(timeStringWithMicroseconds, string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks)));
+            Assert.Equal(13, convertedTime.Hours);
+            Assert.Equal(22, convertedTime.Minutes);
+            Assert.Equal(12, convertedTime.Seconds);
+            Assert.Equal(123, convertedTime.Milliseconds);
+            Assert.Equal(timeStringWithMicroseconds, string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks)));
         }
 
-        [Test]
+        [Fact]
         public void CanConvertTimeWithMilliSecondsToTimeSpanObject()
         {
             //GIVEN - a time string with microseconds
@@ -282,11 +281,11 @@ namespace UnitTests.Fields.Converters
             var convertedTime = DateTimeConverter.ConvertToTimeSpan(timeStringWithMilliseconds);
 
             //THEN - the date time object is setup correctly
-            Assert.AreEqual(13, convertedTime.Hours);
-            Assert.AreEqual(22, convertedTime.Minutes);
-            Assert.AreEqual(12, convertedTime.Seconds);
-            Assert.AreEqual(123, convertedTime.Milliseconds);
-            Assert.AreEqual(timeStringWithMilliseconds + "000", string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks)));
+            Assert.Equal(13, convertedTime.Hours);
+            Assert.Equal(22, convertedTime.Minutes);
+            Assert.Equal(12, convertedTime.Seconds);
+            Assert.Equal(123, convertedTime.Milliseconds);
+            Assert.Equal(timeStringWithMilliseconds + "000", string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks)));
         }
     }
 }

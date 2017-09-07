@@ -1,26 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
 using QuickFix;
 using QuickFix.Fields;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class MessageTests
     {
         private IMessageFactory _defaultMsgFactory = new DefaultMessageFactory();
 
-        [Test]
+        private readonly string specDirectory;
+        private readonly string FIX42;
+        private readonly string FIX44;
+
+        public MessageTests()
+        {
+            specDirectory = Path.GetFullPath("../../../../spec");
+            FIX42 = Path.Combine(specDirectory, "fix/FIX42.xml");
+            FIX44 = Path.Combine(specDirectory, "fix/FIX44.xml");
+        }
+
+
+        [Fact]
         public void IdentifyTypeTest()
         {
             string msg1 = "\x01" + "35=A\x01";
-            Assert.That(Message.IdentifyType(msg1).Obj, Is.EqualTo(new MsgType("A").Obj));
+            Assert.Equal(Message.IdentifyType(msg1).Obj, new MsgType("A").Obj);
             string msg2 = "a;sldkfjadls;k\x01" + "35=A\x01" + "a;sldkfja;sdlfk";
-            Assert.That(Message.IdentifyType(msg2).Obj, Is.EqualTo(new MsgType("A").Obj));
+            Assert.Equal(Message.IdentifyType(msg2).Obj, new MsgType("A").Obj);
             string msg3 = "8=FIX4.2\x01" + "9=12\x01\x01" + "35=B\x01" + "10=031\x01";
-            Assert.That(Message.IdentifyType(msg3).Obj, Is.EqualTo(new MsgType("B").Obj));
+            Assert.Equal(Message.IdentifyType(msg3).Obj, new MsgType("B").Obj);
 
             // no 35
             string err1 = String.Join(Message.SOH, new string[] { "8=FIX.4.4", "49=Sender", "" });
@@ -30,37 +42,32 @@ namespace UnitTests
             Assert.Throws<MessageParseError>(delegate { Message.IdentifyType(err2); });
         }
 
-        [Test]
+        [Fact]
         public void ExtractStringTest()
         {
             string str1 = "8=FIX.4.2\x01" + "9=46\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01";
             int pos = 0;
             StringField sf1 = Message.ExtractField(str1, ref pos);
-            Assert.That(pos, Is.EqualTo(10));
-            Assert.That(sf1.Tag, Is.EqualTo(8));
-            Assert.That(sf1.Obj, Is.EqualTo("FIX.4.2"));
+            Assert.Equal(10, pos);
+            Assert.Equal(8, sf1.Tag);
+            Assert.Equal("FIX.4.2", sf1.Obj);
             StringField sf2 = Message.ExtractField(str1, ref pos);
-            Assert.That(pos, Is.EqualTo(15));
-            Assert.That(sf2.Tag, Is.EqualTo(9));
-            Assert.That(sf2.Obj, Is.EqualTo("46"));
+            Assert.Equal(15, pos);
+            Assert.Equal(9, sf2.Tag);
+            Assert.Equal("46", sf2.Obj);
         }
 
-        [Test]
+        [Fact]
         public void ExtractStringErrorsTest()
         {
             int pos = 0;
-            Assert.Throws(typeof(MessageParseError),
-                delegate { Message.ExtractField("=", ref pos); });
-            Assert.Throws(typeof(MessageParseError),
-                delegate { Message.ExtractField("35=A", ref pos); });
-            Assert.Throws(typeof(MessageParseError),
-                delegate { Message.ExtractField("\x01" + "35=A", ref pos); });
-            Assert.Throws(typeof(MessageParseError),
-                delegate { Message.ExtractField("35=\x01", ref pos); });
+            Assert.Throws<MessageParseError>(delegate { Message.ExtractField("=", ref pos); });
+            Assert.Throws<MessageParseError>(delegate { Message.ExtractField("35=A", ref pos); });
+            Assert.Throws<MessageParseError>(delegate { Message.ExtractField("\x01" + "35=A", ref pos); });
+            Assert.Throws<MessageParseError>(delegate { Message.ExtractField("35=\x01", ref pos); });
         }
-
-
-        [Test]
+        
+        [Fact]
         public void CheckSumTest()
         {
             string str1 = "8=FIX.4.2\x01" + "9=45\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
@@ -79,12 +86,13 @@ namespace UnitTests
             }
             catch (InvalidMessage e)
             {
-                Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
+                //Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
+                throw;
             }
-            Assert.That(msg.CheckSum(), Is.EqualTo(chksum));
+            Assert.Equal(msg.CheckSum(), chksum);
         }
 
-        [Test]
+        [Fact]
         public void FromStringTestWithNoDataDictionary()
         {
             string str1 = "8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
@@ -96,7 +104,8 @@ namespace UnitTests
             }
             catch (InvalidMessage e)
             {
-                Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
+                //Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
+                throw;
             }
             StringField f1 = new StringField(8);
             StringField f2 = new StringField(9);
@@ -116,18 +125,18 @@ namespace UnitTests
             msg.Header.GetField(f7);
             msg.GetField(f9);
             msg.Trailer.GetField(f8);
-            Assert.That(f1.Obj, Is.EqualTo("FIX.4.2"));
-            Assert.That(f2.Obj, Is.EqualTo("55"));
-            Assert.That(f3.Obj, Is.EqualTo("0"));
-            Assert.That(f4.Obj, Is.EqualTo("3"));
-            Assert.That(f5.Obj, Is.EqualTo("TW"));
-            Assert.That(f6.Obj, Is.EqualTo("20000426-12:05:06"));
-            Assert.That(f7.Obj, Is.EqualTo("ISLD"));
-            Assert.That(f8.Obj, Is.EqualTo("123"));
-            Assert.That(f9.Obj, Is.EqualTo("acct123"));
+            Assert.Equal("FIX.4.2", f1.Obj);
+            Assert.Equal("55", f2.Obj);
+            Assert.Equal("0", f3.Obj);
+            Assert.Equal("3", f4.Obj);
+            Assert.Equal("TW", f5.Obj);
+            Assert.Equal("20000426-12:05:06", f6.Obj);
+            Assert.Equal("ISLD", f7.Obj);
+            Assert.Equal("123", f8.Obj);
+            Assert.Equal("acct123", f9.Obj);
         }
 
-        [Test]
+        [Fact]
         public void ToStringTest()
         {
             string str1 = "8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
@@ -139,7 +148,8 @@ namespace UnitTests
             }
             catch (InvalidMessage e)
             {
-                Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
+                //Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
+                throw;
             }
             StringField f1 = new StringField(8);
             StringField f2 = new StringField(9);
@@ -159,20 +169,20 @@ namespace UnitTests
             msg.Header.GetField(f7);
             msg.GetField(f9);
             msg.Trailer.GetField(f8);
-            Assert.That(f1.Obj, Is.EqualTo("FIX.4.2"));
-            Assert.That(f2.Obj, Is.EqualTo("55"));
-            Assert.That(f3.Obj, Is.EqualTo("0"));
-            Assert.That(f4.Obj, Is.EqualTo("3"));
-            Assert.That(f5.Obj, Is.EqualTo("TW"));
-            Assert.That(f6.Obj, Is.EqualTo("20000426-12:05:06"));
-            Assert.That(f7.Obj, Is.EqualTo("ISLD"));
-            Assert.That(f8.Obj, Is.EqualTo("123"));
-            Assert.That(f9.Obj, Is.EqualTo("acct123"));
+            Assert.Equal("FIX.4.2", f1.Obj);
+            Assert.Equal("55", f2.Obj);
+            Assert.Equal("0", f3.Obj);
+            Assert.Equal("3", f4.Obj);
+            Assert.Equal("TW", f5.Obj);
+            Assert.Equal("20000426-12:05:06", f6.Obj);
+            Assert.Equal("ISLD", f7.Obj);
+            Assert.Equal("123", f8.Obj);
+            Assert.Equal("acct123", f9.Obj);
             string raw = msg.ToString();
-            Assert.That(raw, Is.EqualTo(str1));
+            Assert.Equal(raw, str1);
         }
 
-        [Test]
+        [Fact]
         public void ToStringFieldOrder()
         {
             Message msg = new Message();
@@ -182,25 +192,25 @@ namespace UnitTests
             msg.Header.SetField(new QuickFix.Fields.TargetCompID("TARGET"));
             msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(42));
             string expect = "8=FIX.4.2\x01" + "9=31\x01" + "35=A\x01" + "34=42\x01" + "49=SENDER\x01" + "56=TARGET\x01" + "10=200\x01";
-            Assert.That(msg.ToString(), Is.EqualTo(expect));
+            Assert.Equal(msg.ToString(), expect);
         }
 
-        [Test]
+        [Fact]
         public void IsHeaderFieldTest()
         {
-            Assert.That(Message.IsHeaderField(Tags.BeginString), Is.EqualTo(true));
-            Assert.That(Message.IsHeaderField(Tags.TargetCompID), Is.EqualTo(true));
-            Assert.That(Message.IsHeaderField(Tags.Account), Is.EqualTo(false));
+            Assert.True(Message.IsHeaderField(Tags.BeginString));
+            Assert.True(Message.IsHeaderField(Tags.TargetCompID));
+            Assert.False(Message.IsHeaderField(Tags.Account));
         }
 
-        [Test]
+        [Fact]
         public void IsTrailerFieldTest()
         {
-            Assert.That(Message.IsTrailerField(Tags.CheckSum), Is.EqualTo(true));
-            Assert.That(Message.IsTrailerField(Tags.Price), Is.EqualTo(false));
+            Assert.True(Message.IsTrailerField(Tags.CheckSum));
+            Assert.False(Message.IsTrailerField(Tags.Price));
         }
 
-        [Test]
+        [Fact]
         public void EnumeratorTest()
         {
             Message msg = new Message("8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" + "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=123\x01");
@@ -208,34 +218,34 @@ namespace UnitTests
             int numHeaderFields = 0;
             foreach (KeyValuePair<int, QuickFix.Fields.IField> kvp in msg.Header)
                 ++numHeaderFields;
-            Assert.AreEqual(7, numHeaderFields);
+            Assert.Equal(7, numHeaderFields);
 
             int numTrailerFields = 0;
             foreach (KeyValuePair<int, QuickFix.Fields.IField> kvp in msg.Trailer)
                 ++numTrailerFields;
-            Assert.AreEqual(1, numTrailerFields);
+            Assert.Equal(1, numTrailerFields);
 
             int numBodyFields = 0;
             foreach (KeyValuePair<int, QuickFix.Fields.IField> kvp in msg)
                 ++numBodyFields;
-            Assert.AreEqual(1, numBodyFields);
+            Assert.Equal(1, numBodyFields);
         }
 
-        [Test]
+        [Fact]
         public void RepeatedTagDetection()
         {
             Message msg = new Message("8=FIX.4.2\x01" + "9=72\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" + "49=BOGUS\x01" + "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "1=bogus\x01" + "10=052\x01" + "10=000\x01");
-            Assert.AreEqual(1, msg.Header.RepeatedTags.Count);
-            Assert.AreEqual(49, msg.Header.RepeatedTags[0].Tag);
+            Assert.Single(msg.Header.RepeatedTags);
+            Assert.Equal(49, msg.Header.RepeatedTags[0].Tag);
 
-            Assert.AreEqual(1, msg.Trailer.RepeatedTags.Count);
-            Assert.AreEqual(10, msg.Trailer.RepeatedTags[0].Tag);
+            Assert.Single(msg.Trailer.RepeatedTags);
+            Assert.Equal(10, msg.Trailer.RepeatedTags[0].Tag);
 
-            Assert.AreEqual(1, msg.RepeatedTags.Count);
-            Assert.AreEqual(1, msg.RepeatedTags[0].Tag);
+            Assert.Single(msg.RepeatedTags);
+            Assert.Equal(1, msg.RepeatedTags[0].Tag);
         }
 
-        [Test]
+        [Fact]
         public void AddGroupGetGroupTest()
         {
             var nos = new QuickFix.FIX42.NewOrderSingle();
@@ -243,16 +253,16 @@ namespace UnitTests
             noTradingSessions.SetField(new StringField(336, "OHHAI"));
             nos.AddGroup(noTradingSessions);
             var noTradingSessionsRE = nos.GetGroup(1, Tags.NoTradingSessions);
-            Assert.That(noTradingSessionsRE.GetString(336), Is.EqualTo("OHHAI"));
+            Assert.Equal("OHHAI", noTradingSessionsRE.GetString(336));
 
             var nos2 = new QuickFix.FIX42.NewOrderSingle();
             var grp = new Group(200, 300);
             grp.SetField(new StringField(300, "Dude"));
             nos2.AddGroup(grp);
-            Assert.That(nos2.GetGroup(1, 200).GetString(300), Is.EqualTo("Dude"));
+            Assert.Equal("Dude", nos2.GetGroup(1, 200).GetString(300));
         }
 
-        [Test]
+        [Fact]
         public void RepeatingGroupParseGroupTest()
         {
             String data = "8=FIX.4.4\x01" + "9=309\x01" + "35=8\x01" + "49=ASX\x01" + "56=CL1_FIX44\x01" + "34=4\x01" + "52=20060324-01:05:58\x01" + ""
@@ -264,16 +274,16 @@ namespace UnitTests
                 + "60=20060320-03:34:29\x01" + "10=169\x01" + "";
             var msg = new QuickFix.FIX44.ExecutionReport();
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.Load(FIX44);
             msg.FromString(data, false, dd, dd, _defaultMsgFactory);
 
             var grp = msg.GetGroup(1, Tags.NoPartyIDs);
-            Assert.That(grp.GetString(Tags.PartyID), Is.EqualTo("AAA35791"));
+            Assert.Equal("AAA35791", grp.GetString(Tags.PartyID));
             grp = msg.GetGroup(3, Tags.NoPartyIDs);
-            Assert.That(grp.GetString(Tags.PartyID), Is.EqualTo("FIX11"));
+            Assert.Equal("FIX11", grp.GetString(Tags.PartyID));
         }
 
-        [Test]
+        [Fact]
         public void NestedRepeatingGroupParseGroupTest()
         {
             String data = "8=FIX.4.4\x01" + "9=309\x01" + "35=8\x01" + "49=ASX\x01" + "56=CL1_FIX44\x01" + "34=4\x01" + "52=20060324-01:05:58\x01" + ""
@@ -286,16 +296,14 @@ namespace UnitTests
                 + "60=20060320-03:34:29\x01" + "10=169\x01" + "";
             var msg = new QuickFix.FIX44.ExecutionReport();
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.Load(FIX44);
             msg.FromString(data, false, dd, dd, _defaultMsgFactory);
 
             var subGrp = msg.GetGroup(1, Tags.NoPartyIDs).GetGroup(1, Tags.NoPartySubIDs);
-            Assert.That(subGrp.GetString(Tags.PartySubID), Is.EqualTo("OHAI123"));
+            Assert.Equal("OHAI123", subGrp.GetString(Tags.PartySubID));
         }
 
-
-
-        [Test]
+        [Fact]
         public void HeaderGroupParsingTest()
         {
             string data = "8=FIX.4.4\x01" + "9=40\x01" + "35=A\x01"
@@ -303,36 +311,36 @@ namespace UnitTests
                 + "98=0\x01" + "384=2\x01" + "372=D\x01" + "385=R\x01" + "372=8\x01" + "385=S\x01" + "10=228\x01";
 
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.Load(FIX44);
             var nos = new QuickFix.FIX44.Logon();
             nos.FromString(data, false, dd, dd, _defaultMsgFactory);
             Group hops = nos.Header.GetGroup(1, Tags.NoHops);
-            Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("FOO"));
+            Assert.Equal("FOO", hops.GetString(Tags.HopCompID));
             hops = nos.Header.GetGroup(2, Tags.NoHops);
-            Assert.That(hops.GetString(Tags.HopCompID), Is.EqualTo("BAR"));
+            Assert.Equal("BAR", hops.GetString(Tags.HopCompID));
         }
 
-        [Test]
+        [Fact]
         public void MsgType()
         {
-            Assert.AreEqual("B", QuickFix.FIX42.News.MsgType);
+            Assert.Equal("B", QuickFix.FIX42.News.MsgType);
         }
 
-        [Test]
+        [Fact]
         public void ExtractBeginString()
         {
             string m1 = "8=FIX4.2\x01" + "9999=99999\x01";
             string m2 = "987=pants\x01xxxxxxxxxxxxxxxxxxxxxx";
 
-            Assert.AreEqual("FIX4.2", Message.ExtractBeginString(m1));
-            Assert.AreEqual("pants", Message.ExtractBeginString(m2));
+            Assert.Equal("FIX4.2", Message.ExtractBeginString(m1));
+            Assert.Equal("pants", Message.ExtractBeginString(m2));
         }
 
-        [Test]
+        [Fact]
         public void ExtractFieldTypes()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX42.xml");
+            dd.Load(FIX42);
 
             QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
 
@@ -344,27 +352,27 @@ namespace UnitTests
             n.FromString(s, true, dd, dd, _defaultMsgFactory);
 
             // string values are good?
-            Assert.AreEqual("Y", n.SolicitedFlag.ToString()); //bool, 377
-            Assert.AreEqual("1", n.Side.ToString()); //char, 54
-            Assert.AreEqual("20110901-13:41:31.804", n.TransactTime.ToString()); //datetime, 60
-            Assert.AreEqual("5.5", n.OrderQty.ToString()); //decimal, 38
-            Assert.AreEqual("1", n.PutOrCall.ToString()); //int, 201
-            Assert.AreEqual("asdf", n.ClOrdID.ToString()); //string, 11
+            Assert.Equal("Y", n.SolicitedFlag.ToString()); //bool, 377
+            Assert.Equal("1", n.Side.ToString()); //char, 54
+            Assert.Equal("20110901-13:41:31.804", n.TransactTime.ToString()); //datetime, 60
+            Assert.Equal("5.5", n.OrderQty.ToString()); //decimal, 38
+            Assert.Equal("1", n.PutOrCall.ToString()); //int, 201
+            Assert.Equal("asdf", n.ClOrdID.ToString()); //string, 11
 
             // type-converted values are good?
-            Assert.AreEqual(true, n.SolicitedFlag.getValue());
-            Assert.AreEqual('1', n.Side.getValue());
-            Assert.AreEqual(DateTime.Parse("2011-09-01 13:41:31.804"), n.TransactTime.getValue());
-            Assert.AreEqual(5.5m, n.OrderQty.getValue());
-            Assert.AreEqual(1, n.PutOrCall.getValue());
-            Assert.AreEqual("asdf", n.ClOrdID.getValue());
+            Assert.True(n.SolicitedFlag.getValue());
+            Assert.Equal('1', n.Side.getValue());
+            Assert.Equal(DateTime.Parse("2011-09-01 13:41:31.804"), n.TransactTime.getValue());
+            Assert.Equal(5.5m, n.OrderQty.getValue());
+            Assert.Equal(1, n.PutOrCall.getValue());
+            Assert.Equal("asdf", n.ClOrdID.getValue());
         }
 
-        [Test]
+        [Fact]
         public void RepeatingGroup()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX42.xml");
+            dd.Load(FIX42);
 
             QuickFix.FIX42.News news = new QuickFix.FIX42.News(new QuickFix.Fields.Headline("Foo headline"));
 
@@ -382,16 +390,16 @@ namespace UnitTests
             string raw = news.ToString();
 
             string nul = "\x01";
-            StringAssert.Contains(
+            Assert.Contains(
                 nul + "33=2" + nul + "58=line1" + nul + "354=3" + nul + "355=aaa" + nul + "58=line2" + nul + "355=bbb",
                 raw);
         }
 
-        [Test]
+        [Fact]
         public void RepeatingGroup_ReuseObject()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX42.xml");
+            dd.Load(FIX42);
 
             QuickFix.FIX42.News news = new QuickFix.FIX42.News(new QuickFix.Fields.Headline("Foo headline"));
 
@@ -404,15 +412,15 @@ namespace UnitTests
             string raw = news.ToString();
 
             string nul = "\x01";
-            StringAssert.Contains(
+            Assert.Contains(
                 nul + "33=2" + nul + "58=line1" + nul + "58=line2",
                 raw);
         }
 
-        [Test]
+        [Fact]
         public void FromString_DoNotCorrectCounter()
         {
-            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX42.xml");
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary(FIX42);
 
             QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
 
@@ -424,11 +432,11 @@ namespace UnitTests
                 + "10=35" + nul;
 
             n.FromString(s, true, dd, dd, _defaultMsgFactory);
-            Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());
-            StringAssert.Contains("386=3", n.ToString()); //don't correct it to 2, you bastard
+            Assert.Equal("386=3", n.NoTradingSessions.toStringField());
+            Assert.Contains("386=3", n.ToString()); //don't correct it to 2, you bastard
         }
 
-        [Test]
+        [Fact]
         public void ReverseRoute()
         {
             string str1 = "8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
@@ -440,7 +448,8 @@ namespace UnitTests
             }
             catch (InvalidMessage e)
             {
-                Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
+                //Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
+                throw;
             }
             Header header = new Header();
             header.SetField(new BeginString("FIX.4.2"));
@@ -453,16 +462,16 @@ namespace UnitTests
 
             msg.ReverseRoute(header);
             
-            Assert.That(msg.Header.GetString(Tags.BeginString), Is.EqualTo("FIX.4.2"));
-            Assert.That(msg.Header.GetString(Tags.TargetCompID), Is.EqualTo("SENDER"));
-            Assert.That(msg.Header.GetString(Tags.TargetSubID), Is.EqualTo("SENDERSUB"));
-            Assert.That(msg.Header.GetString(Tags.TargetLocationID), Is.EqualTo("SENDERLOC"));
-            Assert.That(msg.Header.GetString(Tags.SenderCompID), Is.EqualTo("TARGET"));
-            Assert.That(msg.Header.GetString(Tags.SenderSubID), Is.EqualTo("TARGETSUB"));
-            Assert.That(msg.Header.GetString(Tags.SenderLocationID), Is.EqualTo("TARGETLOC"));
+            Assert.Equal("FIX.4.2", msg.Header.GetString(Tags.BeginString));
+            Assert.Equal("SENDER", msg.Header.GetString(Tags.TargetCompID));
+            Assert.Equal("SENDERSUB", msg.Header.GetString(Tags.TargetSubID));
+            Assert.Equal("SENDERLOC", msg.Header.GetString(Tags.TargetLocationID));
+            Assert.Equal("TARGET", msg.Header.GetString(Tags.SenderCompID));
+            Assert.Equal("TARGETSUB", msg.Header.GetString(Tags.SenderSubID));
+            Assert.Equal("TARGETLOC", msg.Header.GetString(Tags.SenderLocationID));
         }
 
-        [Test]
+        [Fact]
         public void TestGetSetSessionID()
         {
             SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "SENDERSUB", "SENDERLOC", "TARGET", "TARGETSUB", "TARGETLOC");
@@ -470,22 +479,22 @@ namespace UnitTests
 
             msg.SetSessionID(sessionID);
 
-            Assert.That(msg.Header.GetString(Tags.BeginString), Is.EqualTo("FIX.4.2"));
-            Assert.That(msg.Header.GetString(Tags.SenderCompID), Is.EqualTo("SENDER"));
-            Assert.That(msg.Header.GetString(Tags.SenderSubID), Is.EqualTo("SENDERSUB"));
-            Assert.That(msg.Header.GetString(Tags.SenderLocationID), Is.EqualTo("SENDERLOC"));
-            Assert.That(msg.Header.GetString(Tags.TargetCompID), Is.EqualTo("TARGET"));
-            Assert.That(msg.Header.GetString(Tags.TargetSubID), Is.EqualTo("TARGETSUB"));
-            Assert.That(msg.Header.GetString(Tags.TargetLocationID), Is.EqualTo("TARGETLOC"));
+            Assert.Equal("FIX.4.2", msg.Header.GetString(Tags.BeginString));
+            Assert.Equal("SENDER", msg.Header.GetString(Tags.SenderCompID));
+            Assert.Equal("SENDERSUB", msg.Header.GetString(Tags.SenderSubID));
+            Assert.Equal("SENDERLOC", msg.Header.GetString(Tags.SenderLocationID));
+            Assert.Equal("TARGET", msg.Header.GetString(Tags.TargetCompID));
+            Assert.Equal("TARGETSUB", msg.Header.GetString(Tags.TargetSubID));
+            Assert.Equal("TARGETLOC", msg.Header.GetString(Tags.TargetLocationID));
 
             SessionID getSessionID = msg.GetSessionID(msg);
-            Assert.That(getSessionID.BeginString, Is.EqualTo("FIX.4.2"));
-            Assert.That(getSessionID.SenderCompID, Is.EqualTo("SENDER"));
-            Assert.That(getSessionID.SenderSubID, Is.EqualTo("SENDERSUB"));
-            Assert.That(getSessionID.SenderLocationID, Is.EqualTo("SENDERLOC"));
-            Assert.That(getSessionID.TargetCompID, Is.EqualTo("TARGET"));
-            Assert.That(getSessionID.TargetSubID, Is.EqualTo("TARGETSUB"));
-            Assert.That(getSessionID.TargetLocationID, Is.EqualTo("TARGETLOC"));
+            Assert.Equal("FIX.4.2", getSessionID.BeginString);
+            Assert.Equal("SENDER", getSessionID.SenderCompID);
+            Assert.Equal("SENDERSUB", getSessionID.SenderSubID);
+            Assert.Equal("SENDERLOC", getSessionID.SenderLocationID);
+            Assert.Equal("TARGET", getSessionID.TargetCompID);
+            Assert.Equal("TARGETSUB", getSessionID.TargetSubID);
+            Assert.Equal("TARGETLOC", getSessionID.TargetLocationID);
 
             ////
             sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET");
@@ -493,40 +502,40 @@ namespace UnitTests
 
             msg.SetSessionID(sessionID);
 
-            Assert.That(msg.Header.GetString(Tags.BeginString), Is.EqualTo("FIX.4.2"));
-            Assert.That(msg.Header.GetString(Tags.SenderCompID), Is.EqualTo("SENDER"));
-            Assert.That(msg.Header.IsSetField(Tags.SenderSubID), Is.False);
-            Assert.That(msg.Header.IsSetField(Tags.SenderLocationID), Is.False);
-            Assert.That(msg.Header.GetString(Tags.TargetCompID), Is.EqualTo("TARGET"));
-            Assert.That(msg.Header.IsSetField(Tags.TargetSubID), Is.False);
-            Assert.That(msg.Header.IsSetField(Tags.TargetLocationID), Is.False);
+            Assert.Equal("FIX.4.2", msg.Header.GetString(Tags.BeginString));
+            Assert.Equal("SENDER", msg.Header.GetString(Tags.SenderCompID));
+            Assert.False(msg.Header.IsSetField(Tags.SenderSubID));
+            Assert.False(msg.Header.IsSetField(Tags.SenderLocationID));
+            Assert.Equal("TARGET", msg.Header.GetString(Tags.TargetCompID));
+            Assert.False(msg.Header.IsSetField(Tags.TargetSubID));
+            Assert.False(msg.Header.IsSetField(Tags.TargetLocationID));
 
             getSessionID = msg.GetSessionID(msg);
-            Assert.That(getSessionID.BeginString, Is.EqualTo("FIX.4.2"));
-            Assert.That(getSessionID.SenderCompID, Is.EqualTo("SENDER"));
-            Assert.That(getSessionID.SenderSubID, Is.EqualTo(""));
-            Assert.That(getSessionID.SenderLocationID, Is.EqualTo(""));
-            Assert.That(getSessionID.TargetCompID, Is.EqualTo("TARGET"));
-            Assert.That(getSessionID.TargetSubID, Is.EqualTo(""));
-            Assert.That(getSessionID.TargetLocationID, Is.EqualTo(""));
+            Assert.Equal("FIX.4.2", getSessionID.BeginString);
+            Assert.Equal("SENDER", getSessionID.SenderCompID);
+            Assert.Equal("", getSessionID.SenderSubID);
+            Assert.Equal("", getSessionID.SenderLocationID);
+            Assert.Equal("TARGET", getSessionID.TargetCompID);
+            Assert.Equal("", getSessionID.TargetSubID);
+            Assert.Equal("", getSessionID.TargetLocationID);
         }
 
-        [Test]
+        [Fact]
         public void GetMsgTypeTest()
         {
             string[] msgFields = { "8=FIX.4.4", "9=104", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
                                      "55=sym", "268=1", "269=0", "272=20111012", "273=22:15:30.444", "10=19" };
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
-            Assert.AreEqual("W", Message.GetMsgType(msgStr));
+            Assert.Equal("W", Message.GetMsgType(msgStr));
 
             // invalid 35 value, let it ride
             string[] msgFields2 = { "8=FIX.4.4", "9=68", "35=*", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
                                      "55=sym", "268=0", "10=9" };
             string msgStr2 = String.Join(Message.SOH, msgFields2) + Message.SOH;
-            Assert.AreEqual("*", Message.GetMsgType(msgStr2));
+            Assert.Equal("*", Message.GetMsgType(msgStr2));
         }
 
-        [Test]
+        [Fact]
         public void RepeatingGroup_DelimiterFieldFirst()
         {
             QuickFix.FIX44.MarketDataRequest msg = new QuickFix.FIX44.MarketDataRequest();
@@ -552,10 +561,10 @@ namespace UnitTests
             string msgString = msg.ToString();
             string expected = String.Join(Message.SOH, new string[] { "146=2", "55=FOO1", "48=secid1", "55=FOO2", "48=secid2" });
 
-            StringAssert.Contains(expected, msgString);
+            Assert.Contains(expected, msgString);
         }
 
-        [Test]
+        [Fact]
         public void RepeatingGroup_FieldOrder()
         {
             QuickFix.FIX44.MarketDataRequest msg = new QuickFix.FIX44.MarketDataRequest();
@@ -589,19 +598,19 @@ namespace UnitTests
                 "55=FOO2", "65=sfx2", "48=secid2", "22=src2",
             });
 
-            StringAssert.Contains(expected, msgString);
+            Assert.Contains(expected, msgString);
         }
 
-        [Test]
+        [Fact]
         public void ToString_FIX50()
         {
             QuickFix.FIX50.News msg = new QuickFix.FIX50.News();
             msg.Headline = new Headline("FOO");
 
-            StringAssert.StartsWith("8=FIXT.1.1" + Message.SOH, msg.ToString());
+            Assert.StartsWith("8=FIXT.1.1" + Message.SOH, msg.ToString());
         }
 
-        [Test]
+        [Fact]
         public void RepeatingGroup_SubgroupCounterTagAppearsOnlyOnce()
         {
             // issue #11 bug, as reported by karabiberoglu's further-down post
@@ -638,60 +647,60 @@ namespace UnitTests
             });
 
             //Console.WriteLine(ci.ToString());
-            StringAssert.Contains(expected, msgString);
+            Assert.Contains(expected, msgString);
         }
 
-        [Test]
+        [Fact]
         public void issue56_GetGroup_by_tag_and_return()
         {
             // setup
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.Load(FIX44);
             string[] msgFields = { "8=FIX.4.2", "9=87", "35=B", "34=3", "49=CLIENT1", "52=20111012-22:15:55.474", "56=EXECUTOR", "148=AAAAAAA", "33=2", "58=L1", "58=L2", "10=016" };
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
             QuickFix.FIX42.News msg = new QuickFix.FIX42.News();
             msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
-            Assert.AreEqual(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
+            Assert.Equal(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
 
             // the test
             var grp1 = msg.GetGroup(1, Tags.LinesOfText);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(grp1);
-            Assert.AreEqual("L1", (grp1 as QuickFix.FIX42.News.LinesOfTextGroup).Text.Obj);
+            Assert.IsType<QuickFix.FIX42.News.LinesOfTextGroup>(grp1);
+            Assert.Equal("L1", (grp1 as QuickFix.FIX42.News.LinesOfTextGroup).Text.Obj);
 
             var grp2 = msg.GetGroup(2, Tags.LinesOfText);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(grp2);
-            Assert.AreEqual("L2", (grp2 as QuickFix.FIX42.News.LinesOfTextGroup).Text.Obj);
+            Assert.IsType<QuickFix.FIX42.News.LinesOfTextGroup>(grp2);
+            Assert.Equal("L2", (grp2 as QuickFix.FIX42.News.LinesOfTextGroup).Text.Obj);
         }
 
-        [Test]
+        [Fact]
         public void issue56_GetGroup_by_reference()
         {
             // setup
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.Load(FIX44);
             string[] msgFields = { "8=FIX.4.2", "9=87", "35=B", "34=3", "49=CLIENT1", "52=20111012-22:15:55.474", "56=EXECUTOR", "148=AAAAAAA", "33=2", "58=L1", "58=L2", "10=016" };
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
             QuickFix.FIX42.News msg = new QuickFix.FIX42.News();
             msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
-            Assert.AreEqual(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
+            Assert.Equal(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
 
             // the test
             QuickFix.FIX42.News.LinesOfTextGroup grp = new QuickFix.FIX42.News.LinesOfTextGroup(); // for return value
 
             msg.GetGroup(1, grp);
-            Assert.AreEqual("L1", grp.Text.Obj);
+            Assert.Equal("L1", grp.Text.Obj);
 
             msg.GetGroup(2, grp);
-            Assert.AreEqual("L2", grp.Text.Obj);
+            Assert.Equal("L2", grp.Text.Obj);
         }
 
-        [Test]
+        [Fact]
         public void MissingDelimiterField()
         {
             // issue 101
 
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.Load(FIX44);
 
             // message is missing 703
             string[] msgFields = { "8=FIX.4.4", "9=230", "35=AP", "34=3", "49=XXXXX", "52=20120731-14:06:37.848", "56=FixKevindemo",
@@ -704,17 +713,17 @@ namespace UnitTests
 
             QuickFix.GroupDelimiterTagException ex =
                 Assert.Throws<QuickFix.GroupDelimiterTagException>(delegate { msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory); });
-            Assert.AreEqual(702, ex.Field);
-            Assert.AreEqual("Group 702's first entry does not start with delimiter 703", ex.Message);
+            Assert.Equal(702, ex.Field);
+            Assert.Equal("Group 702's first entry does not start with delimiter 703", ex.Message);
         }
 
-        [Test]
+        [Fact]
         public void DateOnlyTimeOnlyConvertProblem()
         {
             // issue 135
 
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.Load(FIX44);
 
             string[] msgFields = { "8=FIX.4.4", "9=332", "35=W", "34=2", "49=MA", "52=20121024-12:21:42.170", "56=xxxx",
                 "22=4", "48=BE0932900518", "55=[N/A]", "262=1b145288-9c9a-4911-a084-7341c69d3e6b", "762=EURO_EUR", "268=2", 
@@ -728,12 +737,12 @@ namespace UnitTests
             msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
             QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup gentry1 = new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup();
             msg.GetGroup(1, gentry1);
-            Assert.AreEqual(new DateTime(2012, 10, 24), gentry1.MDEntryDate.getValue());
-            Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30, 47).TimeOfDay, gentry1.MDEntryTime.getValue().TimeOfDay);
-            Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30, 47), gentry1.MDEntryDate.getValue() + gentry1.MDEntryTime.getValue().TimeOfDay);
+            Assert.Equal(new DateTime(2012, 10, 24), gentry1.MDEntryDate.getValue());
+            Assert.Equal(new DateTime(2012, 10, 24, 7, 30, 47).TimeOfDay, gentry1.MDEntryTime.getValue().TimeOfDay);
+            Assert.Equal(new DateTime(2012, 10, 24, 7, 30, 47), gentry1.MDEntryDate.getValue() + gentry1.MDEntryTime.getValue().TimeOfDay);
         }
 
-        [Test]
+        [Fact]
         public void SendDateOnlyTimeOnlyConvertProblem()
         {
             // issue 135
@@ -776,15 +785,15 @@ namespace UnitTests
                 "269=1", "270=108.08", "15=EUR", "271=884000", "272=20121024", "273=07:30:47", "276=I", "282=BEARGB21XXX", "299=15467902"
             });
 
-            StringAssert.Contains(expected, msgString);
+            Assert.Contains(expected, msgString);
         }
 
-        [Test]
+        [Fact]
         public void MessageHasDecimalWithNoLeadingZero()
         {
             // issue 160
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.Load(FIX44);
 
             string[] msgFields = { "8=FIX.4.4", "9=122", "35=8", "34=2", "49=sender", "52=20121024-12:21:42.170", "56=target",
                 "37=orderid", "17=execid", "150=0", "39=0",
@@ -796,15 +805,15 @@ namespace UnitTests
             QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
             msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
 
-            Assert.AreEqual(0.23, msg.Factor.getValue());
+            Assert.Equal(0.23M, msg.Factor.getValue());
         }
 
-        [Test]
+        [Fact]
         public void FromString_Groups_NoFactory()
         {
             // issue 179
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.Load(FIX44);
 
             string[] msgFields = {
                 // header
@@ -837,12 +846,12 @@ namespace UnitTests
             Assert.False(partyGroup.IsSetNoPartySubIDs());
         }
 
-        [Test]
+        [Fact]
         public void IsAdmin_IsApp()
         {
             // issue 173
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX42.xml");
+            dd.Load(FIX42);
 
             string[] newsFields = { "8=FIX4.2", "9=5", "35=B", "10=133" };
             string newsStr = String.Join(Message.SOH, newsFields) + Message.SOH;
@@ -861,7 +870,7 @@ namespace UnitTests
             Assert.False(heartbeat.IsApp());
         }
 
-        [Test]
+        [Fact]
         public void issue95()
         {
             // Parser screws up on triple-nested groups.  Contributes to ResendRequest failures.
@@ -876,22 +885,22 @@ namespace UnitTests
             });
 
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.Load(FIX44);
 
             Message msg = new Message();
             msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
 
             // make sure no fields were dropped in parsing
-            Assert.AreEqual(msgStr.Length, msg.ToString().Length);
+            Assert.Equal(msgStr.Length, msg.ToString().Length);
 
             // make sure repeating groups are not rearranged
             // 1 level deep
-            StringAssert.Contains(String.Join(Message.SOH, new string[] { "55=ABC", "65=CD", "48=securityid", "22=1" }), msg.ToString());
+            Assert.Contains(String.Join(Message.SOH, new string[] { "55=ABC", "65=CD", "48=securityid", "22=1" }), msg.ToString());
             // 2 levels deep
-            StringAssert.Contains(String.Join(Message.SOH, new string[] { "311=underlyingsymbol", "312=WI", "309=underlyingsecurityid", "305=1" }), msg.ToString());
+            Assert.Contains(String.Join(Message.SOH, new string[] { "311=underlyingsymbol", "312=WI", "309=underlyingsecurityid", "305=1" }), msg.ToString());
         }
 
-        [Test]
+        [Fact]
         public void SetFieldsTest()
         {
             var message = new Message();
@@ -900,14 +909,14 @@ namespace UnitTests
             var allocAccountType = new AllocAccountType(AllocAccountType.HOUSE_TRADER);
             message.SetFields(new IField[] { allocAccount, allocAccountType, allocId });
 
-            Assert.AreEqual(true, message.IsSetField(Tags.AllocID));
-            Assert.AreEqual("123456", message.GetField(Tags.AllocID));
+            Assert.True(message.IsSetField(Tags.AllocID));
+            Assert.Equal("123456", message.GetField(Tags.AllocID));
 
-            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccount));
-            Assert.AreEqual("QuickFixAccount", message.GetField(Tags.AllocAccount));
+            Assert.True(message.IsSetField(Tags.AllocAccount));
+            Assert.Equal("QuickFixAccount", message.GetField(Tags.AllocAccount));
 
-            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccountType));
-            Assert.AreEqual(AllocAccountType.HOUSE_TRADER, message.GetInt(Tags.AllocAccountType));
+            Assert.True(message.IsSetField(Tags.AllocAccountType));
+            Assert.Equal(AllocAccountType.HOUSE_TRADER, message.GetInt(Tags.AllocAccountType));
         }
     }
 }

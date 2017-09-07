@@ -1,107 +1,105 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class GenMessageTests
     {
-        [Test]
+        [Fact]
         public void TCRFieldPropertiesTest()
         {
-            Decimal val = new Decimal(3.232535);
+            Decimal val = 3.232535M;
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
             tcr.AvgPx = new AvgPx(val);
-            Assert.That(tcr.AvgPx.getValue(), Is.EqualTo(val));
+            Assert.Equal(tcr.AvgPx.getValue(), val);
         }
 
-        [Test]
+        [Fact]
         public void TCRFieldGetterTest()
         {
-            AvgPx avgPx = new AvgPx(new Decimal(10.5));
+            AvgPx avgPx = new AvgPx(10.5M);
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
             tcr.SetField(avgPx);
-            Assert.That(tcr.AvgPx.getValue(), Is.EqualTo(avgPx.getValue()));
+            Assert.Equal(tcr.AvgPx.getValue(), avgPx.getValue());
             AvgPx avgPx2 = new AvgPx();
             tcr.GetField(avgPx2);
-            Assert.That(avgPx2.getValue(), Is.EqualTo(avgPx.getValue()));
+            Assert.Equal(avgPx2.getValue(), avgPx.getValue());
         }
 
-        [Test]
+        [Fact]
         public void TCRFieldSetterTypeSafeOldWayTest()
         {
-            AvgPx avgPx = new AvgPx(new Decimal(10.5));
+            AvgPx avgPx = new AvgPx(10.5M);
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
             tcr.Set(avgPx);
-            Assert.That(tcr.AvgPx.getValue(), Is.EqualTo(avgPx.getValue()));
+            Assert.Equal(tcr.AvgPx.getValue(), avgPx.getValue());
         }
 
-
-        [Test]
+        [Fact]
         public void TCRFieldGetterTypeSafeOldWayTest()
         {
-            AvgPx avgPx = new AvgPx(new Decimal(10.5));
+            AvgPx avgPx = new AvgPx(10.5M);
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            tcr.Set(new AvgPx(new Decimal(10.5)));
+            tcr.Set(new AvgPx(10.5M));
             tcr.Get(avgPx);
-            Assert.That(tcr.AvgPx.getValue(), Is.EqualTo(avgPx.getValue()));
+            Assert.Equal(tcr.AvgPx.getValue(), avgPx.getValue());
         }
 
-        [Test]
+        [Fact]
         public void TCRMsgTypeGetsSetTest()
         {
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport();
-            Assert.That(tcr.Header.IsSetField(QuickFix.Fields.Tags.MsgType), Is.True);
+            Assert.True(tcr.Header.IsSetField(QuickFix.Fields.Tags.MsgType));
             MsgType msgType = new MsgType();
             tcr.Header.GetField(msgType);
-            Assert.That(msgType.getValue(), Is.EqualTo("AE"));
+            Assert.Equal("AE", msgType.getValue());
         }
 
-        [Test]
+        [Fact]
         public void TCRReqFieldsCTORTest()
         {
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport(
                 new TradeReportID("dude1"),
                 new PreviouslyReported(true),
                 new Symbol("AAPL"),
-                new LastQty(new Decimal(100.1)),
-                new LastPx(new Decimal(100.2)),
+                new LastQty(100.1M),
+                new LastPx(100.2M),
                 new TradeDate("2010-12-12"),
                 new TransactTime(new DateTime(2010, 12, 15, 10, 55, 32, 455)));
-            Assert.That(tcr.Symbol.getValue(), Is.EqualTo("AAPL"));
-            Assert.That(tcr.TradeReportID.getValue(), Is.EqualTo("dude1"));
+            Assert.Equal("AAPL", tcr.Symbol.getValue());
+            Assert.Equal("dude1", tcr.TradeReportID.getValue());
             MsgType msgType = new MsgType();
             tcr.Header.GetField(msgType);
-            Assert.That(msgType.getValue(), Is.EqualTo("AE"));
+            Assert.Equal("AE", msgType.getValue());
         }
 
-        [Test]
+        [Fact]
         public void TCRisSetTest()
         {
             QuickFix.FIX44.TradeCaptureReport tcr = new QuickFix.FIX44.TradeCaptureReport(
                 new TradeReportID("dude1"),
                 new PreviouslyReported(true),
                 new Symbol("AAPL"),
-                new LastQty(new Decimal(100.1)),
-                new LastPx(new Decimal(100.2)),
+                new LastQty(100.1M),
+                new LastPx(100.2M),
                 new TradeDate("2010-12-12"),
                 new TransactTime(new DateTime(2010, 12, 15, 10, 55, 32, 455)));
             LastPx lastPx = new LastPx();
-            Assert.That(tcr.IsSet(lastPx), Is.True);
-            AvgPx avgPx = new AvgPx(new Decimal(10.5));
-            Assert.That(tcr.IsSet(avgPx), Is.False);
-            Assert.That(tcr.IsSetAvgPx(), Is.False);
+            Assert.True(tcr.IsSet(lastPx));
+            AvgPx avgPx = new AvgPx(10.5M);
+            Assert.False(tcr.IsSet(avgPx));
+            Assert.False(tcr.IsSetAvgPx());
             tcr.Set(avgPx);
-            Assert.That(tcr.IsSet(avgPx), Is.True);
-            Assert.That(tcr.IsSetAvgPx(), Is.True);
+            Assert.True(tcr.IsSet(avgPx));
+            Assert.True(tcr.IsSetAvgPx());
 
         }
 
-        [Test]
+        [Fact]
         public void TCRGroupCTORTest()
         {
             int[] expFieldOrder = new int[] {
@@ -112,30 +110,30 @@ namespace UnitTests
                     58, 354, 355, 752, 518, 232, 136, 825, 826, 591, 70, 78, 0
                 };
             QuickFix.FIX44.TradeCaptureReport.NoSidesGroup noSides = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
-            Assert.That(noSides.FieldOrder, Is.EqualTo(expFieldOrder));
-            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.fieldOrder, Is.EqualTo(expFieldOrder));
+            Assert.Equal(noSides.FieldOrder, expFieldOrder);
+            Assert.Equal(QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.fieldOrder, expFieldOrder);
         }
 
-        [Test]
+        [Fact]
         public void TCRGroupInGroupCTORTest()
         {
             int[] expFieldOrder = { 757, 758, 759, 806, 0 };
             QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup grp = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup();
-            Assert.That(grp.FieldOrder, Is.EqualTo(expFieldOrder));
-            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup.fieldOrder, Is.EqualTo(expFieldOrder));
+            Assert.Equal(grp.FieldOrder, expFieldOrder);
+            Assert.Equal(QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup.fieldOrder, expFieldOrder);
         }
 
-        [Test]
+        [Fact]
         public void TCRGroupFieldGetterSetterTest()
         {
             QuickFix.FIX44.TradeCaptureReport.NoSidesGroup noSides = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
             OrderID ordId = new OrderID("fooey");
-            Assert.That(noSides.IsSet(ordId), Is.False);
-            Assert.That(noSides.IsSetOrderID(), Is.False);
+            Assert.False(noSides.IsSet(ordId));
+            Assert.False(noSides.IsSetOrderID());
             noSides.Set(ordId);
-            Assert.That(noSides.IsSet(ordId), Is.True);
-            Assert.That(noSides.IsSetOrderID(), Is.True);
-            Assert.That(noSides.OrderID.getValue(), Is.EqualTo("fooey"));
+            Assert.True(noSides.IsSet(ordId));
+            Assert.True(noSides.IsSetOrderID());
+            Assert.Equal("fooey", noSides.OrderID.getValue());
         }
     }
 }

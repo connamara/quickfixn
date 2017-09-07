@@ -138,7 +138,7 @@ namespace QuickFix.Transport
         {
 
             // Get the certificate store for the current user.
-            X509Store store = new X509Store(StoreLocation.CurrentUser);
+            X509Store store = new X509Store("MY", StoreLocation.CurrentUser);
             try
             {
                 store.Open(OpenFlags.ReadOnly);
@@ -162,7 +162,11 @@ namespace QuickFix.Transport
             }
             finally
             {
+#if !NETSTANDARD1_6
                 store.Close();
+#else
+                store.Dispose();
+#endif
             }
 
         }
@@ -197,10 +201,18 @@ namespace QuickFix.Transport
                 {
                     // Setup secure SSL Communication
                     var clientCertificates = GetClientCertificates();
+#if !NETSTANDARD1_6
                     sslStream.AuthenticateAsClient(socketSettings_.ServerCommonName,
                         clientCertificates,
                         socketSettings_.SslProtocol,
                         socketSettings_.CheckCertificateRevocation);
+#else
+                    sslStream.AuthenticateAsClientAsync(socketSettings_.ServerCommonName,
+                            clientCertificates,
+                            socketSettings_.SslProtocol,
+                            socketSettings_.CheckCertificateRevocation)
+                        .GetAwaiter().GetResult();
+#endif
                 }
                 catch (System.Security.Authentication.AuthenticationException ex)
                 {
@@ -227,10 +239,18 @@ namespace QuickFix.Transport
 
                     // Setup secure SSL Communication
                     var serverCertificate = StreamFactory.LoadCertificate(socketSettings_.CertificatePath, socketSettings_.CertificatePassword);
+#if !NETSTANDARD1_6
                     sslStream.AuthenticateAsServer(serverCertificate,
                         socketSettings_.RequireClientCertificate,
                         socketSettings_.SslProtocol,
                         socketSettings_.CheckCertificateRevocation);
+#else
+                    sslStream.AuthenticateAsServerAsync(serverCertificate,
+                            socketSettings_.RequireClientCertificate,
+                            socketSettings_.SslProtocol,
+                            socketSettings_.CheckCertificateRevocation)
+                        .GetAwaiter().GetResult();
+#endif
                 }
                 catch (System.Security.Authentication.AuthenticationException ex)
                 {
@@ -347,8 +367,15 @@ namespace QuickFix.Transport
             {
                 X509Certificate2 cert2 = certificate as X509Certificate2;
 
+#if !NETSTANDARD1_6
                 if (cert2 == null)
                     cert2 = new X509Certificate2(certificate);
+#else
+                if (cert2 == null)
+                    cert2 = new X509Certificate2(certificate.Handle);
+#endif
+
+
 
                 foreach (X509Extension extension in cert2.Extensions)
                 {

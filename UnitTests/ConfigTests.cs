@@ -1,17 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
+﻿using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class ConfigTests
     {
-        [Test]
+        [Fact]
         public void Test()
         {
-            Assert.That(true);
+            Assert.True(true);
         }
     }
 }

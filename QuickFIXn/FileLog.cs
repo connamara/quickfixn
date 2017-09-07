@@ -35,8 +35,13 @@ namespace QuickFix
             messageLogFileName_ = System.IO.Path.Combine(fileLogPath, prefix + ".messages.current.log");
             eventLogFileName_ = System.IO.Path.Combine(fileLogPath, prefix + ".event.current.log");
 
+#if !NETSTANDARD1_6
             messageLog_ = new System.IO.StreamWriter(messageLogFileName_,true);
             eventLog_ = new System.IO.StreamWriter(eventLogFileName_,true);
+#else
+            messageLog_ = new System.IO.StreamWriter(System.IO.File.Open(messageLogFileName_, System.IO.FileMode.Append));
+            eventLog_ = new System.IO.StreamWriter(System.IO.File.Open(eventLogFileName_, System.IO.FileMode.Append));
+#endif
 
             messageLog_.AutoFlush = true;
             eventLog_.AutoFlush = true;
@@ -76,11 +81,21 @@ namespace QuickFix
 
             lock (sync_)
             {
+#if !NETSTANDARD1_6
                 messageLog_.Close();
                 eventLog_.Close();
+#else
+                messageLog_.Dispose();
+                eventLog_.Dispose();
+#endif
 
-                messageLog_ = new System.IO.StreamWriter(messageLogFileName_, false);
-                eventLog_ = new System.IO.StreamWriter(eventLogFileName_, false);
+#if !NETSTANDARD1_6
+                messageLog_ = new System.IO.StreamWriter(messageLogFileName_,false);
+                eventLog_ = new System.IO.StreamWriter(eventLogFileName_,false);
+#else
+                messageLog_ = new System.IO.StreamWriter(System.IO.File.Open(messageLogFileName_, System.IO.FileMode.Append));
+                eventLog_ = new System.IO.StreamWriter(System.IO.File.Open(eventLogFileName_, System.IO.FileMode.Create));
+#endif
 
                 messageLog_.AutoFlush = true;
                 eventLog_.AutoFlush = true;

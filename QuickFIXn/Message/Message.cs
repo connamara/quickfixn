@@ -415,7 +415,11 @@ namespace QuickFix
 
                     if (Tags.MsgType.Equals(f.Tag))
                     {
+#if !NETSTANDARD1_6
                         msgType = string.Copy(f.Obj);
+#else
+                        msgType = f.Obj;
+#endif
                         if (appDD != null)
                         {
                             msgMap = appDD.GetMapForMessage(msgType);

@@ -26,7 +26,11 @@ namespace QuickFix
         {
             Type handlerType = messageHandler.GetType();
 
+#if !NETSTANDARD1_6
             MethodInfo[] methods = handlerType.GetMethods(BindingFlags.Public | BindingFlags.Instance);
+#else
+            MethodInfo[] methods = handlerType.GetTypeInfo().GetMethods(BindingFlags.Public | BindingFlags.Instance);
+#endif
 
             foreach (MethodInfo m in methods)
             {
@@ -64,14 +68,23 @@ namespace QuickFix
         }
 
 
-        static public bool IsHandlerMethod(MethodInfo m)
+        public static bool IsHandlerMethod(MethodInfo m)
         {
+#if !NETSTANDARD1_6
             return (m.IsPublic == true
                 && m.Name.Equals("OnMessage")
                 && m.GetParameters().Length == 2
                 && m.GetParameters()[0].ParameterType.IsSubclassOf(typeof(QuickFix.Message))
                 && typeof(QuickFix.SessionID).IsAssignableFrom(m.GetParameters()[1].ParameterType)
                 && m.ReturnType == typeof(void));
+#else
+            return (m.IsPublic == true
+                    && m.Name.Equals("OnMessage")
+                    && m.GetParameters().Length == 2
+                    && m.GetParameters()[0].ParameterType.GetTypeInfo().IsSubclassOf(typeof(QuickFix.Message))
+                    && typeof(QuickFix.SessionID).GetTypeInfo().IsAssignableFrom(m.GetParameters()[1].ParameterType)
+                    && m.ReturnType == typeof(void));
+#endif
         }
 
 

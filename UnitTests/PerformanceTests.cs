@@ -2,20 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
+using Xunit;
 
 namespace UnitTests
 {
     /// <summary>
     /// TODO: Move performance-related tests into PerformanceTests project.
     /// </summary>
-    [Ignore("Not running perf tests as part of unit test suite.")]
-    [TestFixture]
+    //[Ignore("Not running perf tests as part of unit test suite.")]
     public class PerformanceTests
     {
-        [Test]
+        [Fact]
         public void TestParsePerformance()
         {
             string fix = GenRandomFIXString();
@@ -63,7 +62,7 @@ namespace UnitTests
 
                 sf.Tag = IntParse(field.Substring(0, tagIndex));
                 sf.Obj = field.Substring(tagIndex + 1);
-                m.setField(sf);
+                m.SetField(sf);
             }
             else return;
 
@@ -80,11 +79,11 @@ namespace UnitTests
 
                 sf2.Tag = IntParse(field.Substring(0, tagIndex));
                 sf2.Obj = field.Substring(tagIndex + 1);
-                m.setField(sf2);
+                m.SetField(sf2);
             }
         }
 
-        [Test]
+        [Fact]
         public void TestNewParser()
         {
             HiPerfTimer timer = new HiPerfTimer();
@@ -95,13 +94,13 @@ namespace UnitTests
             for (int i = 0; i < times; i++)
             {
                 Message m = new Message();
-                m.FromString(fix);
+                m.FromString(fix, false, null, null);
             }
             timer.Stop();
             Console.WriteLine("Total per second [new parser]: " + ((1 / timer.Duration) * times).ToString());
         }
 
-        [Test]
+        [Fact]
         public void TestMessageParserIntegrity()
         {
             string fix = "5=ASDF" + Message.SOH + "10=234" + Message.SOH;
@@ -111,8 +110,8 @@ namespace UnitTests
 
             MakeMessage(m, fix);
 
-            Assert.That(m.GetField(5), Is.EqualTo("ASDF"));
-            Assert.That(m.GetField(10), Is.EqualTo("234"));
+            Assert.Equal("ASDF", m.GetField(5));
+            Assert.Equal("234", m.GetField(10));
         }
 
         public static string GenRandomFIXString()
@@ -178,7 +177,7 @@ namespace UnitTests
             private List<MyStruct> structs;
         }
 
-        [Test]
+        [Fact]
         public void TestStructVsClass()
         {
             HiPerfTimer timer = new HiPerfTimer();
@@ -217,7 +216,7 @@ namespace UnitTests
             Console.WriteLine("Duration to construct large class containing smaller structs: " + timer.Duration.ToString());
         }
 
-        [Test]
+        [Fact]
         public void TestUTFByteEncoding()
         {
             string test = "LKDSAJFLAKJSFLKJFLAKSJFLAKSJFASLFASDJLFLKASFLKAFSJLKALKFSKJASLFLAFSJKLKJAFSLAALKSFKJLSAFLJKFSALJKAFSLJKAFSJKLAFSKJLFSAKJLFASKLJAFSKJLAFSLJKAFSKJLFSKJLFSALJKFSAJKLAFSLJKAFSJKLFSJKKJLAFS";
@@ -251,7 +250,7 @@ namespace UnitTests
         /// </summary>
         /// <param name="stringToConvert"></param>
         /// <returns></returns>
-        public unsafe static int IntParse(string stringToConvert)
+        public static unsafe int IntParse(string stringToConvert)
         {
             int value = 0;
             int length = stringToConvert.Length;

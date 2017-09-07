@@ -1,15 +1,13 @@
-﻿using NUnit.Framework;
-using QuickFix;
+﻿using QuickFix;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class SessionSettingsTest
     {
         protected System.Text.StringBuilder partialConfiguration;
 
-        [SetUp]
-        public void Init()
+        public SessionSettingsTest()
         {
             partialConfiguration = new System.Text.StringBuilder()
                 .AppendLine("[SESSION]")
@@ -46,7 +44,7 @@ namespace UnitTests
                 .AppendLine("TargetCompID=TW");
         }
 
-        [Test]
+        [Fact]
         public void Load()
         {
             string configuration = new System.Text.StringBuilder()
@@ -58,43 +56,43 @@ namespace UnitTests
                 .AppendLine(partialConfiguration.ToString())
                 .ToString();
             SessionSettings settings = new SessionSettings(new System.IO.StringReader(configuration));
-            
+
             SessionID session1 = new SessionID("FIX.4.2", "ISLD", "TW");
             SessionID session2 = new SessionID("FIX.4.1", "ISLD", "WT");
             SessionID session3 = new SessionID("FIX.4.0", "ARCA", "TW");
             SessionID session4 = new SessionID("FIX.4.0", "ARCA", "WT");
             SessionID session5 = new SessionID("FIX.4.0", "NYSE", "TW", "QUAL1");
             SessionID session6 = new SessionID("FIX.4.0", "NYSE", "TW", "QUAL2");
-            
-            Assert.That(settings.Get().GetString( "Empty" ), Is.EqualTo("") );
-            
-            Assert.That(settings.Get().GetLong( "Value" ), Is.EqualTo(4) );
-            Assert.That(settings.Get(session1).GetLong("Value"), Is.EqualTo(1));
-            Assert.That(settings.Get(session2).GetLong("Value"), Is.EqualTo(2));
-            Assert.That(settings.Get(session3).GetLong("Value"), Is.EqualTo(3));
-            Assert.That(settings.Get(session4).GetLong("Value"), Is.EqualTo(4));
-            Assert.That(settings.Get(session5).GetLong("Value"), Is.EqualTo(5));
-            Assert.That(settings.Get(session6).GetLong("Value"), Is.EqualTo(6));
+
+            Assert.Equal("", settings.Get().GetString("Empty"));
+
+            Assert.Equal(4, settings.Get().GetLong("Value"));
+            Assert.Equal(1, settings.Get(session1).GetLong("Value"));
+            Assert.Equal(2, settings.Get(session2).GetLong("Value"));
+            Assert.Equal(3, settings.Get(session3).GetLong("Value"));
+            Assert.Equal(4, settings.Get(session4).GetLong("Value"));
+            Assert.Equal(5, settings.Get(session5).GetLong("Value"));
+            Assert.Equal(6, settings.Get(session6).GetLong("Value"));
 
             // case insensitivity
-            Assert.That(settings.Get().GetLong("value"), Is.EqualTo(4));
-            Assert.That(settings.Get(session1).GetLong("value"), Is.EqualTo(1));
-            Assert.That(settings.Get(session2).GetLong("value"), Is.EqualTo(2));
-            Assert.That(settings.Get(session3).GetLong("value"), Is.EqualTo(3));
-            Assert.That(settings.Get(session4).GetLong("value"), Is.EqualTo(4));
-            Assert.That(settings.Get(session5).GetLong("value"), Is.EqualTo(5));
-            Assert.That(settings.Get(session6).GetLong("value"), Is.EqualTo(6));
+            Assert.Equal(4, settings.Get().GetLong("value"));
+            Assert.Equal(1, settings.Get(session1).GetLong("value"));
+            Assert.Equal(2, settings.Get(session2).GetLong("value"));
+            Assert.Equal(3, settings.Get(session3).GetLong("value"));
+            Assert.Equal(4, settings.Get(session4).GetLong("value"));
+            Assert.Equal(5, settings.Get(session5).GetLong("value"));
+            Assert.Equal(6, settings.Get(session6).GetLong("value"));
 
-            Assert.That(settings.Get().GetLong("VALUE"), Is.EqualTo(4));
-            Assert.That(settings.Get(session1).GetLong("VALUE"), Is.EqualTo(1));
-            Assert.That(settings.Get(session2).GetLong("VALUE"), Is.EqualTo(2));
-            Assert.That(settings.Get(session3).GetLong("VALUE"), Is.EqualTo(3));
-            Assert.That(settings.Get(session4).GetLong("VALUE"), Is.EqualTo(4));
-            Assert.That(settings.Get(session5).GetLong("VALUE"), Is.EqualTo(5));
-            Assert.That(settings.Get(session6).GetLong("VALUE"), Is.EqualTo(6));
+            Assert.Equal(4, settings.Get().GetLong("VALUE"));
+            Assert.Equal(1, settings.Get(session1).GetLong("VALUE"));
+            Assert.Equal(2, settings.Get(session2).GetLong("VALUE"));
+            Assert.Equal(3, settings.Get(session3).GetLong("VALUE"));
+            Assert.Equal(4, settings.Get(session4).GetLong("VALUE"));
+            Assert.Equal(5, settings.Get(session5).GetLong("VALUE"));
+            Assert.Equal(6, settings.Get(session6).GetLong("VALUE"));
         }
 
-        [Test]
+        [Fact]
         public void LoadSettingsWithDefaultSectionLast()
         {
             string configuration = new System.Text.StringBuilder()
@@ -114,35 +112,35 @@ namespace UnitTests
             SessionID session5 = new SessionID("FIX.4.0", "NYSE", "TW", "QUAL1");
             SessionID session6 = new SessionID("FIX.4.0", "NYSE", "TW", "QUAL2");
 
-            Assert.That(settings.Get().GetString("Empty"), Is.EqualTo(""));
+            Assert.Equal("", settings.Get().GetString("Empty"));
 
-            Assert.That(settings.Get().GetLong("Value"), Is.EqualTo(4));
-            Assert.That(settings.Get(session1).GetLong("Value"), Is.EqualTo(1));
-            Assert.That(settings.Get(session2).GetLong("Value"), Is.EqualTo(2));
-            Assert.That(settings.Get(session3).GetLong("Value"), Is.EqualTo(3));
-            Assert.That(settings.Get(session4).GetLong("Value"), Is.EqualTo(4));
-            Assert.That(settings.Get(session5).GetLong("Value"), Is.EqualTo(5));
-            Assert.That(settings.Get(session6).GetLong("Value"), Is.EqualTo(6));
+            Assert.Equal(4, settings.Get().GetLong("Value"));
+            Assert.Equal(1, settings.Get(session1).GetLong("Value"));
+            Assert.Equal(2, settings.Get(session2).GetLong("Value"));
+            Assert.Equal(3, settings.Get(session3).GetLong("Value"));
+            Assert.Equal(4, settings.Get(session4).GetLong("Value"));
+            Assert.Equal(5, settings.Get(session5).GetLong("Value"));
+            Assert.Equal(6, settings.Get(session6).GetLong("Value"));
 
             // case insensitivity
-            Assert.That(settings.Get().GetLong("value"), Is.EqualTo(4));
-            Assert.That(settings.Get(session1).GetLong("value"), Is.EqualTo(1));
-            Assert.That(settings.Get(session2).GetLong("value"), Is.EqualTo(2));
-            Assert.That(settings.Get(session3).GetLong("value"), Is.EqualTo(3));
-            Assert.That(settings.Get(session4).GetLong("value"), Is.EqualTo(4));
-            Assert.That(settings.Get(session5).GetLong("value"), Is.EqualTo(5));
-            Assert.That(settings.Get(session6).GetLong("value"), Is.EqualTo(6));
+            Assert.Equal(4, settings.Get().GetLong("value"));
+            Assert.Equal(1, settings.Get(session1).GetLong("value"));
+            Assert.Equal(2, settings.Get(session2).GetLong("value"));
+            Assert.Equal(3, settings.Get(session3).GetLong("value"));
+            Assert.Equal(4, settings.Get(session4).GetLong("value"));
+            Assert.Equal(5, settings.Get(session5).GetLong("value"));
+            Assert.Equal(6, settings.Get(session6).GetLong("value"));
 
-            Assert.That(settings.Get().GetLong("VALUE"), Is.EqualTo(4));
-            Assert.That(settings.Get(session1).GetLong("VALUE"), Is.EqualTo(1));
-            Assert.That(settings.Get(session2).GetLong("VALUE"), Is.EqualTo(2));
-            Assert.That(settings.Get(session3).GetLong("VALUE"), Is.EqualTo(3));
-            Assert.That(settings.Get(session4).GetLong("VALUE"), Is.EqualTo(4));
-            Assert.That(settings.Get(session5).GetLong("VALUE"), Is.EqualTo(5));
-            Assert.That(settings.Get(session6).GetLong("VALUE"), Is.EqualTo(6));
+            Assert.Equal(4, settings.Get().GetLong("VALUE"));
+            Assert.Equal(1, settings.Get(session1).GetLong("VALUE"));
+            Assert.Equal(2, settings.Get(session2).GetLong("VALUE"));
+            Assert.Equal(3, settings.Get(session3).GetLong("VALUE"));
+            Assert.Equal(4, settings.Get(session4).GetLong("VALUE"));
+            Assert.Equal(5, settings.Get(session5).GetLong("VALUE"));
+            Assert.Equal(6, settings.Get(session6).GetLong("VALUE"));
         }
 
-        [Test]
+        [Fact]
         public void DuplicateSession()
         {
             string configuration = new System.Text.StringBuilder()
@@ -159,8 +157,8 @@ namespace UnitTests
                     .ToString();
             Assert.Throws<ConfigError>(delegate { new SessionSettings(new System.IO.StringReader(configuration)); });
         }
-        
-        [Test]
+
+        [Fact]
         public void StripSpaces()
         {
             string configuration = new System.Text.StringBuilder()
@@ -175,25 +173,25 @@ namespace UnitTests
                     .AppendLine("  Bool  =  N  ")
                     .ToString();
             SessionSettings settings = new SessionSettings(new System.IO.StringReader(configuration));
-            
-            Assert.That(settings.Get().GetString("ConnectionType"), Is.EqualTo("initiator"));
+
+            Assert.Equal("initiator", settings.Get().GetString("ConnectionType"));
 
             SessionID session = new SessionID("FIX.4.2", "ISLD", "TW");
-            Assert.That(settings.Get(session).GetString("ConnectionType"), Is.EqualTo("initiator"));
-            Assert.That(settings.Get(session).GetString("BeginString"), Is.EqualTo("FIX.4.2"));
-            Assert.That(settings.Get(session).GetString("SenderCompID"), Is.EqualTo("ISLD"));
-            Assert.That(settings.Get(session).GetString("TargetCompID"), Is.EqualTo("TW"));
-            Assert.That(settings.Get(session).GetLong("Long"), Is.EqualTo(123));
-            Assert.That(settings.Get(session).GetDouble("Double"), Is.EqualTo(1.23));
-            Assert.That(settings.Get(session).GetBool("Bool"), Is.False);
+            Assert.Equal("initiator", settings.Get(session).GetString("ConnectionType"));
+            Assert.Equal("FIX.4.2", settings.Get(session).GetString("BeginString"));
+            Assert.Equal("ISLD", settings.Get(session).GetString("SenderCompID"));
+            Assert.Equal("TW", settings.Get(session).GetString("TargetCompID"));
+            Assert.Equal(123, settings.Get(session).GetLong("Long"));
+            Assert.Equal(1.23, settings.Get(session).GetDouble("Double"));
+            Assert.False(settings.Get(session).GetBool("Bool"));
         }
 
-        [Test]
+        [Fact]
         public void Validate()
         {
             SessionSettings settings = new SessionSettings();
             SessionID sessionID = new SessionID("FIX.4.2", "SenderCompID", "TargetCompID");
-            
+
             // ConnectionType not set
             QuickFix.Dictionary dictionary = new QuickFix.Dictionary();
             Assert.Throws<ConfigError>(delegate { settings.Set(sessionID, dictionary); });
@@ -204,14 +202,14 @@ namespace UnitTests
 
             // ConnectionType set to valid value
             dictionary.SetString(SessionSettings.CONNECTION_TYPE, "initiator");
-            Assert.DoesNotThrow(delegate { settings.Set(sessionID, dictionary); });
-            
+            settings.Set(sessionID, dictionary);
+
             // Invalid BeginString
             sessionID = new SessionID("FIX4.2", "SenderCompID", "TargetCompID");
             Assert.Throws<ConfigError>(delegate { settings.Set(sessionID, dictionary); });
         }
 
-        [Test]
+        [Fact]
         public void SettingsToString()
         {
             string configuration = new System.Text.StringBuilder()
@@ -233,10 +231,10 @@ namespace UnitTests
                 .ToString();
             SessionSettings settings = new SessionSettings(new System.IO.StringReader(configuration));
 
-            Assert.That(settings.ToString(), Is.EqualTo(configuration));
+            Assert.Equal(settings.ToString(), configuration);
         }
 
-        [Test]
+        [Fact]
         public void testExtendedSettings()
         {
             string settingsString = new System.Text.StringBuilder()
@@ -260,49 +258,49 @@ namespace UnitTests
                 .ToString();
 
             SessionSettings settings = new SessionSettings(new System.IO.StringReader(settingsString));
-            
+
             SessionID id = new SessionID("FIX.4.2", "Company", "FixedIncome", "HongKong", "CLIENT1", "HedgeFund", "NYC");
-            Assert.That(settings.Get(id).GetString("HeartBtInt"), Is.EqualTo("60"));
-            Assert.That(settings.Get(id).GetString("BeginString"), Is.EqualTo("FIX.4.2"));
-            Assert.That(settings.Get(id).GetString("SenderCompID"), Is.EqualTo("Company"));
-            Assert.That(settings.Get(id).GetString("SenderSubID"), Is.EqualTo("FixedIncome"));
-            Assert.That(settings.Get(id).GetString("SenderLocationID"), Is.EqualTo("HongKong"));
-            Assert.That(settings.Get(id).GetString("TargetCompID"), Is.EqualTo("CLIENT1"));
-            Assert.That(settings.Get(id).GetString("TargetSubID"), Is.EqualTo("HedgeFund"));
-            Assert.That(settings.Get(id).GetString("TargetLocationID"), Is.EqualTo("NYC"));
-            Assert.That(settings.Get(id).GetString("SendRedundantResendRequests"), Is.EqualTo("Y"));
-            Assert.That(settings.Get(id).GetString("MillisecondsInTimeStamp"), Is.EqualTo("Y"));
-            Assert.That(settings.Get(id).GetString("EnableLastMsgSeqNumProcessed"), Is.EqualTo("Y"));
-            Assert.That(settings.Get(id).GetString("MaxMessagesInResendRequest"), Is.EqualTo("2500"));
-            Assert.That(settings.Get(id).GetString("StartTime"), Is.EqualTo("06:00:00"));
-            Assert.That(settings.Get(id).GetString("EndTime"), Is.EqualTo("05:59:00"));
+            Assert.Equal("60", settings.Get(id).GetString("HeartBtInt"));
+            Assert.Equal("FIX.4.2", settings.Get(id).GetString("BeginString"));
+            Assert.Equal("Company", settings.Get(id).GetString("SenderCompID"));
+            Assert.Equal("FixedIncome", settings.Get(id).GetString("SenderSubID"));
+            Assert.Equal("HongKong", settings.Get(id).GetString("SenderLocationID"));
+            Assert.Equal("CLIENT1", settings.Get(id).GetString("TargetCompID"));
+            Assert.Equal("HedgeFund", settings.Get(id).GetString("TargetSubID"));
+            Assert.Equal("NYC", settings.Get(id).GetString("TargetLocationID"));
+            Assert.Equal("Y", settings.Get(id).GetString("SendRedundantResendRequests"));
+            Assert.Equal("Y", settings.Get(id).GetString("MillisecondsInTimeStamp"));
+            Assert.Equal("Y", settings.Get(id).GetString("EnableLastMsgSeqNumProcessed"));
+            Assert.Equal("2500", settings.Get(id).GetString("MaxMessagesInResendRequest"));
+            Assert.Equal("06:00:00", settings.Get(id).GetString("StartTime"));
+            Assert.Equal("05:59:00", settings.Get(id).GetString("EndTime"));
             id = null;
-            foreach(SessionID sid in settings.GetSessions())
+            foreach (SessionID sid in settings.GetSessions())
             {
                 id = sid;
                 break;
             }
             Assert.NotNull(id);
-            Assert.That(id.BeginString, Is.EqualTo("FIX.4.2"));
-            Assert.That(id.SenderCompID, Is.EqualTo("Company"));
-            Assert.That(id.SenderSubID, Is.EqualTo("FixedIncome"));
-            Assert.That(id.SenderLocationID, Is.EqualTo("HongKong"));
-            Assert.That(id.TargetCompID, Is.EqualTo("CLIENT1"));
-            Assert.That(id.TargetSubID, Is.EqualTo("HedgeFund"));
-            Assert.That(id.TargetLocationID, Is.EqualTo("NYC"));
+            Assert.Equal("FIX.4.2", id.BeginString);
+            Assert.Equal("Company", id.SenderCompID);
+            Assert.Equal("FixedIncome", id.SenderSubID);
+            Assert.Equal("HongKong", id.SenderLocationID);
+            Assert.Equal("CLIENT1", id.TargetCompID);
+            Assert.Equal("HedgeFund", id.TargetSubID);
+            Assert.Equal("NYC", id.TargetLocationID);
         }
 
-        [Test]
+        [Fact]
         public void SettingsFileRelease()
         {
-            string f = "../../foo_config.cfg";
+            string f = "../../../foo_config.cfg";
             new SessionSettings(f);
 
             // if the file is still locked, this will throw an exception
             new SessionSettings(f);
         }
 
-        [Test]
+        [Fact]
         public void CaseInsensitiveSectionName()
         {
             string configuration = @"[dEfAuLt]
@@ -313,11 +311,11 @@ SenderCompID=ISLD
 TargetCompID=TW";
             SessionSettings settings = new SessionSettings(new System.IO.StringReader(configuration));
 
-            Assert.That(settings.Get().GetString("ConnectionType"), Is.EqualTo("initiator"));
+            Assert.Equal("initiator", settings.Get().GetString("ConnectionType"));
 
             SessionID session = new SessionID("FIX.4.2", "ISLD", "TW");
-            Assert.That(settings.Get(session).GetString("ConnectionType"), Is.EqualTo("initiator"));
-            Assert.That(settings.Get(session).GetString("BeginString"), Is.EqualTo("FIX.4.2"));
+            Assert.Equal("initiator", settings.Get(session).GetString("ConnectionType"));
+            Assert.Equal("FIX.4.2", settings.Get(session).GetString("BeginString"));
         }
     }
 }

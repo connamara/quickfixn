@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
 using QuickFix;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class DefaultMessageFactoryTests
     {
-        [Test]
+        [Fact]
         public void GroupCreateTest()
         {
             DefaultMessageFactory dmf = new DefaultMessageFactory();
 
             Group g44 = dmf.Create("FIX.4.4", "B", 33);
-            Assert.IsInstanceOf<QuickFix.FIX44.News.LinesOfTextGroup>(g44);
+            Assert.IsType<QuickFix.FIX44.News.LinesOfTextGroup>(g44);
 
             Group g50 = dmf.Create("FIXT.1.1", "B", 33);
-            Assert.IsInstanceOf<QuickFix.FIX50.News.NoLinesOfTextGroup>(g50);
+            Assert.IsType<QuickFix.FIX50.News.NoLinesOfTextGroup>(g50);
         }
     }
 }

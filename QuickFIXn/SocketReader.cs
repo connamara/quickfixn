@@ -1,6 +1,9 @@
 ﻿using System.Net.Sockets;
 using System.IO;
 using System;
+#if NETSTANDARD1_6
+using System.Threading.Tasks;
+#endif
 
 namespace QuickFix
 {
@@ -21,7 +24,11 @@ namespace QuickFix
         /// <summary>
         /// Keep a handle to the current outstanding read request (if any)
         /// </summary>
+#if !NETSTANDARD1_6
         private IAsyncResult currentReadRequest_;
+#else
+        private Task<int> currentReadRequest_;
+#endif
 
         [Obsolete("Use other constructor")]
         public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
@@ -78,11 +85,20 @@ namespace QuickFix
             try
             {
                 // Begin read if it is not already started
+#if !NETSTANDARD1_6
                 if (currentReadRequest_ == null)
                     currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, null, null);
+#else
+                if (currentReadRequest_ == null)
+                    currentReadRequest_ = stream_.ReadAsync(buffer, 0, buffer.Length);
+#endif
 
                 // Wait for it to complete (given timeout)
+#if !NETSTANDARD1_6
                 currentReadRequest_.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
+#else
+                currentReadRequest_.Wait(timeoutMilliseconds);
+#endif
 
                 if (currentReadRequest_.IsCompleted)
                 {
@@ -91,7 +107,11 @@ namespace QuickFix
                     var request = currentReadRequest_;
                     currentReadRequest_ = null;
 
+#if !NETSTANDARD1_6
                     int bytesRead = stream_.EndRead(request);
+#else
+                    int bytesRead = request.GetAwaiter().GetResult();
+#endif
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
 
@@ -205,14 +225,24 @@ namespace QuickFix
         [Obsolete("Static function can't close stream properly")]
         protected static void DisconnectClient(TcpClient client)
         {
+#if !NETSTANDARD1_6
             client.Client.Close();
             client.Close();
+#else
+            client.Client.Dispose();
+            client.Dispose();
+#endif
         }
 
         protected void DisconnectClient()
         {
+#if !NETSTANDARD1_6
             stream_.Close();
             tcpClient_.Close();
+#else
+            stream_.Dispose();
+            tcpClient_.Dispose();
+#endif
         }
 
         protected bool HandleNewSession(string msg)
@@ -320,7 +350,11 @@ namespace QuickFix
             if (disposing)
             {
                 stream_.Dispose();
+#if !NETSTANDARD1_6
                 tcpClient_.Close();
+#else
+                tcpClient_.Dispose();
+#endif
             }
         }
     }

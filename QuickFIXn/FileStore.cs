@@ -77,21 +77,35 @@ namespace QuickFix
 
             seqNumsFile_ = new System.IO.FileStream(seqNumsFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
             msgFile_ = new System.IO.FileStream(msgFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+#if !NETSTANDARD1_6
             headerFile_ = new System.IO.StreamWriter(headerFileName_, true);
+#else
+            headerFile_ = new System.IO.StreamWriter(System.IO.File.Open(headerFileName_, System.IO.FileMode.Append));
+#endif
         }
 
         private void PurgeSingleFile(System.IO.Stream stream, string filename)
         {
+#if !NETSTANDARD1_6
             if (stream != null)
                 stream.Close();
+#else
+            if (stream != null)
+                stream.Dispose();
+#endif
             if (System.IO.File.Exists(filename))
                 System.IO.File.Delete(filename);
         }
 
         private void PurgeSingleFile(System.IO.StreamWriter stream, string filename)
         {
+#if !NETSTANDARD1_6
             if (stream != null)
                 stream.Close();
+#else
+            if (stream != null)
+                stream.Dispose();
+#endif
             if (System.IO.File.Exists(filename))
                 System.IO.File.Delete(filename);
         }
@@ -116,7 +130,11 @@ namespace QuickFix
             offsets_.Clear();
             if (System.IO.File.Exists(headerFileName_))
             {
+#if !NETSTANDARD1_6
                 using (System.IO.StreamReader reader = new System.IO.StreamReader(headerFileName_))
+#else
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(System.IO.File.OpenRead(headerFileName_)))
+#endif
                 {
                     string line;
                     while ((line = reader.ReadLine()) != null)
@@ -133,7 +151,11 @@ namespace QuickFix
 
             if (System.IO.File.Exists(seqNumsFileName_))
             {
+#if !NETSTANDARD1_6
                 using (System.IO.StreamReader seqNumReader = new System.IO.StreamReader(seqNumsFileName_))
+#else
+                using (System.IO.StreamReader seqNumReader = new System.IO.StreamReader(System.IO.File.OpenRead(seqNumsFileName_)))
+#endif
                 {
                     string[] parts = seqNumReader.ReadToEnd().Split(':');
                     if (parts.Length == 2)
@@ -149,7 +171,11 @@ namespace QuickFix
         {
             if (System.IO.File.Exists(sessionFileName_) && new System.IO.FileInfo(sessionFileName_).Length > 0)
             {
+#if !NETSTANDARD1_6
                 using (System.IO.StreamReader reader = new System.IO.StreamReader(sessionFileName_))
+#else
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(System.IO.File.OpenRead(sessionFileName_)))
+#endif
                 {
                     string s = reader.ReadToEnd();
                     cache_.CreationTime = UtcDateTimeSerializer.FromString(s);
@@ -157,7 +183,11 @@ namespace QuickFix
             }
             else
             {
+#if !NETSTANDARD1_6
                 using (System.IO.StreamWriter writer = new System.IO.StreamWriter(sessionFileName_, false))
+#else
+                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(System.IO.File.Open(sessionFileName_, System.IO.FileMode.Create)))
+#endif
                 {
                     writer.Write(UtcDateTimeSerializer.ToString(cache_.CreationTime.Value));
                 }
@@ -165,7 +195,7 @@ namespace QuickFix
         }
 
 
-        #region MessageStore Members
+#region MessageStore Members
 
         /// <summary>
         /// Get messages within the range of sequence numbers
@@ -286,9 +316,9 @@ namespace QuickFix
             throw new NotImplementedException();
         }
 
-        #endregion
+#endregion
 
-        #region IDisposable Members
+#region IDisposable Members
 
         public void Dispose()
         {
@@ -297,6 +327,6 @@ namespace QuickFix
             headerFile_.Dispose();
         }
 
-        #endregion
+#endregion
     }
 }

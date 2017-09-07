@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NUnit.Framework;
+using Xunit;
 using QuickFix;
 using QuickFix.Fields;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class GroupTests
     {
-        [Test]
+        [Fact]
         public void SubGroup()
         {
             // issue #11 bug, as reported by karabiberoglu's further-down post
@@ -38,10 +37,10 @@ namespace UnitTests
             });
 
             //Console.WriteLine(msgString);
-            StringAssert.Contains(expected, msgString);
+            Assert.Contains(expected, msgString);
         }
 
-        [Test]
+        [Fact]
         public void GroupClone()
         {
             QuickFix.FIX42.News.LinesOfTextGroup linesGroup = new QuickFix.FIX42.News.LinesOfTextGroup();
@@ -50,11 +49,11 @@ namespace UnitTests
 
             QuickFix.FIX42.News.LinesOfTextGroup clone = linesGroup.Clone() as QuickFix.FIX42.News.LinesOfTextGroup;
 
-            Assert.AreEqual(linesGroup.Text.Obj, clone.Text.Obj);
-            Assert.AreEqual(linesGroup.EncodedText.Obj, clone.EncodedText.Obj);
-            Assert.AreEqual(linesGroup.Delim, clone.Delim);
-            Assert.AreEqual(linesGroup.Field, clone.Field);
-            Assert.AreEqual(linesGroup.FieldOrder, clone.FieldOrder);
+            Assert.Equal(linesGroup.Text.Obj, clone.Text.Obj);
+            Assert.Equal(linesGroup.EncodedText.Obj, clone.EncodedText.Obj);
+            Assert.Equal(linesGroup.Delim, clone.Delim);
+            Assert.Equal(linesGroup.Field, clone.Field);
+            Assert.Equal(linesGroup.FieldOrder, clone.FieldOrder);
         }
     }
 }

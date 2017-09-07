@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+#if NETSTANDARD1_6
+using ApplicationException = System.Exception;
+#endif
 
 namespace QuickFix
 {
@@ -24,9 +27,11 @@ namespace QuickFix
         public FieldNotFoundException(string message, System.Exception inner)
             : base(message, inner) { Field = -1; }
 
+#if !NETSTANDARD1_6
         protected FieldNotFoundException(
             System.Runtime.Serialization.SerializationInfo info,
             System.Runtime.Serialization.StreamingContext context)
             : base(info, context) { }
+#endif
     }
 }

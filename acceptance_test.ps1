@@ -19,18 +19,27 @@ function TestSpec
     [Parameter(Mandatory=$True,Position=4)]
      [string]$dest
     )
-    if(Test-Path TestResult.xml){ Remove-Item TestResult.xml }
 
-    Invoke-Expression ".\runat.ps1 $release $port $def $conf"
+    write-host "******************************"
+    write-host "Running Test $dest"
+    write-host "******************************"
+    
+    $dest = Join-Path (Join-Path (Resolve-Path "..") "artifacts") $dest
+    Invoke-Expression ".\runat.ps1 $release $port $def $conf $dest"
+    if(Test-Path $dest){ Remove-Item $dest }
     
     if($LASTEXITCODE -eq 1){ $script:return_value = $script:return_value + 1 }
     $result = "$dest tests result:$LASTEXITCODE"
     echo $result
     $script:success_string = $script:success_string + "`r`n`t$result"
-    Copy-Item TestResult.xml -Destination $dest
+
+    ps dotnet | ft
 }
 
 Push-Location -Path "AcceptanceTest" -StackName AcceptanceTest
+
+& dotnet restore -v q /nologo 
+& dotnet build -c Release -v q --no-dependencies /nologo
     
     Remove-Item AcceptanceTests_*.xml
 

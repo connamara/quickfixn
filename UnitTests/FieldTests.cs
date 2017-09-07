@@ -1,175 +1,174 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NUnit.Framework;
+using Xunit;
 using QuickFix;
 using QuickFix.Fields;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class FieldTests
     {
-        [Test]
+        [Fact]
         public void IntFieldTest()
         {
             IntField field = new IntField(Tags.AdvTransType, 500);
-            Assert.That(field.getValue(), Is.EqualTo(500));
-            Assert.That(field.Tag, Is.EqualTo(5));
-            Assert.That(field.ToString(), Is.EqualTo("500"));
-            Assert.That(field.Obj, Is.EqualTo(500));
-            Assert.That(field.Tag, Is.EqualTo(5));
+            Assert.Equal(500, field.getValue());
+            Assert.Equal(5, field.Tag);
+            Assert.Equal("500", field.ToString());
+            Assert.Equal(500, field.Obj);
+            Assert.Equal(5, field.Tag);
             field.Tag = 10;
-            Assert.That(field.Tag, Is.EqualTo(10));
+            Assert.Equal(10, field.Tag);
         }
 
-        [Test]
+        [Fact]
         public void StringFieldTest()
         {
             StringField field = new StringField(200, "wayner");
-            Assert.That(field.Obj, Is.EqualTo("wayner"));
-            Assert.That(field.getValue(), Is.EqualTo("wayner"));
-            Assert.That(field.Tag, Is.EqualTo(200));
+            Assert.Equal("wayner", field.Obj);
+            Assert.Equal("wayner", field.getValue());
+            Assert.Equal(200, field.Tag);
             field.setValue("galway");
-            Assert.That(field.Obj, Is.EqualTo("galway"));
+            Assert.Equal("galway", field.Obj);
         }
 
-        [Test]
+        [Fact]
         public void CharFieldTest()
         {
             CharField field = new CharField(200, '3');
-            Assert.That(field.Obj, Is.EqualTo('3'));
-            Assert.That(field.getValue(), Is.EqualTo('3'));
-            Assert.That(field.Tag, Is.EqualTo(200));
+            Assert.Equal('3', field.Obj);
+            Assert.Equal('3', field.getValue());
+            Assert.Equal(200, field.Tag);
         }
 
-        [Test]
+        [Fact]
         public void DecimalFieldTest()
         {
             Decimal val = new Decimal(3.232535);
             Decimal newval = new Decimal(3.14159);
             DecimalField field = new DecimalField(200, val);
-            Assert.That(field.Obj, Is.EqualTo(val));
-            Assert.That(field.getValue(), Is.EqualTo(val));
-            Assert.That(field.Tag, Is.EqualTo(200));
+            Assert.Equal(field.Obj, val);
+            Assert.Equal(field.getValue(), val);
+            Assert.Equal(200, field.Tag);
             field.Obj = newval;
-            Assert.That(field.Obj, Is.EqualTo(newval));
+            Assert.Equal(field.Obj, newval);
         }
 
-        [Test]
+        [Fact]
         public void BooleanFieldTest()
         {
             BooleanField field = new BooleanField(10, true);
-            Assert.That(field.Obj, Is.EqualTo(true));
-            Assert.That(field.getValue(), Is.EqualTo(true));
-            Assert.That(field.Tag, Is.EqualTo(10));
+            Assert.True(field.Obj);
+            Assert.True(field.getValue());
+            Assert.Equal(10, field.Tag);
             field.Obj = false;
-            Assert.That(field.Obj, Is.EqualTo(false));
+            Assert.False(field.Obj);
         }
 
-        [Test]
+        [Fact]
         public void DateTimeFieldTest()
         {
             DateTime val = new DateTime( 2009, 9, 4, 3, 44, 1 );
             DateTime newval = new DateTime(2009, 9, 4, 3, 44, 1);
             DateTimeField field = new DateTimeField(200, val);
-            Assert.That(field.Obj, Is.EqualTo(val));
-            Assert.That(field.getValue(), Is.EqualTo(val));
-            Assert.That(field.Tag, Is.EqualTo(200));
+            Assert.Equal(field.Obj, val);
+            Assert.Equal(field.getValue(), val);
+            Assert.Equal(200, field.Tag);
             field.Obj = newval;
-            Assert.That(field.Obj, Is.EqualTo(newval));
-            Assert.That(field.ToString(), Is.EqualTo("20090904-03:44:01.000"));
+            Assert.Equal(field.Obj, newval);
+            Assert.Equal("20090904-03:44:01.000", field.ToString());
         }
 
 
-        [Test]
+        [Fact]
         public void StringFieldTest_TotalAndLength()
         {
-            /// <remarks>
-            /// from quickfix/j FieldTest.java
-            /// </remarks>  
+            // <remarks>
+            // from quickfix/j FieldTest.java
+            // </remarks>  
             StringField obj = new StringField(12, "VALUE");
-            Assert.That(obj.toStringField(), Is.EqualTo("12=VALUE"));
-            Assert.That(obj.getTotal(), Is.EqualTo(542));
-            Assert.That(obj.getLength(), Is.EqualTo(9));
+            Assert.Equal("12=VALUE", obj.toStringField());
+            Assert.Equal(542, obj.getTotal());
+            Assert.Equal(9, obj.getLength());
             obj.Obj = "VALUF"; // F = E+1
-            Assert.That(obj.toStringField(), Is.EqualTo("12=VALUF"));
-            Assert.That(obj.getTotal(), Is.EqualTo(543));
-            Assert.That(obj.getLength(), Is.EqualTo(9));
+            Assert.Equal("12=VALUF", obj.toStringField());
+            Assert.Equal(543, obj.getTotal());
+            Assert.Equal(9, obj.getLength());
             obj.Tag = 13; // 13 = 12+1
-            Assert.That(obj.toStringField(), Is.EqualTo("13=VALUF"));
-            Assert.That(obj.getTotal(), Is.EqualTo(544));
-            Assert.That(obj.getLength(), Is.EqualTo(9));
+            Assert.Equal("13=VALUF", obj.toStringField());
+            Assert.Equal(544, obj.getTotal());
+            Assert.Equal(9, obj.getLength());
         }
 
-        [Test]
+        [Fact]
         public void StringFieldTest_NonAscii()
         {
             // technically, non-ascii shouldn't be in a StringField, but sometimes it happens, so let's not freak out.
             StringField obj = new StringField(359, "olé!");
-            Assert.AreEqual(839, obj.getTotal()); // sum of all bytes in "359=olé!"+nul
-            Assert.AreEqual(10, obj.getLength()); // 7 single-byte chars + 1 double=byte char + nul = 10 bytes
+            Assert.Equal(839, obj.getTotal()); // sum of all bytes in "359=olé!"+nul
+            Assert.Equal(10, obj.getLength()); // 7 single-byte chars + 1 double=byte char + nul = 10 bytes
         }
 
-        [Test]
+        [Fact]
         public void DefaultValTest()
         {
             BooleanField bf = new BooleanField(110);
-            Assert.That(false, Is.EqualTo(bf.Obj));
-            Assert.That(110, Is.EqualTo(bf.Tag));
+            Assert.False(bf.Obj);
+            Assert.Equal(110, bf.Tag);
             CharField cf = new CharField(300);
-            Assert.That('\0', Is.EqualTo(cf.getValue()));
-            Assert.That(300, Is.EqualTo(cf.Tag));
+            Assert.Equal('\0', cf.getValue());
+            Assert.Equal(300, cf.Tag);
             DateTimeField dtf = new DateTimeField(3);
-            Assert.That(3, Is.EqualTo(dtf.Tag));
+            Assert.Equal(3, dtf.Tag);
             StringField sf = new StringField(32);
-            Assert.That(32, Is.EqualTo(sf.Tag));
-            Assert.That("", Is.EqualTo(sf.Obj));
+            Assert.Equal(32, sf.Tag);
+            Assert.Equal("", sf.Obj);
             IntField ifld = new IntField(239);
-            Assert.That(239, Is.EqualTo(ifld.Tag));
-            Assert.That(0, Is.EqualTo(ifld.Obj));
+            Assert.Equal(239, ifld.Tag);
+            Assert.Equal(0, ifld.Obj);
             DecimalField df = new DecimalField(1);
-            Assert.That(1, Is.EqualTo(df.Tag));
-            Assert.That(new Decimal(0.0), Is.EqualTo(df.Obj));
+            Assert.Equal(1, df.Tag);
+            Assert.Equal(new Decimal(0.0), df.Obj);
         }
 
-        [Test]
+        [Fact]
         public void AccountFieldTest()
         {
             Account acct = new Account("iiiD4");
-            Assert.That("iiiD4", Is.EqualTo(acct.Obj));
-            Assert.That(Tags.Account, Is.EqualTo(acct.Tag));
+            Assert.Equal("iiiD4", acct.Obj);
+            Assert.Equal(Tags.Account, acct.Tag);
         }
 
-        [Test]
+        [Fact]
         public void EnumFieldTest()
         {
             CommType ct = new CommType(CommType.PER_UNIT);
-            Assert.That('1', Is.EqualTo(ct.getValue()));
+            Assert.Equal('1', ct.getValue());
             ExecInst ei = new ExecInst(ExecInst.STRICT_LIMIT);
-            Assert.That("b", Is.EqualTo(ei.getValue()));
+            Assert.Equal("b", ei.getValue());
             AllocStatus ass = new AllocStatus(AllocStatus.REVERSED);
-            Assert.That(7, Is.EqualTo(ass.getValue()));
+            Assert.Equal(7, ass.getValue());
         }
 
-        [Test]
+        [Fact]
         public void DateOnlyFieldTest()
         {
             MDEntryDate d = new MDEntryDate(new DateTime(2011, 11, 30, 8, 9, 10, 555));
-            Assert.AreEqual("20111130", d.ToString());
+            Assert.Equal("20111130", d.ToString());
         }
 
-        [Test]
+        [Fact]
         public void TimeOnlyFieldTest()
         {
             MDEntryTime t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), true);
-            Assert.AreEqual("08:09:10.555", t.ToString());
+            Assert.Equal("08:09:10.555", t.ToString());
 
             t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), false);
-            Assert.AreEqual("08:09:10", t.ToString());
+            Assert.Equal("08:09:10", t.ToString());
         }
 
-        [Test]
+        [Fact]
         public void EqualsTest()
         {
             StringField a1 = new StringField(123, "a");

@@ -952,7 +952,7 @@
    <field name='MarketID' required='N' />
    <field name='MarketSegmentID' required='N' />
   </message>
-  <message name='SecurityStatus' msgcat='app' msgtype='f'>
+  <message name='SecurityStatusMsg' msgcat='app' msgtype='f'>
    <field name='SecurityStatusReqID' required='N' />
    <component name='Instrument' required='Y' />
    <component name='InstrumentExtension' required='N' />

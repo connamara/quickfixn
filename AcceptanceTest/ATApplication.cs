@@ -8,9 +8,9 @@ namespace AcceptanceTest
         public event System.Action StopMeEvent;
 
         private HashSet<KeyValuePair<string, SessionID>> clOrdIDs_ = new HashSet<KeyValuePair<string, SessionID>>();
-        private FileLog log_;
+        private ILog log_;
 
-        public ATApplication(FileLog debugLog)
+        public ATApplication(ILog debugLog)
         {
             log_ = debugLog;
         }
@@ -139,7 +139,7 @@ namespace AcceptanceTest
             try
             {
                 string msgType = message.Header.GetField(QuickFix.Fields.Tags.MsgType);
-                log_.OnEvent("Got message " + msgType);
+                log_?.OnEvent("Got message " + msgType);
                 System.Console.WriteLine("===got message " + msgType);
                 Crack(message, sessionID);
             }
@@ -149,7 +149,7 @@ namespace AcceptanceTest
             }
             catch (System.Exception e)
             {
-                log_.OnEvent("FromApp: " + e.ToString() + " while processing msg (" + message.ToString() + ")");
+                log_?.OnEvent("FromApp: " + e.ToString() + " while processing msg (" + message.ToString() + ")");
             }
         }
 

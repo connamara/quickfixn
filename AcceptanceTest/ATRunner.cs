@@ -1,4 +1,6 @@
-﻿using QuickFix;
+﻿using System;
+using System.Collections.Generic;
+using QuickFix;
 using System.Threading;
 
 namespace AcceptanceTest
@@ -15,7 +17,7 @@ namespace AcceptanceTest
                 System.Environment.Exit(2);
             }
 
-            FileLog debugLog = new FileLog("log", new SessionID("AT", "Application", "Debug")); 
+            ILog debugLog = new ConsoleLog();//new FileLog("log", new SessionID("AT", "Application", "Debug")); 
             ThreadedSocketAcceptor acceptor = null;
             try
             {
@@ -23,10 +25,10 @@ namespace AcceptanceTest
                 testApp.StopMeEvent += new System.Action(delegate() { _stopMe = true; });
                 
                 SessionSettings settings = new SessionSettings(args[0]);
-                IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
+                IMessageStoreFactory storeFactory = new MemoryStoreFactory();
                 ILogFactory logFactory = null;
-                if (settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose"))
-                    logFactory = new FileLogFactory(settings);
+                //if (settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose"))
+                //    logF = new FileLogFactory(settings);
                 acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, logFactory);
 
                 acceptor.Start();

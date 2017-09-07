@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+using Xunit;
 using QuickFix.Util;
 
 
 namespace UnitTests.Util
 {
-    [TestFixture]
     public class UtcDateTimeSerializerTests
     {
         /// <summary>
@@ -17,17 +13,17 @@ namespace UnitTests.Util
         /// </summary>
         /// <param name="d1"></param>
         /// <param name="d2"></param>
-        static public void AssertHackyDateTimeEquality(DateTime d1, DateTime d2)
+        public static void AssertHackyDateTimeEquality(DateTime d1, DateTime d2)
         {
-            Assert.AreEqual(d1.Kind, d2.Kind, "kind");
-            Assert.AreEqual(d1.Date, d2.Date, "date");
-            Assert.AreEqual(d1.Hour, d2.Hour, "hours");
-            Assert.AreEqual(d1.Minute, d2.Minute, "minutes");
-            Assert.AreEqual(d1.Second, d2.Second, "seconds");
-            Assert.AreEqual(d1.Millisecond, d2.Millisecond, "milliseconds");
+            Assert.Equal(d1.Kind, d2.Kind);
+            Assert.Equal(d1.Date, d2.Date);
+            Assert.Equal(d1.Hour, d2.Hour);
+            Assert.Equal(d1.Minute, d2.Minute);
+            Assert.Equal(d1.Second, d2.Second);
+            Assert.Equal(d1.Millisecond, d2.Millisecond);
         }
 
-        [Test]
+        [Fact]
         public void BackAndForth()
         {
             DateTime d1 = DateTime.UtcNow;
@@ -37,7 +33,7 @@ namespace UnitTests.Util
             AssertHackyDateTimeEquality(d1, d2);
         }
 
-        [Test]
+        [Fact]
         public void SomeDates()
         {
             DateTime d1 = new DateTime(2013, 1, 1, 1, 1, 1, 1, DateTimeKind.Utc);

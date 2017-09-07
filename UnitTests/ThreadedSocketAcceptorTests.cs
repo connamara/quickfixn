@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using NUnit.Framework;
 using QuickFix;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class ThreadedSocketAcceptorTests
     {
         private const string Config = @"
@@ -43,7 +42,7 @@ BeginString = FIX.4.4
                 new FileLogFactory(settings));
         }
 
-        [Test]
+        [Fact]
         public void TestRecreation()
         {
             StartStopAcceptor();

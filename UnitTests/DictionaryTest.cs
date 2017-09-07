@@ -1,61 +1,72 @@
-﻿using NUnit.Framework;
+﻿using System;
+using Xunit;
 using QuickFix;
 
 namespace UnitTests
 {
-    [TestFixture]
-    public class DictionaryTest
+    public class DictionaryTest : IDisposable
     {
-        [TearDown]
-        public void Teardown()
+        public void Dispose()
         {
+#if !NETCOREAPP1_1
             System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+#else
+            System.Globalization.CultureInfo.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+#endif
         }
 
-        [Test]
+        [Fact]
         public void SetGetString()
         {
             QuickFix.Dictionary d = new QuickFix.Dictionary();
             d.SetString("STRINGKEY1", "STRINGVALUE1");
             d.SetString("STRINGKEY2", "stringvalue2");
-            Assert.That(d.GetString("STRINGKEY1"), Is.EqualTo("STRINGVALUE1"));
-            Assert.That(d.GetString("STRINGKEY2"), Is.EqualTo("stringvalue2"));
-            Assert.That(d.GetString("STRINGKEY2", true), Is.EqualTo("STRINGVALUE2"));
+            Assert.Equal("STRINGVALUE1", d.GetString("STRINGKEY1"));
+            Assert.Equal("stringvalue2", d.GetString("STRINGKEY2"));
+            Assert.Equal("STRINGVALUE2", d.GetString("STRINGKEY2", true));
             Assert.Throws<ConfigError>(delegate { d.GetString("STRINGKEY3"); });
         }
 
-        [Test]
+        [Fact]
         public void SetGetLong()
         {
             QuickFix.Dictionary d = new QuickFix.Dictionary();
             d.SetLong("LONGKEY1", 12);
             d.SetLong("LONGKEY2", 987362);
             d.SetString("BADLONGKEY", "AB12");
-            Assert.That(d.GetLong("LONGKEY1"), Is.EqualTo(12));
-            Assert.That(d.GetLong("LONGKEY2"), Is.EqualTo(987362));
+            Assert.Equal(12L, d.GetLong("LONGKEY1"));
+            Assert.Equal(987362L, d.GetLong("LONGKEY2"));
             Assert.Throws<ConfigError>(delegate { d.GetLong("LONGKEY3"); });
             Assert.Throws<ConfigError>(delegate { d.GetLong("BADLONGKEY"); });
         }
 
-        [Test]
+        [Fact]
         public void SetDouble()
         {
             // make sure that QF/n uses the invariant culture, no matter what the current culture is
+#if !NETCOREAPP1_1
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
+#else
+            System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
+#endif
 
             QuickFix.Dictionary d = new QuickFix.Dictionary();
             d.SetDouble("DOUBLEKEY1", 12.3);
             d.SetDouble("DOUBLEKEY2", 987362.987362);
 
-            Assert.AreEqual("12.3", d.GetString("DOUBLEKEY1"));
-            Assert.AreEqual("987362.987362", d.GetString("DOUBLEKEY2"));
+            Assert.Equal("12.3", d.GetString("DOUBLEKEY1"));
+            Assert.Equal("987362.987362", d.GetString("DOUBLEKEY2"));
         }
 
-        [Test]
+        [Fact]
         public void GetDouble()
         {
             // make sure that QF/n uses the invariant culture, no matter what the current culture is
+#if !NETCOREAPP1_1
             System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
+#else
+            System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
+#endif
 
             QuickFix.Dictionary d = new QuickFix.Dictionary();
             d.SetString("DOUBLEKEY1", "12.3");
@@ -63,27 +74,27 @@ namespace UnitTests
             d.SetString("BADDOUBLEKEY", "AB12.3");
             d.SetString("FOREIGNFORMAT", "44,44");
 
-            Assert.That(d.GetDouble("DOUBLEKEY1"), Is.EqualTo(12.3));
-            Assert.That(d.GetDouble("DOUBLEKEY2"), Is.EqualTo(987362.987362));
+            Assert.Equal(12.3d, d.GetDouble("DOUBLEKEY1"));
+            Assert.Equal(987362.987362d, d.GetDouble("DOUBLEKEY2"));
             Assert.Throws<ConfigError>(delegate { d.GetDouble("DOUBLEKEY3"); });
             Assert.Throws<ConfigError>(delegate { d.GetDouble("BADDOUBLEKEY"); });
             Assert.Throws<ConfigError>(delegate { d.GetDouble("BADDOUBLEKEY"); });
         }
 
-        [Test]
+        [Fact]
         public void SetGetBool()
         {
             QuickFix.Dictionary d = new QuickFix.Dictionary();
             d.SetBool("BOOLKEY1", true);
             d.SetBool("BOOLKEY2", false);
             d.SetString("BADBOOLKEY2", "YO");
-            Assert.That(d.GetBool("BOOLKEY1"), Is.True);
-            Assert.That(d.GetBool("BOOLKEY2"), Is.False);
+            Assert.True(d.GetBool("BOOLKEY1"));
+            Assert.False(d.GetBool("BOOLKEY2"));
             Assert.Throws<ConfigError>(delegate { d.GetBool("BOOLKEY3"); });
             Assert.Throws<ConfigError>(delegate { d.GetBool("BADBOOLKEY2"); });
         }
 
-        [Test]
+        [Fact]
         public void SetGetDay()
         {
             QuickFix.Dictionary d = new QuickFix.Dictionary();
@@ -95,13 +106,13 @@ namespace UnitTests
             d.SetString("DAY5", "TH");
             d.SetString("DAY6", "FR");
             d.SetString("DAY7", "SA");
-            Assert.That(d.GetDay("DAY1"), Is.EqualTo(System.DayOfWeek.Sunday));
-            Assert.That(d.GetDay("DAY2"), Is.EqualTo(System.DayOfWeek.Monday));
-            Assert.That(d.GetDay("DAY3"), Is.EqualTo(System.DayOfWeek.Tuesday));
-            Assert.That(d.GetDay("DAY4"), Is.EqualTo(System.DayOfWeek.Wednesday));
-            Assert.That(d.GetDay("DAY5"), Is.EqualTo(System.DayOfWeek.Thursday));
-            Assert.That(d.GetDay("DAY6"), Is.EqualTo(System.DayOfWeek.Friday));
-            Assert.That(d.GetDay("DAY7"), Is.EqualTo(System.DayOfWeek.Saturday));
+            Assert.Equal(System.DayOfWeek.Sunday, d.GetDay("DAY1"));
+            Assert.Equal(System.DayOfWeek.Monday, d.GetDay("DAY2"));
+            Assert.Equal(System.DayOfWeek.Tuesday, d.GetDay("DAY3"));
+            Assert.Equal(System.DayOfWeek.Wednesday, d.GetDay("DAY4"));
+            Assert.Equal(System.DayOfWeek.Thursday, d.GetDay("DAY5"));
+            Assert.Equal(System.DayOfWeek.Friday, d.GetDay("DAY6"));
+            Assert.Equal(System.DayOfWeek.Saturday, d.GetDay("DAY7"));
 
             d.SetDay("NEXTDAY1", System.DayOfWeek.Sunday);
             d.SetDay("NEXTDAY2", System.DayOfWeek.Monday);
@@ -110,16 +121,16 @@ namespace UnitTests
             d.SetDay("NEXTDAY5", System.DayOfWeek.Thursday);
             d.SetDay("NEXTDAY6", System.DayOfWeek.Friday);
             d.SetDay("NEXTDAY7", System.DayOfWeek.Saturday);
-            Assert.That(d.GetDay("NEXTDAY1"), Is.EqualTo(System.DayOfWeek.Sunday));
-            Assert.That(d.GetDay("NEXTDAY2"), Is.EqualTo(System.DayOfWeek.Monday));
-            Assert.That(d.GetDay("NEXTDAY3"), Is.EqualTo(System.DayOfWeek.Tuesday));
-            Assert.That(d.GetDay("NEXTDAY4"), Is.EqualTo(System.DayOfWeek.Wednesday));
-            Assert.That(d.GetDay("NEXTDAY5"), Is.EqualTo(System.DayOfWeek.Thursday));
-            Assert.That(d.GetDay("NEXTDAY6"), Is.EqualTo(System.DayOfWeek.Friday));
-            Assert.That(d.GetDay("NEXTDAY7"), Is.EqualTo(System.DayOfWeek.Saturday));
+            Assert.Equal(System.DayOfWeek.Sunday, d.GetDay("NEXTDAY1"));
+            Assert.Equal(System.DayOfWeek.Monday, d.GetDay("NEXTDAY2"));
+            Assert.Equal(System.DayOfWeek.Tuesday, d.GetDay("NEXTDAY3"));
+            Assert.Equal(System.DayOfWeek.Wednesday, d.GetDay("NEXTDAY4"));
+            Assert.Equal(System.DayOfWeek.Thursday, d.GetDay("NEXTDAY5"));
+            Assert.Equal(System.DayOfWeek.Friday, d.GetDay("NEXTDAY6"));
+            Assert.Equal(System.DayOfWeek.Saturday, d.GetDay("NEXTDAY7"));
         }
 
-        [Test]
+        [Fact]
         public void Merge()
         {
             QuickFix.Dictionary first = new QuickFix.Dictionary();
@@ -131,12 +142,12 @@ namespace UnitTests
             second.SetString("THIRDKEY", "SECOND");
 
             first.Merge(second);
-            Assert.That(first.GetString("FIRSTKEY"), Is.EqualTo("FIRSTVALUE"));
-            Assert.That(first.GetString("SECONDKEY"), Is.EqualTo("SECONDVALUE"));
-            Assert.That(first.GetString("THIRDKEY"), Is.EqualTo("FIRST"));
+            Assert.Equal("FIRSTVALUE", first.GetString("FIRSTKEY"));
+            Assert.Equal("SECONDVALUE", first.GetString("SECONDKEY"));
+            Assert.Equal("FIRST", first.GetString("THIRDKEY"));
         }
 
-        [Test]
+        [Fact]
         public void ValueEquality()
         {
             QuickFix.Dictionary first = new QuickFix.Dictionary("Name");

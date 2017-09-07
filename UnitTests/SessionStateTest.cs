@@ -1,21 +1,15 @@
 ﻿using System;
-using NUnit.Framework;
 using QuickFix;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class SessionStateTest
     {
-        [SetUp]
-        public void Init()
-        {
-        }
-
-        [Test]
+        [Fact]
         public void TimedOut()
         {
             int heartBtIntMillis = 60 * 1000;
@@ -30,7 +24,7 @@ namespace UnitTests
             Assert.True(SessionState.TimedOut(now, heartBtIntMillis, lastReceivedTime));
         }
         
-        [Test]
+        [Fact]
         public void LogonTimedOut()
         {
             int logonTimeout = 5 * 1000;
@@ -46,7 +40,7 @@ namespace UnitTests
             Assert.True(SessionState.LogonTimedOut(now, logonTimeout, lastRecvTime));
         }
 
-        [Test]
+        [Fact]
         public void LogoutTimedOut()
         {
             bool sentLogout = true;
@@ -64,7 +58,7 @@ namespace UnitTests
             Assert.False(SessionState.LogoutTimedOut(now, sentLogout, logoutTimeout, lastSentTime));
         }
 
-        [Test]
+        [Fact]
         public void NeedTestRequest()
         {
             int heartBtIntMillis = 30 * 1000;
@@ -85,7 +79,7 @@ namespace UnitTests
 
         }
 
-        [Test]
+        [Fact]
         public void NeedHeartbeat()
         {
             int heartBtIntMillis = 60 * 1000;
@@ -109,7 +103,7 @@ namespace UnitTests
             Assert.True(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter));
         }
 
-        [Test]
+        [Fact]
         public void WithinHeartbeat()
         {
             int heartBtIntMillis = 60 * 1000;
@@ -128,7 +122,7 @@ namespace UnitTests
             Assert.True(SessionState.WithinHeartbeat(now, heartBtIntMillis, lastSentTime, lastReceivedTime));
         }
 
-        [Test]
+        [Fact]
         public void ThreadSafeSetAndGet() {
             //Set up store
             if (System.IO.Directory.Exists("store")) {
@@ -209,8 +203,8 @@ namespace UnitTests
             //wait till done and assert results
             Assert.True(setEvent.WaitOne(10000), "Get or Set hung/timed out during concurrent usage");
             Assert.True(getEvent.WaitOne(10000), "Get or Set hung/timed out during concurrent usage");
-            Assert.AreEqual(setTable, getTable, "Garbled data read in concurrent set and get (like between resendrequest and send)");
-            Assert.AreEqual(errorsTable.Count, 0, "IOException occured in concurrent set and get (like between resendrequest and send)");
+            Assert.Equal(setTable, getTable); // Garbled data read in concurrent set and get (like between resendrequest and send
+            Assert.Equal(errorsTable.Count, 0); // IOException occured in concurrent set and get (like between resendrequest and send
 
             //Tear down filestore
             state.Dispose();

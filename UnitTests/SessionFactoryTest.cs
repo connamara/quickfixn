@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using NUnit.Framework;
 using QuickFix;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class SessionFactoryTest
     {
-        [Test]
+        [Fact]
         public void TestPersistMessages()
         {
             IApplication app = new NullApplication();
@@ -24,14 +23,15 @@ namespace UnitTests
             Session session = factory.Create(sessionID, settings);
 
             //true by default
-            Assert.That(session.PersistMessages);
+            Assert.True(session.PersistMessages);
 
             settings.SetBool(SessionSettings.PERSIST_MESSAGES, false);
             session = factory.Create(sessionID, settings);
 
-            Assert.That(!session.PersistMessages);
+            Assert.False(session.PersistMessages);
         }
-        [Test]
+
+        [Fact]
         public void ValidConfiguration()
         {
             IApplication app = new NullApplication();
@@ -46,10 +46,10 @@ namespace UnitTests
             settings.SetString(SessionSettings.END_TIME, "12:00:00");
             settings.SetString(SessionSettings.HEARTBTINT, "30");
 
-            Assert.DoesNotThrow(delegate { factory.Create(sessionID, settings); });
+            factory.Create(sessionID, settings);
         }
 
-        [Test]
+        [Fact]
         public void StartDayAndEndDayAreDifferent()
         {
             IApplication app = new NullApplication();
@@ -66,10 +66,10 @@ namespace UnitTests
             settings.SetString(SessionSettings.END_DAY, "Mon");
             settings.SetString(SessionSettings.HEARTBTINT, "30");
 
-            Assert.DoesNotThrow(delegate { factory.Create(sessionID, settings); });
+            factory.Create(sessionID, settings);
         }
 
-        [Test]
+        [Fact]
         public void TestExtendedSettings()
         {
             IApplication app = new NullApplication();
@@ -93,25 +93,25 @@ namespace UnitTests
 
             Session session = factory.Create(sessionID, settings);
 
-            Assert.That(session.SendRedundantResendRequests);
-            Assert.That(session.ResendSessionLevelRejects);
-            Assert.That(session.MillisecondsInTimeStamp);
+            Assert.True(session.SendRedundantResendRequests);
+            Assert.True(session.ResendSessionLevelRejects);
+            Assert.True(session.MillisecondsInTimeStamp);
 
             settings.SetString(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS, "N");
             settings.SetString(SessionSettings.RESEND_SESSION_LEVEL_REJECTS, "N");
             settings.SetString(SessionSettings.MILLISECONDS_IN_TIMESTAMP, "N");
             session = factory.Create(sessionID, settings);
 
-            Assert.That(!session.SendRedundantResendRequests);
-            Assert.That(!session.ResendSessionLevelRejects);
-            Assert.That(!session.MillisecondsInTimeStamp);
-            Assert.That(session.EnableLastMsgSeqNumProcessed);
-            Assert.That(session.MaxMessagesInResendRequest, Is.EqualTo(2500));
-            Assert.That(session.SendLogoutBeforeTimeoutDisconnect);
-            Assert.That(session.IgnorePossDupResendRequests);
+            Assert.True(!session.SendRedundantResendRequests);
+            Assert.True(!session.ResendSessionLevelRejects);
+            Assert.True(!session.MillisecondsInTimeStamp);
+            Assert.True(session.EnableLastMsgSeqNumProcessed);
+            Assert.Equal(2500, session.MaxMessagesInResendRequest);
+            Assert.True(session.SendLogoutBeforeTimeoutDisconnect);
+            Assert.True(session.IgnorePossDupResendRequests);
         }
 
-        [Test]
+        [Fact]
         public void TestTimeStampPrecisionSettings()
         {
             IApplication app = new NullApplication();
@@ -129,25 +129,25 @@ namespace UnitTests
 
             Session session = factory.Create(sessionID, settings);
 
-            Assert.That(session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Microsecond );
+            Assert.Equal(QuickFix.Fields.Converters.TimeStampPrecision.Microsecond, session.TimeStampPrecision );
 
             settings.SetString(SessionSettings.TIMESTAMP_PRECISION, "Micro");
 
             session = factory.Create(sessionID, settings);
 
-            Assert.That(session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Microsecond);
+            Assert.Equal(QuickFix.Fields.Converters.TimeStampPrecision.Microsecond, session.TimeStampPrecision );
 
             settings.SetString(SessionSettings.TIMESTAMP_PRECISION, "Millisecond");
             session = factory.Create(sessionID, settings);
-            Assert.That(session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Millisecond);
+            Assert.Equal(QuickFix.Fields.Converters.TimeStampPrecision.Millisecond, session.TimeStampPrecision );
 
             settings.SetString(SessionSettings.TIMESTAMP_PRECISION, "Milli");
             session = factory.Create(sessionID, settings);
-            Assert.That(session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Millisecond);
+            Assert.Equal(QuickFix.Fields.Converters.TimeStampPrecision.Millisecond, session.TimeStampPrecision );
 
             settings.SetString(SessionSettings.TIMESTAMP_PRECISION, "Second");
             session = factory.Create(sessionID, settings);
-            Assert.That(session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Second);
+            Assert.Equal(QuickFix.Fields.Converters.TimeStampPrecision.Second, session.TimeStampPrecision );
         }
     }
 }

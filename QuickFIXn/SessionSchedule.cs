@@ -60,10 +60,14 @@ namespace QuickFix
 
             if(UseLocalTime)
                 return utc.ToLocalTime();
-            else if (TimeZone==null)
+            else if (TimeZone == null)
                 return utc;
             else
+#if !NETSTANDARD1_6
                 return System.TimeZoneInfo.ConvertTimeFromUtc(utc, TimeZone);
+#else
+                return System.TimeZoneInfo.ConvertTime(utc, System.TimeZoneInfo.Utc, TimeZone);
+#endif
         }
 
         public bool IsSessionTime(System.DateTime utc)
@@ -139,8 +143,13 @@ namespace QuickFix
 
             if (UseLocalTime)
                 return n.ToUniversalTime();
-            if (TimeZone != null)
+#if !NETSTANDARD1_6
+             if (TimeZone != null)
                 return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(n, this.TimeZone.Id, "UTC");
+#else
+            if (TimeZone != null)
+                return System.TimeZoneInfo.ConvertTime(n, this.TimeZone, System.TimeZoneInfo.Utc);
+#endif
             return n;
         }
 

@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class MemoryStoreTests
     {
-        [Test]
+        [Fact]
         public void GetTest()
         {
             MemoryStore store = new MemoryStore();
@@ -19,11 +18,11 @@ namespace UnitTests
             var msgs = new List<string>();
             store.Get(2, 3, msgs);
             var expected = new List<string>() { "pude", "ok" };
-            Assert.That(msgs, Is.EqualTo(expected));
+            Assert.Equal(msgs, expected);
 
             msgs = new List<string>();
             store.Get(5, 6, msgs);
-            Assert.That(msgs, Is.Empty);
+            Assert.Empty(msgs);
 
 
         }

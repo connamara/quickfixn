@@ -13,7 +13,11 @@ namespace QuickFix
     /// Property setters are internal so they can be set in tests, otherwise the settings should
     /// be set using the <see cref="Configure"/> function
     /// </remarks>
+#if !NETSTANDARD1_6
     public class SocketSettings : ICloneable
+#else
+    public class SocketSettings
+#endif    
     {
         public bool SocketNodelay = true;
         public Nullable<int> SocketReceiveBufferSize;
@@ -103,7 +107,11 @@ namespace QuickFix
         public SocketSettings()
         {
             ValidateCertificates = true;
+#if !NETSTANDARD1_6
             SslProtocol = SslProtocols.Default;
+#else
+            SslProtocol = SslProtocols.Tls;
+#endif
             CheckCertificateRevocation = true;
             RequireClientCertificate = true;
         }
@@ -173,10 +181,12 @@ namespace QuickFix
             }
         }
 
+#if !NETSTANDARD1_6
         object ICloneable.Clone()
         {
             return Clone();
         }
+#endif
 
         public SocketSettings Clone()
         {

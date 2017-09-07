@@ -65,7 +65,11 @@ namespace QuickFix
                     try
                     {
                         state_ = State.SHUTDOWN_REQUESTED;
+#if !NETSTANDARD1_6
                         tcpListener_.Server.Close();
+#else
+                        tcpListener_.Server.Dispose();
+#endif
                         tcpListener_.Stop();
                     }
                     catch (System.Exception e)
@@ -91,7 +95,11 @@ namespace QuickFix
             {
                 try
                 {
+#if !NETSTANDARD1_6
                     TcpClient client = tcpListener_.AcceptTcpClient();
+#else
+                    TcpClient client = tcpListener_.AcceptTcpClientAsync().GetAwaiter().GetResult();
+#endif
                     ApplySocketOptions(client, socketSettings_);
                     ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_);
                     t.Exited += OnClientHandlerThreadExited;

@@ -4,6 +4,9 @@ using System.Threading;
 using System.IO;
 using System;
 using System.Diagnostics;
+#if NETSTANDARD1_6
+using System.Threading.Tasks;
+#endif
 
 namespace QuickFix
 {
@@ -120,7 +123,12 @@ namespace QuickFix
         /// <summary>
         /// Keep a handle to the current outstanding read request (if any)
         /// </summary>
+#if !NETSTANDARD1_6
         private IAsyncResult currentReadRequest_;
+#else
+        private Task<int> currentReadRequest_;
+#endif
+
         /// <summary>
         /// Reads data from the network into the specified buffer.
         /// It will wait up to the specified number of milliseconds for data to arrive,
@@ -137,11 +145,20 @@ namespace QuickFix
             try
             {
                 // Begin read if it is not already started
+#if !NETSTANDARD1_6
                 if (currentReadRequest_ == null)
                     currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, null, null);
+#else
+                if (currentReadRequest_ == null)
+                    currentReadRequest_ = stream_.ReadAsync(buffer, 0, buffer.Length);
+#endif
 
                 // Wait for it to complete (given timeout)
+#if !NETSTANDARD1_6
                 currentReadRequest_.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
+#else
+                currentReadRequest_.Wait(timeoutMilliseconds);
+#endif
 
                 if (currentReadRequest_.IsCompleted)
                 {
@@ -150,7 +167,12 @@ namespace QuickFix
                     var request = currentReadRequest_;
                     currentReadRequest_ = null;
 
+
+#if !NETSTANDARD1_6
                     int bytesRead = stream_.EndRead(request);
+#else
+                    int bytesRead = request.GetAwaiter().GetResult();
+#endif
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
 
@@ -185,7 +207,7 @@ namespace QuickFix
             }
         }
 
-        #region Responder Members
+#region Responder Members
 
         public bool Send(string data)
         {
@@ -198,9 +220,9 @@ namespace QuickFix
         {
             isDisconnectRequested_ = true;
             if (stream_ != null)
-                stream_.Close();
+                stream_.Dispose();
         }
 
-        #endregion
+#endregion
     }
 }

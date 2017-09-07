@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !NETSTANDARD1_6
+using System;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -600,3 +601,4 @@ namespace Acceptor
         }
     }
 }
+#endif

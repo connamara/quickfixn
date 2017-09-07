@@ -10,7 +10,10 @@ Param(
    [string]$tests=$null,
 
   [Parameter(Position=4)]
-    [string] $conf= "cfg\at.cfg" 
+    [string] $conf= "cfg\at.cfg",
+
+[Parameter(Mandatory=$True,Position=5)]
+    [string]$reportPath
 )
 
 $result = 0
@@ -32,17 +35,18 @@ else { Usage }
 
 function StartTests
 {
-    Start-Process -FilePath setup.bat -ArgumentList $port
+    Start-Process -FilePath setup.bat -ArgumentList $port -NoNewWindow -Wait
 
-    Start-Process -FilePath $dir\AcceptanceTest.exe -ArgumentList $conf -NoNewWindow
+    $arguments = @("run", "-f", "netcoreapp1.1", "-c", "Release", "--no-build", "--no-restore", "--", $conf)
+    $p = Start-Process -FilePath "dotnet" -ArgumentList $arguments -NoNewWindow -PassThru
 
-    Invoke-Expression -Command "ruby Runner.rb 127.0.0.1 $port $tests > TestResult.xml"
+    Invoke-Expression -Command "ruby Runner.rb 127.0.0.1 $port $tests > $reportPath"
 
-    Stop-Process -Name AcceptanceTest
+    Stop-Process -Id $p.Id -Force
 
     if($LASTEXITCODE -eq 1){ $script:result = 1 }
        
-    type TestResult.xml
+    type $reportPath
     Quit
 }
 

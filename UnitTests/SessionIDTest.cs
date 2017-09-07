@@ -1,89 +1,83 @@
-﻿using NUnit.Framework;
-using QuickFix;
+﻿using QuickFix;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class SessionIDTest
     {
-        [SetUp]
-        public void Init()
-        {
-        }
-
-        [Test]
+        [Fact]
         public void TestNoLocationSubOrQualifierConstructor()
         {
             SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET");
-            Assert.That(sessionID.BeginString, Is.EqualTo("FIX.4.2"));
-            Assert.That(sessionID.SenderCompID, Is.EqualTo("SENDER"));
-            Assert.That(sessionID.SenderSubID, Is.EqualTo(""));
-            Assert.That(sessionID.SenderLocationID, Is.EqualTo(""));
-            Assert.That(sessionID.TargetCompID, Is.EqualTo("TARGET"));
-            Assert.That(sessionID.TargetSubID, Is.EqualTo(""));
-            Assert.That(sessionID.TargetLocationID, Is.EqualTo(""));
-            Assert.That(sessionID.SessionQualifier, Is.EqualTo(""));
+            Assert.Equal("FIX.4.2", sessionID.BeginString);
+            Assert.Equal("SENDER", sessionID.SenderCompID);
+            Assert.Equal("", sessionID.SenderSubID);
+            Assert.Equal("", sessionID.SenderLocationID);
+            Assert.Equal("TARGET", sessionID.TargetCompID);
+            Assert.Equal("", sessionID.TargetSubID);
+            Assert.Equal("", sessionID.TargetLocationID);
+            Assert.Equal("", sessionID.SessionQualifier);
         }
 
-        [Test]
+        [Fact]
         public void TestNoLocationConstructor()
         {
             SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "SENDERSUB", "TARGET", "TARGETSUB");
-            Assert.That(sessionID.BeginString, Is.EqualTo("FIX.4.2"));
-            Assert.That(sessionID.SenderCompID, Is.EqualTo("SENDER"));
-            Assert.That(sessionID.SenderSubID, Is.EqualTo("SENDERSUB"));
-            Assert.That(sessionID.SenderLocationID, Is.EqualTo(""));
-            Assert.That(sessionID.TargetCompID, Is.EqualTo("TARGET"));
-            Assert.That(sessionID.TargetSubID, Is.EqualTo("TARGETSUB"));
-            Assert.That(sessionID.TargetLocationID, Is.EqualTo(""));
-            Assert.That(sessionID.SessionQualifier, Is.EqualTo(""));
+            Assert.Equal("FIX.4.2", sessionID.BeginString);
+            Assert.Equal("SENDER", sessionID.SenderCompID);
+            Assert.Equal("SENDERSUB", sessionID.SenderSubID);
+            Assert.Equal("", sessionID.SenderLocationID);
+            Assert.Equal("TARGET", sessionID.TargetCompID);
+            Assert.Equal("TARGETSUB", sessionID.TargetSubID);
+            Assert.Equal("", sessionID.TargetLocationID);
+            Assert.Equal("", sessionID.SessionQualifier);
         }
 
-        [Test]
+        [Fact]
         public void TestNoLocationOrSubConstructor()
         {
             SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET", "QUALIFIER");
-            Assert.That(sessionID.BeginString, Is.EqualTo("FIX.4.2"));
-            Assert.That(sessionID.SenderCompID, Is.EqualTo("SENDER"));
-            Assert.That(sessionID.SenderSubID, Is.EqualTo(""));
-            Assert.That(sessionID.SenderLocationID, Is.EqualTo(""));
-            Assert.That(sessionID.TargetCompID, Is.EqualTo("TARGET"));
-            Assert.That(sessionID.TargetSubID, Is.EqualTo(""));
-            Assert.That(sessionID.TargetLocationID, Is.EqualTo(""));
-            Assert.That(sessionID.SessionQualifier, Is.EqualTo("QUALIFIER"));
+            Assert.Equal("FIX.4.2", sessionID.BeginString);
+            Assert.Equal("SENDER", sessionID.SenderCompID);
+            Assert.Equal("", sessionID.SenderSubID);
+            Assert.Equal("", sessionID.SenderLocationID);
+            Assert.Equal("TARGET", sessionID.TargetCompID);
+            Assert.Equal("", sessionID.TargetSubID);
+            Assert.Equal("", sessionID.TargetLocationID);
+            Assert.Equal("QUALIFIER", sessionID.SessionQualifier);
         }
 
-        [Test]
+        [Fact]
         public void TestAllFieldsConstructor()
         {
             SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "SENDERSUB", "SENDERLOC", "TARGET", "TARGETSUB", "TARGETLOC", "QUALIFIER");
-            Assert.That(sessionID.BeginString, Is.EqualTo("FIX.4.2"));
-            Assert.That(sessionID.SenderCompID, Is.EqualTo("SENDER"));
-            Assert.That(sessionID.SenderSubID, Is.EqualTo("SENDERSUB"));
-            Assert.That(sessionID.SenderLocationID, Is.EqualTo("SENDERLOC"));
-            Assert.That(sessionID.TargetCompID, Is.EqualTo("TARGET"));
-            Assert.That(sessionID.TargetSubID, Is.EqualTo("TARGETSUB"));
-            Assert.That(sessionID.TargetLocationID, Is.EqualTo("TARGETLOC"));
-            Assert.That(sessionID.SessionQualifier, Is.EqualTo("QUALIFIER"));
+            Assert.Equal("FIX.4.2", sessionID.BeginString);
+            Assert.Equal("SENDER", sessionID.SenderCompID);
+            Assert.Equal("SENDERSUB", sessionID.SenderSubID);
+            Assert.Equal("SENDERLOC", sessionID.SenderLocationID);
+            Assert.Equal("TARGET", sessionID.TargetCompID);
+            Assert.Equal("TARGETSUB", sessionID.TargetSubID);
+            Assert.Equal("TARGETLOC", sessionID.TargetLocationID);
+            Assert.Equal("QUALIFIER", sessionID.SessionQualifier);
         }
 
-        [Test]
+        [Fact]
         public void TestToString()
         {
             SessionID sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET");
-            Assert.That(sessionID.ToString(), Is.EqualTo("FIX.4.2:SENDER->TARGET"));
+            Assert.Equal("FIX.4.2:SENDER->TARGET", sessionID.ToString());
 
             sessionID = new SessionID("FIX.4.2", "SENDER", "TARGET", "QUALIFIER");
-            Assert.That(sessionID.ToString(), Is.EqualTo("FIX.4.2:SENDER->TARGET:QUALIFIER"));
+            Assert.Equal("FIX.4.2:SENDER->TARGET:QUALIFIER", sessionID.ToString());
 
             sessionID = new SessionID("FIX.4.2", "SENDER", "SENDERSUB", "TARGET", "TARGETSUB");
-            Assert.That(sessionID.ToString(), Is.EqualTo("FIX.4.2:SENDER/SENDERSUB->TARGET/TARGETSUB"));
+            Assert.Equal("FIX.4.2:SENDER/SENDERSUB->TARGET/TARGETSUB", sessionID.ToString());
 
             sessionID = new SessionID("FIX.4.2", "SENDER", "SENDERSUB", "SENDERLOC", "TARGET", "TARGETSUB", "TARGETLOC");
-            Assert.That(sessionID.ToString(), Is.EqualTo("FIX.4.2:SENDER/SENDERSUB/SENDERLOC->TARGET/TARGETSUB/TARGETLOC"));
+            Assert.Equal("FIX.4.2:SENDER/SENDERSUB/SENDERLOC->TARGET/TARGETSUB/TARGETLOC", sessionID.ToString());
 
             sessionID = new SessionID("FIX.4.2", "SENDER", "SENDERSUB", "SENDERLOC", "TARGET", "TARGETSUB", "TARGETLOC", "QUALIFIER");
-            Assert.That(sessionID.ToString(), Is.EqualTo("FIX.4.2:SENDER/SENDERSUB/SENDERLOC->TARGET/TARGETSUB/TARGETLOC:QUALIFIER"));
+            Assert.Equal("FIX.4.2:SENDER/SENDERSUB/SENDERLOC->TARGET/TARGETSUB/TARGETLOC:QUALIFIER", sessionID.ToString());
         }
     }
 }

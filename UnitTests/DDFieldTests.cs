@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using NUnit.Framework;
+using Xunit;
 using QuickFix;
 using QuickFix.DataDictionary;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class DDFieldTests
     {
-        [Test]
+        [Fact]
         public void Constructor()
         {
             Dictionary<String, String> enums = new Dictionary<string, string>();
@@ -18,20 +17,20 @@ namespace UnitTests
 
             DDField ddf = new DDField(5, "Foo", enums, "STRING");
 
-            Assert.AreEqual(2, ddf.EnumDict.Count);
-            Assert.AreEqual("AAA", ddf.EnumDict["a"]);
-            Assert.AreEqual("BBB", ddf.EnumDict["b"]);
+            Assert.Equal(2, ddf.EnumDict.Count);
+            Assert.Equal("AAA", ddf.EnumDict["a"]);
+            Assert.Equal("BBB", ddf.EnumDict["b"]);
 
             //obsolete accessor
 #pragma warning disable 618
-            Assert.AreEqual(2, ddf.Enums.Count);
-            Assert.IsTrue(ddf.Enums.Contains("a"));
-            Assert.IsTrue(ddf.Enums.Contains("b"));
+            Assert.Equal(2, ddf.Enums.Count);
+            Assert.Contains("a", ddf.Enums);
+            Assert.Contains("b", ddf.Enums);
 #pragma warning restore 618
         }
 
 
-        [Test]
+        [Fact]
         public void ObsoleteConstructor()
         {
             HashSet<String> enums = new HashSet<string>();
@@ -42,14 +41,14 @@ namespace UnitTests
             DDField ddf = new DDField(5, "Foo", enums, "STRING");
 #pragma warning restore 618
 
-            Assert.AreEqual(String.Empty, ddf.EnumDict["a"]);
-            Assert.AreEqual(String.Empty, ddf.EnumDict["b"]);
+            Assert.Equal(String.Empty, ddf.EnumDict["a"]);
+            Assert.Equal(String.Empty, ddf.EnumDict["b"]);
 
             //obsolete accessor
 #pragma warning disable 618
-            Assert.AreEqual(2,ddf.Enums.Count);
-            Assert.IsTrue(ddf.Enums.Contains("a"));
-            Assert.IsTrue(ddf.Enums.Contains("b"));
+            Assert.Equal(2,ddf.Enums.Count);
+            Assert.Contains("a", ddf.Enums);
+            Assert.Contains("b", ddf.Enums);
 #pragma warning restore 618
         }
     }

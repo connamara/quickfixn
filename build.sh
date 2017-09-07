@@ -1,13 +1,17 @@
 #!/bin/sh
 
-TARGET=$1
-CONFIGURATION=$2
-NET_VERSION=$3
+set -e
 
-[ -z $TARGET ] && TARGET=Rebuild
-[ -z $CONFIGURATION ] && CONFIGURATION=Release
-[ -z $NET_VERSION ] && NET_VERSION=v4.5.2
+if [ -z "$VERSION" ]; then
+    VERSION=1.7.0
+fi
 
-BUILD_CMD="xbuild QuickFIXn.sln /t:${TARGET} /p:Configuration=${CONFIGURATION};TargetFrameworkVersion=${NET_VERSION}"
-echo "Build command: $BUILD_CMD"
-exec $BUILD_CMD
+echo "Restoring dependencies"
+dotnet restore -v q  /nologo /p:Version=$VERSION
+
+echo "Compiling project"
+dotnet build -c Release -v q /nologo /p:Version=$VERSION
+
+echo "Creating nuget package"
+dotnet pack  -c Release -v q --no-build -o ../artifacts ./QuickFIXn/QuickFIX.csproj /nologo /p:Version=$VERSION
+echo Done

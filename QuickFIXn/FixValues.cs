@@ -72,7 +72,11 @@ namespace QuickFix
                 else if ("FIX.5.0SP2".Equals(beginString))
                     return ApplVerID.FIX50SP2;
                 else
+#if !NETSTANDARD1_6
                     return string.Copy(beginString);
+#else
+                    return new string(beginString.ToCharArray());
+#endif
             }
         }
 
