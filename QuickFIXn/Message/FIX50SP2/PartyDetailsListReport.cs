@@ -440,7 +440,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.PartyID PartyID
+                public QuickFix.Fields.PartyID PartyID
                 { 
                     get 
                     {
@@ -704,7 +704,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.PartySubID PartySubID
+                    public QuickFix.Fields.PartySubID PartySubID
                     { 
                         get 
                         {
@@ -784,7 +784,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.PartyAltID PartyAltID
+                    public QuickFix.Fields.PartyAltID PartyAltID
                     { 
                         get 
                         {
@@ -893,7 +893,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.PartyAltSubID PartyAltSubID
+                        public QuickFix.Fields.PartyAltSubID PartyAltSubID
                         { 
                             get 
                             {
@@ -974,7 +974,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.ContextPartyID ContextPartyID
+                    public QuickFix.Fields.ContextPartyID ContextPartyID
                     { 
                         get 
                         {
@@ -1114,7 +1114,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.ContextPartySubID ContextPartySubID
+                        public QuickFix.Fields.ContextPartySubID ContextPartySubID
                         { 
                             get 
                             {
@@ -1195,7 +1195,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.RiskLimitType RiskLimitType
+                    public QuickFix.Fields.RiskLimitType RiskLimitType
                     { 
                         get 
                         {
@@ -1397,7 +1397,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.RiskInstrumentOperator RiskInstrumentOperator
+                        public QuickFix.Fields.RiskInstrumentOperator RiskInstrumentOperator
                         { 
                             get 
                             {
@@ -2188,7 +2188,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                                                    public QuickFix.Fields.RiskSecurityAltID RiskSecurityAltID
+                            public QuickFix.Fields.RiskSecurityAltID RiskSecurityAltID
                             { 
                                 get 
                                 {
@@ -2269,7 +2269,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.RiskWarningLevelPercent RiskWarningLevelPercent
+                        public QuickFix.Fields.RiskWarningLevelPercent RiskWarningLevelPercent
                         { 
                             get 
                             {
@@ -2350,7 +2350,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.RelatedPartyID RelatedPartyID
+                    public QuickFix.Fields.RelatedPartyID RelatedPartyID
                     { 
                         get 
                         {
@@ -2614,7 +2614,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.RelatedPartySubID RelatedPartySubID
+                        public QuickFix.Fields.RelatedPartySubID RelatedPartySubID
                         { 
                             get 
                             {
@@ -2694,7 +2694,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.RelatedPartyAltID RelatedPartyAltID
+                        public QuickFix.Fields.RelatedPartyAltID RelatedPartyAltID
                         { 
                             get 
                             {
@@ -2803,7 +2803,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                                                    public QuickFix.Fields.RelatedPartyAltSubID RelatedPartyAltSubID
+                            public QuickFix.Fields.RelatedPartyAltSubID RelatedPartyAltSubID
                             { 
                                 get 
                                 {
@@ -2884,7 +2884,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.RelatedContextPartyID RelatedContextPartyID
+                        public QuickFix.Fields.RelatedContextPartyID RelatedContextPartyID
                         { 
                             get 
                             {
@@ -3024,7 +3024,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                                                    public QuickFix.Fields.RelatedContextPartySubID RelatedContextPartySubID
+                            public QuickFix.Fields.RelatedContextPartySubID RelatedContextPartySubID
                             { 
                                 get 
                                 {
@@ -3105,7 +3105,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.RelationshipRiskLimitType RelationshipRiskLimitType
+                        public QuickFix.Fields.RelationshipRiskLimitType RelationshipRiskLimitType
                         { 
                             get 
                             {
@@ -3307,7 +3307,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                                                    public QuickFix.Fields.RelationshipRiskInstrumentOperator RelationshipRiskInstrumentOperator
+                            public QuickFix.Fields.RelationshipRiskInstrumentOperator RelationshipRiskInstrumentOperator
                             { 
                                 get 
                                 {
@@ -4098,7 +4098,7 @@ namespace QuickFix
                                     return clone;
                                 }
                             
-                                                            public QuickFix.Fields.RelationshipRiskSecurityAltID RelationshipRiskSecurityAltID
+                                public QuickFix.Fields.RelationshipRiskSecurityAltID RelationshipRiskSecurityAltID
                                 { 
                                     get 
                                     {
@@ -4179,7 +4179,7 @@ namespace QuickFix
                                 return clone;
                             }
                         
-                                                    public QuickFix.Fields.RelationshipRiskWarningLevelPercent RelationshipRiskWarningLevelPercent
+                            public QuickFix.Fields.RelationshipRiskWarningLevelPercent RelationshipRiskWarningLevelPercent
                             { 
                                 get 
                                 {
@@ -4260,7 +4260,7 @@ namespace QuickFix
                             return clone;
                         }
                     
-                                            public QuickFix.Fields.PartyRelationship PartyRelationship
+                        public QuickFix.Fields.PartyRelationship PartyRelationship
                         { 
                             get 
                             {

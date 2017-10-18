@@ -223,7 +223,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.Symbol Symbol
+                public QuickFix.Fields.Symbol Symbol
                 { 
                     get 
                     {
@@ -2130,7 +2130,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.SecurityAltID SecurityAltID
+                    public QuickFix.Fields.SecurityAltID SecurityAltID
                     { 
                         get 
                         {
@@ -2210,7 +2210,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.StipulationType StipulationType
+                    public QuickFix.Fields.StipulationType StipulationType
                     { 
                         get 
                         {

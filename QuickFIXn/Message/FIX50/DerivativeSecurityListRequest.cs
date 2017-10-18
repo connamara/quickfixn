@@ -2147,7 +2147,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
+                public QuickFix.Fields.UnderlyingSecurityAltID UnderlyingSecurityAltID
                 { 
                     get 
                     {
@@ -2227,7 +2227,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
+                public QuickFix.Fields.UnderlyingStipType UnderlyingStipType
                 { 
                     get 
                     {
@@ -2307,7 +2307,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.UndlyInstrumentPartyID UndlyInstrumentPartyID
+                public QuickFix.Fields.UndlyInstrumentPartyID UndlyInstrumentPartyID
                 { 
                     get 
                     {
@@ -2447,7 +2447,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.UndlyInstrumentPartySubID UndlyInstrumentPartySubID
+                    public QuickFix.Fields.UndlyInstrumentPartySubID UndlyInstrumentPartySubID
                     { 
                         get 
                         {

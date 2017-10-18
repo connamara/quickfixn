@@ -223,7 +223,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.QuoteSetID QuoteSetID
+                public QuickFix.Fields.QuoteSetID QuoteSetID
                 { 
                     get 
                     {
@@ -952,7 +952,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.QuoteEntryID QuoteEntryID
+                    public QuickFix.Fields.QuoteEntryID QuoteEntryID
                     { 
                         get 
                         {

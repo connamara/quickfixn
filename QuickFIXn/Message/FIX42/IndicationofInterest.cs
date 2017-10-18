@@ -1223,7 +1223,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.IOIQualifier IOIQualifier
+                public QuickFix.Fields.IOIQualifier IOIQualifier
                 { 
                     get 
                     {
@@ -1272,7 +1272,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.RoutingType RoutingType
+                public QuickFix.Fields.RoutingType RoutingType
                 { 
                     get 
                     {

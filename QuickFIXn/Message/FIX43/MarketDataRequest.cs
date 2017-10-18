@@ -382,7 +382,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.MDEntryType MDEntryType
+                public QuickFix.Fields.MDEntryType MDEntryType
                 { 
                     get 
                     {
@@ -431,7 +431,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.Symbol Symbol
+                public QuickFix.Fields.Symbol Symbol
                 { 
                     get 
                     {
@@ -1470,7 +1470,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.SecurityAltID SecurityAltID
+                    public QuickFix.Fields.SecurityAltID SecurityAltID
                     { 
                         get 
                         {
@@ -1551,7 +1551,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.TradingSessionID TradingSessionID
+                public QuickFix.Fields.TradingSessionID TradingSessionID
                 { 
                     get 
                     {

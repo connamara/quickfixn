@@ -886,7 +886,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ClOrdID ClOrdID
+                public QuickFix.Fields.ClOrdID ClOrdID
                 { 
                     get 
                     {
@@ -1028,7 +1028,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.ExecID ExecID
+                public QuickFix.Fields.ExecID ExecID
                 { 
                     get 
                     {
@@ -1170,7 +1170,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
+                public QuickFix.Fields.MiscFeeAmt MiscFeeAmt
                 { 
                     get 
                     {
@@ -1281,7 +1281,7 @@ namespace QuickFix
                     return clone;
                 }
             
-                            public QuickFix.Fields.AllocAccount AllocAccount
+                public QuickFix.Fields.AllocAccount AllocAccount
                 { 
                     get 
                     {
@@ -1545,7 +1545,7 @@ namespace QuickFix
                         return clone;
                     }
                 
-                                    public QuickFix.Fields.BrokerOfCredit BrokerOfCredit
+                    public QuickFix.Fields.BrokerOfCredit BrokerOfCredit
                     { 
                         get 
                         {
