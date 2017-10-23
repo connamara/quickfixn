@@ -90,6 +90,23 @@ namespace QuickFix
                 FromString(msgstr, validate, sessionDataDictionary, appDD, null);
         }
 
+        /// <summary>
+        /// Aidan Chisholm  IRESS 23/10/2017
+        /// Added to overload Message constrcutore to bypass message validation / re-ordering of body tags
+        /// </summary>
+        /// <param name="msgstr"></param>
+        /// <param name="sessionDataDictionary"></param>
+        /// <param name="appDD"></param>
+        /// <param name="validateLengthAndChecksum"></param>
+        /// <param name="ignoreBody"></param>
+        public Message(string msgstr, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, bool validateLengthAndChecksum, bool ignoreBody)
+            : this()
+        {
+            FromStringHeader(msgstr);
+
+            FromString(msgstr, validateLengthAndChecksum, sessionDataDictionary, appDD, null, ignoreBody);
+        }
+
         public Message(Message src)
             : base(src)
         {
@@ -501,6 +518,7 @@ namespace QuickFix
 
                     expectingHeader = false;
                     SetUnorderedField(f);
+                    //Console.WriteLine("{0} - {1}", f.Tag.ToString(), f.ToString());
                 }
             }
 
