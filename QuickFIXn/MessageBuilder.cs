@@ -42,15 +42,41 @@ namespace QuickFix
         internal Message Build()
         {
             Message message = _msgFactory.Create(_beginString, _msgType.Obj);
+
             message.FromString(
                 _msgStr,
                 _validateLengthAndChecksum,
                 _sessionDD,
                 _appDD,
                 _msgFactory);
+
             _message = message;
+
             return _message;
         }
+
+        /// <summary>
+        /// Overloading of Build() with ignoreBody parameter
+        /// </summary>
+        /// <param name="ignoreBody"></param>
+        /// <returns></returns>
+        internal Message Build(bool ignoreBody)
+        {
+            Message message = _msgFactory.Create(_beginString, _msgType.Obj);
+
+            message.FromString(
+                _msgStr,
+                _validateLengthAndChecksum,
+                _sessionDD,
+                _appDD,
+                _msgFactory,
+                ignoreBody);
+
+            _message = message;
+
+            return _message;
+        }
+        
 
         internal Message RejectableMessage()
         {

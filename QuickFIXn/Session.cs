@@ -602,7 +602,13 @@ namespace QuickFix
 
             try
             {
-                message = msgBuilder.Build();
+                // Aidan Chisholm  IRESS  23/10/2017
+                // Overloading Build() with ignoreBody parameter, but must also validate Logon for heartbeat interval (currently validating all session level messages)
+                if (Message.IsAdminMsgType(msgBuilder.MsgType.ToString()) || this.ValidateBody)
+                    message = msgBuilder.Build();
+                else
+                    message = msgBuilder.Build(true);
+
 
                 if (appDoesEarlyIntercept_)
                     ((IApplicationExt)Application).FromEarlyIntercept(message, this.SessionID);
@@ -634,7 +640,7 @@ namespace QuickFix
                 else
                 {
                     // Original logic as per QFN 1.6
-                    if (this.ValidateBody && this.ValidateHeader && this.ValidateTrailer)
+                    if (Message.IsAdminMsgType(msgType) || (this.ValidateBody && this.ValidateHeader && this.ValidateTrailer))
                     {
                         // Original logic as per QFN 1.6
                         this.SessionDataDictionary.Validate(message, beginString, msgType);

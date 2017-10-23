@@ -139,7 +139,7 @@ namespace QuickFix.DataDictionary
             if ((null != sessionDataDict) && (null != sessionDataDict.Version))
             {
                 sessionDataDict.CheckMsgType(msgType);
-                sessionDataDict.CheckHasRequired(message, msgType);
+                sessionDataDict.CheckHasRequired(message, msgType, validateHeader, validateBody, validateTrailer);
             }
 
             if (validateBody)
@@ -222,6 +222,51 @@ namespace QuickFix.DataDictionary
 					ReqFieldsSetInGroups(grp, fields);
 			*/
 		}
+
+        /// <summary>
+        /// Overloaded CheckHasRequired()
+        /// Aidan Chisholm  IRESS  23/10/2017
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="msgType"></param>
+        /// <param name="validateHeader"></param>
+        /// <param name="validateBody"></param>
+        /// <param name="validateTrailer"></param>
+        public void CheckHasRequired(Message message, string msgType, bool validateHeader, bool validateBody, bool validateTrailer)
+        {
+            if (validateHeader)
+            {
+                foreach (int field in Header.ReqFields)
+                {
+                    if (!message.Header.IsSetField(field))
+                        throw new RequiredTagMissing(field);
+                }
+            }
+
+            if (validateTrailer)
+            {
+                foreach (int field in Trailer.ReqFields)
+                {
+                    if (!message.Trailer.IsSetField(field))
+                        throw new RequiredTagMissing(field);
+                }
+            }
+
+            if (validateBody)
+            {
+                foreach (int field in Messages[msgType].ReqFields)
+                {
+                    if (!message.IsSetField(field))
+                        throw new RequiredTagMissing(field);
+                }
+            }
+
+            /** FIXME TODO group stuff
+            foreach (DDGroup grp in _messages[msgType].Groups.Values)
+                if (_messages[msgType].ReqFields.Contains(grp.Field))
+                    ReqFieldsSetInGroups(grp, fields);
+            */
+        }
 
         public void Iterate(FieldMap map, string msgType)
 		{

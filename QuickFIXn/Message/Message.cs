@@ -488,6 +488,20 @@ namespace QuickFix
                         pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroupSpec(f.Tag), sessionDD, appDD, msgFactory);
                     }
                 }
+                // Aidan Chisholm  IRESS 23/10/2017
+                // Bypassing body validation so need to keep fields in original order due to FieldMap re-ordering combined with unknown tags/repeating-groups
+                else if (ignoreBody==true)
+                {
+                    if (!expectingBody)
+                    {
+                        if (0 == field_)
+                            field_ = f.Tag;
+                        validStructure_ = false;
+                    }
+
+                    expectingHeader = false;
+                    SetUnorderedField(f);
+                }
             }
 
             if (validate)

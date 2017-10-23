@@ -19,8 +19,18 @@ namespace QuickFix
         {
             _fields = new SortedDictionary<int, Fields.IField>(); /// FIXME sorted dict is a hack to get quasi-correct field order
             _groups = new Dictionary<int, List<Group>>();
+            //_unsortedFields = new List<KeyValuePair<int, Fields.IField>>();
+            _unsortedFields = new List<Fields.IField>();
             this.RepeatedTags = new List<Fields.IField>();
         }
+
+        //public FieldMap(bool keepOrignalOrder)
+        //{
+        //    _unsortedFields = new List<KeyValuePair<int, Fields.IField>>();
+        //    _groups = new Dictionary<int, List<Group>>();
+        //}
+
+
 
         /// <summary>
         /// Constructor with field order
@@ -117,6 +127,13 @@ namespace QuickFix
             
             SetField(field);
             return true;
+        }
+
+        public void SetUnorderedField(Fields.IField field)
+        {
+            //_unsortedFields.Add(new KeyValuePair<int, IField>(field.Tag, field));
+            _unsortedFields.Add(field);
+            _unorderedMap = true;
         }
 
         /// <summary>
@@ -631,30 +648,44 @@ namespace QuickFix
                 }
             }
 
-            foreach (Fields.IField field in _fields.Values)
+            if (!_unorderedMap)
             {
-                if (groupCounterTags.Contains(field.Tag))
-                    continue;
-                if (preFields.Contains(field.Tag))
-                    continue; //already did this one
-                sb.Append(field.Tag.ToString() + "=" + field.ToString());
-                sb.Append(Message.SOH);
+                foreach (Fields.IField field in _fields.Values)
+                {
+                    if (groupCounterTags.Contains(field.Tag))
+                        continue;
+                    if (preFields.Contains(field.Tag))
+                        continue; //already did this one
+                    sb.Append(field.Tag.ToString() + "=" + field.ToString());
+                    sb.Append(Message.SOH);
+                }
+
+                foreach (int counterTag in _groups.Keys)
+                {
+                    if (preFields.Contains(counterTag))
+                        continue; //already did this one
+
+                    List<Group> groupList = _groups[counterTag];
+                    if (groupList.Count == 0)
+                        continue; //probably unnecessary, but it doesn't hurt to check
+
+                    sb.Append(_fields[counterTag].toStringField());
+                    sb.Append(Message.SOH);
+
+                    foreach (Group group in groupList)
+                        sb.Append(group.CalculateString());
+                }
             }
-
-            foreach(int counterTag in _groups.Keys)
+            else
             {
-                if (preFields.Contains(counterTag))
-                    continue; //already did this one
-
-                List<Group> groupList = _groups[counterTag];
-                if (groupList.Count == 0)
-                    continue; //probably unnecessary, but it doesn't hurt to check
-
-                sb.Append(_fields[counterTag].toStringField());
-                sb.Append(Message.SOH);
-
-                foreach (Group group in groupList)
-                    sb.Append(group.CalculateString());
+                // Unordered body!  Just re-print as per List<Fields.IField>
+                // Keeps the tags in original order, ratehrt ah re-ordering as per default QFN behavious using FieldMap's SortedDictionary.
+                // Aidan Chisholm  IRESS  23/10/2017
+                foreach (Fields.IField field in _unsortedFields)
+                {
+                    sb.Append(field.Tag.ToString() + "=" + field.ToString());
+                    sb.Append(Message.SOH);
+                }
             }
 
             return sb.ToString();
@@ -689,7 +720,10 @@ namespace QuickFix
 
         #region Private Members
         private SortedDictionary<int, Fields.IField> _fields; /// FIXME sorted dict is a hack to get quasi-correct field order
-        private Dictionary<int, List<Group>> _groups;
+        //private List<KeyValuePair<int, Fields.IField>> _unsortedFields;  // Aidan Chisholm IRESS 23/10/2017
+        private List<Fields.IField> _unsortedFields;
+        private bool _unorderedMap=false;
+        private Dictionary<int, List<Group>> _groups;  
         protected int[] _fieldOrder;
         #endregion
 
