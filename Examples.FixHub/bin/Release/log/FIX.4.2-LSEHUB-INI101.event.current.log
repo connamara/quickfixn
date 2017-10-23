@@ -1,0 +1,74 @@
+20171020-15:53:24.098 : Created session
+20171020-15:53:31.036 : FIX.4.2:LSEHUB->INI101 Socket Reader 56251872 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18007
+20171020-15:53:31.036 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-15:53:31.058 : Session reset: ResetOnLogon
+20171020-15:53:31.061 : Received logon
+20171020-15:53:31.066 : Responding to logon request
+20171020-15:54:09.503 : Created session
+20171020-15:54:14.226 : FIX.4.2:LSEHUB->INI101 Socket Reader 56251872 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18021
+20171020-15:54:14.226 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-15:54:14.243 : Session reset: ResetOnLogon
+20171020-15:54:14.247 : Received logon
+20171020-15:54:14.254 : Responding to logon request
+20171020-15:55:41.608 : Created session
+20171020-15:55:52.301 : FIX.4.2:LSEHUB->INI101 Socket Reader 15645912 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18025
+20171020-15:55:52.301 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-15:55:52.316 : Session reset: ResetOnLogon
+20171020-15:55:52.318 : Received logon
+20171020-15:55:52.326 : Responding to logon request
+20171020-15:55:56.594 : Message 2 Rejected: Tag appears more than once (Field=29)
+20171020-15:57:56.338 : Created session
+20171020-15:58:13.186 : FIX.4.2:LSEHUB->INI101 Socket Reader 56251872 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18027
+20171020-15:58:13.187 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-15:58:13.202 : Session reset: ResetOnLogon
+20171020-15:58:13.204 : Received logon
+20171020-15:58:13.209 : Responding to logon request
+20171020-16:01:06.338 : Created session
+20171020-16:01:12.064 : FIX.4.2:LSEHUB->INI101 Socket Reader 56251872 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18041
+20171020-16:01:12.064 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-16:01:12.081 : Session reset: ResetOnLogon
+20171020-16:01:12.084 : Received logon
+20171020-16:01:12.091 : Responding to logon request
+20171020-16:11:12.463 : Created session
+20171020-16:12:28.485 : Created session
+20171020-16:12:34.394 : FIX.4.2:LSEHUB->INI101 Socket Reader 56251872 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18227
+20171020-16:12:34.394 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-16:12:34.409 : Session reset: ResetOnLogon
+20171020-16:12:34.412 : Received logon
+20171020-16:12:34.418 : Responding to logon request
+20171020-16:13:38.876 : Created session
+20171020-16:13:45.459 : FIX.4.2:LSEHUB->INI101 Socket Reader 37916227 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18229
+20171020-16:13:45.459 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-16:13:45.474 : Session reset: ResetOnLogon
+20171020-16:13:45.476 : Received logon
+20171020-16:13:45.482 : Responding to logon request
+20171020-17:26:12.032 : Created session
+20171020-17:26:18.415 : FIX.4.2:LSEHUB->INI101 Socket Reader 37916227 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18563
+20171020-17:26:18.415 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-17:26:18.431 : Session reset: ResetOnLogon
+20171020-17:26:18.434 : Received logon
+20171020-17:26:18.441 : Responding to logon request
+20171020-17:27:59.912 : Created session
+20171020-17:28:06.906 : FIX.4.2:LSEHUB->INI101 Socket Reader 37916227 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18569
+20171020-17:28:06.906 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-17:28:06.920 : Session reset: ResetOnLogon
+20171020-17:28:06.923 : Received logon
+20171020-17:28:06.928 : Responding to logon request
+20171020-17:48:03.312 : Created session
+20171020-17:48:15.473 : FIX.4.2:LSEHUB->INI101 Socket Reader 56251872 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18655
+20171020-17:48:15.473 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-17:48:15.489 : Session reset: ResetOnLogon
+20171020-17:48:15.492 : Received logon
+20171020-17:48:15.499 : Responding to logon request
+20171020-17:50:10.328 : Created session
+20171020-17:50:44.163 : FIX.4.2:LSEHUB->INI101 Socket Reader 56251872 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18673
+20171020-17:50:44.163 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-17:51:01.706 : Session reset: ResetOnLogon
+20171020-17:51:01.709 : Received logon
+20171020-17:51:01.713 : Responding to logon request
+20171020-17:53:13.021 : Created session
+20171020-17:53:18.625 : FIX.4.2:LSEHUB->INI101 Socket Reader 37916227 accepting session FIX.4.2:LSEHUB->INI101 from 127.0.0.1:18700
+20171020-17:53:18.625 : FIX.4.2:LSEHUB->INI101 Acceptor heartbeat set to 0 seconds
+20171020-17:53:27.751 : Session reset: ResetOnLogon
+20171020-17:53:27.754 : Received logon
+20171020-17:53:27.758 : Responding to logon request

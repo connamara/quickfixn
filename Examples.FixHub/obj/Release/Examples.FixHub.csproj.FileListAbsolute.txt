@@ -1,0 +1,9 @@
+D:\GitHub\quickfixn\Examples.FixHub\bin\Release\Examples.FixHub.exe.config
+D:\GitHub\quickfixn\Examples.FixHub\bin\Release\ini.cfg
+D:\GitHub\quickfixn\Examples.FixHub\bin\Release\Examples.FixHub.exe
+D:\GitHub\quickfixn\Examples.FixHub\bin\Release\Examples.FixHub.pdb
+D:\GitHub\quickfixn\Examples.FixHub\bin\Release\QuickFix.dll
+D:\GitHub\quickfixn\Examples.FixHub\bin\Release\QuickFix.pdb
+D:\GitHub\quickfixn\Examples.FixHub\obj\Release\Examples.FixHub.csprojResolveAssemblyReference.cache
+D:\GitHub\quickfixn\Examples.FixHub\obj\Release\Examples.FixHub.exe
+D:\GitHub\quickfixn\Examples.FixHub\obj\Release\Examples.FixHub.pdb
