@@ -19,17 +19,9 @@ namespace QuickFix
         {
             _fields = new SortedDictionary<int, Fields.IField>(); /// FIXME sorted dict is a hack to get quasi-correct field order
             _groups = new Dictionary<int, List<Group>>();
-            //_unsortedFields = new List<KeyValuePair<int, Fields.IField>>();
             _unsortedFields = new List<Fields.IField>();
             this.RepeatedTags = new List<Fields.IField>();
         }
-
-        //public FieldMap(bool keepOrignalOrder)
-        //{
-        //    _unsortedFields = new List<KeyValuePair<int, Fields.IField>>();
-        //    _groups = new Dictionary<int, List<Group>>();
-        //}
-
 
 
         /// <summary>
@@ -587,7 +579,7 @@ namespace QuickFix
             }
 
             // Aidan Chisholm  IRESS  24/10/2017
-            // Added to calculate BodyLength when using unsorted body
+            // Added to calculate CheckSum when using unsorted body
             foreach (Fields.IField field in _unsortedFields)
             {
                 if (field.Tag != Fields.Tags.CheckSum)
@@ -743,8 +735,7 @@ namespace QuickFix
 
         #region Private Members
         private SortedDictionary<int, Fields.IField> _fields; /// FIXME sorted dict is a hack to get quasi-correct field order
-        //private List<KeyValuePair<int, Fields.IField>> _unsortedFields;  // Aidan Chisholm IRESS 23/10/2017
-        private List<Fields.IField> _unsortedFields;
+        private List<Fields.IField> _unsortedFields; // Aidan Chisholm IRESS 23/10/2017
         private bool _unorderedMap=false;
         private Dictionary<int, List<Group>> _groups;  
         protected int[] _fieldOrder;
