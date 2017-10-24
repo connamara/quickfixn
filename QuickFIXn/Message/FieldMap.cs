@@ -585,12 +585,21 @@ namespace QuickFix
                 foreach (Group group in groupList)
                     total += group.CalculateTotal();
             }
+
+            // Aidan Chisholm  IRESS  24/10/2017
+            // Added to calculate BodyLength when using unsorted body
+            foreach (Fields.IField field in _unsortedFields)
+            {
+                if (field.Tag != Fields.Tags.CheckSum)
+                    total += field.getTotal();
+            }
             return total;
         }
 
         public int CalculateLength()
         {
             int total = 0;
+
             foreach (Fields.IField field in _fields.Values)
             {
                 if (field != null
@@ -618,6 +627,20 @@ namespace QuickFix
                 foreach (Group group in groupList)
                     total += group.CalculateLength();
             }
+            
+            // Aidan Chisholm  IRESS  24/10/2017
+            // Added to calculate BodyLength when using unsorted body
+            foreach (Fields.IField field in _unsortedFields)
+            {
+                if (field != null
+                    && field.Tag != Tags.BeginString
+                    && field.Tag != Tags.BodyLength
+                    && field.Tag != Tags.CheckSum)
+                {
+                    total += field.getLength();
+                }
+            }
+            
     
             return total;
         }
