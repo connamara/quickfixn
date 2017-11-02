@@ -38,7 +38,7 @@ class FieldGen
   def self.fields_str fields
 <<HERE
 // This is a generated file.  Don't edit it directly!
-
+using QuickFix.Fields.Converters;
 using System;
 
 namespace QuickFix.Fields
@@ -108,7 +108,9 @@ HERE
         public #{field[:name]}(#{field[:base_type]} val)
             :base(Tags.#{field[:name]}, val) {}
         public #{field[:name]}(#{field[:base_type]} val, bool showMilliseconds)
-	    :base(Tags.#{field[:name]}, val, showMilliseconds) {}
+			:base(Tags.#{field[:name]}, val, showMilliseconds) {}
+        public #{field[:name]}(#{field[:base_type]} val, TimeStampPrecision timeStampPrecision)
+			:base(Tags.#{field[:name]}, val, timeStampPrecision) {}
 #{fix_values(field)}
     }
 
