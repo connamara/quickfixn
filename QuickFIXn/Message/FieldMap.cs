@@ -546,6 +546,9 @@ namespace QuickFix
         {
             _fields.Clear();
             _groups.Clear();
+
+            // Aidan Chisholm  IRESS  03/11/2017
+            _unsortedFields.Clear();
         }
 
         /// <summary>
