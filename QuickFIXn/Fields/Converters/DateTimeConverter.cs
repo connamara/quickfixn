@@ -9,10 +9,16 @@ namespace QuickFix.Fields.Converters
     /// </summary>
     public static class DateTimeConverter
     {
+        public const int MicrosPerMillis = 1000;
+        public const int NanosPerMicro = 1000;
+        public const int TicksPerMicrosecond = 10;
+        public const int NanosecondsPerTick = 100;
+        public const string DATE_TIME_FORMAT_WITH_NANOSECONDS = "{0:yyyyMMdd-HH:mm:ss}.{1}";
         public const string DATE_TIME_FORMAT_WITH_MICROSECONDS = "{0:yyyyMMdd-HH:mm:ss.ffffff}";
         public const string DATE_TIME_FORMAT_WITH_MILLISECONDS = "{0:yyyyMMdd-HH:mm:ss.fff}";
         public const string DATE_TIME_FORMAT_WITHOUT_MILLISECONDS = "{0:yyyyMMdd-HH:mm:ss}";
         public const string DATE_ONLY_FORMAT = "{0:yyyyMMdd}";
+        public const string TIME_ONLY_FORMAT_WITH_NANOSECONDS = "{0:HH:mm:ss}.{1}";
         public const string TIME_ONLY_FORMAT_WITH_MICROSECONDS = "{0:HH:mm:ss.ffffff}";
         public const string TIME_ONLY_FORMAT_WITH_MILLISECONDS = "{0:HH:mm:ss.fff}";
         public const string TIME_ONLY_FORMAT_WITHOUT_MILLISECONDS = "{0:HH:mm:ss}";
@@ -35,6 +41,27 @@ namespace QuickFix.Fields.Converters
             {TimeStampPrecision.Microsecond, TIME_ONLY_FORMAT_WITH_MICROSECONDS},
         };
 
+        private static System.DateTime TimeOnlyFromNanoString(string str)
+        {
+            return ConvertFromNanoString(str, TIME_ONLY_FORMATS);
+        }
+
+        private static System.DateTime DateTimeFromNanoString(string str)
+        {
+            return ConvertFromNanoString(str, DATE_TIME_FORMATS);
+        }
+
+        private static System.DateTime ConvertFromNanoString(string str, string[] formats)
+        {
+            int i = str.IndexOf('.');
+            string dec = str.Substring(i+1);
+            long frac = long.Parse(dec);
+            string noFrac = str.Substring(0, i);
+            System.DateTime d = System.DateTime.ParseExact(noFrac, formats, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+            long ticks = frac / NanosecondsPerTick;
+            System.DateTime dt= d.AddTicks(ticks);
+            return dt;
+        }
 
         /// <summary>
         /// Convert string to DateTime
@@ -42,9 +69,25 @@ namespace QuickFix.Fields.Converters
         /// <exception cref="FieldConvertError"/>
         public static System.DateTime ConvertToDateTime(string str)
         {
+            return ConvertToDateTime(str, TimeStampPrecision.Millisecond);
+        }
+
+        /// <summary>
+        /// Convert string to DateTime
+        /// </summary>
+        /// <exception cref="FieldConvertError"/>
+        public static System.DateTime ConvertToDateTime(string str, TimeStampPrecision precision)
+        {
             try
             {
-                return System.DateTime.ParseExact(str, DATE_TIME_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+                if (precision == TimeStampPrecision.Nanosecond)
+                {
+                    return DateTimeFromNanoString(str);
+                }
+                else
+                {
+                    return System.DateTime.ParseExact(str, DATE_TIME_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+                }
             }
             catch (System.Exception e)
             {
@@ -71,16 +114,36 @@ namespace QuickFix.Fields.Converters
         }
 
         /// <summary>
-        /// Check if string is TimeOnly and, if yes, convert to DateTime
+        /// Check if string is TimeOnly and, if yes, convert to DateTime.  Time stamp precision defaults to milliseconds.
         /// </summary>
         /// <param name="str"></param>
         /// <returns></returns>
         /// <exception cref="FieldConvertError"/>
         public static System.DateTime ConvertToTimeOnly(string str)
         {
+            return ConvertToTimeOnly(str, TimeStampPrecision.Millisecond);
+        }
+
+        /// <summary>
+        /// Check if string is TimeOnly and, if yes, convert to DateTime.  Optional time stamp precision up to 
+        /// </summary>
+        /// <param name="str"></param>
+        /// /// <param name="precision"></param>
+        /// <returns></returns>
+        /// <exception cref="FieldConvertError"/>
+        public static System.DateTime ConvertToTimeOnly(string str, TimeStampPrecision precision)
+        {
             try
             {
-                System.DateTime d = System.DateTime.ParseExact(str, TIME_ONLY_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+                System.DateTime d;
+                if (precision == TimeStampPrecision.Nanosecond)
+                {
+                    d = TimeOnlyFromNanoString(str);
+                }
+                else
+                {
+                    d = System.DateTime.ParseExact(str, TIME_ONLY_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+                }
                 return new System.DateTime(1980, 1, 1) + d.TimeOfDay;
             }
             catch (System.Exception e)
@@ -120,6 +183,14 @@ namespace QuickFix.Fields.Converters
         }
 
 
+        private static long Nanoseconds(this System.DateTime dt)
+        {
+            int ns = (int)(dt.Ticks % System.TimeSpan.TicksPerMillisecond % (double)TicksPerMicrosecond) * NanosecondsPerTick;
+            int us = (int)System.Math.Floor((dt.Ticks % System.TimeSpan.TicksPerMillisecond) / (double)TicksPerMicrosecond);
+            int ms = dt.Millisecond;
+            return (ms * NanosPerMicro * MicrosPerMillis) + (us * NanosPerMicro) + ns;
+        }
+
         /// <summary>
         /// Converts the specified dt.
         /// </summary>
@@ -128,8 +199,15 @@ namespace QuickFix.Fields.Converters
         /// <returns></returns>
         public static string Convert(System.DateTime dt, TimeStampPrecision precision )
         {
-            var format = DATE_TIME_PRECISION_TO_FORMAT[precision];
-            return string.Format(format, dt);
+            if (precision == TimeStampPrecision.Nanosecond)
+            {
+                return string.Format(DATE_TIME_FORMAT_WITH_NANOSECONDS, dt, dt.Nanoseconds());
+            }
+            else
+            {
+                var format = DATE_TIME_PRECISION_TO_FORMAT[precision];
+                return string.Format(format, dt);
+            }
         }
 
         /// <summary>
@@ -159,8 +237,15 @@ namespace QuickFix.Fields.Converters
 
         public static string ConvertTimeOnly(System.DateTime dt, TimeStampPrecision precision)
         {
-            var format = TIME_ONLY_PRECISION_TO_FORMAT[precision];
-            return string.Format(format, dt);
+            if (precision == TimeStampPrecision.Nanosecond)
+            {
+                return string.Format(TIME_ONLY_FORMAT_WITH_NANOSECONDS, dt, dt.Nanoseconds());
+            }
+            else
+            {
+                var format = TIME_ONLY_PRECISION_TO_FORMAT[precision];
+                return string.Format(format, dt);
+            }
         }
     }
 }

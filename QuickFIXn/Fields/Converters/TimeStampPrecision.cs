@@ -8,6 +8,7 @@ namespace QuickFix.Fields.Converters
     {
         Second,
         Millisecond,
-        Microsecond
+        Microsecond,
+        Nanosecond
     }
 }
