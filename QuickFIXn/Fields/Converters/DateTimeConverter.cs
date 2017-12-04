@@ -55,12 +55,40 @@ namespace QuickFix.Fields.Converters
         {
             int i = str.IndexOf('.');
             string dec = str.Substring(i+1);
+            System.DateTimeKind kind;
+            int offset = 0;
+
+            if (dec.EndsWith("Z"))
+            {
+                // UTC
+                dec = dec.Substring(0, dec.Length - 1);
+                kind = System.DateTimeKind.Utc;
+            }
+            else if (dec.Contains("+") || dec.Contains("-"))
+            {
+                // GMT offset
+                int n = dec.Contains("+") ? dec.IndexOf('+') : dec.IndexOf('-');
+                kind = System.DateTimeKind.Utc;
+                offset = int.Parse(dec.Substring(n + 1));
+                dec = dec.Substring(0, n);
+            }
+            else
+            {
+                // local time
+                kind = System.DateTimeKind.Local;
+            }
             long frac = long.Parse(dec);
-            string noFrac = str.Substring(0, i);
-            System.DateTime d = System.DateTime.ParseExact(noFrac, formats, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+            string tm = str.Substring(0, i);
+            System.DateTime d = System.DateTime.SpecifyKind(System.DateTime.ParseExact(tm, formats, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES), kind);
+
+            // apply GMT offset
+            if (offset != 0)
+            {
+                d = new System.DateTimeOffset(d).ToOffset(System.TimeSpan.FromHours(offset)).DateTime;
+            }
+
             long ticks = frac / NanosecondsPerTick;
-            System.DateTime dt= d.AddTicks(ticks);
-            return dt;
+            return d.AddTicks(ticks);
         }
 
         /// <summary>
