@@ -16,7 +16,7 @@ namespace QuickFix.Fields
             : this(tag, dt, showMilliseconds ? TimeStampPrecision.Millisecond : TimeStampPrecision.Second ) { }
 
         public DateTimeField(int tag, DateTime dt, TimeStampPrecision timeFormatPrecision)
-    : base(tag, dt )
+            : base(tag, dt )
         {
             timePrecision = timeFormatPrecision;
         }
