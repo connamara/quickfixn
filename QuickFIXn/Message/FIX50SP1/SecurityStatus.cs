@@ -1348,7 +1348,7 @@ namespace QuickFix
             { 
                 return IsSetField(Tags.InterestAccrualDate);
             }
-            public QuickFix.Fields.SecurityStatus SecurityStatus
+            public QuickFix.Fields.SecurityStatus SecurityStatus_
             { 
                 get 
                 {
@@ -1361,7 +1361,7 @@ namespace QuickFix
             
             public void Set(QuickFix.Fields.SecurityStatus val) 
             { 
-                this.SecurityStatus = val;
+                this.SecurityStatus_ = val;
             }
             
             public QuickFix.Fields.SecurityStatus Get(QuickFix.Fields.SecurityStatus val) 
