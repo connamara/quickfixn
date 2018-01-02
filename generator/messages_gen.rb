@@ -59,7 +59,7 @@ namespace QuickFix
 #{msgtype(msg)}
 #{ctor(msg)}
 #{ctor_req(msg)}
-#{gen_msg_fields(msg[:fields], 12)}
+#{gen_msg_fields(msg[:name], msg[:fields], 12)}
 HERE
 
     if msg[:groups].length > 0
@@ -105,8 +105,8 @@ HERE
 HERE
   end
 
-  def self.gen_msg_fields fields, prepend_spaces
-    fields.map { |fld| msg_field(fld,prepend_spaces) }.join("\n")
+  def self.gen_msg_fields msg_name, fields, prepend_spaces
+    fields.map { |fld| msg_field(msg_name, fld,prepend_spaces) }.join("\n")
   end
 
   def self.gen_msg_groups groups, prepend_spaces
@@ -118,9 +118,13 @@ HERE
     msg[:fields].select {|f| f[:required] == true and f[:group] == false }
   end
 
-  def self.msg_field fld, prepend_spaces
+  def self.msg_field msg_name, fld, prepend_spaces
+    fld_name = fld[:name]
+    if fld_name == msg_name
+      fld_name = fld_name + '_'
+    end
     str = []
-    str << "public QuickFix.Fields.#{fld[:name]} #{fld[:name]}"
+    str << "public QuickFix.Fields.#{fld[:name]} #{fld_name}"
     str << "{ "
     str << "    get "
     str << "    {"
@@ -133,7 +137,7 @@ HERE
     str << ""
     str << "public void Set(QuickFix.Fields.#{fld[:name]} val) "
     str << "{ "
-    str << "    this.#{(fld[:name])} = val;"
+    str << "    this.#{fld_name} = val;"
     str << "}"
     str << ""
     str << "public QuickFix.Fields.#{fld[:name]} Get(QuickFix.Fields.#{fld[:name]} val) "
@@ -173,7 +177,7 @@ HERE
     str << "        return clone;"
     str << "    }"
     str << ""
-    str << gen_msg_fields(grp[:fields], prepend_spaces+4)
+    str << gen_msg_fields(grp[:name], grp[:fields], prepend_spaces+4)
     str.last.lstrip!.prepend(' '*4) # hack to remove accidental extra whitespace on first line of that string
     str << gen_msg_groups(grp[:groups], prepend_spaces+4)
     str << "}"
