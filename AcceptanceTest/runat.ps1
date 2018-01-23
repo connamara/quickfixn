@@ -22,10 +22,10 @@ if([string]::IsNullOrEmpty($tests)) {
 
 
 if($release -eq "release") {
-    $dir = "bin\Release"
+    $dir = "bin\Release\net452"
 }
 elseif($release -eq "debug") {
-    $dir = "bin\Debug"
+    $dir = "bin\Debug\net452"
 }
 else { Usage }
 
