@@ -22,8 +22,8 @@ Code Generation
 To regenerate the message and field class source from the Data Dictionaries, you need Ruby and the Nokogiri gem:
 
 ```
-    gem install nokogiri -v 1.6.8.1
-    generate.bat
+gem install nokogiri -v 1.6.8.1
+generate.bat
 ```
 
 (Nokogiri versions 1.7+ require Ruby 2.0, so we must use this older version.)
@@ -91,8 +91,8 @@ An HTML report of the test results will then be available here:
 To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
 
 ```
-    cd AcceptanceTest
-    runat.ps1 release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg
+cd AcceptanceTest
+runat.ps1 release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg
 ```
 
 (See acceptance_test.ps1 for the proper port numbers and config files to use in the above command.)
