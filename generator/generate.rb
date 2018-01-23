@@ -4,13 +4,11 @@ require 'rubygems'
 require 'fix_dictionary'
 require 'fields_gen'
 require 'messages_gen'
-require 'proj_gen'
 require 'message_factory_gen'
 
 class Generator  
   def self.generate
     generator = Generator.new
-    generator.generate_csproj
     generator.generate_message_factories
     generator.generate_fields
     generator.generate_messages
@@ -85,23 +83,6 @@ class Generator
     MessageGen.generate(@fix50.messages,  msgs_path, 'FIX50')
     MessageGen.generate(@fix50sp1.messages,  msgs_path, 'FIX50SP1')
     MessageGen.generate(@fix50sp2.messages,  msgs_path, 'FIX50SP2')
-  end
-
-  def generate_csproj
-    csproj_path = File.join(@src_path, 'FixMessages.csproj')
-    CSProjGen.generate(
-      csproj_path,
-      [
-        {:version=>'FIX40', :messages=>@fix40.messages},
-        {:version=>'FIX41', :messages=>@fix41.messages},
-        {:version=>'FIX42', :messages=>@fix42.messages},
-        {:version=>'FIX43', :messages=>@fix43.messages},
-        {:version=>'FIX44', :messages=>@fix44.messages},
-        {:version=>'FIX50', :messages=>@fix50.messages},
-        {:version=>'FIX50SP1', :messages=>@fix50sp1.messages},
-        {:version=>'FIX50SP2', :messages=>@fix50sp2.messages}
-      ]
-    )
   end
 
   def generate_message_factories
