@@ -50,9 +50,12 @@ IF EXIST tmp rmdir /s /q tmp
 mkdir tmp
 mkdir tmp\%QF_DIR%
 mkdir tmp\%QF_DIR%\bin
+mkdir tmp\%QF_DIR%\bin\net452
+mkdir tmp\%QF_DIR%\bin\netstandard2.0
 mkdir tmp\%QF_DIR%\spec
 mkdir tmp\%QF_DIR%\config
-copy QuickFIXn\bin\Release\net452\QuickFix.dll tmp\%QF_DIR%\bin
+copy QuickFIXn\bin\Release\net452\QuickFix.dll tmp\%QF_DIR%\bin\net452\QuickFix.dll
+copy QuickFIXn\bin\Release\netstandard2.0\QuickFix.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.dll
 xcopy spec tmp\%QF_DIR%\spec /e /y
 copy config\sample_acceptor.cfg tmp\%QF_DIR%\config\
 copy config\sample_initiator.cfg tmp\%QF_DIR%\config\
