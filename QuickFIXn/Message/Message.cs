@@ -129,7 +129,8 @@ namespace QuickFix
                 int fieldvalend = msgstr.IndexOf("\u0001", pos);
                 StringField field =  new StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
 
-                /** TODO data dict stuff
+                /*
+                 TODO data dict stuff
                 if (((null != sessionDD) && sessionDD.IsDataField(field.Tag)) || ((null != appDD) && appDD.IsDataField(field.Tag)))
                 {
                     string fieldLength = "";

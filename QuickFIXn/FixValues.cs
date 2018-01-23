@@ -35,9 +35,7 @@ namespace QuickFix
         }
     }
 
-    /// <summary>
-    /// TODO generate this class
-    /// </summary>
+    // TODO generate this class
     namespace FixValues
     {
         public class ApplVerID
