@@ -369,6 +369,16 @@ QuickFIX Settings
   </tr>
 
   <tr>
+    <td class='setting'>ValidateLengthAndChecksum</td>
+    <td class='description'>If set to N, messages with incorrect length or checksum fields will not be rejected. You can also use this to force acceptance of repeating groups without a data dictionary. In this scenario you will not be able to access all repeating groups.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>Y</td>
+  </tr>
+
+  <tr>
     <td class='setting'>ValidateFieldsOutOfOrder</td>
     <td class='description'>If set to N, fields that are out of order (ie, body fields in the header, or header fields in the body) will not be rejected.  Useful for connecting to systems which do not properly order fields.</td>
     <td class='valid'>
