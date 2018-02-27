@@ -97,7 +97,9 @@ class Generator
         {:version=>'FIX42', :messages=>@fix42.messages},
         {:version=>'FIX43', :messages=>@fix43.messages},
         {:version=>'FIX44', :messages=>@fix44.messages},
-        {:version=>'FIX50', :messages=>@fix50.messages}
+        {:version=>'FIX50', :messages=>@fix50.messages},
+        {:version=>'FIX50SP1', :messages=>@fix50sp1.messages},
+        {:version=>'FIX50SP2', :messages=>@fix50sp2.messages}
       ]
     )
   end

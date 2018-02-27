@@ -80,8 +80,21 @@ namespace UnitTests
             Assert.That(field.Obj, Is.EqualTo(newval));
             Assert.That(field.ToString(), Is.EqualTo("20090904-03:44:01.000"));
         }
-
-
+        
+        [Test]
+        public void DateTimeFieldNanoTest()
+        {
+            DateTime val = ConverterTests.makeDateTime(2009, 9, 4, 3, 44, 1, 100, 310, 300);
+            DateTime newval = ConverterTests.makeDateTime(2009, 9, 4, 3, 44, 1, 100, 310, 300);
+            DateTimeField field = new DateTimeField(200, val, QuickFix.Fields.Converters.TimeStampPrecision.Nanosecond);
+            Assert.That(field.Obj, Is.EqualTo(val));
+            Assert.That(field.getValue(), Is.EqualTo(val));
+            Assert.That(field.Tag, Is.EqualTo(200));
+            field.Obj = newval;
+            Assert.That(field.Obj, Is.EqualTo(newval));
+            Assert.That(field.ToString(), Is.EqualTo("20090904-03:44:01.100310300"));
+        }
+        
         [Test]
         public void StringFieldTest_TotalAndLength()
         {

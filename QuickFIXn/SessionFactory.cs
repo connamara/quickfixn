@@ -112,6 +112,8 @@ namespace QuickFix
                 session.PersistMessages = settings.GetBool(SessionSettings.PERSIST_MESSAGES);
             if (settings.Has(SessionSettings.MILLISECONDS_IN_TIMESTAMP))
                 session.MillisecondsInTimeStamp = settings.GetBool(SessionSettings.MILLISECONDS_IN_TIMESTAMP);
+            if( settings.Has( SessionSettings.TIMESTAMP_PRECISION ) )
+                session.TimeStampPrecision = settings.GetTimeStampPrecision( SessionSettings.TIMESTAMP_PRECISION );
             if (settings.Has(SessionSettings.ENABLE_LAST_MSG_SEQ_NUM_PROCESSED))
                 session.EnableLastMsgSeqNumProcessed = settings.GetBool(SessionSettings.ENABLE_LAST_MSG_SEQ_NUM_PROCESSED);
             if (settings.Has(SessionSettings.MAX_MESSAGES_IN_RESEND_REQUEST))
