@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.IO;
 using System;
+using System.Text.RegularExpressions;
 
 namespace QuickFix
 {
@@ -18,6 +19,8 @@ namespace QuickFix
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
 
+        private SocketSettings socketSettings_;
+
         /// <summary>
         /// Keep a handle to the current outstanding read request (if any)
         /// </summary>
@@ -34,6 +37,8 @@ namespace QuickFix
             tcpClient_ = tcpClient;
             responder_ = responder;
             stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
+
+            socketSettings_ = settings;
         }
 
         /// <summary> FIXME </summary>
@@ -131,16 +136,26 @@ namespace QuickFix
             {
                 if (null == qfSession_)
                 {
-                    qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg));
+                    string adjustedMsg = msg;
+
+                    if (socketSettings_.RjoGlobexAdapterTestMode)
+                    {
+                        this.Log("RjoGlobexAdapterTestMode: ignoring SenderSubID in sender's logon message");
+                        // need to ignore client's SubID when looking up session
+                        Regex rgx = new Regex($"{Message.SOH}50=[^{Message.SOH}]*");
+                        adjustedMsg = rgx.Replace(msg, "");
+                    }
+
+                    qfSession_ = Session.LookupSession(Message.GetReverseSessionID(adjustedMsg));
                     if (null == qfSession_)
                     {
-                        this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        this.Log("ERROR: Disconnecting; received message for unknown session: " + adjustedMsg);
                         DisconnectClient();
                         return;
                     }
                     else
                     {
-                        if (!HandleNewSession(msg))
+                        if (!HandleNewSession(adjustedMsg))
                             return;
                     }
                 }
