@@ -80,8 +80,8 @@ namespace QuickFix
         /// <summary>
         /// Add new session as an ad-hoc (dynamic) operation
         /// </summary>
-        /// <param name="sessionID">ID of new session<param>
-        /// <param name="dict">config settings for new session</param></param>
+        /// <param name="sessionID">ID of new session</param>
+        /// <param name="dict">config settings for new session</param>
         /// <returns>true if session added successfully, false if session already exists or is not an initiator</returns>
         public bool AddSession(SessionID sessionID, Dictionary dict)
         {
@@ -102,8 +102,8 @@ namespace QuickFix
         /// <summary>
         /// Create session, either at start-up or as an ad-hoc operation
         /// </summary>
-        /// <param name="sessionID">ID of new session<param>
-        /// <param name="dict">config settings for new session</param></param>
+        /// <param name="sessionID">ID of new session</param>
+        /// <param name="dict">config settings for new session</param>
         /// <returns>true if session added successfully, false if session already exists or is not an initiator</returns>
         private bool CreateSession(SessionID sessionID, Dictionary dict)
         {

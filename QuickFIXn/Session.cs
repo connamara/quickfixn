@@ -556,7 +556,7 @@ namespace QuickFix
         /// <summary>
         /// Process a message from the counterparty.
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="msgBuilder"></param>
         internal void Next(MessageBuilder msgBuilder)
         {
             if (!IsSessionTime)
@@ -1267,7 +1267,7 @@ namespace QuickFix
         /// <summary>
         /// FIXME don't do so much operator new here
         /// </summary>
-        /// <param name="heartBtInt"></param>
+        /// <param name="otherLogon"></param>
         /// <returns></returns>
         protected bool GenerateLogon(Message otherLogon)
         {
@@ -1481,6 +1481,7 @@ namespace QuickFix
         /// FIXME don't do so much operator new here
         /// </summary>
         /// <param name="m"></param>
+        /// <param name="msgSeqNum"></param>
         protected void InitializeHeader(Message m, int msgSeqNum)
         {
             state_.LastSentTimeDT = DateTime.UtcNow;

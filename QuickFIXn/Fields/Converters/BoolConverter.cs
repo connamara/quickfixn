@@ -25,7 +25,7 @@ namespace QuickFix.Fields.Converters
         /// </summary>
         /// <param name="boolstr"></param>
         /// <returns>true for "Y", false for "N"</returns>
-        /// <exception cref="BadConversionException"/>
+        /// <exception cref="FieldConvertError"/>
         public static Boolean Convert(string boolstr)
         {
             switch (boolstr)

@@ -17,7 +17,7 @@ namespace QuickFix
         /// </summary>
         public FieldMap()
         {
-            _fields = new SortedDictionary<int, Fields.IField>(); /// FIXME sorted dict is a hack to get quasi-correct field order
+            _fields = new SortedDictionary<int, Fields.IField>(); // FIXME sorted dict is a hack to get quasi-correct field order
             _groups = new Dictionary<int, List<Group>>();
             this.RepeatedTags = new List<Fields.IField>();
         }
@@ -238,7 +238,7 @@ namespace QuickFix
         /// <summary>
         /// Add a group to message; the group counter is automatically incremented.
         /// </summary>
-        /// <param name="group">group to add</param>
+        /// <param name="grp">group to add</param>
         public void AddGroup(Group grp)
         {
             AddGroup(grp, true);
@@ -249,7 +249,7 @@ namespace QuickFix
         /// When parsing from a string (e.g. Message::FromString()), we want to leave the counter alone
         /// so we can detect when the counterparty has set it wrong.
         /// </summary>
-        /// <param name="group">group to add</param>
+        /// <param name="grp">group to add</param>
         /// <param name="autoIncCounter">if true, auto-increment the counter, else leave it as-is</param>
         internal void AddGroup(Group grp, bool autoIncCounter)
         {
@@ -503,6 +503,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="num">num of group (starting at 1)</param>
         /// <param name="field">tag of group</param>
+        /// <param name="group">the group to replace it with</param>
         /// <returns>Group object</returns>
         /// <exception cref="FieldNotFoundException" />
         public Group ReplaceGroup(int num, int field, Group group)

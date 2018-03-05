@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if !MISSING_SYSTEMWEBUI
+using System;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -600,3 +601,5 @@ namespace Acceptor
         }
     }
 }
+#endif
+

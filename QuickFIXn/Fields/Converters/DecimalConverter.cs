@@ -15,7 +15,7 @@ namespace QuickFix.Fields.Converters
         /// <summary>
         /// convert string to decimal
         /// </summary>
-        /// <exception cref="BadConversionException"/>
+        /// <exception cref="FieldConvertError"/>
         public static Decimal Convert(string d)
         {
             try

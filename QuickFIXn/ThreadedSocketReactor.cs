@@ -130,6 +130,7 @@ namespace QuickFix
         /// FIXME get socket options from SessionSettings
         /// </summary>
         /// <param name="client"></param>
+        /// <param name="socketSettings"></param>
         public static void ApplySocketOptions(TcpClient client, SocketSettings socketSettings)
         {
             client.LingerState = new LingerOption(false, 0);
