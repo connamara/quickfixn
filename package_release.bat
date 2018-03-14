@@ -56,6 +56,25 @@ mkdir tmp\%QF_DIR%\spec
 mkdir tmp\%QF_DIR%\config
 copy QuickFIXn\bin\Release\net452\QuickFix.dll tmp\%QF_DIR%\bin\net452\QuickFix.dll
 copy QuickFIXn\bin\Release\netstandard2.0\QuickFix.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.dll
+
+copy Messages\FIX40\bin\Release\net452\QuickFix.FIX40.dll tmp\%QF_DIR%\bin\net452\QuickFix.FIX40.dll
+copy Messages\FIX41\bin\Release\net452\QuickFix.FIX41.dll tmp\%QF_DIR%\bin\net452\QuickFix.FIX41.dll
+copy Messages\FIX42\bin\Release\net452\QuickFix.FIX42.dll tmp\%QF_DIR%\bin\net452\QuickFix.FIX42.dll
+copy Messages\FIX43\bin\Release\net452\QuickFix.FIX43.dll tmp\%QF_DIR%\bin\net452\QuickFix.FIX43.dll
+copy Messages\FIX44\bin\Release\net452\QuickFix.FIX44.dll tmp\%QF_DIR%\bin\net452\QuickFix.FIX44.dll
+copy Messages\FIX50\bin\Release\net452\QuickFix.FIX50.dll tmp\%QF_DIR%\bin\net452\QuickFix.FIX50.dll
+copy Messages\FIX50SP1\bin\Release\net452\QuickFix.FIX50SP1.dll tmp\%QF_DIR%\bin\net452\QuickFix.FIX50SP1.dll
+copy Messages\FIX50SP2\bin\Release\net452\QuickFix.FIX50SP2.dll tmp\%QF_DIR%\bin\net452\QuickFix.FIX50SP2.dll
+
+copy Messages\FIX40\bin\Release\netstandard2.0\QuickFix.FIX40.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX40.dll
+copy Messages\FIX41\bin\Release\netstandard2.0\QuickFix.FIX41.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX41.dll
+copy Messages\FIX42\bin\Release\netstandard2.0\QuickFix.FIX42.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX42.dll
+copy Messages\FIX43\bin\Release\netstandard2.0\QuickFix.FIX43.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX43.dll
+copy Messages\FIX44\bin\Release\netstandard2.0\QuickFix.FIX44.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX44.dll
+copy Messages\FIX50\bin\Release\netstandard2.0\QuickFix.FIX50.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX50.dll
+copy Messages\FIX50SP1\bin\Release\netstandard2.0\QuickFix.FIX50SP1.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX50SP1.dll
+copy Messages\FIX50SP2\bin\Release\netstandard2.0\QuickFix.FIX50SP2.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX50SP2.dll
+
 xcopy spec tmp\%QF_DIR%\spec /e /y
 copy config\sample_acceptor.cfg tmp\%QF_DIR%\config\
 copy config\sample_initiator.cfg tmp\%QF_DIR%\config\
