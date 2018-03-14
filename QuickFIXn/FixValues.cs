@@ -65,9 +65,9 @@ namespace QuickFix
                     return ApplVerID.FIX44;
                 else if (BeginString.FIX50.Equals(beginString))
                     return ApplVerID.FIX50;
-                else if ("FIX.5.0SP1".Equals(beginString))
+                else if (BeginString.FIX50SP1.Equals(beginString))
                     return ApplVerID.FIX50SP1;
-                else if ("FIX.5.0SP2".Equals(beginString))
+                else if (BeginString.FIX50SP2.Equals(beginString))
                     return ApplVerID.FIX50SP2;
                 else
                     return string.Copy(beginString);
@@ -77,6 +77,8 @@ namespace QuickFix
         public class BeginString
         {
             public const string FIXT11 = "FIXT.1.1";
+            public const string FIX50SP2 = "FIX.5.0SP2";
+            public const string FIX50SP1  = "FIX.5.0SP1";
             public const string FIX50  = "FIX.5.0";
             public const string FIX44  = "FIX.4.4";
             public const string FIX43  = "FIX.4.3";

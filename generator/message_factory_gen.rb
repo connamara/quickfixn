@@ -14,12 +14,17 @@ class MessageFactoryGen
 return <<HERE
 // This is a generated file.  Don't edit it directly!
 
+using System.Collections.Generic;
+using QuickFix.FixValues;
+
 namespace QuickFix
 {
     namespace #{fixver}
     {
         public class MessageFactory : IMessageFactory
         {
+#{get_method_supported_beginstrings(messages,fixver)}
+			
 #{gen_method_create(messages,fixver)}
 
 #{gen_method_group(messages,fixver)}
@@ -29,6 +34,14 @@ namespace QuickFix
 HERE
   end
 
+  def self.get_method_supported_beginstrings(messages,fixver)
+return <<HERE
+            public ICollection<string> GetSupportedBeginStrings()
+            {
+				return new [] { BeginString.#{fixver} };
+            }
+HERE
+  end
 
   def self.gen_method_create(messages,fixver)
 return <<HERE

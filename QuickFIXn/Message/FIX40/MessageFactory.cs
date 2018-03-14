@@ -1,11 +1,20 @@
 // This is a generated file.  Don't edit it directly!
 
+using System.Collections.Generic;
+using QuickFix.FixValues;
+
 namespace QuickFix
 {
     namespace FIX40
     {
         public class MessageFactory : IMessageFactory
         {
+            public ICollection<string> GetSupportedBeginStrings()
+            {
+				return new [] { BeginString.FIX40 };
+            }
+
+			
             public QuickFix.Message Create(string beginString, string msgType)
             {
                 switch (msgType)

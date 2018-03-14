@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace QuickFix
 {
@@ -10,6 +7,12 @@ namespace QuickFix
     /// </summary>
     public interface IMessageFactory
     {
+        /// <summary>
+        /// Lists the supported begin strings this factory can create messages and groups for
+        /// </summary>
+        /// <returns>List of supported begin strings</returns>
+        ICollection<string> GetSupportedBeginStrings();
+        
         /// <summary>
         /// Creates a message for a specified type and FIX version
         /// </summary>
