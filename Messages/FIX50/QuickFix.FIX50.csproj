@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard2.0</TargetFrameworks>
-    <Title>QuickFIX/n FIX5.0 SP1 Messages</Title>
+    <Title>QuickFIX/n FIX5.0 Messages</Title>
     <PackageTitle>$(Title)</PackageTitle>
     <Description>Open-source C# implementation of QuickFIX</Description>
     <Copyright>QuickFIXn.org 2011-now</Copyright>
@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\QuickFix.csproj" />
+    <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj" />
   </ItemGroup>
 
 </Project>

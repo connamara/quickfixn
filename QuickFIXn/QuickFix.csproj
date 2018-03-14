@@ -13,33 +13,6 @@
     <RootNamespace>QuickFix</RootNamespace>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Message\FIX40\**" />
-    <Compile Remove="Message\FIX41\**" />
-    <Compile Remove="Message\FIX42\**" />
-    <Compile Remove="Message\FIX43\**" />
-    <Compile Remove="Message\FIX44\**" />
-    <Compile Remove="Message\FIX50SP1\**" />
-    <Compile Remove="Message\FIX50SP2\**" />
-    <Compile Remove="Message\FIX50\**" />
-    <EmbeddedResource Remove="Message\FIX40\**" />
-    <EmbeddedResource Remove="Message\FIX41\**" />
-    <EmbeddedResource Remove="Message\FIX42\**" />
-    <EmbeddedResource Remove="Message\FIX43\**" />
-    <EmbeddedResource Remove="Message\FIX44\**" />
-    <EmbeddedResource Remove="Message\FIX50SP1\**" />
-    <EmbeddedResource Remove="Message\FIX50SP2\**" />
-    <EmbeddedResource Remove="Message\FIX50\**" />
-    <None Remove="Message\FIX40\**" />
-    <None Remove="Message\FIX41\**" />
-    <None Remove="Message\FIX42\**" />
-    <None Remove="Message\FIX43\**" />
-    <None Remove="Message\FIX44\**" />
-    <None Remove="Message\FIX50SP1\**" />
-    <None Remove="Message\FIX50SP2\**" />
-    <None Remove="Message\FIX50\**" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(TargetFramework)' == 'net452'">
     <Reference Include="System.Web" />
   </ItemGroup>
