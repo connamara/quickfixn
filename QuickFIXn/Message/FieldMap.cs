@@ -43,7 +43,7 @@ namespace QuickFix
             CopyStateFrom(src);
         }
 
-        internal void CopyStateFrom(FieldMap src)
+        public void CopyStateFrom(FieldMap src)
         {
             this._fieldOrder = src._fieldOrder;
 

@@ -24,6 +24,7 @@ class Generator
     @fix50sp1 = FIXDictionary.load spec('FIX50SP1')
     @fix50sp2 = FIXDictionary.load spec('FIX50SP2')
     @src_path = File.join File.dirname(__FILE__), '..', 'QuickFIXn'
+    @src_messages_path = File.join File.dirname(__FILE__), '..'
   end
 
   def spec fixver
@@ -74,7 +75,7 @@ class Generator
   end
 
   def generate_messages
-    msgs_path = File.join(@src_path, 'Message')
+    msgs_path = File.join(@src_messages_path, 'Messages')
     MessageGen.generate(@fix40.messages,  msgs_path, 'FIX40')
     MessageGen.generate(@fix41.messages,  msgs_path, 'FIX41')
     MessageGen.generate(@fix42.messages,  msgs_path, 'FIX42')
@@ -86,7 +87,7 @@ class Generator
   end
 
   def generate_message_factories
-    msgs_path = File.join(@src_path, 'Message')
+    msgs_path = File.join(@src_messages_path, 'Messages')
     MessageFactoryGen.generate(@fix40.messages,  msgs_path, 'FIX40')
     MessageFactoryGen.generate(@fix41.messages,  msgs_path, 'FIX41')
     MessageFactoryGen.generate(@fix42.messages,  msgs_path, 'FIX42')
