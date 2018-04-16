@@ -129,7 +129,8 @@ namespace QuickFix
                 int fieldvalend = msgstr.IndexOf("\u0001", pos);
                 StringField field =  new StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
 
-                /** TODO data dict stuff
+                /*
+                 TODO data dict stuff
                 if (((null != sessionDD) && sessionDD.IsDataField(field.Tag)) || ((null != appDD) && appDD.IsDataField(field.Tag)))
                 {
                     string fieldLength = "";
@@ -315,9 +316,9 @@ namespace QuickFix
                     return new ApplVerID(ApplVerID.FIX44);
                 case FixValues.BeginString.FIX50:
                     return new ApplVerID(ApplVerID.FIX50);
-                case "FIX.5.0SP1":
+                case FixValues.BeginString.FIX50SP1:
                     return new ApplVerID(ApplVerID.FIX50SP1);
-                case "FIX.5.0SP2":
+                case FixValues.BeginString.FIX50SP2:
                     return new ApplVerID(ApplVerID.FIX50SP2);
                 default:
                     throw new System.ArgumentException(String.Format("ApplVerID for {0} not supported", beginString));
@@ -358,7 +359,20 @@ namespace QuickFix
         {
             FromString(msgstr, validate, sessionDD, appDD, null);
         }
- 
+
+        /// <summary>
+        /// Create a Message from a FIX string
+        /// </summary>
+        /// <param name="msgstr"></param>
+        /// <param name="validate"></param>
+        /// <param name="sessionDD"></param>
+        /// <param name="appDD"></param>
+        /// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
+        public void FromString(string msgstr, bool validate,
+            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
+        {
+            FromString(msgstr, validate, sessionDD, appDD, msgFactory, false);
+        }
 
         /// <summary>
         /// Creates a Message from a FIX string
@@ -368,8 +382,12 @@ namespace QuickFix
         /// <param name="sessionDD"></param>
         /// <param name="appDD"></param>
         /// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
+        /// <param name="ignoreBody">(default false) if true, ignores all non-header non-trailer fields.
+        ///   Intended for callers that only need rejection-related information from the header.
+        ///   </param>
         public void FromString(string msgstr, bool validate,
-            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
+            DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory,
+            bool ignoreBody)
         {
             Clear();
 
@@ -425,7 +443,7 @@ namespace QuickFix
                         pos = SetGroup(f, msgstr, pos, this.Trailer, sessionDD.Trailer.GetGroup(f.Tag), sessionDD, appDD, msgFactory);
                     }
                 }
-                else
+                else if (ignoreBody==false)
                 {
                     if (!expectingBody)
                     {
@@ -713,14 +731,14 @@ namespace QuickFix
         {
             this.Header.SetField(new BeginString(sessionID.BeginString));
             this.Header.SetField(new SenderCompID(sessionID.SenderCompID));
-            if (!string.IsNullOrEmpty(sessionID.SenderSubID))
+            if (SessionID.IsSet(sessionID.SenderSubID))
                 this.Header.SetField(new SenderSubID(sessionID.SenderSubID));
-            if (!string.IsNullOrEmpty(sessionID.SenderLocationID))
+            if (SessionID.IsSet(sessionID.SenderLocationID))
                 this.Header.SetField(new SenderLocationID(sessionID.SenderLocationID));
             this.Header.SetField(new TargetCompID(sessionID.TargetCompID));
-            if (!string.IsNullOrEmpty(sessionID.TargetSubID))
+            if (SessionID.IsSet(sessionID.TargetSubID))
                 this.Header.SetField(new TargetSubID(sessionID.TargetSubID));
-            if (!string.IsNullOrEmpty(sessionID.TargetLocationID))
+            if (SessionID.IsSet(sessionID.TargetLocationID))
                 this.Header.SetField(new TargetLocationID(sessionID.TargetLocationID));
         }
 
@@ -754,12 +772,16 @@ namespace QuickFix
             this.Trailer.Clear();
         }
 
+        private Object lock_ToString = new Object();
         public override string ToString()
         {
-            this.Header.SetField(new BodyLength(BodyLength()), true);
-            this.Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
+            lock (lock_ToString)
+            {
+                this.Header.SetField(new BodyLength(BodyLength()), true);
+                this.Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
 
-            return this.Header.CalculateString() + CalculateString() + this.Trailer.CalculateString();
+                return this.Header.CalculateString() + CalculateString() + this.Trailer.CalculateString();
+            }
         }
 
         protected int BodyLength()

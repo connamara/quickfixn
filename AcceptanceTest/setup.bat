@@ -1,4 +1,4 @@
-echo off
+@echo off
 set PORT=%1
 echo [DEFAULT] > cfg\at.cfg
 REM FIXME:

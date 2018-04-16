@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Globalization;
+using QuickFix.Fields.Converters;
 
 namespace QuickFix
 {
@@ -37,7 +40,8 @@ namespace QuickFix
         }
         
         #endregion
-        
+
+        #region Public Methods
         public Dictionary()
         { }
 
@@ -149,6 +153,23 @@ namespace QuickFix
             }
         }
 
+        public TimeStampPrecision GetTimeStampPrecision( string key )
+        {
+            string precision = GetString( key ).ToUpper();
+            switch( precision )
+            {
+                case "SECOND":
+                    return TimeStampPrecision.Second;
+                case "MILLISECOND":
+                case "MILLI":
+                    return TimeStampPrecision.Millisecond;
+                case "MICROSECOND":
+                case "MICRO":
+                    return TimeStampPrecision.Microsecond;
+                default: throw new ConfigError( "Illegal value " + GetString( key ) + " for " + key );
+            }
+        }
+
         public void SetString(string key, string val)
         {
             data_[key.ToUpper()] = val;
@@ -195,6 +216,50 @@ namespace QuickFix
                 if(!data_.ContainsKey(entry.Key))
                     data_[entry.Key] = entry.Value;
         }
+        #endregion
+
+        #region Public Overrides
+        /// <summary>
+        /// Test Dictionary objects for equality.
+        /// Dictionaries are deemed to be equal if their names and dictionary contents are the same
+        /// </summary>
+        /// <param name="other">Dictionary to compare against</param>
+        /// <returns>true if the two Dictionary objects are the same in terms of contents, else false</returns>
+        public override bool Equals(object other)
+        {
+            //Check whether the compared objects reference the same data.
+            if (Object.ReferenceEquals(this, other))
+                return true;
+
+            //Check whether the compared object is null.
+            if (Object.ReferenceEquals(other, null))
+                return false;
+
+            //Check whether the names and dictionary contents are the same
+            var otherDict = (Dictionary)other;
+            if (Name != otherDict.Name || Count != otherDict.Count)
+                return false;
+
+            // Could use LINQ query here, but this is probably faster!
+            string otherDictValue = null;
+            foreach (var kvp in data_)
+                if (!otherDict.data_.TryGetValue(kvp.Key, out otherDictValue) || otherDictValue != kvp.Value)
+                    return false;
+            return true;
+        }
+
+        /// <summary>
+        /// Generate hash code for the Dictionary.
+        /// If Equals() returns true for a compared object,
+        /// then GetHashCode() must return the same value for this object and the compared object.
+        /// </summary>
+        /// <returns>hash code</returns>
+        public override int GetHashCode()
+        {
+            int nameHash = Object.ReferenceEquals(Name, null) ? 1 : Name.GetHashCode();
+            return nameHash + 100 * Count;
+        }
+        #endregion
 
         #region IEnumerable Members
 

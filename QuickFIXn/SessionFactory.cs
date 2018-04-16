@@ -86,23 +86,20 @@ namespace QuickFix
 
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
                 session.SendRedundantResendRequests = settings.GetBool(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS);
-            /** FIXME - implement optional settings
+            if (settings.Has(SessionSettings.RESEND_SESSION_LEVEL_REJECTS))
+                session.ResendSessionLevelRejects = settings.GetBool(SessionSettings.RESEND_SESSION_LEVEL_REJECTS);
+            /* FIXME - implement optional settings
             if (settings.Has(SessionSettings.CHECK_COMPID))
                 session.SetCheckCompId(settings.GetBool(SessionSettings.CHECK_COMPID));
-            if (settings.Has(SessionSettings.CHECK_LATENCY))
-                session.SetCheckLatency(settings.GetBool(SessionSettings.CHECK_LATENCY));
-            if (settings.Has(SessionSettings.MAX_LATENCY))
-                session.SetMaxLatency(settings.GetLong(SessionSettings.MAX_LATENCY));
              */
+            if (settings.Has(SessionSettings.CHECK_LATENCY))
+                session.CheckLatency = settings.GetBool(SessionSettings.CHECK_LATENCY);
+            if (settings.Has(SessionSettings.MAX_LATENCY))
+                session.MaxLatency = settings.GetInt(SessionSettings.MAX_LATENCY);
             if (settings.Has(SessionSettings.LOGON_TIMEOUT))
                 session.LogonTimeout = settings.GetInt(SessionSettings.LOGON_TIMEOUT);
             if (settings.Has(SessionSettings.LOGOUT_TIMEOUT))
                 session.LogoutTimeout = settings.GetInt(SessionSettings.LOGOUT_TIMEOUT);
-            
-            // FIXME to get from config if available
-            session.MaxLatency = 120;
-            session.CheckLatency = true;
-
             if (settings.Has(SessionSettings.RESET_ON_LOGON))
                 session.ResetOnLogon = settings.GetBool(SessionSettings.RESET_ON_LOGON);
             if (settings.Has(SessionSettings.RESET_ON_LOGOUT))
@@ -115,6 +112,8 @@ namespace QuickFix
                 session.PersistMessages = settings.GetBool(SessionSettings.PERSIST_MESSAGES);
             if (settings.Has(SessionSettings.MILLISECONDS_IN_TIMESTAMP))
                 session.MillisecondsInTimeStamp = settings.GetBool(SessionSettings.MILLISECONDS_IN_TIMESTAMP);
+            if( settings.Has( SessionSettings.TIMESTAMP_PRECISION ) )
+                session.TimeStampPrecision = settings.GetTimeStampPrecision( SessionSettings.TIMESTAMP_PRECISION );
             if (settings.Has(SessionSettings.ENABLE_LAST_MSG_SEQ_NUM_PROCESSED))
                 session.EnableLastMsgSeqNumProcessed = settings.GetBool(SessionSettings.ENABLE_LAST_MSG_SEQ_NUM_PROCESSED);
             if (settings.Has(SessionSettings.MAX_MESSAGES_IN_RESEND_REQUEST))
@@ -123,10 +122,8 @@ namespace QuickFix
                 session.SendLogoutBeforeTimeoutDisconnect = settings.GetBool(SessionSettings.SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT);
             if (settings.Has(SessionSettings.IGNORE_POSSDUP_RESEND_REQUESTS))
                 session.IgnorePossDupResendRequests = settings.GetBool(SessionSettings.IGNORE_POSSDUP_RESEND_REQUESTS);
-            /** FIXME - implement optional settings
             if (settings.Has(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM))
-                session.SetValidateLengthAndChecksum(settings.GetBool(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM));
-            */
+                session.ValidateLengthAndChecksum = settings.GetBool(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM);
             if (settings.Has(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME))
                 session.RequiresOrigSendingTime = settings.GetBool(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME);
 
@@ -152,7 +149,7 @@ namespace QuickFix
             if (settings.Has(settingsKey))
                 path = settings.GetString(settingsKey);
             else
-                path = beginString.Replace("\\.", "") + ".xml";
+                path = beginString.Replace(".", "") + ".xml";
 
             if (!dictionariesByPath_.TryGetValue(path, out dd))
             {

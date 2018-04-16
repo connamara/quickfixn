@@ -17,7 +17,7 @@ namespace QuickFix
         /// </summary>
         public FieldMap()
         {
-            _fields = new SortedDictionary<int, Fields.IField>(); /// FIXME sorted dict is a hack to get quasi-correct field order
+            _fields = new SortedDictionary<int, Fields.IField>(); // FIXME sorted dict is a hack to get quasi-correct field order
             _groups = new Dictionary<int, List<Group>>();
             this.RepeatedTags = new List<Fields.IField>();
         }
@@ -43,7 +43,7 @@ namespace QuickFix
             CopyStateFrom(src);
         }
 
-        internal void CopyStateFrom(FieldMap src)
+        public void CopyStateFrom(FieldMap src)
         {
             this._fieldOrder = src._fieldOrder;
 
@@ -91,6 +91,17 @@ namespace QuickFix
         public void SetField(Fields.IField field)
         {
             _fields[field.Tag] = field;
+        }
+
+        /// <summary>
+        /// set many fields at the same time
+        /// </summary>
+        public void SetFields(IEnumerable<Fields.IField> fields)
+        {
+            foreach (var field in fields)
+            {
+                _fields[field.Tag] = field;
+            }
         }
 
         /// <summary>
@@ -227,7 +238,7 @@ namespace QuickFix
         /// <summary>
         /// Add a group to message; the group counter is automatically incremented.
         /// </summary>
-        /// <param name="group">group to add</param>
+        /// <param name="grp">group to add</param>
         public void AddGroup(Group grp)
         {
             AddGroup(grp, true);
@@ -238,7 +249,7 @@ namespace QuickFix
         /// When parsing from a string (e.g. Message::FromString()), we want to leave the counter alone
         /// so we can detect when the counterparty has set it wrong.
         /// </summary>
-        /// <param name="group">group to add</param>
+        /// <param name="grp">group to add</param>
         /// <param name="autoIncCounter">if true, auto-increment the counter, else leave it as-is</param>
         internal void AddGroup(Group grp, bool autoIncCounter)
         {
@@ -281,13 +292,13 @@ namespace QuickFix
             return _groups[field][num - 1];
         }
 
+        //TODO v2: change this to return void
         /// <summary>
-        /// Gets an instance of a group
+        /// Extracts a repeating-group item into <paramref name="group"/>
         /// </summary>
-        /// <param name="num">index of desired group (starting at 1)</param>
-        /// <param name="group">this var's type is used to determine target group type; retrieved group will be assigned to this var</param>
-        /// <returns>retrieved group</returns>
-        /// <exception cref="FieldNotFoundException" />
+        /// <param name="num">index of desired group item (index starts at 1, not 0)</param>
+        /// <param name="group">group to populate (<c>group.Field</c> is used by this function to extract the group)</param>
+        /// <returns>A redundant reference to <paramref name="group"/><b>Do not use this.  This method will be changed to return void in a future release.</b></returns>
         public Group GetGroup(int num, Group group)
         {
             int tag = group.Field;
@@ -492,6 +503,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="num">num of group (starting at 1)</param>
         /// <param name="field">tag of group</param>
+        /// <param name="group">the group to replace it with</param>
         /// <returns>Group object</returns>
         /// <exception cref="FieldNotFoundException" />
         public Group ReplaceGroup(int num, int field, Group group)
@@ -546,7 +558,6 @@ namespace QuickFix
                     total += field.getTotal();
             }
 
-            // TODO not sure if repeated CheckSum should be included in the total
             foreach (Fields.IField field in this.RepeatedTags)
             {
                 if (field.Tag != Fields.Tags.CheckSum)
@@ -575,7 +586,6 @@ namespace QuickFix
                 }
             }
 
-            // TODO not sure if repeated BeginString/BodyLength/CheckSum should be counted
             foreach (Fields.IField field in this.RepeatedTags)
             {
                 if (field != null
@@ -598,7 +608,10 @@ namespace QuickFix
 
         public virtual string CalculateString()
         {
-            return CalculateString(new StringBuilder(), new int[0]);
+            if( FieldOrder != null )
+                return CalculateString(new StringBuilder(), FieldOrder);
+            else
+                return CalculateString(new StringBuilder(), new int[0]);
         }
 
         public virtual string CalculateString(StringBuilder sb, int[] preFields)
@@ -629,7 +642,6 @@ namespace QuickFix
                 sb.Append(Message.SOH);
             }
 
-            //foreach (List<Group> groupList in _groups.Values)
             foreach(int counterTag in _groups.Keys)
             {
                 if (preFields.Contains(counterTag))

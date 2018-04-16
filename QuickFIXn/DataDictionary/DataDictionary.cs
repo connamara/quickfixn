@@ -166,7 +166,7 @@ namespace QuickFix.DataDictionary
 					throw new RequiredTagMissing(field);
 			}
 
-			/** FIXME TODO group stuff
+			/* FIXME TODO group stuff
 			foreach (DDGroup grp in _messages[msgType].Groups.Values)
 				if (_messages[msgType].ReqFields.Contains(grp.Field))
 					ReqFieldsSetInGroups(grp, fields);
@@ -335,11 +335,18 @@ namespace QuickFix.DataDictionary
 		/// <param name="field"></param>
 		public void CheckValue(Fields.IField field)
 		{
-			DDField fld = FieldsByTag[field.Tag];
-			if (fld.HasEnums() && !fld.EnumDict.ContainsKey(field.ToString()))
-			{
-				throw new IncorrectTagValue(field.Tag);
-			}
+			DDField fld = FieldsByTag[ field.Tag ];
+			if( fld.HasEnums() )
+				if( fld.IsMultipleValueFieldWithEnums )
+				{
+					string [] splitted = field.ToString().Split( ' ' );
+
+					foreach( string value in splitted )
+						if( !fld.EnumDict.ContainsKey( value ) )
+							throw new IncorrectTagValue( field.Tag );
+				}
+				else if( !fld.EnumDict.ContainsKey( field.ToString() ) )
+					throw new IncorrectTagValue( field.Tag );
 		}
 
 		/// <summary>

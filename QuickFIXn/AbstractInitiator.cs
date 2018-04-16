@@ -21,6 +21,7 @@ namespace QuickFix
         private HashSet<SessionID> disconnected_ = new HashSet<SessionID>();
         private bool isStopped_ = true;
         private Thread thread_;
+        private SessionFactory sessionFactory_ = null;
 
         #region Properties
 
@@ -73,9 +74,7 @@ namespace QuickFix
             foreach (SessionID sessionID in _settings.GetSessions())
             {
                 Dictionary dict = _settings.Get(sessionID);
-                sessionIDs_.Add(sessionID);
-                sessions_[sessionID] = factory.Create(sessionID, dict);
-                SetDisconnected(sessionID);
+                CreateSession(sessionID, dict);
             }
 
             if (0 == sessions_.Count)
@@ -89,16 +88,82 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Starts a connection with a remote acceptor
+        /// Add new session as an ad-hoc (dynamic) operation
         /// </summary>
-        /// <exception cref="System.ObjectDisposedException"></exception>
-        /// <exception cref="ConfigError">No sessions defined for initiator</exception>
-        /// <remarks>
-        /// Decura, modified, removed all the code and calls the Start method passing null
-        /// </remarks>
-        public void Start()
+        /// <param name="sessionID">ID of new session</param>
+        /// <param name="dict">config settings for new session</param>
+        /// <returns>true if session added successfully, false if session already exists or is not an initiator</returns>
+        public bool AddSession(SessionID sessionID, Dictionary dict)
         {
-            Start(null);
+            lock (_settings)
+                if (!_settings.Has(sessionID)) // session won't be in settings if ad-hoc creation after startup
+                    _settings.Set(sessionID, dict); // need to to this here to merge in default config settings
+                else
+                    return false; // session already exists
+
+            if (CreateSession(sessionID, dict))
+                return true;
+
+            lock (_settings) // failed to create new session
+                _settings.Remove(sessionID);
+            return false;
+        }
+
+        /// <summary>
+        /// Create session, either at start-up or as an ad-hoc operation
+        /// </summary>
+        /// <param name="sessionID">ID of new session</param>
+        /// <param name="dict">config settings for new session</param>
+        /// <returns>true if session added successfully, false if session already exists or is not an initiator</returns>
+        private bool CreateSession(SessionID sessionID, Dictionary dict)
+        {
+            if (dict.GetString(SessionSettings.CONNECTION_TYPE) == "initiator" && !sessionIDs_.Contains(sessionID))
+            {
+                Session session = sessionFactory_.Create(sessionID, dict);
+                lock (sync_)
+                {
+                    sessionIDs_.Add(sessionID);
+                    sessions_[sessionID] = session;
+                    SetDisconnected(sessionID);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Ad-hoc removal of an existing session
+        /// </summary>
+        /// <param name="sessionID">ID of session to be removed</param>
+        /// <param name="terminateActiveSession">if true, force disconnection and removal of session even if it has an active connection</param>
+        /// <returns>true if session removed or not already present; false if could not be removed due to an active connection</returns>
+        public bool RemoveSession(SessionID sessionID, bool terminateActiveSession)
+        {
+            Session session = null;
+            bool disconnectRequired = false;
+            lock (sync_)
+            {
+                if (sessionIDs_.Contains(sessionID))
+                {
+                    session = sessions_[sessionID];
+                    if (session.IsLoggedOn && !terminateActiveSession)
+                        return false;
+                    sessions_.Remove(sessionID);
+                    disconnectRequired = IsConnected(sessionID) || IsPending(sessionID);
+                    if (disconnectRequired)
+                        SetDisconnected(sessionID);
+                    disconnected_.Remove(sessionID);
+                    sessionIDs_.Remove(sessionID);
+                }
+            }
+            lock (_settings)
+                _settings.Remove(sessionID);
+            if (disconnectRequired)
+                session.Disconnect("Dynamic session removal");
+            OnRemove(sessionID); // ensure session's reader thread is gone before we dispose session
+            if (session != null)
+                session.Dispose();
+            return true;
         }
 
         /// <summary>
@@ -139,7 +204,7 @@ namespace QuickFix
             if (!force)
             {
                 // TODO change this duration to always exceed LogoutTimeout setting
-                for (int second = 0; (second < 10) && IsLoggedOn(); ++second)
+                for (int second = 0; (second < 10) && IsLoggedOn; ++second)
                     Thread.Sleep(1000);
             }
 
@@ -162,26 +227,30 @@ namespace QuickFix
             {
                 foreach (Session s in sessions_.Values)
                     s.Dispose();
+
+                sessions_.Clear();
+                sessionIDs_.Clear();
+                pending_.Clear();
+                connected_.Clear();
+                disconnected_.Clear();
             }
-            sessions_.Clear();
-            sessionIDs_.Clear();
-            pending_.Clear();
-            connected_.Clear();
-            disconnected_.Clear();
         }
 
-        public bool IsLoggedOn()
+        public bool IsLoggedOn
         {
-            lock (sync_)
+            get
             {
-                foreach (SessionID sessionID in connected_)
+                lock (sync_)
                 {
-                    if (Session.LookupSession(sessionID).IsLoggedOn)
-                        return true;
+                    foreach (SessionID sessionID in connected_)
+                    {
+                        if (Session.LookupSession(sessionID).IsLoggedOn)
+                            return true;
+                    }
                 }
-            }
 
-            return false;
+                return false;
+            }
         }
 
         #region Virtual Methods
@@ -191,6 +260,14 @@ namespace QuickFix
         /// </summary>
         /// <param name="settings"></param>
         protected virtual void OnConfigure(SessionSettings settings)
+        { }
+
+        /// <summary>
+        /// Implement this to provide custom reaction behavior to an ad-hoc session removal.
+        /// (This is called after the session is removed.)
+        /// </summary>
+        /// <param name="sessionID">ID of session that was removed</param>
+        protected virtual void OnRemove(SessionID sessionID)
         { }
 
         [System.Obsolete("This method's intended purpose is unclear.  Don't use it.")]
@@ -269,9 +346,12 @@ namespace QuickFix
         {
             lock (sync_)
             {
-                pending_.Remove(sessionID);
-                connected_.Remove(sessionID);
-                disconnected_.Add(sessionID);
+                if (sessionIDs_.Contains(sessionID))
+                {
+                    pending_.Remove(sessionID);
+                    connected_.Remove(sessionID);
+                    disconnected_.Add(sessionID);
+                }
             }
         }
 

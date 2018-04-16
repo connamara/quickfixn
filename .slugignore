@@ -5,7 +5,7 @@ Examples
 QuickFIXn.sln
 docs
 spec
-acceptance_test.bat
+acceptance_test.ps1
 generator
 unit_test.bat
 PerformanceTests

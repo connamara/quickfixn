@@ -1,13 +1,9 @@
 echo off
 
-set TARGET=%1
-set CONFIGURATION=%2
-set NET_VERSION=%3
+set CONFIGURATION=%1
 
-if "%1" == "" set TARGET=Rebuild
-if "%2" == "" set CONFIGURATION=Release
-if "%3" == "" set NET_VERSION=v3.5
+if "%1" == "" set CONFIGURATION=Release
 
-set BUILD_CMD=MSBuild.exe QuickFIXn.sln /t:%TARGET% /p:Configuration=%CONFIGURATION%;TargetFrameworkVersion=%NET_VERSION%
+set BUILD_CMD=dotnet build -c %CONFIGURATION%
 echo Build command: %BUILD_CMD%
 %BUILD_CMD%

@@ -4,6 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
+using UnitTests.TestHelpers;
 
 namespace UnitTests
 {
@@ -264,7 +265,7 @@ namespace UnitTests
                 + "60=20060320-03:34:29\x01" + "10=169\x01" + "";
             var msg = new QuickFix.FIX44.ExecutionReport();
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.LoadFIXSpec("FIX44");
             msg.FromString(data, false, dd, dd, _defaultMsgFactory);
 
             var grp = msg.GetGroup(1, Tags.NoPartyIDs);
@@ -286,7 +287,7 @@ namespace UnitTests
                 + "60=20060320-03:34:29\x01" + "10=169\x01" + "";
             var msg = new QuickFix.FIX44.ExecutionReport();
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.LoadFIXSpec("FIX44");
             msg.FromString(data, false, dd, dd, _defaultMsgFactory);
 
             var subGrp = msg.GetGroup(1, Tags.NoPartyIDs).GetGroup(1, Tags.NoPartySubIDs);
@@ -303,7 +304,7 @@ namespace UnitTests
                 + "98=0\x01" + "384=2\x01" + "372=D\x01" + "385=R\x01" + "372=8\x01" + "385=S\x01" + "10=228\x01";
 
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.LoadFIXSpec("FIX44");
             var nos = new QuickFix.FIX44.Logon();
             nos.FromString(data, false, dd, dd, _defaultMsgFactory);
             Group hops = nos.Header.GetGroup(1, Tags.NoHops);
@@ -332,7 +333,7 @@ namespace UnitTests
         public void ExtractFieldTypes()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX42.xml");
+            dd.LoadFIXSpec("FIX42");
 
             QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
 
@@ -364,7 +365,7 @@ namespace UnitTests
         public void RepeatingGroup()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX42.xml");
+            dd.LoadFIXSpec("FIX42");
 
             QuickFix.FIX42.News news = new QuickFix.FIX42.News(new QuickFix.Fields.Headline("Foo headline"));
 
@@ -391,7 +392,7 @@ namespace UnitTests
         public void RepeatingGroup_ReuseObject()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX42.xml");
+            dd.LoadFIXSpec("FIX42");
 
             QuickFix.FIX42.News news = new QuickFix.FIX42.News(new QuickFix.Fields.Headline("Foo headline"));
 
@@ -412,7 +413,8 @@ namespace UnitTests
         [Test]
         public void FromString_DoNotCorrectCounter()
         {
-            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary("../../../spec/fix/FIX42.xml");
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX42");
 
             QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
 
@@ -642,11 +644,11 @@ namespace UnitTests
         }
 
         [Test]
-        public void issue56_GetGroup_type1()
+        public void issue56_GetGroup_by_tag_and_return()
         {
-            // boring message construction stuff
+            // setup
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.LoadFIXSpec("FIX44");
             string[] msgFields = { "8=FIX.4.2", "9=87", "35=B", "34=3", "49=CLIENT1", "52=20111012-22:15:55.474", "56=EXECUTOR", "148=AAAAAAA", "33=2", "58=L1", "58=L2", "10=016" };
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
             QuickFix.FIX42.News msg = new QuickFix.FIX42.News();
@@ -664,11 +666,11 @@ namespace UnitTests
         }
 
         [Test]
-        public void issue56_GetGroup_type2()
+        public void issue56_GetGroup_by_reference()
         {
-            // boring message construction stuff
+            // setup
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.LoadFIXSpec("FIX44");
             string[] msgFields = { "8=FIX.4.2", "9=87", "35=B", "34=3", "49=CLIENT1", "52=20111012-22:15:55.474", "56=EXECUTOR", "148=AAAAAAA", "33=2", "58=L1", "58=L2", "10=016" };
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
             QuickFix.FIX42.News msg = new QuickFix.FIX42.News();
@@ -678,14 +680,10 @@ namespace UnitTests
             // the test
             QuickFix.FIX42.News.LinesOfTextGroup grp = new QuickFix.FIX42.News.LinesOfTextGroup(); // for return value
 
-            var rv1 = msg.GetGroup(1, grp);
-            Assert.AreSame(rv1, grp);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rv1);
+            msg.GetGroup(1, grp);
             Assert.AreEqual("L1", grp.Text.Obj);
 
-            var rv2 = msg.GetGroup(2, grp);
-            Assert.AreSame(rv2, grp);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rv2);
+            msg.GetGroup(2, grp);
             Assert.AreEqual("L2", grp.Text.Obj);
         }
 
@@ -695,7 +693,7 @@ namespace UnitTests
             // issue 101
 
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.LoadFIXSpec("FIX44");
 
             // message is missing 703
             string[] msgFields = { "8=FIX.4.4", "9=230", "35=AP", "34=3", "49=XXXXX", "52=20120731-14:06:37.848", "56=FixKevindemo",
@@ -718,7 +716,7 @@ namespace UnitTests
             // issue 135
 
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.LoadFIXSpec("FIX44");
 
             string[] msgFields = { "8=FIX.4.4", "9=332", "35=W", "34=2", "49=MA", "52=20121024-12:21:42.170", "56=xxxx",
                 "22=4", "48=BE0932900518", "55=[N/A]", "262=1b145288-9c9a-4911-a084-7341c69d3e6b", "762=EURO_EUR", "268=2", 
@@ -730,7 +728,8 @@ namespace UnitTests
             QuickFix.FIX44.MarketDataSnapshotFullRefresh msg = new QuickFix.FIX44.MarketDataSnapshotFullRefresh();
 
             msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
-            QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup gentry1 = (QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup)msg.GetGroup(1, new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup());
+            QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup gentry1 = new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup();
+            msg.GetGroup(1, gentry1);
             Assert.AreEqual(new DateTime(2012, 10, 24), gentry1.MDEntryDate.getValue());
             Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30, 47).TimeOfDay, gentry1.MDEntryTime.getValue().TimeOfDay);
             Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30, 47), gentry1.MDEntryDate.getValue() + gentry1.MDEntryTime.getValue().TimeOfDay);
@@ -787,7 +786,7 @@ namespace UnitTests
         {
             // issue 160
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.LoadFIXSpec("FIX44");
 
             string[] msgFields = { "8=FIX.4.4", "9=122", "35=8", "34=2", "49=sender", "52=20121024-12:21:42.170", "56=target",
                 "37=orderid", "17=execid", "150=0", "39=0",
@@ -807,7 +806,7 @@ namespace UnitTests
         {
             // issue 179
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX44.xml");
+            dd.LoadFIXSpec("FIX44");
 
             string[] msgFields = {
                 // header
@@ -845,7 +844,7 @@ namespace UnitTests
         {
             // issue 173
             var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.Load("../../../spec/fix/FIX42.xml");
+            dd.LoadFIXSpec("FIX42");
 
             string[] newsFields = { "8=FIX4.2", "9=5", "35=B", "10=133" };
             string newsStr = String.Join(Message.SOH, newsFields) + Message.SOH;
@@ -862,6 +861,55 @@ namespace UnitTests
 
             //Assert.True(heartbeat.IsAdmin());
             Assert.False(heartbeat.IsApp());
+        }
+
+        [Test]
+        public void issue95()
+        {
+            // Parser screws up on triple-nested groups.  Contributes to ResendRequest failures.
+            string msgStr = String.Join(Message.SOH, new string[]{
+                "8=FIX.4.4","9=999","35=R","34=6","49=sendercompid","52=20130225-10:44:59.149","56=targetcompid", //headers
+                    "131=quotereqid",
+                    "146=1", // NoRelatedSym
+                        "55=ABC","65=CD","48=securityid","22=1", // group
+                        "711=1", // NoUnderlyings
+                            "311=underlyingsymbol","312=WI","309=underlyingsecurityid","305=1",
+                "10=999",""
+            });
+
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+
+            Message msg = new Message();
+            msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
+
+            // make sure no fields were dropped in parsing
+            Assert.AreEqual(msgStr.Length, msg.ToString().Length);
+
+            // make sure repeating groups are not rearranged
+            // 1 level deep
+            StringAssert.Contains(String.Join(Message.SOH, new string[] { "55=ABC", "65=CD", "48=securityid", "22=1" }), msg.ToString());
+            // 2 levels deep
+            StringAssert.Contains(String.Join(Message.SOH, new string[] { "311=underlyingsymbol", "312=WI", "309=underlyingsecurityid", "305=1" }), msg.ToString());
+        }
+
+        [Test]
+        public void SetFieldsTest()
+        {
+            var message = new Message();
+            var allocId = new AllocID("123456");
+            var allocAccount = new AllocAccount("QuickFixAccount");
+            var allocAccountType = new AllocAccountType(AllocAccountType.HOUSE_TRADER);
+            message.SetFields(new IField[] { allocAccount, allocAccountType, allocId });
+
+            Assert.AreEqual(true, message.IsSetField(Tags.AllocID));
+            Assert.AreEqual("123456", message.GetField(Tags.AllocID));
+
+            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccount));
+            Assert.AreEqual("QuickFixAccount", message.GetField(Tags.AllocAccount));
+
+            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccountType));
+            Assert.AreEqual(AllocAccountType.HOUSE_TRADER, message.GetInt(Tags.AllocAccountType));
         }
     }
 }

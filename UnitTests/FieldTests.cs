@@ -80,8 +80,21 @@ namespace UnitTests
             Assert.That(field.Obj, Is.EqualTo(newval));
             Assert.That(field.ToString(), Is.EqualTo("20090904-03:44:01.000"));
         }
-
-
+        
+        [Test]
+        public void DateTimeFieldNanoTest()
+        {
+            DateTime val = ConverterTests.makeDateTime(2009, 9, 4, 3, 44, 1, 100, 310, 300);
+            DateTime newval = ConverterTests.makeDateTime(2009, 9, 4, 3, 44, 1, 100, 310, 300);
+            DateTimeField field = new DateTimeField(200, val, QuickFix.Fields.Converters.TimeStampPrecision.Nanosecond);
+            Assert.That(field.Obj, Is.EqualTo(val));
+            Assert.That(field.getValue(), Is.EqualTo(val));
+            Assert.That(field.Tag, Is.EqualTo(200));
+            field.Obj = newval;
+            Assert.That(field.Obj, Is.EqualTo(newval));
+            Assert.That(field.ToString(), Is.EqualTo("20090904-03:44:01.100310300"));
+        }
+        
         [Test]
         public void StringFieldTest_TotalAndLength()
         {
@@ -153,20 +166,37 @@ namespace UnitTests
         }
 
         [Test]
-        public void TimeOnlyFieldTest()
+        public void DateOnlyFieldTest()
         {
             MDEntryDate d = new MDEntryDate(new DateTime(2011, 11, 30, 8, 9, 10, 555));
             Assert.AreEqual("20111130", d.ToString());
         }
 
         [Test]
-        public void DateOnlyFieldTest()
+        public void TimeOnlyFieldTest()
         {
             MDEntryTime t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), true);
             Assert.AreEqual("08:09:10.555", t.ToString());
 
             t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), false);
             Assert.AreEqual("08:09:10", t.ToString());
+        }
+
+        [Test]
+        public void EqualsTest()
+        {
+            StringField a1 = new StringField(123, "a");
+            StringField aSame = a1;
+            StringField a2 = new StringField(123, "a");
+            StringField diffValue = new StringField(123, "b");
+            StringField diffTag = new StringField(999, "a");
+            IField diffType = new CharField(123, 'a');
+
+            Assert.True(a1.Equals(aSame));
+            Assert.True(a1.Equals(a2));
+            Assert.False(a1.Equals(diffValue));
+            Assert.False(a1.Equals(diffTag));
+            Assert.False(a1.Equals(diffType));
         }
     }
 }

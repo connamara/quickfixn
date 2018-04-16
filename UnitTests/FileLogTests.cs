@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
@@ -48,15 +49,17 @@ namespace UnitTests
         [Test]
         public void testGeneratedFileName()
         {
-            if (System.IO.Directory.Exists("log"))
-                System.IO.Directory.Delete("log", true);
+            var logDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "log");
+
+            if (System.IO.Directory.Exists(logDirectory))
+                System.IO.Directory.Delete(logDirectory, true);
 
             QuickFix.SessionID sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
             QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
 
             QuickFix.Dictionary config = new QuickFix.Dictionary();
             config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
-            config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, "log");
+            config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, logDirectory);
 
             settings.Set(sessionID, config);
 
@@ -67,8 +70,8 @@ namespace UnitTests
             log.OnIncoming("some incoming");
             log.OnOutgoing("some outgoing");
 
-            Assert.That(System.IO.File.Exists("log/FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log"));
-            Assert.That(System.IO.File.Exists("log/FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log"));
+            Assert.That(System.IO.File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log")));
+            Assert.That(System.IO.File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log")));
         }
 
         [Test]

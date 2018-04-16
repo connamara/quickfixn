@@ -49,7 +49,7 @@ namespace QuickFix
             if (SessionID.IsSet(sessionID.TargetLocationID))
                 prefix.Append('_').Append(sessionID.TargetLocationID);
 
-            if (sessionID.SessionQualifier.Length != 0)
+            if (SessionID.IsSet(sessionID.SessionQualifier))
                 prefix.Append('-').Append(sessionID.SessionQualifier);
 
             return prefix.ToString();
@@ -256,7 +256,7 @@ namespace QuickFix
             seqNumsFile_.Seek(0, System.IO.SeekOrigin.Begin);
             System.IO.StreamWriter writer = new System.IO.StreamWriter(seqNumsFile_);
 
-            writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10"));
+            writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10") + "  ");
             writer.Flush();
         }
 

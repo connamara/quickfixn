@@ -14,12 +14,17 @@ class MessageFactoryGen
 return <<HERE
 // This is a generated file.  Don't edit it directly!
 
+using System.Collections.Generic;
+using QuickFix.FixValues;
+
 namespace QuickFix
 {
     namespace #{fixver}
     {
         public class MessageFactory : IMessageFactory
         {
+#{get_method_supported_beginstrings(messages,fixver)}
+			
 #{gen_method_create(messages,fixver)}
 
 #{gen_method_group(messages,fixver)}
@@ -29,6 +34,14 @@ namespace QuickFix
 HERE
   end
 
+  def self.get_method_supported_beginstrings(messages,fixver)
+return <<HERE
+            public ICollection<string> GetSupportedBeginStrings()
+            {
+				return new [] { BeginString.#{fixver} };
+            }
+HERE
+  end
 
   def self.gen_method_create(messages,fixver)
 return <<HERE
@@ -74,15 +87,23 @@ HERE
         lines << indent + "    switch (correspondingFieldID)"
         lines << indent + "    {"
 
-	m[:groups].each {|g|
-            lines << indent + "        case QuickFix.Fields.Tags.#{g[:name]}: return new QuickFix.#{fixver}.#{m[:name]}.#{g[:name]}Group();"
+        m[:groups].each {|g|
+          gen_method_group_groups(m,fixver,g,"",lines,indent)
         }
 
         lines << indent + "    }"
         lines << indent + "}"
-	lines << ""
+        lines << ""
       end
     }
     lines.join("\n")
   end
+  
+  def self.gen_method_group_groups(message,fixver,thisgroup,path,lines,indent)
+    lines << indent + "        case QuickFix.Fields.Tags.#{thisgroup[:name]}: return new QuickFix.#{fixver}.#{message[:name]}#{path}.#{thisgroup[:name]}Group();"
+  
+    thisgroup[:groups].each {|g| 
+      gen_method_group_groups(message,fixver,g,"#{path}.#{thisgroup[:name]}Group",lines,indent);
+    }
+  end  
 end

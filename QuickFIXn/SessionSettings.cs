@@ -22,10 +22,10 @@ namespace QuickFix
         public const string DEFAULT_APPLVERID = "DefaultApplVerID";
         public const string CONNECTION_TYPE = "ConnectionType";
         public const string USE_DATA_DICTIONARY = "UseDataDictionary";
+        public const string NON_STOP_SESSION = "NonStopSession";
         public const string USE_LOCAL_TIME = "UseLocalTime";
         public const string TIME_ZONE = "TimeZone";
         public const string START_DAY = "StartDay";
-        public const string MAX_LATENCY = "MaxLatency";
         public const string END_DAY = "EndDay";
         public const string START_TIME = "StartTime";
         public const string END_TIME = "EndTime";
@@ -45,6 +45,7 @@ namespace QuickFix
         public const string VALIDATE_FIELDS_OUT_OF_ORDER = "ValidateFieldsOutOfOrder";
         public const string VALIDATE_FIELDS_HAVE_VALUES = "ValidateFieldsHaveValues";
         public const string VALIDATE_USER_DEFINED_FIELDS = "ValidateUserDefinedFields";
+        public const string VALIDATE_LENGTH_AND_CHECKSUM = "ValidateLengthAndChecksum";
         public const string DATA_DICTIONARY = "DataDictionary";
         public const string TRANSPORT_DATA_DICTIONARY = "TransportDataDictionary";
         public const string APP_DATA_DICTIONARY = "AppDataDictionary";
@@ -52,13 +53,30 @@ namespace QuickFix
         public const string LOGON_TIMEOUT = "LogonTimeout";
         public const string LOGOUT_TIMEOUT = "LogoutTimeout";
         public const string SEND_REDUNDANT_RESENDREQUESTS = "SendRedundantResendRequests";
+        public const string RESEND_SESSION_LEVEL_REJECTS = "ResendSessionLevelRejects";
         public const string MILLISECONDS_IN_TIMESTAMP = "MillisecondsInTimeStamp";
+        public const string TIMESTAMP_PRECISION = "TimeStampPrecision";
         public const string ENABLE_LAST_MSG_SEQ_NUM_PROCESSED = "EnableLastMsgSeqNumProcessed";
         public const string MAX_MESSAGES_IN_RESEND_REQUEST = "MaxMessagesInResendRequest";
         public const string SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT = "SendLogoutBeforeDisconnectFromTimeout";
         public const string SOCKET_NODELAY = "SocketNodelay";
+        public const string SOCKET_SEND_BUFFER_SIZE = "SocketSendBufferSize";
+        public const string SOCKET_RECEIVE_BUFFER_SIZE = "SocketReceiveBufferSize";
         public const string IGNORE_POSSDUP_RESEND_REQUESTS = "IgnorePossDupResendRequests";
         public const string RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME = "RequiresOrigSendingTime";
+        public const string CHECK_LATENCY = "CheckLatency";
+        public const string MAX_LATENCY = "MaxLatency";
+
+
+        public const string SSL_ENABLE = "SSLEnable";
+        public const string SSL_SERVERNAME = "SSLServerName";
+        public const string SSL_PROTOCOLS = "SSLProtocols";
+        public const string SSL_VALIDATE_CERTIFICATES = "SSLValidateCertificates";
+        public const string SSL_CHECK_CERTIFICATE_REVOCATION = "SSLCheckCertificateRevocation";
+        public const string SSL_CERTIFICATE = "SSLCertificate";
+        public const string SSL_CERTIFICATE_PASSWORD = "SSLCertificatePassword";
+        public const string SSL_REQUIRE_CLIENT_CERTIFICATE = "SSLRequireClientCertificate";
+        public const string SSL_CA_CERTIFICATE = "SSLCACertificate";
 
         #endregion
 
@@ -167,6 +185,21 @@ namespace QuickFix
                 entry.Value.Merge(defaults_);
         }
 
+        /// <summary>
+        /// Remove existing session config from the settings
+        /// </summary>
+        /// <param name="sessionID">ID of session for which config is to be removed</param>
+        /// <returns>true if removed, false if config for the session does not exist</returns>
+        public bool Remove(SessionID sessionID)
+        {
+            return settings_.Remove(sessionID);
+        }
+
+        /// <summary>
+        /// Add new session config
+        /// </summary>
+        /// <param name="sessionID">ID of session for which to add config</param>
+        /// <param name="settings">session config</param>
         public void Set(SessionID sessionID, QuickFix.Dictionary settings)
         {
             if (Has(sessionID))
