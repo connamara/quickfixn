@@ -137,10 +137,6 @@ namespace QuickFix
         /// <param name="settings"></param>
         /// <param name="settingsKey"></param>
         /// <param name="beginString"></param>
-        /// <remarks>
-        /// Decura: Added virtual keyword
-        /// Previous: protected DataDictionary.DataDictionary createDataDictionary(SessionID sessionID, QuickFix.Dictionary settings, string settingsKey, string beginString)
-        /// </remarks>
         /// <returns></returns>
         protected virtual DataDictionary.DataDictionary createDataDictionary(SessionID sessionID, QuickFix.Dictionary settings, string settingsKey, string beginString)
         {

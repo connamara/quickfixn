@@ -65,9 +65,6 @@ namespace QuickFix
         /// <param name="factory">The factory.</param>
         /// <exception cref="System.ObjectDisposedException"></exception>
         /// <exception cref="ConfigError">No sessions defined for initiator</exception>
-        /// <remarks>
-        /// Decura, new method
-        /// </remarks>
         public void Start(SessionFactory factory)
         {
             if (_disposed)

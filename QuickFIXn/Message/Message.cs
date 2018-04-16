@@ -724,9 +724,6 @@ namespace QuickFix
         /// FIXME less operator new
         /// </summary>
         /// <param name="sessionID"></param>
-        /// <remarks>
-        /// Decura, modified all the SubId to use the string.IsNullOrEmpty as the value can also be null
-        /// </remarks>
         public void SetSessionID(SessionID sessionID)
         {
             this.Header.SetField(new BeginString(sessionID.BeginString));

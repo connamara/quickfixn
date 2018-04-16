@@ -23,9 +23,6 @@ namespace QuickFix
         /// Starts the specified factory.
         /// </summary>
         /// <param name="factory">The factory.</param>
-        /// <remarks>
-        /// Decura, new method
-        /// </remarks>
         void Start(SessionFactory factory);
 		
         /// <summary>
