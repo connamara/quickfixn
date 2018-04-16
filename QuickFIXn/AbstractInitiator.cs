@@ -63,8 +63,6 @@ namespace QuickFix
         /// Starts the specified factory.
         /// </summary>
         /// <param name="factory">The factory.</param>
-        /// <exception cref="System.ObjectDisposedException"></exception>
-        /// <exception cref="ConfigError">No sessions defined for initiator</exception>
         public void Start(SessionFactory factory)
         {
             if (_disposed)
