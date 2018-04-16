@@ -54,6 +54,11 @@ namespace QuickFix
                 throw new ConfigError("No sessions defined");
         }
 
+        public void Start()
+        {
+            Start(null);
+        }
+
         /// <summary>
         /// Starts the specified factory.
         /// </summary>
