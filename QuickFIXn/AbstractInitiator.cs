@@ -74,8 +74,7 @@ namespace QuickFix
                 throw new System.ObjectDisposedException(this.GetType().Name);
 
             // create all sessions
-            if (factory == null)
-                factory = new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
+            sessionFactory_ = factory ?? new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
             foreach (SessionID sessionID in _settings.GetSessions())
             {
                 Dictionary dict = _settings.Get(sessionID);
