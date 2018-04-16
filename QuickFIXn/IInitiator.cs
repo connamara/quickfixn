@@ -20,6 +20,12 @@ namespace QuickFix
         void Start();
 
         /// <summary>
+        /// Starts the specified factory.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        void Start(SessionFactory factory);
+		
+        /// <summary>
         /// Logout existing session and close connection.  All open resources are released.
         /// </summary>
         void Stop();
