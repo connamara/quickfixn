@@ -51,7 +51,8 @@ namespace QuickFix
         /// </summary>
         /// <param name="tcpClient"></param>
         /// <param name="clientId"></param>
-        /// <param name="debugLogFilePath">path where thread log will go</param>
+        /// <param name="settingsDict"></param>
+        /// <param name="socketSettings"></param>
         public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings)
         {
             string debugLogFilePath = "log";

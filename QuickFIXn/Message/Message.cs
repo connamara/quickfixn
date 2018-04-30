@@ -129,7 +129,8 @@ namespace QuickFix
                 int fieldvalend = msgstr.IndexOf("\u0001", pos);
                 StringField field =  new StringField(tag, msgstr.Substring(pos, fieldvalend - pos));
 
-                /** TODO data dict stuff
+                /*
+                 TODO data dict stuff
                 if (((null != sessionDD) && sessionDD.IsDataField(field.Tag)) || ((null != appDD) && appDD.IsDataField(field.Tag)))
                 {
                     string fieldLength = "";
@@ -315,9 +316,9 @@ namespace QuickFix
                     return new ApplVerID(ApplVerID.FIX44);
                 case FixValues.BeginString.FIX50:
                     return new ApplVerID(ApplVerID.FIX50);
-                case "FIX.5.0SP1":
+                case FixValues.BeginString.FIX50SP1:
                     return new ApplVerID(ApplVerID.FIX50SP1);
-                case "FIX.5.0SP2":
+                case FixValues.BeginString.FIX50SP2:
                     return new ApplVerID(ApplVerID.FIX50SP2);
                 default:
                     throw new System.ArgumentException(String.Format("ApplVerID for {0} not supported", beginString));

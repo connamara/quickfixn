@@ -166,7 +166,7 @@ namespace QuickFix.DataDictionary
 					throw new RequiredTagMissing(field);
 			}
 
-			/** FIXME TODO group stuff
+			/* FIXME TODO group stuff
 			foreach (DDGroup grp in _messages[msgType].Groups.Values)
 				if (_messages[msgType].ReqFields.Contains(grp.Field))
 					ReqFieldsSetInGroups(grp, fields);
