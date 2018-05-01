@@ -8,6 +8,7 @@
     <Copyright>QuickFIXn.org 2011-now</Copyright>
     <Authors>Connamara Systems, LLC and QuickFIX/n contributors</Authors>
     <Version>1.8.0</Version>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

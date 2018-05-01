@@ -7,6 +7,7 @@
     <AssemblyName>SimpleAcceptor</AssemblyName>
     <Copyright>Copyright © Connamara Systems, LLC 2011</Copyright>
     <Company>Connamara Systems, LLC</Company>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
