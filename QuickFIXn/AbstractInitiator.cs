@@ -56,11 +56,20 @@ namespace QuickFix
 
         public void Start()
         {
+            Start(null);
+        }
+
+        /// <summary>
+        /// Starts the specified factory.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        public void Start(SessionFactory factory)
+        {
             if (_disposed)
                 throw new System.ObjectDisposedException(this.GetType().Name);
 
             // create all sessions
-            sessionFactory_ = new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
+            sessionFactory_ = factory ?? new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
             foreach (SessionID sessionID in _settings.GetSessions())
             {
                 Dictionary dict = _settings.Get(sessionID);

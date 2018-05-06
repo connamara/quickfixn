@@ -130,7 +130,15 @@ namespace QuickFix
             return session;
         }
 
-        protected DataDictionary.DataDictionary createDataDictionary(SessionID sessionID, QuickFix.Dictionary settings, string settingsKey, string beginString)
+        /// <summary>
+        /// createDataDictionary
+        /// </summary>
+        /// <param name="sessionID"></param>
+        /// <param name="settings"></param>
+        /// <param name="settingsKey"></param>
+        /// <param name="beginString"></param>
+        /// <returns></returns>
+        protected virtual DataDictionary.DataDictionary createDataDictionary(SessionID sessionID, QuickFix.Dictionary settings, string settingsKey, string beginString)
         {
             DataDictionary.DataDictionary dd;
             string path;
