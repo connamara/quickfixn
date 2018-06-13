@@ -537,26 +537,36 @@ namespace QuickFix.DataDictionary
 		{
             /* 
             // This code is great for debugging DD parsing issues.
-            string s = "+ " + node.Name;
+            string s = "+ " + node.Name;  // node.Name is probably "message"
             if (node.Attributes["name"] != null)
                 s += " | " + node.Attributes["name"].Value;
             Console.WriteLine(s);
             */
+
+		    string messageTypeName = (node.Attributes["name"] != null) ? node.Attributes["name"].Value : node.Name;
 
 			if (!node.HasChildNodes) { return; }
 			foreach (XmlNode childNode in node.ChildNodes)
 			{
                 /*
                 // Continuation of code that's great for debugging DD parsing issues.
-                s = "    + " + childNode.Name;
-                if (node.Attributes["name"] != null)
+                s = "    + " + childNode.Name;  // childNode.Name is probably "field"
+                if (childNode.Attributes["name"] != null)
                     s += " | " + childNode.Attributes["name"].Value;
                 Console.WriteLine(s);
                 */
 
-				if( childNode.Name == "field" )
+			    var fieldName = (childNode.Attributes["name"] != null) ? childNode.Attributes["name"].Value : "no-name";
+
+                if ( childNode.Name == "field" )
 				{
-					DDField fld = FieldsByName[childNode.Attributes["name"].Value];
+				    if (FieldsByName.ContainsKey(fieldName) == false)
+				    {
+				        throw new Exception(
+				            $"Field '{fieldName}' is used in '{messageTypeName}', but is not defined in <fields> set.");
+				    }
+
+				    DDField fld = FieldsByName[fieldName];
                     XmlAttribute req = childNode.Attributes["required"];
                     if (req != null && req.Value == "Y"
                         && (componentRequired == null || componentRequired.Value == true))
@@ -576,7 +586,7 @@ namespace QuickFix.DataDictionary
 				}
 				else if(childNode.Name == "group")
 				{
-					DDField fld = FieldsByName[childNode.Attributes["name"].Value];
+					DDField fld = FieldsByName[fieldName];
 					DDGrp grp = new DDGrp();
                     XmlAttribute req = childNode.Attributes["required"];
                     if (req != null && req.Value == "Y"
@@ -595,8 +605,7 @@ namespace QuickFix.DataDictionary
 				}
                 else if (childNode.Name == "component")
                 {
-                    String name = childNode.Attributes["name"].Value;
-                    XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + name + "']");
+                    XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + fieldName + "']");
                     XmlAttribute req = childNode.Attributes["required"];
                     bool? compRequired = (req != null && req.Value == "Y");
                     parseMsgEl(compNode, ddmap, compRequired);
