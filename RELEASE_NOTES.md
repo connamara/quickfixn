@@ -8,8 +8,10 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
-### v1.8.0:
+### NEXT VERSION:
+* (patch) #486 - More informative exception for DD parsing errors (gbirchmeier)
 
+### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)
 * (patch) #406 - Remove xslt (brobits)
 * (patch) #417 - Bring unit tests up-to-date with NUnit v3.4.1 (zherr)
