@@ -35,10 +35,9 @@ namespace QuickFix
         }
     }
 
-    // TODO generate this class
     namespace FixValues
     {
-        public class ApplVerID
+        public static class ApplVerID
         {
             public const string FIX27 = "0";
             public const string FIX30 = "1";
@@ -72,13 +71,37 @@ namespace QuickFix
                 else
                     return string.Copy(beginString);
             }
+
+            public static string ToBeginString(string applVerId)
+            {
+                if (applVerId == ApplVerID.FIX40)
+                    return BeginString.FIX40;
+                else if (applVerId == ApplVerID.FIX41)
+                    return BeginString.FIX41;
+                else if (applVerId == ApplVerID.FIX42)
+                    return BeginString.FIX42;
+                else if (applVerId == ApplVerID.FIX43)
+                    return BeginString.FIX43;
+                else if (applVerId == ApplVerID.FIX44)
+                    return BeginString.FIX44;
+                else if (applVerId == ApplVerID.FIX50)
+                    return BeginString.FIX50;
+                else if (applVerId == ApplVerID.FIX50SP1)
+                    return BeginString.FIX50SP1;
+                else if (applVerId == ApplVerID.FIX50SP2)
+                    return BeginString.FIX50SP2;
+                else
+                    throw new System.ArgumentException($"ApplVerId parameter '{applVerId}' does not map to a known BeginString");
+            }
         }
 
-        public class BeginString
+        public static class BeginString
         {
+            // The FIX5+ beginstrings aren't legitimate, but we use them internally.
+
             public const string FIXT11 = "FIXT.1.1";
             public const string FIX50SP2 = "FIX.5.0SP2";
-            public const string FIX50SP1  = "FIX.5.0SP1";
+            public const string FIX50SP1 = "FIX.5.0SP1";
             public const string FIX50  = "FIX.5.0";
             public const string FIX44  = "FIX.4.4";
             public const string FIX43  = "FIX.4.3";

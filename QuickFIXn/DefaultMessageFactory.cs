@@ -14,16 +14,24 @@ namespace QuickFix
     public class DefaultMessageFactory : IMessageFactory
     {
         private static int _dllLoadFlag;
-        private readonly IReadOnlyDictionary<string, IMessageFactory> _factories;
 
         /// <summary>
-        /// This consctructor will
+        /// key is BeginString (including the fake FIX50 beginstrings)
+        /// </summary>
+        private readonly IReadOnlyDictionary<string, IMessageFactory> _factories;
+
+        private QuickFix.Fields.ApplVerID _defaultApplVerId;
+        
+        /// <summary>
+        /// This constructor will
         /// 1. Dynamically load all QuickFix.*.dll assemblies into the current appdomain
         /// 2. Find all IMessageFactory implementations in these assemblies (must have parameterless constructor)
         /// 3. Use them based on begin strings they support
         /// </summary>
-        public DefaultMessageFactory()
+        /// <param name="defaultApplVerId">ApplVerID value used by default in Create methods that don't explicitly specify it (only relevant for FIX5+)</param>
+        public DefaultMessageFactory(string defaultApplVerId = QuickFix.FixValues.ApplVerID.FIX50SP2)
         {
+            _defaultApplVerId = new ApplVerID(defaultApplVerId);
             var assemblies = GetAppDomainAssemblies();
             var factories = GetMessageFactories(assemblies);
             _factories = ConvertToDictionary(factories);
@@ -33,6 +41,7 @@ namespace QuickFix
         /// This constructor will save the IMessageFactory instances based on what they return from GetSupportedBeginStrings()
         /// </summary>
         /// <param name="factories">IMessageFactory instances</param>
+        [System.Obsolete("Nothing uses this, so no reason to keep it")]
         public DefaultMessageFactory(IEnumerable<IMessageFactory> factories)
         {
             _factories = ConvertToDictionary(factories);
@@ -57,25 +66,50 @@ namespace QuickFix
             return _factories.Keys.ToList();
         }
 
+        /*
+         *     @Override
+    public Message create(String beginString, ApplVerID applVerID, String msgType) {
+        MessageFactory messageFactory = messageFactories.get(beginString);
+        if (beginString.equals(BEGINSTRING_FIXT11) && !MessageUtils.isAdminMessage(msgType)) {
+            if (applVerID == null) {
+                applVerID = new ApplVerID(defaultApplVerID.getValue());
+            }
+            messageFactory = messageFactories.get(MessageUtils.toBeginString(applVerID));
+        }
+
+        if (messageFactory != null) {
+            return messageFactory.create(beginString, applVerID, msgType);
+        }
+
+        Message message = new Message();
+        message.getHeader().setString(MsgType.FIELD, msgType);
+
+        return message;
+    }
+    */
+
         public Message Create(string beginString, string msgType)
         {
-            // FIXME: This is a hack.  FIXT11 could mean 50 or 50sp1 or 50sp2.
-            // We need some way to choose which 50 version it is.
-            // Choosing 50 here is not adequate.
-            var key = beginString.Equals(FixValues.BeginString.FIXT11) && !Message.IsAdminMsgType(msgType)
-                ? FixValues.BeginString.FIX50
-                : beginString;
+            return Create(beginString, _defaultApplVerId, msgType);
+        }
 
-            if (_factories.TryGetValue(key, out var factory))
+        public Message Create(string beginString, QuickFix.Fields.ApplVerID applVerID, string msgType)
+        {
+            IMessageFactory messageFactory = _factories[beginString];
+
+            if (beginString == QuickFix.Values.BeginString_FIXT11 && !Message.IsAdminMsgType(msgType))
             {
-                return factory.Create(beginString, msgType);
+                if (applVerID == null)
+                    applVerID = _defaultApplVerId;
+                messageFactory = _factories[QuickFix.FixValues.ApplVerID.ToBeginString(applVerID.Obj)];
             }
-            else
-            {
-                var message = new Message();
-                message.Header.SetField(new StringField(QuickFix.Fields.Tags.MsgType, msgType));
-                return message;
-            }
+
+            if (messageFactory != null)
+                return messageFactory.Create(beginString, applVerID, msgType);
+
+            var message = new Message();
+            message.Header.SetField(new StringField(QuickFix.Fields.Tags.MsgType, msgType));
+            return message;
         }
 
         public Group Create(string beginString, string msgType, int groupCounterTag)

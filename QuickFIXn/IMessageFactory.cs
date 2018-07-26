@@ -22,6 +22,15 @@ namespace QuickFix
         Message Create(string beginString, string msgType);
 
         /// <summary>
+        /// Creates a message for a specified type, FIX version, and ApplVerID
+        /// </summary>
+        /// <param name="beginString">the FIX version (e.g. "FIX.4.2")</param>
+        /// <param name="applVerId">the ApplVerID (for example "6" for FIX44)</param>
+        /// <param name="msgType">the FIX message type (e.g. "D" for a NewOrderSingle)</param>
+        /// <returns>a message instance of proper derived type</returns>
+        Message Create(string beginString, QuickFix.Fields.ApplVerID applVerId, string msgType);
+
+        /// <summary>
         /// Creates a group for the specified parent message type and
         /// for the fields with the corresponding field ID
         /// </summary>
