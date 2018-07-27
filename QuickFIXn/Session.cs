@@ -210,8 +210,17 @@ namespace QuickFix
         /// Sets a maximum number of messages to request in a resend request.
         /// </summary>
         public int MaxMessagesInResendRequest { get; set; }
+
+        /// <summary>
+        /// This is the FIX field value, e.g. "6" for FIX44
+        /// </summary>
         public ApplVerID targetDefaultApplVerID { get; set; }
+
+        /// <summary>
+        /// This is the FIX field value, e.g. "6" for FIX44
+        /// </summary>
         public string SenderDefaultApplVerID { get; set; }
+
         public SessionID SessionID { get; set; }
         public IApplication Application { get; set; }
         public DataDictionaryProvider DataDictionaryProvider { get; set; }
@@ -545,6 +554,7 @@ namespace QuickFix
 
             MessageBuilder msgBuilder = new MessageBuilder(
                     msgStr,
+                    SenderDefaultApplVerID,
                     this.ValidateLengthAndChecksum,
                     this.SessionDataDictionary,
                     this.ApplicationDataDictionary,

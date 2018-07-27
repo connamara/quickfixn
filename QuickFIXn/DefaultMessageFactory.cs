@@ -66,28 +66,6 @@ namespace QuickFix
             return _factories.Keys.ToList();
         }
 
-        /*
-         *     @Override
-    public Message create(String beginString, ApplVerID applVerID, String msgType) {
-        MessageFactory messageFactory = messageFactories.get(beginString);
-        if (beginString.equals(BEGINSTRING_FIXT11) && !MessageUtils.isAdminMessage(msgType)) {
-            if (applVerID == null) {
-                applVerID = new ApplVerID(defaultApplVerID.getValue());
-            }
-            messageFactory = messageFactories.get(MessageUtils.toBeginString(applVerID));
-        }
-
-        if (messageFactory != null) {
-            return messageFactory.create(beginString, applVerID, msgType);
-        }
-
-        Message message = new Message();
-        message.getHeader().setString(MsgType.FIELD, msgType);
-
-        return message;
-    }
-    */
-
         public Message Create(string beginString, string msgType)
         {
             return Create(beginString, _defaultApplVerId, msgType);
