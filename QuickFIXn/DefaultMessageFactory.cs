@@ -73,18 +73,21 @@ namespace QuickFix
 
         public Message Create(string beginString, QuickFix.Fields.ApplVerID applVerID, string msgType)
         {
-            IMessageFactory messageFactory = _factories[beginString];
+            _factories.TryGetValue(beginString, out IMessageFactory messageFactory);
 
             if (beginString == QuickFix.Values.BeginString_FIXT11 && !Message.IsAdminMsgType(msgType))
             {
                 if (applVerID == null)
                     applVerID = _defaultApplVerId;
-                messageFactory = _factories[QuickFix.FixValues.ApplVerID.ToBeginString(applVerID.Obj)];
+                _factories.TryGetValue(
+                    QuickFix.FixValues.ApplVerID.ToBeginString(applVerID.Obj),
+                    out messageFactory);
             }
 
             if (messageFactory != null)
                 return messageFactory.Create(beginString, applVerID, msgType);
 
+            // didn't find a factory, so return a generic Message object
             var message = new Message();
             message.Header.SetField(new StringField(QuickFix.Fields.Tags.MsgType, msgType));
             return message;
