@@ -9,7 +9,11 @@ What's New
 ----------
 
 ### NEXT VERSION:
+* (minor) #469 - Add support for NET Standard 2.0 (jhickson)
+* (minor) #476 - Separate FIX message assemblies from the main project (akamyshanov)
+* (minor) #482 - x64 support (brobits)
 * (patch) #486 - More informative exception for DD parsing errors (gbirchmeier)
+* (patch) #492 - fix delete-generated script (gbirchmeier)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)
