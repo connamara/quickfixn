@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Xml;
 using System.Xml.XPath;
+using QuickFix.Fields;
 
 namespace QuickFix.DataDictionary
 {
@@ -186,7 +187,7 @@ namespace QuickFix.DataDictionary
 					throw new RepeatedTag(lastField);
 				CheckHasValue(field);
 
-				if (null != this.Version && this.Version.Length > 0)
+				if (!string.IsNullOrEmpty(this.Version))
 				{
 					CheckValidFormat(field);
 					
@@ -228,7 +229,7 @@ namespace QuickFix.DataDictionary
 					throw new RepeatedTag(lastField);
 				CheckHasValue(field);
 
-				if (null != this.Version && this.Version.Length > 0)
+				if (!string.IsNullOrEmpty(this.Version))
 				{
 					CheckValidFormat(field);
 
@@ -279,22 +280,22 @@ namespace QuickFix.DataDictionary
 				if (!TryGetFieldType(field.Tag, out type))
 					return;
 
-				if (type.Equals(typeof(Fields.StringField)))
+				if (type == typeof(StringField))
 					return;
-				else if (type.Equals(typeof(Fields.CharField)))
+				else if (type == typeof(CharField))
 					Fields.Converters.CharConverter.Convert(field.ToString());
-				else if (type.Equals(typeof(Fields.IntField)))
+				else if (type == typeof(IntField))
 					Fields.Converters.IntConverter.Convert(field.ToString());
-				else if (type.Equals(typeof(Fields.DecimalField)))
+				else if (type == typeof(DecimalField))
 					Fields.Converters.DecimalConverter.Convert(field.ToString());
-				else if (type.Equals(typeof(Fields.BooleanField)))
+				else if (type == typeof(BooleanField))
 					Fields.Converters.BoolConverter.Convert(field.ToString());
 
-				else if (type.Equals(typeof(Fields.DateTimeField)))
+				else if (type == typeof(DateTimeField))
 					Fields.Converters.DateTimeConverter.ConvertToDateTime(field.ToString());
-				else if (type.Equals(typeof(Fields.DateOnlyField)))
+				else if (type == typeof(DateOnlyField))
 					Fields.Converters.DateTimeConverter.ConvertToDateOnly(field.ToString());
-				else if (type.Equals(typeof(Fields.TimeOnlyField)))
+				else if (type == typeof(TimeOnlyField))
 					Fields.Converters.DateTimeConverter.ConvertToTimeOnly(field.ToString());
 				return;
 
@@ -432,21 +433,26 @@ namespace QuickFix.DataDictionary
 
 		public void Load(Stream stream)
 		{
-			XmlDocument doc = new XmlDocument();
-			RootDoc = doc;
-			doc.Load(stream);
-			setVersionInfo(doc);
-			parseFields(doc);
-			parseMessages(doc);
-			parseHeader(doc);
-			parseTrailer(doc);
+		    XmlReaderSettings readerSettings = new XmlReaderSettings();
+		    readerSettings.IgnoreComments = true;
+
+		    using (XmlReader reader = XmlReader.Create(stream, readerSettings))
+		    {
+                RootDoc = new XmlDocument();
+                RootDoc.Load(reader);
+                SetVersionInfo(RootDoc);
+                ParseFields(RootDoc);
+                ParseMessages(RootDoc);
+                ParseHeader(RootDoc);
+                ParseTrailer(RootDoc);
+		    }
 		}
 
 		public Boolean FieldHasValue(int tag, String val) {
 			return FieldsByTag[tag].EnumDict.ContainsKey(val);
 		}
 
-		private void setVersionInfo(XmlDocument doc) {
+		private void SetVersionInfo(XmlDocument doc) {
 			MajorVersion = doc.SelectSingleNode("/fix/@major").Value;
 			MinorVersion = doc.SelectSingleNode("/fix/@minor").Value;
 			string type;
@@ -462,17 +468,17 @@ namespace QuickFix.DataDictionary
 			Version = String.Format("{0}.{1}.{2}", type, MajorVersion, MinorVersion);
 		}
 
-		private void parseFields(XmlDocument doc)
+		private void ParseFields(XmlDocument doc)
 		{
 			XmlNodeList nodeList = doc.SelectNodes("//fields/field");
 			foreach(XmlNode fldEl in nodeList) {
-				DDField fld = newField(fldEl);
+				DDField fld = NewField(fldEl);
 				FieldsByTag[fld.Tag] = fld;
 				FieldsByName[fld.Name] = fld;
 			}
 		}
 
-		private DDField newField(XmlNode fldEl)
+		private DDField NewField(XmlNode fldEl)
 		{
 			String tagstr = fldEl.Attributes["number"].Value;
 			String name = fldEl.Attributes["name"].Value;
@@ -492,26 +498,26 @@ namespace QuickFix.DataDictionary
 			return new DDField(tag, name, enums, fldType);
 		}
 
-		private void parseMessages(XmlDocument doc)
+		private void ParseMessages(XmlDocument doc)
 		{
 			XmlNodeList nodeList = doc.SelectNodes("//messages/message");
 			foreach (XmlNode msgEl in nodeList)
 			{
 				DDMap msg = new DDMap();
-				parseMsgEl(msgEl, msg);
+				ParseMsgEl(msgEl, msg);
 				String msgtype = msgEl.Attributes["msgtype"].Value;
 				Messages.Add(msgtype, msg);
 			}
 		}
 
-		private void parseHeader(XmlDocument doc)
+		private void ParseHeader(XmlDocument doc)
 		{
-			parseMsgEl(doc.SelectSingleNode("//header"), Header);
+			ParseMsgEl(doc.SelectSingleNode("//header"), Header);
 		}
 
-		private void parseTrailer(XmlDocument doc)
+		private void ParseTrailer(XmlDocument doc)
 		{
-			parseMsgEl(doc.SelectSingleNode("//trailer"), Trailer);
+			ParseMsgEl(doc.SelectSingleNode("//trailer"), Trailer);
 		}
 
         /// <summary>
@@ -519,9 +525,9 @@ namespace QuickFix.DataDictionary
         /// </summary>
         /// <param name="node"></param>
         /// <param name="ddmap"></param>
-        private void parseMsgEl(XmlNode node, DDMap ddmap)
+        private void ParseMsgEl(XmlNode node, DDMap ddmap)
         {
-            parseMsgEl(node, ddmap, null);
+            ParseMsgEl(node, ddmap, null);
         }
 
         /// <summary>
@@ -533,7 +539,7 @@ namespace QuickFix.DataDictionary
         /// If non-null, parsing is inside a component that is required (true) or not (false).
         /// If null, parser is not inside a component.
         /// </param>
-		private void parseMsgEl(XmlNode node, DDMap ddmap, bool? componentRequired)
+		private void ParseMsgEl(XmlNode node, DDMap ddmap, bool? componentRequired)
 		{
             /* 
             // This code is great for debugging DD parsing issues.
@@ -600,7 +606,7 @@ namespace QuickFix.DataDictionary
 						ddmap.Fields.Add(fld.Tag, fld);
 					}
 					grp.NumFld = fld.Tag; 
-					parseMsgEl(childNode, grp);
+					ParseMsgEl(childNode, grp);
 					ddmap.Groups.Add(fld.Tag, grp);
 				}
                 else if (childNode.Name == "component")
@@ -608,7 +614,7 @@ namespace QuickFix.DataDictionary
                     XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + fieldName + "']");
                     XmlAttribute req = childNode.Attributes["required"];
                     bool? compRequired = (req != null && req.Value == "Y");
-                    parseMsgEl(compNode, ddmap, compRequired);
+                    ParseMsgEl(compNode, ddmap, compRequired);
                 }
 			}
 		}
