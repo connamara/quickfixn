@@ -502,7 +502,7 @@ namespace UnitTests
             Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectTagValue>());
         }
 
-        [Test] // Issue #282 investigation
+        [Test] // Issue #282
         public void ValidateTagSpecifiedWithoutAValue()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
@@ -524,6 +524,24 @@ namespace UnitTests
 
             dd.CheckFieldsHaveValues = false;
             Assert.DoesNotThrow(delegate { dd.Validate(message, beginString, msgType); });
+        }
+
+        [Test] // Issue #493
+        public void ParseThroughComments()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadTestFIXSpec("comments");
+
+            // The fact that it doesn't throw is sufficient, but we'll do some other checks anyway.
+
+            var logon = dd.GetMapForMessage("A");
+            Assert.True(logon.IsField(108)); // HeartBtInt
+            Assert.True(logon.IsField(9000)); // CustomField
+
+            var news = dd.GetMapForMessage("B");
+            Assert.True(news.IsField(148)); // Headline
+            Assert.True(news.IsGroup(33)); // LinesOfText
+            Assert.True(news.GetGroup(33).IsField(355)); // EncodedText
         }
     }
 }

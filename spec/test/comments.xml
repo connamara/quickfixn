@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This dictionary has some comments which were tripping
+  up the parser.
+-->
+<fix minor="9" major="9">
+  <header/>
+  <trailer/>
+  <messages>
+    <message name="Logon" msgtype="A" msgcat="admin">
+      <field name="HeartBtInt" required="Y" />
+      <!-- custom fields -->
+      <field name="CustomField" required="N" />
+    </message>
+    <message name="News" msgtype="B" msgcat="app">
+      <field name="Headline" required="Y"/>
+      <group name="LinesOfText" required="Y">
+        <field name="Text" required="Y"/>
+        <!-- test-hack -->
+        <field name="EncodedTextLen" required="N"/>
+        <field name="EncodedText" required="N"/>
+      </group>
+    </message>
+  </messages>
+  <components>
+  </components>
+  <fields>
+    <field number='33' name='LinesOfText' type='INT' />
+    <field number='58' name='Text' type='STRING' />
+    <field number='108' name='HeartBtInt' type='INT' />
+    <field number='148' name='Headline' type='STRING' />
+    <field number="354" name="EncodedTextLen" type="INT"/>
+    <field number="355" name="EncodedText" type="DATA"/>
+    <field number='9000' name='CustomField' type='STRING' />
+  </fields>
+</fix>

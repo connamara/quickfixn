@@ -14,6 +14,7 @@ What's New
 * (minor) #482 - x64 support (brobits)
 * (patch) #486 - More informative exception for DD parsing errors (gbirchmeier)
 * (patch) #492 - fix delete-generated script (gbirchmeier)
+* (patch) #493 - fix DD parsing issue with certain comments (gbirchmeier)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)
