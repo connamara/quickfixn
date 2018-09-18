@@ -1,6 +1,8 @@
 version: 1.0.{build}
 
 install:
+- ps: |
+      [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls
 - cmd: >-
     gem install nokogiri -v 1.6.8.1
 
