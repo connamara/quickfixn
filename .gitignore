@@ -21,10 +21,15 @@ AcceptanceTest/cfg/at.cfg
 Examples/Executor/bin/*
 Examples/Executor/obj/*
 Examples/Executor/log/
+Examples/Executor/store/
 Examples/TradeClient/bin/*
 Examples/TradeClient/obj/*
+Examples/TradeClient/log/
+Examples/TradeClient/store/
 Examples/SimpleAcceptor/bin/*
 Examples/SimpleAcceptor/obj/*
+Examples/SimpleAcceptor/log/
+Examples/SimpleAcceptor/store/
 .DS_Store
 upload_to_s3.rb
 *~
@@ -155,3 +160,6 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+
+# JetBrains Rider
+.idea
