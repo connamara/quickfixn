@@ -8,7 +8,7 @@ For more information, visit [http://www.quickfixn.org] (http://www.quickfixn.org
 
 Getting Started
 ===============
-Copy bin/net452/QuickFix.dll or bin/netstandard2.0/QuickFix.dll along with needed message assemblies into your .NET project.
+Copy bin/netstandard2.0/QuickFix.dll along with needed message assemblies into your .NET project.
 
 Then read the [documentation] (http://quickfixn.org/tutorial/creating-an-application)
 
