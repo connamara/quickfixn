@@ -362,6 +362,25 @@ namespace UnitTests
         }
 
         [Test]
+        public void ExtractFieldTest()
+        {
+            string msgstr = "100=200\x01" + "300=400\x01" + "500=600\x01";
+            int n = 0;
+
+            var x = QuickFix.Message.ExtractField(msgstr, ref n);
+            Assert.AreEqual(8, n);
+            Assert.AreEqual("100=200", x.toStringField());
+
+            x = QuickFix.Message.ExtractField(msgstr, ref n);
+            Assert.AreEqual(16, n);
+            Assert.AreEqual("300=400", x.toStringField());
+
+            x = QuickFix.Message.ExtractField(msgstr, ref n);
+            Assert.AreEqual(24, n);
+            Assert.AreEqual("500=600", x.toStringField());
+        }
+
+        [Test]
         public void RepeatingGroup()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
