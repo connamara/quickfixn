@@ -13,7 +13,7 @@ Param(
     [string] $conf= "cfg\at.cfg", 
 
   [Parameter(Position=5)]
-    [string] $framework= "net452"
+    [string] $framework= "net461"
 )
 
 $result = 0
@@ -25,7 +25,7 @@ if([string]::IsNullOrEmpty($tests))
 }
 
 
-if(($configuration -ne "release" -And $configuration -ne "debug") -Or ($framework -ne "net452" -And $framework -ne "netcoreapp2.0"))
+if(($configuration -ne "release" -And $configuration -ne "debug") -Or ($framework -ne "net461" -And $framework -ne "netcoreapp2.0"))
 {
     Usage
 }
@@ -59,7 +59,7 @@ function StartTests
 
 function Usage
 {
-    echo "Usage: runat [release | debug] [port] [TESTFILE...] [net452|netcoreapp2.0]"
+    echo "Usage: runat [release | debug] [port] [TESTFILE...] [net461|netcoreapp2.0]"
     $script:result = 1
     Quit
 }

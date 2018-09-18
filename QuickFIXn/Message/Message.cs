@@ -123,7 +123,7 @@ namespace QuickFix
         {
             try
             {
-                int tagend = msgstr.IndexOf("=", pos);
+                int tagend = msgstr.IndexOf('=', pos);
                 int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
                 pos = tagend + 1;
                 int fieldvalend = msgstr.IndexOf((char)1, pos);

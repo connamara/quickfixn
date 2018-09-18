@@ -15,6 +15,8 @@ What's New
 * (patch) #486 - More informative exception for DD parsing errors (gbirchmeier)
 * (patch) #492 - fix delete-generated script (gbirchmeier)
 * (patch) #493 - fix DD parsing issue with certain comments (gbirchmeier)
+* (minor) #448 - Fix message load error within *nix environments (mtnbiker99)
+* (minor) #497 - Support full cross-platform operation (michaelwilner)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)
