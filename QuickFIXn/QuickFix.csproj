@@ -14,8 +14,4 @@
     <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <DefineConstants>$(DefineConstants);MISSING_SYSTEMWEBUI</DefineConstants>
-  </PropertyGroup>
-
 </Project>
