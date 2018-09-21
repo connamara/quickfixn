@@ -35,6 +35,7 @@ namespace QuickFix
         private TcpListener tcpListener_;
         private SocketSettings socketSettings_;
         private QuickFix.Dictionary sessionDict_;
+        private IPEndPoint serverSocketEndPoint_;
 
         #endregion
 
@@ -46,7 +47,8 @@ namespace QuickFix
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
         {
             socketSettings_ = socketSettings;
-            tcpListener_ = new TcpListener(serverSocketEndPoint);
+            serverSocketEndPoint_ = serverSocketEndPoint;
+            tcpListener_ = new TcpListener(serverSocketEndPoint_);
             sessionDict_ = sessionDict;
         }
 
@@ -65,8 +67,17 @@ namespace QuickFix
                     try
                     {
                         state_ = State.SHUTDOWN_REQUESTED;
-                        tcpListener_.Server.Close();
-                        tcpListener_.Stop();
+                        using (TcpClient killer = new TcpClient())
+                        {
+                            try
+                            {
+                                killer.Connect(serverSocketEndPoint_);
+                            }
+                            catch (System.Exception e)
+                            {
+                                this.Log("Tried to interrupt server socket but was already closed: " + e.Message);
+                            }
+                        }
                     }
                     catch (System.Exception e)
                     {
@@ -92,16 +103,25 @@ namespace QuickFix
                 try
                 {
                     TcpClient client = tcpListener_.AcceptTcpClient();
-                    ApplySocketOptions(client, socketSettings_);
-                    ClientHandlerThread t = new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_);
-                    t.Exited += OnClientHandlerThreadExited;
-                    lock (sync_)
+                    if (State.RUNNING == ReactorState)
                     {
-                        clientThreads_.Add(t.Id, t);
+                        ApplySocketOptions(client, socketSettings_);
+                        ClientHandlerThread t =
+                            new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_);
+                        t.Exited += OnClientHandlerThreadExited;
+                        lock (sync_)
+                        {
+                            clientThreads_.Add(t.Id, t);
+                        }
+
+                        // FIXME set the client thread's exception handler here
+                        t.Log("connected");
+                        t.Start();
                     }
-                    // FIXME set the client thread's exception handler here
-                    t.Log("connected");
-                    t.Start();
+                    else
+                    {
+                        client.Dispose();
+                    }
                 }
                 catch (System.Exception e)
                 {
@@ -109,6 +129,8 @@ namespace QuickFix
                         this.Log("Error accepting connection: " + e.Message);
                 }
             }
+            tcpListener_.Server.Close();
+            tcpListener_.Stop();
             ShutdownClientHandlerThreads();
         }
 
