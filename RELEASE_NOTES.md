@@ -17,6 +17,7 @@ What's New
 * (patch) #493 - fix DD parsing issue with certain comments (gbirchmeier)
 * (minor) #448 - Fix message load error within *nix environments (mtnbiker99)
 * (minor) #497 - Support full cross-platform operation (michaelwilner)
+* (patch) #498 - Fix hanging on ThreadedSocketReactor exit (michaelwilner)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)
