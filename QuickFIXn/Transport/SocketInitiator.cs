@@ -62,7 +62,9 @@ namespace QuickFix.Transport
                 t.Session.Log.OnEvent("Connection succeeded");
                 t.Session.Next();
                 while (t.Read())
-                { }
+                {
+                }
+
                 if (t.Initiator.IsStopped)
                     t.Initiator.RemoveThread(t);
                 t.Initiator.SetDisconnected(t.Session.SessionID);
@@ -71,7 +73,7 @@ namespace QuickFix.Transport
             {
                 t.Session.Log.OnEvent("Connection failed: " + ex.Message);
             }
-            catch (SocketException e) 
+            catch (SocketException e)
             {
                 t.Session.Log.OnEvent("Connection failed: " + e.Message);
             }
@@ -79,9 +81,34 @@ namespace QuickFix.Transport
             {
                 t.Session.Log.OnEvent("Connection failed (AuthenticationException): " + ex.Message);
             }
-            catch (Exception)
+            catch (ObjectDisposedException ex)
             {
-                // It might be the logger ObjectDisposedException, so don't try to log!
+                // There's a chance that the logger is the thing that got disposed,
+                // so let's make sure we're not going to throw a repeat exception
+                // by hitting that logger again.
+
+                try
+                {
+                    t.Session.Log.OnEvent(ex.ToString());
+                }
+                catch (ObjectDisposedException ode)
+                {
+                    // Can't use the logger, so write a different file.
+                    System.IO.StreamWriter sw = System.IO.File.AppendText("ObjectDisposedException.log");
+                    try
+                    {
+                        string logLine = $"{System.DateTime.Now:G}: {ode}";
+                        sw.WriteLine(logLine);
+                    }
+                    finally
+                    {
+                        sw.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                t.Session.Log.OnEvent("Unexpected exception: " + ex);
             }
             finally
             {
