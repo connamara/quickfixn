@@ -11,14 +11,14 @@ namespace UnitTests
     {
         #region Properties
         /// <summary>
-        /// Windows/Mono-agnostic time zone ID
+        /// Windows/*nix-agnostic time zone ID
         /// (because it would be too easy if they could settle on a standard list of ids, right?)
         /// </summary>
         public string EASTERN_STANDARD_TIME_ZONE_ID
         {
             get
             {
-                if(null != System.Type.GetType("Mono.Runtime"))
+                if (!TimeZoneInfo.GetSystemTimeZones().Any(x => x.Id == "Eastern Standard Time"))
                     return "US/Eastern";
                 else
                     return "Eastern Standard Time";
@@ -26,14 +26,14 @@ namespace UnitTests
         }
 
         /// <summary>
-        /// Windows/Mono-agnostic time zone ID
+        /// Windows/*nix-agnostic time zone ID
         /// (because it would be too easy if they could settle on a standard list of ids, right?)
         /// </summary>
         public string PACIFIC_STANDARD_TIME_ZONE_ID
         {
             get
             {
-                if (null != System.Type.GetType("Mono.Runtime"))
+                if (!TimeZoneInfo.GetSystemTimeZones().Any(x => x.Id == "Pacific Standard Time"))
                     return "US/Pacific";
                 else
                     return "Pacific Standard Time";

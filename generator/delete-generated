@@ -2,32 +2,50 @@
 
 require 'fileutils'
 
-FILE_ROOT = File.expand_path('../../QuickFIXn', __FILE__)
+is_err = false
 
-puts "FILE_ROOT: #{FILE_ROOT}"
+FILE_ROOT = File.expand_path('../../', __FILE__)
+
 
 files_to_delete = [
-  File.join(FILE_ROOT, 'FixMessages.csproj'),
-  File.join(FILE_ROOT, 'Fields/Fields.cs'),
-  File.join(FILE_ROOT, 'Fields/FieldTags.cs')
+  File.join(FILE_ROOT, 'QuickFIXn/Fields/Fields.cs'),
+  File.join(FILE_ROOT, 'QuickFIXn/Fields/FieldTags.cs')
 ]
 
-dir_pattern = File.join(FILE_ROOT, 'Message/FIX*')
-dirs_to_delete = Dir.glob(dir_pattern)
+message_dir_pattern = File.join(FILE_ROOT, 'Messages/FIX*/*cs')
+message_files_to_delete = Dir.glob(message_dir_pattern)
 
 
 puts '--Deleting generated code--'
-puts 'Files:'
+puts 'Field definition files:'
 
 files_to_delete.each do |f|
   puts "* Attempting to delete file: #{f}"
-  File.delete f
+  if(File.exists?(f))
+    File.delete f
+  else
+    puts "  WARNING: File does not exist"
+    is_err = true
+  end
 end
 
-puts 'Dirs:'
+puts 'Message definition files:'
 
-dirs_to_delete.each do |d|
-  puts "* Attempting to delete directory: #{d}/"
-  FileUtils.rm_r d
+if(message_files_to_delete.empty?)
+  puts "  WARNING: 'Messages/FIX*/*cs' files do not exist."
+  is_err = true
+else
+  message_files_to_delete.each do |f|
+    File.delete f
+  end
+  puts "  All 'Messages/FIX*/*cs' files are deleted, if present."
 end
 
+
+if(is_err)
+  puts "---"
+  puts "GENERAL ERROR: Not all expected files were found, but all that *were* found were deleted."
+  puts "  This may be ok, for instance, if you ran this script multiple times in a row."
+  puts "  This should *not* happen on a fresh checkout, or right after running the generator."
+  puts "  Users of this script must evaluate this result accordingly."
+end
