@@ -3,6 +3,8 @@
 class FieldGen
   def self.generate fields, fields_path, tags_path
     fields.map! {|fld| fld.merge! type_info(fld) }
+    puts "generate #{fields_path}"
+    puts "     and #{tags_path}"
     File.open(fields_path, 'w') {|f| f.puts fields_str(fields) }
     File.open(tags_path, 'w') {|f| f.puts tags_str(fields) }
   end
@@ -108,7 +110,9 @@ HERE
         public #{field[:name]}(#{field[:base_type]} val)
             :base(Tags.#{field[:name]}, val) {}
         public #{field[:name]}(#{field[:base_type]} val, bool showMilliseconds)
-	    :base(Tags.#{field[:name]}, val, showMilliseconds) {}
+            :base(Tags.#{field[:name]}, val, showMilliseconds) {}
+		public #{field[:name]}(#{field[:base_type]} val, Converters.TimeStampPrecision precision)
+            :base(Tags.#{field[:name]}, val, precision) {}
 #{fix_values(field)}
     }
 

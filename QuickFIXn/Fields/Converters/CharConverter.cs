@@ -13,7 +13,7 @@ namespace QuickFix.Fields.Converters
         /// <summary>
         /// Convert string to char
         /// </summary>
-        /// <exception cref="BadConversionException"/>
+        /// <exception cref="FieldConvertError"/>
         public static char Convert(string c)
         {
             if (c.Length != 1)

@@ -2,7 +2,7 @@ version: 1.0.{build}
 
 install:
 - cmd: >-
-    gem install nokogiri -v 1.6.8.1
+    gem install --source http://rubygems.org nokogiri -v 1.6.8.1
 
     generate.bat
 build_script:

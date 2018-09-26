@@ -16,7 +16,9 @@ TradeClient can also be configured to connect to SimpleAcceptor,
 though TradeClient will not hear any application-level responses from
 SimpleAcceptor.
 
-Each app is meant to be run from its target dir, e.g. Examples\Executor\bin\Debug\.
+Each app is meant to be run from its target dir, e.g. Examples\Executor\bin\Debug\net461
+or Examples\Executor\bin\Debug\netcoreapp2.0. The instructions below assume net461, but
+apply equally to netcoreapp2.0.
 
 
 SimpleAcceptor
@@ -37,7 +39,7 @@ handle. For more information - http://quickfixn.org/tutorial/configuration
 
 Build QuickFIX/n first by running build.bat
 Then start the SimpleAcceptor by opening a command prompt at 
-quickfixn/Examples/SimpleAcceptor/bin/Release and running:
+quickfixn/Examples/SimpleAcceptor/bin/Release/net461 and running:
 Examples.SimpleAcceptor.exe simpleacc.cfg
 
 Executor
@@ -58,7 +60,7 @@ the counterparty will reject your message.
 The Executor is configured with the executor.cfg file.
 
 Build QuickFIX/n by running build.bat, then start the Executor by opening a command
-prompt at quickfixn/Examples/Executor/bin/Release and running:
+prompt at quickfixn/Examples/Executor/bin/Release/net461 and running:
 Executor.exe executor.cfg
 
 TradeClient
@@ -75,5 +77,5 @@ demonstration of how to complete certain tasks in your own application.
 TradeClient is configured with the tradeclient.cfg file.
 
 Build QuickFIX/n by running build.bat, then start TradeClient by opening a command
-prompt at quickfixn/Examples/TradeClient/bin/Release and running
+prompt at quickfixn/Examples/TradeClient/bin/Release/net461 and running
 TradeClient.exe tradeclient.cfg

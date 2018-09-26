@@ -3,6 +3,7 @@ using NUnit.Framework;
 using QuickFix;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 
 namespace UnitTests
@@ -131,15 +132,16 @@ namespace UnitTests
         [Test]
         public void ThreadSafeSetAndGet() {
             //Set up store
-            if (System.IO.Directory.Exists("store")) {
-                System.IO.Directory.Delete("store", true);
-            }
+            var storeDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "store");
+
+            if (System.IO.Directory.Exists(storeDirectory))
+                System.IO.Directory.Delete(storeDirectory, true);
 
             SessionID sessionId = new SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
 
             Dictionary config = new Dictionary();
             config.SetString(SessionSettings.CONNECTION_TYPE, "initiator");
-            config.SetString(SessionSettings.FILE_STORE_PATH, "store");
+            config.SetString(SessionSettings.FILE_STORE_PATH, storeDirectory);
 
             SessionSettings settings = new SessionSettings();
             settings.Set(sessionId, config);
@@ -215,6 +217,8 @@ namespace UnitTests
             //Tear down filestore
             state.Dispose();
             store.Dispose();
+
+            Directory.Delete(storeDirectory, true);
         }
     }
 }

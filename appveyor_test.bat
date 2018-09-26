@@ -1,1 +1,1 @@
- PowerShell .\acceptance_test.ps1
+PowerShell .\acceptance_test.ps1

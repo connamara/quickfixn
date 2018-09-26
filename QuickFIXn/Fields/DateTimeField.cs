@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using QuickFix.Fields.Converters;
 
 namespace QuickFix.Fields
 {
     public class DateTimeField : FieldBase<DateTime>
     {
-        protected readonly bool showMilliseconds = true;
+        protected readonly TimeStampPrecision timePrecision = TimeStampPrecision.Millisecond;
         public DateTimeField(int tag)
             : base(tag, new DateTime()) {}
 
@@ -15,7 +13,14 @@ namespace QuickFix.Fields
             : base(tag, dt) {}
 
         public DateTimeField(int tag, DateTime dt, bool showMilliseconds)
-            : base(tag, dt) { this.showMilliseconds = showMilliseconds; }
+            : this(tag, dt, showMilliseconds ? TimeStampPrecision.Millisecond : TimeStampPrecision.Second ) { }
+
+        public DateTimeField(int tag, DateTime dt, TimeStampPrecision timeFormatPrecision)
+            : base(tag, dt )
+        {
+            timePrecision = timeFormatPrecision;
+        }
+
 
         // quickfix compat
         public DateTime getValue()
@@ -26,7 +31,7 @@ namespace QuickFix.Fields
 
         protected override string makeString()
         {
-            return Converters.DateTimeConverter.Convert(Obj, showMilliseconds);
+            return Converters.DateTimeConverter.Convert(Obj, timePrecision);
         }
     }
 
@@ -40,6 +45,10 @@ namespace QuickFix.Fields
 
         public DateOnlyField(int tag, DateTime dt, bool showMilliseconds)
             : base(tag, dt, showMilliseconds) { }
+
+        public DateOnlyField(int tag, DateTime dt, TimeStampPrecision timeFormatPrecision)
+    : base(tag, dt, timeFormatPrecision) { }
+
         protected override string makeString()
         {
             return Converters.DateTimeConverter.ConvertDateOnly(Obj);
@@ -56,9 +65,13 @@ namespace QuickFix.Fields
 
         public TimeOnlyField(int tag, DateTime dt, bool showMilliseconds)
             : base(tag, dt, showMilliseconds) { }
+
+        public TimeOnlyField(int tag, DateTime dt, TimeStampPrecision timeFormatPrecision)
+            : base(tag, dt, timeFormatPrecision) { }
+
         protected override string makeString()
         {
-            return Converters.DateTimeConverter.ConvertTimeOnly(Obj, base.showMilliseconds); 
+            return Converters.DateTimeConverter.ConvertTimeOnly(Obj, base.timePrecision); 
         }
     }
 }

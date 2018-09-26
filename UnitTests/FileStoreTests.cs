@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
@@ -16,17 +17,21 @@ namespace UnitTests
         QuickFix.SessionSettings settings;
         QuickFix.SessionID sessionID;
 
+        private string storeDirectory;
+
         [SetUp]
         public void setup()
         {
-            if (System.IO.Directory.Exists("store"))
-                System.IO.Directory.Delete("store", true);
+            storeDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "store");
+
+            if (System.IO.Directory.Exists(storeDirectory))
+                System.IO.Directory.Delete(storeDirectory, true);
 
             sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
 
             QuickFix.Dictionary config = new QuickFix.Dictionary();
             config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
-            config.SetString(QuickFix.SessionSettings.FILE_STORE_PATH, "store");
+            config.SetString(QuickFix.SessionSettings.FILE_STORE_PATH, storeDirectory);
 
             settings = new QuickFix.SessionSettings();
             settings.Set(sessionID, config);
@@ -50,6 +55,7 @@ namespace UnitTests
         public void teardown()
         {
             store.Dispose();
+            Directory.Delete(storeDirectory, true);
         }
 
         [Test]
@@ -65,10 +71,10 @@ namespace UnitTests
         [Test]
         public void generateFileNamesTest()
         {
-            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.seqnums"));
-            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.body"));
-            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.header"));
-            Assert.That(System.IO.File.Exists("store/FIX.4.2-SENDERCOMP-TARGETCOMP.session"));
+            Assert.That(System.IO.File.Exists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.seqnums")));
+            Assert.That(System.IO.File.Exists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.body")));
+            Assert.That(System.IO.File.Exists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.header")));
+            Assert.That(System.IO.File.Exists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.session")));
         }
 
         [Test]

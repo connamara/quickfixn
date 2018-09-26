@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using QuickFix.Fields;
+using QuickFix.Fields.Converters;
 
 namespace QuickFix
 {
@@ -171,7 +172,29 @@ namespace QuickFix
         /// Determines if milliseconds should be added to timestamps.
         /// Only avilable on FIX4.2. or greater
         /// </summary>
-        public bool MillisecondsInTimeStamp { get; set; }
+        public bool MillisecondsInTimeStamp
+        {
+            get
+            {
+                return TimeStampPrecision == TimeStampPrecision.Millisecond;
+            }
+            set
+            {
+                TimeStampPrecision = value ? TimeStampPrecision.Millisecond : TimeStampPrecision.Second;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the time stamp precision.
+        /// </summary>
+        /// <value>
+        /// The time stamp precision.
+        /// </value>
+        public TimeStampPrecision TimeStampPrecision
+        {
+            get;
+            set;
+        }
 
         /// <summary>
         /// Adds the last message sequence number processed in the header (tag 369)
@@ -187,8 +210,17 @@ namespace QuickFix
         /// Sets a maximum number of messages to request in a resend request.
         /// </summary>
         public int MaxMessagesInResendRequest { get; set; }
+
+        /// <summary>
+        /// This is the FIX field value, e.g. "6" for FIX44
+        /// </summary>
         public ApplVerID targetDefaultApplVerID { get; set; }
+
+        /// <summary>
+        /// This is the FIX field value, e.g. "6" for FIX44
+        /// </summary>
         public string SenderDefaultApplVerID { get; set; }
+
         public SessionID SessionID { get; set; }
         public IApplication Application { get; set; }
         public DataDictionaryProvider DataDictionaryProvider { get; set; }
@@ -246,7 +278,7 @@ namespace QuickFix
             this.ResendSessionLevelRejects = false;
             this.ValidateLengthAndChecksum = true;
             this.CheckCompID = true;
-            this.MillisecondsInTimeStamp = true;
+            this.TimeStampPrecision = TimeStampPrecision.Millisecond;
             this.EnableLastMsgSeqNumProcessed = false;
             this.MaxMessagesInResendRequest = 0;
             this.SendLogoutBeforeTimeoutDisconnect = false;
@@ -522,6 +554,7 @@ namespace QuickFix
 
             MessageBuilder msgBuilder = new MessageBuilder(
                     msgStr,
+                    SenderDefaultApplVerID,
                     this.ValidateLengthAndChecksum,
                     this.SessionDataDictionary,
                     this.ApplicationDataDictionary,
@@ -533,7 +566,7 @@ namespace QuickFix
         /// <summary>
         /// Process a message from the counterparty.
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="msgBuilder"></param>
         internal void Next(MessageBuilder msgBuilder)
         {
             if (!IsSessionTime)
@@ -1244,7 +1277,7 @@ namespace QuickFix
         /// <summary>
         /// FIXME don't do so much operator new here
         /// </summary>
-        /// <param name="heartBtInt"></param>
+        /// <param name="otherLogon"></param>
         /// <returns></returns>
         protected bool GenerateLogon(Message otherLogon)
         {
@@ -1458,6 +1491,7 @@ namespace QuickFix
         /// FIXME don't do so much operator new here
         /// </summary>
         /// <param name="m"></param>
+        /// <param name="msgSeqNum"></param>
         protected void InitializeHeader(Message m, int msgSeqNum)
         {
             state_.LastSentTimeDT = DateTime.UtcNow;
@@ -1492,13 +1526,13 @@ namespace QuickFix
 
         protected void InsertSendingTime(FieldMap header)
         {
-            bool showMilliseconds = false;
+            bool fix42OrAbove = false;
             if (this.SessionID.BeginString == FixValues.BeginString.FIXT11)
-                showMilliseconds = true;
+                fix42OrAbove = true;
             else
-                showMilliseconds = this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0;
+                fix42OrAbove = this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0;
 
-            header.SetField(new Fields.SendingTime(System.DateTime.UtcNow, showMilliseconds && MillisecondsInTimeStamp));
+            header.SetField(new Fields.SendingTime(System.DateTime.UtcNow, fix42OrAbove ? TimeStampPrecision : TimeStampPrecision.Second ) );
         }
 
         protected void Persist(Message message, string messageString)
@@ -1554,13 +1588,13 @@ namespace QuickFix
 
         protected void InsertOrigSendingTime(FieldMap header, System.DateTime sendingTime)
         {
-            bool showMilliseconds = false;
+            bool fix42OrAbove = false;
             if (this.SessionID.BeginString == FixValues.BeginString.FIXT11)
-                showMilliseconds = true;
+                fix42OrAbove = true;
             else
-                showMilliseconds = this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0;
+                fix42OrAbove = this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0;
 
-            header.SetField(new OrigSendingTime(sendingTime, showMilliseconds && MillisecondsInTimeStamp));
+            header.SetField(new OrigSendingTime(sendingTime, fix42OrAbove ? TimeStampPrecision : TimeStampPrecision.Second ) );
         }
         protected void NextQueued()
         {

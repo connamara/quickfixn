@@ -17,12 +17,12 @@ echo tag version: %TAG_VERSION%
 echo
 
 rem Update the assembly version
-ruby scripts\update_assembly_version.rb %TAG_VERSION% QuickFIXn\Properties\AssemblyInfo.cs
+ruby scripts\update_assembly_version.rb %TAG_VERSION% QuickFIXn\QuickFix.csproj
 if %errorlevel% neq 0 echo "update_assembly_version.rb failed" && exit /b %errorlevel%
-echo * AssemblyInfo updated for new version number.
+echo * QuickFix.csproj updated for new version number.
 
 rem commit the version file, so it will be part of the tag
-call git add QuickFIXn\Properties\AssemblyInfo.cs
+call git add QuickFIXn\QuickFix.csproj
 call git commit -m "version number for version %TAG_VERSION%"
 echo * Version number committed.
 
@@ -50,9 +50,20 @@ IF EXIST tmp rmdir /s /q tmp
 mkdir tmp
 mkdir tmp\%QF_DIR%
 mkdir tmp\%QF_DIR%\bin
+mkdir tmp\%QF_DIR%\bin\netstandard2.0
 mkdir tmp\%QF_DIR%\spec
 mkdir tmp\%QF_DIR%\config
-copy QuickFIXn\bin\Release\QuickFix.dll tmp\%QF_DIR%\bin
+copy QuickFIXn\bin\Release\netstandard2.0\QuickFix.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.dll
+
+copy Messages\FIX40\bin\Release\netstandard2.0\QuickFix.FIX40.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX40.dll
+copy Messages\FIX41\bin\Release\netstandard2.0\QuickFix.FIX41.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX41.dll
+copy Messages\FIX42\bin\Release\netstandard2.0\QuickFix.FIX42.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX42.dll
+copy Messages\FIX43\bin\Release\netstandard2.0\QuickFix.FIX43.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX43.dll
+copy Messages\FIX44\bin\Release\netstandard2.0\QuickFix.FIX44.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX44.dll
+copy Messages\FIX50\bin\Release\netstandard2.0\QuickFix.FIX50.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX50.dll
+copy Messages\FIX50SP1\bin\Release\netstandard2.0\QuickFix.FIX50SP1.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX50SP1.dll
+copy Messages\FIX50SP2\bin\Release\netstandard2.0\QuickFix.FIX50SP2.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX50SP2.dll
+
 xcopy spec tmp\%QF_DIR%\spec /e /y
 copy config\sample_acceptor.cfg tmp\%QF_DIR%\config\
 copy config\sample_initiator.cfg tmp\%QF_DIR%\config\

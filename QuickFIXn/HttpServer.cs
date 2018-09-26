@@ -4,8 +4,6 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Web;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using QuickFix;
 
 namespace Acceptor
@@ -320,13 +318,6 @@ namespace Acceptor
 
         private string ProcessRoot( HttpListenerRequest request)
         {
-            HtmlTable table = new HtmlTable
-            {
-                Border = 1,
-                ID="sessionlist",
-                CellPadding = 2,
-                Width = "100%"
-            };
             StringBuilder sbHtmlPageBody = _sbHtmlHeader;
 
             //Session count
@@ -334,39 +325,38 @@ namespace Acceptor
 
             //session management links
             sbHtmlPageBody.AppendFormat(@"<CENTER><A HREF='/resetSessions{0}'>RESET</A>&nbsp;<A HREF='/refreshSessions'>REFRESH</A>&nbsp;<A HREF='/enableSessions'>ENABLE</A>&nbsp;<A HREF='/disableSessions'>DISABLE</A></CENTER><HR/></HEADER><BODY>", GetParameterList(request.Url.OriginalString));
-
-            HtmlTableRow row = new HtmlTableRow();
-            var headerRow = new HtmlTableRow();
-            headerRow.Cells.Add(new HtmlTableCell { InnerText = "Session", Align = "center" });
-            headerRow.Cells.Add(new HtmlTableCell { InnerText = "Type", Align = "center" });
-            headerRow.Cells.Add(new HtmlTableCell { InnerText = "Enabled", Align = "center" });
-            headerRow.Cells.Add(new HtmlTableCell { InnerText = "Session Time", Align = "center" });
-            headerRow.Cells.Add(new HtmlTableCell { InnerText = "Logged On", Align = "center" });
-            headerRow.Cells.Add(new HtmlTableCell { InnerText = "Next Incoming", Align = "center" });
-            headerRow.Cells.Add(new HtmlTableCell { InnerText = "Next Outgoing", Align = "center" });
-            table.Rows.Add(headerRow);
+            
+            //Start the table generation
+            sbHtmlPageBody.Append("<table id=\"sessionlist\" style=\"border-width:1; padding:2; width:100%\">");
+            
+            sbHtmlPageBody.Append("<tr>");
+            sbHtmlPageBody.Append(AddCell("Session", true));
+            sbHtmlPageBody.Append(AddCell("Type", true));
+            sbHtmlPageBody.Append(AddCell("Enabled", true));
+            sbHtmlPageBody.Append(AddCell("Session Time", true));
+            sbHtmlPageBody.Append(AddCell("Logged On", true));
+            sbHtmlPageBody.Append(AddCell("Next Incoming", true));
+            sbHtmlPageBody.Append(AddCell("Next Outgoing", true));
+            sbHtmlPageBody.Append("</tr>");
 
             foreach (SessionID session in _sessionSettings.GetSessions())
             {
                 Session sessionDetails = Session.LookupSession(session);
-                row = new HtmlTableRow();
-                row.Cells.Add(new HtmlTableCell { InnerHtml = String.Format("<a href=\"session?BeginString={0}&SenderCompID={1}&TargetCompID={2}\">{0}:{1}->{2}</a>", session.BeginString, session.SenderCompID, session.TargetCompID ) });
-                row.Cells.Add(new HtmlTableCell { InnerHtml = sessionDetails.IsInitiator ? "initiator" : "acceptor" });
-                row.Cells.Add(new HtmlTableCell { InnerHtml = sessionDetails.IsEnabled ? "yes" : "no" });
-                row.Cells.Add(new HtmlTableCell { InnerHtml = sessionDetails.IsSessionTime ? "yes" : "no" });
-                row.Cells.Add(new HtmlTableCell { InnerHtml = sessionDetails.IsLoggedOn ? "yes" : "no" });
-                row.Cells.Add(new HtmlTableCell { InnerHtml = sessionDetails.NextTargetMsgSeqNum.ToString() });
-                row.Cells.Add(new HtmlTableCell { InnerHtml = sessionDetails.NextSenderMsgSeqNum.ToString() });
-
-                table.Rows.Add(row);
+                sbHtmlPageBody.Append("<tr>");
+                sbHtmlPageBody.Append(AddCell(String.Format(
+                    "<a href=\"session?BeginString={0}&SenderCompID={1}&TargetCompID={2}\">{0}:{1}->{2}</a>",
+                    session.BeginString, session.SenderCompID, session.TargetCompID)));
+                sbHtmlPageBody.Append(AddCell(sessionDetails.IsInitiator ? "initiator" : "acceptor"));
+                sbHtmlPageBody.Append(AddCell(sessionDetails.IsEnabled ? "yes" : "no"));
+                sbHtmlPageBody.Append(AddCell(sessionDetails.IsSessionTime ? "yes" : "no"));
+                sbHtmlPageBody.Append(AddCell(sessionDetails.IsLoggedOn ? "yes" : "no"));
+                sbHtmlPageBody.Append(AddCell(sessionDetails.NextTargetMsgSeqNum.ToString()));
+                sbHtmlPageBody.Append(AddCell(sessionDetails.NextSenderMsgSeqNum.ToString()));
+                sbHtmlPageBody.Append("</tr>");
             }
 
-
-            table.Rows.Add(row);
-            StringWriter sr = new StringWriter();
-            HtmlTextWriter hText = new HtmlTextWriter(sr);
-            table.RenderControl(hText);
-            return sbHtmlPageBody + hText.InnerWriter.ToString();
+            sbHtmlPageBody.Append("</table>");
+            return sbHtmlPageBody.ToString();
         }
 
         public string SessionDetails(HttpListenerRequest request)
@@ -482,37 +472,29 @@ namespace Acceptor
             sbHtmlPageBody.AppendFormat(@"<CENTER>{0}</CENTER><HR/>", sessionId);
             sbHtmlPageBody.AppendFormat(@"<CENTER>[<A HREF='/resetSession?{0}'>RESET</A>]&nbsp;[<A HREF='/refreshSession?{0}'>REFRESH</A>]</CENTER><HR/></HEADER><BODY>", GetParameterList(urlOriginalString));
 
-            HtmlTable table = new HtmlTable
-            {
-                Border = 1,
-                ID="session_details",
-                CellPadding = 2,
-                Width = "100%"
-            };
-            table.Rows.Add(AddRow("Enabled", sessionDetails.IsEnabled, url));
-            table.Rows.Add(AddRow("ConnectionType", sessionDetails.IsInitiator?"initiator": "acceptor"));
-            table.Rows.Add(AddRow("SessionTime", sessionDetails.IsSessionTime));
-            table.Rows.Add(AddRow("LoggedOn", sessionDetails.IsLoggedOn));
-            table.Rows.Add(AddRow("Next Incoming", sessionDetails.NextTargetMsgSeqNum, url));
-            table.Rows.Add(AddRow("Next Outgoing", sessionDetails.NextSenderMsgSeqNum, url));
-            table.Rows.Add(AddRow("SendRedundantResendRequests", sessionDetails.SendRedundantResendRequests, url));
-            table.Rows.Add(AddRow("CheckCompId", sessionDetails.CheckCompID, url));
-            table.Rows.Add(AddRow("CheckLatency", sessionDetails.CheckLatency, url));
-            table.Rows.Add(AddRow("MaxLatency", sessionDetails.MaxLatency, url));
-            table.Rows.Add(AddRow("LogonTimeout", sessionDetails.LogonTimeout, url));
-            table.Rows.Add(AddRow("LogoutTimeout", sessionDetails.LogoutTimeout, url));
-            table.Rows.Add(AddRow("ResetOnLogon", sessionDetails.ResetOnLogon, url));
-            table.Rows.Add(AddRow("ResetOnLogout", sessionDetails.ResetOnLogout, url));
-            table.Rows.Add(AddRow("ResetOnDisconnect", sessionDetails.ResetOnDisconnect, url));
-            table.Rows.Add(AddRow("RefreshOnLogon", sessionDetails.RefreshOnLogon, url));
-            table.Rows.Add(AddRow("MillisecondsInTimestamp", sessionDetails.MillisecondsInTimeStamp, url));
-            table.Rows.Add(AddRow("PersistMessages", sessionDetails.PersistMessages, url));
+            sbHtmlPageBody.Append("<table id=\"session_details\" style=\"border-width:1; padding:2; width:100%\">");
+            
+            sbHtmlPageBody.Append(AddRow("Enabled", sessionDetails.IsEnabled, url));
+            sbHtmlPageBody.Append(AddRow("ConnectionType", sessionDetails.IsInitiator?"initiator": "acceptor"));
+            sbHtmlPageBody.Append(AddRow("SessionTime", sessionDetails.IsSessionTime));
+            sbHtmlPageBody.Append(AddRow("LoggedOn", sessionDetails.IsLoggedOn));
+            sbHtmlPageBody.Append(AddRow("Next Incoming", sessionDetails.NextTargetMsgSeqNum, url));
+            sbHtmlPageBody.Append(AddRow("Next Outgoing", sessionDetails.NextSenderMsgSeqNum, url));
+            sbHtmlPageBody.Append(AddRow("SendRedundantResendRequests", sessionDetails.SendRedundantResendRequests, url));
+            sbHtmlPageBody.Append(AddRow("CheckCompId", sessionDetails.CheckCompID, url));
+            sbHtmlPageBody.Append(AddRow("CheckLatency", sessionDetails.CheckLatency, url));
+            sbHtmlPageBody.Append(AddRow("MaxLatency", sessionDetails.MaxLatency, url));
+            sbHtmlPageBody.Append(AddRow("LogonTimeout", sessionDetails.LogonTimeout, url));
+            sbHtmlPageBody.Append(AddRow("LogoutTimeout", sessionDetails.LogoutTimeout, url));
+            sbHtmlPageBody.Append(AddRow("ResetOnLogon", sessionDetails.ResetOnLogon, url));
+            sbHtmlPageBody.Append(AddRow("ResetOnLogout", sessionDetails.ResetOnLogout, url));
+            sbHtmlPageBody.Append(AddRow("ResetOnDisconnect", sessionDetails.ResetOnDisconnect, url));
+            sbHtmlPageBody.Append(AddRow("RefreshOnLogon", sessionDetails.RefreshOnLogon, url));
+            sbHtmlPageBody.Append(AddRow("MillisecondsInTimestamp", sessionDetails.MillisecondsInTimeStamp, url));
+            sbHtmlPageBody.Append(AddRow("PersistMessages", sessionDetails.PersistMessages, url));
 
-            StringWriter sr = new StringWriter();
-            HtmlTextWriter hText = new HtmlTextWriter(sr);
-            table.RenderControl(hText);
-
-            return sbHtmlPageBody + hText.InnerWriter.ToString();
+            sbHtmlPageBody.Append("</table>");
+            return sbHtmlPageBody.ToString();
         }
 
         public static string RemoveQueryStringByKey(string url, string key)
@@ -538,38 +520,39 @@ namespace Acceptor
             return HttpUtility.ParseQueryString((new Uri(url).Query)).ToString();
         }
 
-        private static HtmlTableRow AddRow(string colName, bool value, string url="")
+        private static string AddRow(string colName, bool value, string url="")
         {
-            HtmlTableRow row = new HtmlTableRow();
-            row.Cells.Add(new HtmlTableCell { InnerHtml = colName });
-            row.Cells.Add(new HtmlTableCell { InnerHtml = value ? "yes" : "no" });
-            row.Cells.Add(url.Length > 0
-                ? new HtmlTableCell {InnerHtml = $"<a href=\" {url}&{colName}={!value} \">toggle</a>"}
-                : new HtmlTableCell {InnerHtml = ""});
-            return row;
+            string valueAsStr = value ? "yes" : "no";
+            string innerHtml = url.Length > 0
+                ? $"<a href=\" {url}&{colName}={!value} \">toggle</a>"
+                : "";
+            return AddRow(colName, valueAsStr, innerHtml);
         }
 
-        private static HtmlTableRow AddRow(string colName, int value, string url = "")
+        private static string AddRow(string colName, int value, string url = "")
         {
-            HtmlTableRow row = new HtmlTableRow();
-            row.Cells.Add(new HtmlTableCell { InnerHtml = colName });
-            row.Cells.Add(new HtmlTableCell { InnerHtml = value.ToString()});
-            row.Cells.Add(new HtmlTableCell {InnerHtml = $"<a href=\" {url}&{colName}={value - 10} \"> << </a>" +
-                                                         $"<a href=\" {url}&{colName}={value - 1} \"> < </a>" +
-                                                         " | " +
-                                                         $"<a href=\" {url}&{colName}={value +1} \"> > </a>" +
-                                                         $"<a href=\" {url}&{colName}={value + 10} \"> >> </a>"
-            });
-            
-            return row;
+            string innerHtml = $"<a href=\" {url}&{colName}={value - 10} \"> << </a>" +
+                               $"<a href=\" {url}&{colName}={value - 1} \"> < </a>" +
+                               " | " +
+                               $"<a href=\" {url}&{colName}={value + 1} \"> > </a>" +
+                               $"<a href=\" {url}&{colName}={value + 10} \"> >> </a>";
+            return AddRow(colName, value.ToString(), innerHtml);
         }
-        private static HtmlTableRow AddRow(string colName, string value)
+        private static string AddRow(string colName, string value, string innerHtml = "")
         {
-            HtmlTableRow row = new HtmlTableRow();
-            row.Cells.Add(new HtmlTableCell { InnerHtml = colName });
-            row.Cells.Add(new HtmlTableCell { InnerHtml = value});
-            row.Cells.Add(new HtmlTableCell { InnerHtml = "" });
-            return row;
+            StringBuilder row = new StringBuilder();
+            row.Append("<tr>");
+            row.Append(AddCell(colName));
+            row.Append(AddCell(value));
+            row.Append(AddCell(innerHtml));
+            row.Append("</tr>");
+            return row.ToString();
+        }
+
+        private static string AddCell(string cellContent, bool header = false)
+        {
+            string entryType = header ? "th" : "td";
+            return "<"+entryType+" align=\"left\">" + cellContent + "</"+entryType+">";
         }
 
         public virtual void Dispose()

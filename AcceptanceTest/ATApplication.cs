@@ -70,6 +70,26 @@ namespace AcceptanceTest
             Echo(message, sessionID);
         }
 
+        public void OnMessage(QuickFix.FIX50SP1.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX50SP1.SecurityDefinition message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX50SP2.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX50SP2.SecurityDefinition message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
         protected void Echo(Message message, SessionID sessionID)
         {
             Message echo = new Message(message);
@@ -98,6 +118,8 @@ namespace AcceptanceTest
         public void OnMessage(QuickFix.FIX43.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
         public void OnMessage(QuickFix.FIX44.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
         public void OnMessage(QuickFix.FIX50.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
+        public void OnMessage(QuickFix.FIX50SP1.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
+        public void OnMessage(QuickFix.FIX50SP2.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
 
         public void ProcessNews(QuickFix.Message msg, SessionID sessionID)
         {

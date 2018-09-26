@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Title>QuickFIX/n FIX4.3 Messages</Title>
+    <PackageTitle>$(Title)</PackageTitle>
+    <Description>Open-source C# implementation of QuickFIX</Description>
+    <Copyright>QuickFIXn.org 2011-now</Copyright>
+    <Authors>Connamara Systems, LLC and QuickFIX/n contributors</Authors>
+    <Version>1.8.0</Version>
+    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj" />
+  </ItemGroup>
+
+</Project>

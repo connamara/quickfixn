@@ -1,91 +1,36 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{592C4909-1D3E-41C9-B6F9-505C770533A2}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
     <RootNamespace>TradeClient</RootNamespace>
     <AssemblyName>TradeClient</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <StartupObject>TradeClient.Program</StartupObject>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <TargetFrameworkProfile />
+    <Copyright>Copyright © Connamara Systems, LLC 2011</Copyright>
+    <Company>Connamara Systems, LLC</Company>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TradeClientApp.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj">
-      <Project>{D67079DA-6C49-48B2-93AB-1C3E879F5A0B}</Project>
-      <Name>QuickFix</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\QuickFixn-TestCA.cer">
-      <Link>QuickFixn-TestCA.cer</Link>
+    <None Include="..\QuickFixn-TestCA.cer" Link="QuickFixn-TestCA.cer">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="..\QuickFixn-TestClient.pfx">
-      <Link>QuickFixn-TestClient.pfx</Link>
+    <None Include="..\QuickFixn-TestClient.pfx" Link="QuickFixn-TestClient.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="app.config" />
-    <None Include="tradeclient.cfg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Messages\FIX44\QuickFix.FIX44.csproj" />
+    <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="tradeclient.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="tradeclient_ssl.cfg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Update="tradeclient_ssl.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
