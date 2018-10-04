@@ -71,7 +71,8 @@ namespace QuickFix
                         {
                             try
                             {
-                                killer.Connect(serverSocketEndPoint_);
+                                IPEndPoint killerEndPoint =  new IPEndPoint(IPAddress.Loopback, serverSocketEndPoint_.Port);
+                                killer.Connect(killerEndPoint);
                             }
                             catch (System.Exception e)
                             {
