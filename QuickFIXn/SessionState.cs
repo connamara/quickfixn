@@ -300,7 +300,10 @@ namespace QuickFix
 
         public void Queue(int msgSeqNum, Message msg)
         {
-            MsgQueue.Add(msgSeqNum, msg);
+            if (!MsgQueue.ContainsKey(msgSeqNum))
+            {
+                MsgQueue.Add(msgSeqNum, msg);
+            }
         }
 
         public void ClearQueue()
