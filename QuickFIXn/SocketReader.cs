@@ -4,7 +4,7 @@ using System;
 
 namespace QuickFix
 {
-    /// TEST
+    
     /// <summary>
     /// TODO merge with SocketInitiatorThread
     /// </summary>
