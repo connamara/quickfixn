@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 namespace QuickFix
 {
+    /// TEST
     /// <summary>
     /// Handles a connection with an acceptor.
     /// </summary>
