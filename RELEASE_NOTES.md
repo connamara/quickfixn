@@ -18,7 +18,8 @@ What's New
 * (minor) #448 - Fix message load error within *nix environments (mtnbiker99)
 * (minor) #497 - Support full cross-platform operation (michaelwilner)
 * (patch) #498 - Fix hanging on ThreadedSocketReactor exit (michaelwilner)
-* (minor) #489 - fixes for DefaultMessageFactory / FIX50sp1/2
+* (minor) #489 - fixes for DefaultMessageFactory / FIX50sp1/2 (gbirchmeier)
+* (minor) #507 - better feedback for "Incorrect BeginString" errors (gbirchmeier)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)

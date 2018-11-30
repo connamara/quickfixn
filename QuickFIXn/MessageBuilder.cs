@@ -22,6 +22,10 @@ namespace QuickFix
 
         public string OriginalString { get { return _msgStr; } }
         public QuickFix.Fields.MsgType MsgType { get { return _msgType; } }
+
+        /// <summary>
+        /// The BeginString from the raw FIX message
+        /// </summary>
         public string BeginString { get { return _beginString; } }
 
         internal MessageBuilder(
