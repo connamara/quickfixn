@@ -161,8 +161,8 @@ namespace AcceptanceTest
             try
             {
                 string msgType = message.Header.GetField(QuickFix.Fields.Tags.MsgType);
-                log_.OnEvent("Got message " + msgType);
-                System.Console.WriteLine("===got message " + msgType);
+                // log_.OnEvent("Got message " + msgType);
+                // System.Console.WriteLine("===got message " + msgType);
                 Crack(message, sessionID);
             }
             catch (QuickFix.UnsupportedMessageType)

@@ -592,7 +592,7 @@ namespace QuickFix
                 string beginString = msgBuilder.BeginString;
 
                 if (!beginString.Equals(this.SessionID.BeginString))
-                    throw new UnsupportedVersion();
+                    throw new UnsupportedVersion(beginString);
 
 
                 if (MsgType.LOGON.Equals(msgType))
@@ -659,7 +659,7 @@ namespace QuickFix
                     this.Log.OnEvent(e.InnerException.Message);
                 GenerateReject(msgBuilder, e.sessionRejectReason, e.Field);
             }
-            catch (UnsupportedVersion)
+            catch (UnsupportedVersion uvx)
             {
                 if (MsgType.LOGOUT.Equals(msgBuilder.MsgType.Obj))
                 {
@@ -667,7 +667,8 @@ namespace QuickFix
                 }
                 else
                 {
-                    GenerateLogout("Incorrect BeginString");
+                    this.Log.OnEvent(uvx.ToString());
+                    GenerateLogout(uvx.Message);
                     state_.IncrNextTargetMsgSeqNum();
                 }
             }

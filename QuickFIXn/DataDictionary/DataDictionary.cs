@@ -83,7 +83,7 @@ namespace QuickFix.DataDictionary
 
 			if ((null != sessionDataDict) && (null != sessionDataDict.Version))
 				if (!sessionDataDict.Version.Equals(beginString))
-					throw new UnsupportedVersion();
+					throw new UnsupportedVersion(beginString);
 
 			if (((null != sessionDataDict) && sessionDataDict.CheckFieldsOutOfOrder) || ((null != appDataDict) && appDataDict.CheckFieldsOutOfOrder))
 			{

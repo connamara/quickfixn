@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace QuickFix
 {
     public class QuickFIXException : System.Exception
@@ -67,20 +69,21 @@ namespace QuickFix
     }
 
     /// <summary>
-    /// Version of FIX is not supported
+    /// Version of FIX is not supported.  In practice, this means the BeginString is somehow wrong.
     /// </summary>
     public class UnsupportedVersion : QuickFIXException
     {
+        [Obsolete("You should pass the invalid beginString as a parameter")]
         public UnsupportedVersion()
-            : base("Unsupported Version")
+            : base("Incorrect BeginString")
         { }
 
-        public UnsupportedVersion(string msg)
-            : base("Unsupported Version: " + msg)
+        public UnsupportedVersion(string beginString)
+            : base("Incorrect BeginString (" + beginString + ")")
         { }
 
-        public UnsupportedVersion(string msg, System.Exception innerException) 
-            : base("Unsupported Version: " + msg, innerException)
+        public UnsupportedVersion(string beginString, System.Exception innerException)
+            : base("Incorrect BeginString (" + beginString + ")", innerException)
         { }
     }
 
