@@ -79,11 +79,11 @@ namespace QuickFix
         { }
 
         public UnsupportedVersion(string beginString)
-            : base("Incorrect BeginString [" + beginString + "]")
+            : base("Incorrect BeginString (" + beginString + ")")
         { }
 
         public UnsupportedVersion(string beginString, System.Exception innerException)
-            : base("Incorrect BeginString [" + beginString + "]", innerException)
+            : base("Incorrect BeginString (" + beginString + ")", innerException)
         { }
     }
 
