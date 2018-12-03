@@ -56,7 +56,7 @@ Contributors
 - James Cook
 - Matt Lane
 - Austin Swaney
-- Arkadiusz Wójcik
+- Arkadiusz Wojcik
 - Zachary Herr
 - Mohit Kumar
 - Dain Hall
