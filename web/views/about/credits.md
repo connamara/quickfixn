@@ -52,5 +52,16 @@ Contributors
 - Timothy Caro
 - Steffan Ulfburg
 - Martin Adams
+- Dmitry Afanasiev
+- James Cook
+- Matt Lane
 - Austin Swaney
-
+- Arkadiusz Wójcik
+- Zachary Herr
+- Mohit Kumar
+- Dain Hall
+- Huw Jenkins
+- Mike Miracle
+- Jos Hickson
+- Micheal Wilner
+- Zeljko Vignjevic
