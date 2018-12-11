@@ -63,5 +63,5 @@ Contributors
 - Huw Jenkins
 - Mike Miracle
 - Jos Hickson
-- Micheal Wilner
+- Michael Wilner
 - Zeljko Vignjevic
