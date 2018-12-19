@@ -96,7 +96,14 @@ namespace QuickFix.Transport
                     {
                         // The session is disposed, and so is its log. We cannot use it to log the event,
                         // so we resort to storing it in a local file.
-                        File.AppendAllText("DisposedSessionEvents.log", $"{System.DateTime.Now:G}: {exceptionEvent}{Environment.NewLine}");
+                        try
+                        {
+                            File.AppendAllText("DisposedSessionEvents.log", $"{System.DateTime.Now:G}: {exceptionEvent}{Environment.NewLine}");
+                        }
+                        catch (IOException)
+                        {
+                            // Prevent IO exceptions from crashing the application
+                        }
                     }
                     else
                     {
