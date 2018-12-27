@@ -33,7 +33,7 @@ a counterparty logs on, when admin messages are sent, and most
 importantly, when application messages are received.
 
 **FromApp** - every inbound application level message will pass through this
-method, such as orders, executions, secutiry definitions, and market
+method, such as orders, executions, security definitions, and market
 data.  
 
 **FromAdmin** - every inbound admin level message will pass through this
