@@ -166,6 +166,14 @@ namespace QuickFix
             {
                 client.SendBufferSize = socketSettings.SocketSendBufferSize.Value;
             }
+            if (socketSettings.SocketReceiveTimeout.HasValue)
+            {
+                client.ReceiveTimeout = socketSettings.SocketReceiveTimeout.Value;
+            }
+            if (socketSettings.SocketSendTimeout.HasValue)
+            {
+                client.SendTimeout = socketSettings.SocketSendTimeout.Value;
+            }
         }
 
         private void ShutdownClientHandlerThreads()

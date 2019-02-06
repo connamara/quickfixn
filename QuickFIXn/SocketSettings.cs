@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Authentication;
-using System.Text;
 
 namespace QuickFix
 {
@@ -15,9 +12,53 @@ namespace QuickFix
     /// </remarks>
     public class SocketSettings : ICloneable
     {
-        public bool SocketNodelay = true;
-        public Nullable<int> SocketReceiveBufferSize;
-        public Nullable<int> SocketSendBufferSize;
+        #region Socket Settings
+
+        /// <summary>
+        /// Gets a value that specifies whether the <see cref="T:System.Net.Sockets.Socket"/> is using the Nagle algorithm.
+        /// </summary>
+        /// <value>
+        /// <c>false</c> if the socket uses the Nagle algorithm; otherwise, <c>true</c>. The default is <c>false</c>.
+        /// </value>
+        public bool SocketNodelay { get; internal set; }
+
+        /// <summary>
+        /// Gets the size of the <see cref="T:System.Net.Sockets.Socket"/> receive buffer.
+        /// </summary>
+        /// <value>
+        /// The size, in bytes, of the receive buffer. A <c>null</c> value defaults to 8192.
+        /// </value>
+        public int? SocketReceiveBufferSize { get; internal set; }
+
+        /// <summary>
+        /// Gets the size of the <see cref="T:System.Net.Sockets.Socket"/> send buffer.
+        /// </summary>
+        /// <value>
+        /// The size, in bytes, of the send buffer. A <c>null</c> value defaults to 8192.
+        /// </value>
+        public int? SocketSendBufferSize { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of time in milliseconds after which a synchronous
+        /// <see cref="T:System.Net.Sockets.Socket"/> Receive() call will time out.
+        /// </summary>
+        /// <value>
+        /// The time-out value, in milliseconds. A <c>null</c>, <c>0</c> or <c>-1</c>
+        /// value indicates an infinite time-out period.
+        /// </value>
+        public int? SocketReceiveTimeout { get; internal set; }
+
+        /// <summary>
+        /// Gets the amount of time in milliseconds after which a synchronous
+        /// <see cref="T:System.Net.Sockets.Socket"/> Send() call will time out.
+        /// </summary>
+        /// <value>
+        /// The time-out value, in milliseconds. A <c>null</c>, <c>0</c> or <c>-1</c>
+        /// value indicates an infinite time-out period.
+        /// </value>
+        public int? SocketSendTimeout { get; internal set; }
+
+        #endregion
 
         #region SSL Settings
 
@@ -94,6 +135,7 @@ namespace QuickFix
         /// <c>true</c> if [require client certificate]; otherwise, <c>false</c>.
         /// </value>
         public bool RequireClientCertificate { get; internal set; }
+
         #endregion
 
         /// <summary>
@@ -106,10 +148,11 @@ namespace QuickFix
             SslProtocol = SslProtocols.Default;
             CheckCertificateRevocation = true;
             RequireClientCertificate = true;
+            SocketNodelay = true;
         }
 
         /// <summary>
-        /// Setup socket settings based on setttings specified in dictionary
+        /// Setup socket settings based on settings specified in dictionary
         /// </summary>
         /// <remarks>
         /// used "Configure" as name since it is used in a lot of other places, 
@@ -126,6 +169,12 @@ namespace QuickFix
 
             if (dictionary.Has(SessionSettings.SOCKET_SEND_BUFFER_SIZE))
                 SocketSendBufferSize = dictionary.GetInt(SessionSettings.SOCKET_SEND_BUFFER_SIZE);
+
+            if (dictionary.Has(SessionSettings.SOCKET_RECEIVE_TIMEOUT))
+                SocketReceiveTimeout = dictionary.GetInt(SessionSettings.SOCKET_RECEIVE_TIMEOUT);
+
+            if (dictionary.Has(SessionSettings.SOCKET_SEND_TIMEOUT))
+                SocketSendTimeout = dictionary.GetInt(SessionSettings.SOCKET_SEND_TIMEOUT);
 
             if (dictionary.Has(SessionSettings.SSL_SERVERNAME))
                 ServerCommonName = dictionary.GetString(SessionSettings.SSL_SERVERNAME);
