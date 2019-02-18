@@ -608,6 +608,12 @@ namespace QuickFix.DataDictionary
 					grp.NumFld = fld.Tag; 
 					ParseMsgEl(childNode, grp);
 					ddmap.Groups.Add(fld.Tag, grp);
+					
+					// if first field in group, make it the DELIM
+					if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == 0))
+					{
+						((DDGrp)ddmap).Delim = fld.Tag;
+					}
 				}
                 else if (childNode.Name == "component")
                 {
