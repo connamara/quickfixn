@@ -2,18 +2,18 @@
 
 namespace QuickFix
 {
-    public class FixMessageParser : IMessageParser
+    public class MessageParser : IMessageParser
     {
         private readonly DataDictionary.DataDictionary _dataDictionary;
         private readonly IMessageFactory _factory;
 
-        public FixMessageParser(DataDictionary.DataDictionary dataDictionary, IMessageFactory factory)
+        public MessageParser(DataDictionary.DataDictionary dataDictionary, IMessageFactory factory)
         {
             _dataDictionary = dataDictionary;
             _factory = factory;
         }
 
-        public T ParseMessage<T>(string fixMessage, bool validate = true) where T : Message
+        public Message ParseMessage(string fixMessage, bool validate = true)
         {
             SessionID sessionId = ParseSessionID(fixMessage);
             MsgType msgType = Message.IdentifyType(fixMessage);
@@ -26,7 +26,7 @@ namespace QuickFix
                                _dataDictionary,
                                _factory);
 
-            return (T) message;
+            return message;
         }
 
         public BeginString ParseBeginString(string fixMessage)

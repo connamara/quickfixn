@@ -621,21 +621,19 @@ namespace UnitTests
             string fixMessage = "8=FIX.4.4^9=235^35=D^34=4^49=BANZAI^52=20121105-23:24:55^56=EXEC^11=1352157895032^21=1^38=10000^40=1^54=1^55=ORCL^59=0^354=119^355=<h:box xmlns:h=\"http://www.w3.org/TR/html4/\"><h:bag><h:fruit>Apples</h:fruit><h:fruit>Bananas</h:fruit></h:bag></h:box>^10=103^"
                 .Replace("^", Message.SOH);
 
-            IMessageParser messageParser = new FixMessageParser(dd, new QuickFix.FIX44.MessageFactory());
-            NewOrderSingle newOrderSingle = messageParser.ParseMessage<NewOrderSingle>(fixMessage);
+            IMessageParser messageParser = new MessageParser(dd, new QuickFix.FIX44.MessageFactory());
+            Message message = messageParser.ParseMessage(fixMessage);
 
-            MessageSerializer messageSerializer = new MessageSerializer(dd);
+            XDocument expectedXDocument = XDocument.Parse(expectedDocumentStr);
+            XmlDocument expectedXmlDocument = new XmlDocument();
+            expectedXmlDocument.LoadXml(expectedDocumentStr);
 
-            XDocument expectedDocument = XDocument.Parse(expectedDocumentStr);
-            XDocument actualDocument = messageSerializer.ToXDocument(newOrderSingle);
+            IMessageSerializer messageSerializer = new MessageSerializer(dd);
+            XDocument actualDocument = messageSerializer.ToXDocument(message);
+            XmlDocument actualXmlDocument = messageSerializer.ToXmlDocument(message);
 
-            XmlDocument xmlDocument = new XmlDocument();
-            xmlDocument.LoadXml(expectedDocumentStr);
-
-            XmlDocument actualXmlDocument = messageSerializer.ToXmlDocument(newOrderSingle);
-
-            Assert.That(XNode.DeepEquals(actualDocument, expectedDocument));
-            Assert.That(XNode.DeepEquals(new XDocument(actualXmlDocument), new XDocument(xmlDocument)));
+            Assert.That(XNode.DeepEquals(actualDocument, expectedXDocument));
+            Assert.That(XNode.DeepEquals(new XDocument(actualXmlDocument), new XDocument(expectedXmlDocument)));
         }
     }
 }

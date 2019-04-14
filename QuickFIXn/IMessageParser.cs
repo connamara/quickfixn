@@ -7,7 +7,6 @@ namespace QuickFix
         BeginString ParseBeginString(string fixMessage);
         MsgType ParseMsgType(string fixMessage);
         Header ParseHeader(string fixMessage);
-
-        T ParseMessage<T>(string fixMessage, bool validate = true) where T : Message;
+        Message ParseMessage(string fixMessage, bool validate = true);
     }
 }
