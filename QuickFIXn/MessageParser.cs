@@ -15,11 +15,13 @@ namespace QuickFix
 
         public Message ParseMessage(string fixMessage, bool validate = true)
         {
-            SessionID sessionId = ParseSessionID(fixMessage);
-            MsgType msgType = Message.IdentifyType(fixMessage);
+            Message msg = new Message();
+            msg.FromStringHeader(fixMessage);
 
-            Message message = _factory.Create(sessionId.BeginString, msgType.getValue());
+            string beginString = msg.Header.GetString(Tags.BeginString);
+            string msgType = msg.Header.GetString(Tags.MsgType);
 
+            Message message = _factory.Create(beginString, msgType);
             message.FromString(fixMessage,
                                validate,
                                _dataDictionary,
@@ -27,32 +29,6 @@ namespace QuickFix
                                _factory);
 
             return message;
-        }
-
-        public BeginString ParseBeginString(string fixMessage)
-        {
-            return new BeginString(Message.ExtractBeginString(fixMessage));
-        }
-
-        public MsgType ParseMsgType(string fixMessage)
-        {
-            return Message.IdentifyType(fixMessage);
-        }
-
-        public SessionID ParseSessionID(string fixMessage)
-        {
-            Message msg = new Message();
-            return msg.FromStringHeader(fixMessage)
-                       ? msg.GetSessionID(msg)
-                       : null;
-        }
-
-        public Header ParseHeader(string fixMessage)
-        {
-            Message msg = new Message();
-            return msg.FromStringHeader(fixMessage)
-                       ? msg.Header
-                       : null;
         }
     }
 }
