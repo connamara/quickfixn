@@ -1,9 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 using NUnit.Framework;
 using QuickFix;
+using QuickFix.Fields;
+using QuickFix.FIX44;
+using QuickFix.Util;
 using UnitTests.TestHelpers;
+using Message = QuickFix.Message;
 
 namespace UnitTests
 {
@@ -542,6 +549,93 @@ namespace UnitTests
             Assert.True(news.IsField(148)); // Headline
             Assert.True(news.IsGroup(33)); // LinesOfText
             Assert.True(news.GetGroup(33).IsField(355)); // EncodedText
+        }
+
+        [Test]
+        public void EnumLabelAndFieldType()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+
+            Assert.That(() => dd.GetEnumLabel(new MsgType("V")), Is.EqualTo("MARKET_DATA_REQUEST"));
+            Assert.That(() => dd.GetEnumLabel(new ExecInst("8")), Is.EqualTo("TRY_TO_SCALE"));
+            Assert.That(() => dd.GetEnumLabel(new SecurityIDSource("4")), Is.EqualTo("ISIN_NUMBER"));
+
+            Assert.That(() => dd.GetEnumLabel(Tags.MsgType, "V"), Is.EqualTo("MARKET_DATA_REQUEST"));
+            Assert.That(() => dd.GetEnumLabel(Tags.ExecInst, "8"), Is.EqualTo("TRY_TO_SCALE"));
+            Assert.That(() => dd.GetEnumLabel(Tags.SecurityIDSource, "4"), Is.EqualTo("ISIN_NUMBER"));
+
+            Assert.That(() => dd.GetFixType(new MsgType()), Is.EqualTo("STRING"));
+            Assert.That(() => dd.GetFixType(new LastMkt()), Is.EqualTo("EXCHANGE"));
+            Assert.That(() => dd.GetFixType(new EndSeqNo()), Is.EqualTo("SEQNUM"));
+            Assert.That(() => dd.GetFixType(new ExecInst()), Is.EqualTo("MULTIPLEVALUESTRING"));
+            Assert.That(() => dd.GetFixType(new SettlDate()), Is.EqualTo("LOCALMKTDATE"));
+
+            Assert.That(() => dd.GetFixType(Tags.MsgType), Is.EqualTo("STRING"));
+            Assert.That(() => dd.GetFixType(Tags.LastMkt), Is.EqualTo("EXCHANGE"));
+            Assert.That(() => dd.GetFixType(Tags.EndSeqNo), Is.EqualTo("SEQNUM"));
+            Assert.That(() => dd.GetFixType(Tags.ExecInst), Is.EqualTo("MULTIPLEVALUESTRING"));
+            Assert.That(() => dd.GetFixType(Tags.SettlDate), Is.EqualTo("LOCALMKTDATE"));
+        }
+
+        [Test]
+        public void MessageToXDocumentAndXmlDocument()
+        {
+            string expectedDocumentStr = @"
+<Message MsgType=""D"" MsgName=""ORDER_SINGLE"">
+  <Header>
+    <BeginString Tag=""8"" FixType=""STRING"" Value=""FIX.4.4"" />
+    <BodyLength Tag=""9"" FixType=""LENGTH"" Value=""235"" />
+    <MsgType Tag=""35"" FixType=""STRING"" Value=""D"" HasEnums=""true"" EnumValue=""ORDER_SINGLE"" />
+    <MsgSeqNum Tag=""34"" FixType=""SEQNUM"" Value=""4"" />
+    <SenderCompID Tag=""49"" FixType=""STRING"" Value=""BANZAI"" />
+    <SendingTime Tag=""52"" FixType=""UTCTIMESTAMP"" Value=""20121105-23:24:55"" />
+    <TargetCompID Tag=""56"" FixType=""STRING"" Value=""EXEC"" />
+  </Header>
+  <Body>
+    <ClOrdID Tag=""11"" FixType=""STRING"" Value=""1352157895032"" />
+    <HandlInst Tag=""21"" FixType=""CHAR"" Value=""1"" HasEnums=""true"" EnumValue=""AUTOMATED_EXECUTION_ORDER_PRIVATE"" />
+    <OrderQty Tag=""38"" FixType=""QTY"" Value=""10000"" />
+    <OrdType Tag=""40"" FixType=""CHAR"" Value=""1"" HasEnums=""true"" EnumValue=""MARKET"" />
+    <Side Tag=""54"" FixType=""CHAR"" Value=""1"" HasEnums=""true"" EnumValue=""BUY"" />
+    <Symbol Tag=""55"" FixType=""STRING"" Value=""ORCL"" />
+    <TimeInForce Tag=""59"" FixType=""CHAR"" Value=""0"" HasEnums=""true"" EnumValue=""DAY"" />
+    <EncodedTextLen Tag=""354"" FixType=""LENGTH"" Value=""119"" />
+    <EncodedText Tag=""355"" FixType=""DATA"" ContentType=""XML"">
+      <box>
+        <bag>
+          <fruit>Apples</fruit>
+          <fruit>Bananas</fruit>
+        </bag>
+      </box>
+    </EncodedText>
+  </Body>
+  <Trailer>
+    <CheckSum Tag=""10"" FixType=""STRING"" Value=""103"" />
+  </Trailer>
+</Message>
+";
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+
+            string fixMessage = "8=FIX.4.4^9=235^35=D^34=4^49=BANZAI^52=20121105-23:24:55^56=EXEC^11=1352157895032^21=1^38=10000^40=1^54=1^55=ORCL^59=0^354=119^355=<h:box xmlns:h=\"http://www.w3.org/TR/html4/\"><h:bag><h:fruit>Apples</h:fruit><h:fruit>Bananas</h:fruit></h:bag></h:box>^10=103^"
+                .Replace("^", Message.SOH);
+
+            IMessageParser messageParser = new FixMessageParser(dd, new QuickFix.FIX44.MessageFactory());
+            NewOrderSingle newOrderSingle = messageParser.ParseMessage<NewOrderSingle>(fixMessage);
+
+            MessageSerializer messageSerializer = new MessageSerializer(dd);
+
+            XDocument expectedDocument = XDocument.Parse(expectedDocumentStr);
+            XDocument actualDocument = messageSerializer.ToXDocument(newOrderSingle);
+
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.LoadXml(expectedDocumentStr);
+
+            XmlDocument actualXmlDocument = messageSerializer.ToXmlDocument(newOrderSingle);
+
+            Assert.That(XNode.DeepEquals(actualDocument, expectedDocument));
+            Assert.That(XNode.DeepEquals(new XDocument(actualXmlDocument), new XDocument(xmlDocument)));
         }
     }
 }

@@ -425,7 +425,15 @@ namespace QuickFix.DataDictionary
 			return Trailer.IsField(tag);
 		}
 
-		public void Load(String path)
+        public bool IsBodyField(int tag)
+        {
+            DDField ddField;
+            return FieldsByTag.TryGetValue(tag, out ddField)
+                   && !IsHeaderField(tag)
+                   && !IsTrailerField(tag);
+        }
+
+        public void Load(String path)
 		{
 			var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
 			Load(stream);
@@ -450,9 +458,64 @@ namespace QuickFix.DataDictionary
 
 		public Boolean FieldHasValue(int tag, String val) {
 			return FieldsByTag[tag].EnumDict.ContainsKey(val);
-		}
+        }
 
-		private void SetVersionInfo(XmlDocument doc) {
+        public string GetEnumLabel(IField field)
+        {
+            return GetEnumLabel(field.Tag, field.ToString());
+        }
+
+        public bool TryGetEnumLabel(IField field, out string enumName)
+        {
+            return TryGetEnumLabel(field.Tag, field.ToString(), out enumName);
+        }
+
+        public string GetEnumLabel(int tag, string value)
+        {
+            string enumName;
+            TryGetEnumLabel(tag, value, out enumName);
+            return enumName;
+        }
+
+        public bool TryGetEnumLabel(int tag, string value, out string enumName)
+        {
+            enumName = null;
+            DDField ddField;
+            return FieldsByTag.TryGetValue(tag, out ddField)
+                   && ddField.EnumDict.TryGetValue(value, out enumName);
+        }
+
+        public string GetFixType(IField field)
+        {
+            return GetFixType(field.Tag);
+        }
+
+        public bool TryGetFixType(IField field, out string fieldType)
+        {
+            return TryGetFixType(field.Tag, out fieldType);
+        }
+
+        public string GetFixType(int tag)
+        {
+            string fixFieldType;
+            TryGetFixType(tag, out fixFieldType);
+            return fixFieldType;
+        }
+
+        public bool TryGetFixType(int tag, out string fieldType)
+        {
+            DDField ddField;
+            if (FieldsByTag.TryGetValue(tag, out ddField))
+            {
+                fieldType = ddField.FixFldType;
+                return true;
+            }
+
+            fieldType = null;
+            return false;
+        }
+
+        private void SetVersionInfo(XmlDocument doc) {
 			MajorVersion = doc.SelectSingleNode("/fix/@major").Value;
 			MinorVersion = doc.SelectSingleNode("/fix/@minor").Value;
 			string type;
