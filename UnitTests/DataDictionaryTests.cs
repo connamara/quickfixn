@@ -625,15 +625,13 @@ namespace UnitTests
             Message message = messageParser.ParseMessage(fixMessage);
 
             XDocument expectedXDocument = XDocument.Parse(expectedDocumentStr);
-            XmlDocument expectedXmlDocument = new XmlDocument();
-            expectedXmlDocument.LoadXml(expectedDocumentStr);
 
             IMessageSerializer messageSerializer = new MessageSerializer(dd);
             XDocument actualDocument = messageSerializer.ToXDocument(message);
             XmlDocument actualXmlDocument = messageSerializer.ToXmlDocument(message);
 
             Assert.That(XNode.DeepEquals(actualDocument, expectedXDocument));
-            Assert.That(XNode.DeepEquals(new XDocument(actualXmlDocument), new XDocument(expectedXmlDocument)));
+            Assert.That(XNode.DeepEquals(XDocument.Parse(actualXmlDocument.InnerXml), expectedXDocument));
         }
     }
 }
