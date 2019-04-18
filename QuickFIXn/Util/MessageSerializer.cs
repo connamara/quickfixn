@@ -19,14 +19,13 @@ namespace QuickFix.Util
 
         public XDocument ToXDocument(Message message)
         {
-            string msgTypeStr = message.Header.GetField(Tags.MsgType);
-            MsgType msgType = new MsgType(msgTypeStr);
-            string msgName = _dataDictionary.GetEnumLabel(msgType);
+            string msgType = message.Header.GetField(Tags.MsgType);
+            string msgName = _dataDictionary.GetEnumLabel(Tags.MsgType, msgType);
 
             XDocument doc = new XDocument(new XDeclaration("1.0", "utf-8", null));
 
             XElement root = new XElement("Message");
-            root.Add(new XAttribute("MsgType", message.Header.GetField(Tags.MsgType)));
+            root.Add(new XAttribute("MsgType", msgType));
             root.Add(new XAttribute("MsgName", msgName));
             doc.Add(root);
 
@@ -65,12 +64,6 @@ namespace QuickFix.Util
 
             return xmlDocument;
         }
-
-        //public string ToJson(Message message)
-        //{
-        //    XmlDocument doc = ToXmlDocument(message);
-        //    return JsonConvert.SerializeXmlNode(doc);
-        //}
 
         private void FieldMapToXml(FieldMap fieldMap, XElement parent, int[] precedingFields)
         {

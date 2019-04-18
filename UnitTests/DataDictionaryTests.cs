@@ -581,6 +581,9 @@ namespace UnitTests
         [Test]
         public void MessageToXDocumentAndXmlDocument()
         {
+            /*
+             * Arrange.
+             */
             string expectedDocumentStr = @"
 <Message MsgType=""D"" MsgName=""ORDER_SINGLE"">
   <Header>
@@ -621,15 +624,36 @@ namespace UnitTests
             string fixMessage = "8=FIX.4.4^9=235^35=D^34=4^49=BANZAI^52=20121105-23:24:55^56=EXEC^11=1352157895032^21=1^38=10000^40=1^54=1^55=ORCL^59=0^354=119^355=<h:box xmlns:h=\"http://www.w3.org/TR/html4/\"><h:bag><h:fruit>Apples</h:fruit><h:fruit>Bananas</h:fruit></h:bag></h:box>^10=103^"
                 .Replace("^", Message.SOH);
 
-            IMessageParser messageParser = new MessageParser(dd, new QuickFix.FIX44.MessageFactory());
-            Message message = messageParser.ParseMessage(fixMessage);
+            // Parse the header.
+            Message msg = new Message();
+            msg.FromStringHeader(fixMessage);
 
+            string beginString = msg.Header.GetString(Tags.BeginString);
+            string msgType = msg.Header.GetString(Tags.MsgType);
+
+            // Create the message from string.
+            var factory = new QuickFix.FIX44.MessageFactory();
+            Message message = factory.Create(beginString, msgType);
+            message.FromString(fixMessage,
+                               true,
+                               dd,
+                               dd,
+                               factory);
+
+            // Read the expected xml.
             XDocument expectedXDocument = XDocument.Parse(expectedDocumentStr);
 
+            /*
+             * Act.
+             */
+            // Serialize the message to xml.
             IMessageSerializer messageSerializer = new MessageSerializer(dd);
             XDocument actualDocument = messageSerializer.ToXDocument(message);
             XmlDocument actualXmlDocument = messageSerializer.ToXmlDocument(message);
 
+            /*
+             * Assert.
+             */
             Assert.That(XNode.DeepEquals(actualDocument, expectedXDocument));
             Assert.That(XNode.DeepEquals(XDocument.Parse(actualXmlDocument.InnerXml), expectedXDocument));
         }
