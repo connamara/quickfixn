@@ -120,7 +120,7 @@ namespace QuickFix
             public static SessionRejectReason VALUE_IS_INCORRECT = new SessionRejectReason(5, "Value is incorrect (out of range) for this tag");
             public static SessionRejectReason INCORRECT_DATA_FORMAT_FOR_VALUE = new SessionRejectReason(6, "Incorrect data format for value");
             public static SessionRejectReason DECRYPTION_PROBLEM = new SessionRejectReason(7, "Decryption problem");
-            public static SessionRejectReason SIGNATURE_PROBLEM = new SessionRejectReason(8, "Signature proble");
+            public static SessionRejectReason SIGNATURE_PROBLEM = new SessionRejectReason(8, "Signature problem");
             public static SessionRejectReason COMPID_PROBLEM = new SessionRejectReason(9, "CompID problem");
             public static SessionRejectReason SENDING_TIME_ACCURACY_PROBLEM = new SessionRejectReason(10, "SendingTime accuracy problem");
             public static SessionRejectReason INVALID_MSGTYPE = new SessionRejectReason(11, "Invalid MsgType");
