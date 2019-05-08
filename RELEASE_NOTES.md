@@ -21,6 +21,7 @@ What's New
 * (minor) #489 - fixes for DefaultMessageFactory / FIX50sp1/2 (gbirchmeier)
 * (patch) #499 - fix bug in SessionState MessageQueue (vigzel)
 * (minor) #507 - better feedback for "Incorrect BeginString" errors (gbirchmeier)
+* (minor) #521 - fix misspelled session reject reason (vpfau)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)
