@@ -65,3 +65,4 @@ Contributors
 - Jos Hickson
 - Michael Wilner
 - Zeljko Vignjevic
+- Vitaliy Pfau
