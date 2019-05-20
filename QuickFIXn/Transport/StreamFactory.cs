@@ -17,6 +17,40 @@ namespace QuickFix.Transport
     /// </summary>
     public static class StreamFactory
     {
+        private static Socket CreateTunnelThruProxy(string destIP, int destPort)
+        {
+            var destUriWithPort = $"{destIP}:{destPort}";
+            var uriBuilder = new UriBuilder(destUriWithPort);
+            var destUri = uriBuilder.Uri; // new Uri($"http://{destUriWithPort}");
+            var webProxy = WebRequest.GetSystemWebProxy();
+
+            if (webProxy.IsBypassed(destUri))
+                return null;
+
+            var proxyUri = webProxy.GetProxy(destUri);
+            var proxyEntry = Dns.GetHostAddresses(proxyUri.Host);
+            int iPort = proxyUri.Port;
+            var address = proxyEntry.First(a => a.AddressFamily == AddressFamily.InterNetwork);
+            var proxyEndPoint = new IPEndPoint(address, iPort);
+            var socketThruProxy = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            socketThruProxy.Connect(proxyEndPoint);
+
+            //string proxyMsg = $"CONNECT {destIP1}:{destPort1} HTTP/1.1\nHost:{destIP1}:{destPort1} \n\n";
+            string proxyMsg = $"CONNECT {destIP}:{destPort} HTTP/1.1 \n\n";
+            var buffer = Encoding.ASCII.GetBytes(proxyMsg);
+            var buffer12 = new byte[500];
+            socketThruProxy.Send(buffer, buffer.Length, 0);
+            int msg = socketThruProxy.Receive(buffer12, 500, 0);
+            string data;
+            data = Encoding.ASCII.GetString(buffer12);
+            int index = data.IndexOf("200");
+
+            if (index < 0)
+                throw new ApplicationException(
+                    $"Connection failed to {destUriWithPort} through proxy server {proxyUri.ToString()}.");
+
+            return socketThruProxy;
+        }
         /// <summary>
         /// Connect to the specified endpoint and return a stream that can be used to communicate with it. (for initiator)
         /// </summary>
@@ -26,17 +60,23 @@ namespace QuickFix.Transport
         /// <returns>an opened and initiated stream which can be read and written to</returns>
         public static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILog logger)
         {
-            var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            socket.NoDelay = settings.SocketNodelay;
-            if (settings.SocketReceiveBufferSize.HasValue)
+            var socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port);
+
+            if (socket == null)
             {
-                socket.ReceiveBufferSize = settings.SocketReceiveBufferSize.Value;
+                socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                socket.NoDelay = settings.SocketNodelay;
+                if (settings.SocketReceiveBufferSize.HasValue)
+                {
+                    socket.ReceiveBufferSize = settings.SocketReceiveBufferSize.Value;
+                }
+                if (settings.SocketSendBufferSize.HasValue)
+                {
+                    socket.SendBufferSize = settings.SocketSendBufferSize.Value;
+                }
+                socket.Connect(endpoint);
             }
-            if (settings.SocketSendBufferSize.HasValue)
-            {
-                socket.SendBufferSize = settings.SocketSendBufferSize.Value;
-            }
-            socket.Connect(endpoint);
+
             Stream stream = new NetworkStream(socket, true);
 
             if (settings.UseSSL)
@@ -138,7 +178,20 @@ namespace QuickFix.Transport
         {
 
             // Get the certificate store for the current user.
-            X509Store store = new X509Store(StoreLocation.CurrentUser);
+            // Custom change made to lookup the certificate in local machine first
+            //   and then in the current user store
+            var certificate = GetCertificateFromStoreHelper(certName, new X509Store(StoreLocation.LocalMachine));
+
+            if (certificate == null)
+            {
+                certificate = GetCertificateFromStoreHelper(certName, new X509Store(StoreLocation.CurrentUser));
+            }
+
+            return certificate;
+        }
+
+        private static X509Certificate2 GetCertificateFromStoreHelper(string certName, X509Store store)
+        {
             try
             {
                 store.Open(OpenFlags.ReadOnly);
@@ -164,7 +217,6 @@ namespace QuickFix.Transport
             {
                 store.Close();
             }
-
         }
 
 
