@@ -11,15 +11,15 @@ namespace UnitTests
     [TestFixture]
     public class ThreadedSocketAcceptorTests
     {
-        private const string Config = @"
+        private static string Config = $@"
 [DEFAULT]
 StartTime = 00:00:00
 EndTime = 23:59:59
 ConnectionType = acceptor
 SocketAcceptHost = 127.0.0.1
 SocketAcceptPort = 10000
-FileStorePath = store
-FileLogPath = log
+FileStorePath = {TestContext.CurrentContext.TestDirectory}\store
+FileLogPath = {TestContext.CurrentContext.TestDirectory}\log
 UseDataDictionary = N
 
 [SESSION]
