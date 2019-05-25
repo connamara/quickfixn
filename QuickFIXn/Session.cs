@@ -795,6 +795,11 @@ namespace QuickFix
                         if (endSeqNo > next)
                             endSeqNo = next;
                         GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
+                        msgSeqNum = resendReq.Header.GetInt(Tags.MsgSeqNum);
+                        if (!IsTargetTooHigh(msgSeqNum) && !IsTargetTooLow(msgSeqNum))
+                        {
+                            state_.IncrNextTargetMsgSeqNum();
+                        }
                         return;
                     }
 

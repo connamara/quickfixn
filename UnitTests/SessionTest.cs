@@ -228,15 +228,16 @@ namespace UnitTests
             session.Next(msg.ToString());
         }
 
-        public bool SENT_RESEND()
+        public bool SENT_SEQUENCE_RESET()
         {
-            if (!responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.SEQUENCE_RESET) &&
-                responder.msgLookup[QuickFix.Fields.MsgType.SEQUENCE_RESET].Count > 0)
-                return false;
+            return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.SEQUENCE_RESET) &&
+                responder.msgLookup[QuickFix.Fields.MsgType.SEQUENCE_RESET].Count > 0;
+        }
 
-            responder.msgLookup[QuickFix.Fields.MsgType.SEQUENCE_RESET].Dequeue();
-
-            return true;
+        public bool SENT_RESEND_REQUEST()
+        {
+            return responder.msgLookup.ContainsKey(QuickFix.Fields.MsgType.RESEND_REQUEST) &&
+                responder.msgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Count > 0;
         }
 
         public bool RESENT()
@@ -434,7 +435,7 @@ namespace UnitTests
             } //seq 4, next is 5
 
             SendResendRequest(1, 4);
-            Assert.That(SENT_RESEND());
+            Assert.That(SENT_SEQUENCE_RESET());
             Assert.IsFalse(RESENT());
         }
 
@@ -955,5 +956,21 @@ namespace UnitTests
             Assert.That(DISCONNECTED());
         }
 
+        [Test]
+        public void TestResendRequestMsgSeqNumNotIgnoredWhenNoPersistance()
+        {
+            session.PersistMessages = false;
+
+            Logon();
+
+            SendNOSMessage();
+            SendNOSMessage();
+
+            //The below will trigger a sequence reset
+            SendResendRequest(2, 0);
+
+            SendNOSMessage();
+            Assert.That(!SENT_RESEND_REQUEST());
+        }
     }
 }
