@@ -35,7 +35,6 @@ namespace QuickFix.Transport
             var socketThruProxy = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socketThruProxy.Connect(proxyEndPoint);
 
-            //string proxyMsg = $"CONNECT {destIP1}:{destPort1} HTTP/1.1\nHost:{destIP1}:{destPort1} \n\n";
             string proxyMsg = $"CONNECT {destIP}:{destPort} HTTP/1.1 \n\n";
             var buffer = Encoding.ASCII.GetBytes(proxyMsg);
             var buffer12 = new byte[500];
@@ -60,8 +59,10 @@ namespace QuickFix.Transport
         /// <returns>an opened and initiated stream which can be read and written to</returns>
         public static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILog logger)
         {
+            // If system has configured a proxy for this config, use it.
             var socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port);
 
+            // No proxy.  Set up a regular socket.
             if (socket == null)
             {
                 socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -126,9 +127,9 @@ namespace QuickFix.Transport
         {
             X509Certificate2 certificate;
 
-            // TODO: Change to _certificateCache to ConcurrentDictorionary once we start targeting .NET 4
-            // Then remove this lock and use GetOrAdd function of concurrent dictionary
-            //  certificate = _certificateCache.GetOrAdd(name, (key) => LoadCertificateInner(name, password));
+            // TODO: Change _certificateCache's type to ConcurrentDictionary once we start targeting .NET 4,
+            //   then remove this lock and use GetOrAdd function of concurrent dictionary
+            //   e.g.: certificate = _certificateCache.GetOrAdd(name, (key) => LoadCertificateInner(name, password));
             lock (_certificateCache)
             {
                 if (_certificateCache.TryGetValue(name, out certificate))
@@ -176,18 +177,8 @@ namespace QuickFix.Transport
         /// <returns></returns>
         private static X509Certificate2 GetCertificateFromStore(string certName)
         {
-
-            // Get the certificate store for the current user.
-            // Custom change made to lookup the certificate in local machine first
-            //   and then in the current user store
-            var certificate = GetCertificateFromStoreHelper(certName, new X509Store(StoreLocation.LocalMachine));
-
-            if (certificate == null)
-            {
-                certificate = GetCertificateFromStoreHelper(certName, new X509Store(StoreLocation.CurrentUser));
-            }
-
-            return certificate;
+            return GetCertificateFromStoreHelper(certName, new X509Store(StoreLocation.LocalMachine))
+                ?? GetCertificateFromStoreHelper(certName, new X509Store(StoreLocation.CurrentUser));
         }
 
         private static X509Certificate2 GetCertificateFromStoreHelper(string certName, X509Store store)
@@ -210,7 +201,6 @@ namespace QuickFix.Transport
                 if (currentCerts.Count == 0)
                     return null;
 
-                // Return the first certificate in the collection, has the right name and is current. 
                 return currentCerts[0];
             }
             finally
