@@ -22,6 +22,7 @@ What's New
 * (patch) #499 - fix bug in SessionState MessageQueue (vigzel)
 * (minor) #507 - better feedback for "Incorrect BeginString" errors (gbirchmeier)
 * (minor) #521 - fix misspelled session reject reason (vpfau)
+* (minor) #524 - add tunnel support; expand cert store search to include LocalMachine (nileshwagel/gbirchmeier)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)
