@@ -19,25 +19,25 @@ namespace QuickFix.Transport
     {
         private static Socket CreateTunnelThruProxy(string destIP, int destPort)
         {
-            var destUriWithPort = $"{destIP}:{destPort}";
-            var uriBuilder = new UriBuilder(destUriWithPort);
-            var destUri = uriBuilder.Uri; // new Uri($"http://{destUriWithPort}");
-            var webProxy = WebRequest.GetSystemWebProxy();
+            string destUriWithPort = $"{destIP}:{destPort}";
+            UriBuilder uriBuilder = new UriBuilder(destUriWithPort);
+            Uri destUri = uriBuilder.Uri;
+            IWebProxy webProxy = WebRequest.GetSystemWebProxy();
 
             if (webProxy.IsBypassed(destUri))
                 return null;
 
-            var proxyUri = webProxy.GetProxy(destUri);
-            var proxyEntry = Dns.GetHostAddresses(proxyUri.Host);
+            Uri proxyUri = webProxy.GetProxy(destUri);
+            IPAddress[] proxyEntry = Dns.GetHostAddresses(proxyUri.Host);
             int iPort = proxyUri.Port;
-            var address = proxyEntry.First(a => a.AddressFamily == AddressFamily.InterNetwork);
-            var proxyEndPoint = new IPEndPoint(address, iPort);
-            var socketThruProxy = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            IPAddress address = proxyEntry.First(a => a.AddressFamily == AddressFamily.InterNetwork);
+            IPEndPoint proxyEndPoint = new IPEndPoint(address, iPort);
+            Socket socketThruProxy = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socketThruProxy.Connect(proxyEndPoint);
 
             string proxyMsg = $"CONNECT {destIP}:{destPort} HTTP/1.1 \n\n";
-            var buffer = Encoding.ASCII.GetBytes(proxyMsg);
-            var buffer12 = new byte[500];
+            byte[] buffer = Encoding.ASCII.GetBytes(proxyMsg);
+            byte[] buffer12 = new byte[500];
             socketThruProxy.Send(buffer, buffer.Length, 0);
             int msg = socketThruProxy.Receive(buffer12, 500, 0);
             string data;
@@ -50,6 +50,7 @@ namespace QuickFix.Transport
 
             return socketThruProxy;
         }
+
         /// <summary>
         /// Connect to the specified endpoint and return a stream that can be used to communicate with it. (for initiator)
         /// </summary>
@@ -60,7 +61,7 @@ namespace QuickFix.Transport
         public static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILog logger)
         {
             // If system has configured a proxy for this config, use it.
-            var socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port);
+            Socket socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port);
 
             // No proxy.  Set up a regular socket.
             if (socket == null)
@@ -233,12 +234,12 @@ namespace QuickFix.Transport
             /// <returns>a ssl enabled stream</returns>
             public Stream CreateClientStreamAndAuthenticate(Stream innerStream)
             {
-                var sslStream = new SslStream(innerStream, false, ValidateServerCertificate, SelectLocalCertificate);
+                SslStream sslStream = new SslStream(innerStream, false, ValidateServerCertificate, SelectLocalCertificate);
 
                 try
                 {
                     // Setup secure SSL Communication
-                    var clientCertificates = GetClientCertificates();
+                    X509CertificateCollection clientCertificates = GetClientCertificates();
                     sslStream.AuthenticateAsClient(socketSettings_.ServerCommonName,
                         clientCertificates,
                         socketSettings_.SslProtocol,
@@ -260,7 +261,7 @@ namespace QuickFix.Transport
             /// <returns>a ssl enabled stream</returns>
             public Stream CreateServerStreamAndAuthenticate(Stream innerStream)
             {
-                var sslStream = new SslStream(innerStream, false, ValidateClientCertificate, SelectLocalCertificate);
+                SslStream sslStream = new SslStream(innerStream, false, ValidateClientCertificate, SelectLocalCertificate);
 
                 try
                 {
@@ -268,7 +269,7 @@ namespace QuickFix.Transport
                         throw new Exception(string.Format("No server certificate specified, the {0} setting must be configured", SessionSettings.SSL_CERTIFICATE));
 
                     // Setup secure SSL Communication
-                    var serverCertificate = StreamFactory.LoadCertificate(socketSettings_.CertificatePath, socketSettings_.CertificatePassword);
+                    X509Certificate2 serverCertificate = StreamFactory.LoadCertificate(socketSettings_.CertificatePath, socketSettings_.CertificatePassword);
                     sslStream.AuthenticateAsServer(serverCertificate,
                         socketSettings_.RequireClientCertificate,
                         socketSettings_.SslProtocol,
@@ -288,7 +289,7 @@ namespace QuickFix.Transport
                 if (!string.IsNullOrEmpty(socketSettings_.CertificatePath))
                 {
                     X509CertificateCollection certificates = new X509Certificate2Collection();
-                    var clientCert = StreamFactory.LoadCertificate(socketSettings_.CertificatePath, socketSettings_.CertificatePassword);
+                    X509Certificate2 clientCert = StreamFactory.LoadCertificate(socketSettings_.CertificatePath, socketSettings_.CertificatePassword);
                     certificates.Add(clientCert);
                     return certificates;
                 }
@@ -396,8 +397,8 @@ namespace QuickFix.Transport
                 {
                     if (extension is X509EnhancedKeyUsageExtension)
                     {
-                        var keyUsage = (X509EnhancedKeyUsageExtension)extension;
-                        foreach (var oid in keyUsage.EnhancedKeyUsages)
+                        X509EnhancedKeyUsageExtension keyUsage = (X509EnhancedKeyUsageExtension)extension;
+                        foreach (System.Security.Cryptography.Oid oid in keyUsage.EnhancedKeyUsages)
                         {
                             if (oid.Value == enhancedKeyOid)
                                 return true;
@@ -437,7 +438,5 @@ namespace QuickFix.Transport
                 return localCertificates[0];
             }
         }
-
-
     }
 }
