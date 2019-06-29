@@ -31,8 +31,6 @@ namespace QuickFix
         private System.IO.FileStream msgFile_;
         private System.IO.StreamWriter headerFile_;
 
-        private Encoding encoding_;
-
         private MemoryStore cache_ = new MemoryStore();
 
         System.Collections.Generic.Dictionary<int, MsgDef> offsets_ = new Dictionary<int, MsgDef>();
@@ -57,10 +55,8 @@ namespace QuickFix
             return prefix.ToString();
         }
 
-        public FileStore(SessionID sessionID, SessionSettings settings)
+        public FileStore(string path, SessionID sessionID)
         {
-            string path = settings.Get(sessionID).GetString(SessionSettings.FILE_STORE_PATH);
-
             if (!System.IO.Directory.Exists(path))
                 System.IO.Directory.CreateDirectory(path);
 
@@ -70,11 +66,6 @@ namespace QuickFix
             msgFileName_ = System.IO.Path.Combine(path, prefix + ".body");
             headerFileName_ = System.IO.Path.Combine(path, prefix + ".header");
             sessionFileName_ = System.IO.Path.Combine(path, prefix + ".session");
-
-            encoding_ = settings.Get(sessionID).Has(SessionSettings.ENCODING)
-                ? Encoding.GetEncoding(settings.Get(sessionID).GetString(SessionSettings.ENCODING))
-                : SessionFactory.DefaultEncoding;
-
             open();
         }
 
@@ -191,7 +182,7 @@ namespace QuickFix
                     byte[] msgBytes = new byte[offsets_[i].size];
                     msgFile_.Read(msgBytes, 0, msgBytes.Length);
 
-                    messages.Add(encoding_.GetString(msgBytes));
+                    messages.Add(CharEncoding.DefaultEncoding.GetString(msgBytes));
                 }
             }
 
@@ -208,7 +199,7 @@ namespace QuickFix
             msgFile_.Seek(0, System.IO.SeekOrigin.End);
 
             long offset = msgFile_.Position;
-            byte[] msgBytes = encoding_.GetBytes(msg);
+            byte[] msgBytes = CharEncoding.DefaultEncoding.GetBytes(msg);
             int size = msgBytes.Length;
 
             StringBuilder b = new StringBuilder();

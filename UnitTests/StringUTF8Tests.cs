@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using QuickFix;
-using QuickFix.Fields;
 
 namespace UnitTests
 {
@@ -15,7 +10,7 @@ namespace UnitTests
         public void NextTagTest()
         {
             byte[] str = new byte[5];
-            str = SessionFactory.DefaultEncoding.GetBytes("35=8\u0001");
+            str = CharEncoding.DefaultEncoding.GetBytes("35=8\u0001");
             ByteSizeString utf8str = new ByteSizeString(str, 5);
             
             int pos = 0;
@@ -25,7 +20,7 @@ namespace UnitTests
 
             Assert.That(tag, Is.EqualTo(35));
             Assert.That(pos, Is.EqualTo(5));
-            Assert.That(val.ByteArray, Is.EqualTo(SessionFactory.DefaultEncoding.GetBytes("8")));
+            Assert.That(val.ByteArray, Is.EqualTo(CharEncoding.DefaultEncoding.GetBytes("8")));
             Assert.That(val.ToString(), Is.EqualTo("8"));
         }
     }

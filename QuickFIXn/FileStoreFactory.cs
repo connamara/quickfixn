@@ -1,5 +1,4 @@
-﻿
-namespace QuickFix
+﻿namespace QuickFix
 {
     /// <summary>
     /// Creates a message store that stores messages in a file
@@ -17,8 +16,6 @@ namespace QuickFix
             settings_ = settings;
         }
 
-        #region MessageStoreFactory Members
-
         /// <summary>
         /// Creates a file-based message store
         /// </summary>
@@ -26,9 +23,7 @@ namespace QuickFix
         /// <returns></returns>
         public IMessageStore Create(SessionID sessionID)
         {
-            return new FileStore(sessionID, settings_);
+            return new FileStore(settings_.Get(sessionID).GetString(SessionSettings.FILE_STORE_PATH), sessionID);
         }
-
-        #endregion
     }
 }

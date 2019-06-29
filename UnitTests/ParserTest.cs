@@ -1,15 +1,12 @@
 ﻿using NUnit.Framework;
 using QuickFix;
 using System;
-using System.Text;
 
 namespace UnitTests
 {
     [TestFixture]
     public class ParserTest
     {
-        private static readonly Encoding _encoding = SessionFactory.DefaultEncoding;
-
         const string normalLength   = "8=FIX.4.2\x01" + "9=12\x01" + "35=A\x01" + " 108=30\x01" + "10=31\x01";
         const string badLength      = "8=FIX.4.2\x01" + "9=A\x01"  + "35=A\x01" + "108=30\x01"  + "10=31\x01";
         const string negativeLength = "8=FIX.4.2\x01" + "9=-1\x01" + "35=A\x01" + "108=30\x01"  + "10=31\x01";
@@ -19,7 +16,7 @@ namespace UnitTests
         [Test]
         public void ExtractLength()
         {
-            Parser parser = new Parser(_encoding);
+            Parser parser = new Parser();
 
             int len = 0;
             int pos = 0;
@@ -49,7 +46,7 @@ namespace UnitTests
             const string fixMsg2 = "8=FIX.4.2\x01" + "9=17\x01" + "35=4\x01" + "36=88\x01"  + "123=Y\x01"  + "10=34\x01";
             const string fixMsg3 = "8=FIX.4.2\x01" + "9=19\x01" + "35=A\x01" + "108=30\x01" + "9710=8\x01" + "10=31\x01";
 
-            Parser parser = new Parser(_encoding);
+            Parser parser = new Parser();
             parser.AddToStream(fixMsg1 + fixMsg2 + fixMsg3);
 
             string readFixMsg1;
@@ -71,7 +68,7 @@ namespace UnitTests
             string partFixMsg1 = "8=FIX.4.2\x01" + "9=17\x01" + "35=4\x01" + "36=";
             string partFixMsg2 = "88\x01" + "123=Y\x01" + "10=34\x01";
 
-            Parser parser = new Parser(_encoding);
+            Parser parser = new Parser();
             parser.AddToStream(partFixMsg1);
 
             string readPartFixMsg;
@@ -87,7 +84,7 @@ namespace UnitTests
         {
             string fixMsg = "8=TEST\x01" + "9=TEST\x01" + "35=TEST\x01" + "49=SS1\x01" + "56=RORE\x01" + "34=3\x01" + "52=20050222-16:45:53\x01" + "10=TEST\x01";
 
-            Parser parser = new Parser(_encoding);
+            Parser parser = new Parser();
             parser.AddToStream(fixMsg);
 
             string readFixMsg;
@@ -101,15 +98,19 @@ namespace UnitTests
         public void ReadFixMessageWithNonAscii()
         {
             string[] fixMsgFields1 = { "8=FIX.4.4", "9=19", "35=B", "148=Ole!", "33=0", "10=0" };
-            string fixMsg1 = String.Join("\x01", fixMsgFields1) + "\x01";
+            string fixMsg1 = String.Join(Message.SOH, fixMsgFields1) + Message.SOH;
 
             Assert.AreEqual("é", "\x00E9");
             Assert.AreEqual("é", "\xE9");
 
-            string[] fixMsgFields2 = { "8=FIX.4.4", "9=20", "35=B", "148=Olé!", "33=0", "10=0" };
-            string fixMsg2 = String.Join("\x01", fixMsgFields2) + "\x01";
+            // In 1.8 and earlier, the default encoding was UTF-8, which treated "é" as 2 bytes,
+            // and this message had 9=20, which didn't agree with other implementations.
+            // Now that the default encoding is ISO-8859-1, "é" is one byte,
+            // and 9=19.
+            string[] fixMsgFields2 = { "8=FIX.4.4", "9=19", "35=B", "148=Olé!", "33=0", "10=0" };
+            string fixMsg2 = String.Join(Message.SOH, fixMsgFields2) + Message.SOH;
 
-            Parser parser = new Parser(_encoding);
+            Parser parser = new Parser();
             parser.AddToStream(fixMsg1 + fixMsg2);
 
             string readFixMsg1;
@@ -117,7 +118,7 @@ namespace UnitTests
             Assert.AreEqual(fixMsg1, readFixMsg1);
 
             string readFixMsg2;
-            Assert.True(parser.ReadFixMessage(out readFixMsg2));
+            Assert.True(parser.ReadFixMessage(out readFixMsg2), "parser.ReadFixMessage(readFixMsg2) failure");
             Assert.AreEqual(fixMsg2, readFixMsg2);
         }
 
@@ -127,7 +128,7 @@ namespace UnitTests
             string[] fixMsgFields1 = { "8=FIX.4.4", "9=15", "35=B", "148=", "33=0", "10=0" };
             string fixMsg1 = String.Join("\x01", fixMsgFields1) + "\x01";
 
-            Parser parser = new Parser(_encoding);
+            Parser parser = new Parser();
             parser.AddToStream(fixMsg1);
 
             string readFixMsg1;

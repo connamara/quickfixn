@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 
 namespace QuickFix
 {
@@ -8,8 +7,6 @@ namespace QuickFix
     /// </summary>
     public class SessionFactory
     {
-        public static readonly Encoding DefaultEncoding = Encoding.UTF8;
-
         protected IApplication application_;
         protected IMessageStoreFactory messageStoreFactory_;
         protected ILogFactory logFactory_;
@@ -129,8 +126,6 @@ namespace QuickFix
                 session.ValidateLengthAndChecksum = settings.GetBool(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM);
             if (settings.Has(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME))
                 session.RequiresOrigSendingTime = settings.GetBool(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME);
-            if (settings.Has(SessionSettings.ENCODING))
-                session.Encoding = Encoding.GetEncoding(settings.GetString(SessionSettings.ENCODING));
 
             return session;
         }

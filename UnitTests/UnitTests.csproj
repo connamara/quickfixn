@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="EncodingTests.cs" />
     <Compile Remove="PerformanceTests.cs" />
   </ItemGroup>
 

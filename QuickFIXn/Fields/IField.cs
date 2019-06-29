@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-namespace QuickFix.Fields
+﻿namespace QuickFix.Fields
 {
     /// <summary>
     /// Interface for all field classes
@@ -25,11 +22,11 @@ namespace QuickFix.Fields
         /// <summary>
         /// length of formatted field (including tag=val\001)
         /// </summary>
-        public abstract int getLength(Encoding encoding);
+        public abstract int getLength();
 
         /// <summary>
         /// checksum
         /// </summary>
-        public abstract int getTotal(Encoding encoding);
+        public abstract int getTotal();
     }
 }

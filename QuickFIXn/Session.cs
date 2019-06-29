@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using QuickFix.Fields;
 using QuickFix.Fields.Converters;
 
@@ -227,7 +226,6 @@ namespace QuickFix
         public DataDictionaryProvider DataDictionaryProvider { get; set; }
         public DataDictionary.DataDictionary SessionDataDictionary { get; private set; }
         public DataDictionary.DataDictionary ApplicationDataDictionary { get; private set; }
-        public Encoding Encoding { get; set; }
 
         /// <summary>
         /// Returns whether the Session has a Responder. This method is synchronized
@@ -252,7 +250,6 @@ namespace QuickFix
             this.schedule_ = sessionSchedule;
             this.msgFactory_ = msgFactory;
             this.appDoesEarlyIntercept_ = app is IApplicationExt;
-            this.Encoding = SessionFactory.DefaultEncoding;
 
             this.SenderDefaultApplVerID = senderDefaultApplVerID;
 
@@ -561,8 +558,7 @@ namespace QuickFix
                     this.ValidateLengthAndChecksum,
                     this.SessionDataDictionary,
                     this.ApplicationDataDictionary,
-                    this.msgFactory_,
-                    this.Encoding);
+                    this.msgFactory_);
 
             Next(msgBuilder);
         }
@@ -1641,7 +1637,6 @@ namespace QuickFix
         {
             lock (sync_)
             {
-                message.Encoding = this.Encoding;
                 string msgType = message.Header.GetField(Fields.Tags.MsgType);
 
                 InitializeHeader(message, seqNum);

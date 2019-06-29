@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-namespace QuickFix.Fields
+﻿namespace QuickFix.Fields
 {
     /// <summary>
     /// Base class for all field types
@@ -88,23 +85,23 @@ namespace QuickFix.Fields
         /// <summary>
         /// length of formatted field (including tag=val\001)
         /// </summary>
-        public override int getLength(Encoding encoding)
+        public override int getLength()
         {
             if (_changed)
                 makeStringFields();
-            return encoding.GetByteCount(_stringField) + 1; // +1 for SOH
+            return CharEncoding.DefaultEncoding.GetByteCount(_stringField) + 1; // +1 for SOH
         }
 
         /// <summary>
         /// checksum
         /// </summary>
-        public override int getTotal(Encoding encoding)
+        public override int getTotal()
         {
             if (_changed)
                 makeStringFields();
 
             int sum = 0;
-            byte[] array = encoding.GetBytes(_stringField);
+            byte[] array = CharEncoding.DefaultEncoding.GetBytes(_stringField);
             foreach (byte b in array)
             {
                 sum += b;
