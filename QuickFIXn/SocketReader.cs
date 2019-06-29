@@ -73,8 +73,8 @@ namespace QuickFix
         /// <exception cref="System.Net.Sockets.SocketException">On connection reset</exception>
         protected virtual int ReadSome(byte[] buffer, int timeoutMilliseconds)
         {
-            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketReader.
-            // Any changes here should also be made there.
+            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketInitiatorThread.
+            // Any changes made here should also be made there.
             try
             {
                 // Begin read if it is not already started

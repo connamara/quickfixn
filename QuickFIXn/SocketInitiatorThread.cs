@@ -132,8 +132,8 @@ namespace QuickFix
         /// <exception cref="System.Net.Sockets.SocketException">On connection reset</exception>
         protected int ReadSome(byte[] buffer, int timeoutMilliseconds)
         {
-            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketReader any changes here should 
-            // also be performed there
+            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketReader.
+            // Any changes made here should also be performed there.
             try
             {
                 // Begin read if it is not already started
