@@ -66,7 +66,6 @@ namespace QuickFix
             msgFileName_ = System.IO.Path.Combine(path, prefix + ".body");
             headerFileName_ = System.IO.Path.Combine(path, prefix + ".header");
             sessionFileName_ = System.IO.Path.Combine(path, prefix + ".session");
-
             open();
         }
 
@@ -183,7 +182,7 @@ namespace QuickFix
                     byte[] msgBytes = new byte[offsets_[i].size];
                     msgFile_.Read(msgBytes, 0, msgBytes.Length);
 
-                    messages.Add(Encoding.UTF8.GetString(msgBytes));
+                    messages.Add(CharEncoding.DefaultEncoding.GetString(msgBytes));
                 }
             }
 
@@ -200,7 +199,7 @@ namespace QuickFix
             msgFile_.Seek(0, System.IO.SeekOrigin.End);
 
             long offset = msgFile_.Position;
-            byte[] msgBytes = Encoding.UTF8.GetBytes(msg);
+            byte[] msgBytes = CharEncoding.DefaultEncoding.GetBytes(msg);
             int size = msgBytes.Length;
 
             StringBuilder b = new StringBuilder();

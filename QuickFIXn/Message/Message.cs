@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using QuickFix.Fields;
 using System.Text.RegularExpressions;
@@ -49,7 +47,7 @@ namespace QuickFix
         public const string SOH = "\u0001";
         private int field_ = 0;
         private bool validStructure_;
-        
+
         #region Properties
 
         public Header Header { get; private set; }
@@ -565,11 +563,11 @@ namespace QuickFix
             {
                 int receivedBodyLength = this.Header.GetInt(Tags.BodyLength);
                 if (BodyLength() != receivedBodyLength)
-                    throw new InvalidMessage("Expected BodyLength=" + BodyLength() + ", Received BodyLength=" + receivedBodyLength);
+                    throw new InvalidMessage("Expected BodyLength=" + BodyLength() + ", Received BodyLength=" + receivedBodyLength + ", Message.SeqNum=" + this.Header.GetInt(Tags.MsgSeqNum));
 
                 int receivedCheckSum = this.Trailer.GetInt(Tags.CheckSum);
                 if (CheckSum() != receivedCheckSum)
-                    throw new InvalidMessage("Expected CheckSum=" + CheckSum() + ", Received CheckSum=" + receivedCheckSum);
+                    throw new InvalidMessage("Expected CheckSum=" + CheckSum() + ", Received CheckSum=" + receivedCheckSum + ", Message.SeqNum=" + this.Header.GetInt(Tags.MsgSeqNum));
             }
             catch (FieldNotFoundException e)
             {

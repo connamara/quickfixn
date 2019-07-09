@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using QuickFix.Fields;
+﻿using QuickFix.Fields;
 
 namespace QuickFix
 {
@@ -42,7 +38,6 @@ namespace QuickFix
             _sessionDD = sessionDD;
             _appDD = appDD;
             _msgFactory = msgFactory;
-
             _msgType = Message.IdentifyType(_msgStr);
             _beginString = Message.ExtractBeginString(_msgStr);
         }

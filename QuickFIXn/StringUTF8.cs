@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace QuickFix
 {
@@ -23,7 +20,7 @@ namespace QuickFix
 
         public override string ToString()
         {
-            return Encoding.UTF8.GetString(_str);
+            return CharEncoding.DefaultEncoding.GetString(_str);
         }
 
         public int IndexOf( byte nextchar, int pos )
