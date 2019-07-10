@@ -24,8 +24,17 @@ namespace QuickFix.Transport
             Uri destUri = uriBuilder.Uri;
             IWebProxy webProxy = WebRequest.GetSystemWebProxy();
 
-            if (webProxy.IsBypassed(destUri))
+            try
+            {
+                if (webProxy.IsBypassed(destUri))
+                    return null;
+            }
+            catch (PlatformNotSupportedException)
+            {
+                // .NET Core doesn't support IWebProxy.IsBypassed
+                // (because .NET Core doesn't have access to Windows-specific services, of course)
                 return null;
+            }
 
             Uri proxyUri = webProxy.GetProxy(destUri);
             IPAddress[] proxyEntry = Dns.GetHostAddresses(proxyUri.Host);
