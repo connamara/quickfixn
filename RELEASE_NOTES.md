@@ -25,6 +25,7 @@ What's New
 * (minor) #524 - add tunnel support; expand cert store search to include LocalMachine (nileshwagel/gbirchmeier)
 * (minor) #531 - change encoding to iso-8859-1 (aka latin1) (amibar/gbirchmeier)
 * (patch) #532 - bug in #524: don't attempt non-.NET-Core-supported functionality (gbirchmeier)
+* (patch) #533 - file maintenance (gbirchmeier)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)

@@ -4,7 +4,7 @@ using QuickFix;
 namespace UnitTests
 {
     [TestFixture]
-    public class StringUTF8Tests
+    public class ByteSizeStringTests
     {
         [Test]
         public void NextTagTest()
