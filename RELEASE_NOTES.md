@@ -15,7 +15,7 @@ What's New
 * (patch) #486 - More informative exception for DD parsing errors (gbirchmeier)
 * (patch) #492 - fix delete-generated script (gbirchmeier)
 * (patch) #493 - fix DD parsing issue with certain comments (gbirchmeier)
-* (minor) #448 - Fix message load error within *nix environments (mtnbiker99)
+* (minor) #448 - Fix message load error within \*nix environments (mtnbiker99)
 * (minor) #497 - Support full cross-platform operation (michaelwilner)
 * (patch) #498 - Fix hanging on ThreadedSocketReactor exit (michaelwilner)
 * (minor) #489 - fixes for DefaultMessageFactory / FIX50sp1/2 (gbirchmeier)
@@ -26,6 +26,7 @@ What's New
 * (minor) #531 - change encoding to iso-8859-1 (aka latin1) (amibar/gbirchmeier)
 * (patch) #532 - bug in #524: don't attempt non-.NET-Core-supported functionality (gbirchmeier)
 * (patch) #533 - file maintenance (gbirchmeier)
+* (patch) #509 - Consistent sessionID argument name in IApplication (eugbaranov)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)
