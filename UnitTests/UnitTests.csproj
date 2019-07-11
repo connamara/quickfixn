@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="EncodingTests.cs" />
-    <Compile Remove="PerformanceTests.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="../spec/**/*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Link>spec/%(RecursiveDir)%(Filename)%(Extension)</Link>
