@@ -50,7 +50,7 @@ Contributors
 - Andrey Kamyshanov
 - Jac Steyn
 - Timothy Caro
-- Steffan Ulfburg
+- Staffan Ulfburg
 - Martin Adams
 - Dmitry Afanasiev
 - James Cook
