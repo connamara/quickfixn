@@ -236,7 +236,7 @@ namespace UnitTests
         {
             DecimalField field = new DecimalField(200, new Decimal(101.0001));
             fieldmap.SetField(field);
-            string refield = fieldmap.GetField(200);
+            string refield = fieldmap.GetString(200);
             Assert.That("101.0001", Is.EqualTo(refield));
         }
 
@@ -263,7 +263,7 @@ namespace UnitTests
         public void FieldNotFoundTest()
         {
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { fieldmap.GetField(99900); });
+                delegate { fieldmap.GetString(99900); });
             Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fieldmap.GetField(new DateTimeField(1002030)); });
             Assert.Throws(typeof(FieldNotFoundException),
