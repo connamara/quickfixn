@@ -491,7 +491,7 @@ namespace UnitTests
             int count = -1;
             foreach (QuickFix.Message sequenceResestMsg in responder.msgLookup[QuickFix.Fields.MsgType.SEQUENCE_RESET])
             {
-                Assert.AreEqual(sequenceResestMsg.GetField(QuickFix.Fields.Tags.GapFillFlag), "Y");
+                Assert.AreEqual(sequenceResestMsg.GetString(QuickFix.Fields.Tags.GapFillFlag), "Y");
                 Assert.AreEqual(sequenceResestMsg.Header.GetInt(QuickFix.Fields.Tags.MsgSeqNum), gapStarts[++count]);
                 Assert.AreEqual(sequenceResestMsg.GetInt(QuickFix.Fields.Tags.NewSeqNo), gapEnds[count]);
             }
@@ -524,7 +524,7 @@ namespace UnitTests
         public void AssertMsInTag(string msgType, int tag, bool shouldHaveMs)
         {
             QuickFix.Message msg = responder.msgLookup[msgType].Last();
-            string sendingTime = msg.Header.GetField(tag);
+            string sendingTime = msg.Header.GetString(tag);
             Match m = msRegex.Match(sendingTime);
             Assert.That(m.Success == shouldHaveMs);
         }
@@ -532,7 +532,7 @@ namespace UnitTests
         public void AssertMicrosecondsInTag(string msgType, int tag, bool shouldHaveMicrosecond)
         {
             QuickFix.Message msg = responder.msgLookup[msgType].Last();
-            string sendingTime = msg.Header.GetField(tag);
+            string sendingTime = msg.Header.GetString(tag);
             Match m = microsecondRegex.Match(sendingTime);
             Assert.That(m.Success == shouldHaveMicrosecond);
         }

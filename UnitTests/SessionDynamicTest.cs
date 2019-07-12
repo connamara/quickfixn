@@ -195,8 +195,8 @@ namespace UnitTests
                 {
                     Message message = new Message(socketState._messageFragment);
                     socketState._messageFragment = string.Empty;
-                    string targetCompID = message.Header.GetField(QuickFix.Fields.Tags.TargetCompID);
-                    if (message.Header.GetField(QuickFix.Fields.Tags.MsgType) == QuickFix.Fields.MsgType.LOGON)
+                    string targetCompID = message.Header.GetString(QuickFix.Fields.Tags.TargetCompID);
+                    if (message.Header.GetString(QuickFix.Fields.Tags.MsgType) == QuickFix.Fields.MsgType.LOGON)
                         lock (_sessions)
                         {
                             _sessions[targetCompID] = socketState;

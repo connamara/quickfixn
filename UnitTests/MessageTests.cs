@@ -922,10 +922,10 @@ namespace UnitTests
             message.SetFields(new IField[] { allocAccount, allocAccountType, allocId });
 
             Assert.AreEqual(true, message.IsSetField(Tags.AllocID));
-            Assert.AreEqual("123456", message.GetField(Tags.AllocID));
+            Assert.AreEqual("123456", message.GetString(Tags.AllocID));
 
             Assert.AreEqual(true, message.IsSetField(Tags.AllocAccount));
-            Assert.AreEqual("QuickFixAccount", message.GetField(Tags.AllocAccount));
+            Assert.AreEqual("QuickFixAccount", message.GetString(Tags.AllocAccount));
 
             Assert.AreEqual(true, message.IsSetField(Tags.AllocAccountType));
             Assert.AreEqual(AllocAccountType.HOUSE_TRADER, message.GetInt(Tags.AllocAccountType));
