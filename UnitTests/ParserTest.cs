@@ -13,6 +13,11 @@ namespace UnitTests
         const string incomplete_1   = "8=FIX.4.2";
         const string incomplete_2   = "8=FIX.4.2\x01" + "9=12";
 
+        public byte[] StrToBytes(string str)
+        {
+            return CharEncoding.DefaultEncoding.GetBytes(str);
+        }
+
         [Test]
         public void ExtractLength()
         {
@@ -47,7 +52,8 @@ namespace UnitTests
             const string fixMsg3 = "8=FIX.4.2\x01" + "9=19\x01" + "35=A\x01" + "108=30\x01" + "9710=8\x01" + "10=31\x01";
 
             Parser parser = new Parser();
-            parser.AddToStream(fixMsg1 + fixMsg2 + fixMsg3);
+            byte[] combined = StrToBytes(fixMsg1 + fixMsg2 + fixMsg3);
+            parser.AddToStream(ref combined, combined.Length);
 
             string readFixMsg1;
             Assert.True(parser.ReadFixMessage(out readFixMsg1));
@@ -68,24 +74,28 @@ namespace UnitTests
             string partFixMsg1 = "8=FIX.4.2\x01" + "9=17\x01" + "35=4\x01" + "36=";
             string partFixMsg2 = "88\x01" + "123=Y\x01" + "10=34\x01";
 
-            Parser parser = new Parser();
-            parser.AddToStream(partFixMsg1);
+            byte[] partBytes1 = CharEncoding.DefaultEncoding.GetBytes(partFixMsg1);
+            byte[] partBytes2 = CharEncoding.DefaultEncoding.GetBytes(partFixMsg2);
 
+            Parser parser = new Parser();
             string readPartFixMsg;
+
+            parser.AddToStream(ref partBytes1, partBytes1.Length);
             Assert.False(parser.ReadFixMessage(out readPartFixMsg));
 
-            parser.AddToStream(partFixMsg2);
+            parser.AddToStream(ref partBytes2, partBytes2.Length);
             Assert.True(parser.ReadFixMessage(out readPartFixMsg));
+
             Assert.AreEqual(partFixMsg1 + partFixMsg2, readPartFixMsg);
         }
 
         [Test]
         public void ReadFixMessageWithBadLength()
         {
-            string fixMsg = "8=TEST\x01" + "9=TEST\x01" + "35=TEST\x01" + "49=SS1\x01" + "56=RORE\x01" + "34=3\x01" + "52=20050222-16:45:53\x01" + "10=TEST\x01";
+            byte[] fixMsg = StrToBytes("8=TEST\x01" + "9=TEST\x01" + "35=TEST\x01" + "49=SS1\x01" + "56=RORE\x01" + "34=3\x01" + "52=20050222-16:45:53\x01" + "10=TEST\x01");
 
             Parser parser = new Parser();
-            parser.AddToStream(fixMsg);
+            parser.AddToStream(ref fixMsg, fixMsg.Length);
 
             string readFixMsg;
             Assert.Throws<QuickFix.MessageParseError>(delegate { parser.ReadFixMessage(out readFixMsg); });
@@ -111,7 +121,8 @@ namespace UnitTests
             string fixMsg2 = String.Join(Message.SOH, fixMsgFields2) + Message.SOH;
 
             Parser parser = new Parser();
-            parser.AddToStream(fixMsg1 + fixMsg2);
+            byte[] combined = StrToBytes(fixMsg1 + fixMsg2);
+            parser.AddToStream(ref combined, combined.Length);
 
             string readFixMsg1;
             Assert.True(parser.ReadFixMessage(out readFixMsg1));
@@ -129,7 +140,8 @@ namespace UnitTests
             string fixMsg1 = String.Join("\x01", fixMsgFields1) + "\x01";
 
             Parser parser = new Parser();
-            parser.AddToStream(fixMsg1);
+            byte[] bytesMsg = StrToBytes(fixMsg1);
+            parser.AddToStream(ref bytesMsg, bytesMsg.Length);
 
             string readFixMsg1;
             Assert.True(parser.ReadFixMessage(out readFixMsg1));

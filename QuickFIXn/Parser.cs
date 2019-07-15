@@ -1,3 +1,5 @@
+using System;
+
 namespace QuickFix
 {
     /// <summary>
@@ -15,12 +17,12 @@ namespace QuickFix
             usedBufferLength += bytesAdded;
         }
 
+        [Obsolete("Unused and will be removed in a future version.")]
         public void AddToStream(string data)
         {
             byte[] bytes = CharEncoding.DefaultEncoding.GetBytes(data);
             AddToStream(ref bytes, bytes.Length);
         }
-        
 
         public bool ReadFixMessage(out string msg)
         {
