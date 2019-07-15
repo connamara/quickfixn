@@ -74,14 +74,13 @@ namespace QuickFix
             return QuickFix.Transport.StreamFactory.CreateClientStream(socketEndPoint_, socketSettings_, session_.Log);
         }
 
-
         public bool Read()
         {
             try
             {
                 int bytesRead = ReadSome(readBuffer_, 1000);
                 if (bytesRead > 0)
-                    parser_.AddToStream(CharEncoding.DefaultEncoding.GetString(readBuffer_, 0, bytesRead));
+                    parser_.AddToStream(ref readBuffer_, bytesRead);
                 else if (null != session_)
                 {
                     session_.Next();
