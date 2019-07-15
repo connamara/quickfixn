@@ -69,3 +69,4 @@ Contributors
 - Nilesh Wagel
 - Ami Bar
 - Eugene Baranov
+- Philipe de Liz Pereira
