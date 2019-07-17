@@ -112,6 +112,20 @@ namespace UnitTests
         }
 
         [Test]
+        public void GroupBeginsGroupTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadTestFIXSpec("group_begins_group");
+            QuickFix.DataDictionary.DDMap msg = dd.Messages["magic"];
+            Assert.True(msg.IsGroup(6660)); // NoMagicGroups
+            Assert.True(msg.GetGroup(6660).IsGroup(7770)); // NoMagicGroups/NoRabbits
+            Assert.True(msg.GetGroup(6660).IsField(6661)); // NoMagicGroups/MagicWord
+            Assert.True(msg.GetGroup(6660).GetGroup(7770).IsField(7711)); // NoMagicGroups/NoRabbits/RabbitName
+            Assert.AreEqual(7770, msg.GetGroup(6660).Delim); // NoMagicGroups delim is NoRabbits counter
+            Assert.AreEqual(7711, msg.GetGroup(6660).GetGroup(7770).Delim); // NoRabbits delim is RabbitName
+        }
+
+        [Test]
         public void HeaderGroupTest()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
@@ -239,6 +253,46 @@ namespace UnitTests
             message.FromString(msgStr, true, dd, dd, f);
 
             dd.Validate(message, beginString, msgType.Obj);
+        }
+
+        [Test]
+        public void ValidateGroupBeginsGroup()
+        {
+            // TODO: In a future version, change this so that
+            //       1) generator will generate source for our test DD
+            //       2) this test will use proper type-safe methods and not generics
+            // Probably some or all of this would then move to MessageTests.cs
+
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadTestFIXSpec("group_begins_group");
+
+            string pipedStr = "8=FIX.9.9|9=99|35=magic|34=3|49=CLIENT1|52=20111012-22:15:55.474|56=EXECUTOR|"
+                + "1111=mundane|5555=magicfield|6660=1|7770=2|7711=Hoppy|7712=brown|"
+                + "7711=Floppy|7712=white|6661=abracadabra|10=100|";
+            // note: length and checksum are garbage
+            string msgStr = pipedStr.Replace("|", Message.SOH);
+
+            QuickFix.Fields.MsgType msgType = Message.IdentifyType(msgStr);
+            string beginString = Message.ExtractBeginString(msgStr);
+
+            Message msg = new Message(msgStr, dd, false);
+
+            System.Diagnostics.Debug.WriteLine("Message: " + msg.ToString());
+            System.Diagnostics.Debug.WriteLine("BeginString: " + beginString);
+
+            // true param means body-only, i.e. don't validate length/checksum
+            dd.Validate(msg, true, beginString, "magic");
+
+            // Verify can retrieve one of the inner groups.
+            // (Gotta use generic methods because code isn't generated for this DD)
+            Group magicGroup = new Group(6660, 7770, new[] { 7770, 6661 });
+            msg.GetGroup(1, magicGroup);
+            Group rabbitGroup = new Group(7770, 7711, new[] { 7711, 7722 });
+            magicGroup.GetGroup(2, rabbitGroup);
+
+            Assert.AreEqual("abracadabra", magicGroup.GetString(6661));
+            Assert.AreEqual("Floppy", rabbitGroup.GetString(7711));
+            Assert.AreEqual("white", rabbitGroup.GetString(7712));
         }
 
         [Test]
