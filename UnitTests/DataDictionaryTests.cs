@@ -117,11 +117,11 @@ namespace UnitTests
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.LoadTestFIXSpec("group_begins_group");
             QuickFix.DataDictionary.DDMap msg = dd.Messages["magic"];
-            Assert.True(msg.IsGroup(6660)); // NoMagicGroups
-            Assert.True(msg.GetGroup(6660).IsGroup(7770)); // NoMagicGroups/NoRabbits
-            Assert.True(msg.GetGroup(6660).IsField(6661)); // NoMagicGroups/MagicWord
-            Assert.True(msg.GetGroup(6660).GetGroup(7770).IsField(7711)); // NoMagicGroups/NoRabbits/RabbitName
-            Assert.AreEqual(7770, msg.GetGroup(6660).Delim); // NoMagicGroups delim is NoRabbits counter
+            Assert.True(msg.IsGroup(6660)); // NoMagics group
+            Assert.True(msg.GetGroup(6660).IsGroup(7770)); // NoMagics/NoRabbits
+            Assert.True(msg.GetGroup(6660).IsField(6661)); // NoMagics/MagicWord
+            Assert.True(msg.GetGroup(6660).GetGroup(7770).IsField(7711)); // NoMagics/NoRabbits/RabbitName
+            Assert.AreEqual(7770, msg.GetGroup(6660).Delim); // NoMagics delim is NoRabbits counter
             Assert.AreEqual(7711, msg.GetGroup(6660).GetGroup(7770).Delim); // NoRabbits delim is RabbitName
         }
 
@@ -266,19 +266,14 @@ namespace UnitTests
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.LoadTestFIXSpec("group_begins_group");
 
-            string pipedStr = "8=FIX.9.9|9=99|35=magic|34=3|49=CLIENT1|52=20111012-22:15:55.474|56=EXECUTOR|"
+            string pipedStr = "8=FIX.9.9|9=167|35=magic|34=3|49=CLIENT1|52=20111012-22:15:55.474|56=EXECUTOR|"
                 + "1111=mundane|5555=magicfield|6660=1|7770=2|7711=Hoppy|7712=brown|"
-                + "7711=Floppy|7712=white|6661=abracadabra|10=100|";
-            // note: length and checksum are garbage
+                + "7711=Floppy|7712=white|6661=abracadabra|10=48|";
+            // note: length and checksum might be garbage
             string msgStr = pipedStr.Replace("|", Message.SOH);
 
-            QuickFix.Fields.MsgType msgType = Message.IdentifyType(msgStr);
             string beginString = Message.ExtractBeginString(msgStr);
-
             Message msg = new Message(msgStr, dd, false);
-
-            System.Diagnostics.Debug.WriteLine("Message: " + msg.ToString());
-            System.Diagnostics.Debug.WriteLine("BeginString: " + beginString);
 
             // true param means body-only, i.e. don't validate length/checksum
             dd.Validate(msg, true, beginString, "magic");

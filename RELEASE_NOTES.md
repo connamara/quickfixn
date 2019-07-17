@@ -30,6 +30,7 @@ What's New
 * (patch) #296 - make FieldMap.GetField obsolete; favor .GetString instead (staffanu)
 * (patch) #478 - eliminate unnecessary string/byte flip-flop (gbirchmeier)
 * (patch) #473 - correct ordering of fields in message trailer (Ieshaj/gbirchmeier)
+* (patch) #513 - Allow groups where the first entry is a group (twoi/gbirchmeier)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)
