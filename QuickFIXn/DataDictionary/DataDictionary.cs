@@ -23,6 +23,8 @@ namespace QuickFix.DataDictionary
 		public bool CheckFieldsOutOfOrder { get; set; }
 		public bool CheckFieldsHaveValues { get; set; }
 		public bool CheckUserDefinedFields { get; set; }
+		public bool AllowUnknownFieldValues { get; set; }
+		public bool AllowUnknownMessageFields { get; set; }
 
 		public DDMap Header = new DDMap();
 		public DDMap Trailer = new DDMap();
@@ -324,6 +326,8 @@ namespace QuickFix.DataDictionary
 		/// <param name="tag"></param>
 		public void CheckValidTagNumber(int tag)
 		{
+			if (AllowUnknownMessageFields)
+				return;
 			if (!FieldsByTag.ContainsKey(tag))
 			{
 				throw new InvalidTagNumber(tag);
@@ -336,18 +340,22 @@ namespace QuickFix.DataDictionary
 		/// <param name="field"></param>
 		public void CheckValue(Fields.IField field)
 		{
-			DDField fld = FieldsByTag[ field.Tag ];
-			if( fld.HasEnums() )
-				if( fld.IsMultipleValueFieldWithEnums )
+			if (AllowUnknownFieldValues)
+				return;
+			DDField fld = FieldsByTag[field.Tag];
+			if (fld.HasEnums())
+			{
+				if (fld.IsMultipleValueFieldWithEnums)
 				{
-					string [] splitted = field.ToString().Split( ' ' );
+					string[] splitted = field.ToString().Split(' ');
 
-					foreach( string value in splitted )
-						if( !fld.EnumDict.ContainsKey( value ) )
-							throw new IncorrectTagValue( field.Tag );
+					foreach (string value in splitted)
+						if (!fld.EnumDict.ContainsKey(value))
+							throw new IncorrectTagValue(field.Tag);
 				}
-				else if( !fld.EnumDict.ContainsKey( field.ToString() ) )
-					throw new IncorrectTagValue( field.Tag );
+				else if (!fld.EnumDict.ContainsKey(field.ToString()))
+					throw new IncorrectTagValue(field.Tag);
+			}
 		}
 
 		/// <summary>
@@ -357,6 +365,8 @@ namespace QuickFix.DataDictionary
 		/// <param name="msgType"></param>
 		public void CheckIsInMessage(Fields.IField field, string msgType)
 		{
+			if (AllowUnknownMessageFields)
+				return;
 			DDMap dd;
 			if (Messages.TryGetValue(msgType, out dd))
 				if (dd.Fields.ContainsKey(field.Tag))
@@ -372,6 +382,8 @@ namespace QuickFix.DataDictionary
 		/// <param name="msgType">Message type that contains the group (included in exceptions thrown on failure)</param>
 		public void CheckIsInGroup(Fields.IField field, DDGrp ddgrp, string msgType)
 		{
+			if (AllowUnknownMessageFields)
+				return;
 			if (ddgrp.IsField(field.Tag))
 				return;
 			throw new TagNotDefinedForMessage(field.Tag, msgType);
