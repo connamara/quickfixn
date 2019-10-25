@@ -95,12 +95,11 @@ namespace QuickFix
 
         public Group Create(string beginString, string msgType, int groupCounterTag)
         {
-            // FIXME: This is a hack.  FIXT11 could mean 50 or 50sp1 or 50sp2.
-            // We need some way to choose which 50 version it is.
-            // Choosing 50 here is not adequate.
-            var key = beginString.Equals(FixValues.BeginString.FIXT11)
-                ? FixValues.BeginString.FIX50
-                : beginString;
+            string key = beginString;
+            if(beginString.Equals(FixValues.BeginString.FIXT11))
+            {
+                key = QuickFix.FixValues.ApplVerID.ToBeginString(_defaultApplVerId.getValue());
+            }
 
             if (_factories.TryGetValue(key, out var factory))
             {
