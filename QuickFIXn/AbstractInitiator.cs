@@ -46,8 +46,8 @@ namespace QuickFix
             _app = app;
             _storeFactory = storeFactory;
             _settings = settings;
-            _logFactory = logFactory;
-            _msgFactory = messageFactory;
+            _logFactory = logFactory ?? new NullLogFactory();
+            _msgFactory = messageFactory ?? new DefaultMessageFactory();
 
             HashSet<SessionID> definedSessions = _settings.GetSessions();
             if (0 == definedSessions.Count)
