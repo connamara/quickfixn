@@ -9,6 +9,9 @@ What's New
 ----------
 
 ### NEXT VERSION:
+* nothing yet
+
+### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
 * (minor) #476 - Separate FIX message assemblies from the main project (akamyshanov)
 * (minor) #482 - x64 support (brobits)
