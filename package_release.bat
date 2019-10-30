@@ -52,6 +52,7 @@ mkdir tmp\%QF_DIR%
 mkdir tmp\%QF_DIR%\bin
 mkdir tmp\%QF_DIR%\bin\netstandard2.0
 mkdir tmp\%QF_DIR%\spec
+mkdir tmp\%QF_DIR%\spec\fix
 mkdir tmp\%QF_DIR%\config
 copy QuickFIXn\bin\Release\netstandard2.0\QuickFix.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.dll
 
@@ -64,7 +65,7 @@ copy Messages\FIX50\bin\Release\netstandard2.0\QuickFix.FIX50.dll tmp\%QF_DIR%\b
 copy Messages\FIX50SP1\bin\Release\netstandard2.0\QuickFix.FIX50SP1.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX50SP1.dll
 copy Messages\FIX50SP2\bin\Release\netstandard2.0\QuickFix.FIX50SP2.dll tmp\%QF_DIR%\bin\netstandard2.0\QuickFix.FIX50SP2.dll
 
-xcopy spec tmp\%QF_DIR%\spec /e /y
+xcopy spec\fix tmp\%QF_DIR%\spec\fix /e /y
 copy config\sample_acceptor.cfg tmp\%QF_DIR%\config\
 copy config\sample_initiator.cfg tmp\%QF_DIR%\config\
 copy RELEASE_README.md tmp\%QF_DIR%\README.md
