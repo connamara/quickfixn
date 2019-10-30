@@ -7,6 +7,31 @@ type: tutorial
 weight: 2
 ---
 
+Get your DLLs
+-------------
+
+Your project will need at least 2 QuickFIX/n dlls:
+
+* the core: QuickFix.dll
+* the message definitions for the FIX version(s) you're using, which will be one or more of:
+  * QuickFix.FIX41.dll
+  * QuickFix.FIX42.dll
+  * QuickFix.FIX43.dll
+  * QuickFix.FIX44.dll
+  * QuickFix.FIX50.dll
+  * QuickFix.FIX50SP1.dll
+  * QuickFix.FIX50SP2.dll
+
+All of these are in the release zip.
+
+(If you built QF/n from source, then you'll find these dlls in `Messages\FIX<n>\bin\`)
+
+Most applications only need to support one FIX version.
+
+
+Creating Your Application
+-------------------------
+
 Creating a FIX application is easy; simply implement an `IApplication`:
 
 ```csharp
