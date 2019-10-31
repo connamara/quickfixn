@@ -14,6 +14,7 @@ Starting with v1.9.0, your project will need at least 2 QuickFIX/n dlls:
 
 * the core: QuickFix.dll
 * the message definitions for the FIX version(s) you're using, which will be one or more of:
+  * QuickFix.FIX40.dll
   * QuickFix.FIX41.dll
   * QuickFix.FIX42.dll
   * QuickFix.FIX43.dll
