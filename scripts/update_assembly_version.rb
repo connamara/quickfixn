@@ -1,10 +1,8 @@
-
-
 def print_usage_and_die
-  puts "Usage: ruby update_assembly_version.rb version csproj_filepath"
+  puts "Usage: ruby update_assembly_version.rb version csproj1 csproj2 ..."
   puts "Parameters:"
   puts "    version: Where version is a string \"vN.N.N\" (e.g. v2.0.143)"
-  puts "    assembly_filepath: Path to a VisualStudio .csproj file"
+  puts "    csprojN: a VisualStudio .csproj file"
   exit(1)
 end
 
@@ -22,21 +20,35 @@ if not is_correct_pattern? ARGV[0]
   print_usage_and_die
 end
 
-vers = ARGV[0].sub(/^v/,"") #remove the leading v
-csprojpath = ARGV[1]
+vers = ARGV.shift.sub(/^v/,'') #remove the leading v
 
+puts
 
-if not (File.exists?(csprojpath) and File.writable?(csprojpath))
-  puts "Can't open file \"#{csprojpath}\" for writing."
-  puts "(Current path: #{Dir.pwd})"
-  print_usage_and_die
+ARGV.each do |csproj|
+  print "Attempting to change #{csproj}: "
+
+  unless (File.exists?(csproj) and File.writable?(csproj))
+    puts "FAILED."
+    puts "** Can't open file #{csproj} for writing."
+    puts "** (Current path: #{Dir.pwd})"
+    exit(1)
+  end
+
+  begin
+    contents = IO.read(csproj)
+    contents.sub!(/<Version>[^<]*<\/Version>/, "<Version>#{vers}</Version>")
+
+    File.open(csproj,"w") {|f|
+      f.write(contents)
+    }
+    puts "SUCCEEDED."
+
+  rescue StandardError
+    puts "FAILED."
+    puts "** Exception raised."
+    puts
+    raise
+  end
 end
 
-contents = IO.read(csprojpath)
-contents.sub!(/<Version>[^<]*<\/Version>/, "<Version>#{vers}</Version>")
-
-File.open(csprojpath,"w") {|f|
-  f.write(contents)
-}
-
-
+puts "Assembly version update complete."
