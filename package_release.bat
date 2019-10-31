@@ -17,9 +17,9 @@ echo tag version: %TAG_VERSION%
 echo
 
 rem Update the assembly version
-ruby scripts\update_assembly_version.rb %TAG_VERSION% QuickFIXn\QuickFix.csproj
+ruby scripts\update_assembly_version.rb %TAG_VERSION% QuickFIXn\QuickFix.csproj Messages\FIX40\QuickFix.FIX40.csproj Messages\FIX41\QuickFix.FIX41.csproj Messages\FIX42\QuickFix.FIX42.csproj Messages\FIX43\QuickFix.FIX43.csproj Messages\FIX44\QuickFix.FIX44.csproj Messages\FIX50\QuickFix.FIX50.csproj Messages\FIX50SP1\QuickFix.FIX50SP1.csproj Messages\FIX50SP2\QuickFix.FIX50SP2.csproj
 if %errorlevel% neq 0 echo "update_assembly_version.rb failed" && exit /b %errorlevel%
-echo * QuickFix.csproj updated for new version number.
+echo * QuickFix .csproj files updated for new version number.
 
 rem commit the version file, so it will be part of the tag
 call git add QuickFIXn\QuickFix.csproj
