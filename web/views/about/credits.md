@@ -70,3 +70,4 @@ Contributors
 - Ami Bar
 - Eugene Baranov
 - Philipe de Liz Pereira
+- Aleksandar Ivanov Dalemski 
