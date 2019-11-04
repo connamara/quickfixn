@@ -9,7 +9,7 @@ What's New
 ----------
 
 ### NEXT VERSION:
-* nothing yet
+* (patch) #505 - Fix ObjectDisposedException when SocketInitiator is stopped before connection attempt fails (musashibg)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
