@@ -66,7 +66,7 @@ Contributors
 - Michael Wilner
 - Zeljko Vignjevic
 - Vitaliy Pfau
-- Nilesh Wagel
+- Nilesh Wagle
 - Ami Bar
 - Eugene Baranov
 - Philipe de Liz Pereira
