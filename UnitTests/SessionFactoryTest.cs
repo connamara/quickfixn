@@ -145,6 +145,14 @@ namespace UnitTests
             session = factory.Create(sessionID, settings);
             Assert.That(session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Millisecond);
 
+            settings.SetString(SessionSettings.TIMESTAMP_PRECISION, "Nanosecond");
+            session = factory.Create(sessionID, settings);
+            Assert.That(session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Nanosecond);
+
+            settings.SetString(SessionSettings.TIMESTAMP_PRECISION, "Nano");
+            session = factory.Create(sessionID, settings);
+            Assert.That(session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Nanosecond);
+            
             settings.SetString(SessionSettings.TIMESTAMP_PRECISION, "Second");
             session = factory.Create(sessionID, settings);
             Assert.That(session.TimeStampPrecision == QuickFix.Fields.Converters.TimeStampPrecision.Second);
