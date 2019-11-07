@@ -24,7 +24,7 @@ namespace QuickFix.Fields.Converters
         public const string TIME_ONLY_FORMAT_WITHOUT_MILLISECONDS = "{0:HH:mm:ss}";
         
         public const string DATE_TIME_WITH_MICROSECONDS = "yyyyMMdd-HH:mm:ss.ffffff";
-        public static int DATETIME_MAXLENGTH_WITHOUT_NANOSECONDS = DATE_TIME_WITH_MICROSECONDS.Length;
+        public static int DATE_TIME_MAXLENGTH_WITHOUT_NANOSECONDS = DATE_TIME_WITH_MICROSECONDS.Length;
         public static string[] DATE_TIME_FORMATS = { DATE_TIME_WITH_MICROSECONDS, "yyyyMMdd-HH:mm:ss.fff", "yyyyMMdd-HH:mm:ss" };
         public static string[] DATE_ONLY_FORMATS = { "yyyyMMdd" };
         public static string[] TIME_ONLY_FORMATS = { "HH:mm:ss.ffffff", "HH:mm:ss.fff", "HH:mm:ss" };
@@ -112,7 +112,7 @@ namespace QuickFix.Fields.Converters
             try
             {
                 //Avoid NanoString Path parsing if not possible from string length
-                if (str.Length > DATETIME_MAXLENGTH_WITHOUT_NANOSECONDS && precision == TimeStampPrecision.Nanosecond)
+                if (str.Length > DATE_TIME_MAXLENGTH_WITHOUT_NANOSECONDS && precision == TimeStampPrecision.Nanosecond)
                 {
                     return DateTimeFromNanoString(str);
                 }
