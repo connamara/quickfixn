@@ -213,14 +213,26 @@ namespace QuickFix.Fields.Converters
         {
             return includeMilliseconds ? Convert(dt, TimeStampPrecision.Millisecond): Convert( dt, TimeStampPrecision.Second );
         }
-
-
-        private static long Nanoseconds(this System.DateTime dt)
+        
+        //
+        // Summary:
+        //     Gets the nanoseconds component of the date represented by this instance truncated to 100 nanosecond resolution
+        //
+        // Returns:
+        //     The nanoseconds component, expressed as a value between 0 and 99900.
+        public static int Nanosecond(this System.DateTime dt)
         {
             int ns = (int)(dt.Ticks % System.TimeSpan.TicksPerMillisecond % (double)TicksPerMicrosecond) * NanosecondsPerTick;
             int us = (int)System.Math.Floor((dt.Ticks % System.TimeSpan.TicksPerMillisecond) / (double)TicksPerMicrosecond);
+            return (us * NanosPerMicro) + ns;
+        }
+
+        private static long SubsecondAsNanoseconds(this System.DateTime dt)
+        {
+            int ns = dt.Nanosecond();
             int ms = dt.Millisecond;
             return (ms * NanosPerMicro * MicrosPerMillis) + (us * NanosPerMicro) + ns;
+            return (ms * NanosPerMicro * MicrosPerMillis) + ns;
         }
 
         /// <summary>
@@ -233,7 +245,7 @@ namespace QuickFix.Fields.Converters
         {
             if (precision == TimeStampPrecision.Nanosecond)
             {
-                return string.Format(DATE_TIME_FORMAT_WITH_NANOSECONDS, dt, dt.Nanoseconds());
+                return string.Format(DATE_TIME_FORMAT_WITH_NANOSECONDS, dt, dt.SubsecondAsNanoseconds());
             }
             else
             {
