@@ -100,7 +100,7 @@ namespace QuickFix.Fields.Converters
         /// <exception cref="FieldConvertError"/>
         public static System.DateTime ConvertToDateTime(string str)
         {
-            return ConvertToDateTime(str, TimeStampPrecision.Nanosecond);
+            return ConvertToDateTime(str, TimeStampPrecision.Millisecond);
         }
 
         /// <summary>
