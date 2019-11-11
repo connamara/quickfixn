@@ -231,7 +231,6 @@ namespace QuickFix.Fields.Converters
         {
             int ns = dt.Nanosecond();
             int ms = dt.Millisecond;
-            return (ms * NanosPerMicro * MicrosPerMillis) + (us * NanosPerMicro) + ns;
             return (ms * NanosPerMicro * MicrosPerMillis) + ns;
         }
 
