@@ -283,7 +283,7 @@ namespace QuickFix.Fields.Converters
         {
             if (precision == TimeStampPrecision.Nanosecond)
             {
-                return string.Format(TIME_ONLY_FORMAT_WITH_NANOSECONDS, dt, dt.Nanoseconds());
+                return string.Format(TIME_ONLY_FORMAT_WITH_NANOSECONDS, dt, dt.SubsecondAsNanoseconds());
             }
             else
             {
