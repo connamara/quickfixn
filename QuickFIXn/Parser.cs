@@ -9,19 +9,25 @@ namespace QuickFix
         private byte[] buffer_ = new byte[512];
         int usedBufferLength = 0;
 
-        public void AddToStream(ref byte[] data, int bytesAdded)
+        public void AddToStream(byte[] data, int bytesAdded)
         {
             if (buffer_.Length < usedBufferLength + bytesAdded)
-                System.Array.Resize<byte>(ref buffer_, (usedBufferLength + bytesAdded));
-            System.Buffer.BlockCopy(data, 0, buffer_, usedBufferLength , bytesAdded);
+                Array.Resize(ref buffer_, (usedBufferLength + bytesAdded));
+            Buffer.BlockCopy(data, 0, buffer_, usedBufferLength , bytesAdded);
             usedBufferLength += bytesAdded;
+        }
+
+        [Obsolete("Use the overload without ref instead.")]
+        public void AddToStream(ref byte[] data, int bytesAdded)
+        {
+            AddToStream(data, bytesAdded);
         }
 
         [Obsolete("Unused and will be removed in a future version.")]
         public void AddToStream(string data)
         {
             byte[] bytes = CharEncoding.DefaultEncoding.GetBytes(data);
-            AddToStream(ref bytes, bytes.Length);
+            AddToStream(bytes, bytes.Length);
         }
 
         public bool ReadFixMessage(out string msg)
@@ -116,7 +122,7 @@ namespace QuickFix
 
         private bool Fail(string what)
         {
-            System.Console.WriteLine("Parser failed: " + what);
+            Console.WriteLine("Parser failed: " + what);
             return false;
         }
 
@@ -147,7 +153,7 @@ namespace QuickFix
         private byte[] Remove(byte[] array, int count)
         {
             byte[] returnByte = new byte[array.Length - count];
-            System.Buffer.BlockCopy(array, count, returnByte, 0, array.Length - count);
+            Buffer.BlockCopy(array, count, returnByte, 0, array.Length - count);
             usedBufferLength -= count;
             return returnByte;
         }
@@ -155,7 +161,7 @@ namespace QuickFix
         private string Substring(byte[] array, int startIndex, int length)
         {
             byte[] returnByte = new byte[length];
-            System.Buffer.BlockCopy(array, startIndex, returnByte, 0, length);
+            Buffer.BlockCopy(array, startIndex, returnByte, 0, length);
             return CharEncoding.DefaultEncoding.GetString(returnByte);
         }
     }
