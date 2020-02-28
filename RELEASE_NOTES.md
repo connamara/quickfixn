@@ -10,6 +10,7 @@ What's New
 
 ### NEXT VERSION:
 * (patch) #505 - Fix ObjectDisposedException when SocketInitiator is stopped before connection attempt fails (musashibg)
+* (patch) #571 - StreamFactory fix: unexpected null from GetProxy (mkoca & mcmillab)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
