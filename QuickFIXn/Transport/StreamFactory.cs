@@ -37,6 +37,9 @@ namespace QuickFix.Transport
             }
 
             Uri proxyUri = webProxy.GetProxy(destUri);
+            if (proxyUri == null)
+                return null;
+
             IPAddress[] proxyEntry = Dns.GetHostAddresses(proxyUri.Host);
             int iPort = proxyUri.Port;
             IPAddress address = proxyEntry.First(a => a.AddressFamily == AddressFamily.InterNetwork);
