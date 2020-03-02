@@ -13,6 +13,7 @@ What's New
 * (patch) #571 - StreamFactory fix: unexpected null from GetProxy (mkoca & mcmillab)
 * (patch) #547 - Implement Refresh() method in FileStore (roederja2)
 * (minor) #570 - change Parser.AddToStream() interface to not use 'ref' (roederja2)
+* (patch) #526 - Do not ignore MsgSeqNum on ResendRequest when no persistence (ledusskapis)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
