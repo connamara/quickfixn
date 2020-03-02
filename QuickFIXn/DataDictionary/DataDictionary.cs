@@ -23,7 +23,6 @@ namespace QuickFix.DataDictionary
         public bool CheckFieldsOutOfOrder { get; set; }
         public bool CheckFieldsHaveValues { get; set; }
         public bool CheckUserDefinedFields { get; set; }
-        public bool AllowUnknownFieldValues { get; set; }
         public bool AllowUnknownMessageFields { get; set; }
 
         public DDMap Header = new DDMap();
@@ -341,8 +340,6 @@ namespace QuickFix.DataDictionary
         /// <param name="field"></param>
         public void CheckValue(Fields.IField field)
         {
-            if (AllowUnknownFieldValues)
-                return;
             DDField fld = FieldsByTag[field.Tag];
             if (fld.HasEnums())
             {
