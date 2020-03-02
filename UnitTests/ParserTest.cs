@@ -53,7 +53,7 @@ namespace UnitTests
 
             Parser parser = new Parser();
             byte[] combined = StrToBytes(fixMsg1 + fixMsg2 + fixMsg3);
-            parser.AddToStream(ref combined, combined.Length);
+            parser.AddToStream(combined, combined.Length);
 
             string readFixMsg1;
             Assert.True(parser.ReadFixMessage(out readFixMsg1));
@@ -80,10 +80,10 @@ namespace UnitTests
             Parser parser = new Parser();
             string readPartFixMsg;
 
-            parser.AddToStream(ref partBytes1, partBytes1.Length);
+            parser.AddToStream(partBytes1, partBytes1.Length);
             Assert.False(parser.ReadFixMessage(out readPartFixMsg));
 
-            parser.AddToStream(ref partBytes2, partBytes2.Length);
+            parser.AddToStream(partBytes2, partBytes2.Length);
             Assert.True(parser.ReadFixMessage(out readPartFixMsg));
 
             Assert.AreEqual(partFixMsg1 + partFixMsg2, readPartFixMsg);
@@ -95,7 +95,7 @@ namespace UnitTests
             byte[] fixMsg = StrToBytes("8=TEST\x01" + "9=TEST\x01" + "35=TEST\x01" + "49=SS1\x01" + "56=RORE\x01" + "34=3\x01" + "52=20050222-16:45:53\x01" + "10=TEST\x01");
 
             Parser parser = new Parser();
-            parser.AddToStream(ref fixMsg, fixMsg.Length);
+            parser.AddToStream(fixMsg, fixMsg.Length);
 
             string readFixMsg;
             Assert.Throws<QuickFix.MessageParseError>(delegate { parser.ReadFixMessage(out readFixMsg); });
@@ -122,7 +122,7 @@ namespace UnitTests
 
             Parser parser = new Parser();
             byte[] combined = StrToBytes(fixMsg1 + fixMsg2);
-            parser.AddToStream(ref combined, combined.Length);
+            parser.AddToStream(combined, combined.Length);
 
             string readFixMsg1;
             Assert.True(parser.ReadFixMessage(out readFixMsg1));
@@ -141,7 +141,7 @@ namespace UnitTests
 
             Parser parser = new Parser();
             byte[] bytesMsg = StrToBytes(fixMsg1);
-            parser.AddToStream(ref bytesMsg, bytesMsg.Length);
+            parser.AddToStream(bytesMsg, bytesMsg.Length);
 
             string readFixMsg1;
             Assert.True(parser.ReadFixMessage(out readFixMsg1));
