@@ -71,3 +71,5 @@ Contributors
 - Eugene Baranov
 - Philipe de Liz Pereira
 - Aleksandar Ivanov Dalemski 
+- Jann Roeder
+- Reinis Rudzits
