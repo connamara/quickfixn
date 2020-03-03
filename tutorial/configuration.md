@@ -400,12 +400,23 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>ValidateUserDefinedFields</td>
-    <td class='description'>If set to N, user defined fields will not be rejected if they are not defined in the data dictionary, or are not present in messages they do not belong to.</td>
+    <td class='description'>If set to N, user-defined fields will not be rejected if they are not defined in the data dictionary, or are not present in messages they do not belong to.</td>
     <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
     <td class='default'>Y</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>AllowUnknownMsgFields</td>
+    <td class='description'>If set to Y, non user-defined fields (field with tag < 5000) will not be rejected if they are not defined in the data dictionary, or are present in messages they do not belong to.
+                            <br/>(Only applies to fields outside repeating groups; fields in groups must still obey the configured data dictionary or be rejected.)</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
   </tr>
 
   <tr>

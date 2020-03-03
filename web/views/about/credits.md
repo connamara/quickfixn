@@ -73,3 +73,4 @@ Contributors
 - Aleksandar Ivanov Dalemski 
 - Jann Roeder
 - Reinis Rudzits
+- Peter Mihalik
