@@ -33,6 +33,7 @@ namespace QuickFix.DataDictionary
             CheckFieldsHaveValues = true;
             CheckFieldsOutOfOrder = true;
             CheckUserDefinedFields = true;
+            AllowUnknownMessageFields = false;
         }
 
         /// <summary>
