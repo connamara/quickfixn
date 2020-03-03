@@ -165,12 +165,33 @@ namespace UnitTests
         }
 
         [Test]
-        public void CheckValidTagTest()
+        public void CheckValidTagNumberTest()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.LoadFIXSpec("FIX44");
+
+            Assert.DoesNotThrow(delegate { dd.CheckValidTagNumber(35); });
+
             Assert.Throws(typeof(InvalidTagNumber),
                 delegate { dd.CheckValidTagNumber(999); });
+
+            dd.AllowUnknownMessageFields = true;
+            Assert.DoesNotThrow(delegate { dd.CheckValidTagNumber(999); });
+        }
+
+        [Test]
+        public void CheckIsInMessageTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+
+            Assert.DoesNotThrow(delegate { dd.CheckIsInMessage(new QuickFix.Fields.MDReqID("foo"), "W"); });
+
+            Assert.Throws(typeof(TagNotDefinedForMessage),
+                delegate { dd.CheckIsInMessage(new QuickFix.Fields.EmailThreadID("foo"), "W"); });
+
+            dd.AllowUnknownMessageFields = true;
+            Assert.DoesNotThrow(delegate { dd.CheckIsInMessage(new QuickFix.Fields.EmailThreadID("foo"), "W"); });
         }
 
         [Test]
