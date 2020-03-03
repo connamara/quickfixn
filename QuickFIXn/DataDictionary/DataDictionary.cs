@@ -380,8 +380,6 @@ namespace QuickFix.DataDictionary
         /// <param name="msgType">Message type that contains the group (included in exceptions thrown on failure)</param>
         public void CheckIsInGroup(Fields.IField field, DDGrp ddgrp, string msgType)
         {
-            if (AllowUnknownMessageFields)
-                return;
             if (ddgrp.IsField(field.Tag))
                 return;
             throw new TagNotDefinedForMessage(field.Tag, msgType);
