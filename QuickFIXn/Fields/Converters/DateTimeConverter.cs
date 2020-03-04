@@ -214,12 +214,11 @@ namespace QuickFix.Fields.Converters
             return includeMilliseconds ? Convert(dt, TimeStampPrecision.Millisecond): Convert( dt, TimeStampPrecision.Second );
         }
         
-        //
-        // Summary:
-        //     Gets the nanoseconds component of the date represented by this instance truncated to 100 nanosecond resolution
-        //
-        // Returns:
-        //     The nanoseconds component, expressed as a value between 0 and 99900.
+        /// <summary>
+        /// Gets the nanoseconds component of the date represented by this instance truncated to 100 nanosecond resolution
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns>The nanoseconds component, expressed as a value between 0 and 99900.</returns>
         public static int Nanosecond(this System.DateTime dt)
         {
             int ns = (int)(dt.Ticks % System.TimeSpan.TicksPerMillisecond % (double)TicksPerMicrosecond) * NanosecondsPerTick;
