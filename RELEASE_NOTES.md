@@ -16,6 +16,7 @@ What's New
 * (patch) #526 - Do not ignore MsgSeqNum on ResendRequest when no persistence (ledusskapis)
 * (patch) #430 - Support config AllowUnknownMsgFields (peto268/gbirchmeier)
 * (patch) #349 - Improvement to repeating-group error detection when delimiter is missing (gbirchmeier)
+* (minor) #561 - Fix nanosecond config throw (dckorben)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
