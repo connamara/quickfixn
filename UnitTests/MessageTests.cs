@@ -187,6 +187,26 @@ namespace UnitTests
         }
 
         [Test]
+        public void FromString_GroupDelimiterIssue()
+        {
+            // 349
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX42");
+
+            QuickFix.FIX42.News n = new QuickFix.FIX42.News();
+
+            string s = String.Join(Message.SOH, new string[]{
+              "8=FIX.4.2", "9=91", "35=B", "34=2", "49=TW", "52=20111011-15:06:23.103", "56=ISLD",
+              "148=headline", "33=3",
+              "58=line1", "354=3", "355=uno", // first group, has delimiter
+              "354=3", "355=dos", // second group, missing delimiter
+              "354=4", "355=tres", // third group, also missing delimiter
+              "10=193" }) + Message.SOH;
+
+            Assert.Throws<RepeatedTagWithoutGroupDelimiterTagException>(delegate { n.FromString(s, true, dd, dd, _defaultMsgFactory); });
+        }
+
+        [Test]
         public void ToStringTest()
         {
             string str1 = "8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +

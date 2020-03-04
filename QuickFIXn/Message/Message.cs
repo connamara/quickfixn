@@ -498,16 +498,16 @@ namespace QuickFix
         /// <param name="msgstr">full message string</param>
         /// <param name="pos">starting character position of group</param>
         /// <param name="fieldMap">full message as FieldMap</param>
-        /// <param name="dd">group definition structure from dd</param>
+        /// <param name="groupDD">group definition structure from dd</param>
         /// <param name="sessionDataDictionary"></param>
         /// <param name="appDD"></param>
         /// <param name="msgFactory">if null, then this method will use the generic Group class constructor</param>
         /// <returns></returns>
         protected int SetGroup(
-            StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
+            StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec groupDD,
             DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
         {
-            int grpEntryDelimiterTag = dd.Delim;
+            int grpEntryDelimiterTag = groupDD.Delim;
             int grpPos = pos;
             Group grp = null; // the group entry being constructed
 
@@ -534,15 +534,20 @@ namespace QuickFix
                     if (grp == null)
                         grp = new Group(grpNoFld.Tag, grpEntryDelimiterTag);
                 }
-                else if (!dd.IsField(f.Tag))
+                else if (!groupDD.IsField(f.Tag))
                 {
                     // This field is not in the group, thus the repeating group is done.
-
                     if (grp != null)
                     {
                         fieldMap.AddGroup(grp, false);
                     }
                     return grpPos;
+                }
+                else if(groupDD.IsField(f.Tag) && grp != null && grp.IsSetField(f.Tag))
+                {
+                    // Tag is appearing for the second time within a group element.
+                    // Presumably the sender didn't set the delimiter (or their DD has a different delimiter).
+                    throw new RepeatedTagWithoutGroupDelimiterTagException(grpNoFld.Tag, f.Tag);
                 }
 
                 if (grp == null)
@@ -553,10 +558,10 @@ namespace QuickFix
 
                 // f is just a field in our group entry.  Add it and iterate again.
                 grp.SetField(f);
-                if(dd.IsGroup(f.Tag))
+                if(groupDD.IsGroup(f.Tag))
                 {
                     // f is a counter for a nested group.  Recurse!
-                    pos = SetGroup(f, msgstr, pos, grp, dd.GetGroupSpec(f.Tag), sessionDataDictionary, appDD, msgFactory);
+                    pos = SetGroup(f, msgstr, pos, grp, groupDD.GetGroupSpec(f.Tag), sessionDataDictionary, appDD, msgFactory);
                 }
             }
             
