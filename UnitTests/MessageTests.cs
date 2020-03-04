@@ -129,6 +129,84 @@ namespace UnitTests
         }
 
         [Test]
+        public void FromString_Groups_NoFactory()
+        {
+            // issue 179
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+
+            string[] msgFields = {
+                // header
+                "8=FIX.4.4","9=638", "35=8", "34=360", "49=BLPTSOX", "52=20130321-15:21:23", "56=THINKTSOX", "57=6804469", "128=ZERO",
+                // non-group body fields
+                "6=122.255", "11=61101189", "14=1990000", "15=GBP", "17=VCON:20130321:50018:5:12", "22=4", "31=122.255", "32=1990000",
+                "37=116", "38=1990000", "39=2", "48=GB0032452392", "54=1", "55=[N/A]", "60=20130321-15:21:23", "64=20130322", "75=20130321",
+                "106=UK TSY 4 1/4% 2036", "118=2436321.85", "150=F", "151=0", "157=15", "159=3447.35", "192=0", "198=3739:20130321:50018:5",
+                "223=0.0425", "228=1", "236=0.0291371041", "238=0", "381=2432874.5", "423=1", "470=GB", "541=20360307",
+                // NoPartyIDs
+                "453=6",
+                "448=VCON", "447=D", "452=1", "802=1", "523=14", "803=4",
+                "448=TFOLIO:6804469", "447=D", "452=12",
+                "448=TFOLIO", "447=D", "452=11",
+                "448=THINKFOLIO LTD", "447=D", "452=13",
+                "448=SXT", "447=D", "452=16",
+                "448=TFOLIO:6804469", "447=D", "452=36",
+                "10=152"
+            };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
+            msg.FromString(msgStr, true, dd, dd, null); // <-- null factory!
+
+            Console.WriteLine(msg.ToString());
+
+            QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup partyGroup = new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup();
+            msg.GetGroup(2, partyGroup);
+
+            Assert.False(partyGroup.IsSetNoPartySubIDs());
+        }
+
+        [Test]
+        public void FromString_DoNotCorrectCounter()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX42");
+
+            QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
+
+            string nul = "\x01";
+            string s = "8=FIX.4.2" + nul + "9=148" + nul + "35=D" + nul + "34=2" + nul + "49=TW" + nul + "52=20111011-15:06:23.103" + nul + "56=ISLD" + nul
+                + "11=ID" + nul + "21=1" + nul + "40=1" + nul + "54=1" + nul + "38=200.00" + nul + "55=INTC" + nul
+                + "386=3" + nul + "336=PRE-OPEN" + nul + "336=AFTER-HOURS" + nul
+                + "60=20111011-15:06:23.103" + nul
+                + "10=35" + nul;
+
+            n.FromString(s, true, dd, dd, _defaultMsgFactory);
+            Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());
+            StringAssert.Contains("386=3", n.ToString()); //should not be "corrected" to 2!
+        }
+
+        [Test]
+        public void FromString_GroupDelimiterIssue()
+        {
+            // 349
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX42");
+
+            QuickFix.FIX42.News n = new QuickFix.FIX42.News();
+
+            string s = String.Join(Message.SOH, new string[]{
+              "8=FIX.4.2", "9=91", "35=B", "34=2", "49=TW", "52=20111011-15:06:23.103", "56=ISLD",
+              "148=headline", "33=3",
+              "58=line1", "354=3", "355=uno", // first group, has delimiter
+              "354=3", "355=dos", // second group, missing delimiter
+              "354=4", "355=tres", // third group, also missing delimiter
+              "10=193" }) + Message.SOH;
+
+            Assert.Throws<RepeatedTagWithoutGroupDelimiterTagException>(delegate { n.FromString(s, true, dd, dd, _defaultMsgFactory); });
+        }
+
+        [Test]
         public void ToStringTest()
         {
             string str1 = "8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
@@ -427,26 +505,6 @@ namespace UnitTests
             StringAssert.Contains(
                 nul + "33=2" + nul + "58=line1" + nul + "58=line2",
                 raw);
-        }
-
-        [Test]
-        public void FromString_DoNotCorrectCounter()
-        {
-            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.LoadFIXSpec("FIX42");
-
-            QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
-
-            string nul = "\x01";
-            string s = "8=FIX.4.2" + nul + "9=148" + nul + "35=D" + nul + "34=2" + nul + "49=TW" + nul + "52=20111011-15:06:23.103" + nul + "56=ISLD" + nul
-                + "11=ID" + nul + "21=1" + nul + "40=1" + nul + "54=1" + nul + "38=200.00" + nul + "55=INTC" + nul
-                + "386=3" + nul + "336=PRE-OPEN" + nul + "336=AFTER-HOURS" + nul
-                + "60=20111011-15:06:23.103" + nul
-                + "10=35" + nul;
-
-            n.FromString(s, true, dd, dd, _defaultMsgFactory);
-            Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());
-            StringAssert.Contains("386=3", n.ToString()); //don't correct it to 2, you bastard
         }
 
         [Test]
@@ -818,44 +876,6 @@ namespace UnitTests
             msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
 
             Assert.AreEqual(0.23, msg.Factor.getValue());
-        }
-
-        [Test]
-        public void FromString_Groups_NoFactory()
-        {
-            // issue 179
-            var dd = new QuickFix.DataDictionary.DataDictionary();
-            dd.LoadFIXSpec("FIX44");
-
-            string[] msgFields = {
-                // header
-                "8=FIX.4.4","9=638", "35=8", "34=360", "49=BLPTSOX", "52=20130321-15:21:23", "56=THINKTSOX", "57=6804469", "128=ZERO",
-                // non-group body fields
-                "6=122.255", "11=61101189", "14=1990000", "15=GBP", "17=VCON:20130321:50018:5:12", "22=4", "31=122.255", "32=1990000",
-                "37=116", "38=1990000", "39=2", "48=GB0032452392", "54=1", "55=[N/A]", "60=20130321-15:21:23", "64=20130322", "75=20130321",
-                "106=UK TSY 4 1/4% 2036", "118=2436321.85", "150=F", "151=0", "157=15", "159=3447.35", "192=0", "198=3739:20130321:50018:5",
-                "223=0.0425", "228=1", "236=0.0291371041", "238=0", "381=2432874.5", "423=1", "470=GB", "541=20360307",
-                // NoPartyIDs
-                "453=6",
-                "448=VCON", "447=D", "452=1", "802=1", "523=14", "803=4",
-                "448=TFOLIO:6804469", "447=D", "452=12",
-                "448=TFOLIO", "447=D", "452=11",
-                "448=THINKFOLIO LTD", "447=D", "452=13",
-                "448=SXT", "447=D", "452=16",
-                "448=TFOLIO:6804469", "447=D", "452=36",
-                "10=152"
-            };
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
-
-            QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
-            msg.FromString(msgStr, true, dd, dd, null); // <-- null factory!
-
-            Console.WriteLine(msg.ToString());
-
-            QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup partyGroup = new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup();
-            msg.GetGroup(2, partyGroup);
-
-            Assert.False(partyGroup.IsSetNoPartySubIDs());
         }
 
         [Test]
