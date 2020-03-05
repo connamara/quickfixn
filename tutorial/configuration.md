@@ -180,6 +180,20 @@ QuickFIX Settings
   </tr>
 
   <tr>
+    <td class='setting'>SendRedundantResendRequests</td>
+    <td class='description'>
+      If set to Y, QuickFIX will send all necessary resend requests, even if they appear redundant.
+      Some systems will not certify the engine unless it does this.
+      When set to N, QuickFIX will attempt to minimize resend requests.
+      This is particularly useful on high volume systems.
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
+
+  <tr>
     <td class='setting'>ResetOnLogon</td>
     <td class='description'>Determines if sequence numbers should be reset when receiving a logon request. Acceptors only.</td>
     <td class='valid'>
