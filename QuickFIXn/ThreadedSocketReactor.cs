@@ -150,7 +150,7 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME get socket options from SessionSettings
+        /// Apply socket options from settings
         /// </summary>
         /// <param name="client"></param>
         /// <param name="socketSettings"></param>
