@@ -74,14 +74,13 @@ namespace QuickFix
             return QuickFix.Transport.StreamFactory.CreateClientStream(socketEndPoint_, socketSettings_, session_.Log);
         }
 
-
         public bool Read()
         {
             try
             {
                 int bytesRead = ReadSome(readBuffer_, 1000);
                 if (bytesRead > 0)
-                    parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                    parser_.AddToStream(readBuffer_, bytesRead);
                 else if (null != session_)
                 {
                     session_.Next();
@@ -132,8 +131,8 @@ namespace QuickFix
         /// <exception cref="System.Net.Sockets.SocketException">On connection reset</exception>
         protected int ReadSome(byte[] buffer, int timeoutMilliseconds)
         {
-            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketReader any changes here should 
-            // also be performed there
+            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketReader.
+            // Any changes made here should also be performed there.
             try
             {
                 // Begin read if it is not already started
@@ -189,7 +188,7 @@ namespace QuickFix
 
         public bool Send(string data)
         {
-            byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
+            byte[] rawData = CharEncoding.DefaultEncoding.GetBytes(data);
             stream_.Write(rawData, 0, rawData.Length);
             return true;
         }

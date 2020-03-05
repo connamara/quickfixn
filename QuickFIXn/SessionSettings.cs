@@ -46,6 +46,7 @@ namespace QuickFix
         public const string VALIDATE_FIELDS_HAVE_VALUES = "ValidateFieldsHaveValues";
         public const string VALIDATE_USER_DEFINED_FIELDS = "ValidateUserDefinedFields";
         public const string VALIDATE_LENGTH_AND_CHECKSUM = "ValidateLengthAndChecksum";
+        public const string ALLOW_UNKNOWN_MSG_FIELDS = "AllowUnknownMsgFields";
         public const string DATA_DICTIONARY = "DataDictionary";
         public const string TRANSPORT_DATA_DICTIONARY = "TransportDataDictionary";
         public const string APP_DATA_DICTIONARY = "AppDataDictionary";
@@ -68,7 +69,6 @@ namespace QuickFix
         public const string RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME = "RequiresOrigSendingTime";
         public const string CHECK_LATENCY = "CheckLatency";
         public const string MAX_LATENCY = "MaxLatency";
-
 
         public const string SSL_ENABLE = "SSLEnable";
         public const string SSL_SERVERNAME = "SSLServerName";

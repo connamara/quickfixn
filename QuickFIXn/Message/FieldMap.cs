@@ -523,6 +523,7 @@ namespace QuickFix
         /// getField without a type defaults to returning a string
         /// </summary>
         /// <param name="tag">fix tag</param>
+        [Obsolete("Use GetString instead.")]
         public string GetField(int tag)
         {
             if (_fields.ContainsKey(tag))
@@ -622,7 +623,7 @@ namespace QuickFix
             {
                 if (IsSetField(preField))
                 {
-                    sb.Append(preField + "=" + GetField(preField)).Append(Message.SOH);
+                    sb.Append(preField + "=" + GetString(preField)).Append(Message.SOH);
                     if (groupCounterTags.Contains(preField))
                     {
                         List<Group> glist = _groups[preField];

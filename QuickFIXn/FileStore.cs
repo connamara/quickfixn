@@ -66,18 +66,26 @@ namespace QuickFix
             msgFileName_ = System.IO.Path.Combine(path, prefix + ".body");
             headerFileName_ = System.IO.Path.Combine(path, prefix + ".header");
             sessionFileName_ = System.IO.Path.Combine(path, prefix + ".session");
-
             open();
         }
 
         private void open()
         {
+            close();
+
             ConstructFromFileCache();
             InitializeSessionCreateTime();
 
             seqNumsFile_ = new System.IO.FileStream(seqNumsFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
             msgFile_ = new System.IO.FileStream(msgFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
             headerFile_ = new System.IO.StreamWriter(headerFileName_, true);
+        }
+
+        private void close()
+        {
+            seqNumsFile_?.Dispose();
+            msgFile_?.Dispose();
+            headerFile_?.Dispose();
         }
 
         private void PurgeSingleFile(System.IO.Stream stream, string filename)
@@ -183,7 +191,7 @@ namespace QuickFix
                     byte[] msgBytes = new byte[offsets_[i].size];
                     msgFile_.Read(msgBytes, 0, msgBytes.Length);
 
-                    messages.Add(Encoding.UTF8.GetString(msgBytes));
+                    messages.Add(CharEncoding.DefaultEncoding.GetString(msgBytes));
                 }
             }
 
@@ -200,7 +208,7 @@ namespace QuickFix
             msgFile_.Seek(0, System.IO.SeekOrigin.End);
 
             long offset = msgFile_.Position;
-            byte[] msgBytes = Encoding.UTF8.GetBytes(msg);
+            byte[] msgBytes = CharEncoding.DefaultEncoding.GetBytes(msg);
             int size = msgBytes.Length;
 
             StringBuilder b = new StringBuilder();
@@ -271,7 +279,7 @@ namespace QuickFix
         [System.Obsolete("Use CreationTime instead")]
         public DateTime GetCreationTime()
         {
-            throw new NotImplementedException();
+            return CreationTime.GetValueOrDefault();
         }
 
         public void Reset()
@@ -283,7 +291,8 @@ namespace QuickFix
 
         public void Refresh()
         {
-            throw new NotImplementedException();
+            cache_.Reset();
+            open();
         }
 
         #endregion
@@ -292,9 +301,7 @@ namespace QuickFix
 
         public void Dispose()
         {
-            seqNumsFile_.Dispose();
-            msgFile_.Dispose();
-            headerFile_.Dispose();
+            close();
         }
 
         #endregion

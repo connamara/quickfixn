@@ -104,7 +104,7 @@ namespace AcceptanceTest
             if (message.Header.IsSetField(QuickFix.Fields.Tags.PossResend))
                 possResend = message.Header.GetBoolean(QuickFix.Fields.Tags.PossResend);
 
-            KeyValuePair<string, SessionID> pair = new KeyValuePair<string, SessionID>(message.GetField(QuickFix.Fields.Tags.ClOrdID), sessionID);
+            KeyValuePair<string, SessionID> pair = new KeyValuePair<string, SessionID>(message.GetString(QuickFix.Fields.Tags.ClOrdID), sessionID);
             if (possResend && clOrdIDs_.Contains(pair))
                 return;
             clOrdIDs_.Add(pair);
@@ -160,9 +160,10 @@ namespace AcceptanceTest
         {
             try
             {
-                string msgType = message.Header.GetField(QuickFix.Fields.Tags.MsgType);
+                string msgType = message.Header.GetString(QuickFix.Fields.Tags.MsgType);
                 // log_.OnEvent("Got message " + msgType);
                 // System.Console.WriteLine("===got message " + msgType);
+
                 Crack(message, sessionID);
             }
             catch (QuickFix.UnsupportedMessageType)

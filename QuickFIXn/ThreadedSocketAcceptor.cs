@@ -5,8 +5,6 @@ using System;
 
 namespace QuickFix
 {
-    // TODO v2.0 - consider changing to internal
-
     /// <summary>
     /// Acceptor implementation - with threads
     /// Creates a ThreadedSocketReactor for every listening endpoint.
@@ -74,18 +72,57 @@ namespace QuickFix
 
         #region Constructors
 
+        /// <summary>
+        /// Create a ThreadedSocketAcceptor with a NullLogFactory and DefaultMessageFactory
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="storeFactory"></param>
+        /// <param name="settings"></param>
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(new SessionFactory(application, storeFactory), settings)
+            : this(application, storeFactory, settings, null, null)
         { }
 
+        /// <summary>
+        /// Create a ThreadedSocketAcceptor with a DefaultMessageFactory
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="storeFactory"></param>
+        /// <param name="settings"></param>
+        /// <param name="logFactory"></param>
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
-            : this(new SessionFactory(application, storeFactory, logFactory), settings)
+            : this(application, storeFactory, settings, logFactory, null)
         { }
 
-        public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
-            : this(new SessionFactory(application, storeFactory, logFactory, messageFactory), settings)
-        { }
+        /// <summary>
+        /// Create a ThreadedSocketAcceptor
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="storeFactory"></param>
+        /// <param name="settings"></param>
+        /// <param name="logFactory">If null, a NullFactory will be used.</param>
+        /// <param name="messageFactory">If null, a DefaultMessageFactory will be created (using settings parameters)</param>
+        public ThreadedSocketAcceptor(
+            IApplication application,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILogFactory logFactory,
+            IMessageFactory messageFactory)
+        {
+            logFactory = logFactory ?? new NullLogFactory();
+            messageFactory = messageFactory ?? new DefaultMessageFactory();
+            SessionFactory sf = new SessionFactory(application, storeFactory, logFactory, messageFactory);
 
+            try
+            {
+                CreateSessions(settings, sf);
+            }
+            catch (System.Exception e)
+            {
+                throw new ConfigError(e.Message, e);
+            }
+        }
+
+        [Obsolete("Will be removed in a future release.")]
         public ThreadedSocketAcceptor(SessionFactory sessionFactory, SessionSettings settings)
         {
             try

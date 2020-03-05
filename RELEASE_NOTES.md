@@ -9,18 +9,39 @@ What's New
 ----------
 
 ### NEXT VERSION:
+* (patch) #505 - Fix ObjectDisposedException when SocketInitiator is stopped before connection attempt fails (musashibg)
+* (patch) #571 - StreamFactory fix: unexpected null from GetProxy (mkoca & mcmillab)
+* (patch) #547 - Implement Refresh() method in FileStore (roederja2)
+* (minor) #570 - change Parser.AddToStream() interface to not use 'ref' (roederja2)
+* (patch) #526 - Do not ignore MsgSeqNum on ResendRequest when no persistence (ledusskapis)
+* (patch) #430 - Support config AllowUnknownMsgFields (peto268/gbirchmeier)
+* (patch) #349 - Improvement to repeating-group error detection when delimiter is missing (gbirchmeier)
+* (minor) #561 - Fix nanosecond config throw (dckorben)
+
+### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
 * (minor) #476 - Separate FIX message assemblies from the main project (akamyshanov)
 * (minor) #482 - x64 support (brobits)
 * (patch) #486 - More informative exception for DD parsing errors (gbirchmeier)
 * (patch) #492 - fix delete-generated script (gbirchmeier)
 * (patch) #493 - fix DD parsing issue with certain comments (gbirchmeier)
-* (minor) #448 - Fix message load error within *nix environments (mtnbiker99)
+* (minor) #448 - Fix message load error within \*nix environments (mtnbiker99)
 * (minor) #497 - Support full cross-platform operation (michaelwilner)
 * (patch) #498 - Fix hanging on ThreadedSocketReactor exit (michaelwilner)
 * (minor) #489 - fixes for DefaultMessageFactory / FIX50sp1/2 (gbirchmeier)
 * (patch) #499 - fix bug in SessionState MessageQueue (vigzel)
 * (minor) #507 - better feedback for "Incorrect BeginString" errors (gbirchmeier)
+* (minor) #521 - fix misspelled session reject reason (vpfau)
+* (minor) #524 - add tunnel support; expand cert store search to include LocalMachine (nileshwagel/gbirchmeier)
+* (minor) #531 - change encoding to iso-8859-1 (aka latin1) (amibar/gbirchmeier)
+* (patch) #532 - bug in #524: don't attempt non-.NET-Core-supported functionality (gbirchmeier)
+* (patch) #533 - file maintenance (gbirchmeier)
+* (patch) #509 - Consistent sessionID argument name in IApplication (eugbaranov)
+* (patch) #296 - make FieldMap.GetField obsolete; favor .GetString instead (staffanu)
+* (patch) #478 - eliminate unnecessary string/byte flip-flop (gbirchmeier)
+* (patch) #473 - correct ordering of fields in message trailer (Ieshaj/gbirchmeier)
+* (patch) #513 - Allow groups where the first entry is a group (twoi/gbirchmeier)
+* (minor) #549 - SessionFactory.Create creates a more-appropriate DefaultMessageFactory; also add NullLogFactory (gbirchmeier)
 
 ### v1.8.0:
 * (patch) #402 - Multithreading fix to please NUnit 2.6.3 and above (arkadiuszwojcik)

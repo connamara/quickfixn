@@ -299,5 +299,12 @@ namespace QuickFix
         { }
     }
 
+    public class RepeatedTagWithoutGroupDelimiterTagException : TagException
+    {
+        public RepeatedTagWithoutGroupDelimiterTagException(int counterTag, int troubleTag)
+            : base(string.Format("Group {0} contains a repeat occurrence of tag {1} in a single group, which is illegal.", counterTag, troubleTag), troubleTag)
+        { }
+    }
+
     #endregion
 }

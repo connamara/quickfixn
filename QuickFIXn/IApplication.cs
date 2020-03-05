@@ -47,9 +47,9 @@ namespace QuickFix
         /// before it is sent out.
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="sessionId"></param>
+        /// <param name="sessionID"></param>
         /// <exception cref="DoNotSend">throw this to abort sending the message</exception>
-        void ToApp(Message message, SessionID sessionId);
+        void ToApp(Message message, SessionID sessionID);
 
         /// <summary>
         /// This callback receives messages for the application. This is one of the
