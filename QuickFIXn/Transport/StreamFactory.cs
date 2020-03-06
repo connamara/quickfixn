@@ -98,7 +98,6 @@ namespace QuickFix.Transport
             {
                 socket.SendTimeout = settings.SocketSendTimeout.Value;
             }
-            socket.Connect(endpoint);
 
             Stream stream = new NetworkStream(socket, true);
 
