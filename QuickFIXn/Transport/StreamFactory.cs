@@ -12,7 +12,7 @@ using System.Net;
 namespace QuickFix.Transport
 {
     /// <summary>
-    /// Streamfactory is resposible for initiating <see cref="T:System.IO.Stream"/> for communication.
+    /// StreamFactory is responsible for initiating <see cref="T:System.IO.Stream"/> for communication.
     /// If any SSL setup is required it is performed here
     /// </summary>
     public static class StreamFactory
@@ -89,6 +89,14 @@ namespace QuickFix.Transport
                     socket.SendBufferSize = settings.SocketSendBufferSize.Value;
                 }
                 socket.Connect(endpoint);
+            }
+            if (settings.SocketReceiveTimeout.HasValue)
+            {
+                socket.ReceiveTimeout = settings.SocketReceiveTimeout.Value;
+            }
+            if (settings.SocketSendTimeout.HasValue)
+            {
+                socket.SendTimeout = settings.SocketSendTimeout.Value;
             }
 
             Stream stream = new NetworkStream(socket, true);

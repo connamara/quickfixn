@@ -63,6 +63,8 @@ namespace QuickFix
         public const string SOCKET_NODELAY = "SocketNodelay";
         public const string SOCKET_SEND_BUFFER_SIZE = "SocketSendBufferSize";
         public const string SOCKET_RECEIVE_BUFFER_SIZE = "SocketReceiveBufferSize";
+        public const string SOCKET_SEND_TIMEOUT = "SocketSendTimeout";
+        public const string SOCKET_RECEIVE_TIMEOUT = "SocketReceiveTimeout";
         public const string IGNORE_POSSDUP_RESEND_REQUESTS = "IgnorePossDupResendRequests";
         public const string RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME = "RequiresOrigSendingTime";
         public const string CHECK_LATENCY = "CheckLatency";
