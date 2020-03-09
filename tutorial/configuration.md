@@ -24,6 +24,7 @@ QuickFIX Settings
 * [Validation](#validation)
 * [Initiator](#initiator)
 * [Acceptor](#acceptor)
+* [Socket Configuration](#socketConfiguration)
 * [Storage](#storage)
 * [File Storage](#file)
 * [Logging](#logging)
@@ -177,6 +178,20 @@ QuickFIX Settings
       <div>N</div>
     </td>
     <td class='default'>Y</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SendRedundantResendRequests</td>
+    <td class='description'>
+      If set to Y, QuickFIX will send all necessary resend requests, even if they appear redundant.
+      Some systems will not certify the engine unless it does this.
+      When set to N, QuickFIX will attempt to minimize resend requests.
+      This is particularly useful on high volume systems.
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
   </tr>
 
   <tr>
@@ -507,16 +522,6 @@ QuickFIX Settings
     <td class='valid'>Valid IP address in the format of x.x.x.x or a domain name</td>
     <td class='default'>-</td>
   </tr>
-  
-  <tr>
-    <td class='setting'>SocketNodelay</td>
-    <td class='description'>Disable Nagle's algorithm for this connection. Written data to the network is not buffered pending acknowledgement of previously written data. Currently, this must be defined in the [DEFAULT] section.</td>
-    <td class='valid'>
-      <div>Y</div>
-      <div>N</div>
-    </td>
-    <td class='default'>Y</td>
-  </tr>
 </table>
 
 <a name='acceptor'></a>
@@ -544,7 +549,11 @@ QuickFIX Settings
     <td class='valid'>Valid IP address in the format of x.x.x.x</td>
     <td class='default'>0.0.0.0</td>
   </tr>
-  
+</table>
+
+<a name='socketConfiguration'></a>
+<h2>Socket Configuration</h2>
+<table>
   <tr>
     <td class='setting'>SocketNodelay</td>
     <td class='description'>Disable Nagle's algorithm for this connection. Written data to the network is not buffered pending acknowledgement of previously written data. Currently, this must be defined in the [DEFAULT] section.</td>
@@ -554,6 +563,59 @@ QuickFIX Settings
     </td>
     <td class='default'>Y</td>
   </tr>
+
+  <tr>
+    <td class='setting'>SocketSendBufferSize</td>
+    <td class='description'>
+      Set the size (in bytes) of the TCP send buffer.
+      <br/>
+      <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.tcpclient.sendbuffersize">(See related .NET API)</a>
+    </td>
+    <td class='valid'>
+      <div>integer</div>
+    </td>
+    <td class='default'>8192</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketReceiveBufferSize</td>
+    <td class='description'>
+      Set the size (in bytes) of the TCP receive buffer
+      <br/>
+      <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.tcpclient.receivebuffersize">(See related .NET API)</a>
+    </td>
+    <td class='valid'>
+      <div>integer</div>
+    </td>
+    <td class='default'>8192</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketSendTimeout</td>
+    <td class='description'>
+      Set the time that the TCP socket will wait for a send operation to complete successfully
+      <br/>
+      <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.tcpclient.sendtimeout">(See related .NET API)</a>
+    </td>
+    <td class='valid'>
+      <div>integer</div>
+    </td>
+    <td class='default'>0</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>SocketReceiveTimeout</td>
+    <td class='description'>
+      Set the time that the TCP socket will wait for a receive operation to complete successfully
+      <br/>
+      <a href="https://docs.microsoft.com/en-us/dotnet/api/system.net.sockets.tcpclient.receivetimeout">(See related .NET API)</a>
+    </td>
+    <td class='valid'>
+      <div>integer</div>
+    </td>
+    <td class='default'>0</td>
+  </tr>
+
 </table>
 
 <a name='storage'></a>
