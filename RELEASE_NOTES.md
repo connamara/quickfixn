@@ -17,7 +17,7 @@ What's New
 * (patch) #430 - Support config AllowUnknownMsgFields (peto268/gbirchmeier)
 * (patch) #349 - Improvement to repeating-group error detection when delimiter is missing (gbirchmeier)
 * (minor) #561 - Fix nanosecond config throw (dckorben)
-* (patch) #512 - Support config SocketSendTimeout/SocketReceiveTimeout to prevent SSL socket timeouts (allysutherland)
+* (minor) #512 - Support config SocketSendTimeout/SocketReceiveTimeout to prevent SSL socket timeouts (allysutherland)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
