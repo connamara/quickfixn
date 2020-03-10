@@ -147,7 +147,7 @@ namespace UnitTests
                     var conf = CreateSessionConfig(StaticAcceptorCompID2, false);
 
                     conf.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort2.ToString());
-                    conf.SetString(SessionSettings.FILE_LOG_PATH, LogPath + "2");
+                    conf.SetString(SessionSettings.FILE_LOG_PATH, _logPath + "2");
 
                     settings.Set(id, conf);
                 }
