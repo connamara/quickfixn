@@ -71,7 +71,6 @@ namespace QuickFix
             // FIXME - do something more flexible than hardcoding a filelog
             log_ = new FileLog(debugLogFilePath, new SessionID(
                     "ClientHandlerThread", clientId.ToString(), "Debug-" + Guid.NewGuid().ToString()));
-            //log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
 
             this.Id = clientId;
             socketReader_ = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor);
