@@ -74,3 +74,4 @@ Contributors
 - Jann Roeder
 - Reinis Rudzits
 - Peter Mihalik
+- Aidan Chisholm
