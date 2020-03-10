@@ -41,11 +41,11 @@ namespace QuickFix
             TcpClient tcpClient,
             SocketSettings settings,
             ClientHandlerThread responder,
-            AcceptorSocketDescriptor acceptroDescriptor)
+            AcceptorSocketDescriptor acceptorDescriptor)
         {
             tcpClient_ = tcpClient;
             responder_ = responder;
-            acceptorDescriptor_ = acceptroDescriptor;
+            acceptorDescriptor_ = acceptorDescriptor;
             stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
         }
 
