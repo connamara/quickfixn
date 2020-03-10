@@ -59,8 +59,8 @@ namespace QuickFix
             
         }
 
-        internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings, AcceptorSocketDescriptor acceptorDescriptor
-            )
+        internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict,
+            SocketSettings socketSettings, AcceptorSocketDescriptor acceptorDescriptor)
         {
             string debugLogFilePath = "log";
             if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
