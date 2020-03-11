@@ -31,9 +31,9 @@ QuickFIX Settings
 * [SSL](#ssl)
 * [Sample Settings File](#sample)
 
-<a name='session'> </a>
+<a name="session"/>
 
-<h2>Session</h2>
+## Session
 
 <table>
   <tr>
