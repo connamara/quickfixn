@@ -1,5 +1,6 @@
 title: QuickFIX/n
 github_username: Connamara
-#kramdown:
-#  input: GFM
-markdown: gfm
+kramdown:
+  input: GFM
+# uncomment this and comment out kramdown if you want to use github's regular parser
+#markdown: gfm
