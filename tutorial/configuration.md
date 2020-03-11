@@ -33,11 +33,7 @@ QuickFIX Settings
 
 <a name='session'> </a>
 
-## Session
-
-
-<div id="config-table">
-
+<h2>Session</h2>
 
 <table>
   <tr>
@@ -826,8 +822,6 @@ QuickFIX Settings
   </tr>
 </table>
 
-
-</div>
 
 
 <a name='sample'></a>
