@@ -51,7 +51,7 @@ namespace QuickFix
             stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
 
             _startTime = DateTime.UtcNow;
-            _logonTimeout = TimeSpan.FromSeconds(Math.Max(10, settings.LogonTimeout));
+            _logonTimeout = TimeSpan.FromSeconds(settings.LogonTimeout);
         }
 
         /// <summary> FIXME </summary>
