@@ -75,3 +75,4 @@ Contributors
 - Reinis Rudzits
 - Peter Mihalik
 - Aidan Chisholm
+- Mikhail Derevyashkin
