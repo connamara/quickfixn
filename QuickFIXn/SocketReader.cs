@@ -50,7 +50,7 @@ namespace QuickFix
             acceptorDescriptor_ = acceptorDescriptor;
             stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
 
-            _startTime = DateTime.Now;
+            _startTime = DateTime.UtcNow;
             _logonTimeout = TimeSpan.FromSeconds(Math.Max(10, settings.LogonTimeout));
         }
 
