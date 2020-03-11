@@ -35,13 +35,7 @@ QuickFIX Settings
 
 ## Session
 
-<table>
-  <tr>
-    <th>Setting</th>
-    <th>Description</th>
-    <th>Valid Values</th>
-    <th>Default</th>
-  </tr>
+<table><tr><th>Settingx</th><th>Description</th><th>Valid Values</th><th>Default</th></tr>
 
   <tr>
     <td class='setting'>BeginString</td>
