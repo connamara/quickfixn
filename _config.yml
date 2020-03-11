@@ -1,4 +1,5 @@
 title: QuickFIX/n
 github_username: Connamara
-kramdown:
-  input: GFM
+#kramdown:
+#  input: GFM
+markdown: CommonMarkGhPages
