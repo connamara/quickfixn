@@ -183,6 +183,7 @@ QuickFIX Settings
       Some systems will not certify the engine unless it does this.
       When set to N, QuickFIX will attempt to minimize resend requests.
       This is particularly useful on high volume systems.
+    </td>
     <td class='valid'>
       <div>Y</div>
       <div>N</div>
