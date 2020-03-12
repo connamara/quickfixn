@@ -835,6 +835,11 @@ namespace QuickFix
             return s.ToString();
         }
 
+        /// <summary>
+        /// Get a representation of the message as an XML string.
+        /// (NOTE: this is just an ad-hoc XML; it is NOT FIXML.)
+        /// </summary>
+        /// <returns>an XML string</returns>
         public string ToXML()
         {
             StringBuilder s = new StringBuilder();
