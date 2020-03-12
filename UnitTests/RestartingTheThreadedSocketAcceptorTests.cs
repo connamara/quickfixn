@@ -148,7 +148,17 @@ namespace UnitTests
 
         private void ReceiveAsync(SocketState socketState)
         {
-            socketState._socket.BeginReceive(socketState._rxBuffer, 0, socketState._rxBuffer.Length, SocketFlags.None, new AsyncCallback(ProcessRXData), socketState);
+            try
+            {
+                socketState._socket.BeginReceive(socketState._rxBuffer, 0, socketState._rxBuffer.Length, SocketFlags.None, new AsyncCallback(ProcessRXData), socketState);
+            }
+            catch (SocketException e)
+            {
+                if( e.SocketErrorCode != SocketError.Shutdown )
+                {
+                    throw;
+                }
+            }
         }
 
         private void ProcessRXData(IAsyncResult ar)
