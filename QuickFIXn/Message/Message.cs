@@ -803,21 +803,6 @@ namespace QuickFix
             return this.Header.CalculateLength() + CalculateLength() + this.Trailer.CalculateLength();
         }
 
-        protected bool InitializeXML(string url)
-        {
-            try
-            {
-                DataDictionary.DataDictionary p = new DataDictionary.DataDictionary(url);
-                dataDictionary_ = p;
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-
         public string ToXMLFields(FieldMap fields, int space)
         {
             StringBuilder s = new StringBuilder();
