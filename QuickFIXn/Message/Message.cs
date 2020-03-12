@@ -2,6 +2,7 @@
 using System.Text;
 using QuickFix.Fields;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace QuickFix
 {
@@ -59,6 +60,7 @@ namespace QuickFix
         public const string SOH = "\u0001";
         private int field_ = 0;
         private bool validStructure_;
+        protected DataDictionary.DataDictionary dataDictionary_ = null;
 
         #region Properties
 
@@ -799,6 +801,60 @@ namespace QuickFix
         protected int BodyLength()
         {
             return this.Header.CalculateLength() + CalculateLength() + this.Trailer.CalculateLength();
+        }
+
+        private static string FieldMapToXML(DataDictionary.DataDictionary dd, FieldMap fields, int space)
+        {
+            StringBuilder s = new StringBuilder();
+            string name = string.Empty;
+
+            // fields
+            foreach (var f in fields)
+            {
+               s.Append("<field ");
+               if ((dd != null) && ( dd.FieldsByTag.ContainsKey(f.Key)))
+               {
+                   s.Append("name=\"" + dd.FieldsByTag[f.Key].Name + "\" ");
+               }
+               s.Append("number=\"" + f.Key.ToString() + "\">");
+               s.Append("<![CDATA[" + f.Value.ToString() + "]]>");
+               s.Append("</field>");
+            }
+            // now groups
+            List<int> groupTags = fields.GetGroupTags();
+            foreach (int groupTag in groupTags)
+            {
+                for (int counter = 1; counter <= fields.GroupCount(groupTag); counter++)
+                {
+                    s.Append("<group>");
+                    s.Append(FieldMapToXML(dd, fields.GetGroup(counter, groupTag), space+1));
+                    s.Append("</group>");
+                }
+            }
+
+            return s.ToString();
+        }
+
+        /// <summary>
+        /// Get a representation of the message as an XML string.
+        /// (NOTE: this is just an ad-hoc XML; it is NOT FIXML.)
+        /// </summary>
+        /// <returns>an XML string</returns>
+        public string ToXML()
+        {
+            StringBuilder s = new StringBuilder();
+            s.AppendLine("<message>");
+            s.AppendLine("<header>");
+            s.AppendLine(FieldMapToXML(dataDictionary_, Header, 4));
+            s.AppendLine("</header>");
+            s.AppendLine("<body>");
+            s.AppendLine(FieldMapToXML(dataDictionary_, this, 4));
+            s.AppendLine("</body>");
+            s.AppendLine("<trailer>");
+            s.AppendLine(FieldMapToXML(dataDictionary_, Trailer, 4));
+            s.AppendLine("</trailer>");
+            s.AppendLine("</message>");
+            return s.ToString();
         }
     }
 }
