@@ -20,6 +20,7 @@ What's New
 * (minor) #512 - Support config SocketSendTimeout/SocketReceiveTimeout to prevent SSL socket timeouts (allysutherland)
 * (patch) #383/#582 - Fix debug logfile name clash (chizz5056/gbirchmeier)
 * (patch) #410/#583 - SocketAcceptPort now fully-obeyed (mvdtom)
+* (minor) #585/#323 - Add Message.ToXML() (baffles/gbirchmeier)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
