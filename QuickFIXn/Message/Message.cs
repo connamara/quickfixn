@@ -2,6 +2,7 @@
 using System.Text;
 using QuickFix.Fields;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace QuickFix
 {
@@ -801,6 +802,7 @@ namespace QuickFix
         {
             return this.Header.CalculateLength() + CalculateLength() + this.Trailer.CalculateLength();
         }
+
         protected bool InitializeXML(string url)
         {
             try
@@ -816,7 +818,7 @@ namespace QuickFix
         }
 
 
-        public string toXMLFields(FieldMap fields, int space)
+        public string ToXMLFields(FieldMap fields, int space)
         {
             StringBuilder s = new StringBuilder();
             string name = string.Empty;
@@ -824,7 +826,6 @@ namespace QuickFix
             // fields
             foreach (var f in fields)
             {
-                
                s.Append("<field ");
                if ((dataDictionary_ != null) && ( dataDictionary_.FieldsByTag.ContainsKey(f.Key)))
                {
@@ -833,7 +834,6 @@ namespace QuickFix
                s.Append("number=\"" + f.Key.ToString() + "\">");
                s.Append("<![CDATA[" + f.Value.ToString() + "]]>");
                s.Append("</field>");
-
             }
             // now groups
             List<int> groupTags = fields.GetGroupTags();
@@ -842,26 +842,26 @@ namespace QuickFix
                 for (int counter = 1; counter <= fields.GroupCount(groupTag); counter++)
                 {
                     s.Append("<group>");
-                    s.Append( toXMLFields( fields.GetGroup(counter, groupTag), space+1));
+                    s.Append( ToXMLFields( fields.GetGroup(counter, groupTag), space+1));
                     s.Append("</group>");
                 }
             }
-            
+
             return s.ToString();
         }
 
-        public string toXML()
+        public string ToXML()
         {
             StringBuilder s = new StringBuilder();
             s.AppendLine("<message>");
             s.AppendLine("<header>");
-            s.AppendLine(toXMLFields(Header, 4));
+            s.AppendLine(ToXMLFields(Header, 4));
             s.AppendLine("</header>");
             s.AppendLine("<body>");
-            s.AppendLine(toXMLFields(this, 4));
+            s.AppendLine(ToXMLFields(this, 4));
             s.AppendLine("</body>");
             s.AppendLine("<trailer>");
-            s.AppendLine(toXMLFields(Trailer, 4));
+            s.AppendLine(ToXMLFields(Trailer, 4));
             s.AppendLine("</trailer>");
             s.AppendLine("</message>");
             return s.ToString();

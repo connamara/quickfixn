@@ -982,7 +982,7 @@ namespace UnitTests
                 Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
             }
 
-            string xmlDoc = msg.toXML();
+            string xmlDoc = msg.ToXML();
             XDocument doc = null;
             try
             {
@@ -1011,7 +1011,7 @@ namespace UnitTests
                 }
                 else
                 {
-                    string value = msg.GetField(number);
+                    string value = msg.GetString(number);
                     Assert.That(value, Is.EqualTo(elem.value));
                 }
             }
@@ -1048,7 +1048,7 @@ namespace UnitTests
             msg.FromString(msgStr, true, dd, dd, null); // <-- null factory!
 
 
-            string xmlDoc = msg.toXML();
+            string xmlDoc = msg.ToXML();
 
             System.Diagnostics.Debug.Print(xmlDoc.ToString());
 
@@ -1092,7 +1092,7 @@ namespace UnitTests
                     {
                         if (group.IsSetField(number))
                         {
-                            string msgValue = group.GetField(number);
+                            string msgValue = group.GetString(number);
                             Assert.That(value, Is.EqualTo(msgValue));
                         }
                     }
