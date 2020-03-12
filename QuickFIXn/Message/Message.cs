@@ -803,7 +803,7 @@ namespace QuickFix
             return this.Header.CalculateLength() + CalculateLength() + this.Trailer.CalculateLength();
         }
 
-        public string ToXMLFields(FieldMap fields, int space)
+        private static string FieldMapToXML(DataDictionary.DataDictionary dd, FieldMap fields, int space)
         {
             StringBuilder s = new StringBuilder();
             string name = string.Empty;
@@ -812,9 +812,9 @@ namespace QuickFix
             foreach (var f in fields)
             {
                s.Append("<field ");
-               if ((dataDictionary_ != null) && ( dataDictionary_.FieldsByTag.ContainsKey(f.Key)))
+               if ((dd != null) && ( dd.FieldsByTag.ContainsKey(f.Key)))
                {
-                   s.Append("name=\"" + dataDictionary_.FieldsByTag[f.Key].Name + "\" ");
+                   s.Append("name=\"" + dd.FieldsByTag[f.Key].Name + "\" ");
                }
                s.Append("number=\"" + f.Key.ToString() + "\">");
                s.Append("<![CDATA[" + f.Value.ToString() + "]]>");
@@ -827,7 +827,7 @@ namespace QuickFix
                 for (int counter = 1; counter <= fields.GroupCount(groupTag); counter++)
                 {
                     s.Append("<group>");
-                    s.Append( ToXMLFields( fields.GetGroup(counter, groupTag), space+1));
+                    s.Append(FieldMapToXML(dd, fields.GetGroup(counter, groupTag), space+1));
                     s.Append("</group>");
                 }
             }
@@ -840,13 +840,13 @@ namespace QuickFix
             StringBuilder s = new StringBuilder();
             s.AppendLine("<message>");
             s.AppendLine("<header>");
-            s.AppendLine(ToXMLFields(Header, 4));
+            s.AppendLine(FieldMapToXML(dataDictionary_, Header, 4));
             s.AppendLine("</header>");
             s.AppendLine("<body>");
-            s.AppendLine(ToXMLFields(this, 4));
+            s.AppendLine(FieldMapToXML(dataDictionary_, this, 4));
             s.AppendLine("</body>");
             s.AppendLine("<trailer>");
-            s.AppendLine(ToXMLFields(Trailer, 4));
+            s.AppendLine(FieldMapToXML(dataDictionary_, Trailer, 4));
             s.AppendLine("</trailer>");
             s.AppendLine("</message>");
             return s.ToString();
