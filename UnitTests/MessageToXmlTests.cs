@@ -20,48 +20,22 @@ namespace UnitTests
             string str1 = "8=FIX.4.2\x01" + "9=55\x01" + "35=0\x01" + "34=3\x01" + "49=TW\x01" +
                 "52=20000426-12:05:06\x01" + "56=ISLD\x01" + "1=acct123\x01" + "10=123\x01";
             Message msg = new Message();
-            try
-            {
-                msg.FromString(str1, true, null, null, _defaultMsgFactory);
-            }
-            catch (InvalidMessage e)
-            {
-                Assert.Fail("Unexpected exception (InvalidMessage): " + e.Message);
-            }
+            msg.FromString(str1, true, null, null, _defaultMsgFactory);
 
-            string xmlDoc = msg.ToXML();
-            XDocument doc = null;
-            try
-            {
-                doc = XDocument.Parse(xmlDoc);
-            }
-            catch (Exception e)
-            {
-                Assert.Fail("Badly formed XML generated: " + e.Message);
-            }
+            string expected = @"<message>
+<header>
+<field number=""8""><![CDATA[FIX.4.2]]></field><field number=""9""><![CDATA[55]]></field><field number=""34""><![CDATA[3]]></field><field number=""35""><![CDATA[0]]></field><field number=""49""><![CDATA[TW]]></field><field number=""52""><![CDATA[20000426-12:05:06]]></field><field number=""56""><![CDATA[ISLD]]></field>
+</header>
+<body>
+<field number=""1""><![CDATA[acct123]]></field>
+</body>
+<trailer>
+<field number=""10""><![CDATA[123]]></field>
+</trailer>
+</message>
+";
 
-            var fields = doc.Descendants("message").Descendants("body")
-                .Select(field =>
-                    new
-                    {
-                        number = field.Descendants("field").Attributes("number").Single().Value,
-                        value = field.Descendants("field").Single().Value
-                    })
-                    .ToList();
-
-            foreach (var elem in fields)
-            {
-                int number = 0;
-                if (int.TryParse(elem.number.ToString(), out number) == false)
-                {
-                    Assert.Fail("should be number " + elem.number.ToString() + " " + elem.value.ToString());
-                }
-                else
-                {
-                    string value = msg.GetString(number);
-                    Assert.That(value, Is.EqualTo(elem.value));
-                }
-            }
+            Assert.AreEqual(expected, msg.ToXML());
         }
 
 
@@ -94,57 +68,20 @@ namespace UnitTests
             QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
             msg.FromString(msgStr, true, dd, dd, null); // <-- null factory!
 
+            string expected = @"<message>
+<header>
+<field number=""8""><![CDATA[FIX.4.4]]></field><field number=""9""><![CDATA[638]]></field><field number=""34""><![CDATA[360]]></field><field number=""35""><![CDATA[8]]></field><field number=""49""><![CDATA[BLPTSOX]]></field><field number=""52""><![CDATA[20130321-15:21:23]]></field><field number=""56""><![CDATA[THINKTSOX]]></field><field number=""57""><![CDATA[6804469]]></field><field number=""128""><![CDATA[ZERO]]></field>
+</header>
+<body>
+<field number=""6""><![CDATA[122.255]]></field><field number=""11""><![CDATA[61101189]]></field><field number=""14""><![CDATA[1990000]]></field><field number=""15""><![CDATA[GBP]]></field><field number=""17""><![CDATA[VCON:20130321:50018:5:12]]></field><field number=""22""><![CDATA[4]]></field><field number=""31""><![CDATA[122.255]]></field><field number=""32""><![CDATA[1990000]]></field><field number=""37""><![CDATA[116]]></field><field number=""38""><![CDATA[1990000]]></field><field number=""39""><![CDATA[2]]></field><field number=""48""><![CDATA[GB0032452392]]></field><field number=""54""><![CDATA[1]]></field><field number=""55""><![CDATA[[N/A]]]></field><field number=""60""><![CDATA[20130321-15:21:23]]></field><field number=""64""><![CDATA[20130322]]></field><field number=""75""><![CDATA[20130321]]></field><field number=""106""><![CDATA[UK TSY 4 1/4% 2036]]></field><field number=""118""><![CDATA[2436321.85]]></field><field number=""150""><![CDATA[F]]></field><field number=""151""><![CDATA[0]]></field><field number=""157""><![CDATA[15]]></field><field number=""159""><![CDATA[3447.35]]></field><field number=""192""><![CDATA[0]]></field><field number=""198""><![CDATA[3739:20130321:50018:5]]></field><field number=""223""><![CDATA[0.0425]]></field><field number=""228""><![CDATA[1]]></field><field number=""236""><![CDATA[0.0291371041]]></field><field number=""238""><![CDATA[0]]></field><field number=""381""><![CDATA[2432874.5]]></field><field number=""423""><![CDATA[1]]></field><field number=""453""><![CDATA[6]]></field><field number=""470""><![CDATA[GB]]></field><field number=""541""><![CDATA[20360307]]></field><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[VCON]]></field><field number=""452""><![CDATA[1]]></field><field number=""802""><![CDATA[1]]></field><group><field number=""523""><![CDATA[14]]></field><field number=""803""><![CDATA[4]]></field></group></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[TFOLIO:6804469]]></field><field number=""452""><![CDATA[12]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[TFOLIO]]></field><field number=""452""><![CDATA[11]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[THINKFOLIO LTD]]></field><field number=""452""><![CDATA[13]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[SXT]]></field><field number=""452""><![CDATA[16]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[TFOLIO:6804469]]></field><field number=""452""><![CDATA[36]]></field></group>
+</body>
+<trailer>
+<field number=""10""><![CDATA[152]]></field>
+</trailer>
+</message>
+";
 
-            string xmlDoc = msg.ToXML();
-
-            System.Diagnostics.Debug.Print(xmlDoc.ToString());
-
-            XDocument doc = null;
-            try
-            {
-                doc = XDocument.Parse(xmlDoc);
-            }
-            catch (Exception e)
-            {
-                Assert.Fail("Badly formed XML generated: " + e.Message);
-            }
-
-
-            var groups = doc.Descendants("message").Descendants("body").Elements("group")
-                .Select(group =>
-                    new
-                    {
-                        numbers = group.Descendants("field").Attributes("number"),
-                        values = group.Descendants("field")
-                    })
-
-                    .ToList();
-            int ct = 0;
-            foreach (var elem in groups)
-            {
-                int number = 0;
-                Group group = msg.GetGroup(++ct, 453);
-
-                var valueEnum = elem.values.GetEnumerator();
-                foreach (var numberEnum in elem.numbers)
-                {
-                    valueEnum.MoveNext();
-                    string value = valueEnum.Current.Value;
-
-                    if (int.TryParse(numberEnum.Value.ToString(), out number) == false)
-                    {
-                        Assert.Fail("should be number " + numberEnum.Value.ToString());
-                    }
-                    else
-                    {
-                        if (group.IsSetField(number))
-                        {
-                            string msgValue = group.GetString(number);
-                            Assert.That(value, Is.EqualTo(msgValue));
-                        }
-                    }
-                }
-            }
+            Assert.AreEqual(expected, msg.ToXML());
         }
     }
 }
