@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System;
+using System.Threading;
 
 namespace QuickFix
 {
@@ -184,6 +185,21 @@ namespace QuickFix
             }
         }
 
+        private void LogonAllSessions()
+        {
+            foreach (Session session in sessions_.Values)
+            {
+                try
+                {
+                    session.Logon();
+                }
+                catch (System.Exception e)
+                {
+                    LogEvent( session.Log, "Error during logon of Session " + session.SessionID + ": " + e.Message);
+                }
+            }
+        }
+
         private void LogoutAllSessions(bool force)
         {
             foreach (Session session in sessions_.Values)
@@ -194,64 +210,59 @@ namespace QuickFix
                 }
                 catch (System.Exception e)
                 {
-                    // FIXME logError(session.getSessionID(), "Error during logout", e);
-                    System.Console.WriteLine("Error during logout of Session " + session.SessionID + ": " + e.Message);
+                    LogEvent(session.Log, "Error during logout of Session " + session.SessionID + ": " + e.Message);
                 }
             }
 
             if (force && IsLoggedOn)
             {
-                foreach (Session session in sessions_.Values)
-                {
-                    try
-                    {
-                        if (session.IsLoggedOn)
-                            session.Disconnect("Forcibly disconnecting session");
-                    }
-                    catch (System.Exception e)
-                    {
-                        // FIXME logError(session.getSessionID(), "Error during disconnect", e);
-                        System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
-                    }
-                }
+                DisconnectSessions("Forcibly disconnecting session");
             }
 
             if (!force)
                 WaitForLogout();
         }
 
+        private static void LogEvent( ILog log, string message )
+        {
+            if( log != null )
+            {
+                log.OnEvent( message );
+            }
+        }
+
+        private const int TenSecondsInTicks = 10000;
+
         /// <summary>
         /// FIXME
         /// </summary>
         private void WaitForLogout()
         {
-            System.Console.WriteLine("TODO - ThreadedSocketAcceptor.WaitForLogout not implemented!");
-            /*
-            int start = System.Environment.TickCount;
-            HashSet<Session> sessions = new HashSet<Session>(sessions_.Values);
-            while(sessions.Count > 0)
+            int start = Environment.TickCount;
+            using( var resetEvent = new ManualResetEvent( false ) )
             {
-                Thread.Sleep(100);
-                
-                int elapsed = System.Environment.TickCount - start;
-                Iterator<Session> sessionItr = loggedOnSessions.iterator();
-                while (sessionItr.hasNext())
+                while( IsLoggedOn && ( Environment.TickCount - start ) < TenSecondsInTicks )
                 {
-                    Session session = sessionItr.next();
-                    if (elapsed >= session.getLogoutTimeout() * 1000L)
-                    {
-                        session.disconnect("Logout timeout, force disconnect", false);
-                        sessionItr.remove();
-                    }
-                }
-                // Be sure we don't look forever
-                if (elapsed > 60000)
-                {
-                    log.warn("Stopping session logout wait after 1 minute");
-                    break;
+                    resetEvent.WaitOne( 100 );
                 }
             }
-            */
+            DisconnectSessions("Logout timeout, force disconnect");
+        }
+
+        private void DisconnectSessions(string disconnectMessage)
+        {
+            foreach (Session session in sessions_.Values)
+            {
+                try
+                {
+                    if (session.IsLoggedOn)
+                        session.Disconnect(disconnectMessage);
+                }
+                catch (System.Exception e)
+                {
+                    LogEvent( session.Log, "Error during disconnect of Session " + session.SessionID + ": " + e.Message );
+                }
+            }
         }
 
         private void DisposeSessions()
@@ -275,6 +286,7 @@ namespace QuickFix
             {
                 if (!isStarted_)
                 {
+                    LogonAllSessions();
                     StartAcceptingConnections();
                     isStarted_ = true;
                 }
@@ -291,11 +303,15 @@ namespace QuickFix
             if (_disposed)
                 throw new ObjectDisposedException(GetType().Name);
 
-            StopAcceptingConnections();
-            LogoutAllSessions(force);
-            DisposeSessions();
-            sessions_.Clear();
-
+            lock( sync_ )
+            {
+                if( isStarted_ )
+                {
+                    isStarted_ = false;
+                    LogoutAllSessions(force);
+                    StopAcceptingConnections();
+                }
+            }
             // FIXME StopSessionTimer();
             // FIXME Session.UnregisterSessions(GetSessions());
         }
@@ -309,6 +325,34 @@ namespace QuickFix
             get
             {
                 return sessions_.Values.Any(session => session.IsLoggedOn);
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is started.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is started; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsStarted
+        {
+            get
+            {
+                return isStarted_;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this instance is started.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is started; otherwise, <c>false</c>.
+        /// </value>
+        public bool AreSocketsRunning
+        {
+            get
+            {
+                return socketDescriptorForAddress_.All( s => s.Value.SocketReactor.IsRunning );
             }
         }
 
@@ -387,9 +431,15 @@ namespace QuickFix
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
+            if( _disposed )
+            {
+                return;
+            }
             try
             {
                 Stop();
+                DisposeSessions();
+                sessions_.Clear();
                 _disposed = true;
             }
             catch (ObjectDisposedException)
@@ -406,7 +456,8 @@ namespace QuickFix
         /// </remarks>
         public void Dispose()
         {
-            Stop();
+            Dispose( true );
+            GC.SuppressFinalize( this );
         }
     }
 }

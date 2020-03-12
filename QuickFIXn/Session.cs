@@ -620,6 +620,8 @@ namespace QuickFix
 
                 if (MsgType.LOGON.Equals(msgType))
                     NextLogon(message);
+                else if (MsgType.LOGOUT.Equals(msgType))
+                    NextLogout(message);
                 else if (!IsLoggedOn)
                     Disconnect(string.Format("Received msg type '{0}' when not logged on", msgType));
                 else if (MsgType.HEARTBEAT.Equals(msgType))
@@ -628,8 +630,6 @@ namespace QuickFix
                     NextTestRequest(message);
                 else if (MsgType.SEQUENCE_RESET.Equals(msgType))
                     NextSequenceReset(message);
-                else if (MsgType.LOGOUT.Equals(msgType))
-                    NextLogout(message);
                 else if (MsgType.RESEND_REQUEST.Equals(msgType))
                     NextResendRequest(message);
                 else
