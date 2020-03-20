@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -101,6 +103,7 @@ namespace UnitTests
             settings.SetString(SessionSettings.SOCKET_CONNECT_PORT, ConnectPort.ToString());
             settings.SetString(SessionSettings.SOCKET_ACCEPT_HOST, Host);
             settings.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort.ToString());
+            settings.SetString(SessionSettings.DEBUG_FILE_LOG_PATH, Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath), "log"));
             return settings;
         }
 
