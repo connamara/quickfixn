@@ -8,7 +8,7 @@ permalink: /download/
 
 The latest version of QuickFIX/n is v1.9.0
 
-You can download it [here](http://quickfixn.s3.amazonaws.com/quickfixn-v1.9.0.zip)
+[Click here to downlaad it](http://quickfixn.s3.amazonaws.com/quickfixn-v1.9.0.zip)
 
 Source Code
 -----------
