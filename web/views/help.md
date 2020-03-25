@@ -41,13 +41,14 @@ Commercial Support
 
 [![Connamara Systems, LLC][1]][0]
 
-**[Use this form to contact us!](https://www.connamara.com/contact/)**
 
 Connamara offers commercial support for developers who are integrating 
 any of the QuickFIX implementations (C++, Java, .NET). The support is 
 offered in 10-hour bundles and grants developers access, via telephone 
 or email, to the team that created QuickFIX/n and are maintainers of 
 QuickFIX.
+
+**[Call us!  We'd love to help!](https://www.connamara.com/contact/)**
 
 In addition to offering QuickFIX support, Connamara delivers Made-To-Measure 
 Trading Solutions by bridging the gap between buy and build. By using 
