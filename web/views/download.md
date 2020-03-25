@@ -17,10 +17,10 @@ View the code on [github](https://github.com/connamara/quickfixn)
 NuGet
 -----
 
-*This project has never released any official NuGet packages.*
+**This project has NEVER released any official NuGet packages (yet).**
 
-*Any NuGet packages you see online were created by outside parties and
-are not endorsed or affiliated with the QuickFIX/n team.*
+**Any NuGet packages you see online were created by outside parties and
+are not endorsed or affiliated with the QuickFIX/n team.**
 
 We do intend to change this with the next release (probably 1.10.0),
 but we do not have an ETA for this at present.
