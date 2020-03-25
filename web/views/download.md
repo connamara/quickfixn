@@ -12,7 +12,18 @@ You can download it [here](http://quickfixn.s3.amazonaws.com/quickfixn-v1.9.0.zi
 
 Source Code
 -----------
-View the code on [github] [0]
+View the code on [github](https://github.com/connamara/quickfixn)
+
+NuGet
+-----
+
+*This project has never released any official NuGet packages.*
+
+*Any NuGet packages you see online were created by outside parties and
+are not endorsed or affiliated with the QuickFIX/n team.*
+
+We do intend to change this with the next release (probably 1.10.0),
+but we do not have an ETA for this at present.
 
 Previous Versions
 -----------------
@@ -29,7 +40,5 @@ Previous Versions
   * [v0.9.1](http://quickfixn.s3.amazonaws.com/quickfixn-v0.9.1.zip)
   * [v0.9.0](http://quickfixn.s3.amazonaws.com/quickfixn-v0.9.0.zip)
 
-[View all previous versions in github][1]
+[View all previous versions in github](https://github.com/connamara/quickfixn/tags)
 
-[0]: https://github.com/connamara/quickfixn
-[1]: https://github.com/connamara/quickfixn/tags
