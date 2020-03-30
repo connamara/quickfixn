@@ -112,7 +112,7 @@ namespace QuickFix.Fields.Converters
             try
             {
                 //Avoid NanoString Path parsing if not possible from string length
-                if (str.Length > DATE_TIME_MAXLENGTH_WITHOUT_NANOSECONDS && precision == TimeStampPrecision.Nanosecond)
+                if (str.Length > DATE_TIME_MAXLENGTH_WITHOUT_NANOSECONDS)
                 {
                     return DateTimeFromNanoString(str);
                 }

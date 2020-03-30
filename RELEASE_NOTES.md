@@ -21,6 +21,7 @@ What's New
 * (patch) #383/#582 - Fix debug logfile name clash (chizz5056/gbirchmeier)
 * (patch) #410/#583 - SocketAcceptPort now fully-obeyed (mvdtom)
 * (minor) #585/#323 - Add Message.ToXML() (baffles/gbirchmeier)
+* (patch) #591 - Nanosecond DateTime reader bugfix (gbirchmeier)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)

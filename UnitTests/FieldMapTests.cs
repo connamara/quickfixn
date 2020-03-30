@@ -100,6 +100,16 @@ namespace UnitTests
         }
 
         [Test]
+        public void DateTimeFieldNanoTest()
+        {
+            fieldmap.SetField(new StringField(Tags.TransactTime, "20200309-20:53:10.643649215"));
+            TransactTime tt = new TransactTime();
+            fieldmap.GetField(tt);
+            // Ticks resolution is 100 nanoseconds, so we lose the last 2 decimal points
+            Assert.That(tt.Obj.Ticks, Is.EqualTo(637193839906436492));
+        }
+
+        [Test]
         public void DateOnlyFieldTest()
         {
             fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
