@@ -561,7 +561,7 @@ namespace QuickFix.DataDictionary
             Console.WriteLine(s);
             */
 
-            string messageTypeName = (node.Attributes["name"] != null) ? node.Attributes["name"].Value : node.Name;
+            string messageTypeName = (node.Attributes?["name"] != null) ? node.Attributes["name"].Value : node.Name;
 
             if (!node.HasChildNodes) { return; }
             foreach (XmlNode childNode in node.ChildNodes)
