@@ -24,6 +24,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CONTRIBUTING.md = CONTRIBUTING.md
 		generate.bat = generate.bat
 		LICENSE = LICENSE
+		New-Release.ps1 = New-Release.ps1
 		package_release.bat = package_release.bat
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
