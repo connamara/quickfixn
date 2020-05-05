@@ -115,9 +115,11 @@ To run a test with the debugger,
 Credits
 -------
 
-QuickFIXn is maintained and funded by [Connamara Systems, llc](http://connamara.com).
+![Connamara Systems](http://quickfixn.org/web/public/images/Connamara-Logo.png)
 
-The names and logos for Connamara Systems are trademarks of Connamara Systems, llc.
+QuickFIXn is maintained and funded by [Connamara Systems, LLC](http://connamara.com).
+
+The names and logos for Connamara Systems are trademarks of Connamara Systems, LLC.
 
 Licensing
 ---------
