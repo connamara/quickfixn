@@ -574,6 +574,11 @@ namespace QuickFix.DataDictionary
                 Console.WriteLine(s);
                 */
 
+                if (childNode.Attributes == null)
+                    throw new DictionaryParseException($"Malformed data dictionary: Found text-only node containing '{childNode.InnerText.Trim()}'");
+                if (childNode.Attributes["name"] == null)
+                    throw new DictionaryParseException($"Malformed data dictionary: Found '{childNode.Name}' node without 'name' within parent '{node.Name}/{messageTypeName}'");
+
                 var fieldName = (childNode.Attributes["name"] != null) ? childNode.Attributes["name"].Value : "no-name";
 
                 if (childNode.Name == "field")
