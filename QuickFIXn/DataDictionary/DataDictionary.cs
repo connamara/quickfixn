@@ -538,7 +538,7 @@ namespace QuickFix.DataDictionary
         /// </summary>
         /// <param name="childNode"></param>
         /// <param name="parentNode"></param>
-        public static void VerifyChildNode(XmlNode childNode, XmlNode parentNode)
+        internal static void VerifyChildNode(XmlNode childNode, XmlNode parentNode)
         {
             if (childNode.Attributes == null) {
                 throw new DictionaryParseException($"Malformed data dictionary: Found text-only node containing '{childNode.InnerText.Trim()}'");
