@@ -606,7 +606,7 @@ namespace QuickFix.DataDictionary
                         }
 
                         DDField fld = FieldsByName[nameAttribute];
-                        if (required && (componentRequired == null || componentRequired.Value == true))
+                        if (required && componentRequired.GetValueOrDefault(true))
                         {
                             ddmap.ReqFields.Add(fld.Tag);
                         }
@@ -616,9 +616,9 @@ namespace QuickFix.DataDictionary
                         }
 
                         // if this is in a group whose delim is unset, then this must be the delim (i.e. first field)
-                        if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == 0))
+                        if (ddmap is DDGrp ddGroup && ddGroup.Delim == 0)
                         {
-                            ((DDGrp)ddmap).Delim = fld.Tag;
+                            ddGroup.Delim = fld.Tag;
                         }
                         break;
 
@@ -631,7 +631,7 @@ namespace QuickFix.DataDictionary
 
                         DDField counterFld = FieldsByName[nameAttribute];
                         DDGrp grp = new DDGrp();
-                        if (required && (componentRequired == null || componentRequired.Value == true))
+                        if (required && componentRequired.GetValueOrDefault(true))
                         {
                             ddmap.ReqFields.Add(counterFld.Tag);
                             grp.Required = true;
@@ -645,9 +645,9 @@ namespace QuickFix.DataDictionary
                         ddmap.Groups.Add(counterFld.Tag, grp);
 
                         // if this is in a group whose delim is unset, then this must be the delim (i.e. first field)
-                        if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == 0))
+                        if (ddmap is DDGrp ddGrp && ddGrp.Delim == 0)
                         {
-                            ((DDGrp)ddmap).Delim = counterFld.Tag;
+                            ddGrp.Delim = counterFld.Tag;
                         }
                         break;
 
