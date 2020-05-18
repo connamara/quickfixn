@@ -540,17 +540,19 @@ namespace QuickFix.DataDictionary
         /// <param name="parentNode"></param>
         internal static void VerifyChildNode(XmlNode childNode, XmlNode parentNode)
         {
-            if (childNode.Attributes == null) {
+            if (childNode.Attributes == null)
+            {
                 throw new DictionaryParseException($"Malformed data dictionary: Found text-only node containing '{childNode.InnerText.Trim()}'");
             }
-            if (childNode.Attributes["name"] == null) {
+            if (childNode.Attributes["name"] == null)
+            {
                 string messageTypeName = (parentNode.Attributes["name"] != null) ? parentNode.Attributes["name"].Value : parentNode.Name;
                 throw new DictionaryParseException($"Malformed data dictionary: Found '{childNode.Name}' node without 'name' within parent '{parentNode.Name}/{messageTypeName}'");
             }
         }
 
         /// <summary>
-        /// Implied null third componentRequired parameter
+        /// Parse a message element.  Its data is added to parameter `ddmap`.
         /// </summary>
         /// <param name="node"></param>
         /// <param name="ddmap"></param>
@@ -560,7 +562,7 @@ namespace QuickFix.DataDictionary
         }
 
         /// <summary>
-        /// Parse a message element
+        /// Parse a message element.  Its data is added to parameter `ddmap`.
         /// </summary>
         /// <param name="node">a message, group, or component node</param>
         /// <param name="ddmap">the still-being-constructed DDMap for this node</param>
@@ -594,66 +596,45 @@ namespace QuickFix.DataDictionary
                 VerifyChildNode(childNode, node);
 
                 var nameAttribute = childNode.Attributes["name"].Value;
-                bool required = childNode.Attributes["required"]?.Value == "Y";
 
-                switch(childNode.Name)
+                switch (childNode.Name)
                 {
                     case "field":
+                    case "group":
                         if (FieldsByName.ContainsKey(nameAttribute) == false)
                         {
                             throw new DictionaryParseException(
                                 $"Field '{nameAttribute}' is not defined in <fields> section.");
                         }
-
                         DDField fld = FieldsByName[nameAttribute];
-                        if (required && componentRequired.GetValueOrDefault(true))
-                        {
+
+                        bool required = (childNode.Attributes["required"]?.Value == "Y") && componentRequired.GetValueOrDefault(true);
+
+                        if (required)
                             ddmap.ReqFields.Add(fld.Tag);
-                        }
-                        if (!ddmap.IsField(fld.Tag))
-                        {
+
+                        if (ddmap.IsField(fld.Tag) == false)
                             ddmap.Fields.Add(fld.Tag, fld);
-                        }
 
                         // if this is in a group whose delim is unset, then this must be the delim (i.e. first field)
                         if (ddmap is DDGrp ddGroup && ddGroup.Delim == 0)
-                        {
                             ddGroup.Delim = fld.Tag;
-                        }
-                        break;
 
-                    case "group":
-                        if (FieldsByName.ContainsKey(nameAttribute) == false)
+                        if (childNode.Name == "group")
                         {
-                            throw new DictionaryParseException(
-                                $"Group counter field '{nameAttribute}' is not defined in <fields> section.");
-                        }
+                            DDGrp grp = new DDGrp();
+                            grp.NumFld = fld.Tag;
+                            if (required)
+                                grp.Required = true;
 
-                        DDField counterFld = FieldsByName[nameAttribute];
-                        DDGrp grp = new DDGrp();
-                        if (required && componentRequired.GetValueOrDefault(true))
-                        {
-                            ddmap.ReqFields.Add(counterFld.Tag);
-                            grp.Required = true;
-                        }
-                        if (!ddmap.IsField(counterFld.Tag))
-                        {
-                            ddmap.Fields.Add(counterFld.Tag, counterFld);
-                        }
-                        grp.NumFld = counterFld.Tag;
-                        ParseMsgEl(childNode, grp);
-                        ddmap.Groups.Add(counterFld.Tag, grp);
-
-                        // if this is in a group whose delim is unset, then this must be the delim (i.e. first field)
-                        if (ddmap is DDGrp ddGrp && ddGrp.Delim == 0)
-                        {
-                            ddGrp.Delim = counterFld.Tag;
+                            ParseMsgEl(childNode, grp);
+                            ddmap.Groups.Add(fld.Tag, grp);
                         }
                         break;
 
                     case "component":
                         XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + nameAttribute + "']");
-                        ParseMsgEl(compNode, ddmap, required);
+                        ParseMsgEl(compNode, ddmap, (childNode.Attributes["required"]?.Value == "Y"));
                         break;
 
                     default:
