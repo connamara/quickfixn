@@ -602,7 +602,7 @@ namespace QuickFix.DataDictionary
                         if (FieldsByName.ContainsKey(nameAttribute) == false)
                         {
                             throw new DictionaryParseException(
-                                $"Field '{nameAttribute}' is used in '{messageTypeName}', but is not defined in <fields> set.");
+                                $"Field '{nameAttribute}' is not defined in <fields> section.");
                         }
 
                         DDField fld = FieldsByName[nameAttribute];
@@ -623,25 +623,31 @@ namespace QuickFix.DataDictionary
                         break;
 
                     case "group":
-                        DDField groupFld = FieldsByName[nameAttribute];
+                        if (FieldsByName.ContainsKey(nameAttribute) == false)
+                        {
+                            throw new DictionaryParseException(
+                                $"Group counter field '{nameAttribute}' is not defined in <fields> section.");
+                        }
+
+                        DDField counterFld = FieldsByName[nameAttribute];
                         DDGrp grp = new DDGrp();
                         if (required && (componentRequired == null || componentRequired.Value == true))
                         {
-                            ddmap.ReqFields.Add(groupFld.Tag);
+                            ddmap.ReqFields.Add(counterFld.Tag);
                             grp.Required = true;
                         }
-                        if (!ddmap.IsField(groupFld.Tag))
+                        if (!ddmap.IsField(counterFld.Tag))
                         {
-                            ddmap.Fields.Add(groupFld.Tag, groupFld);
+                            ddmap.Fields.Add(counterFld.Tag, counterFld);
                         }
-                        grp.NumFld = groupFld.Tag;
+                        grp.NumFld = counterFld.Tag;
                         ParseMsgEl(childNode, grp);
-                        ddmap.Groups.Add(groupFld.Tag, grp);
+                        ddmap.Groups.Add(counterFld.Tag, grp);
 
                         // if this is in a group whose delim is unset, then this must be the delim (i.e. first field)
                         if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == 0))
                         {
-                            ((DDGrp)ddmap).Delim = groupFld.Tag;
+                            ((DDGrp)ddmap).Delim = counterFld.Tag;
                         }
                         break;
 
