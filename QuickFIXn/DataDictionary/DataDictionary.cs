@@ -533,6 +533,23 @@ namespace QuickFix.DataDictionary
         }
 
         /// <summary>
+        /// Checks that node has 'name' attribute, and is not a stray text node.
+        /// Throws a DictionaryParseException if a field or component node is malformed.
+        /// </summary>
+        /// <param name="childNode"></param>
+        /// <param name="parentNode"></param>
+        public static void VerifyChildNode(XmlNode childNode, XmlNode parentNode)
+        {
+            if (childNode.Attributes == null) {
+                throw new DictionaryParseException($"Malformed data dictionary: Found text-only node containing '{childNode.InnerText.Trim()}'");
+            }
+            if (childNode.Attributes["name"] == null) {
+                string messageTypeName = (parentNode.Attributes["name"] != null) ? parentNode.Attributes["name"].Value : parentNode.Name;
+                throw new DictionaryParseException($"Malformed data dictionary: Found '{childNode.Name}' node without 'name' within parent '{parentNode.Name}/{messageTypeName}'");
+            }
+        }
+
+        /// <summary>
         /// Implied null third componentRequired parameter
         /// </summary>
         /// <param name="node"></param>
@@ -545,8 +562,8 @@ namespace QuickFix.DataDictionary
         /// <summary>
         /// Parse a message element
         /// </summary>
-        /// <param name="node"></param>
-        /// <param name="ddmap"></param>
+        /// <param name="node">a message, group, or component node</param>
+        /// <param name="ddmap">the still-being-constructed DDMap for this node</param>
         /// <param name="componentRequired">
         /// If non-null, parsing is inside a component that is required (true) or not (false).
         /// If null, parser is not inside a component.
@@ -574,70 +591,67 @@ namespace QuickFix.DataDictionary
                 Console.WriteLine(s);
                 */
 
-                if (childNode.Attributes == null)
-                    throw new DictionaryParseException($"Malformed data dictionary: Found text-only node containing '{childNode.InnerText.Trim()}'");
-                if (childNode.Attributes["name"] == null)
-                    throw new DictionaryParseException($"Malformed data dictionary: Found '{childNode.Name}' node without 'name' within parent '{node.Name}/{messageTypeName}'");
+                VerifyChildNode(childNode, node);
 
-                var fieldName = (childNode.Attributes["name"] != null) ? childNode.Attributes["name"].Value : "no-name";
+                var nameAttribute = childNode.Attributes["name"].Value;
+                bool required = childNode.Attributes["required"]?.Value == "Y";
 
-                if (childNode.Name == "field")
+                switch(childNode.Name)
                 {
-                    if (FieldsByName.ContainsKey(fieldName) == false)
-                    {
-                        throw new Exception(
-                            $"Field '{fieldName}' is used in '{messageTypeName}', but is not defined in <fields> set.");
-                    }
+                    case "field":
+                        if (FieldsByName.ContainsKey(nameAttribute) == false)
+                        {
+                            throw new DictionaryParseException(
+                                $"Field '{nameAttribute}' is used in '{messageTypeName}', but is not defined in <fields> set.");
+                        }
 
-                    DDField fld = FieldsByName[fieldName];
-                    XmlAttribute req = childNode.Attributes["required"];
-                    if (req != null && req.Value == "Y"
-                        && (componentRequired == null || componentRequired.Value == true))
-                    {
-                        ddmap.ReqFields.Add(fld.Tag);
-                    }
-                    if (!ddmap.IsField(fld.Tag))
-                    {
-                        ddmap.Fields.Add(fld.Tag, fld);
-                    }
+                        DDField fld = FieldsByName[nameAttribute];
+                        if (required && (componentRequired == null || componentRequired.Value == true))
+                        {
+                            ddmap.ReqFields.Add(fld.Tag);
+                        }
+                        if (!ddmap.IsField(fld.Tag))
+                        {
+                            ddmap.Fields.Add(fld.Tag, fld);
+                        }
 
-                    // if first field in group, make it the DELIM
-                    if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == 0))
-                    {
-                        ((DDGrp)ddmap).Delim = fld.Tag;
-                    }
-                }
-                else if (childNode.Name == "group")
-                {
-                    DDField fld = FieldsByName[fieldName];
-                    DDGrp grp = new DDGrp();
-                    XmlAttribute req = childNode.Attributes["required"];
-                    if (req != null && req.Value == "Y"
-                        && (componentRequired == null || componentRequired.Value == true))
-                    {
-                        ddmap.ReqFields.Add(fld.Tag);
-                        grp.Required = true;
-                    }
-                    if (!ddmap.IsField(fld.Tag))
-                    {
-                        ddmap.Fields.Add(fld.Tag, fld);
-                    }
-                    grp.NumFld = fld.Tag;
-                    ParseMsgEl(childNode, grp);
-                    ddmap.Groups.Add(fld.Tag, grp);
+                        // if this is in a group whose delim is unset, then this must be the delim (i.e. first field)
+                        if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == 0))
+                        {
+                            ((DDGrp)ddmap).Delim = fld.Tag;
+                        }
+                        break;
 
-                    // if first field in group, make it the DELIM
-                    if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == 0))
-                    {
-                        ((DDGrp)ddmap).Delim = fld.Tag;
-                    }
-                }
-                else if (childNode.Name == "component")
-                {
-                    XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + fieldName + "']");
-                    XmlAttribute req = childNode.Attributes["required"];
-                    bool? compRequired = (req != null && req.Value == "Y");
-                    ParseMsgEl(compNode, ddmap, compRequired);
+                    case "group":
+                        DDField groupFld = FieldsByName[nameAttribute];
+                        DDGrp grp = new DDGrp();
+                        if (required && (componentRequired == null || componentRequired.Value == true))
+                        {
+                            ddmap.ReqFields.Add(groupFld.Tag);
+                            grp.Required = true;
+                        }
+                        if (!ddmap.IsField(groupFld.Tag))
+                        {
+                            ddmap.Fields.Add(groupFld.Tag, groupFld);
+                        }
+                        grp.NumFld = groupFld.Tag;
+                        ParseMsgEl(childNode, grp);
+                        ddmap.Groups.Add(groupFld.Tag, grp);
+
+                        // if this is in a group whose delim is unset, then this must be the delim (i.e. first field)
+                        if ((ddmap.GetType() == typeof(DDGrp) && ((DDGrp)ddmap).Delim == 0))
+                        {
+                            ((DDGrp)ddmap).Delim = groupFld.Tag;
+                        }
+                        break;
+
+                    case "component":
+                        XmlNode compNode = RootDoc.SelectSingleNode("//components/component[@name='" + nameAttribute + "']");
+                        ParseMsgEl(compNode, ddmap, required);
+                        break;
+
+                    default:
+                        throw new DictionaryParseException($"Malformed data dictionary: child node type should be one of {{field,group,component}} but is '{childNode.Name}' within parent '{node.Name}/{messageTypeName}'");
                 }
             }
         }

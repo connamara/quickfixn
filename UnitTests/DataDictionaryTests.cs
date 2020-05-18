@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using NUnit.Framework;
 using QuickFix;
 using UnitTests.TestHelpers;
@@ -612,6 +613,38 @@ namespace UnitTests
             Assert.True(news.IsField(148)); // Headline
             Assert.True(news.IsGroup(33)); // LinesOfText
             Assert.True(news.GetGroup(33).IsField(355)); // EncodedText
+        }
+
+
+        XmlNode MakeNode(string xmlString)
+        {
+            XmlDocument doc = new XmlDocument();
+            if (xmlString.StartsWith("<"))
+            {
+                doc.LoadXml(xmlString);
+                return doc.DocumentElement;
+            }
+            else
+            {
+                return doc.CreateTextNode(xmlString);
+            }
+        }
+
+        [Test]
+        public void VerifyChildNode()
+        {
+            XmlNode parentNode = MakeNode("<message name='Daddy'/>");
+
+            Assert.DoesNotThrow(
+                delegate { QuickFix.DataDictionary.DataDictionary.VerifyChildNode(MakeNode("<field name='qty'/>"), parentNode); });
+
+            DictionaryParseException dpx = Assert.Throws<DictionaryParseException>(
+                delegate { QuickFix.DataDictionary.DataDictionary.VerifyChildNode(MakeNode("foo"), parentNode); });
+            Assert.AreEqual("Malformed data dictionary: Found text-only node containing 'foo'", dpx.Message);
+
+            dpx = Assert.Throws<DictionaryParseException>(
+                delegate { QuickFix.DataDictionary.DataDictionary.VerifyChildNode(MakeNode("<field>qty</field>"), parentNode); });
+            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'message/Daddy'", dpx.Message);
         }
     }
 }
