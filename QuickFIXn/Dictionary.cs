@@ -162,7 +162,7 @@ namespace QuickFix
                 case "TH": return System.DayOfWeek.Thursday;
                 case "FR": return System.DayOfWeek.Friday;
                 case "SA": return System.DayOfWeek.Saturday;
-                default: throw new ConfigError("Illegal day name " + abbr);
+                default: throw new ConfigError("Illegal day name " + day);
             }
         }
 
