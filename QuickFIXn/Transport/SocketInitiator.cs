@@ -55,33 +55,61 @@ namespace QuickFix.Transport
         {
             SocketInitiatorThread t = socketInitiatorThread as SocketInitiatorThread;
             if (t == null) return;
+
+            string exceptionEvent = null;
             try
             {
-                t.Connect();
-                t.Initiator.SetConnected(t.Session.SessionID);
-                t.Session.Log.OnEvent("Connection succeeded");
-                t.Session.Next();
-                while (t.Read())
-                { }
-                if (t.Initiator.IsStopped)
-                    t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
-            }
-            catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
-            {
-                t.Session.Log.OnEvent("Connection failed: " + ex.Message);
-            }
-            catch (SocketException e) 
-            {
-                t.Session.Log.OnEvent("Connection failed: " + e.Message);
-            }
-            catch (System.Security.Authentication.AuthenticationException ex) // some certificate problems
-            {
-                t.Session.Log.OnEvent("Connection failed (AuthenticationException): " + ex.Message);
-            }
-            catch (Exception)
-            {
-                // It might be the logger ObjectDisposedException, so don't try to log!
+                try
+                {
+                    t.Connect();
+                    t.Initiator.SetConnected(t.Session.SessionID);
+                    t.Session.Log.OnEvent("Connection succeeded");
+                    t.Session.Next();
+                    while (t.Read())
+                    {
+                    }
+
+                    if (t.Initiator.IsStopped)
+                        t.Initiator.RemoveThread(t);
+                    t.Initiator.SetDisconnected(t.Session.SessionID);
+                }
+                catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
+                {
+                    exceptionEvent = $"Connection failed: {ex.Message}";
+                }
+                catch (SocketException e)
+                {
+                    exceptionEvent = $"Connection failed: {e.Message}";
+                }
+                catch (System.Security.Authentication.AuthenticationException ex) // some certificate problems
+                {
+                    exceptionEvent = $"Connection failed (AuthenticationException): {ex.Message}";
+                }
+                catch (Exception ex)
+                {
+                    exceptionEvent = $"Unexpected exception: {ex}";
+                }
+
+                if (exceptionEvent != null)
+                {
+                    if (t.Session.Disposed)
+                    {
+                        // The session is disposed, and so is its log. We cannot use it to log the event,
+                        // so we resort to storing it in a local file.
+                        try
+                        {
+                            File.AppendAllText("DisposedSessionEvents.log", $"{System.DateTime.Now:G}: {exceptionEvent}{Environment.NewLine}");
+                        }
+                        catch (IOException)
+                        {
+                            // Prevent IO exceptions from crashing the application
+                        }
+                    }
+                    else
+                    {
+                        t.Session.Log.OnEvent(exceptionEvent);
+                    }
+                }
             }
             finally
             {

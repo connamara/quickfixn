@@ -19,7 +19,7 @@ s3 = Aws::S3::Resource.new(
 )
 
 obj = s3.bucket(bucket).object(File.basename(file))
-if obj.upload_file(file)
+if obj.upload_file(file, acl: 'public_read')
 	puts "Uploaded #{file} to bucket #{bucket}"
 else
 	puts "Could not upload #{file} to bucket #{bucket}!"

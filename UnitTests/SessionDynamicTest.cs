@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Net;
 using System.Net.Sockets;
@@ -60,9 +58,11 @@ namespace UnitTests
         const string Host = "127.0.0.1";
         const int ConnectPort = 55100;
         const int AcceptPort = 55101;
+        const int AcceptPort2 = 55102;
         const string ServerCompID = "dummy";
         const string StaticInitiatorCompID = "ini01";
         const string StaticAcceptorCompID = "acc01";
+        const string StaticAcceptorCompID2 = "acc02";
 
         const string FIXMessageEnd = @"\x0110=\d{3}\x01";
         const string FIXMessageDelimit = @"(8=FIX|\A).*?(" + FIXMessageEnd + @"|\z)";
@@ -109,6 +109,11 @@ namespace UnitTests
 
         void StartEngine(bool initiator)
         {
+            StartEngine(initiator, false);
+        }
+
+        void StartEngine(bool initiator, bool twoSessions)
+        {
             TestApplication application = new TestApplication(LogonCallback, LogoffCallback);
             IMessageStoreFactory storeFactory = new MemoryStoreFactory();
             SessionSettings settings = new SessionSettings();
@@ -135,6 +140,18 @@ namespace UnitTests
             else
             {
                 settings.Set(CreateSessionID(StaticAcceptorCompID), CreateSessionConfig(StaticAcceptorCompID, false));
+
+                if (twoSessions)
+                {
+                    var id = CreateSessionID(StaticAcceptorCompID2);
+                    var conf = CreateSessionConfig(StaticAcceptorCompID2, false);
+
+                    conf.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort2.ToString());
+                    conf.SetString(SessionSettings.FILE_LOG_PATH, _logPath + "2");
+
+                    settings.Set(id, conf);
+                }
+
                 _acceptor = new ThreadedSocketAcceptor(application, storeFactory, settings, logFactory);
                 _acceptor.Start();
             }
@@ -189,7 +206,7 @@ namespace UnitTests
                     Monitor.Pulse(socketState._socket);
                 return;
             }
-            string msgText = Encoding.ASCII.GetString(socketState._rxBuffer, 0, bytesReceived);
+            string msgText = CharEncoding.DefaultEncoding.GetString(socketState._rxBuffer, 0, bytesReceived);
             foreach (Match m in Regex.Matches(msgText, FIXMessageDelimit))
             {
                 socketState._messageFragment += m.Value;
@@ -197,8 +214,8 @@ namespace UnitTests
                 {
                     Message message = new Message(socketState._messageFragment);
                     socketState._messageFragment = string.Empty;
-                    string targetCompID = message.Header.GetField(QuickFix.Fields.Tags.TargetCompID);
-                    if (message.Header.GetField(QuickFix.Fields.Tags.MsgType) == QuickFix.Fields.MsgType.LOGON)
+                    string targetCompID = message.Header.GetString(QuickFix.Fields.Tags.TargetCompID);
+                    if (message.Header.GetString(QuickFix.Fields.Tags.MsgType) == QuickFix.Fields.MsgType.LOGON)
                         lock (_sessions)
                         {
                             _sessions[targetCompID] = socketState;
@@ -216,8 +233,13 @@ namespace UnitTests
 
         Socket ConnectToEngine()
         {
+            return ConnectToEngine(AcceptPort);
+        }
+
+        Socket ConnectToEngine(int port)
+        {
             var address = IPAddress.Parse(Host);
-            var endpoint = new IPEndPoint(address, AcceptPort);
+            var endpoint = new IPEndPoint(address, port);
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
@@ -298,7 +320,8 @@ namespace UnitTests
             msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(1));
             msg.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
             msg.SetField(new QuickFix.Fields.HeartBtInt(300));
-            s.Send(Encoding.ASCII.GetBytes(msg.ToString()));
+            // Simple logon message
+            s.Send(CharEncoding.DefaultEncoding.GetBytes(msg.ToString()));
         }
 
         void ClearLogs()
@@ -335,6 +358,29 @@ namespace UnitTests
 
             Thread.Sleep(500);
             ClearLogs();
+        }
+
+        [Test]
+        public void DifferentPortForAcceptorTest()
+        {
+            //create two sessions with two different SOCKET_ACCEPT_PORT
+            StartEngine(false, true);
+
+            // Ensure we can log on 1st session to 1st port
+            using (var socket11 = ConnectToEngine(AcceptPort))
+            {
+                Assert.IsTrue(socket11.Connected, "Failed to connect to 1st accept port");
+                SendLogon(socket11, StaticAcceptorCompID);
+                Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon 1st acceptor session");
+            }
+
+            // Ensure we can't log on 2nd session to 1st port
+            using(var socket12 = ConnectToEngine(AcceptPort))
+            {
+                Assert.IsTrue(socket12.Connected, "Failed to connect to 1st accept port");
+                SendLogon(socket12, StaticAcceptorCompID2);
+                Assert.IsTrue(WaitForDisconnect(socket12), "Server failed to disconnect 2nd CompID from 1st port");
+            }
         }
 
         [Test]

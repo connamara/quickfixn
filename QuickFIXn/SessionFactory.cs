@@ -23,10 +23,18 @@ namespace QuickFix
 
         public SessionFactory(IApplication app, IMessageStoreFactory storeFactory, ILogFactory logFactory, IMessageFactory messageFactory)
         {
+            // TODO: for V2, consider ONLY instantiating MessageFactory in the Create() method,
+            //   and removing instance var messageFactory_ altogether.
+            //   This makes sense because we can't distinguish FIX50 versions here in this constructor,
+            //   and thus can't create the right FIX-Version factory because we don't know what
+            //   session to use to look up the BeginString and DefaultApplVerID.
+
             application_ = app;
             messageStoreFactory_ = storeFactory;
-            logFactory_ = logFactory;
+            logFactory_ = logFactory ?? new NullLogFactory();
             messageFactory_ = messageFactory ?? new DefaultMessageFactory();
+
+            System.Console.WriteLine("[SessionFactory] " + messageFactory_.GetType().FullName);
         }
 
         public Session Create(SessionID sessionID, QuickFix.Dictionary settings)
@@ -43,14 +51,26 @@ namespace QuickFix
                 useDataDictionary = settings.GetBool(SessionSettings.USE_DATA_DICTIONARY);
 
             QuickFix.Fields.ApplVerID defaultApplVerID = null;
+            IMessageFactory sessionMsgFactory = messageFactory_;
             if (sessionID.IsFIXT)
             {
                 if (!settings.Has(SessionSettings.DEFAULT_APPLVERID))
                 {
                     throw new ConfigError("ApplVerID is required for FIXT transport");
                 }
-                defaultApplVerID = Message.GetApplVerID(settings.GetString(SessionSettings.DEFAULT_APPLVERID));
-                
+                string rawDefaultApplVerIdSetting = settings.GetString(SessionSettings.DEFAULT_APPLVERID);
+
+                defaultApplVerID = Message.GetApplVerID(rawDefaultApplVerIdSetting);
+
+                // DefaultMessageFactory as created in the SessionFactory ctor cannot
+                // tell the difference between FIX50 versions (same BeginString, unknown defaultApplVerId).
+                // But we have the real session settings here, so we can fix that.
+                // This is, of course, kind of a hack, and it should be reworked in V2 (TODO!).
+                if (messageFactory_ is DefaultMessageFactory)
+                {
+                    sessionMsgFactory = new DefaultMessageFactory(
+                        FixValues.ApplVerID.FromBeginString(rawDefaultApplVerIdSetting));
+                }
             }
 
             DataDictionaryProvider dd = new DataDictionaryProvider();
@@ -81,7 +101,7 @@ namespace QuickFix
                 new SessionSchedule(settings),
                 heartBtInt,
                 logFactory_,
-                messageFactory_,
+                sessionMsgFactory,
                 senderDefaultApplVerId);
 
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
@@ -153,6 +173,8 @@ namespace QuickFix
                 ddCopy.CheckFieldsHaveValues = settings.GetBool(SessionSettings.VALIDATE_FIELDS_HAVE_VALUES);
             if (settings.Has(SessionSettings.VALIDATE_USER_DEFINED_FIELDS))
                 ddCopy.CheckUserDefinedFields = settings.GetBool(SessionSettings.VALIDATE_USER_DEFINED_FIELDS);
+            if (settings.Has(SessionSettings.ALLOW_UNKNOWN_MSG_FIELDS))
+                ddCopy.AllowUnknownMessageFields = settings.GetBool(SessionSettings.ALLOW_UNKNOWN_MSG_FIELDS);
 
             return ddCopy;
         }

@@ -79,7 +79,7 @@ Push-Location -Path "AcceptanceTest" -StackName AcceptanceTest
     
     Remove-Item AcceptanceTests_*.xml
 
-    RunSuite "release" "net452"
+    RunSuite "release" "net461"
 
     RunSuite "release" "netcoreapp2.0"
 

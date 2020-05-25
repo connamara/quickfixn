@@ -5,64 +5,13 @@ using System;
 
 namespace QuickFix
 {
-    // TODO v2.0 - consider changing to internal
-
     /// <summary>
     /// Acceptor implementation - with threads
     /// Creates a ThreadedSocketReactor for every listening endpoint.
     /// </summary>
     public class ThreadedSocketAcceptor : IAcceptor
     {
-        class AcceptorSocketDescriptor
-        {
-            #region Properties
-
-            public ThreadedSocketReactor SocketReactor
-            {
-                get { return socketReactor_; }
-            }
-
-            public IPEndPoint Address
-            {
-                get { return socketEndPoint_; }
-            }
-
-            #endregion
-
-            #region Private Members
-
-            private ThreadedSocketReactor socketReactor_;
-            private IPEndPoint socketEndPoint_;
-            private Dictionary<SessionID, Session> acceptedSessions_ = new Dictionary<SessionID, Session>();
-
-            #endregion
-            
-            public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
-            {
-                socketEndPoint_ = socketEndPoint;
-                socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict);
-            }
-
-            public void AcceptSession(Session session)
-            {
-                acceptedSessions_[session.SessionID] = session;
-            }
-
-            /// <summary>
-            /// Remove a session from those tied to this socket.
-            /// </summary>
-            /// <param name="sessionID">ID of session to be removed</param>
-            /// <returns>true if session removed, false if not found</returns>
-            public bool RemoveSession(SessionID sessionID)
-            {
-                return acceptedSessions_.Remove(sessionID);
-            }
-
-            public Dictionary<SessionID, Session> GetAcceptedSessions()
-            {
-                return new Dictionary<SessionID, Session>(acceptedSessions_);
-            }
-        }
+        
 
         private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private SessionSettings settings_;
@@ -74,18 +23,57 @@ namespace QuickFix
 
         #region Constructors
 
+        /// <summary>
+        /// Create a ThreadedSocketAcceptor with a NullLogFactory and DefaultMessageFactory
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="storeFactory"></param>
+        /// <param name="settings"></param>
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(new SessionFactory(application, storeFactory), settings)
+            : this(application, storeFactory, settings, null, null)
         { }
 
+        /// <summary>
+        /// Create a ThreadedSocketAcceptor with a DefaultMessageFactory
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="storeFactory"></param>
+        /// <param name="settings"></param>
+        /// <param name="logFactory"></param>
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
-            : this(new SessionFactory(application, storeFactory, logFactory), settings)
+            : this(application, storeFactory, settings, logFactory, null)
         { }
 
-        public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
-            : this(new SessionFactory(application, storeFactory, logFactory, messageFactory), settings)
-        { }
+        /// <summary>
+        /// Create a ThreadedSocketAcceptor
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="storeFactory"></param>
+        /// <param name="settings"></param>
+        /// <param name="logFactory">If null, a NullFactory will be used.</param>
+        /// <param name="messageFactory">If null, a DefaultMessageFactory will be created (using settings parameters)</param>
+        public ThreadedSocketAcceptor(
+            IApplication application,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILogFactory logFactory,
+            IMessageFactory messageFactory)
+        {
+            logFactory = logFactory ?? new NullLogFactory();
+            messageFactory = messageFactory ?? new DefaultMessageFactory();
+            SessionFactory sf = new SessionFactory(application, storeFactory, logFactory, messageFactory);
 
+            try
+            {
+                CreateSessions(settings, sf);
+            }
+            catch (System.Exception e)
+            {
+                throw new ConfigError(e.Message, e);
+            }
+        }
+
+        [Obsolete("Will be removed in a future release.")]
         public ThreadedSocketAcceptor(SessionFactory sessionFactory, SessionSettings settings)
         {
             try

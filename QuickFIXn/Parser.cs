@@ -1,3 +1,5 @@
+using System;
+
 namespace QuickFix
 {
     /// <summary>
@@ -6,26 +8,32 @@ namespace QuickFix
     {
         private byte[] buffer_ = new byte[512];
         int usedBufferLength = 0;
-        public void AddToStream(ref byte[] data, int bytesAdded)
+
+        public void AddToStream(byte[] data, int bytesAdded)
         {
             if (buffer_.Length < usedBufferLength + bytesAdded)
-                System.Array.Resize<byte>(ref buffer_, (usedBufferLength + bytesAdded));
-            System.Buffer.BlockCopy(data, 0, buffer_, usedBufferLength , bytesAdded);
+                Array.Resize(ref buffer_, (usedBufferLength + bytesAdded));
+            Buffer.BlockCopy(data, 0, buffer_, usedBufferLength , bytesAdded);
             usedBufferLength += bytesAdded;
         }
 
+        [Obsolete("Use the overload without ref instead.")]
+        public void AddToStream(ref byte[] data, int bytesAdded)
+        {
+            AddToStream(data, bytesAdded);
+        }
+
+        [Obsolete("Unused and will be removed in a future version.")]
         public void AddToStream(string data)
         {
-            byte[] bytes = System.Text.Encoding.UTF8.GetBytes(data);
-            AddToStream(ref bytes, bytes.Length);
-
+            byte[] bytes = CharEncoding.DefaultEncoding.GetBytes(data);
+            AddToStream(bytes, bytes.Length);
         }
-        
 
         public bool ReadFixMessage(out string msg)
         {
             msg = "";
-            
+
             if(buffer_.Length < 2)
                 return false;
             
@@ -44,14 +52,16 @@ namespace QuickFix
                 if (!ExtractLength(out length, out pos, buffer_))
                     return false;
 
+                // pos is at first character past the BodyLength field (tag 9)
+
                 pos += length;
                 if (buffer_.Length < pos)
                     return false;
-           
+
                 pos = IndexOf(buffer_, "\x01" + "10=", pos - 1);
                 if (-1 == pos)
-                    return false;
-                pos += 4;
+                    return false; // no tag 10 received yet
+                pos += 4; // pos now just after "10="
 
                 pos = IndexOf(buffer_, "\x01", pos);
                 if (-1 == pos)
@@ -74,7 +84,7 @@ namespace QuickFix
 
         public bool ExtractLength(out int length, out int pos, string buf)
         {
-            return ExtractLength(out length, out pos, System.Text.Encoding.UTF8.GetBytes(buf));
+            return ExtractLength(out length, out pos, CharEncoding.DefaultEncoding.GetBytes(buf));
         }
 
         public bool ExtractLength(out int length, out int pos, byte[] buf)
@@ -112,13 +122,13 @@ namespace QuickFix
 
         private bool Fail(string what)
         {
-            System.Console.WriteLine("Parser failed: " + what);
+            Console.WriteLine("Parser failed: " + what);
             return false;
         }
 
         private int IndexOf(byte[] arrayToSearchThrough, string stringPatternToFind, int offset)
         {
-            byte[] patternToFind = System.Text.Encoding.UTF8.GetBytes(stringPatternToFind);
+            byte[] patternToFind = CharEncoding.DefaultEncoding.GetBytes(stringPatternToFind);
             if (patternToFind.Length > arrayToSearchThrough.Length)
                 return -1;
             for (int i = offset; i <= arrayToSearchThrough.Length - patternToFind.Length; i++)
@@ -139,10 +149,11 @@ namespace QuickFix
             }
             return -1;
         }
+
         private byte[] Remove(byte[] array, int count)
         {
             byte[] returnByte = new byte[array.Length - count];
-            System.Buffer.BlockCopy(array, count, returnByte,0, array.Length - count);
+            Buffer.BlockCopy(array, count, returnByte, 0, array.Length - count);
             usedBufferLength -= count;
             return returnByte;
         }
@@ -150,8 +161,8 @@ namespace QuickFix
         private string Substring(byte[] array, int startIndex, int length)
         {
             byte[] returnByte = new byte[length];
-            System.Buffer.BlockCopy(array, startIndex, returnByte, 0, length);
-            return System.Text.Encoding.UTF8.GetString(returnByte);
+            Buffer.BlockCopy(array, startIndex, returnByte, 0, length);
+            return CharEncoding.DefaultEncoding.GetString(returnByte);
         }
     }
 }

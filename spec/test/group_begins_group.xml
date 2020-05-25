@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This dictionary has a group that starts with a group.
+  Not sure if it's technically FIX-compliant, but submitter of #513
+  has encountered it in the wild.
+  There's no reason we *can't* support it, so we will.
+-->
+<fix minor="9" major="9">
+  <header/>
+  <trailer/>
+  <messages>
+    <message name="MagicMessage" msgtype="magic" msgcat="app">
+      <field name="MundaneField" required="Y"/>
+      <field name="MagicField" required="N"/>
+
+      <group name="NoMagics">
+        <group name="NoRabbits">
+          <field name="RabbitName" required="Y"/>
+          <field name="RabbitColor" required="N"/>
+        </group>
+        <field name="MagicWord" required="N"/>
+      </group>
+
+    </message>
+  </messages>
+
+  <fields>
+    <field number="1111" name="MundaneField" type="STRING"/>
+    <field number="5555" name="MagicField" type="STRING"/>
+    <field number="6660" name="NoMagics" type="NUMINGROUP"/>
+    <field number="7770" name="NoRabbits" type="NUMINGROUP"/>
+    <field number="7711" name="RabbitName" type="STRING"/>
+    <field number="7712" name="RabbitColor" type="STRING"/>
+    <field number="6661" name="MagicWord" type="STRING"/>
+  </fields>
+</fix>

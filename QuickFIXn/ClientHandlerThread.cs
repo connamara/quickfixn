@@ -54,6 +54,13 @@ namespace QuickFix
         /// <param name="settingsDict"></param>
         /// <param name="socketSettings"></param>
         public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings)
+            : this(tcpClient, clientId, settingsDict, socketSettings, null)
+        {
+            
+        }
+
+        internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict,
+            SocketSettings socketSettings, AcceptorSocketDescriptor acceptorDescriptor)
         {
             string debugLogFilePath = "log";
             if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
@@ -62,10 +69,11 @@ namespace QuickFix
                 debugLogFilePath = settingsDict.GetString(SessionSettings.FILE_LOG_PATH);
 
             // FIXME - do something more flexible than hardcoding a filelog
-            log_ = new FileLog(debugLogFilePath, new SessionID("ClientHandlerThread", clientId.ToString(), "Debug"));
+            log_ = new FileLog(debugLogFilePath, new SessionID(
+                    "ClientHandlerThread", clientId.ToString(), "Debug-" + Guid.NewGuid().ToString()));
 
             this.Id = clientId;
-            socketReader_ = new SocketReader(tcpClient, socketSettings, this);
+            socketReader_ = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor);
         }
 
         public void Start()

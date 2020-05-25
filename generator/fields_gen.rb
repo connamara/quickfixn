@@ -3,6 +3,8 @@
 class FieldGen
   def self.generate fields, fields_path, tags_path
     fields.map! {|fld| fld.merge! type_info(fld) }
+    puts "generate #{fields_path}"
+    puts "     and #{tags_path}"
     File.open(fields_path, 'w') {|f| f.puts fields_str(fields) }
     File.open(tags_path, 'w') {|f| f.puts tags_str(fields) }
   end

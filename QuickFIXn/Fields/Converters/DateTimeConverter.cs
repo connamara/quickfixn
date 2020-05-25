@@ -22,7 +22,10 @@ namespace QuickFix.Fields.Converters
         public const string TIME_ONLY_FORMAT_WITH_MICROSECONDS = "{0:HH:mm:ss.ffffff}";
         public const string TIME_ONLY_FORMAT_WITH_MILLISECONDS = "{0:HH:mm:ss.fff}";
         public const string TIME_ONLY_FORMAT_WITHOUT_MILLISECONDS = "{0:HH:mm:ss}";
-        public static string[] DATE_TIME_FORMATS = { "yyyyMMdd-HH:mm:ss.ffffff", "yyyyMMdd-HH:mm:ss.fff", "yyyyMMdd-HH:mm:ss" };
+        
+        public const string DATE_TIME_WITH_MICROSECONDS = "yyyyMMdd-HH:mm:ss.ffffff";
+        public static int DATE_TIME_MAXLENGTH_WITHOUT_NANOSECONDS = DATE_TIME_WITH_MICROSECONDS.Length;
+        public static string[] DATE_TIME_FORMATS = { DATE_TIME_WITH_MICROSECONDS, "yyyyMMdd-HH:mm:ss.fff", "yyyyMMdd-HH:mm:ss" };
         public static string[] DATE_ONLY_FORMATS = { "yyyyMMdd" };
         public static string[] TIME_ONLY_FORMATS = { "HH:mm:ss.ffffff", "HH:mm:ss.fff", "HH:mm:ss" };
         public static DateTimeStyles DATE_TIME_STYLES = DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal;
@@ -108,7 +111,8 @@ namespace QuickFix.Fields.Converters
         {
             try
             {
-                if (precision == TimeStampPrecision.Nanosecond)
+                //Avoid NanoString Path parsing if not possible from string length
+                if (str.Length > DATE_TIME_MAXLENGTH_WITHOUT_NANOSECONDS)
                 {
                     return DateTimeFromNanoString(str);
                 }
@@ -209,14 +213,24 @@ namespace QuickFix.Fields.Converters
         {
             return includeMilliseconds ? Convert(dt, TimeStampPrecision.Millisecond): Convert( dt, TimeStampPrecision.Second );
         }
-
-
-        private static long Nanoseconds(this System.DateTime dt)
+        
+        /// <summary>
+        /// Gets the nanoseconds component of the date represented by this instance truncated to 100 nanosecond resolution
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns>The nanoseconds component, expressed as a value between 0 and 99900.</returns>
+        public static int Nanosecond(this System.DateTime dt)
         {
             int ns = (int)(dt.Ticks % System.TimeSpan.TicksPerMillisecond % (double)TicksPerMicrosecond) * NanosecondsPerTick;
             int us = (int)System.Math.Floor((dt.Ticks % System.TimeSpan.TicksPerMillisecond) / (double)TicksPerMicrosecond);
+            return (us * NanosPerMicro) + ns;
+        }
+
+        private static long SubsecondAsNanoseconds(this System.DateTime dt)
+        {
+            int ns = dt.Nanosecond();
             int ms = dt.Millisecond;
-            return (ms * NanosPerMicro * MicrosPerMillis) + (us * NanosPerMicro) + ns;
+            return (ms * NanosPerMicro * MicrosPerMillis) + ns;
         }
 
         /// <summary>
@@ -229,7 +243,7 @@ namespace QuickFix.Fields.Converters
         {
             if (precision == TimeStampPrecision.Nanosecond)
             {
-                return string.Format(DATE_TIME_FORMAT_WITH_NANOSECONDS, dt, dt.Nanoseconds());
+                return string.Format(DATE_TIME_FORMAT_WITH_NANOSECONDS, dt, dt.SubsecondAsNanoseconds());
             }
             else
             {
@@ -267,7 +281,7 @@ namespace QuickFix.Fields.Converters
         {
             if (precision == TimeStampPrecision.Nanosecond)
             {
-                return string.Format(TIME_ONLY_FORMAT_WITH_NANOSECONDS, dt, dt.Nanoseconds());
+                return string.Format(TIME_ONLY_FORMAT_WITH_NANOSECONDS, dt, dt.SubsecondAsNanoseconds());
             }
             else
             {

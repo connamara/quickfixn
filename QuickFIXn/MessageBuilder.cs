@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using QuickFix.Fields;
 
 namespace QuickFix
 {
@@ -17,31 +14,37 @@ namespace QuickFix
         private string _beginString;
 
         private Message _message;
+        private QuickFix.Fields.ApplVerID _defaultApplVerId;
 
         public string OriginalString { get { return _msgStr; } }
         public QuickFix.Fields.MsgType MsgType { get { return _msgType; } }
+
+        /// <summary>
+        /// The BeginString from the raw FIX message
+        /// </summary>
         public string BeginString { get { return _beginString; } }
 
         internal MessageBuilder(
             string msgStr,
+            string defaultApplVerId,
             bool validateLengthAndChecksum,
             DataDictionary.DataDictionary sessionDD,
             DataDictionary.DataDictionary appDD,
             IMessageFactory msgFactory)
         {
             _msgStr = msgStr;
+            _defaultApplVerId = new ApplVerID(defaultApplVerId);
             _validateLengthAndChecksum = validateLengthAndChecksum;
             _sessionDD = sessionDD;
             _appDD = appDD;
             _msgFactory = msgFactory;
-
             _msgType = Message.IdentifyType(_msgStr);
             _beginString = Message.ExtractBeginString(_msgStr);
         }
 
         internal Message Build()
         {
-            Message message = _msgFactory.Create(_beginString, _msgType.Obj);
+            Message message = _msgFactory.Create(_beginString, _defaultApplVerId, _msgType.Obj);
             message.FromString(
                 _msgStr,
                 _validateLengthAndChecksum,

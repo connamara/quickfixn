@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.IO;
 using System;
+using System.Linq;
 
 namespace QuickFix
 {
@@ -17,6 +18,7 @@ namespace QuickFix
         private Stream stream_;     //will be null when initialized
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
+        private readonly AcceptorSocketDescriptor acceptorDescriptor_;
 
         /// <summary>
         /// Keep a handle to the current outstanding read request (if any)
@@ -30,9 +32,20 @@ namespace QuickFix
         }
 
         public SocketReader(TcpClient tcpClient, SocketSettings settings, ClientHandlerThread responder)
+            : this(tcpClient, settings, responder, null)
+        {
+            
+        }
+
+        internal SocketReader(
+            TcpClient tcpClient,
+            SocketSettings settings,
+            ClientHandlerThread responder,
+            AcceptorSocketDescriptor acceptorDescriptor)
         {
             tcpClient_ = tcpClient;
             responder_ = responder;
+            acceptorDescriptor_ = acceptorDescriptor;
             stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
         }
 
@@ -43,7 +56,7 @@ namespace QuickFix
             {
                 int bytesRead = ReadSome(readBuffer_, 1000);
                 if (bytesRead > 0)
-                    parser_.AddToStream(System.Text.Encoding.UTF8.GetString(readBuffer_, 0, bytesRead));
+                    parser_.AddToStream(readBuffer_, bytesRead);
                 else if (null != qfSession_)
                 {
                     qfSession_.Next();
@@ -73,8 +86,8 @@ namespace QuickFix
         /// <exception cref="System.Net.Sockets.SocketException">On connection reset</exception>
         protected virtual int ReadSome(byte[] buffer, int timeoutMilliseconds)
         {
-            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketReader any changes here should 
-            // also be performed there
+            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketInitiatorThread.
+            // Any changes made here should also be made there.
             try
             {
                 // Begin read if it is not already started
@@ -125,8 +138,6 @@ namespace QuickFix
 
         protected void OnMessageFoundInternal(string msg)
         {
-            // Message fixMessage;
-
             try
             {
                 if (null == qfSession_)
@@ -135,6 +146,13 @@ namespace QuickFix
                     if (null == qfSession_)
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        DisconnectClient();
+                        return;
+                    }
+                    else if(IsAssumedSession(qfSession_.SessionID))
+                    {
+                        this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        qfSession_ = null;
                         DisconnectClient();
                         return;
                     }
@@ -238,6 +256,12 @@ namespace QuickFix
             HandleExceptionInternal(quickFixSession, cause);
         }
 
+        private bool IsAssumedSession(SessionID sessionID)
+        {
+            return acceptorDescriptor_ != null 
+                   && !acceptorDescriptor_.GetAcceptedSessions().Any(kv => kv.Key.Equals(sessionID));
+        }
+
         private void HandleExceptionInternal(Session quickFixSession, System.Exception cause)
         {
             bool disconnectNeeded = true;
@@ -306,7 +330,7 @@ namespace QuickFix
 
         public int Send(string data)
         {
-            byte[] rawData = System.Text.Encoding.UTF8.GetBytes(data);
+            byte[] rawData = CharEncoding.DefaultEncoding.GetBytes(data);
             stream_.Write(rawData, 0, rawData.Length);
             return rawData.Length;
         }

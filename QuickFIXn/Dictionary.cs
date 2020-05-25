@@ -166,6 +166,9 @@ namespace QuickFix
                 case "MICROSECOND":
                 case "MICRO":
                     return TimeStampPrecision.Microsecond;
+                case "NANOSECOND":
+                case "NANO":
+                    return TimeStampPrecision.Nanosecond;
                 default: throw new ConfigError( "Illegal value " + GetString( key ) + " for " + key );
             }
         }

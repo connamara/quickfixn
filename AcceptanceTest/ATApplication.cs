@@ -70,6 +70,26 @@ namespace AcceptanceTest
             Echo(message, sessionID);
         }
 
+        public void OnMessage(QuickFix.FIX50SP1.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX50SP1.SecurityDefinition message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX50SP2.NewOrderSingle nos, SessionID sessionID)
+        {
+            ProcessNOS(nos, sessionID);
+        }
+
+        public void OnMessage(QuickFix.FIX50SP2.SecurityDefinition message, SessionID sessionID)
+        {
+            Echo(message, sessionID);
+        }
+
         protected void Echo(Message message, SessionID sessionID)
         {
             Message echo = new Message(message);
@@ -84,7 +104,7 @@ namespace AcceptanceTest
             if (message.Header.IsSetField(QuickFix.Fields.Tags.PossResend))
                 possResend = message.Header.GetBoolean(QuickFix.Fields.Tags.PossResend);
 
-            KeyValuePair<string, SessionID> pair = new KeyValuePair<string, SessionID>(message.GetField(QuickFix.Fields.Tags.ClOrdID), sessionID);
+            KeyValuePair<string, SessionID> pair = new KeyValuePair<string, SessionID>(message.GetString(QuickFix.Fields.Tags.ClOrdID), sessionID);
             if (possResend && clOrdIDs_.Contains(pair))
                 return;
             clOrdIDs_.Add(pair);
@@ -98,6 +118,8 @@ namespace AcceptanceTest
         public void OnMessage(QuickFix.FIX43.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
         public void OnMessage(QuickFix.FIX44.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
         public void OnMessage(QuickFix.FIX50.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
+        public void OnMessage(QuickFix.FIX50SP1.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
+        public void OnMessage(QuickFix.FIX50SP2.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
 
         public void ProcessNews(QuickFix.Message msg, SessionID sessionID)
         {
@@ -138,9 +160,10 @@ namespace AcceptanceTest
         {
             try
             {
-                string msgType = message.Header.GetField(QuickFix.Fields.Tags.MsgType);
-                log_.OnEvent("Got message " + msgType);
-                System.Console.WriteLine("===got message " + msgType);
+                string msgType = message.Header.GetString(QuickFix.Fields.Tags.MsgType);
+                // log_.OnEvent("Got message " + msgType);
+                // System.Console.WriteLine("===got message " + msgType);
+
                 Crack(message, sessionID);
             }
             catch (QuickFix.UnsupportedMessageType)

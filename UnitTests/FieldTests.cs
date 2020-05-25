@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using NUnit.Framework;
-using QuickFix;
 using QuickFix.Fields;
 
 namespace UnitTests
@@ -113,15 +110,11 @@ namespace UnitTests
             Assert.That(obj.toStringField(), Is.EqualTo("13=VALUF"));
             Assert.That(obj.getTotal(), Is.EqualTo(544));
             Assert.That(obj.getLength(), Is.EqualTo(9));
-        }
 
-        [Test]
-        public void StringFieldTest_NonAscii()
-        {
-            // technically, non-ascii shouldn't be in a StringField, but sometimes it happens, so let's not freak out.
-            StringField obj = new StringField(359, "olé!");
-            Assert.AreEqual(839, obj.getTotal()); // sum of all bytes in "359=olé!"+nul
-            Assert.AreEqual(10, obj.getLength()); // 7 single-byte chars + 1 double=byte char + nul = 10 bytes
+            // latin-1-specific character
+            obj = new StringField(359, "olé!"); // the é is single-byte in iso-8859-1, but is 2 bytes in ascii or utf-8
+            Assert.AreEqual(708, obj.getTotal()); // sum of all bytes in "359=olé!"+nul
+            Assert.AreEqual(9, obj.getLength());  // 8 single-byte chars + 1 nul char
         }
 
         [Test]

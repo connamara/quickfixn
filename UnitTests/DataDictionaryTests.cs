@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using NUnit.Framework;
 using QuickFix;
 using UnitTests.TestHelpers;
@@ -112,6 +113,20 @@ namespace UnitTests
         }
 
         [Test]
+        public void GroupBeginsGroupTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadTestFIXSpec("group_begins_group");
+            QuickFix.DataDictionary.DDMap msg = dd.Messages["magic"];
+            Assert.True(msg.IsGroup(6660)); // NoMagics group
+            Assert.True(msg.GetGroup(6660).IsGroup(7770)); // NoMagics/NoRabbits
+            Assert.True(msg.GetGroup(6660).IsField(6661)); // NoMagics/MagicWord
+            Assert.True(msg.GetGroup(6660).GetGroup(7770).IsField(7711)); // NoMagics/NoRabbits/RabbitName
+            Assert.AreEqual(7770, msg.GetGroup(6660).Delim); // NoMagics delim is NoRabbits counter
+            Assert.AreEqual(7711, msg.GetGroup(6660).GetGroup(7770).Delim); // NoRabbits delim is RabbitName
+        }
+
+        [Test]
         public void HeaderGroupTest()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
@@ -151,12 +166,33 @@ namespace UnitTests
         }
 
         [Test]
-        public void CheckValidTagTest()
+        public void CheckValidTagNumberTest()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.LoadFIXSpec("FIX44");
+
+            Assert.DoesNotThrow(delegate { dd.CheckValidTagNumber(35); });
+
             Assert.Throws(typeof(InvalidTagNumber),
                 delegate { dd.CheckValidTagNumber(999); });
+
+            dd.AllowUnknownMessageFields = true;
+            Assert.DoesNotThrow(delegate { dd.CheckValidTagNumber(999); });
+        }
+
+        [Test]
+        public void CheckIsInMessageTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+
+            Assert.DoesNotThrow(delegate { dd.CheckIsInMessage(new QuickFix.Fields.MDReqID("foo"), "W"); });
+
+            Assert.Throws(typeof(TagNotDefinedForMessage),
+                delegate { dd.CheckIsInMessage(new QuickFix.Fields.EmailThreadID("foo"), "W"); });
+
+            dd.AllowUnknownMessageFields = true;
+            Assert.DoesNotThrow(delegate { dd.CheckIsInMessage(new QuickFix.Fields.EmailThreadID("foo"), "W"); });
         }
 
         [Test]
@@ -239,6 +275,41 @@ namespace UnitTests
             message.FromString(msgStr, true, dd, dd, f);
 
             dd.Validate(message, beginString, msgType.Obj);
+        }
+
+        [Test]
+        public void ValidateGroupBeginsGroup()
+        {
+            // TODO: In a future version, change this so that
+            //       1) generator will generate source for our test DD
+            //       2) this test will use proper type-safe methods and not generics
+            // Probably some or all of this would then move to MessageTests.cs
+
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadTestFIXSpec("group_begins_group");
+
+            string pipedStr = "8=FIX.9.9|9=167|35=magic|34=3|49=CLIENT1|52=20111012-22:15:55.474|56=EXECUTOR|"
+                + "1111=mundane|5555=magicfield|6660=1|7770=2|7711=Hoppy|7712=brown|"
+                + "7711=Floppy|7712=white|6661=abracadabra|10=48|";
+            // note: length and checksum might be garbage
+            string msgStr = pipedStr.Replace("|", Message.SOH);
+
+            string beginString = Message.ExtractBeginString(msgStr);
+            Message msg = new Message(msgStr, dd, false);
+
+            // true param means body-only, i.e. don't validate length/checksum
+            dd.Validate(msg, true, beginString, "magic");
+
+            // Verify can retrieve one of the inner groups.
+            // (Gotta use generic methods because code isn't generated for this DD)
+            Group magicGroup = new Group(6660, 7770, new[] { 7770, 6661 });
+            msg.GetGroup(1, magicGroup);
+            Group rabbitGroup = new Group(7770, 7711, new[] { 7711, 7722 });
+            magicGroup.GetGroup(2, rabbitGroup);
+
+            Assert.AreEqual("abracadabra", magicGroup.GetString(6661));
+            Assert.AreEqual("Floppy", rabbitGroup.GetString(7711));
+            Assert.AreEqual("white", rabbitGroup.GetString(7712));
         }
 
         [Test]
@@ -502,7 +573,7 @@ namespace UnitTests
             Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectTagValue>());
         }
 
-        [Test] // Issue #282 investigation
+        [Test] // Issue #282
         public void ValidateTagSpecifiedWithoutAValue()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
@@ -524,6 +595,56 @@ namespace UnitTests
 
             dd.CheckFieldsHaveValues = false;
             Assert.DoesNotThrow(delegate { dd.Validate(message, beginString, msgType); });
+        }
+
+        [Test] // Issue #493
+        public void ParseThroughComments()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadTestFIXSpec("comments");
+
+            // The fact that it doesn't throw is sufficient, but we'll do some other checks anyway.
+
+            var logon = dd.GetMapForMessage("A");
+            Assert.True(logon.IsField(108)); // HeartBtInt
+            Assert.True(logon.IsField(9000)); // CustomField
+
+            var news = dd.GetMapForMessage("B");
+            Assert.True(news.IsField(148)); // Headline
+            Assert.True(news.IsGroup(33)); // LinesOfText
+            Assert.True(news.GetGroup(33).IsField(355)); // EncodedText
+        }
+
+
+        XmlNode MakeNode(string xmlString)
+        {
+            XmlDocument doc = new XmlDocument();
+            if (xmlString.StartsWith("<"))
+            {
+                doc.LoadXml(xmlString);
+                return doc.DocumentElement;
+            }
+            else
+            {
+                return doc.CreateTextNode(xmlString);
+            }
+        }
+
+        [Test]
+        public void VerifyChildNode()
+        {
+            XmlNode parentNode = MakeNode("<message name='Daddy'/>");
+
+            Assert.DoesNotThrow(
+                delegate { QuickFix.DataDictionary.DataDictionary.VerifyChildNode(MakeNode("<field name='qty'/>"), parentNode); });
+
+            DictionaryParseException dpx = Assert.Throws<DictionaryParseException>(
+                delegate { QuickFix.DataDictionary.DataDictionary.VerifyChildNode(MakeNode("foo"), parentNode); });
+            Assert.AreEqual("Malformed data dictionary: Found text-only node containing 'foo'", dpx.Message);
+
+            dpx = Assert.Throws<DictionaryParseException>(
+                delegate { QuickFix.DataDictionary.DataDictionary.VerifyChildNode(MakeNode("<field>qty</field>"), parentNode); });
+            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'message/Daddy'", dpx.Message);
         }
     }
 }

@@ -7,15 +7,17 @@ class MessageGen
 
     basemsgstr = gen_basemsg(fixver,destdir)
     basemsg_path = File.join(destdir, "Message.cs")
-    puts 'generate ' + basemsg_path
+    puts "generate #{basemsg_path}"
     File.open(basemsg_path, 'w') {|f| f.puts(basemsgstr) }
 
+    puts "generate #{destdir}*"
     messages.each do |msg| 
       msgstr = gen_msg(msg, fixver)
       msg_path = File.join(destdir, msg[:name] + '.cs')
-      puts 'generate ' + msg_path
+      # puts "generate #{msg_path}"
       File.open(msg_path, 'w') {|f| f.puts(msgstr) }
     end
+    puts "  (generated #{messages.count} message files)"
   end
 
   def self.lower rawstr

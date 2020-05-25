@@ -15,6 +15,12 @@ namespace QuickFix
             }
 
 			
+            public QuickFix.Message Create(string beginString, QuickFix.Fields.ApplVerID applVerId, string msgType)
+            {
+                return Create(beginString, msgType);
+            }
+
+
             public QuickFix.Message Create(string beginString, string msgType)
             {
                 switch (msgType)
