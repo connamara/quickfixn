@@ -139,8 +139,21 @@ namespace QuickFix
 
         public System.DayOfWeek GetDay(string key)
         {
-            string abbr = GetString(key).Substring(0, 2).ToUpper();
-            switch(abbr)
+            return TranslateDayOfWeek(GetString(key));
+        }
+
+        public IEnumerable<System.DayOfWeek> GetDays(string key)
+        {
+            return GetString(key)
+                .Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => TranslateDayOfWeek(s));
+        }
+
+        private System.DayOfWeek TranslateDayOfWeek(string day)
+        {
+            string abbr = day.Substring(0, 2).ToUpper();
+
+            switch (abbr)
             {
                 case "SU": return System.DayOfWeek.Sunday;
                 case "MO": return System.DayOfWeek.Monday;
@@ -149,7 +162,7 @@ namespace QuickFix
                 case "TH": return System.DayOfWeek.Thursday;
                 case "FR": return System.DayOfWeek.Friday;
                 case "SA": return System.DayOfWeek.Saturday;
-                default: throw new ConfigError("Illegal value " + GetString(key) + " for " + key);
+                default: throw new ConfigError("Illegal day name " + abbr);
             }
         }
 
