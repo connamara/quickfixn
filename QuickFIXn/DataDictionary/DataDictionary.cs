@@ -350,19 +350,21 @@ namespace QuickFix.DataDictionary
         /// <param name="field"></param>
         public void CheckValue(Fields.IField field)
         {
-            DDField fld = FieldsByTag[field.Tag];
-            if (fld.HasEnums())
+            if (FieldsByTag.TryGetValue(field.Tag, out var fld))
             {
-                if (fld.IsMultipleValueFieldWithEnums)
+                if (fld.HasEnums())
                 {
-                    string[] splitted = field.ToString().Split(' ');
+                    if (fld.IsMultipleValueFieldWithEnums)
+                    {
+                        string[] splitted = field.ToString().Split(' ');
 
-                    foreach (string value in splitted)
-                        if (!fld.EnumDict.ContainsKey(value))
-                            throw new IncorrectTagValue(field.Tag);
+                        foreach (string value in splitted)
+                            if (!fld.EnumDict.ContainsKey(value))
+                                throw new IncorrectTagValue(field.Tag);
+                    }
+                    else if (!fld.EnumDict.ContainsKey(field.ToString()))
+                        throw new IncorrectTagValue(field.Tag);
                 }
-                else if (!fld.EnumDict.ContainsKey(field.ToString()))
-                    throw new IncorrectTagValue(field.Tag);
             }
         }
 
