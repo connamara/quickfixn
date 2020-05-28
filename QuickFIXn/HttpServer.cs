@@ -555,13 +555,14 @@ namespace Acceptor
             return "<"+entryType+" align=\"left\">" + cellContent + "</"+entryType+">";
         }
 
-        public virtual void Dispose()
+        ~HttpServer() => Dispose(false);
+        public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
-        private void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (_disposed)
             {
