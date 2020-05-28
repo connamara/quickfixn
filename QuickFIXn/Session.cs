@@ -1691,7 +1691,7 @@ namespace QuickFix
         private bool disposed_ = false;
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposed_) return;
+            if (disposed_) return;
             if (disposing)
             {
                 if (state_ != null) { state_.Dispose(); }
