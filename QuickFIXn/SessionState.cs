@@ -422,9 +422,24 @@ namespace QuickFix
 
         public void Dispose()
         {
-            if (log_ != null) { log_.Dispose(); }
-            if (MessageStore != null) { MessageStore.Dispose(); }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        private bool _disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            if (disposing)
+            {
+                if (log_ != null) { log_.Dispose(); }
+                if (MessageStore != null) { MessageStore.Dispose(); }
+            }
+            _disposed = true;
+        }
+
+        ~SessionState() => Dispose(false);
+
     }
 }
 
