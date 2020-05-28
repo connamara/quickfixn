@@ -124,7 +124,11 @@ namespace QuickFix
         /// FIXME do real logging
         public void Log(string s)
         {
-            log_.OnEvent(s);
+            var log = log_;
+            if( log != null )
+            {
+                log.OnEvent( s );
+            }
         }
 
         /// <summary>

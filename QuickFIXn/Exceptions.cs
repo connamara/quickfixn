@@ -134,6 +134,17 @@ namespace QuickFix
         { }
     }
 
+    public class ConnectionShutdownRequestedException : QuickFIXException
+    {
+        public ConnectionShutdownRequestedException()
+            : base("Connection shutdown requested")
+        { }
+
+        public ConnectionShutdownRequestedException(System.Exception innerException)
+            : base("Connection shutdown requested", innerException)
+        { }
+    }
+
     public class MessageParseError : QuickFIXException
     {
         public MessageParseError()

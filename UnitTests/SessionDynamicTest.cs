@@ -349,9 +349,9 @@ namespace UnitTests
             if (_listenSocket != null)
                 _listenSocket.Close();
             if (_initiator != null)
-                _initiator.Stop(true);
+                _initiator.Dispose();
             if (_acceptor != null)
-                _acceptor.Stop(true);
+                _acceptor.Dispose();
 
             _initiator = null;
             _acceptor = null;
