@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using System.Collections.Generic;
+using System;
 
 namespace QuickFix
 {
@@ -13,7 +14,6 @@ namespace QuickFix
         private IMessageFactory _msgFactory = null;
 
         private object sync_ = new object();
-        private bool _disposed = false;
         private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private HashSet<SessionID> sessionIDs_ = new HashSet<SessionID>();
         private HashSet<SessionID> pending_ = new HashSet<SessionID>();
@@ -381,6 +381,7 @@ namespace QuickFix
             return new HashSet<SessionID>(sessions_.Keys);
         }
 
+        private bool _disposed = false;
         /// <summary>
         /// Any subclasses of AbstractInitiator should override this if they have resources to dispose
         /// that aren't already covered in its OnStop() handler.
@@ -389,13 +390,20 @@ namespace QuickFix
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
-            this.Stop();
+            if (_disposed) return;
+            if (disposing)
+            {
+                this.Stop();
+            }
             _disposed = true;
         }
 
         public void Dispose()
         {
             Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        ~AbstractInitiator() => Dispose(false);
     }
 }
