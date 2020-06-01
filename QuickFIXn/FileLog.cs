@@ -43,6 +43,8 @@ namespace QuickFix
             eventLog_.AutoFlush = true;
         }
 
+        public const string WILDCARD_FILE_PREFIX = "DS_"; // Dynamic Session
+        public const string WILDCARD_REPLACEMENT = "(ANY)";
         /// <summary>
         /// Calculates unique filename prefix from SessionID.
         /// Handles wildcards in SessionID fields
@@ -50,8 +52,6 @@ namespace QuickFix
         /// <returns>Filename prefix unique for SessioID</returns>
         public static string Prefix(SessionID sessionID)
         {
-            const string WILDCARD_FILE_PREFIX = "DS_"; // Dynamic Session
-            const string WILDCARD_REPLACEMENT = "(ANY)";
 
             bool hasWildcard = false;
 
