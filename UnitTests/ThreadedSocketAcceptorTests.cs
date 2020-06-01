@@ -28,14 +28,14 @@ TargetCompID = target
 BeginString = FIX.4.4
 ";
 
-        private static SessionSettings CreateSettings()
+        private static SessionSettings CreateSettings(string config)
         {
-            return new SessionSettings(new StringReader(Config));
+            return new SessionSettings(new StringReader(config));
         }
 
-        private static ThreadedSocketAcceptor CreateAcceptor()
+        private static ThreadedSocketAcceptor CreateAcceptor(string config)
         {
-            var settings = CreateSettings();
+            var settings = CreateSettings(config);
             return new ThreadedSocketAcceptor(
                 new NullApplication(),
                 new FileStoreFactory(settings),
@@ -46,14 +46,14 @@ BeginString = FIX.4.4
         [Test]
         public void TestRecreation()
         {
-            StartStopAcceptor();
-            StartStopAcceptor();
-            StartStopAcceptor();
+            StartStopAcceptor(Config);
+            StartStopAcceptor(Config);
+            StartStopAcceptor(Config);
         }
 
-        private static void StartStopAcceptor()
+        private static void StartStopAcceptor(string config)
         {
-            var acceptor = CreateAcceptor();
+            var acceptor = CreateAcceptor(config);
             acceptor.Start();
             acceptor.Dispose();
         }
