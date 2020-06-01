@@ -101,6 +101,7 @@ namespace QuickFix
             }
 
             if (0 == socketDescriptorForAddress_.Count)
+                // If empty => no listers will be started => this instance could never accept a connection
                 throw new ConfigError("No acceptor sessions found in SessionSettings.");
         }
 
