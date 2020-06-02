@@ -10,5 +10,6 @@ namespace QuickFix
         public const string BeginString_FIX42  = "FIX.4.2";
         public const string BeginString_FIX41  = "FIX.4.1";
         public const string BeginString_FIX40  = "FIX.4.0";
+        public const string WILDCARD_VALUE = "*";
     }
 }

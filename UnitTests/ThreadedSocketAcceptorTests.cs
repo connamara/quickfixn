@@ -57,5 +57,30 @@ BeginString = FIX.4.4
             acceptor.Start();
             acceptor.Dispose();
         }
+
+        private static string ConfigWildcards = $@"
+[DEFAULT]
+StartTime = 00:00:00
+EndTime = 23:59:59
+ConnectionType = acceptor
+SocketAcceptHost = 127.0.0.1
+SocketAcceptPort = 10000
+FileStorePath = {TestContext.CurrentContext.TestDirectory}\store
+FileLogPath = {TestContext.CurrentContext.TestDirectory}\log
+UseDataDictionary = N
+
+[SESSION]
+SenderCompID = *
+TargetCompID = *
+BeginString = FIX.4.4
+";
+        [Test]
+        public void TestRecreationWildcards()
+        {
+            StartStopAcceptor(ConfigWildcards);
+            StartStopAcceptor(ConfigWildcards);
+            StartStopAcceptor(ConfigWildcards);
+        }
+
     }
 }

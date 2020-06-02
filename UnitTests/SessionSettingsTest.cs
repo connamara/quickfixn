@@ -144,6 +144,49 @@ namespace UnitTests
         }
 
         [Test]
+        public void LoadSettingsWithWildcards()
+        {
+            string configuration = new System.Text.StringBuilder()
+                //.AppendLine(partialConfiguration.ToString())
+                .AppendLine("[DEFAULT]")
+                .AppendLine("ConnectionType=acceptor")
+                .AppendLine("BeginString=*")
+                .AppendLine("SenderCompID=*")
+                .AppendLine("TargetCompID=*")
+                .AppendLine("SessionQualifier=*")
+                .AppendLine("SomeValue=whatever")
+                .AppendLine("Empty=")
+                .ToString();
+            SessionSettings settings = new SessionSettings(new System.IO.StringReader(configuration));
+            Assert.That(settings.Get().GetString("BeginString"), Is.EqualTo("*"));
+            Assert.That(settings.Get().GetString("SenderCompID"), Is.EqualTo("*"));
+            Assert.That(settings.Get().GetString("TargetCompID"), Is.EqualTo("*"));
+            Assert.That(settings.Get().GetString("SessionQualifier"), Is.EqualTo("*"));
+
+            configuration = new System.Text.StringBuilder()
+                //.AppendLine(partialConfiguration.ToString())
+                .AppendLine("[SESSION]")
+                .AppendLine("ConnectionType=initiator")
+                .AppendLine("BeginString=*")
+                .AppendLine("SenderCompID=*")
+                .AppendLine("TargetCompID=*")
+                .ToString();
+            ConfigError ex = Assert.Throws<ConfigError>(delegate { _ = new SessionSettings(new System.IO.StringReader(configuration)); });
+            Assert.That(ex.Message, Is.EqualTo("Configuration failed: BeginString could be a wildcard (*) only in 'acceptor' configuration"));
+
+            configuration = new System.Text.StringBuilder()
+                //.AppendLine(partialConfiguration.ToString())
+                .AppendLine("[SESSION]")
+                .AppendLine("ConnectionType=initiator")
+                .AppendLine("BeginString=FIX.4.0")
+                .AppendLine("SenderCompID=*")
+                .AppendLine("TargetCompID=*")
+                .ToString();
+            ex = Assert.Throws<ConfigError>(delegate { _ = new SessionSettings(new System.IO.StringReader(configuration)); });
+            Assert.That(ex.Message, Is.EqualTo("Configuration failed: SenderCompID could be a wildcard (*) only in 'acceptor' configuration"));
+        }
+
+        [Test]
         public void DuplicateSession()
         {
             string configuration = new System.Text.StringBuilder()

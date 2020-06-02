@@ -39,11 +39,11 @@ namespace UnitTests
         [Test]
         public void testPrefixWildcards()
         {
-            QuickFix.SessionID someSessionID = new QuickFix.SessionID("FIX.4.4", QuickFix.SessionSettings.WILDCARD_VALUE, "target");
-            QuickFix.SessionID someSessionIDWithQualifier = new QuickFix.SessionID("FIX.4.3", "sender", QuickFix.SessionSettings.WILDCARD_VALUE, "foo");
+            QuickFix.SessionID someSessionID = new QuickFix.SessionID("FIX.4.4", QuickFix.Values.WILDCARD_VALUE, "target");
+            QuickFix.SessionID someSessionIDWithQualifier = new QuickFix.SessionID(QuickFix.Values.WILDCARD_VALUE, "sender", QuickFix.Values.WILDCARD_VALUE, "foo");
 
             Assert.AreEqual($"{QuickFix.FileLog.WILDCARD_FILE_PREFIX}FIX.4.4-{QuickFix.FileLog.WILDCARD_REPLACEMENT}-target", QuickFix.FileLog.Prefix(someSessionID));
-            Assert.AreEqual($"{QuickFix.FileLog.WILDCARD_FILE_PREFIX}FIX.4.3-sender-{QuickFix.FileLog.WILDCARD_REPLACEMENT}-foo", QuickFix.FileLog.Prefix(someSessionIDWithQualifier));
+            Assert.AreEqual($"{QuickFix.FileLog.WILDCARD_FILE_PREFIX}{QuickFix.FileLog.WILDCARD_REPLACEMENT}-sender-{QuickFix.FileLog.WILDCARD_REPLACEMENT}-foo", QuickFix.FileLog.Prefix(someSessionIDWithQualifier));
         }
 
         [Test]
@@ -59,11 +59,11 @@ namespace UnitTests
         [Test]
         public void testPrefixForSubsAndLocationWildcards()
         {
-            QuickFix.SessionID sessionIDWithSubsAndLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", QuickFix.SessionSettings.WILDCARD_VALUE,
-                "TARGETCOMP", "TARGETSUB", QuickFix.SessionSettings.WILDCARD_VALUE);
+            QuickFix.SessionID sessionIDWithSubsAndLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", QuickFix.Values.WILDCARD_VALUE,
+                "TARGETCOMP", "TARGETSUB", QuickFix.Values.WILDCARD_VALUE);
             Assert.That(QuickFix.FileLog.Prefix(sessionIDWithSubsAndLocation), Is.EqualTo($"{QuickFix.FileLog.WILDCARD_FILE_PREFIX}FIX.4.2-SENDERCOMP_SENDERSUB_{QuickFix.FileLog.WILDCARD_REPLACEMENT}-TARGETCOMP_TARGETSUB_{QuickFix.FileLog.WILDCARD_REPLACEMENT}"));
 
-            QuickFix.SessionID sessionIDWithSubsNoLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", QuickFix.SessionSettings.WILDCARD_VALUE, "TARGETCOMP", QuickFix.SessionSettings.WILDCARD_VALUE);
+            QuickFix.SessionID sessionIDWithSubsNoLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", QuickFix.Values.WILDCARD_VALUE, "TARGETCOMP", QuickFix.Values.WILDCARD_VALUE);
             Assert.That(QuickFix.FileLog.Prefix(sessionIDWithSubsNoLocation), Is.EqualTo($"{QuickFix.FileLog.WILDCARD_FILE_PREFIX}FIX.4.2-SENDERCOMP_{QuickFix.FileLog.WILDCARD_REPLACEMENT}-TARGETCOMP_{QuickFix.FileLog.WILDCARD_REPLACEMENT}"));
         }
 
@@ -103,7 +103,7 @@ namespace UnitTests
             if (System.IO.Directory.Exists(logDirectory))
                 System.IO.Directory.Delete(logDirectory, true);
 
-            QuickFix.SessionID sessionID = new QuickFix.SessionID("FIX.4.2", QuickFix.SessionSettings.WILDCARD_VALUE, QuickFix.SessionSettings.WILDCARD_VALUE);
+            QuickFix.SessionID sessionID = new QuickFix.SessionID("FIX.4.2", QuickFix.Values.WILDCARD_VALUE, QuickFix.Values.WILDCARD_VALUE);
             QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
 
             QuickFix.Dictionary config = new QuickFix.Dictionary();

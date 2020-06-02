@@ -81,8 +81,6 @@ namespace QuickFix
         public const string SSL_REQUIRE_CLIENT_CERTIFICATE = "SSLRequireClientCertificate";
         public const string SSL_CA_CERTIFICATE = "SSLCACertificate";
 
-        public const string WILDCARD_VALUE = "*";
-
         #endregion
 
         #region Private Members
@@ -257,21 +255,51 @@ namespace QuickFix
 
         protected void Validate(QuickFix.Dictionary dictionary)
         {
-            string beginString = dictionary.GetString(BEGINSTRING);
-            if (beginString != Values.BeginString_FIX40 &&
-                beginString != Values.BeginString_FIX41 &&
-                beginString != Values.BeginString_FIX42 &&
-                beginString != Values.BeginString_FIX43 &&
-                beginString != Values.BeginString_FIX44 &&
-                beginString != Values.BeginString_FIXT11)
-            {
-                throw new ConfigError(BEGINSTRING + " (" + beginString + ") must be FIX.4.0 to FIX.4.4 or FIXT.1.1");
-            }
-
+            // Firstly check to validate connection type
             string connectionType = dictionary.GetString(CONNECTION_TYPE);
             if (!"initiator".Equals(connectionType) && !"acceptor".Equals(connectionType))
             {
                 throw new ConfigError(CONNECTION_TYPE + " must be 'initiator' or 'acceptor'");
+            }
+            // Wildcards in session name parameters are valid only for acceptor
+            ValidateWildcardMandatory(dictionary, BEGINSTRING);
+            ValidateWildcardMandatory(dictionary, SENDERCOMPID);
+            ValidateWildcardOptional(dictionary, SENDERSUBID);
+            ValidateWildcardOptional(dictionary, SENDERLOCID);
+            ValidateWildcardMandatory(dictionary, TARGETCOMPID);
+            ValidateWildcardOptional(dictionary, TARGETSUBID);
+            ValidateWildcardOptional(dictionary, TARGETLOCID);
+            string beginString = dictionary.GetString(BEGINSTRING);
+            // BeginString can only be one of the predefined values
+            if ("acceptor".Equals(connectionType) &&
+                beginString != Values.BeginString_FIX40 &&
+                beginString != Values.BeginString_FIX41 &&
+                beginString != Values.BeginString_FIX42 &&
+                beginString != Values.BeginString_FIX43 &&
+                beginString != Values.BeginString_FIX44 &&
+                beginString != Values.BeginString_FIXT11 &&
+                beginString != Values.WILDCARD_VALUE)
+            {
+                throw new ConfigError($"{BEGINSTRING} ({ beginString }) must be FIX.4.0 to FIX.4.4 or FIXT.1.1 or wildcard '{Values.WILDCARD_VALUE}' (only for acceptor)");
+            }
+        }
+
+        private void ValidateWildcardMandatory(Dictionary dictionary, string parameterName)
+        {
+            if (Values.WILDCARD_VALUE.Equals(dictionary.GetString(parameterName))
+                && (!"acceptor".Equals(dictionary.GetString(CONNECTION_TYPE))))
+            {
+                throw new ConfigError($"{parameterName} could be a wildcard ({Values.WILDCARD_VALUE}) only in 'acceptor' configuration");
+            }
+        }
+
+        private void ValidateWildcardOptional(Dictionary dictionary, string parameterName)
+        {
+            if (dictionary.Has(parameterName) &&
+                Values.WILDCARD_VALUE.Equals(dictionary.GetString(parameterName))
+                && (!"acceptor".Equals(dictionary.GetString(CONNECTION_TYPE))))
+            {
+                throw new ConfigError($"{parameterName} could be a wildcard ({Values.WILDCARD_VALUE}) only in 'acceptor' configuration");
             }
         }
     }

@@ -56,13 +56,13 @@ namespace QuickFix
             bool hasWildcard = false;
 
             System.Text.StringBuilder prefix = new System.Text.StringBuilder();
-            if (SessionSettings.WILDCARD_VALUE.Equals(sessionID.BeginString))
+            if (Values.WILDCARD_VALUE.Equals(sessionID.BeginString))
             {
                 hasWildcard = true;
                 prefix.Append(WILDCARD_REPLACEMENT).Append('-');
             }
             else prefix.Append(sessionID.BeginString).Append('-');
-            if (SessionSettings.WILDCARD_VALUE.Equals(sessionID.SenderCompID))
+            if (Values.WILDCARD_VALUE.Equals(sessionID.SenderCompID))
             {
                 hasWildcard = true;
                 prefix.Append(WILDCARD_REPLACEMENT);
@@ -73,7 +73,7 @@ namespace QuickFix
             if (SessionID.IsSet(sessionID.SenderSubID))
             {
                 prefix.Append('_');
-                if (SessionSettings.WILDCARD_VALUE.Equals(sessionID.SenderSubID))
+                if (Values.WILDCARD_VALUE.Equals(sessionID.SenderSubID))
                 {
                     hasWildcard = true;
                     prefix.Append(WILDCARD_REPLACEMENT);
@@ -83,7 +83,7 @@ namespace QuickFix
             if (SessionID.IsSet(sessionID.SenderLocationID))
             {
                 prefix.Append('_');
-                if (SessionSettings.WILDCARD_VALUE.Equals(sessionID.SenderLocationID))
+                if (Values.WILDCARD_VALUE.Equals(sessionID.SenderLocationID))
                 {
                     hasWildcard = true;
                     prefix.Append(WILDCARD_REPLACEMENT);
@@ -91,7 +91,7 @@ namespace QuickFix
                 else prefix.Append(sessionID.SenderLocationID);
             }
             prefix.Append('-');
-            if (SessionSettings.WILDCARD_VALUE.Equals(sessionID.TargetCompID))
+            if (Values.WILDCARD_VALUE.Equals(sessionID.TargetCompID))
             {
                 hasWildcard = true;
                 prefix.Append(WILDCARD_REPLACEMENT);
@@ -101,7 +101,7 @@ namespace QuickFix
             if (SessionID.IsSet(sessionID.TargetSubID))
             {
                 prefix.Append('_');
-                if (SessionSettings.WILDCARD_VALUE.Equals(sessionID.TargetSubID))
+                if (Values.WILDCARD_VALUE.Equals(sessionID.TargetSubID))
                 {
                     hasWildcard = true;
                     prefix.Append(WILDCARD_REPLACEMENT);
@@ -111,7 +111,7 @@ namespace QuickFix
             if (SessionID.IsSet(sessionID.TargetLocationID))
             {
                 prefix.Append('_');
-                if (SessionSettings.WILDCARD_VALUE.Equals(sessionID.TargetLocationID))
+                if (Values.WILDCARD_VALUE.Equals(sessionID.TargetLocationID))
                 {
                     hasWildcard = true;
                     prefix.Append(WILDCARD_REPLACEMENT);
@@ -123,7 +123,7 @@ namespace QuickFix
             if (SessionID.IsSet(sessionID.SessionQualifier))
             {
                 prefix.Append('-');
-                if (SessionSettings.WILDCARD_VALUE.Equals(sessionID.SessionQualifier))
+                if (Values.WILDCARD_VALUE.Equals(sessionID.SessionQualifier))
                 {
                     hasWildcard = true;
                     prefix.Append(WILDCARD_REPLACEMENT);
