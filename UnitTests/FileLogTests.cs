@@ -107,7 +107,7 @@ namespace UnitTests
             QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
 
             QuickFix.Dictionary config = new QuickFix.Dictionary();
-            config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
+            config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "acceptor");
             config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, logDirectory);
 
             settings.Set(sessionID, config);
