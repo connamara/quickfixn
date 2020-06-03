@@ -344,7 +344,8 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// 
+        /// Looks up a Session by its SessionID, firstly by strings equality, and then by wildcard matching.
+        /// In the latter case, creates a new session using the found wildcard session as a template.
         /// </summary>
         /// <returns>the Session if found or created, otherwise returns null</returns>
         public static Session GetSession(SessionID sessionID)
