@@ -271,8 +271,7 @@ namespace QuickFix
             ValidateWildcardOptional(dictionary, TARGETLOCID);
             string beginString = dictionary.GetString(BEGINSTRING);
             // BeginString can only be one of the predefined values
-            if ("acceptor".Equals(connectionType) &&
-                beginString != Values.BeginString_FIX40 &&
+            if (beginString != Values.BeginString_FIX40 &&
                 beginString != Values.BeginString_FIX41 &&
                 beginString != Values.BeginString_FIX42 &&
                 beginString != Values.BeginString_FIX43 &&
