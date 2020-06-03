@@ -61,7 +61,7 @@ namespace QuickFix
         {
             logFactory = logFactory ?? new NullLogFactory();
             messageFactory = messageFactory ?? new DefaultMessageFactory();
-            SessionFactory sf = new SessionFactory(application, storeFactory, logFactory, messageFactory);
+            SessionFactory sf = new SessionFactory(application, storeFactory, logFactory, messageFactory, this);
 
             try
             {

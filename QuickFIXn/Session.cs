@@ -312,6 +312,19 @@ namespace QuickFix
             this.Log.OnEvent("Created session");
         }
 
+        private IAcceptor _acceptor = null;
+        private QuickFix.Dictionary _settings = null;
+        public Session(
+            IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
+            SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID,
+            IAcceptor acceptor, QuickFix.Dictionary settings)
+            :this(app, storeFactory, sessID, dataDictProvider,sessionSchedule, heartBtInt, logFactory, msgFactory, senderDefaultApplVerID)
+        {
+            _acceptor = acceptor;
+            _settings = settings;
+        }
+
+
         #region Static Methods
 
         /// <summary>
@@ -328,6 +341,64 @@ namespace QuickFix
                     result = null;
             }
             return result;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>the Session if found or created, otherwise returns null</returns>
+        public static Session GetSession(SessionID sessionID)
+        {
+            Session result = LookupSession(sessionID);
+            if (null != result) return result;
+            // If the sessionID would match a "template" sessions with wildcards
+            // => create the new session based on the template
+            lock (sessions_)
+            {
+                //TODO: For large number of sessions, optimize iterating through all sessions to find "templates"?
+                foreach (KeyValuePair<SessionID, Session> kv in sessions_)
+                {
+                    Session session = kv.Value;
+                    if (session.IsMatching(sessionID)) return session.CreateFromTemplate(sessionID);
+                }
+            }
+            return null;
+        }
+
+        private bool IsMatching(SessionID sessionID)
+        {
+            // (SessionID is "*" AND sessionID is set) OR (SessionID  = sessionID)
+            return ((SessionID.BeginString.Equals(Values.WILDCARD_VALUE) && !sessionID.BeginString.Equals(SessionID.NOT_SET)) || SessionID.BeginString.Equals(sessionID.BeginString))
+                && ((SessionID.SenderCompID.Equals(Values.WILDCARD_VALUE) && !sessionID.SenderCompID.Equals(SessionID.NOT_SET)) || SessionID.SenderCompID.Equals(sessionID.SenderCompID))
+                && ((SessionID.SenderSubID.Equals(Values.WILDCARD_VALUE) && !sessionID.SenderSubID.Equals(SessionID.NOT_SET)) || SessionID.SenderSubID.Equals(sessionID.SenderSubID))
+                && ((SessionID.SenderLocationID.Equals(Values.WILDCARD_VALUE) && !sessionID.SenderLocationID.Equals(SessionID.NOT_SET)) || SessionID.SenderLocationID.Equals(sessionID.SenderLocationID))
+                && ((SessionID.TargetCompID.Equals(Values.WILDCARD_VALUE) && !sessionID.TargetCompID.Equals(SessionID.NOT_SET)) || SessionID.TargetCompID.Equals(sessionID.TargetCompID))
+                && ((SessionID.TargetSubID.Equals(Values.WILDCARD_VALUE) && !sessionID.TargetSubID.Equals(SessionID.NOT_SET)) || SessionID.TargetSubID.Equals(sessionID.TargetSubID))
+                && ((SessionID.TargetLocationID.Equals(Values.WILDCARD_VALUE) && !sessionID.TargetLocationID.Equals(SessionID.NOT_SET)) || SessionID.TargetLocationID.Equals(sessionID.TargetLocationID));
+        }
+
+        private Session CreateFromTemplate(SessionID sessionID)
+        {
+            Dictionary dict = ReplaceWildcards(sessionID);
+            if (!_acceptor.AddSession(sessionID, dict))
+            {
+                Log.OnEvent($"ERROR adding session {sessionID} from template {SessionID}");
+                return null;
+            }
+            return LookupSession(sessionID);
+        }
+
+        private QuickFix.Dictionary ReplaceWildcards(SessionID sessionID)
+        {
+            QuickFix.Dictionary actualSettings = new QuickFix.Dictionary(_settings);
+            if (Values.WILDCARD_VALUE.Equals(SessionID.BeginString)) actualSettings.SetString(SessionSettings.BEGINSTRING, sessionID.BeginString);
+            if (Values.WILDCARD_VALUE.Equals(SessionID.SenderCompID)) actualSettings.SetString(SessionSettings.SENDERCOMPID, sessionID.SenderCompID);
+            if (Values.WILDCARD_VALUE.Equals(SessionID.SenderSubID)) actualSettings.SetString(SessionSettings.SENDERSUBID, sessionID.SenderSubID);
+            if (Values.WILDCARD_VALUE.Equals(SessionID.SenderLocationID)) actualSettings.SetString(SessionSettings.SENDERLOCID, sessionID.SenderLocationID);
+            if (Values.WILDCARD_VALUE.Equals(SessionID.TargetCompID)) actualSettings.SetString(SessionSettings.TARGETCOMPID, sessionID.TargetCompID);
+            if (Values.WILDCARD_VALUE.Equals(SessionID.TargetSubID)) actualSettings.SetString(SessionSettings.TARGETSUBID, sessionID.TargetSubID);
+            if (Values.WILDCARD_VALUE.Equals(SessionID.TargetLocationID)) actualSettings.SetString(SessionSettings.TARGETLOCID, sessionID.TargetLocationID);
+            return actualSettings;
         }
 
         /// <summary>
