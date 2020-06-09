@@ -5,7 +5,7 @@ using QuickFix;
 
 namespace SerilogLog
 {
-    class SerilogLogFactory : QuickFix.ILogFactory
+    public class SerilogLogFactory : QuickFix.ILogFactory
     {
         SessionSettings _settings;
         public SerilogLogFactory(SessionSettings settings)
