@@ -23,6 +23,7 @@ What's New
 * (minor) #585/#323 - Add Message.ToXML() (baffles/gbirchmeier)
 * (patch) #591 - Nanosecond DateTime reader bugfix (gbirchmeier)
 * (patch) #592/#601 - better detection of malformed DD elements (gbirchmeier/roederja2)
+* (patch) #606 - fix IDisposable implementations to follow MS general pattern (pavka1799)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
