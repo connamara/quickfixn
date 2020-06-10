@@ -77,3 +77,4 @@ Contributors
 - Aidan Chisholm
 - Mikhail Derevyashkin
 - Brian Leach
+- Pavel Karasev
