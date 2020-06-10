@@ -356,7 +356,6 @@ namespace QuickFix
             // => create the new session based on the template
             lock (sessions_)
             {
-                //TODO: For large number of sessions, optimize iterating through all sessions to find "templates"?
                 foreach (KeyValuePair<SessionID, Session> kv in sessions_)
                 {
                     Session session = kv.Value;
