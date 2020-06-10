@@ -152,7 +152,7 @@ namespace UnitTests
             NullLog log = new NullLog();
 
             //Set up sessionstate
-            SessionState state = new SessionState(log, 1) {MessageStore = store};
+            SessionState state = new SessionState(true, log, 1) {MessageStore = store};
 
             Hashtable errorsTable = Hashtable.Synchronized(new Hashtable());//used in more than 1 thread at a time
             Hashtable setTable = new Hashtable(1000);//only used in 1 thread at a time

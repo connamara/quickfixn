@@ -178,7 +178,7 @@ namespace UnitTests
         Regex microsecondRegex = new Regex(@"\.[\d]{1,6}$");
 
         [SetUp]
-        public void setup()
+        public void Setup()
         {
             responder = new MockResponder();
             sessionID = new QuickFix.SessionID("FIX.4.2", "SENDER", "TARGET");
@@ -192,16 +192,15 @@ namespace UnitTests
             config.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
             settings.Set(sessionID, config);
 
-            session = new QuickFix.Session(application, new QuickFix.MemoryStoreFactory(), sessionID, 
+            // acceptor
+            session = new QuickFix.Session(false, application, new QuickFix.MemoryStoreFactory(), sessionID,
                 new QuickFix.DataDictionaryProvider(),new QuickFix.SessionSchedule(config), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
             session.CheckLatency = false;
 
-            // must be set for an initiator
-            int heartBeatInterval = 10;
-
-            session2 = new QuickFix.Session(application, new QuickFix.MemoryStoreFactory(), new QuickFix.SessionID("FIX.4.2", "OTHER_SENDER", "OTHER_TARGET"),
-                new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), heartBeatInterval, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
+            // initiator
+            session2 = new QuickFix.Session(true, application, new QuickFix.MemoryStoreFactory(), new QuickFix.SessionID("FIX.4.2", "OTHER_SENDER", "OTHER_TARGET"),
+                new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session2.SetResponder(responder);
             session2.CheckLatency = false;
 
@@ -916,7 +915,7 @@ namespace UnitTests
         public void TestApplicationExtension()
         {
             var mockApp = new MockApplicationExt();
-            session = new QuickFix.Session(mockApp, new QuickFix.MemoryStoreFactory(), sessionID,
+            session = new QuickFix.Session(true, mockApp, new QuickFix.MemoryStoreFactory(), sessionID,
                 new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), 0, new QuickFix.ScreenLogFactory(settings), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
             session.CheckLatency = false;
