@@ -367,7 +367,7 @@ namespace QuickFix
 
         private bool IsMatching(SessionID sessionID)
         {
-            // (SessionID is "*" AND sessionID is set) OR (SessionID  = sessionID)
+            // (SessionID is "*" AND sessionID is set) OR (SessionID == sessionID)
             return ((SessionID.BeginString.Equals(Values.WILDCARD_VALUE) && !sessionID.BeginString.Equals(SessionID.NOT_SET)) || SessionID.BeginString.Equals(sessionID.BeginString))
                 && ((SessionID.SenderCompID.Equals(Values.WILDCARD_VALUE) && !sessionID.SenderCompID.Equals(SessionID.NOT_SET)) || SessionID.SenderCompID.Equals(sessionID.SenderCompID))
                 && ((SessionID.SenderSubID.Equals(Values.WILDCARD_VALUE) && !sessionID.SenderSubID.Equals(SessionID.NOT_SET)) || SessionID.SenderSubID.Equals(sessionID.SenderSubID))
