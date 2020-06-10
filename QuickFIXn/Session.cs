@@ -379,6 +379,11 @@ namespace QuickFix
 
         private Session CreateFromTemplate(SessionID sessionID)
         {
+            if(null == _acceptor)
+            {
+                Log.OnEvent($"ERROR adding session {sessionID}: template {SessionID} created with null acceptor");
+                return null;
+            }
             Dictionary dict = ReplaceWildcards(sessionID);
             if (!_acceptor.AddSession(sessionID, dict))
             {
