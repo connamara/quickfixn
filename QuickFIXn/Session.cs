@@ -25,7 +25,6 @@ namespace QuickFix
         private IMessageFactory msgFactory_;
         private bool appDoesEarlyIntercept_;
         private static readonly HashSet<string> AdminMsgTypes = new HashSet<string>() { "0", "A", "1", "2", "3", "4", "5" };
-        private bool disposed_;
 
         #endregion
 
@@ -1685,20 +1684,29 @@ namespace QuickFix
 
         public void Dispose()
         {
-            if (!disposed_)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private bool disposed_ = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed_) return;
+            if (disposing)
             {
                 if (state_ != null) { state_.Dispose(); }
                 lock (sessions_)
                 {
                     sessions_.Remove(this.SessionID);
                 }
-                disposed_ = true;
             }
+            disposed_ = true;
         }
 
         public bool Disposed
         {
             get { return disposed_; }
         }
+        ~Session() => Dispose(false);
     }
 }

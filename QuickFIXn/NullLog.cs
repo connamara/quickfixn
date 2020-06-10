@@ -4,7 +4,7 @@ namespace QuickFix
     /// <summary>
     /// Log implementation that does not do anything
     /// </summary>
-    public class NullLog : ILog
+    public sealed class NullLog : ILog
     {
         #region ILog Members
 

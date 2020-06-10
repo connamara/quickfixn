@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace QuickFix
 {
     /// <summary>
@@ -14,7 +16,6 @@ namespace QuickFix
         private string messageLogFileName_;
         private string eventLogFileName_;
 
-        private bool _disposed = false;
 
         public FileLog(string fileLogPath)
         {
@@ -120,18 +121,27 @@ namespace QuickFix
         #endregion
 
         #region IDisposable Members
-
         public void Dispose()
         {
-            if (messageLog_ != null) { messageLog_.Dispose(); }
-            if (eventLog_ != null) { eventLog_.Dispose(); }
-
-            messageLog_ = null;
-            eventLog_ = null;
-
-            _disposed = true;
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
+        private bool _disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            if (disposing)
+            {
+                if (messageLog_ != null) { messageLog_.Dispose(); }
+                if (eventLog_ != null) { eventLog_.Dispose(); }
+
+                messageLog_ = null;
+                eventLog_ = null;
+            }
+            _disposed = true;
+        }
+        ~FileLog() => Dispose(false);
         #endregion
     }
 }

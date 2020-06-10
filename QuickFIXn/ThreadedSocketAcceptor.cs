@@ -387,17 +387,20 @@ namespace QuickFix
         /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
-            try
+            if (_disposed) return;
+            if (disposing)
             {
-                Stop();
-                _disposed = true;
+                try
+                {
+                    Stop();
+                }
+                catch (ObjectDisposedException)
+                {
+                    // ignore
+                }
             }
-            catch (ObjectDisposedException)
-            {
-                // ignore
-            }
+            _disposed = true;
         }
-
         /// <summary>
         /// Disposes created sessions
         /// </summary>
@@ -406,7 +409,9 @@ namespace QuickFix
         /// </remarks>
         public void Dispose()
         {
-            Stop();
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+        ~ThreadedSocketAcceptor() => Dispose(false);
     }
 }
