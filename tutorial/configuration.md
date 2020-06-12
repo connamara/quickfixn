@@ -381,7 +381,7 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>ValidateLengthAndChecksum</td>
-    <td class='description'>If set to N, messages with incorrect length or checksum fields will not be rejected. You can also use this to force acceptance of repeating groups without a data dictionary. In this scenario you will not be able to access all repeating groups.</td>
+    <td class='description'>If set to N, messages with incorrect length or checksum fields will not be rejected.</td>
     <td class='valid'>
       <div>Y</div>
       <div>N</div>
