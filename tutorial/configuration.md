@@ -313,7 +313,7 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>UseDataDictionary</td>
-    <td class='description'>Tells session whether or not to expect a data dictionary.  <em>You should always use a DataDictionary if you are using repeating groups.</em></td>
+    <td class='description'>Tells session whether or not to expect a data dictionary.  <em><strong>You should always use a DataDictionary if you are using repeating groups.</strong></em></td>
     <td class='valid'>
       <div>Y</div>
       <div>N</div>
@@ -402,7 +402,14 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>ValidateFieldsHaveValues</td>
-    <td class='description'>If set to N, fields without values (empty) will not be rejected.  Useful for connecting to systems that improperly send empty tags.</td>
+    <td class='description'>If set to N, fields without values (e.g. "|44=|"; nothing after the <tt>=</tt>) will not be rejected.
+                            Useful for connecting to systems that improperly send empty tags.
+                            <br/>
+                            <strong>Warning: The QF/n engine will not try to convert empty strings to non-string types.</strong>
+                            For instance, <tt>msg.Price.Obj</tt> will throw an <tt>IncorrectDataFormat<tt> exception, because the
+                            engine will not convert "" to float (or DateTime, or int, etc.).
+                            You can use <tt>msg.GetString(44).Length</tt> to get the field as a string and query its length.
+    </td>
     <td class='valid'>
       <div>Y</div>
       <div>N</div>
