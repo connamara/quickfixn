@@ -282,10 +282,19 @@ namespace QuickFix.DataDictionary
                 Type type;
                 if (!TryGetFieldType(field.Tag, out type))
                     return;
-
                 if (type == typeof(StringField))
                     return;
-                else if (type == typeof(CharField))
+
+                if (false == CheckFieldsHaveValues && field.ToString().Length < 1)
+                {
+                    // If ValidateFieldsHaveValues=N, don't check empty non-string fields
+                    // because engine should not decide how to convert empty to e.g. float or datetime.
+                    // (User code may see IncorrectDataFormat exceptions
+                    //  when attempting to extract fields in not-string formats.)
+                    return;
+                }
+
+                if (type == typeof(CharField))
                     Fields.Converters.CharConverter.Convert(field.ToString());
                 else if (type == typeof(IntField))
                     Fields.Converters.IntConverter.Convert(field.ToString());
