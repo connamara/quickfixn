@@ -357,12 +357,11 @@ QuickFIX Settings
       <div>XML definition file for validating application messages.  This setting is only valid for FIXT.1.1 (or newer) sessions.</div><br/>
       <div>See DataDictionary for older transport versions (FIX.4.0-FIX.4.4) for additional information.</div><br/>
       <div>This setting supports the possibility of a custom application data dictionary for each session.  This setting would only be used with FIXT.1.1 and newer transport protocols.  This setting can be used as a prefix to specify multiple application dictionaries for the FIXT transport.  For example:</div><br/>
-      <code>
-        DefaultApplVerID=FIX.4.2
-        # For default application version ID
-        AppDataDictionary=FIX42.xml
-        # For nondefault application version ID
-        # Use BeginString suffix for app version
+      <code>DefaultApplVerID=FIX.4.2<br/>
+        # For default application version ID<br/>
+        AppDataDictionary=FIX42.xml<br/>
+        # For nondefault application version ID<br/>
+        # Use BeginString suffix for app version<br/>
         AppDataDictionary.FIX.4.4=FIX44.xml
       </code>
     </td>
@@ -402,7 +401,7 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>ValidateFieldsHaveValues</td>
-    <td class='description'>If set to N, fields without values (e.g. "|44=|"; nothing after the <tt>=</tt>) will not be rejected.
+    <td class='description'>If set to N, fields without values (e.g. "<tt>|44=|</tt>"; nothing after the "=") will not be rejected.
                             Useful for connecting to systems that improperly send empty tags.
                             <br/>
                             <strong>Warning: The QF/n engine will not try to convert empty strings to non-string types.</strong>
