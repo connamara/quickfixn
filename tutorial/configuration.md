@@ -406,7 +406,8 @@ QuickFIX Settings
                             Useful for connecting to systems that improperly send empty tags.
                             <br/>
                             <strong>Warning: The QF/n engine will not try to convert empty strings to non-string types.</strong>
-                            For instance, <tt>msg.Price.Obj</tt> will throw an <tt>IncorrectDataFormat<tt> exception, because the
+                            <br/>
+                            For instance, <tt>msg.Price.Obj</tt> will throw an <tt>IncorrectDataFormat</tt> exception, because the
                             engine will not convert "" to float (or DateTime, or int, etc.).
                             You can use <tt>msg.GetString(44).Length</tt> to get the field as a string and query its length.
     </td>
