@@ -8,6 +8,15 @@ namespace UnitTests
     public class FieldTests
     {
         [Test]
+        public void Tag()
+        {
+            // three paths to this value
+            Assert.AreEqual(1, QuickFix.Fields.Account.TAG);
+            Assert.AreEqual(1, new QuickFix.Fields.Account().Tag);
+            Assert.AreEqual(1, QuickFix.Fields.Tags.Account);
+        }
+
+        [Test]
         public void IntFieldTest()
         {
             IntField field = new IntField(Tags.AdvTransType, 500);
