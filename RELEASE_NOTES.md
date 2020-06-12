@@ -27,6 +27,7 @@ What's New
 * (patch) #566 - SSLValidateCertificates=N overrides SSLCheckCertificateRevocation (gbirchmeier, h/t to Mad-Lynx)
 * (patch) #405 - CheckFieldsHaveValues needs to work for non-strings too (gbirchmeier)
 * (minor) #596 - Support HeartBtInt=0 (gbirchmeier)
+* (minor) #136 - add static TAG property to each field (gbirchmeier)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
