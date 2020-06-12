@@ -37,13 +37,21 @@ namespace QuickFix
             System.Console.WriteLine("[SessionFactory] " + messageFactory_.GetType().FullName);
         }
 
+        static private bool DetectIfInitiator(QuickFix.Dictionary settings)
+        {
+            switch (settings.GetString(SessionSettings.CONNECTION_TYPE))
+            {
+                case "acceptor": return false;
+                case "initiator": return true;
+            }
+            throw new ConfigError("Invalid ConnectionType");
+        }
+
         public Session Create(SessionID sessionID, QuickFix.Dictionary settings)
         {
-            string connectionType = settings.GetString(SessionSettings.CONNECTION_TYPE);
-            if (!"acceptor".Equals(connectionType) && !"initiator".Equals(connectionType))
-                throw new ConfigError("Invalid ConnectionType");
+            bool isInitiator = SessionFactory.DetectIfInitiator(settings);
 
-            if ("acceptor".Equals(connectionType) && settings.Has(SessionSettings.SESSION_QUALIFIER))
+            if (!isInitiator && settings.Has(SessionSettings.SESSION_QUALIFIER))
                 throw new ConfigError("SessionQualifier cannot be used with acceptor.");
 
             bool useDataDictionary = true;
@@ -83,17 +91,18 @@ namespace QuickFix
             }
 
             int heartBtInt = 0;
-            if ( connectionType == "initiator" )
+            if (isInitiator)
             {
-                heartBtInt = System.Convert.ToInt32(settings.GetLong( SessionSettings.HEARTBTINT ));
-                if ( heartBtInt <= 0 )
-                    throw new ConfigError( "Heartbeat must be greater than zero" );
+                heartBtInt = System.Convert.ToInt32(settings.GetLong(SessionSettings.HEARTBTINT));
+                if (heartBtInt < 0)
+                    throw new ConfigError($"{SessionSettings.HEARTBTINT} must be greater or equal to zero");
             }
             string senderDefaultApplVerId = "";
             if(defaultApplVerID != null)
                 senderDefaultApplVerId = defaultApplVerID.Obj;
 
             Session session = new Session(
+                isInitiator,
                 application_,
                 messageStoreFactory_,
                 sessionID,

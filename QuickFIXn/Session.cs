@@ -240,8 +240,19 @@ namespace QuickFix
 
         #endregion
 
+        /// <summary>
+        /// Don't use this.  It decides the connection is an initiator if heartBtInt=0,
+        /// which is bad because 0 is actually a valid (though not-often-used) setting.
+        /// </summary>
+        [System.Obsolete("Use the constructor that takes the isInitiator parameter.")]
         public Session(
             IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
+            SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
+            : this(0 == heartBtInt, app, storeFactory, sessID, dataDictProvider, sessionSchedule, heartBtInt, logFactory, msgFactory, senderDefaultApplVerID)
+        { }
+
+        public Session(
+            bool isInitiator, IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
             SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
         {
             this.Application = app;
@@ -265,7 +276,7 @@ namespace QuickFix
             else
                 log = new NullLog();
 
-            state_ = new SessionState(log, heartBtInt)
+            state_ = new SessionState(isInitiator, log, heartBtInt)
             {
                 MessageStore = storeFactory.Create(sessID)
             };
@@ -462,10 +473,10 @@ namespace QuickFix
 
             if (!IsSessionTime)
             {
-                if(IsInitiator==false)
-                    Reset("Out of SessionTime (Session.Next())", "Message received outside of session time");
-                else
+                if(IsInitiator)
                     Reset("Out of SessionTime (Session.Next())");
+                else
+                    Reset("Out of SessionTime (Session.Next())", "Message received outside of session time");
                 return;
             }
 
@@ -720,7 +731,7 @@ namespace QuickFix
                 }
             }
 
-            if (!state_.IsInitiator && this.ResetOnLogon)
+            if (IsAcceptor && this.ResetOnLogon)
                 state_.Reset("ResetOnLogon");
             if (this.RefreshOnLogon)
                 Refresh();
@@ -737,7 +748,7 @@ namespace QuickFix
 
             state_.ReceivedLogon = true;
             this.Log.OnEvent("Received logon");
-            if (!state_.IsInitiator)
+            if (IsAcceptor)
             {
                 int heartBtInt = logon.GetInt(Fields.Tags.HeartBtInt);
                 state_.HeartBtInt = heartBtInt;
