@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using NUnit.Framework;
 using QuickFix;
 using UnitTests.TestHelpers;
@@ -162,6 +163,71 @@ namespace UnitTests
             dd.LoadFIXSpec("FIX44");
             Assert.True(dd.Trailer.ReqFields.Contains(10));
             Assert.That(dd.Trailer.Fields.Count, Is.EqualTo(3));
+        }
+
+        [Test]
+        public void CheckValidFormat()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+            dd.CheckFieldsHaveValues = true;
+
+            var goodFields = new QuickFix.Fields.StringField[] {
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.Symbol, "foo"), // string
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.Side, "2"), // char
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.LastQty, "123"), // int
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.AvgPx, "1.23"), // decimal
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.ReportToExch, "Y"), // bool
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.ContraTradeTime, "20011217-09:30:47.123"), // datetime
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.MDEntryDate, "20030910"), // dateonly
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.MDEntryTime, "13:20:00.123"), // timeonly
+
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.Symbol, "") // string
+            };
+
+            foreach (var datum in goodFields)
+            {
+                Assert.DoesNotThrow(delegate { dd.CheckValidFormat(datum); });
+            }
+
+            var badFields = new QuickFix.Fields.StringField[]
+            {
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.Side, "toolong"), // char
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.LastQty, "notint"), // int
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.AvgPx, "notdec"), // decimal
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.ReportToExch, "notbool"), // bool
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.ContraTradeTime, "notdatetime"), // datetime
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.MDEntryDate, "notdate"), // dateonly
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.MDEntryTime, "nottime") // timeonly
+            };
+
+            foreach (var datum in badFields)
+            {
+                Assert.Throws(typeof(IncorrectDataFormat), delegate { dd.CheckValidFormat(datum); });
+            }
+
+            var emptyFields = new QuickFix.Fields.StringField[]
+            {
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.Side, ""), // char
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.LastQty, ""), // int
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.AvgPx, ""), // decimal
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.ReportToExch, ""), // bool
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.ContraTradeTime, ""), // datetime
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.MDEntryDate, ""), // dateonly
+                new QuickFix.Fields.StringField(QuickFix.Fields.Tags.MDEntryTime, "") // timeonly
+            };
+
+            foreach (var datum in emptyFields)
+            {
+                Assert.Throws(typeof(IncorrectDataFormat), delegate { dd.CheckValidFormat(datum); });
+            }
+
+            // Setting change!
+            dd.CheckFieldsHaveValues = false;
+            foreach (var datum in emptyFields)
+            {
+                Assert.DoesNotThrow(delegate { dd.CheckValidFormat(datum); });
+            }
         }
 
         [Test]
@@ -577,10 +643,10 @@ namespace UnitTests
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.LoadFIXSpec("FIX42");
-            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+            QuickFix.FIX42.MessageFactory f = new QuickFix.FIX42.MessageFactory();
 
-            string[] msgFields = {"8=FIX.4.2", "9=65", "35=B", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-                                   "148=", "33=0", "10=188"};
+            string[] msgFields = {"8=FIX.4.2", "9=70", "35=B", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                   "358=", "148=", "33=0", "10=150"};
             string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "B";
@@ -612,6 +678,38 @@ namespace UnitTests
             Assert.True(news.IsField(148)); // Headline
             Assert.True(news.IsGroup(33)); // LinesOfText
             Assert.True(news.GetGroup(33).IsField(355)); // EncodedText
+        }
+
+
+        XmlNode MakeNode(string xmlString)
+        {
+            XmlDocument doc = new XmlDocument();
+            if (xmlString.StartsWith("<"))
+            {
+                doc.LoadXml(xmlString);
+                return doc.DocumentElement;
+            }
+            else
+            {
+                return doc.CreateTextNode(xmlString);
+            }
+        }
+
+        [Test]
+        public void VerifyChildNode()
+        {
+            XmlNode parentNode = MakeNode("<message name='Daddy'/>");
+
+            Assert.DoesNotThrow(
+                delegate { QuickFix.DataDictionary.DataDictionary.VerifyChildNode(MakeNode("<field name='qty'/>"), parentNode); });
+
+            DictionaryParseException dpx = Assert.Throws<DictionaryParseException>(
+                delegate { QuickFix.DataDictionary.DataDictionary.VerifyChildNode(MakeNode("foo"), parentNode); });
+            Assert.AreEqual("Malformed data dictionary: Found text-only node containing 'foo'", dpx.Message);
+
+            dpx = Assert.Throws<DictionaryParseException>(
+                delegate { QuickFix.DataDictionary.DataDictionary.VerifyChildNode(MakeNode("<field>qty</field>"), parentNode); });
+            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'message/Daddy'", dpx.Message);
         }
     }
 }

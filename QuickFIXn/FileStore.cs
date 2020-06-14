@@ -301,9 +301,22 @@ namespace QuickFix
 
         public void Dispose()
         {
-            close();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+
+        }
+        private bool _disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            if (disposing)
+            {
+                close();
+            }
+            _disposed = true;
         }
 
+        ~FileStore() => Dispose(false);
         #endregion
     }
 }

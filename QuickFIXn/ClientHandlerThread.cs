@@ -150,19 +150,32 @@ namespace QuickFix
 
         #endregion
 
+        ~ClientHandlerThread() => Dispose(false);
         public void Dispose()
         {
-            if (socketReader_ != null)
-            {
-                socketReader_.Dispose();
-                socketReader_ = null;
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-            if (log_ != null)
+        private bool _disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            if (disposing)
             {
-                log_.Dispose();
-                log_ = null;
+                if (socketReader_ != null)
+                {
+                    socketReader_.Dispose();
+                    socketReader_ = null;
+                }
+
+                if (log_ != null)
+                {
+                    log_.Dispose();
+                    log_ = null;
+                }
             }
+            _disposed = true;
         }
     }
 }

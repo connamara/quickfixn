@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace QuickFix
 {
     /// <summary>
@@ -45,9 +47,19 @@ namespace QuickFix
 
         public void Dispose()
         {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            if (disposing)
+            {
+                foreach (var log in logs_)
+                    log.Dispose();
+            }
             _disposed = true;
-            foreach (var log in logs_)
-                log.Dispose();
         }
 
         private void DisposedCheck()
@@ -55,5 +67,7 @@ namespace QuickFix
             if (_disposed)
                 throw new System.ObjectDisposedException(this.GetType().Name);
         }
+
+        ~CompositeLog() => Dispose(false);
     }
 }
