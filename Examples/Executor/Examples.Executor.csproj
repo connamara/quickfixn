@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net461;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
     <RootNamespace>Executor</RootNamespace>
     <AssemblyName>Executor</AssemblyName>
     <Copyright>Copyright © Connamara Systems, LLC 2011</Copyright>
     <Company>Connamara Systems, LLC</Company>
     <Platforms>AnyCPU;x64</Platforms>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

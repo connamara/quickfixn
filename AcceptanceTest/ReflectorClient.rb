@@ -53,7 +53,14 @@ class ReflectorClient
       if socket == nil
 	    raise IOError("failed to connect")
       end
-      socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER, false)
+
+      # WSL doesn't support socket option SO_LINGER.
+      # This detects if this script is NOT running in WSL, and if not,
+      # sets the socket option. Otherwise, it's skipped.
+      # See https://stackoverflow.com/questions/38086185/how-to-check-if-a-program-is-run-in-bash-on-ubuntu-on-windows-and-not-just-plain
+      unless ENV.include?('IS_WSL') || ENV.include?('WSL_DISTRO_NAME')
+        socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER, false)
+      end
       socket.setsockopt(Socket::IPPROTO_TCP, Socket::TCP_NODELAY, true)
       @sockets[cid] = socket
       @parsers[cid] = FixParser.new(socket)

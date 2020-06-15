@@ -8,6 +8,7 @@
     <Copyright>Copyright © Connamara Systems, LLC 2011</Copyright>
     <Company>Connamara Systems, LLC</Company>
     <Platforms>AnyCPU;x64</Platforms>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
