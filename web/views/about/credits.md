@@ -78,3 +78,4 @@ Contributors
 - Mikhail Derevyashkin
 - Brian Leach
 - Pavel Karasev
+- Craig E. Shea
