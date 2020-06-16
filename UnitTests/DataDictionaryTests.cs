@@ -246,6 +246,29 @@ namespace UnitTests
         }
 
         [Test]
+        public void CheckValue()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+
+            // unknown field
+            Assert.DoesNotThrow(delegate { dd.CheckValue(new QuickFix.Fields.CharField(20, '0')); });
+            // not an enum
+            Assert.DoesNotThrow(delegate { dd.CheckValue(new QuickFix.Fields.ListSeqNo(5)); });
+            // regular enum, ok
+            Assert.DoesNotThrow(delegate { dd.CheckValue(new QuickFix.Fields.TickDirection('2')); });
+            // multiple-value field, ok
+            Assert.DoesNotThrow(delegate { dd.CheckValue(new QuickFix.Fields.QuoteCondition("A C D")); });
+
+            // regular enum, invalid value
+            Assert.Throws(typeof(IncorrectTagValue),
+                delegate { dd.CheckValue(new QuickFix.Fields.TickDirection('9')); });
+            // multiple-value field, one value is invalid
+            Assert.Throws(typeof(IncorrectTagValue),
+               delegate { dd.CheckValue(new QuickFix.Fields.QuoteCondition("A @ D")); });
+        }
+
+        [Test]
         public void CheckIsInMessageTest()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();

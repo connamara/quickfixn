@@ -345,7 +345,8 @@ namespace QuickFix.DataDictionary
         }
 
         /// <summary>
-        /// If field is an enum, make sure the value is valid.
+        /// If field is an enum or multiple value field, make sure the value(s) is/are valid.
+        /// (If field is unknown, ignore it.  It's not this function's job to test that.)
         /// </summary>
         /// <param name="field"></param>
         public void CheckValue(Fields.IField field)
