@@ -325,7 +325,7 @@ QuickFIX Settings
     <td class='setting'>DataDictionary</td>
     <td class='description'>
       <div>XML definition file for validating incoming FIX messages. If no DataDictionary is supplied, only basic message validation will be done.</div><br/> 
-      <div>This setting should only be used with FIX transport versions older than FIXT.1.1. See TransportDataDictionary and AppDataDictionary for FIXT.1.1 settings.</div>
+      <div>This setting should only be used with FIX transport versions older than FIXT.1.1 (i.e. FIX4x). See TransportDataDictionary and AppDataDictionary for FIXT.1.1 (i.e. FIX5+) settings.</div>
     </td>
     <td class='valid'>
       <div>Valid XML data dictionary file.  QuickFIX/N comes with the following defaults in the spec/fix directory</div><br/>
@@ -341,7 +341,7 @@ QuickFIX Settings
   <tr>
     <td class='setting'>TransportDataDictionary</td>
     <td class='description'>
-      <div>XML definition file for validating admin (transport) messages.  This setting is only valid for FIXT.1.1 (or newer) sessions.</div><br/>
+      <div>XML definition file for validating admin (transport) messages.  This setting is only valid for FIXT.1.1 (usually FIX5+) sessions.</div><br/>
       <div>See DataDictionary for older transport versions (FIX.4.0-FIX.4.4) for additional information.</div>
     </td>
     <td class='valid'>
@@ -354,9 +354,9 @@ QuickFIX Settings
   <tr>
     <td class='setting'>AppDataDictionary</td>
     <td class='description'>
-      <div>XML definition file for validating application messages.  This setting is only valid for FIXT.1.1 (or newer) sessions.</div><br/>
-      <div>See DataDictionary for older transport versions (FIX.4.0-FIX.4.4) for additional information.</div><br/>
-      <div>This setting supports the possibility of a custom application data dictionary for each session.  This setting would only be used with FIXT.1.1 and newer transport protocols.  This setting can be used as a prefix to specify multiple application dictionaries for the FIXT transport.  For example:</div><br/>
+      <div>XML definition file for validating application messages.  This setting is only valid for FIXT.1.1 (usually FIX5+) sessions.</div><br/>
+      <div>Not used for older transport versions.  For FIX4x versions, see the DataDictionary setting.</div><br/>
+      <div>This setting supports the possibility of a custom application data dictionary for each session.  This setting can be used as a prefix to specify multiple application dictionaries for the FIXT transport.  For example:</div><br/>
       <code>DefaultApplVerID=FIX.4.2<br/>
         # For default application version ID<br/>
         AppDataDictionary=FIX42.xml<br/>
