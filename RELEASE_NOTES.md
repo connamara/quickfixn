@@ -29,6 +29,7 @@ What's New
 * (minor) #596 - Support HeartBtInt=0 (gbirchmeier)
 * (minor) #136 - add static TAG property to each field (gbirchmeier)
 * (patch) #564 - NuGet package creation! (fourpastmidnight)
+* (patch) #612 - add Serilog standalone example (pavka1799)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
