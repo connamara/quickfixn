@@ -30,6 +30,7 @@ What's New
 * (minor) #136 - add static TAG property to each field (gbirchmeier)
 * (patch) #564 - NuGet package creation! (fourpastmidnight)
 * (patch) #612 - add Serilog standalone example (pavka1799)
+* (patch) #602 - Correct DD.CheckValue() to be compatible with AllowUnknownMessageFields (roblugt/gbirchmeier)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
