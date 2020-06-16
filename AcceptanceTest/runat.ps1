@@ -74,7 +74,7 @@ function Write-TestResult {
             Format-Table
 
         $TotalResults = $TestResult.at.results
-        Write-Host $('-'*120)
+        Write-Host $('-'*80)
         Write-Host "$FixVersion ($Framework) Results:"
         Write-Host "  Total Tests: $($TotalResults.total)"
         Write-Host "      Passing: $($TotalResults.total - $TotalResults.failures)"
