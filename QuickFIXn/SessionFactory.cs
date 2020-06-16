@@ -33,8 +33,6 @@ namespace QuickFix
             messageStoreFactory_ = storeFactory;
             logFactory_ = logFactory ?? new NullLogFactory();
             messageFactory_ = messageFactory ?? new DefaultMessageFactory();
-
-            System.Console.WriteLine("[SessionFactory] " + messageFactory_.GetType().FullName);
         }
 
         static private bool DetectIfInitiator(QuickFix.Dictionary settings)

@@ -21,7 +21,7 @@ namespace UnitTests
             Assert.IsTrue(socketSettings.ValidateCertificates);
             Assert.IsNull(socketSettings.CertificatePath);
             Assert.IsNull(socketSettings.CertificatePassword);
-            Assert.AreEqual(SslProtocols.Default,socketSettings.SslProtocol);
+            Assert.AreEqual(SslProtocols.None, socketSettings.SslProtocol);
             Assert.IsTrue(socketSettings.CheckCertificateRevocation);
             Assert.IsFalse(socketSettings.UseSSL);
             Assert.IsNull(socketSettings.CACertificatePath);
