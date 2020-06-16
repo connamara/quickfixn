@@ -145,7 +145,7 @@ namespace QuickFix
         public SocketSettings()
         {
             ValidateCertificates = true;
-            SslProtocol = SslProtocols.Default;
+            SslProtocol = SslProtocols.None;
             CheckCertificateRevocation = true;
             RequireClientCertificate = true;
             SocketNodelay = true;

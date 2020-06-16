@@ -31,6 +31,7 @@ What's New
 * (patch) #564 - NuGet package creation! (fourpastmidnight)
 * (patch) #612 - add Serilog standalone example (pavka1799)
 * (patch) #602 - Correct DD.CheckValue() to be compatible with AllowUnknownMessageFields (roblugt/gbirchmeier)
+* (patch) none - use SslProtocol.None instead of deprecated .Default (gbirchmeier)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)
