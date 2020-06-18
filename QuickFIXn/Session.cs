@@ -315,10 +315,10 @@ namespace QuickFix
         private IAcceptor _acceptor = null;
         private QuickFix.Dictionary _settings = null;
         public Session(
-            IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
+            bool isInitiator, IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
             SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID,
             IAcceptor acceptor, QuickFix.Dictionary settings)
-            :this(app, storeFactory, sessID, dataDictProvider,sessionSchedule, heartBtInt, logFactory, msgFactory, senderDefaultApplVerID)
+            :this(isInitiator, app, storeFactory, sessID, dataDictProvider,sessionSchedule, heartBtInt, logFactory, msgFactory, senderDefaultApplVerID)
         {
             _acceptor = acceptor;
             _settings = settings;
