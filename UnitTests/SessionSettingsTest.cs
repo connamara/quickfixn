@@ -147,7 +147,6 @@ namespace UnitTests
         public void LoadSettingsWithWildcards()
         {
             string configuration = new System.Text.StringBuilder()
-                //.AppendLine(partialConfiguration.ToString())
                 .AppendLine("[DEFAULT]")
                 .AppendLine("ConnectionType=acceptor")
                 .AppendLine("BeginString=*")
@@ -164,7 +163,6 @@ namespace UnitTests
             Assert.That(settings.Get().GetString("SessionQualifier"), Is.EqualTo("*"));
 
             configuration = new System.Text.StringBuilder()
-                //.AppendLine(partialConfiguration.ToString())
                 .AppendLine("[SESSION]")
                 .AppendLine("ConnectionType=initiator")
                 .AppendLine("BeginString=*")
@@ -175,7 +173,6 @@ namespace UnitTests
             Assert.That(ex.Message, Is.EqualTo("Configuration failed: BeginString could be a wildcard (*) only in 'acceptor' configuration"));
 
             configuration = new System.Text.StringBuilder()
-                //.AppendLine(partialConfiguration.ToString())
                 .AppendLine("[SESSION]")
                 .AppendLine("ConnectionType=initiator")
                 .AppendLine("BeginString=FIX.4.0")
