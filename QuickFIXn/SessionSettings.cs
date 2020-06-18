@@ -69,7 +69,6 @@ namespace QuickFix
         public const string RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME = "RequiresOrigSendingTime";
         public const string CHECK_LATENCY = "CheckLatency";
         public const string MAX_LATENCY = "MaxLatency";
-        //public const string ACCEPTOR_TEMPLATE = "AcceptorTemplate";
 
         public const string SSL_ENABLE = "SSLEnable";
         public const string SSL_SERVERNAME = "SSLServerName";
