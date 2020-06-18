@@ -349,5 +349,6 @@ namespace QuickFix
                 tcpClient_.Close();
             }
         }
+        ~SocketReader() => Dispose(false);
     }
 }

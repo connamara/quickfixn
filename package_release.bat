@@ -12,6 +12,14 @@ if "%ACCESS_KEY%" == "" goto usage
 set SECRET_KEY=%3
 if "%SECRET_KEY%" == "" goto usage
 
+set BUILD_TARGET=build
+set BUILD_PROPS="-c Release"
+set NUGET_API_KEY=%4
+if "%NUGET_API_KEY%" NEQ "" (
+	set BUILD_TARGET=pack
+	set BUILD_PROPS="%BUILD_PROPS% --include-symbols -o tmp\NuGet"
+)
+
 echo ==QuickFIX/N Package release script==
 echo tag version: %TAG_VERSION%
 echo
@@ -49,9 +57,17 @@ if %errorlevel% neq 0 echo "There was an error generating code from the data dic
 echo * Generated code.
 
 rem Build QuickFIX/n
-call build.bat
+IF EXIST tmp\NuGet del /q tmp\NuGet\*.*nupkg
+rem This builds the projects and packages them.
+dotnet %BUILD_TARGET% %BUILD_PROPS% QuickFIXn.sln
 if %errorlevel% neq 0 echo "There was an error building QuickFIX/n" && exit /b %errorlevel%
-echo * Built QuickFIX/n.
+echo * Built QuickFIX/n and created NuGet packages.
+
+rem Push NuGet packages (and symbol packages) to nuget.org
+rem DO NOT remove quotes around *.nupkg. Due to a bug in older versions of .NET SDK,
+rem without quotes, only the first package will be pushed.
+if "%BUILD_TARGET%" == "pack" dotnet nuget push '*.nupkg' -s https://api.nuget.org/v3/index.json -k %NUGET_API_KEY% tmp\NuGet
+echo * Pushed QuickFIX/n NuGet packages to NuGet.org
 
 rem Copy files to temp directory
 IF EXIST tmp rmdir /s /q tmp
@@ -101,7 +117,7 @@ rem Switch back to master
 call git checkout master
 echo * Changed back to master.
 
-echo 
+echo
 echo Successfully created QuickFIX/n %TAG_VERSION%.
 echo You can download the zip here: http://quickfixn.s3.amazonaws.com/%ZIP_NAME%
 echo You must commit the new tag and deploy the website
@@ -109,7 +125,7 @@ set RESULT=0
 goto quit
 
 :usage
-echo Usage: package_release.bat [VERSION] [S3_ACCESS_KEY] [S3_SECRET_KEY]
+echo Usage: package_release.bat <VERSION> <S3_ACCESS_KEY> <S3_SECRET_KEY> [<NUGET_API_KEY>]
 set RESULT=1
 
 :quit

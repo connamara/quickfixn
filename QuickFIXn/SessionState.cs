@@ -155,11 +155,20 @@ namespace QuickFix
 
         #endregion
 
+        /// <summary>
+        /// Don't use this.  It decides the connection is an initiator if heartBtInt=0,
+        /// which is bad because 0 is actually a valid (though not-often-used) setting.
+        /// </summary>
+        [System.Obsolete("Use the constructor that takes the isInitiator parameter.")]
         public SessionState(ILog log, int heartBtInt)
+            : this(0 != heartBtInt, log, heartBtInt)
+        { }
+
+        public SessionState(bool isInitiator, ILog log, int heartBtInt)
         {
             log_ = log;
             this.HeartBtInt = heartBtInt;
-            this.IsInitiator = (0 != heartBtInt);
+            this.IsInitiator = isInitiator;
             lastReceivedTimeDT_ = DateTime.UtcNow;
             lastSentTimeDT_ = DateTime.UtcNow;
         }
@@ -422,9 +431,24 @@ namespace QuickFix
 
         public void Dispose()
         {
-            if (log_ != null) { log_.Dispose(); }
-            if (MessageStore != null) { MessageStore.Dispose(); }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
+
+        private bool _disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            if (disposing)
+            {
+                if (log_ != null) { log_.Dispose(); }
+                if (MessageStore != null) { MessageStore.Dispose(); }
+            }
+            _disposed = true;
+        }
+
+        ~SessionState() => Dispose(false);
+
     }
 }
 

@@ -88,6 +88,8 @@ HERE
     /// </summary>/
     public sealed class #{field[:name]} : #{field[:cs_class]}
     {
+        public const int TAG = #{field[:tag]};
+
         public #{field[:name]}()
             :base(Tags.#{field[:name]}) {}
         public #{field[:name]}(#{field[:base_type]} val)
@@ -105,6 +107,8 @@ HERE
     /// </summary>/
     public sealed class #{field[:name]} : #{field[:cs_class]}
     {
+        public const int TAG = #{field[:tag]};
+
         public #{field[:name]}()
             :base(Tags.#{field[:name]}) {}
         public #{field[:name]}(#{field[:base_type]} val)

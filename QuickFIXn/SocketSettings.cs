@@ -145,7 +145,7 @@ namespace QuickFix
         public SocketSettings()
         {
             ValidateCertificates = true;
-            SslProtocol = SslProtocols.Default;
+            SslProtocol = SslProtocols.None;
             CheckCertificateRevocation = true;
             RequireClientCertificate = true;
             SocketNodelay = true;
@@ -192,7 +192,10 @@ namespace QuickFix
                 ValidateCertificates = dictionary.GetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES);
 
             if (dictionary.Has(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION))
-                CheckCertificateRevocation = dictionary.GetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION);
+            {
+                // can only be true if ValdateCertificates is true (this is noted in the config docs)
+                CheckCertificateRevocation = ValidateCertificates && dictionary.GetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION);
+            }
 
             // Use setting for client certificate check if one exist 
             // otherwise enable client certificate check if a ca certificate is specified

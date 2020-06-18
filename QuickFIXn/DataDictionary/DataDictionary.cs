@@ -282,10 +282,19 @@ namespace QuickFix.DataDictionary
                 Type type;
                 if (!TryGetFieldType(field.Tag, out type))
                     return;
-
                 if (type == typeof(StringField))
                     return;
-                else if (type == typeof(CharField))
+
+                if (false == CheckFieldsHaveValues && field.ToString().Length < 1)
+                {
+                    // If ValidateFieldsHaveValues=N, don't check empty non-string fields
+                    // because engine should not decide how to convert empty to e.g. float or datetime.
+                    // (User code may see IncorrectDataFormat exceptions
+                    //  when attempting to extract fields in not-string formats.)
+                    return;
+                }
+
+                if (type == typeof(CharField))
                     Fields.Converters.CharConverter.Convert(field.ToString());
                 else if (type == typeof(IntField))
                     Fields.Converters.IntConverter.Convert(field.ToString());
@@ -336,24 +345,27 @@ namespace QuickFix.DataDictionary
         }
 
         /// <summary>
-        /// If field is an enum, make sure the value is valid.
+        /// If field is an enum or multiple value field, make sure the value(s) is/are valid.
+        /// (If field is unknown, ignore it.  It's not this function's job to test that.)
         /// </summary>
         /// <param name="field"></param>
         public void CheckValue(Fields.IField field)
         {
-            DDField fld = FieldsByTag[field.Tag];
-            if (fld.HasEnums())
+            if (FieldsByTag.TryGetValue(field.Tag, out var fld))
             {
-                if (fld.IsMultipleValueFieldWithEnums)
+                if (fld.HasEnums())
                 {
-                    string[] splitted = field.ToString().Split(' ');
+                    if (fld.IsMultipleValueFieldWithEnums)
+                    {
+                        string[] splitted = field.ToString().Split(' ');
 
-                    foreach (string value in splitted)
-                        if (!fld.EnumDict.ContainsKey(value))
-                            throw new IncorrectTagValue(field.Tag);
+                        foreach (string value in splitted)
+                            if (!fld.EnumDict.ContainsKey(value))
+                                throw new IncorrectTagValue(field.Tag);
+                    }
+                    else if (!fld.EnumDict.ContainsKey(field.ToString()))
+                        throw new IncorrectTagValue(field.Tag);
                 }
-                else if (!fld.EnumDict.ContainsKey(field.ToString()))
-                    throw new IncorrectTagValue(field.Tag);
             }
         }
 

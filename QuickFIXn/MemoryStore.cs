@@ -83,8 +83,22 @@ namespace QuickFix
         { }
 
         public void Dispose()
-        { }
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        private bool _disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed) return;
+            if (disposing)
+            {
+                messages_ = null;
+            }
+            _disposed = true;
+        }
 
+        ~MemoryStore() => Dispose(false);
         #endregion
     }
 }

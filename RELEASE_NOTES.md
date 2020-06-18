@@ -23,6 +23,15 @@ What's New
 * (minor) #585/#323 - Add Message.ToXML() (baffles/gbirchmeier)
 * (patch) #591 - Nanosecond DateTime reader bugfix (gbirchmeier)
 * (patch) #592/#601 - better detection of malformed DD elements (gbirchmeier/roederja2)
+* (patch) #606 - fix IDisposable implementations to follow MS general pattern (pavka1799)
+* (patch) #566 - SSLValidateCertificates=N overrides SSLCheckCertificateRevocation (gbirchmeier, h/t to Mad-Lynx)
+* (patch) #405 - CheckFieldsHaveValues needs to work for non-strings too (gbirchmeier)
+* (minor) #596 - Support HeartBtInt=0 (gbirchmeier)
+* (minor) #136 - add static TAG property to each field (gbirchmeier)
+* (patch) #564 - NuGet package creation! (fourpastmidnight)
+* (patch) #612 - add Serilog standalone example (pavka1799)
+* (patch) #602 - Correct DD.CheckValue() to be compatible with AllowUnknownMessageFields (roblugt/gbirchmeier)
+* (patch) none - use SslProtocol.None instead of deprecated .Default (gbirchmeier)
 
 ### v1.9.0:
 * (minor) #469 - Add support for NET Standard 2.0 (jhickson)

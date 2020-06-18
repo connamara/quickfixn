@@ -9,6 +9,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Account : StringField
     {
+        public const int TAG = 1;
+
         public Account()
             :base(Tags.Account) {}
         public Account(string val)
@@ -22,6 +24,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AdvId : StringField
     {
+        public const int TAG = 2;
+
         public AdvId()
             :base(Tags.AdvId) {}
         public AdvId(string val)
@@ -35,6 +39,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AdvRefID : StringField
     {
+        public const int TAG = 3;
+
         public AdvRefID()
             :base(Tags.AdvRefID) {}
         public AdvRefID(string val)
@@ -48,6 +54,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AdvSide : CharField
     {
+        public const int TAG = 4;
+
         public AdvSide()
             :base(Tags.AdvSide) {}
         public AdvSide(char val)
@@ -67,6 +75,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AdvTransType : StringField
     {
+        public const int TAG = 5;
+
         public AdvTransType()
             :base(Tags.AdvTransType) {}
         public AdvTransType(string val)
@@ -85,6 +95,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AvgPx : DecimalField
     {
+        public const int TAG = 6;
+
         public AvgPx()
             :base(Tags.AvgPx) {}
         public AvgPx(Decimal val)
@@ -98,6 +110,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BeginSeqNo : IntField
     {
+        public const int TAG = 7;
+
         public BeginSeqNo()
             :base(Tags.BeginSeqNo) {}
         public BeginSeqNo(int val)
@@ -111,6 +125,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BeginString : StringField
     {
+        public const int TAG = 8;
+
         public BeginString()
             :base(Tags.BeginString) {}
         public BeginString(string val)
@@ -124,6 +140,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BodyLength : IntField
     {
+        public const int TAG = 9;
+
         public BodyLength()
             :base(Tags.BodyLength) {}
         public BodyLength(int val)
@@ -137,6 +155,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CheckSum : StringField
     {
+        public const int TAG = 10;
+
         public CheckSum()
             :base(Tags.CheckSum) {}
         public CheckSum(string val)
@@ -150,6 +170,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ClOrdID : StringField
     {
+        public const int TAG = 11;
+
         public ClOrdID()
             :base(Tags.ClOrdID) {}
         public ClOrdID(string val)
@@ -163,6 +185,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Commission : DecimalField
     {
+        public const int TAG = 12;
+
         public Commission()
             :base(Tags.Commission) {}
         public Commission(Decimal val)
@@ -176,6 +200,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CommType : CharField
     {
+        public const int TAG = 13;
+
         public CommType()
             :base(Tags.CommType) {}
         public CommType(char val)
@@ -203,6 +229,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CumQty : DecimalField
     {
+        public const int TAG = 14;
+
         public CumQty()
             :base(Tags.CumQty) {}
         public CumQty(Decimal val)
@@ -216,6 +244,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Currency : StringField
     {
+        public const int TAG = 15;
+
         public Currency()
             :base(Tags.Currency) {}
         public Currency(string val)
@@ -229,6 +259,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EndSeqNo : IntField
     {
+        public const int TAG = 16;
+
         public EndSeqNo()
             :base(Tags.EndSeqNo) {}
         public EndSeqNo(int val)
@@ -242,6 +274,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecID : StringField
     {
+        public const int TAG = 17;
+
         public ExecID()
             :base(Tags.ExecID) {}
         public ExecID(string val)
@@ -255,6 +289,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecInst : StringField
     {
+        public const int TAG = 18;
+
         public ExecInst()
             :base(Tags.ExecInst) {}
         public ExecInst(string val)
@@ -337,6 +373,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecRefID : StringField
     {
+        public const int TAG = 19;
+
         public ExecRefID()
             :base(Tags.ExecRefID) {}
         public ExecRefID(string val)
@@ -350,6 +388,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecTransType : CharField
     {
+        public const int TAG = 20;
+
         public ExecTransType()
             :base(Tags.ExecTransType) {}
         public ExecTransType(char val)
@@ -369,6 +409,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HandlInst : CharField
     {
+        public const int TAG = 21;
+
         public HandlInst()
             :base(Tags.HandlInst) {}
         public HandlInst(char val)
@@ -390,6 +432,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IDSource : StringField
     {
+        public const int TAG = 22;
+
         public IDSource()
             :base(Tags.IDSource) {}
         public IDSource(string val)
@@ -414,6 +458,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IOIid : StringField
     {
+        public const int TAG = 23;
+
         public IOIid()
             :base(Tags.IOIid) {}
         public IOIid(string val)
@@ -427,6 +473,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IOIOthSvc : CharField
     {
+        public const int TAG = 24;
+
         public IOIOthSvc()
             :base(Tags.IOIOthSvc) {}
         public IOIOthSvc(char val)
@@ -440,6 +488,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IOIQltyInd : CharField
     {
+        public const int TAG = 25;
+
         public IOIQltyInd()
             :base(Tags.IOIQltyInd) {}
         public IOIQltyInd(char val)
@@ -458,6 +508,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IOIRefID : StringField
     {
+        public const int TAG = 26;
+
         public IOIRefID()
             :base(Tags.IOIRefID) {}
         public IOIRefID(string val)
@@ -471,6 +523,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IOIShares : StringField
     {
+        public const int TAG = 27;
+
         public IOIShares()
             :base(Tags.IOIShares) {}
         public IOIShares(string val)
@@ -484,6 +538,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IOITransType : CharField
     {
+        public const int TAG = 28;
+
         public IOITransType()
             :base(Tags.IOITransType) {}
         public IOITransType(char val)
@@ -502,6 +558,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastCapacity : CharField
     {
+        public const int TAG = 29;
+
         public LastCapacity()
             :base(Tags.LastCapacity) {}
         public LastCapacity(char val)
@@ -521,6 +579,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastMkt : StringField
     {
+        public const int TAG = 30;
+
         public LastMkt()
             :base(Tags.LastMkt) {}
         public LastMkt(string val)
@@ -534,6 +594,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastPx : DecimalField
     {
+        public const int TAG = 31;
+
         public LastPx()
             :base(Tags.LastPx) {}
         public LastPx(Decimal val)
@@ -547,6 +609,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastShares : DecimalField
     {
+        public const int TAG = 32;
+
         public LastShares()
             :base(Tags.LastShares) {}
         public LastShares(Decimal val)
@@ -560,6 +624,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LinesOfText : IntField
     {
+        public const int TAG = 33;
+
         public LinesOfText()
             :base(Tags.LinesOfText) {}
         public LinesOfText(int val)
@@ -573,6 +639,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MsgSeqNum : IntField
     {
+        public const int TAG = 34;
+
         public MsgSeqNum()
             :base(Tags.MsgSeqNum) {}
         public MsgSeqNum(int val)
@@ -586,6 +654,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MsgType : StringField
     {
+        public const int TAG = 35;
+
         public MsgType()
             :base(Tags.MsgType) {}
         public MsgType(string val)
@@ -824,6 +894,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NewSeqNo : IntField
     {
+        public const int TAG = 36;
+
         public NewSeqNo()
             :base(Tags.NewSeqNo) {}
         public NewSeqNo(int val)
@@ -837,6 +909,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderID : StringField
     {
+        public const int TAG = 37;
+
         public OrderID()
             :base(Tags.OrderID) {}
         public OrderID(string val)
@@ -850,6 +924,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderQty : DecimalField
     {
+        public const int TAG = 38;
+
         public OrderQty()
             :base(Tags.OrderQty) {}
         public OrderQty(Decimal val)
@@ -863,6 +939,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrdStatus : CharField
     {
+        public const int TAG = 39;
+
         public OrdStatus()
             :base(Tags.OrdStatus) {}
         public OrdStatus(char val)
@@ -894,6 +972,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrdType : CharField
     {
+        public const int TAG = 40;
+
         public OrdType()
             :base(Tags.OrdType) {}
         public OrdType(char val)
@@ -935,6 +1015,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigClOrdID : StringField
     {
+        public const int TAG = 41;
+
         public OrigClOrdID()
             :base(Tags.OrigClOrdID) {}
         public OrigClOrdID(string val)
@@ -948,6 +1030,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigTime : DateTimeField
     {
+        public const int TAG = 42;
+
         public OrigTime()
             :base(Tags.OrigTime) {}
         public OrigTime(DateTime val)
@@ -965,6 +1049,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PossDupFlag : BooleanField
     {
+        public const int TAG = 43;
+
         public PossDupFlag()
             :base(Tags.PossDupFlag) {}
         public PossDupFlag(Boolean val)
@@ -984,6 +1070,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Price : DecimalField
     {
+        public const int TAG = 44;
+
         public Price()
             :base(Tags.Price) {}
         public Price(Decimal val)
@@ -997,6 +1085,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefSeqNum : IntField
     {
+        public const int TAG = 45;
+
         public RefSeqNum()
             :base(Tags.RefSeqNum) {}
         public RefSeqNum(int val)
@@ -1010,6 +1100,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatdSym : StringField
     {
+        public const int TAG = 46;
+
         public RelatdSym()
             :base(Tags.RelatdSym) {}
         public RelatdSym(string val)
@@ -1023,6 +1115,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Rule80A : CharField
     {
+        public const int TAG = 47;
+
         public Rule80A()
             :base(Tags.Rule80A) {}
         public Rule80A(char val)
@@ -1088,6 +1182,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityID : StringField
     {
+        public const int TAG = 48;
+
         public SecurityID()
             :base(Tags.SecurityID) {}
         public SecurityID(string val)
@@ -1101,6 +1197,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SenderCompID : StringField
     {
+        public const int TAG = 49;
+
         public SenderCompID()
             :base(Tags.SenderCompID) {}
         public SenderCompID(string val)
@@ -1114,6 +1212,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SenderSubID : StringField
     {
+        public const int TAG = 50;
+
         public SenderSubID()
             :base(Tags.SenderSubID) {}
         public SenderSubID(string val)
@@ -1127,6 +1227,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SendingTime : DateTimeField
     {
+        public const int TAG = 52;
+
         public SendingTime()
             :base(Tags.SendingTime) {}
         public SendingTime(DateTime val)
@@ -1144,6 +1246,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Shares : DecimalField
     {
+        public const int TAG = 53;
+
         public Shares()
             :base(Tags.Shares) {}
         public Shares(Decimal val)
@@ -1157,6 +1261,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Side : CharField
     {
+        public const int TAG = 54;
+
         public Side()
             :base(Tags.Side) {}
         public Side(char val)
@@ -1190,6 +1296,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Symbol : StringField
     {
+        public const int TAG = 55;
+
         public Symbol()
             :base(Tags.Symbol) {}
         public Symbol(string val)
@@ -1203,6 +1311,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TargetCompID : StringField
     {
+        public const int TAG = 56;
+
         public TargetCompID()
             :base(Tags.TargetCompID) {}
         public TargetCompID(string val)
@@ -1216,6 +1326,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TargetSubID : StringField
     {
+        public const int TAG = 57;
+
         public TargetSubID()
             :base(Tags.TargetSubID) {}
         public TargetSubID(string val)
@@ -1229,6 +1341,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Text : StringField
     {
+        public const int TAG = 58;
+
         public Text()
             :base(Tags.Text) {}
         public Text(string val)
@@ -1242,6 +1356,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TimeInForce : CharField
     {
+        public const int TAG = 59;
+
         public TimeInForce()
             :base(Tags.TimeInForce) {}
         public TimeInForce(char val)
@@ -1267,6 +1383,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TransactTime : DateTimeField
     {
+        public const int TAG = 60;
+
         public TransactTime()
             :base(Tags.TransactTime) {}
         public TransactTime(DateTime val)
@@ -1284,6 +1402,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Urgency : CharField
     {
+        public const int TAG = 61;
+
         public Urgency()
             :base(Tags.Urgency) {}
         public Urgency(char val)
@@ -1302,6 +1422,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ValidUntilTime : DateTimeField
     {
+        public const int TAG = 62;
+
         public ValidUntilTime()
             :base(Tags.ValidUntilTime) {}
         public ValidUntilTime(DateTime val)
@@ -1319,6 +1441,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlmntTyp : CharField
     {
+        public const int TAG = 63;
+
         public SettlmntTyp()
             :base(Tags.SettlmntTyp) {}
         public SettlmntTyp(char val)
@@ -1350,6 +1474,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FutSettDate : StringField
     {
+        public const int TAG = 64;
+
         public FutSettDate()
             :base(Tags.FutSettDate) {}
         public FutSettDate(string val)
@@ -1363,6 +1489,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SymbolSfx : StringField
     {
+        public const int TAG = 65;
+
         public SymbolSfx()
             :base(Tags.SymbolSfx) {}
         public SymbolSfx(string val)
@@ -1382,6 +1510,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListID : StringField
     {
+        public const int TAG = 66;
+
         public ListID()
             :base(Tags.ListID) {}
         public ListID(string val)
@@ -1395,6 +1525,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListSeqNo : IntField
     {
+        public const int TAG = 67;
+
         public ListSeqNo()
             :base(Tags.ListSeqNo) {}
         public ListSeqNo(int val)
@@ -1408,6 +1540,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListNoOrds : IntField
     {
+        public const int TAG = 68;
+
         public ListNoOrds()
             :base(Tags.ListNoOrds) {}
         public ListNoOrds(int val)
@@ -1421,6 +1555,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListExecInst : StringField
     {
+        public const int TAG = 69;
+
         public ListExecInst()
             :base(Tags.ListExecInst) {}
         public ListExecInst(string val)
@@ -1434,6 +1570,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocID : StringField
     {
+        public const int TAG = 70;
+
         public AllocID()
             :base(Tags.AllocID) {}
         public AllocID(string val)
@@ -1447,6 +1585,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocTransType : CharField
     {
+        public const int TAG = 71;
+
         public AllocTransType()
             :base(Tags.AllocTransType) {}
         public AllocTransType(char val)
@@ -1469,6 +1609,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefAllocID : StringField
     {
+        public const int TAG = 72;
+
         public RefAllocID()
             :base(Tags.RefAllocID) {}
         public RefAllocID(string val)
@@ -1482,6 +1624,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoOrders : IntField
     {
+        public const int TAG = 73;
+
         public NoOrders()
             :base(Tags.NoOrders) {}
         public NoOrders(int val)
@@ -1495,6 +1639,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AvgPrxPrecision : IntField
     {
+        public const int TAG = 74;
+
         public AvgPrxPrecision()
             :base(Tags.AvgPrxPrecision) {}
         public AvgPrxPrecision(int val)
@@ -1508,6 +1654,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeDate : StringField
     {
+        public const int TAG = 75;
+
         public TradeDate()
             :base(Tags.TradeDate) {}
         public TradeDate(string val)
@@ -1521,6 +1669,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecBroker : StringField
     {
+        public const int TAG = 76;
+
         public ExecBroker()
             :base(Tags.ExecBroker) {}
         public ExecBroker(string val)
@@ -1534,6 +1684,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OpenClose : CharField
     {
+        public const int TAG = 77;
+
         public OpenClose()
             :base(Tags.OpenClose) {}
         public OpenClose(char val)
@@ -1551,6 +1703,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoAllocs : IntField
     {
+        public const int TAG = 78;
+
         public NoAllocs()
             :base(Tags.NoAllocs) {}
         public NoAllocs(int val)
@@ -1564,6 +1718,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocAccount : StringField
     {
+        public const int TAG = 79;
+
         public AllocAccount()
             :base(Tags.AllocAccount) {}
         public AllocAccount(string val)
@@ -1577,6 +1733,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocShares : DecimalField
     {
+        public const int TAG = 80;
+
         public AllocShares()
             :base(Tags.AllocShares) {}
         public AllocShares(Decimal val)
@@ -1590,6 +1748,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ProcessCode : CharField
     {
+        public const int TAG = 81;
+
         public ProcessCode()
             :base(Tags.ProcessCode) {}
         public ProcessCode(char val)
@@ -1616,6 +1776,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRpts : IntField
     {
+        public const int TAG = 82;
+
         public NoRpts()
             :base(Tags.NoRpts) {}
         public NoRpts(int val)
@@ -1629,6 +1791,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RptSeq : IntField
     {
+        public const int TAG = 83;
+
         public RptSeq()
             :base(Tags.RptSeq) {}
         public RptSeq(int val)
@@ -1642,6 +1806,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CxlQty : DecimalField
     {
+        public const int TAG = 84;
+
         public CxlQty()
             :base(Tags.CxlQty) {}
         public CxlQty(Decimal val)
@@ -1655,6 +1821,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoDlvyInst : IntField
     {
+        public const int TAG = 85;
+
         public NoDlvyInst()
             :base(Tags.NoDlvyInst) {}
         public NoDlvyInst(int val)
@@ -1668,6 +1836,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DlvyInst : StringField
     {
+        public const int TAG = 86;
+
         public DlvyInst()
             :base(Tags.DlvyInst) {}
         public DlvyInst(string val)
@@ -1681,6 +1851,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocStatus : IntField
     {
+        public const int TAG = 87;
+
         public AllocStatus()
             :base(Tags.AllocStatus) {}
         public AllocStatus(int val)
@@ -1706,6 +1878,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocRejCode : IntField
     {
+        public const int TAG = 88;
+
         public AllocRejCode()
             :base(Tags.AllocRejCode) {}
         public AllocRejCode(int val)
@@ -1740,6 +1914,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Signature : StringField
     {
+        public const int TAG = 89;
+
         public Signature()
             :base(Tags.Signature) {}
         public Signature(string val)
@@ -1753,6 +1929,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecureDataLen : IntField
     {
+        public const int TAG = 90;
+
         public SecureDataLen()
             :base(Tags.SecureDataLen) {}
         public SecureDataLen(int val)
@@ -1766,6 +1944,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecureData : StringField
     {
+        public const int TAG = 91;
+
         public SecureData()
             :base(Tags.SecureData) {}
         public SecureData(string val)
@@ -1779,6 +1959,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BrokerOfCredit : StringField
     {
+        public const int TAG = 92;
+
         public BrokerOfCredit()
             :base(Tags.BrokerOfCredit) {}
         public BrokerOfCredit(string val)
@@ -1792,6 +1974,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SignatureLength : IntField
     {
+        public const int TAG = 93;
+
         public SignatureLength()
             :base(Tags.SignatureLength) {}
         public SignatureLength(int val)
@@ -1805,6 +1989,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EmailType : CharField
     {
+        public const int TAG = 94;
+
         public EmailType()
             :base(Tags.EmailType) {}
         public EmailType(char val)
@@ -1823,6 +2009,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RawDataLength : IntField
     {
+        public const int TAG = 95;
+
         public RawDataLength()
             :base(Tags.RawDataLength) {}
         public RawDataLength(int val)
@@ -1836,6 +2024,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RawData : StringField
     {
+        public const int TAG = 96;
+
         public RawData()
             :base(Tags.RawData) {}
         public RawData(string val)
@@ -1849,6 +2039,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PossResend : BooleanField
     {
+        public const int TAG = 97;
+
         public PossResend()
             :base(Tags.PossResend) {}
         public PossResend(Boolean val)
@@ -1866,6 +2058,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncryptMethod : IntField
     {
+        public const int TAG = 98;
+
         public EncryptMethod()
             :base(Tags.EncryptMethod) {}
         public EncryptMethod(int val)
@@ -1899,6 +2093,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StopPx : DecimalField
     {
+        public const int TAG = 99;
+
         public StopPx()
             :base(Tags.StopPx) {}
         public StopPx(Decimal val)
@@ -1912,6 +2108,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExDestination : StringField
     {
+        public const int TAG = 100;
+
         public ExDestination()
             :base(Tags.ExDestination) {}
         public ExDestination(string val)
@@ -1929,6 +2127,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CxlRejReason : IntField
     {
+        public const int TAG = 102;
+
         public CxlRejReason()
             :base(Tags.CxlRejReason) {}
         public CxlRejReason(int val)
@@ -1960,6 +2160,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrdRejReason : IntField
     {
+        public const int TAG = 103;
+
         public OrdRejReason()
             :base(Tags.OrdRejReason) {}
         public OrdRejReason(int val)
@@ -1998,6 +2200,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IOIQualifier : CharField
     {
+        public const int TAG = 104;
+
         public IOIQualifier()
             :base(Tags.IOIQualifier) {}
         public IOIQualifier(char val)
@@ -2035,6 +2239,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class WaveNo : StringField
     {
+        public const int TAG = 105;
+
         public WaveNo()
             :base(Tags.WaveNo) {}
         public WaveNo(string val)
@@ -2048,6 +2254,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Issuer : StringField
     {
+        public const int TAG = 106;
+
         public Issuer()
             :base(Tags.Issuer) {}
         public Issuer(string val)
@@ -2061,6 +2269,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityDesc : StringField
     {
+        public const int TAG = 107;
+
         public SecurityDesc()
             :base(Tags.SecurityDesc) {}
         public SecurityDesc(string val)
@@ -2074,6 +2284,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HeartBtInt : IntField
     {
+        public const int TAG = 108;
+
         public HeartBtInt()
             :base(Tags.HeartBtInt) {}
         public HeartBtInt(int val)
@@ -2087,6 +2299,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ClientID : StringField
     {
+        public const int TAG = 109;
+
         public ClientID()
             :base(Tags.ClientID) {}
         public ClientID(string val)
@@ -2100,6 +2314,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MinQty : DecimalField
     {
+        public const int TAG = 110;
+
         public MinQty()
             :base(Tags.MinQty) {}
         public MinQty(Decimal val)
@@ -2113,6 +2329,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaxFloor : DecimalField
     {
+        public const int TAG = 111;
+
         public MaxFloor()
             :base(Tags.MaxFloor) {}
         public MaxFloor(Decimal val)
@@ -2126,6 +2344,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TestReqID : StringField
     {
+        public const int TAG = 112;
+
         public TestReqID()
             :base(Tags.TestReqID) {}
         public TestReqID(string val)
@@ -2139,6 +2359,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ReportToExch : BooleanField
     {
+        public const int TAG = 113;
+
         public ReportToExch()
             :base(Tags.ReportToExch) {}
         public ReportToExch(Boolean val)
@@ -2156,6 +2378,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LocateReqd : BooleanField
     {
+        public const int TAG = 114;
+
         public LocateReqd()
             :base(Tags.LocateReqd) {}
         public LocateReqd(Boolean val)
@@ -2173,6 +2397,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OnBehalfOfCompID : StringField
     {
+        public const int TAG = 115;
+
         public OnBehalfOfCompID()
             :base(Tags.OnBehalfOfCompID) {}
         public OnBehalfOfCompID(string val)
@@ -2186,6 +2412,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OnBehalfOfSubID : StringField
     {
+        public const int TAG = 116;
+
         public OnBehalfOfSubID()
             :base(Tags.OnBehalfOfSubID) {}
         public OnBehalfOfSubID(string val)
@@ -2199,6 +2427,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteID : StringField
     {
+        public const int TAG = 117;
+
         public QuoteID()
             :base(Tags.QuoteID) {}
         public QuoteID(string val)
@@ -2212,6 +2442,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NetMoney : DecimalField
     {
+        public const int TAG = 118;
+
         public NetMoney()
             :base(Tags.NetMoney) {}
         public NetMoney(Decimal val)
@@ -2225,6 +2457,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlCurrAmt : DecimalField
     {
+        public const int TAG = 119;
+
         public SettlCurrAmt()
             :base(Tags.SettlCurrAmt) {}
         public SettlCurrAmt(Decimal val)
@@ -2238,6 +2472,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlCurrency : StringField
     {
+        public const int TAG = 120;
+
         public SettlCurrency()
             :base(Tags.SettlCurrency) {}
         public SettlCurrency(string val)
@@ -2251,6 +2487,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ForexReq : BooleanField
     {
+        public const int TAG = 121;
+
         public ForexReq()
             :base(Tags.ForexReq) {}
         public ForexReq(Boolean val)
@@ -2268,6 +2506,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigSendingTime : DateTimeField
     {
+        public const int TAG = 122;
+
         public OrigSendingTime()
             :base(Tags.OrigSendingTime) {}
         public OrigSendingTime(DateTime val)
@@ -2285,6 +2525,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class GapFillFlag : BooleanField
     {
+        public const int TAG = 123;
+
         public GapFillFlag()
             :base(Tags.GapFillFlag) {}
         public GapFillFlag(Boolean val)
@@ -2304,6 +2546,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoExecs : IntField
     {
+        public const int TAG = 124;
+
         public NoExecs()
             :base(Tags.NoExecs) {}
         public NoExecs(int val)
@@ -2317,6 +2561,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CxlType : CharField
     {
+        public const int TAG = 125;
+
         public CxlType()
             :base(Tags.CxlType) {}
         public CxlType(char val)
@@ -2334,6 +2580,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExpireTime : DateTimeField
     {
+        public const int TAG = 126;
+
         public ExpireTime()
             :base(Tags.ExpireTime) {}
         public ExpireTime(DateTime val)
@@ -2351,6 +2599,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DKReason : CharField
     {
+        public const int TAG = 127;
+
         public DKReason()
             :base(Tags.DKReason) {}
         public DKReason(char val)
@@ -2373,6 +2623,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeliverToCompID : StringField
     {
+        public const int TAG = 128;
+
         public DeliverToCompID()
             :base(Tags.DeliverToCompID) {}
         public DeliverToCompID(string val)
@@ -2386,6 +2638,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeliverToSubID : StringField
     {
+        public const int TAG = 129;
+
         public DeliverToSubID()
             :base(Tags.DeliverToSubID) {}
         public DeliverToSubID(string val)
@@ -2399,6 +2653,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IOINaturalFlag : BooleanField
     {
+        public const int TAG = 130;
+
         public IOINaturalFlag()
             :base(Tags.IOINaturalFlag) {}
         public IOINaturalFlag(Boolean val)
@@ -2418,6 +2674,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteReqID : StringField
     {
+        public const int TAG = 131;
+
         public QuoteReqID()
             :base(Tags.QuoteReqID) {}
         public QuoteReqID(string val)
@@ -2431,6 +2689,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidPx : DecimalField
     {
+        public const int TAG = 132;
+
         public BidPx()
             :base(Tags.BidPx) {}
         public BidPx(Decimal val)
@@ -2444,6 +2704,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OfferPx : DecimalField
     {
+        public const int TAG = 133;
+
         public OfferPx()
             :base(Tags.OfferPx) {}
         public OfferPx(Decimal val)
@@ -2457,6 +2719,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidSize : DecimalField
     {
+        public const int TAG = 134;
+
         public BidSize()
             :base(Tags.BidSize) {}
         public BidSize(Decimal val)
@@ -2470,6 +2734,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OfferSize : DecimalField
     {
+        public const int TAG = 135;
+
         public OfferSize()
             :base(Tags.OfferSize) {}
         public OfferSize(Decimal val)
@@ -2483,6 +2749,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoMiscFees : IntField
     {
+        public const int TAG = 136;
+
         public NoMiscFees()
             :base(Tags.NoMiscFees) {}
         public NoMiscFees(int val)
@@ -2496,6 +2764,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MiscFeeAmt : DecimalField
     {
+        public const int TAG = 137;
+
         public MiscFeeAmt()
             :base(Tags.MiscFeeAmt) {}
         public MiscFeeAmt(Decimal val)
@@ -2509,6 +2779,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MiscFeeCurr : StringField
     {
+        public const int TAG = 138;
+
         public MiscFeeCurr()
             :base(Tags.MiscFeeCurr) {}
         public MiscFeeCurr(string val)
@@ -2522,6 +2794,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MiscFeeType : StringField
     {
+        public const int TAG = 139;
+
         public MiscFeeType()
             :base(Tags.MiscFeeType) {}
         public MiscFeeType(string val)
@@ -2551,6 +2825,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PrevClosePx : DecimalField
     {
+        public const int TAG = 140;
+
         public PrevClosePx()
             :base(Tags.PrevClosePx) {}
         public PrevClosePx(Decimal val)
@@ -2564,6 +2840,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ResetSeqNumFlag : BooleanField
     {
+        public const int TAG = 141;
+
         public ResetSeqNumFlag()
             :base(Tags.ResetSeqNumFlag) {}
         public ResetSeqNumFlag(Boolean val)
@@ -2582,6 +2860,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SenderLocationID : StringField
     {
+        public const int TAG = 142;
+
         public SenderLocationID()
             :base(Tags.SenderLocationID) {}
         public SenderLocationID(string val)
@@ -2595,6 +2875,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TargetLocationID : StringField
     {
+        public const int TAG = 143;
+
         public TargetLocationID()
             :base(Tags.TargetLocationID) {}
         public TargetLocationID(string val)
@@ -2608,6 +2890,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OnBehalfOfLocationID : StringField
     {
+        public const int TAG = 144;
+
         public OnBehalfOfLocationID()
             :base(Tags.OnBehalfOfLocationID) {}
         public OnBehalfOfLocationID(string val)
@@ -2621,6 +2905,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeliverToLocationID : StringField
     {
+        public const int TAG = 145;
+
         public DeliverToLocationID()
             :base(Tags.DeliverToLocationID) {}
         public DeliverToLocationID(string val)
@@ -2634,6 +2920,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelatedSym : IntField
     {
+        public const int TAG = 146;
+
         public NoRelatedSym()
             :base(Tags.NoRelatedSym) {}
         public NoRelatedSym(int val)
@@ -2647,6 +2935,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Subject : StringField
     {
+        public const int TAG = 147;
+
         public Subject()
             :base(Tags.Subject) {}
         public Subject(string val)
@@ -2660,6 +2950,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Headline : StringField
     {
+        public const int TAG = 148;
+
         public Headline()
             :base(Tags.Headline) {}
         public Headline(string val)
@@ -2673,6 +2965,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class URLLink : StringField
     {
+        public const int TAG = 149;
+
         public URLLink()
             :base(Tags.URLLink) {}
         public URLLink(string val)
@@ -2686,6 +2980,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecType : CharField
     {
+        public const int TAG = 150;
+
         public ExecType()
             :base(Tags.ExecType) {}
         public ExecType(char val)
@@ -2726,6 +3022,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LeavesQty : DecimalField
     {
+        public const int TAG = 151;
+
         public LeavesQty()
             :base(Tags.LeavesQty) {}
         public LeavesQty(Decimal val)
@@ -2739,6 +3037,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashOrderQty : DecimalField
     {
+        public const int TAG = 152;
+
         public CashOrderQty()
             :base(Tags.CashOrderQty) {}
         public CashOrderQty(Decimal val)
@@ -2752,6 +3052,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocAvgPx : DecimalField
     {
+        public const int TAG = 153;
+
         public AllocAvgPx()
             :base(Tags.AllocAvgPx) {}
         public AllocAvgPx(Decimal val)
@@ -2765,6 +3067,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocNetMoney : DecimalField
     {
+        public const int TAG = 154;
+
         public AllocNetMoney()
             :base(Tags.AllocNetMoney) {}
         public AllocNetMoney(Decimal val)
@@ -2778,6 +3082,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlCurrFxRate : DecimalField
     {
+        public const int TAG = 155;
+
         public SettlCurrFxRate()
             :base(Tags.SettlCurrFxRate) {}
         public SettlCurrFxRate(Decimal val)
@@ -2791,6 +3097,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlCurrFxRateCalc : CharField
     {
+        public const int TAG = 156;
+
         public SettlCurrFxRateCalc()
             :base(Tags.SettlCurrFxRateCalc) {}
         public SettlCurrFxRateCalc(char val)
@@ -2808,6 +3116,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NumDaysInterest : IntField
     {
+        public const int TAG = 157;
+
         public NumDaysInterest()
             :base(Tags.NumDaysInterest) {}
         public NumDaysInterest(int val)
@@ -2821,6 +3131,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AccruedInterestRate : DecimalField
     {
+        public const int TAG = 158;
+
         public AccruedInterestRate()
             :base(Tags.AccruedInterestRate) {}
         public AccruedInterestRate(Decimal val)
@@ -2834,6 +3146,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AccruedInterestAmt : DecimalField
     {
+        public const int TAG = 159;
+
         public AccruedInterestAmt()
             :base(Tags.AccruedInterestAmt) {}
         public AccruedInterestAmt(Decimal val)
@@ -2847,6 +3161,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlInstMode : CharField
     {
+        public const int TAG = 160;
+
         public SettlInstMode()
             :base(Tags.SettlInstMode) {}
         public SettlInstMode(char val)
@@ -2868,6 +3184,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocText : StringField
     {
+        public const int TAG = 161;
+
         public AllocText()
             :base(Tags.AllocText) {}
         public AllocText(string val)
@@ -2881,6 +3199,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlInstID : StringField
     {
+        public const int TAG = 162;
+
         public SettlInstID()
             :base(Tags.SettlInstID) {}
         public SettlInstID(string val)
@@ -2894,6 +3214,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlInstTransType : CharField
     {
+        public const int TAG = 163;
+
         public SettlInstTransType()
             :base(Tags.SettlInstTransType) {}
         public SettlInstTransType(char val)
@@ -2913,6 +3235,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EmailThreadID : StringField
     {
+        public const int TAG = 164;
+
         public EmailThreadID()
             :base(Tags.EmailThreadID) {}
         public EmailThreadID(string val)
@@ -2926,6 +3250,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlInstSource : CharField
     {
+        public const int TAG = 165;
+
         public SettlInstSource()
             :base(Tags.SettlInstSource) {}
         public SettlInstSource(char val)
@@ -2946,6 +3272,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlLocation : StringField
     {
+        public const int TAG = 166;
+
         public SettlLocation()
             :base(Tags.SettlLocation) {}
         public SettlLocation(string val)
@@ -2970,6 +3298,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityType : StringField
     {
+        public const int TAG = 167;
+
         public SecurityType()
             :base(Tags.SecurityType) {}
         public SecurityType(string val)
@@ -3132,6 +3462,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EffectiveTime : DateTimeField
     {
+        public const int TAG = 168;
+
         public EffectiveTime()
             :base(Tags.EffectiveTime) {}
         public EffectiveTime(DateTime val)
@@ -3149,6 +3481,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StandInstDbType : IntField
     {
+        public const int TAG = 169;
+
         public StandInstDbType()
             :base(Tags.StandInstDbType) {}
         public StandInstDbType(int val)
@@ -3169,6 +3503,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StandInstDbName : StringField
     {
+        public const int TAG = 170;
+
         public StandInstDbName()
             :base(Tags.StandInstDbName) {}
         public StandInstDbName(string val)
@@ -3182,6 +3518,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StandInstDbID : StringField
     {
+        public const int TAG = 171;
+
         public StandInstDbID()
             :base(Tags.StandInstDbID) {}
         public StandInstDbID(string val)
@@ -3195,6 +3533,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlDeliveryType : IntField
     {
+        public const int TAG = 172;
+
         public SettlDeliveryType()
             :base(Tags.SettlDeliveryType) {}
         public SettlDeliveryType(int val)
@@ -3216,6 +3556,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlDepositoryCode : StringField
     {
+        public const int TAG = 173;
+
         public SettlDepositoryCode()
             :base(Tags.SettlDepositoryCode) {}
         public SettlDepositoryCode(string val)
@@ -3229,6 +3571,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlBrkrCode : StringField
     {
+        public const int TAG = 174;
+
         public SettlBrkrCode()
             :base(Tags.SettlBrkrCode) {}
         public SettlBrkrCode(string val)
@@ -3242,6 +3586,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlInstCode : StringField
     {
+        public const int TAG = 175;
+
         public SettlInstCode()
             :base(Tags.SettlInstCode) {}
         public SettlInstCode(string val)
@@ -3255,6 +3601,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecuritySettlAgentName : StringField
     {
+        public const int TAG = 176;
+
         public SecuritySettlAgentName()
             :base(Tags.SecuritySettlAgentName) {}
         public SecuritySettlAgentName(string val)
@@ -3268,6 +3616,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecuritySettlAgentCode : StringField
     {
+        public const int TAG = 177;
+
         public SecuritySettlAgentCode()
             :base(Tags.SecuritySettlAgentCode) {}
         public SecuritySettlAgentCode(string val)
@@ -3281,6 +3631,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecuritySettlAgentAcctNum : StringField
     {
+        public const int TAG = 178;
+
         public SecuritySettlAgentAcctNum()
             :base(Tags.SecuritySettlAgentAcctNum) {}
         public SecuritySettlAgentAcctNum(string val)
@@ -3294,6 +3646,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecuritySettlAgentAcctName : StringField
     {
+        public const int TAG = 179;
+
         public SecuritySettlAgentAcctName()
             :base(Tags.SecuritySettlAgentAcctName) {}
         public SecuritySettlAgentAcctName(string val)
@@ -3307,6 +3661,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecuritySettlAgentContactName : StringField
     {
+        public const int TAG = 180;
+
         public SecuritySettlAgentContactName()
             :base(Tags.SecuritySettlAgentContactName) {}
         public SecuritySettlAgentContactName(string val)
@@ -3320,6 +3676,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecuritySettlAgentContactPhone : StringField
     {
+        public const int TAG = 181;
+
         public SecuritySettlAgentContactPhone()
             :base(Tags.SecuritySettlAgentContactPhone) {}
         public SecuritySettlAgentContactPhone(string val)
@@ -3333,6 +3691,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashSettlAgentName : StringField
     {
+        public const int TAG = 182;
+
         public CashSettlAgentName()
             :base(Tags.CashSettlAgentName) {}
         public CashSettlAgentName(string val)
@@ -3346,6 +3706,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashSettlAgentCode : StringField
     {
+        public const int TAG = 183;
+
         public CashSettlAgentCode()
             :base(Tags.CashSettlAgentCode) {}
         public CashSettlAgentCode(string val)
@@ -3359,6 +3721,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashSettlAgentAcctNum : StringField
     {
+        public const int TAG = 184;
+
         public CashSettlAgentAcctNum()
             :base(Tags.CashSettlAgentAcctNum) {}
         public CashSettlAgentAcctNum(string val)
@@ -3372,6 +3736,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashSettlAgentAcctName : StringField
     {
+        public const int TAG = 185;
+
         public CashSettlAgentAcctName()
             :base(Tags.CashSettlAgentAcctName) {}
         public CashSettlAgentAcctName(string val)
@@ -3385,6 +3751,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashSettlAgentContactName : StringField
     {
+        public const int TAG = 186;
+
         public CashSettlAgentContactName()
             :base(Tags.CashSettlAgentContactName) {}
         public CashSettlAgentContactName(string val)
@@ -3398,6 +3766,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashSettlAgentContactPhone : StringField
     {
+        public const int TAG = 187;
+
         public CashSettlAgentContactPhone()
             :base(Tags.CashSettlAgentContactPhone) {}
         public CashSettlAgentContactPhone(string val)
@@ -3411,6 +3781,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidSpotRate : DecimalField
     {
+        public const int TAG = 188;
+
         public BidSpotRate()
             :base(Tags.BidSpotRate) {}
         public BidSpotRate(Decimal val)
@@ -3424,6 +3796,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidForwardPoints : DecimalField
     {
+        public const int TAG = 189;
+
         public BidForwardPoints()
             :base(Tags.BidForwardPoints) {}
         public BidForwardPoints(Decimal val)
@@ -3437,6 +3811,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OfferSpotRate : DecimalField
     {
+        public const int TAG = 190;
+
         public OfferSpotRate()
             :base(Tags.OfferSpotRate) {}
         public OfferSpotRate(Decimal val)
@@ -3450,6 +3826,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OfferForwardPoints : DecimalField
     {
+        public const int TAG = 191;
+
         public OfferForwardPoints()
             :base(Tags.OfferForwardPoints) {}
         public OfferForwardPoints(Decimal val)
@@ -3463,6 +3841,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderQty2 : DecimalField
     {
+        public const int TAG = 192;
+
         public OrderQty2()
             :base(Tags.OrderQty2) {}
         public OrderQty2(Decimal val)
@@ -3476,6 +3856,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FutSettDate2 : StringField
     {
+        public const int TAG = 193;
+
         public FutSettDate2()
             :base(Tags.FutSettDate2) {}
         public FutSettDate2(string val)
@@ -3489,6 +3871,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastSpotRate : DecimalField
     {
+        public const int TAG = 194;
+
         public LastSpotRate()
             :base(Tags.LastSpotRate) {}
         public LastSpotRate(Decimal val)
@@ -3502,6 +3886,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastForwardPoints : DecimalField
     {
+        public const int TAG = 195;
+
         public LastForwardPoints()
             :base(Tags.LastForwardPoints) {}
         public LastForwardPoints(Decimal val)
@@ -3515,6 +3901,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocLinkID : StringField
     {
+        public const int TAG = 196;
+
         public AllocLinkID()
             :base(Tags.AllocLinkID) {}
         public AllocLinkID(string val)
@@ -3528,6 +3916,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocLinkType : IntField
     {
+        public const int TAG = 197;
+
         public AllocLinkType()
             :base(Tags.AllocLinkType) {}
         public AllocLinkType(int val)
@@ -3547,6 +3937,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryOrderID : StringField
     {
+        public const int TAG = 198;
+
         public SecondaryOrderID()
             :base(Tags.SecondaryOrderID) {}
         public SecondaryOrderID(string val)
@@ -3560,6 +3952,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoIOIQualifiers : IntField
     {
+        public const int TAG = 199;
+
         public NoIOIQualifiers()
             :base(Tags.NoIOIQualifiers) {}
         public NoIOIQualifiers(int val)
@@ -3573,6 +3967,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaturityMonthYear : StringField
     {
+        public const int TAG = 200;
+
         public MaturityMonthYear()
             :base(Tags.MaturityMonthYear) {}
         public MaturityMonthYear(string val)
@@ -3586,6 +3982,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PutOrCall : IntField
     {
+        public const int TAG = 201;
+
         public PutOrCall()
             :base(Tags.PutOrCall) {}
         public PutOrCall(int val)
@@ -3603,6 +4001,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikePrice : DecimalField
     {
+        public const int TAG = 202;
+
         public StrikePrice()
             :base(Tags.StrikePrice) {}
         public StrikePrice(Decimal val)
@@ -3616,6 +4016,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CoveredOrUncovered : IntField
     {
+        public const int TAG = 203;
+
         public CoveredOrUncovered()
             :base(Tags.CoveredOrUncovered) {}
         public CoveredOrUncovered(int val)
@@ -3633,6 +4035,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CustomerOrFirm : IntField
     {
+        public const int TAG = 204;
+
         public CustomerOrFirm()
             :base(Tags.CustomerOrFirm) {}
         public CustomerOrFirm(int val)
@@ -3650,6 +4054,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaturityDay : StringField
     {
+        public const int TAG = 205;
+
         public MaturityDay()
             :base(Tags.MaturityDay) {}
         public MaturityDay(string val)
@@ -3663,6 +4069,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OptAttribute : CharField
     {
+        public const int TAG = 206;
+
         public OptAttribute()
             :base(Tags.OptAttribute) {}
         public OptAttribute(char val)
@@ -3676,6 +4084,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityExchange : StringField
     {
+        public const int TAG = 207;
+
         public SecurityExchange()
             :base(Tags.SecurityExchange) {}
         public SecurityExchange(string val)
@@ -3689,6 +4099,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NotifyBrokerOfCredit : BooleanField
     {
+        public const int TAG = 208;
+
         public NotifyBrokerOfCredit()
             :base(Tags.NotifyBrokerOfCredit) {}
         public NotifyBrokerOfCredit(Boolean val)
@@ -3708,6 +4120,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocHandlInst : IntField
     {
+        public const int TAG = 209;
+
         public AllocHandlInst()
             :base(Tags.AllocHandlInst) {}
         public AllocHandlInst(int val)
@@ -3726,6 +4140,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaxShow : DecimalField
     {
+        public const int TAG = 210;
+
         public MaxShow()
             :base(Tags.MaxShow) {}
         public MaxShow(Decimal val)
@@ -3739,6 +4155,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegDifference : DecimalField
     {
+        public const int TAG = 211;
+
         public PegDifference()
             :base(Tags.PegDifference) {}
         public PegDifference(Decimal val)
@@ -3752,6 +4170,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoOrders : IntField
     {
+        public const int TAG = 68;
+
         public TotNoOrders()
             :base(Tags.TotNoOrders) {}
         public TotNoOrders(int val)
@@ -3765,6 +4185,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class XmlDataLen : IntField
     {
+        public const int TAG = 212;
+
         public XmlDataLen()
             :base(Tags.XmlDataLen) {}
         public XmlDataLen(int val)
@@ -3778,6 +4200,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class XmlData : StringField
     {
+        public const int TAG = 213;
+
         public XmlData()
             :base(Tags.XmlData) {}
         public XmlData(string val)
@@ -3791,6 +4215,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlInstRefID : StringField
     {
+        public const int TAG = 214;
+
         public SettlInstRefID()
             :base(Tags.SettlInstRefID) {}
         public SettlInstRefID(string val)
@@ -3804,6 +4230,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRoutingIDs : IntField
     {
+        public const int TAG = 215;
+
         public NoRoutingIDs()
             :base(Tags.NoRoutingIDs) {}
         public NoRoutingIDs(int val)
@@ -3817,6 +4245,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RoutingType : IntField
     {
+        public const int TAG = 216;
+
         public RoutingType()
             :base(Tags.RoutingType) {}
         public RoutingType(int val)
@@ -3836,6 +4266,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RoutingID : StringField
     {
+        public const int TAG = 217;
+
         public RoutingID()
             :base(Tags.RoutingID) {}
         public RoutingID(string val)
@@ -3849,6 +4281,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SpreadToBenchmark : DecimalField
     {
+        public const int TAG = 218;
+
         public SpreadToBenchmark()
             :base(Tags.SpreadToBenchmark) {}
         public SpreadToBenchmark(Decimal val)
@@ -3862,6 +4296,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Benchmark : CharField
     {
+        public const int TAG = 219;
+
         public Benchmark()
             :base(Tags.Benchmark) {}
         public Benchmark(char val)
@@ -3891,6 +4327,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CouponRate : DecimalField
     {
+        public const int TAG = 223;
+
         public CouponRate()
             :base(Tags.CouponRate) {}
         public CouponRate(Decimal val)
@@ -3904,6 +4342,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContractMultiplier : DecimalField
     {
+        public const int TAG = 231;
+
         public ContractMultiplier()
             :base(Tags.ContractMultiplier) {}
         public ContractMultiplier(Decimal val)
@@ -3917,6 +4357,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDReqID : StringField
     {
+        public const int TAG = 262;
+
         public MDReqID()
             :base(Tags.MDReqID) {}
         public MDReqID(string val)
@@ -3930,6 +4372,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SubscriptionRequestType : CharField
     {
+        public const int TAG = 263;
+
         public SubscriptionRequestType()
             :base(Tags.SubscriptionRequestType) {}
         public SubscriptionRequestType(char val)
@@ -3949,6 +4393,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MarketDepth : IntField
     {
+        public const int TAG = 264;
+
         public MarketDepth()
             :base(Tags.MarketDepth) {}
         public MarketDepth(int val)
@@ -3962,6 +4408,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDUpdateType : IntField
     {
+        public const int TAG = 265;
+
         public MDUpdateType()
             :base(Tags.MDUpdateType) {}
         public MDUpdateType(int val)
@@ -3979,6 +4427,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AggregatedBook : BooleanField
     {
+        public const int TAG = 266;
+
         public AggregatedBook()
             :base(Tags.AggregatedBook) {}
         public AggregatedBook(Boolean val)
@@ -3998,6 +4448,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoMDEntryTypes : IntField
     {
+        public const int TAG = 267;
+
         public NoMDEntryTypes()
             :base(Tags.NoMDEntryTypes) {}
         public NoMDEntryTypes(int val)
@@ -4011,6 +4463,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoMDEntries : IntField
     {
+        public const int TAG = 268;
+
         public NoMDEntries()
             :base(Tags.NoMDEntries) {}
         public NoMDEntries(int val)
@@ -4024,6 +4478,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntryType : CharField
     {
+        public const int TAG = 269;
+
         public MDEntryType()
             :base(Tags.MDEntryType) {}
         public MDEntryType(char val)
@@ -4075,6 +4531,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntryPx : DecimalField
     {
+        public const int TAG = 270;
+
         public MDEntryPx()
             :base(Tags.MDEntryPx) {}
         public MDEntryPx(Decimal val)
@@ -4088,6 +4546,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntrySize : DecimalField
     {
+        public const int TAG = 271;
+
         public MDEntrySize()
             :base(Tags.MDEntrySize) {}
         public MDEntrySize(Decimal val)
@@ -4101,6 +4561,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntryDate : DateOnlyField
     {
+        public const int TAG = 272;
+
         public MDEntryDate()
             :base(Tags.MDEntryDate) {}
         public MDEntryDate(DateTime val)
@@ -4114,6 +4576,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntryTime : TimeOnlyField
     {
+        public const int TAG = 273;
+
         public MDEntryTime()
             :base(Tags.MDEntryTime) {}
         public MDEntryTime(DateTime val)
@@ -4131,6 +4595,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TickDirection : CharField
     {
+        public const int TAG = 274;
+
         public TickDirection()
             :base(Tags.TickDirection) {}
         public TickDirection(char val)
@@ -4152,6 +4618,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDMkt : StringField
     {
+        public const int TAG = 275;
+
         public MDMkt()
             :base(Tags.MDMkt) {}
         public MDMkt(string val)
@@ -4165,6 +4633,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteCondition : StringField
     {
+        public const int TAG = 276;
+
         public QuoteCondition()
             :base(Tags.QuoteCondition) {}
         public QuoteCondition(string val)
@@ -4243,6 +4713,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeCondition : StringField
     {
+        public const int TAG = 277;
+
         public TradeCondition()
             :base(Tags.TradeCondition) {}
         public TradeCondition(string val)
@@ -4340,6 +4812,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntryID : StringField
     {
+        public const int TAG = 278;
+
         public MDEntryID()
             :base(Tags.MDEntryID) {}
         public MDEntryID(string val)
@@ -4353,6 +4827,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDUpdateAction : CharField
     {
+        public const int TAG = 279;
+
         public MDUpdateAction()
             :base(Tags.MDUpdateAction) {}
         public MDUpdateAction(char val)
@@ -4374,6 +4850,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntryRefID : StringField
     {
+        public const int TAG = 280;
+
         public MDEntryRefID()
             :base(Tags.MDEntryRefID) {}
         public MDEntryRefID(string val)
@@ -4387,6 +4865,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDReqRejReason : CharField
     {
+        public const int TAG = 281;
+
         public MDReqRejReason()
             :base(Tags.MDReqRejReason) {}
         public MDReqRejReason(char val)
@@ -4416,6 +4896,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntryOriginator : StringField
     {
+        public const int TAG = 282;
+
         public MDEntryOriginator()
             :base(Tags.MDEntryOriginator) {}
         public MDEntryOriginator(string val)
@@ -4429,6 +4911,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LocationID : StringField
     {
+        public const int TAG = 283;
+
         public LocationID()
             :base(Tags.LocationID) {}
         public LocationID(string val)
@@ -4442,6 +4926,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeskID : StringField
     {
+        public const int TAG = 284;
+
         public DeskID()
             :base(Tags.DeskID) {}
         public DeskID(string val)
@@ -4455,6 +4941,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeleteReason : CharField
     {
+        public const int TAG = 285;
+
         public DeleteReason()
             :base(Tags.DeleteReason) {}
         public DeleteReason(char val)
@@ -4474,6 +4962,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OpenCloseSettleFlag : StringField
     {
+        public const int TAG = 286;
+
         public OpenCloseSettleFlag()
             :base(Tags.OpenCloseSettleFlag) {}
         public OpenCloseSettleFlag(string val)
@@ -4496,6 +4986,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SellerDays : IntField
     {
+        public const int TAG = 287;
+
         public SellerDays()
             :base(Tags.SellerDays) {}
         public SellerDays(int val)
@@ -4509,6 +5001,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntryBuyer : StringField
     {
+        public const int TAG = 288;
+
         public MDEntryBuyer()
             :base(Tags.MDEntryBuyer) {}
         public MDEntryBuyer(string val)
@@ -4522,6 +5016,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntrySeller : StringField
     {
+        public const int TAG = 289;
+
         public MDEntrySeller()
             :base(Tags.MDEntrySeller) {}
         public MDEntrySeller(string val)
@@ -4535,6 +5031,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntryPositionNo : IntField
     {
+        public const int TAG = 290;
+
         public MDEntryPositionNo()
             :base(Tags.MDEntryPositionNo) {}
         public MDEntryPositionNo(int val)
@@ -4548,6 +5046,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FinancialStatus : StringField
     {
+        public const int TAG = 291;
+
         public FinancialStatus()
             :base(Tags.FinancialStatus) {}
         public FinancialStatus(string val)
@@ -4566,6 +5066,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CorporateAction : StringField
     {
+        public const int TAG = 292;
+
         public CorporateAction()
             :base(Tags.CorporateAction) {}
         public CorporateAction(string val)
@@ -4608,6 +5110,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DefBidSize : DecimalField
     {
+        public const int TAG = 293;
+
         public DefBidSize()
             :base(Tags.DefBidSize) {}
         public DefBidSize(Decimal val)
@@ -4621,6 +5125,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DefOfferSize : DecimalField
     {
+        public const int TAG = 294;
+
         public DefOfferSize()
             :base(Tags.DefOfferSize) {}
         public DefOfferSize(Decimal val)
@@ -4634,6 +5140,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoQuoteEntries : IntField
     {
+        public const int TAG = 295;
+
         public NoQuoteEntries()
             :base(Tags.NoQuoteEntries) {}
         public NoQuoteEntries(int val)
@@ -4647,6 +5155,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoQuoteSets : IntField
     {
+        public const int TAG = 296;
+
         public NoQuoteSets()
             :base(Tags.NoQuoteSets) {}
         public NoQuoteSets(int val)
@@ -4660,6 +5170,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteAckStatus : IntField
     {
+        public const int TAG = 297;
+
         public QuoteAckStatus()
             :base(Tags.QuoteAckStatus) {}
         public QuoteAckStatus(int val)
@@ -4673,6 +5185,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteCancelType : IntField
     {
+        public const int TAG = 298;
+
         public QuoteCancelType()
             :base(Tags.QuoteCancelType) {}
         public QuoteCancelType(int val)
@@ -4698,6 +5212,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteEntryID : StringField
     {
+        public const int TAG = 299;
+
         public QuoteEntryID()
             :base(Tags.QuoteEntryID) {}
         public QuoteEntryID(string val)
@@ -4711,6 +5227,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteRejectReason : IntField
     {
+        public const int TAG = 300;
+
         public QuoteRejectReason()
             :base(Tags.QuoteRejectReason) {}
         public QuoteRejectReason(int val)
@@ -4742,6 +5260,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteResponseLevel : IntField
     {
+        public const int TAG = 301;
+
         public QuoteResponseLevel()
             :base(Tags.QuoteResponseLevel) {}
         public QuoteResponseLevel(int val)
@@ -4762,6 +5282,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteSetID : StringField
     {
+        public const int TAG = 302;
+
         public QuoteSetID()
             :base(Tags.QuoteSetID) {}
         public QuoteSetID(string val)
@@ -4775,6 +5297,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteRequestType : IntField
     {
+        public const int TAG = 303;
+
         public QuoteRequestType()
             :base(Tags.QuoteRequestType) {}
         public QuoteRequestType(int val)
@@ -4792,6 +5316,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotQuoteEntries : IntField
     {
+        public const int TAG = 304;
+
         public TotQuoteEntries()
             :base(Tags.TotQuoteEntries) {}
         public TotQuoteEntries(int val)
@@ -4805,6 +5331,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingIDSource : StringField
     {
+        public const int TAG = 305;
+
         public UnderlyingIDSource()
             :base(Tags.UnderlyingIDSource) {}
         public UnderlyingIDSource(string val)
@@ -4818,6 +5346,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingIssuer : StringField
     {
+        public const int TAG = 306;
+
         public UnderlyingIssuer()
             :base(Tags.UnderlyingIssuer) {}
         public UnderlyingIssuer(string val)
@@ -4831,6 +5361,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSecurityDesc : StringField
     {
+        public const int TAG = 307;
+
         public UnderlyingSecurityDesc()
             :base(Tags.UnderlyingSecurityDesc) {}
         public UnderlyingSecurityDesc(string val)
@@ -4844,6 +5376,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSecurityExchange : StringField
     {
+        public const int TAG = 308;
+
         public UnderlyingSecurityExchange()
             :base(Tags.UnderlyingSecurityExchange) {}
         public UnderlyingSecurityExchange(string val)
@@ -4857,6 +5391,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSecurityID : StringField
     {
+        public const int TAG = 309;
+
         public UnderlyingSecurityID()
             :base(Tags.UnderlyingSecurityID) {}
         public UnderlyingSecurityID(string val)
@@ -4870,6 +5406,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSecurityType : StringField
     {
+        public const int TAG = 310;
+
         public UnderlyingSecurityType()
             :base(Tags.UnderlyingSecurityType) {}
         public UnderlyingSecurityType(string val)
@@ -4883,6 +5421,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSymbol : StringField
     {
+        public const int TAG = 311;
+
         public UnderlyingSymbol()
             :base(Tags.UnderlyingSymbol) {}
         public UnderlyingSymbol(string val)
@@ -4896,6 +5436,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSymbolSfx : StringField
     {
+        public const int TAG = 312;
+
         public UnderlyingSymbolSfx()
             :base(Tags.UnderlyingSymbolSfx) {}
         public UnderlyingSymbolSfx(string val)
@@ -4909,6 +5451,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingMaturityMonthYear : StringField
     {
+        public const int TAG = 313;
+
         public UnderlyingMaturityMonthYear()
             :base(Tags.UnderlyingMaturityMonthYear) {}
         public UnderlyingMaturityMonthYear(string val)
@@ -4922,6 +5466,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingMaturityDay : StringField
     {
+        public const int TAG = 314;
+
         public UnderlyingMaturityDay()
             :base(Tags.UnderlyingMaturityDay) {}
         public UnderlyingMaturityDay(string val)
@@ -4935,6 +5481,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingPutOrCall : IntField
     {
+        public const int TAG = 315;
+
         public UnderlyingPutOrCall()
             :base(Tags.UnderlyingPutOrCall) {}
         public UnderlyingPutOrCall(int val)
@@ -4952,6 +5500,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingStrikePrice : DecimalField
     {
+        public const int TAG = 316;
+
         public UnderlyingStrikePrice()
             :base(Tags.UnderlyingStrikePrice) {}
         public UnderlyingStrikePrice(Decimal val)
@@ -4965,6 +5515,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingOptAttribute : CharField
     {
+        public const int TAG = 317;
+
         public UnderlyingOptAttribute()
             :base(Tags.UnderlyingOptAttribute) {}
         public UnderlyingOptAttribute(char val)
@@ -4978,6 +5530,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCurrency : StringField
     {
+        public const int TAG = 318;
+
         public UnderlyingCurrency()
             :base(Tags.UnderlyingCurrency) {}
         public UnderlyingCurrency(string val)
@@ -4991,6 +5545,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RatioQty : DecimalField
     {
+        public const int TAG = 319;
+
         public RatioQty()
             :base(Tags.RatioQty) {}
         public RatioQty(Decimal val)
@@ -5004,6 +5560,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityReqID : StringField
     {
+        public const int TAG = 320;
+
         public SecurityReqID()
             :base(Tags.SecurityReqID) {}
         public SecurityReqID(string val)
@@ -5017,6 +5575,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityRequestType : IntField
     {
+        public const int TAG = 321;
+
         public SecurityRequestType()
             :base(Tags.SecurityRequestType) {}
         public SecurityRequestType(int val)
@@ -5042,6 +5602,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityResponseID : StringField
     {
+        public const int TAG = 322;
+
         public SecurityResponseID()
             :base(Tags.SecurityResponseID) {}
         public SecurityResponseID(string val)
@@ -5055,6 +5617,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityResponseType : IntField
     {
+        public const int TAG = 323;
+
         public SecurityResponseType()
             :base(Tags.SecurityResponseType) {}
         public SecurityResponseType(int val)
@@ -5077,6 +5641,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityStatusReqID : StringField
     {
+        public const int TAG = 324;
+
         public SecurityStatusReqID()
             :base(Tags.SecurityStatusReqID) {}
         public SecurityStatusReqID(string val)
@@ -5090,6 +5656,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnsolicitedIndicator : BooleanField
     {
+        public const int TAG = 325;
+
         public UnsolicitedIndicator()
             :base(Tags.UnsolicitedIndicator) {}
         public UnsolicitedIndicator(Boolean val)
@@ -5109,6 +5677,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityTradingStatus : IntField
     {
+        public const int TAG = 326;
+
         public SecurityTradingStatus()
             :base(Tags.SecurityTradingStatus) {}
         public SecurityTradingStatus(int val)
@@ -5156,6 +5726,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HaltReason : CharField
     {
+        public const int TAG = 327;
+
         public HaltReason()
             :base(Tags.HaltReason) {}
         public HaltReason(char val)
@@ -5177,6 +5749,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InViewOfCommon : BooleanField
     {
+        public const int TAG = 328;
+
         public InViewOfCommon()
             :base(Tags.InViewOfCommon) {}
         public InViewOfCommon(Boolean val)
@@ -5196,6 +5770,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DueToRelated : BooleanField
     {
+        public const int TAG = 329;
+
         public DueToRelated()
             :base(Tags.DueToRelated) {}
         public DueToRelated(Boolean val)
@@ -5215,6 +5791,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BuyVolume : DecimalField
     {
+        public const int TAG = 330;
+
         public BuyVolume()
             :base(Tags.BuyVolume) {}
         public BuyVolume(Decimal val)
@@ -5228,6 +5806,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SellVolume : DecimalField
     {
+        public const int TAG = 331;
+
         public SellVolume()
             :base(Tags.SellVolume) {}
         public SellVolume(Decimal val)
@@ -5241,6 +5821,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HighPx : DecimalField
     {
+        public const int TAG = 332;
+
         public HighPx()
             :base(Tags.HighPx) {}
         public HighPx(Decimal val)
@@ -5254,6 +5836,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LowPx : DecimalField
     {
+        public const int TAG = 333;
+
         public LowPx()
             :base(Tags.LowPx) {}
         public LowPx(Decimal val)
@@ -5267,6 +5851,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Adjustment : IntField
     {
+        public const int TAG = 334;
+
         public Adjustment()
             :base(Tags.Adjustment) {}
         public Adjustment(int val)
@@ -5285,6 +5871,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesReqID : StringField
     {
+        public const int TAG = 335;
+
         public TradSesReqID()
             :base(Tags.TradSesReqID) {}
         public TradSesReqID(string val)
@@ -5298,6 +5886,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradingSessionID : StringField
     {
+        public const int TAG = 336;
+
         public TradingSessionID()
             :base(Tags.TradingSessionID) {}
         public TradingSessionID(string val)
@@ -5319,6 +5909,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContraTrader : StringField
     {
+        public const int TAG = 337;
+
         public ContraTrader()
             :base(Tags.ContraTrader) {}
         public ContraTrader(string val)
@@ -5332,6 +5924,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesMethod : IntField
     {
+        public const int TAG = 338;
+
         public TradSesMethod()
             :base(Tags.TradSesMethod) {}
         public TradSesMethod(int val)
@@ -5350,6 +5944,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesMode : IntField
     {
+        public const int TAG = 339;
+
         public TradSesMode()
             :base(Tags.TradSesMode) {}
         public TradSesMode(int val)
@@ -5368,6 +5964,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesStatus : IntField
     {
+        public const int TAG = 340;
+
         public TradSesStatus()
             :base(Tags.TradSesStatus) {}
         public TradSesStatus(int val)
@@ -5392,6 +5990,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesStartTime : DateTimeField
     {
+        public const int TAG = 341;
+
         public TradSesStartTime()
             :base(Tags.TradSesStartTime) {}
         public TradSesStartTime(DateTime val)
@@ -5409,6 +6009,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesOpenTime : DateTimeField
     {
+        public const int TAG = 342;
+
         public TradSesOpenTime()
             :base(Tags.TradSesOpenTime) {}
         public TradSesOpenTime(DateTime val)
@@ -5426,6 +6028,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesPreCloseTime : DateTimeField
     {
+        public const int TAG = 343;
+
         public TradSesPreCloseTime()
             :base(Tags.TradSesPreCloseTime) {}
         public TradSesPreCloseTime(DateTime val)
@@ -5443,6 +6047,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesCloseTime : DateTimeField
     {
+        public const int TAG = 344;
+
         public TradSesCloseTime()
             :base(Tags.TradSesCloseTime) {}
         public TradSesCloseTime(DateTime val)
@@ -5460,6 +6066,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesEndTime : DateTimeField
     {
+        public const int TAG = 345;
+
         public TradSesEndTime()
             :base(Tags.TradSesEndTime) {}
         public TradSesEndTime(DateTime val)
@@ -5477,6 +6085,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NumberOfOrders : IntField
     {
+        public const int TAG = 346;
+
         public NumberOfOrders()
             :base(Tags.NumberOfOrders) {}
         public NumberOfOrders(int val)
@@ -5490,6 +6100,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MessageEncoding : StringField
     {
+        public const int TAG = 347;
+
         public MessageEncoding()
             :base(Tags.MessageEncoding) {}
         public MessageEncoding(string val)
@@ -5509,6 +6121,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedIssuerLen : IntField
     {
+        public const int TAG = 348;
+
         public EncodedIssuerLen()
             :base(Tags.EncodedIssuerLen) {}
         public EncodedIssuerLen(int val)
@@ -5522,6 +6136,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedIssuer : StringField
     {
+        public const int TAG = 349;
+
         public EncodedIssuer()
             :base(Tags.EncodedIssuer) {}
         public EncodedIssuer(string val)
@@ -5535,6 +6151,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedSecurityDescLen : IntField
     {
+        public const int TAG = 350;
+
         public EncodedSecurityDescLen()
             :base(Tags.EncodedSecurityDescLen) {}
         public EncodedSecurityDescLen(int val)
@@ -5548,6 +6166,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedSecurityDesc : StringField
     {
+        public const int TAG = 351;
+
         public EncodedSecurityDesc()
             :base(Tags.EncodedSecurityDesc) {}
         public EncodedSecurityDesc(string val)
@@ -5561,6 +6181,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedListExecInstLen : IntField
     {
+        public const int TAG = 352;
+
         public EncodedListExecInstLen()
             :base(Tags.EncodedListExecInstLen) {}
         public EncodedListExecInstLen(int val)
@@ -5574,6 +6196,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedListExecInst : StringField
     {
+        public const int TAG = 353;
+
         public EncodedListExecInst()
             :base(Tags.EncodedListExecInst) {}
         public EncodedListExecInst(string val)
@@ -5587,6 +6211,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedTextLen : IntField
     {
+        public const int TAG = 354;
+
         public EncodedTextLen()
             :base(Tags.EncodedTextLen) {}
         public EncodedTextLen(int val)
@@ -5600,6 +6226,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedText : StringField
     {
+        public const int TAG = 355;
+
         public EncodedText()
             :base(Tags.EncodedText) {}
         public EncodedText(string val)
@@ -5613,6 +6241,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedSubjectLen : IntField
     {
+        public const int TAG = 356;
+
         public EncodedSubjectLen()
             :base(Tags.EncodedSubjectLen) {}
         public EncodedSubjectLen(int val)
@@ -5626,6 +6256,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedSubject : StringField
     {
+        public const int TAG = 357;
+
         public EncodedSubject()
             :base(Tags.EncodedSubject) {}
         public EncodedSubject(string val)
@@ -5639,6 +6271,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedHeadlineLen : IntField
     {
+        public const int TAG = 358;
+
         public EncodedHeadlineLen()
             :base(Tags.EncodedHeadlineLen) {}
         public EncodedHeadlineLen(int val)
@@ -5652,6 +6286,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedHeadline : StringField
     {
+        public const int TAG = 359;
+
         public EncodedHeadline()
             :base(Tags.EncodedHeadline) {}
         public EncodedHeadline(string val)
@@ -5665,6 +6301,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedAllocTextLen : IntField
     {
+        public const int TAG = 360;
+
         public EncodedAllocTextLen()
             :base(Tags.EncodedAllocTextLen) {}
         public EncodedAllocTextLen(int val)
@@ -5678,6 +6316,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedAllocText : StringField
     {
+        public const int TAG = 361;
+
         public EncodedAllocText()
             :base(Tags.EncodedAllocText) {}
         public EncodedAllocText(string val)
@@ -5691,6 +6331,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedUnderlyingIssuerLen : IntField
     {
+        public const int TAG = 362;
+
         public EncodedUnderlyingIssuerLen()
             :base(Tags.EncodedUnderlyingIssuerLen) {}
         public EncodedUnderlyingIssuerLen(int val)
@@ -5704,6 +6346,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedUnderlyingIssuer : StringField
     {
+        public const int TAG = 363;
+
         public EncodedUnderlyingIssuer()
             :base(Tags.EncodedUnderlyingIssuer) {}
         public EncodedUnderlyingIssuer(string val)
@@ -5717,6 +6361,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedUnderlyingSecurityDescLen : IntField
     {
+        public const int TAG = 364;
+
         public EncodedUnderlyingSecurityDescLen()
             :base(Tags.EncodedUnderlyingSecurityDescLen) {}
         public EncodedUnderlyingSecurityDescLen(int val)
@@ -5730,6 +6376,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedUnderlyingSecurityDesc : StringField
     {
+        public const int TAG = 365;
+
         public EncodedUnderlyingSecurityDesc()
             :base(Tags.EncodedUnderlyingSecurityDesc) {}
         public EncodedUnderlyingSecurityDesc(string val)
@@ -5743,6 +6391,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocPrice : DecimalField
     {
+        public const int TAG = 366;
+
         public AllocPrice()
             :base(Tags.AllocPrice) {}
         public AllocPrice(Decimal val)
@@ -5756,6 +6406,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteSetValidUntilTime : DateTimeField
     {
+        public const int TAG = 367;
+
         public QuoteSetValidUntilTime()
             :base(Tags.QuoteSetValidUntilTime) {}
         public QuoteSetValidUntilTime(DateTime val)
@@ -5773,6 +6425,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteEntryRejectReason : IntField
     {
+        public const int TAG = 368;
+
         public QuoteEntryRejectReason()
             :base(Tags.QuoteEntryRejectReason) {}
         public QuoteEntryRejectReason(int val)
@@ -5802,6 +6456,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastMsgSeqNumProcessed : IntField
     {
+        public const int TAG = 369;
+
         public LastMsgSeqNumProcessed()
             :base(Tags.LastMsgSeqNumProcessed) {}
         public LastMsgSeqNumProcessed(int val)
@@ -5815,6 +6471,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OnBehalfOfSendingTime : DateTimeField
     {
+        public const int TAG = 370;
+
         public OnBehalfOfSendingTime()
             :base(Tags.OnBehalfOfSendingTime) {}
         public OnBehalfOfSendingTime(DateTime val)
@@ -5832,6 +6490,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefTagID : IntField
     {
+        public const int TAG = 371;
+
         public RefTagID()
             :base(Tags.RefTagID) {}
         public RefTagID(int val)
@@ -5845,6 +6505,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefMsgType : StringField
     {
+        public const int TAG = 372;
+
         public RefMsgType()
             :base(Tags.RefMsgType) {}
         public RefMsgType(string val)
@@ -5858,6 +6520,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SessionRejectReason : IntField
     {
+        public const int TAG = 373;
+
         public SessionRejectReason()
             :base(Tags.SessionRejectReason) {}
         public SessionRejectReason(int val)
@@ -5894,6 +6558,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidRequestTransType : CharField
     {
+        public const int TAG = 374;
+
         public BidRequestTransType()
             :base(Tags.BidRequestTransType) {}
         public BidRequestTransType(char val)
@@ -5912,6 +6578,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContraBroker : StringField
     {
+        public const int TAG = 375;
+
         public ContraBroker()
             :base(Tags.ContraBroker) {}
         public ContraBroker(string val)
@@ -5925,6 +6593,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplianceID : StringField
     {
+        public const int TAG = 376;
+
         public ComplianceID()
             :base(Tags.ComplianceID) {}
         public ComplianceID(string val)
@@ -5938,6 +6608,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SolicitedFlag : BooleanField
     {
+        public const int TAG = 377;
+
         public SolicitedFlag()
             :base(Tags.SolicitedFlag) {}
         public SolicitedFlag(Boolean val)
@@ -5957,6 +6629,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecRestatementReason : IntField
     {
+        public const int TAG = 378;
+
         public ExecRestatementReason()
             :base(Tags.ExecRestatementReason) {}
         public ExecRestatementReason(int val)
@@ -5987,6 +6661,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BusinessRejectRefID : StringField
     {
+        public const int TAG = 379;
+
         public BusinessRejectRefID()
             :base(Tags.BusinessRejectRefID) {}
         public BusinessRejectRefID(string val)
@@ -6000,6 +6676,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BusinessRejectReason : IntField
     {
+        public const int TAG = 380;
+
         public BusinessRejectReason()
             :base(Tags.BusinessRejectReason) {}
         public BusinessRejectReason(int val)
@@ -6026,6 +6704,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class GrossTradeAmt : DecimalField
     {
+        public const int TAG = 381;
+
         public GrossTradeAmt()
             :base(Tags.GrossTradeAmt) {}
         public GrossTradeAmt(Decimal val)
@@ -6039,6 +6719,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoContraBrokers : IntField
     {
+        public const int TAG = 382;
+
         public NoContraBrokers()
             :base(Tags.NoContraBrokers) {}
         public NoContraBrokers(int val)
@@ -6052,6 +6734,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaxMessageSize : IntField
     {
+        public const int TAG = 383;
+
         public MaxMessageSize()
             :base(Tags.MaxMessageSize) {}
         public MaxMessageSize(int val)
@@ -6065,6 +6749,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoMsgTypes : IntField
     {
+        public const int TAG = 384;
+
         public NoMsgTypes()
             :base(Tags.NoMsgTypes) {}
         public NoMsgTypes(int val)
@@ -6078,6 +6764,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MsgDirection : CharField
     {
+        public const int TAG = 385;
+
         public MsgDirection()
             :base(Tags.MsgDirection) {}
         public MsgDirection(char val)
@@ -6095,6 +6783,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoTradingSessions : IntField
     {
+        public const int TAG = 386;
+
         public NoTradingSessions()
             :base(Tags.NoTradingSessions) {}
         public NoTradingSessions(int val)
@@ -6108,6 +6798,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotalVolumeTraded : DecimalField
     {
+        public const int TAG = 387;
+
         public TotalVolumeTraded()
             :base(Tags.TotalVolumeTraded) {}
         public TotalVolumeTraded(Decimal val)
@@ -6121,6 +6813,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DiscretionInst : CharField
     {
+        public const int TAG = 388;
+
         public DiscretionInst()
             :base(Tags.DiscretionInst) {}
         public DiscretionInst(char val)
@@ -6144,6 +6838,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DiscretionOffset : DecimalField
     {
+        public const int TAG = 389;
+
         public DiscretionOffset()
             :base(Tags.DiscretionOffset) {}
         public DiscretionOffset(Decimal val)
@@ -6157,6 +6853,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidID : StringField
     {
+        public const int TAG = 390;
+
         public BidID()
             :base(Tags.BidID) {}
         public BidID(string val)
@@ -6170,6 +6868,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ClientBidID : StringField
     {
+        public const int TAG = 391;
+
         public ClientBidID()
             :base(Tags.ClientBidID) {}
         public ClientBidID(string val)
@@ -6183,6 +6883,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListName : StringField
     {
+        public const int TAG = 392;
+
         public ListName()
             :base(Tags.ListName) {}
         public ListName(string val)
@@ -6196,6 +6898,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotalNumSecurities : IntField
     {
+        public const int TAG = 393;
+
         public TotalNumSecurities()
             :base(Tags.TotalNumSecurities) {}
         public TotalNumSecurities(int val)
@@ -6209,6 +6913,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidType : IntField
     {
+        public const int TAG = 394;
+
         public BidType()
             :base(Tags.BidType) {}
         public BidType(int val)
@@ -6229,6 +6935,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NumTickets : IntField
     {
+        public const int TAG = 395;
+
         public NumTickets()
             :base(Tags.NumTickets) {}
         public NumTickets(int val)
@@ -6242,6 +6950,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideValue1 : DecimalField
     {
+        public const int TAG = 396;
+
         public SideValue1()
             :base(Tags.SideValue1) {}
         public SideValue1(Decimal val)
@@ -6255,6 +6965,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideValue2 : DecimalField
     {
+        public const int TAG = 397;
+
         public SideValue2()
             :base(Tags.SideValue2) {}
         public SideValue2(Decimal val)
@@ -6268,6 +6980,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoBidDescriptors : IntField
     {
+        public const int TAG = 398;
+
         public NoBidDescriptors()
             :base(Tags.NoBidDescriptors) {}
         public NoBidDescriptors(int val)
@@ -6281,6 +6995,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidDescriptorType : IntField
     {
+        public const int TAG = 399;
+
         public BidDescriptorType()
             :base(Tags.BidDescriptorType) {}
         public BidDescriptorType(int val)
@@ -6299,6 +7015,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidDescriptor : StringField
     {
+        public const int TAG = 400;
+
         public BidDescriptor()
             :base(Tags.BidDescriptor) {}
         public BidDescriptor(string val)
@@ -6312,6 +7030,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideValueInd : IntField
     {
+        public const int TAG = 401;
+
         public SideValueInd()
             :base(Tags.SideValueInd) {}
         public SideValueInd(int val)
@@ -6332,6 +7052,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LiquidityPctLow : DecimalField
     {
+        public const int TAG = 402;
+
         public LiquidityPctLow()
             :base(Tags.LiquidityPctLow) {}
         public LiquidityPctLow(Decimal val)
@@ -6345,6 +7067,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LiquidityPctHigh : DecimalField
     {
+        public const int TAG = 403;
+
         public LiquidityPctHigh()
             :base(Tags.LiquidityPctHigh) {}
         public LiquidityPctHigh(Decimal val)
@@ -6358,6 +7082,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LiquidityValue : DecimalField
     {
+        public const int TAG = 404;
+
         public LiquidityValue()
             :base(Tags.LiquidityValue) {}
         public LiquidityValue(Decimal val)
@@ -6371,6 +7097,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EFPTrackingError : DecimalField
     {
+        public const int TAG = 405;
+
         public EFPTrackingError()
             :base(Tags.EFPTrackingError) {}
         public EFPTrackingError(Decimal val)
@@ -6384,6 +7112,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FairValue : DecimalField
     {
+        public const int TAG = 406;
+
         public FairValue()
             :base(Tags.FairValue) {}
         public FairValue(Decimal val)
@@ -6397,6 +7127,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OutsideIndexPct : DecimalField
     {
+        public const int TAG = 407;
+
         public OutsideIndexPct()
             :base(Tags.OutsideIndexPct) {}
         public OutsideIndexPct(Decimal val)
@@ -6410,6 +7142,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ValueOfFutures : DecimalField
     {
+        public const int TAG = 408;
+
         public ValueOfFutures()
             :base(Tags.ValueOfFutures) {}
         public ValueOfFutures(Decimal val)
@@ -6423,6 +7157,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LiquidityIndType : IntField
     {
+        public const int TAG = 409;
+
         public LiquidityIndType()
             :base(Tags.LiquidityIndType) {}
         public LiquidityIndType(int val)
@@ -6444,6 +7180,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class WtAverageLiquidity : DecimalField
     {
+        public const int TAG = 410;
+
         public WtAverageLiquidity()
             :base(Tags.WtAverageLiquidity) {}
         public WtAverageLiquidity(Decimal val)
@@ -6457,6 +7195,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExchangeForPhysical : BooleanField
     {
+        public const int TAG = 411;
+
         public ExchangeForPhysical()
             :base(Tags.ExchangeForPhysical) {}
         public ExchangeForPhysical(Boolean val)
@@ -6476,6 +7216,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OutMainCntryUIndex : DecimalField
     {
+        public const int TAG = 412;
+
         public OutMainCntryUIndex()
             :base(Tags.OutMainCntryUIndex) {}
         public OutMainCntryUIndex(Decimal val)
@@ -6489,6 +7231,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CrossPercent : DecimalField
     {
+        public const int TAG = 413;
+
         public CrossPercent()
             :base(Tags.CrossPercent) {}
         public CrossPercent(Decimal val)
@@ -6502,6 +7246,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ProgRptReqs : IntField
     {
+        public const int TAG = 414;
+
         public ProgRptReqs()
             :base(Tags.ProgRptReqs) {}
         public ProgRptReqs(int val)
@@ -6522,6 +7268,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ProgPeriodInterval : IntField
     {
+        public const int TAG = 415;
+
         public ProgPeriodInterval()
             :base(Tags.ProgPeriodInterval) {}
         public ProgPeriodInterval(int val)
@@ -6535,6 +7283,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IncTaxInd : IntField
     {
+        public const int TAG = 416;
+
         public IncTaxInd()
             :base(Tags.IncTaxInd) {}
         public IncTaxInd(int val)
@@ -6552,6 +7302,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NumBidders : IntField
     {
+        public const int TAG = 417;
+
         public NumBidders()
             :base(Tags.NumBidders) {}
         public NumBidders(int val)
@@ -6565,6 +7317,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeType : CharField
     {
+        public const int TAG = 418;
+
         public TradeType()
             :base(Tags.TradeType) {}
         public TradeType(char val)
@@ -6578,6 +7332,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BasisPxType : CharField
     {
+        public const int TAG = 419;
+
         public BasisPxType()
             :base(Tags.BasisPxType) {}
         public BasisPxType(char val)
@@ -6607,6 +7363,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoBidComponents : IntField
     {
+        public const int TAG = 420;
+
         public NoBidComponents()
             :base(Tags.NoBidComponents) {}
         public NoBidComponents(int val)
@@ -6620,6 +7378,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Country : StringField
     {
+        public const int TAG = 421;
+
         public Country()
             :base(Tags.Country) {}
         public Country(string val)
@@ -6633,6 +7393,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoStrikes : IntField
     {
+        public const int TAG = 422;
+
         public TotNoStrikes()
             :base(Tags.TotNoStrikes) {}
         public TotNoStrikes(int val)
@@ -6646,6 +7408,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriceType : IntField
     {
+        public const int TAG = 423;
+
         public PriceType()
             :base(Tags.PriceType) {}
         public PriceType(int val)
@@ -6681,6 +7445,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DayOrderQty : DecimalField
     {
+        public const int TAG = 424;
+
         public DayOrderQty()
             :base(Tags.DayOrderQty) {}
         public DayOrderQty(Decimal val)
@@ -6694,6 +7460,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DayCumQty : DecimalField
     {
+        public const int TAG = 425;
+
         public DayCumQty()
             :base(Tags.DayCumQty) {}
         public DayCumQty(Decimal val)
@@ -6707,6 +7475,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DayAvgPx : DecimalField
     {
+        public const int TAG = 426;
+
         public DayAvgPx()
             :base(Tags.DayAvgPx) {}
         public DayAvgPx(Decimal val)
@@ -6720,6 +7490,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class GTBookingInst : IntField
     {
+        public const int TAG = 427;
+
         public GTBookingInst()
             :base(Tags.GTBookingInst) {}
         public GTBookingInst(int val)
@@ -6740,6 +7512,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoStrikes : IntField
     {
+        public const int TAG = 428;
+
         public NoStrikes()
             :base(Tags.NoStrikes) {}
         public NoStrikes(int val)
@@ -6753,6 +7527,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListStatusType : IntField
     {
+        public const int TAG = 429;
+
         public ListStatusType()
             :base(Tags.ListStatusType) {}
         public ListStatusType(int val)
@@ -6776,6 +7552,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NetGrossInd : IntField
     {
+        public const int TAG = 430;
+
         public NetGrossInd()
             :base(Tags.NetGrossInd) {}
         public NetGrossInd(int val)
@@ -6793,6 +7571,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListOrderStatus : IntField
     {
+        public const int TAG = 431;
+
         public ListOrderStatus()
             :base(Tags.ListOrderStatus) {}
         public ListOrderStatus(int val)
@@ -6818,6 +7598,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExpireDate : StringField
     {
+        public const int TAG = 432;
+
         public ExpireDate()
             :base(Tags.ExpireDate) {}
         public ExpireDate(string val)
@@ -6831,6 +7613,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListExecInstType : CharField
     {
+        public const int TAG = 433;
+
         public ListExecInstType()
             :base(Tags.ListExecInstType) {}
         public ListExecInstType(char val)
@@ -6855,6 +7639,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CxlRejResponseTo : CharField
     {
+        public const int TAG = 434;
+
         public CxlRejResponseTo()
             :base(Tags.CxlRejResponseTo) {}
         public CxlRejResponseTo(char val)
@@ -6872,6 +7658,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCouponRate : DecimalField
     {
+        public const int TAG = 435;
+
         public UnderlyingCouponRate()
             :base(Tags.UnderlyingCouponRate) {}
         public UnderlyingCouponRate(Decimal val)
@@ -6885,6 +7673,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingContractMultiplier : DecimalField
     {
+        public const int TAG = 436;
+
         public UnderlyingContractMultiplier()
             :base(Tags.UnderlyingContractMultiplier) {}
         public UnderlyingContractMultiplier(Decimal val)
@@ -6898,6 +7688,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContraTradeQty : DecimalField
     {
+        public const int TAG = 437;
+
         public ContraTradeQty()
             :base(Tags.ContraTradeQty) {}
         public ContraTradeQty(Decimal val)
@@ -6911,6 +7703,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContraTradeTime : DateTimeField
     {
+        public const int TAG = 438;
+
         public ContraTradeTime()
             :base(Tags.ContraTradeTime) {}
         public ContraTradeTime(DateTime val)
@@ -6928,6 +7722,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ClearingFirm : StringField
     {
+        public const int TAG = 439;
+
         public ClearingFirm()
             :base(Tags.ClearingFirm) {}
         public ClearingFirm(string val)
@@ -6941,6 +7737,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ClearingAccount : StringField
     {
+        public const int TAG = 440;
+
         public ClearingAccount()
             :base(Tags.ClearingAccount) {}
         public ClearingAccount(string val)
@@ -6954,6 +7752,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LiquidityNumSecurities : IntField
     {
+        public const int TAG = 441;
+
         public LiquidityNumSecurities()
             :base(Tags.LiquidityNumSecurities) {}
         public LiquidityNumSecurities(int val)
@@ -6967,6 +7767,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MultiLegReportingType : CharField
     {
+        public const int TAG = 442;
+
         public MultiLegReportingType()
             :base(Tags.MultiLegReportingType) {}
         public MultiLegReportingType(char val)
@@ -6986,6 +7788,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikeTime : DateTimeField
     {
+        public const int TAG = 443;
+
         public StrikeTime()
             :base(Tags.StrikeTime) {}
         public StrikeTime(DateTime val)
@@ -7003,6 +7807,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListStatusText : StringField
     {
+        public const int TAG = 444;
+
         public ListStatusText()
             :base(Tags.ListStatusText) {}
         public ListStatusText(string val)
@@ -7016,6 +7822,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedListStatusTextLen : IntField
     {
+        public const int TAG = 445;
+
         public EncodedListStatusTextLen()
             :base(Tags.EncodedListStatusTextLen) {}
         public EncodedListStatusTextLen(int val)
@@ -7029,6 +7837,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedListStatusText : StringField
     {
+        public const int TAG = 446;
+
         public EncodedListStatusText()
             :base(Tags.EncodedListStatusText) {}
         public EncodedListStatusText(string val)
@@ -7042,6 +7852,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityIDSource : StringField
     {
+        public const int TAG = 22;
+
         public SecurityIDSource()
             :base(Tags.SecurityIDSource) {}
         public SecurityIDSource(string val)
@@ -7081,6 +7893,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IOIQty : StringField
     {
+        public const int TAG = 27;
+
         public IOIQty()
             :base(Tags.IOIQty) {}
         public IOIQty(string val)
@@ -7101,6 +7915,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastQty : DecimalField
     {
+        public const int TAG = 32;
+
         public LastQty()
             :base(Tags.LastQty) {}
         public LastQty(Decimal val)
@@ -7114,6 +7930,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SendingDate : StringField
     {
+        public const int TAG = 51;
+
         public SendingDate()
             :base(Tags.SendingDate) {}
         public SendingDate(string val)
@@ -7127,6 +7945,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Quantity : DecimalField
     {
+        public const int TAG = 53;
+
         public Quantity()
             :base(Tags.Quantity) {}
         public Quantity(Decimal val)
@@ -7140,6 +7960,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PositionEffect : CharField
     {
+        public const int TAG = 77;
+
         public PositionEffect()
             :base(Tags.PositionEffect) {}
         public PositionEffect(char val)
@@ -7161,6 +7983,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocQty : DecimalField
     {
+        public const int TAG = 80;
+
         public AllocQty()
             :base(Tags.AllocQty) {}
         public AllocQty(Decimal val)
@@ -7174,6 +7998,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Spread : DecimalField
     {
+        public const int TAG = 218;
+
         public Spread()
             :base(Tags.Spread) {}
         public Spread(Decimal val)
@@ -7187,6 +8013,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BenchmarkCurveCurrency : StringField
     {
+        public const int TAG = 220;
+
         public BenchmarkCurveCurrency()
             :base(Tags.BenchmarkCurveCurrency) {}
         public BenchmarkCurveCurrency(string val)
@@ -7200,6 +8028,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BenchmarkCurveName : StringField
     {
+        public const int TAG = 221;
+
         public BenchmarkCurveName()
             :base(Tags.BenchmarkCurveName) {}
         public BenchmarkCurveName(string val)
@@ -7227,6 +8057,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BenchmarkCurvePoint : StringField
     {
+        public const int TAG = 222;
+
         public BenchmarkCurvePoint()
             :base(Tags.BenchmarkCurvePoint) {}
         public BenchmarkCurvePoint(string val)
@@ -7240,6 +8072,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CouponPaymentDate : StringField
     {
+        public const int TAG = 224;
+
         public CouponPaymentDate()
             :base(Tags.CouponPaymentDate) {}
         public CouponPaymentDate(string val)
@@ -7253,6 +8087,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IssueDate : StringField
     {
+        public const int TAG = 225;
+
         public IssueDate()
             :base(Tags.IssueDate) {}
         public IssueDate(string val)
@@ -7266,6 +8102,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RepurchaseTerm : IntField
     {
+        public const int TAG = 226;
+
         public RepurchaseTerm()
             :base(Tags.RepurchaseTerm) {}
         public RepurchaseTerm(int val)
@@ -7279,6 +8117,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RepurchaseRate : DecimalField
     {
+        public const int TAG = 227;
+
         public RepurchaseRate()
             :base(Tags.RepurchaseRate) {}
         public RepurchaseRate(Decimal val)
@@ -7292,6 +8132,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Factor : DecimalField
     {
+        public const int TAG = 228;
+
         public Factor()
             :base(Tags.Factor) {}
         public Factor(Decimal val)
@@ -7305,6 +8147,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeOriginationDate : StringField
     {
+        public const int TAG = 229;
+
         public TradeOriginationDate()
             :base(Tags.TradeOriginationDate) {}
         public TradeOriginationDate(string val)
@@ -7318,6 +8162,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExDate : StringField
     {
+        public const int TAG = 230;
+
         public ExDate()
             :base(Tags.ExDate) {}
         public ExDate(string val)
@@ -7331,6 +8177,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoStipulations : IntField
     {
+        public const int TAG = 232;
+
         public NoStipulations()
             :base(Tags.NoStipulations) {}
         public NoStipulations(int val)
@@ -7344,6 +8192,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StipulationType : StringField
     {
+        public const int TAG = 233;
+
         public StipulationType()
             :base(Tags.StipulationType) {}
         public StipulationType(string val)
@@ -7443,6 +8293,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StipulationValue : StringField
     {
+        public const int TAG = 234;
+
         public StipulationValue()
             :base(Tags.StipulationValue) {}
         public StipulationValue(string val)
@@ -7472,6 +8324,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class YieldType : StringField
     {
+        public const int TAG = 235;
+
         public YieldType()
             :base(Tags.YieldType) {}
         public YieldType(string val)
@@ -7527,6 +8381,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Yield : DecimalField
     {
+        public const int TAG = 236;
+
         public Yield()
             :base(Tags.Yield) {}
         public Yield(Decimal val)
@@ -7540,6 +8396,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotalTakedown : DecimalField
     {
+        public const int TAG = 237;
+
         public TotalTakedown()
             :base(Tags.TotalTakedown) {}
         public TotalTakedown(Decimal val)
@@ -7553,6 +8411,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Concession : DecimalField
     {
+        public const int TAG = 238;
+
         public Concession()
             :base(Tags.Concession) {}
         public Concession(Decimal val)
@@ -7566,6 +8426,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RepoCollateralSecurityType : IntField
     {
+        public const int TAG = 239;
+
         public RepoCollateralSecurityType()
             :base(Tags.RepoCollateralSecurityType) {}
         public RepoCollateralSecurityType(int val)
@@ -7579,6 +8441,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RedemptionDate : StringField
     {
+        public const int TAG = 240;
+
         public RedemptionDate()
             :base(Tags.RedemptionDate) {}
         public RedemptionDate(string val)
@@ -7592,6 +8456,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCouponPaymentDate : StringField
     {
+        public const int TAG = 241;
+
         public UnderlyingCouponPaymentDate()
             :base(Tags.UnderlyingCouponPaymentDate) {}
         public UnderlyingCouponPaymentDate(string val)
@@ -7605,6 +8471,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingIssueDate : StringField
     {
+        public const int TAG = 242;
+
         public UnderlyingIssueDate()
             :base(Tags.UnderlyingIssueDate) {}
         public UnderlyingIssueDate(string val)
@@ -7618,6 +8486,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingRepoCollateralSecurityType : IntField
     {
+        public const int TAG = 243;
+
         public UnderlyingRepoCollateralSecurityType()
             :base(Tags.UnderlyingRepoCollateralSecurityType) {}
         public UnderlyingRepoCollateralSecurityType(int val)
@@ -7631,6 +8501,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingRepurchaseTerm : IntField
     {
+        public const int TAG = 244;
+
         public UnderlyingRepurchaseTerm()
             :base(Tags.UnderlyingRepurchaseTerm) {}
         public UnderlyingRepurchaseTerm(int val)
@@ -7644,6 +8516,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingRepurchaseRate : DecimalField
     {
+        public const int TAG = 245;
+
         public UnderlyingRepurchaseRate()
             :base(Tags.UnderlyingRepurchaseRate) {}
         public UnderlyingRepurchaseRate(Decimal val)
@@ -7657,6 +8531,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingFactor : DecimalField
     {
+        public const int TAG = 246;
+
         public UnderlyingFactor()
             :base(Tags.UnderlyingFactor) {}
         public UnderlyingFactor(Decimal val)
@@ -7670,6 +8546,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingRedemptionDate : StringField
     {
+        public const int TAG = 247;
+
         public UnderlyingRedemptionDate()
             :base(Tags.UnderlyingRedemptionDate) {}
         public UnderlyingRedemptionDate(string val)
@@ -7683,6 +8561,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegCouponPaymentDate : StringField
     {
+        public const int TAG = 248;
+
         public LegCouponPaymentDate()
             :base(Tags.LegCouponPaymentDate) {}
         public LegCouponPaymentDate(string val)
@@ -7696,6 +8576,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegIssueDate : StringField
     {
+        public const int TAG = 249;
+
         public LegIssueDate()
             :base(Tags.LegIssueDate) {}
         public LegIssueDate(string val)
@@ -7709,6 +8591,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegRepoCollateralSecurityType : IntField
     {
+        public const int TAG = 250;
+
         public LegRepoCollateralSecurityType()
             :base(Tags.LegRepoCollateralSecurityType) {}
         public LegRepoCollateralSecurityType(int val)
@@ -7722,6 +8606,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegRepurchaseTerm : IntField
     {
+        public const int TAG = 251;
+
         public LegRepurchaseTerm()
             :base(Tags.LegRepurchaseTerm) {}
         public LegRepurchaseTerm(int val)
@@ -7735,6 +8621,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegRepurchaseRate : DecimalField
     {
+        public const int TAG = 252;
+
         public LegRepurchaseRate()
             :base(Tags.LegRepurchaseRate) {}
         public LegRepurchaseRate(Decimal val)
@@ -7748,6 +8636,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegFactor : DecimalField
     {
+        public const int TAG = 253;
+
         public LegFactor()
             :base(Tags.LegFactor) {}
         public LegFactor(Decimal val)
@@ -7761,6 +8651,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegRedemptionDate : StringField
     {
+        public const int TAG = 254;
+
         public LegRedemptionDate()
             :base(Tags.LegRedemptionDate) {}
         public LegRedemptionDate(string val)
@@ -7774,6 +8666,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CreditRating : StringField
     {
+        public const int TAG = 255;
+
         public CreditRating()
             :base(Tags.CreditRating) {}
         public CreditRating(string val)
@@ -7787,6 +8681,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCreditRating : StringField
     {
+        public const int TAG = 256;
+
         public UnderlyingCreditRating()
             :base(Tags.UnderlyingCreditRating) {}
         public UnderlyingCreditRating(string val)
@@ -7800,6 +8696,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegCreditRating : StringField
     {
+        public const int TAG = 257;
+
         public LegCreditRating()
             :base(Tags.LegCreditRating) {}
         public LegCreditRating(string val)
@@ -7813,6 +8711,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradedFlatSwitch : BooleanField
     {
+        public const int TAG = 258;
+
         public TradedFlatSwitch()
             :base(Tags.TradedFlatSwitch) {}
         public TradedFlatSwitch(Boolean val)
@@ -7830,6 +8730,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BasisFeatureDate : StringField
     {
+        public const int TAG = 259;
+
         public BasisFeatureDate()
             :base(Tags.BasisFeatureDate) {}
         public BasisFeatureDate(string val)
@@ -7843,6 +8745,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BasisFeaturePrice : DecimalField
     {
+        public const int TAG = 260;
+
         public BasisFeaturePrice()
             :base(Tags.BasisFeaturePrice) {}
         public BasisFeaturePrice(Decimal val)
@@ -7856,6 +8760,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteStatus : IntField
     {
+        public const int TAG = 297;
+
         public QuoteStatus()
             :base(Tags.QuoteStatus) {}
         public QuoteStatus(int val)
@@ -7893,6 +8799,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSecurityIDSource : StringField
     {
+        public const int TAG = 305;
+
         public UnderlyingSecurityIDSource()
             :base(Tags.UnderlyingSecurityIDSource) {}
         public UnderlyingSecurityIDSource(string val)
@@ -7906,6 +8814,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyIDSource : CharField
     {
+        public const int TAG = 447;
+
         public PartyIDSource()
             :base(Tags.PartyIDSource) {}
         public PartyIDSource(char val)
@@ -7946,6 +8856,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyID : StringField
     {
+        public const int TAG = 448;
+
         public PartyID()
             :base(Tags.PartyID) {}
         public PartyID(string val)
@@ -7959,6 +8871,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotalVolumeTradedDate : DateOnlyField
     {
+        public const int TAG = 449;
+
         public TotalVolumeTradedDate()
             :base(Tags.TotalVolumeTradedDate) {}
         public TotalVolumeTradedDate(DateTime val)
@@ -7972,6 +8886,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotalVolumeTradedTime : TimeOnlyField
     {
+        public const int TAG = 450;
+
         public TotalVolumeTradedTime()
             :base(Tags.TotalVolumeTradedTime) {}
         public TotalVolumeTradedTime(DateTime val)
@@ -7989,6 +8905,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NetChgPrevDay : DecimalField
     {
+        public const int TAG = 451;
+
         public NetChgPrevDay()
             :base(Tags.NetChgPrevDay) {}
         public NetChgPrevDay(Decimal val)
@@ -8002,6 +8920,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyRole : IntField
     {
+        public const int TAG = 452;
+
         public PartyRole()
             :base(Tags.PartyRole) {}
         public PartyRole(int val)
@@ -8103,6 +9023,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoPartyIDs : IntField
     {
+        public const int TAG = 453;
+
         public NoPartyIDs()
             :base(Tags.NoPartyIDs) {}
         public NoPartyIDs(int val)
@@ -8116,6 +9038,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoSecurityAltID : IntField
     {
+        public const int TAG = 454;
+
         public NoSecurityAltID()
             :base(Tags.NoSecurityAltID) {}
         public NoSecurityAltID(int val)
@@ -8129,6 +9053,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityAltID : StringField
     {
+        public const int TAG = 455;
+
         public SecurityAltID()
             :base(Tags.SecurityAltID) {}
         public SecurityAltID(string val)
@@ -8142,6 +9068,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityAltIDSource : StringField
     {
+        public const int TAG = 456;
+
         public SecurityAltIDSource()
             :base(Tags.SecurityAltIDSource) {}
         public SecurityAltIDSource(string val)
@@ -8155,6 +9083,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoUnderlyingSecurityAltID : IntField
     {
+        public const int TAG = 457;
+
         public NoUnderlyingSecurityAltID()
             :base(Tags.NoUnderlyingSecurityAltID) {}
         public NoUnderlyingSecurityAltID(int val)
@@ -8168,6 +9098,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSecurityAltID : StringField
     {
+        public const int TAG = 458;
+
         public UnderlyingSecurityAltID()
             :base(Tags.UnderlyingSecurityAltID) {}
         public UnderlyingSecurityAltID(string val)
@@ -8181,6 +9113,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSecurityAltIDSource : StringField
     {
+        public const int TAG = 459;
+
         public UnderlyingSecurityAltIDSource()
             :base(Tags.UnderlyingSecurityAltIDSource) {}
         public UnderlyingSecurityAltIDSource(string val)
@@ -8194,6 +9128,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Product : IntField
     {
+        public const int TAG = 460;
+
         public Product()
             :base(Tags.Product) {}
         public Product(int val)
@@ -8222,6 +9158,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CFICode : StringField
     {
+        public const int TAG = 461;
+
         public CFICode()
             :base(Tags.CFICode) {}
         public CFICode(string val)
@@ -8235,6 +9173,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingProduct : IntField
     {
+        public const int TAG = 462;
+
         public UnderlyingProduct()
             :base(Tags.UnderlyingProduct) {}
         public UnderlyingProduct(int val)
@@ -8248,6 +9188,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCFICode : StringField
     {
+        public const int TAG = 463;
+
         public UnderlyingCFICode()
             :base(Tags.UnderlyingCFICode) {}
         public UnderlyingCFICode(string val)
@@ -8261,6 +9203,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TestMessageIndicator : BooleanField
     {
+        public const int TAG = 464;
+
         public TestMessageIndicator()
             :base(Tags.TestMessageIndicator) {}
         public TestMessageIndicator(Boolean val)
@@ -8278,6 +9222,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuantityType : IntField
     {
+        public const int TAG = 465;
+
         public QuantityType()
             :base(Tags.QuantityType) {}
         public QuantityType(int val)
@@ -8301,6 +9247,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BookingRefID : StringField
     {
+        public const int TAG = 466;
+
         public BookingRefID()
             :base(Tags.BookingRefID) {}
         public BookingRefID(string val)
@@ -8314,6 +9262,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IndividualAllocID : StringField
     {
+        public const int TAG = 467;
+
         public IndividualAllocID()
             :base(Tags.IndividualAllocID) {}
         public IndividualAllocID(string val)
@@ -8327,6 +9277,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RoundingDirection : CharField
     {
+        public const int TAG = 468;
+
         public RoundingDirection()
             :base(Tags.RoundingDirection) {}
         public RoundingDirection(char val)
@@ -8345,6 +9297,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RoundingModulus : DecimalField
     {
+        public const int TAG = 469;
+
         public RoundingModulus()
             :base(Tags.RoundingModulus) {}
         public RoundingModulus(Decimal val)
@@ -8358,6 +9312,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CountryOfIssue : StringField
     {
+        public const int TAG = 470;
+
         public CountryOfIssue()
             :base(Tags.CountryOfIssue) {}
         public CountryOfIssue(string val)
@@ -8371,6 +9327,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StateOrProvinceOfIssue : StringField
     {
+        public const int TAG = 471;
+
         public StateOrProvinceOfIssue()
             :base(Tags.StateOrProvinceOfIssue) {}
         public StateOrProvinceOfIssue(string val)
@@ -8384,6 +9342,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LocaleOfIssue : StringField
     {
+        public const int TAG = 472;
+
         public LocaleOfIssue()
             :base(Tags.LocaleOfIssue) {}
         public LocaleOfIssue(string val)
@@ -8397,6 +9357,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRegistDtls : IntField
     {
+        public const int TAG = 473;
+
         public NoRegistDtls()
             :base(Tags.NoRegistDtls) {}
         public NoRegistDtls(int val)
@@ -8410,6 +9372,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MailingDtls : StringField
     {
+        public const int TAG = 474;
+
         public MailingDtls()
             :base(Tags.MailingDtls) {}
         public MailingDtls(string val)
@@ -8423,6 +9387,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InvestorCountryOfResidence : StringField
     {
+        public const int TAG = 475;
+
         public InvestorCountryOfResidence()
             :base(Tags.InvestorCountryOfResidence) {}
         public InvestorCountryOfResidence(string val)
@@ -8436,6 +9402,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PaymentRef : StringField
     {
+        public const int TAG = 476;
+
         public PaymentRef()
             :base(Tags.PaymentRef) {}
         public PaymentRef(string val)
@@ -8449,6 +9417,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DistribPaymentMethod : IntField
     {
+        public const int TAG = 477;
+
         public DistribPaymentMethod()
             :base(Tags.DistribPaymentMethod) {}
         public DistribPaymentMethod(int val)
@@ -8478,6 +9448,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashDistribCurr : StringField
     {
+        public const int TAG = 478;
+
         public CashDistribCurr()
             :base(Tags.CashDistribCurr) {}
         public CashDistribCurr(string val)
@@ -8491,6 +9463,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CommCurrency : StringField
     {
+        public const int TAG = 479;
+
         public CommCurrency()
             :base(Tags.CommCurrency) {}
         public CommCurrency(string val)
@@ -8504,6 +9478,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CancellationRights : CharField
     {
+        public const int TAG = 480;
+
         public CancellationRights()
             :base(Tags.CancellationRights) {}
         public CancellationRights(char val)
@@ -8526,6 +9502,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MoneyLaunderingStatus : CharField
     {
+        public const int TAG = 481;
+
         public MoneyLaunderingStatus()
             :base(Tags.MoneyLaunderingStatus) {}
         public MoneyLaunderingStatus(char val)
@@ -8549,6 +9527,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MailingInst : StringField
     {
+        public const int TAG = 482;
+
         public MailingInst()
             :base(Tags.MailingInst) {}
         public MailingInst(string val)
@@ -8562,6 +9542,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TransBkdTime : DateTimeField
     {
+        public const int TAG = 483;
+
         public TransBkdTime()
             :base(Tags.TransBkdTime) {}
         public TransBkdTime(DateTime val)
@@ -8579,6 +9561,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecPriceType : CharField
     {
+        public const int TAG = 484;
+
         public ExecPriceType()
             :base(Tags.ExecPriceType) {}
         public ExecPriceType(char val)
@@ -8602,6 +9586,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecPriceAdjustment : DecimalField
     {
+        public const int TAG = 485;
+
         public ExecPriceAdjustment()
             :base(Tags.ExecPriceAdjustment) {}
         public ExecPriceAdjustment(Decimal val)
@@ -8615,6 +9601,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DateOfBirth : StringField
     {
+        public const int TAG = 486;
+
         public DateOfBirth()
             :base(Tags.DateOfBirth) {}
         public DateOfBirth(string val)
@@ -8628,6 +9616,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeReportTransType : IntField
     {
+        public const int TAG = 487;
+
         public TradeReportTransType()
             :base(Tags.TradeReportTransType) {}
         public TradeReportTransType(int val)
@@ -8649,6 +9639,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CardHolderName : StringField
     {
+        public const int TAG = 488;
+
         public CardHolderName()
             :base(Tags.CardHolderName) {}
         public CardHolderName(string val)
@@ -8662,6 +9654,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CardNumber : StringField
     {
+        public const int TAG = 489;
+
         public CardNumber()
             :base(Tags.CardNumber) {}
         public CardNumber(string val)
@@ -8675,6 +9669,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CardExpDate : StringField
     {
+        public const int TAG = 490;
+
         public CardExpDate()
             :base(Tags.CardExpDate) {}
         public CardExpDate(string val)
@@ -8688,6 +9684,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CardIssNo : StringField
     {
+        public const int TAG = 491;
+
         public CardIssNo()
             :base(Tags.CardIssNo) {}
         public CardIssNo(string val)
@@ -8701,6 +9699,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PaymentMethod : IntField
     {
+        public const int TAG = 492;
+
         public PaymentMethod()
             :base(Tags.PaymentMethod) {}
         public PaymentMethod(int val)
@@ -8732,6 +9732,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RegistAcctType : StringField
     {
+        public const int TAG = 493;
+
         public RegistAcctType()
             :base(Tags.RegistAcctType) {}
         public RegistAcctType(string val)
@@ -8745,6 +9747,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Designation : StringField
     {
+        public const int TAG = 494;
+
         public Designation()
             :base(Tags.Designation) {}
         public Designation(string val)
@@ -8758,6 +9762,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TaxAdvantageType : IntField
     {
+        public const int TAG = 495;
+
         public TaxAdvantageType()
             :base(Tags.TaxAdvantageType) {}
         public TaxAdvantageType(int val)
@@ -8806,6 +9812,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RegistRejReasonText : StringField
     {
+        public const int TAG = 496;
+
         public RegistRejReasonText()
             :base(Tags.RegistRejReasonText) {}
         public RegistRejReasonText(string val)
@@ -8819,6 +9827,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FundRenewWaiv : CharField
     {
+        public const int TAG = 497;
+
         public FundRenewWaiv()
             :base(Tags.FundRenewWaiv) {}
         public FundRenewWaiv(char val)
@@ -8836,6 +9846,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashDistribAgentName : StringField
     {
+        public const int TAG = 498;
+
         public CashDistribAgentName()
             :base(Tags.CashDistribAgentName) {}
         public CashDistribAgentName(string val)
@@ -8849,6 +9861,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashDistribAgentCode : StringField
     {
+        public const int TAG = 499;
+
         public CashDistribAgentCode()
             :base(Tags.CashDistribAgentCode) {}
         public CashDistribAgentCode(string val)
@@ -8862,6 +9876,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashDistribAgentAcctNumber : StringField
     {
+        public const int TAG = 500;
+
         public CashDistribAgentAcctNumber()
             :base(Tags.CashDistribAgentAcctNumber) {}
         public CashDistribAgentAcctNumber(string val)
@@ -8875,6 +9891,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashDistribPayRef : StringField
     {
+        public const int TAG = 501;
+
         public CashDistribPayRef()
             :base(Tags.CashDistribPayRef) {}
         public CashDistribPayRef(string val)
@@ -8888,6 +9906,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashDistribAgentAcctName : StringField
     {
+        public const int TAG = 502;
+
         public CashDistribAgentAcctName()
             :base(Tags.CashDistribAgentAcctName) {}
         public CashDistribAgentAcctName(string val)
@@ -8901,6 +9921,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CardStartDate : StringField
     {
+        public const int TAG = 503;
+
         public CardStartDate()
             :base(Tags.CardStartDate) {}
         public CardStartDate(string val)
@@ -8914,6 +9936,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PaymentDate : StringField
     {
+        public const int TAG = 504;
+
         public PaymentDate()
             :base(Tags.PaymentDate) {}
         public PaymentDate(string val)
@@ -8927,6 +9951,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PaymentRemitterID : StringField
     {
+        public const int TAG = 505;
+
         public PaymentRemitterID()
             :base(Tags.PaymentRemitterID) {}
         public PaymentRemitterID(string val)
@@ -8940,6 +9966,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RegistStatus : CharField
     {
+        public const int TAG = 506;
+
         public RegistStatus()
             :base(Tags.RegistStatus) {}
         public RegistStatus(char val)
@@ -8959,6 +9987,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RegistRejReasonCode : IntField
     {
+        public const int TAG = 507;
+
         public RegistRejReasonCode()
             :base(Tags.RegistRejReasonCode) {}
         public RegistRejReasonCode(int val)
@@ -8999,6 +10029,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RegistRefID : StringField
     {
+        public const int TAG = 508;
+
         public RegistRefID()
             :base(Tags.RegistRefID) {}
         public RegistRefID(string val)
@@ -9012,6 +10044,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RegistDetls : StringField
     {
+        public const int TAG = 509;
+
         public RegistDetls()
             :base(Tags.RegistDetls) {}
         public RegistDetls(string val)
@@ -9025,6 +10059,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoDistribInsts : IntField
     {
+        public const int TAG = 510;
+
         public NoDistribInsts()
             :base(Tags.NoDistribInsts) {}
         public NoDistribInsts(int val)
@@ -9038,6 +10074,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RegistEmail : StringField
     {
+        public const int TAG = 511;
+
         public RegistEmail()
             :base(Tags.RegistEmail) {}
         public RegistEmail(string val)
@@ -9051,6 +10089,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DistribPercentage : DecimalField
     {
+        public const int TAG = 512;
+
         public DistribPercentage()
             :base(Tags.DistribPercentage) {}
         public DistribPercentage(Decimal val)
@@ -9064,6 +10104,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RegistID : StringField
     {
+        public const int TAG = 513;
+
         public RegistID()
             :base(Tags.RegistID) {}
         public RegistID(string val)
@@ -9077,6 +10119,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RegistTransType : CharField
     {
+        public const int TAG = 514;
+
         public RegistTransType()
             :base(Tags.RegistTransType) {}
         public RegistTransType(char val)
@@ -9095,6 +10139,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecValuationPoint : DateTimeField
     {
+        public const int TAG = 515;
+
         public ExecValuationPoint()
             :base(Tags.ExecValuationPoint) {}
         public ExecValuationPoint(DateTime val)
@@ -9112,6 +10158,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderPercent : DecimalField
     {
+        public const int TAG = 516;
+
         public OrderPercent()
             :base(Tags.OrderPercent) {}
         public OrderPercent(Decimal val)
@@ -9125,6 +10173,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OwnershipType : CharField
     {
+        public const int TAG = 517;
+
         public OwnershipType()
             :base(Tags.OwnershipType) {}
         public OwnershipType(char val)
@@ -9143,6 +10193,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoContAmts : IntField
     {
+        public const int TAG = 518;
+
         public NoContAmts()
             :base(Tags.NoContAmts) {}
         public NoContAmts(int val)
@@ -9156,6 +10208,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContAmtType : IntField
     {
+        public const int TAG = 519;
+
         public ContAmtType()
             :base(Tags.ContAmtType) {}
         public ContAmtType(int val)
@@ -9186,6 +10240,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContAmtValue : DecimalField
     {
+        public const int TAG = 520;
+
         public ContAmtValue()
             :base(Tags.ContAmtValue) {}
         public ContAmtValue(Decimal val)
@@ -9199,6 +10255,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContAmtCurr : StringField
     {
+        public const int TAG = 521;
+
         public ContAmtCurr()
             :base(Tags.ContAmtCurr) {}
         public ContAmtCurr(string val)
@@ -9212,6 +10270,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OwnerType : IntField
     {
+        public const int TAG = 522;
+
         public OwnerType()
             :base(Tags.OwnerType) {}
         public OwnerType(int val)
@@ -9240,6 +10300,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartySubID : StringField
     {
+        public const int TAG = 523;
+
         public PartySubID()
             :base(Tags.PartySubID) {}
         public PartySubID(string val)
@@ -9253,6 +10315,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NestedPartyID : StringField
     {
+        public const int TAG = 524;
+
         public NestedPartyID()
             :base(Tags.NestedPartyID) {}
         public NestedPartyID(string val)
@@ -9266,6 +10330,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NestedPartyIDSource : CharField
     {
+        public const int TAG = 525;
+
         public NestedPartyIDSource()
             :base(Tags.NestedPartyIDSource) {}
         public NestedPartyIDSource(char val)
@@ -9279,6 +10345,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryClOrdID : StringField
     {
+        public const int TAG = 526;
+
         public SecondaryClOrdID()
             :base(Tags.SecondaryClOrdID) {}
         public SecondaryClOrdID(string val)
@@ -9292,6 +10360,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryExecID : StringField
     {
+        public const int TAG = 527;
+
         public SecondaryExecID()
             :base(Tags.SecondaryExecID) {}
         public SecondaryExecID(string val)
@@ -9305,6 +10375,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderCapacity : CharField
     {
+        public const int TAG = 528;
+
         public OrderCapacity()
             :base(Tags.OrderCapacity) {}
         public OrderCapacity(char val)
@@ -9326,6 +10398,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderRestrictions : StringField
     {
+        public const int TAG = 529;
+
         public OrderRestrictions()
             :base(Tags.OrderRestrictions) {}
         public OrderRestrictions(string val)
@@ -9358,6 +10432,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MassCancelRequestType : CharField
     {
+        public const int TAG = 530;
+
         public MassCancelRequestType()
             :base(Tags.MassCancelRequestType) {}
         public MassCancelRequestType(char val)
@@ -9385,6 +10461,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MassCancelResponse : CharField
     {
+        public const int TAG = 531;
+
         public MassCancelResponse()
             :base(Tags.MassCancelResponse) {}
         public MassCancelResponse(char val)
@@ -9413,6 +10491,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MassCancelRejectReason : IntField
     {
+        public const int TAG = 532;
+
         public MassCancelRejectReason()
             :base(Tags.MassCancelRejectReason) {}
         public MassCancelRejectReason(int val)
@@ -9443,6 +10523,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotalAffectedOrders : IntField
     {
+        public const int TAG = 533;
+
         public TotalAffectedOrders()
             :base(Tags.TotalAffectedOrders) {}
         public TotalAffectedOrders(int val)
@@ -9456,6 +10538,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoAffectedOrders : IntField
     {
+        public const int TAG = 534;
+
         public NoAffectedOrders()
             :base(Tags.NoAffectedOrders) {}
         public NoAffectedOrders(int val)
@@ -9469,6 +10553,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AffectedOrderID : StringField
     {
+        public const int TAG = 535;
+
         public AffectedOrderID()
             :base(Tags.AffectedOrderID) {}
         public AffectedOrderID(string val)
@@ -9482,6 +10568,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AffectedSecondaryOrderID : StringField
     {
+        public const int TAG = 536;
+
         public AffectedSecondaryOrderID()
             :base(Tags.AffectedSecondaryOrderID) {}
         public AffectedSecondaryOrderID(string val)
@@ -9495,6 +10583,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteType : IntField
     {
+        public const int TAG = 537;
+
         public QuoteType()
             :base(Tags.QuoteType) {}
         public QuoteType(int val)
@@ -9514,6 +10604,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NestedPartyRole : IntField
     {
+        public const int TAG = 538;
+
         public NestedPartyRole()
             :base(Tags.NestedPartyRole) {}
         public NestedPartyRole(int val)
@@ -9527,6 +10619,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNestedPartyIDs : IntField
     {
+        public const int TAG = 539;
+
         public NoNestedPartyIDs()
             :base(Tags.NoNestedPartyIDs) {}
         public NoNestedPartyIDs(int val)
@@ -9540,6 +10634,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotalAccruedInterestAmt : DecimalField
     {
+        public const int TAG = 540;
+
         public TotalAccruedInterestAmt()
             :base(Tags.TotalAccruedInterestAmt) {}
         public TotalAccruedInterestAmt(Decimal val)
@@ -9553,6 +10649,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaturityDate : StringField
     {
+        public const int TAG = 541;
+
         public MaturityDate()
             :base(Tags.MaturityDate) {}
         public MaturityDate(string val)
@@ -9566,6 +10664,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingMaturityDate : StringField
     {
+        public const int TAG = 542;
+
         public UnderlyingMaturityDate()
             :base(Tags.UnderlyingMaturityDate) {}
         public UnderlyingMaturityDate(string val)
@@ -9579,6 +10679,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InstrRegistry : StringField
     {
+        public const int TAG = 543;
+
         public InstrRegistry()
             :base(Tags.InstrRegistry) {}
         public InstrRegistry(string val)
@@ -9596,6 +10698,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashMargin : CharField
     {
+        public const int TAG = 544;
+
         public CashMargin()
             :base(Tags.CashMargin) {}
         public CashMargin(char val)
@@ -9614,6 +10718,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NestedPartySubID : StringField
     {
+        public const int TAG = 545;
+
         public NestedPartySubID()
             :base(Tags.NestedPartySubID) {}
         public NestedPartySubID(string val)
@@ -9627,6 +10733,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Scope : StringField
     {
+        public const int TAG = 546;
+
         public Scope()
             :base(Tags.Scope) {}
         public Scope(string val)
@@ -9646,6 +10754,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDImplicitDelete : BooleanField
     {
+        public const int TAG = 547;
+
         public MDImplicitDelete()
             :base(Tags.MDImplicitDelete) {}
         public MDImplicitDelete(Boolean val)
@@ -9663,6 +10773,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CrossID : StringField
     {
+        public const int TAG = 548;
+
         public CrossID()
             :base(Tags.CrossID) {}
         public CrossID(string val)
@@ -9676,6 +10788,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CrossType : IntField
     {
+        public const int TAG = 549;
+
         public CrossType()
             :base(Tags.CrossType) {}
         public CrossType(int val)
@@ -9699,6 +10813,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CrossPrioritization : IntField
     {
+        public const int TAG = 550;
+
         public CrossPrioritization()
             :base(Tags.CrossPrioritization) {}
         public CrossPrioritization(int val)
@@ -9717,6 +10833,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigCrossID : StringField
     {
+        public const int TAG = 551;
+
         public OrigCrossID()
             :base(Tags.OrigCrossID) {}
         public OrigCrossID(string val)
@@ -9730,6 +10848,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoSides : IntField
     {
+        public const int TAG = 552;
+
         public NoSides()
             :base(Tags.NoSides) {}
         public NoSides(int val)
@@ -9747,6 +10867,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Username : StringField
     {
+        public const int TAG = 553;
+
         public Username()
             :base(Tags.Username) {}
         public Username(string val)
@@ -9760,6 +10882,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Password : StringField
     {
+        public const int TAG = 554;
+
         public Password()
             :base(Tags.Password) {}
         public Password(string val)
@@ -9773,6 +10897,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoLegs : IntField
     {
+        public const int TAG = 555;
+
         public NoLegs()
             :base(Tags.NoLegs) {}
         public NoLegs(int val)
@@ -9786,6 +10912,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegCurrency : StringField
     {
+        public const int TAG = 556;
+
         public LegCurrency()
             :base(Tags.LegCurrency) {}
         public LegCurrency(string val)
@@ -9799,6 +10927,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotalNumSecurityTypes : IntField
     {
+        public const int TAG = 557;
+
         public TotalNumSecurityTypes()
             :base(Tags.TotalNumSecurityTypes) {}
         public TotalNumSecurityTypes(int val)
@@ -9812,6 +10942,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoSecurityTypes : IntField
     {
+        public const int TAG = 558;
+
         public NoSecurityTypes()
             :base(Tags.NoSecurityTypes) {}
         public NoSecurityTypes(int val)
@@ -9825,6 +10957,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityListRequestType : IntField
     {
+        public const int TAG = 559;
+
         public SecurityListRequestType()
             :base(Tags.SecurityListRequestType) {}
         public SecurityListRequestType(int val)
@@ -9847,6 +10981,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityRequestResult : IntField
     {
+        public const int TAG = 560;
+
         public SecurityRequestResult()
             :base(Tags.SecurityRequestResult) {}
         public SecurityRequestResult(int val)
@@ -9868,6 +11004,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RoundLot : DecimalField
     {
+        public const int TAG = 561;
+
         public RoundLot()
             :base(Tags.RoundLot) {}
         public RoundLot(Decimal val)
@@ -9881,6 +11019,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MinTradeVol : DecimalField
     {
+        public const int TAG = 562;
+
         public MinTradeVol()
             :base(Tags.MinTradeVol) {}
         public MinTradeVol(Decimal val)
@@ -9894,6 +11034,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MultiLegRptTypeReq : IntField
     {
+        public const int TAG = 563;
+
         public MultiLegRptTypeReq()
             :base(Tags.MultiLegRptTypeReq) {}
         public MultiLegRptTypeReq(int val)
@@ -9912,6 +11054,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegPositionEffect : CharField
     {
+        public const int TAG = 564;
+
         public LegPositionEffect()
             :base(Tags.LegPositionEffect) {}
         public LegPositionEffect(char val)
@@ -9925,6 +11069,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegCoveredOrUncovered : IntField
     {
+        public const int TAG = 565;
+
         public LegCoveredOrUncovered()
             :base(Tags.LegCoveredOrUncovered) {}
         public LegCoveredOrUncovered(int val)
@@ -9938,6 +11084,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegPrice : DecimalField
     {
+        public const int TAG = 566;
+
         public LegPrice()
             :base(Tags.LegPrice) {}
         public LegPrice(Decimal val)
@@ -9951,6 +11099,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesStatusRejReason : IntField
     {
+        public const int TAG = 567;
+
         public TradSesStatusRejReason()
             :base(Tags.TradSesStatusRejReason) {}
         public TradSesStatusRejReason(int val)
@@ -9968,6 +11118,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeRequestID : StringField
     {
+        public const int TAG = 568;
+
         public TradeRequestID()
             :base(Tags.TradeRequestID) {}
         public TradeRequestID(string val)
@@ -9981,6 +11133,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeRequestType : IntField
     {
+        public const int TAG = 569;
+
         public TradeRequestType()
             :base(Tags.TradeRequestType) {}
         public TradeRequestType(int val)
@@ -10001,6 +11155,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PreviouslyReported : BooleanField
     {
+        public const int TAG = 570;
+
         public PreviouslyReported()
             :base(Tags.PreviouslyReported) {}
         public PreviouslyReported(Boolean val)
@@ -10018,6 +11174,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeReportID : StringField
     {
+        public const int TAG = 571;
+
         public TradeReportID()
             :base(Tags.TradeReportID) {}
         public TradeReportID(string val)
@@ -10031,6 +11189,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeReportRefID : StringField
     {
+        public const int TAG = 572;
+
         public TradeReportRefID()
             :base(Tags.TradeReportRefID) {}
         public TradeReportRefID(string val)
@@ -10044,6 +11204,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MatchStatus : CharField
     {
+        public const int TAG = 573;
+
         public MatchStatus()
             :base(Tags.MatchStatus) {}
         public MatchStatus(char val)
@@ -10065,6 +11227,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MatchType : StringField
     {
+        public const int TAG = 574;
+
         public MatchType()
             :base(Tags.MatchType) {}
         public MatchType(string val)
@@ -10132,6 +11296,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OddLot : BooleanField
     {
+        public const int TAG = 575;
+
         public OddLot()
             :base(Tags.OddLot) {}
         public OddLot(Boolean val)
@@ -10149,6 +11315,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoClearingInstructions : IntField
     {
+        public const int TAG = 576;
+
         public NoClearingInstructions()
             :base(Tags.NoClearingInstructions) {}
         public NoClearingInstructions(int val)
@@ -10162,6 +11330,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ClearingInstruction : IntField
     {
+        public const int TAG = 577;
+
         public ClearingInstruction()
             :base(Tags.ClearingInstruction) {}
         public ClearingInstruction(int val)
@@ -10192,6 +11362,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeInputSource : StringField
     {
+        public const int TAG = 578;
+
         public TradeInputSource()
             :base(Tags.TradeInputSource) {}
         public TradeInputSource(string val)
@@ -10205,6 +11377,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeInputDevice : StringField
     {
+        public const int TAG = 579;
+
         public TradeInputDevice()
             :base(Tags.TradeInputDevice) {}
         public TradeInputDevice(string val)
@@ -10218,6 +11392,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoDates : IntField
     {
+        public const int TAG = 580;
+
         public NoDates()
             :base(Tags.NoDates) {}
         public NoDates(int val)
@@ -10231,6 +11407,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AccountType : IntField
     {
+        public const int TAG = 581;
+
         public AccountType()
             :base(Tags.AccountType) {}
         public AccountType(int val)
@@ -10255,6 +11433,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CustOrderCapacity : IntField
     {
+        public const int TAG = 582;
+
         public CustOrderCapacity()
             :base(Tags.CustOrderCapacity) {}
         public CustOrderCapacity(int val)
@@ -10274,6 +11454,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ClOrdLinkID : StringField
     {
+        public const int TAG = 583;
+
         public ClOrdLinkID()
             :base(Tags.ClOrdLinkID) {}
         public ClOrdLinkID(string val)
@@ -10287,6 +11469,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MassStatusReqID : StringField
     {
+        public const int TAG = 584;
+
         public MassStatusReqID()
             :base(Tags.MassStatusReqID) {}
         public MassStatusReqID(string val)
@@ -10300,6 +11484,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MassStatusReqType : IntField
     {
+        public const int TAG = 585;
+
         public MassStatusReqType()
             :base(Tags.MassStatusReqType) {}
         public MassStatusReqType(int val)
@@ -10325,6 +11511,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigOrdModTime : DateTimeField
     {
+        public const int TAG = 586;
+
         public OrigOrdModTime()
             :base(Tags.OrigOrdModTime) {}
         public OrigOrdModTime(DateTime val)
@@ -10342,6 +11530,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSettlmntTyp : CharField
     {
+        public const int TAG = 587;
+
         public LegSettlmntTyp()
             :base(Tags.LegSettlmntTyp) {}
         public LegSettlmntTyp(char val)
@@ -10355,6 +11545,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegFutSettDate : StringField
     {
+        public const int TAG = 588;
+
         public LegFutSettDate()
             :base(Tags.LegFutSettDate) {}
         public LegFutSettDate(string val)
@@ -10368,6 +11560,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DayBookingInst : CharField
     {
+        public const int TAG = 589;
+
         public DayBookingInst()
             :base(Tags.DayBookingInst) {}
         public DayBookingInst(char val)
@@ -10386,6 +11580,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BookingUnit : CharField
     {
+        public const int TAG = 590;
+
         public BookingUnit()
             :base(Tags.BookingUnit) {}
         public BookingUnit(char val)
@@ -10404,6 +11600,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PreallocMethod : CharField
     {
+        public const int TAG = 591;
+
         public PreallocMethod()
             :base(Tags.PreallocMethod) {}
         public PreallocMethod(char val)
@@ -10421,6 +11619,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCountryOfIssue : StringField
     {
+        public const int TAG = 592;
+
         public UnderlyingCountryOfIssue()
             :base(Tags.UnderlyingCountryOfIssue) {}
         public UnderlyingCountryOfIssue(string val)
@@ -10434,6 +11634,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingStateOrProvinceOfIssue : StringField
     {
+        public const int TAG = 593;
+
         public UnderlyingStateOrProvinceOfIssue()
             :base(Tags.UnderlyingStateOrProvinceOfIssue) {}
         public UnderlyingStateOrProvinceOfIssue(string val)
@@ -10447,6 +11649,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLocaleOfIssue : StringField
     {
+        public const int TAG = 594;
+
         public UnderlyingLocaleOfIssue()
             :base(Tags.UnderlyingLocaleOfIssue) {}
         public UnderlyingLocaleOfIssue(string val)
@@ -10460,6 +11664,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingInstrRegistry : StringField
     {
+        public const int TAG = 595;
+
         public UnderlyingInstrRegistry()
             :base(Tags.UnderlyingInstrRegistry) {}
         public UnderlyingInstrRegistry(string val)
@@ -10473,6 +11679,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegCountryOfIssue : StringField
     {
+        public const int TAG = 596;
+
         public LegCountryOfIssue()
             :base(Tags.LegCountryOfIssue) {}
         public LegCountryOfIssue(string val)
@@ -10486,6 +11694,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegStateOrProvinceOfIssue : StringField
     {
+        public const int TAG = 597;
+
         public LegStateOrProvinceOfIssue()
             :base(Tags.LegStateOrProvinceOfIssue) {}
         public LegStateOrProvinceOfIssue(string val)
@@ -10499,6 +11709,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegLocaleOfIssue : StringField
     {
+        public const int TAG = 598;
+
         public LegLocaleOfIssue()
             :base(Tags.LegLocaleOfIssue) {}
         public LegLocaleOfIssue(string val)
@@ -10512,6 +11724,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegInstrRegistry : StringField
     {
+        public const int TAG = 599;
+
         public LegInstrRegistry()
             :base(Tags.LegInstrRegistry) {}
         public LegInstrRegistry(string val)
@@ -10525,6 +11739,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSymbol : StringField
     {
+        public const int TAG = 600;
+
         public LegSymbol()
             :base(Tags.LegSymbol) {}
         public LegSymbol(string val)
@@ -10538,6 +11754,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSymbolSfx : StringField
     {
+        public const int TAG = 601;
+
         public LegSymbolSfx()
             :base(Tags.LegSymbolSfx) {}
         public LegSymbolSfx(string val)
@@ -10551,6 +11769,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSecurityID : StringField
     {
+        public const int TAG = 602;
+
         public LegSecurityID()
             :base(Tags.LegSecurityID) {}
         public LegSecurityID(string val)
@@ -10564,6 +11784,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSecurityIDSource : StringField
     {
+        public const int TAG = 603;
+
         public LegSecurityIDSource()
             :base(Tags.LegSecurityIDSource) {}
         public LegSecurityIDSource(string val)
@@ -10577,6 +11799,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoLegSecurityAltID : StringField
     {
+        public const int TAG = 604;
+
         public NoLegSecurityAltID()
             :base(Tags.NoLegSecurityAltID) {}
         public NoLegSecurityAltID(string val)
@@ -10590,6 +11814,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSecurityAltID : StringField
     {
+        public const int TAG = 605;
+
         public LegSecurityAltID()
             :base(Tags.LegSecurityAltID) {}
         public LegSecurityAltID(string val)
@@ -10603,6 +11829,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSecurityAltIDSource : StringField
     {
+        public const int TAG = 606;
+
         public LegSecurityAltIDSource()
             :base(Tags.LegSecurityAltIDSource) {}
         public LegSecurityAltIDSource(string val)
@@ -10616,6 +11844,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegProduct : IntField
     {
+        public const int TAG = 607;
+
         public LegProduct()
             :base(Tags.LegProduct) {}
         public LegProduct(int val)
@@ -10629,6 +11859,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegCFICode : StringField
     {
+        public const int TAG = 608;
+
         public LegCFICode()
             :base(Tags.LegCFICode) {}
         public LegCFICode(string val)
@@ -10642,6 +11874,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSecurityType : StringField
     {
+        public const int TAG = 609;
+
         public LegSecurityType()
             :base(Tags.LegSecurityType) {}
         public LegSecurityType(string val)
@@ -10655,6 +11889,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegMaturityMonthYear : StringField
     {
+        public const int TAG = 610;
+
         public LegMaturityMonthYear()
             :base(Tags.LegMaturityMonthYear) {}
         public LegMaturityMonthYear(string val)
@@ -10668,6 +11904,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegMaturityDate : StringField
     {
+        public const int TAG = 611;
+
         public LegMaturityDate()
             :base(Tags.LegMaturityDate) {}
         public LegMaturityDate(string val)
@@ -10681,6 +11919,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegStrikePrice : DecimalField
     {
+        public const int TAG = 612;
+
         public LegStrikePrice()
             :base(Tags.LegStrikePrice) {}
         public LegStrikePrice(Decimal val)
@@ -10694,6 +11934,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegOptAttribute : CharField
     {
+        public const int TAG = 613;
+
         public LegOptAttribute()
             :base(Tags.LegOptAttribute) {}
         public LegOptAttribute(char val)
@@ -10707,6 +11949,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegContractMultiplier : DecimalField
     {
+        public const int TAG = 614;
+
         public LegContractMultiplier()
             :base(Tags.LegContractMultiplier) {}
         public LegContractMultiplier(Decimal val)
@@ -10720,6 +11964,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegCouponRate : DecimalField
     {
+        public const int TAG = 615;
+
         public LegCouponRate()
             :base(Tags.LegCouponRate) {}
         public LegCouponRate(Decimal val)
@@ -10733,6 +11979,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSecurityExchange : StringField
     {
+        public const int TAG = 616;
+
         public LegSecurityExchange()
             :base(Tags.LegSecurityExchange) {}
         public LegSecurityExchange(string val)
@@ -10746,6 +11994,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegIssuer : StringField
     {
+        public const int TAG = 617;
+
         public LegIssuer()
             :base(Tags.LegIssuer) {}
         public LegIssuer(string val)
@@ -10759,6 +12009,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedLegIssuerLen : IntField
     {
+        public const int TAG = 618;
+
         public EncodedLegIssuerLen()
             :base(Tags.EncodedLegIssuerLen) {}
         public EncodedLegIssuerLen(int val)
@@ -10772,6 +12024,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedLegIssuer : StringField
     {
+        public const int TAG = 619;
+
         public EncodedLegIssuer()
             :base(Tags.EncodedLegIssuer) {}
         public EncodedLegIssuer(string val)
@@ -10785,6 +12039,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSecurityDesc : StringField
     {
+        public const int TAG = 620;
+
         public LegSecurityDesc()
             :base(Tags.LegSecurityDesc) {}
         public LegSecurityDesc(string val)
@@ -10798,6 +12054,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedLegSecurityDescLen : IntField
     {
+        public const int TAG = 621;
+
         public EncodedLegSecurityDescLen()
             :base(Tags.EncodedLegSecurityDescLen) {}
         public EncodedLegSecurityDescLen(int val)
@@ -10811,6 +12069,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedLegSecurityDesc : StringField
     {
+        public const int TAG = 622;
+
         public EncodedLegSecurityDesc()
             :base(Tags.EncodedLegSecurityDesc) {}
         public EncodedLegSecurityDesc(string val)
@@ -10824,6 +12084,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegRatioQty : DecimalField
     {
+        public const int TAG = 623;
+
         public LegRatioQty()
             :base(Tags.LegRatioQty) {}
         public LegRatioQty(Decimal val)
@@ -10837,6 +12099,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSide : CharField
     {
+        public const int TAG = 624;
+
         public LegSide()
             :base(Tags.LegSide) {}
         public LegSide(char val)
@@ -10850,6 +12114,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradingSessionSubID : StringField
     {
+        public const int TAG = 625;
+
         public TradingSessionSubID()
             :base(Tags.TradingSessionSubID) {}
         public TradingSessionSubID(string val)
@@ -10872,6 +12138,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocType : IntField
     {
+        public const int TAG = 626;
+
         public AllocType()
             :base(Tags.AllocType) {}
         public AllocType(int val)
@@ -10906,6 +12174,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoHops : IntField
     {
+        public const int TAG = 627;
+
         public NoHops()
             :base(Tags.NoHops) {}
         public NoHops(int val)
@@ -10919,6 +12189,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HopCompID : StringField
     {
+        public const int TAG = 628;
+
         public HopCompID()
             :base(Tags.HopCompID) {}
         public HopCompID(string val)
@@ -10932,6 +12204,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HopSendingTime : DateTimeField
     {
+        public const int TAG = 629;
+
         public HopSendingTime()
             :base(Tags.HopSendingTime) {}
         public HopSendingTime(DateTime val)
@@ -10949,6 +12223,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HopRefID : IntField
     {
+        public const int TAG = 630;
+
         public HopRefID()
             :base(Tags.HopRefID) {}
         public HopRefID(int val)
@@ -10962,6 +12238,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MidPx : DecimalField
     {
+        public const int TAG = 631;
+
         public MidPx()
             :base(Tags.MidPx) {}
         public MidPx(Decimal val)
@@ -10975,6 +12253,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidYield : DecimalField
     {
+        public const int TAG = 632;
+
         public BidYield()
             :base(Tags.BidYield) {}
         public BidYield(Decimal val)
@@ -10988,6 +12268,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MidYield : DecimalField
     {
+        public const int TAG = 633;
+
         public MidYield()
             :base(Tags.MidYield) {}
         public MidYield(Decimal val)
@@ -11001,6 +12283,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OfferYield : DecimalField
     {
+        public const int TAG = 634;
+
         public OfferYield()
             :base(Tags.OfferYield) {}
         public OfferYield(Decimal val)
@@ -11014,6 +12298,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ClearingFeeIndicator : StringField
     {
+        public const int TAG = 635;
+
         public ClearingFeeIndicator()
             :base(Tags.ClearingFeeIndicator) {}
         public ClearingFeeIndicator(string val)
@@ -11045,6 +12331,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class WorkingIndicator : BooleanField
     {
+        public const int TAG = 636;
+
         public WorkingIndicator()
             :base(Tags.WorkingIndicator) {}
         public WorkingIndicator(Boolean val)
@@ -11062,6 +12350,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegLastPx : DecimalField
     {
+        public const int TAG = 637;
+
         public LegLastPx()
             :base(Tags.LegLastPx) {}
         public LegLastPx(Decimal val)
@@ -11075,6 +12365,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriorityIndicator : IntField
     {
+        public const int TAG = 638;
+
         public PriorityIndicator()
             :base(Tags.PriorityIndicator) {}
         public PriorityIndicator(int val)
@@ -11092,6 +12384,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriceImprovement : DecimalField
     {
+        public const int TAG = 639;
+
         public PriceImprovement()
             :base(Tags.PriceImprovement) {}
         public PriceImprovement(Decimal val)
@@ -11105,6 +12399,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Price2 : DecimalField
     {
+        public const int TAG = 640;
+
         public Price2()
             :base(Tags.Price2) {}
         public Price2(Decimal val)
@@ -11118,6 +12414,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastForwardPoints2 : DecimalField
     {
+        public const int TAG = 641;
+
         public LastForwardPoints2()
             :base(Tags.LastForwardPoints2) {}
         public LastForwardPoints2(Decimal val)
@@ -11131,6 +12429,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidForwardPoints2 : DecimalField
     {
+        public const int TAG = 642;
+
         public BidForwardPoints2()
             :base(Tags.BidForwardPoints2) {}
         public BidForwardPoints2(Decimal val)
@@ -11144,6 +12444,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OfferForwardPoints2 : DecimalField
     {
+        public const int TAG = 643;
+
         public OfferForwardPoints2()
             :base(Tags.OfferForwardPoints2) {}
         public OfferForwardPoints2(Decimal val)
@@ -11157,6 +12459,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RFQReqID : StringField
     {
+        public const int TAG = 644;
+
         public RFQReqID()
             :base(Tags.RFQReqID) {}
         public RFQReqID(string val)
@@ -11170,6 +12474,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MktBidPx : DecimalField
     {
+        public const int TAG = 645;
+
         public MktBidPx()
             :base(Tags.MktBidPx) {}
         public MktBidPx(Decimal val)
@@ -11183,6 +12489,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MktOfferPx : DecimalField
     {
+        public const int TAG = 646;
+
         public MktOfferPx()
             :base(Tags.MktOfferPx) {}
         public MktOfferPx(Decimal val)
@@ -11196,6 +12504,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MinBidSize : DecimalField
     {
+        public const int TAG = 647;
+
         public MinBidSize()
             :base(Tags.MinBidSize) {}
         public MinBidSize(Decimal val)
@@ -11209,6 +12519,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MinOfferSize : DecimalField
     {
+        public const int TAG = 648;
+
         public MinOfferSize()
             :base(Tags.MinOfferSize) {}
         public MinOfferSize(Decimal val)
@@ -11222,6 +12534,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteStatusReqID : StringField
     {
+        public const int TAG = 649;
+
         public QuoteStatusReqID()
             :base(Tags.QuoteStatusReqID) {}
         public QuoteStatusReqID(string val)
@@ -11235,6 +12549,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegalConfirm : BooleanField
     {
+        public const int TAG = 650;
+
         public LegalConfirm()
             :base(Tags.LegalConfirm) {}
         public LegalConfirm(Boolean val)
@@ -11252,6 +12568,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLastPx : DecimalField
     {
+        public const int TAG = 651;
+
         public UnderlyingLastPx()
             :base(Tags.UnderlyingLastPx) {}
         public UnderlyingLastPx(Decimal val)
@@ -11265,6 +12583,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLastQty : DecimalField
     {
+        public const int TAG = 652;
+
         public UnderlyingLastQty()
             :base(Tags.UnderlyingLastQty) {}
         public UnderlyingLastQty(Decimal val)
@@ -11278,6 +12598,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecDefStatus : IntField
     {
+        public const int TAG = 653;
+
         public SecDefStatus()
             :base(Tags.SecDefStatus) {}
         public SecDefStatus(int val)
@@ -11298,6 +12620,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegRefID : StringField
     {
+        public const int TAG = 654;
+
         public LegRefID()
             :base(Tags.LegRefID) {}
         public LegRefID(string val)
@@ -11311,6 +12635,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContraLegRefID : StringField
     {
+        public const int TAG = 655;
+
         public ContraLegRefID()
             :base(Tags.ContraLegRefID) {}
         public ContraLegRefID(string val)
@@ -11324,6 +12650,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlCurrBidFxRate : DecimalField
     {
+        public const int TAG = 656;
+
         public SettlCurrBidFxRate()
             :base(Tags.SettlCurrBidFxRate) {}
         public SettlCurrBidFxRate(Decimal val)
@@ -11337,6 +12665,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlCurrOfferFxRate : DecimalField
     {
+        public const int TAG = 657;
+
         public SettlCurrOfferFxRate()
             :base(Tags.SettlCurrOfferFxRate) {}
         public SettlCurrOfferFxRate(Decimal val)
@@ -11350,6 +12680,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteRequestRejectReason : IntField
     {
+        public const int TAG = 658;
+
         public QuoteRequestRejectReason()
             :base(Tags.QuoteRequestRejectReason) {}
         public QuoteRequestRejectReason(int val)
@@ -11378,6 +12710,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideComplianceID : StringField
     {
+        public const int TAG = 659;
+
         public SideComplianceID()
             :base(Tags.SideComplianceID) {}
         public SideComplianceID(string val)
@@ -11391,6 +12725,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlType : StringField
     {
+        public const int TAG = 63;
+
         public SettlType()
             :base(Tags.SettlType) {}
         public SettlType(string val)
@@ -11418,6 +12754,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlDate : StringField
     {
+        public const int TAG = 64;
+
         public SettlDate()
             :base(Tags.SettlDate) {}
         public SettlDate(string val)
@@ -11431,6 +12769,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AvgPxPrecision : IntField
     {
+        public const int TAG = 74;
+
         public AvgPxPrecision()
             :base(Tags.AvgPxPrecision) {}
         public AvgPxPrecision(int val)
@@ -11444,6 +12784,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlDate2 : StringField
     {
+        public const int TAG = 193;
+
         public SettlDate2()
             :base(Tags.SettlDate2) {}
         public SettlDate2(string val)
@@ -11457,6 +12799,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegOffsetValue : DecimalField
     {
+        public const int TAG = 211;
+
         public PegOffsetValue()
             :base(Tags.PegOffsetValue) {}
         public PegOffsetValue(Decimal val)
@@ -11470,6 +12814,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OpenCloseSettlFlag : StringField
     {
+        public const int TAG = 286;
+
         public OpenCloseSettlFlag()
             :base(Tags.OpenCloseSettlFlag) {}
         public OpenCloseSettlFlag(string val)
@@ -11493,6 +12839,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoQuoteEntries : IntField
     {
+        public const int TAG = 304;
+
         public TotNoQuoteEntries()
             :base(Tags.TotNoQuoteEntries) {}
         public TotNoQuoteEntries(int val)
@@ -11506,6 +12854,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DiscretionOffsetValue : DecimalField
     {
+        public const int TAG = 389;
+
         public DiscretionOffsetValue()
             :base(Tags.DiscretionOffsetValue) {}
         public DiscretionOffsetValue(Decimal val)
@@ -11519,6 +12869,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoRelatedSym : IntField
     {
+        public const int TAG = 393;
+
         public TotNoRelatedSym()
             :base(Tags.TotNoRelatedSym) {}
         public TotNoRelatedSym(int val)
@@ -11532,6 +12884,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidTradeType : CharField
     {
+        public const int TAG = 418;
+
         public BidTradeType()
             :base(Tags.BidTradeType) {}
         public BidTradeType(char val)
@@ -11551,6 +12905,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CardIssNum : StringField
     {
+        public const int TAG = 491;
+
         public CardIssNum()
             :base(Tags.CardIssNum) {}
         public CardIssNum(string val)
@@ -11564,6 +12920,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RegistDtls : StringField
     {
+        public const int TAG = 509;
+
         public RegistDtls()
             :base(Tags.RegistDtls) {}
         public RegistDtls(string val)
@@ -11577,6 +12935,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoSecurityTypes : IntField
     {
+        public const int TAG = 557;
+
         public TotNoSecurityTypes()
             :base(Tags.TotNoSecurityTypes) {}
         public TotNoSecurityTypes(int val)
@@ -11590,6 +12950,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSettlType : CharField
     {
+        public const int TAG = 587;
+
         public LegSettlType()
             :base(Tags.LegSettlType) {}
         public LegSettlType(char val)
@@ -11603,6 +12965,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSettlDate : StringField
     {
+        public const int TAG = 588;
+
         public LegSettlDate()
             :base(Tags.LegSettlDate) {}
         public LegSettlDate(string val)
@@ -11616,6 +12980,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AcctIDSource : IntField
     {
+        public const int TAG = 660;
+
         public AcctIDSource()
             :base(Tags.AcctIDSource) {}
         public AcctIDSource(int val)
@@ -11637,6 +13003,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocAcctIDSource : IntField
     {
+        public const int TAG = 661;
+
         public AllocAcctIDSource()
             :base(Tags.AllocAcctIDSource) {}
         public AllocAcctIDSource(int val)
@@ -11650,6 +13018,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BenchmarkPrice : DecimalField
     {
+        public const int TAG = 662;
+
         public BenchmarkPrice()
             :base(Tags.BenchmarkPrice) {}
         public BenchmarkPrice(Decimal val)
@@ -11663,6 +13033,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BenchmarkPriceType : IntField
     {
+        public const int TAG = 663;
+
         public BenchmarkPriceType()
             :base(Tags.BenchmarkPriceType) {}
         public BenchmarkPriceType(int val)
@@ -11676,6 +13048,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ConfirmID : StringField
     {
+        public const int TAG = 664;
+
         public ConfirmID()
             :base(Tags.ConfirmID) {}
         public ConfirmID(string val)
@@ -11689,6 +13063,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ConfirmStatus : IntField
     {
+        public const int TAG = 665;
+
         public ConfirmStatus()
             :base(Tags.ConfirmStatus) {}
         public ConfirmStatus(int val)
@@ -11709,6 +13085,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ConfirmTransType : IntField
     {
+        public const int TAG = 666;
+
         public ConfirmTransType()
             :base(Tags.ConfirmTransType) {}
         public ConfirmTransType(int val)
@@ -11727,6 +13105,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContractSettlMonth : StringField
     {
+        public const int TAG = 667;
+
         public ContractSettlMonth()
             :base(Tags.ContractSettlMonth) {}
         public ContractSettlMonth(string val)
@@ -11740,6 +13120,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeliveryForm : IntField
     {
+        public const int TAG = 668;
+
         public DeliveryForm()
             :base(Tags.DeliveryForm) {}
         public DeliveryForm(int val)
@@ -11758,6 +13140,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastParPx : DecimalField
     {
+        public const int TAG = 669;
+
         public LastParPx()
             :base(Tags.LastParPx) {}
         public LastParPx(Decimal val)
@@ -11771,6 +13155,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoLegAllocs : IntField
     {
+        public const int TAG = 670;
+
         public NoLegAllocs()
             :base(Tags.NoLegAllocs) {}
         public NoLegAllocs(int val)
@@ -11784,6 +13170,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegAllocAccount : StringField
     {
+        public const int TAG = 671;
+
         public LegAllocAccount()
             :base(Tags.LegAllocAccount) {}
         public LegAllocAccount(string val)
@@ -11797,6 +13185,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegIndividualAllocID : StringField
     {
+        public const int TAG = 672;
+
         public LegIndividualAllocID()
             :base(Tags.LegIndividualAllocID) {}
         public LegIndividualAllocID(string val)
@@ -11810,6 +13200,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegAllocQty : DecimalField
     {
+        public const int TAG = 673;
+
         public LegAllocQty()
             :base(Tags.LegAllocQty) {}
         public LegAllocQty(Decimal val)
@@ -11823,6 +13215,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegAllocAcctIDSource : StringField
     {
+        public const int TAG = 674;
+
         public LegAllocAcctIDSource()
             :base(Tags.LegAllocAcctIDSource) {}
         public LegAllocAcctIDSource(string val)
@@ -11836,6 +13230,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSettlCurrency : StringField
     {
+        public const int TAG = 675;
+
         public LegSettlCurrency()
             :base(Tags.LegSettlCurrency) {}
         public LegSettlCurrency(string val)
@@ -11849,6 +13245,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegBenchmarkCurveCurrency : StringField
     {
+        public const int TAG = 676;
+
         public LegBenchmarkCurveCurrency()
             :base(Tags.LegBenchmarkCurveCurrency) {}
         public LegBenchmarkCurveCurrency(string val)
@@ -11862,6 +13260,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegBenchmarkCurveName : StringField
     {
+        public const int TAG = 677;
+
         public LegBenchmarkCurveName()
             :base(Tags.LegBenchmarkCurveName) {}
         public LegBenchmarkCurveName(string val)
@@ -11875,6 +13275,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegBenchmarkCurvePoint : StringField
     {
+        public const int TAG = 678;
+
         public LegBenchmarkCurvePoint()
             :base(Tags.LegBenchmarkCurvePoint) {}
         public LegBenchmarkCurvePoint(string val)
@@ -11888,6 +13290,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegBenchmarkPrice : DecimalField
     {
+        public const int TAG = 679;
+
         public LegBenchmarkPrice()
             :base(Tags.LegBenchmarkPrice) {}
         public LegBenchmarkPrice(Decimal val)
@@ -11901,6 +13305,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegBenchmarkPriceType : IntField
     {
+        public const int TAG = 680;
+
         public LegBenchmarkPriceType()
             :base(Tags.LegBenchmarkPriceType) {}
         public LegBenchmarkPriceType(int val)
@@ -11914,6 +13320,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegBidPx : DecimalField
     {
+        public const int TAG = 681;
+
         public LegBidPx()
             :base(Tags.LegBidPx) {}
         public LegBidPx(Decimal val)
@@ -11927,6 +13335,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegIOIQty : StringField
     {
+        public const int TAG = 682;
+
         public LegIOIQty()
             :base(Tags.LegIOIQty) {}
         public LegIOIQty(string val)
@@ -11940,6 +13350,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoLegStipulations : IntField
     {
+        public const int TAG = 683;
+
         public NoLegStipulations()
             :base(Tags.NoLegStipulations) {}
         public NoLegStipulations(int val)
@@ -11953,6 +13365,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegOfferPx : DecimalField
     {
+        public const int TAG = 684;
+
         public LegOfferPx()
             :base(Tags.LegOfferPx) {}
         public LegOfferPx(Decimal val)
@@ -11966,6 +13380,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegOrderQty : DecimalField
     {
+        public const int TAG = 685;
+
         public LegOrderQty()
             :base(Tags.LegOrderQty) {}
         public LegOrderQty(Decimal val)
@@ -11979,6 +13395,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegPriceType : IntField
     {
+        public const int TAG = 686;
+
         public LegPriceType()
             :base(Tags.LegPriceType) {}
         public LegPriceType(int val)
@@ -11992,6 +13410,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegQty : DecimalField
     {
+        public const int TAG = 687;
+
         public LegQty()
             :base(Tags.LegQty) {}
         public LegQty(Decimal val)
@@ -12005,6 +13425,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegStipulationType : StringField
     {
+        public const int TAG = 688;
+
         public LegStipulationType()
             :base(Tags.LegStipulationType) {}
         public LegStipulationType(string val)
@@ -12018,6 +13440,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegStipulationValue : StringField
     {
+        public const int TAG = 689;
+
         public LegStipulationValue()
             :base(Tags.LegStipulationValue) {}
         public LegStipulationValue(string val)
@@ -12031,6 +13455,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSwapType : IntField
     {
+        public const int TAG = 690;
+
         public LegSwapType()
             :base(Tags.LegSwapType) {}
         public LegSwapType(int val)
@@ -12050,6 +13476,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Pool : StringField
     {
+        public const int TAG = 691;
+
         public Pool()
             :base(Tags.Pool) {}
         public Pool(string val)
@@ -12063,6 +13491,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuotePriceType : IntField
     {
+        public const int TAG = 692;
+
         public QuotePriceType()
             :base(Tags.QuotePriceType) {}
         public QuotePriceType(int val)
@@ -12089,6 +13519,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteRespID : StringField
     {
+        public const int TAG = 693;
+
         public QuoteRespID()
             :base(Tags.QuoteRespID) {}
         public QuoteRespID(string val)
@@ -12102,6 +13534,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteRespType : IntField
     {
+        public const int TAG = 694;
+
         public QuoteRespType()
             :base(Tags.QuoteRespType) {}
         public QuoteRespType(int val)
@@ -12125,6 +13559,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteQualifier : CharField
     {
+        public const int TAG = 695;
+
         public QuoteQualifier()
             :base(Tags.QuoteQualifier) {}
         public QuoteQualifier(char val)
@@ -12138,6 +13574,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class YieldRedemptionDate : StringField
     {
+        public const int TAG = 696;
+
         public YieldRedemptionDate()
             :base(Tags.YieldRedemptionDate) {}
         public YieldRedemptionDate(string val)
@@ -12151,6 +13589,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class YieldRedemptionPrice : DecimalField
     {
+        public const int TAG = 697;
+
         public YieldRedemptionPrice()
             :base(Tags.YieldRedemptionPrice) {}
         public YieldRedemptionPrice(Decimal val)
@@ -12164,6 +13604,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class YieldRedemptionPriceType : IntField
     {
+        public const int TAG = 698;
+
         public YieldRedemptionPriceType()
             :base(Tags.YieldRedemptionPriceType) {}
         public YieldRedemptionPriceType(int val)
@@ -12177,6 +13619,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BenchmarkSecurityID : StringField
     {
+        public const int TAG = 699;
+
         public BenchmarkSecurityID()
             :base(Tags.BenchmarkSecurityID) {}
         public BenchmarkSecurityID(string val)
@@ -12190,6 +13634,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ReversalIndicator : BooleanField
     {
+        public const int TAG = 700;
+
         public ReversalIndicator()
             :base(Tags.ReversalIndicator) {}
         public ReversalIndicator(Boolean val)
@@ -12203,6 +13649,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class YieldCalcDate : StringField
     {
+        public const int TAG = 701;
+
         public YieldCalcDate()
             :base(Tags.YieldCalcDate) {}
         public YieldCalcDate(string val)
@@ -12216,6 +13664,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoPositions : IntField
     {
+        public const int TAG = 702;
+
         public NoPositions()
             :base(Tags.NoPositions) {}
         public NoPositions(int val)
@@ -12229,6 +13679,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosType : StringField
     {
+        public const int TAG = 703;
+
         public PosType()
             :base(Tags.PosType) {}
         public PosType(string val)
@@ -12271,6 +13723,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LongQty : DecimalField
     {
+        public const int TAG = 704;
+
         public LongQty()
             :base(Tags.LongQty) {}
         public LongQty(Decimal val)
@@ -12284,6 +13738,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ShortQty : DecimalField
     {
+        public const int TAG = 705;
+
         public ShortQty()
             :base(Tags.ShortQty) {}
         public ShortQty(Decimal val)
@@ -12297,6 +13753,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosQtyStatus : IntField
     {
+        public const int TAG = 706;
+
         public PosQtyStatus()
             :base(Tags.PosQtyStatus) {}
         public PosQtyStatus(int val)
@@ -12315,6 +13773,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosAmtType : StringField
     {
+        public const int TAG = 707;
+
         public PosAmtType()
             :base(Tags.PosAmtType) {}
         public PosAmtType(string val)
@@ -12348,6 +13808,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosAmt : DecimalField
     {
+        public const int TAG = 708;
+
         public PosAmt()
             :base(Tags.PosAmt) {}
         public PosAmt(Decimal val)
@@ -12361,6 +13823,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosTransType : IntField
     {
+        public const int TAG = 709;
+
         public PosTransType()
             :base(Tags.PosTransType) {}
         public PosTransType(int val)
@@ -12382,6 +13846,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosReqID : StringField
     {
+        public const int TAG = 710;
+
         public PosReqID()
             :base(Tags.PosReqID) {}
         public PosReqID(string val)
@@ -12395,6 +13861,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoUnderlyings : IntField
     {
+        public const int TAG = 711;
+
         public NoUnderlyings()
             :base(Tags.NoUnderlyings) {}
         public NoUnderlyings(int val)
@@ -12408,6 +13876,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosMaintAction : IntField
     {
+        public const int TAG = 712;
+
         public PosMaintAction()
             :base(Tags.PosMaintAction) {}
         public PosMaintAction(int val)
@@ -12427,6 +13897,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigPosReqRefID : StringField
     {
+        public const int TAG = 713;
+
         public OrigPosReqRefID()
             :base(Tags.OrigPosReqRefID) {}
         public OrigPosReqRefID(string val)
@@ -12440,6 +13912,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosMaintRptRefID : StringField
     {
+        public const int TAG = 714;
+
         public PosMaintRptRefID()
             :base(Tags.PosMaintRptRefID) {}
         public PosMaintRptRefID(string val)
@@ -12453,6 +13927,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ClearingBusinessDate : StringField
     {
+        public const int TAG = 715;
+
         public ClearingBusinessDate()
             :base(Tags.ClearingBusinessDate) {}
         public ClearingBusinessDate(string val)
@@ -12466,6 +13942,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlSessID : StringField
     {
+        public const int TAG = 716;
+
         public SettlSessID()
             :base(Tags.SettlSessID) {}
         public SettlSessID(string val)
@@ -12485,6 +13963,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlSessSubID : StringField
     {
+        public const int TAG = 717;
+
         public SettlSessSubID()
             :base(Tags.SettlSessSubID) {}
         public SettlSessSubID(string val)
@@ -12498,6 +13978,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AdjustmentType : IntField
     {
+        public const int TAG = 718;
+
         public AdjustmentType()
             :base(Tags.AdjustmentType) {}
         public AdjustmentType(int val)
@@ -12517,6 +13999,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContraryInstructionIndicator : BooleanField
     {
+        public const int TAG = 719;
+
         public ContraryInstructionIndicator()
             :base(Tags.ContraryInstructionIndicator) {}
         public ContraryInstructionIndicator(Boolean val)
@@ -12530,6 +14014,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriorSpreadIndicator : BooleanField
     {
+        public const int TAG = 720;
+
         public PriorSpreadIndicator()
             :base(Tags.PriorSpreadIndicator) {}
         public PriorSpreadIndicator(Boolean val)
@@ -12543,6 +14029,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosMaintRptID : StringField
     {
+        public const int TAG = 721;
+
         public PosMaintRptID()
             :base(Tags.PosMaintRptID) {}
         public PosMaintRptID(string val)
@@ -12556,6 +14044,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosMaintStatus : IntField
     {
+        public const int TAG = 722;
+
         public PosMaintStatus()
             :base(Tags.PosMaintStatus) {}
         public PosMaintStatus(int val)
@@ -12576,6 +14066,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosMaintResult : IntField
     {
+        public const int TAG = 723;
+
         public PosMaintResult()
             :base(Tags.PosMaintResult) {}
         public PosMaintResult(int val)
@@ -12595,6 +14087,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosReqType : IntField
     {
+        public const int TAG = 724;
+
         public PosReqType()
             :base(Tags.PosReqType) {}
         public PosReqType(int val)
@@ -12617,6 +14111,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ResponseTransportType : IntField
     {
+        public const int TAG = 725;
+
         public ResponseTransportType()
             :base(Tags.ResponseTransportType) {}
         public ResponseTransportType(int val)
@@ -12634,6 +14130,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ResponseDestination : StringField
     {
+        public const int TAG = 726;
+
         public ResponseDestination()
             :base(Tags.ResponseDestination) {}
         public ResponseDestination(string val)
@@ -12647,6 +14145,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotalNumPosReports : IntField
     {
+        public const int TAG = 727;
+
         public TotalNumPosReports()
             :base(Tags.TotalNumPosReports) {}
         public TotalNumPosReports(int val)
@@ -12660,6 +14160,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosReqResult : IntField
     {
+        public const int TAG = 728;
+
         public PosReqResult()
             :base(Tags.PosReqResult) {}
         public PosReqResult(int val)
@@ -12681,6 +14183,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PosReqStatus : IntField
     {
+        public const int TAG = 729;
+
         public PosReqStatus()
             :base(Tags.PosReqStatus) {}
         public PosReqStatus(int val)
@@ -12699,6 +14203,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlPrice : DecimalField
     {
+        public const int TAG = 730;
+
         public SettlPrice()
             :base(Tags.SettlPrice) {}
         public SettlPrice(Decimal val)
@@ -12712,6 +14218,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlPriceType : IntField
     {
+        public const int TAG = 731;
+
         public SettlPriceType()
             :base(Tags.SettlPriceType) {}
         public SettlPriceType(int val)
@@ -12729,6 +14237,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSettlPrice : DecimalField
     {
+        public const int TAG = 732;
+
         public UnderlyingSettlPrice()
             :base(Tags.UnderlyingSettlPrice) {}
         public UnderlyingSettlPrice(Decimal val)
@@ -12742,6 +14252,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSettlPriceType : IntField
     {
+        public const int TAG = 733;
+
         public UnderlyingSettlPriceType()
             :base(Tags.UnderlyingSettlPriceType) {}
         public UnderlyingSettlPriceType(int val)
@@ -12755,6 +14267,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriorSettlPrice : DecimalField
     {
+        public const int TAG = 734;
+
         public PriorSettlPrice()
             :base(Tags.PriorSettlPrice) {}
         public PriorSettlPrice(Decimal val)
@@ -12768,6 +14282,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoQuoteQualifiers : IntField
     {
+        public const int TAG = 735;
+
         public NoQuoteQualifiers()
             :base(Tags.NoQuoteQualifiers) {}
         public NoQuoteQualifiers(int val)
@@ -12781,6 +14297,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocSettlCurrency : StringField
     {
+        public const int TAG = 736;
+
         public AllocSettlCurrency()
             :base(Tags.AllocSettlCurrency) {}
         public AllocSettlCurrency(string val)
@@ -12794,6 +14312,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocSettlCurrAmt : DecimalField
     {
+        public const int TAG = 737;
+
         public AllocSettlCurrAmt()
             :base(Tags.AllocSettlCurrAmt) {}
         public AllocSettlCurrAmt(Decimal val)
@@ -12807,6 +14327,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InterestAtMaturity : DecimalField
     {
+        public const int TAG = 738;
+
         public InterestAtMaturity()
             :base(Tags.InterestAtMaturity) {}
         public InterestAtMaturity(Decimal val)
@@ -12820,6 +14342,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegDatedDate : StringField
     {
+        public const int TAG = 739;
+
         public LegDatedDate()
             :base(Tags.LegDatedDate) {}
         public LegDatedDate(string val)
@@ -12833,6 +14357,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegPool : StringField
     {
+        public const int TAG = 740;
+
         public LegPool()
             :base(Tags.LegPool) {}
         public LegPool(string val)
@@ -12846,6 +14372,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocInterestAtMaturity : DecimalField
     {
+        public const int TAG = 741;
+
         public AllocInterestAtMaturity()
             :base(Tags.AllocInterestAtMaturity) {}
         public AllocInterestAtMaturity(Decimal val)
@@ -12859,6 +14387,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocAccruedInterestAmt : DecimalField
     {
+        public const int TAG = 742;
+
         public AllocAccruedInterestAmt()
             :base(Tags.AllocAccruedInterestAmt) {}
         public AllocAccruedInterestAmt(Decimal val)
@@ -12872,6 +14402,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeliveryDate : StringField
     {
+        public const int TAG = 743;
+
         public DeliveryDate()
             :base(Tags.DeliveryDate) {}
         public DeliveryDate(string val)
@@ -12885,6 +14417,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AssignmentMethod : CharField
     {
+        public const int TAG = 744;
+
         public AssignmentMethod()
             :base(Tags.AssignmentMethod) {}
         public AssignmentMethod(char val)
@@ -12903,6 +14437,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AssignmentUnit : DecimalField
     {
+        public const int TAG = 745;
+
         public AssignmentUnit()
             :base(Tags.AssignmentUnit) {}
         public AssignmentUnit(Decimal val)
@@ -12916,6 +14452,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OpenInterest : DecimalField
     {
+        public const int TAG = 746;
+
         public OpenInterest()
             :base(Tags.OpenInterest) {}
         public OpenInterest(Decimal val)
@@ -12929,6 +14467,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExerciseMethod : CharField
     {
+        public const int TAG = 747;
+
         public ExerciseMethod()
             :base(Tags.ExerciseMethod) {}
         public ExerciseMethod(char val)
@@ -12946,6 +14486,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNumTradeReports : IntField
     {
+        public const int TAG = 748;
+
         public TotNumTradeReports()
             :base(Tags.TotNumTradeReports) {}
         public TotNumTradeReports(int val)
@@ -12959,6 +14501,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeRequestResult : IntField
     {
+        public const int TAG = 749;
+
         public TradeRequestResult()
             :base(Tags.TradeRequestResult) {}
         public TradeRequestResult(int val)
@@ -12986,6 +14530,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeRequestStatus : IntField
     {
+        public const int TAG = 750;
+
         public TradeRequestStatus()
             :base(Tags.TradeRequestStatus) {}
         public TradeRequestStatus(int val)
@@ -13004,6 +14550,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeReportRejectReason : IntField
     {
+        public const int TAG = 751;
+
         public TradeReportRejectReason()
             :base(Tags.TradeReportRejectReason) {}
         public TradeReportRejectReason(int val)
@@ -13027,6 +14575,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideMultiLegReportingType : IntField
     {
+        public const int TAG = 752;
+
         public SideMultiLegReportingType()
             :base(Tags.SideMultiLegReportingType) {}
         public SideMultiLegReportingType(int val)
@@ -13047,6 +14597,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoPosAmt : IntField
     {
+        public const int TAG = 753;
+
         public NoPosAmt()
             :base(Tags.NoPosAmt) {}
         public NoPosAmt(int val)
@@ -13060,6 +14612,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AutoAcceptIndicator : BooleanField
     {
+        public const int TAG = 754;
+
         public AutoAcceptIndicator()
             :base(Tags.AutoAcceptIndicator) {}
         public AutoAcceptIndicator(Boolean val)
@@ -13073,6 +14627,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocReportID : StringField
     {
+        public const int TAG = 755;
+
         public AllocReportID()
             :base(Tags.AllocReportID) {}
         public AllocReportID(string val)
@@ -13086,6 +14642,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNested2PartyIDs : IntField
     {
+        public const int TAG = 756;
+
         public NoNested2PartyIDs()
             :base(Tags.NoNested2PartyIDs) {}
         public NoNested2PartyIDs(int val)
@@ -13099,6 +14657,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested2PartyID : StringField
     {
+        public const int TAG = 757;
+
         public Nested2PartyID()
             :base(Tags.Nested2PartyID) {}
         public Nested2PartyID(string val)
@@ -13112,6 +14672,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested2PartyIDSource : CharField
     {
+        public const int TAG = 758;
+
         public Nested2PartyIDSource()
             :base(Tags.Nested2PartyIDSource) {}
         public Nested2PartyIDSource(char val)
@@ -13125,6 +14687,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested2PartyRole : IntField
     {
+        public const int TAG = 759;
+
         public Nested2PartyRole()
             :base(Tags.Nested2PartyRole) {}
         public Nested2PartyRole(int val)
@@ -13138,6 +14702,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested2PartySubID : StringField
     {
+        public const int TAG = 760;
+
         public Nested2PartySubID()
             :base(Tags.Nested2PartySubID) {}
         public Nested2PartySubID(string val)
@@ -13151,6 +14717,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BenchmarkSecurityIDSource : StringField
     {
+        public const int TAG = 761;
+
         public BenchmarkSecurityIDSource()
             :base(Tags.BenchmarkSecurityIDSource) {}
         public BenchmarkSecurityIDSource(string val)
@@ -13164,6 +14732,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecuritySubType : StringField
     {
+        public const int TAG = 762;
+
         public SecuritySubType()
             :base(Tags.SecuritySubType) {}
         public SecuritySubType(string val)
@@ -13177,6 +14747,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSecuritySubType : StringField
     {
+        public const int TAG = 763;
+
         public UnderlyingSecuritySubType()
             :base(Tags.UnderlyingSecuritySubType) {}
         public UnderlyingSecuritySubType(string val)
@@ -13190,6 +14762,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegSecuritySubType : StringField
     {
+        public const int TAG = 764;
+
         public LegSecuritySubType()
             :base(Tags.LegSecuritySubType) {}
         public LegSecuritySubType(string val)
@@ -13203,6 +14777,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllowableOneSidednessPct : DecimalField
     {
+        public const int TAG = 765;
+
         public AllowableOneSidednessPct()
             :base(Tags.AllowableOneSidednessPct) {}
         public AllowableOneSidednessPct(Decimal val)
@@ -13216,6 +14792,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllowableOneSidednessValue : DecimalField
     {
+        public const int TAG = 766;
+
         public AllowableOneSidednessValue()
             :base(Tags.AllowableOneSidednessValue) {}
         public AllowableOneSidednessValue(Decimal val)
@@ -13229,6 +14807,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllowableOneSidednessCurr : StringField
     {
+        public const int TAG = 767;
+
         public AllowableOneSidednessCurr()
             :base(Tags.AllowableOneSidednessCurr) {}
         public AllowableOneSidednessCurr(string val)
@@ -13242,6 +14822,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoTrdRegTimestamps : IntField
     {
+        public const int TAG = 768;
+
         public NoTrdRegTimestamps()
             :base(Tags.NoTrdRegTimestamps) {}
         public NoTrdRegTimestamps(int val)
@@ -13255,6 +14837,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TrdRegTimestamp : DateTimeField
     {
+        public const int TAG = 769;
+
         public TrdRegTimestamp()
             :base(Tags.TrdRegTimestamp) {}
         public TrdRegTimestamp(DateTime val)
@@ -13272,6 +14856,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TrdRegTimestampType : IntField
     {
+        public const int TAG = 770;
+
         public TrdRegTimestampType()
             :base(Tags.TrdRegTimestampType) {}
         public TrdRegTimestampType(int val)
@@ -13294,6 +14880,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TrdRegTimestampOrigin : StringField
     {
+        public const int TAG = 771;
+
         public TrdRegTimestampOrigin()
             :base(Tags.TrdRegTimestampOrigin) {}
         public TrdRegTimestampOrigin(string val)
@@ -13307,6 +14895,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ConfirmRefID : StringField
     {
+        public const int TAG = 772;
+
         public ConfirmRefID()
             :base(Tags.ConfirmRefID) {}
         public ConfirmRefID(string val)
@@ -13320,6 +14910,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ConfirmType : IntField
     {
+        public const int TAG = 773;
+
         public ConfirmType()
             :base(Tags.ConfirmType) {}
         public ConfirmType(int val)
@@ -13338,6 +14930,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ConfirmRejReason : IntField
     {
+        public const int TAG = 774;
+
         public ConfirmRejReason()
             :base(Tags.ConfirmRejReason) {}
         public ConfirmRejReason(int val)
@@ -13356,6 +14950,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BookingType : IntField
     {
+        public const int TAG = 775;
+
         public BookingType()
             :base(Tags.BookingType) {}
         public BookingType(int val)
@@ -13374,6 +14970,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IndividualAllocRejCode : IntField
     {
+        public const int TAG = 776;
+
         public IndividualAllocRejCode()
             :base(Tags.IndividualAllocRejCode) {}
         public IndividualAllocRejCode(int val)
@@ -13387,6 +14985,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlInstMsgID : StringField
     {
+        public const int TAG = 777;
+
         public SettlInstMsgID()
             :base(Tags.SettlInstMsgID) {}
         public SettlInstMsgID(string val)
@@ -13400,6 +15000,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoSettlInst : IntField
     {
+        public const int TAG = 778;
+
         public NoSettlInst()
             :base(Tags.NoSettlInst) {}
         public NoSettlInst(int val)
@@ -13413,6 +15015,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastUpdateTime : DateTimeField
     {
+        public const int TAG = 779;
+
         public LastUpdateTime()
             :base(Tags.LastUpdateTime) {}
         public LastUpdateTime(DateTime val)
@@ -13430,6 +15034,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocSettlInstType : IntField
     {
+        public const int TAG = 780;
+
         public AllocSettlInstType()
             :base(Tags.AllocSettlInstType) {}
         public AllocSettlInstType(int val)
@@ -13450,6 +15056,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoSettlPartyIDs : IntField
     {
+        public const int TAG = 781;
+
         public NoSettlPartyIDs()
             :base(Tags.NoSettlPartyIDs) {}
         public NoSettlPartyIDs(int val)
@@ -13463,6 +15071,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlPartyID : StringField
     {
+        public const int TAG = 782;
+
         public SettlPartyID()
             :base(Tags.SettlPartyID) {}
         public SettlPartyID(string val)
@@ -13476,6 +15086,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlPartyIDSource : CharField
     {
+        public const int TAG = 783;
+
         public SettlPartyIDSource()
             :base(Tags.SettlPartyIDSource) {}
         public SettlPartyIDSource(char val)
@@ -13489,6 +15101,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlPartyRole : IntField
     {
+        public const int TAG = 784;
+
         public SettlPartyRole()
             :base(Tags.SettlPartyRole) {}
         public SettlPartyRole(int val)
@@ -13502,6 +15116,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlPartySubID : StringField
     {
+        public const int TAG = 785;
+
         public SettlPartySubID()
             :base(Tags.SettlPartySubID) {}
         public SettlPartySubID(string val)
@@ -13515,6 +15131,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlPartySubIDType : IntField
     {
+        public const int TAG = 786;
+
         public SettlPartySubIDType()
             :base(Tags.SettlPartySubIDType) {}
         public SettlPartySubIDType(int val)
@@ -13528,6 +15146,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DlvyInstType : CharField
     {
+        public const int TAG = 787;
+
         public DlvyInstType()
             :base(Tags.DlvyInstType) {}
         public DlvyInstType(char val)
@@ -13545,6 +15165,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TerminationType : IntField
     {
+        public const int TAG = 788;
+
         public TerminationType()
             :base(Tags.TerminationType) {}
         public TerminationType(int val)
@@ -13564,6 +15186,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NextExpectedMsgSeqNum : IntField
     {
+        public const int TAG = 789;
+
         public NextExpectedMsgSeqNum()
             :base(Tags.NextExpectedMsgSeqNum) {}
         public NextExpectedMsgSeqNum(int val)
@@ -13577,6 +15201,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrdStatusReqID : StringField
     {
+        public const int TAG = 790;
+
         public OrdStatusReqID()
             :base(Tags.OrdStatusReqID) {}
         public OrdStatusReqID(string val)
@@ -13590,6 +15216,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlInstReqID : StringField
     {
+        public const int TAG = 791;
+
         public SettlInstReqID()
             :base(Tags.SettlInstReqID) {}
         public SettlInstReqID(string val)
@@ -13603,6 +15231,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlInstReqRejCode : IntField
     {
+        public const int TAG = 792;
+
         public SettlInstReqRejCode()
             :base(Tags.SettlInstReqRejCode) {}
         public SettlInstReqRejCode(int val)
@@ -13622,6 +15252,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryAllocID : StringField
     {
+        public const int TAG = 793;
+
         public SecondaryAllocID()
             :base(Tags.SecondaryAllocID) {}
         public SecondaryAllocID(string val)
@@ -13635,6 +15267,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocReportType : IntField
     {
+        public const int TAG = 794;
+
         public AllocReportType()
             :base(Tags.AllocReportType) {}
         public AllocReportType(int val)
@@ -13660,6 +15294,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocReportRefID : StringField
     {
+        public const int TAG = 795;
+
         public AllocReportRefID()
             :base(Tags.AllocReportRefID) {}
         public AllocReportRefID(string val)
@@ -13673,6 +15309,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocCancReplaceReason : IntField
     {
+        public const int TAG = 796;
+
         public AllocCancReplaceReason()
             :base(Tags.AllocCancReplaceReason) {}
         public AllocCancReplaceReason(int val)
@@ -13691,6 +15329,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CopyMsgIndicator : BooleanField
     {
+        public const int TAG = 797;
+
         public CopyMsgIndicator()
             :base(Tags.CopyMsgIndicator) {}
         public CopyMsgIndicator(Boolean val)
@@ -13704,6 +15344,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocAccountType : IntField
     {
+        public const int TAG = 798;
+
         public AllocAccountType()
             :base(Tags.AllocAccountType) {}
         public AllocAccountType(int val)
@@ -13728,6 +15370,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderAvgPx : DecimalField
     {
+        public const int TAG = 799;
+
         public OrderAvgPx()
             :base(Tags.OrderAvgPx) {}
         public OrderAvgPx(Decimal val)
@@ -13741,6 +15385,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderBookingQty : DecimalField
     {
+        public const int TAG = 800;
+
         public OrderBookingQty()
             :base(Tags.OrderBookingQty) {}
         public OrderBookingQty(Decimal val)
@@ -13754,6 +15400,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoSettlPartySubIDs : IntField
     {
+        public const int TAG = 801;
+
         public NoSettlPartySubIDs()
             :base(Tags.NoSettlPartySubIDs) {}
         public NoSettlPartySubIDs(int val)
@@ -13767,6 +15415,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoPartySubIDs : IntField
     {
+        public const int TAG = 802;
+
         public NoPartySubIDs()
             :base(Tags.NoPartySubIDs) {}
         public NoPartySubIDs(int val)
@@ -13780,6 +15430,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartySubIDType : IntField
     {
+        public const int TAG = 803;
+
         public PartySubIDType()
             :base(Tags.PartySubIDType) {}
         public PartySubIDType(int val)
@@ -13828,6 +15480,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNestedPartySubIDs : IntField
     {
+        public const int TAG = 804;
+
         public NoNestedPartySubIDs()
             :base(Tags.NoNestedPartySubIDs) {}
         public NoNestedPartySubIDs(int val)
@@ -13841,6 +15495,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NestedPartySubIDType : IntField
     {
+        public const int TAG = 805;
+
         public NestedPartySubIDType()
             :base(Tags.NestedPartySubIDType) {}
         public NestedPartySubIDType(int val)
@@ -13854,6 +15510,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNested2PartySubIDs : IntField
     {
+        public const int TAG = 806;
+
         public NoNested2PartySubIDs()
             :base(Tags.NoNested2PartySubIDs) {}
         public NoNested2PartySubIDs(int val)
@@ -13867,6 +15525,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested2PartySubIDType : IntField
     {
+        public const int TAG = 807;
+
         public Nested2PartySubIDType()
             :base(Tags.Nested2PartySubIDType) {}
         public Nested2PartySubIDType(int val)
@@ -13880,6 +15540,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocIntermedReqType : IntField
     {
+        public const int TAG = 808;
+
         public AllocIntermedReqType()
             :base(Tags.AllocIntermedReqType) {}
         public AllocIntermedReqType(int val)
@@ -13901,6 +15563,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingPx : DecimalField
     {
+        public const int TAG = 810;
+
         public UnderlyingPx()
             :base(Tags.UnderlyingPx) {}
         public UnderlyingPx(Decimal val)
@@ -13914,6 +15578,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriceDelta : DecimalField
     {
+        public const int TAG = 811;
+
         public PriceDelta()
             :base(Tags.PriceDelta) {}
         public PriceDelta(Decimal val)
@@ -13927,6 +15593,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplQueueMax : IntField
     {
+        public const int TAG = 812;
+
         public ApplQueueMax()
             :base(Tags.ApplQueueMax) {}
         public ApplQueueMax(int val)
@@ -13940,6 +15608,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplQueueDepth : IntField
     {
+        public const int TAG = 813;
+
         public ApplQueueDepth()
             :base(Tags.ApplQueueDepth) {}
         public ApplQueueDepth(int val)
@@ -13953,6 +15623,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplQueueResolution : IntField
     {
+        public const int TAG = 814;
+
         public ApplQueueResolution()
             :base(Tags.ApplQueueResolution) {}
         public ApplQueueResolution(int val)
@@ -13972,6 +15644,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplQueueAction : IntField
     {
+        public const int TAG = 815;
+
         public ApplQueueAction()
             :base(Tags.ApplQueueAction) {}
         public ApplQueueAction(int val)
@@ -13991,6 +15665,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoAltMDSource : IntField
     {
+        public const int TAG = 816;
+
         public NoAltMDSource()
             :base(Tags.NoAltMDSource) {}
         public NoAltMDSource(int val)
@@ -14004,6 +15680,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AltMDSourceID : StringField
     {
+        public const int TAG = 817;
+
         public AltMDSourceID()
             :base(Tags.AltMDSourceID) {}
         public AltMDSourceID(string val)
@@ -14017,6 +15695,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryTradeReportID : StringField
     {
+        public const int TAG = 818;
+
         public SecondaryTradeReportID()
             :base(Tags.SecondaryTradeReportID) {}
         public SecondaryTradeReportID(string val)
@@ -14030,6 +15710,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AvgPxIndicator : IntField
     {
+        public const int TAG = 819;
+
         public AvgPxIndicator()
             :base(Tags.AvgPxIndicator) {}
         public AvgPxIndicator(int val)
@@ -14049,6 +15731,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeLinkID : StringField
     {
+        public const int TAG = 820;
+
         public TradeLinkID()
             :base(Tags.TradeLinkID) {}
         public TradeLinkID(string val)
@@ -14062,6 +15746,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderInputDevice : StringField
     {
+        public const int TAG = 821;
+
         public OrderInputDevice()
             :base(Tags.OrderInputDevice) {}
         public OrderInputDevice(string val)
@@ -14075,6 +15761,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingTradingSessionID : StringField
     {
+        public const int TAG = 822;
+
         public UnderlyingTradingSessionID()
             :base(Tags.UnderlyingTradingSessionID) {}
         public UnderlyingTradingSessionID(string val)
@@ -14088,6 +15776,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingTradingSessionSubID : StringField
     {
+        public const int TAG = 823;
+
         public UnderlyingTradingSessionSubID()
             :base(Tags.UnderlyingTradingSessionSubID) {}
         public UnderlyingTradingSessionSubID(string val)
@@ -14101,6 +15791,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeLegRefID : StringField
     {
+        public const int TAG = 824;
+
         public TradeLegRefID()
             :base(Tags.TradeLegRefID) {}
         public TradeLegRefID(string val)
@@ -14114,6 +15806,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExchangeRule : StringField
     {
+        public const int TAG = 825;
+
         public ExchangeRule()
             :base(Tags.ExchangeRule) {}
         public ExchangeRule(string val)
@@ -14127,6 +15821,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeAllocIndicator : IntField
     {
+        public const int TAG = 826;
+
         public TradeAllocIndicator()
             :base(Tags.TradeAllocIndicator) {}
         public TradeAllocIndicator(int val)
@@ -14148,6 +15844,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExpirationCycle : IntField
     {
+        public const int TAG = 827;
+
         public ExpirationCycle()
             :base(Tags.ExpirationCycle) {}
         public ExpirationCycle(int val)
@@ -14166,6 +15864,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TrdType : IntField
     {
+        public const int TAG = 828;
+
         public TrdType()
             :base(Tags.TrdType) {}
         public TrdType(int val)
@@ -14237,6 +15937,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TrdSubType : IntField
     {
+        public const int TAG = 829;
+
         public TrdSubType()
             :base(Tags.TrdSubType) {}
         public TrdSubType(int val)
@@ -14291,6 +15993,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TransferReason : StringField
     {
+        public const int TAG = 830;
+
         public TransferReason()
             :base(Tags.TransferReason) {}
         public TransferReason(string val)
@@ -14304,6 +16008,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AsgnReqID : StringField
     {
+        public const int TAG = 831;
+
         public AsgnReqID()
             :base(Tags.AsgnReqID) {}
         public AsgnReqID(string val)
@@ -14317,6 +16023,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNumAssignmentReports : IntField
     {
+        public const int TAG = 832;
+
         public TotNumAssignmentReports()
             :base(Tags.TotNumAssignmentReports) {}
         public TotNumAssignmentReports(int val)
@@ -14330,6 +16038,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AsgnRptID : StringField
     {
+        public const int TAG = 833;
+
         public AsgnRptID()
             :base(Tags.AsgnRptID) {}
         public AsgnRptID(string val)
@@ -14343,6 +16053,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ThresholdAmount : DecimalField
     {
+        public const int TAG = 834;
+
         public ThresholdAmount()
             :base(Tags.ThresholdAmount) {}
         public ThresholdAmount(Decimal val)
@@ -14356,6 +16068,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegMoveType : IntField
     {
+        public const int TAG = 835;
+
         public PegMoveType()
             :base(Tags.PegMoveType) {}
         public PegMoveType(int val)
@@ -14373,6 +16087,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegOffsetType : IntField
     {
+        public const int TAG = 836;
+
         public PegOffsetType()
             :base(Tags.PegOffsetType) {}
         public PegOffsetType(int val)
@@ -14393,6 +16109,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegLimitType : IntField
     {
+        public const int TAG = 837;
+
         public PegLimitType()
             :base(Tags.PegLimitType) {}
         public PegLimitType(int val)
@@ -14411,6 +16129,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegRoundDirection : IntField
     {
+        public const int TAG = 838;
+
         public PegRoundDirection()
             :base(Tags.PegRoundDirection) {}
         public PegRoundDirection(int val)
@@ -14428,6 +16148,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PeggedPrice : DecimalField
     {
+        public const int TAG = 839;
+
         public PeggedPrice()
             :base(Tags.PeggedPrice) {}
         public PeggedPrice(Decimal val)
@@ -14441,6 +16163,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegScope : IntField
     {
+        public const int TAG = 840;
+
         public PegScope()
             :base(Tags.PegScope) {}
         public PegScope(int val)
@@ -14461,6 +16185,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DiscretionMoveType : IntField
     {
+        public const int TAG = 841;
+
         public DiscretionMoveType()
             :base(Tags.DiscretionMoveType) {}
         public DiscretionMoveType(int val)
@@ -14478,6 +16204,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DiscretionOffsetType : IntField
     {
+        public const int TAG = 842;
+
         public DiscretionOffsetType()
             :base(Tags.DiscretionOffsetType) {}
         public DiscretionOffsetType(int val)
@@ -14498,6 +16226,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DiscretionLimitType : IntField
     {
+        public const int TAG = 843;
+
         public DiscretionLimitType()
             :base(Tags.DiscretionLimitType) {}
         public DiscretionLimitType(int val)
@@ -14516,6 +16246,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DiscretionRoundDirection : IntField
     {
+        public const int TAG = 844;
+
         public DiscretionRoundDirection()
             :base(Tags.DiscretionRoundDirection) {}
         public DiscretionRoundDirection(int val)
@@ -14533,6 +16265,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DiscretionPrice : DecimalField
     {
+        public const int TAG = 845;
+
         public DiscretionPrice()
             :base(Tags.DiscretionPrice) {}
         public DiscretionPrice(Decimal val)
@@ -14546,6 +16280,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DiscretionScope : IntField
     {
+        public const int TAG = 846;
+
         public DiscretionScope()
             :base(Tags.DiscretionScope) {}
         public DiscretionScope(int val)
@@ -14565,6 +16301,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TargetStrategy : IntField
     {
+        public const int TAG = 847;
+
         public TargetStrategy()
             :base(Tags.TargetStrategy) {}
         public TargetStrategy(int val)
@@ -14583,6 +16321,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TargetStrategyParameters : StringField
     {
+        public const int TAG = 848;
+
         public TargetStrategyParameters()
             :base(Tags.TargetStrategyParameters) {}
         public TargetStrategyParameters(string val)
@@ -14596,6 +16336,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ParticipationRate : DecimalField
     {
+        public const int TAG = 849;
+
         public ParticipationRate()
             :base(Tags.ParticipationRate) {}
         public ParticipationRate(Decimal val)
@@ -14609,6 +16351,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TargetStrategyPerformance : DecimalField
     {
+        public const int TAG = 850;
+
         public TargetStrategyPerformance()
             :base(Tags.TargetStrategyPerformance) {}
         public TargetStrategyPerformance(Decimal val)
@@ -14622,6 +16366,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastLiquidityInd : IntField
     {
+        public const int TAG = 851;
+
         public LastLiquidityInd()
             :base(Tags.LastLiquidityInd) {}
         public LastLiquidityInd(int val)
@@ -14641,6 +16387,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PublishTrdIndicator : BooleanField
     {
+        public const int TAG = 852;
+
         public PublishTrdIndicator()
             :base(Tags.PublishTrdIndicator) {}
         public PublishTrdIndicator(Boolean val)
@@ -14658,6 +16406,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ShortSaleReason : IntField
     {
+        public const int TAG = 853;
+
         public ShortSaleReason()
             :base(Tags.ShortSaleReason) {}
         public ShortSaleReason(int val)
@@ -14680,6 +16430,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QtyType : IntField
     {
+        public const int TAG = 854;
+
         public QtyType()
             :base(Tags.QtyType) {}
         public QtyType(int val)
@@ -14698,6 +16450,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryTrdType : IntField
     {
+        public const int TAG = 855;
+
         public SecondaryTrdType()
             :base(Tags.SecondaryTrdType) {}
         public SecondaryTrdType(int val)
@@ -14711,6 +16465,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeReportType : IntField
     {
+        public const int TAG = 856;
+
         public TradeReportType()
             :base(Tags.TradeReportType) {}
         public TradeReportType(int val)
@@ -14744,6 +16500,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocNoOrdersType : IntField
     {
+        public const int TAG = 857;
+
         public AllocNoOrdersType()
             :base(Tags.AllocNoOrdersType) {}
         public AllocNoOrdersType(int val)
@@ -14761,6 +16519,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SharedCommission : DecimalField
     {
+        public const int TAG = 858;
+
         public SharedCommission()
             :base(Tags.SharedCommission) {}
         public SharedCommission(Decimal val)
@@ -14774,6 +16534,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ConfirmReqID : StringField
     {
+        public const int TAG = 859;
+
         public ConfirmReqID()
             :base(Tags.ConfirmReqID) {}
         public ConfirmReqID(string val)
@@ -14787,6 +16549,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AvgParPx : DecimalField
     {
+        public const int TAG = 860;
+
         public AvgParPx()
             :base(Tags.AvgParPx) {}
         public AvgParPx(Decimal val)
@@ -14800,6 +16564,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ReportedPx : DecimalField
     {
+        public const int TAG = 861;
+
         public ReportedPx()
             :base(Tags.ReportedPx) {}
         public ReportedPx(Decimal val)
@@ -14813,6 +16579,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoCapacities : IntField
     {
+        public const int TAG = 862;
+
         public NoCapacities()
             :base(Tags.NoCapacities) {}
         public NoCapacities(int val)
@@ -14826,6 +16594,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderCapacityQty : DecimalField
     {
+        public const int TAG = 863;
+
         public OrderCapacityQty()
             :base(Tags.OrderCapacityQty) {}
         public OrderCapacityQty(Decimal val)
@@ -14839,6 +16609,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoEvents : IntField
     {
+        public const int TAG = 864;
+
         public NoEvents()
             :base(Tags.NoEvents) {}
         public NoEvents(int val)
@@ -14852,6 +16624,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EventType : IntField
     {
+        public const int TAG = 865;
+
         public EventType()
             :base(Tags.EventType) {}
         public EventType(int val)
@@ -14887,6 +16661,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EventDate : StringField
     {
+        public const int TAG = 866;
+
         public EventDate()
             :base(Tags.EventDate) {}
         public EventDate(string val)
@@ -14900,6 +16676,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EventPx : DecimalField
     {
+        public const int TAG = 867;
+
         public EventPx()
             :base(Tags.EventPx) {}
         public EventPx(Decimal val)
@@ -14913,6 +16691,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EventText : StringField
     {
+        public const int TAG = 868;
+
         public EventText()
             :base(Tags.EventText) {}
         public EventText(string val)
@@ -14926,6 +16706,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PctAtRisk : DecimalField
     {
+        public const int TAG = 869;
+
         public PctAtRisk()
             :base(Tags.PctAtRisk) {}
         public PctAtRisk(Decimal val)
@@ -14939,6 +16721,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoInstrAttrib : IntField
     {
+        public const int TAG = 870;
+
         public NoInstrAttrib()
             :base(Tags.NoInstrAttrib) {}
         public NoInstrAttrib(int val)
@@ -14952,6 +16736,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InstrAttribType : IntField
     {
+        public const int TAG = 871;
+
         public InstrAttribType()
             :base(Tags.InstrAttribType) {}
         public InstrAttribType(int val)
@@ -14999,6 +16785,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InstrAttribValue : StringField
     {
+        public const int TAG = 872;
+
         public InstrAttribValue()
             :base(Tags.InstrAttribValue) {}
         public InstrAttribValue(string val)
@@ -15012,6 +16800,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DatedDate : StringField
     {
+        public const int TAG = 873;
+
         public DatedDate()
             :base(Tags.DatedDate) {}
         public DatedDate(string val)
@@ -15025,6 +16815,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InterestAccrualDate : StringField
     {
+        public const int TAG = 874;
+
         public InterestAccrualDate()
             :base(Tags.InterestAccrualDate) {}
         public InterestAccrualDate(string val)
@@ -15038,6 +16830,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CPProgram : IntField
     {
+        public const int TAG = 875;
+
         public CPProgram()
             :base(Tags.CPProgram) {}
         public CPProgram(int val)
@@ -15056,6 +16850,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CPRegType : StringField
     {
+        public const int TAG = 876;
+
         public CPRegType()
             :base(Tags.CPRegType) {}
         public CPRegType(string val)
@@ -15069,6 +16865,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCPProgram : StringField
     {
+        public const int TAG = 877;
+
         public UnderlyingCPProgram()
             :base(Tags.UnderlyingCPProgram) {}
         public UnderlyingCPProgram(string val)
@@ -15082,6 +16880,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCPRegType : StringField
     {
+        public const int TAG = 878;
+
         public UnderlyingCPRegType()
             :base(Tags.UnderlyingCPRegType) {}
         public UnderlyingCPRegType(string val)
@@ -15095,6 +16895,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingQty : DecimalField
     {
+        public const int TAG = 879;
+
         public UnderlyingQty()
             :base(Tags.UnderlyingQty) {}
         public UnderlyingQty(Decimal val)
@@ -15108,6 +16910,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TrdMatchID : StringField
     {
+        public const int TAG = 880;
+
         public TrdMatchID()
             :base(Tags.TrdMatchID) {}
         public TrdMatchID(string val)
@@ -15121,6 +16925,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryTradeReportRefID : StringField
     {
+        public const int TAG = 881;
+
         public SecondaryTradeReportRefID()
             :base(Tags.SecondaryTradeReportRefID) {}
         public SecondaryTradeReportRefID(string val)
@@ -15134,6 +16940,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingDirtyPrice : DecimalField
     {
+        public const int TAG = 882;
+
         public UnderlyingDirtyPrice()
             :base(Tags.UnderlyingDirtyPrice) {}
         public UnderlyingDirtyPrice(Decimal val)
@@ -15147,6 +16955,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingEndPrice : DecimalField
     {
+        public const int TAG = 883;
+
         public UnderlyingEndPrice()
             :base(Tags.UnderlyingEndPrice) {}
         public UnderlyingEndPrice(Decimal val)
@@ -15160,6 +16970,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingStartValue : DecimalField
     {
+        public const int TAG = 884;
+
         public UnderlyingStartValue()
             :base(Tags.UnderlyingStartValue) {}
         public UnderlyingStartValue(Decimal val)
@@ -15173,6 +16985,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCurrentValue : DecimalField
     {
+        public const int TAG = 885;
+
         public UnderlyingCurrentValue()
             :base(Tags.UnderlyingCurrentValue) {}
         public UnderlyingCurrentValue(Decimal val)
@@ -15186,6 +17000,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingEndValue : DecimalField
     {
+        public const int TAG = 886;
+
         public UnderlyingEndValue()
             :base(Tags.UnderlyingEndValue) {}
         public UnderlyingEndValue(Decimal val)
@@ -15199,6 +17015,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoUnderlyingStips : IntField
     {
+        public const int TAG = 887;
+
         public NoUnderlyingStips()
             :base(Tags.NoUnderlyingStips) {}
         public NoUnderlyingStips(int val)
@@ -15212,6 +17030,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingStipType : StringField
     {
+        public const int TAG = 888;
+
         public UnderlyingStipType()
             :base(Tags.UnderlyingStipType) {}
         public UnderlyingStipType(string val)
@@ -15225,6 +17045,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingStipValue : StringField
     {
+        public const int TAG = 889;
+
         public UnderlyingStipValue()
             :base(Tags.UnderlyingStipValue) {}
         public UnderlyingStipValue(string val)
@@ -15238,6 +17060,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaturityNetMoney : DecimalField
     {
+        public const int TAG = 890;
+
         public MaturityNetMoney()
             :base(Tags.MaturityNetMoney) {}
         public MaturityNetMoney(Decimal val)
@@ -15251,6 +17075,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MiscFeeBasis : IntField
     {
+        public const int TAG = 891;
+
         public MiscFeeBasis()
             :base(Tags.MiscFeeBasis) {}
         public MiscFeeBasis(int val)
@@ -15269,6 +17095,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoAllocs : IntField
     {
+        public const int TAG = 892;
+
         public TotNoAllocs()
             :base(Tags.TotNoAllocs) {}
         public TotNoAllocs(int val)
@@ -15282,6 +17110,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastFragment : BooleanField
     {
+        public const int TAG = 893;
+
         public LastFragment()
             :base(Tags.LastFragment) {}
         public LastFragment(Boolean val)
@@ -15299,6 +17129,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollReqID : StringField
     {
+        public const int TAG = 894;
+
         public CollReqID()
             :base(Tags.CollReqID) {}
         public CollReqID(string val)
@@ -15312,6 +17144,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollAsgnReason : IntField
     {
+        public const int TAG = 895;
+
         public CollAsgnReason()
             :base(Tags.CollAsgnReason) {}
         public CollAsgnReason(int val)
@@ -15335,6 +17169,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollInquiryQualifier : IntField
     {
+        public const int TAG = 896;
+
         public CollInquiryQualifier()
             :base(Tags.CollInquiryQualifier) {}
         public CollInquiryQualifier(int val)
@@ -15360,6 +17196,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoTrades : IntField
     {
+        public const int TAG = 897;
+
         public NoTrades()
             :base(Tags.NoTrades) {}
         public NoTrades(int val)
@@ -15373,6 +17211,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MarginRatio : DecimalField
     {
+        public const int TAG = 898;
+
         public MarginRatio()
             :base(Tags.MarginRatio) {}
         public MarginRatio(Decimal val)
@@ -15386,6 +17226,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MarginExcess : DecimalField
     {
+        public const int TAG = 899;
+
         public MarginExcess()
             :base(Tags.MarginExcess) {}
         public MarginExcess(Decimal val)
@@ -15399,6 +17241,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotalNetValue : DecimalField
     {
+        public const int TAG = 900;
+
         public TotalNetValue()
             :base(Tags.TotalNetValue) {}
         public TotalNetValue(Decimal val)
@@ -15412,6 +17256,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CashOutstanding : DecimalField
     {
+        public const int TAG = 901;
+
         public CashOutstanding()
             :base(Tags.CashOutstanding) {}
         public CashOutstanding(Decimal val)
@@ -15425,6 +17271,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollAsgnID : StringField
     {
+        public const int TAG = 902;
+
         public CollAsgnID()
             :base(Tags.CollAsgnID) {}
         public CollAsgnID(string val)
@@ -15438,6 +17286,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollAsgnTransType : IntField
     {
+        public const int TAG = 903;
+
         public CollAsgnTransType()
             :base(Tags.CollAsgnTransType) {}
         public CollAsgnTransType(int val)
@@ -15458,6 +17308,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollRespID : StringField
     {
+        public const int TAG = 904;
+
         public CollRespID()
             :base(Tags.CollRespID) {}
         public CollRespID(string val)
@@ -15471,6 +17323,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollAsgnRespType : IntField
     {
+        public const int TAG = 905;
+
         public CollAsgnRespType()
             :base(Tags.CollAsgnRespType) {}
         public CollAsgnRespType(int val)
@@ -15490,6 +17344,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollAsgnRejectReason : IntField
     {
+        public const int TAG = 906;
+
         public CollAsgnRejectReason()
             :base(Tags.CollAsgnRejectReason) {}
         public CollAsgnRejectReason(int val)
@@ -15512,6 +17368,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollAsgnRefID : StringField
     {
+        public const int TAG = 907;
+
         public CollAsgnRefID()
             :base(Tags.CollAsgnRefID) {}
         public CollAsgnRefID(string val)
@@ -15525,6 +17383,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollRptID : StringField
     {
+        public const int TAG = 908;
+
         public CollRptID()
             :base(Tags.CollRptID) {}
         public CollRptID(string val)
@@ -15538,6 +17398,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollInquiryID : StringField
     {
+        public const int TAG = 909;
+
         public CollInquiryID()
             :base(Tags.CollInquiryID) {}
         public CollInquiryID(string val)
@@ -15551,6 +17413,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollStatus : IntField
     {
+        public const int TAG = 910;
+
         public CollStatus()
             :base(Tags.CollStatus) {}
         public CollStatus(int val)
@@ -15571,6 +17435,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNumReports : IntField
     {
+        public const int TAG = 911;
+
         public TotNumReports()
             :base(Tags.TotNumReports) {}
         public TotNumReports(int val)
@@ -15584,6 +17450,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastRptRequested : BooleanField
     {
+        public const int TAG = 912;
+
         public LastRptRequested()
             :base(Tags.LastRptRequested) {}
         public LastRptRequested(Boolean val)
@@ -15601,6 +17469,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AgreementDesc : StringField
     {
+        public const int TAG = 913;
+
         public AgreementDesc()
             :base(Tags.AgreementDesc) {}
         public AgreementDesc(string val)
@@ -15614,6 +17484,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AgreementID : StringField
     {
+        public const int TAG = 914;
+
         public AgreementID()
             :base(Tags.AgreementID) {}
         public AgreementID(string val)
@@ -15627,6 +17499,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AgreementDate : StringField
     {
+        public const int TAG = 915;
+
         public AgreementDate()
             :base(Tags.AgreementDate) {}
         public AgreementDate(string val)
@@ -15640,6 +17514,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StartDate : StringField
     {
+        public const int TAG = 916;
+
         public StartDate()
             :base(Tags.StartDate) {}
         public StartDate(string val)
@@ -15653,6 +17529,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EndDate : StringField
     {
+        public const int TAG = 917;
+
         public EndDate()
             :base(Tags.EndDate) {}
         public EndDate(string val)
@@ -15666,6 +17544,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AgreementCurrency : StringField
     {
+        public const int TAG = 918;
+
         public AgreementCurrency()
             :base(Tags.AgreementCurrency) {}
         public AgreementCurrency(string val)
@@ -15679,6 +17559,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeliveryType : IntField
     {
+        public const int TAG = 919;
+
         public DeliveryType()
             :base(Tags.DeliveryType) {}
         public DeliveryType(int val)
@@ -15700,6 +17582,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EndAccruedInterestAmt : DecimalField
     {
+        public const int TAG = 920;
+
         public EndAccruedInterestAmt()
             :base(Tags.EndAccruedInterestAmt) {}
         public EndAccruedInterestAmt(Decimal val)
@@ -15713,6 +17597,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StartCash : DecimalField
     {
+        public const int TAG = 921;
+
         public StartCash()
             :base(Tags.StartCash) {}
         public StartCash(Decimal val)
@@ -15726,6 +17612,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EndCash : DecimalField
     {
+        public const int TAG = 922;
+
         public EndCash()
             :base(Tags.EndCash) {}
         public EndCash(Decimal val)
@@ -15739,6 +17627,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UserRequestID : StringField
     {
+        public const int TAG = 923;
+
         public UserRequestID()
             :base(Tags.UserRequestID) {}
         public UserRequestID(string val)
@@ -15752,6 +17642,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UserRequestType : IntField
     {
+        public const int TAG = 924;
+
         public UserRequestType()
             :base(Tags.UserRequestType) {}
         public UserRequestType(int val)
@@ -15774,6 +17666,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NewPassword : StringField
     {
+        public const int TAG = 925;
+
         public NewPassword()
             :base(Tags.NewPassword) {}
         public NewPassword(string val)
@@ -15787,6 +17681,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UserStatus : IntField
     {
+        public const int TAG = 926;
+
         public UserStatus()
             :base(Tags.UserStatus) {}
         public UserStatus(int val)
@@ -15810,6 +17706,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UserStatusText : StringField
     {
+        public const int TAG = 927;
+
         public UserStatusText()
             :base(Tags.UserStatusText) {}
         public UserStatusText(string val)
@@ -15823,6 +17721,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StatusValue : IntField
     {
+        public const int TAG = 928;
+
         public StatusValue()
             :base(Tags.StatusValue) {}
         public StatusValue(int val)
@@ -15844,6 +17744,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StatusText : StringField
     {
+        public const int TAG = 929;
+
         public StatusText()
             :base(Tags.StatusText) {}
         public StatusText(string val)
@@ -15857,6 +17759,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefCompID : StringField
     {
+        public const int TAG = 930;
+
         public RefCompID()
             :base(Tags.RefCompID) {}
         public RefCompID(string val)
@@ -15870,6 +17774,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefSubID : StringField
     {
+        public const int TAG = 931;
+
         public RefSubID()
             :base(Tags.RefSubID) {}
         public RefSubID(string val)
@@ -15883,6 +17789,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NetworkResponseID : StringField
     {
+        public const int TAG = 932;
+
         public NetworkResponseID()
             :base(Tags.NetworkResponseID) {}
         public NetworkResponseID(string val)
@@ -15896,6 +17804,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NetworkRequestID : StringField
     {
+        public const int TAG = 933;
+
         public NetworkRequestID()
             :base(Tags.NetworkRequestID) {}
         public NetworkRequestID(string val)
@@ -15909,6 +17819,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastNetworkResponseID : StringField
     {
+        public const int TAG = 934;
+
         public LastNetworkResponseID()
             :base(Tags.LastNetworkResponseID) {}
         public LastNetworkResponseID(string val)
@@ -15922,6 +17834,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NetworkRequestType : IntField
     {
+        public const int TAG = 935;
+
         public NetworkRequestType()
             :base(Tags.NetworkRequestType) {}
         public NetworkRequestType(int val)
@@ -15942,6 +17856,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoCompIDs : IntField
     {
+        public const int TAG = 936;
+
         public NoCompIDs()
             :base(Tags.NoCompIDs) {}
         public NoCompIDs(int val)
@@ -15955,6 +17871,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NetworkStatusResponseType : IntField
     {
+        public const int TAG = 937;
+
         public NetworkStatusResponseType()
             :base(Tags.NetworkStatusResponseType) {}
         public NetworkStatusResponseType(int val)
@@ -15972,6 +17890,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoCollInquiryQualifier : IntField
     {
+        public const int TAG = 938;
+
         public NoCollInquiryQualifier()
             :base(Tags.NoCollInquiryQualifier) {}
         public NoCollInquiryQualifier(int val)
@@ -15985,6 +17905,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TrdRptStatus : IntField
     {
+        public const int TAG = 939;
+
         public TrdRptStatus()
             :base(Tags.TrdRptStatus) {}
         public TrdRptStatus(int val)
@@ -16003,6 +17925,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AffirmStatus : IntField
     {
+        public const int TAG = 940;
+
         public AffirmStatus()
             :base(Tags.AffirmStatus) {}
         public AffirmStatus(int val)
@@ -16022,6 +17946,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingStrikeCurrency : StringField
     {
+        public const int TAG = 941;
+
         public UnderlyingStrikeCurrency()
             :base(Tags.UnderlyingStrikeCurrency) {}
         public UnderlyingStrikeCurrency(string val)
@@ -16035,6 +17961,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegStrikeCurrency : StringField
     {
+        public const int TAG = 942;
+
         public LegStrikeCurrency()
             :base(Tags.LegStrikeCurrency) {}
         public LegStrikeCurrency(string val)
@@ -16048,6 +17976,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TimeBracket : StringField
     {
+        public const int TAG = 943;
+
         public TimeBracket()
             :base(Tags.TimeBracket) {}
         public TimeBracket(string val)
@@ -16061,6 +17991,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollAction : IntField
     {
+        public const int TAG = 944;
+
         public CollAction()
             :base(Tags.CollAction) {}
         public CollAction(int val)
@@ -16079,6 +18011,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollInquiryStatus : IntField
     {
+        public const int TAG = 945;
+
         public CollInquiryStatus()
             :base(Tags.CollInquiryStatus) {}
         public CollInquiryStatus(int val)
@@ -16099,6 +18033,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollInquiryResult : IntField
     {
+        public const int TAG = 946;
+
         public CollInquiryResult()
             :base(Tags.CollInquiryResult) {}
         public CollInquiryResult(int val)
@@ -16125,6 +18061,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikeCurrency : StringField
     {
+        public const int TAG = 947;
+
         public StrikeCurrency()
             :base(Tags.StrikeCurrency) {}
         public StrikeCurrency(string val)
@@ -16138,6 +18076,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNested3PartyIDs : IntField
     {
+        public const int TAG = 948;
+
         public NoNested3PartyIDs()
             :base(Tags.NoNested3PartyIDs) {}
         public NoNested3PartyIDs(int val)
@@ -16151,6 +18091,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested3PartyID : StringField
     {
+        public const int TAG = 949;
+
         public Nested3PartyID()
             :base(Tags.Nested3PartyID) {}
         public Nested3PartyID(string val)
@@ -16164,6 +18106,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested3PartyIDSource : CharField
     {
+        public const int TAG = 950;
+
         public Nested3PartyIDSource()
             :base(Tags.Nested3PartyIDSource) {}
         public Nested3PartyIDSource(char val)
@@ -16177,6 +18121,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested3PartyRole : IntField
     {
+        public const int TAG = 951;
+
         public Nested3PartyRole()
             :base(Tags.Nested3PartyRole) {}
         public Nested3PartyRole(int val)
@@ -16190,6 +18136,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNested3PartySubIDs : IntField
     {
+        public const int TAG = 952;
+
         public NoNested3PartySubIDs()
             :base(Tags.NoNested3PartySubIDs) {}
         public NoNested3PartySubIDs(int val)
@@ -16203,6 +18151,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested3PartySubID : StringField
     {
+        public const int TAG = 953;
+
         public Nested3PartySubID()
             :base(Tags.Nested3PartySubID) {}
         public Nested3PartySubID(string val)
@@ -16216,6 +18166,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested3PartySubIDType : IntField
     {
+        public const int TAG = 954;
+
         public Nested3PartySubIDType()
             :base(Tags.Nested3PartySubIDType) {}
         public Nested3PartySubIDType(int val)
@@ -16229,6 +18181,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegContractSettlMonth : StringField
     {
+        public const int TAG = 955;
+
         public LegContractSettlMonth()
             :base(Tags.LegContractSettlMonth) {}
         public LegContractSettlMonth(string val)
@@ -16242,6 +18196,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegInterestAccrualDate : StringField
     {
+        public const int TAG = 956;
+
         public LegInterestAccrualDate()
             :base(Tags.LegInterestAccrualDate) {}
         public LegInterestAccrualDate(string val)
@@ -16255,6 +18211,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IOIID : StringField
     {
+        public const int TAG = 23;
+
         public IOIID()
             :base(Tags.IOIID) {}
         public IOIID(string val)
@@ -16268,6 +18226,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoLinesOfText : IntField
     {
+        public const int TAG = 33;
+
         public NoLinesOfText()
             :base(Tags.NoLinesOfText) {}
         public NoLinesOfText(int val)
@@ -16281,6 +18241,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HaltReasonChar : CharField
     {
+        public const int TAG = 327;
+
         public HaltReasonChar()
             :base(Tags.HaltReasonChar) {}
         public HaltReasonChar(char val)
@@ -16302,6 +18264,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoStrategyParameters : IntField
     {
+        public const int TAG = 957;
+
         public NoStrategyParameters()
             :base(Tags.NoStrategyParameters) {}
         public NoStrategyParameters(int val)
@@ -16315,6 +18279,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrategyParameterName : StringField
     {
+        public const int TAG = 958;
+
         public StrategyParameterName()
             :base(Tags.StrategyParameterName) {}
         public StrategyParameterName(string val)
@@ -16328,6 +18294,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrategyParameterType : IntField
     {
+        public const int TAG = 959;
+
         public StrategyParameterType()
             :base(Tags.StrategyParameterType) {}
         public StrategyParameterType(int val)
@@ -16375,6 +18343,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrategyParameterValue : StringField
     {
+        public const int TAG = 960;
+
         public StrategyParameterValue()
             :base(Tags.StrategyParameterValue) {}
         public StrategyParameterValue(string val)
@@ -16388,6 +18358,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HostCrossID : StringField
     {
+        public const int TAG = 961;
+
         public HostCrossID()
             :base(Tags.HostCrossID) {}
         public HostCrossID(string val)
@@ -16401,6 +18373,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideTimeInForce : DateTimeField
     {
+        public const int TAG = 962;
+
         public SideTimeInForce()
             :base(Tags.SideTimeInForce) {}
         public SideTimeInForce(DateTime val)
@@ -16418,6 +18392,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDReportID : IntField
     {
+        public const int TAG = 963;
+
         public MDReportID()
             :base(Tags.MDReportID) {}
         public MDReportID(int val)
@@ -16431,6 +18407,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityReportID : IntField
     {
+        public const int TAG = 964;
+
         public SecurityReportID()
             :base(Tags.SecurityReportID) {}
         public SecurityReportID(int val)
@@ -16444,6 +18422,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityStat : StringField
     {
+        public const int TAG = 965;
+
         public SecurityStat()
             :base(Tags.SecurityStat) {}
         public SecurityStat(string val)
@@ -16461,6 +18441,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettleOnOpenFlag : StringField
     {
+        public const int TAG = 966;
+
         public SettleOnOpenFlag()
             :base(Tags.SettleOnOpenFlag) {}
         public SettleOnOpenFlag(string val)
@@ -16474,6 +18456,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikeMultiplier : DecimalField
     {
+        public const int TAG = 967;
+
         public StrikeMultiplier()
             :base(Tags.StrikeMultiplier) {}
         public StrikeMultiplier(Decimal val)
@@ -16487,6 +18471,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikeValue : DecimalField
     {
+        public const int TAG = 968;
+
         public StrikeValue()
             :base(Tags.StrikeValue) {}
         public StrikeValue(Decimal val)
@@ -16500,6 +18486,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MinPriceIncrement : DecimalField
     {
+        public const int TAG = 969;
+
         public MinPriceIncrement()
             :base(Tags.MinPriceIncrement) {}
         public MinPriceIncrement(Decimal val)
@@ -16513,6 +18501,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PositionLimit : IntField
     {
+        public const int TAG = 970;
+
         public PositionLimit()
             :base(Tags.PositionLimit) {}
         public PositionLimit(int val)
@@ -16526,6 +18516,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NTPositionLimit : IntField
     {
+        public const int TAG = 971;
+
         public NTPositionLimit()
             :base(Tags.NTPositionLimit) {}
         public NTPositionLimit(int val)
@@ -16539,6 +18531,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingAllocationPercent : DecimalField
     {
+        public const int TAG = 972;
+
         public UnderlyingAllocationPercent()
             :base(Tags.UnderlyingAllocationPercent) {}
         public UnderlyingAllocationPercent(Decimal val)
@@ -16552,6 +18546,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCashAmount : DecimalField
     {
+        public const int TAG = 973;
+
         public UnderlyingCashAmount()
             :base(Tags.UnderlyingCashAmount) {}
         public UnderlyingCashAmount(Decimal val)
@@ -16565,6 +18561,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCashType : StringField
     {
+        public const int TAG = 974;
+
         public UnderlyingCashType()
             :base(Tags.UnderlyingCashType) {}
         public UnderlyingCashType(string val)
@@ -16582,6 +18580,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSettlementType : IntField
     {
+        public const int TAG = 975;
+
         public UnderlyingSettlementType()
             :base(Tags.UnderlyingSettlementType) {}
         public UnderlyingSettlementType(int val)
@@ -16600,6 +18600,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuantityDate : StringField
     {
+        public const int TAG = 976;
+
         public QuantityDate()
             :base(Tags.QuantityDate) {}
         public QuantityDate(string val)
@@ -16613,6 +18615,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContIntRptID : StringField
     {
+        public const int TAG = 977;
+
         public ContIntRptID()
             :base(Tags.ContIntRptID) {}
         public ContIntRptID(string val)
@@ -16626,6 +18630,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LateIndicator : BooleanField
     {
+        public const int TAG = 978;
+
         public LateIndicator()
             :base(Tags.LateIndicator) {}
         public LateIndicator(Boolean val)
@@ -16639,6 +18645,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InputSource : StringField
     {
+        public const int TAG = 979;
+
         public InputSource()
             :base(Tags.InputSource) {}
         public InputSource(string val)
@@ -16652,6 +18660,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityUpdateAction : CharField
     {
+        public const int TAG = 980;
+
         public SecurityUpdateAction()
             :base(Tags.SecurityUpdateAction) {}
         public SecurityUpdateAction(char val)
@@ -16670,6 +18680,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoExpiration : IntField
     {
+        public const int TAG = 981;
+
         public NoExpiration()
             :base(Tags.NoExpiration) {}
         public NoExpiration(int val)
@@ -16683,6 +18695,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExpType : IntField
     {
+        public const int TAG = 982;
+
         public ExpType()
             :base(Tags.ExpType) {}
         public ExpType(int val)
@@ -16703,6 +18717,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExpQty : DecimalField
     {
+        public const int TAG = 983;
+
         public ExpQty()
             :base(Tags.ExpQty) {}
         public ExpQty(Decimal val)
@@ -16716,6 +18732,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoUnderlyingAmounts : IntField
     {
+        public const int TAG = 984;
+
         public NoUnderlyingAmounts()
             :base(Tags.NoUnderlyingAmounts) {}
         public NoUnderlyingAmounts(int val)
@@ -16729,6 +18747,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingPayAmount : DecimalField
     {
+        public const int TAG = 985;
+
         public UnderlyingPayAmount()
             :base(Tags.UnderlyingPayAmount) {}
         public UnderlyingPayAmount(Decimal val)
@@ -16742,6 +18762,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCollectAmount : DecimalField
     {
+        public const int TAG = 986;
+
         public UnderlyingCollectAmount()
             :base(Tags.UnderlyingCollectAmount) {}
         public UnderlyingCollectAmount(Decimal val)
@@ -16755,6 +18777,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSettlementDate : StringField
     {
+        public const int TAG = 987;
+
         public UnderlyingSettlementDate()
             :base(Tags.UnderlyingSettlementDate) {}
         public UnderlyingSettlementDate(string val)
@@ -16768,6 +18792,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSettlementStatus : StringField
     {
+        public const int TAG = 988;
+
         public UnderlyingSettlementStatus()
             :base(Tags.UnderlyingSettlementStatus) {}
         public UnderlyingSettlementStatus(string val)
@@ -16781,6 +18807,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryIndividualAllocID : StringField
     {
+        public const int TAG = 989;
+
         public SecondaryIndividualAllocID()
             :base(Tags.SecondaryIndividualAllocID) {}
         public SecondaryIndividualAllocID(string val)
@@ -16794,6 +18822,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegReportID : StringField
     {
+        public const int TAG = 990;
+
         public LegReportID()
             :base(Tags.LegReportID) {}
         public LegReportID(string val)
@@ -16807,6 +18837,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RndPx : DecimalField
     {
+        public const int TAG = 991;
+
         public RndPx()
             :base(Tags.RndPx) {}
         public RndPx(Decimal val)
@@ -16820,6 +18852,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class IndividualAllocType : IntField
     {
+        public const int TAG = 992;
+
         public IndividualAllocType()
             :base(Tags.IndividualAllocType) {}
         public IndividualAllocType(int val)
@@ -16837,6 +18871,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocCustomerCapacity : StringField
     {
+        public const int TAG = 993;
+
         public AllocCustomerCapacity()
             :base(Tags.AllocCustomerCapacity) {}
         public AllocCustomerCapacity(string val)
@@ -16850,6 +18886,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TierCode : StringField
     {
+        public const int TAG = 994;
+
         public TierCode()
             :base(Tags.TierCode) {}
         public TierCode(string val)
@@ -16863,6 +18901,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnitOfMeasure : StringField
     {
+        public const int TAG = 996;
+
         public UnitOfMeasure()
             :base(Tags.UnitOfMeasure) {}
         public UnitOfMeasure(string val)
@@ -16891,6 +18931,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TimeUnit : StringField
     {
+        public const int TAG = 997;
+
         public TimeUnit()
             :base(Tags.TimeUnit) {}
         public TimeUnit(string val)
@@ -16913,6 +18955,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingUnitOfMeasure : StringField
     {
+        public const int TAG = 998;
+
         public UnderlyingUnitOfMeasure()
             :base(Tags.UnderlyingUnitOfMeasure) {}
         public UnderlyingUnitOfMeasure(string val)
@@ -16926,6 +18970,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegUnitOfMeasure : StringField
     {
+        public const int TAG = 999;
+
         public LegUnitOfMeasure()
             :base(Tags.LegUnitOfMeasure) {}
         public LegUnitOfMeasure(string val)
@@ -16939,6 +18985,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingTimeUnit : StringField
     {
+        public const int TAG = 1000;
+
         public UnderlyingTimeUnit()
             :base(Tags.UnderlyingTimeUnit) {}
         public UnderlyingTimeUnit(string val)
@@ -16952,6 +19000,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegTimeUnit : StringField
     {
+        public const int TAG = 1001;
+
         public LegTimeUnit()
             :base(Tags.LegTimeUnit) {}
         public LegTimeUnit(string val)
@@ -16965,6 +19015,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocMethod : IntField
     {
+        public const int TAG = 1002;
+
         public AllocMethod()
             :base(Tags.AllocMethod) {}
         public AllocMethod(int val)
@@ -16983,6 +19035,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeID : StringField
     {
+        public const int TAG = 1003;
+
         public TradeID()
             :base(Tags.TradeID) {}
         public TradeID(string val)
@@ -16996,6 +19050,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideTradeReportID : StringField
     {
+        public const int TAG = 1005;
+
         public SideTradeReportID()
             :base(Tags.SideTradeReportID) {}
         public SideTradeReportID(string val)
@@ -17009,6 +19065,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideFillStationCd : StringField
     {
+        public const int TAG = 1006;
+
         public SideFillStationCd()
             :base(Tags.SideFillStationCd) {}
         public SideFillStationCd(string val)
@@ -17022,6 +19080,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideReasonCd : StringField
     {
+        public const int TAG = 1007;
+
         public SideReasonCd()
             :base(Tags.SideReasonCd) {}
         public SideReasonCd(string val)
@@ -17035,6 +19095,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideTrdSubTyp : IntField
     {
+        public const int TAG = 1008;
+
         public SideTrdSubTyp()
             :base(Tags.SideTrdSubTyp) {}
         public SideTrdSubTyp(int val)
@@ -17061,6 +19123,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideQty : IntField
     {
+        public const int TAG = 1009;
+
         public SideQty()
             :base(Tags.SideQty) {}
         public SideQty(int val)
@@ -17074,6 +19138,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MessageEventSource : StringField
     {
+        public const int TAG = 1011;
+
         public MessageEventSource()
             :base(Tags.MessageEventSource) {}
         public MessageEventSource(string val)
@@ -17087,6 +19153,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideTrdRegTimestamp : DateTimeField
     {
+        public const int TAG = 1012;
+
         public SideTrdRegTimestamp()
             :base(Tags.SideTrdRegTimestamp) {}
         public SideTrdRegTimestamp(DateTime val)
@@ -17104,6 +19172,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideTrdRegTimestampType : IntField
     {
+        public const int TAG = 1013;
+
         public SideTrdRegTimestampType()
             :base(Tags.SideTrdRegTimestampType) {}
         public SideTrdRegTimestampType(int val)
@@ -17117,6 +19187,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideTrdRegTimestampSrc : StringField
     {
+        public const int TAG = 1014;
+
         public SideTrdRegTimestampSrc()
             :base(Tags.SideTrdRegTimestampSrc) {}
         public SideTrdRegTimestampSrc(string val)
@@ -17130,6 +19202,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AsOfIndicator : CharField
     {
+        public const int TAG = 1015;
+
         public AsOfIndicator()
             :base(Tags.AsOfIndicator) {}
         public AsOfIndicator(char val)
@@ -17147,6 +19221,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoSideTrdRegTS : IntField
     {
+        public const int TAG = 1016;
+
         public NoSideTrdRegTS()
             :base(Tags.NoSideTrdRegTS) {}
         public NoSideTrdRegTS(int val)
@@ -17160,6 +19236,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegOptionRatio : DecimalField
     {
+        public const int TAG = 1017;
+
         public LegOptionRatio()
             :base(Tags.LegOptionRatio) {}
         public LegOptionRatio(Decimal val)
@@ -17173,6 +19251,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoInstrumentParties : IntField
     {
+        public const int TAG = 1018;
+
         public NoInstrumentParties()
             :base(Tags.NoInstrumentParties) {}
         public NoInstrumentParties(int val)
@@ -17186,6 +19266,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InstrumentPartyID : StringField
     {
+        public const int TAG = 1019;
+
         public InstrumentPartyID()
             :base(Tags.InstrumentPartyID) {}
         public InstrumentPartyID(string val)
@@ -17199,6 +19281,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeVolume : DecimalField
     {
+        public const int TAG = 1020;
+
         public TradeVolume()
             :base(Tags.TradeVolume) {}
         public TradeVolume(Decimal val)
@@ -17212,6 +19296,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDBookType : IntField
     {
+        public const int TAG = 1021;
+
         public MDBookType()
             :base(Tags.MDBookType) {}
         public MDBookType(int val)
@@ -17230,6 +19316,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDFeedType : StringField
     {
+        public const int TAG = 1022;
+
         public MDFeedType()
             :base(Tags.MDFeedType) {}
         public MDFeedType(string val)
@@ -17243,6 +19331,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDPriceLevel : IntField
     {
+        public const int TAG = 1023;
+
         public MDPriceLevel()
             :base(Tags.MDPriceLevel) {}
         public MDPriceLevel(int val)
@@ -17256,6 +19346,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDOriginType : IntField
     {
+        public const int TAG = 1024;
+
         public MDOriginType()
             :base(Tags.MDOriginType) {}
         public MDOriginType(int val)
@@ -17274,6 +19366,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FirstPx : DecimalField
     {
+        public const int TAG = 1025;
+
         public FirstPx()
             :base(Tags.FirstPx) {}
         public FirstPx(Decimal val)
@@ -17287,6 +19381,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntrySpotRate : DecimalField
     {
+        public const int TAG = 1026;
+
         public MDEntrySpotRate()
             :base(Tags.MDEntrySpotRate) {}
         public MDEntrySpotRate(Decimal val)
@@ -17300,6 +19396,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDEntryForwardPoints : DecimalField
     {
+        public const int TAG = 1027;
+
         public MDEntryForwardPoints()
             :base(Tags.MDEntryForwardPoints) {}
         public MDEntryForwardPoints(Decimal val)
@@ -17313,6 +19411,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ManualOrderIndicator : BooleanField
     {
+        public const int TAG = 1028;
+
         public ManualOrderIndicator()
             :base(Tags.ManualOrderIndicator) {}
         public ManualOrderIndicator(Boolean val)
@@ -17326,6 +19426,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CustDirectedOrder : BooleanField
     {
+        public const int TAG = 1029;
+
         public CustDirectedOrder()
             :base(Tags.CustDirectedOrder) {}
         public CustDirectedOrder(Boolean val)
@@ -17339,6 +19441,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ReceivedDeptID : StringField
     {
+        public const int TAG = 1030;
+
         public ReceivedDeptID()
             :base(Tags.ReceivedDeptID) {}
         public ReceivedDeptID(string val)
@@ -17352,6 +19456,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CustOrderHandlingInst : StringField
     {
+        public const int TAG = 1031;
+
         public CustOrderHandlingInst()
             :base(Tags.CustOrderHandlingInst) {}
         public CustOrderHandlingInst(string val)
@@ -17391,6 +19497,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderHandlingInstSource : IntField
     {
+        public const int TAG = 1032;
+
         public OrderHandlingInstSource()
             :base(Tags.OrderHandlingInstSource) {}
         public OrderHandlingInstSource(int val)
@@ -17407,6 +19515,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeskType : StringField
     {
+        public const int TAG = 1033;
+
         public DeskType()
             :base(Tags.DeskType) {}
         public DeskType(string val)
@@ -17433,6 +19543,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeskTypeSource : IntField
     {
+        public const int TAG = 1034;
+
         public DeskTypeSource()
             :base(Tags.DeskTypeSource) {}
         public DeskTypeSource(int val)
@@ -17449,6 +19561,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DeskOrderHandlingInst : StringField
     {
+        public const int TAG = 1035;
+
         public DeskOrderHandlingInst()
             :base(Tags.DeskOrderHandlingInst) {}
         public DeskOrderHandlingInst(string val)
@@ -17488,6 +19602,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecAckStatus : CharField
     {
+        public const int TAG = 1036;
+
         public ExecAckStatus()
             :base(Tags.ExecAckStatus) {}
         public ExecAckStatus(char val)
@@ -17506,6 +19622,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingDeliveryAmount : DecimalField
     {
+        public const int TAG = 1037;
+
         public UnderlyingDeliveryAmount()
             :base(Tags.UnderlyingDeliveryAmount) {}
         public UnderlyingDeliveryAmount(Decimal val)
@@ -17519,6 +19637,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingCapValue : DecimalField
     {
+        public const int TAG = 1038;
+
         public UnderlyingCapValue()
             :base(Tags.UnderlyingCapValue) {}
         public UnderlyingCapValue(Decimal val)
@@ -17532,6 +19652,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSettlMethod : StringField
     {
+        public const int TAG = 1039;
+
         public UnderlyingSettlMethod()
             :base(Tags.UnderlyingSettlMethod) {}
         public UnderlyingSettlMethod(string val)
@@ -17545,6 +19667,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryTradeID : StringField
     {
+        public const int TAG = 1040;
+
         public SecondaryTradeID()
             :base(Tags.SecondaryTradeID) {}
         public SecondaryTradeID(string val)
@@ -17558,6 +19682,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FirmTradeID : StringField
     {
+        public const int TAG = 1041;
+
         public FirmTradeID()
             :base(Tags.FirmTradeID) {}
         public FirmTradeID(string val)
@@ -17571,6 +19697,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryFirmTradeID : StringField
     {
+        public const int TAG = 1042;
+
         public SecondaryFirmTradeID()
             :base(Tags.SecondaryFirmTradeID) {}
         public SecondaryFirmTradeID(string val)
@@ -17584,6 +19712,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CollApplType : IntField
     {
+        public const int TAG = 1043;
+
         public CollApplType()
             :base(Tags.CollApplType) {}
         public CollApplType(int val)
@@ -17601,6 +19731,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingAdjustedQuantity : DecimalField
     {
+        public const int TAG = 1044;
+
         public UnderlyingAdjustedQuantity()
             :base(Tags.UnderlyingAdjustedQuantity) {}
         public UnderlyingAdjustedQuantity(Decimal val)
@@ -17614,6 +19746,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingFXRate : DecimalField
     {
+        public const int TAG = 1045;
+
         public UnderlyingFXRate()
             :base(Tags.UnderlyingFXRate) {}
         public UnderlyingFXRate(Decimal val)
@@ -17627,6 +19761,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingFXRateCalc : CharField
     {
+        public const int TAG = 1046;
+
         public UnderlyingFXRateCalc()
             :base(Tags.UnderlyingFXRateCalc) {}
         public UnderlyingFXRateCalc(char val)
@@ -17644,6 +19780,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocPositionEffect : CharField
     {
+        public const int TAG = 1047;
+
         public AllocPositionEffect()
             :base(Tags.AllocPositionEffect) {}
         public AllocPositionEffect(char val)
@@ -17663,6 +19801,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DealingCapacity : CharField
     {
+        public const int TAG = 1048;
+
         public DealingCapacity()
             :base(Tags.DealingCapacity) {}
         public DealingCapacity(char val)
@@ -17681,6 +19821,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InstrmtAssignmentMethod : CharField
     {
+        public const int TAG = 1049;
+
         public InstrmtAssignmentMethod()
             :base(Tags.InstrmtAssignmentMethod) {}
         public InstrmtAssignmentMethod(char val)
@@ -17694,6 +19836,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InstrumentPartyIDSource : CharField
     {
+        public const int TAG = 1050;
+
         public InstrumentPartyIDSource()
             :base(Tags.InstrumentPartyIDSource) {}
         public InstrumentPartyIDSource(char val)
@@ -17707,6 +19851,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InstrumentPartyRole : IntField
     {
+        public const int TAG = 1051;
+
         public InstrumentPartyRole()
             :base(Tags.InstrumentPartyRole) {}
         public InstrumentPartyRole(int val)
@@ -17720,6 +19866,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoInstrumentPartySubIDs : IntField
     {
+        public const int TAG = 1052;
+
         public NoInstrumentPartySubIDs()
             :base(Tags.NoInstrumentPartySubIDs) {}
         public NoInstrumentPartySubIDs(int val)
@@ -17733,6 +19881,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InstrumentPartySubID : StringField
     {
+        public const int TAG = 1053;
+
         public InstrumentPartySubID()
             :base(Tags.InstrumentPartySubID) {}
         public InstrumentPartySubID(string val)
@@ -17746,6 +19896,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class InstrumentPartySubIDType : IntField
     {
+        public const int TAG = 1054;
+
         public InstrumentPartySubIDType()
             :base(Tags.InstrumentPartySubIDType) {}
         public InstrumentPartySubIDType(int val)
@@ -17759,6 +19911,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PositionCurrency : StringField
     {
+        public const int TAG = 1055;
+
         public PositionCurrency()
             :base(Tags.PositionCurrency) {}
         public PositionCurrency(string val)
@@ -17772,6 +19926,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CalculatedCcyLastQty : DecimalField
     {
+        public const int TAG = 1056;
+
         public CalculatedCcyLastQty()
             :base(Tags.CalculatedCcyLastQty) {}
         public CalculatedCcyLastQty(Decimal val)
@@ -17785,6 +19941,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AggressorIndicator : BooleanField
     {
+        public const int TAG = 1057;
+
         public AggressorIndicator()
             :base(Tags.AggressorIndicator) {}
         public AggressorIndicator(Boolean val)
@@ -17802,6 +19960,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoUndlyInstrumentParties : IntField
     {
+        public const int TAG = 1058;
+
         public NoUndlyInstrumentParties()
             :base(Tags.NoUndlyInstrumentParties) {}
         public NoUndlyInstrumentParties(int val)
@@ -17815,6 +19975,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UndlyInstrumentPartyID : StringField
     {
+        public const int TAG = 1059;
+
         public UndlyInstrumentPartyID()
             :base(Tags.UndlyInstrumentPartyID) {}
         public UndlyInstrumentPartyID(string val)
@@ -17828,6 +19990,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UndlyInstrumentPartyIDSource : CharField
     {
+        public const int TAG = 1060;
+
         public UndlyInstrumentPartyIDSource()
             :base(Tags.UndlyInstrumentPartyIDSource) {}
         public UndlyInstrumentPartyIDSource(char val)
@@ -17841,6 +20005,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UndlyInstrumentPartyRole : IntField
     {
+        public const int TAG = 1061;
+
         public UndlyInstrumentPartyRole()
             :base(Tags.UndlyInstrumentPartyRole) {}
         public UndlyInstrumentPartyRole(int val)
@@ -17854,6 +20020,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoUndlyInstrumentPartySubIDs : IntField
     {
+        public const int TAG = 1062;
+
         public NoUndlyInstrumentPartySubIDs()
             :base(Tags.NoUndlyInstrumentPartySubIDs) {}
         public NoUndlyInstrumentPartySubIDs(int val)
@@ -17867,6 +20035,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UndlyInstrumentPartySubID : StringField
     {
+        public const int TAG = 1063;
+
         public UndlyInstrumentPartySubID()
             :base(Tags.UndlyInstrumentPartySubID) {}
         public UndlyInstrumentPartySubID(string val)
@@ -17880,6 +20050,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UndlyInstrumentPartySubIDType : IntField
     {
+        public const int TAG = 1064;
+
         public UndlyInstrumentPartySubIDType()
             :base(Tags.UndlyInstrumentPartySubIDType) {}
         public UndlyInstrumentPartySubIDType(int val)
@@ -17893,6 +20065,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class BidSwapPoints : DecimalField
     {
+        public const int TAG = 1065;
+
         public BidSwapPoints()
             :base(Tags.BidSwapPoints) {}
         public BidSwapPoints(Decimal val)
@@ -17906,6 +20080,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OfferSwapPoints : DecimalField
     {
+        public const int TAG = 1066;
+
         public OfferSwapPoints()
             :base(Tags.OfferSwapPoints) {}
         public OfferSwapPoints(Decimal val)
@@ -17919,6 +20095,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegBidForwardPoints : DecimalField
     {
+        public const int TAG = 1067;
+
         public LegBidForwardPoints()
             :base(Tags.LegBidForwardPoints) {}
         public LegBidForwardPoints(Decimal val)
@@ -17932,6 +20110,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegOfferForwardPoints : DecimalField
     {
+        public const int TAG = 1068;
+
         public LegOfferForwardPoints()
             :base(Tags.LegOfferForwardPoints) {}
         public LegOfferForwardPoints(Decimal val)
@@ -17945,6 +20125,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SwapPoints : DecimalField
     {
+        public const int TAG = 1069;
+
         public SwapPoints()
             :base(Tags.SwapPoints) {}
         public SwapPoints(Decimal val)
@@ -17958,6 +20140,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDQuoteType : IntField
     {
+        public const int TAG = 1070;
+
         public MDQuoteType()
             :base(Tags.MDQuoteType) {}
         public MDQuoteType(int val)
@@ -17978,6 +20162,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LastSwapPoints : DecimalField
     {
+        public const int TAG = 1071;
+
         public LastSwapPoints()
             :base(Tags.LastSwapPoints) {}
         public LastSwapPoints(Decimal val)
@@ -17991,6 +20177,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideGrossTradeAmt : DecimalField
     {
+        public const int TAG = 1072;
+
         public SideGrossTradeAmt()
             :base(Tags.SideGrossTradeAmt) {}
         public SideGrossTradeAmt(Decimal val)
@@ -18004,6 +20192,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegLastForwardPoints : DecimalField
     {
+        public const int TAG = 1073;
+
         public LegLastForwardPoints()
             :base(Tags.LegLastForwardPoints) {}
         public LegLastForwardPoints(Decimal val)
@@ -18017,6 +20207,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegCalculatedCcyLastQty : DecimalField
     {
+        public const int TAG = 1074;
+
         public LegCalculatedCcyLastQty()
             :base(Tags.LegCalculatedCcyLastQty) {}
         public LegCalculatedCcyLastQty(Decimal val)
@@ -18030,6 +20222,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegGrossTradeAmt : DecimalField
     {
+        public const int TAG = 1075;
+
         public LegGrossTradeAmt()
             :base(Tags.LegGrossTradeAmt) {}
         public LegGrossTradeAmt(Decimal val)
@@ -18043,6 +20237,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaturityTime : StringField
     {
+        public const int TAG = 1079;
+
         public MaturityTime()
             :base(Tags.MaturityTime) {}
         public MaturityTime(string val)
@@ -18056,6 +20252,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefOrderID : StringField
     {
+        public const int TAG = 1080;
+
         public RefOrderID()
             :base(Tags.RefOrderID) {}
         public RefOrderID(string val)
@@ -18069,6 +20267,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefOrderIDSource : CharField
     {
+        public const int TAG = 1081;
+
         public RefOrderIDSource()
             :base(Tags.RefOrderIDSource) {}
         public RefOrderIDSource(char val)
@@ -18093,6 +20293,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryDisplayQty : DecimalField
     {
+        public const int TAG = 1082;
+
         public SecondaryDisplayQty()
             :base(Tags.SecondaryDisplayQty) {}
         public SecondaryDisplayQty(Decimal val)
@@ -18106,6 +20308,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DisplayWhen : CharField
     {
+        public const int TAG = 1083;
+
         public DisplayWhen()
             :base(Tags.DisplayWhen) {}
         public DisplayWhen(char val)
@@ -18123,6 +20327,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DisplayMethod : CharField
     {
+        public const int TAG = 1084;
+
         public DisplayMethod()
             :base(Tags.DisplayMethod) {}
         public DisplayMethod(char val)
@@ -18142,6 +20348,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DisplayLowQty : DecimalField
     {
+        public const int TAG = 1085;
+
         public DisplayLowQty()
             :base(Tags.DisplayLowQty) {}
         public DisplayLowQty(Decimal val)
@@ -18155,6 +20363,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DisplayHighQty : DecimalField
     {
+        public const int TAG = 1086;
+
         public DisplayHighQty()
             :base(Tags.DisplayHighQty) {}
         public DisplayHighQty(Decimal val)
@@ -18168,6 +20378,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DisplayMinIncr : DecimalField
     {
+        public const int TAG = 1087;
+
         public DisplayMinIncr()
             :base(Tags.DisplayMinIncr) {}
         public DisplayMinIncr(Decimal val)
@@ -18181,6 +20393,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefreshQty : DecimalField
     {
+        public const int TAG = 1088;
+
         public RefreshQty()
             :base(Tags.RefreshQty) {}
         public RefreshQty(Decimal val)
@@ -18194,6 +20408,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MatchIncrement : DecimalField
     {
+        public const int TAG = 1089;
+
         public MatchIncrement()
             :base(Tags.MatchIncrement) {}
         public MatchIncrement(Decimal val)
@@ -18207,6 +20423,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaxPriceLevels : IntField
     {
+        public const int TAG = 1090;
+
         public MaxPriceLevels()
             :base(Tags.MaxPriceLevels) {}
         public MaxPriceLevels(int val)
@@ -18220,6 +20438,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PreTradeAnonymity : BooleanField
     {
+        public const int TAG = 1091;
+
         public PreTradeAnonymity()
             :base(Tags.PreTradeAnonymity) {}
         public PreTradeAnonymity(Boolean val)
@@ -18233,6 +20453,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriceProtectionScope : CharField
     {
+        public const int TAG = 1092;
+
         public PriceProtectionScope()
             :base(Tags.PriceProtectionScope) {}
         public PriceProtectionScope(char val)
@@ -18252,6 +20474,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LotType : CharField
     {
+        public const int TAG = 1093;
+
         public LotType()
             :base(Tags.LotType) {}
         public LotType(char val)
@@ -18271,6 +20495,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegPriceType : IntField
     {
+        public const int TAG = 1094;
+
         public PegPriceType()
             :base(Tags.PegPriceType) {}
         public PegPriceType(int val)
@@ -18295,6 +20521,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PeggedRefPrice : DecimalField
     {
+        public const int TAG = 1095;
+
         public PeggedRefPrice()
             :base(Tags.PeggedRefPrice) {}
         public PeggedRefPrice(Decimal val)
@@ -18308,6 +20536,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegSecurityIDSource : StringField
     {
+        public const int TAG = 1096;
+
         public PegSecurityIDSource()
             :base(Tags.PegSecurityIDSource) {}
         public PegSecurityIDSource(string val)
@@ -18321,6 +20551,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegSecurityID : StringField
     {
+        public const int TAG = 1097;
+
         public PegSecurityID()
             :base(Tags.PegSecurityID) {}
         public PegSecurityID(string val)
@@ -18334,6 +20566,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegSymbol : StringField
     {
+        public const int TAG = 1098;
+
         public PegSymbol()
             :base(Tags.PegSymbol) {}
         public PegSymbol(string val)
@@ -18347,6 +20581,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PegSecurityDesc : StringField
     {
+        public const int TAG = 1099;
+
         public PegSecurityDesc()
             :base(Tags.PegSecurityDesc) {}
         public PegSecurityDesc(string val)
@@ -18360,6 +20596,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerType : CharField
     {
+        public const int TAG = 1100;
+
         public TriggerType()
             :base(Tags.TriggerType) {}
         public TriggerType(char val)
@@ -18379,6 +20617,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerAction : CharField
     {
+        public const int TAG = 1101;
+
         public TriggerAction()
             :base(Tags.TriggerAction) {}
         public TriggerAction(char val)
@@ -18397,6 +20637,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerPrice : DecimalField
     {
+        public const int TAG = 1102;
+
         public TriggerPrice()
             :base(Tags.TriggerPrice) {}
         public TriggerPrice(Decimal val)
@@ -18410,6 +20652,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerSymbol : StringField
     {
+        public const int TAG = 1103;
+
         public TriggerSymbol()
             :base(Tags.TriggerSymbol) {}
         public TriggerSymbol(string val)
@@ -18423,6 +20667,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerSecurityID : StringField
     {
+        public const int TAG = 1104;
+
         public TriggerSecurityID()
             :base(Tags.TriggerSecurityID) {}
         public TriggerSecurityID(string val)
@@ -18436,6 +20682,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerSecurityIDSource : StringField
     {
+        public const int TAG = 1105;
+
         public TriggerSecurityIDSource()
             :base(Tags.TriggerSecurityIDSource) {}
         public TriggerSecurityIDSource(string val)
@@ -18449,6 +20697,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerSecurityDesc : StringField
     {
+        public const int TAG = 1106;
+
         public TriggerSecurityDesc()
             :base(Tags.TriggerSecurityDesc) {}
         public TriggerSecurityDesc(string val)
@@ -18462,6 +20712,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerPriceType : CharField
     {
+        public const int TAG = 1107;
+
         public TriggerPriceType()
             :base(Tags.TriggerPriceType) {}
         public TriggerPriceType(char val)
@@ -18483,6 +20735,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerPriceTypeScope : CharField
     {
+        public const int TAG = 1108;
+
         public TriggerPriceTypeScope()
             :base(Tags.TriggerPriceTypeScope) {}
         public TriggerPriceTypeScope(char val)
@@ -18502,6 +20756,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerPriceDirection : CharField
     {
+        public const int TAG = 1109;
+
         public TriggerPriceDirection()
             :base(Tags.TriggerPriceDirection) {}
         public TriggerPriceDirection(char val)
@@ -18519,6 +20775,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerNewPrice : DecimalField
     {
+        public const int TAG = 1110;
+
         public TriggerNewPrice()
             :base(Tags.TriggerNewPrice) {}
         public TriggerNewPrice(Decimal val)
@@ -18532,6 +20790,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerOrderType : CharField
     {
+        public const int TAG = 1111;
+
         public TriggerOrderType()
             :base(Tags.TriggerOrderType) {}
         public TriggerOrderType(char val)
@@ -18549,6 +20809,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerNewQty : DecimalField
     {
+        public const int TAG = 1112;
+
         public TriggerNewQty()
             :base(Tags.TriggerNewQty) {}
         public TriggerNewQty(Decimal val)
@@ -18562,6 +20824,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerTradingSessionID : StringField
     {
+        public const int TAG = 1113;
+
         public TriggerTradingSessionID()
             :base(Tags.TriggerTradingSessionID) {}
         public TriggerTradingSessionID(string val)
@@ -18575,6 +20839,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TriggerTradingSessionSubID : StringField
     {
+        public const int TAG = 1114;
+
         public TriggerTradingSessionSubID()
             :base(Tags.TriggerTradingSessionSubID) {}
         public TriggerTradingSessionSubID(string val)
@@ -18588,6 +20854,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderCategory : CharField
     {
+        public const int TAG = 1115;
+
         public OrderCategory()
             :base(Tags.OrderCategory) {}
         public OrderCategory(char val)
@@ -18612,6 +20880,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRootPartyIDs : IntField
     {
+        public const int TAG = 1116;
+
         public NoRootPartyIDs()
             :base(Tags.NoRootPartyIDs) {}
         public NoRootPartyIDs(int val)
@@ -18625,6 +20895,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RootPartyID : StringField
     {
+        public const int TAG = 1117;
+
         public RootPartyID()
             :base(Tags.RootPartyID) {}
         public RootPartyID(string val)
@@ -18638,6 +20910,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RootPartyIDSource : CharField
     {
+        public const int TAG = 1118;
+
         public RootPartyIDSource()
             :base(Tags.RootPartyIDSource) {}
         public RootPartyIDSource(char val)
@@ -18651,6 +20925,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RootPartyRole : IntField
     {
+        public const int TAG = 1119;
+
         public RootPartyRole()
             :base(Tags.RootPartyRole) {}
         public RootPartyRole(int val)
@@ -18664,6 +20940,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRootPartySubIDs : IntField
     {
+        public const int TAG = 1120;
+
         public NoRootPartySubIDs()
             :base(Tags.NoRootPartySubIDs) {}
         public NoRootPartySubIDs(int val)
@@ -18677,6 +20955,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RootPartySubID : StringField
     {
+        public const int TAG = 1121;
+
         public RootPartySubID()
             :base(Tags.RootPartySubID) {}
         public RootPartySubID(string val)
@@ -18690,6 +20970,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RootPartySubIDType : IntField
     {
+        public const int TAG = 1122;
+
         public RootPartySubIDType()
             :base(Tags.RootPartySubIDType) {}
         public RootPartySubIDType(int val)
@@ -18703,6 +20985,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradeHandlingInstr : CharField
     {
+        public const int TAG = 1123;
+
         public TradeHandlingInstr()
             :base(Tags.TradeHandlingInstr) {}
         public TradeHandlingInstr(char val)
@@ -18724,6 +21008,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigTradeHandlingInstr : CharField
     {
+        public const int TAG = 1124;
+
         public OrigTradeHandlingInstr()
             :base(Tags.OrigTradeHandlingInstr) {}
         public OrigTradeHandlingInstr(char val)
@@ -18737,6 +21023,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigTradeDate : StringField
     {
+        public const int TAG = 1125;
+
         public OrigTradeDate()
             :base(Tags.OrigTradeDate) {}
         public OrigTradeDate(string val)
@@ -18750,6 +21038,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigTradeID : StringField
     {
+        public const int TAG = 1126;
+
         public OrigTradeID()
             :base(Tags.OrigTradeID) {}
         public OrigTradeID(string val)
@@ -18763,6 +21053,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigSecondaryTradeID : StringField
     {
+        public const int TAG = 1127;
+
         public OrigSecondaryTradeID()
             :base(Tags.OrigSecondaryTradeID) {}
         public OrigSecondaryTradeID(string val)
@@ -18776,6 +21068,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplVerID : StringField
     {
+        public const int TAG = 1128;
+
         public ApplVerID()
             :base(Tags.ApplVerID) {}
         public ApplVerID(string val)
@@ -18801,6 +21095,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CstmApplVerID : StringField
     {
+        public const int TAG = 1129;
+
         public CstmApplVerID()
             :base(Tags.CstmApplVerID) {}
         public CstmApplVerID(string val)
@@ -18814,6 +21110,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefApplVerID : StringField
     {
+        public const int TAG = 1130;
+
         public RefApplVerID()
             :base(Tags.RefApplVerID) {}
         public RefApplVerID(string val)
@@ -18827,6 +21125,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefCstmApplVerID : StringField
     {
+        public const int TAG = 1131;
+
         public RefCstmApplVerID()
             :base(Tags.RefCstmApplVerID) {}
         public RefCstmApplVerID(string val)
@@ -18840,6 +21140,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TZTransactTime : DateTimeField
     {
+        public const int TAG = 1132;
+
         public TZTransactTime()
             :base(Tags.TZTransactTime) {}
         public TZTransactTime(DateTime val)
@@ -18857,6 +21159,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExDestinationIDSource : CharField
     {
+        public const int TAG = 1133;
+
         public ExDestinationIDSource()
             :base(Tags.ExDestinationIDSource) {}
         public ExDestinationIDSource(char val)
@@ -18877,6 +21181,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ReportedPxDiff : BooleanField
     {
+        public const int TAG = 1134;
+
         public ReportedPxDiff()
             :base(Tags.ReportedPxDiff) {}
         public ReportedPxDiff(Boolean val)
@@ -18890,6 +21196,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RptSys : StringField
     {
+        public const int TAG = 1135;
+
         public RptSys()
             :base(Tags.RptSys) {}
         public RptSys(string val)
@@ -18903,6 +21211,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AllocClearingFeeIndicator : StringField
     {
+        public const int TAG = 1136;
+
         public AllocClearingFeeIndicator()
             :base(Tags.AllocClearingFeeIndicator) {}
         public AllocClearingFeeIndicator(string val)
@@ -18916,6 +21226,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DefaultApplVerID : StringField
     {
+        public const int TAG = 1137;
+
         public DefaultApplVerID()
             :base(Tags.DefaultApplVerID) {}
         public DefaultApplVerID(string val)
@@ -18929,6 +21241,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DisplayQty : DecimalField
     {
+        public const int TAG = 1138;
+
         public DisplayQty()
             :base(Tags.DisplayQty) {}
         public DisplayQty(Decimal val)
@@ -18942,6 +21256,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExchangeSpecialInstructions : StringField
     {
+        public const int TAG = 1139;
+
         public ExchangeSpecialInstructions()
             :base(Tags.ExchangeSpecialInstructions) {}
         public ExchangeSpecialInstructions(string val)
@@ -18955,6 +21271,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityStatus : StringField
     {
+        public const int TAG = 965;
+
         public SecurityStatus()
             :base(Tags.SecurityStatus) {}
         public SecurityStatus(string val)
@@ -18972,6 +21290,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExpirationQtyType : IntField
     {
+        public const int TAG = 982;
+
         public ExpirationQtyType()
             :base(Tags.ExpirationQtyType) {}
         public ExpirationQtyType(int val)
@@ -18992,6 +21312,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaxTradeVol : DecimalField
     {
+        public const int TAG = 1140;
+
         public MaxTradeVol()
             :base(Tags.MaxTradeVol) {}
         public MaxTradeVol(Decimal val)
@@ -19005,6 +21327,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoMDFeedTypes : IntField
     {
+        public const int TAG = 1141;
+
         public NoMDFeedTypes()
             :base(Tags.NoMDFeedTypes) {}
         public NoMDFeedTypes(int val)
@@ -19018,6 +21342,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MatchAlgorithm : StringField
     {
+        public const int TAG = 1142;
+
         public MatchAlgorithm()
             :base(Tags.MatchAlgorithm) {}
         public MatchAlgorithm(string val)
@@ -19031,6 +21357,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaxPriceVariation : DecimalField
     {
+        public const int TAG = 1143;
+
         public MaxPriceVariation()
             :base(Tags.MaxPriceVariation) {}
         public MaxPriceVariation(Decimal val)
@@ -19044,6 +21372,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ImpliedMarketIndicator : IntField
     {
+        public const int TAG = 1144;
+
         public ImpliedMarketIndicator()
             :base(Tags.ImpliedMarketIndicator) {}
         public ImpliedMarketIndicator(int val)
@@ -19063,6 +21393,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EventTime : DateTimeField
     {
+        public const int TAG = 1145;
+
         public EventTime()
             :base(Tags.EventTime) {}
         public EventTime(DateTime val)
@@ -19080,6 +21412,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MinPriceIncrementAmount : DecimalField
     {
+        public const int TAG = 1146;
+
         public MinPriceIncrementAmount()
             :base(Tags.MinPriceIncrementAmount) {}
         public MinPriceIncrementAmount(Decimal val)
@@ -19093,6 +21427,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnitOfMeasureQty : DecimalField
     {
+        public const int TAG = 1147;
+
         public UnitOfMeasureQty()
             :base(Tags.UnitOfMeasureQty) {}
         public UnitOfMeasureQty(Decimal val)
@@ -19106,6 +21442,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LowLimitPrice : DecimalField
     {
+        public const int TAG = 1148;
+
         public LowLimitPrice()
             :base(Tags.LowLimitPrice) {}
         public LowLimitPrice(Decimal val)
@@ -19119,6 +21457,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HighLimitPrice : DecimalField
     {
+        public const int TAG = 1149;
+
         public HighLimitPrice()
             :base(Tags.HighLimitPrice) {}
         public HighLimitPrice(Decimal val)
@@ -19132,6 +21472,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradingReferencePrice : DecimalField
     {
+        public const int TAG = 1150;
+
         public TradingReferencePrice()
             :base(Tags.TradingReferencePrice) {}
         public TradingReferencePrice(Decimal val)
@@ -19145,6 +21487,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityGroup : StringField
     {
+        public const int TAG = 1151;
+
         public SecurityGroup()
             :base(Tags.SecurityGroup) {}
         public SecurityGroup(string val)
@@ -19158,6 +21502,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegNumber : IntField
     {
+        public const int TAG = 1152;
+
         public LegNumber()
             :base(Tags.LegNumber) {}
         public LegNumber(int val)
@@ -19171,6 +21517,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlementCycleNo : IntField
     {
+        public const int TAG = 1153;
+
         public SettlementCycleNo()
             :base(Tags.SettlementCycleNo) {}
         public SettlementCycleNo(int val)
@@ -19184,6 +21532,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideCurrency : StringField
     {
+        public const int TAG = 1154;
+
         public SideCurrency()
             :base(Tags.SideCurrency) {}
         public SideCurrency(string val)
@@ -19197,6 +21547,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideSettlCurrency : StringField
     {
+        public const int TAG = 1155;
+
         public SideSettlCurrency()
             :base(Tags.SideSettlCurrency) {}
         public SideSettlCurrency(string val)
@@ -19210,6 +21562,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplExtID : IntField
     {
+        public const int TAG = 1156;
+
         public ApplExtID()
             :base(Tags.ApplExtID) {}
         public ApplExtID(int val)
@@ -19223,6 +21577,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CcyAmt : DecimalField
     {
+        public const int TAG = 1157;
+
         public CcyAmt()
             :base(Tags.CcyAmt) {}
         public CcyAmt(Decimal val)
@@ -19236,6 +21592,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoSettlDetails : IntField
     {
+        public const int TAG = 1158;
+
         public NoSettlDetails()
             :base(Tags.NoSettlDetails) {}
         public NoSettlDetails(int val)
@@ -19249,6 +21607,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlObligMode : IntField
     {
+        public const int TAG = 1159;
+
         public SettlObligMode()
             :base(Tags.SettlObligMode) {}
         public SettlObligMode(int val)
@@ -19266,6 +21626,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlObligMsgID : StringField
     {
+        public const int TAG = 1160;
+
         public SettlObligMsgID()
             :base(Tags.SettlObligMsgID) {}
         public SettlObligMsgID(string val)
@@ -19279,6 +21641,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlObligID : StringField
     {
+        public const int TAG = 1161;
+
         public SettlObligID()
             :base(Tags.SettlObligID) {}
         public SettlObligID(string val)
@@ -19292,6 +21656,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlObligTransType : CharField
     {
+        public const int TAG = 1162;
+
         public SettlObligTransType()
             :base(Tags.SettlObligTransType) {}
         public SettlObligTransType(char val)
@@ -19311,6 +21677,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlObligRefID : StringField
     {
+        public const int TAG = 1163;
+
         public SettlObligRefID()
             :base(Tags.SettlObligRefID) {}
         public SettlObligRefID(string val)
@@ -19324,6 +21692,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlObligSource : CharField
     {
+        public const int TAG = 1164;
+
         public SettlObligSource()
             :base(Tags.SettlObligSource) {}
         public SettlObligSource(char val)
@@ -19342,6 +21712,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoSettlOblig : IntField
     {
+        public const int TAG = 1165;
+
         public NoSettlOblig()
             :base(Tags.NoSettlOblig) {}
         public NoSettlOblig(int val)
@@ -19355,6 +21727,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteMsgID : StringField
     {
+        public const int TAG = 1166;
+
         public QuoteMsgID()
             :base(Tags.QuoteMsgID) {}
         public QuoteMsgID(string val)
@@ -19368,6 +21742,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class QuoteEntryStatus : IntField
     {
+        public const int TAG = 1167;
+
         public QuoteEntryStatus()
             :base(Tags.QuoteEntryStatus) {}
         public QuoteEntryStatus(int val)
@@ -19392,6 +21768,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoCxldQuotes : IntField
     {
+        public const int TAG = 1168;
+
         public TotNoCxldQuotes()
             :base(Tags.TotNoCxldQuotes) {}
         public TotNoCxldQuotes(int val)
@@ -19405,6 +21783,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoAccQuotes : IntField
     {
+        public const int TAG = 1169;
+
         public TotNoAccQuotes()
             :base(Tags.TotNoAccQuotes) {}
         public TotNoAccQuotes(int val)
@@ -19418,6 +21798,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoRejQuotes : IntField
     {
+        public const int TAG = 1170;
+
         public TotNoRejQuotes()
             :base(Tags.TotNoRejQuotes) {}
         public TotNoRejQuotes(int val)
@@ -19431,6 +21813,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PrivateQuote : BooleanField
     {
+        public const int TAG = 1171;
+
         public PrivateQuote()
             :base(Tags.PrivateQuote) {}
         public PrivateQuote(Boolean val)
@@ -19444,6 +21828,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RespondentType : IntField
     {
+        public const int TAG = 1172;
+
         public RespondentType()
             :base(Tags.RespondentType) {}
         public RespondentType(int val)
@@ -19463,6 +21849,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDSubBookType : IntField
     {
+        public const int TAG = 1173;
+
         public MDSubBookType()
             :base(Tags.MDSubBookType) {}
         public MDSubBookType(int val)
@@ -19476,6 +21864,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityTradingEvent : IntField
     {
+        public const int TAG = 1174;
+
         public SecurityTradingEvent()
             :base(Tags.SecurityTradingEvent) {}
         public SecurityTradingEvent(int val)
@@ -19500,6 +21890,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoStatsIndicators : IntField
     {
+        public const int TAG = 1175;
+
         public NoStatsIndicators()
             :base(Tags.NoStatsIndicators) {}
         public NoStatsIndicators(int val)
@@ -19513,6 +21905,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StatsType : IntField
     {
+        public const int TAG = 1176;
+
         public StatsType()
             :base(Tags.StatsType) {}
         public StatsType(int val)
@@ -19532,6 +21926,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoOfSecSizes : IntField
     {
+        public const int TAG = 1177;
+
         public NoOfSecSizes()
             :base(Tags.NoOfSecSizes) {}
         public NoOfSecSizes(int val)
@@ -19545,6 +21941,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDSecSizeType : IntField
     {
+        public const int TAG = 1178;
+
         public MDSecSizeType()
             :base(Tags.MDSecSizeType) {}
         public MDSecSizeType(int val)
@@ -19561,6 +21959,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDSecSize : DecimalField
     {
+        public const int TAG = 1179;
+
         public MDSecSize()
             :base(Tags.MDSecSize) {}
         public MDSecSize(Decimal val)
@@ -19574,6 +21974,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplID : StringField
     {
+        public const int TAG = 1180;
+
         public ApplID()
             :base(Tags.ApplID) {}
         public ApplID(string val)
@@ -19587,6 +21989,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplSeqNum : IntField
     {
+        public const int TAG = 1181;
+
         public ApplSeqNum()
             :base(Tags.ApplSeqNum) {}
         public ApplSeqNum(int val)
@@ -19600,6 +22004,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplBegSeqNum : IntField
     {
+        public const int TAG = 1182;
+
         public ApplBegSeqNum()
             :base(Tags.ApplBegSeqNum) {}
         public ApplBegSeqNum(int val)
@@ -19613,6 +22019,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplEndSeqNum : IntField
     {
+        public const int TAG = 1183;
+
         public ApplEndSeqNum()
             :base(Tags.ApplEndSeqNum) {}
         public ApplEndSeqNum(int val)
@@ -19626,6 +22034,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityXMLLen : IntField
     {
+        public const int TAG = 1184;
+
         public SecurityXMLLen()
             :base(Tags.SecurityXMLLen) {}
         public SecurityXMLLen(int val)
@@ -19639,6 +22049,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityXML : StringField
     {
+        public const int TAG = 1185;
+
         public SecurityXML()
             :base(Tags.SecurityXML) {}
         public SecurityXML(string val)
@@ -19652,6 +22064,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityXMLSchema : StringField
     {
+        public const int TAG = 1186;
+
         public SecurityXMLSchema()
             :base(Tags.SecurityXMLSchema) {}
         public SecurityXMLSchema(string val)
@@ -19665,6 +22079,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefreshIndicator : BooleanField
     {
+        public const int TAG = 1187;
+
         public RefreshIndicator()
             :base(Tags.RefreshIndicator) {}
         public RefreshIndicator(Boolean val)
@@ -19678,6 +22094,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Volatility : DecimalField
     {
+        public const int TAG = 1188;
+
         public Volatility()
             :base(Tags.Volatility) {}
         public Volatility(Decimal val)
@@ -19691,6 +22109,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TimeToExpiration : DecimalField
     {
+        public const int TAG = 1189;
+
         public TimeToExpiration()
             :base(Tags.TimeToExpiration) {}
         public TimeToExpiration(Decimal val)
@@ -19704,6 +22124,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskFreeRate : DecimalField
     {
+        public const int TAG = 1190;
+
         public RiskFreeRate()
             :base(Tags.RiskFreeRate) {}
         public RiskFreeRate(Decimal val)
@@ -19717,6 +22139,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriceUnitOfMeasure : StringField
     {
+        public const int TAG = 1191;
+
         public PriceUnitOfMeasure()
             :base(Tags.PriceUnitOfMeasure) {}
         public PriceUnitOfMeasure(string val)
@@ -19730,6 +22154,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriceUnitOfMeasureQty : DecimalField
     {
+        public const int TAG = 1192;
+
         public PriceUnitOfMeasureQty()
             :base(Tags.PriceUnitOfMeasureQty) {}
         public PriceUnitOfMeasureQty(Decimal val)
@@ -19743,6 +22169,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SettlMethod : CharField
     {
+        public const int TAG = 1193;
+
         public SettlMethod()
             :base(Tags.SettlMethod) {}
         public SettlMethod(char val)
@@ -19760,6 +22188,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExerciseStyle : IntField
     {
+        public const int TAG = 1194;
+
         public ExerciseStyle()
             :base(Tags.ExerciseStyle) {}
         public ExerciseStyle(int val)
@@ -19778,6 +22208,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OptPayAmount : DecimalField
     {
+        public const int TAG = 1195;
+
         public OptPayAmount()
             :base(Tags.OptPayAmount) {}
         public OptPayAmount(Decimal val)
@@ -19791,6 +22223,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriceQuoteMethod : StringField
     {
+        public const int TAG = 1196;
+
         public PriceQuoteMethod()
             :base(Tags.PriceQuoteMethod) {}
         public PriceQuoteMethod(string val)
@@ -19810,6 +22244,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FuturesValuationMethod : StringField
     {
+        public const int TAG = 1197;
+
         public FuturesValuationMethod()
             :base(Tags.FuturesValuationMethod) {}
         public FuturesValuationMethod(string val)
@@ -19828,6 +22264,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListMethod : IntField
     {
+        public const int TAG = 1198;
+
         public ListMethod()
             :base(Tags.ListMethod) {}
         public ListMethod(int val)
@@ -19845,6 +22283,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CapPrice : DecimalField
     {
+        public const int TAG = 1199;
+
         public CapPrice()
             :base(Tags.CapPrice) {}
         public CapPrice(Decimal val)
@@ -19858,6 +22298,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FloorPrice : DecimalField
     {
+        public const int TAG = 1200;
+
         public FloorPrice()
             :base(Tags.FloorPrice) {}
         public FloorPrice(Decimal val)
@@ -19871,6 +22313,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoStrikeRules : IntField
     {
+        public const int TAG = 1201;
+
         public NoStrikeRules()
             :base(Tags.NoStrikeRules) {}
         public NoStrikeRules(int val)
@@ -19884,6 +22328,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StartStrikePxRange : DecimalField
     {
+        public const int TAG = 1202;
+
         public StartStrikePxRange()
             :base(Tags.StartStrikePxRange) {}
         public StartStrikePxRange(Decimal val)
@@ -19897,6 +22343,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EndStrikePxRange : DecimalField
     {
+        public const int TAG = 1203;
+
         public EndStrikePxRange()
             :base(Tags.EndStrikePxRange) {}
         public EndStrikePxRange(Decimal val)
@@ -19910,6 +22358,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikeIncrement : DecimalField
     {
+        public const int TAG = 1204;
+
         public StrikeIncrement()
             :base(Tags.StrikeIncrement) {}
         public StrikeIncrement(Decimal val)
@@ -19923,6 +22373,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoTickRules : IntField
     {
+        public const int TAG = 1205;
+
         public NoTickRules()
             :base(Tags.NoTickRules) {}
         public NoTickRules(int val)
@@ -19936,6 +22388,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StartTickPriceRange : DecimalField
     {
+        public const int TAG = 1206;
+
         public StartTickPriceRange()
             :base(Tags.StartTickPriceRange) {}
         public StartTickPriceRange(Decimal val)
@@ -19949,6 +22403,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EndTickPriceRange : DecimalField
     {
+        public const int TAG = 1207;
+
         public EndTickPriceRange()
             :base(Tags.EndTickPriceRange) {}
         public EndTickPriceRange(Decimal val)
@@ -19962,6 +22418,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TickIncrement : DecimalField
     {
+        public const int TAG = 1208;
+
         public TickIncrement()
             :base(Tags.TickIncrement) {}
         public TickIncrement(Decimal val)
@@ -19975,6 +22433,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TickRuleType : IntField
     {
+        public const int TAG = 1209;
+
         public TickRuleType()
             :base(Tags.TickRuleType) {}
         public TickRuleType(int val)
@@ -19995,6 +22455,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NestedInstrAttribType : IntField
     {
+        public const int TAG = 1210;
+
         public NestedInstrAttribType()
             :base(Tags.NestedInstrAttribType) {}
         public NestedInstrAttribType(int val)
@@ -20008,6 +22470,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NestedInstrAttribValue : StringField
     {
+        public const int TAG = 1211;
+
         public NestedInstrAttribValue()
             :base(Tags.NestedInstrAttribValue) {}
         public NestedInstrAttribValue(string val)
@@ -20021,6 +22485,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegMaturityTime : StringField
     {
+        public const int TAG = 1212;
+
         public LegMaturityTime()
             :base(Tags.LegMaturityTime) {}
         public LegMaturityTime(string val)
@@ -20034,6 +22500,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingMaturityTime : StringField
     {
+        public const int TAG = 1213;
+
         public UnderlyingMaturityTime()
             :base(Tags.UnderlyingMaturityTime) {}
         public UnderlyingMaturityTime(string val)
@@ -20047,6 +22515,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSymbol : StringField
     {
+        public const int TAG = 1214;
+
         public DerivativeSymbol()
             :base(Tags.DerivativeSymbol) {}
         public DerivativeSymbol(string val)
@@ -20060,6 +22530,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSymbolSfx : StringField
     {
+        public const int TAG = 1215;
+
         public DerivativeSymbolSfx()
             :base(Tags.DerivativeSymbolSfx) {}
         public DerivativeSymbolSfx(string val)
@@ -20073,6 +22545,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityID : StringField
     {
+        public const int TAG = 1216;
+
         public DerivativeSecurityID()
             :base(Tags.DerivativeSecurityID) {}
         public DerivativeSecurityID(string val)
@@ -20086,6 +22560,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityIDSource : StringField
     {
+        public const int TAG = 1217;
+
         public DerivativeSecurityIDSource()
             :base(Tags.DerivativeSecurityIDSource) {}
         public DerivativeSecurityIDSource(string val)
@@ -20099,6 +22575,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoDerivativeSecurityAltID : IntField
     {
+        public const int TAG = 1218;
+
         public NoDerivativeSecurityAltID()
             :base(Tags.NoDerivativeSecurityAltID) {}
         public NoDerivativeSecurityAltID(int val)
@@ -20112,6 +22590,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityAltID : StringField
     {
+        public const int TAG = 1219;
+
         public DerivativeSecurityAltID()
             :base(Tags.DerivativeSecurityAltID) {}
         public DerivativeSecurityAltID(string val)
@@ -20125,6 +22605,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityAltIDSource : StringField
     {
+        public const int TAG = 1220;
+
         public DerivativeSecurityAltIDSource()
             :base(Tags.DerivativeSecurityAltIDSource) {}
         public DerivativeSecurityAltIDSource(string val)
@@ -20138,6 +22620,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryLowLimitPrice : DecimalField
     {
+        public const int TAG = 1221;
+
         public SecondaryLowLimitPrice()
             :base(Tags.SecondaryLowLimitPrice) {}
         public SecondaryLowLimitPrice(Decimal val)
@@ -20151,6 +22635,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaturityRuleID : StringField
     {
+        public const int TAG = 1222;
+
         public MaturityRuleID()
             :base(Tags.MaturityRuleID) {}
         public MaturityRuleID(string val)
@@ -20164,6 +22650,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikeRuleID : StringField
     {
+        public const int TAG = 1223;
+
         public StrikeRuleID()
             :base(Tags.StrikeRuleID) {}
         public StrikeRuleID(string val)
@@ -20177,6 +22665,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegUnitOfMeasureQty : DecimalField
     {
+        public const int TAG = 1224;
+
         public LegUnitOfMeasureQty()
             :base(Tags.LegUnitOfMeasureQty) {}
         public LegUnitOfMeasureQty(Decimal val)
@@ -20190,6 +22680,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeOptPayAmount : DecimalField
     {
+        public const int TAG = 1225;
+
         public DerivativeOptPayAmount()
             :base(Tags.DerivativeOptPayAmount) {}
         public DerivativeOptPayAmount(Decimal val)
@@ -20203,6 +22695,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EndMaturityMonthYear : StringField
     {
+        public const int TAG = 1226;
+
         public EndMaturityMonthYear()
             :base(Tags.EndMaturityMonthYear) {}
         public EndMaturityMonthYear(string val)
@@ -20216,6 +22710,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ProductComplex : StringField
     {
+        public const int TAG = 1227;
+
         public ProductComplex()
             :base(Tags.ProductComplex) {}
         public ProductComplex(string val)
@@ -20229,6 +22725,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeProductComplex : StringField
     {
+        public const int TAG = 1228;
+
         public DerivativeProductComplex()
             :base(Tags.DerivativeProductComplex) {}
         public DerivativeProductComplex(string val)
@@ -20242,6 +22740,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaturityMonthYearIncrement : IntField
     {
+        public const int TAG = 1229;
+
         public MaturityMonthYearIncrement()
             :base(Tags.MaturityMonthYearIncrement) {}
         public MaturityMonthYearIncrement(int val)
@@ -20255,6 +22755,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryHighLimitPrice : DecimalField
     {
+        public const int TAG = 1230;
+
         public SecondaryHighLimitPrice()
             :base(Tags.SecondaryHighLimitPrice) {}
         public SecondaryHighLimitPrice(Decimal val)
@@ -20268,6 +22770,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MinLotSize : DecimalField
     {
+        public const int TAG = 1231;
+
         public MinLotSize()
             :base(Tags.MinLotSize) {}
         public MinLotSize(Decimal val)
@@ -20281,6 +22785,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoExecInstRules : IntField
     {
+        public const int TAG = 1232;
+
         public NoExecInstRules()
             :base(Tags.NoExecInstRules) {}
         public NoExecInstRules(int val)
@@ -20294,6 +22800,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoLotTypeRules : IntField
     {
+        public const int TAG = 1234;
+
         public NoLotTypeRules()
             :base(Tags.NoLotTypeRules) {}
         public NoLotTypeRules(int val)
@@ -20307,6 +22815,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoMatchRules : IntField
     {
+        public const int TAG = 1235;
+
         public NoMatchRules()
             :base(Tags.NoMatchRules) {}
         public NoMatchRules(int val)
@@ -20320,6 +22830,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoMaturityRules : IntField
     {
+        public const int TAG = 1236;
+
         public NoMaturityRules()
             :base(Tags.NoMaturityRules) {}
         public NoMaturityRules(int val)
@@ -20333,6 +22845,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoOrdTypeRules : IntField
     {
+        public const int TAG = 1237;
+
         public NoOrdTypeRules()
             :base(Tags.NoOrdTypeRules) {}
         public NoOrdTypeRules(int val)
@@ -20346,6 +22860,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoTimeInForceRules : IntField
     {
+        public const int TAG = 1239;
+
         public NoTimeInForceRules()
             :base(Tags.NoTimeInForceRules) {}
         public NoTimeInForceRules(int val)
@@ -20359,6 +22875,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryTradingReferencePrice : DecimalField
     {
+        public const int TAG = 1240;
+
         public SecondaryTradingReferencePrice()
             :base(Tags.SecondaryTradingReferencePrice) {}
         public SecondaryTradingReferencePrice(Decimal val)
@@ -20372,6 +22890,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StartMaturityMonthYear : StringField
     {
+        public const int TAG = 1241;
+
         public StartMaturityMonthYear()
             :base(Tags.StartMaturityMonthYear) {}
         public StartMaturityMonthYear(string val)
@@ -20385,6 +22905,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FlexProductEligibilityIndicator : BooleanField
     {
+        public const int TAG = 1242;
+
         public FlexProductEligibilityIndicator()
             :base(Tags.FlexProductEligibilityIndicator) {}
         public FlexProductEligibilityIndicator(Boolean val)
@@ -20398,6 +22920,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivFlexProductEligibilityIndicator : BooleanField
     {
+        public const int TAG = 1243;
+
         public DerivFlexProductEligibilityIndicator()
             :base(Tags.DerivFlexProductEligibilityIndicator) {}
         public DerivFlexProductEligibilityIndicator(Boolean val)
@@ -20411,6 +22935,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FlexibleIndicator : BooleanField
     {
+        public const int TAG = 1244;
+
         public FlexibleIndicator()
             :base(Tags.FlexibleIndicator) {}
         public FlexibleIndicator(Boolean val)
@@ -20424,6 +22950,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradingCurrency : StringField
     {
+        public const int TAG = 1245;
+
         public TradingCurrency()
             :base(Tags.TradingCurrency) {}
         public TradingCurrency(string val)
@@ -20437,6 +22965,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeProduct : IntField
     {
+        public const int TAG = 1246;
+
         public DerivativeProduct()
             :base(Tags.DerivativeProduct) {}
         public DerivativeProduct(int val)
@@ -20450,6 +22980,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityGroup : StringField
     {
+        public const int TAG = 1247;
+
         public DerivativeSecurityGroup()
             :base(Tags.DerivativeSecurityGroup) {}
         public DerivativeSecurityGroup(string val)
@@ -20463,6 +22995,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeCFICode : StringField
     {
+        public const int TAG = 1248;
+
         public DerivativeCFICode()
             :base(Tags.DerivativeCFICode) {}
         public DerivativeCFICode(string val)
@@ -20476,6 +23010,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityType : StringField
     {
+        public const int TAG = 1249;
+
         public DerivativeSecurityType()
             :base(Tags.DerivativeSecurityType) {}
         public DerivativeSecurityType(string val)
@@ -20489,6 +23025,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecuritySubType : StringField
     {
+        public const int TAG = 1250;
+
         public DerivativeSecuritySubType()
             :base(Tags.DerivativeSecuritySubType) {}
         public DerivativeSecuritySubType(string val)
@@ -20502,6 +23040,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeMaturityMonthYear : StringField
     {
+        public const int TAG = 1251;
+
         public DerivativeMaturityMonthYear()
             :base(Tags.DerivativeMaturityMonthYear) {}
         public DerivativeMaturityMonthYear(string val)
@@ -20515,6 +23055,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeMaturityDate : StringField
     {
+        public const int TAG = 1252;
+
         public DerivativeMaturityDate()
             :base(Tags.DerivativeMaturityDate) {}
         public DerivativeMaturityDate(string val)
@@ -20528,6 +23070,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeMaturityTime : StringField
     {
+        public const int TAG = 1253;
+
         public DerivativeMaturityTime()
             :base(Tags.DerivativeMaturityTime) {}
         public DerivativeMaturityTime(string val)
@@ -20541,6 +23085,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSettleOnOpenFlag : StringField
     {
+        public const int TAG = 1254;
+
         public DerivativeSettleOnOpenFlag()
             :base(Tags.DerivativeSettleOnOpenFlag) {}
         public DerivativeSettleOnOpenFlag(string val)
@@ -20554,6 +23100,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeInstrmtAssignmentMethod : CharField
     {
+        public const int TAG = 1255;
+
         public DerivativeInstrmtAssignmentMethod()
             :base(Tags.DerivativeInstrmtAssignmentMethod) {}
         public DerivativeInstrmtAssignmentMethod(char val)
@@ -20567,6 +23115,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityStatus : StringField
     {
+        public const int TAG = 1256;
+
         public DerivativeSecurityStatus()
             :base(Tags.DerivativeSecurityStatus) {}
         public DerivativeSecurityStatus(string val)
@@ -20580,6 +23130,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeInstrRegistry : StringField
     {
+        public const int TAG = 1257;
+
         public DerivativeInstrRegistry()
             :base(Tags.DerivativeInstrRegistry) {}
         public DerivativeInstrRegistry(string val)
@@ -20593,6 +23145,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeCountryOfIssue : StringField
     {
+        public const int TAG = 1258;
+
         public DerivativeCountryOfIssue()
             :base(Tags.DerivativeCountryOfIssue) {}
         public DerivativeCountryOfIssue(string val)
@@ -20606,6 +23160,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeStateOrProvinceOfIssue : StringField
     {
+        public const int TAG = 1259;
+
         public DerivativeStateOrProvinceOfIssue()
             :base(Tags.DerivativeStateOrProvinceOfIssue) {}
         public DerivativeStateOrProvinceOfIssue(string val)
@@ -20619,6 +23175,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeLocaleOfIssue : StringField
     {
+        public const int TAG = 1260;
+
         public DerivativeLocaleOfIssue()
             :base(Tags.DerivativeLocaleOfIssue) {}
         public DerivativeLocaleOfIssue(string val)
@@ -20632,6 +23190,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeStrikePrice : DecimalField
     {
+        public const int TAG = 1261;
+
         public DerivativeStrikePrice()
             :base(Tags.DerivativeStrikePrice) {}
         public DerivativeStrikePrice(Decimal val)
@@ -20645,6 +23205,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeStrikeCurrency : StringField
     {
+        public const int TAG = 1262;
+
         public DerivativeStrikeCurrency()
             :base(Tags.DerivativeStrikeCurrency) {}
         public DerivativeStrikeCurrency(string val)
@@ -20658,6 +23220,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeStrikeMultiplier : DecimalField
     {
+        public const int TAG = 1263;
+
         public DerivativeStrikeMultiplier()
             :base(Tags.DerivativeStrikeMultiplier) {}
         public DerivativeStrikeMultiplier(Decimal val)
@@ -20671,6 +23235,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeStrikeValue : DecimalField
     {
+        public const int TAG = 1264;
+
         public DerivativeStrikeValue()
             :base(Tags.DerivativeStrikeValue) {}
         public DerivativeStrikeValue(Decimal val)
@@ -20684,6 +23250,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeOptAttribute : CharField
     {
+        public const int TAG = 1265;
+
         public DerivativeOptAttribute()
             :base(Tags.DerivativeOptAttribute) {}
         public DerivativeOptAttribute(char val)
@@ -20697,6 +23265,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeContractMultiplier : DecimalField
     {
+        public const int TAG = 1266;
+
         public DerivativeContractMultiplier()
             :base(Tags.DerivativeContractMultiplier) {}
         public DerivativeContractMultiplier(Decimal val)
@@ -20710,6 +23280,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeMinPriceIncrement : DecimalField
     {
+        public const int TAG = 1267;
+
         public DerivativeMinPriceIncrement()
             :base(Tags.DerivativeMinPriceIncrement) {}
         public DerivativeMinPriceIncrement(Decimal val)
@@ -20723,6 +23295,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeMinPriceIncrementAmount : DecimalField
     {
+        public const int TAG = 1268;
+
         public DerivativeMinPriceIncrementAmount()
             :base(Tags.DerivativeMinPriceIncrementAmount) {}
         public DerivativeMinPriceIncrementAmount(Decimal val)
@@ -20736,6 +23310,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeUnitOfMeasure : StringField
     {
+        public const int TAG = 1269;
+
         public DerivativeUnitOfMeasure()
             :base(Tags.DerivativeUnitOfMeasure) {}
         public DerivativeUnitOfMeasure(string val)
@@ -20749,6 +23325,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeUnitOfMeasureQty : DecimalField
     {
+        public const int TAG = 1270;
+
         public DerivativeUnitOfMeasureQty()
             :base(Tags.DerivativeUnitOfMeasureQty) {}
         public DerivativeUnitOfMeasureQty(Decimal val)
@@ -20762,6 +23340,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeTimeUnit : StringField
     {
+        public const int TAG = 1271;
+
         public DerivativeTimeUnit()
             :base(Tags.DerivativeTimeUnit) {}
         public DerivativeTimeUnit(string val)
@@ -20775,6 +23355,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityExchange : StringField
     {
+        public const int TAG = 1272;
+
         public DerivativeSecurityExchange()
             :base(Tags.DerivativeSecurityExchange) {}
         public DerivativeSecurityExchange(string val)
@@ -20788,6 +23370,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativePositionLimit : IntField
     {
+        public const int TAG = 1273;
+
         public DerivativePositionLimit()
             :base(Tags.DerivativePositionLimit) {}
         public DerivativePositionLimit(int val)
@@ -20801,6 +23385,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeNTPositionLimit : IntField
     {
+        public const int TAG = 1274;
+
         public DerivativeNTPositionLimit()
             :base(Tags.DerivativeNTPositionLimit) {}
         public DerivativeNTPositionLimit(int val)
@@ -20814,6 +23400,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeIssuer : StringField
     {
+        public const int TAG = 1275;
+
         public DerivativeIssuer()
             :base(Tags.DerivativeIssuer) {}
         public DerivativeIssuer(string val)
@@ -20827,6 +23415,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeIssueDate : StringField
     {
+        public const int TAG = 1276;
+
         public DerivativeIssueDate()
             :base(Tags.DerivativeIssueDate) {}
         public DerivativeIssueDate(string val)
@@ -20840,6 +23430,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeEncodedIssuerLen : IntField
     {
+        public const int TAG = 1277;
+
         public DerivativeEncodedIssuerLen()
             :base(Tags.DerivativeEncodedIssuerLen) {}
         public DerivativeEncodedIssuerLen(int val)
@@ -20853,6 +23445,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeEncodedIssuer : StringField
     {
+        public const int TAG = 1278;
+
         public DerivativeEncodedIssuer()
             :base(Tags.DerivativeEncodedIssuer) {}
         public DerivativeEncodedIssuer(string val)
@@ -20866,6 +23460,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityDesc : StringField
     {
+        public const int TAG = 1279;
+
         public DerivativeSecurityDesc()
             :base(Tags.DerivativeSecurityDesc) {}
         public DerivativeSecurityDesc(string val)
@@ -20879,6 +23475,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeEncodedSecurityDescLen : IntField
     {
+        public const int TAG = 1280;
+
         public DerivativeEncodedSecurityDescLen()
             :base(Tags.DerivativeEncodedSecurityDescLen) {}
         public DerivativeEncodedSecurityDescLen(int val)
@@ -20892,6 +23490,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeEncodedSecurityDesc : StringField
     {
+        public const int TAG = 1281;
+
         public DerivativeEncodedSecurityDesc()
             :base(Tags.DerivativeEncodedSecurityDesc) {}
         public DerivativeEncodedSecurityDesc(string val)
@@ -20905,6 +23505,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityXMLLen : IntField
     {
+        public const int TAG = 1282;
+
         public DerivativeSecurityXMLLen()
             :base(Tags.DerivativeSecurityXMLLen) {}
         public DerivativeSecurityXMLLen(int val)
@@ -20918,6 +23520,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityXML : StringField
     {
+        public const int TAG = 1283;
+
         public DerivativeSecurityXML()
             :base(Tags.DerivativeSecurityXML) {}
         public DerivativeSecurityXML(string val)
@@ -20931,6 +23535,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityXMLSchema : StringField
     {
+        public const int TAG = 1284;
+
         public DerivativeSecurityXMLSchema()
             :base(Tags.DerivativeSecurityXMLSchema) {}
         public DerivativeSecurityXMLSchema(string val)
@@ -20944,6 +23550,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeContractSettlMonth : StringField
     {
+        public const int TAG = 1285;
+
         public DerivativeContractSettlMonth()
             :base(Tags.DerivativeContractSettlMonth) {}
         public DerivativeContractSettlMonth(string val)
@@ -20957,6 +23565,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoDerivativeEvents : IntField
     {
+        public const int TAG = 1286;
+
         public NoDerivativeEvents()
             :base(Tags.NoDerivativeEvents) {}
         public NoDerivativeEvents(int val)
@@ -20970,6 +23580,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeEventType : IntField
     {
+        public const int TAG = 1287;
+
         public DerivativeEventType()
             :base(Tags.DerivativeEventType) {}
         public DerivativeEventType(int val)
@@ -20983,6 +23595,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeEventDate : StringField
     {
+        public const int TAG = 1288;
+
         public DerivativeEventDate()
             :base(Tags.DerivativeEventDate) {}
         public DerivativeEventDate(string val)
@@ -20996,6 +23610,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeEventTime : DateTimeField
     {
+        public const int TAG = 1289;
+
         public DerivativeEventTime()
             :base(Tags.DerivativeEventTime) {}
         public DerivativeEventTime(DateTime val)
@@ -21013,6 +23629,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeEventPx : DecimalField
     {
+        public const int TAG = 1290;
+
         public DerivativeEventPx()
             :base(Tags.DerivativeEventPx) {}
         public DerivativeEventPx(Decimal val)
@@ -21026,6 +23644,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeEventText : StringField
     {
+        public const int TAG = 1291;
+
         public DerivativeEventText()
             :base(Tags.DerivativeEventText) {}
         public DerivativeEventText(string val)
@@ -21039,6 +23659,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoDerivativeInstrumentParties : IntField
     {
+        public const int TAG = 1292;
+
         public NoDerivativeInstrumentParties()
             :base(Tags.NoDerivativeInstrumentParties) {}
         public NoDerivativeInstrumentParties(int val)
@@ -21052,6 +23674,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeInstrumentPartyID : StringField
     {
+        public const int TAG = 1293;
+
         public DerivativeInstrumentPartyID()
             :base(Tags.DerivativeInstrumentPartyID) {}
         public DerivativeInstrumentPartyID(string val)
@@ -21065,6 +23689,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeInstrumentPartyIDSource : StringField
     {
+        public const int TAG = 1294;
+
         public DerivativeInstrumentPartyIDSource()
             :base(Tags.DerivativeInstrumentPartyIDSource) {}
         public DerivativeInstrumentPartyIDSource(string val)
@@ -21078,6 +23704,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeInstrumentPartyRole : IntField
     {
+        public const int TAG = 1295;
+
         public DerivativeInstrumentPartyRole()
             :base(Tags.DerivativeInstrumentPartyRole) {}
         public DerivativeInstrumentPartyRole(int val)
@@ -21091,6 +23719,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoDerivativeInstrumentPartySubIDs : IntField
     {
+        public const int TAG = 1296;
+
         public NoDerivativeInstrumentPartySubIDs()
             :base(Tags.NoDerivativeInstrumentPartySubIDs) {}
         public NoDerivativeInstrumentPartySubIDs(int val)
@@ -21104,6 +23734,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeInstrumentPartySubID : StringField
     {
+        public const int TAG = 1297;
+
         public DerivativeInstrumentPartySubID()
             :base(Tags.DerivativeInstrumentPartySubID) {}
         public DerivativeInstrumentPartySubID(string val)
@@ -21117,6 +23749,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeInstrumentPartySubIDType : IntField
     {
+        public const int TAG = 1298;
+
         public DerivativeInstrumentPartySubIDType()
             :base(Tags.DerivativeInstrumentPartySubIDType) {}
         public DerivativeInstrumentPartySubIDType(int val)
@@ -21130,6 +23764,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeExerciseStyle : CharField
     {
+        public const int TAG = 1299;
+
         public DerivativeExerciseStyle()
             :base(Tags.DerivativeExerciseStyle) {}
         public DerivativeExerciseStyle(char val)
@@ -21143,6 +23779,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MarketSegmentID : StringField
     {
+        public const int TAG = 1300;
+
         public MarketSegmentID()
             :base(Tags.MarketSegmentID) {}
         public MarketSegmentID(string val)
@@ -21156,6 +23794,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MarketID : StringField
     {
+        public const int TAG = 1301;
+
         public MarketID()
             :base(Tags.MarketID) {}
         public MarketID(string val)
@@ -21169,6 +23809,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaturityMonthYearIncrementUnits : IntField
     {
+        public const int TAG = 1302;
+
         public MaturityMonthYearIncrementUnits()
             :base(Tags.MaturityMonthYearIncrementUnits) {}
         public MaturityMonthYearIncrementUnits(int val)
@@ -21188,6 +23830,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MaturityMonthYearFormat : IntField
     {
+        public const int TAG = 1303;
+
         public MaturityMonthYearFormat()
             :base(Tags.MaturityMonthYearFormat) {}
         public MaturityMonthYearFormat(int val)
@@ -21206,6 +23850,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikeExerciseStyle : IntField
     {
+        public const int TAG = 1304;
+
         public StrikeExerciseStyle()
             :base(Tags.StrikeExerciseStyle) {}
         public StrikeExerciseStyle(int val)
@@ -21219,6 +23865,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecondaryPriceLimitType : IntField
     {
+        public const int TAG = 1305;
+
         public SecondaryPriceLimitType()
             :base(Tags.SecondaryPriceLimitType) {}
         public SecondaryPriceLimitType(int val)
@@ -21232,6 +23880,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PriceLimitType : IntField
     {
+        public const int TAG = 1306;
+
         public PriceLimitType()
             :base(Tags.PriceLimitType) {}
         public PriceLimitType(int val)
@@ -21250,6 +23900,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSecurityListRequestType : IntField
     {
+        public const int TAG = 1307;
+
         public DerivativeSecurityListRequestType()
             :base(Tags.DerivativeSecurityListRequestType) {}
         public DerivativeSecurityListRequestType(int val)
@@ -21274,6 +23926,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ExecInstValue : CharField
     {
+        public const int TAG = 1308;
+
         public ExecInstValue()
             :base(Tags.ExecInstValue) {}
         public ExecInstValue(char val)
@@ -21287,6 +23941,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoTradingSessionRules : IntField
     {
+        public const int TAG = 1309;
+
         public NoTradingSessionRules()
             :base(Tags.NoTradingSessionRules) {}
         public NoTradingSessionRules(int val)
@@ -21300,6 +23956,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoMarketSegments : IntField
     {
+        public const int TAG = 1310;
+
         public NoMarketSegments()
             :base(Tags.NoMarketSegments) {}
         public NoMarketSegments(int val)
@@ -21313,6 +23971,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoDerivativeInstrAttrib : IntField
     {
+        public const int TAG = 1311;
+
         public NoDerivativeInstrAttrib()
             :base(Tags.NoDerivativeInstrAttrib) {}
         public NoDerivativeInstrAttrib(int val)
@@ -21326,6 +23986,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNestedInstrAttrib : IntField
     {
+        public const int TAG = 1312;
+
         public NoNestedInstrAttrib()
             :base(Tags.NoNestedInstrAttrib) {}
         public NoNestedInstrAttrib(int val)
@@ -21339,6 +24001,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeInstrAttribType : IntField
     {
+        public const int TAG = 1313;
+
         public DerivativeInstrAttribType()
             :base(Tags.DerivativeInstrAttribType) {}
         public DerivativeInstrAttribType(int val)
@@ -21352,6 +24016,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeInstrAttribValue : StringField
     {
+        public const int TAG = 1314;
+
         public DerivativeInstrAttribValue()
             :base(Tags.DerivativeInstrAttribValue) {}
         public DerivativeInstrAttribValue(string val)
@@ -21365,6 +24031,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativePriceUnitOfMeasure : StringField
     {
+        public const int TAG = 1315;
+
         public DerivativePriceUnitOfMeasure()
             :base(Tags.DerivativePriceUnitOfMeasure) {}
         public DerivativePriceUnitOfMeasure(string val)
@@ -21378,6 +24046,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativePriceUnitOfMeasureQty : DecimalField
     {
+        public const int TAG = 1316;
+
         public DerivativePriceUnitOfMeasureQty()
             :base(Tags.DerivativePriceUnitOfMeasureQty) {}
         public DerivativePriceUnitOfMeasureQty(Decimal val)
@@ -21391,6 +24061,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeSettlMethod : CharField
     {
+        public const int TAG = 1317;
+
         public DerivativeSettlMethod()
             :base(Tags.DerivativeSettlMethod) {}
         public DerivativeSettlMethod(char val)
@@ -21404,6 +24076,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativePriceQuoteMethod : StringField
     {
+        public const int TAG = 1318;
+
         public DerivativePriceQuoteMethod()
             :base(Tags.DerivativePriceQuoteMethod) {}
         public DerivativePriceQuoteMethod(string val)
@@ -21417,6 +24091,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeFuturesValuationMethod : StringField
     {
+        public const int TAG = 1319;
+
         public DerivativeFuturesValuationMethod()
             :base(Tags.DerivativeFuturesValuationMethod) {}
         public DerivativeFuturesValuationMethod(string val)
@@ -21430,6 +24106,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeListMethod : IntField
     {
+        public const int TAG = 1320;
+
         public DerivativeListMethod()
             :base(Tags.DerivativeListMethod) {}
         public DerivativeListMethod(int val)
@@ -21443,6 +24121,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeCapPrice : DecimalField
     {
+        public const int TAG = 1321;
+
         public DerivativeCapPrice()
             :base(Tags.DerivativeCapPrice) {}
         public DerivativeCapPrice(Decimal val)
@@ -21456,6 +24136,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeFloorPrice : DecimalField
     {
+        public const int TAG = 1322;
+
         public DerivativeFloorPrice()
             :base(Tags.DerivativeFloorPrice) {}
         public DerivativeFloorPrice(Decimal val)
@@ -21469,6 +24151,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativePutOrCall : IntField
     {
+        public const int TAG = 1323;
+
         public DerivativePutOrCall()
             :base(Tags.DerivativePutOrCall) {}
         public DerivativePutOrCall(int val)
@@ -21482,6 +24166,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListUpdateAction : CharField
     {
+        public const int TAG = 1324;
+
         public ListUpdateAction()
             :base(Tags.ListUpdateAction) {}
         public ListUpdateAction(char val)
@@ -21495,6 +24181,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ParentMktSegmID : StringField
     {
+        public const int TAG = 1325;
+
         public ParentMktSegmID()
             :base(Tags.ParentMktSegmID) {}
         public ParentMktSegmID(string val)
@@ -21508,6 +24196,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradingSessionDesc : StringField
     {
+        public const int TAG = 1326;
+
         public TradingSessionDesc()
             :base(Tags.TradingSessionDesc) {}
         public TradingSessionDesc(string val)
@@ -21521,6 +24211,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesUpdateAction : CharField
     {
+        public const int TAG = 1327;
+
         public TradSesUpdateAction()
             :base(Tags.TradSesUpdateAction) {}
         public TradSesUpdateAction(char val)
@@ -21534,6 +24226,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RejectText : StringField
     {
+        public const int TAG = 1328;
+
         public RejectText()
             :base(Tags.RejectText) {}
         public RejectText(string val)
@@ -21547,6 +24241,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FeeMultiplier : DecimalField
     {
+        public const int TAG = 1329;
+
         public FeeMultiplier()
             :base(Tags.FeeMultiplier) {}
         public FeeMultiplier(Decimal val)
@@ -21560,6 +24256,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegSymbol : StringField
     {
+        public const int TAG = 1330;
+
         public UnderlyingLegSymbol()
             :base(Tags.UnderlyingLegSymbol) {}
         public UnderlyingLegSymbol(string val)
@@ -21573,6 +24271,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegSymbolSfx : StringField
     {
+        public const int TAG = 1331;
+
         public UnderlyingLegSymbolSfx()
             :base(Tags.UnderlyingLegSymbolSfx) {}
         public UnderlyingLegSymbolSfx(string val)
@@ -21586,6 +24286,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegSecurityID : StringField
     {
+        public const int TAG = 1332;
+
         public UnderlyingLegSecurityID()
             :base(Tags.UnderlyingLegSecurityID) {}
         public UnderlyingLegSecurityID(string val)
@@ -21599,6 +24301,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegSecurityIDSource : StringField
     {
+        public const int TAG = 1333;
+
         public UnderlyingLegSecurityIDSource()
             :base(Tags.UnderlyingLegSecurityIDSource) {}
         public UnderlyingLegSecurityIDSource(string val)
@@ -21612,6 +24316,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoUnderlyingLegSecurityAltID : IntField
     {
+        public const int TAG = 1334;
+
         public NoUnderlyingLegSecurityAltID()
             :base(Tags.NoUnderlyingLegSecurityAltID) {}
         public NoUnderlyingLegSecurityAltID(int val)
@@ -21625,6 +24331,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegSecurityAltID : StringField
     {
+        public const int TAG = 1335;
+
         public UnderlyingLegSecurityAltID()
             :base(Tags.UnderlyingLegSecurityAltID) {}
         public UnderlyingLegSecurityAltID(string val)
@@ -21638,6 +24346,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegSecurityAltIDSource : StringField
     {
+        public const int TAG = 1336;
+
         public UnderlyingLegSecurityAltIDSource()
             :base(Tags.UnderlyingLegSecurityAltIDSource) {}
         public UnderlyingLegSecurityAltIDSource(string val)
@@ -21651,6 +24361,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegSecurityType : StringField
     {
+        public const int TAG = 1337;
+
         public UnderlyingLegSecurityType()
             :base(Tags.UnderlyingLegSecurityType) {}
         public UnderlyingLegSecurityType(string val)
@@ -21664,6 +24376,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegSecuritySubType : StringField
     {
+        public const int TAG = 1338;
+
         public UnderlyingLegSecuritySubType()
             :base(Tags.UnderlyingLegSecuritySubType) {}
         public UnderlyingLegSecuritySubType(string val)
@@ -21677,6 +24391,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegMaturityMonthYear : StringField
     {
+        public const int TAG = 1339;
+
         public UnderlyingLegMaturityMonthYear()
             :base(Tags.UnderlyingLegMaturityMonthYear) {}
         public UnderlyingLegMaturityMonthYear(string val)
@@ -21690,6 +24406,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegStrikePrice : DecimalField
     {
+        public const int TAG = 1340;
+
         public UnderlyingLegStrikePrice()
             :base(Tags.UnderlyingLegStrikePrice) {}
         public UnderlyingLegStrikePrice(Decimal val)
@@ -21703,6 +24421,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegSecurityExchange : StringField
     {
+        public const int TAG = 1341;
+
         public UnderlyingLegSecurityExchange()
             :base(Tags.UnderlyingLegSecurityExchange) {}
         public UnderlyingLegSecurityExchange(string val)
@@ -21716,6 +24436,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoOfLegUnderlyings : IntField
     {
+        public const int TAG = 1342;
+
         public NoOfLegUnderlyings()
             :base(Tags.NoOfLegUnderlyings) {}
         public NoOfLegUnderlyings(int val)
@@ -21729,6 +24451,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegPutOrCall : IntField
     {
+        public const int TAG = 1343;
+
         public UnderlyingLegPutOrCall()
             :base(Tags.UnderlyingLegPutOrCall) {}
         public UnderlyingLegPutOrCall(int val)
@@ -21742,6 +24466,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegCFICode : StringField
     {
+        public const int TAG = 1344;
+
         public UnderlyingLegCFICode()
             :base(Tags.UnderlyingLegCFICode) {}
         public UnderlyingLegCFICode(string val)
@@ -21755,6 +24481,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegMaturityDate : StringField
     {
+        public const int TAG = 1345;
+
         public UnderlyingLegMaturityDate()
             :base(Tags.UnderlyingLegMaturityDate) {}
         public UnderlyingLegMaturityDate(string val)
@@ -21768,6 +24496,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplReqID : StringField
     {
+        public const int TAG = 1346;
+
         public ApplReqID()
             :base(Tags.ApplReqID) {}
         public ApplReqID(string val)
@@ -21781,6 +24511,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplReqType : IntField
     {
+        public const int TAG = 1347;
+
         public ApplReqType()
             :base(Tags.ApplReqType) {}
         public ApplReqType(int val)
@@ -21803,6 +24535,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplResponseType : IntField
     {
+        public const int TAG = 1348;
+
         public ApplResponseType()
             :base(Tags.ApplResponseType) {}
         public ApplResponseType(int val)
@@ -21821,6 +24555,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplTotalMessageCount : IntField
     {
+        public const int TAG = 1349;
+
         public ApplTotalMessageCount()
             :base(Tags.ApplTotalMessageCount) {}
         public ApplTotalMessageCount(int val)
@@ -21834,6 +24570,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplLastSeqNum : IntField
     {
+        public const int TAG = 1350;
+
         public ApplLastSeqNum()
             :base(Tags.ApplLastSeqNum) {}
         public ApplLastSeqNum(int val)
@@ -21847,6 +24585,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoApplIDs : IntField
     {
+        public const int TAG = 1351;
+
         public NoApplIDs()
             :base(Tags.NoApplIDs) {}
         public NoApplIDs(int val)
@@ -21860,6 +24600,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplResendFlag : BooleanField
     {
+        public const int TAG = 1352;
+
         public ApplResendFlag()
             :base(Tags.ApplResendFlag) {}
         public ApplResendFlag(Boolean val)
@@ -21873,6 +24615,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplResponseID : StringField
     {
+        public const int TAG = 1353;
+
         public ApplResponseID()
             :base(Tags.ApplResponseID) {}
         public ApplResponseID(string val)
@@ -21886,6 +24630,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplResponseError : IntField
     {
+        public const int TAG = 1354;
+
         public ApplResponseError()
             :base(Tags.ApplResponseError) {}
         public ApplResponseError(int val)
@@ -21904,6 +24650,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefApplID : StringField
     {
+        public const int TAG = 1355;
+
         public RefApplID()
             :base(Tags.RefApplID) {}
         public RefApplID(string val)
@@ -21917,6 +24665,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplReportID : StringField
     {
+        public const int TAG = 1356;
+
         public ApplReportID()
             :base(Tags.ApplReportID) {}
         public ApplReportID(string val)
@@ -21930,6 +24680,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefApplLastSeqNum : IntField
     {
+        public const int TAG = 1357;
+
         public RefApplLastSeqNum()
             :base(Tags.RefApplLastSeqNum) {}
         public RefApplLastSeqNum(int val)
@@ -21943,6 +24695,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegPutOrCall : IntField
     {
+        public const int TAG = 1358;
+
         public LegPutOrCall()
             :base(Tags.LegPutOrCall) {}
         public LegPutOrCall(int val)
@@ -21956,6 +24710,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedSymbolLen : IntField
     {
+        public const int TAG = 1359;
+
         public EncodedSymbolLen()
             :base(Tags.EncodedSymbolLen) {}
         public EncodedSymbolLen(int val)
@@ -21969,6 +24725,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedSymbol : StringField
     {
+        public const int TAG = 1360;
+
         public EncodedSymbol()
             :base(Tags.EncodedSymbol) {}
         public EncodedSymbol(string val)
@@ -21982,6 +24740,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoFills : IntField
     {
+        public const int TAG = 1361;
+
         public TotNoFills()
             :base(Tags.TotNoFills) {}
         public TotNoFills(int val)
@@ -21995,6 +24755,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoFills : IntField
     {
+        public const int TAG = 1362;
+
         public NoFills()
             :base(Tags.NoFills) {}
         public NoFills(int val)
@@ -22008,6 +24770,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FillExecID : StringField
     {
+        public const int TAG = 1363;
+
         public FillExecID()
             :base(Tags.FillExecID) {}
         public FillExecID(string val)
@@ -22021,6 +24785,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FillPx : DecimalField
     {
+        public const int TAG = 1364;
+
         public FillPx()
             :base(Tags.FillPx) {}
         public FillPx(Decimal val)
@@ -22034,6 +24800,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FillQty : DecimalField
     {
+        public const int TAG = 1365;
+
         public FillQty()
             :base(Tags.FillQty) {}
         public FillQty(Decimal val)
@@ -22047,6 +24815,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegAllocID : StringField
     {
+        public const int TAG = 1366;
+
         public LegAllocID()
             :base(Tags.LegAllocID) {}
         public LegAllocID(string val)
@@ -22060,6 +24830,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegAllocSettlCurrency : StringField
     {
+        public const int TAG = 1367;
+
         public LegAllocSettlCurrency()
             :base(Tags.LegAllocSettlCurrency) {}
         public LegAllocSettlCurrency(string val)
@@ -22073,6 +24845,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradSesEvent : IntField
     {
+        public const int TAG = 1368;
+
         public TradSesEvent()
             :base(Tags.TradSesEvent) {}
         public TradSesEvent(int val)
@@ -22092,6 +24866,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MassActionReportID : StringField
     {
+        public const int TAG = 1369;
+
         public MassActionReportID()
             :base(Tags.MassActionReportID) {}
         public MassActionReportID(string val)
@@ -22105,6 +24881,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNotAffectedOrders : IntField
     {
+        public const int TAG = 1370;
+
         public NoNotAffectedOrders()
             :base(Tags.NoNotAffectedOrders) {}
         public NoNotAffectedOrders(int val)
@@ -22118,6 +24896,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NotAffectedOrderID : StringField
     {
+        public const int TAG = 1371;
+
         public NotAffectedOrderID()
             :base(Tags.NotAffectedOrderID) {}
         public NotAffectedOrderID(string val)
@@ -22131,6 +24911,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NotAffOrigClOrdID : StringField
     {
+        public const int TAG = 1372;
+
         public NotAffOrigClOrdID()
             :base(Tags.NotAffOrigClOrdID) {}
         public NotAffOrigClOrdID(string val)
@@ -22144,6 +24926,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MassActionType : IntField
     {
+        public const int TAG = 1373;
+
         public MassActionType()
             :base(Tags.MassActionType) {}
         public MassActionType(int val)
@@ -22162,6 +24946,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MassActionScope : IntField
     {
+        public const int TAG = 1374;
+
         public MassActionScope()
             :base(Tags.MassActionScope) {}
         public MassActionScope(int val)
@@ -22189,6 +24975,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MassActionResponse : IntField
     {
+        public const int TAG = 1375;
+
         public MassActionResponse()
             :base(Tags.MassActionResponse) {}
         public MassActionResponse(int val)
@@ -22206,6 +24994,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MassActionRejectReason : IntField
     {
+        public const int TAG = 1376;
+
         public MassActionRejectReason()
             :base(Tags.MassActionRejectReason) {}
         public MassActionRejectReason(int val)
@@ -22234,6 +25024,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MultilegModel : IntField
     {
+        public const int TAG = 1377;
+
         public MultilegModel()
             :base(Tags.MultilegModel) {}
         public MultilegModel(int val)
@@ -22252,6 +25044,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MultilegPriceMethod : IntField
     {
+        public const int TAG = 1378;
+
         public MultilegPriceMethod()
             :base(Tags.MultilegPriceMethod) {}
         public MultilegPriceMethod(int val)
@@ -22273,6 +25067,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegVolatility : DecimalField
     {
+        public const int TAG = 1379;
+
         public LegVolatility()
             :base(Tags.LegVolatility) {}
         public LegVolatility(Decimal val)
@@ -22286,6 +25082,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DividendYield : DecimalField
     {
+        public const int TAG = 1380;
+
         public DividendYield()
             :base(Tags.DividendYield) {}
         public DividendYield(Decimal val)
@@ -22299,6 +25097,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegDividendYield : DecimalField
     {
+        public const int TAG = 1381;
+
         public LegDividendYield()
             :base(Tags.LegDividendYield) {}
         public LegDividendYield(Decimal val)
@@ -22312,6 +25112,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class CurrencyRatio : DecimalField
     {
+        public const int TAG = 1382;
+
         public CurrencyRatio()
             :base(Tags.CurrencyRatio) {}
         public CurrencyRatio(Decimal val)
@@ -22325,6 +25127,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegCurrencyRatio : DecimalField
     {
+        public const int TAG = 1383;
+
         public LegCurrencyRatio()
             :base(Tags.LegCurrencyRatio) {}
         public LegCurrencyRatio(Decimal val)
@@ -22338,6 +25142,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegExecInst : StringField
     {
+        public const int TAG = 1384;
+
         public LegExecInst()
             :base(Tags.LegExecInst) {}
         public LegExecInst(string val)
@@ -22351,6 +25157,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContingencyType : IntField
     {
+        public const int TAG = 1385;
+
         public ContingencyType()
             :base(Tags.ContingencyType) {}
         public ContingencyType(int val)
@@ -22370,6 +25178,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ListRejectReason : IntField
     {
+        public const int TAG = 1386;
+
         public ListRejectReason()
             :base(Tags.ListRejectReason) {}
         public ListRejectReason(int val)
@@ -22392,6 +25202,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoTrdRepIndicators : IntField
     {
+        public const int TAG = 1387;
+
         public NoTrdRepIndicators()
             :base(Tags.NoTrdRepIndicators) {}
         public NoTrdRepIndicators(int val)
@@ -22405,6 +25217,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TrdRepPartyRole : IntField
     {
+        public const int TAG = 1388;
+
         public TrdRepPartyRole()
             :base(Tags.TrdRepPartyRole) {}
         public TrdRepPartyRole(int val)
@@ -22418,6 +25232,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TrdRepIndicator : BooleanField
     {
+        public const int TAG = 1389;
+
         public TrdRepIndicator()
             :base(Tags.TrdRepIndicator) {}
         public TrdRepIndicator(Boolean val)
@@ -22431,6 +25247,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TradePublishIndicator : IntField
     {
+        public const int TAG = 1390;
+
         public TradePublishIndicator()
             :base(Tags.TradePublishIndicator) {}
         public TradePublishIndicator(int val)
@@ -22449,6 +25267,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegOptAttribute : CharField
     {
+        public const int TAG = 1391;
+
         public UnderlyingLegOptAttribute()
             :base(Tags.UnderlyingLegOptAttribute) {}
         public UnderlyingLegOptAttribute(char val)
@@ -22462,6 +25282,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegSecurityDesc : StringField
     {
+        public const int TAG = 1392;
+
         public UnderlyingLegSecurityDesc()
             :base(Tags.UnderlyingLegSecurityDesc) {}
         public UnderlyingLegSecurityDesc(string val)
@@ -22475,6 +25297,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MarketReqID : StringField
     {
+        public const int TAG = 1393;
+
         public MarketReqID()
             :base(Tags.MarketReqID) {}
         public MarketReqID(string val)
@@ -22488,6 +25312,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MarketReportID : StringField
     {
+        public const int TAG = 1394;
+
         public MarketReportID()
             :base(Tags.MarketReportID) {}
         public MarketReportID(string val)
@@ -22501,6 +25327,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MarketUpdateAction : CharField
     {
+        public const int TAG = 1395;
+
         public MarketUpdateAction()
             :base(Tags.MarketUpdateAction) {}
         public MarketUpdateAction(char val)
@@ -22519,6 +25347,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MarketSegmentDesc : StringField
     {
+        public const int TAG = 1396;
+
         public MarketSegmentDesc()
             :base(Tags.MarketSegmentDesc) {}
         public MarketSegmentDesc(string val)
@@ -22532,6 +25362,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedMktSegmDescLen : IntField
     {
+        public const int TAG = 1397;
+
         public EncodedMktSegmDescLen()
             :base(Tags.EncodedMktSegmDescLen) {}
         public EncodedMktSegmDescLen(int val)
@@ -22545,6 +25377,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedMktSegmDesc : StringField
     {
+        public const int TAG = 1398;
+
         public EncodedMktSegmDesc()
             :base(Tags.EncodedMktSegmDesc) {}
         public EncodedMktSegmDesc(string val)
@@ -22558,6 +25392,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplNewSeqNum : IntField
     {
+        public const int TAG = 1399;
+
         public ApplNewSeqNum()
             :base(Tags.ApplNewSeqNum) {}
         public ApplNewSeqNum(int val)
@@ -22571,6 +25407,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncryptedPasswordMethod : IntField
     {
+        public const int TAG = 1400;
+
         public EncryptedPasswordMethod()
             :base(Tags.EncryptedPasswordMethod) {}
         public EncryptedPasswordMethod(int val)
@@ -22584,6 +25422,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncryptedPasswordLen : IntField
     {
+        public const int TAG = 1401;
+
         public EncryptedPasswordLen()
             :base(Tags.EncryptedPasswordLen) {}
         public EncryptedPasswordLen(int val)
@@ -22597,6 +25437,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncryptedPassword : StringField
     {
+        public const int TAG = 1402;
+
         public EncryptedPassword()
             :base(Tags.EncryptedPassword) {}
         public EncryptedPassword(string val)
@@ -22610,6 +25452,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncryptedNewPasswordLen : IntField
     {
+        public const int TAG = 1403;
+
         public EncryptedNewPasswordLen()
             :base(Tags.EncryptedNewPasswordLen) {}
         public EncryptedNewPasswordLen(int val)
@@ -22623,6 +25467,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncryptedNewPassword : StringField
     {
+        public const int TAG = 1404;
+
         public EncryptedNewPassword()
             :base(Tags.EncryptedNewPassword) {}
         public EncryptedNewPassword(string val)
@@ -22636,6 +25482,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingLegMaturityTime : StringField
     {
+        public const int TAG = 1405;
+
         public UnderlyingLegMaturityTime()
             :base(Tags.UnderlyingLegMaturityTime) {}
         public UnderlyingLegMaturityTime(string val)
@@ -22649,6 +25497,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefApplExtID : IntField
     {
+        public const int TAG = 1406;
+
         public RefApplExtID()
             :base(Tags.RefApplExtID) {}
         public RefApplExtID(int val)
@@ -22662,6 +25512,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DefaultApplExtID : IntField
     {
+        public const int TAG = 1407;
+
         public DefaultApplExtID()
             :base(Tags.DefaultApplExtID) {}
         public DefaultApplExtID(int val)
@@ -22675,6 +25527,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DefaultCstmApplVerID : StringField
     {
+        public const int TAG = 1408;
+
         public DefaultCstmApplVerID()
             :base(Tags.DefaultCstmApplVerID) {}
         public DefaultCstmApplVerID(string val)
@@ -22688,6 +25542,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SessionStatus : IntField
     {
+        public const int TAG = 1409;
+
         public SessionStatus()
             :base(Tags.SessionStatus) {}
         public SessionStatus(int val)
@@ -22712,6 +25568,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DefaultVerIndicator : BooleanField
     {
+        public const int TAG = 1410;
+
         public DefaultVerIndicator()
             :base(Tags.DefaultVerIndicator) {}
         public DefaultVerIndicator(Boolean val)
@@ -22725,6 +25583,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested4PartySubIDType : IntField
     {
+        public const int TAG = 1411;
+
         public Nested4PartySubIDType()
             :base(Tags.Nested4PartySubIDType) {}
         public Nested4PartySubIDType(int val)
@@ -22738,6 +25598,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested4PartySubID : StringField
     {
+        public const int TAG = 1412;
+
         public Nested4PartySubID()
             :base(Tags.Nested4PartySubID) {}
         public Nested4PartySubID(string val)
@@ -22751,6 +25613,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNested4PartySubIDs : IntField
     {
+        public const int TAG = 1413;
+
         public NoNested4PartySubIDs()
             :base(Tags.NoNested4PartySubIDs) {}
         public NoNested4PartySubIDs(int val)
@@ -22764,6 +25628,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNested4PartyIDs : IntField
     {
+        public const int TAG = 1414;
+
         public NoNested4PartyIDs()
             :base(Tags.NoNested4PartyIDs) {}
         public NoNested4PartyIDs(int val)
@@ -22777,6 +25643,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested4PartyID : StringField
     {
+        public const int TAG = 1415;
+
         public Nested4PartyID()
             :base(Tags.Nested4PartyID) {}
         public Nested4PartyID(string val)
@@ -22790,6 +25658,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested4PartyIDSource : CharField
     {
+        public const int TAG = 1416;
+
         public Nested4PartyIDSource()
             :base(Tags.Nested4PartyIDSource) {}
         public Nested4PartyIDSource(char val)
@@ -22803,6 +25673,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Nested4PartyRole : IntField
     {
+        public const int TAG = 1417;
+
         public Nested4PartyRole()
             :base(Tags.Nested4PartyRole) {}
         public Nested4PartyRole(int val)
@@ -22816,6 +25688,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegLastQty : DecimalField
     {
+        public const int TAG = 1418;
+
         public LegLastQty()
             :base(Tags.LegLastQty) {}
         public LegLastQty(Decimal val)
@@ -22829,6 +25703,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingExerciseStyle : IntField
     {
+        public const int TAG = 1419;
+
         public UnderlyingExerciseStyle()
             :base(Tags.UnderlyingExerciseStyle) {}
         public UnderlyingExerciseStyle(int val)
@@ -22842,6 +25718,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegExerciseStyle : IntField
     {
+        public const int TAG = 1420;
+
         public LegExerciseStyle()
             :base(Tags.LegExerciseStyle) {}
         public LegExerciseStyle(int val)
@@ -22855,6 +25733,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegPriceUnitOfMeasure : StringField
     {
+        public const int TAG = 1421;
+
         public LegPriceUnitOfMeasure()
             :base(Tags.LegPriceUnitOfMeasure) {}
         public LegPriceUnitOfMeasure(string val)
@@ -22868,6 +25748,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegPriceUnitOfMeasureQty : DecimalField
     {
+        public const int TAG = 1422;
+
         public LegPriceUnitOfMeasureQty()
             :base(Tags.LegPriceUnitOfMeasureQty) {}
         public LegPriceUnitOfMeasureQty(Decimal val)
@@ -22881,6 +25763,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingUnitOfMeasureQty : DecimalField
     {
+        public const int TAG = 1423;
+
         public UnderlyingUnitOfMeasureQty()
             :base(Tags.UnderlyingUnitOfMeasureQty) {}
         public UnderlyingUnitOfMeasureQty(Decimal val)
@@ -22894,6 +25778,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingPriceUnitOfMeasure : StringField
     {
+        public const int TAG = 1424;
+
         public UnderlyingPriceUnitOfMeasure()
             :base(Tags.UnderlyingPriceUnitOfMeasure) {}
         public UnderlyingPriceUnitOfMeasure(string val)
@@ -22907,6 +25793,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingPriceUnitOfMeasureQty : DecimalField
     {
+        public const int TAG = 1425;
+
         public UnderlyingPriceUnitOfMeasureQty()
             :base(Tags.UnderlyingPriceUnitOfMeasureQty) {}
         public UnderlyingPriceUnitOfMeasureQty(Decimal val)
@@ -22920,6 +25808,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ApplReportType : IntField
     {
+        public const int TAG = 1426;
+
         public ApplReportType()
             :base(Tags.ApplReportType) {}
         public ApplReportType(int val)
@@ -22939,6 +25829,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class HaltReasonInt : IntField
     {
+        public const int TAG = 327;
+
         public HaltReasonInt()
             :base(Tags.HaltReasonInt) {}
         public HaltReasonInt(int val)
@@ -22960,6 +25852,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideLastQty : IntField
     {
+        public const int TAG = 1009;
+
         public SideLastQty()
             :base(Tags.SideLastQty) {}
         public SideLastQty(int val)
@@ -22973,6 +25867,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingInstrumentPartyID : StringField
     {
+        public const int TAG = 1059;
+
         public UnderlyingInstrumentPartyID()
             :base(Tags.UnderlyingInstrumentPartyID) {}
         public UnderlyingInstrumentPartyID(string val)
@@ -22986,6 +25882,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingInstrumentPartyIDSource : CharField
     {
+        public const int TAG = 1060;
+
         public UnderlyingInstrumentPartyIDSource()
             :base(Tags.UnderlyingInstrumentPartyIDSource) {}
         public UnderlyingInstrumentPartyIDSource(char val)
@@ -22999,6 +25897,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingInstrumentPartyRole : IntField
     {
+        public const int TAG = 1061;
+
         public UnderlyingInstrumentPartyRole()
             :base(Tags.UnderlyingInstrumentPartyRole) {}
         public UnderlyingInstrumentPartyRole(int val)
@@ -23012,6 +25912,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingInstrumentPartySubID : StringField
     {
+        public const int TAG = 1063;
+
         public UnderlyingInstrumentPartySubID()
             :base(Tags.UnderlyingInstrumentPartySubID) {}
         public UnderlyingInstrumentPartySubID(string val)
@@ -23025,6 +25927,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingInstrumentPartySubIDType : IntField
     {
+        public const int TAG = 1064;
+
         public UnderlyingInstrumentPartySubIDType()
             :base(Tags.UnderlyingInstrumentPartySubIDType) {}
         public UnderlyingInstrumentPartySubIDType(int val)
@@ -23038,6 +25942,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OptPayoutAmount : DecimalField
     {
+        public const int TAG = 1195;
+
         public OptPayoutAmount()
             :base(Tags.OptPayoutAmount) {}
         public OptPayoutAmount(Decimal val)
@@ -23051,6 +25957,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ValuationMethod : StringField
     {
+        public const int TAG = 1197;
+
         public ValuationMethod()
             :base(Tags.ValuationMethod) {}
         public ValuationMethod(string val)
@@ -23071,6 +25979,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeValuationMethod : StringField
     {
+        public const int TAG = 1319;
+
         public DerivativeValuationMethod()
             :base(Tags.DerivativeValuationMethod) {}
         public DerivativeValuationMethod(string val)
@@ -23084,6 +25994,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideExecID : StringField
     {
+        public const int TAG = 1427;
+
         public SideExecID()
             :base(Tags.SideExecID) {}
         public SideExecID(string val)
@@ -23097,6 +26009,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderDelay : IntField
     {
+        public const int TAG = 1428;
+
         public OrderDelay()
             :base(Tags.OrderDelay) {}
         public OrderDelay(int val)
@@ -23110,6 +26024,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrderDelayUnit : IntField
     {
+        public const int TAG = 1429;
+
         public OrderDelayUnit()
             :base(Tags.OrderDelayUnit) {}
         public OrderDelayUnit(int val)
@@ -23137,6 +26053,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class VenueType : CharField
     {
+        public const int TAG = 1430;
+
         public VenueType()
             :base(Tags.VenueType) {}
         public VenueType(char val)
@@ -23155,6 +26073,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefOrdIDReason : IntField
     {
+        public const int TAG = 1431;
+
         public RefOrdIDReason()
             :base(Tags.RefOrdIDReason) {}
         public RefOrdIDReason(int val)
@@ -23173,6 +26093,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OrigCustOrderCapacity : IntField
     {
+        public const int TAG = 1432;
+
         public OrigCustOrderCapacity()
             :base(Tags.OrigCustOrderCapacity) {}
         public OrigCustOrderCapacity(int val)
@@ -23192,6 +26114,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RefApplReqID : StringField
     {
+        public const int TAG = 1433;
+
         public RefApplReqID()
             :base(Tags.RefApplReqID) {}
         public RefApplReqID(string val)
@@ -23205,6 +26129,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ModelType : IntField
     {
+        public const int TAG = 1434;
+
         public ModelType()
             :base(Tags.ModelType) {}
         public ModelType(int val)
@@ -23222,6 +26148,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContractMultiplierUnit : IntField
     {
+        public const int TAG = 1435;
+
         public ContractMultiplierUnit()
             :base(Tags.ContractMultiplierUnit) {}
         public ContractMultiplierUnit(int val)
@@ -23240,6 +26168,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegContractMultiplierUnit : IntField
     {
+        public const int TAG = 1436;
+
         public LegContractMultiplierUnit()
             :base(Tags.LegContractMultiplierUnit) {}
         public LegContractMultiplierUnit(int val)
@@ -23253,6 +26183,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingContractMultiplierUnit : IntField
     {
+        public const int TAG = 1437;
+
         public UnderlyingContractMultiplierUnit()
             :base(Tags.UnderlyingContractMultiplierUnit) {}
         public UnderlyingContractMultiplierUnit(int val)
@@ -23266,6 +26198,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeContractMultiplierUnit : IntField
     {
+        public const int TAG = 1438;
+
         public DerivativeContractMultiplierUnit()
             :base(Tags.DerivativeContractMultiplierUnit) {}
         public DerivativeContractMultiplierUnit(int val)
@@ -23279,6 +26213,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FlowScheduleType : IntField
     {
+        public const int TAG = 1439;
+
         public FlowScheduleType()
             :base(Tags.FlowScheduleType) {}
         public FlowScheduleType(int val)
@@ -23299,6 +26235,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LegFlowScheduleType : IntField
     {
+        public const int TAG = 1440;
+
         public LegFlowScheduleType()
             :base(Tags.LegFlowScheduleType) {}
         public LegFlowScheduleType(int val)
@@ -23312,6 +26250,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingFlowScheduleType : IntField
     {
+        public const int TAG = 1441;
+
         public UnderlyingFlowScheduleType()
             :base(Tags.UnderlyingFlowScheduleType) {}
         public UnderlyingFlowScheduleType(int val)
@@ -23325,6 +26265,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DerivativeFlowScheduleType : IntField
     {
+        public const int TAG = 1442;
+
         public DerivativeFlowScheduleType()
             :base(Tags.DerivativeFlowScheduleType) {}
         public DerivativeFlowScheduleType(int val)
@@ -23338,6 +26280,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class FillLiquidityInd : IntField
     {
+        public const int TAG = 1443;
+
         public FillLiquidityInd()
             :base(Tags.FillLiquidityInd) {}
         public FillLiquidityInd(int val)
@@ -23351,6 +26295,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SideLiquidityInd : IntField
     {
+        public const int TAG = 1444;
+
         public SideLiquidityInd()
             :base(Tags.SideLiquidityInd) {}
         public SideLiquidityInd(int val)
@@ -23364,6 +26310,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRateSources : IntField
     {
+        public const int TAG = 1445;
+
         public NoRateSources()
             :base(Tags.NoRateSources) {}
         public NoRateSources(int val)
@@ -23377,6 +26325,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RateSource : IntField
     {
+        public const int TAG = 1446;
+
         public RateSource()
             :base(Tags.RateSource) {}
         public RateSource(int val)
@@ -23396,6 +26346,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RateSourceType : IntField
     {
+        public const int TAG = 1447;
+
         public RateSourceType()
             :base(Tags.RateSourceType) {}
         public RateSourceType(int val)
@@ -23413,6 +26365,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ReferencePage : StringField
     {
+        public const int TAG = 1448;
+
         public ReferencePage()
             :base(Tags.ReferencePage) {}
         public ReferencePage(string val)
@@ -23426,6 +26380,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RestructuringType : StringField
     {
+        public const int TAG = 1449;
+
         public RestructuringType()
             :base(Tags.RestructuringType) {}
         public RestructuringType(string val)
@@ -23445,6 +26401,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class Seniority : StringField
     {
+        public const int TAG = 1450;
+
         public Seniority()
             :base(Tags.Seniority) {}
         public Seniority(string val)
@@ -23463,6 +26421,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NotionalPercentageOutstanding : DecimalField
     {
+        public const int TAG = 1451;
+
         public NotionalPercentageOutstanding()
             :base(Tags.NotionalPercentageOutstanding) {}
         public NotionalPercentageOutstanding(Decimal val)
@@ -23476,6 +26436,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OriginalNotionalPercentageOutstanding : DecimalField
     {
+        public const int TAG = 1452;
+
         public OriginalNotionalPercentageOutstanding()
             :base(Tags.OriginalNotionalPercentageOutstanding) {}
         public OriginalNotionalPercentageOutstanding(Decimal val)
@@ -23489,6 +26451,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingRestructuringType : StringField
     {
+        public const int TAG = 1453;
+
         public UnderlyingRestructuringType()
             :base(Tags.UnderlyingRestructuringType) {}
         public UnderlyingRestructuringType(string val)
@@ -23502,6 +26466,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingSeniority : StringField
     {
+        public const int TAG = 1454;
+
         public UnderlyingSeniority()
             :base(Tags.UnderlyingSeniority) {}
         public UnderlyingSeniority(string val)
@@ -23515,6 +26481,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingNotionalPercentageOutstanding : DecimalField
     {
+        public const int TAG = 1455;
+
         public UnderlyingNotionalPercentageOutstanding()
             :base(Tags.UnderlyingNotionalPercentageOutstanding) {}
         public UnderlyingNotionalPercentageOutstanding(Decimal val)
@@ -23528,6 +26496,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingOriginalNotionalPercentageOutstanding : DecimalField
     {
+        public const int TAG = 1456;
+
         public UnderlyingOriginalNotionalPercentageOutstanding()
             :base(Tags.UnderlyingOriginalNotionalPercentageOutstanding) {}
         public UnderlyingOriginalNotionalPercentageOutstanding(Decimal val)
@@ -23541,6 +26511,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class AttachmentPoint : DecimalField
     {
+        public const int TAG = 1457;
+
         public AttachmentPoint()
             :base(Tags.AttachmentPoint) {}
         public AttachmentPoint(Decimal val)
@@ -23554,6 +26526,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class DetachmentPoint : DecimalField
     {
+        public const int TAG = 1458;
+
         public DetachmentPoint()
             :base(Tags.DetachmentPoint) {}
         public DetachmentPoint(Decimal val)
@@ -23567,6 +26541,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingAttachmentPoint : DecimalField
     {
+        public const int TAG = 1459;
+
         public UnderlyingAttachmentPoint()
             :base(Tags.UnderlyingAttachmentPoint) {}
         public UnderlyingAttachmentPoint(Decimal val)
@@ -23580,6 +26556,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingDetachmentPoint : DecimalField
     {
+        public const int TAG = 1460;
+
         public UnderlyingDetachmentPoint()
             :base(Tags.UnderlyingDetachmentPoint) {}
         public UnderlyingDetachmentPoint(Decimal val)
@@ -23593,6 +26571,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoTargetPartyIDs : IntField
     {
+        public const int TAG = 1461;
+
         public NoTargetPartyIDs()
             :base(Tags.NoTargetPartyIDs) {}
         public NoTargetPartyIDs(int val)
@@ -23606,6 +26586,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TargetPartyID : StringField
     {
+        public const int TAG = 1462;
+
         public TargetPartyID()
             :base(Tags.TargetPartyID) {}
         public TargetPartyID(string val)
@@ -23619,6 +26601,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TargetPartyIDSource : CharField
     {
+        public const int TAG = 1463;
+
         public TargetPartyIDSource()
             :base(Tags.TargetPartyIDSource) {}
         public TargetPartyIDSource(char val)
@@ -23632,6 +26616,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TargetPartyRole : IntField
     {
+        public const int TAG = 1464;
+
         public TargetPartyRole()
             :base(Tags.TargetPartyRole) {}
         public TargetPartyRole(int val)
@@ -23645,6 +26631,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityListID : StringField
     {
+        public const int TAG = 1465;
+
         public SecurityListID()
             :base(Tags.SecurityListID) {}
         public SecurityListID(string val)
@@ -23658,6 +26646,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityListRefID : StringField
     {
+        public const int TAG = 1466;
+
         public SecurityListRefID()
             :base(Tags.SecurityListRefID) {}
         public SecurityListRefID(string val)
@@ -23671,6 +26661,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityListDesc : StringField
     {
+        public const int TAG = 1467;
+
         public SecurityListDesc()
             :base(Tags.SecurityListDesc) {}
         public SecurityListDesc(string val)
@@ -23684,6 +26676,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedSecurityListDescLen : IntField
     {
+        public const int TAG = 1468;
+
         public EncodedSecurityListDescLen()
             :base(Tags.EncodedSecurityListDescLen) {}
         public EncodedSecurityListDescLen(int val)
@@ -23697,6 +26691,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class EncodedSecurityListDesc : StringField
     {
+        public const int TAG = 1469;
+
         public EncodedSecurityListDesc()
             :base(Tags.EncodedSecurityListDesc) {}
         public EncodedSecurityListDesc(string val)
@@ -23710,6 +26706,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityListType : IntField
     {
+        public const int TAG = 1470;
+
         public SecurityListType()
             :base(Tags.SecurityListType) {}
         public SecurityListType(int val)
@@ -23729,6 +26727,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class SecurityListTypeSource : IntField
     {
+        public const int TAG = 1471;
+
         public SecurityListTypeSource()
             :base(Tags.SecurityListTypeSource) {}
         public SecurityListTypeSource(int val)
@@ -23747,6 +26747,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NewsID : StringField
     {
+        public const int TAG = 1472;
+
         public NewsID()
             :base(Tags.NewsID) {}
         public NewsID(string val)
@@ -23760,6 +26762,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NewsCategory : IntField
     {
+        public const int TAG = 1473;
+
         public NewsCategory()
             :base(Tags.NewsCategory) {}
         public NewsCategory(int val)
@@ -23780,6 +26784,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class LanguageCode : StringField
     {
+        public const int TAG = 1474;
+
         public LanguageCode()
             :base(Tags.LanguageCode) {}
         public LanguageCode(string val)
@@ -23793,6 +26799,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoNewsRefIDs : IntField
     {
+        public const int TAG = 1475;
+
         public NoNewsRefIDs()
             :base(Tags.NoNewsRefIDs) {}
         public NoNewsRefIDs(int val)
@@ -23806,6 +26814,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NewsRefID : StringField
     {
+        public const int TAG = 1476;
+
         public NewsRefID()
             :base(Tags.NewsRefID) {}
         public NewsRefID(string val)
@@ -23819,6 +26829,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NewsRefType : IntField
     {
+        public const int TAG = 1477;
+
         public NewsRefType()
             :base(Tags.NewsRefType) {}
         public NewsRefType(int val)
@@ -23837,6 +26849,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikePriceDeterminationMethod : IntField
     {
+        public const int TAG = 1478;
+
         public StrikePriceDeterminationMethod()
             :base(Tags.StrikePriceDeterminationMethod) {}
         public StrikePriceDeterminationMethod(int val)
@@ -23856,6 +26870,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikePriceBoundaryMethod : IntField
     {
+        public const int TAG = 1479;
+
         public StrikePriceBoundaryMethod()
             :base(Tags.StrikePriceBoundaryMethod) {}
         public StrikePriceBoundaryMethod(int val)
@@ -23876,6 +26892,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StrikePriceBoundaryPrecision : DecimalField
     {
+        public const int TAG = 1480;
+
         public StrikePriceBoundaryPrecision()
             :base(Tags.StrikePriceBoundaryPrecision) {}
         public StrikePriceBoundaryPrecision(Decimal val)
@@ -23889,6 +26907,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class UnderlyingPriceDeterminationMethod : IntField
     {
+        public const int TAG = 1481;
+
         public UnderlyingPriceDeterminationMethod()
             :base(Tags.UnderlyingPriceDeterminationMethod) {}
         public UnderlyingPriceDeterminationMethod(int val)
@@ -23908,6 +26928,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class OptPayoutType : IntField
     {
+        public const int TAG = 1482;
+
         public OptPayoutType()
             :base(Tags.OptPayoutType) {}
         public OptPayoutType(int val)
@@ -23926,6 +26948,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoComplexEvents : IntField
     {
+        public const int TAG = 1483;
+
         public NoComplexEvents()
             :base(Tags.NoComplexEvents) {}
         public NoComplexEvents(int val)
@@ -23939,6 +26963,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexEventType : IntField
     {
+        public const int TAG = 1484;
+
         public ComplexEventType()
             :base(Tags.ComplexEventType) {}
         public ComplexEventType(int val)
@@ -23963,6 +26989,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexOptPayoutAmount : DecimalField
     {
+        public const int TAG = 1485;
+
         public ComplexOptPayoutAmount()
             :base(Tags.ComplexOptPayoutAmount) {}
         public ComplexOptPayoutAmount(Decimal val)
@@ -23976,6 +27004,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexEventPrice : DecimalField
     {
+        public const int TAG = 1486;
+
         public ComplexEventPrice()
             :base(Tags.ComplexEventPrice) {}
         public ComplexEventPrice(Decimal val)
@@ -23989,6 +27019,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexEventPriceBoundaryMethod : IntField
     {
+        public const int TAG = 1487;
+
         public ComplexEventPriceBoundaryMethod()
             :base(Tags.ComplexEventPriceBoundaryMethod) {}
         public ComplexEventPriceBoundaryMethod(int val)
@@ -24009,6 +27041,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexEventPriceBoundaryPrecision : DecimalField
     {
+        public const int TAG = 1488;
+
         public ComplexEventPriceBoundaryPrecision()
             :base(Tags.ComplexEventPriceBoundaryPrecision) {}
         public ComplexEventPriceBoundaryPrecision(Decimal val)
@@ -24022,6 +27056,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexEventPriceTimeType : IntField
     {
+        public const int TAG = 1489;
+
         public ComplexEventPriceTimeType()
             :base(Tags.ComplexEventPriceTimeType) {}
         public ComplexEventPriceTimeType(int val)
@@ -24040,6 +27076,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexEventCondition : IntField
     {
+        public const int TAG = 1490;
+
         public ComplexEventCondition()
             :base(Tags.ComplexEventCondition) {}
         public ComplexEventCondition(int val)
@@ -24057,6 +27095,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoComplexEventDates : IntField
     {
+        public const int TAG = 1491;
+
         public NoComplexEventDates()
             :base(Tags.NoComplexEventDates) {}
         public NoComplexEventDates(int val)
@@ -24070,6 +27110,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexEventStartDate : DateTimeField
     {
+        public const int TAG = 1492;
+
         public ComplexEventStartDate()
             :base(Tags.ComplexEventStartDate) {}
         public ComplexEventStartDate(DateTime val)
@@ -24087,6 +27129,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexEventEndDate : DateTimeField
     {
+        public const int TAG = 1493;
+
         public ComplexEventEndDate()
             :base(Tags.ComplexEventEndDate) {}
         public ComplexEventEndDate(DateTime val)
@@ -24104,6 +27148,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoComplexEventTimes : IntField
     {
+        public const int TAG = 1494;
+
         public NoComplexEventTimes()
             :base(Tags.NoComplexEventTimes) {}
         public NoComplexEventTimes(int val)
@@ -24117,6 +27163,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexEventStartTime : TimeOnlyField
     {
+        public const int TAG = 1495;
+
         public ComplexEventStartTime()
             :base(Tags.ComplexEventStartTime) {}
         public ComplexEventStartTime(DateTime val)
@@ -24134,6 +27182,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ComplexEventEndTime : TimeOnlyField
     {
+        public const int TAG = 1496;
+
         public ComplexEventEndTime()
             :base(Tags.ComplexEventEndTime) {}
         public ComplexEventEndTime(DateTime val)
@@ -24151,6 +27201,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StreamAsgnReqID : StringField
     {
+        public const int TAG = 1497;
+
         public StreamAsgnReqID()
             :base(Tags.StreamAsgnReqID) {}
         public StreamAsgnReqID(string val)
@@ -24164,6 +27216,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StreamAsgnReqType : IntField
     {
+        public const int TAG = 1498;
+
         public StreamAsgnReqType()
             :base(Tags.StreamAsgnReqType) {}
         public StreamAsgnReqType(int val)
@@ -24181,6 +27235,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoAsgnReqs : IntField
     {
+        public const int TAG = 1499;
+
         public NoAsgnReqs()
             :base(Tags.NoAsgnReqs) {}
         public NoAsgnReqs(int val)
@@ -24194,6 +27250,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class MDStreamID : StringField
     {
+        public const int TAG = 1500;
+
         public MDStreamID()
             :base(Tags.MDStreamID) {}
         public MDStreamID(string val)
@@ -24207,6 +27265,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StreamAsgnRptID : StringField
     {
+        public const int TAG = 1501;
+
         public StreamAsgnRptID()
             :base(Tags.StreamAsgnRptID) {}
         public StreamAsgnRptID(string val)
@@ -24220,6 +27280,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StreamAsgnRejReason : IntField
     {
+        public const int TAG = 1502;
+
         public StreamAsgnRejReason()
             :base(Tags.StreamAsgnRejReason) {}
         public StreamAsgnRejReason(int val)
@@ -24240,6 +27302,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StreamAsgnAckType : IntField
     {
+        public const int TAG = 1503;
+
         public StreamAsgnAckType()
             :base(Tags.StreamAsgnAckType) {}
         public StreamAsgnAckType(int val)
@@ -24257,6 +27321,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelSymTransactTime : DateTimeField
     {
+        public const int TAG = 1504;
+
         public RelSymTransactTime()
             :base(Tags.RelSymTransactTime) {}
         public RelSymTransactTime(DateTime val)
@@ -24274,6 +27340,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyDetailsListRequestID : StringField
     {
+        public const int TAG = 1505;
+
         public PartyDetailsListRequestID()
             :base(Tags.PartyDetailsListRequestID) {}
         public PartyDetailsListRequestID(string val)
@@ -24287,6 +27355,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoPartyListResponseTypes : IntField
     {
+        public const int TAG = 1506;
+
         public NoPartyListResponseTypes()
             :base(Tags.NoPartyListResponseTypes) {}
         public NoPartyListResponseTypes(int val)
@@ -24300,6 +27370,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyListResponseType : IntField
     {
+        public const int TAG = 1507;
+
         public PartyListResponseType()
             :base(Tags.PartyListResponseType) {}
         public PartyListResponseType(int val)
@@ -24319,6 +27391,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRequestedPartyRoles : IntField
     {
+        public const int TAG = 1508;
+
         public NoRequestedPartyRoles()
             :base(Tags.NoRequestedPartyRoles) {}
         public NoRequestedPartyRoles(int val)
@@ -24332,6 +27406,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RequestedPartyRole : IntField
     {
+        public const int TAG = 1509;
+
         public RequestedPartyRole()
             :base(Tags.RequestedPartyRole) {}
         public RequestedPartyRole(int val)
@@ -24345,6 +27421,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyDetailsListReportID : StringField
     {
+        public const int TAG = 1510;
+
         public PartyDetailsListReportID()
             :base(Tags.PartyDetailsListReportID) {}
         public PartyDetailsListReportID(string val)
@@ -24358,6 +27436,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyDetailsRequestResult : IntField
     {
+        public const int TAG = 1511;
+
         public PartyDetailsRequestResult()
             :base(Tags.PartyDetailsRequestResult) {}
         public PartyDetailsRequestResult(int val)
@@ -24381,6 +27461,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class TotNoPartyList : IntField
     {
+        public const int TAG = 1512;
+
         public TotNoPartyList()
             :base(Tags.TotNoPartyList) {}
         public TotNoPartyList(int val)
@@ -24394,6 +27476,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoPartyList : IntField
     {
+        public const int TAG = 1513;
+
         public NoPartyList()
             :base(Tags.NoPartyList) {}
         public NoPartyList(int val)
@@ -24407,6 +27491,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoPartyRelationships : IntField
     {
+        public const int TAG = 1514;
+
         public NoPartyRelationships()
             :base(Tags.NoPartyRelationships) {}
         public NoPartyRelationships(int val)
@@ -24420,6 +27506,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyRelationship : IntField
     {
+        public const int TAG = 1515;
+
         public PartyRelationship()
             :base(Tags.PartyRelationship) {}
         public PartyRelationship(int val)
@@ -24472,6 +27560,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoPartyAltIDs : IntField
     {
+        public const int TAG = 1516;
+
         public NoPartyAltIDs()
             :base(Tags.NoPartyAltIDs) {}
         public NoPartyAltIDs(int val)
@@ -24485,6 +27575,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyAltID : StringField
     {
+        public const int TAG = 1517;
+
         public PartyAltID()
             :base(Tags.PartyAltID) {}
         public PartyAltID(string val)
@@ -24498,6 +27590,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyAltIDSource : CharField
     {
+        public const int TAG = 1518;
+
         public PartyAltIDSource()
             :base(Tags.PartyAltIDSource) {}
         public PartyAltIDSource(char val)
@@ -24511,6 +27605,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoPartyAltSubIDs : IntField
     {
+        public const int TAG = 1519;
+
         public NoPartyAltSubIDs()
             :base(Tags.NoPartyAltSubIDs) {}
         public NoPartyAltSubIDs(int val)
@@ -24524,6 +27620,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyAltSubID : StringField
     {
+        public const int TAG = 1520;
+
         public PartyAltSubID()
             :base(Tags.PartyAltSubID) {}
         public PartyAltSubID(string val)
@@ -24537,6 +27635,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class PartyAltSubIDType : IntField
     {
+        public const int TAG = 1521;
+
         public PartyAltSubIDType()
             :base(Tags.PartyAltSubIDType) {}
         public PartyAltSubIDType(int val)
@@ -24550,6 +27650,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoContextPartyIDs : IntField
     {
+        public const int TAG = 1522;
+
         public NoContextPartyIDs()
             :base(Tags.NoContextPartyIDs) {}
         public NoContextPartyIDs(int val)
@@ -24563,6 +27665,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContextPartyID : StringField
     {
+        public const int TAG = 1523;
+
         public ContextPartyID()
             :base(Tags.ContextPartyID) {}
         public ContextPartyID(string val)
@@ -24576,6 +27680,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContextPartyIDSource : CharField
     {
+        public const int TAG = 1524;
+
         public ContextPartyIDSource()
             :base(Tags.ContextPartyIDSource) {}
         public ContextPartyIDSource(char val)
@@ -24589,6 +27695,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContextPartyRole : IntField
     {
+        public const int TAG = 1525;
+
         public ContextPartyRole()
             :base(Tags.ContextPartyRole) {}
         public ContextPartyRole(int val)
@@ -24602,6 +27710,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoContextPartySubIDs : IntField
     {
+        public const int TAG = 1526;
+
         public NoContextPartySubIDs()
             :base(Tags.NoContextPartySubIDs) {}
         public NoContextPartySubIDs(int val)
@@ -24615,6 +27725,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContextPartySubID : StringField
     {
+        public const int TAG = 1527;
+
         public ContextPartySubID()
             :base(Tags.ContextPartySubID) {}
         public ContextPartySubID(string val)
@@ -24628,6 +27740,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class ContextPartySubIDType : IntField
     {
+        public const int TAG = 1528;
+
         public ContextPartySubIDType()
             :base(Tags.ContextPartySubIDType) {}
         public ContextPartySubIDType(int val)
@@ -24641,6 +27755,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRiskLimits : IntField
     {
+        public const int TAG = 1529;
+
         public NoRiskLimits()
             :base(Tags.NoRiskLimits) {}
         public NoRiskLimits(int val)
@@ -24654,6 +27770,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskLimitType : IntField
     {
+        public const int TAG = 1530;
+
         public RiskLimitType()
             :base(Tags.RiskLimitType) {}
         public RiskLimitType(int val)
@@ -24674,6 +27792,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskLimitAmount : DecimalField
     {
+        public const int TAG = 1531;
+
         public RiskLimitAmount()
             :base(Tags.RiskLimitAmount) {}
         public RiskLimitAmount(Decimal val)
@@ -24687,6 +27807,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskLimitCurrency : StringField
     {
+        public const int TAG = 1532;
+
         public RiskLimitCurrency()
             :base(Tags.RiskLimitCurrency) {}
         public RiskLimitCurrency(string val)
@@ -24700,6 +27822,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskLimitPlatform : StringField
     {
+        public const int TAG = 1533;
+
         public RiskLimitPlatform()
             :base(Tags.RiskLimitPlatform) {}
         public RiskLimitPlatform(string val)
@@ -24713,6 +27837,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRiskInstruments : IntField
     {
+        public const int TAG = 1534;
+
         public NoRiskInstruments()
             :base(Tags.NoRiskInstruments) {}
         public NoRiskInstruments(int val)
@@ -24726,6 +27852,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskInstrumentOperator : IntField
     {
+        public const int TAG = 1535;
+
         public RiskInstrumentOperator()
             :base(Tags.RiskInstrumentOperator) {}
         public RiskInstrumentOperator(int val)
@@ -24743,6 +27871,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSymbol : StringField
     {
+        public const int TAG = 1536;
+
         public RiskSymbol()
             :base(Tags.RiskSymbol) {}
         public RiskSymbol(string val)
@@ -24756,6 +27886,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSymbolSfx : StringField
     {
+        public const int TAG = 1537;
+
         public RiskSymbolSfx()
             :base(Tags.RiskSymbolSfx) {}
         public RiskSymbolSfx(string val)
@@ -24769,6 +27901,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSecurityID : StringField
     {
+        public const int TAG = 1538;
+
         public RiskSecurityID()
             :base(Tags.RiskSecurityID) {}
         public RiskSecurityID(string val)
@@ -24782,6 +27916,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSecurityIDSource : StringField
     {
+        public const int TAG = 1539;
+
         public RiskSecurityIDSource()
             :base(Tags.RiskSecurityIDSource) {}
         public RiskSecurityIDSource(string val)
@@ -24795,6 +27931,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRiskSecurityAltID : IntField
     {
+        public const int TAG = 1540;
+
         public NoRiskSecurityAltID()
             :base(Tags.NoRiskSecurityAltID) {}
         public NoRiskSecurityAltID(int val)
@@ -24808,6 +27946,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSecurityAltID : StringField
     {
+        public const int TAG = 1541;
+
         public RiskSecurityAltID()
             :base(Tags.RiskSecurityAltID) {}
         public RiskSecurityAltID(string val)
@@ -24821,6 +27961,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSecurityAltIDSource : StringField
     {
+        public const int TAG = 1542;
+
         public RiskSecurityAltIDSource()
             :base(Tags.RiskSecurityAltIDSource) {}
         public RiskSecurityAltIDSource(string val)
@@ -24834,6 +27976,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskProduct : IntField
     {
+        public const int TAG = 1543;
+
         public RiskProduct()
             :base(Tags.RiskProduct) {}
         public RiskProduct(int val)
@@ -24847,6 +27991,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskProductComplex : StringField
     {
+        public const int TAG = 1544;
+
         public RiskProductComplex()
             :base(Tags.RiskProductComplex) {}
         public RiskProductComplex(string val)
@@ -24860,6 +28006,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSecurityGroup : StringField
     {
+        public const int TAG = 1545;
+
         public RiskSecurityGroup()
             :base(Tags.RiskSecurityGroup) {}
         public RiskSecurityGroup(string val)
@@ -24873,6 +28021,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskCFICode : StringField
     {
+        public const int TAG = 1546;
+
         public RiskCFICode()
             :base(Tags.RiskCFICode) {}
         public RiskCFICode(string val)
@@ -24886,6 +28036,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSecurityType : StringField
     {
+        public const int TAG = 1547;
+
         public RiskSecurityType()
             :base(Tags.RiskSecurityType) {}
         public RiskSecurityType(string val)
@@ -24899,6 +28051,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSecuritySubType : StringField
     {
+        public const int TAG = 1548;
+
         public RiskSecuritySubType()
             :base(Tags.RiskSecuritySubType) {}
         public RiskSecuritySubType(string val)
@@ -24912,6 +28066,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskMaturityMonthYear : StringField
     {
+        public const int TAG = 1549;
+
         public RiskMaturityMonthYear()
             :base(Tags.RiskMaturityMonthYear) {}
         public RiskMaturityMonthYear(string val)
@@ -24925,6 +28081,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskMaturityTime : StringField
     {
+        public const int TAG = 1550;
+
         public RiskMaturityTime()
             :base(Tags.RiskMaturityTime) {}
         public RiskMaturityTime(string val)
@@ -24938,6 +28096,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskRestructuringType : StringField
     {
+        public const int TAG = 1551;
+
         public RiskRestructuringType()
             :base(Tags.RiskRestructuringType) {}
         public RiskRestructuringType(string val)
@@ -24951,6 +28111,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSeniority : StringField
     {
+        public const int TAG = 1552;
+
         public RiskSeniority()
             :base(Tags.RiskSeniority) {}
         public RiskSeniority(string val)
@@ -24964,6 +28126,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskPutOrCall : IntField
     {
+        public const int TAG = 1553;
+
         public RiskPutOrCall()
             :base(Tags.RiskPutOrCall) {}
         public RiskPutOrCall(int val)
@@ -24977,6 +28141,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskFlexibleIndicator : BooleanField
     {
+        public const int TAG = 1554;
+
         public RiskFlexibleIndicator()
             :base(Tags.RiskFlexibleIndicator) {}
         public RiskFlexibleIndicator(Boolean val)
@@ -24990,6 +28156,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskCouponRate : DecimalField
     {
+        public const int TAG = 1555;
+
         public RiskCouponRate()
             :base(Tags.RiskCouponRate) {}
         public RiskCouponRate(Decimal val)
@@ -25003,6 +28171,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSecurityDesc : StringField
     {
+        public const int TAG = 1556;
+
         public RiskSecurityDesc()
             :base(Tags.RiskSecurityDesc) {}
         public RiskSecurityDesc(string val)
@@ -25016,6 +28186,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskInstrumentSettlType : StringField
     {
+        public const int TAG = 1557;
+
         public RiskInstrumentSettlType()
             :base(Tags.RiskInstrumentSettlType) {}
         public RiskInstrumentSettlType(string val)
@@ -25029,6 +28201,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskInstrumentMultiplier : DecimalField
     {
+        public const int TAG = 1558;
+
         public RiskInstrumentMultiplier()
             :base(Tags.RiskInstrumentMultiplier) {}
         public RiskInstrumentMultiplier(Decimal val)
@@ -25042,6 +28216,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRiskWarningLevels : IntField
     {
+        public const int TAG = 1559;
+
         public NoRiskWarningLevels()
             :base(Tags.NoRiskWarningLevels) {}
         public NoRiskWarningLevels(int val)
@@ -25055,6 +28231,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskWarningLevelPercent : DecimalField
     {
+        public const int TAG = 1560;
+
         public RiskWarningLevelPercent()
             :base(Tags.RiskWarningLevelPercent) {}
         public RiskWarningLevelPercent(Decimal val)
@@ -25068,6 +28246,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskWarningLevelName : StringField
     {
+        public const int TAG = 1561;
+
         public RiskWarningLevelName()
             :base(Tags.RiskWarningLevelName) {}
         public RiskWarningLevelName(string val)
@@ -25081,6 +28261,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelatedPartyIDs : IntField
     {
+        public const int TAG = 1562;
+
         public NoRelatedPartyIDs()
             :base(Tags.NoRelatedPartyIDs) {}
         public NoRelatedPartyIDs(int val)
@@ -25094,6 +28276,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedPartyID : StringField
     {
+        public const int TAG = 1563;
+
         public RelatedPartyID()
             :base(Tags.RelatedPartyID) {}
         public RelatedPartyID(string val)
@@ -25107,6 +28291,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedPartyIDSource : CharField
     {
+        public const int TAG = 1564;
+
         public RelatedPartyIDSource()
             :base(Tags.RelatedPartyIDSource) {}
         public RelatedPartyIDSource(char val)
@@ -25120,6 +28306,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedPartyRole : IntField
     {
+        public const int TAG = 1565;
+
         public RelatedPartyRole()
             :base(Tags.RelatedPartyRole) {}
         public RelatedPartyRole(int val)
@@ -25133,6 +28321,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelatedPartySubIDs : IntField
     {
+        public const int TAG = 1566;
+
         public NoRelatedPartySubIDs()
             :base(Tags.NoRelatedPartySubIDs) {}
         public NoRelatedPartySubIDs(int val)
@@ -25146,6 +28336,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedPartySubID : StringField
     {
+        public const int TAG = 1567;
+
         public RelatedPartySubID()
             :base(Tags.RelatedPartySubID) {}
         public RelatedPartySubID(string val)
@@ -25159,6 +28351,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedPartySubIDType : IntField
     {
+        public const int TAG = 1568;
+
         public RelatedPartySubIDType()
             :base(Tags.RelatedPartySubIDType) {}
         public RelatedPartySubIDType(int val)
@@ -25172,6 +28366,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelatedPartyAltIDs : IntField
     {
+        public const int TAG = 1569;
+
         public NoRelatedPartyAltIDs()
             :base(Tags.NoRelatedPartyAltIDs) {}
         public NoRelatedPartyAltIDs(int val)
@@ -25185,6 +28381,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedPartyAltID : StringField
     {
+        public const int TAG = 1570;
+
         public RelatedPartyAltID()
             :base(Tags.RelatedPartyAltID) {}
         public RelatedPartyAltID(string val)
@@ -25198,6 +28396,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedPartyAltIDSource : CharField
     {
+        public const int TAG = 1571;
+
         public RelatedPartyAltIDSource()
             :base(Tags.RelatedPartyAltIDSource) {}
         public RelatedPartyAltIDSource(char val)
@@ -25211,6 +28411,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelatedPartyAltSubIDs : IntField
     {
+        public const int TAG = 1572;
+
         public NoRelatedPartyAltSubIDs()
             :base(Tags.NoRelatedPartyAltSubIDs) {}
         public NoRelatedPartyAltSubIDs(int val)
@@ -25224,6 +28426,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedPartyAltSubID : StringField
     {
+        public const int TAG = 1573;
+
         public RelatedPartyAltSubID()
             :base(Tags.RelatedPartyAltSubID) {}
         public RelatedPartyAltSubID(string val)
@@ -25237,6 +28441,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedPartyAltSubIDType : IntField
     {
+        public const int TAG = 1574;
+
         public RelatedPartyAltSubIDType()
             :base(Tags.RelatedPartyAltSubIDType) {}
         public RelatedPartyAltSubIDType(int val)
@@ -25250,6 +28456,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelatedContextPartyIDs : IntField
     {
+        public const int TAG = 1575;
+
         public NoRelatedContextPartyIDs()
             :base(Tags.NoRelatedContextPartyIDs) {}
         public NoRelatedContextPartyIDs(int val)
@@ -25263,6 +28471,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedContextPartyID : StringField
     {
+        public const int TAG = 1576;
+
         public RelatedContextPartyID()
             :base(Tags.RelatedContextPartyID) {}
         public RelatedContextPartyID(string val)
@@ -25276,6 +28486,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedContextPartyIDSource : CharField
     {
+        public const int TAG = 1577;
+
         public RelatedContextPartyIDSource()
             :base(Tags.RelatedContextPartyIDSource) {}
         public RelatedContextPartyIDSource(char val)
@@ -25289,6 +28501,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedContextPartyRole : IntField
     {
+        public const int TAG = 1578;
+
         public RelatedContextPartyRole()
             :base(Tags.RelatedContextPartyRole) {}
         public RelatedContextPartyRole(int val)
@@ -25302,6 +28516,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelatedContextPartySubIDs : IntField
     {
+        public const int TAG = 1579;
+
         public NoRelatedContextPartySubIDs()
             :base(Tags.NoRelatedContextPartySubIDs) {}
         public NoRelatedContextPartySubIDs(int val)
@@ -25315,6 +28531,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedContextPartySubID : StringField
     {
+        public const int TAG = 1580;
+
         public RelatedContextPartySubID()
             :base(Tags.RelatedContextPartySubID) {}
         public RelatedContextPartySubID(string val)
@@ -25328,6 +28546,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelatedContextPartySubIDType : IntField
     {
+        public const int TAG = 1581;
+
         public RelatedContextPartySubIDType()
             :base(Tags.RelatedContextPartySubIDType) {}
         public RelatedContextPartySubIDType(int val)
@@ -25341,6 +28561,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelationshipRiskLimits : IntField
     {
+        public const int TAG = 1582;
+
         public NoRelationshipRiskLimits()
             :base(Tags.NoRelationshipRiskLimits) {}
         public NoRelationshipRiskLimits(int val)
@@ -25354,6 +28576,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskLimitType : IntField
     {
+        public const int TAG = 1583;
+
         public RelationshipRiskLimitType()
             :base(Tags.RelationshipRiskLimitType) {}
         public RelationshipRiskLimitType(int val)
@@ -25367,6 +28591,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskLimitAmount : DecimalField
     {
+        public const int TAG = 1584;
+
         public RelationshipRiskLimitAmount()
             :base(Tags.RelationshipRiskLimitAmount) {}
         public RelationshipRiskLimitAmount(Decimal val)
@@ -25380,6 +28606,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskLimitCurrency : StringField
     {
+        public const int TAG = 1585;
+
         public RelationshipRiskLimitCurrency()
             :base(Tags.RelationshipRiskLimitCurrency) {}
         public RelationshipRiskLimitCurrency(string val)
@@ -25393,6 +28621,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskLimitPlatform : StringField
     {
+        public const int TAG = 1586;
+
         public RelationshipRiskLimitPlatform()
             :base(Tags.RelationshipRiskLimitPlatform) {}
         public RelationshipRiskLimitPlatform(string val)
@@ -25406,6 +28636,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelationshipRiskInstruments : IntField
     {
+        public const int TAG = 1587;
+
         public NoRelationshipRiskInstruments()
             :base(Tags.NoRelationshipRiskInstruments) {}
         public NoRelationshipRiskInstruments(int val)
@@ -25419,6 +28651,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskInstrumentOperator : IntField
     {
+        public const int TAG = 1588;
+
         public RelationshipRiskInstrumentOperator()
             :base(Tags.RelationshipRiskInstrumentOperator) {}
         public RelationshipRiskInstrumentOperator(int val)
@@ -25432,6 +28666,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSymbol : StringField
     {
+        public const int TAG = 1589;
+
         public RelationshipRiskSymbol()
             :base(Tags.RelationshipRiskSymbol) {}
         public RelationshipRiskSymbol(string val)
@@ -25445,6 +28681,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSymbolSfx : StringField
     {
+        public const int TAG = 1590;
+
         public RelationshipRiskSymbolSfx()
             :base(Tags.RelationshipRiskSymbolSfx) {}
         public RelationshipRiskSymbolSfx(string val)
@@ -25458,6 +28696,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSecurityID : StringField
     {
+        public const int TAG = 1591;
+
         public RelationshipRiskSecurityID()
             :base(Tags.RelationshipRiskSecurityID) {}
         public RelationshipRiskSecurityID(string val)
@@ -25471,6 +28711,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSecurityIDSource : StringField
     {
+        public const int TAG = 1592;
+
         public RelationshipRiskSecurityIDSource()
             :base(Tags.RelationshipRiskSecurityIDSource) {}
         public RelationshipRiskSecurityIDSource(string val)
@@ -25484,6 +28726,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelationshipRiskSecurityAltID : IntField
     {
+        public const int TAG = 1593;
+
         public NoRelationshipRiskSecurityAltID()
             :base(Tags.NoRelationshipRiskSecurityAltID) {}
         public NoRelationshipRiskSecurityAltID(int val)
@@ -25497,6 +28741,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSecurityAltID : StringField
     {
+        public const int TAG = 1594;
+
         public RelationshipRiskSecurityAltID()
             :base(Tags.RelationshipRiskSecurityAltID) {}
         public RelationshipRiskSecurityAltID(string val)
@@ -25510,6 +28756,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSecurityAltIDSource : StringField
     {
+        public const int TAG = 1595;
+
         public RelationshipRiskSecurityAltIDSource()
             :base(Tags.RelationshipRiskSecurityAltIDSource) {}
         public RelationshipRiskSecurityAltIDSource(string val)
@@ -25523,6 +28771,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskProduct : IntField
     {
+        public const int TAG = 1596;
+
         public RelationshipRiskProduct()
             :base(Tags.RelationshipRiskProduct) {}
         public RelationshipRiskProduct(int val)
@@ -25536,6 +28786,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskProductComplex : StringField
     {
+        public const int TAG = 1597;
+
         public RelationshipRiskProductComplex()
             :base(Tags.RelationshipRiskProductComplex) {}
         public RelationshipRiskProductComplex(string val)
@@ -25549,6 +28801,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSecurityGroup : StringField
     {
+        public const int TAG = 1598;
+
         public RelationshipRiskSecurityGroup()
             :base(Tags.RelationshipRiskSecurityGroup) {}
         public RelationshipRiskSecurityGroup(string val)
@@ -25562,6 +28816,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskCFICode : StringField
     {
+        public const int TAG = 1599;
+
         public RelationshipRiskCFICode()
             :base(Tags.RelationshipRiskCFICode) {}
         public RelationshipRiskCFICode(string val)
@@ -25575,6 +28831,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSecurityType : StringField
     {
+        public const int TAG = 1600;
+
         public RelationshipRiskSecurityType()
             :base(Tags.RelationshipRiskSecurityType) {}
         public RelationshipRiskSecurityType(string val)
@@ -25588,6 +28846,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSecuritySubType : StringField
     {
+        public const int TAG = 1601;
+
         public RelationshipRiskSecuritySubType()
             :base(Tags.RelationshipRiskSecuritySubType) {}
         public RelationshipRiskSecuritySubType(string val)
@@ -25601,6 +28861,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskMaturityMonthYear : StringField
     {
+        public const int TAG = 1602;
+
         public RelationshipRiskMaturityMonthYear()
             :base(Tags.RelationshipRiskMaturityMonthYear) {}
         public RelationshipRiskMaturityMonthYear(string val)
@@ -25614,6 +28876,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskMaturityTime : StringField
     {
+        public const int TAG = 1603;
+
         public RelationshipRiskMaturityTime()
             :base(Tags.RelationshipRiskMaturityTime) {}
         public RelationshipRiskMaturityTime(string val)
@@ -25627,6 +28891,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskRestructuringType : StringField
     {
+        public const int TAG = 1604;
+
         public RelationshipRiskRestructuringType()
             :base(Tags.RelationshipRiskRestructuringType) {}
         public RelationshipRiskRestructuringType(string val)
@@ -25640,6 +28906,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSeniority : StringField
     {
+        public const int TAG = 1605;
+
         public RelationshipRiskSeniority()
             :base(Tags.RelationshipRiskSeniority) {}
         public RelationshipRiskSeniority(string val)
@@ -25653,6 +28921,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskPutOrCall : IntField
     {
+        public const int TAG = 1606;
+
         public RelationshipRiskPutOrCall()
             :base(Tags.RelationshipRiskPutOrCall) {}
         public RelationshipRiskPutOrCall(int val)
@@ -25666,6 +28936,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskFlexibleIndicator : BooleanField
     {
+        public const int TAG = 1607;
+
         public RelationshipRiskFlexibleIndicator()
             :base(Tags.RelationshipRiskFlexibleIndicator) {}
         public RelationshipRiskFlexibleIndicator(Boolean val)
@@ -25679,6 +28951,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskCouponRate : DecimalField
     {
+        public const int TAG = 1608;
+
         public RelationshipRiskCouponRate()
             :base(Tags.RelationshipRiskCouponRate) {}
         public RelationshipRiskCouponRate(Decimal val)
@@ -25692,6 +28966,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSecurityExchange : StringField
     {
+        public const int TAG = 1609;
+
         public RelationshipRiskSecurityExchange()
             :base(Tags.RelationshipRiskSecurityExchange) {}
         public RelationshipRiskSecurityExchange(string val)
@@ -25705,6 +28981,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskSecurityDesc : StringField
     {
+        public const int TAG = 1610;
+
         public RelationshipRiskSecurityDesc()
             :base(Tags.RelationshipRiskSecurityDesc) {}
         public RelationshipRiskSecurityDesc(string val)
@@ -25718,6 +28996,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskInstrumentSettlType : StringField
     {
+        public const int TAG = 1611;
+
         public RelationshipRiskInstrumentSettlType()
             :base(Tags.RelationshipRiskInstrumentSettlType) {}
         public RelationshipRiskInstrumentSettlType(string val)
@@ -25731,6 +29011,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskInstrumentMultiplier : DecimalField
     {
+        public const int TAG = 1612;
+
         public RelationshipRiskInstrumentMultiplier()
             :base(Tags.RelationshipRiskInstrumentMultiplier) {}
         public RelationshipRiskInstrumentMultiplier(Decimal val)
@@ -25744,6 +29026,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class NoRelationshipRiskWarningLevels : IntField
     {
+        public const int TAG = 1613;
+
         public NoRelationshipRiskWarningLevels()
             :base(Tags.NoRelationshipRiskWarningLevels) {}
         public NoRelationshipRiskWarningLevels(int val)
@@ -25757,6 +29041,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskWarningLevelPercent : DecimalField
     {
+        public const int TAG = 1614;
+
         public RelationshipRiskWarningLevelPercent()
             :base(Tags.RelationshipRiskWarningLevelPercent) {}
         public RelationshipRiskWarningLevelPercent(Decimal val)
@@ -25770,6 +29056,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskWarningLevelName : StringField
     {
+        public const int TAG = 1615;
+
         public RelationshipRiskWarningLevelName()
             :base(Tags.RelationshipRiskWarningLevelName) {}
         public RelationshipRiskWarningLevelName(string val)
@@ -25783,6 +29071,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskSecurityExchange : StringField
     {
+        public const int TAG = 1616;
+
         public RiskSecurityExchange()
             :base(Tags.RiskSecurityExchange) {}
         public RiskSecurityExchange(string val)
@@ -25796,6 +29086,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class StreamAsgnType : IntField
     {
+        public const int TAG = 1617;
+
         public StreamAsgnType()
             :base(Tags.StreamAsgnType) {}
         public StreamAsgnType(int val)
@@ -25814,6 +29106,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskEncodedSecurityDescLen : IntField
     {
+        public const int TAG = 1618;
+
         public RelationshipRiskEncodedSecurityDescLen()
             :base(Tags.RelationshipRiskEncodedSecurityDescLen) {}
         public RelationshipRiskEncodedSecurityDescLen(int val)
@@ -25827,6 +29121,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RelationshipRiskEncodedSecurityDesc : StringField
     {
+        public const int TAG = 1619;
+
         public RelationshipRiskEncodedSecurityDesc()
             :base(Tags.RelationshipRiskEncodedSecurityDesc) {}
         public RelationshipRiskEncodedSecurityDesc(string val)
@@ -25840,6 +29136,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskEncodedSecurityDescLen : IntField
     {
+        public const int TAG = 1620;
+
         public RiskEncodedSecurityDescLen()
             :base(Tags.RiskEncodedSecurityDescLen) {}
         public RiskEncodedSecurityDescLen(int val)
@@ -25853,6 +29151,8 @@ namespace QuickFix.Fields
     /// </summary>/
     public sealed class RiskEncodedSecurityDesc : StringField
     {
+        public const int TAG = 1621;
+
         public RiskEncodedSecurityDesc()
             :base(Tags.RiskEncodedSecurityDesc) {}
         public RiskEncodedSecurityDesc(string val)

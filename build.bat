@@ -4,6 +4,9 @@ set CONFIGURATION=%1
 
 if "%1" == "" set CONFIGURATION=Release
 
-set BUILD_CMD=dotnet build -c %CONFIGURATION%
-echo Build command: %BUILD_CMD%
-%BUILD_CMD%
+pwsh -v >nul
+if "%ERRORLEVEL%" == "0" (
+	pwsh .\build.ps1 %CONFIGURATION%
+) else (
+	powershell .\build.ps1 %CONFIGURATION%
+)
