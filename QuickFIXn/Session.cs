@@ -348,7 +348,7 @@ namespace QuickFix
         /// In the latter case, creates a new session using the found wildcard session as a template.
         /// </summary>
         /// <returns>the Session if found or created, otherwise returns null</returns>
-        public static Session GetSession(SessionID sessionID)
+        public static Session LookupOrCreateDynamicSession(SessionID sessionID)
         {
             Session result = LookupSession(sessionID);
             if (null != result) return result;
