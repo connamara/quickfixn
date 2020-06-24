@@ -349,13 +349,13 @@ namespace QuickFix.Transport
             /// <summary>
             /// Perform certificate validation common for both server and client.
             /// </summary>
-            /// <param name="certificate">The remtoe certificate to validate.</param>
+            /// <param name="certificate">The remote certificate to validate.</param>
             /// <param name="sslPolicyErrors">The SSL policy errors supplied by .Net.</param>
             /// <param name="enhancedKeyUsage">Enhanced key usage, which the remote computers certificate should contain.</param>
             /// <returns> <c>true</c> if the certificate should be treated as trusted; otherwise <c>false</c> </returns>
             private bool VerifyRemoteCertificate(X509Certificate certificate, SslPolicyErrors sslPolicyErrors, string enhancedKeyUsage)
             {
-                // Accept without looking at if the certificat is valid if validation is disabled
+                // Accept without looking at if the certificate is valid if validation is disabled
                 if (socketSettings_.ValidateCertificates == false)
                     return true;
 
