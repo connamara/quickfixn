@@ -1,15 +1,15 @@
 QuickFIX/n
-----------
+==========
 Thank you for using QuickFIX/n!  
-Here's an overview of what is in this zip package.
+Here's an overview of what's in this zip package.
 
 Introduction
-============
+------------
 QuickFIX/n implements the FIX protocol on .NET.
 For more information, visit [http://www.quickfixn.org] (http://www.quickfixn.org)
 
 File and Directory Information
-==============================
+------------------------------
 * RELEASE_NOTES.md - release notes
 * README.md - this file
 * LICENSE - license information
@@ -18,7 +18,7 @@ File and Directory Information
 * spec - Contains the various FIX data dictionaries
 
 Getting Started
-===============
+---------------
 The directory bin/netstandard2.0 contains
 * the QF/n core, QuickFix.dll
 * a message-definition dll for each FIX version (e.g. QuickFix.FIX40.dll, QuickFix.FIX41.dll, ...)
