@@ -27,7 +27,7 @@ Write-Host "`nTag Version: $TagVersion`n"
 if ($UseWslRuby -and $UseWslRuby.IsPresent) {
 	wsl ruby scripts\update_assembly_version.rb $TagVersion QuickFIXn\QuickFix.csproj Messages\FIX40\QuickFix.FIX40.csproj Messages\FIX41\QuickFix.FIX41.csproj Messages\FIX42\QuickFix.FIX42.csproj Messages\FIX43\QuickFix.FIX43.csproj Messages\FIX44\QuickFix.FIX44.csproj Messages\FIX50\QuickFix.FIX50.csproj Messages\FIX50SP1\QuickFix.FIX50SP1.csproj Messages\FIX50SP2\QuickFix.FIX50SP2.csproj
 } else {
-	.\ruby scripts\update_assembly_version.rb $TagVersion QuickFIXn\QuickFix.csproj Messages\FIX40\QuickFix.FIX40.csproj Messages\FIX41\QuickFix.FIX41.csproj Messages\FIX42\QuickFix.FIX42.csproj Messages\FIX43\QuickFix.FIX43.csproj Messages\FIX44\QuickFix.FIX44.csproj Messages\FIX50\QuickFix.FIX50.csproj Messages\FIX50SP1\QuickFix.FIX50SP1.csproj Messages\FIX50SP2\QuickFix.FIX50SP2.csproj
+	ruby scripts\update_assembly_version.rb $TagVersion QuickFIXn\QuickFix.csproj Messages\FIX40\QuickFix.FIX40.csproj Messages\FIX41\QuickFix.FIX41.csproj Messages\FIX42\QuickFix.FIX42.csproj Messages\FIX43\QuickFix.FIX43.csproj Messages\FIX44\QuickFix.FIX44.csproj Messages\FIX50\QuickFix.FIX50.csproj Messages\FIX50SP1\QuickFix.FIX50SP1.csproj Messages\FIX50SP2\QuickFix.FIX50SP2.csproj
 }
 
 $ExitCode = $LASTEXITCODE
@@ -38,22 +38,22 @@ if ($ExitCode -eq 0) {
 	Exit $ExitCode
 }
 
-.\git add QuickFIXn\QuickFix.csproj
-.\git add Messages\FIX40\QuickFix.FIX40.csproj
-.\git add Messages\FIX41\QuickFix.FIX41.csproj
-.\git add Messages\FIX42\QuickFix.FIX42.csproj
-.\git add Messages\FIX43\QuickFix.FIX43.csproj
-.\git add Messages\FIX44\QuickFix.FIX44.csproj
-.\git add Messages\FIX50\QuickFix.FIX50.csproj
-.\git add Messages\FIX50SP1\QuickFix.FIX50SP1.csproj
-.\git add Messages\FIX50SP2\QuickFix.FIX50SP2.csproj
-.\git commit -m "version number for version %TAG_VERSION%"
+git add QuickFIXn\QuickFix.csproj
+git add Messages\FIX40\QuickFix.FIX40.csproj
+git add Messages\FIX41\QuickFix.FIX41.csproj
+git add Messages\FIX42\QuickFix.FIX42.csproj
+git add Messages\FIX43\QuickFix.FIX43.csproj
+git add Messages\FIX44\QuickFix.FIX44.csproj
+git add Messages\FIX50\QuickFix.FIX50.csproj
+git add Messages\FIX50SP1\QuickFix.FIX50SP1.csproj
+git add Messages\FIX50SP2\QuickFix.FIX50SP2.csproj
+git commit -m "version number for version %TAG_VERSION%"
 Write-Host '* Version number committed.'
 
-.\git tag -a $TagVersion -m 'Release version $TagVersion'
+git tag -a $TagVersion -m 'Release version $TagVersion'
 Write-Host '* Created tag.'
 
-.\git checkout $TagVersion
+git checkout $TagVersion
 $ExitCode = $LASTEXITCODE
 if ($ExitCode -eq 0) {
 	Write-Host "* Checked out tag $TagVersion"
@@ -65,7 +65,7 @@ if ($ExitCode -eq 0) {
 if ($UsWslRuby -and $UseWslRuby.IsPresent) {
 	wsl ruby generator/generate.rb
 } else {
-	.\ruby generator/generate.rb
+	ruby generator/generate.rb
 }
 
 $ExitCode = $LASTEXITCODE
@@ -91,17 +91,17 @@ if ($ExitCode -eq 0) {
 
 # DO NOT remove quotes around *.nupkg. Due to a bug in older versions of the .NET SDK,
 # without the surrounding quotes, only the first package will be pushed.
-if ($BuildTarget -ieq 'pack') {
-	dotnet nuget push '*.nupkg' -s 'https://api.nuget.org/v3/index.json' -k $NuGetApiKey 'tmp\NuGet'
-}
+#if ($BuildTarget -ieq 'pack') {
+#	dotnet nuget push '*.nupkg' -s 'https://api.nuget.org/v3/index.json' -k $NuGetApiKey 'tmp\NuGet'
+#}
 
-$ExitCode = $LASTEXITCODE
-if ($ExitCode -eq 0) {
-	Write-Host '* Pushed QuickFIX/n NuGet packages to NuGet.org'
-} else {
-	Write-Error 'A problem occurred while pushing NuGet packages to NuGet.org'
-	Exit $ExitCode
-}
+#$ExitCode = $LASTEXITCODE
+#if ($ExitCode -eq 0) {
+#	Write-Host '* Pushed QuickFIX/n NuGet packages to NuGet.org'
+#} else {
+#	Write-Error 'A problem occurred while pushing NuGet packages to NuGet.org'
+#	Exit $ExitCode
+#}
 
 @(
 	$QFDir
@@ -140,7 +140,7 @@ Write-Host '* Created zip.'
 if ($UseWslRuby -and $UseWslRuby.IsPresent) {
 	wsl ruby scripts\s3_upload.rb "$QFDir.zip" $AwsAccessKey $AwsSecretKey
 } else {
-	.\ruby scripts\s3_upload.rb "$QFDir.zip" $AwsAccessKey $AwsSecretKey
+	ruby scripts\s3_upload.rb "$QFDir.zip" $AwsAccessKey $AwsSecretKey
 }
 
 $ExitCode = $LASTEXITCODE
@@ -154,7 +154,7 @@ if ($ExitCode -eq 0) {
 Get-ChildItem -Path 'tmp' -Recurse | Remove-Item -Recurse -Force
 Write-Host '* Removed ''tmp'' directory.'
 
-.\git checkout master
+git checkout master
 Write-Host '* Changed back to master.'
 
 Write-Host "`nSuccessfully created QuickFIX/n $TagVersion" -ForegroundColor Green
