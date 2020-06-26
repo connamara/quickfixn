@@ -14,6 +14,8 @@ Param (
 	[Parameter(Position=3)]
 	[string]$NuGetApiKey,
 
+	[switch]$PushNuGetPackages,
+
 	[switch]$UseWslRuby
 )
 
@@ -91,17 +93,21 @@ if ($ExitCode -eq 0) {
 
 # DO NOT remove quotes around *.nupkg. Due to a bug in older versions of the .NET SDK,
 # without the surrounding quotes, only the first package will be pushed.
-if ($BuildTarget -ieq 'pack') {
+if ($BuildTarget -ieq 'pack' -and $PushNuGetPackages -and $PushNuGetPackages.IsPresent) {
 	dotnet nuget push '*.nupkg' -s 'https://api.nuget.org/v3/index.json' -k $NuGetApiKey 'tmp\NuGet'
+
+	$ExitCode = $LASTEXITCODE
+	if ($ExitCode -eq 0) {
+		Write-Host '* Pushed QuickFIX/n NuGet packages to NuGet.org'
+	} else {
+		Write-Error 'A problem occurred while pushing NuGet packages to NuGet.org'
+		Exit $ExitCode
+	}
+} else {
+	Write-Host '* Skipping Nuget package push because -PushNugetPackages was not specified or set to $false'
 }
 
-$ExitCode = $LASTEXITCODE
-if ($ExitCode -eq 0) {
-	Write-Host '* Pushed QuickFIX/n NuGet packages to NuGet.org'
-} else {
-	Write-Error 'A problem occurred while pushing NuGet packages to NuGet.org'
-	Exit $ExitCode
-}
+
 
 @(
 	"tmp\$QFDir"
