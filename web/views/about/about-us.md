@@ -44,6 +44,13 @@ Connamara is an active maintainer of QuickFIX and a contributor to the
 QuickFIX/J project. Connamara also offers a commercial version of QuickFIX/J 
 that exhibits dramatically lower latencies and variance.
 
+About the Name...
+-----------------
+This project's correct and proper name is "QuickFIX/n".
+
+It is true that the "n" was inspired by ".NET", but the word "net"
+is NOT part of the name and should never be written as such.
+
 [0]: http://quickfixengine.org
 [1]: http://quickfixj.org
 [2]: http://connamara.com
