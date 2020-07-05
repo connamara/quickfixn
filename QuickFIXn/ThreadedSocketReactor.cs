@@ -61,8 +61,14 @@ namespace QuickFix
 
         public void Start()
         {
-            serverThread_ = new Thread(new ThreadStart(Run));
-            serverThread_.Start();
+            lock (sync_)
+            {
+                if (state_ == State.RUNNING && serverThread_ == null)
+                {
+                    serverThread_ = new Thread(Run);
+                    serverThread_.Start();
+                }
+            }
         }
 
         public void Shutdown()

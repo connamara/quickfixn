@@ -384,6 +384,25 @@ namespace UnitTests
         }
 
         [Test]
+        public void AddSessionDynamicWithDifferentPortTest()
+        {
+            StartEngine(false);
+
+            // Add the dynamic acceptor with another port and ensure that we can now log on
+            string dynamicCompID = "acc10";
+            var sessionID = CreateSessionID(dynamicCompID);
+            var sessionConfig = CreateSessionConfig(dynamicCompID, false);
+            sessionConfig.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort2.ToString());
+
+            _acceptor.AddSession(sessionID, sessionConfig);
+
+            var socket = ConnectToEngine(AcceptPort2);
+            SendLogon(socket, dynamicCompID);
+
+            Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failde to logon dynamic added acceptor session with another port");
+        }
+        
+        [Test]
         public void DynamicAcceptor()
         {
             StartEngine(false);
