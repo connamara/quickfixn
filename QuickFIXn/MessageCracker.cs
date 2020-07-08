@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
 using QuickFix.Fields;
 using System.Reflection;
 using System.Linq.Expressions;
@@ -13,16 +12,21 @@ namespace QuickFix
     /// Helper class for delegating message types for various FIX versions to
     /// type-safe OnMessage methods.
     /// </summary>
-    public abstract class MessageCracker
+    public class MessageCracker
     {
         private Dictionary<Type, Action<Message, SessionID>> _callCache = new Dictionary<Type, Action<Message, SessionID>>();
 
-        public MessageCracker()
+        public MessageCracker(object messageHandler)
+        {
+            Initialize(messageHandler);
+        }
+
+        protected MessageCracker()
         {
             Initialize(this);
         }
 
-        private void Initialize(Object messageHandler)
+        private void Initialize(object messageHandler)
         {
             Type handlerType = messageHandler.GetType();
 
@@ -30,15 +34,16 @@ namespace QuickFix
 
             foreach (MethodInfo m in methods)
             {
-                TryBuildCallCache(m);
+                TryBuildCallCache(messageHandler, m);
             }
         }
 
         /// <summary>
         /// build  a complied expression tree - much faster than calling MethodInfo.Invoke
         /// </summary>
+        /// <param name="messageHandler"></param>
         /// <param name="m"></param>
-        private void TryBuildCallCache(MethodInfo m)
+        private void TryBuildCallCache(object messageHandler, MethodInfo m)
         {
             if (IsHandlerMethod(m))
             {
@@ -52,7 +57,7 @@ namespace QuickFix
 
                 var sessionParam = Expression.Parameter(typeof(SessionID), "sessionID");
 
-                var instance = Expression.Constant(this);
+                var instance = Expression.Constant(messageHandler);
 
                 var methodCall = Expression.Call(instance, m, Expression.Convert(messageParam, expParamMessage.ParameterType), Expression.Convert(sessionParam, expParamSessionId.ParameterType));
 
