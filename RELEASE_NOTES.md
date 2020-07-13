@@ -9,6 +9,9 @@ What's New
 ----------
 
 ### NEXT VERSION:
+* next item goes here
+
+### v1.10.0:
 * (patch) #505 - Fix ObjectDisposedException when SocketInitiator is stopped before connection attempt fails (musashibg)
 * (patch) #571 - StreamFactory fix: unexpected null from GetProxy (mkoca & mcmillab)
 * (patch) #547 - Implement Refresh() method in FileStore (roederja2)
