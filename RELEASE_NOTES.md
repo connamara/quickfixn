@@ -9,7 +9,7 @@ What's New
 ----------
 
 ### NEXT VERSION:
-* (patch) #630 - Make DefaultMessageFactory reflect only over QF/n assemblies
+* (patch) #630 - Make DefaultMessageFactory reflect only over QF/n assemblies (gbirchmeier)
 
 ### v1.10.0:
 * (patch) #505 - Fix ObjectDisposedException when SocketInitiator is stopped before connection attempt fails (musashibg)
