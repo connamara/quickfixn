@@ -58,7 +58,6 @@ class Fixture
     attr_accessor :name, :total, :errors, :failures, :cases
 
     def self.create_from_acceptance_test_xml xml_filename
-        require 'rubygems'
         require 'nokogiri'
 
         fixture = Fixture.new

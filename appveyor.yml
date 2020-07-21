@@ -1,9 +1,16 @@
 version: 1.0.{build}
 
 install:
+- dir C:\
+- set PATH=C:\Ruby26-x64\bin;%PATH%
+- ruby -v
 - ps: |
-    gem install --source http://rubygems.org nokogiri -v 1.6.8.1
+    ruby -v
+    gem install nokogiri
     ruby generator\generate.rb
+
+before_test:
+- ruby -v
 
 build_script:
 - ps: dotnet build -c Release
