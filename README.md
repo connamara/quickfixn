@@ -13,21 +13,19 @@ This project requires the following:
 
 **To build and run tests**
 
-* [Ruby (1.9.3 recommended)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
+* [Ruby (2.5+ recommended)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
 * From the command-line: dotnet 2.0.0 or higher
 * From Visual Studio: version 2017 or higher
 
 Code Generation
 ---------------
-To regenerate the message and field class source from the Data Dictionaries, you need Ruby and the Nokogiri gem:
+To regenerate the message and field class source from the Data Dictionaries,
+you need Ruby and the Nokogiri gem:
 
 ```
-gem install nokogiri -v 1.6.8.1
-generate.bat
+gem install nokogiri
+ruby generate\generate.bat
 ```
-
-(Nokogiri versions 1.7+ require Ruby 2.0, so we must use this older version.)
-
 
 Build
 -----
@@ -92,8 +90,10 @@ To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
 
 ```
 cd AcceptanceTest
-runat.ps1 release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg
+pwsh runat.ps1 release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg netcoreapp2.1
 ```
+
+The final param must be "net461" or "netcoreapp2.1".
 
 (See acceptance_test.ps1 for the proper port numbers and config files to use in the above command.)
 
