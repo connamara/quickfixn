@@ -120,6 +120,7 @@ AppDataDictionary=..\spec\fix\FIX50SP1.xml
 "@ | Out-File 'cfg\at.cfg' -Encoding utf8
 
     # Start the acceptor...
+    # (this runs the exe or dll in AcceptanceTest/bin/)
     $AtProcess = Start-Process -FilePath dotnet.exe -ArgumentList "run -c $Configuration -f $Framework --no-build --no-restore -- $Conf" -NoNewWindow -PassThru
 
     if ($UseWsl -and $UseWsl.IsPresent) {
