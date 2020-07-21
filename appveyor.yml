@@ -2,7 +2,9 @@ version: 1.0.{build}
 
 install:
 - set PATH=C:\Ruby27-x64\bin;%PATH%
+- ruby -v
 - ps: |
+    ruby -v
     gem install nokogiri
     ruby generator\generate.rb
 
