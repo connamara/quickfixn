@@ -1,6 +1,7 @@
 version: 1.0.{build}
 
 install:
+- dir C:\
 - set PATH=C:\Ruby27-x64\bin;%PATH%
 - ruby -v
 - ps: |
