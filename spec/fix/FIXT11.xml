@@ -310,6 +310,6 @@
     <field name='RefApplVerID' number='1130' type='STRING'/>
     <field name='RefCstmApplVerID' number='1131' type='STRING'/>
     <field name='DefaultApplVerID' number='1137' type='STRING'/>
-    <field name='ApplExtID' number='1137' type='INT'/>
+    <field name='ApplExtID' number='1156' type='INT'/>
   </fields>
 </fix>
