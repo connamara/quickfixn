@@ -222,7 +222,10 @@ namespace QuickFix
                 case Tags.XmlData:
                 case Tags.MessageEncoding:
                 case Tags.LastMsgSeqNumProcessed:
-                    // case Tags.OnBehalfOfSendingTime: TODO 
+                case Tags.OnBehalfOfSendingTime: // FIX42-43 only
+                case Tags.ApplVerID:
+                case Tags.ApplExtID:
+                case Tags.CstmApplVerID:
                     return true;
                 default:
                     return false;
