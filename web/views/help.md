@@ -17,23 +17,39 @@ Sign up [here][2] or send an email to:
 
 Please subscribe before you send a mail to the list, else your request for help will not be sent out.
 
+(We advise that you do *not* use digest mode.
+The list is not high traffic, so you shouldn't really need it.
+More importantly, digest mode makes email chains hard to follow.)
+
+
+StackOverflow
+-------------
+
+There are several developers that monitor QuickFIX/n questions on [StackOverflow](https://stackoverflow.com).
+
+Just post your question and tag it "quickfixn"!
+
 
 Bugs and Issues
 ---------------
 
-Bugs and issues can be submitted by anyone through our github repository issues list.
+Bugs and issues can be submitted by anyone through our GitHub repository issues list.
 
-**Do not submit questions or help requests to the issues list.**
-**It is for bugs and issues and is only monitored by a few people.**
-**If you need help, please join the mailing list as described above and you'll be able to send your question to the entire community.**
+**Do not submit questions or help requests to the GitHub issues list.**
 
-With that said, here is our [github repository issues list](https://github.com/connamara/quickfixn/issues).
+**The GitHub issues list is for engine bugs & features.
+All help requests will be closed without helping you and you will be
+advised to use the options above instead.**
+
+With that said, if you have found a potential bug or missing feature,
+here is our [github repository issues list](https://github.com/connamara/quickfixn/issues).
 
 Please provide sample code, logs, and a description of the problem when
 the issue is submitted.
 
 We will try to address new issues as quickly as possible, and we invite
-any interested developers to try their hand at fixing bugs and adding improvements by forking the repo and submitting pull requests.
+any interested developers to try their hand at fixing bugs and adding
+improvements by forking the repo and submitting pull requests.
 
 
 Commercial Support
