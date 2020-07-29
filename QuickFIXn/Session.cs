@@ -908,7 +908,7 @@ namespace QuickFix
             {
                 disconnectReason = "Received logout request";
                 this.Log.OnEvent(disconnectReason);
-                GenerateLogout(logout);
+                SendLogoutMsg(logout);
                 this.Log.OnEvent("Sending logout response");
             }
             else
@@ -1325,7 +1325,7 @@ namespace QuickFix
         /// <returns></returns>
         public bool GenerateLogout()
         {
-            return GenerateLogout(null, null);
+            return this.GenerateLogout(null);
         }
 
         /// <summary>
@@ -1335,44 +1335,40 @@ namespace QuickFix
         /// <returns></returns>
         private bool GenerateLogout(string text)
         {
-            return GenerateLogout(null, text);
-        }
+            //return GenerateLogout(null, text);
 
-        /// <summary>
-        /// Send a Logout message
-        /// </summary>
-        /// <param name="other">used to fill MsgSeqNum field, if configuration requires it</param>
-        /// <returns></returns>
-        private bool GenerateLogout(Message other)
-        {
-            return GenerateLogout(other, null);
-        }
-
-        /// <summary>
-        /// Send a Logout message
-        /// </summary>
-        /// <param name="other">used to fill MsgSeqNum field, if configuration requires it; ignored if null</param>
-        /// <param name="text">written into the Text field; ignored if empty/null</param>
-        /// <returns></returns>
-        private bool GenerateLogout(Message other, string text)
-        {
-            Message logout = msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGOUT);
-            InitializeHeader(logout);
+            Message logout = this.msgFactory_.Create(this.SessionID.BeginString, Fields.MsgType.LOGOUT);
+            this.InitializeHeader(logout);
             if (text != null && text.Length > 0)
                 logout.SetField(new Fields.Text(text));
-            if (other != null && this.EnableLastMsgSeqNumProcessed)
+
+            this.state_.SentLogout = this.SendRaw(logout, 0);
+            return this.state_.SentLogout;
+        }
+
+        /// <summary>
+        /// Send a Logout message
+        /// </summary>
+        /// <param name="logout"></param>
+        /// <returns></returns>
+        private bool SendLogoutMsg(Message logout)
+        {
+            if (logout == null)
+                return false;
+
+            if (!this.EnableLastMsgSeqNumProcessed)
             {
                 try
                 {
-                    logout.Header.SetField(new Fields.LastMsgSeqNumProcessed(other.Header.GetInt(Tags.MsgSeqNum)));
+                    logout.Header.RemoveField(Tags.MsgSeqNum);
                 }
                 catch (FieldNotFoundException)
                 {
-                    this.Log.OnEvent("Error: No message sequence number: " + other);
+                    this.Log.OnEvent("Error: No message sequence number: " + logout);
                 }
             }
-            state_.SentLogout = SendRaw(logout, 0);
-            return state_.SentLogout;
+            this.state_.SentLogout = this.SendRaw(logout, 0);
+            return this.state_.SentLogout;
         }
 
         public bool GenerateHeartbeat()
