@@ -42,6 +42,7 @@ namespace QuickFix
         public const string RESET_ON_LOGON = "ResetOnLogon";
         public const string RESET_ON_LOGOUT = "ResetOnLogout";
         public const string RESET_ON_DISCONNECT = "ResetOnDisconnect";
+        public const string VALIDATE_ENUM_VALUES = "ValidateEnumValues";
         public const string VALIDATE_FIELDS_OUT_OF_ORDER = "ValidateFieldsOutOfOrder";
         public const string VALIDATE_FIELDS_HAVE_VALUES = "ValidateFieldsHaveValues";
         public const string VALIDATE_USER_DEFINED_FIELDS = "ValidateUserDefinedFields";
