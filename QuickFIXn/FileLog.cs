@@ -43,23 +43,97 @@ namespace QuickFix
             eventLog_.AutoFlush = true;
         }
 
+        public const string WILDCARD_FILE_PREFIX = "DS_"; // Dynamic Session
+        public const string WILDCARD_REPLACEMENT = "(ANY)";
+        /// <summary>
+        /// Calculates unique filename prefix from SessionID.
+        /// Handles wildcards in SessionID fields
+        /// </summary>
+        /// <returns>Filename prefix unique for SessioID</returns>
         public static string Prefix(SessionID sessionID)
         {
-            System.Text.StringBuilder prefix = new System.Text.StringBuilder(sessionID.BeginString)
-                .Append('-').Append(sessionID.SenderCompID);
+
+            bool hasWildcard = false;
+
+            System.Text.StringBuilder prefix = new System.Text.StringBuilder();
+            if (Values.WILDCARD_VALUE.Equals(sessionID.BeginString))
+            {
+                hasWildcard = true;
+                prefix.Append(WILDCARD_REPLACEMENT).Append('-');
+            }
+            else prefix.Append(sessionID.BeginString).Append('-');
+            if (Values.WILDCARD_VALUE.Equals(sessionID.SenderCompID))
+            {
+                hasWildcard = true;
+                prefix.Append(WILDCARD_REPLACEMENT);
+            }
+            else prefix.Append(sessionID.SenderCompID);
+
+                
             if (SessionID.IsSet(sessionID.SenderSubID))
-                prefix.Append('_').Append(sessionID.SenderSubID);
+            {
+                prefix.Append('_');
+                if (Values.WILDCARD_VALUE.Equals(sessionID.SenderSubID))
+                {
+                    hasWildcard = true;
+                    prefix.Append(WILDCARD_REPLACEMENT);
+                }
+                else prefix.Append(sessionID.SenderSubID);
+            }
             if (SessionID.IsSet(sessionID.SenderLocationID))
-                prefix.Append('_').Append(sessionID.SenderLocationID);
-            prefix.Append('-').Append(sessionID.TargetCompID);
+            {
+                prefix.Append('_');
+                if (Values.WILDCARD_VALUE.Equals(sessionID.SenderLocationID))
+                {
+                    hasWildcard = true;
+                    prefix.Append(WILDCARD_REPLACEMENT);
+                }
+                else prefix.Append(sessionID.SenderLocationID);
+            }
+            prefix.Append('-');
+            if (Values.WILDCARD_VALUE.Equals(sessionID.TargetCompID))
+            {
+                hasWildcard = true;
+                prefix.Append(WILDCARD_REPLACEMENT);
+            }
+            else prefix.Append(sessionID.TargetCompID);
+
             if (SessionID.IsSet(sessionID.TargetSubID))
-                prefix.Append('_').Append(sessionID.TargetSubID);
+            {
+                prefix.Append('_');
+                if (Values.WILDCARD_VALUE.Equals(sessionID.TargetSubID))
+                {
+                    hasWildcard = true;
+                    prefix.Append(WILDCARD_REPLACEMENT);
+                }
+                else prefix.Append(sessionID.TargetSubID);
+            }
             if (SessionID.IsSet(sessionID.TargetLocationID))
-                prefix.Append('_').Append(sessionID.TargetLocationID);
-
+            {
+                prefix.Append('_');
+                if (Values.WILDCARD_VALUE.Equals(sessionID.TargetLocationID))
+                {
+                    hasWildcard = true;
+                    prefix.Append(WILDCARD_REPLACEMENT);
+                }
+                else prefix.Append(sessionID.TargetLocationID);
+            }
+            // SessionQualifier now is not allowed for acceptor, so cannot be a wildcard,
+            // still should not hurt to implement wildcard logic for it
             if (SessionID.IsSet(sessionID.SessionQualifier))
-                prefix.Append('-').Append(sessionID.SessionQualifier);
-
+            {
+                prefix.Append('-');
+                if (Values.WILDCARD_VALUE.Equals(sessionID.SessionQualifier))
+                {
+                    hasWildcard = true;
+                    prefix.Append(WILDCARD_REPLACEMENT);
+                }
+                else prefix.Append(sessionID.SessionQualifier);
+            }
+            // To guarantee unique file name,
+            // even if someone uses WILDCARD_REPLACEMENT as a part if SessionID
+            if (hasWildcard) return WILDCARD_FILE_PREFIX + prefix.ToString();
+            // No wildcard(s) - no additional prefix 
             return prefix.ToString();
         }
 

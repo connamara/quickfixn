@@ -61,7 +61,7 @@ namespace QuickFix
         {
             logFactory = logFactory ?? new NullLogFactory();
             messageFactory = messageFactory ?? new DefaultMessageFactory();
-            SessionFactory sf = new SessionFactory(application, storeFactory, logFactory, messageFactory);
+            SessionFactory sf = new SessionFactory(application, storeFactory, logFactory, messageFactory, this);
 
             try
             {
@@ -101,6 +101,7 @@ namespace QuickFix
             }
 
             if (0 == socketDescriptorForAddress_.Count)
+                // If empty => no listers will be started => this instance could never accept a connection
                 throw new ConfigError("No acceptor sessions found in SessionSettings.");
         }
 

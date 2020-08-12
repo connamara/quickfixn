@@ -45,6 +45,13 @@ namespace QuickFix
             throw new ConfigError("Invalid ConnectionType");
         }
 
+        private IAcceptor _acceptor = null;
+        public SessionFactory(IApplication app, IMessageStoreFactory storeFactory, ILogFactory logFactory, IMessageFactory messageFactory, IAcceptor acceptor)
+         : this(app, storeFactory, logFactory, messageFactory)
+        {
+            _acceptor = acceptor;
+        }
+
         public Session Create(SessionID sessionID, QuickFix.Dictionary settings)
         {
             bool isInitiator = SessionFactory.DetectIfInitiator(settings);
@@ -109,7 +116,9 @@ namespace QuickFix
                 heartBtInt,
                 logFactory_,
                 sessionMsgFactory,
-                senderDefaultApplVerId);
+                senderDefaultApplVerId,
+                _acceptor,
+                settings);
 
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
                 session.SendRedundantResendRequests = settings.GetBool(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS);
