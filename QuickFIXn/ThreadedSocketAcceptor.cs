@@ -11,7 +11,7 @@ namespace QuickFix
     /// </summary>
     public class ThreadedSocketAcceptor : IAcceptor
     {
-        
+
 
         private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private SessionSettings settings_;
@@ -112,7 +112,7 @@ namespace QuickFix
             IPEndPoint socketEndPoint;
             if (dict.Has(SessionSettings.SOCKET_ACCEPT_HOST))
             {
-                string host = dict.GetString(SessionSettings.SOCKET_ACCEPT_HOST);                
+                string host = dict.GetString(SessionSettings.SOCKET_ACCEPT_HOST);
                 IPAddress[] addrs = Dns.GetHostAddresses(host);
                 socketEndPoint = new IPEndPoint(addrs[0], port);
                 // Set hostname (if it is not already configured)
@@ -124,7 +124,7 @@ namespace QuickFix
             }
 
             socketSettings.Configure(dict);
-            
+
 
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
@@ -150,13 +150,29 @@ namespace QuickFix
                 if ("acceptor" == connectionType)
                 {
                     AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(dict);
-                    Session session = sessionFactory_.Create(sessionID, dict);
-                    descriptor.AcceptSession(session);
-                    sessions_[sessionID] = session;
+                    if (SessionTemplate.IsSessionTemplate(sessionID))
+                    {
+                        SessionTemplate.AddTemplate(sessionID, dict, this, descriptor);
+                    }
+                    else
+                    {
+                        _ = CreateAcceptorSession(sessionID, dict, descriptor);
+                    }
                     return true;
                 }
             }
             return false;
+        }
+        /// <summary>
+        /// Can be called at initial session creation or
+        /// to create a dynamic session from a template right at the first connect
+        /// </summary>
+        internal Session CreateAcceptorSession(SessionID sessionID, Dictionary dict, AcceptorSocketDescriptor descriptor)
+        {
+            Session session = sessionFactory_.Create(sessionID, dict);
+            descriptor.AcceptSession(session);
+            sessions_[sessionID] = session;
+            return session;
         }
 
         private void StartAcceptingConnections()
