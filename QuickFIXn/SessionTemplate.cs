@@ -55,7 +55,8 @@ namespace QuickFix
                 {
                     if (IsMatching(sessionID, kv.Key))
                     {
-                        Dictionary dict = ReplaceWildcardsInSettins(sessionID, kv.Value.Dict);
+                        Dictionary dict = ReplaceWildcardsInSettins(sessionID, kv.Key, kv.Value.Dict);
+                        kv.Value.Acceptor.SetSessionSettings(sessionID, dict);
                         return kv.Value.Acceptor.CreateAcceptorSession(sessionID, dict, kv.Value.Descriptor);
                     }
                 }
@@ -75,16 +76,15 @@ namespace QuickFix
                 && ((templateID.TargetLocationID.Equals(WildcardValue) && !sessionID.TargetLocationID.Equals(SessionID.NOT_SET)) || templateID.TargetLocationID.Equals(sessionID.TargetLocationID));
         }
 
-        private static Dictionary ReplaceWildcardsInSettins(SessionID sessionID, Dictionary dict)
+        private static Dictionary ReplaceWildcardsInSettins(SessionID sessionID, SessionID templateID, Dictionary dict)
         {
             QuickFix.Dictionary actualSettings = new QuickFix.Dictionary(dict);
-            if (WildcardValue.Equals(sessionID.BeginString)) actualSettings.SetString(SessionSettings.BEGINSTRING, sessionID.BeginString);
-            if (WildcardValue.Equals(sessionID.SenderCompID)) actualSettings.SetString(SessionSettings.SENDERCOMPID, sessionID.SenderCompID);
-            if (WildcardValue.Equals(sessionID.SenderSubID)) actualSettings.SetString(SessionSettings.SENDERSUBID, sessionID.SenderSubID);
-            if (WildcardValue.Equals(sessionID.SenderLocationID)) actualSettings.SetString(SessionSettings.SENDERLOCID, sessionID.SenderLocationID);
-            if (WildcardValue.Equals(sessionID.TargetCompID)) actualSettings.SetString(SessionSettings.TARGETCOMPID, sessionID.TargetCompID);
-            if (WildcardValue.Equals(sessionID.TargetSubID)) actualSettings.SetString(SessionSettings.TARGETSUBID, sessionID.TargetSubID);
-            if (WildcardValue.Equals(sessionID.TargetLocationID)) actualSettings.SetString(SessionSettings.TARGETLOCID, sessionID.TargetLocationID);
+            if (WildcardValue.Equals(templateID.SenderCompID)) actualSettings.SetString(SessionSettings.SENDERCOMPID, sessionID.SenderCompID);
+            if (WildcardValue.Equals(templateID.SenderSubID)) actualSettings.SetString(SessionSettings.SENDERSUBID, sessionID.SenderSubID);
+            if (WildcardValue.Equals(templateID.SenderLocationID)) actualSettings.SetString(SessionSettings.SENDERLOCID, sessionID.SenderLocationID);
+            if (WildcardValue.Equals(templateID.TargetCompID)) actualSettings.SetString(SessionSettings.TARGETCOMPID, sessionID.TargetCompID);
+            if (WildcardValue.Equals(templateID.TargetSubID)) actualSettings.SetString(SessionSettings.TARGETSUBID, sessionID.TargetSubID);
+            if (WildcardValue.Equals(templateID.TargetLocationID)) actualSettings.SetString(SessionSettings.TARGETLOCID, sessionID.TargetLocationID);
             return actualSettings;
         }
     }

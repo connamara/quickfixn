@@ -164,8 +164,8 @@ namespace QuickFix
             return false;
         }
         /// <summary>
-        /// Can be called at initial session creation or
-        /// to create a dynamic session from a template right at the first connect
+        /// Can be called at initial sessions creation
+        /// or to create from a template a new dynamic session right at its first connect
         /// </summary>
         internal Session CreateAcceptorSession(SessionID sessionID, Dictionary dict, AcceptorSocketDescriptor descriptor)
         {
@@ -173,6 +173,14 @@ namespace QuickFix
             descriptor.AcceptSession(session);
             sessions_[sessionID] = session;
             return session;
+        }
+        /// <summary>
+        /// Must be called before creating a dynamic session at its first connect
+        /// to add its settings into the global dictionary
+        /// </summary>
+        internal void SetSessionSettings(SessionID sessionID, Dictionary dict)
+        {
+            settings_.Set(sessionID, dict);
         }
 
         private void StartAcceptingConnections()
