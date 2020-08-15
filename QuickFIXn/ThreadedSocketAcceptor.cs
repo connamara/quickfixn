@@ -17,6 +17,7 @@ namespace QuickFix
         private SessionSettings settings_;
         private Dictionary<IPEndPoint, AcceptorSocketDescriptor> socketDescriptorForAddress_ = new Dictionary<IPEndPoint, AcceptorSocketDescriptor>();
         private SessionFactory sessionFactory_;
+        private SessionProvider _sessionProvider = new SessionProvider();
         private bool isStarted_ = false;
         private bool _disposed = false;
         private object sync_ = new object();
@@ -129,7 +130,7 @@ namespace QuickFix
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict, _sessionProvider);
                 socketDescriptorForAddress_[socketEndPoint] = descriptor;
             }
 
@@ -150,9 +151,9 @@ namespace QuickFix
                 if ("acceptor" == connectionType)
                 {
                     AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(dict);
-                    if (SessionTemplate.IsSessionTemplate(sessionID))
+                    if (SessionProvider.IsSessionTemplate(sessionID))
                     {
-                        SessionTemplate.AddTemplate(sessionID, dict, this, descriptor);
+                        _sessionProvider.AddTemplate(sessionID, dict, this, descriptor);
                     }
                     else
                     {

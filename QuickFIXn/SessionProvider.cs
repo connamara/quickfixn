@@ -4,10 +4,10 @@ using System.Collections.Generic;
 namespace QuickFix
 {
     /// <summary>
-    /// Support for wildcards in session names, i.e for session templates,
-    /// to create a session upon connect, if its SessionID matches a template
+    /// Supporting wildcards in acceptor's session names (for session templates)
+    /// to create a new Session upon connect, if its SessionID matches a template
     /// </summary>
-    internal static class SessionTemplate
+    internal class SessionProvider
     {
         const string WildcardValue = "*";
         internal static bool IsSessionTemplate(SessionID sessionID)
@@ -19,12 +19,9 @@ namespace QuickFix
                 || sessionID.TargetSubID.Equals(WildcardValue)
                 || sessionID.TargetLocationID.Equals(WildcardValue);
         }
-        /// <summary>
-        /// Settings, Acceptor and Socket Descriptor for each "template" SessionID 
-        /// </summary>
-        private static Dictionary<SessionID, TemplateParams> _templates =
-            new Dictionary<SessionID, TemplateParams>();
-        internal static void AddTemplate(SessionID sessionID, Dictionary dict, ThreadedSocketAcceptor acceptor, AcceptorSocketDescriptor descriptor)
+
+        private Dictionary<SessionID, TemplateParams> _templates = new Dictionary<SessionID, TemplateParams>();
+        internal void AddTemplate(SessionID sessionID, Dictionary dict, ThreadedSocketAcceptor acceptor, AcceptorSocketDescriptor descriptor)
         {
             lock (_templates)
             {
@@ -36,7 +33,7 @@ namespace QuickFix
         /// Looks up an earlier created session, or creates a new one,
         /// if the SessionID matches a session's template
         /// </summary>
-        internal static Session GetSession(SessionID sessionID)
+        internal Session GetSession(SessionID sessionID)
         {
             Session session = Session.LookupSession(sessionID);
             if (null == session) session = CreateFromTemplate(sessionID);
@@ -47,7 +44,7 @@ namespace QuickFix
         /// creates and returns the new session from the first matching template
         /// </summary>
         /// <param name="sessionID">Session name without wildcards</param>
-        private static Session CreateFromTemplate(SessionID sessionID)
+        private Session CreateFromTemplate(SessionID sessionID)
         {
             lock (_templates)
             {
@@ -66,7 +63,7 @@ namespace QuickFix
 
         private static bool IsMatching(SessionID sessionID, SessionID templateID)
         {
-            // matching if for all parts (templateID is "*" AND sessionID is set) OR (templateID == sessionID)
+            // Matching if for all parts (templateID is "*" AND sessionID is set) OR (templateID == sessionID)
             return templateID.BeginString.Equals(sessionID.BeginString) // do not allow a wildcard for BeginString, as would have to implement logic to switch data dictionary to match FIX version, which does not seem to worth it...
                 && ((templateID.SenderCompID.Equals(WildcardValue) && !sessionID.SenderCompID.Equals(SessionID.NOT_SET)) || templateID.SenderCompID.Equals(sessionID.SenderCompID))
                 && ((templateID.SenderSubID.Equals(WildcardValue) && !sessionID.SenderSubID.Equals(SessionID.NOT_SET)) || templateID.SenderSubID.Equals(sessionID.SenderSubID))
