@@ -24,7 +24,7 @@ you need Ruby and the Nokogiri gem:
 
 ```
 gem install nokogiri
-ruby generate\generate.bat
+ruby generator\generate.rb
 ```
 
 Build
