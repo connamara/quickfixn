@@ -11,6 +11,7 @@ What's New
 ### NEXT VERSION:
 * (patch) #630 - Make DefaultMessageFactory reflect only over QF/n assemblies (gbirchmeier)
 * (patch) #643 - add 1156 (ApplExtId) to FIXT11.xml (gbirchmeier)
+* (patch) #642 - allow decimal fields to have exponential notation (rakker91)
 
 ### v1.10.0:
 * (patch) #505 - Fix ObjectDisposedException when SocketInitiator is stopped before connection attempt fails (musashibg)
