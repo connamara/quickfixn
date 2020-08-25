@@ -26,7 +26,7 @@ namespace QuickFix.Fields.Converters
                 if ((asciiValOfFirstChar < IntConverter.ASCII_ZERO) || (asciiValOfFirstChar > IntConverter.ASCII_NINE))
                     if (asciiValOfFirstChar != IntConverter.ASCII_MINUS && asciiValOfFirstChar != ASCII_DECIMALPOINT)
                         throw new FieldConvertError("Could not convert string to decimal (" + d + "): The first character must be a digit, decimal point, or minus sign");
-                return System.Convert.ToDecimal( d, System.Globalization.CultureInfo.InvariantCulture );
+                return decimal.Parse(d, System.Globalization.NumberStyles.AllowExponent | System.Globalization.NumberStyles.AllowLeadingSign | System.Globalization.NumberStyles.AllowDecimalPoint, System.Globalization.CultureInfo.InvariantCulture);
             }
             catch (System.OverflowException e)
             {

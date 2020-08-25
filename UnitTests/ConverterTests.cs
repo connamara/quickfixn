@@ -63,6 +63,7 @@ namespace UnitTests
             Assert.That(DecimalConverter.Convert(new Decimal(4.23322)), Is.EqualTo("4.23322"));
             Assert.That(DecimalConverter.Convert(new Decimal(-4.23322)), Is.EqualTo("-4.23322"));
             Assert.That(DecimalConverter.Convert("4332.33"), Is.EqualTo(new Decimal(4332.33)));
+            Assert.That(DecimalConverter.Convert("3.000000000021874E-4"), Is.EqualTo(0.0003000000000021874M));
             Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert("2.32a34"); });
             Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert("+1.2"); });
             Assert.Throws(typeof(FieldConvertError), delegate { DecimalConverter.Convert("(1.2)"); });
