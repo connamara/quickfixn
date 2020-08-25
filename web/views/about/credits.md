@@ -80,3 +80,4 @@ Contributors
 - Pavel Karasev
 - Craig E. Shea
 - Rob Lugt
+- Robert May
