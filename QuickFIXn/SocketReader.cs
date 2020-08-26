@@ -19,6 +19,7 @@ namespace QuickFix
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
         private readonly AcceptorSocketDescriptor acceptorDescriptor_;
+        private readonly SessionProvider _sessionProvider;
 
         /// <summary>
         /// Keep a handle to the current outstanding read request (if any)
@@ -32,7 +33,7 @@ namespace QuickFix
         }
 
         public SocketReader(TcpClient tcpClient, SocketSettings settings, ClientHandlerThread responder)
-            : this(tcpClient, settings, responder, null)
+            : this(tcpClient, settings, responder, null, null)
         {
             
         }
@@ -41,12 +42,14 @@ namespace QuickFix
             TcpClient tcpClient,
             SocketSettings settings,
             ClientHandlerThread responder,
-            AcceptorSocketDescriptor acceptorDescriptor)
+            AcceptorSocketDescriptor acceptorDescriptor,
+            SessionProvider sessionProvider)
         {
             tcpClient_ = tcpClient;
             responder_ = responder;
             acceptorDescriptor_ = acceptorDescriptor;
             stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
+            _sessionProvider = sessionProvider;
         }
 
         /// <summary> FIXME </summary>
@@ -142,7 +145,7 @@ namespace QuickFix
             {
                 if (null == qfSession_)
                 {
-                    qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg));
+                    qfSession_ = _sessionProvider.GetSession(Message.GetReverseSessionID(msg));
                     if (null == qfSession_)
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);

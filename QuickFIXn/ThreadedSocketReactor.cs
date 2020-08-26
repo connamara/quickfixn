@@ -37,7 +37,7 @@ namespace QuickFix
         private QuickFix.Dictionary sessionDict_;
         private IPEndPoint serverSocketEndPoint_;
         private readonly AcceptorSocketDescriptor acceptorDescriptor_;
-
+        private readonly SessionProvider _sessionProvider;
         #endregion
 
         [Obsolete("Use the other constructor")]
@@ -46,17 +46,18 @@ namespace QuickFix
         { }
 
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings,
-            QuickFix.Dictionary sessionDict) : this(serverSocketEndPoint, socketSettings, sessionDict, null)
+            QuickFix.Dictionary sessionDict) : this(serverSocketEndPoint, socketSettings, sessionDict, null, null)
         {
             
         }
-        internal ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict, AcceptorSocketDescriptor acceptorDescriptor)
+        internal ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict, AcceptorSocketDescriptor acceptorDescriptor, SessionProvider sessionProvider)
         {
             socketSettings_ = socketSettings;
             serverSocketEndPoint_ = serverSocketEndPoint;
             tcpListener_ = new TcpListener(serverSocketEndPoint_);
             sessionDict_ = sessionDict;
             acceptorDescriptor_ = acceptorDescriptor;
+            _sessionProvider = sessionProvider;
         }
 
         public void Start()
@@ -115,7 +116,7 @@ namespace QuickFix
                     {
                         ApplySocketOptions(client, socketSettings_);
                         ClientHandlerThread t =
-                            new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_, acceptorDescriptor_);
+                            new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_, acceptorDescriptor_, _sessionProvider);
                         t.Exited += OnClientHandlerThreadExited;
                         lock (sync_)
                         {

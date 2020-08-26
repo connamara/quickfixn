@@ -11,12 +11,13 @@ namespace QuickFix
     /// </summary>
     public class ThreadedSocketAcceptor : IAcceptor
     {
-        
+
 
         private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
         private SessionSettings settings_;
         private Dictionary<IPEndPoint, AcceptorSocketDescriptor> socketDescriptorForAddress_ = new Dictionary<IPEndPoint, AcceptorSocketDescriptor>();
         private SessionFactory sessionFactory_;
+        private SessionProvider _sessionProvider = new SessionProvider();
         private bool isStarted_ = false;
         private bool _disposed = false;
         private object sync_ = new object();
@@ -112,7 +113,7 @@ namespace QuickFix
             IPEndPoint socketEndPoint;
             if (dict.Has(SessionSettings.SOCKET_ACCEPT_HOST))
             {
-                string host = dict.GetString(SessionSettings.SOCKET_ACCEPT_HOST);                
+                string host = dict.GetString(SessionSettings.SOCKET_ACCEPT_HOST);
                 IPAddress[] addrs = Dns.GetHostAddresses(host);
                 socketEndPoint = new IPEndPoint(addrs[0], port);
                 // Set hostname (if it is not already configured)
@@ -124,12 +125,12 @@ namespace QuickFix
             }
 
             socketSettings.Configure(dict);
-            
+
 
             AcceptorSocketDescriptor descriptor;
             if (!socketDescriptorForAddress_.TryGetValue(socketEndPoint, out descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict, _sessionProvider);
                 socketDescriptorForAddress_[socketEndPoint] = descriptor;
             }
 
@@ -150,13 +151,37 @@ namespace QuickFix
                 if ("acceptor" == connectionType)
                 {
                     AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(dict);
-                    Session session = sessionFactory_.Create(sessionID, dict);
-                    descriptor.AcceptSession(session);
-                    sessions_[sessionID] = session;
+                    if (SessionProvider.IsSessionTemplate(sessionID))
+                    {
+                        _sessionProvider.AddTemplate(sessionID, dict, this, descriptor);
+                    }
+                    else
+                    {
+                        _ = CreateAcceptorSession(sessionID, dict, descriptor);
+                    }
                     return true;
                 }
             }
             return false;
+        }
+        /// <summary>
+        /// Can be called at initial sessions creation
+        /// or to create from a template a new dynamic session right at its first connect
+        /// </summary>
+        internal Session CreateAcceptorSession(SessionID sessionID, Dictionary dict, AcceptorSocketDescriptor descriptor)
+        {
+            Session session = sessionFactory_.Create(sessionID, dict);
+            descriptor.AcceptSession(session);
+            sessions_[sessionID] = session;
+            return session;
+        }
+        /// <summary>
+        /// Must be called before creating a dynamic session at its first connect
+        /// to add its settings into the global dictionary
+        /// </summary>
+        internal void SetSessionSettings(SessionID sessionID, Dictionary dict)
+        {
+            settings_.Set(sessionID, dict);
         }
 
         private void StartAcceptingConnections()

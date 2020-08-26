@@ -28,10 +28,10 @@ namespace QuickFix
 
         #endregion
 
-        public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
+        public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict, SessionProvider sessionProvider)
         {
             socketEndPoint_ = socketEndPoint;
-            socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict, this);
+            socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict, this, sessionProvider);
         }
 
         public void AcceptSession(Session session)

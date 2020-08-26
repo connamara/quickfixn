@@ -144,6 +144,37 @@ namespace UnitTests
         }
 
         [Test]
+        public void LoadSettingsWithWildcards()
+        {
+            // May set wildcards to any field in the [DEFAULT] section
+            string configuration = new System.Text.StringBuilder()
+                .AppendLine("[DEFAULT]")
+                .AppendLine("ConnectionType=acceptor")
+                .AppendLine("BeginString=*")
+                .AppendLine("SenderCompID=*")
+                .AppendLine("TargetCompID=*")
+                .AppendLine("SessionQualifier=*")
+                .AppendLine("SomeValue=whatever")
+                .AppendLine("Empty=")
+                .ToString();
+            SessionSettings settings = new SessionSettings(new System.IO.StringReader(configuration));
+            Assert.That(settings.Get().GetString("BeginString"), Is.EqualTo("*"));
+            Assert.That(settings.Get().GetString("SenderCompID"), Is.EqualTo("*"));
+            Assert.That(settings.Get().GetString("TargetCompID"), Is.EqualTo("*"));
+            Assert.That(settings.Get().GetString("SessionQualifier"), Is.EqualTo("*"));
+            // BeginString cannot be a wildcard in any [SESSION] section
+            configuration = new System.Text.StringBuilder()
+                .AppendLine("[SESSION]")
+                .AppendLine("ConnectionType=acceptor")
+                .AppendLine("BeginString=*")
+                .AppendLine("SenderCompID=*")
+                .AppendLine("TargetCompID=*")
+                .ToString();
+            ConfigError ex = Assert.Throws<ConfigError>(delegate { _ = new SessionSettings(new System.IO.StringReader(configuration)); });
+            Assert.That(ex.Message, Is.EqualTo("Configuration failed: BeginString (*) must be FIX.4.0 to FIX.4.4 or FIXT.1.1"));
+        }
+
+        [Test]
         public void DuplicateSession()
         {
             string configuration = new System.Text.StringBuilder()
