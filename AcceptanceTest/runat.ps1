@@ -15,7 +15,7 @@ Param(
     [string] $Conf,
 
     [Parameter(Mandatory, Position=4)]
-    [ValidateSet('net461','netcoreapp2.1')]
+    [ValidateSet('net461','netcoreapp2.1', 'netcoreapp3.1')]
     [string] $Framework,
 
     [switch]$UseWsl
