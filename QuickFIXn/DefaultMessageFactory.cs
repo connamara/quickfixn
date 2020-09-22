@@ -153,11 +153,14 @@ namespace QuickFix
                 {
                     return;
                 }
-
-                var dlls = Directory.GetFiles(directory, "quickfix.*.dll");
+                var quickFixRootLib = Path.GetFileName(assemblyLocation);
+                var dlls = Directory.GetFiles(directory, "*.dll");
                 foreach (var path in dlls)
                 {
-                    Assembly.LoadFrom(path);
+                    var pi = new FileInfo(path);
+                    //in linux casing is important, or we compare insensitive
+                    if(pi.Name.StartsWith("quickfix.", StringComparison.OrdinalIgnoreCase) && !pi.Name.Equals(quickFixRootLib))
+                        Assembly.LoadFrom(path);
                 }
             }
             catch (Exception ex)
