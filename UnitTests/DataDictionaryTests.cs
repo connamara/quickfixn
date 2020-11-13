@@ -596,7 +596,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void NotThrowRequiredTagMissingIfEnforceRequiredFieldsIsSet()
+        public void NotThrowRequiredTagMissingIfEnforceRequiredFieldsIsFalse()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.LoadFIXSpec("FIX44");
