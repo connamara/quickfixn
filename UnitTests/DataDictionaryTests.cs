@@ -596,6 +596,30 @@ namespace UnitTests
         }
 
         [Test]
+        public void NotThrowRequiredTagMissingIfEnforceRequiredFieldsIsSet()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+            dd.EnforceRequiredFields = false;
+            QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
+
+            string[] msgFields = { "8=FIX.4.4", "9=76", "35=7", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
+                                     "2=AdvId", "5=N", "4=B", "53=1", "10=138" };
+            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+
+            string msgType = "7";
+            string beginString = "FIX.4.4";
+
+            Message message = f.Create(beginString, msgType);
+            message.FromString(msgStr, true, dd, dd, f);
+
+            dd.Validate(message, beginString, msgType);
+
+            // If we got this far we passed.
+            Assert.True(true);
+        }
+
+        [Test]
         public void ComponentFieldsRequirements()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
