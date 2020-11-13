@@ -182,8 +182,8 @@ namespace QuickFix
                 ddCopy.CheckUserDefinedFields = settings.GetBool(SessionSettings.VALIDATE_USER_DEFINED_FIELDS);
             if (settings.Has(SessionSettings.ALLOW_UNKNOWN_MSG_FIELDS))
                 ddCopy.AllowUnknownMessageFields = settings.GetBool(SessionSettings.ALLOW_UNKNOWN_MSG_FIELDS);
-            if (settings.Has(SessionSettings.ENFORCE_REQUIRED_FILEDS))
-                ddCopy.EnforceRequiredFields = settings.GetBool(SessionSettings.ENFORCE_REQUIRED_FILEDS);
+            if (settings.Has(SessionSettings.VALIDATE_REQUIRED_FIELDS))
+                ddCopy.ValidateRequiredFields = settings.GetBool(SessionSettings.VALIDATE_REQUIRED_FIELDS);
 
             return ddCopy;
         }

@@ -596,11 +596,11 @@ namespace UnitTests
         }
 
         [Test]
-        public void NotThrowRequiredTagMissingIfEnforceRequiredFieldsIsFalse()
+        public void NotThrowRequiredTagMissingIfValidateRequiredFieldsIsFalse()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
             dd.LoadFIXSpec("FIX44");
-            dd.EnforceRequiredFields = false;
+            dd.ValidateRequiredFields = false;
             QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
             string[] msgFields = { "8=FIX.4.4", "9=76", "35=7", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",

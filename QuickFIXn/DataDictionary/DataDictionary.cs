@@ -24,7 +24,7 @@ namespace QuickFix.DataDictionary
         public bool CheckFieldsHaveValues { get; set; }
         public bool CheckUserDefinedFields { get; set; }
         public bool AllowUnknownMessageFields { get; set; }
-        public bool EnforceRequiredFields { get; set; }
+        public bool ValidateRequiredFields { get; set; }
 
         public DDMap Header = new DDMap();
         public DDMap Trailer = new DDMap();
@@ -35,7 +35,7 @@ namespace QuickFix.DataDictionary
             CheckFieldsOutOfOrder = true;
             CheckUserDefinedFields = true;
             AllowUnknownMessageFields = false;
-            EnforceRequiredFields = true;
+            ValidateRequiredFields = true;
         }
 
         /// <summary>
@@ -99,10 +99,7 @@ namespace QuickFix.DataDictionary
             if ((null != appDataDict) && (null != appDataDict.Version))
             {
                 appDataDict.CheckMsgType(msgType);
-                if (appDataDict.EnforceRequiredFields)
-                {
-                    appDataDict.CheckHasRequired(message, msgType);
-                }
+                appDataDict.CheckHasRequired(message, msgType);
             }
 
             if (!bodyOnly)
@@ -157,7 +154,12 @@ namespace QuickFix.DataDictionary
 
         public void CheckHasRequired(Message message, string msgType)
         {
-            foreach (int field in Header.ReqFields)
+            if (!ValidateRequiredFields)
+            {
+                return;
+            }
+
+                foreach (int field in Header.ReqFields)
             {
                 if (!message.Header.IsSetField(field))
                     throw new RequiredTagMissing(field);
