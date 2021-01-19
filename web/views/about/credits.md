@@ -81,3 +81,4 @@ Contributors
 - Craig E. Shea
 - Rob Lugt
 - Robert May
+- Johnathan David
