@@ -82,3 +82,4 @@ Contributors
 - Rob Lugt
 - Robert May
 - Johnathan David
+- Jaroslav Havel
