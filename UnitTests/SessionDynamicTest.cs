@@ -98,7 +98,7 @@ namespace UnitTests
                 Monitor.Pulse(_loggedOnCompIDs);
             }
         }
-         void LogoffCallback(string compID)
+        void LogoffCallback(string compID)
         {
             lock (_loggedOnCompIDs)
             {
@@ -164,7 +164,7 @@ namespace UnitTests
             _listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _listenSocket.Bind(listenEndpoint);
             _listenSocket.Listen(10);
-           _listenSocket.BeginAccept(new AsyncCallback(ProcessInboundConnect), null);
+            _listenSocket.BeginAccept(new AsyncCallback(ProcessInboundConnect), null);
         }
 
         void ProcessInboundConnect(IAsyncResult ar)
@@ -189,7 +189,7 @@ namespace UnitTests
         void ProcessRXData(IAsyncResult ar)
         {
             SocketState socketState = (SocketState)ar.AsyncState;
-            int bytesReceived  = 0;
+            int bytesReceived = 0;
             try
             {
                 bytesReceived = socketState._socket.EndReceive(ar);
@@ -219,16 +219,24 @@ namespace UnitTests
                         lock (_sessions)
                         {
                             _sessions[targetCompID] = socketState;
-                           Monitor.Pulse(_sessions);
+                            Monitor.Pulse(_sessions);
                         }
                 }
             }
-            ReceiveAsync(socketState);
+
+            try
+            {
+                ReceiveAsync(socketState);
+            }
+            catch (System.ObjectDisposedException)
+            {
+                // ignore socket disposed
+            }
         }
 
         void ReceiveAsync(SocketState socketState)
         {
-             socketState._socket.BeginReceive(socketState._rxBuffer, 0, socketState._rxBuffer.Length, SocketFlags.None, new AsyncCallback(ProcessRXData), socketState);;
+            socketState._socket.BeginReceive(socketState._rxBuffer, 0, socketState._rxBuffer.Length, SocketFlags.None, new AsyncCallback(ProcessRXData), socketState);
         }
 
         Socket ConnectToEngine()
@@ -366,6 +374,8 @@ namespace UnitTests
             //create two sessions with two different SOCKET_ACCEPT_PORT
             StartEngine(false, true);
 
+            Thread.Sleep(100);
+
             // Ensure we can log on 1st session to 1st port
             using (var socket11 = ConnectToEngine(AcceptPort))
             {
@@ -375,7 +385,7 @@ namespace UnitTests
             }
 
             // Ensure we can't log on 2nd session to 1st port
-            using(var socket12 = ConnectToEngine(AcceptPort))
+            using (var socket12 = ConnectToEngine(AcceptPort))
             {
                 Assert.IsTrue(socket12.Connected, "Failed to connect to 1st accept port");
                 SendLogon(socket12, StaticAcceptorCompID2);
@@ -441,7 +451,7 @@ namespace UnitTests
             StartEngine(true);
 
             // Ensure we can log on statically (normally) configured initiator
-            Assert.IsTrue(WaitForLogonMessage(StaticInitiatorCompID),  "Failed to get logon message for static initiator session");
+            Assert.IsTrue(WaitForLogonMessage(StaticInitiatorCompID), "Failed to get logon message for static initiator session");
             SendInitiatorLogon(StaticInitiatorCompID);
 
             // Add the dynamic initator and ensure that we can log on
@@ -481,7 +491,7 @@ namespace UnitTests
             Assert.IsFalse(IsLoggedOn(StaticInitiatorCompID), "Session still logged on after being removed");
 
             // Check that log directory default setting has been effective
-            Assert.Greater(System.IO.Directory.GetFiles(_logPath, QuickFix.Values.BeginString_FIX42 + "*.log").Length, 0); 
+            Assert.Greater(System.IO.Directory.GetFiles(_logPath, QuickFix.Values.BeginString_FIX42 + "*.log").Length, 0);
         }
     }
 }
