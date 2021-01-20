@@ -1,11 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Xml.Linq;
 using NUnit.Framework;
 using QuickFix;
-using QuickFix.Fields;
-using UnitTests.TestHelpers;
 
 namespace UnitTests
 {
@@ -22,18 +19,20 @@ namespace UnitTests
             Message msg = new Message();
             msg.FromString(str1, true, null, null, _defaultMsgFactory);
 
-            string expected = @"<message>
-<header>
-<field number=""8""><![CDATA[FIX.4.2]]></field><field number=""9""><![CDATA[55]]></field><field number=""34""><![CDATA[3]]></field><field number=""35""><![CDATA[0]]></field><field number=""49""><![CDATA[TW]]></field><field number=""52""><![CDATA[20000426-12:05:06]]></field><field number=""56""><![CDATA[ISLD]]></field>
-</header>
-<body>
-<field number=""1""><![CDATA[acct123]]></field>
-</body>
-<trailer>
-<field number=""10""><![CDATA[123]]></field>
-</trailer>
-</message>
-";
+            var expectedArr = new List<string>();
+            expectedArr.Add("<message>");
+            expectedArr.Add("<header>");
+            expectedArr.Add(@"<field number=""8""><![CDATA[FIX.4.2]]></field><field number=""9""><![CDATA[55]]></field><field number=""34""><![CDATA[3]]></field><field number=""35""><![CDATA[0]]></field><field number=""49""><![CDATA[TW]]></field><field number=""52""><![CDATA[20000426-12:05:06]]></field><field number=""56""><![CDATA[ISLD]]></field>");
+            expectedArr.Add("</header>");
+            expectedArr.Add("<body>");
+            expectedArr.Add(@"<field number=""1""><![CDATA[acct123]]></field>");
+            expectedArr.Add("</body>");
+            expectedArr.Add("<trailer>");
+            expectedArr.Add(@"<field number=""10""><![CDATA[123]]></field>");
+            expectedArr.Add("</trailer>");
+            expectedArr.Add("</message>");
+            expectedArr.Add("");
+            var expected = string.Join(Environment.NewLine, expectedArr);
 
             Assert.AreEqual(expected, msg.ToXML());
         }
@@ -68,18 +67,21 @@ namespace UnitTests
             QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
             msg.FromString(msgStr, true, dd, dd, null); // <-- null factory!
 
-            string expected = @"<message>
-<header>
-<field number=""8""><![CDATA[FIX.4.4]]></field><field number=""9""><![CDATA[638]]></field><field number=""34""><![CDATA[360]]></field><field number=""35""><![CDATA[8]]></field><field number=""49""><![CDATA[BLPTSOX]]></field><field number=""52""><![CDATA[20130321-15:21:23]]></field><field number=""56""><![CDATA[THINKTSOX]]></field><field number=""57""><![CDATA[6804469]]></field><field number=""128""><![CDATA[ZERO]]></field>
-</header>
-<body>
-<field number=""6""><![CDATA[122.255]]></field><field number=""11""><![CDATA[61101189]]></field><field number=""14""><![CDATA[1990000]]></field><field number=""15""><![CDATA[GBP]]></field><field number=""17""><![CDATA[VCON:20130321:50018:5:12]]></field><field number=""22""><![CDATA[4]]></field><field number=""31""><![CDATA[122.255]]></field><field number=""32""><![CDATA[1990000]]></field><field number=""37""><![CDATA[116]]></field><field number=""38""><![CDATA[1990000]]></field><field number=""39""><![CDATA[2]]></field><field number=""48""><![CDATA[GB0032452392]]></field><field number=""54""><![CDATA[1]]></field><field number=""55""><![CDATA[[N/A]]]></field><field number=""60""><![CDATA[20130321-15:21:23]]></field><field number=""64""><![CDATA[20130322]]></field><field number=""75""><![CDATA[20130321]]></field><field number=""106""><![CDATA[UK TSY 4 1/4% 2036]]></field><field number=""118""><![CDATA[2436321.85]]></field><field number=""150""><![CDATA[F]]></field><field number=""151""><![CDATA[0]]></field><field number=""157""><![CDATA[15]]></field><field number=""159""><![CDATA[3447.35]]></field><field number=""192""><![CDATA[0]]></field><field number=""198""><![CDATA[3739:20130321:50018:5]]></field><field number=""223""><![CDATA[0.0425]]></field><field number=""228""><![CDATA[1]]></field><field number=""236""><![CDATA[0.0291371041]]></field><field number=""238""><![CDATA[0]]></field><field number=""381""><![CDATA[2432874.5]]></field><field number=""423""><![CDATA[1]]></field><field number=""453""><![CDATA[6]]></field><field number=""470""><![CDATA[GB]]></field><field number=""541""><![CDATA[20360307]]></field><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[VCON]]></field><field number=""452""><![CDATA[1]]></field><field number=""802""><![CDATA[1]]></field><group><field number=""523""><![CDATA[14]]></field><field number=""803""><![CDATA[4]]></field></group></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[TFOLIO:6804469]]></field><field number=""452""><![CDATA[12]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[TFOLIO]]></field><field number=""452""><![CDATA[11]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[THINKFOLIO LTD]]></field><field number=""452""><![CDATA[13]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[SXT]]></field><field number=""452""><![CDATA[16]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[TFOLIO:6804469]]></field><field number=""452""><![CDATA[36]]></field></group>
-</body>
-<trailer>
-<field number=""10""><![CDATA[152]]></field>
-</trailer>
-</message>
-";
+            var expectedArr = new List<string>();
+
+            expectedArr.Add("<message>");
+            expectedArr.Add("<header>");
+            expectedArr.Add(@"<field number=""8""><![CDATA[FIX.4.4]]></field><field number=""9""><![CDATA[638]]></field><field number=""34""><![CDATA[360]]></field><field number=""35""><![CDATA[8]]></field><field number=""49""><![CDATA[BLPTSOX]]></field><field number=""52""><![CDATA[20130321-15:21:23]]></field><field number=""56""><![CDATA[THINKTSOX]]></field><field number=""57""><![CDATA[6804469]]></field><field number=""128""><![CDATA[ZERO]]></field>");
+            expectedArr.Add("</header>");
+            expectedArr.Add("<body>");
+            expectedArr.Add(@"<field number=""6""><![CDATA[122.255]]></field><field number=""11""><![CDATA[61101189]]></field><field number=""14""><![CDATA[1990000]]></field><field number=""15""><![CDATA[GBP]]></field><field number=""17""><![CDATA[VCON:20130321:50018:5:12]]></field><field number=""22""><![CDATA[4]]></field><field number=""31""><![CDATA[122.255]]></field><field number=""32""><![CDATA[1990000]]></field><field number=""37""><![CDATA[116]]></field><field number=""38""><![CDATA[1990000]]></field><field number=""39""><![CDATA[2]]></field><field number=""48""><![CDATA[GB0032452392]]></field><field number=""54""><![CDATA[1]]></field><field number=""55""><![CDATA[[N/A]]]></field><field number=""60""><![CDATA[20130321-15:21:23]]></field><field number=""64""><![CDATA[20130322]]></field><field number=""75""><![CDATA[20130321]]></field><field number=""106""><![CDATA[UK TSY 4 1/4% 2036]]></field><field number=""118""><![CDATA[2436321.85]]></field><field number=""150""><![CDATA[F]]></field><field number=""151""><![CDATA[0]]></field><field number=""157""><![CDATA[15]]></field><field number=""159""><![CDATA[3447.35]]></field><field number=""192""><![CDATA[0]]></field><field number=""198""><![CDATA[3739:20130321:50018:5]]></field><field number=""223""><![CDATA[0.0425]]></field><field number=""228""><![CDATA[1]]></field><field number=""236""><![CDATA[0.0291371041]]></field><field number=""238""><![CDATA[0]]></field><field number=""381""><![CDATA[2432874.5]]></field><field number=""423""><![CDATA[1]]></field><field number=""453""><![CDATA[6]]></field><field number=""470""><![CDATA[GB]]></field><field number=""541""><![CDATA[20360307]]></field><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[VCON]]></field><field number=""452""><![CDATA[1]]></field><field number=""802""><![CDATA[1]]></field><group><field number=""523""><![CDATA[14]]></field><field number=""803""><![CDATA[4]]></field></group></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[TFOLIO:6804469]]></field><field number=""452""><![CDATA[12]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[TFOLIO]]></field><field number=""452""><![CDATA[11]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[THINKFOLIO LTD]]></field><field number=""452""><![CDATA[13]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[SXT]]></field><field number=""452""><![CDATA[16]]></field></group><group><field number=""447""><![CDATA[D]]></field><field number=""448""><![CDATA[TFOLIO:6804469]]></field><field number=""452""><![CDATA[36]]></field></group>");
+            expectedArr.Add("</body>");
+            expectedArr.Add("<trailer>");
+            expectedArr.Add(@"<field number=""10""><![CDATA[152]]></field>");
+            expectedArr.Add("</trailer>");
+            expectedArr.Add("</message>");
+            expectedArr.Add("");
+            var expected = string.Join(Environment.NewLine, expectedArr);
 
             Assert.AreEqual(expected, msg.ToXML());
         }
