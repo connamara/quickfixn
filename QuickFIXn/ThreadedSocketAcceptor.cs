@@ -99,9 +99,6 @@ namespace QuickFix
                 QuickFix.Dictionary dict = settings.Get(sessionID);
                 CreateSession(sessionID, dict);
             }
-
-            if (0 == socketDescriptorForAddress_.Count)
-                throw new ConfigError("No acceptor sessions found in SessionSettings.");
         }
 
         private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(Dictionary dict)
@@ -153,6 +150,14 @@ namespace QuickFix
                     Session session = sessionFactory_.Create(sessionID, dict);
                     descriptor.AcceptSession(session);
                     sessions_[sessionID] = session;
+
+                    // start SocketReactor if it was created via AddSession call
+                    // and if acceptor is already started
+                    if (isStarted_ && !_disposed)
+                    {
+                        descriptor.SocketReactor.Start();
+                    }
+
                     return true;
                 }
             }
