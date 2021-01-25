@@ -234,8 +234,8 @@ namespace QuickFix
                 {
                     foreach (SessionID sessionID in connected_)
                     {
-                        if (Session.LookupSession(sessionID).IsLoggedOn)
-                            return true;
+                        Session session = Session.LookupSession(sessionID);
+                        return session != null && session.IsLoggedOn;
                     }
                 }
 
