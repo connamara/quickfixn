@@ -1,13 +1,9 @@
 ﻿using NUnit.Framework;
 using QuickFix;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UnitTests
 {
@@ -17,7 +13,7 @@ namespace UnitTests
         static readonly Random _random = new Random();
         static TcpListener _tcpListener;
 
-        private int OcuppyAPort()
+        private int OccupyAPort()
         {
             int randomPort;
             for (int i = 0; i < 10; i++)
@@ -33,7 +29,7 @@ namespace UnitTests
                 catch { }
             }
 
-            throw new Exception("Could not ocuppy a port in 10 attempts");
+            throw new Exception("Could not occupy a port in 10 attempts");
         }
 
         static StringWriter GetStdOut()
@@ -46,7 +42,7 @@ namespace UnitTests
         [Test]
         public void TestStartOnBusyPort()
         {
-            var port = OcuppyAPort();
+            var port = OccupyAPort();
 
             var settings = new SocketSettings();
             var testingObject = new ThreadedSocketReactor(new IPEndPoint(IPAddress.Loopback, port), settings, sessionDict: null);
