@@ -109,7 +109,17 @@ namespace QuickFix
             lock (sync_)
             {
                 if (State.SHUTDOWN_REQUESTED != state_)
-                    tcpListener_.Start();
+                {
+                    try
+                    {
+                        tcpListener_.Start();
+                    }
+                    catch(Exception e)
+                    {
+                        this.Log("Error starting listener: " + e.Message);
+                        throw;
+                    }
+                }
             }
 
             while (State.RUNNING == ReactorState)
