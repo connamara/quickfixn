@@ -60,13 +60,15 @@ HERE
 
   def self.tags_str fields
 <<HERE
+// This is a generated file.  Don't edit it directly!
+
 using System;
 
 namespace QuickFix.Fields
 {
     /// <summary>
     /// FIX Field Tag Values
-    /// </summary>/
+    /// </summary>
     public static class Tags
     {
 #{fields.map {|f| tag_str(f)}.join("\n")}
