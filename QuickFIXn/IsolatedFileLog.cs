@@ -13,7 +13,7 @@ namespace QuickFix
     /// </summary>
     public class IsolatedFileLog : FileLog
     {
-        IsolatedStorageFile store_;
+        private IsolatedStorageFile store_;
 
         public IsolatedFileLog(IsolatedStorageFile store, string fileLogPath, SessionID sessionID)
             : base(fileLogPath, sessionID)

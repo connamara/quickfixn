@@ -14,7 +14,7 @@ namespace QuickFix
         #region LogFactory Members
 
         public IsolatedFileLogFactory(IsolatedStorageFile store, SessionSettings settings)
-            :base(settings)
+            : base(settings)
         {
             isoStorage_ = store;
         }
