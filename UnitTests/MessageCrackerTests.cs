@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using QuickFix;
-using QuickFix.Fields;
 using System.Reflection;
 
 
@@ -103,6 +100,43 @@ namespace UnitTests
             MessageCracker mc = new TestCracker();
             Assert.Throws<UnsupportedMessageType>(delegate { mc.Crack(new QuickFix.FIX42.Email(), _DummySessionID); });
             Assert.Throws<UnsupportedMessageType>(delegate { mc.Crack(new QuickFix.FIX43.News(), _DummySessionID); });
+        }
+
+        public class MessageHandler
+        {
+            public bool CrackedNews42 { get; set; }
+            public bool CrackedNews44 { get; set; }
+
+            public void OnMessage(QuickFix.FIX42.News msg, SessionID s) { CrackedNews42 = true; }
+            public void OnMessage(QuickFix.FIX44.News msg, SessionID s) { CrackedNews44 = true; }
+        }
+
+        [Test]
+        public void GoldenPathStandaloneCracker()
+        {
+            var handler = new MessageHandler();
+            var cracker = new MessageCracker(handler);
+
+            cracker.Crack(new QuickFix.FIX42.News(), _DummySessionID);
+            Assert.IsTrue(handler.CrackedNews42);
+            Assert.IsFalse(handler.CrackedNews44);
+
+            // reset and do the opposite
+            handler.CrackedNews42 = false;
+
+            cracker.Crack(new QuickFix.FIX44.News(), _DummySessionID);
+            Assert.IsFalse(handler.CrackedNews42);
+            Assert.IsTrue(handler.CrackedNews44);
+        }
+
+        [Test]
+        public void UnsupportedMessageStandaloneCracker()
+        {
+            var handler = new MessageHandler();
+            var cracker = new MessageCracker(handler);
+            
+            Assert.Throws<UnsupportedMessageType>(delegate { cracker.Crack(new QuickFix.FIX42.Email(), _DummySessionID); });
+            Assert.Throws<UnsupportedMessageType>(delegate { cracker.Crack(new QuickFix.FIX43.News(), _DummySessionID); });
         }
     }
 }
