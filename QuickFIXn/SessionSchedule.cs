@@ -1,5 +1,8 @@
 ﻿
 using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace QuickFix
 {
     public class SessionSchedule
@@ -10,6 +13,7 @@ namespace QuickFix
         public bool WeeklySession { get; private set; }
         public System.DayOfWeek StartDay { get; private set; }
         public System.DayOfWeek EndDay { get; private set; }
+        public List<System.DayOfWeek> Weekdays { get; private set; }
 
         public bool NonStopSession { get; private set; }
 
@@ -76,7 +80,7 @@ namespace QuickFix
             if (WeeklySession)
                 return CheckDay(adjusted);
             else
-                return CheckTime(adjusted.TimeOfDay);
+                return CheckTime(adjusted);
         }
 
         /// <summary>
@@ -189,22 +193,29 @@ namespace QuickFix
 
             //start day must be same as end day
             if (StartTime >= EndTime)
-                return time.DayOfWeek != StartDay || CheckTime(time.TimeOfDay);
+                return time.DayOfWeek != StartDay || CheckTime(time);
             else
-                return time.DayOfWeek == StartDay && CheckTime(time.TimeOfDay);
+                return time.DayOfWeek == StartDay && CheckTime(time);
         }
 
         /// <summary>
         /// Return true if time is between StartDay:StartTime and EndDay:EndTime
         /// </summary>
-        /// <param name="time"></param>
+        /// <param name="date"></param>
         /// <returns></returns>
-        private bool CheckTime(System.TimeSpan time)
+        private bool CheckTime(System.DateTime date)
         {
             if (NonStopSession)
             {
                 return true;
             }
+
+            if (Weekdays?.Any() == true && !Weekdays.Contains(date.DayOfWeek))
+            {
+                return false;
+            }
+
+            var time = date.TimeOfDay;
 
             if (StartTime.CompareTo(EndTime) < 0)
             {
@@ -249,6 +260,22 @@ namespace QuickFix
                 StartDay = settings.GetDay(SessionSettings.START_DAY);
                 EndDay = settings.GetDay(SessionSettings.END_DAY);
                 WeeklySession = true;
+            }
+
+            if (settings.Has(SessionSettings.WEEKDAYS))
+            {
+                if (WeeklySession)
+                {
+                    throw new QuickFix.ConfigError("Usage of StartDay or EndDay is not compatible with " + SessionSettings.WEEKDAYS);
+                }
+
+                var weekdayNames = settings.GetString(SessionSettings.WEEKDAYS);
+                if (string.IsNullOrWhiteSpace(weekdayNames))
+                {
+                    throw new QuickFix.ConfigError(SessionSettings.WEEKDAYS + " is empty");
+                }
+
+                Weekdays = settings.GetDays(SessionSettings.WEEKDAYS).ToList();
             }
 
             if (settings.Has(SessionSettings.USE_LOCAL_TIME))
