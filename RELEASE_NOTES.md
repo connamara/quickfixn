@@ -63,6 +63,7 @@ What's New
 * #711 - fix explicit 0.0.0.0 address binding (bohdanstefaniuk)
 * #823 - get rid of IOIQty enums in FIX5 DDs, allow free string (gbirchmeier)
 * #786 - rewrite HttpServer: better HTML, no crash on errors (gbirchmeier)
+* #697 - new SocketIgnoreProxy setting (ABSJ415)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages
