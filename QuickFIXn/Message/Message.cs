@@ -66,7 +66,7 @@ namespace QuickFix
 
         public Header Header { get; private set; }
         public Trailer Trailer { get; private set; }
-        
+
         #endregion
 
         #region Constructors
@@ -129,6 +129,40 @@ namespace QuickFix
         public static MsgType IdentifyType(string fixstring)
         {
             return new MsgType(GetMsgType(fixstring));
+        }
+
+        public static int ExtractFieldTag(string msgstr, int pos)
+        {
+            int tagend = msgstr.IndexOf('=', pos);
+            int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
+            return tag;
+        }
+
+        public static StringField ExtractDataField(string msgstr, int dataLength, ref int pos, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
+        {
+            try
+            {
+                int tagend = msgstr.IndexOf('=', pos);
+                int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
+                pos = tagend + 1;
+                int fieldvalend = msgstr.IndexOf((char)1, pos);
+                StringField field = new StringField(tag, msgstr.Substring(pos, dataLength));
+
+                pos += dataLength + 1;
+                return field;
+            }
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                throw new MessageParseError("Error at position (" + pos + ") while parsing msg (" + msgstr + ")", e);
+            }
+            catch (System.OverflowException e)
+            {
+                throw new MessageParseError("Error at position (" + pos + ") while parsing msg (" + msgstr + ")", e);
+            }
+            catch (System.FormatException e)
+            {
+                throw new MessageParseError("Error at position (" + pos + ") while parsing msg (" + msgstr + ")", e);
+            }
         }
 
         public static StringField ExtractField(string msgstr, ref int pos, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
@@ -228,6 +262,18 @@ namespace QuickFix
                     return false;
             }
         }
+
+        public static bool IsDataField(int tag)
+        {
+            switch (tag)
+            {
+                case Tags.XmlData:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public static bool IsHeaderField(int tag, DataDictionary.DataDictionary dd)
         {
             if (IsHeaderField(tag))
@@ -342,16 +388,16 @@ namespace QuickFix
         public bool FromStringHeader(string msgstr)
         {
             Clear();
-            
+
             int pos = 0;
             int count = 0;
             while(pos < msgstr.Length)
             {
                 StringField f = ExtractField(msgstr, ref pos);
-                
+
                 if((count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
                     return false;
-                
+
                 if(IsHeaderField(f.Tag))
                     this.Header.SetField(f, false);
                 else
@@ -408,12 +454,29 @@ namespace QuickFix
             bool expectingBody = true;
             int count = 0;
             int pos = 0;
-	        DataDictionary.IFieldMapSpec msgMap = null;
+            DataDictionary.IFieldMapSpec msgMap = null;
 
             while (pos < msgstr.Length)
             {
-                StringField f = ExtractField(msgstr, ref pos, sessionDD, appDD);
-                
+                StringField f;
+                int fieldTag = ExtractFieldTag(msgstr, pos);
+                if (IsDataField(fieldTag))
+                {
+                    // Assume length field is 1 less
+                    int lenFieldTag = fieldTag - 1;
+                    // Special case for Signature which violates above assumption
+                    if (Tags.Signature.Equals(fieldTag))
+                        f = ExtractDataField(msgstr, Tags.SignatureLength, ref pos, sessionDD, appDD);
+                    else if (IsHeaderField(lenFieldTag))
+                        f = ExtractDataField(msgstr, Header.GetInt(lenFieldTag), ref pos, sessionDD, appDD);
+                    else if (IsSetField(lenFieldTag))
+                        f = ExtractDataField(msgstr, GetInt(lenFieldTag), ref pos, sessionDD, appDD);
+                    else
+                        f = ExtractField(msgstr, ref pos, sessionDD, appDD);
+                }
+                else
+                    f = ExtractField(msgstr, ref pos, sessionDD, appDD);
+
                 if (validate && (count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
                     throw new InvalidMessage("Header fields out of order");
 
@@ -433,7 +496,7 @@ namespace QuickFix
                         {
                             msgMap = appDD.GetMapForMessage(msgType);
                         }
-		            }
+                    }
 
                     if (!this.Header.SetField(f, false))
                         this.Header.RepeatedTags.Add(f);
@@ -470,7 +533,7 @@ namespace QuickFix
                         this.RepeatedTags.Add(f);
                     }
 
-                    
+
                     if((null != msgMap) && (msgMap.IsGroup(f.Tag)))
                     {
                         pos = SetGroup(f, msgstr, pos, this, msgMap.GetGroupSpec(f.Tag), sessionDD, appDD, msgFactory);
@@ -483,7 +546,6 @@ namespace QuickFix
                 Validate();
             }
         }
-
 
         [System.Obsolete("Use the version that takes an IMessageFactory instead")]
         protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
@@ -566,7 +628,7 @@ namespace QuickFix
                     pos = SetGroup(f, msgstr, pos, grp, groupDD.GetGroupSpec(f.Tag), sessionDataDictionary, appDD, msgFactory);
                 }
             }
-            
+
             return grpPos;
         }
 
@@ -811,14 +873,14 @@ namespace QuickFix
             // fields
             foreach (var f in fields)
             {
-               s.Append("<field ");
-               if ((dd != null) && ( dd.FieldsByTag.ContainsKey(f.Key)))
-               {
-                   s.Append("name=\"" + dd.FieldsByTag[f.Key].Name + "\" ");
-               }
-               s.Append("number=\"" + f.Key.ToString() + "\">");
-               s.Append("<![CDATA[" + f.Value.ToString() + "]]>");
-               s.Append("</field>");
+                s.Append("<field ");
+                if ((dd != null) && ( dd.FieldsByTag.ContainsKey(f.Key)))
+                {
+                    s.Append("name=\"" + dd.FieldsByTag[f.Key].Name + "\" ");
+                }
+                s.Append("number=\"" + f.Key.ToString() + "\">");
+                s.Append("<![CDATA[" + f.Value.ToString() + "]]>");
+                s.Append("</field>");
             }
             // now groups
             List<int> groupTags = fields.GetGroupTags();

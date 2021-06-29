@@ -323,6 +323,28 @@ namespace UnitTests
         }
 
         [Test]
+        public void CheckNonFixXMLTest()
+        {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX42");
+
+            QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
+
+            string nul = Message.SOH;
+            string s = "8=FIX.4.2" + nul + "9=495" + nul + "35=n" + nul + "34=31420" + nul + "369=1003" + nul + "52=20200701-20:34:33.978" + nul + "49=CME" + nul + "50=84" +
+                nul + "56=DUMMY11" + nul + "57=SID1" + nul + "143=US,IL" + nul + "212=392" + nul + "213=<RTRF>8=FIX.4.2" + nul + "9=356" + nul + "35=8" + nul + "34=36027" + nul +
+                "369=18623" + nul + "52=20200701-20:34:33.977" + nul + "49=CME" + nul + "50=84" + nul + "56=M2L000N" + nul + "57=DUMMY" + nul + "143=US,IL" + nul + "1=00331" + nul +
+                "6=0" + nul + "11=ACP1593635673935" + nul + "14=0" + nul + "17=84618:1342652" + nul + "20=0" + nul + "37=84778833500" + nul + "38=10" + nul + "39=0" + nul + "40=2" + nul +
+                "41=0" + nul + "44=139.203125" + nul + "48=204527" + nul + "54=1" + nul + "55=ZN" + nul + "59=0" + nul + "60=20200701-20:34:33.976" + nul + "107=ZNH1" + nul + "150=0" + nul +
+                "151=10" + nul + "167=FUT" + nul + "432=20200701" + nul + "1028=Y" + nul + "1031=Y" + nul + "5979=1593635673976364291" + nul + "9717=ACP1593635673935" + nul + "10=124" + nul + "</RTRF>" + nul + "10=028" + nul;
+
+            n.FromString(s, true, dd, dd, _defaultMsgFactory);
+
+            //verify that the data field was read correctly
+            Assert.AreEqual(n.Header.GetInt(212), n.Header.GetString(213).Length);
+        }
+
+        [Test]
         public void ValidateWrongType()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
