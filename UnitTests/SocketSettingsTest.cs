@@ -12,6 +12,7 @@ namespace UnitTests
         {
             SocketSettings socketSettings = new SocketSettings();
 
+            Assert.IsFalse(socketSettings.SocketIgnoreProxy);
             Assert.IsTrue(socketSettings.SocketNodelay);
             Assert.IsNull(socketSettings.SocketReceiveBufferSize);
             Assert.IsNull(socketSettings.SocketSendBufferSize);
@@ -31,6 +32,7 @@ namespace UnitTests
         private Dictionary BaseTestDict()
         {
             Dictionary dict = new Dictionary();
+            dict.SetBool(SessionSettings.SOCKET_IGNORE_PROXY, false);
             dict.SetBool(SessionSettings.SOCKET_NODELAY, false);
             dict.SetLong(SessionSettings.SOCKET_RECEIVE_BUFFER_SIZE, 1);
             dict.SetLong(SessionSettings.SOCKET_SEND_BUFFER_SIZE, 2);
@@ -54,6 +56,7 @@ namespace UnitTests
             SocketSettings socketSettings = new SocketSettings();
             socketSettings.Configure(BaseTestDict());
 
+            Assert.IsFalse(socketSettings.SocketIgnoreProxy);
             Assert.IsFalse(socketSettings.SocketNodelay);
             Assert.AreEqual(1, socketSettings.SocketReceiveBufferSize);
             Assert.AreEqual(2, socketSettings.SocketSendBufferSize);

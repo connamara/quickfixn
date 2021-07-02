@@ -58,6 +58,13 @@ namespace QuickFix
         /// </value>
         public int? SocketSendTimeout { get; internal set; }
 
+        /// <summary>
+        /// Gets a value that specifies whether the proxy server settings should be ignored.
+        /// </summary>
+        /// <value>
+        /// <c>false</c> if connection should use proxy; otherwise for ignoring proxy, <c>true</c>. The default is <c>false</c>.
+        /// </value>
+        public bool SocketIgnoreProxy { get; internal set; }
         #endregion
 
         #region SSL Settings
@@ -149,6 +156,7 @@ namespace QuickFix
             CheckCertificateRevocation = true;
             RequireClientCertificate = true;
             SocketNodelay = true;
+            SocketIgnoreProxy = false;
         }
 
         /// <summary>
@@ -161,6 +169,9 @@ namespace QuickFix
         /// <param name="dictionary">the dictionary to read the settings from</param>
         public void Configure(QuickFix.Dictionary dictionary)
         {
+            if (dictionary.Has(SessionSettings.SOCKET_IGNORE_PROXY))
+                SocketIgnoreProxy = dictionary.GetBool(SessionSettings.SOCKET_IGNORE_PROXY);
+
             if (dictionary.Has(SessionSettings.SOCKET_NODELAY))
                 SocketNodelay = dictionary.GetBool(SessionSettings.SOCKET_NODELAY);
 
