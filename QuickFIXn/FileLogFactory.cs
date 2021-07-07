@@ -6,13 +6,13 @@ namespace QuickFix
     /// </summary>
     public class FileLogFactory : ILogFactory
     {
-        SessionSettings settings_;
+        protected SessionSettings Settings { get; private set; }
 
         #region LogFactory Members
 
         public FileLogFactory(SessionSettings settings)
         {
-            settings_ = settings;
+            Settings = settings;
         }
 
         /// <summary>
@@ -20,9 +20,9 @@ namespace QuickFix
         /// </summary>
         /// <param name="sessionID">session ID for the message store</param>
         /// <returns></returns>
-        public ILog Create(SessionID sessionID)
+        public virtual ILog Create(SessionID sessionID)
         {
-            return new FileLog(settings_.Get(sessionID).GetString(SessionSettings.FILE_LOG_PATH), sessionID);
+            return new FileLog(Settings.Get(sessionID).GetString(SessionSettings.FILE_LOG_PATH), sessionID);
         }
 
         #endregion

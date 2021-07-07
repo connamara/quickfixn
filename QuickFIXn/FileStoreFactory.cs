@@ -5,7 +5,7 @@
     /// </summary>
     public class FileStoreFactory : IMessageStoreFactory
     {
-        private SessionSettings settings_;
+        protected SessionSettings Settings { get; private set; }
 
         /// <summary>
         /// Create the factory with configuration in session settings
@@ -13,7 +13,7 @@
         /// <param name="settings"></param>
         public FileStoreFactory(SessionSettings settings)
         {
-            settings_ = settings;
+            Settings = settings;
         }
 
         /// <summary>
@@ -21,9 +21,9 @@
         /// </summary>
         /// <param name="sessionID">session ID for the message store</param>
         /// <returns></returns>
-        public IMessageStore Create(SessionID sessionID)
+        public virtual IMessageStore Create(SessionID sessionID)
         {
-            return new FileStore(settings_.Get(sessionID).GetString(SessionSettings.FILE_STORE_PATH), sessionID);
+            return new FileStore(Settings.Get(sessionID).GetString(SessionSettings.FILE_STORE_PATH), sessionID);
         }
     }
 }

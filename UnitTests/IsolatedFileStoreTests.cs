@@ -1,28 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using System.Threading;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace UnitTests
 {
     [TestFixture]
-    public class FileStoreTests
+    public class IsolatedFileStoreTests
     {
-        QuickFix.FileStore store;
-        QuickFix.FileStoreFactory factory;
+        QuickFix.IsolatedFileStore store;
+        QuickFix.IsolatedFileStoreFactory factory;
 
         QuickFix.SessionSettings settings;
         QuickFix.SessionID sessionID;
+
+        IsolatedStorageFile isoStore;
 
         private string storeDirectory;
 
         [SetUp]
         public void setup()
         {
-            storeDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "store");
+            storeDirectory = "store";
 
             if (System.IO.Directory.Exists(storeDirectory))
                 System.IO.Directory.Delete(storeDirectory, true);
@@ -35,9 +38,11 @@ namespace UnitTests
 
             settings = new QuickFix.SessionSettings();
             settings.Set(sessionID, config);
-            factory = new QuickFix.FileStoreFactory(settings);
 
-            store = (QuickFix.FileStore)factory.Create(sessionID);
+            isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
+            factory = new QuickFix.IsolatedFileStoreFactory(isoStore, settings);
+
+            store = (QuickFix.IsolatedFileStore)factory.Create(sessionID);
         }
 
         void rebuildStore()
@@ -47,7 +52,7 @@ namespace UnitTests
                 store.Dispose();
             }
 
-            store = (QuickFix.FileStore)factory.Create(sessionID);
+            store = (QuickFix.IsolatedFileStore)factory.Create(sessionID);
         }
 
 
@@ -55,17 +60,26 @@ namespace UnitTests
         public void teardown()
         {
             store.Dispose();
-            Directory.Delete(storeDirectory, true);
+            if (isoStore.DirectoryExists(storeDirectory))
+            {
+                foreach (var isoFile in isoStore.GetFileNames(storeDirectory + @"\*"))
+                {
+                    isoStore.DeleteFile(Path.Combine(storeDirectory, isoFile));
+                }
+                isoStore.DeleteDirectory(storeDirectory);
+            }
+            isoStore.Dispose();
+            isoStore = null;
         }
 
         [Test]
         public void testPrefixForSessionWithSubsAndLoc()
         {
             QuickFix.SessionID sessionIDWithSubsAndLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", "SENDERLOC", "TARGETCOMP", "TARGETSUB", "TARGETLOC");
-            Assert.That(QuickFix.FileStore.Prefix(sessionIDWithSubsAndLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB_SENDERLOC-TARGETCOMP_TARGETSUB_TARGETLOC"));
+            Assert.That(QuickFix.IsolatedFileStore.Prefix(sessionIDWithSubsAndLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB_SENDERLOC-TARGETCOMP_TARGETSUB_TARGETLOC"));
 
             QuickFix.SessionID sessionIDWithSubsNoLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", "TARGETCOMP", "TARGETSUB");
-            Assert.That(QuickFix.FileStore.Prefix(sessionIDWithSubsNoLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB"));
+            Assert.That(QuickFix.IsolatedFileStore.Prefix(sessionIDWithSubsNoLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB"));
         }
 
         [Test]
@@ -74,10 +88,10 @@ namespace UnitTests
             Assert.IsFalse(store.IsOpen);
             store.Open();
             Assert.IsTrue(store.IsOpen);
-            Assert.That(System.IO.File.Exists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.seqnums")));
-            Assert.That(System.IO.File.Exists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.body")));
-            Assert.That(System.IO.File.Exists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.header")));
-            Assert.That(System.IO.File.Exists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.session")));
+            Assert.That(isoStore.FileExists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.seqnums")));
+            Assert.That(isoStore.FileExists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.body")));
+            Assert.That(isoStore.FileExists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.header")));
+            Assert.That(isoStore.FileExists(Path.Combine(storeDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.session")));
         }
 
         [Test]

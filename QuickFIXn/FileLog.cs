@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.IO;
 
 namespace QuickFix
 {
@@ -13,34 +14,62 @@ namespace QuickFix
         private System.IO.StreamWriter messageLog_;
         private System.IO.StreamWriter eventLog_;
 
-        private string messageLogFileName_;
-        private string eventLogFileName_;
+        public string BasePath { get; private set; }
+        protected string messageLogFileName_;
+        protected string eventLogFileName_;
 
+        public bool IsOpen { get; private set; }
 
         public FileLog(string fileLogPath)
+            : this(fileLogPath, "GLOBAL")
         {
-            Init(fileLogPath, "GLOBAL");
+        }
+        public FileLog(string fileLogPath, SessionID sessionID)
+            : this(fileLogPath, Prefix(sessionID))
+        {
+        }
+        public FileLog(string fileLogPath, string prefix)
+        {
+            BasePath = fileLogPath;
+            messageLogFileName_ = System.IO.Path.Combine(BasePath, prefix + ".messages.current.log");
+            eventLogFileName_ = System.IO.Path.Combine(BasePath, prefix + ".event.current.log");
         }
 
-        public FileLog(string fileLogPath, SessionID sessionID)
+        protected virtual System.IO.FileStream GetStream(string path, FileMode fileMode)
         {
-            Init(fileLogPath, Prefix(sessionID));
-        }   
-        
+            DisposedCheck();
 
-        private void Init(string fileLogPath, string prefix)
+            if (!System.IO.Directory.Exists(BasePath))
+                System.IO.Directory.CreateDirectory(BasePath);
+
+            var stream = new FileStream(path, fileMode, FileAccess.Write, FileShare.Read);
+            return stream;
+        }
+
+        protected StreamWriter GetStreamWriter(FileStream stream)
         {
-            if (!System.IO.Directory.Exists(fileLogPath))
-                System.IO.Directory.CreateDirectory(fileLogPath);
+            var writer = new StreamWriter(stream)
+            {
+                AutoFlush = true
+            };
+            return writer;
+        }
 
-            messageLogFileName_ = System.IO.Path.Combine(fileLogPath, prefix + ".messages.current.log");
-            eventLogFileName_ = System.IO.Path.Combine(fileLogPath, prefix + ".event.current.log");
+        private void Open(FileMode fileMode)
+        {
+            var messageStream = GetStream(messageLogFileName_, fileMode);
+            messageLog_ = GetStreamWriter(messageStream);
+            var eventStream = GetStream(eventLogFileName_, fileMode);
+            eventLog_ = GetStreamWriter(eventStream);
 
-            messageLog_ = new System.IO.StreamWriter(messageLogFileName_,true);
-            eventLog_ = new System.IO.StreamWriter(eventLogFileName_,true);
+            IsOpen = true;
+        }
+        private void Close()
+        {
+            messageLog_?.Close();
+            eventLog_?.Close();
 
-            messageLog_.AutoFlush = true;
-            eventLog_.AutoFlush = true;
+            IsOpen = false;
         }
 
         public static string Prefix(SessionID sessionID)
@@ -77,14 +106,9 @@ namespace QuickFix
 
             lock (sync_)
             {
-                messageLog_.Close();
-                eventLog_.Close();
+                Close();
 
-                messageLog_ = new System.IO.StreamWriter(messageLogFileName_, false);
-                eventLog_ = new System.IO.StreamWriter(eventLogFileName_, false);
-
-                messageLog_.AutoFlush = true;
-                eventLog_.AutoFlush = true;
+                Open(FileMode.Create);
             }
         }
 
@@ -94,6 +118,9 @@ namespace QuickFix
 
             lock (sync_)
             {
+                if (!IsOpen)
+                    Open(FileMode.Append);
+
                 messageLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : " + msg);
             }
         }
@@ -104,6 +131,9 @@ namespace QuickFix
 
             lock (sync_)
             {
+                if (!IsOpen)
+                    Open(FileMode.Append);
+
                 messageLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : " + msg);
             }
         }
@@ -114,7 +144,10 @@ namespace QuickFix
 
             lock (sync_)
             {
-                eventLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : "+ s);
+                if (!IsOpen)
+                    Open(FileMode.Append);
+
+                eventLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : " + s);
             }
         }
 
@@ -131,14 +164,16 @@ namespace QuickFix
         protected virtual void Dispose(bool disposing)
         {
             if (_disposed) return;
+
             if (disposing)
             {
-                if (messageLog_ != null) { messageLog_.Dispose(); }
-                if (eventLog_ != null) { eventLog_.Dispose(); }
-
-                messageLog_ = null;
-                eventLog_ = null;
+                Close();
             }
+
+            BasePath = null;
+            messageLog_ = null;
+            eventLog_ = null;
+
             _disposed = true;
         }
         ~FileLog() => Dispose(false);

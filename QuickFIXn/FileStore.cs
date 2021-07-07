@@ -35,6 +35,10 @@ namespace QuickFix
 
         System.Collections.Generic.Dictionary<int, MsgDef> offsets_ = new Dictionary<int, MsgDef>();
 
+        public string BasePath { get; private set; }
+
+        public bool IsOpen { get; private set; }
+
         public static string Prefix(SessionID sessionID)
         {
             System.Text.StringBuilder prefix = new System.Text.StringBuilder(sessionID.BeginString)
@@ -55,56 +59,81 @@ namespace QuickFix
             return prefix.ToString();
         }
 
-        public FileStore(string path, SessionID sessionID)
+        public FileStore(string basePath, SessionID sessionID)
         {
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
+            BasePath = basePath;
 
             string prefix = Prefix(sessionID);
 
-            seqNumsFileName_ = System.IO.Path.Combine(path, prefix + ".seqnums");
-            msgFileName_ = System.IO.Path.Combine(path, prefix + ".body");
-            headerFileName_ = System.IO.Path.Combine(path, prefix + ".header");
-            sessionFileName_ = System.IO.Path.Combine(path, prefix + ".session");
-            open();
+            seqNumsFileName_ = System.IO.Path.Combine(BasePath, prefix + ".seqnums");
+            msgFileName_ = System.IO.Path.Combine(BasePath, prefix + ".body");
+            headerFileName_ = System.IO.Path.Combine(BasePath, prefix + ".header");
+            sessionFileName_ = System.IO.Path.Combine(BasePath, prefix + ".session");
         }
 
-        private void open()
+        protected virtual System.IO.FileStream GetStream(string path, System.IO.FileMode fileMode, System.IO.FileAccess fileAccess)
         {
-            close();
+            DisposedCheck();
 
+            if (!System.IO.Directory.Exists(BasePath))
+                System.IO.Directory.CreateDirectory(BasePath);
+
+            var stream = new System.IO.FileStream(path, fileMode, fileAccess, System.IO.FileShare.ReadWrite);
+            return stream;
+        }
+
+        System.IO.StreamWriter GetStreamWriter(System.IO.FileStream stream)
+        {
+            var writer = new System.IO.StreamWriter(stream)
+            {
+                AutoFlush = true
+            };
+
+            return writer;
+        }
+
+        internal void Open()
+        {
             ConstructFromFileCache();
             InitializeSessionCreateTime();
 
-            seqNumsFile_ = new System.IO.FileStream(seqNumsFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
-            msgFile_ = new System.IO.FileStream(msgFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
-            headerFile_ = new System.IO.StreamWriter(headerFileName_, true);
+            var seqNumsStream = GetStream(seqNumsFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+            seqNumsFile_ = seqNumsStream;
+
+            var msgStream = GetStream(msgFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+            msgFile_ = msgStream;
+
+            var headerStream = GetStream(headerFileName_, System.IO.FileMode.Append, System.IO.FileAccess.Write);
+            var headerReader = GetStreamWriter(headerStream);
+            headerFile_ = headerReader;
+
+            IsOpen = true;
         }
 
-        private void close()
+        internal void Close()
         {
             seqNumsFile_?.Dispose();
             msgFile_?.Dispose();
             headerFile_?.Dispose();
+
+            IsOpen = false;
         }
 
         private void PurgeSingleFile(System.IO.Stream stream, string filename)
         {
             if (stream != null)
                 stream.Close();
-            if (System.IO.File.Exists(filename))
-                System.IO.File.Delete(filename);
+            PurgeSingleFile(filename);
         }
 
         private void PurgeSingleFile(System.IO.StreamWriter stream, string filename)
         {
             if (stream != null)
                 stream.Close();
-            if (System.IO.File.Exists(filename))
-                System.IO.File.Delete(filename);
+            PurgeSingleFile(filename);
         }
 
-        private void PurgeSingleFile(string filename)
+        protected virtual void PurgeSingleFile(string filename)
         {
             if (System.IO.File.Exists(filename))
                 System.IO.File.Delete(filename);
@@ -118,36 +147,52 @@ namespace QuickFix
             PurgeSingleFile(sessionFileName_);
         }
 
+        protected virtual bool FileExists(string filename)
+        {
+            return System.IO.File.Exists(filename);
+        }
+
+        protected virtual bool FileExistsWithNonZeroLength(string filename)
+        {
+            var fileInfo = new System.IO.FileInfo(filename);
+            return fileInfo.Exists && fileInfo.Length > 0;
+        }
 
         private void ConstructFromFileCache()
         {
             offsets_.Clear();
-            if (System.IO.File.Exists(headerFileName_))
+            if (FileExists(headerFileName_))
             {
-                using (System.IO.StreamReader reader = new System.IO.StreamReader(headerFileName_))
+                using (var stream = GetStream(headerFileName_, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
+                    using (var reader = new System.IO.StreamReader(stream))
                     {
-                        string[] headerParts = line.Split(',');
-                        if (headerParts.Length == 3)
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
                         {
-                            offsets_[Convert.ToInt32(headerParts[0])] = new MsgDef(
-                                Convert.ToInt64(headerParts[1]), Convert.ToInt32(headerParts[2]));
+                            string[] headerParts = line.Split(',');
+                            if (headerParts.Length == 3)
+                            {
+                                offsets_[Convert.ToInt32(headerParts[0])] = new MsgDef(
+                                    Convert.ToInt64(headerParts[1]), Convert.ToInt32(headerParts[2]));
+                            }
                         }
                     }
                 }
             }
 
-            if (System.IO.File.Exists(seqNumsFileName_))
+            if (FileExists(seqNumsFileName_))
             {
-                using (System.IO.StreamReader seqNumReader = new System.IO.StreamReader(seqNumsFileName_))
+                using (var stream = GetStream(seqNumsFileName_, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
-                    string[] parts = seqNumReader.ReadToEnd().Split(':');
-                    if (parts.Length == 2)
+                    using (var seqNumReader = new System.IO.StreamReader(stream))
                     {
-                        cache_.SetNextSenderMsgSeqNum(Convert.ToInt32(parts[0]));
-                        cache_.SetNextTargetMsgSeqNum(Convert.ToInt32(parts[1]));
+                        string[] parts = seqNumReader.ReadToEnd().Split(':');
+                        if (parts.Length == 2)
+                        {
+                            cache_.SetNextSenderMsgSeqNum(Convert.ToInt32(parts[0]));
+                            cache_.SetNextTargetMsgSeqNum(Convert.ToInt32(parts[1]));
+                        }
                     }
                 }
             }
@@ -155,23 +200,34 @@ namespace QuickFix
 
         private void InitializeSessionCreateTime()
         {
-            if (System.IO.File.Exists(sessionFileName_) && new System.IO.FileInfo(sessionFileName_).Length > 0)
+            if (FileExistsWithNonZeroLength(sessionFileName_))
             {
-                using (System.IO.StreamReader reader = new System.IO.StreamReader(sessionFileName_))
+                using (var stream = GetStream(sessionFileName_, System.IO.FileMode.Open, System.IO.FileAccess.Read))
                 {
-                    string s = reader.ReadToEnd();
-                    cache_.CreationTime = UtcDateTimeSerializer.FromString(s);
+                    using (var reader = new System.IO.StreamReader(stream))
+                    {
+                        string s = reader.ReadToEnd();
+                        cache_.CreationTime = UtcDateTimeSerializer.FromString(s);
+                    }
                 }
             }
             else
             {
-                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(sessionFileName_, false))
+                using (var stream = GetStream(sessionFileName_, System.IO.FileMode.Create, System.IO.FileAccess.Write))
                 {
-                    writer.Write(UtcDateTimeSerializer.ToString(cache_.CreationTime.Value));
+                    using (var writer = GetStreamWriter(stream))
+                    {
+                        writer.Write(UtcDateTimeSerializer.ToString(cache_.CreationTime.Value));
+                    }
                 }
             }
         }
 
+        private void DisposedCheck()
+        {
+            if (_disposed)
+                throw new System.ObjectDisposedException(this.GetType().Name);
+        }
 
         #region MessageStore Members
 
@@ -183,6 +239,9 @@ namespace QuickFix
         /// <param name="messages"></param>
         public void Get(int startSeqNum, int endSeqNum, List<string> messages)
         {
+            if (!IsOpen)
+                Open();
+
             for (int i = startSeqNum; i <= endSeqNum; i++)
             {
                 if (offsets_.ContainsKey(i))
@@ -196,7 +255,7 @@ namespace QuickFix
             }
 
         }
-        
+
         /// <summary>
         /// Store a message
         /// </summary>
@@ -205,6 +264,9 @@ namespace QuickFix
         /// <returns></returns>
         public bool Set(int msgSeqNum, string msg)
         {
+            if (!IsOpen)
+                Open();
+
             msgFile_.Seek(0, System.IO.SeekOrigin.End);
 
             long offset = msgFile_.Position;
@@ -221,40 +283,57 @@ namespace QuickFix
             msgFile_.Write(msgBytes, 0, size);
             msgFile_.Flush();
 
-
             return true;
         }
 
         public int GetNextSenderMsgSeqNum()
         {
+            if (!IsOpen)
+                Open();
+
             return cache_.GetNextSenderMsgSeqNum();
         }
 
         public int GetNextTargetMsgSeqNum()
         {
+            if (!IsOpen)
+                Open();
+
             return cache_.GetNextTargetMsgSeqNum();
         }
 
         public void SetNextSenderMsgSeqNum(int value)
         {
+            if (!IsOpen)
+                Open();
+
             cache_.SetNextSenderMsgSeqNum(value);
             setSeqNum();
         }
 
         public void SetNextTargetMsgSeqNum(int value)
         {
+            if (!IsOpen)
+                Open();
+
             cache_.SetNextTargetMsgSeqNum(value);
             setSeqNum();
         }
 
         public void IncrNextSenderMsgSeqNum()
         {
+            if (!IsOpen)
+                Open();
+
             cache_.IncrNextSenderMsgSeqNum();
             setSeqNum();
         }
 
         public void IncrNextTargetMsgSeqNum()
         {
+            if (!IsOpen)
+                Open();
+
             cache_.IncrNextTargetMsgSeqNum();
             setSeqNum();
         }
@@ -262,16 +341,19 @@ namespace QuickFix
         private void setSeqNum()
         {
             seqNumsFile_.Seek(0, System.IO.SeekOrigin.Begin);
-            System.IO.StreamWriter writer = new System.IO.StreamWriter(seqNumsFile_);
-
-            writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10") + "  ");
-            writer.Flush();
+            using (var writer = new System.IO.StreamWriter(seqNumsFile_, Encoding.Default, 1096, true))
+            {
+                writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10") + "  ");
+                writer.Flush();
+            }
         }
 
         public DateTime? CreationTime
         {
             get
             {
+                if (!IsOpen)
+                    Open();
                 return cache_.CreationTime;
             }
         }
@@ -286,13 +368,13 @@ namespace QuickFix
         {
             cache_.Reset();
             PurgeFileCache();
-            open();
+            Open();
         }
 
         public void Refresh()
         {
             cache_.Reset();
-            open();
+            Open();
         }
 
         #endregion
@@ -311,8 +393,13 @@ namespace QuickFix
             if (_disposed) return;
             if (disposing)
             {
-                close();
+                Close();
             }
+
+            seqNumsFile_ = null;
+            msgFile_ = null;
+            headerFile_ = null;
+
             _disposed = true;
         }
 

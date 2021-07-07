@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.IsolatedStorage;
 using System.Linq;
 using System.Text;
 using NUnit.Framework;
@@ -8,13 +9,15 @@ using NUnit.Framework;
 namespace UnitTests
 {
     [TestFixture]
-    public class FileLogTests
+    public class IsolatedFileLogTests
     {
-        QuickFix.FileLog log;
+        QuickFix.IsolatedFileLog log;
 
         [SetUp]
         public void setup()
-        { }
+        {
+
+        }
 
         [TearDown]
         public void teardown()
@@ -49,10 +52,7 @@ namespace UnitTests
         [Test]
         public void testGeneratedFileName()
         {
-            var logDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "log");
-
-            if (System.IO.Directory.Exists(logDirectory))
-                System.IO.Directory.Delete(logDirectory, true);
+            var logDirectory = "log";
 
             QuickFix.SessionID sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
             QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
@@ -63,8 +63,19 @@ namespace UnitTests
 
             settings.Set(sessionID, config);
 
-            QuickFix.FileLogFactory factory = new QuickFix.FileLogFactory(settings);
-            log = (QuickFix.FileLog)factory.Create(sessionID);
+            var isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
+            QuickFix.IsolatedFileLogFactory factory = new QuickFix.IsolatedFileLogFactory(isoStore, settings);
+            if (isoStore.DirectoryExists(logDirectory))
+            {
+                foreach (var isoFile in isoStore.GetFileNames(logDirectory + @"\*"))
+                {
+                    isoStore.DeleteFile(Path.Combine(logDirectory, isoFile));
+
+                }
+                isoStore.DeleteDirectory(logDirectory);
+            }
+
+            log = (QuickFix.IsolatedFileLog)factory.Create(sessionID);
 
             Assert.IsFalse(log.IsOpen);
             log.OnEvent("some event");
@@ -72,8 +83,8 @@ namespace UnitTests
             log.OnOutgoing("some outgoing");
             Assert.IsTrue(log.IsOpen);
 
-            Assert.That(System.IO.File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log")));
-            Assert.That(System.IO.File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log")));
+            Assert.That(isoStore.FileExists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log")));
+            Assert.That(isoStore.FileExists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log")));
         }
 
         [Test]
@@ -85,7 +96,8 @@ namespace UnitTests
             QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
             settings.Set(sessionID, config);
 
-            QuickFix.FileLogFactory factory = new QuickFix.FileLogFactory(settings);
+            var isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
+            QuickFix.IsolatedFileLogFactory factory = new QuickFix.IsolatedFileLogFactory(isoStore, settings);
 
             Assert.Throws<QuickFix.ConfigError>(delegate { factory.Create(sessionID); });
         }
@@ -104,15 +116,25 @@ namespace UnitTests
 
             settings.Set(sessionID, config);
 
-            QuickFix.FileLogFactory factory = new QuickFix.FileLogFactory(settings);
+            var isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.Machine | IsolatedStorageScope.Assembly, null, null);
+            QuickFix.IsolatedFileLogFactory factory = new QuickFix.IsolatedFileLogFactory(isoStore, settings);
+            if (isoStore.DirectoryExists(logDirectory))
+            {
+                foreach (var isoFile in isoStore.GetFileNames(logDirectory + @"\*"))
+                {
+                    isoStore.DeleteFile(Path.Combine(logDirectory, isoFile));
 
-            log = (QuickFix.FileLog)factory.Create(sessionID);
+                }
+                isoStore.DeleteDirectory(logDirectory);
+            }
+
+            log = (QuickFix.IsolatedFileLog)factory.Create(sessionID);
             log.Dispose();
 
             Assert.Throws<ObjectDisposedException>(delegate { log.Clear(); });
             Assert.Throws<ObjectDisposedException>(delegate { log.OnEvent("write to disposed"); });
             Assert.Throws<ObjectDisposedException>(delegate { log.OnIncoming("write to disposed"); });
-            Assert.Throws<ObjectDisposedException>(delegate { log.OnOutgoing("write to disposed"); });
+            Assert.Throws<ObjectDisposedException>(delegate { log.OnOutgoing("write to disposed"); });            
         }
     }
 }
