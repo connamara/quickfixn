@@ -19,7 +19,7 @@ File and Directory Information
 
 Getting Started
 ---------------
-The directory bin/netstandard2.0 contains
+The directory bin/netstandard2.1 contains
 * the QF/n core, QuickFix.dll
 * a message-definition dll for each FIX version (e.g. QuickFix.FIX40.dll, QuickFix.FIX41.dll, ...)
 
