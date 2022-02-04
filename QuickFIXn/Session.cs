@@ -814,11 +814,12 @@ namespace QuickFix
                         return;
                     }
 
-                    List<string> messages = new List<string>();
-                    state_.Get(begSeqNo, endSeqNo, messages);
+                    //List<string> messages = new List<string>();
+                    //state_.Get(begSeqNo, endSeqNo, messages);
                     int current = begSeqNo;
                     int begin = 0;
-                    foreach (string msgStr in messages)
+                    //foreach (string msgStr in messages)
+                    foreach(string msgStr in state_.GetEnumerable(begSeqNo, endSeqNo))
                     {
                         Message msg = new Message();
                         msg.FromString(msgStr, true, this.SessionDataDictionary, this.ApplicationDataDictionary, msgFactory_);

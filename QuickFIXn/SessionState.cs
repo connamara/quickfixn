@@ -290,6 +290,11 @@ namespace QuickFix
             }
         }
 
+        public void GetEnumerable(int begSeqNo, int endSeqNo)
+        {
+            return MessageStore.GetEnumerable(begSeqNo, endSeqNo);
+        }
+
         public void SetResendRange(int begin, int end)
         {
             SetResendRange(begin, end, -1);

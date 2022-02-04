@@ -26,6 +26,14 @@ namespace QuickFix
         void Get(int startSeqNum, int endSeqNum, List<string> messages);
 
         /// <summary>
+        /// Return messages within the range of sequence numbers
+        /// </summary>
+        /// <param name="startSeqNum"></param>
+        /// <param name="endSeqNum"></param>
+        /// <returns></returns>
+        IEnumerable<string> GetEnumerable(int startSeqNum, int endSeqNum);
+
+        /// <summary>
         /// Adds a raw fix message to the store with the give sequence number
         /// </summary>
         /// <param name="msgSeqNum">the sequence number</param>

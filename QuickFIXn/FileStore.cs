@@ -198,6 +198,27 @@ namespace QuickFix
         }
         
         /// <summary>
+        /// Return messages within the range of sequence numbers
+        /// </summary>
+        /// <param name="startSeqNum"></param>
+        /// <param name="endSeqNum"></param>
+        /// <returns></returns>
+        public IEnumerable<string> GetEnumerable(int startSeqNum, int endSeqNum)
+        {
+            for (int i = startSeqNum; i <= endSeqNum; i++)
+            {
+                if (offsets_.ContainsKey(i))
+                {
+                    msgFile_.Seek(offsets_[i].index, System.IO.SeekOrigin.Begin);
+                    byte[] msgBytes = new byte[offsets_[i].size];
+                    msgFile_.Read(msgBytes, 0, msgBytes.Length);
+
+                    yield return CharEncoding.DefaultEncoding.GetString(msgBytes);
+                }
+            }
+        }
+
+        /// <summary>
         /// Store a message
         /// </summary>
         /// <param name="msgSeqNum"></param>
