@@ -10,18 +10,22 @@ namespace TradeClient
         {
             try
             {
+                Console.WriteLine("[");
                 using (StreamReader streamReader = new StreamReader(fname))
                 {
                     QuickFix.IMessageFactory msgFactory = new QuickFix.DefaultMessageFactory();
                     QuickFix.Message msg = new QuickFix.Message();
                     string line = null;
+                    string comma = "";
                     while ((line = streamReader.ReadLine()) != null)
                     {
                         line = line.Trim();
                         msg.FromString(line, false, sessionDataDictionary, appDataDictionary, msgFactory);
-                        Console.WriteLine(msg.ToJSON(humanReadableValues));
+                        Console.WriteLine(comma + msg.ToJSON(humanReadableValues));
+                        comma = ",";
                     }
                 }
+                Console.WriteLine("]");
 
             }
             catch (System.Exception e)
@@ -38,13 +42,13 @@ namespace TradeClient
             {
                 System.Console.WriteLine("USAGE");
                 System.Console.WriteLine("");
-                System.Console.WriteLine("    FixToJson.exe FILE [HUMAN_READABLE_VALUES] [APP_DATA_DICTIONARY] [SESSION_DATA_DICTIONARY]");
+                System.Console.WriteLine("    FixToJson.exe FILE [HUMAN_READABLE_VALUES] [DATA_DICTIONARY]");
                 System.Console.WriteLine("");
                 System.Console.WriteLine("EXAMPLES");
                 System.Console.WriteLine("");
-                System.Console.WriteLine("    FixToJson.exe messages.log true FIX50SP2.xml FIXT11.xml");
-                System.Console.WriteLine("    FixToJson.exe messages.log true FIX42.xml");
-                System.Console.WriteLine("    FixToJson.exe messages.log false FIX42.xml");
+                System.Console.WriteLine("    FixToJson.exe messages.log true ../../spec/fix/FIX50SP2.xml");
+                System.Console.WriteLine("    FixToJson.exe messages.log true ../../spec/fix/FIX44.xml");
+                System.Console.WriteLine("    FixToJson.exe messages.log false ../../spec/fix/FIX42.xml");
                 System.Console.WriteLine("");
                 System.Console.WriteLine("NOTE");
                 System.Console.WriteLine("");
@@ -69,11 +73,6 @@ namespace TradeClient
                 appDataDictionary = sessionDataDictionary;
             }
             
-            if (args.Length > 3)
-            {
-                appDataDictionary = new QuickFix.DataDictionary.DataDictionary(args[3]);
-            }
-
             FixToJson(fname, humanReadableValues, sessionDataDictionary, appDataDictionary);
             Environment.Exit(1);
         }
