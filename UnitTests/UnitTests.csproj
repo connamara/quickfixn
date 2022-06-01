@@ -29,6 +29,7 @@
     <ProjectReference Include="..\Messages\FIX50SP1\QuickFix.FIX50SP1.csproj" />
     <ProjectReference Include="..\Messages\FIX50SP2\QuickFix.FIX50SP2.csproj" />
     <ProjectReference Include="..\Messages\FIX50\QuickFix.FIX50.csproj" />
+    <ProjectReference Include="..\Messages\FIXT11\QuickFix.FIXT11.csproj" />
     <ProjectReference Include="..\QuickFIXn\QuickFix.csproj" />
   </ItemGroup>
 
