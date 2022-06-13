@@ -10,7 +10,7 @@ namespace TradeClient
         {
             try
             {
-                Console.WriteLine("[");
+                Console.WriteLine("{\n\"messages\": [");
                 using (StreamReader streamReader = new StreamReader(fname))
                 {
                     QuickFix.IMessageFactory msgFactory = new QuickFix.DefaultMessageFactory();
@@ -25,7 +25,7 @@ namespace TradeClient
                         comma = ",";
                     }
                 }
-                Console.WriteLine("]");
+                Console.WriteLine("]\n}");
 
             }
             catch (System.Exception e)
