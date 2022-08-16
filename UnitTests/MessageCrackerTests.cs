@@ -27,8 +27,9 @@ namespace UnitTests
 
         class TheseMightBeHandlerMethods
         {
-            // This is a handler.
+            // These are handlers.
             public void OnMessage(QuickFix.FIX42.News m, SessionID s) { }
+            public void OnMessage(QuickFix.FIXT11.Logon m, SessionID s) { }
 
             // These are NOT handlers because...
 
@@ -64,8 +65,9 @@ namespace UnitTests
                 }
             }
 
-            Assert.AreEqual(1, handlers.Count);
+            Assert.AreEqual(2, handlers.Count);
             Assert.AreEqual(handlers[0].GetParameters()[0].ParameterType, typeof(QuickFix.FIX42.News));
+            Assert.AreEqual(handlers[1].GetParameters()[0].ParameterType, typeof(QuickFix.FIXT11.Logon));
         }
 
 
@@ -74,9 +76,11 @@ namespace UnitTests
         {
             public bool CrackedNews42 { get; set; }
             public bool CrackedNews44 { get; set; }
+            public bool CrackedLogonFIXT11 { get; set; }
 
             public void OnMessage(QuickFix.FIX42.News msg, SessionID s) { CrackedNews42 = true; }
             public void OnMessage(QuickFix.FIX44.News msg, SessionID s) { CrackedNews44 = true; }
+            public void OnMessage(QuickFix.FIXT11.Logon msg, SessionID s) { CrackedLogonFIXT11 = true; }
         }
 
         [Test]
@@ -95,6 +99,10 @@ namespace UnitTests
             mc.Crack(new QuickFix.FIX44.News(), _DummySessionID);
             Assert.IsFalse(tc.CrackedNews42);
             Assert.IsTrue(tc.CrackedNews44);
+
+            Assert.IsFalse(tc.CrackedLogonFIXT11);
+            mc.Crack(new QuickFix.FIXT11.Logon(), _DummySessionID);
+            Assert.IsTrue(tc.CrackedLogonFIXT11);
         }
 
         [Test]
