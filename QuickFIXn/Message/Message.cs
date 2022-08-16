@@ -60,13 +60,13 @@ namespace QuickFix
         public const string SOH = "\u0001";
         private int field_ = 0;
         private bool validStructure_;
-        protected DataDictionary.DataDictionary dataDictionary_ = null;
 
         #region Properties
 
         public Header Header { get; private set; }
         public Trailer Trailer { get; private set; }
-        
+        public DataDictionary.DataDictionary ApplicationDataDictionary { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -89,12 +89,14 @@ namespace QuickFix
         public Message(string msgstr, DataDictionary.DataDictionary dataDictionary, bool validate)
             : this()
         {
+            this.ApplicationDataDictionary = dataDictionary;
             FromString(msgstr, validate, dataDictionary, dataDictionary, null);
         }
 
         public Message(string msgstr, DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD, bool validate)
             : this()
         {
+            this.ApplicationDataDictionary = appDD;
             FromStringHeader(msgstr);
             if(IsAdmin())
                 FromString(msgstr, validate, sessionDataDictionary, sessionDataDictionary, null);
@@ -369,6 +371,7 @@ namespace QuickFix
         /// <param name="appDD"></param>
         public void FromString(string msgstr, bool validate, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
         {
+            this.ApplicationDataDictionary = appDD;
             FromString(msgstr, validate, sessionDD, appDD, null);
         }
 
@@ -383,6 +386,7 @@ namespace QuickFix
         public void FromString(string msgstr, bool validate,
             DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
         {
+            this.ApplicationDataDictionary = appDD;
             FromString(msgstr, validate, sessionDD, appDD, msgFactory, false);
         }
 
@@ -401,6 +405,7 @@ namespace QuickFix
             DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory,
             bool ignoreBody)
         {
+            this.ApplicationDataDictionary = appDD;
             Clear();
 
             string msgType = "";
@@ -835,6 +840,83 @@ namespace QuickFix
             return s.ToString();
         }
 
+
+        /// <summary>
+        /// ToJSON() helper method.
+        /// </summary>
+        /// <returns>an XML string</returns>
+        private static StringBuilder FieldMapToJSON(StringBuilder sb, DataDictionary.DataDictionary dd, FieldMap fields, bool humanReadableValues)
+        {
+            IList<int> numInGroupTagList = fields.GetGroupTags();
+            IList<Fields.IField> numInGroupFieldList = new List<Fields.IField>();
+            string valueDescription = "";
+
+            // Non-Group Fields
+            foreach (var field in fields)
+            {
+                if (QuickFix.Fields.CheckSum.TAG == field.Value.Tag)
+                    continue; // FIX JSON Encoding does not include CheckSum
+
+                if (numInGroupTagList.Contains(field.Value.Tag))
+                {
+                    numInGroupFieldList.Add(field.Value);
+                    continue; // Groups will be handled below
+                }
+
+                if ((dd != null) && ( dd.FieldsByTag.ContainsKey(field.Value.Tag)))
+                {
+                    sb.Append("\"" + dd.FieldsByTag[field.Value.Tag].Name + "\":");
+                    if (humanReadableValues)
+                    {
+                        if (dd.FieldsByTag[field.Value.Tag].EnumDict.TryGetValue(field.Value.ToString(), out valueDescription))
+                        {
+                            sb.Append("\"" + valueDescription + "\",");
+                        }
+                        else
+                            sb.Append("\"" + field.Value.ToString() + "\",");
+                    }
+                    else
+                    {
+                        sb.Append("\"" + field.Value.ToString() + "\",");
+                    }
+                }
+                else
+                {
+                    sb.Append("\"" + field.Value.Tag.ToString() + "\":");
+                    sb.Append("\"" + field.Value.ToString() + "\",");
+                }
+            }
+
+            // Group Fields
+            foreach(Fields.IField numInGroupField in numInGroupFieldList)
+            {
+                // The name of the NumInGroup field is the key of the JSON list containing the Group items
+                if ((dd != null) && ( dd.FieldsByTag.ContainsKey(numInGroupField.Tag)))
+                    sb.Append("\"" + dd.FieldsByTag[numInGroupField.Tag].Name + "\":[");
+                else
+                    sb.Append("\"" + numInGroupField.Tag.ToString() + "\":[");
+
+                // Populate the JSON list with the Group items
+                for (int counter = 1; counter <= fields.GroupCount(numInGroupField.Tag); counter++)
+                {
+                    sb.Append("{");
+                    FieldMapToJSON(sb, dd, fields.GetGroup(counter, numInGroupField.Tag), humanReadableValues);
+                    sb.Append("},");
+                }
+
+                // Remove trailing comma
+                if (sb.Length > 0 && sb[sb.Length - 1] == ',')
+                    sb.Remove(sb.Length - 1, 1);
+
+                sb.Append("],");
+            }
+            // Remove trailing comma
+            if (sb.Length > 0 && sb[sb.Length - 1] == ',')
+                sb.Remove(sb.Length - 1, 1);
+
+            return sb;
+        }
+
         /// <summary>
         /// Get a representation of the message as an XML string.
         /// (NOTE: this is just an ad-hoc XML; it is NOT FIXML.)
@@ -842,19 +924,70 @@ namespace QuickFix
         /// <returns>an XML string</returns>
         public string ToXML()
         {
+            return ToXML(this.ApplicationDataDictionary);
+        }
+
+        /// <summary>
+        /// Get a representation of the message as an XML string.
+        /// (NOTE: this is just an ad-hoc XML; it is NOT FIXML.)
+        /// </summary>
+        /// <returns>an XML string</returns>
+        public string ToXML(DataDictionary.DataDictionary dd)
+        {
             StringBuilder s = new StringBuilder();
-            s.AppendLine("<message>");
-            s.AppendLine("<header>");
-            s.AppendLine(FieldMapToXML(dataDictionary_, Header, 4));
-            s.AppendLine("</header>");
-            s.AppendLine("<body>");
-            s.AppendLine(FieldMapToXML(dataDictionary_, this, 4));
-            s.AppendLine("</body>");
-            s.AppendLine("<trailer>");
-            s.AppendLine(FieldMapToXML(dataDictionary_, Trailer, 4));
-            s.AppendLine("</trailer>");
-            s.AppendLine("</message>");
+            s.Append("<message>");
+            s.Append("<header>");
+            s.Append(FieldMapToXML(dd, Header, 4));
+            s.Append("</header>");
+            s.Append("<body>");
+            s.Append(FieldMapToXML(dd, this, 4));
+            s.Append("</body>");
+            s.Append("<trailer>");
+            s.Append(FieldMapToXML(dd, Trailer, 4));
+            s.Append("</trailer>");
+            s.Append("</message>");
             return s.ToString();
+        }
+
+        /// <summary>
+        /// Get a representation of the message as a string in FIX JSON Encoding.
+        /// See: https://github.com/FIXTradingCommunity/fix-json-encoding-spec
+        /// </summary>
+        /// <returns>a JSON string</returns>
+        public string ToJSON()
+        {
+            return ToJSON(this.ApplicationDataDictionary, false);
+        }
+
+
+        /// <summary>
+        /// Get a representation of the message as a string in FIX JSON Encoding.
+        /// See: https://github.com/FIXTradingCommunity/fix-json-encoding-spec
+        ///
+        /// Per the FIX JSON Encoding spec, tags are converted to human-readable form, but values are not.
+        /// If you want human-readable values, set humanReadableValues to true.
+        /// </summary>
+        /// <returns>a JSON string</returns>
+        public string ToJSON(bool humanReadableValues)
+        {
+            return ToJSON(this.ApplicationDataDictionary, humanReadableValues);
+        }
+
+        /// <summary>
+        /// Get a representation of the message as a string in FIX JSON Encoding.
+        /// See: https://github.com/FIXTradingCommunity/fix-json-encoding-spec
+        ///
+        /// Per the FIX JSON Encoding spec, tags are converted to human-readable form, but values are not.
+        /// If you want human-readable values, set humanReadableValues to true.
+        /// </summary>
+        /// <returns>a JSON string</returns>
+        public string ToJSON(DataDictionary.DataDictionary dd, bool humanReadableValues)
+        {
+            StringBuilder sb = new StringBuilder().Append("{").Append("\"Header\":{");
+            FieldMapToJSON(sb, dd, Header,  humanReadableValues).Append("},\"Body\":{");
+            FieldMapToJSON(sb, dd, this,    humanReadableValues).Append("},\"Trailer\":{");
+            FieldMapToJSON(sb, dd, Trailer, humanReadableValues).Append("}}");
+            return sb.ToString();
         }
     }
 }
