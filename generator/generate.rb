@@ -23,6 +23,7 @@ class Generator
     @fix50 = FIXDictionary.load spec('FIX50')
     @fix50sp1 = FIXDictionary.load spec('FIX50SP1')
     @fix50sp2 = FIXDictionary.load spec('FIX50SP2')
+    @fixt11 = FIXDictionary.load spec('FIXT11')
     @src_path = File.join File.dirname(__FILE__), '..', 'QuickFIXn'
     @src_messages_path = File.join File.dirname(__FILE__), '..'
   end
@@ -41,13 +42,14 @@ class Generator
     field_names = (@fix40.fields.keys + @fix41.fields.keys +
         @fix42.fields.keys + @fix43.fields.keys +
         @fix44.fields.keys + @fix50.fields.keys +
-        @fix50sp1.fields.keys + @fix50sp2.fields.keys).uniq
+        @fix50sp1.fields.keys + @fix50sp2.fields.keys + @fixt11.fields.keys).uniq
     field_names.map {|fn| get_field_def(fn) }
   end
 
   def get_field_def fld_name
     # we give priority to latest fix version
     fld = merge_field_defs(
+      @fixt11.fields[fld_name],
       @fix50sp2.fields[fld_name],
       @fix50sp1.fields[fld_name],
       @fix50.fields[fld_name],
@@ -84,6 +86,7 @@ class Generator
     MessageGen.generate(@fix50.messages,  msgs_path, 'FIX50')
     MessageGen.generate(@fix50sp1.messages,  msgs_path, 'FIX50SP1')
     MessageGen.generate(@fix50sp2.messages,  msgs_path, 'FIX50SP2')
+    MessageGen.generate(@fixt11.messages,  msgs_path, 'FIXT11')
   end
 
   def generate_message_factories
@@ -96,6 +99,7 @@ class Generator
     MessageFactoryGen.generate(@fix50.messages,  msgs_path, 'FIX50')
     MessageFactoryGen.generate(@fix50sp1.messages,  msgs_path, 'FIX50SP1')
     MessageFactoryGen.generate(@fix50sp2.messages,  msgs_path, 'FIX50SP2')
+    MessageFactoryGen.generate(@fixt11.messages,  msgs_path, 'FIXT11')
   end
 end
 
