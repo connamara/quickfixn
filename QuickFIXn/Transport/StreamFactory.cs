@@ -17,12 +17,12 @@ namespace QuickFix.Transport
     /// </summary>
     public static class StreamFactory
     {
-        private static Socket CreateTunnelThruProxy(string destIP, int destPort)
+        private static Socket CreateTunnelThruProxy(string destIP, int destPort, string destHostName)
         {
             string destUriWithPort = $"{destIP}:{destPort}";
             UriBuilder uriBuilder = new UriBuilder(destUriWithPort);
             Uri destUri = uriBuilder.Uri;
-            IWebProxy webProxy = WebRequest.GetSystemWebProxy();
+            IWebProxy webProxy = WebRequest.DefaultWebProxy;
 
             try
             {
@@ -47,18 +47,19 @@ namespace QuickFix.Transport
             Socket socketThruProxy = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socketThruProxy.Connect(proxyEndPoint);
 
-            string proxyMsg = $"CONNECT {destIP}:{destPort} HTTP/1.1 \n\n";
+            string proxyMsg = !string.IsNullOrWhiteSpace(destHostName)
+                ? $"CONNECT {destHostName}:{destPort} HTTP/1.1\nHost: {destHostName}:{destPort}\n\n"
+                : $"CONNECT {destIP}:{destPort} HTTP/1.1\n\n";
             byte[] buffer = Encoding.ASCII.GetBytes(proxyMsg);
             byte[] buffer12 = new byte[500];
             socketThruProxy.Send(buffer, buffer.Length, 0);
-            int msg = socketThruProxy.Receive(buffer12, 500, 0);
-            string data;
-            data = Encoding.ASCII.GetString(buffer12);
-            int index = data.IndexOf("200");
+            socketThruProxy.Receive(buffer12, 500, 0);
+            string data = Encoding.ASCII.GetString(buffer12);
+            int index = data.IndexOf("200", StringComparison.Ordinal);
 
             if (index < 0)
                 throw new ApplicationException(
-                    $"Connection failed to {destUriWithPort} through proxy server {proxyUri.ToString()}.");
+                    $"Connection failed to {destUriWithPort} through proxy server {proxyUri}.");
 
             return socketThruProxy;
         }
@@ -73,7 +74,7 @@ namespace QuickFix.Transport
         public static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILog logger)
         {
             // If system has configured a proxy for this config, use it.
-            Socket socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port);
+            Socket socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port, settings.SocketConnectHost);
 
             // No proxy.  Set up a regular socket.
             if (socket == null)
