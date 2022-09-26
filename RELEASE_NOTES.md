@@ -50,6 +50,7 @@ What's New
 * #516 - remove ability to toggle Session-enable via HttpServer because it never really worked (gbirchmeier)
 * #913/#741 - new FieldMap.ReadGroups for iterating on groups (NoviProg/gbirchmeier)
 * #914 - Optimize MessageCracker.IsHandlerMethod (vasily-balansea)
+* #742 - Improvements to HTTP web proxy (IanLeeClaxton)
 
 ### v1.12.0
 
