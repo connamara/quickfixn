@@ -14,7 +14,7 @@ namespace QuickFix
         public const int BUF_SIZE = 4096;
         byte[] readBuffer_ = new byte[BUF_SIZE];
         private Parser parser_ = new Parser();
-        private Session qfSession_; //will be null when initialized
+        private Session _qfSession; //will be null when initialized
         private Stream stream_;     //will be null when initialized
         private TcpClient tcpClient_;
         private ClientHandlerThread responder_;
@@ -46,7 +46,7 @@ namespace QuickFix
             tcpClient_ = tcpClient;
             responder_ = responder;
             acceptorDescriptor_ = acceptorDescriptor;
-            stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
+            stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLogger());
         }
 
         /// <summary> FIXME </summary>
@@ -57,20 +57,20 @@ namespace QuickFix
                 int bytesRead = ReadSome(readBuffer_, 1000);
                 if (bytesRead > 0)
                     parser_.AddToStream(readBuffer_, bytesRead);
-                else if (null != qfSession_)
+                else if (null != _qfSession)
                 {
-                    qfSession_.Next();
+                    _qfSession.Next();
                 }
 
                 ProcessStream();
             }
             catch (MessageParseError e)
             {
-                HandleExceptionInternal(qfSession_, e);
+                HandleExceptionInternal(_qfSession, e);
             }
             catch (System.Exception e)
             {
-                HandleExceptionInternal(qfSession_, e);
+                HandleExceptionInternal(_qfSession, e);
                 throw e;
             }
         }
@@ -140,19 +140,19 @@ namespace QuickFix
         {
             try
             {
-                if (null == qfSession_)
+                if (null == _qfSession)
                 {
-                    qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg));
-                    if (null == qfSession_)
+                    _qfSession = Session.LookupSession(Message.GetReverseSessionID(msg));
+                    if (null == _qfSession)
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
                         DisconnectClient();
                         return;
                     }
-                    else if(IsAssumedSession(qfSession_.SessionID))
+                    else if(IsAssumedSession(_qfSession.SessionID))
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
-                        qfSession_ = null;
+                        _qfSession = null;
                         DisconnectClient();
                         return;
                     }
@@ -165,11 +165,11 @@ namespace QuickFix
 
                 try
                 {
-                    qfSession_.Next(msg);
+                    _qfSession.Next(msg);
                 }
                 catch (System.Exception e)
                 {
-                    this.Log("Error on Session '" + qfSession_.SessionID + "': " + e.ToString());
+                    this.Log("Error on Session '" + _qfSession.SessionID + "': " + e.ToString());
                 }
             }
             catch (InvalidMessage e)
@@ -235,18 +235,18 @@ namespace QuickFix
 
         protected bool HandleNewSession(string msg)
         {
-            if (qfSession_.HasResponder)
+            if (_qfSession.HasResponder)
             {
-                qfSession_.Log.OnIncoming(msg);
-                qfSession_.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + tcpClient_.Client.RemoteEndPoint + ")");
-                qfSession_ = null;
+                _qfSession.Logger.LogIncoming(msg);
+                _qfSession.Logger.LogEvent("Multiple logons/connections for this session are not allowed (" + tcpClient_.Client.RemoteEndPoint + ")");
+                _qfSession = null;
                 DisconnectClient();
                 return false;
             }
-            qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
+            _qfSession.Logger.LogEvent(_qfSession.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + _qfSession.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
             // FIXME do this here? qfSession_.HeartBtInt = QuickFix.Fields.Converters.IntConverter.Convert(message.GetField(Fields.Tags.HeartBtInt)); /// FIXME
-            qfSession_.Log.OnEvent(qfSession_.SessionID + " Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");
-            qfSession_.SetResponder(responder_);
+            _qfSession.Logger.LogEvent(_qfSession.SessionID + " Acceptor heartbeat set to " + _qfSession.HeartBtInt + " seconds");
+            _qfSession.SetResponder(responder_);
             return true;
         }
 

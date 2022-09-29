@@ -9,7 +9,7 @@ namespace QuickFix
     /// <summary>
     /// Name/value pairs used for specifying groups of settings
     /// </summary>
-    public class Dictionary : System.Collections.IEnumerable
+    public class Dictionary : IEnumerable<KeyValuePair<string, string>>
     {
         #region Private Members
 
@@ -231,11 +231,11 @@ namespace QuickFix
         public override bool Equals(object other)
         {
             //Check whether the compared objects reference the same data.
-            if (Object.ReferenceEquals(this, other))
+            if (ReferenceEquals(this, other))
                 return true;
 
             //Check whether the compared object is null.
-            if (Object.ReferenceEquals(other, null))
+            if (ReferenceEquals(other, null))
                 return false;
 
             //Check whether the names and dictionary contents are the same
@@ -267,6 +267,11 @@ namespace QuickFix
         #region IEnumerable Members
 
         public System.Collections.IEnumerator GetEnumerator()
+        {
+            return data_.GetEnumerator();
+        }
+
+        IEnumerator<KeyValuePair<string, string>> IEnumerable<KeyValuePair<string, string>>.GetEnumerator()
         {
             return data_.GetEnumerator();
         }

@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Collections.Generic;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace QuickFix
 {
@@ -10,7 +12,7 @@ namespace QuickFix
         private IApplication _app = null;
         private IMessageStoreFactory _storeFactory = null;
         private SessionSettings _settings = null;
-        private ILogFactory _logFactory = null;
+        private ILoggerFactory _loggerFactory = null;
         private IMessageFactory _msgFactory = null;
 
         private object sync_ = new object();
@@ -33,20 +35,32 @@ namespace QuickFix
         #endregion
 
         public AbstractInitiator(IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(app, storeFactory, settings, null, null)
+            : this(app, storeFactory, settings, (ILoggerFactory)null, null)
         { }
 
+        [Obsolete]
         public AbstractInitiator(IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
             : this(app, storeFactory, settings, logFactory, null)
         { }
 
+        [Obsolete]
         public AbstractInitiator(
             IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
+            : this(app, storeFactory, settings, LoggerExtensions.LoggerFactoryTransient(logFactory), messageFactory)
+        {
+        }
+
+        public AbstractInitiator(IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILoggerFactory loggerFactory)
+            : this(app, storeFactory, settings, loggerFactory, null)
+        { }
+
+        public AbstractInitiator(
+            IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILoggerFactory loggerFactory, IMessageFactory messageFactory)
         {
             _app = app;
             _storeFactory = storeFactory;
             _settings = settings;
-            _logFactory = logFactory ?? new NullLogFactory();
+            _loggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
             _msgFactory = messageFactory ?? new DefaultMessageFactory();
 
             HashSet<SessionID> definedSessions = _settings.GetSessions();
@@ -60,7 +74,7 @@ namespace QuickFix
                 throw new System.ObjectDisposedException(this.GetType().Name);
 
             // create all sessions
-            sessionFactory_ = new SessionFactory(_app, _storeFactory, _logFactory, _msgFactory);
+            sessionFactory_ = new SessionFactory(_app, _storeFactory, _loggerFactory, _msgFactory);
             foreach (SessionID sessionID in _settings.GetSessions())
             {
                 Dictionary dict = _settings.Get(sessionID);

@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -28,7 +30,16 @@ namespace QuickFix
 
         #endregion
 
+        [Obsolete]
         public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
+        {
+            socketEndPoint_ = socketEndPoint;
+            socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict, this);
+        }
+
+        [Obsolete]
+        public AcceptorSocketDescriptor(
+            IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict, ILoggerFactory loggerFactory)
         {
             socketEndPoint_ = socketEndPoint;
             socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict, this);

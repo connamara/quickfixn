@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 
@@ -31,7 +32,7 @@ namespace QuickFix
         private ResendRange resendRange_ = new ResendRange();
         private Dictionary<int, Message> msgQueue = new Dictionary<int, Message>();
 
-        private ILog log_;
+        private ILogger _log;
 
         #endregion
 
@@ -43,11 +44,12 @@ namespace QuickFix
         public bool IsInitiator
         { get; set; }
 
-        public bool ShouldSendLogon
-        { get { return IsInitiator && !SentLogon; } }
+        public bool ShouldSendLogon => IsInitiator && !SentLogon;
 
-        public ILog Log
-        { get { return log_; } }
+        [Obsolete]
+        public ILog Log => (Logger as ILog) != null ? Logger as ILog : NullLog.Instance; 
+
+        public ILogger Logger => _log;
 
         #endregion
 
@@ -160,13 +162,13 @@ namespace QuickFix
         /// which is bad because 0 is actually a valid (though not-often-used) setting.
         /// </summary>
         [System.Obsolete("Use the constructor that takes the isInitiator parameter.")]
-        public SessionState(ILog log, int heartBtInt)
-            : this(0 != heartBtInt, log, heartBtInt)
+        public SessionState(ILogger logger, int heartBtInt)
+            : this(0 != heartBtInt, logger, heartBtInt)
         { }
 
-        public SessionState(bool isInitiator, ILog log, int heartBtInt)
+        public SessionState(bool isInitiator, ILogger log, int heartBtInt)
         {
-            log_ = log;
+            _log = log;
             this.HeartBtInt = heartBtInt;
             this.IsInitiator = isInitiator;
             lastReceivedTimeDT_ = DateTime.UtcNow;
@@ -417,8 +419,8 @@ namespace QuickFix
         {
             lock (sync_)
             {
-                this.MessageStore.Reset();
-                this.Log.OnEvent("Session reset: " + reason);
+                MessageStore.Reset();
+                Logger.LogEvent("Session reset: " + reason);
             }
         }
 
@@ -441,7 +443,6 @@ namespace QuickFix
             if (_disposed) return;
             if (disposing)
             {
-                if (log_ != null) { log_.Dispose(); }
                 if (MessageStore != null) { MessageStore.Dispose(); }
             }
             _disposed = true;

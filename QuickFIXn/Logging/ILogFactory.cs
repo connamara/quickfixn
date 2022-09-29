@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace QuickFix
 {
     /// <summary>
@@ -10,6 +12,7 @@ namespace QuickFix
     /// <summary>
     /// Used by a session to create a log implementation
     /// </summary>
+    [Obsolete("Use ILoggerProvider instead")]
     public interface ILogFactory
     {
         /// <summary>

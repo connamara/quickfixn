@@ -8,6 +8,7 @@ using System.Net;
 using System.Diagnostics;
 using System.Threading;
 using System.IO;
+using Microsoft.Extensions.Logging;
 
 namespace QuickFix.Transport
 {
@@ -40,15 +41,25 @@ namespace QuickFix.Transport
         #endregion
 
         public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(application, storeFactory, settings, null)
+            : this(application, storeFactory, settings, (ILoggerFactory) null)
         { }
 
+        [Obsolete]
         public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
             : base(application, storeFactory, settings, logFactory)
         { }
 
+        [Obsolete]
         public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
             : base(application, storeFactory, settings, logFactory, messageFactory)
+        { }
+
+        public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILoggerFactory loggerFactory)
+            : base(application, storeFactory, settings, loggerFactory)
+        { }
+
+        public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILoggerFactory loggerFactory, IMessageFactory messageFactory)
+            : base(application, storeFactory, settings, loggerFactory, messageFactory)
         { }
 
         public static void SocketInitiatorThreadStart(object socketInitiatorThread)
@@ -63,7 +74,7 @@ namespace QuickFix.Transport
                 {
                     t.Connect();
                     t.Initiator.SetConnected(t.Session.SessionID);
-                    t.Session.Log.OnEvent("Connection succeeded");
+                    t.Session.Logger.LogEvent("Connection succeeded");
                     t.Session.Next();
                     while (t.Read())
                     {
@@ -107,7 +118,7 @@ namespace QuickFix.Transport
                     }
                     else
                     {
-                        t.Session.Log.OnEvent(exceptionEvent);
+                        t.Session.Logger.LogEvent(exceptionEvent);
                     }
                 }
             }
@@ -251,7 +262,7 @@ namespace QuickFix.Transport
 
                 IPEndPoint socketEndPoint = GetNextSocketEndPoint(sessionID, settings);
                 SetPending(sessionID);
-                session.Log.OnEvent("Connecting to " + socketEndPoint.Address + " on port " + socketEndPoint.Port);
+                session.Logger.LogEvent("Connecting to " + socketEndPoint.Address + " on port " + socketEndPoint.Port);
 
                 //Setup socket settings based on current section
                 var socketSettings = socketSettings_.Clone();
@@ -266,7 +277,7 @@ namespace QuickFix.Transport
             catch (System.Exception e)
             {
                 if (null != session)
-                    session.Log.OnEvent(e.Message);
+                    session.Logger.LogEvent(e.Message);
             }
         }
 

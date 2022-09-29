@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace QuickFix
 {
@@ -33,6 +34,8 @@ namespace QuickFix
         private Thread serverThread_ = null;
         private Dictionary<long, ClientHandlerThread> clientThreads_ = new Dictionary<long, ClientHandlerThread>();
         private TcpListener tcpListener_;
+        private readonly ILoggerFactory _loggerFactory;
+        private readonly ILogger _logger;
         private SocketSettings socketSettings_;
         private QuickFix.Dictionary sessionDict_;
         private IPEndPoint serverSocketEndPoint_;
@@ -45,11 +48,20 @@ namespace QuickFix
             : this(serverSocketEndPoint, socketSettings, null)
         { }
 
+        [Obsolete]
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings,
-            QuickFix.Dictionary sessionDict) : this(serverSocketEndPoint, socketSettings, sessionDict, null)
+            QuickFix.Dictionary sessionDict) : this(serverSocketEndPoint, socketSettings, sessionDict, (AcceptorSocketDescriptor)null)
         {
             
         }
+
+        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings,
+            QuickFix.Dictionary sessionDict, ILoggerFactory loggerFactory) : this(serverSocketEndPoint, socketSettings, sessionDict, null, loggerFactory)
+        {
+
+        }
+
+        [Obsolete]
         internal ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict, AcceptorSocketDescriptor acceptorDescriptor)
         {
             socketSettings_ = socketSettings;
@@ -57,6 +69,22 @@ namespace QuickFix
             tcpListener_ = new TcpListener(serverSocketEndPoint_);
             sessionDict_ = sessionDict;
             acceptorDescriptor_ = acceptorDescriptor;
+        }
+
+        internal ThreadedSocketReactor(
+            IPEndPoint serverSocketEndPoint, 
+            SocketSettings socketSettings, 
+            QuickFix.Dictionary sessionDict, 
+            AcceptorSocketDescriptor acceptorDescriptor, 
+            ILoggerFactory loggerFactory)
+        {
+            socketSettings_ = socketSettings;
+            serverSocketEndPoint_ = serverSocketEndPoint;
+            tcpListener_ = new TcpListener(serverSocketEndPoint_);
+            sessionDict_ = sessionDict;
+            acceptorDescriptor_ = acceptorDescriptor;
+            _loggerFactory = loggerFactory;
+            _logger = loggerFactory.CreateLogger(nameof(ThreadedSocketReactor));
         }
 
         public void Start()
@@ -89,13 +117,13 @@ namespace QuickFix
                             }
                             catch (System.Exception e)
                             {
-                                this.Log("Tried to interrupt server socket but was already closed: " + e.Message);
+                                _logger.LogError("Tried to interrupt server socket but was already closed: " + e.Message);
                             }
                         }
                     }
                     catch (System.Exception e)
                     {
-                        this.Log("Error while closing server socket: " + e.Message);
+                        _logger.LogError("Error while closing server socket: " + e.Message);
                     }
                 }
             }
@@ -116,7 +144,7 @@ namespace QuickFix
                     }
                     catch(Exception e)
                     {
-                        this.Log("Error starting listener: " + e.Message);
+                        _logger.LogError("Error starting listener: " + e.Message);
                         throw;
                     }
                 }
@@ -131,7 +159,8 @@ namespace QuickFix
                     {
                         ApplySocketOptions(client, socketSettings_);
                         ClientHandlerThread t =
-                            new ClientHandlerThread(client, nextClientId_++, sessionDict_, socketSettings_, acceptorDescriptor_);
+                            new ClientHandlerThread(
+                                client, nextClientId_++, sessionDict_, socketSettings_, acceptorDescriptor_, _loggerFactory);
                         t.Exited += OnClientHandlerThreadExited;
                         lock (sync_)
                         {
@@ -150,7 +179,7 @@ namespace QuickFix
                 catch (System.Exception e)
                 {
                     if (State.RUNNING == ReactorState)
-                        this.Log("Error accepting connection: " + e.Message);
+                        _logger.LogError("Error accepting connection: " + e.Message);
                 }
             }
             tcpListener_.Server.Close();
@@ -205,7 +234,7 @@ namespace QuickFix
             {
                 if (State.SHUTDOWN_COMPLETE != state_)
                 {
-                    this.Log("shutting down...");
+                    _logger.LogInformation("shutting down...");
 
                     foreach (ClientHandlerThread t in clientThreads_.Values)
                     {
@@ -225,15 +254,6 @@ namespace QuickFix
                     state_ = State.SHUTDOWN_COMPLETE;
                 }
             }
-        }
-
-        /// <summary>
-        /// FIXME do real logging
-        /// </summary>
-        /// <param name="s"></param>
-        private void Log(string s)
-        {
-            System.Console.WriteLine(s);
         }
     }
 }

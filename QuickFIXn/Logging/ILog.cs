@@ -11,6 +11,7 @@ namespace QuickFix
     /// <summary>
     /// Session log for messages and events
     /// </summary>
+    [Obsolete("Use ILogger instead")]
     public interface ILog : IDisposable
     {
         /// <summary>

@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace QuickFix
 {
@@ -13,11 +15,11 @@ namespace QuickFix
     {
         
 
-        private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
-        private SessionSettings settings_;
+        private Dictionary<SessionID, Session> _sessions = new Dictionary<SessionID, Session>();
+        private SessionSettings _settings;
         private Dictionary<IPEndPoint, AcceptorSocketDescriptor> socketDescriptorForAddress_ = new Dictionary<IPEndPoint, AcceptorSocketDescriptor>();
-        private SessionFactory sessionFactory_;
-        private bool isStarted_ = false;
+        private SessionFactory _sessionFactory;
+        private bool _isStarted = false;
         private bool _disposed = false;
         private object sync_ = new object();
 
@@ -30,8 +32,25 @@ namespace QuickFix
         /// <param name="storeFactory"></param>
         /// <param name="settings"></param>
         public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(application, storeFactory, settings, null, null)
+            : this(application, storeFactory, settings, (ILoggerFactory) null, null)
         { }
+
+        [Obsolete]
+        public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
+            : this(application, storeFactory, settings, logFactory, null)
+        { }
+
+        
+        [Obsolete]
+        public ThreadedSocketAcceptor(
+            IApplication application,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILogFactory logFactory,
+            IMessageFactory messageFactory)
+            : this (application, storeFactory, settings, logFactory != null ? LoggerExtensions.LoggerFactoryTransient(logFactory) : NullLoggerFactory.Instance, messageFactory)
+        {
+        }
 
         /// <summary>
         /// Create a ThreadedSocketAcceptor with a DefaultMessageFactory
@@ -40,7 +59,8 @@ namespace QuickFix
         /// <param name="storeFactory"></param>
         /// <param name="settings"></param>
         /// <param name="logFactory"></param>
-        public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
+        public ThreadedSocketAcceptor(
+            IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILoggerFactory logFactory)
             : this(application, storeFactory, settings, logFactory, null)
         { }
 
@@ -50,24 +70,24 @@ namespace QuickFix
         /// <param name="application"></param>
         /// <param name="storeFactory"></param>
         /// <param name="settings"></param>
-        /// <param name="logFactory">If null, a NullFactory will be used.</param>
+        /// <param name="loggerFactory">If null, a NullFactory will be used.</param>
         /// <param name="messageFactory">If null, a DefaultMessageFactory will be created (using settings parameters)</param>
         public ThreadedSocketAcceptor(
             IApplication application,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
-            ILogFactory logFactory,
+            ILoggerFactory loggerFactory,
             IMessageFactory messageFactory)
         {
-            logFactory = logFactory ?? new NullLogFactory();
+            loggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
             messageFactory = messageFactory ?? new DefaultMessageFactory();
-            SessionFactory sf = new SessionFactory(application, storeFactory, logFactory, messageFactory);
+            SessionFactory sf = new SessionFactory(application, storeFactory, loggerFactory, messageFactory);
 
             try
             {
                 CreateSessions(settings, sf);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw new ConfigError(e.Message, e);
             }
@@ -80,7 +100,7 @@ namespace QuickFix
             {
                 CreateSessions(settings, sessionFactory);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw new ConfigError(e.Message, e);
             }
@@ -92,8 +112,8 @@ namespace QuickFix
 
         private void CreateSessions(SessionSettings settings, SessionFactory sessionFactory)
         {
-            sessionFactory_ = sessionFactory;
-            settings_ = settings;
+            _sessionFactory = sessionFactory;
+            _settings = settings;
             foreach (SessionID sessionID in settings.GetSessions())
             {
                 QuickFix.Dictionary dict = settings.Get(sessionID);
@@ -141,19 +161,19 @@ namespace QuickFix
         /// <returns>true if session added successfully, false if session already exists or is not an acceptor</returns>
         private bool CreateSession(SessionID sessionID, Dictionary dict)
         {
-            if (!sessions_.ContainsKey(sessionID))
+            if (!_sessions.ContainsKey(sessionID))
             {
                 string connectionType = dict.GetString(SessionSettings.CONNECTION_TYPE);
                 if ("acceptor" == connectionType)
                 {
                     AcceptorSocketDescriptor descriptor = GetAcceptorSocketDescriptor(dict);
-                    Session session = sessionFactory_.Create(sessionID, dict);
+                    Session session = _sessionFactory.Create(sessionID, dict);
                     descriptor.AcceptSession(session);
-                    sessions_[sessionID] = session;
+                    _sessions[sessionID] = session;
 
                     // start SocketReactor if it was created via AddSession call
                     // and if acceptor is already started
-                    if (isStarted_ && !_disposed)
+                    if (_isStarted && !_disposed)
                     {
                         descriptor.SocketReactor.Start();
                     }
@@ -191,7 +211,7 @@ namespace QuickFix
 
         private void LogoutAllSessions(bool force)
         {
-            foreach (Session session in sessions_.Values)
+            foreach (Session session in _sessions.Values)
             {
                 try
                 {
@@ -206,7 +226,7 @@ namespace QuickFix
 
             if (force && IsLoggedOn)
             {
-                foreach (Session session in sessions_.Values)
+                foreach (Session session in _sessions.Values)
                 {
                     try
                     {
@@ -261,7 +281,7 @@ namespace QuickFix
 
         private void DisposeSessions()
         {
-            foreach (var session in sessions_.Values)
+            foreach (var session in _sessions.Values)
             {
                 session.Dispose();
             }
@@ -278,10 +298,10 @@ namespace QuickFix
 
             lock (sync_)
             {
-                if (!isStarted_)
+                if (!_isStarted)
                 {
                     StartAcceptingConnections();
-                    isStarted_ = true;
+                    _isStarted = true;
                 }
             }
         }
@@ -299,7 +319,7 @@ namespace QuickFix
             StopAcceptingConnections();
             LogoutAllSessions(force);
             DisposeSessions();
-            sessions_.Clear();
+            _sessions.Clear();
 
             // FIXME StopSessionTimer();
             // FIXME Session.UnregisterSessions(GetSessions());
@@ -313,7 +333,7 @@ namespace QuickFix
         {
             get
             {
-                return sessions_.Values.Any(session => session.IsLoggedOn);
+                return _sessions.Values.Any(session => session.IsLoggedOn);
             }
         }
 
@@ -323,7 +343,7 @@ namespace QuickFix
         /// <returns>the SessionIDs for the sessions managed by this acceptor</returns>
         public HashSet<SessionID> GetSessionIDs()
         {
-            return new HashSet<SessionID>(sessions_.Keys);
+            return new HashSet<SessionID>(_sessions.Keys);
         }
 
         /// <summary>
@@ -343,17 +363,17 @@ namespace QuickFix
         /// <returns>true if session added successfully, false if session already exists or is not an acceptor</returns>
         public bool AddSession(SessionID sessionID, Dictionary dict)
         {
-            lock (settings_)
-                if (!settings_.Has(sessionID)) // session won't be in settings if ad-hoc creation after startup
-                    settings_.Set(sessionID, dict); // need to to this here to merge in default config settings
+            lock (_settings)
+                if (!_settings.Has(sessionID)) // session won't be in settings if ad-hoc creation after startup
+                    _settings.Set(sessionID, dict); // need to to this here to merge in default config settings
                 else
                     return false; // session already exists
 
             if (CreateSession(sessionID, dict))
                 return true;
 
-            lock (settings_) // failed to create session, so remove from settings
-                settings_.Remove(sessionID);
+            lock (_settings) // failed to create session, so remove from settings
+                _settings.Remove(sessionID);
             return false;
         }
 
@@ -367,7 +387,7 @@ namespace QuickFix
         public bool RemoveSession(SessionID sessionID, bool terminateActiveSession)
         {
             Session session = null;
-            if (sessions_.TryGetValue(sessionID, out session))
+            if (_sessions.TryGetValue(sessionID, out session))
             {
                 if (session.IsLoggedOn && !terminateActiveSession)
                     return false;
@@ -375,10 +395,10 @@ namespace QuickFix
                 foreach (AcceptorSocketDescriptor descriptor in socketDescriptorForAddress_.Values)
                     if (descriptor.RemoveSession(sessionID))
                         break;
-                sessions_.Remove(sessionID);
+                _sessions.Remove(sessionID);
                 session.Dispose();
-                lock (settings_)
-                    settings_.Remove(sessionID);
+                lock (_settings)
+                    _settings.Remove(sessionID);
             }
             return true;
         }

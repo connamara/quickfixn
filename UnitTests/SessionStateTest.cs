@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace UnitTests
 {
@@ -149,7 +150,7 @@ namespace UnitTests
 
             FileStore store = (FileStore)factory.Create(sessionId);
 
-            NullLog log = new NullLog();
+            NullLogger log = NullLogger.Instance;
 
             //Set up sessionstate
             SessionState state = new SessionState(true, log, 1) {MessageStore = store};

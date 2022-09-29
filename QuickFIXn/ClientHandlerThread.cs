@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Threading;
 using System;
+using Microsoft.Extensions.Logging;
 
 namespace QuickFix
 {
@@ -32,7 +33,7 @@ namespace QuickFix
         private Thread thread_ = null;
         private volatile bool isShutdownRequested_ = false;
         private SocketReader socketReader_;
-        private FileLog log_;
+        private ILogger _logger;
 
         [Obsolete("Don't use this constructor")]
         public ClientHandlerThread(TcpClient tcpClient, long clientId)
@@ -46,6 +47,14 @@ namespace QuickFix
         {
         }
 
+        [Obsolete("Use constructor with injecting ILoggerFactory")]
+        public ClientHandlerThread(
+            TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings)
+            : this(tcpClient, clientId, settingsDict, socketSettings, (AcceptorSocketDescriptor)null)
+        {
+            
+        }
+
         /// <summary>
         /// Creates a ClientHandlerThread
         /// </summary>
@@ -53,12 +62,14 @@ namespace QuickFix
         /// <param name="clientId"></param>
         /// <param name="settingsDict"></param>
         /// <param name="socketSettings"></param>
-        public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings)
-            : this(tcpClient, clientId, settingsDict, socketSettings, null)
+        /// <param name="loggerFactory"></param>
+        public ClientHandlerThread(
+            TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings, ILoggerFactory loggerFactory)
+            : this(tcpClient, clientId, settingsDict, socketSettings, null, loggerFactory)
         {
-            
         }
 
+        [Obsolete("Creates File Logger under the hood, please use Constructor with ILoggerFactory")]
         internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict,
             SocketSettings socketSettings, AcceptorSocketDescriptor acceptorDescriptor)
         {
@@ -67,11 +78,19 @@ namespace QuickFix
                 debugLogFilePath = settingsDict.GetString(SessionSettings.DEBUG_FILE_LOG_PATH);
             else if (settingsDict.Has(SessionSettings.FILE_LOG_PATH))
                 debugLogFilePath = settingsDict.GetString(SessionSettings.FILE_LOG_PATH);
+            var sessionID = new SessionID(
+                    "ClientHandlerThread", clientId.ToString(), "Debug-" + Guid.NewGuid().ToString());
+            _logger = new FileLog(debugLogFilePath, sessionID);
+            this.Id = clientId;
+            socketReader_ = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor);
+        }
 
-            // FIXME - do something more flexible than hardcoding a filelog
-            log_ = new FileLog(debugLogFilePath, new SessionID(
-                    "ClientHandlerThread", clientId.ToString(), "Debug-" + Guid.NewGuid().ToString()));
-
+        internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict,
+        SocketSettings socketSettings, AcceptorSocketDescriptor acceptorDescriptor, ILoggerFactory loggerFactory)
+        {
+            var sessionID = new SessionID(
+                    "ClientHandlerThread", clientId.ToString(), "Debug-" + Guid.NewGuid().ToString());
+            _logger = loggerFactory.CreateLogger(sessionID.ToString());
             this.Id = clientId;
             socketReader_ = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor);
         }
@@ -124,16 +143,16 @@ namespace QuickFix
         /// FIXME do real logging
         public void Log(string s)
         {
-            log_.OnEvent(s);
+            _logger.LogEvent(s);
         }
 
         /// <summary>
         /// Provide StreamReader with access to the log
         /// </summary>
         /// <returns></returns>
-        internal ILog GetLog()
+        internal ILogger GetLogger()
         {
-            return log_;
+            return _logger;
         }
 
         #region Responder Members
@@ -169,10 +188,9 @@ namespace QuickFix
                     socketReader_ = null;
                 }
 
-                if (log_ != null)
+                if (_logger != null)
                 {
-                    log_.Dispose();
-                    log_ = null;
+                    _logger = null;
                 }
             }
             _disposed = true;

@@ -8,6 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Diagnostics;
 using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace QuickFix.Transport
 {
@@ -63,6 +64,12 @@ namespace QuickFix.Transport
             return socketThruProxy;
         }
 
+        [Obsolete]
+        public static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILog log)
+        {
+            return CreateClientStream(endpoint, settings, (ILogger)new LogLogger(log));
+        }
+
         /// <summary>
         /// Connect to the specified endpoint and return a stream that can be used to communicate with it. (for initiator)
         /// </summary>
@@ -70,7 +77,7 @@ namespace QuickFix.Transport
         /// <param name="settings">The socket settings.</param>
         /// <param name="logger">Logger to use.</param>
         /// <returns>an opened and initiated stream which can be read and written to</returns>
-        public static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILog logger)
+        public static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILogger logger)
         {
             // If system has configured a proxy for this config, use it.
             Socket socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port);
@@ -110,6 +117,12 @@ namespace QuickFix.Transport
             return stream;
         }
 
+        [Obsolete]
+        public static Stream CreateServerStream(TcpClient tcpClient, SocketSettings settings, ILog log)
+        {
+            return CreateServerStream(tcpClient, settings, (ILogger)new LogLogger(log));
+        }
+
         /// <summary>
         /// Initiate communication to the remote client and return a stream that can be used to communicate with it. (for acceptor)
         /// </summary>
@@ -118,7 +131,7 @@ namespace QuickFix.Transport
         /// <param name="logger">Logger to use.</param>
         /// <returns>an opened and initiated stream which can be read and written to</returns>
         /// <exception cref="System.ArgumentException">tcp client must be connected in order to get stream;tcpClient</exception>
-        public static Stream CreateServerStream(TcpClient tcpClient, SocketSettings settings, ILog logger)
+        public static Stream CreateServerStream(TcpClient tcpClient, SocketSettings settings, ILogger logger)
         {
             if (tcpClient.Connected == false)
                 throw new ArgumentException("tcp client must be connected in order to get stream", "tcpClient");
@@ -236,14 +249,21 @@ namespace QuickFix.Transport
         /// </summary>
         private sealed class SSLStreamFactory
         {
-            ILog log_;
+            ILogger _logger;
             SocketSettings socketSettings_;
             const string clientAuthenticationOid = "1.3.6.1.5.5.7.3.2";
             const string serverAuthenticationOid = "1.3.6.1.5.5.7.3.1";
 
+            [Obsolete]
             public SSLStreamFactory(ILog log, SocketSettings settings)
             {
-                log_ = log;
+                _logger = new LogLogger(log);
+                socketSettings_ = settings;
+            }
+
+            public SSLStreamFactory(ILogger logger, SocketSettings settings)
+            {
+                _logger = logger;
                 socketSettings_ = settings;
             }
 
@@ -267,7 +287,7 @@ namespace QuickFix.Transport
                 }
                 catch (System.Security.Authentication.AuthenticationException ex)
                 {
-                    log_.OnEvent("Unable to perform authentication against server: " + ex.Message);
+                    _logger.LogEvent("Unable to perform authentication against server: " + ex.Message);
                     throw;
                 }
 
@@ -297,7 +317,7 @@ namespace QuickFix.Transport
                 }
                 catch (System.Security.Authentication.AuthenticationException ex)
                 {
-                    log_.OnEvent("Unable to perform authentication against server: " + ex.Message);
+                    _logger.LogEvent("Unable to perform authentication against server: " + ex.Message);
                     throw;
                 }
 
@@ -363,9 +383,9 @@ namespace QuickFix.Transport
                 if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage))
                 {
                     if (enhancedKeyUsage == clientAuthenticationOid)
-                        log_.OnEvent("Remote certificate is not intended for client authentication: It is missing enhanced key usage " + enhancedKeyUsage);
+                        _logger.LogEvent("Remote certificate is not intended for client authentication: It is missing enhanced key usage " + enhancedKeyUsage);
                     else
-                        log_.OnEvent("Remote certificate is not intended for server authentication: It is missing enhanced key usage " + enhancedKeyUsage);
+                        _logger.LogEvent("Remote certificate is not intended for server authentication: It is missing enhanced key usage " + enhancedKeyUsage);
 
                     return false;
                 }
@@ -392,7 +412,7 @@ namespace QuickFix.Transport
                 // Any basic authentication check failed, do after checking CA
                 if (sslPolicyErrors != SslPolicyErrors.None)
                 {
-                    log_.OnEvent("Remote certificate was not recognized as a valid certificate: " + sslPolicyErrors);
+                    _logger.LogEvent("Remote certificate was not recognized as a valid certificate: " + sslPolicyErrors);
                     return false;
                 }
 

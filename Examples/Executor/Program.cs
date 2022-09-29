@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using Acceptor;
+using Microsoft.Extensions.Logging;
 using QuickFix;
 
 namespace Executor

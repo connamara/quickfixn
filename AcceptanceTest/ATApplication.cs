@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using QuickFix;
 
 namespace AcceptanceTest
@@ -8,11 +9,11 @@ namespace AcceptanceTest
         public event System.Action StopMeEvent;
 
         private HashSet<KeyValuePair<string, SessionID>> clOrdIDs_ = new HashSet<KeyValuePair<string, SessionID>>();
-        private FileLog log_;
+        private ILogger _logger;
 
-        public ATApplication(FileLog debugLog)
+        public ATApplication(ILogger debugLog)
         {
-            log_ = debugLog;
+            _logger = debugLog;
         }
 
         public void OnMessage(QuickFix.FIX40.NewOrderSingle nos, SessionID sessionID)
@@ -172,7 +173,7 @@ namespace AcceptanceTest
             }
             catch (System.Exception e)
             {
-                log_.OnEvent("FromApp: " + e.ToString() + " while processing msg (" + message.ToString() + ")");
+                _logger.LogEvent("FromApp: " + e.ToString() + " while processing msg (" + message.ToString() + ")");
             }
         }
 

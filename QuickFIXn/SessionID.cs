@@ -10,112 +10,35 @@ namespace QuickFix
     /// but using different FIX versions (and/or session qualifiers).
     /// 
     /// </summary>
-    public class SessionID
+    public class SessionID : IEquatable<SessionID>
     {
-        #region Properties
-        
-        public string BeginString
-        {
-            get { return beginString_; }
-        }
-
-        public string SenderCompID
-        {
-            get { return senderCompID_; }
-        }
-
-        public string SenderSubID
-        {
-            get { return senderSubID_; }
-        }
-
-        public string SenderLocationID
-        {
-            get { return senderLocationID_; }
-        }
-
-        public string TargetCompID
-        {
-            get { return targetCompID_; }
-        }
-
-        public string TargetSubID
-        {
-            get { return targetSubID_; }
-        }
-
-        public string TargetLocationID
-        {
-            get { return targetLocationID_; }
-        }
-
-        /// <summary>
-        /// Session qualifier can be used to identify different sessions
-        /// for the same target company ID. Session qualifiers can only be used
-        /// with initiated sessions. They cannot be used with accepted sessions.
-        /// </summary>
-        public string SessionQualifier
-        {
-            get { return sessionQualifier_; }
-        }
-
-        /// <summary>
-        /// Returns whether session version is FIXT 1.1 or newer
-        /// </summary>
-        public bool IsFIXT
-        {
-            get { return isFIXT_; }
-        }
-
-        #endregion
-
         #region Public Members
         public const string NOT_SET = "";
         #endregion
 
         #region Private Members
-        private string id_;
-        private string beginString_;
-        private string senderCompID_;
-        private string senderSubID_;
-        private string senderLocationID_;
-        private string targetCompID_;
-        private string targetSubID_;
-        private string targetLocationID_;
-        private string sessionQualifier_;
-        private bool isFIXT_;
-
+        private readonly string _id;
         #endregion
 
         public SessionID(string beginString, string senderCompID, string senderSubID, string senderLocationID, string targetCompID, string targetSubID, string targetLocationID, string sessionQualifier)
         {
             if (beginString == null)
-              throw new ArgumentNullException("beginString");
+                throw new ArgumentNullException("beginString");
             if (senderCompID == null)
-              throw new ArgumentNullException("senderCompID");
+                throw new ArgumentNullException("senderCompID");
             if (targetCompID == null)
-              throw new ArgumentNullException("targetCompID");
-            beginString_ = beginString;
-            senderCompID_ = senderCompID;
-            senderSubID_ = senderSubID;
-            senderLocationID_ = senderLocationID;
-            targetCompID_ = targetCompID;
-            targetSubID_ = targetSubID;
-            targetLocationID_ = targetLocationID;
-            sessionQualifier_ = sessionQualifier;
-            isFIXT_ = beginString_.StartsWith("FIXT");
-
-            id_ = beginString_
-                + ":"
-                + senderCompID_
-                + (IsSet(senderSubID_) ? "/" + senderSubID_ : "")
-                + (IsSet(senderLocationID_) ? "/" + senderLocationID_ : "")
-                + "->"
-                + targetCompID_
-                + (IsSet(targetSubID_) ? "/" + targetSubID_ : "")
-                + (IsSet(targetLocationID_) ? "/" + targetLocationID_ : "");
-            if (null != sessionQualifier_ && sessionQualifier_.Length > 0)
-                id_ += ":" + sessionQualifier_;
+                throw new ArgumentNullException("targetCompID");
+            BeginString = beginString;
+            SenderCompID = senderCompID;
+            SenderSubID = senderSubID;
+            SenderLocationID = senderLocationID;
+            TargetCompID = targetCompID;
+            TargetSubID = targetSubID;
+            TargetLocationID = targetLocationID;
+            SessionQualifier = sessionQualifier;
+            IsFIXT = beginString.StartsWith("FIXT");
+            _id = $"{beginString}:{senderCompID}{(IsSet(senderSubID) ? "/" + senderSubID : "")}{(IsSet(senderLocationID) ? "/" + senderLocationID : "")}" +
+                $"->{targetCompID}{(IsSet(targetSubID) ? "/" + targetSubID : "")}{(IsSet(targetLocationID) ? "/" + targetLocationID : "")}{(string.IsNullOrEmpty(sessionQualifier) ? "" : ":" + sessionQualifier)}";
         }
 
         public SessionID(string beginString, string senderCompID, string targetCompID)
@@ -130,9 +53,39 @@ namespace QuickFix
             : this(beginString, senderCompID, senderSubID, senderLocationID, targetCompID, targetSubID, targetLocationID, NOT_SET)
         { }
 
-        public SessionID(string beginString, string senderCompID, string targetCompID, string sessionQualifier) 
+        public SessionID(string beginString, string senderCompID, string targetCompID, string sessionQualifier)
             : this(beginString, senderCompID, NOT_SET, NOT_SET, targetCompID, NOT_SET, NOT_SET, sessionQualifier)
         { }
+
+        #region Properties
+
+        public string BeginString { get; }
+
+        public string SenderCompID { get; }
+
+        public string SenderSubID { get; }
+
+        public string SenderLocationID { get; }
+
+        public string TargetCompID { get; }
+
+        public string TargetSubID { get; }
+
+        public string TargetLocationID { get; }
+
+        /// <summary>
+        /// Session qualifier can be used to identify different sessions
+        /// for the same target company ID. Session qualifiers can only be used
+        /// with initiated sessions. They cannot be used with accepted sessions.
+        /// </summary>
+        public string SessionQualifier { get; }
+
+        /// <summary>
+        /// Returns whether session version is FIXT 1.1 or newer
+        /// </summary>
+        public bool IsFIXT { get; }
+
+        #endregion
 
         public static bool IsSet(string value)
         {
@@ -141,20 +94,78 @@ namespace QuickFix
 
         public override string ToString()
         {
-            return id_;
+            return _id;
         }
 
         public override int GetHashCode()
         {
-            return id_.GetHashCode();
+            return _id.GetHashCode();
         }
         
         public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType())
                 return false;
-            SessionID rhs = (SessionID)obj;
-            return id_.Equals(rhs.id_);
+            return Equals(obj as SessionID);
         }
+
+        public bool Equals(SessionID other)
+        {
+            if (ReferenceEquals(this, other))
+            {
+                return true;
+            }
+
+            if (ReferenceEquals(other, null))
+            {
+                return false;
+            }
+
+            return _id.Equals(other._id);
+        }
+
+        [Obsolete]
+        internal static SessionID FromString(string sessionID)
+        {
+            if (string.IsNullOrEmpty(sessionID))
+            {
+                throw new ArgumentNullException("invalid sessionID");
+            }
+            var initialSplit = sessionID.Split(':');
+            if (initialSplit.Length < 2 || initialSplit.Length > 3)
+            {
+                throw new ArgumentException("invalid sessionID");
+            }
+            var sessionQualifier = initialSplit.Length == 3 ? initialSplit[2] : NOT_SET;
+            var beginString = initialSplit[0];
+            var midSplit = initialSplit[1].Split(new string[] { "->" }, StringSplitOptions.None);
+            if (midSplit.Length != 2)
+            {
+                throw new ArgumentException("invalid sessionID");
+            }
+            var senderSplit = midSplit[0].Split('/');
+            var targetSplit = midSplit[1].Split('/');
+            if (senderSplit.Length > 3 || targetSplit.Length > 3)
+            {
+                throw new ArgumentException("invalid sessionID");
+            }
+            var senderCompID = senderSplit[0];
+            var senderSubID = senderSplit.Length > 1 ? senderSplit[1] : NOT_SET;
+            var senderLocationID = senderSplit.Length > 2 ? senderSplit[2] : NOT_SET;
+            var targetCompID = targetSplit[0];
+            var targetSubID = targetSplit.Length > 1 ? targetSplit[1] : NOT_SET;
+            var targetLocationID = targetSplit.Length > 2 ? targetSplit[2] : NOT_SET;
+            return new SessionID(
+                beginString, 
+                senderCompID, 
+                senderSubID, 
+                senderLocationID, 
+                targetCompID, 
+                targetSubID, 
+                targetLocationID, 
+                sessionQualifier);
+        }
+
+        
     }
 }

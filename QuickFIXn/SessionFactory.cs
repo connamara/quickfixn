@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
+using System;
+using System.Collections.Generic;
 
 namespace QuickFix
 {
@@ -7,21 +10,33 @@ namespace QuickFix
     /// </summary>
     public class SessionFactory
     {
-        protected IApplication application_;
-        protected IMessageStoreFactory messageStoreFactory_;
-        protected ILogFactory logFactory_;
-        protected IMessageFactory messageFactory_;
-        protected Dictionary<string,DataDictionary.DataDictionary> dictionariesByPath_ = new Dictionary<string,DataDictionary.DataDictionary>();
+        protected IApplication _application;
+        protected IMessageStoreFactory _messageStoreFactory;
+        protected ILoggerFactory _loggerFactory;
+        protected IMessageFactory _messageFactory;
+        protected Dictionary<string,DataDictionary.DataDictionary> _dictionariesByPath = new Dictionary<string,DataDictionary.DataDictionary>();
 
         public SessionFactory(IApplication app, IMessageStoreFactory storeFactory)
-            : this(app, storeFactory, null, null)
+            : this(app, storeFactory, (ILoggerFactory)null, null)
         { }
 
+        [Obsolete]
         public SessionFactory(IApplication app, IMessageStoreFactory storeFactory, ILogFactory logFactory)
             : this(app, storeFactory, logFactory, null)
         { }
 
+        public SessionFactory(IApplication app, IMessageStoreFactory storeFactory, ILoggerFactory loggerFactory)
+            : this(app, storeFactory, loggerFactory, null)
+        { }
+
+        [Obsolete]
         public SessionFactory(IApplication app, IMessageStoreFactory storeFactory, ILogFactory logFactory, IMessageFactory messageFactory)
+            : this(app, storeFactory, LoggerExtensions.LoggerFactoryTransient(logFactory), messageFactory)
+        {
+
+        }
+
+        public SessionFactory(IApplication app, IMessageStoreFactory storeFactory, ILoggerFactory loggerFactory, IMessageFactory messageFactory)
         {
             // TODO: for V2, consider ONLY instantiating MessageFactory in the Create() method,
             //   and removing instance var messageFactory_ altogether.
@@ -29,10 +44,10 @@ namespace QuickFix
             //   and thus can't create the right FIX-Version factory because we don't know what
             //   session to use to look up the BeginString and DefaultApplVerID.
 
-            application_ = app;
-            messageStoreFactory_ = storeFactory;
-            logFactory_ = logFactory ?? new NullLogFactory();
-            messageFactory_ = messageFactory ?? new DefaultMessageFactory();
+            _application = app;
+            _messageStoreFactory = storeFactory;
+            _loggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
+            _messageFactory = messageFactory ?? new DefaultMessageFactory();
         }
 
         static private bool DetectIfInitiator(QuickFix.Dictionary settings)
@@ -57,7 +72,7 @@ namespace QuickFix
                 useDataDictionary = settings.GetBool(SessionSettings.USE_DATA_DICTIONARY);
 
             QuickFix.Fields.ApplVerID defaultApplVerID = null;
-            IMessageFactory sessionMsgFactory = messageFactory_;
+            IMessageFactory sessionMsgFactory = _messageFactory;
             if (sessionID.IsFIXT)
             {
                 if (!settings.Has(SessionSettings.DEFAULT_APPLVERID))
@@ -72,7 +87,7 @@ namespace QuickFix
                 // tell the difference between FIX50 versions (same BeginString, unknown defaultApplVerId).
                 // But we have the real session settings here, so we can fix that.
                 // This is, of course, kind of a hack, and it should be reworked in V2 (TODO!).
-                if (messageFactory_ is DefaultMessageFactory)
+                if (_messageFactory is DefaultMessageFactory)
                 {
                     sessionMsgFactory = new DefaultMessageFactory(
                         FixValues.ApplVerID.FromBeginString(rawDefaultApplVerIdSetting));
@@ -101,13 +116,13 @@ namespace QuickFix
 
             Session session = new Session(
                 isInitiator,
-                application_,
-                messageStoreFactory_,
+                _application,
+                _messageStoreFactory,
                 sessionID,
                 dd,
                 new SessionSchedule(settings),
                 heartBtInt,
-                logFactory_,
+                _loggerFactory,
                 sessionMsgFactory,
                 senderDefaultApplVerId);
 
@@ -166,10 +181,10 @@ namespace QuickFix
             else
                 path = beginString.Replace(".", "") + ".xml";
 
-            if (!dictionariesByPath_.TryGetValue(path, out dd))
+            if (!_dictionariesByPath.TryGetValue(path, out dd))
             {
                 dd = new DataDictionary.DataDictionary(path);
-                dictionariesByPath_[path] = dd;
+                _dictionariesByPath[path] = dd;
             }
 
             DataDictionary.DataDictionary ddCopy = new DataDictionary.DataDictionary(dd);

@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Extensions.Logging;
 using System;
 
 namespace QuickFix
@@ -6,7 +7,8 @@ namespace QuickFix
     /// <summary>
     /// File log implementation
     /// </summary>
-    public class FileLog : ILog, System.IDisposable
+    [Obsolete("Use File Logger of your choice")]
+    public class FileLog : ILogger, ILog
     {
         private object sync_ = new object();
 
@@ -120,6 +122,25 @@ namespace QuickFix
 
         #endregion
 
+        #region Logger Members
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        {
+            ((ILog)this).Log(logLevel, eventId, state, exception, formatter);
+        }
+
+        public bool IsEnabled(LogLevel logLevel)
+        {
+            return ((ILog)this).IsEnabled(logLevel);
+        }
+
+        public IDisposable BeginScope<TState>(TState state)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #region IDisposable Members
         public void Dispose()
         {
@@ -141,6 +162,7 @@ namespace QuickFix
             }
             _disposed = true;
         }
+
         ~FileLog() => Dispose(false);
         #endregion
     }
