@@ -112,6 +112,7 @@ namespace QuickFix.DataDictionary
                 case "UTCTIMESTAMP": return typeof(Fields.DateTimeField);
                 case "BOOLEAN": return typeof(Fields.BooleanField);
                 case "LOCALMKTDATE": return typeof(Fields.StringField);
+                case "LOCALMKTTIME": return typeof(Fields.StringField);
                 case "DATA": return typeof(Fields.StringField);
                 case "FLOAT": return typeof(Fields.DecimalField);
                 case "PRICEOFFSET": return typeof(Fields.DecimalField);
@@ -123,12 +124,15 @@ namespace QuickFix.DataDictionary
                 case "NUMINGROUP": return typeof(Fields.IntField);
                 case "PERCENTAGE": return typeof(Fields.DecimalField);
                 case "SEQNUM": return typeof(Fields.IntField);
+                case "TAGNUM": return typeof(Fields.IntField);
                 case "LENGTH": return typeof(Fields.IntField);
                 case "COUNTRY": return typeof(Fields.StringField);
                 case "TZTIMEONLY": return typeof(Fields.StringField);
                 case "TZTIMESTAMP": return typeof(Fields.StringField); 
                 case "XMLDATA": return typeof(Fields.StringField);
                 case "LANGUAGE": return typeof(Fields.StringField);
+                case "XID": return typeof(Fields.StringField);
+                case "XIDREF": return typeof(Fields.StringField);
 
                 case "TIME": return typeof(Fields.DateTimeField);
                 case "DATE": return typeof(Fields.StringField);
