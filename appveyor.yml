@@ -16,7 +16,7 @@ before_test:
 - ruby -v
 
 build_script:
-- ps: dotnet build -c Release
+- ps: dotnet build -c Release --framework net6.0
 
 test_script:
 - ps: |
