@@ -1,5 +1,8 @@
 version: 1.0.{build}
 
+image:
+- Visual Studio 2022
+
 install:
 - dir C:\
 - set PATH=C:\Ruby26-x64\bin;%PATH%
