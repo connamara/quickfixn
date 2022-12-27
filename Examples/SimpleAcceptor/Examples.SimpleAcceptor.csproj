@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <RootNamespace>SimpleAcceptor</RootNamespace>
     <AssemblyName>SimpleAcceptor</AssemblyName>
     <Copyright>Copyright © Connamara Systems, LLC 2011</Copyright>
