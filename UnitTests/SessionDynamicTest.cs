@@ -409,7 +409,7 @@ namespace UnitTests
             var socket = ConnectToEngine(AcceptPort2);
             SendLogon(socket, dynamicCompID);
 
-            Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failde to logon dynamic added acceptor session with another port");
+            Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failed to logon dynamic added acceptor session with another port");
         }
         
         [Test]
