@@ -66,7 +66,7 @@ function Write-TestResult {
 
     process {
         # Canonicalize the FIX protocal version for the test results being displayed
-        $FixVersion = $TestResult.SelectSingleNode('test').name -replace $TestRegex, '${FixVersion}'
+        $FixVersion = $TestResult.FirstChild.SelectSingleNode('test').name -replace $TestRegex, '${FixVersion}'
         $FixVersion = $($FixVersion -replace $FixRegex, 'FIX ${Major}.${Minor} ${Prefix} ${Number}').TrimEnd().ToUpperInvariant()
 
         Write-Host "`nTest Results for:  $FixVersion ($Framework)"
