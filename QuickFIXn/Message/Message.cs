@@ -433,7 +433,7 @@ namespace QuickFix
 
                     if (Tags.MsgType.Equals(f.Tag))
                     {
-                        msgType = string.Copy(f.Obj);
+                        msgType = f.Obj;
                         if (appDD != null)
                         {
                             msgMap = appDD.GetMapForMessage(msgType);
