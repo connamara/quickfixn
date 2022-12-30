@@ -33,6 +33,9 @@ function TestSpec
         [switch]$UseWsl
     )
 
+    Write-Host "====="
+    Write-Host "Launching AT for result file $Dest"
+
     .\runat.ps1 $Configuration $Port "$Def" "$Conf" $Framework -UseWsl:$($UseWsl -and $UseWsl.IsPresent)
 
     if ($LASTEXITCODE -ne 0) { $Script:ReturnValue = $Script:ReturnValue + 1 }
@@ -96,6 +99,8 @@ function RunSuite
 }
 
 try {
+    Write-Host "Launching acceptance tests..."
+
     Push-Location -Path "AcceptanceTest" -StackName AcceptanceTest
 
     Remove-Item AcceptanceTests_*.xml
