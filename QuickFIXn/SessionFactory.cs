@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using QuickFix.Util;
 
 namespace QuickFix
 {
@@ -165,6 +167,8 @@ namespace QuickFix
                 path = settings.GetString(settingsKey);
             else
                 path = beginString.Replace(".", "") + ".xml";
+
+            path = StringUtil.FixSlashes(path);
 
             if (!dictionariesByPath_.TryGetValue(path, out dd))
             {
