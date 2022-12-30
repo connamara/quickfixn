@@ -90,10 +90,10 @@ To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
 
 ```
 cd AcceptanceTest
-pwsh runat.ps1 release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg netcoreapp2.1
+pwsh runat.ps1 release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg net6.0
 ```
 
-The final param must be "net461" or "netcoreapp2.1".
+The final param *must* be "net6.0".
 
 (See acceptance_test.ps1 for the proper port numbers and config files to use in the above command.)
 

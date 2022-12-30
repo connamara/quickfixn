@@ -106,25 +106,25 @@ if ($ExitCode -eq 0) {
 @(
 	$QFDir
 	"$QFDir\bin"
-	"$QFDir\bin\netstandard2.0"
+	"$QFDir\bin\net6.0"
 	"$QFDir\spec"
 	"$QFDir\spec\fix"
 	"$QFDir\config"
 ) | ForEach-Object { New-Item -ItemType Directory $_ }
 
 @(
-	'QuickFIXn\bin\Release\netstandard2.0\QuickFix.dll',
-	'Messages\FIX40\bin\Release\netstandard2.0\QuickFix.FIX40.dll',
-	'Messages\FIX41\bin\Release\netstandard2.0\QuickFix.FIX41.dll',
-	'Messages\FIX42\bin\Release\netstandard2.0\QuickFix.FIX42.dll',
-	'Messages\FIX43\bin\Release\netstandard2.0\QuickFix.FIX43.dll',
-	'Messages\FIX44\bin\Release\netstandard2.0\QuickFix.FIX44.dll',
-	'Messages\FIX50\bin\Release\netstandard2.0\QuickFix.FIX50.dll',
-	'Messages\FIX50SP1\bin\Release\netstandard2.0\QuickFix.FIX50SP1.dll',
-	'Messages\FIX50SP2\bin\Release\netstandard2.0\QuickFix.FIX50SP2.dll'
+	'QuickFIXn\bin\Release\net6.0\QuickFix.dll',
+	'Messages\FIX40\bin\Release\net6.0\QuickFix.FIX40.dll',
+	'Messages\FIX41\bin\Release\net6.0\QuickFix.FIX41.dll',
+	'Messages\FIX42\bin\Release\net6.0\QuickFix.FIX42.dll',
+	'Messages\FIX43\bin\Release\net6.0\QuickFix.FIX43.dll',
+	'Messages\FIX44\bin\Release\net6.0\QuickFix.FIX44.dll',
+	'Messages\FIX50\bin\Release\net6.0\QuickFix.FIX50.dll',
+	'Messages\FIX50SP1\bin\Release\net6.0\QuickFix.FIX50SP1.dll',
+	'Messages\FIX50SP2\bin\Release\net6.0\QuickFix.FIX50SP2.dll'
 ) | ForEach-Object {
 	$Filename = Split-Path $_ -Leaf
-	Copy-Item -Path $_ -Destination "tmp\$QFDir\bin\netstandard2.0\$Filename"
+	Copy-Item -Path $_ -Destination "tmp\$QFDir\bin\net6.0\$Filename"
 }
 
 Copy-Item -Path 'spec\fix' -Destination "tmp\$QFDir\spec\fix" -Recurse -Force
