@@ -62,7 +62,7 @@ namespace QuickFix
             catch (System.Exception e)
             {
                 HandleExceptionInternal(qfSession_, e);
-                throw e;
+                throw;
             }
         }
 
