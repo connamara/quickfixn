@@ -489,15 +489,6 @@ namespace QuickFix
             }
         }
 
-
-        [System.Obsolete("Use the version that takes an IMessageFactory instead")]
-        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
-            DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
-        {
-            return SetGroup(grpNoFld, msgstr, pos, fieldMap, dd, sessionDataDictionary, appDD, null);
-        }
-
-
         /// <summary>
         /// Constructs a group and stores it in this Message object
         /// </summary>

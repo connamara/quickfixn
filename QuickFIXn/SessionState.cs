@@ -155,15 +155,6 @@ namespace QuickFix
 
         #endregion
 
-        /// <summary>
-        /// Don't use this.  It decides the connection is an initiator if heartBtInt=0,
-        /// which is bad because 0 is actually a valid (though not-often-used) setting.
-        /// </summary>
-        [System.Obsolete("Use the constructor that takes the isInitiator parameter.")]
-        public SessionState(ILog log, int heartBtInt)
-            : this(0 != heartBtInt, log, heartBtInt)
-        { }
-
         public SessionState(bool isInitiator, ILog log, int heartBtInt)
         {
             log_ = log;
@@ -407,12 +398,6 @@ namespace QuickFix
             }
         }
 
-        [Obsolete("Use Reset(reason) instead.")]
-        public void Reset()
-        {
-            this.Reset("(unspecified reason)");
-        }
-        
         public void Reset(string reason)
         {
             lock (sync_)

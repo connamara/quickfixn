@@ -276,12 +276,6 @@ namespace QuickFix
             }
         }
 
-        [System.Obsolete("Use CreationTime instead")]
-        public DateTime GetCreationTime()
-        {
-            return CreationTime.GetValueOrDefault();
-        }
-
         public void Reset()
         {
             cache_.Reset();

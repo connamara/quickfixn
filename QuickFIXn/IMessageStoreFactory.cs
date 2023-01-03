@@ -1,12 +1,5 @@
-﻿
-namespace QuickFix
+﻿namespace QuickFix
 {
-    /// <summary>
-    /// (Renamed per naming convention.)
-    /// </summary>
-    [System.Obsolete("Use IMessageStoreFactory instead.")]
-    public interface MessageStoreFactory : IMessageStoreFactory { }
-
     /// <summary>
     /// Used by a Session to create a message store implementation
     /// </summary>

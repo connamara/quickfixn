@@ -38,16 +38,6 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// This constructor will save the IMessageFactory instances based on what they return from GetSupportedBeginStrings()
-        /// </summary>
-        /// <param name="factories">IMessageFactory instances</param>
-        [System.Obsolete("Nothing uses this, so no reason to keep it")]
-        public DefaultMessageFactory(IEnumerable<IMessageFactory> factories)
-        {
-            _factories = ConvertToDictionary(factories);
-        }
-
-        /// <summary>
         /// This constructor will
         /// 1. Locate all IMessageFactory implementations from the provided assemblies (must have parameterless constructor)
         /// 2. Use them based on begin strings they support

@@ -8,7 +8,14 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
-### NEXT VERSION:
+### v1.11.0:
+
+**NOTE: Breaking changes in release** 
+* #749 - All deprecations are removed (gbirchmeier)
+* #746 - remove some unused public `FIXnn_LAST_FIELD` constants; correct FIX44 DD `UNKOWN_ID` typo (gbirchmeier)
+* #748 - Update all csproj files to net6.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
+
+* (minor) #732 - generate FIXT11 msg classes so they can be cracked (mgatny)
 * (patch) #630 - Make DefaultMessageFactory reflect only over QF/n assemblies (gbirchmeier)
 * (patch) #643 - add 1156 (ApplExtId) to FIXT11.xml (gbirchmeier)
 * (patch) #642 - allow decimal fields to have exponential notation (rakker91)
