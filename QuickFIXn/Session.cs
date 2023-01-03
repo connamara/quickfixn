@@ -240,17 +240,6 @@ namespace QuickFix
 
         #endregion
 
-        /// <summary>
-        /// Don't use this.  It decides the connection is an initiator if heartBtInt=0,
-        /// which is bad because 0 is actually a valid (though not-often-used) setting.
-        /// </summary>
-        [System.Obsolete("Use the constructor that takes the isInitiator parameter.")]
-        public Session(
-            IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
-            SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
-            : this(0 == heartBtInt, app, storeFactory, sessID, dataDictProvider, sessionSchedule, heartBtInt, logFactory, msgFactory, senderDefaultApplVerID)
-        { }
-
         public Session(
             bool isInitiator, IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
             SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
@@ -1050,12 +1039,6 @@ namespace QuickFix
         public void Refresh()
         {
             state_.Refresh();
-        }
-
-        [Obsolete("Use Reset(reason) instead.")]
-        public void Reset()
-        {
-            this.Reset("(unspecified reason)");
         }
 
         /// <summary>

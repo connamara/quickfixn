@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace QuickFix.DataDictionary
 {
@@ -23,26 +21,6 @@ namespace QuickFix.DataDictionary
             this.FieldType = FieldTypeFromFix(this.FixFldType, out this._isMultipleValueFieldWithEnums);
         }
 
-        /// <summary>
-        /// Converter used only by the obsolete constructor and Enums attribute.
-        /// </summary>
-        private static Dictionary<string,string> HashSetToDict(HashSet<String> enums)
-        {
-            Dictionary<String, String> dict = new Dictionary<string, string>();
-            foreach (String s in enums)
-                dict[s] = "";
-            return dict;
-        }
-
-        /// <summary>
-        /// Old version of constructor.  Discarded in favor of version that takes Dictionary instead of HashSet
-        /// (so that enum desc strings can be preserved).
-        /// </summary>
-        [Obsolete("Use DDField(int,String,Dictionary<String,String>,string) instead")]
-        public DDField(int tag, String name, HashSet<String> enums, String fixFldType)
-            : this(tag, name, HashSetToDict(enums), fixFldType)
-        { }
-
         //TODO in version 2.0 - these probably shouldn't be public writable
         public int Tag;
         public String Name;
@@ -56,42 +34,11 @@ namespace QuickFix.DataDictionary
         public bool IsMultipleValueFieldWithEnums { get { return _isMultipleValueFieldWithEnums; } }
         private bool _isMultipleValueFieldWithEnums;
 
-        /// <summary>
-        /// Replaced by EnumDict, which preserves the enum's description.
-        /// This attribute is a wrapper around EnumDict for backward-compatibility only.
-        /// The getter constructs a new HashSet, so is probably inefficient.
-        /// The setter sets EnumDict where all values are empty string.
-        /// </summary>
-        [Obsolete("Use EnumDict instead.  See this property's doc comments.")]
-        public HashSet<String> Enums
-        {
-            get { return new HashSet<String>(EnumDict.Keys); }
-            set { EnumDict = HashSetToDict(value); }
-        }
-
-        /// <summary>
-        /// This field deprecated because it makes no sense; being required is not a quality of the field,
-        /// but a quality of the message that contains the field.
-        /// </summary>
-        [Obsolete("Always false.  Use the containing message's DDMap.ReqFields instead.")]
-        public Boolean Required
-        {
-            get { return false; }
-            set { }
-        }
-
         public Boolean HasEnums()
         {
             return EnumDict.Count > 0;
         }
 
-        [Obsolete("Will be removed from the public interface in a future major release.")]
-        public Type FieldTypeFromFix(String type)
-        {
-            bool discardedVar = false;
-            return FieldTypeFromFix(type, out discardedVar);
-        }
-        
         private Type FieldTypeFromFix(String type, out bool multipleValueFieldWithEnums )
         {
             multipleValueFieldWithEnums = false;

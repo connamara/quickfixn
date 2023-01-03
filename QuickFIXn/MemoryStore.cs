@@ -64,13 +64,6 @@ namespace QuickFix
             internal set { creationTime = value; }
         }
 
-        [System.Obsolete("Use CreationTime instead")]
-        public DateTime GetCreationTime()
-        {
-            throw new NotImplementedException();
-        }
-
-
         public void Reset()
         {
             nextSenderMsgSeqNum_ = 1;

@@ -5,7 +5,6 @@ using System.Linq;
 
 namespace QuickFix
 {
-
     /// <summary>
     /// TODO merge with SocketInitiatorThread
     /// </summary>
@@ -25,17 +24,9 @@ namespace QuickFix
         /// </summary>
         private IAsyncResult currentReadRequest_;
 
-        [Obsolete("Use other constructor")]
-        public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
-            : this(tcpClient, new SocketSettings(), responder)
-        {
-        }
-
         public SocketReader(TcpClient tcpClient, SocketSettings settings, ClientHandlerThread responder)
             : this(tcpClient, settings, responder, null)
-        {
-            
-        }
+        { }
 
         internal SocketReader(
             TcpClient tcpClient,
@@ -130,13 +121,7 @@ namespace QuickFix
             }
         }
 
-        [Obsolete("This should be made private")]
-        public void OnMessageFound(string msg)
-        {
-            OnMessageFoundInternal(msg);
-        }
-
-        protected void OnMessageFoundInternal(string msg)
+        private void OnMessageFound(string msg)
         {
             try
             {
@@ -217,14 +202,7 @@ namespace QuickFix
         {
             string msg;
             while (ReadMessage(out msg))
-                OnMessageFoundInternal(msg);
-        }
-
-        [Obsolete("Static function can't close stream properly")]
-        protected static void DisconnectClient(TcpClient client)
-        {
-            client.Client.Close();
-            client.Close();
+                OnMessageFound(msg);
         }
 
         protected void DisconnectClient()
@@ -250,8 +228,7 @@ namespace QuickFix
             return true;
         }
 
-        [Obsolete("This should be made private/protected")]
-        public void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
+        private void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
         {
             HandleExceptionInternal(quickFixSession, cause);
         }
