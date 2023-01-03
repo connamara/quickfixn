@@ -19,6 +19,7 @@ it technically violates semantic versioning.
 * #748 - Update all csproj files to net6.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
 
 **Non-breaking changes**
+* (patch) #623 - fix issues with New-Release.ps1 (fourpastmidnight)
 * (minor) #732 - generate FIXT11 msg classes so they can be cracked (mgatny)
 * (patch) #727/#728 - improve dictionary parsing speed (sylr)
 * (minor) #724 - Add methods for serializing to FIX JSON Encoding (mgatny)
