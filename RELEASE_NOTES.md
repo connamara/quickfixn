@@ -9,13 +9,19 @@ What's New
 ----------
 
 ### v1.11.0:
+This build removes deprecations, and also updates to .NET 6.0.  
+We decided this wasn't big enough to warrant a v2 release, even though
+it technically violates semantic versioning.
 
-**NOTE: Breaking changes in release** 
+**Breaking changes in release** 
 * #749 - All deprecations are removed (gbirchmeier)
-* #746 - remove some unused public `FIXnn_LAST_FIELD` constants; correct FIX44 DD `UNKOWN_ID` typo (gbirchmeier)
+* #746 - remove some unused public `FIXnn_LAST_FIELD` constants; corrected FIX44 DD `UNKOWN_ID` typo (gbirchmeier)
 * #748 - Update all csproj files to net6.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
 
+**Non-breaking changes**
 * (minor) #732 - generate FIXT11 msg classes so they can be cracked (mgatny)
+* (patch) #727/#728 - improve dictionary parsing speed (sylr)
+* (minor) #724 - Add methods for serializing to FIX JSON Encoding (mgatny)
 * (patch) #630 - Make DefaultMessageFactory reflect only over QF/n assemblies (gbirchmeier)
 * (patch) #643 - add 1156 (ApplExtId) to FIXT11.xml (gbirchmeier)
 * (patch) #642 - allow decimal fields to have exponential notation (rakker91)
