@@ -108,12 +108,6 @@ namespace QuickFix
             return true;
         }
 
-        private bool Fail(string what)
-        {
-            Console.WriteLine("Parser failed: " + what);
-            return false;
-        }
-
         private int IndexOf(byte[] arrayToSearchThrough, string stringPatternToFind, int offset)
         {
             byte[] patternToFind = CharEncoding.DefaultEncoding.GetBytes(stringPatternToFind);
