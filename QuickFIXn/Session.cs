@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using QuickFix.Fields;
 using QuickFix.Fields.Converters;
 
@@ -230,7 +231,7 @@ namespace QuickFix
         /// <summary>
         /// Returns whether the Session has a Responder. This method is synchronized
         /// </summary>
-        public bool HasResponder { get { lock (sync_) { return null != responder_; } } }
+        public bool HasResponder { get { Thread.MemoryBarrier(); return null != responder_; } }
 
         /// <summary>
         /// Returns whether the Sessions will allow ResetSequence messages sent as
