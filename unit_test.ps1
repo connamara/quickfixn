@@ -5,5 +5,6 @@ Param (
 )
 
 foreach ($c in $Configuration) {
+	Write-Host "Running unit tests with config: $Configuration"
 	dotnet test -c $Configuration --no-build --no-restore UnitTests --logger trx
 }
