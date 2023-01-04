@@ -158,7 +158,7 @@ namespace UnitTests
             QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
             msg.FromString(msgStr, true, dd, dd, null); // <-- null factory!
 
-            Console.WriteLine(msg.ToString());
+            //Console.WriteLine(msg.ToString());
 
             QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup partyGroup = new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup();
             msg.GetGroup(2, partyGroup);
