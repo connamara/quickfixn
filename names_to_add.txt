@@ -3,3 +3,6 @@ to add these names to the contributor credits when
 I straighten things out.
 
 # Sylvain Rabot (sylr)
+
+# Bruno Belmondo (brunobelmondo)
+

@@ -73,10 +73,20 @@ function Write-TestResult {
 
         $TestResult.at.test |
             ForEach-Object {
+                $ErrorMessage = ''
+                if ($_.result -ine 'success') {
+                    $ErrorMessage = 'Could not extract message from XML.  See log.'
+                    try {
+                        $ErrorMessage = $_.message.ChildNodes[0].Value.Trim()
+                    }catch{
+                        # ignore
+                    }
+                }
+
                 [PSCustomObject]@{
                     Name = $_.name -replace $TestRegex, '${TestName}'
                     Result = if ($_.result -ieq 'success') { 'PASS' } else { 'FAIL' }
-                    Message = $_.message
+                    Message = $ErrorMessage
                 }
             } |
             Format-Table
