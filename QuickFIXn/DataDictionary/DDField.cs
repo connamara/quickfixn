@@ -18,28 +18,27 @@ namespace QuickFix.DataDictionary
             this.Name = name;
             this.EnumDict = enums;
             this.FixFldType = fixFldType;
-            this.FieldType = FieldTypeFromFix(this.FixFldType, out this._isMultipleValueFieldWithEnums);
+            this.FieldType = FieldTypeFromFix(this.FixFldType, out bool isMVFWE);
+            this.IsMultipleValueFieldWithEnums = isMVFWE;
         }
 
-        //TODO in version 2.0 - these probably shouldn't be public writable
-        public int Tag;
-        public String Name;
-        public Dictionary<String, String> EnumDict;
-        public String FixFldType;
-        public Type FieldType;
+        public int Tag { get; private set; }
+        public String Name { get; private set; }
+        public Dictionary<String, String> EnumDict { get; private set; }
+        public String FixFldType { get; private set; }
+        public Type FieldType { get; private set; }
 
         /// <summary>
         /// true if FIX field has an enum and if its type is one of: {MultipleValueString,MultipleStringValue,MultipleCharValue}
         /// </summary>
-        public bool IsMultipleValueFieldWithEnums { get { return _isMultipleValueFieldWithEnums; } }
-        private bool _isMultipleValueFieldWithEnums;
+        public bool IsMultipleValueFieldWithEnums { get; private set; }
 
         public Boolean HasEnums()
         {
             return EnumDict.Count > 0;
         }
 
-        private Type FieldTypeFromFix(String type, out bool multipleValueFieldWithEnums )
+        private Type FieldTypeFromFix(String type, out bool multipleValueFieldWithEnums)
         {
             multipleValueFieldWithEnums = false;
 
@@ -52,9 +51,9 @@ namespace QuickFix.DataDictionary
                 case "AMT": return typeof(Fields.DecimalField);
                 case "QTY": return typeof(Fields.DecimalField);
                 case "CURRENCY": return typeof(Fields.StringField);
-                case "MULTIPLEVALUESTRING": multipleValueFieldWithEnums = true; return typeof( Fields.StringField );
-                case "MULTIPLESTRINGVALUE": multipleValueFieldWithEnums = true; return typeof( Fields.StringField );
-                case "MULTIPLECHARVALUE": multipleValueFieldWithEnums = true; return typeof( Fields.StringField );
+                case "MULTIPLEVALUESTRING": multipleValueFieldWithEnums = true; return typeof(Fields.StringField);
+                case "MULTIPLESTRINGVALUE": multipleValueFieldWithEnums = true; return typeof(Fields.StringField);
+                case "MULTIPLECHARVALUE": multipleValueFieldWithEnums = true; return typeof(Fields.StringField);
                 case "EXCHANGE": return typeof(Fields.StringField);
                 case "UTCTIMESTAMP": return typeof(Fields.DateTimeField);
                 case "BOOLEAN": return typeof(Fields.BooleanField);
@@ -75,7 +74,7 @@ namespace QuickFix.DataDictionary
                 case "LENGTH": return typeof(Fields.IntField);
                 case "COUNTRY": return typeof(Fields.StringField);
                 case "TZTIMEONLY": return typeof(Fields.StringField);
-                case "TZTIMESTAMP": return typeof(Fields.StringField); 
+                case "TZTIMESTAMP": return typeof(Fields.StringField);
                 case "XMLDATA": return typeof(Fields.StringField);
                 case "LANGUAGE": return typeof(Fields.StringField);
                 case "XID": return typeof(Fields.StringField);

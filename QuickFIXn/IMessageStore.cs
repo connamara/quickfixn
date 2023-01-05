@@ -26,11 +26,9 @@ namespace QuickFix
         /// <returns>true if successful, false otherwise</returns>
         bool Set(int msgSeqNum, string msg);
 
-        /// FIXME v2 - property-ize these get/set functions
-        int GetNextSenderMsgSeqNum();
-        int GetNextTargetMsgSeqNum();
-        void SetNextSenderMsgSeqNum(int value);
-        void SetNextTargetMsgSeqNum(int value);
+        int NextSenderMsgSeqNum { get; set; }
+        int NextTargetMsgSeqNum { get; set; }
+
         void IncrNextSenderMsgSeqNum();
         void IncrNextTargetMsgSeqNum();
 

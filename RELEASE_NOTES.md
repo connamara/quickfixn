@@ -14,9 +14,11 @@ We decided this wasn't big enough to warrant a v2 release, even though
 it technically violates semantic versioning.
 
 **Breaking changes in release** 
+* #748 - Update all csproj files to net6.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
 * #749 - All deprecations are removed (gbirchmeier)
 * #746 - remove some unused public `FIXnn_LAST_FIELD` constants; corrected FIX44 DD `UNKOWN_ID` typo (gbirchmeier)
-* #748 - Update all csproj files to net6.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
+* #756 - privatize DDField property setters,
+         change various Get/SetNextSenderMsgSeqNum & Get/SetNextTargetMsgSeqNum functions to properties (gbirchmeier)
 
 **Non-breaking changes**
 * (patch) #647 - replace lock with memory barrier to avoid deadlocks (brunobelmondo)
