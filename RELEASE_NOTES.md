@@ -19,6 +19,8 @@ it technically violates semantic versioning.
 * #748 - Update all csproj files to net6.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
 
 **Non-breaking changes**
+* (minor) #745 - JSON-to-FIX (mgatny)
+* (minor) #724 - FIX-to-JSON serialization, and a ToXML() bugfix (mgatny)
 * (patch) #647 - replace lock with memory barrier to avoid deadlocks (brunobelmondo)
 * (patch) #623 - fix issues with New-Release.ps1 (fourpastmidnight)
 * (minor) #732 - generate FIXT11 msg classes so they can be cracked (mgatny)
