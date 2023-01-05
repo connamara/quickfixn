@@ -360,24 +360,25 @@ namespace QuickFix
             lock (sync_) { return this.MessageStore.Set(msgSeqNum, msg); }
         }
 
+        // TODO turn these Getters/Setters into C# Properties
         public int GetNextSenderMsgSeqNum()
         {
-            lock (sync_) { return this.MessageStore.GetNextSenderMsgSeqNum(); }
+            lock (sync_) { return this.MessageStore.NextSenderMsgSeqNum; }
         }
 
         public int GetNextTargetMsgSeqNum()
         {
-            lock (sync_) { return this.MessageStore.GetNextTargetMsgSeqNum(); }
+            lock (sync_) { return this.MessageStore.NextTargetMsgSeqNum; }
         }
 
         public void SetNextSenderMsgSeqNum(int value)
         {
-            lock (sync_) { this.MessageStore.SetNextSenderMsgSeqNum(value); }
+            lock (sync_) { this.MessageStore.NextSenderMsgSeqNum = value; }
         }
 
         public void SetNextTargetMsgSeqNum(int value)
         {
-            lock (sync_) { this.MessageStore.SetNextTargetMsgSeqNum(value); }
+            lock (sync_) { this.MessageStore.NextTargetMsgSeqNum = value; }
         }
 
         public void IncrNextSenderMsgSeqNum()

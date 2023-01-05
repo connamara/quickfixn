@@ -78,52 +78,52 @@ namespace UnitTests
         }
 
         [Test]
-        public void getNextSenderMsgSeqNumTest()
+        public void NextSenderMsgSeqNumTest()
         {
-            Assert.AreEqual(1, store.GetNextSenderMsgSeqNum());
-            store.SetNextSenderMsgSeqNum(5);
-            Assert.AreEqual(5, store.GetNextSenderMsgSeqNum());
+            Assert.AreEqual(1, store.NextSenderMsgSeqNum);
+            store.NextSenderMsgSeqNum = 5;
+            Assert.AreEqual(5, store.NextSenderMsgSeqNum);
             rebuildStore();
-            Assert.AreEqual(5, store.GetNextSenderMsgSeqNum());
+            Assert.AreEqual(5, store.NextSenderMsgSeqNum);
         }
 
         [Test]
         public void incNextSenderMsgSeqNumTest()
         {
             store.IncrNextSenderMsgSeqNum();
-            Assert.AreEqual(2, store.GetNextSenderMsgSeqNum());
+            Assert.AreEqual(2, store.NextSenderMsgSeqNum);
             rebuildStore();
-            Assert.AreEqual(2, store.GetNextSenderMsgSeqNum());
+            Assert.AreEqual(2, store.NextSenderMsgSeqNum);
         }
 
         [Test]
-        public void getNextTargetMsgSeqNumTest()
+        public void NextTargetMsgSeqNumTest()
         {
-            Assert.AreEqual(1, store.GetNextTargetMsgSeqNum());
-            store.SetNextTargetMsgSeqNum(6);
-            Assert.AreEqual(6, store.GetNextTargetMsgSeqNum());
+            Assert.AreEqual(1, store.NextTargetMsgSeqNum);
+            store.NextTargetMsgSeqNum = 6;
+            Assert.AreEqual(6, store.NextTargetMsgSeqNum);
             rebuildStore();
-            Assert.AreEqual(6, store.GetNextTargetMsgSeqNum());
+            Assert.AreEqual(6, store.NextTargetMsgSeqNum);
         }
 
         [Test]
         public void incNextTargetMsgSeqNumTest()
         {
             store.IncrNextTargetMsgSeqNum();
-            Assert.AreEqual(2, store.GetNextTargetMsgSeqNum());
+            Assert.AreEqual(2, store.NextTargetMsgSeqNum);
             rebuildStore();
-            Assert.AreEqual(2, store.GetNextTargetMsgSeqNum());
+            Assert.AreEqual(2, store.NextTargetMsgSeqNum);
         }
 
         [Test]
         public void resetTest()
         {
             // seq nums reset
-            store.SetNextTargetMsgSeqNum(5);
-            store.SetNextSenderMsgSeqNum(4);
+            store.NextTargetMsgSeqNum = 5;
+            store.NextSenderMsgSeqNum = 4;
             store.Reset();
-            Assert.AreEqual(1, store.GetNextTargetMsgSeqNum());
-            Assert.AreEqual(1, store.GetNextSenderMsgSeqNum());
+            Assert.AreEqual(1, store.NextTargetMsgSeqNum);
+            Assert.AreEqual(1, store.NextSenderMsgSeqNum);
 
             // Check that messages do not persist after reset
             store.Set(1, "dude");

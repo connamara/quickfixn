@@ -1599,7 +1599,7 @@ namespace QuickFix
         }
         protected void NextQueued()
         {
-            while (NextQueued(state_.MessageStore.GetNextTargetMsgSeqNum()))
+            while (NextQueued(state_.MessageStore.NextTargetMsgSeqNum))
             {
                 // continue
             }
