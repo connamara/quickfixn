@@ -1,5 +1,8 @@
 version: 1.0.{build}
 
+image:
+- Visual Studio 2022
+
 install:
 - dir C:\
 - set PATH=C:\Ruby26-x64\bin;%PATH%
@@ -13,7 +16,7 @@ before_test:
 - ruby -v
 
 build_script:
-- ps: dotnet build -c Release
+- ps: dotnet build -c Release --framework net6.0
 
 test_script:
 - ps: |
