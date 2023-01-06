@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj" />
+      <ProjectReference Include="..\..\Messages\FIX50SP2\QuickFix.FIX50SP2.csproj" />
+      <ProjectReference Include="..\..\Messages\FIX44\QuickFix.FIX44.csproj" />
+      <ProjectReference Include="..\..\Messages\FIX42\QuickFix.FIX42.csproj" />
+  </ItemGroup>
+</Project>
