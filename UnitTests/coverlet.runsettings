@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RunSettings>
+    <DataCollectionRunSettings>
+        <DataCollectors>
+            <DataCollector friendlyName="XPlat code coverage">
+                <Configuration>
+                    <!--
+                    Exclude the generated QuickFix assemblies and Field files from the code coverage collection.
+                    If they are included they massively slow the tests and increase the size of the generated reports
+                    -->
+                    <Exclude>[QuickFix.FIX*]*</Exclude> <!-- [Assembly-Filter]Type-Filter -->
+                    <ExcludeByFile>**/QuickFIXn/Fields/Fields.cs,**/QuickFIXn/Fields/FieldTags.cs</ExcludeByFile> <!-- Globbing filter -->
+                </Configuration>
+            </DataCollector>
+        </DataCollectors>
+    </DataCollectionRunSettings>
+</RunSettings>

@@ -14,8 +14,8 @@ This project requires the following:
 **To build and run tests**
 
 * [Ruby (2.5+ recommended)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
-* From the command-line: dotnet 2.0.0 or higher
-* From Visual Studio: version 2017 or higher
+* From the command-line: dotnet 6.0 or higher
+* From Visual Studio: version 2022 or higher
 
 Code Generation
 ---------------
@@ -32,16 +32,16 @@ Build
 To build the project, run:
 
 ```
-build.bat
+build.ps1
 ```
 
 You can also override the default configuration (Release) by giving a command line argument:
 
 ```
-build.bat Debug
+build.ps1 Debug
 ```
 
-The build.bat script expects dotnet to be on your PATH.
+The build.ps1 script expects dotnet to be on your PATH.
 
 Alternatively, simply use the dotnet tools.
 
@@ -50,12 +50,12 @@ Unit Tests
 To run the NUnit tests, run:
 
 ```
-unit_test.bat
+unit_test.ps1
 ```
 
 (This script expects `dotnet` to be on your PATH.)
 
-TRX reports of the test results (one each for NET Framework 4.5.2 and NET Standard 2.0) will then be available here:
+TRX and code coverage reports of the test results will then be available here:
 
 ```
 UnitTests\TestResults
