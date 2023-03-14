@@ -13,7 +13,9 @@ class FieldGen
     case field[:fldtype]
       when 'CHAR' 
         {:cs_class => 'CharField', :base_type=>'char'}
-      when 'INT', 'NUMINGROUP', 'SEQNUM', 'LENGTH'
+	  when 'SEQNUM'
+        {:cs_class => 'SequenceField', :base_type=>'ulong'}
+      when 'INT', 'NUMINGROUP', 'LENGTH'
         {:cs_class => 'IntField', :base_type=>'int'}
       when 'AMT', 'PERCENTAGE', 'PRICE', 'QTY', 'PRICEOFFSET', 'FLOAT'
         {:cs_class => 'DecimalField', :base_type=>'Decimal'}

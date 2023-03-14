@@ -2,15 +2,15 @@
 {
     public class ResendRange
     {
-        public int BeginSeqNo { get; set; }
-        public int EndSeqNo { get; set; }
-        public int ChunkEndSeqNo { get; set; }
+        public ulong BeginSeqNo { get; set; }
+        public ulong EndSeqNo { get; set; }
+        public ulong ChunkEndSeqNo { get; set; }
 
         public ResendRange()
         {
             BeginSeqNo = 0;
             EndSeqNo = 0;
-            ChunkEndSeqNo = -1;
+            ChunkEndSeqNo = 0;
         }
 
         public override string ToString()

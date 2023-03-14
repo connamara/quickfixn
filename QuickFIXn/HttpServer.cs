@@ -381,14 +381,14 @@ namespace Acceptor
 
             if (request.QueryString["next incoming"] != null)
             {
-                int value = Convert.ToInt16(request.QueryString["next incoming"]);
+                ulong value = Convert.ToUInt64(request.QueryString["next incoming"]);
                 sessionDetails.NextTargetMsgSeqNum = value <= 0 ? 1 : value;
                 url = RemoveQueryStringByKey(urlOriginalString, "next incoming");
             }
 
             if (request.QueryString["Next Outgoing"] != null)
             {
-                int value = Convert.ToInt16(request.QueryString["Next Outgoing"]);
+                ulong value = Convert.ToUInt64(request.QueryString["Next Outgoing"]);
                 sessionDetails.NextSenderMsgSeqNum = value <= 0 ? 1 : value;
                 url = RemoveQueryStringByKey(urlOriginalString, "Next Outgoing");
             }
@@ -538,6 +538,17 @@ namespace Acceptor
                                $"<a href=\" {url}&{colName}={value + 10} \"> >> </a>";
             return AddRow(colName, value.ToString(), innerHtml);
         }
+
+        private static string AddRow(string colName, ulong value, string url = "")
+        {
+            string innerHtml = $"<a href=\" {url}&{colName}={value - 10} \"> << </a>" +
+                               $"<a href=\" {url}&{colName}={value - 1} \"> < </a>" +
+                               " | " +
+                               $"<a href=\" {url}&{colName}={value + 1} \"> > </a>" +
+                               $"<a href=\" {url}&{colName}={value + 10} \"> >> </a>";
+            return AddRow(colName, value.ToString(), innerHtml);
+        }
+
         private static string AddRow(string colName, string value, string innerHtml = "")
         {
             StringBuilder row = new StringBuilder();

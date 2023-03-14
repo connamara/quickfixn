@@ -168,6 +168,18 @@ namespace QuickFix
         }
 
         /// <summary>
+        /// Gets a sequence field; saves its value into the parameter object, which is also the return value.
+        /// </summary>
+        /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+        /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+        /// <returns><paramref name="field"/></returns>
+        public Fields.SequenceField GetField(Fields.SequenceField field)
+        {
+            field.Obj = GetSequence(field.Tag);
+            return field;
+        }
+
+        /// <summary>
         /// Gets a decimal field; saves its value into the parameter object, which is also the return value.
         /// </summary>
         /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
@@ -321,6 +333,28 @@ namespace QuickFix
                     return ((IntField)fld).Obj;
                 else
                     return IntConverter.Convert(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
+        }
+
+        /// <summary>
+        /// Gets the unsigned long value of a sequence number field
+        /// </summary>
+        /// <param name="tag">the FIX tag</param>
+        /// <returns>the unsigned long sequence field value</returns>
+        /// <exception cref="FieldNotFoundException" />
+        public ulong GetSequence(int tag)
+        {
+            try
+            {
+                Fields.IField fld = _fields[tag];
+                if (fld.GetType() == typeof(SequenceField))
+                    return ((SequenceField)fld).Obj;
+                else
+                    return SequenceConverter.Convert(fld.ToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
             {
