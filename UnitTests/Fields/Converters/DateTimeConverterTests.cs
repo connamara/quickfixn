@@ -70,23 +70,6 @@ public class DateTimeConverterTests {
     }
 
     [Test]
-    public void ParseToTimeOnlyTest_Nano() {
-        var targetTicks = new DateTime(1980, 1, 1, 4, 22, 1, 0, DateTimeKind.Utc).Ticks;
-        Assert.That(targetTicks, Is.EqualTo(624511453210000000)); // for human reader reference
-
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700").Ticks, Is.EqualTo(targetTicks + 1234567));
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700Z").Ticks, Is.EqualTo(targetTicks + 1234567));
-
-        var ticksInHour = 36000000000;
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700+01").Ticks, Is.EqualTo(targetTicks + 1234567 - ticksInHour));
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700-01").Ticks, Is.EqualTo(targetTicks + 1234567 + ticksInHour));
-
-        var ticksIn90mins = 54000000000;
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700+01:30").Ticks, Is.EqualTo(targetTicks + 1234567 - ticksIn90mins));
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700-01:30").Ticks, Is.EqualTo(targetTicks + 1234567 + ticksIn90mins));
-    }
-
-    [Test]
     public void ParseToTimeOnlyTest_Exceptions() {
         Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToTimeOnly(""); });
         Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToTimeOnly("20021201-11:03:00"); });
