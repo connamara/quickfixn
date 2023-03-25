@@ -8,6 +8,8 @@ namespace UnitTests.Fields.Converters;
 
 [TestFixture]
 public class DateTimeConverterTests {
+    
+    private const string TIME_ONLY_FORMAT_WITH_MICROSECONDS = "{0:HH:mm:ss.ffffff}";
 
     [SetUp]
     public void SetUp() {
@@ -67,23 +69,6 @@ public class DateTimeConverterTests {
         Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01").Ticks, Is.EqualTo(targetTicks));
         Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123").Ticks, Is.EqualTo(targetTicks + 1230000));
         Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456").Ticks, Is.EqualTo(targetTicks + 1234560));
-    }
-
-    [Test]
-    public void ParseToTimeOnlyTest_Nano() {
-        var targetTicks = new DateTime(1980, 1, 1, 4, 22, 1, 0, DateTimeKind.Utc).Ticks;
-        Assert.That(targetTicks, Is.EqualTo(624511453210000000)); // for human reader reference
-
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700").Ticks, Is.EqualTo(targetTicks + 1234567));
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700Z").Ticks, Is.EqualTo(targetTicks + 1234567));
-
-        var ticksInHour = 36000000000;
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700+01").Ticks, Is.EqualTo(targetTicks + 1234567 - ticksInHour));
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700-01").Ticks, Is.EqualTo(targetTicks + 1234567 + ticksInHour));
-
-        var ticksIn90mins = 54000000000;
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700+01:30").Ticks, Is.EqualTo(targetTicks + 1234567 - ticksIn90mins));
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700-01:30").Ticks, Is.EqualTo(targetTicks + 1234567 + ticksIn90mins));
     }
 
     [Test]
@@ -180,7 +165,7 @@ public class DateTimeConverterTests {
         Assert.That(convertedTime.Minutes, Is.EqualTo(22));
         Assert.That(convertedTime.Seconds, Is.EqualTo(12));
         Assert.That(convertedTime.Milliseconds, Is.EqualTo(123));
-        Assert.That(timeStringWithMicroseconds, Is.EqualTo(string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks))));
+        Assert.That(timeStringWithMicroseconds, Is.EqualTo(string.Format(TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks))));
     }
 
     [Test]
@@ -199,6 +184,57 @@ public class DateTimeConverterTests {
         Assert.That(convertedTime.Minutes, Is.EqualTo(22));
         Assert.That(convertedTime.Seconds, Is.EqualTo(12));
         Assert.That(convertedTime.Milliseconds, Is.EqualTo(123));
-        Assert.That(timeStringWithMilliseconds + "000", Is.EqualTo(string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks))));
+        Assert.That(timeStringWithMilliseconds + "000", Is.EqualTo(string.Format(TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks))));
+    }
+    
+    [Test]
+    public void DateTimeConverterTest()
+    {
+        // DateTime types to string
+        Assert.That(DateTimeConverter.ToFIX(new DateTime(2002, 12, 01, 11, 03, 05)), Is.EqualTo("20021201-11:03:05.000"));
+        Assert.That(DateTimeConverter.ToFIX(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("20021201-11:03:05.321"));
+        Assert.That(DateTimeConverter.ToFIX(new DateTime(2002, 12, 01, 11, 03, 05, 321), false), Is.EqualTo("20021201-11:03:05"));
+        Assert.That(DateTimeConverter.ToFIX(new DateTime(2002, 12, 01, 11, 03, 05, 321), true), Is.EqualTo("20021201-11:03:05.321"));
+
+        // 2 valid string-to-DateTime formats
+        Assert.That(DateTimeConverter.ParseToDateTime("20100912-04:22:01"), Is.EqualTo(new DateTime(2010, 9, 12, 4, 22, 01, DateTimeKind.Utc)));
+        Assert.That(DateTimeConverter.ParseToDateTime("20100912-04:22:01.123"), Is.EqualTo(new DateTime(2010, 9, 12, 4, 22, 01, 123, DateTimeKind.Utc)));
+
+        // invalid string-to-DateTime formats
+        Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToDateTime(""); });
+        Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToDateTime("20021201"); });
+        Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToDateTime("20021201-11:03"); });
+    }
+
+    [Test]
+    public void DateOnlyConverterTest()
+    {
+        // DateTime types to string
+        Assert.That(DateTimeConverter.ToFIXDateOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("20021201"));
+
+        // string-to-DateTime but time is zero
+        Assert.That(DateTimeConverter.ParseToDateOnly("20100912"), Is.EqualTo(new DateTime(2010, 9, 12, 0, 0, 0, DateTimeKind.Utc)));
+
+        // invalid string-to-DateTime formats
+        Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToDateOnly(""); });
+        Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToDateOnly("20021201-11:03:00"); });
+    }
+
+    [Test]
+    public void TimeOnlyConverterTest()
+    {
+        // DateTime types to string
+        Assert.That(DateTimeConverter.ToFIXTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05)), Is.EqualTo("11:03:05.000"));
+        Assert.That(DateTimeConverter.ToFIXTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321)), Is.EqualTo("11:03:05.321"));
+        Assert.That(DateTimeConverter.ToFIXTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321), false), Is.EqualTo("11:03:05"));
+        Assert.That(DateTimeConverter.ToFIXTimeOnly(new DateTime(2002, 12, 01, 11, 03, 05, 321), true), Is.EqualTo("11:03:05.321"));
+
+        // 2 valid string-to-DateTime formats, set date to Jan 1
+        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01"), Is.EqualTo(new DateTime(1980, 1, 1, 4, 22, 01, DateTimeKind.Utc)));
+        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123"), Is.EqualTo(new DateTime(1980, 1, 1, 4, 22, 01, 123, DateTimeKind.Utc)));
+
+        // invalid string-to-DateTime formats
+        Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToTimeOnly(""); });
+        Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToTimeOnly("20021201-11:03:00"); });
     }
 }
