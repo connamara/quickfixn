@@ -45,6 +45,7 @@ What's New
 * #963 - fix: concurrency bug with NonSessionLog on Windows (gbirchmeier)
 * #195 - fix: Acceptor.Stop() then restart now works (huwmjenkins/vyourtchenko)
 * #956 - fix: FileLog.Clear() broke in 1.13, now fixed again (hansw96/gbirchmeier)
+* #765 - overhaul of DateTimeConverter (Rob-Hague/vyourtchenko)
 
 ### v1.13.1
 * backport #951 to 1.13
