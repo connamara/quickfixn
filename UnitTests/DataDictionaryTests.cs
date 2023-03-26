@@ -707,7 +707,7 @@ namespace UnitTests
         XmlNode MakeNode(string xmlString)
         {
             XmlDocument doc = new XmlDocument();
-            if (xmlString.StartsWith("<"))
+            if (xmlString.StartsWith("<", StringComparison.Ordinal))
             {
                 doc.LoadXml(xmlString);
                 return doc.DocumentElement;

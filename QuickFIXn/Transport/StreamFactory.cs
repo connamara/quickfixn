@@ -54,7 +54,7 @@ namespace QuickFix.Transport
             int msg = socketThruProxy.Receive(buffer12, 500, 0);
             string data;
             data = Encoding.ASCII.GetString(buffer12);
-            int index = data.IndexOf("200");
+            int index = data.IndexOf("200", StringComparison.Ordinal);
 
             if (index < 0)
                 throw new ApplicationException(

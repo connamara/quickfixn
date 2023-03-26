@@ -178,7 +178,7 @@ namespace QuickFix
             var assemblies = AppDomain
                 .CurrentDomain
                 .GetAssemblies()
-                .Where(assembly => !assembly.IsDynamic && assembly.GetName().Name.StartsWith("QuickFix"))
+                .Where(assembly => !assembly.IsDynamic && assembly.GetName().Name.StartsWith("QuickFix", StringComparison.Ordinal))
                 .ToList();
             return assemblies;
         }

@@ -206,7 +206,7 @@ namespace QuickFix
                     }
                     else
                     {
-                        int offset = setting.Key.IndexOf(".");
+                        int offset = setting.Key.IndexOf('.');
                         if (offset == -1)
                             throw new System.ArgumentException(string.Format("Malformed {0} : {1}", SessionSettings.APP_DATA_DICTIONARY, setting.Key));
 
