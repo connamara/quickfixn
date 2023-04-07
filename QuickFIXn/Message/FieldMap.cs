@@ -326,18 +326,17 @@ namespace QuickFix
         /// <exception cref="FieldNotFoundException" />
         public int GetInt(int tag)
         {
-            try
-            {
-                Fields.IField fld = _fields[tag];
-                if (fld.GetType() == typeof(IntField))
-                    return ((IntField)fld).Obj;
-                else
-                    return IntConverter.Convert(fld.ToString());
-            }
-            catch (System.Collections.Generic.KeyNotFoundException)
+            if (!_fields.TryGetValue(tag, out IField fld))
             {
                 throw new FieldNotFoundException(tag);
             }
+
+            if (fld is FieldBase<int> intField)
+            {
+                return intField.Obj;
+            }
+
+            return IntConverter.Convert(fld.ToString());
         }
 
         /// <summary>
@@ -368,25 +367,29 @@ namespace QuickFix
         /// <param name="tag">the FIX tag</param>
         /// <returns>the DateTime value</returns>
         /// <exception cref="FieldNotFoundException" />
-        public System.DateTime GetDateTime(int tag)
+        public DateTime GetDateTime(int tag)
         {
-            try
-            {
-                Fields.IField fld = _fields[tag];
-                Type fldTyp = fld.GetType();
-                if (fldTyp == typeof(DateTimeField))
-                    return ((DateTimeField)(fld)).Obj;
-                if (fldTyp == typeof(DateOnlyField))
-                    return GetDateOnly(tag);
-                if (fldTyp == typeof(TimeOnlyField))
-                    return GetTimeOnly(tag);
-                else
-                    return DateTimeConverter.ConvertToDateTime(fld.ToString());
-            }
-            catch (System.Collections.Generic.KeyNotFoundException)
+            if (!_fields.TryGetValue(tag, out IField fld))
             {
                 throw new FieldNotFoundException(tag);
             }
+
+            if (fld is DateOnlyField dateOnlyField)
+            {
+                return dateOnlyField.Obj.Date;
+            }
+
+            if (fld is TimeOnlyField timeOnlyField)
+            {
+                return new DateTime(1980, 01, 01).Add(timeOnlyField.Obj.TimeOfDay);
+            }
+
+            if (fld is FieldBase<DateTime> dateTimeField)
+            {
+                return dateTimeField.Obj;
+            }
+                
+            return DateTimeConverter.ConvertToDateTime(fld.ToString());
         }
 
         /// <summary>
@@ -395,17 +398,19 @@ namespace QuickFix
         /// <param name="tag">the FIX tag</param>
         /// <returns>the DateTime value</returns>
         /// <exception cref="FieldNotFoundException" />
-        public System.DateTime GetDateOnly(int tag)
+        public DateTime GetDateOnly(int tag)
         {
-            try
-            {
-                Fields.IField fld = _fields[tag];                
-                return DateTimeConverter.ConvertToDateOnly(fld.ToString());
-            }
-            catch (System.Collections.Generic.KeyNotFoundException)
+            if (!_fields.TryGetValue(tag, out IField fld))
             {
                 throw new FieldNotFoundException(tag);
             }
+
+            if (fld is FieldBase<DateTime> dateTimeField)
+            {
+                return dateTimeField.Obj.Date;
+            }
+
+            return DateTimeConverter.ConvertToDateOnly(fld.ToString());
         }
 
         /// <summary>
@@ -414,17 +419,19 @@ namespace QuickFix
         /// <param name="tag">the FIX tag</param>
         /// <returns>the DateTime value</returns>
         /// <exception cref="FieldNotFoundException" />
-        public System.DateTime GetTimeOnly(int tag)
+        public DateTime GetTimeOnly(int tag)
         {
-            try
-            {
-                Fields.IField fld = _fields[tag];
-                return DateTimeConverter.ConvertToTimeOnly(fld.ToString());
-            }
-            catch (System.Collections.Generic.KeyNotFoundException)
+            if (!_fields.TryGetValue(tag, out IField fld))
             {
                 throw new FieldNotFoundException(tag);
             }
+
+            if (fld is FieldBase<DateTime> dateTimeField)
+            {
+                return new DateTime(1980, 01, 01).Add(dateTimeField.Obj.TimeOfDay);
+            }
+
+            return DateTimeConverter.ConvertToTimeOnly(fld.ToString());
         }
 
         /// <summary>
@@ -435,18 +442,17 @@ namespace QuickFix
         /// <exception cref="FieldNotFoundException" />
         public bool GetBoolean(int tag)
         {
-            try
-            {
-                Fields.IField fld = _fields[tag];
-                if (fld.GetType() == typeof(BooleanField))
-                    return ((BooleanField)fld).Obj;
-                else
-                    return BoolConverter.Convert(fld.ToString());
-            }
-            catch (System.Collections.Generic.KeyNotFoundException)
+            if (!_fields.TryGetValue(tag, out IField fld))
             {
                 throw new FieldNotFoundException(tag);
             }
+
+            if (fld is FieldBase<bool> boolField)
+            {
+                return boolField.Obj;
+            }
+
+            return BoolConverter.Convert(fld.ToString());
         }
 
         /// <summary>
@@ -455,16 +461,14 @@ namespace QuickFix
         /// <param name="tag">the FIX tag</param>
         /// <returns>the string value</returns>
         /// <exception cref="FieldNotFoundException" />
-        public String GetString(int tag)
+        public string GetString(int tag)
         {
-            try
-            {
-                return _fields[tag].ToString();
-            }
-            catch (System.Collections.Generic.KeyNotFoundException)
+            if (!_fields.TryGetValue(tag, out IField fld))
             {
                 throw new FieldNotFoundException(tag);
             }
+
+            return fld.ToString();
         }
 
         /// <summary>
@@ -475,18 +479,17 @@ namespace QuickFix
         /// <exception cref="FieldNotFoundException" />
         public char GetChar(int tag)
         {
-            try
-            {
-                Fields.IField fld = _fields[tag];
-                if (fld.GetType() == typeof(CharField))
-                    return ((CharField)fld).Obj;
-                else
-                    return CharConverter.Convert(fld.ToString());
-            }
-            catch (System.Collections.Generic.KeyNotFoundException)
+            if (!_fields.TryGetValue(tag, out IField fld))
             {
                 throw new FieldNotFoundException(tag);
             }
+
+            if (fld is FieldBase<char> charField)
+            {
+                return charField.Obj;
+            }
+
+            return CharConverter.Convert(fld.ToString());
         }
 
         /// <summary>
@@ -495,20 +498,19 @@ namespace QuickFix
         /// <param name="tag">the FIX tag</param>
         /// <returns>the decimal value</returns>
         /// <exception cref="FieldNotFoundException" />
-        public Decimal GetDecimal(int tag)
+        public decimal GetDecimal(int tag)
         {
-            try
-            {
-                Fields.IField fld = _fields[tag];
-                if (fld.GetType() == typeof(DecimalField))
-                    return ((DecimalField)fld).Obj;
-                else
-                    return DecimalConverter.Convert(fld.ToString());
-            }
-            catch (System.Collections.Generic.KeyNotFoundException)
+            if (!_fields.TryGetValue(tag, out IField fld))
             {
                 throw new FieldNotFoundException(tag);
             }
+
+            if (fld is FieldBase<decimal> decimalField)
+            {
+                return decimalField.Obj;
+            }
+
+            return DecimalConverter.Convert(fld.ToString());
         }
 
         /// <summary>
