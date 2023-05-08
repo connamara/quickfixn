@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0</TargetFrameworks>
+    <GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>
+    <Title>QuickFIX/n FIXT1.1 Messages</Title>
+    <PackageId>QuickFIXn.FIXT1.1</PackageId>
+    <PackageTitle>$(Title)</PackageTitle>
+    <Description>Open-source C# implementation of QuickFIX. This package allows you to create applications targeting the FIX 4.4 protocol.</Description>
+    <Copyright>Copyright © 2011 - $([System.DateTime]::UtcNow.Year) QuickFIXn.org. All rights reserved.</Copyright>
+    <Authors>Connamara Systems, LLC and QuickFIX/n contributors</Authors>
+    <Version>1.9.0</Version>
+    <Platforms>AnyCPU;x64</Platforms>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/connamara/quickfixn</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>http://quickfixn.org/</PackageProjectUrl>
+    <PackageTags>QuickFIX QuickFIX/n FIX</PackageTags>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

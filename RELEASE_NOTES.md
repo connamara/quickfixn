@@ -8,7 +8,26 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
-### NEXT VERSION:
+### v1.11.0:
+This build removes deprecations, and also updates to .NET 6.0.  
+We decided this wasn't big enough to warrant a v2 release, even though
+it technically violates semantic versioning.
+
+**Breaking changes in release** 
+* #748 - Update all csproj files to net6.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
+* #749 - All deprecations are removed (gbirchmeier)
+* #746 - remove some unused public `FIXnn_LAST_FIELD` constants; corrected FIX44 DD `UNKOWN_ID` typo (gbirchmeier)
+* #756 - privatize DDField property setters,
+         change various Get/SetNextSenderMsgSeqNum & Get/SetNextTargetMsgSeqNum functions to properties (gbirchmeier)
+
+**Non-breaking changes**
+* (minor) #745 - JSON-to-FIX (mgatny)
+* (minor) #724 - FIX-to-JSON serialization, and a ToXML() bugfix (mgatny)
+* (patch) #647 - replace lock with memory barrier to avoid deadlocks (brunobelmondo)
+* (patch) #623 - fix issues with New-Release.ps1 (fourpastmidnight)
+* (minor) #732 - generate FIXT11 msg classes so they can be cracked (mgatny)
+* (patch) #727/#728 - improve dictionary parsing speed (sylr)
+* (minor) #724 - Add methods for serializing to FIX JSON Encoding (mgatny)
 * (patch) #630 - Make DefaultMessageFactory reflect only over QF/n assemblies (gbirchmeier)
 * (patch) #643 - add 1156 (ApplExtId) to FIXT11.xml (gbirchmeier)
 * (patch) #642 - allow decimal fields to have exponential notation (rakker91)

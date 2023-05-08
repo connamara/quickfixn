@@ -518,20 +518,6 @@ namespace QuickFix
             return _groups[field][num - 1] = group;
         }
 
-
-        /// <summary>
-        /// getField without a type defaults to returning a string
-        /// </summary>
-        /// <param name="tag">fix tag</param>
-        [Obsolete("Use GetString instead.")]
-        public string GetField(int tag)
-        {
-            if (_fields.ContainsKey(tag))
-                return _fields[tag].ToString();
-            else
-                throw new FieldNotFoundException(tag);
-        }
-
         /// <summary>
         /// Removes fields and groups in message
         /// </summary>

@@ -260,10 +260,6 @@ namespace QuickFix
         protected virtual void OnRemove(SessionID sessionID)
         { }
 
-        [System.Obsolete("This method's intended purpose is unclear.  Don't use it.")]
-        protected virtual void OnInitialize(SessionSettings settings)
-        { }
-
         #endregion
 
         #region Abstract Methods

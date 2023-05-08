@@ -146,8 +146,8 @@ namespace QuickFix
                     string[] parts = seqNumReader.ReadToEnd().Split(':');
                     if (parts.Length == 2)
                     {
-                        cache_.SetNextSenderMsgSeqNum(Convert.ToInt32(parts[0]));
-                        cache_.SetNextTargetMsgSeqNum(Convert.ToInt32(parts[1]));
+                        cache_.NextSenderMsgSeqNum = Convert.ToInt32(parts[0]);
+                        cache_.NextTargetMsgSeqNum = Convert.ToInt32(parts[1]);
                     }
                 }
             }
@@ -225,26 +225,20 @@ namespace QuickFix
             return true;
         }
 
-        public int GetNextSenderMsgSeqNum()
-        {
-            return cache_.GetNextSenderMsgSeqNum();
-        }
-
-        public int GetNextTargetMsgSeqNum()
-        {
-            return cache_.GetNextTargetMsgSeqNum();
-        }
-
-        public void SetNextSenderMsgSeqNum(int value)
-        {
-            cache_.SetNextSenderMsgSeqNum(value);
+        public int NextSenderMsgSeqNum {
+          get { return cache_.NextSenderMsgSeqNum; }
+          set {
+            cache_.NextSenderMsgSeqNum = value;
             setSeqNum();
+          }
         }
 
-        public void SetNextTargetMsgSeqNum(int value)
-        {
-            cache_.SetNextTargetMsgSeqNum(value);
+        public int NextTargetMsgSeqNum {
+          get { return cache_.NextTargetMsgSeqNum; }
+          set {
+            cache_.NextTargetMsgSeqNum = value;
             setSeqNum();
+          }
         }
 
         public void IncrNextSenderMsgSeqNum()
@@ -264,7 +258,7 @@ namespace QuickFix
             seqNumsFile_.Seek(0, System.IO.SeekOrigin.Begin);
             System.IO.StreamWriter writer = new System.IO.StreamWriter(seqNumsFile_);
 
-            writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10") + "  ");
+            writer.Write(NextSenderMsgSeqNum.ToString("D10") + " : " + NextTargetMsgSeqNum.ToString("D10") + "  ");
             writer.Flush();
         }
 
@@ -274,12 +268,6 @@ namespace QuickFix
             {
                 return cache_.CreationTime;
             }
-        }
-
-        [System.Obsolete("Use CreationTime instead")]
-        public DateTime GetCreationTime()
-        {
-            return CreationTime.GetValueOrDefault();
         }
 
         public void Reset()

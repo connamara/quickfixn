@@ -69,7 +69,7 @@ namespace QuickFix
                 else if (BeginString.FIX50SP2.Equals(beginString))
                     return ApplVerID.FIX50SP2;
                 else
-                    return string.Copy(beginString);
+                    return beginString;
             }
 
             public static string ToBeginString(string applVerId)

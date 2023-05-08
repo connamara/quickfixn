@@ -3,13 +3,6 @@ using System;
 
 namespace QuickFix
 {
-    /// FIXME v2 - property-ize all of these get/set functions
-
-    /// <summary>
-    /// (Renamed per naming convention.)
-    /// </summary>
-    [System.Obsolete("Use IMessageStore instead.")]
-    public interface MessageStore : IMessageStore { }
 
     /// <summary>
     /// Used by a Session to store and retrieve messages for resend purposes
@@ -33,18 +26,14 @@ namespace QuickFix
         /// <returns>true if successful, false otherwise</returns>
         bool Set(int msgSeqNum, string msg);
 
-        int GetNextSenderMsgSeqNum();
-        int GetNextTargetMsgSeqNum();
-        void SetNextSenderMsgSeqNum(int value);
-        void SetNextTargetMsgSeqNum(int value);
+        int NextSenderMsgSeqNum { get; set; }
+        int NextTargetMsgSeqNum { get; set; }
+
         void IncrNextSenderMsgSeqNum();
         void IncrNextTargetMsgSeqNum();
 
 
         System.DateTime? CreationTime { get; }
-
-        [System.Obsolete("use CreationTime instead")]
-        System.DateTime GetCreationTime();
 
         /// <summary>
         /// Reset the message store. Sequence numbers are set back to 1 and stored

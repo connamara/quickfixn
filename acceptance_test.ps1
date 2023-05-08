@@ -33,6 +33,9 @@ function TestSpec
         [switch]$UseWsl
     )
 
+    Write-Host "====="
+    Write-Host "Launching AT for result file $Dest"
+
     .\runat.ps1 $Configuration $Port "$Def" "$Conf" $Framework -UseWsl:$($UseWsl -and $UseWsl.IsPresent)
 
     if ($LASTEXITCODE -ne 0) { $Script:ReturnValue = $Script:ReturnValue + 1 }
@@ -53,7 +56,7 @@ function RunSuite
         [string]$Configuration,
 
         [Parameter(Mandatory, Position=1, ValueFromPipeline)]
-        [ValidateSet('net461','netcoreapp2.1')]
+        [ValidateSet('net6.0','net461','netcoreapp2.1')]
         [string[]]$Framework,
 
         [switch]$UseWsl
@@ -96,11 +99,13 @@ function RunSuite
 }
 
 try {
+    Write-Host "Launching acceptance tests..."
+
     Push-Location -Path "AcceptanceTest" -StackName AcceptanceTest
 
     Remove-Item AcceptanceTests_*.xml
 
-    'net461', 'netcoreapp2.1' | RunSuite -Configuration $Configuration -UseWsl:$($UseWsl -and $UseWsl.IsPresent)
+    'net6.0' | RunSuite -Configuration $Configuration -UseWsl:$($UseWsl -and $UseWsl.IsPresent)
 } finally {
     Pop-Location -StackName AcceptanceTest
 

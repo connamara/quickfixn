@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using QuickFix.Fields;
 using QuickFix.Fields.Converters;
 
@@ -79,11 +80,11 @@ namespace QuickFix
         {
             get
             {
-                return state_.GetNextSenderMsgSeqNum();
+                return state_.NextSenderMsgSeqNum;
             }
             set
             {
-                state_.SetNextSenderMsgSeqNum(value);
+                state_.NextSenderMsgSeqNum = value;
             }
         }
 
@@ -94,11 +95,11 @@ namespace QuickFix
         {
             get
             {
-                return state_.GetNextTargetMsgSeqNum();
+                return state_.NextTargetMsgSeqNum;
             }
             set
             {
-                state_.SetNextTargetMsgSeqNum(value);
+                state_.NextTargetMsgSeqNum = value;
             }
         }
 
@@ -230,7 +231,7 @@ namespace QuickFix
         /// <summary>
         /// Returns whether the Session has a Responder. This method is synchronized
         /// </summary>
-        public bool HasResponder { get { lock (sync_) { return null != responder_; } } }
+        public bool HasResponder { get { Thread.MemoryBarrier(); return null != responder_; } }
 
         /// <summary>
         /// Returns whether the Sessions will allow ResetSequence messages sent as
@@ -239,17 +240,6 @@ namespace QuickFix
         public bool RequiresOrigSendingTime { get; set; }
 
         #endregion
-
-        /// <summary>
-        /// Don't use this.  It decides the connection is an initiator if heartBtInt=0,
-        /// which is bad because 0 is actually a valid (though not-often-used) setting.
-        /// </summary>
-        [System.Obsolete("Use the constructor that takes the isInitiator parameter.")]
-        public Session(
-            IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
-            SessionSchedule sessionSchedule, int heartBtInt, ILogFactory logFactory, IMessageFactory msgFactory, string senderDefaultApplVerID)
-            : this(0 == heartBtInt, app, storeFactory, sessID, dataDictProvider, sessionSchedule, heartBtInt, logFactory, msgFactory, senderDefaultApplVerID)
-        { }
 
         public Session(
             bool isInitiator, IApplication app, IMessageStoreFactory storeFactory, SessionID sessID, DataDictionaryProvider dataDictProvider,
@@ -796,13 +786,13 @@ namespace QuickFix
 
                     if ((endSeqNo == 999999) || (endSeqNo == 0))
                     {
-                        endSeqNo = state_.GetNextSenderMsgSeqNum() - 1;
+                        endSeqNo = state_.NextSenderMsgSeqNum - 1;
                     }
 
                     if (!PersistMessages)
                     {
                         endSeqNo++;
-                        int next = state_.GetNextSenderMsgSeqNum();
+                        int next = state_.NextSenderMsgSeqNum;
                         if (endSeqNo > next)
                             endSeqNo = next;
                         GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
@@ -855,7 +845,7 @@ namespace QuickFix
                         current = msgSeqNum + 1;
                     }
 
-                    int nextSeqNum = state_.GetNextSenderMsgSeqNum();
+                    int nextSeqNum = state_.NextSenderMsgSeqNum;
                     if (++endSeqNo > nextSeqNum)
                     {
                         endSeqNo = nextSeqNum;
@@ -942,15 +932,15 @@ namespace QuickFix
             if (sequenceReset.IsSetField(Fields.Tags.NewSeqNo))
             {
                 int newSeqNo = sequenceReset.GetInt(Fields.Tags.NewSeqNo);
-                this.Log.OnEvent("Received SequenceReset FROM: " + state_.GetNextTargetMsgSeqNum() + " TO: " + newSeqNo);
+                this.Log.OnEvent("Received SequenceReset FROM: " + state_.NextTargetMsgSeqNum + " TO: " + newSeqNo);
 
-                if (newSeqNo > state_.GetNextTargetMsgSeqNum())
+                if (newSeqNo > state_.NextTargetMsgSeqNum)
                 {
-                    state_.SetNextTargetMsgSeqNum(newSeqNo);
+                    state_.NextTargetMsgSeqNum = newSeqNo;
                 }
                 else
                 {
-                    if (newSeqNo < state_.GetNextTargetMsgSeqNum())
+                    if (newSeqNo < state_.NextTargetMsgSeqNum)
                         GenerateReject(sequenceReset, FixValues.SessionRejectReason.VALUE_IS_INCORRECT);
                 }
             }
@@ -1052,12 +1042,6 @@ namespace QuickFix
             state_.Refresh();
         }
 
-        [Obsolete("Use Reset(reason) instead.")]
-        public void Reset()
-        {
-            this.Reset("(unspecified reason)");
-        }
-
         /// <summary>
         /// Send a logout, disconnect, and reset session state
         /// </summary>
@@ -1093,8 +1077,8 @@ namespace QuickFix
         {
             return (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX41) >= 0)
                 && (this.ResetOnLogon || this.ResetOnLogout || this.ResetOnDisconnect)
-                && (state_.GetNextSenderMsgSeqNum() == 1)
-                && (state_.GetNextTargetMsgSeqNum() == 1);
+                && (state_.NextSenderMsgSeqNum == 1)
+                && (state_.NextTargetMsgSeqNum == 1);
         }
 
         protected bool IsCorrectCompID(string senderCompID, string targetCompID)
@@ -1113,19 +1097,19 @@ namespace QuickFix
 
         protected bool IsTargetTooHigh(int msgSeqNum)
         {
-            return msgSeqNum > state_.GetNextTargetMsgSeqNum();
+            return msgSeqNum > state_.NextTargetMsgSeqNum;
         }
 
         protected bool IsTargetTooLow(int msgSeqNum)
         {
-            return msgSeqNum < state_.GetNextTargetMsgSeqNum();
+            return msgSeqNum < state_.NextTargetMsgSeqNum;
         }
 
         protected void DoTargetTooHigh(Message msg, int msgSeqNum)
         {
             string beginString = msg.Header.GetString(Fields.Tags.BeginString);
 
-            this.Log.OnEvent("MsgSeqNum too high, expecting " + state_.GetNextTargetMsgSeqNum() + " but received " + msgSeqNum);
+            this.Log.OnEvent("MsgSeqNum too high, expecting " + state_.NextTargetMsgSeqNum + " but received " + msgSeqNum);
             state_.Queue(msgSeqNum, msg);
 
             if (state_.ResendRequested())
@@ -1150,7 +1134,7 @@ namespace QuickFix
 
             if (!possDupFlag)
             {
-                string err = "MsgSeqNum too low, expecting " + state_.GetNextTargetMsgSeqNum() + " but received " + msgSeqNum;
+                string err = "MsgSeqNum too low, expecting " + state_.NextTargetMsgSeqNum + " but received " + msgSeqNum;
                 GenerateLogout(err);
                 throw new QuickFIXException(err);
             }
@@ -1240,7 +1224,7 @@ namespace QuickFix
 
         protected bool GenerateResendRequest(string beginString, int msgSeqNum)
         {
-            int beginSeqNum = state_.GetNextTargetMsgSeqNum();
+            int beginSeqNum = state_.NextTargetMsgSeqNum;
             int endRangeSeqNum = msgSeqNum - 1;
             int endChunkSeqNum;
             if (this.MaxMessagesInResendRequest > 0)
@@ -1452,7 +1436,7 @@ namespace QuickFix
             }
             if (!MsgType.LOGON.Equals(msgType)
               && !MsgType.SEQUENCE_RESET.Equals(msgType)
-              && (msgSeqNum == state_.GetNextTargetMsgSeqNum()))
+              && (msgSeqNum == state_.NextTargetMsgSeqNum))
             {
                 state_.IncrNextTargetMsgSeqNum();
             }
@@ -1527,7 +1511,7 @@ namespace QuickFix
             if (msgSeqNum > 0)
                 m.Header.SetField(new Fields.MsgSeqNum(msgSeqNum));
             else
-                m.Header.SetField(new Fields.MsgSeqNum(state_.GetNextSenderMsgSeqNum()));
+                m.Header.SetField(new Fields.MsgSeqNum(state_.NextSenderMsgSeqNum));
 
             if (this.EnableLastMsgSeqNumProcessed && !m.Header.IsSetField(Tags.LastMsgSeqNumProcessed))
             {
@@ -1615,7 +1599,7 @@ namespace QuickFix
         }
         protected void NextQueued()
         {
-            while (NextQueued(state_.MessageStore.GetNextTargetMsgSeqNum()))
+            while (NextQueued(state_.MessageStore.NextTargetMsgSeqNum))
             {
                 // continue
             }
@@ -1669,7 +1653,7 @@ namespace QuickFix
                         if (resetSeqNumFlag.getValue())
                         {
                             state_.Reset("ResetSeqNumFlag");
-                            message.Header.SetField(new Fields.MsgSeqNum(state_.GetNextSenderMsgSeqNum()));
+                            message.Header.SetField(new Fields.MsgSeqNum(state_.NextSenderMsgSeqNum));
                         }
                         state_.SentReset = resetSeqNumFlag.Obj;
                     }

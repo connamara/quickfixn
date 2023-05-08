@@ -58,21 +58,4 @@ namespace QuickFix
         /// <returns>true if session removed or not already present; false if could not be removed due to an active connection</returns>
         bool RemoveSession(SessionID sessionID, bool terminateActiveSession);
     }
-
-    /// <summary>
-    /// Extension hack to preserve the public interface.
-    /// #220 changed IsLoggedOn from a method to a property, which is good, but changes the public interface,
-    /// which we don't want to do until 2.0.  So we will keep the method too.
-    /// Normally, you can't have a property and method with the same name, but you can get around
-    /// this with an extension method.
-    /// </summary>
-    [System.Obsolete]
-    public static class IInitiatorExtension
-    {
-        [System.Obsolete("Use the property version instead (i.e. get rid of those parens!)")]
-        public static bool IsLoggedOn(this IInitiator init)
-        {
-            return init.IsLoggedOn;
-        }
-    }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Platforms>AnyCPU;x64</Platforms>
     <IsPackable>false</IsPackable>
@@ -15,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NUnit" Version="3.13.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.3.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,6 +29,7 @@
     <ProjectReference Include="..\Messages\FIX50SP1\QuickFix.FIX50SP1.csproj" />
     <ProjectReference Include="..\Messages\FIX50SP2\QuickFix.FIX50SP2.csproj" />
     <ProjectReference Include="..\Messages\FIX50\QuickFix.FIX50.csproj" />
+    <ProjectReference Include="..\Messages\FIXT11\QuickFix.FIXT11.csproj" />
     <ProjectReference Include="..\QuickFIXn\QuickFix.csproj" />
   </ItemGroup>
 

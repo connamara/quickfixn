@@ -11,8 +11,6 @@ namespace QuickFix
         #region Private Members
 
         System.Collections.Generic.Dictionary<int, string> messages_;
-        int nextSenderMsgSeqNum_;
-        int nextTargetMsgSeqNum_;
         DateTime? creationTime;
 
         #endregion
@@ -40,23 +38,14 @@ namespace QuickFix
             return true;
         }
 
-        public int GetNextSenderMsgSeqNum()
-        { return nextSenderMsgSeqNum_; }
-
-        public int GetNextTargetMsgSeqNum()
-        { return nextTargetMsgSeqNum_; }
-
-        public void SetNextSenderMsgSeqNum(int value)
-        { nextSenderMsgSeqNum_ = value; }
-
-        public void SetNextTargetMsgSeqNum(int value)
-        { nextTargetMsgSeqNum_ = value; }
+        public int NextSenderMsgSeqNum { get; set; }
+        public int NextTargetMsgSeqNum { get; set; }
 
         public void IncrNextSenderMsgSeqNum()
-        { ++nextSenderMsgSeqNum_; }
+        { ++NextSenderMsgSeqNum; }
 
         public void IncrNextTargetMsgSeqNum()
-        { ++nextTargetMsgSeqNum_; }
+        { ++NextTargetMsgSeqNum; }
 
         public System.DateTime? CreationTime
         {
@@ -64,17 +53,10 @@ namespace QuickFix
             internal set { creationTime = value; }
         }
 
-        [System.Obsolete("Use CreationTime instead")]
-        public DateTime GetCreationTime()
-        {
-            throw new NotImplementedException();
-        }
-
-
         public void Reset()
         {
-            nextSenderMsgSeqNum_ = 1;
-            nextTargetMsgSeqNum_ = 1;
+            NextSenderMsgSeqNum = 1;
+            NextTargetMsgSeqNum = 1;
             messages_.Clear();
             creationTime = DateTime.UtcNow;
         }

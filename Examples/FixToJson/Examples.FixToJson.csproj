@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+    <RootNamespace>FixToJson</RootNamespace>
+    <AssemblyName>FixToJson</AssemblyName>
+    <Copyright>Copyright © Connamara Systems, LLC 2022</Copyright>
+    <Company>Connamara Systems, LLC</Company>
+    <Platforms>AnyCPU;x64</Platforms>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <ProjectReference Include="..\..\QuickFIXn\QuickFix.csproj" />
+      <ProjectReference Include="..\..\Messages\FIX50SP2\QuickFix.FIX50SP2.csproj" />
+      <ProjectReference Include="..\..\Messages\FIX44\QuickFix.FIX44.csproj" />
+      <ProjectReference Include="..\..\Messages\FIX42\QuickFix.FIX42.csproj" />
+  </ItemGroup>
+</Project>

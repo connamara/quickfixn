@@ -34,18 +34,6 @@ namespace QuickFix
         private SocketReader socketReader_;
         private FileLog log_;
 
-        [Obsolete("Don't use this constructor")]
-        public ClientHandlerThread(TcpClient tcpClient, long clientId)
-            : this(tcpClient, clientId, new QuickFix.Dictionary())
-        { }
-
-
-        [Obsolete("Don't use this constructor")]
-        public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict)
-            : this(tcpClient, clientId, settingsDict, new SocketSettings())
-        {
-        }
-
         /// <summary>
         /// Creates a ClientHandlerThread
         /// </summary>
