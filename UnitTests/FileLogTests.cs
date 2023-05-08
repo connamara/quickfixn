@@ -75,6 +75,33 @@ namespace UnitTests
         }
 
         [Test]
+        public void testDoNotCreateFileWithoutEventsOrMessages()
+        {
+            var logDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "log");
+
+            if (System.IO.Directory.Exists(logDirectory))
+                System.IO.Directory.Delete(logDirectory, true);
+
+            QuickFix.SessionID sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
+            QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
+
+            QuickFix.Dictionary config = new QuickFix.Dictionary();
+            config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
+            config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, logDirectory);
+
+            settings.Set(sessionID, config);
+
+            QuickFix.FileLogFactory factory = new QuickFix.FileLogFactory(settings);
+            log = (QuickFix.FileLog)factory.Create(sessionID);
+
+            Assert.False(System.IO.File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log")));
+            Assert.False(System.IO.File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log")));
+            log.Clear();
+            Assert.False(System.IO.File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log")));
+            Assert.False(System.IO.File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log")));
+        }
+
+        [Test]
         public void testThrowsIfNoConfig()
         {
             QuickFix.SessionID sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
