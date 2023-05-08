@@ -73,6 +73,10 @@ What's New
 * #740 - Capture inner exception messages when handling authentication exceptions (rars)
 * #833 - Add Try/Catch logic to SocketInitiator.OnStart() (Falcz)
 * #782 - proper handling of XmlData field (larsope)
+* #770 - fix unobserved SocketException
+    * Perform socket read operations according to Task-based asynchronous pattern (TAP) instead of Asynchronous
+      Programming Model (APM), in order to catch unobserved SocketExceptions (nmandzyk)
+    * Cleanup/nullable-ize SocketInitiatorThread (gbirchmeier)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages

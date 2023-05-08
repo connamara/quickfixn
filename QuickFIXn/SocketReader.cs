@@ -3,27 +3,27 @@ using System.Net.Sockets;
 using System.IO;
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace QuickFix
 {
-    /// <summary>
-    /// TODO merge with SocketInitiatorThread
-    /// </summary>
     public class SocketReader : IDisposable
     {
         public const int BUF_SIZE = 4096;
         private readonly byte[] _readBuffer = new byte[BUF_SIZE];
         private readonly Parser _parser = new();
-        private Session? _qfSession; //will be null when initialized
+        private Session? _qfSession;
         private readonly Stream _stream;
+        private readonly CancellationTokenSource _readCancellationTokenSource = new();
         private readonly TcpClient _tcpClient;
         private readonly ClientHandlerThread _responder;
         private readonly AcceptorSocketDescriptor? _acceptorDescriptor;
 
         /// <summary>
-        /// Keep a handle to the current outstanding read request (if any)
+        /// Keep a task for handling async read
         /// </summary>
-        private IAsyncResult? _currentReadRequest;
+        private Task<int>? _currentReadTask;
 
         internal SocketReader(
             TcpClient tcpClient,
@@ -71,46 +71,44 @@ namespace QuickFix
         /// <exception cref="System.Net.Sockets.SocketException">On connection reset</exception>
         protected virtual int ReadSome(byte[] buffer, int timeoutMilliseconds)
         {
-            // NOTE: THIS FUNCTION IS EXACTLY THE SAME AS THE ONE IN SocketInitiatorThread.
-            // Any changes made here should also be made there.
-            try
-            {
+            // NOTE: THIS FUNCTION IS (nearly) EXACTLY THE SAME AS THE ONE IN SocketInitiatorThread.
+            // Any changes made here should also be performed there.
+            try {
                 // Begin read if it is not already started
-                _currentReadRequest ??= _stream.BeginRead(buffer, 0, buffer.Length, null, null);
+                _currentReadTask ??= _stream.ReadAsync(buffer, 0, buffer.Length, _readCancellationTokenSource.Token);
 
-                // Wait for it to complete (given timeout)
-                _currentReadRequest.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
+                if (_currentReadTask.Wait(timeoutMilliseconds)) {
+                    // Dispose/nullify currentReadTask *before* retreiving .Result.
+                    //   Accessting .Result can throw an exception, so we need to reset currentReadTask
+                    //   first, to set us up for the next read even if an exception is thrown.
+                    Task<int>? request = _currentReadTask;
+                    _currentReadTask = null;
 
-                if (_currentReadRequest.IsCompleted)
-                {
-                    // Make sure to set _currentReadRequest to before retreiving result
-                    // so a new read can be started next time even if an exception is thrown
-                    var request = _currentReadRequest;
-                    _currentReadRequest = null;
-
-                    int bytesRead = _stream.EndRead(request);
+                    int bytesRead = request.Result; // (As mentioned above, this can throw an exception!)
                     if (0 == bytesRead)
-                        throw new SocketException(System.Convert.ToInt32(SocketError.Shutdown));
+                        throw new SocketException(Convert.ToInt32(SocketError.Shutdown));
 
                     return bytesRead;
                 }
 
                 return 0;
             }
-            catch (IOException ex) // Timeout
+            catch (AggregateException ex) // Timeout
             {
-                var inner = ex.InnerException as SocketException;
-                if (inner?.SocketErrorCode == SocketError.TimedOut)
-                {
+                _currentReadTask = null;
+
+                IOException? ioException = ex.InnerException as IOException;
+                SocketException? inner = ioException?.InnerException as SocketException;
+                if (inner is not null && inner.SocketErrorCode == SocketError.TimedOut) {
                     // Nothing read 
                     return 0;
                 }
-                else if (inner is not null)
-                {
+
+                if (inner is not null) {
                     throw inner; //rethrow SocketException part (which we have exception logic for)
                 }
-                else
-                    throw; //rethrow original exception
+
+                throw; //rethrow original exception
             }
         }
 
@@ -200,8 +198,7 @@ namespace QuickFix
 
         protected void DisconnectClient()
         {
-            _stream.Close();
-            _tcpClient.Close();
+            Dispose();
         }
 
         private bool IsAssumedSession(SessionID sessionId)
@@ -275,13 +272,23 @@ namespace QuickFix
             GC.SuppressFinalize(this);
         }
 
+        private bool _disposed = false;
         protected virtual void Dispose(bool disposing)
         {
+            if (_disposed) return;
             if (disposing)
             {
+                _readCancellationTokenSource.Cancel();
+                _readCancellationTokenSource.Dispose();
+
+                // just wait when read task will be cancelled
+                _currentReadTask?.ContinueWith(_ => { }).Wait(1000);
+                _currentReadTask?.Dispose();
+
                 _stream.Dispose();
                 _tcpClient.Close();
             }
+            _disposed = true;
         }
         ~SocketReader() => Dispose(false);
     }
