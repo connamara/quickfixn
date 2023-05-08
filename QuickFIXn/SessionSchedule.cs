@@ -8,6 +8,7 @@ namespace QuickFix
         public System.TimeSpan EndTime { get; private set; }
 
         public bool WeeklySession { get; private set; }
+        public bool UseDailyTimeCheck { get; private set; }
         public System.DayOfWeek StartDay { get; private set; }
         public System.DayOfWeek EndDay { get; private set; }
 
@@ -73,7 +74,9 @@ namespace QuickFix
 
             System.DateTime adjusted = AdjustUtcDateTime(utc);
 
-            if (WeeklySession)
+            if (UseDailyTimeCheck && WeeklySession)
+                return CheckDay(adjusted) && CheckTime(adjusted.TimeOfDay);
+            else if (WeeklySession)
                 return CheckDay(adjusted);
             else
                 return CheckTime(adjusted.TimeOfDay);
@@ -95,11 +98,19 @@ namespace QuickFix
                 throw new ArgumentException("Only UTC time is supported", "time");
 
             DateTime d = AdjustUtcDateTime(utc);
-            DateTime end = DateTime.MinValue;
+            DateTime end = new DateTime(d.Year, d.Month, d.Day, EndTime.Hours, EndTime.Minutes, EndTime.Seconds, d.Kind);
 
-            if (WeeklySession)
+            if (UseDailyTimeCheck && WeeklySession)
             {
-                end = new DateTime(d.Year, d.Month, d.Day, EndTime.Hours, EndTime.Minutes, EndTime.Seconds, d.Kind);
+                if(DateTime.Compare(d, end) > 0) // d is later than end
+                    end = end.AddDays(1);
+                while (!CheckDay(end))
+                {
+                    end = end.AddDays(1);
+                }
+            }
+            else if (WeeklySession)
+            {
                 while (end.DayOfWeek != EndDay)
                     end = end.AddDays(1);
                 if (DateTime.Compare(d, end) > 0) // d is later than end
@@ -107,7 +118,6 @@ namespace QuickFix
             }
             else
             {
-                end = new DateTime(d.Year, d.Month, d.Day, EndTime.Hours, EndTime.Minutes, EndTime.Seconds, d.Kind);
                 if (DateTime.Compare(d, end) > 0) // d is later than end
                     end = end.AddDays(1);
             }
@@ -132,7 +142,16 @@ namespace QuickFix
                 throw new ArgumentException("Only UTC time is supported", "time");
 
             DateTime n = NextEndTime(utc);
-            if (WeeklySession)
+
+            if (UseDailyTimeCheck && WeeklySession)
+            {
+                n = n.AddDays(-1);
+                while(!CheckDay(n))
+                {
+                    n = n.AddDays(-1);
+                }
+            }
+            else if (WeeklySession)
                 n = n.AddDays(-7);
             else
                 n = n.AddDays(-1);
@@ -249,6 +268,11 @@ namespace QuickFix
                 StartDay = settings.GetDay(SessionSettings.START_DAY);
                 EndDay = settings.GetDay(SessionSettings.END_DAY);
                 WeeklySession = true;
+            }
+
+            if (WeeklySession &&  settings.Has(SessionSettings.USE_DAILY_TIME_CHECK) && settings.GetBool(SessionSettings.USE_DAILY_TIME_CHECK))
+            {
+                UseDailyTimeCheck = true;
             }
 
             if (settings.Has(SessionSettings.USE_LOCAL_TIME))
