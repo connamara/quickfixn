@@ -4,6 +4,7 @@ using System.Threading;
 using System.IO;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace QuickFix
 {
@@ -21,6 +22,7 @@ namespace QuickFix
         private byte[] readBuffer_ = new byte[BUF_SIZE];
         private Parser parser_;
         protected Stream stream_;
+        protected CancellationTokenSource _readCancellationTokenSource;
         private Transport.SocketInitiator initiator_;
         private Session session_;
         private IPEndPoint socketEndPoint_;
@@ -36,6 +38,7 @@ namespace QuickFix
             parser_ = new Parser();
             session_ = session;
             socketSettings_ = socketSettings;
+            _readCancellationTokenSource = new CancellationTokenSource();
         }
 
         public void Start()
@@ -117,9 +120,9 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Keep a handle to the current outstanding read request (if any)
+        /// Keep a task for handling async read
         /// </summary>
-        private IAsyncResult currentReadRequest_;
+        private Task<int> currentReadTask;
         /// <summary>
         /// Reads data from the network into the specified buffer.
         /// It will wait up to the specified number of milliseconds for data to arrive,
@@ -136,20 +139,22 @@ namespace QuickFix
             try
             {
                 // Begin read if it is not already started
-                if (currentReadRequest_ == null)
-                    currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, null, null);
+                if (currentReadTask == null)
+                    currentReadTask = stream_.ReadAsync(buffer, 0, buffer.Length, _readCancellationTokenSource.Token);
 
                 // Wait for it to complete (given timeout)
-                currentReadRequest_.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
+                currentReadTask.Wait(timeoutMilliseconds);
+                
 
-                if (currentReadRequest_.IsCompleted)
+                if (currentReadTask.IsCompleted)
                 {
                     // Make sure to set currentReadRequest_ to before retreiving result 
                     // so a new read can be started next time even if an exception is thrown
-                    var request = currentReadRequest_;
-                    currentReadRequest_ = null;
+                    var request = currentReadTask;
+                    currentReadTask.Dispose();
+                    currentReadTask = null;
 
-                    int bytesRead = stream_.EndRead(request);
+                    int bytesRead = request.Result;
                     if (0 == bytesRead)
                         throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
 
@@ -158,9 +163,10 @@ namespace QuickFix
                 else
                     return 0;
             }
-            catch (System.IO.IOException ex) // Timeout
+            catch (AggregateException ex) // Timeout
             {
-                var inner = ex.InnerException as SocketException;
+                var ioException = ex.InnerException as IOException;
+                var inner = ioException?.InnerException as SocketException;
                 if (inner != null && inner.SocketErrorCode == SocketError.TimedOut)
                 {
                     // Nothing read 
@@ -196,8 +202,15 @@ namespace QuickFix
         public void Disconnect()
         {
             isDisconnectRequested_ = true;
-            if (stream_ != null)
-                stream_.Close();
+            _readCancellationTokenSource?.Cancel();
+            _readCancellationTokenSource?.Dispose();
+            _readCancellationTokenSource = null;
+
+            // just wait when read task will be cancelled
+            currentReadTask?.ContinueWith(t => { }).Wait(1000);
+            currentReadTask?.Dispose();
+            currentReadTask = null;
+            stream_?.Close();
         }
 
         #endregion
