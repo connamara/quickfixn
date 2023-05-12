@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SeqNumType = System.UInt64;
 
 namespace QuickFix
 {

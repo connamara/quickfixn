@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using MessagesBySeqNum = System.Collections.Generic.Dictionary<ulong, QuickFix.Message>;
-using SeqNumType = System.UInt64;
 
 namespace QuickFix
 {

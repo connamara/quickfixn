@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using SeqNumType = System.UInt64;
 
 namespace UnitTests
 {

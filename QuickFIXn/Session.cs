@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using QuickFix.Fields;
 using QuickFix.Fields.Converters;
-using SeqNumType = System.UInt64;
 
 namespace QuickFix
 {

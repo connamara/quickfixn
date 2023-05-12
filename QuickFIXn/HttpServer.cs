@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using QuickFix;
-using SeqNumType = System.UInt64;
 
 namespace Acceptor
 {

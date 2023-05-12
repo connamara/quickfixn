@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using QuickFix.Util;
-using SeqNumType = System.UInt64;
 
 namespace QuickFix
 {

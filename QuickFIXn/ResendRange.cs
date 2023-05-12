@@ -1,6 +1,4 @@
-﻿using SeqNumType = System.UInt64;
-
-namespace QuickFix
+﻿namespace QuickFix
 {
     public class ResendRange
     {

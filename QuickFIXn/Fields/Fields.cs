@@ -1,8 +1,6 @@
 // This is a generated file.  Don't edit it directly!
 
 using System;
-using SeqNumType = System.UInt64;
-using SeqNumFieldType = QuickFix.Fields.ULongField;
 
 namespace QuickFix.Fields
 {
