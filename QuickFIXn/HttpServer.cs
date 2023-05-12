@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading;
 using System.Web;
 using QuickFix;
+using SeqNumType = System.UInt64;
 
 namespace Acceptor
 {
@@ -381,15 +382,15 @@ namespace Acceptor
 
             if (request.QueryString["next incoming"] != null)
             {
-                ulong val = Convert.ToUInt64(request.QueryString["next incoming"]);
-                sessionDetails.NextTargetMsgSeqNum = (val == 0 || val == System.UInt64.MaxValue) ? 1 : val;
+                SeqNumType val = Convert.ToUInt64(request.QueryString["next incoming"]);
+                sessionDetails.NextTargetMsgSeqNum = (val == 0 || val == SeqNumType.MaxValue) ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "next incoming");
             }
 
             if (request.QueryString["Next Outgoing"] != null)
             {
-                ulong val = Convert.ToUInt64(request.QueryString["Next Outgoing"]);
-                sessionDetails.NextSenderMsgSeqNum = (val == 0 || val == System.UInt64.MaxValue) ? 1 : val;
+                SeqNumType val = Convert.ToUInt64(request.QueryString["Next Outgoing"]);
+                sessionDetails.NextSenderMsgSeqNum = (val == 0 || val == SeqNumType.MaxValue) ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "Next Outgoing");
             }
 
@@ -539,7 +540,7 @@ namespace Acceptor
             return AddRow(colName, val.ToString(), innerHtml);
         }
 
-        private static string AddRow(string colName, ulong val, string url = "")
+        private static string AddRow(string colName, SeqNumType val, string url = "")
         {
             string innerHtml = $"<a href=\" {url}&{colName}={val - 10} \"> << </a>" +
                                $"<a href=\" {url}&{colName}={val - 1} \"> < </a>" +

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using QuickFix.Util;
+using SeqNumType = System.UInt64;
 
 namespace QuickFix
 {
@@ -33,7 +34,7 @@ namespace QuickFix
 
         private MemoryStore cache_ = new MemoryStore();
 
-        System.Collections.Generic.Dictionary<ulong, MsgDef> offsets_ = new Dictionary<ulong, MsgDef>();
+        System.Collections.Generic.Dictionary<SeqNumType, MsgDef> offsets_ = new Dictionary<SeqNumType, MsgDef>();
 
         public static string Prefix(SessionID sessionID)
         {
@@ -181,9 +182,9 @@ namespace QuickFix
         /// <param name="startSeqNum"></param>
         /// <param name="endSeqNum"></param>
         /// <param name="messages"></param>
-        public void Get(ulong startSeqNum, ulong endSeqNum, List<string> messages)
+        public void Get(SeqNumType startSeqNum, SeqNumType endSeqNum, List<string> messages)
         {
-            for (ulong i = startSeqNum; i <= endSeqNum; i++)
+            for (SeqNumType i = startSeqNum; i <= endSeqNum; i++)
             {
                 if (offsets_.ContainsKey(i))
                 {
@@ -203,7 +204,7 @@ namespace QuickFix
         /// <param name="msgSeqNum"></param>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public bool Set(ulong msgSeqNum, string msg)
+        public bool Set(SeqNumType msgSeqNum, string msg)
         {
             msgFile_.Seek(0, System.IO.SeekOrigin.End);
 
@@ -225,7 +226,7 @@ namespace QuickFix
             return true;
         }
 
-        public ulong NextSenderMsgSeqNum {
+        public SeqNumType NextSenderMsgSeqNum {
           get { return cache_.NextSenderMsgSeqNum; }
           set {
             cache_.NextSenderMsgSeqNum = value;
@@ -233,7 +234,7 @@ namespace QuickFix
           }
         }
 
-        public ulong NextTargetMsgSeqNum {
+        public SeqNumType NextTargetMsgSeqNum {
           get { return cache_.NextTargetMsgSeqNum; }
           set {
             cache_.NextTargetMsgSeqNum = value;

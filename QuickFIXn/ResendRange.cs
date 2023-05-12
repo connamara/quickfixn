@@ -1,12 +1,14 @@
-﻿namespace QuickFix
+﻿using SeqNumType = System.UInt64;
+
+namespace QuickFix
 {
     public class ResendRange
     {
-        public const ulong NOT_SET = System.UInt64.MaxValue;
+        public const SeqNumType NOT_SET = SeqNumType.MaxValue;
 
-        public ulong BeginSeqNo { get; set; }
-        public ulong EndSeqNo { get; set; }
-        public ulong ChunkEndSeqNo { get; set; }
+        public SeqNumType BeginSeqNo { get; set; }
+        public SeqNumType EndSeqNo { get; set; }
+        public SeqNumType ChunkEndSeqNo { get; set; }
 
         public ResendRange()
         {

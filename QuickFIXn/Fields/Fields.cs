@@ -1,6 +1,8 @@
 // This is a generated file.  Don't edit it directly!
 
 using System;
+using SeqNumType = System.UInt64;
+using SeqNumFieldType = QuickFix.Fields.ULongField;
 
 namespace QuickFix.Fields
 {
@@ -108,13 +110,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// BeginSeqNo Field
     /// </summary>/
-    public sealed class BeginSeqNo : ULongField
+    public sealed class BeginSeqNo : SeqNumFieldType
     {
         public const int TAG = 7;
 
         public BeginSeqNo()
             :base(Tags.BeginSeqNo) {}
-        public BeginSeqNo(ulong val)
+        public BeginSeqNo(SeqNumType val)
             :base(Tags.BeginSeqNo, val) {}
 
     }
@@ -257,13 +259,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// EndSeqNo Field
     /// </summary>/
-    public sealed class EndSeqNo : ULongField
+    public sealed class EndSeqNo : SeqNumFieldType
     {
         public const int TAG = 16;
 
         public EndSeqNo()
             :base(Tags.EndSeqNo) {}
-        public EndSeqNo(ulong val)
+        public EndSeqNo(SeqNumType val)
             :base(Tags.EndSeqNo, val) {}
 
     }
@@ -637,13 +639,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// MsgSeqNum Field
     /// </summary>/
-    public sealed class MsgSeqNum : ULongField
+    public sealed class MsgSeqNum : SeqNumFieldType
     {
         public const int TAG = 34;
 
         public MsgSeqNum()
             :base(Tags.MsgSeqNum) {}
-        public MsgSeqNum(ulong val)
+        public MsgSeqNum(SeqNumType val)
             :base(Tags.MsgSeqNum, val) {}
 
     }
@@ -892,13 +894,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// NewSeqNo Field
     /// </summary>/
-    public sealed class NewSeqNo : ULongField
+    public sealed class NewSeqNo : SeqNumFieldType
     {
         public const int TAG = 36;
 
         public NewSeqNo()
             :base(Tags.NewSeqNo) {}
-        public NewSeqNo(ulong val)
+        public NewSeqNo(SeqNumType val)
             :base(Tags.NewSeqNo, val) {}
 
     }
@@ -1083,13 +1085,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// RefSeqNum Field
     /// </summary>/
-    public sealed class RefSeqNum : ULongField
+    public sealed class RefSeqNum : SeqNumFieldType
     {
         public const int TAG = 45;
 
         public RefSeqNum()
             :base(Tags.RefSeqNum) {}
-        public RefSeqNum(ulong val)
+        public RefSeqNum(SeqNumType val)
             :base(Tags.RefSeqNum, val) {}
 
     }
@@ -6454,13 +6456,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// LastMsgSeqNumProcessed Field
     /// </summary>/
-    public sealed class LastMsgSeqNumProcessed : ULongField
+    public sealed class LastMsgSeqNumProcessed : SeqNumFieldType
     {
         public const int TAG = 369;
 
         public LastMsgSeqNumProcessed()
             :base(Tags.LastMsgSeqNumProcessed) {}
-        public LastMsgSeqNumProcessed(ulong val)
+        public LastMsgSeqNumProcessed(SeqNumType val)
             :base(Tags.LastMsgSeqNumProcessed, val) {}
 
     }
@@ -12221,13 +12223,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// HopRefID Field
     /// </summary>/
-    public sealed class HopRefID : ULongField
+    public sealed class HopRefID : SeqNumFieldType
     {
         public const int TAG = 630;
 
         public HopRefID()
             :base(Tags.HopRefID) {}
-        public HopRefID(ulong val)
+        public HopRefID(SeqNumType val)
             :base(Tags.HopRefID, val) {}
 
     }
@@ -15184,13 +15186,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// NextExpectedMsgSeqNum Field
     /// </summary>/
-    public sealed class NextExpectedMsgSeqNum : ULongField
+    public sealed class NextExpectedMsgSeqNum : SeqNumFieldType
     {
         public const int TAG = 789;
 
         public NextExpectedMsgSeqNum()
             :base(Tags.NextExpectedMsgSeqNum) {}
-        public NextExpectedMsgSeqNum(ulong val)
+        public NextExpectedMsgSeqNum(SeqNumType val)
             :base(Tags.NextExpectedMsgSeqNum, val) {}
 
     }
@@ -21987,13 +21989,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// ApplSeqNum Field
     /// </summary>/
-    public sealed class ApplSeqNum : ULongField
+    public sealed class ApplSeqNum : SeqNumFieldType
     {
         public const int TAG = 1181;
 
         public ApplSeqNum()
             :base(Tags.ApplSeqNum) {}
-        public ApplSeqNum(ulong val)
+        public ApplSeqNum(SeqNumType val)
             :base(Tags.ApplSeqNum, val) {}
 
     }
@@ -22002,13 +22004,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// ApplBegSeqNum Field
     /// </summary>/
-    public sealed class ApplBegSeqNum : ULongField
+    public sealed class ApplBegSeqNum : SeqNumFieldType
     {
         public const int TAG = 1182;
 
         public ApplBegSeqNum()
             :base(Tags.ApplBegSeqNum) {}
-        public ApplBegSeqNum(ulong val)
+        public ApplBegSeqNum(SeqNumType val)
             :base(Tags.ApplBegSeqNum, val) {}
 
     }
@@ -22017,13 +22019,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// ApplEndSeqNum Field
     /// </summary>/
-    public sealed class ApplEndSeqNum : ULongField
+    public sealed class ApplEndSeqNum : SeqNumFieldType
     {
         public const int TAG = 1183;
 
         public ApplEndSeqNum()
             :base(Tags.ApplEndSeqNum) {}
-        public ApplEndSeqNum(ulong val)
+        public ApplEndSeqNum(SeqNumType val)
             :base(Tags.ApplEndSeqNum, val) {}
 
     }
@@ -24568,13 +24570,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// ApplLastSeqNum Field
     /// </summary>/
-    public sealed class ApplLastSeqNum : ULongField
+    public sealed class ApplLastSeqNum : SeqNumFieldType
     {
         public const int TAG = 1350;
 
         public ApplLastSeqNum()
             :base(Tags.ApplLastSeqNum) {}
-        public ApplLastSeqNum(ulong val)
+        public ApplLastSeqNum(SeqNumType val)
             :base(Tags.ApplLastSeqNum, val) {}
 
     }
@@ -24678,13 +24680,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// RefApplLastSeqNum Field
     /// </summary>/
-    public sealed class RefApplLastSeqNum : ULongField
+    public sealed class RefApplLastSeqNum : SeqNumFieldType
     {
         public const int TAG = 1357;
 
         public RefApplLastSeqNum()
             :base(Tags.RefApplLastSeqNum) {}
-        public RefApplLastSeqNum(ulong val)
+        public RefApplLastSeqNum(SeqNumType val)
             :base(Tags.RefApplLastSeqNum, val) {}
 
     }
@@ -25390,13 +25392,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// ApplNewSeqNum Field
     /// </summary>/
-    public sealed class ApplNewSeqNum : ULongField
+    public sealed class ApplNewSeqNum : SeqNumFieldType
     {
         public const int TAG = 1399;
 
         public ApplNewSeqNum()
             :base(Tags.ApplNewSeqNum) {}
-        public ApplNewSeqNum(ulong val)
+        public ApplNewSeqNum(SeqNumType val)
             :base(Tags.ApplNewSeqNum, val) {}
 
     }

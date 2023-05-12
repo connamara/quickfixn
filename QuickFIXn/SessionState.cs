@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MessagesBySeqNum = System.Collections.Generic.Dictionary<ulong, QuickFix.Message>;
+using SeqNumType = System.UInt64;
 
 namespace QuickFix
 {
@@ -274,7 +275,7 @@ namespace QuickFix
             return resendRange_;
         }
 
-        public void Get(ulong begSeqNo, ulong endSeqNo, List<string> messages)
+        public void Get(SeqNumType begSeqNo, SeqNumType endSeqNo, List<string> messages)
         {
             lock (sync_)
             {
@@ -282,12 +283,12 @@ namespace QuickFix
             }
         }
 
-        public void SetResendRange(ulong begin, ulong end)
+        public void SetResendRange(SeqNumType begin, SeqNumType end)
         {
             SetResendRange(begin, end, ResendRange.NOT_SET);
         }
 
-        public void SetResendRange(ulong begin, ulong end, ulong chunkEnd)
+        public void SetResendRange(SeqNumType begin, SeqNumType end, SeqNumType chunkEnd)
         {
             resendRange_.BeginSeqNo = begin;
             resendRange_.EndSeqNo = end;
@@ -299,7 +300,7 @@ namespace QuickFix
             return !(resendRange_.BeginSeqNo == 0 && resendRange_.EndSeqNo == 0);
         }
 
-        public void Queue(ulong msgSeqNum, Message msg)
+        public void Queue(SeqNumType msgSeqNum, Message msg)
         {
             if (!MsgQueue.ContainsKey(msgSeqNum))
             {
@@ -312,7 +313,7 @@ namespace QuickFix
             MsgQueue.Clear();
         }
 
-        public QuickFix.Message Dequeue(ulong num)
+        public QuickFix.Message Dequeue(SeqNumType num)
         {
             if (MsgQueue.ContainsKey(num))
             {
@@ -323,7 +324,7 @@ namespace QuickFix
             return null;
         }
 
-        public Message Retrieve(ulong msgSeqNum)
+        public Message Retrieve(SeqNumType msgSeqNum)
         {
             Message msg = null;
             if (MsgQueue.ContainsKey(msgSeqNum))
@@ -356,18 +357,18 @@ namespace QuickFix
 
         #region MessageStore-manipulating Members
 
-        public bool Set(ulong msgSeqNum, string msg)
+        public bool Set(SeqNumType msgSeqNum, string msg)
         {
             lock (sync_) { return this.MessageStore.Set(msgSeqNum, msg); }
         }
 
-        public ulong NextSenderMsgSeqNum
+        public SeqNumType NextSenderMsgSeqNum
         {
             get { lock (sync_) { return this.MessageStore.NextSenderMsgSeqNum; } }
             set { lock (sync_) { this.MessageStore.NextSenderMsgSeqNum = value; } }
         }
 
-        public ulong NextTargetMsgSeqNum
+        public SeqNumType NextTargetMsgSeqNum
         {
             get { lock (sync_) { return this.MessageStore.NextTargetMsgSeqNum; } }
             set { lock (sync_) { this.MessageStore.NextTargetMsgSeqNum = value; } }

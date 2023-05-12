@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SeqNumType = System.UInt64;
 
 namespace QuickFix
 {
@@ -10,20 +11,20 @@ namespace QuickFix
     {
         #region Private Members
 
-        System.Collections.Generic.Dictionary<ulong, string> messages_;
+        System.Collections.Generic.Dictionary<SeqNumType, string> messages_;
         DateTime? creationTime;
 
         #endregion
 
         public MemoryStore()
         {
-            messages_ = new System.Collections.Generic.Dictionary<ulong, string>();
+            messages_ = new System.Collections.Generic.Dictionary<SeqNumType, string>();
             Reset();
         }
 
-        public void Get(ulong begSeqNo, ulong endSeqNo, List<string> messages)
+        public void Get(SeqNumType begSeqNo, SeqNumType endSeqNo, List<string> messages)
         {
-            for (ulong current = begSeqNo; current <= endSeqNo; current++)
+            for (SeqNumType current = begSeqNo; current <= endSeqNo; current++)
             {
                 if (messages_.ContainsKey(current))
                     messages.Add(messages_[current]);
@@ -32,14 +33,14 @@ namespace QuickFix
 
         #region MessageStore Members
 
-        public bool Set(ulong msgSeqNum, string msg)
+        public bool Set(SeqNumType msgSeqNum, string msg)
         {
             messages_[msgSeqNum] = msg;
             return true;
         }
 
-        public ulong NextSenderMsgSeqNum { get; set; }
-        public ulong NextTargetMsgSeqNum { get; set; }
+        public SeqNumType NextSenderMsgSeqNum { get; set; }
+        public SeqNumType NextTargetMsgSeqNum { get; set; }
 
         public void IncrNextSenderMsgSeqNum()
         { ++NextSenderMsgSeqNum; }
