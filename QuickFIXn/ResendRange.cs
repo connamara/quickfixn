@@ -2,15 +2,17 @@
 {
     public class ResendRange
     {
-        public int BeginSeqNo { get; set; }
-        public int EndSeqNo { get; set; }
-        public int ChunkEndSeqNo { get; set; }
+        public const ulong NOT_SET = System.UInt64.MaxValue;
+
+        public ulong BeginSeqNo { get; set; }
+        public ulong EndSeqNo { get; set; }
+        public ulong ChunkEndSeqNo { get; set; }
 
         public ResendRange()
         {
             BeginSeqNo = 0;
             EndSeqNo = 0;
-            ChunkEndSeqNo = -1;
+            ChunkEndSeqNo = ResendRange.NOT_SET;
         }
 
         public override string ToString()

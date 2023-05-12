@@ -381,15 +381,15 @@ namespace Acceptor
 
             if (request.QueryString["next incoming"] != null)
             {
-                int value = Convert.ToInt16(request.QueryString["next incoming"]);
-                sessionDetails.NextTargetMsgSeqNum = value <= 0 ? 1 : value;
+                ulong val = Convert.ToUInt64(request.QueryString["next incoming"]);
+                sessionDetails.NextTargetMsgSeqNum = (val == 0 || val == System.UInt64.MaxValue) ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "next incoming");
             }
 
             if (request.QueryString["Next Outgoing"] != null)
             {
-                int value = Convert.ToInt16(request.QueryString["Next Outgoing"]);
-                sessionDetails.NextSenderMsgSeqNum = value <= 0 ? 1 : value;
+                ulong val = Convert.ToUInt64(request.QueryString["Next Outgoing"]);
+                sessionDetails.NextSenderMsgSeqNum = (val == 0 || val == System.UInt64.MaxValue) ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "Next Outgoing");
             }
 
@@ -413,22 +413,22 @@ namespace Acceptor
 
             if (request.QueryString["MaxLatency"] != null)
             {
-                int value = Convert.ToInt16(request.QueryString["MaxLatency"]);
-                sessionDetails.MaxLatency = value <= 0 ? 1 : value;
+                int val = Convert.ToInt16(request.QueryString["MaxLatency"]);
+                sessionDetails.MaxLatency = val <= 0 ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "MaxLatency");
             }
 
             if (request.QueryString["LogonTimeout"] != null)
             {
-                int value = Convert.ToInt16(request.QueryString["LogonTimeout"]);
-                sessionDetails.LogonTimeout = value <= 0 ? 1 : value;
+                int val = Convert.ToInt16(request.QueryString["LogonTimeout"]);
+                sessionDetails.LogonTimeout = val <= 0 ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "LogonTimeout");
             }
 
             if (request.QueryString["LogoutTimeout"] != null)
             {
-                int value = Convert.ToInt16(request.QueryString["LogoutTimeout"]);
-                sessionDetails.LogoutTimeout = value <= 0 ? 1 : value;
+                int val = Convert.ToInt16(request.QueryString["LogoutTimeout"]);
+                sessionDetails.LogoutTimeout = val <= 0 ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "LogoutTimeout");
             }
 
@@ -520,30 +520,41 @@ namespace Acceptor
             return HttpUtility.ParseQueryString((new Uri(url).Query)).ToString();
         }
 
-        private static string AddRow(string colName, bool value, string url="")
+        private static string AddRow(string colName, bool val, string url="")
         {
-            string valueAsStr = value ? "yes" : "no";
+            string valueAsStr = val ? "yes" : "no";
             string innerHtml = url.Length > 0
-                ? $"<a href=\" {url}&{colName}={!value} \">toggle</a>"
+                ? $"<a href=\" {url}&{colName}={!val} \">toggle</a>"
                 : "";
             return AddRow(colName, valueAsStr, innerHtml);
         }
 
-        private static string AddRow(string colName, int value, string url = "")
+        private static string AddRow(string colName, int val, string url = "")
         {
-            string innerHtml = $"<a href=\" {url}&{colName}={value - 10} \"> << </a>" +
-                               $"<a href=\" {url}&{colName}={value - 1} \"> < </a>" +
+            string innerHtml = $"<a href=\" {url}&{colName}={val - 10} \"> << </a>" +
+                               $"<a href=\" {url}&{colName}={val - 1} \"> < </a>" +
                                " | " +
-                               $"<a href=\" {url}&{colName}={value + 1} \"> > </a>" +
-                               $"<a href=\" {url}&{colName}={value + 10} \"> >> </a>";
-            return AddRow(colName, value.ToString(), innerHtml);
+                               $"<a href=\" {url}&{colName}={val + 1} \"> > </a>" +
+                               $"<a href=\" {url}&{colName}={val + 10} \"> >> </a>";
+            return AddRow(colName, val.ToString(), innerHtml);
         }
-        private static string AddRow(string colName, string value, string innerHtml = "")
+
+        private static string AddRow(string colName, ulong val, string url = "")
+        {
+            string innerHtml = $"<a href=\" {url}&{colName}={val - 10} \"> << </a>" +
+                               $"<a href=\" {url}&{colName}={val - 1} \"> < </a>" +
+                               " | " +
+                               $"<a href=\" {url}&{colName}={val + 1} \"> > </a>" +
+                               $"<a href=\" {url}&{colName}={val + 10} \"> >> </a>";
+            return AddRow(colName, val.ToString(), innerHtml);
+        }
+
+        private static string AddRow(string colName, string val, string innerHtml = "")
         {
             StringBuilder row = new StringBuilder();
             row.Append("<tr>");
             row.Append(AddCell(colName));
-            row.Append(AddCell(value));
+            row.Append(AddCell(val));
             row.Append(AddCell(innerHtml));
             row.Append("</tr>");
             return row.ToString();

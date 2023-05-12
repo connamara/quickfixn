@@ -10,20 +10,20 @@ namespace QuickFix
     {
         #region Private Members
 
-        System.Collections.Generic.Dictionary<int, string> messages_;
+        System.Collections.Generic.Dictionary<ulong, string> messages_;
         DateTime? creationTime;
 
         #endregion
 
         public MemoryStore()
         {
-            messages_ = new System.Collections.Generic.Dictionary<int, string>();
+            messages_ = new System.Collections.Generic.Dictionary<ulong, string>();
             Reset();
         }
 
-        public void Get(int begSeqNo, int endSeqNo, List<string> messages)
+        public void Get(ulong begSeqNo, ulong endSeqNo, List<string> messages)
         {
-            for (int current = begSeqNo; current <= endSeqNo; current++)
+            for (ulong current = begSeqNo; current <= endSeqNo; current++)
             {
                 if (messages_.ContainsKey(current))
                     messages.Add(messages_[current]);
@@ -32,14 +32,14 @@ namespace QuickFix
 
         #region MessageStore Members
 
-        public bool Set(int msgSeqNum, string msg)
+        public bool Set(ulong msgSeqNum, string msg)
         {
             messages_[msgSeqNum] = msg;
             return true;
         }
 
-        public int NextSenderMsgSeqNum { get; set; }
-        public int NextTargetMsgSeqNum { get; set; }
+        public ulong NextSenderMsgSeqNum { get; set; }
+        public ulong NextTargetMsgSeqNum { get; set; }
 
         public void IncrNextSenderMsgSeqNum()
         { ++NextSenderMsgSeqNum; }

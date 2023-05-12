@@ -76,7 +76,7 @@ namespace QuickFix
         /// <summary>
         /// Gets or sets the next expected outgoing sequence number
         /// </summary>
-        public int NextSenderMsgSeqNum
+        public ulong NextSenderMsgSeqNum
         {
             get
             {
@@ -91,7 +91,7 @@ namespace QuickFix
         /// <summary>
         /// Gets or sets the next expected incoming sequence number
         /// </summary>
-        public int NextTargetMsgSeqNum
+        public ulong NextTargetMsgSeqNum
         {
             get
             {
@@ -210,7 +210,7 @@ namespace QuickFix
         /// <summary>
         /// Sets a maximum number of messages to request in a resend request.
         /// </summary>
-        public int MaxMessagesInResendRequest { get; set; }
+        public ulong MaxMessagesInResendRequest { get; set; }
 
         /// <summary>
         /// This is the FIX field value, e.g. "6" for FIX44
@@ -749,7 +749,7 @@ namespace QuickFix
             state_.SentReset = false;
             state_.ReceivedReset = false;
 
-            int msgSeqNum = logon.Header.GetInt(Fields.Tags.MsgSeqNum);
+            ulong msgSeqNum = logon.Header.GetULong(Fields.Tags.MsgSeqNum);
             if (IsTargetTooHigh(msgSeqNum) && !resetSeqNumFlag.Obj)
             {
                 DoTargetTooHigh(logon, msgSeqNum);
@@ -777,11 +777,11 @@ namespace QuickFix
                 return;
             try
             {
-                int msgSeqNum = 0;
+                ulong msgSeqNum = 0;
                 if (!(this.IgnorePossDupResendRequests && resendReq.Header.IsSetField(Tags.PossDupFlag)))
                 {
-                    int begSeqNo = resendReq.GetInt(Fields.Tags.BeginSeqNo);
-                    int endSeqNo = resendReq.GetInt(Fields.Tags.EndSeqNo);
+                    ulong begSeqNo = resendReq.GetULong(Fields.Tags.BeginSeqNo);
+                    ulong endSeqNo = resendReq.GetULong(Fields.Tags.EndSeqNo);
                     this.Log.OnEvent("Got resend request from " + begSeqNo + " to " + endSeqNo);
 
                     if ((endSeqNo == 999999) || (endSeqNo == 0))
@@ -792,11 +792,11 @@ namespace QuickFix
                     if (!PersistMessages)
                     {
                         endSeqNo++;
-                        int next = state_.NextSenderMsgSeqNum;
+                        ulong next = state_.NextSenderMsgSeqNum;
                         if (endSeqNo > next)
                             endSeqNo = next;
                         GenerateSequenceReset(resendReq, begSeqNo, endSeqNo);
-                        msgSeqNum = resendReq.Header.GetInt(Tags.MsgSeqNum);
+                        msgSeqNum = resendReq.Header.GetULong(Tags.MsgSeqNum);
                         if (!IsTargetTooHigh(msgSeqNum) && !IsTargetTooLow(msgSeqNum))
                         {
                             state_.IncrNextTargetMsgSeqNum();
@@ -806,13 +806,13 @@ namespace QuickFix
 
                     List<string> messages = new List<string>();
                     state_.Get(begSeqNo, endSeqNo, messages);
-                    int current = begSeqNo;
-                    int begin = 0;
+                    ulong current = begSeqNo;
+                    ulong begin = 0;
                     foreach (string msgStr in messages)
                     {
                         Message msg = new Message();
                         msg.FromString(msgStr, true, this.SessionDataDictionary, this.ApplicationDataDictionary, msgFactory_);
-                        msgSeqNum = msg.Header.GetInt(Tags.MsgSeqNum);
+                        msgSeqNum = msg.Header.GetULong(Tags.MsgSeqNum);
 
                         if ((current != msgSeqNum) && begin == 0)
                         {
@@ -845,7 +845,7 @@ namespace QuickFix
                         current = msgSeqNum + 1;
                     }
 
-                    int nextSeqNum = state_.NextSenderMsgSeqNum;
+                    ulong nextSeqNum = state_.NextSenderMsgSeqNum;
                     if (++endSeqNo > nextSeqNum)
                     {
                         endSeqNo = nextSeqNum;
@@ -861,7 +861,7 @@ namespace QuickFix
                         GenerateSequenceReset(resendReq, begin, endSeqNo);
                     }
                 }
-                msgSeqNum = resendReq.Header.GetInt(Tags.MsgSeqNum);
+                msgSeqNum = resendReq.Header.GetULong(Tags.MsgSeqNum);
                 if (!IsTargetTooHigh(msgSeqNum) && !IsTargetTooLow(msgSeqNum))
                 {
                     state_.IncrNextTargetMsgSeqNum();
@@ -931,7 +931,7 @@ namespace QuickFix
 
             if (sequenceReset.IsSetField(Fields.Tags.NewSeqNo))
             {
-                int newSeqNo = sequenceReset.GetInt(Fields.Tags.NewSeqNo);
+                ulong newSeqNo = sequenceReset.GetULong(Fields.Tags.NewSeqNo);
                 this.Log.OnEvent("Received SequenceReset FROM: " + state_.NextTargetMsgSeqNum + " TO: " + newSeqNo);
 
                 if (newSeqNo > state_.NextTargetMsgSeqNum)
@@ -953,7 +953,7 @@ namespace QuickFix
 
         public bool Verify(Message msg, bool checkTooHigh, bool checkTooLow)
         {
-            int msgSeqNum = 0;
+            ulong msgSeqNum = 0;
             string msgType = "";
 
             try
@@ -970,7 +970,7 @@ namespace QuickFix
                 }
 
                 if (checkTooHigh || checkTooLow)
-                    msgSeqNum = msg.Header.GetInt(Fields.Tags.MsgSeqNum);
+                    msgSeqNum = msg.Header.GetULong(Fields.Tags.MsgSeqNum);
 
                 if (checkTooHigh && IsTargetTooHigh(msgSeqNum))
                 {
@@ -994,7 +994,7 @@ namespace QuickFix
                     else if (msgSeqNum >= range.ChunkEndSeqNo)
                     {
                         this.Log.OnEvent("Chunked ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.ChunkEndSeqNo + " has been satisfied.");
-                        int newChunkEndSeqNo = Math.Min(range.EndSeqNo, range.ChunkEndSeqNo + this.MaxMessagesInResendRequest);
+                        ulong newChunkEndSeqNo = Math.Min(range.EndSeqNo, range.ChunkEndSeqNo + this.MaxMessagesInResendRequest);
                         GenerateResendRequestRange(msg.Header.GetString(Fields.Tags.BeginString), range.ChunkEndSeqNo + 1, newChunkEndSeqNo);
                         range.ChunkEndSeqNo = newChunkEndSeqNo;
                     }
@@ -1095,17 +1095,17 @@ namespace QuickFix
             return true;
         }
 
-        protected bool IsTargetTooHigh(int msgSeqNum)
+        protected bool IsTargetTooHigh(ulong msgSeqNum)
         {
             return msgSeqNum > state_.NextTargetMsgSeqNum;
         }
 
-        protected bool IsTargetTooLow(int msgSeqNum)
+        protected bool IsTargetTooLow(ulong msgSeqNum)
         {
             return msgSeqNum < state_.NextTargetMsgSeqNum;
         }
 
-        protected void DoTargetTooHigh(Message msg, int msgSeqNum)
+        protected void DoTargetTooHigh(Message msg, ulong msgSeqNum)
         {
             string beginString = msg.Header.GetString(Fields.Tags.BeginString);
 
@@ -1126,7 +1126,7 @@ namespace QuickFix
             GenerateResendRequest(beginString, msgSeqNum);
         }
 
-        protected void DoTargetTooLow(Message msg, int msgSeqNum)
+        protected void DoTargetTooLow(Message msg, ulong msgSeqNum)
         {
             bool possDupFlag = false;
             if (msg.Header.IsSetField(Fields.Tags.PossDupFlag))
@@ -1176,7 +1176,7 @@ namespace QuickFix
         protected void GenerateBusinessMessageReject(Message message, int err, int field)
         {
             string msgType = message.Header.GetString(Tags.MsgType);
-            int msgSeqNum = message.Header.GetInt(Tags.MsgSeqNum);
+            ulong msgSeqNum = message.Header.GetULong(Tags.MsgSeqNum);
             string reason = FixValues.BusinessRejectReason.RejText[err];
             Message reject;
             if (this.SessionID.BeginString.CompareTo(FixValues.BeginString.FIX42) >= 0)
@@ -1202,7 +1202,7 @@ namespace QuickFix
             SendRaw(reject, 0);
         }
 
-        protected bool GenerateResendRequestRange(string beginString, int startSeqNum, int endSeqNum)
+        protected bool GenerateResendRequestRange(string beginString, ulong startSeqNum, ulong endSeqNum)
         {
             Message resendRequest = msgFactory_.Create(beginString, MsgType.RESEND_REQUEST);
 
@@ -1222,11 +1222,11 @@ namespace QuickFix
             }
         }
 
-        protected bool GenerateResendRequest(string beginString, int msgSeqNum)
+        protected bool GenerateResendRequest(string beginString, ulong msgSeqNum)
         {
-            int beginSeqNum = state_.NextTargetMsgSeqNum;
-            int endRangeSeqNum = msgSeqNum - 1;
-            int endChunkSeqNum;
+            ulong beginSeqNum = state_.NextTargetMsgSeqNum;
+            ulong endRangeSeqNum = msgSeqNum - 1;
+            ulong endChunkSeqNum;
             if (this.MaxMessagesInResendRequest > 0)
             {
                 endChunkSeqNum = Math.Min(endRangeSeqNum, beginSeqNum + this.MaxMessagesInResendRequest - 1);
@@ -1288,7 +1288,7 @@ namespace QuickFix
                 logon.SetField(new Fields.DefaultApplVerID(this.SenderDefaultApplVerID));
             logon.SetField(new Fields.HeartBtInt(otherLogon.GetInt(Tags.HeartBtInt)));
             if (this.EnableLastMsgSeqNumProcessed)
-                logon.Header.SetField(new Fields.LastMsgSeqNumProcessed(otherLogon.Header.GetInt(Tags.MsgSeqNum)));
+                logon.Header.SetField(new Fields.LastMsgSeqNumProcessed(otherLogon.Header.GetULong(Tags.MsgSeqNum)));
 
             InitializeHeader(logon);
             state_.SentLogon = SendRaw(logon, 0);
@@ -1348,7 +1348,7 @@ namespace QuickFix
             {
                 try
                 {
-                    logout.Header.SetField(new Fields.LastMsgSeqNumProcessed(other.Header.GetInt(Tags.MsgSeqNum)));
+                    logout.Header.SetField(new Fields.LastMsgSeqNumProcessed(other.Header.GetULong(Tags.MsgSeqNum)));
                 }
                 catch (FieldNotFoundException)
                 {
@@ -1375,7 +1375,7 @@ namespace QuickFix
                 heartbeat.SetField(new Fields.TestReqID(testRequest.GetString(Fields.Tags.TestReqID)));
                 if (this.EnableLastMsgSeqNumProcessed)
                 {
-                    heartbeat.Header.SetField(new Fields.LastMsgSeqNumProcessed(testRequest.Header.GetInt(Tags.MsgSeqNum)));
+                    heartbeat.Header.SetField(new Fields.LastMsgSeqNumProcessed(testRequest.Header.GetULong(Tags.MsgSeqNum)));
                 }
             }
             catch (FieldNotFoundException)
@@ -1413,12 +1413,12 @@ namespace QuickFix
             else
                 msgType = "";
 
-            int msgSeqNum = 0;
+            ulong msgSeqNum = 0;
             if (message.Header.IsSetField(Fields.Tags.MsgSeqNum))
             {
                 try
                 {
-                    msgSeqNum = message.Header.GetInt(Fields.Tags.MsgSeqNum);
+                    msgSeqNum = message.Header.GetULong(Fields.Tags.MsgSeqNum);
                     reject.SetField(new Fields.RefSeqNum(msgSeqNum));
                 }
                 catch (System.Exception)
@@ -1493,7 +1493,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="m"></param>
         /// <param name="msgSeqNum"></param>
-        protected void InitializeHeader(Message m, int msgSeqNum)
+        protected void InitializeHeader(Message m, ulong msgSeqNum)
         {
             state_.LastSentTimeDT = DateTime.UtcNow;
             m.Header.SetField(new Fields.BeginString(this.SessionID.BeginString));
@@ -1540,7 +1540,7 @@ namespace QuickFix
         {
             if (this.PersistMessages)
             {
-                int msgSeqNum = message.Header.GetInt(Fields.Tags.MsgSeqNum);
+                ulong msgSeqNum = message.Header.GetULong(Fields.Tags.MsgSeqNum);
                 state_.Set(msgSeqNum, messageString);
             }
             state_.IncrNextSenderMsgSeqNum();
@@ -1560,12 +1560,12 @@ namespace QuickFix
             return true;
         }
 
-        private void GenerateSequenceReset(Message receivedMessage, int beginSeqNo, int endSeqNo)
+        private void GenerateSequenceReset(Message receivedMessage, ulong beginSeqNo, ulong endSeqNo)
         {
             string beginString = this.SessionID.BeginString;
             Message sequenceReset = msgFactory_.Create(beginString, Fields.MsgType.SEQUENCE_RESET);
             InitializeHeader(sequenceReset);
-            int newSeqNo = endSeqNo;
+            ulong newSeqNo = endSeqNo;
             sequenceReset.Header.SetField(new PossDupFlag(true));
             InsertOrigSendingTime(sequenceReset.Header, sequenceReset.Header.GetDateTime(Tags.SendingTime));
 
@@ -1576,7 +1576,7 @@ namespace QuickFix
             {
                 try
                 {
-                    sequenceReset.Header.SetField(new Fields.LastMsgSeqNumProcessed(receivedMessage.Header.GetInt(Tags.MsgSeqNum)));
+                    sequenceReset.Header.SetField(new Fields.LastMsgSeqNumProcessed(receivedMessage.Header.GetULong(Tags.MsgSeqNum)));
                 }
                 catch (FieldNotFoundException)
                 {
@@ -1605,7 +1605,7 @@ namespace QuickFix
             }
         }
 
-        protected bool NextQueued(int num)
+        protected bool NextQueued(ulong num)
         {
             Message msg = state_.Dequeue(num);
 
@@ -1633,7 +1633,7 @@ namespace QuickFix
             return AdminMsgTypes.Contains(msgType);
         }
 
-        protected bool SendRaw(Message message, int seqNum)
+        protected bool SendRaw(Message message, ulong seqNum)
         {
             lock (sync_)
             {
