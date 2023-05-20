@@ -82,35 +82,31 @@ To run the full suite of acceptance tests:
 acceptance_test.ps1
 ```
 
-An HTML report of the test results will then be available here:
+XML reports of the test results will then be available here:
 
-    AcceptanceTests\AcceptanceTests.html
+    AcceptanceTest\AcceptanceTests_*.xml
 
-To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
+To run a subset of the acceptance tests, run the AcceptanceTest .NET project with the desired arguments:
+
+`<test_definitions> <config_filepath> <use_wsl>(true|false)`
+
+For example,
 
 ```
 cd AcceptanceTest
-pwsh runat.ps1 release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg net6.0
+
+dotnet run -c Release -f net6.0 -- definitions/server/fix40/*.def cfg/at_40.cfg true
+
+# or
+bin/Release/net6.0/AcceptanceTest.exe definitions/server/fix42\14e_IncorrectEnumValue.def cfg/at_42.cfg true
+
+# or run from Visual Studio with the arguments specified by the launch profile ("Debug" menu bar item then "AcceptanceTest Debug Properties")
 ```
 
-The final param *must* be "net6.0".
-
-(See acceptance_test.ps1 for the proper port numbers and config files to use in the above command.)
+The third option allows the tests to debugged.
 
 The test results will then be available in AcceptanceTests\TestResults.xml and
 debug information will be available in the AcceptanceTests\log directory.
-
-To run a test with the debugger,
-
-  1. Open the solution file in Visual Studio
-  2. Right click on "AcceptanceTest" project and choose "Properties" from the menu
-  3. Click "Debug" on the left hand nav bar
-  4. Set "Command line arguments" to the relevant "cfg\at_XX.cfg" for your test
-  5. Set the working directory to "[yourpath]\quickfixn\AcceptanceTest"
-  6. Save the properties
-  7. Right click the "AcceptanceTest" project, go to Debug -> Start New Instance
-  8. In command terminal, go into "AcceptanceTest" directory
-  9. Run: `ruby Runner.rb 127.0.0.1 5001 definitions\server\fix42\YourTestName.def`
 
 Credits
 -------
