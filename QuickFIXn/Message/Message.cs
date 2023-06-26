@@ -134,6 +134,40 @@ namespace QuickFix
             return new MsgType(GetMsgType(fixstring));
         }
 
+        public static int ExtractFieldTag(string msgstr, int pos)
+        {
+            int tagend = msgstr.IndexOf('=', pos);
+            int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
+            return tag;
+        }
+
+        public static StringField ExtractDataField(string msgstr, int dataLength, ref int pos, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
+        {
+            try
+            {
+                int tagend = msgstr.IndexOf('=', pos);
+                int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
+                pos = tagend + 1;
+                int fieldvalend = msgstr.IndexOf((char)1, pos);
+                StringField field = new StringField(tag, msgstr.Substring(pos, dataLength));
+
+                pos += dataLength + 1;
+                return field;
+            }
+            catch (System.ArgumentOutOfRangeException e)
+            {
+                throw new MessageParseError("Error at position (" + pos + ") while parsing msg (" + msgstr + ")", e);
+            }
+            catch (System.OverflowException e)
+            {
+                throw new MessageParseError("Error at position (" + pos + ") while parsing msg (" + msgstr + ")", e);
+            }
+            catch (System.FormatException e)
+            {
+                throw new MessageParseError("Error at position (" + pos + ") while parsing msg (" + msgstr + ")", e);
+            }
+        }
+
         public static StringField ExtractField(string msgstr, ref int pos, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD)
         {
             try
@@ -406,6 +440,9 @@ namespace QuickFix
             DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory,
             bool ignoreBody)
         {
+            bool IsDataField(int tag)
+                => tag == Tags.XmlData;
+
             this.ApplicationDataDictionary = appDD;
             Clear();
 
@@ -418,8 +455,19 @@ namespace QuickFix
 
             while (pos < msgstr.Length)
             {
-                StringField f = ExtractField(msgstr, ref pos, sessionDD, appDD);
-                
+                StringField f = null;
+                int fieldTag = ExtractFieldTag(msgstr, pos);
+                if (IsDataField(fieldTag))
+                {
+                    if (IsHeaderField(Tags.XmlDataLen))
+                        f = ExtractDataField(msgstr, Header.GetInt(Tags.XmlDataLen), ref pos, sessionDD, appDD);
+                    else if (IsSetField(Tags.XmlDataLen))
+                        f = ExtractDataField(msgstr, GetInt(Tags.XmlDataLen), ref pos, sessionDD, appDD);
+                }
+
+                if (f == null)
+                    f = ExtractField(msgstr, ref pos, sessionDD, appDD);
+
                 if (validate && (count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
                     throw new InvalidMessage("Header fields out of order");
 
