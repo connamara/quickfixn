@@ -148,7 +148,6 @@ namespace QuickFix
                 int tagend = msgstr.IndexOf('=', pos);
                 int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
                 pos = tagend + 1;
-                int fieldvalend = msgstr.IndexOf((char)1, pos);
                 StringField field = new StringField(tag, msgstr.Substring(pos, dataLength));
 
                 pos += dataLength + 1;
