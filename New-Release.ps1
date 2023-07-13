@@ -55,7 +55,7 @@ Write-Host '* Version number committed.'
 git tag -a $TagVersion -m 'Release version $TagVersion'
 Write-Host '* Created tag.'
 
-git checkout $TagVersion
+git checkout -c advice.detachedHead=false $TagVersion
 $ExitCode = $LASTEXITCODE
 if ($ExitCode -eq 0) {
 	Write-Host "* Checked out tag $TagVersion"
