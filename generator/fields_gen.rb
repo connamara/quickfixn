@@ -16,7 +16,7 @@ class FieldGen
       when 'INT', 'NUMINGROUP', 'LENGTH'
         {:cs_class => 'IntField', :base_type=>'int'}
       when 'SEQNUM'
-        {:cs_class => 'ULongField', :base_type=>'ulong'}
+        {:cs_class => 'SeqNumFieldType', :base_type=>'SeqNumType'}
       when 'AMT', 'PERCENTAGE', 'PRICE', 'QTY', 'PRICEOFFSET', 'FLOAT'
         {:cs_class => 'DecimalField', :base_type=>'Decimal'}
       when 'UTCTIMESTAMP', 'TZTIMESTAMP', 'TIME'
