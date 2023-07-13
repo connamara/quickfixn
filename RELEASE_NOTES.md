@@ -19,6 +19,8 @@ it technically violates semantic versioning.
 * #746 - remove some unused public `FIXnn_LAST_FIELD` constants; corrected FIX44 DD `UNKOWN_ID` typo (gbirchmeier)
 * #756 - privatize DDField property setters,
          change various Get/SetNextSenderMsgSeqNum & Get/SetNextTargetMsgSeqNum functions to properties (gbirchmeier)
+* #760 - change seqnums to UInt64 to support Continuous Markets (mgatny)  
+         (ATTENTION! Note the INT->SEQNUM changes in FIX40/41/42.xml DDs!  You may need to update your DDs!)
 
 **Non-breaking changes**
 * (minor) #745 - JSON-to-FIX (mgatny)
