@@ -164,3 +164,8 @@ FakesAssemblies/
 
 # JetBrains Rider
 .idea
+
+# stuff from the gh-pages branch I guess
+.sass-cache/
+_site/
+
