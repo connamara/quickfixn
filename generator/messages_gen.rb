@@ -3,7 +3,7 @@
 class MessageGen
   def self.generate messages, dir, fixver
     destdir = File.join(dir, fixver)
-    Dir.mkdir(destdir) unless File.exists? destdir
+    Dir.mkdir(destdir) unless File.exist? destdir
 
     basemsgstr = gen_basemsg(fixver,destdir)
     basemsg_path = File.join(destdir, "Message.cs")

@@ -113,6 +113,45 @@ namespace UnitTests
             Assert.AreEqual(2, _store.NextTargetMsgSeqNum);
         }
 
+        /// Using UInt64 seqnums per FIX Trading Community Continuous Markets Working Group recommendations.
+        [Test]
+        public void TestSeqNumLimitsForContinuousMarkets()
+        {
+            // Given the next seqnums are UInt64.MaxValue - 1
+            _store.NextSenderMsgSeqNum = System.UInt64.MaxValue - 1;
+            _store.NextTargetMsgSeqNum = _store.NextSenderMsgSeqNum;
+
+            // When the next seqnums are incremented
+            _store.IncrNextSenderMsgSeqNum();
+            _store.IncrNextTargetMsgSeqNum();
+
+            // Then the next seqnums should be UInt64.MaxValue
+            Assert.AreEqual(System.UInt64.MaxValue, _store.NextSenderMsgSeqNum);
+            Assert.AreEqual(System.UInt64.MaxValue, _store.NextTargetMsgSeqNum);
+
+            // When the store is reloaded from files
+            RebuildStore();
+
+            // Then the next seqnums should still be UInt64.MaxValue
+            Assert.AreEqual(System.UInt64.MaxValue, _store.NextSenderMsgSeqNum);
+            Assert.AreEqual(System.UInt64.MaxValue, _store.NextTargetMsgSeqNum);
+
+            // When the next seqnums are incremented again
+            _store.IncrNextSenderMsgSeqNum();
+            _store.IncrNextTargetMsgSeqNum();
+
+            // Then the next seqnums should overflow to zero
+            Assert.AreEqual(0, _store.NextSenderMsgSeqNum);
+            Assert.AreEqual(0, _store.NextTargetMsgSeqNum);
+            
+            // When the store is reloaded from files
+            RebuildStore();
+
+            // Then the next seqnums should still be zero
+            Assert.AreEqual(0, _store.NextSenderMsgSeqNum);
+            Assert.AreEqual(0, _store.NextTargetMsgSeqNum);
+        }
+
         [Test]
         public void ResetTest()
         {

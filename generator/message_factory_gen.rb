@@ -1,7 +1,7 @@
 class MessageFactoryGen
   def self.generate(messages, dir, fixver)
     destdir = File.join(dir,fixver)
-    Dir.mkdir(destdir) unless File.exists?(destdir)
+    Dir.mkdir(destdir) unless File.exist?(destdir)
     file_path = File.join(destdir,"MessageFactory.cs")
     puts 'generate ' + file_path
 

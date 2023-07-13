@@ -108,13 +108,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// BeginSeqNo Field
     /// </summary>/
-    public sealed class BeginSeqNo : IntField
+    public sealed class BeginSeqNo : SeqNumFieldType
     {
         public const int TAG = 7;
 
         public BeginSeqNo()
             :base(Tags.BeginSeqNo) {}
-        public BeginSeqNo(int val)
+        public BeginSeqNo(SeqNumType val)
             :base(Tags.BeginSeqNo, val) {}
 
     }
@@ -257,13 +257,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// EndSeqNo Field
     /// </summary>/
-    public sealed class EndSeqNo : IntField
+    public sealed class EndSeqNo : SeqNumFieldType
     {
         public const int TAG = 16;
 
         public EndSeqNo()
             :base(Tags.EndSeqNo) {}
-        public EndSeqNo(int val)
+        public EndSeqNo(SeqNumType val)
             :base(Tags.EndSeqNo, val) {}
 
     }
@@ -637,13 +637,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// MsgSeqNum Field
     /// </summary>/
-    public sealed class MsgSeqNum : IntField
+    public sealed class MsgSeqNum : SeqNumFieldType
     {
         public const int TAG = 34;
 
         public MsgSeqNum()
             :base(Tags.MsgSeqNum) {}
-        public MsgSeqNum(int val)
+        public MsgSeqNum(SeqNumType val)
             :base(Tags.MsgSeqNum, val) {}
 
     }
@@ -664,16 +664,112 @@ namespace QuickFix.Fields
 
         // Field Enumerations
         public const string HEARTBEAT = "0";
+        public const string TEST_REQUEST = "1";
+        public const string RESEND_REQUEST = "2";
+        public const string REJECT = "3";
+        public const string SEQUENCE_RESET = "4";
+        public const string LOGOUT = "5";
+        public const string INDICATION_OF_INTEREST = "6";
+        public const string ADVERTISEMENT = "7";
+        public const string EXECUTION_REPORT = "8";
+        public const string ORDER_CANCEL_REJECT = "9";
+        public const string LOGON = "A";
+        public const string NEWS = "B";
+        public const string EMAIL = "C";
+        public const string ORDER_SINGLE = "D";
+        public const string ORDER_LIST = "E";
+        public const string ORDER_CANCEL_REQUEST = "F";
+        public const string ORDER_CANCEL_REPLACE_REQUEST = "G";
+        public const string ORDER_STATUS_REQUEST = "H";
+        public const string ALLOCATION_INSTRUCTION = "J";
+        public const string LIST_CANCEL_REQUEST = "K";
+        public const string LIST_EXECUTE = "L";
+        public const string LIST_STATUS_REQUEST = "M";
+        public const string LIST_STATUS = "N";
+        public const string ALLOCATION_INSTRUCTION_ACK = "P";
+        public const string DONT_KNOW_TRADE = "Q";
+        public const string QUOTE_REQUEST = "R";
+        public const string QUOTE = "S";
+        public const string SETTLEMENT_INSTRUCTIONS = "T";
+        public const string MARKET_DATA_REQUEST = "V";
+        public const string MARKET_DATA_SNAPSHOT_FULL_REFRESH = "W";
+        public const string MARKET_DATA_INCREMENTAL_REFRESH = "X";
+        public const string MARKET_DATA_REQUEST_REJECT = "Y";
+        public const string QUOTE_CANCEL = "Z";
+        public const string QUOTE_STATUS_REQUEST = "a";
+        public const string MASS_QUOTE_ACKNOWLEDGEMENT = "b";
+        public const string SECURITY_DEFINITION_REQUEST = "c";
+        public const string SECURITY_DEFINITION = "d";
+        public const string SECURITY_STATUS_REQUEST = "e";
+        public const string SECURITY_STATUS = "f";
+        public const string TRADING_SESSION_STATUS_REQUEST = "g";
+        public const string TRADING_SESSION_STATUS = "h";
+        public const string MASS_QUOTE = "i";
+        public const string BUSINESS_MESSAGE_REJECT = "j";
+        public const string BID_REQUEST = "k";
+        public const string BID_RESPONSE = "l";
+        public const string LIST_STRIKE_PRICE = "m";
+        public const string XML_MESSAGE = "n";
+        public const string REGISTRATION_INSTRUCTIONS = "o";
+        public const string REGISTRATION_INSTRUCTIONS_RESPONSE = "p";
+        public const string ORDER_MASS_CANCEL_REQUEST = "q";
+        public const string ORDER_MASS_CANCEL_REPORT = "r";
+        public const string NEW_ORDER_CROSS = "s";
+        public const string CROSS_ORDER_CANCEL_REPLACE_REQUEST = "t";
+        public const string CROSS_ORDER_CANCEL_REQUEST = "u";
+        public const string SECURITY_TYPE_REQUEST = "v";
+        public const string SECURITY_TYPES = "w";
+        public const string SECURITY_LIST_REQUEST = "x";
+        public const string SECURITY_LIST = "y";
+        public const string DERIVATIVE_SECURITY_LIST_REQUEST = "z";
+        public const string DERIVATIVE_SECURITY_LIST = "AA";
+        public const string NEW_ORDER_MULTILEG = "AB";
+        public const string MULTILEG_ORDER_CANCEL_REPLACE = "AC";
+        public const string TRADE_CAPTURE_REPORT_REQUEST = "AD";
+        public const string TRADE_CAPTURE_REPORT = "AE";
+        public const string ORDER_MASS_STATUS_REQUEST = "AF";
+        public const string QUOTE_REQUEST_REJECT = "AG";
+        public const string RFQ_REQUEST = "AH";
+        public const string QUOTE_STATUS_REPORT = "AI";
+        public const string QUOTE_RESPONSE = "AJ";
+        public const string CONFIRMATION = "AK";
+        public const string POSITION_MAINTENANCE_REQUEST = "AL";
+        public const string POSITION_MAINTENANCE_REPORT = "AM";
+        public const string REQUEST_FOR_POSITIONS = "AN";
+        public const string REQUEST_FOR_POSITIONS_ACK = "AO";
+        public const string POSITION_REPORT = "AP";
+        public const string TRADE_CAPTURE_REPORT_REQUEST_ACK = "AQ";
+        public const string TRADE_CAPTURE_REPORT_ACK = "AR";
+        public const string ALLOCATION_REPORT = "AS";
+        public const string ALLOCATION_REPORT_ACK = "AT";
+        public const string CONFIRMATION_ACK = "AU";
+        public const string SETTLEMENT_INSTRUCTION_REQUEST = "AV";
+        public const string ASSIGNMENT_REPORT = "AW";
+        public const string COLLATERAL_REQUEST = "AX";
+        public const string COLLATERAL_ASSIGNMENT = "AY";
+        public const string COLLATERAL_RESPONSE = "AZ";
+        public const string COLLATERAL_REPORT = "BA";
+        public const string COLLATERAL_INQUIRY = "BB";
+        public const string NETWORK_STATUS_REQUEST = "BC";
+        public const string NETWORK_STATUS_RESPONSE = "BD";
+        public const string USER_REQUEST = "BE";
+        public const string USER_RESPONSE = "BF";
+        public const string COLLATERAL_INQUIRY_ACK = "BG";
+        public const string CONFIRMATION_REQUEST = "BH";
+        public const string TRADING_SESSION_LIST_REQUEST = "BI";
+        public const string TRADING_SESSION_LIST = "BJ";
+        public const string SECURITY_LIST_UPDATE_REPORT = "BK";
+        public const string ADJUSTED_POSITION_REPORT = "BL";
+        public const string ALLOCATION_INSTRUCTION_ALERT = "BM";
+        public const string EXECUTION_ACKNOWLEDGEMENT = "BN";
+        public const string CONTRARY_INTENTION_REPORT = "BO";
+        public const string SECURITY_DEFINITION_UPDATE_REPORT = "BP";
         public const string TESTREQUEST = "1";
         public const string RESENDREQUEST = "2";
-        public const string REJECT = "3";
         public const string SEQUENCERESET = "4";
-        public const string LOGOUT = "5";
         public const string IOI = "6";
-        public const string ADVERTISEMENT = "7";
         public const string EXECUTIONREPORT = "8";
         public const string ORDERCANCELREJECT = "9";
-        public const string LOGON = "A";
         public const string DERIVATIVESECURITYLIST = "AA";
         public const string NEWORDERMULTILEG = "AB";
         public const string MULTILEGORDERCANCELREPLACE = "AC";
@@ -684,7 +780,6 @@ namespace QuickFix.Fields
         public const string RFQREQUEST = "AH";
         public const string QUOTESTATUSREPORT = "AI";
         public const string QUOTERESPONSE = "AJ";
-        public const string CONFIRMATION = "AK";
         public const string POSITIONMAINTENANCEREQUEST = "AL";
         public const string POSITIONMAINTENANCEREPORT = "AM";
         public const string REQUESTFORPOSITIONS = "AN";
@@ -694,13 +789,11 @@ namespace QuickFix.Fields
         public const string TRADECAPTUREREPORTACK = "AR";
         public const string ALLOCATIONREPORT = "AS";
         public const string ALLOCATIONREPORTACK = "AT";
-        public const string CONFIRMATION_ACK = "AU";
         public const string SETTLEMENTINSTRUCTIONREQUEST = "AV";
         public const string ASSIGNMENTREPORT = "AW";
         public const string COLLATERALREQUEST = "AX";
         public const string COLLATERALASSIGNMENT = "AY";
         public const string COLLATERALRESPONSE = "AZ";
-        public const string NEWS = "B";
         public const string COLLATERALREPORT = "BA";
         public const string COLLATERALINQUIRY = "BB";
         public const string NETWORKCOUNTERPARTYSYSTEMSTATUSREQUEST = "BC";
@@ -727,7 +820,6 @@ namespace QuickFix.Fields
         public const string APPLICATIONMESSAGEREQUESTACK = "BX";
         public const string APPLICATIONMESSAGEREPORT = "BY";
         public const string ORDERMASSACTIONREPORT = "BZ";
-        public const string EMAIL = "C";
         public const string ORDERMASSACTIONREQUEST = "CA";
         public const string USERNOTIFICATION = "CB";
         public const string STREAMASSIGNMENTREQUEST = "CC";
@@ -748,7 +840,6 @@ namespace QuickFix.Fields
         public const string ALLOCATIONINSTRUCTIONACK = "P";
         public const string DONTKNOWTRADEDK = "Q";
         public const string QUOTEREQUEST = "R";
-        public const string QUOTE = "S";
         public const string SETTLEMENTINSTRUCTIONS = "T";
         public const string MARKETDATAREQUEST = "V";
         public const string MARKETDATASNAPSHOTFULLREFRESH = "W";
@@ -781,105 +872,14 @@ namespace QuickFix.Fields
         public const string SECURITYLISTREQUEST = "x";
         public const string SECURITYLIST = "y";
         public const string DERIVATIVESECURITYLISTREQUEST = "z";
-        public const string TEST_REQUEST = "1";
-        public const string RESEND_REQUEST = "2";
-        public const string SEQUENCE_RESET = "4";
-        public const string INDICATION_OF_INTEREST = "6";
-        public const string EXECUTION_REPORT = "8";
-        public const string ORDER_CANCEL_REJECT = "9";
-        public const string QUOTE_STATUS_REQUEST = "a";
-        public const string DERIVATIVE_SECURITY_LIST = "AA";
         public const string NEW_ORDER_AB = "AB";
-        public const string MULTILEG_ORDER_CANCEL_REPLACE = "AC";
-        public const string TRADE_CAPTURE_REPORT_REQUEST = "AD";
-        public const string TRADE_CAPTURE_REPORT = "AE";
-        public const string ORDER_MASS_STATUS_REQUEST = "AF";
-        public const string QUOTE_REQUEST_REJECT = "AG";
-        public const string RFQ_REQUEST = "AH";
-        public const string QUOTE_STATUS_REPORT = "AI";
-        public const string QUOTE_RESPONSE = "AJ";
-        public const string POSITION_MAINTENANCE_REQUEST = "AL";
-        public const string POSITION_MAINTENANCE_REPORT = "AM";
-        public const string REQUEST_FOR_POSITIONS = "AN";
-        public const string REQUEST_FOR_POSITIONS_ACK = "AO";
-        public const string POSITION_REPORT = "AP";
-        public const string TRADE_CAPTURE_REPORT_REQUEST_ACK = "AQ";
-        public const string TRADE_CAPTURE_REPORT_ACK = "AR";
-        public const string ALLOCATION_REPORT = "AS";
-        public const string ALLOCATION_REPORT_ACK = "AT";
-        public const string SETTLEMENT_INSTRUCTION_REQUEST = "AV";
-        public const string ASSIGNMENT_REPORT = "AW";
-        public const string COLLATERAL_REQUEST = "AX";
-        public const string COLLATERAL_ASSIGNMENT = "AY";
-        public const string COLLATERAL_RESPONSE = "AZ";
-        public const string MASS_QUOTE_ACKNOWLEDGEMENT = "b";
-        public const string COLLATERAL_REPORT = "BA";
-        public const string COLLATERAL_INQUIRY = "BB";
         public const string NETWORK_COUNTERPARTY_SYSTEM_STATUS_REQUEST = "BC";
         public const string NETWORK_COUNTERPARTY_SYSTEM_STATUS_RESPONSE = "BD";
-        public const string USER_REQUEST = "BE";
-        public const string USER_RESPONSE = "BF";
-        public const string COLLATERAL_INQUIRY_ACK = "BG";
-        public const string CONFIRMATION_REQUEST = "BH";
-        public const string SECURITY_DEFINITION_REQUEST = "c";
-        public const string SECURITY_DEFINITION = "d";
         public const string NEW_ORDER_D = "D";
-        public const string SECURITY_STATUS_REQUEST = "e";
         public const string NEW_ORDER_E = "E";
-        public const string ORDER_CANCEL_REQUEST = "F";
-        public const string SECURITY_STATUS = "f";
-        public const string ORDER_CANCEL_REPLACE_REQUEST = "G";
-        public const string TRADING_SESSION_STATUS_REQUEST = "g";
-        public const string ORDER_STATUS_REQUEST = "H";
-        public const string TRADING_SESSION_STATUS = "h";
-        public const string MASS_QUOTE = "i";
-        public const string BUSINESS_MESSAGE_REJECT = "j";
-        public const string ALLOCATION_INSTRUCTION = "J";
-        public const string BID_REQUEST = "k";
-        public const string LIST_CANCEL_REQUEST = "K";
-        public const string BID_RESPONSE = "l";
-        public const string LIST_EXECUTE = "L";
-        public const string LIST_STRIKE_PRICE = "m";
-        public const string LIST_STATUS_REQUEST = "M";
-        public const string XML_MESSAGE = "n";
-        public const string LIST_STATUS = "N";
-        public const string REGISTRATION_INSTRUCTIONS = "o";
-        public const string REGISTRATION_INSTRUCTIONS_RESPONSE = "p";
-        public const string ALLOCATION_INSTRUCTION_ACK = "P";
-        public const string ORDER_MASS_CANCEL_REQUEST = "q";
-        public const string DONT_KNOW_TRADE = "Q";
-        public const string QUOTE_REQUEST = "R";
-        public const string ORDER_MASS_CANCEL_REPORT = "r";
         public const string NEW_ORDER_s = "s";
-        public const string SETTLEMENT_INSTRUCTIONS = "T";
-        public const string CROSS_ORDER_CANCEL_REPLACE_REQUEST = "t";
-        public const string CROSS_ORDER_CANCEL_REQUEST = "u";
-        public const string MARKET_DATA_REQUEST = "V";
-        public const string SECURITY_TYPE_REQUEST = "v";
-        public const string SECURITY_TYPES = "w";
         public const string MARKET_DATA_W = "W";
-        public const string SECURITY_LIST_REQUEST = "x";
         public const string MARKET_DATA_X = "X";
-        public const string MARKET_DATA_REQUEST_REJECT = "Y";
-        public const string SECURITY_LIST = "y";
-        public const string QUOTE_CANCEL = "Z";
-        public const string DERIVATIVE_SECURITY_LIST_REQUEST = "z";
-        public const string CONTRARY_INTENTION_REPORT = "BO";
-        public const string SECURITY_DEFINITION_UPDATE_REPORT = "BP";
-        public const string SECURITY_LIST_UPDATE_REPORT = "BK";
-        public const string ADJUSTED_POSITION_REPORT = "BL";
-        public const string ALLOCATION_INSTRUCTION_ALERT = "BM";
-        public const string EXECUTION_ACKNOWLEDGEMENT = "BN";
-        public const string TRADING_SESSION_LIST = "BJ";
-        public const string TRADING_SESSION_LIST_REQUEST = "BI";
-        public const string ORDER_SINGLE = "D";
-        public const string ORDER_LIST = "E";
-        public const string MARKET_DATA_SNAPSHOT_FULL_REFRESH = "W";
-        public const string MARKET_DATA_INCREMENTAL_REFRESH = "X";
-        public const string NEW_ORDER_CROSS = "s";
-        public const string NEW_ORDER_MULTILEG = "AB";
-        public const string NETWORK_STATUS_REQUEST = "BC";
-        public const string NETWORK_STATUS_RESPONSE = "BD";
         public const string ORDER_CANCEL = "G";
         public const string ALLOCATION = "J";
         public const string ALLOCATION_ACK = "P";
@@ -892,13 +892,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// NewSeqNo Field
     /// </summary>/
-    public sealed class NewSeqNo : IntField
+    public sealed class NewSeqNo : SeqNumFieldType
     {
         public const int TAG = 36;
 
         public NewSeqNo()
             :base(Tags.NewSeqNo) {}
-        public NewSeqNo(int val)
+        public NewSeqNo(SeqNumType val)
             :base(Tags.NewSeqNo, val) {}
 
     }
@@ -1083,13 +1083,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// RefSeqNum Field
     /// </summary>/
-    public sealed class RefSeqNum : IntField
+    public sealed class RefSeqNum : SeqNumFieldType
     {
         public const int TAG = 45;
 
         public RefSeqNum()
             :base(Tags.RefSeqNum) {}
-        public RefSeqNum(int val)
+        public RefSeqNum(SeqNumType val)
             :base(Tags.RefSeqNum, val) {}
 
     }
@@ -2067,19 +2067,19 @@ namespace QuickFix.Fields
 
 
         // Field Enumerations
-        public const int NONE = 0;
-        public const int PKCS_1 = 1;
-        public const int DES = 2;
-        public const int PKCS_3 = 3;
-        public const int PGP_4 = 4;
-        public const int PGP_5 = 5;
-        public const int PEM = 6;
         public const int NONE_OTHER = 0;
         public const int PKCS = 1;
+        public const int DES = 2;
         public const int PKCS_DES = 3;
         public const int PGP_DES = 4;
         public const int PGP_DES_MD5 = 5;
         public const int PEM_DES_MD5 = 6;
+        public const int NONE = 0;
+        public const int PKCS_1 = 1;
+        public const int PKCS_3 = 3;
+        public const int PGP_4 = 4;
+        public const int PGP_5 = 5;
+        public const int PEM = 6;
         public const int PKCS_PROPRIETARY = 1;
         public const int PKCSDES = 3;
         public const int PGPDES = 4;
@@ -6454,13 +6454,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// LastMsgSeqNumProcessed Field
     /// </summary>/
-    public sealed class LastMsgSeqNumProcessed : IntField
+    public sealed class LastMsgSeqNumProcessed : SeqNumFieldType
     {
         public const int TAG = 369;
 
         public LastMsgSeqNumProcessed()
             :base(Tags.LastMsgSeqNumProcessed) {}
-        public LastMsgSeqNumProcessed(int val)
+        public LastMsgSeqNumProcessed(SeqNumType val)
             :base(Tags.LastMsgSeqNumProcessed, val) {}
 
     }
@@ -12221,13 +12221,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// HopRefID Field
     /// </summary>/
-    public sealed class HopRefID : IntField
+    public sealed class HopRefID : SeqNumFieldType
     {
         public const int TAG = 630;
 
         public HopRefID()
             :base(Tags.HopRefID) {}
-        public HopRefID(int val)
+        public HopRefID(SeqNumType val)
             :base(Tags.HopRefID, val) {}
 
     }
@@ -15184,13 +15184,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// NextExpectedMsgSeqNum Field
     /// </summary>/
-    public sealed class NextExpectedMsgSeqNum : IntField
+    public sealed class NextExpectedMsgSeqNum : SeqNumFieldType
     {
         public const int TAG = 789;
 
         public NextExpectedMsgSeqNum()
             :base(Tags.NextExpectedMsgSeqNum) {}
-        public NextExpectedMsgSeqNum(int val)
+        public NextExpectedMsgSeqNum(SeqNumType val)
             :base(Tags.NextExpectedMsgSeqNum, val) {}
 
     }
@@ -21987,13 +21987,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// ApplSeqNum Field
     /// </summary>/
-    public sealed class ApplSeqNum : IntField
+    public sealed class ApplSeqNum : SeqNumFieldType
     {
         public const int TAG = 1181;
 
         public ApplSeqNum()
             :base(Tags.ApplSeqNum) {}
-        public ApplSeqNum(int val)
+        public ApplSeqNum(SeqNumType val)
             :base(Tags.ApplSeqNum, val) {}
 
     }
@@ -22002,13 +22002,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// ApplBegSeqNum Field
     /// </summary>/
-    public sealed class ApplBegSeqNum : IntField
+    public sealed class ApplBegSeqNum : SeqNumFieldType
     {
         public const int TAG = 1182;
 
         public ApplBegSeqNum()
             :base(Tags.ApplBegSeqNum) {}
-        public ApplBegSeqNum(int val)
+        public ApplBegSeqNum(SeqNumType val)
             :base(Tags.ApplBegSeqNum, val) {}
 
     }
@@ -22017,13 +22017,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// ApplEndSeqNum Field
     /// </summary>/
-    public sealed class ApplEndSeqNum : IntField
+    public sealed class ApplEndSeqNum : SeqNumFieldType
     {
         public const int TAG = 1183;
 
         public ApplEndSeqNum()
             :base(Tags.ApplEndSeqNum) {}
-        public ApplEndSeqNum(int val)
+        public ApplEndSeqNum(SeqNumType val)
             :base(Tags.ApplEndSeqNum, val) {}
 
     }
@@ -24568,13 +24568,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// ApplLastSeqNum Field
     /// </summary>/
-    public sealed class ApplLastSeqNum : IntField
+    public sealed class ApplLastSeqNum : SeqNumFieldType
     {
         public const int TAG = 1350;
 
         public ApplLastSeqNum()
             :base(Tags.ApplLastSeqNum) {}
-        public ApplLastSeqNum(int val)
+        public ApplLastSeqNum(SeqNumType val)
             :base(Tags.ApplLastSeqNum, val) {}
 
     }
@@ -24678,13 +24678,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// RefApplLastSeqNum Field
     /// </summary>/
-    public sealed class RefApplLastSeqNum : IntField
+    public sealed class RefApplLastSeqNum : SeqNumFieldType
     {
         public const int TAG = 1357;
 
         public RefApplLastSeqNum()
             :base(Tags.RefApplLastSeqNum) {}
-        public RefApplLastSeqNum(int val)
+        public RefApplLastSeqNum(SeqNumType val)
             :base(Tags.RefApplLastSeqNum, val) {}
 
     }
@@ -25390,13 +25390,13 @@ namespace QuickFix.Fields
     /// <summary>
     /// ApplNewSeqNum Field
     /// </summary>/
-    public sealed class ApplNewSeqNum : IntField
+    public sealed class ApplNewSeqNum : SeqNumFieldType
     {
         public const int TAG = 1399;
 
         public ApplNewSeqNum()
             :base(Tags.ApplNewSeqNum) {}
-        public ApplNewSeqNum(int val)
+        public ApplNewSeqNum(SeqNumType val)
             :base(Tags.ApplNewSeqNum, val) {}
 
     }

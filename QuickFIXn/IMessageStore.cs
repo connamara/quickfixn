@@ -16,7 +16,7 @@ namespace QuickFix
         /// <param name="startSeqNum">the starting message sequence number</param>
         /// <param name="endSeqNum">the ending message sequence number</param>
         /// <param name="messages">the retrieved messages (out parameter)</param>
-        void Get(int startSeqNum, int endSeqNum, List<string> messages);
+        void Get(SeqNumType startSeqNum, SeqNumType endSeqNum, List<string> messages);
 
         /// <summary>
         /// Adds a raw fix message to the store with the give sequence number
@@ -24,10 +24,10 @@ namespace QuickFix
         /// <param name="msgSeqNum">the sequence number</param>
         /// <param name="msg">the raw FIX message string</param>
         /// <returns>true if successful, false otherwise</returns>
-        bool Set(int msgSeqNum, string msg);
+        bool Set(SeqNumType msgSeqNum, string msg);
 
-        int NextSenderMsgSeqNum { get; set; }
-        int NextTargetMsgSeqNum { get; set; }
+        SeqNumType NextSenderMsgSeqNum { get; set; }
+        SeqNumType NextTargetMsgSeqNum { get; set; }
 
         void IncrNextSenderMsgSeqNum();
         void IncrNextTargetMsgSeqNum();

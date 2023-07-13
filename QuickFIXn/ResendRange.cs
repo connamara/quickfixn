@@ -2,15 +2,17 @@
 {
     public class ResendRange
     {
-        public int BeginSeqNo { get; set; }
-        public int EndSeqNo { get; set; }
-        public int ChunkEndSeqNo { get; set; }
+        public const SeqNumType NOT_SET = SeqNumType.MaxValue;
+
+        public SeqNumType BeginSeqNo { get; set; }
+        public SeqNumType EndSeqNo { get; set; }
+        public SeqNumType ChunkEndSeqNo { get; set; }
 
         public ResendRange()
         {
             BeginSeqNo = 0;
             EndSeqNo = 0;
-            ChunkEndSeqNo = -1;
+            ChunkEndSeqNo = ResendRange.NOT_SET;
         }
 
         public override string ToString()
