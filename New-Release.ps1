@@ -27,9 +27,9 @@ Write-Host '--== QuickFIX/n Package Release Script ==--' -ForegroundColor Cyan
 Write-Host "`nTag Version: $TagVersion`n"
 
 if ($UseWslRuby -and $UseWslRuby.IsPresent) {
-	wsl ruby scripts/update_assembly_version.rb "v$TagVersion" QuickFIXn/QuickFix.csproj Messages/FIX40/QuickFix.FIX40.csproj Messages/FIX41/QuickFix.FIX41.csproj Messages/FIX42/QuickFix.FIX42.csproj Messages/FIX43/QuickFix.FIX43.csproj Messages/FIX44/QuickFix.FIX44.csproj Messages/FIX50/QuickFix.FIX50.csproj Messages/FIX50SP1/QuickFix.FIX50SP1.csproj Messages/FIX50SP2/QuickFix.FIX50SP2.csproj
+	wsl ruby scripts/update_assembly_version.rb "$TagVersion" QuickFIXn/QuickFix.csproj Messages/FIX40/QuickFix.FIX40.csproj Messages/FIX41/QuickFix.FIX41.csproj Messages/FIX42/QuickFix.FIX42.csproj Messages/FIX43/QuickFix.FIX43.csproj Messages/FIX44/QuickFix.FIX44.csproj Messages/FIX50/QuickFix.FIX50.csproj Messages/FIX50SP1/QuickFix.FIX50SP1.csproj Messages/FIX50SP2/QuickFix.FIX50SP2.csproj
 } else {
-	ruby scripts\update_assembly_version.rb "v$TagVersion" QuickFIXn\QuickFix.csproj Messages\FIX40\QuickFix.FIX40.csproj Messages\FIX41\QuickFix.FIX41.csproj Messages\FIX42\QuickFix.FIX42.csproj Messages\FIX43\QuickFix.FIX43.csproj Messages\FIX44\QuickFix.FIX44.csproj Messages\FIX50\QuickFix.FIX50.csproj Messages\FIX50SP1\QuickFix.FIX50SP1.csproj Messages\FIX50SP2\QuickFix.FIX50SP2.csproj
+	ruby scripts\update_assembly_version.rb "$TagVersion" QuickFIXn\QuickFix.csproj Messages\FIX40\QuickFix.FIX40.csproj Messages\FIX41\QuickFix.FIX41.csproj Messages\FIX42\QuickFix.FIX42.csproj Messages\FIX43\QuickFix.FIX43.csproj Messages\FIX44\QuickFix.FIX44.csproj Messages\FIX50\QuickFix.FIX50.csproj Messages\FIX50SP1\QuickFix.FIX50SP1.csproj Messages\FIX50SP2\QuickFix.FIX50SP2.csproj
 }
 
 $ExitCode = $LASTEXITCODE
@@ -49,7 +49,7 @@ git add Messages\FIX44\QuickFix.FIX44.csproj
 git add Messages\FIX50\QuickFix.FIX50.csproj
 git add Messages\FIX50SP1\QuickFix.FIX50SP1.csproj
 git add Messages\FIX50SP2\QuickFix.FIX50SP2.csproj
-git commit -m "version number for version %TAG_VERSION%"
+git commit -m "version number for version $TagVersion"
 Write-Host '* Version number committed.'
 
 git tag -a $TagVersion -m 'Release version $TagVersion'

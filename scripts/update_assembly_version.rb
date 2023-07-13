@@ -16,7 +16,7 @@ if ARGV[0].nil? or ARGV[1].nil?
 end
 
 if not is_correct_pattern? ARGV[0]
-  puts "Invalid version string."
+  puts "Invalid version string: #{ARGV[0]}."
   print_usage_and_die
 end
 
