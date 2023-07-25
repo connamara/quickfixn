@@ -882,7 +882,11 @@ namespace QuickFix
             if (sequenceReset.IsSetField(Fields.Tags.GapFillFlag))
                 isGapFill = sequenceReset.GetBoolean(Fields.Tags.GapFillFlag);
 
-            if (!Verify(sequenceReset, isGapFill, isGapFill))
+            bool possDupFlag = false;
+            if (sequenceReset.Header.IsSetField(Fields.Tags.PossDupFlag))
+                possDupFlag = sequenceReset.Header.GetBoolean(Fields.Tags.PossDupFlag);
+
+            if (!Verify(sequenceReset, isGapFill, isGapFill && !possDupFlag))
                 return;
 
             if (sequenceReset.IsSetField(Fields.Tags.NewSeqNo))
