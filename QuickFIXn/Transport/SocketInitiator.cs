@@ -80,25 +80,27 @@ namespace QuickFix.Transport
                     exceptionEvent = $"Unexpected exception: {ex}";
                 }
 
-                if (exceptionEvent != null)
+                if (exceptionEvent == null)
+                    return;
+                
+                if (t.Session.Disposed)
                 {
-                    if (t.Session.Disposed)
+                    // The session is disposed, and so is its log. We cannot use it to log the event,
+                    // so we resort to storing it in a local file.
+                    try
                     {
-                        // The session is disposed, and so is its log. We cannot use it to log the event,
-                        // so we resort to storing it in a local file.
-                        try
-                        {
-                            File.AppendAllText("DisposedSessionEvents.log", $"{System.DateTime.Now:G}: {exceptionEvent}{Environment.NewLine}");
-                        }
-                        catch (IOException)
-                        {
-                            // Prevent IO exceptions from crashing the application
-                        }
+                        var path = Path.Combine(t.Initiator.GetLogPath(), "DisposedSessionEvents.log");
+                        
+                        File.AppendAllText(path, $"{System.DateTime.Now:G}: {exceptionEvent}{Environment.NewLine}");
                     }
-                    else
+                    catch (IOException)
                     {
-                        t.Session.Log.OnEvent(exceptionEvent);
+                        // Prevent IO exceptions from crashing the application
                     }
+                }
+                else
+                {
+                    t.Session.Log.OnEvent(exceptionEvent);
                 }
             }
             finally

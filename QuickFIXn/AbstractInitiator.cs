@@ -340,6 +340,16 @@ namespace QuickFix
                 }
             }
         }
+        
+        protected string GetLogPath()
+        {
+            lock (sync_)
+            {
+                return _settings.Get().Has(SessionSettings.FILE_LOG_PATH) 
+                    ? _settings.Get().GetString(SessionSettings.FILE_LOG_PATH) 
+                    : ".";
+            }
+        }
 
         protected bool IsPending(SessionID sessionID)
         {
