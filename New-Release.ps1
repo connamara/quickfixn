@@ -27,9 +27,9 @@ Write-Host '--== QuickFIX/n Package Release Script ==--' -ForegroundColor Cyan
 Write-Host "`nTag Version: $TagVersion`n"
 
 if ($UseWslRuby -and $UseWslRuby.IsPresent) {
-	wsl ruby scripts/update_assembly_version.rb "$TagVersion" QuickFIXn/QuickFix.csproj Messages/FIX40/QuickFix.FIX40.csproj Messages/FIX41/QuickFix.FIX41.csproj Messages/FIX42/QuickFix.FIX42.csproj Messages/FIX43/QuickFix.FIX43.csproj Messages/FIX44/QuickFix.FIX44.csproj Messages/FIX50/QuickFix.FIX50.csproj Messages/FIX50SP1/QuickFix.FIX50SP1.csproj Messages/FIX50SP2/QuickFix.FIX50SP2.csproj
+	wsl ruby scripts/update_assembly_version.rb "$TagVersion" QuickFIXn/QuickFix.csproj Messages/FIX40/QuickFix.FIX40.csproj Messages/FIX41/QuickFix.FIX41.csproj Messages/FIX42/QuickFix.FIX42.csproj Messages/FIX43/QuickFix.FIX43.csproj Messages/FIX44/QuickFix.FIX44.csproj Messages/FIX50/QuickFix.FIX50.csproj Messages/FIX50SP1/QuickFix.FIX50SP1.csproj Messages/FIX50SP2/QuickFix.FIX50SP2.csproj Messages/FIXT11/QuickFix.FIXT11.csproj
 } else {
-	ruby scripts\update_assembly_version.rb "$TagVersion" QuickFIXn\QuickFix.csproj Messages\FIX40\QuickFix.FIX40.csproj Messages\FIX41\QuickFix.FIX41.csproj Messages\FIX42\QuickFix.FIX42.csproj Messages\FIX43\QuickFix.FIX43.csproj Messages\FIX44\QuickFix.FIX44.csproj Messages\FIX50\QuickFix.FIX50.csproj Messages\FIX50SP1\QuickFix.FIX50SP1.csproj Messages\FIX50SP2\QuickFix.FIX50SP2.csproj
+	ruby scripts\update_assembly_version.rb "$TagVersion" QuickFIXn\QuickFix.csproj Messages\FIX40\QuickFix.FIX40.csproj Messages\FIX41\QuickFix.FIX41.csproj Messages\FIX42\QuickFix.FIX42.csproj Messages\FIX43\QuickFix.FIX43.csproj Messages\FIX44\QuickFix.FIX44.csproj Messages\FIX50\QuickFix.FIX50.csproj Messages\FIX50SP1\QuickFix.FIX50SP1.csproj Messages\FIX50SP2\QuickFix.FIX50SP2.csproj Messages\FIXT11\QuickFix.FIXT11.csproj
 }
 
 $ExitCode = $LASTEXITCODE
@@ -41,6 +41,7 @@ if ($ExitCode -eq 0) {
 }
 
 git add QuickFIXn\QuickFix.csproj
+git add Messages\FIXT11\QuickFix.FIXT11.csproj
 git add Messages\FIX40\QuickFix.FIX40.csproj
 git add Messages\FIX41\QuickFix.FIX41.csproj
 git add Messages\FIX42\QuickFix.FIX42.csproj
@@ -118,6 +119,7 @@ if ($BuildTarget -ieq 'pack' -and $PushNuGetPackages -and $PushNuGetPackages.IsP
 
 @(
 	'QuickFIXn\bin\Release\net6.0\QuickFix.dll',
+	'Messages\FIXT11\bin\Release\net6.0\QuickFix.FIXT11.dll',
 	'Messages\FIX40\bin\Release\net6.0\QuickFix.FIX40.dll',
 	'Messages\FIX41\bin\Release\net6.0\QuickFix.FIX41.dll',
 	'Messages\FIX42\bin\Release\net6.0\QuickFix.FIX42.dll',
