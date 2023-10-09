@@ -83,3 +83,6 @@ Contributors
 - Robert May
 - Johnathan David
 - Jaroslav Havel
+- Sylvain Rabot
+- Bruno Belmondo
+

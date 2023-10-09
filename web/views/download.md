@@ -6,9 +6,9 @@ weight: 4
 permalink: /download/
 ---
 
-The latest version of QuickFIX/n is v1.10.0
+The latest version of QuickFIX/n is v1.11.0
 
-[Click here to download it](http://quickfixn.s3.amazonaws.com/quickfixn-v1.10.0.zip)
+[Click here to download it](http://quickfixn.s3.amazonaws.com/quickfixn-v1.11.0.zip)
 
 Source Code
 -----------
@@ -29,6 +29,7 @@ These packages are:
   * [QuickFIXn.FIX5.0](https://www.nuget.org/packages/QuickFIXn.FIX5.0/) - FIX5.0 message definitions
   * [QuickFIXn.FIX5.0SP1](https://www.nuget.org/packages/QuickFIXn.FIX5.0SP1/) - FIX5.0SP1 message definitions
   * [QuickFIXn.FIX5.0SP2](https://www.nuget.org/packages/QuickFIXn.FIX5.0SP2/) - FIX5.0SP2 message definitions
+  * [QuickFIXn.FIXT11](https://www.nuget.org/packages/QuickFIXn.FIXT1.1/) - FIXT1.1 message definitions
 
 **These are the only packages published by us.**  
 
@@ -38,6 +39,7 @@ parties (and most of them got the project's name wrong!).
 
 Previous Versions
 -----------------
+  * [v1.10.0](http://quickfixn.s3.amazonaws.com/quickfixn-v1.10.0.zip)
   * [v1.9.0](http://quickfixn.s3.amazonaws.com/quickfixn-v1.9.0.zip)
   * [v1.8.0](http://quickfixn.s3.amazonaws.com/quickfixn-v1.8.0.zip)
   * [v1.7.0](http://quickfixn.s3.amazonaws.com/quickfixn-v1.7.0.zip)
