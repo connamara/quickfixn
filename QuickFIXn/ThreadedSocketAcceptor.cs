@@ -73,19 +73,6 @@ namespace QuickFix
             }
         }
 
-        [Obsolete("Will be removed in a future release.")]
-        public ThreadedSocketAcceptor(SessionFactory sessionFactory, SessionSettings settings)
-        {
-            try
-            {
-                CreateSessions(settings, sessionFactory);
-            }
-            catch (System.Exception e)
-            {
-                throw new ConfigError(e.Message, e);
-            }
-        }
-
         #endregion
 
         #region Private Methods

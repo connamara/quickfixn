@@ -40,11 +40,6 @@ namespace QuickFix
 
         #endregion
 
-        [Obsolete("Use the other constructor")]
-        public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings)
-            : this(serverSocketEndPoint, socketSettings, null)
-        { }
-
         public ThreadedSocketReactor(IPEndPoint serverSocketEndPoint, SocketSettings socketSettings,
             QuickFix.Dictionary sessionDict) : this(serverSocketEndPoint, socketSettings, sessionDict, null)
         {

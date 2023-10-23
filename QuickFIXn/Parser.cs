@@ -3,6 +3,7 @@ using System;
 namespace QuickFix
 {
     /// <summary>
+    /// Parses bytestream into messages
     /// </summary>
     public class Parser
     {
@@ -15,19 +16,6 @@ namespace QuickFix
                 Array.Resize(ref buffer_, (usedBufferLength + bytesAdded));
             Buffer.BlockCopy(data, 0, buffer_, usedBufferLength , bytesAdded);
             usedBufferLength += bytesAdded;
-        }
-
-        [Obsolete("Use the overload without ref instead.")]
-        public void AddToStream(ref byte[] data, int bytesAdded)
-        {
-            AddToStream(data, bytesAdded);
-        }
-
-        [Obsolete("Unused and will be removed in a future version.")]
-        public void AddToStream(string data)
-        {
-            byte[] bytes = CharEncoding.DefaultEncoding.GetBytes(data);
-            AddToStream(bytes, bytes.Length);
         }
 
         public bool ReadFixMessage(out string msg)
@@ -118,12 +106,6 @@ namespace QuickFix
 
             pos = endPos + 1;
             return true;
-        }
-
-        private bool Fail(string what)
-        {
-            Console.WriteLine("Parser failed: " + what);
-            return false;
         }
 
         private int IndexOf(byte[] arrayToSearchThrough, string stringPatternToFind, int offset)

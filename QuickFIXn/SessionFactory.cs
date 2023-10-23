@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using QuickFix.Util;
 
 namespace QuickFix
 {
@@ -144,7 +146,7 @@ namespace QuickFix
             if (settings.Has(SessionSettings.ENABLE_LAST_MSG_SEQ_NUM_PROCESSED))
                 session.EnableLastMsgSeqNumProcessed = settings.GetBool(SessionSettings.ENABLE_LAST_MSG_SEQ_NUM_PROCESSED);
             if (settings.Has(SessionSettings.MAX_MESSAGES_IN_RESEND_REQUEST))
-                session.MaxMessagesInResendRequest = settings.GetInt(SessionSettings.MAX_MESSAGES_IN_RESEND_REQUEST);
+                session.MaxMessagesInResendRequest = settings.GetULong(SessionSettings.MAX_MESSAGES_IN_RESEND_REQUEST);
             if (settings.Has(SessionSettings.SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT))
                 session.SendLogoutBeforeTimeoutDisconnect = settings.GetBool(SessionSettings.SEND_LOGOUT_BEFORE_TIMEOUT_DISCONNECT);
             if (settings.Has(SessionSettings.IGNORE_POSSDUP_RESEND_REQUESTS))
@@ -165,6 +167,8 @@ namespace QuickFix
                 path = settings.GetString(settingsKey);
             else
                 path = beginString.Replace(".", "") + ".xml";
+
+            path = StringUtil.FixSlashes(path);
 
             if (!dictionariesByPath_.TryGetValue(path, out dd))
             {

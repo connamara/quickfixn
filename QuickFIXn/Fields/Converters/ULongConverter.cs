@@ -2,36 +2,36 @@
 namespace QuickFix.Fields.Converters
 {
     /// <summary>
-    ///  convert Int64 to/from string
+    ///  convert UInt64 to/from string
     /// </summary>
-    public static class IntConverter
+    public static class ULongConverter
     {
         /// <summary>
-        /// Converts string to int.
+        /// Converts string to ulong.
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        public static int Convert(string i)
+        public static ulong Convert(string i)
         {
             try
             {
                 AsciiValidator.Validate(i);
-                return System.Convert.ToInt32(i);
+                return System.Convert.ToUInt64(i);
             }
             catch (System.FormatException e)
             {
-                throw new FieldConvertError("Could not convert string to int (" + i + ")", e);
+                throw new FieldConvertError("Could not convert string to ulong (" + i + ")", e);
             }
             catch (System.OverflowException e)
             {
-                throw new FieldConvertError("Could not convert string to int (" + i + ")", e);
+                throw new FieldConvertError("Could not convert string to ulong (" + i + ")", e);
             }
         }
 
         /// <summary>
-        /// convert integer to string
+        /// convert ulong to string
         /// </summary>
-        public static string Convert(System.Int64 i)
+        public static string Convert(System.UInt64 i)
         {
             return i.ToString();
         }

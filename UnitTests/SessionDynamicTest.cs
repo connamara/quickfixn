@@ -13,6 +13,7 @@ using QuickFix.Transport;
 namespace UnitTests
 {
     [TestFixture]
+    [Category("DynamicSession")]
     class SessionDynamicTest
     {
         public class TestApplication : IApplication
@@ -246,6 +247,11 @@ namespace UnitTests
 
         Socket ConnectToEngine(int port)
         {
+            return ConnectToEngine(port, 3);
+        }
+
+        Socket ConnectToEngine(int port, int numRetries)
+        {
             var address = IPAddress.Parse(Host);
             var endpoint = new IPEndPoint(address, port);
             var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
@@ -257,8 +263,19 @@ namespace UnitTests
             }
             catch (Exception ex)
             {
-                Assert.Fail(string.Format("Failed to connect: {0}", ex.Message));
-                return null;
+                string errorMsg = string.Format("Failed to connect: {0}", ex.Message);
+                if (numRetries > 0)
+                {
+                    numRetries--;
+                    TestContext.Out.WriteLine(string.Format("{0}: Retries Remaining: {1}: Retrying...", errorMsg, numRetries));
+                    Thread.Sleep(500);
+                    return ConnectToEngine(port, numRetries);
+                }
+                else
+                {
+                    Assert.Fail(errorMsg);
+                    return null;
+                }
             }
         }
 
@@ -409,7 +426,7 @@ namespace UnitTests
             var socket = ConnectToEngine(AcceptPort2);
             SendLogon(socket, dynamicCompID);
 
-            Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failde to logon dynamic added acceptor session with another port");
+            Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failed to logon dynamic added acceptor session with another port");
         }
         
         [Test]

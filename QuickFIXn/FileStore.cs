@@ -33,7 +33,7 @@ namespace QuickFix
 
         private MemoryStore cache_ = new MemoryStore();
 
-        System.Collections.Generic.Dictionary<int, MsgDef> offsets_ = new Dictionary<int, MsgDef>();
+        System.Collections.Generic.Dictionary<SeqNumType, MsgDef> offsets_ = new Dictionary<SeqNumType, MsgDef>();
 
         public static string Prefix(SessionID sessionID)
         {
@@ -132,7 +132,7 @@ namespace QuickFix
                         string[] headerParts = line.Split(',');
                         if (headerParts.Length == 3)
                         {
-                            offsets_[Convert.ToInt32(headerParts[0])] = new MsgDef(
+                            offsets_[Convert.ToUInt64(headerParts[0])] = new MsgDef(
                                 Convert.ToInt64(headerParts[1]), Convert.ToInt32(headerParts[2]));
                         }
                     }
@@ -146,8 +146,8 @@ namespace QuickFix
                     string[] parts = seqNumReader.ReadToEnd().Split(':');
                     if (parts.Length == 2)
                     {
-                        cache_.SetNextSenderMsgSeqNum(Convert.ToInt32(parts[0]));
-                        cache_.SetNextTargetMsgSeqNum(Convert.ToInt32(parts[1]));
+                        cache_.NextSenderMsgSeqNum = Convert.ToUInt64(parts[0]);
+                        cache_.NextTargetMsgSeqNum = Convert.ToUInt64(parts[1]);
                     }
                 }
             }
@@ -181,9 +181,9 @@ namespace QuickFix
         /// <param name="startSeqNum"></param>
         /// <param name="endSeqNum"></param>
         /// <param name="messages"></param>
-        public void Get(int startSeqNum, int endSeqNum, List<string> messages)
+        public void Get(SeqNumType startSeqNum, SeqNumType endSeqNum, List<string> messages)
         {
-            for (int i = startSeqNum; i <= endSeqNum; i++)
+            for (SeqNumType i = startSeqNum; i <= endSeqNum; i++)
             {
                 if (offsets_.ContainsKey(i))
                 {
@@ -203,7 +203,7 @@ namespace QuickFix
         /// <param name="msgSeqNum"></param>
         /// <param name="msg"></param>
         /// <returns></returns>
-        public bool Set(int msgSeqNum, string msg)
+        public bool Set(SeqNumType msgSeqNum, string msg)
         {
             msgFile_.Seek(0, System.IO.SeekOrigin.End);
 
@@ -225,26 +225,20 @@ namespace QuickFix
             return true;
         }
 
-        public int GetNextSenderMsgSeqNum()
-        {
-            return cache_.GetNextSenderMsgSeqNum();
-        }
-
-        public int GetNextTargetMsgSeqNum()
-        {
-            return cache_.GetNextTargetMsgSeqNum();
-        }
-
-        public void SetNextSenderMsgSeqNum(int value)
-        {
-            cache_.SetNextSenderMsgSeqNum(value);
+        public SeqNumType NextSenderMsgSeqNum {
+          get { return cache_.NextSenderMsgSeqNum; }
+          set {
+            cache_.NextSenderMsgSeqNum = value;
             setSeqNum();
+          }
         }
 
-        public void SetNextTargetMsgSeqNum(int value)
-        {
-            cache_.SetNextTargetMsgSeqNum(value);
+        public SeqNumType NextTargetMsgSeqNum {
+          get { return cache_.NextTargetMsgSeqNum; }
+          set {
+            cache_.NextTargetMsgSeqNum = value;
             setSeqNum();
+          }
         }
 
         public void IncrNextSenderMsgSeqNum()
@@ -264,7 +258,7 @@ namespace QuickFix
             seqNumsFile_.Seek(0, System.IO.SeekOrigin.Begin);
             System.IO.StreamWriter writer = new System.IO.StreamWriter(seqNumsFile_);
 
-            writer.Write(GetNextSenderMsgSeqNum().ToString("D10") + " : " + GetNextTargetMsgSeqNum().ToString("D10") + "  ");
+            writer.Write(NextSenderMsgSeqNum.ToString("D20") + " : " + NextTargetMsgSeqNum.ToString("D20") + "  ");
             writer.Flush();
         }
 
@@ -274,12 +268,6 @@ namespace QuickFix
             {
                 return cache_.CreationTime;
             }
-        }
-
-        [System.Obsolete("Use CreationTime instead")]
-        public DateTime GetCreationTime()
-        {
-            return CreationTime.GetValueOrDefault();
         }
 
         public void Reset()

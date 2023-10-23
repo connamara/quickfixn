@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'aws-sdk'
+require 'aws-sdk-s3'
 
 if ARGV[0].nil? or ARGV[1].nil? or ARGV[2].nil?
   puts "Usage: ruby upload_to_s3.rb <ZIPFILE> <ACCESS_KEY> <SECRET_KEY>"

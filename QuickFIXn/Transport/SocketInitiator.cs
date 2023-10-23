@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Net.Sockets;
-using QuickFix.Config;
 using System.Net;
-using System.Diagnostics;
 using System.Threading;
 using System.IO;
 
@@ -19,13 +16,6 @@ namespace QuickFix.Transport
         public const string SOCKET_CONNECT_HOST = "SocketConnectHost";
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
         public const string RECONNECT_INTERVAL  = "ReconnectInterval";
-
-        #region Properties
-
-        [System.Obsolete("Has never worked.  Always returns false.  Will be removed.")]
-        public bool Connected { get { return false; } }
-
-        #endregion
 
         #region Private Members
 

@@ -73,11 +73,6 @@ namespace QuickFix
     /// </summary>
     public class UnsupportedVersion : QuickFIXException
     {
-        [Obsolete("You should pass the invalid beginString as a parameter")]
-        public UnsupportedVersion()
-            : base("Incorrect BeginString")
-        { }
-
         public UnsupportedVersion(string beginString)
             : base("Incorrect BeginString (" + beginString + ")")
         { }
@@ -181,13 +176,6 @@ namespace QuickFix
 
         public int Field { get { return _field; } }
         public FixValues.SessionRejectReason sessionRejectReason;
-
-        [System.Obsolete("For getter, use 'Field' instead.  The setter should not be used at all.")]
-        public int field
-        {
-            get { return _field; }
-            set { _field = value; }
-        }
 
         public TagException(string msg, int field)
             : base(msg)

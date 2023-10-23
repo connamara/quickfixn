@@ -158,7 +158,7 @@ namespace UnitTests
             QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
             msg.FromString(msgStr, true, dd, dd, null); // <-- null factory!
 
-            Console.WriteLine(msg.ToString());
+            //Console.WriteLine(msg.ToString());
 
             QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup partyGroup = new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup();
             msg.GetGroup(2, partyGroup);
@@ -963,6 +963,95 @@ namespace UnitTests
 
             string foo = msg.ToString().Replace(Message.SOH, "|");
             StringAssert.EndsWith("|10=099|", foo);
+        }
+
+                [Test]
+        [Category("JSON")]
+        public void JsonNestedRepeatingGroupParseGroupTest()
+        {
+            // Given the following string in FIX JSON Encoding:
+            string json = @"
+                {
+                    ""Header"": {
+                        ""BeginString"":""FIX.4.4"",
+                        ""MsgSeqNum"":""360"",
+                        ""MsgType"":""8"",
+                        ""SenderCompID"":""BLPTSOX"",
+                        ""SendingTime"":""20130321-15:21:23"",
+                        ""TargetCompID"":""THINKTSOX""
+                    },
+                    ""Body"": {
+                        ""31337"":""custom body field"",
+                        ""AvgPx"":""122.255"",
+                        ""ClOrdID"":""61101189"",
+                        ""CumQty"":""1990000"",
+                        ""ExecID"":""VCON:20130321:50018:5:12"",
+                        ""LastPx"":""122.255"",
+                        ""LastQty"":""1990000"",
+                        ""OrderID"":""116"",
+                        ""OrderQty"":""1990000"",
+                        ""OrdStatus"":""2"",
+                        ""Side"":""1"",
+                        ""Symbol"":""[N/A]"",
+                        ""TransactTime"":""20130321-15:21:23"",
+                        ""ExecType"":""F"",
+                        ""LeavesQty"":""0"",
+                        ""NoPartyIDs"": [
+                            {
+                                ""PartyIDSource"":""D"",
+                                ""PartyID"":""OHAI"",
+                                ""PartyRole"":""1"",
+                                ""NoPartySubIDs"": [
+                                    {
+                                        ""PartySubID"":""14"",
+                                        ""PartySubIDType"":""4"",
+                                        ""31338"":""custom group field""
+                                    }
+                                ]
+                            },
+                            { ""PartyIDSource"":""D"", ""PartyID"":""TFOLIO:6804469"", ""PartyRole"":""12"" },
+                            { ""PartyIDSource"":""D"", ""PartyID"":""TFOLIO"",         ""PartyRole"":""11"" },
+                            { ""PartyIDSource"":""D"", ""PartyID"":""THINKFOLIO LTD"", ""PartyRole"":""13"" },
+                            { ""PartyIDSource"":""D"", ""PartyID"":""SXT"",            ""PartyRole"":""16"" },
+                            { ""PartyIDSource"":""D"", ""PartyID"":""TFOLIO:6804469"", ""PartyRole"":""36"" }
+                        ]
+                    },
+                    ""Trailer"": {
+                    }
+                }
+            ";
+
+            // When the JSON is parsed into a QuickFIX Message
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+            var msg = new Message();
+            msg.FromJson(json, true, dd, dd, _defaultMsgFactory);
+            TestContext.Out.WriteLine(msg.ToString().Replace(Message.SOH, "|"));
+
+            // Then the Header of the Message should contain:
+            Assert.That(msg.Header.GetString(Tags.BeginString), Is.EqualTo("FIX.4.4"));
+            Assert.That(msg.Header.GetString(Tags.MsgSeqNum),   Is.EqualTo("360"));
+            Assert.That(msg.Header.GetString(Tags.BodyLength),  Is.EqualTo("446"));
+
+            // And the Body of the Message should contain:
+            Assert.That(msg.GetString(31337), Is.EqualTo("custom body field"));
+            Assert.That(msg.GetString(Tags.AvgPx), Is.EqualTo("122.255"));
+            Assert.That(msg.GetString(Tags.Symbol), Is.EqualTo("[N/A]"));
+            Assert.That(msg.GetString(Tags.OrdStatus), Is.EqualTo("2"));
+            Assert.That(msg.GetString(Tags.TransactTime), Is.EqualTo("20130321-15:21:23"));
+
+            // And the NoPartyIDs Group should contain:
+            Assert.That(msg.GetString(Tags.NoPartyIDs), Is.EqualTo("6"));
+
+            var noPartyGrp = msg.GetGroup(1, Tags.NoPartyIDs);
+            Assert.That(noPartyGrp.GetString(Tags.PartyID), Is.EqualTo("OHAI"));
+            Assert.That(noPartyGrp.GetString(Tags.PartyIDSource), Is.EqualTo("D"));
+            Assert.That(noPartyGrp.GetString(Tags.NoPartySubIDs), Is.EqualTo("1"));
+
+            var noPartySubGrp = noPartyGrp.GetGroup(1, Tags.NoPartySubIDs);
+            Assert.That(noPartySubGrp.GetString(Tags.PartySubID), Is.EqualTo("14"));
+            Assert.That(noPartySubGrp.GetString(Tags.PartySubIDType), Is.EqualTo("4"));
+            Assert.That(noPartySubGrp.GetString(31338), Is.EqualTo("custom group field"));
         }
     }
 }

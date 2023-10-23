@@ -51,15 +51,15 @@ class ReflectorClient
     def @reflector.connectAction(cid)
       socket = TCPSocket.open(@address, @port)
       if socket == nil
-	    raise IOError("failed to connect")
+        raise IOError("failed to connect")
       end
 
-      # WSL doesn't support socket option SO_LINGER.
-      # This detects if this script is NOT running in WSL, and if not,
-      # sets the socket option. Otherwise, it's skipped.
-      # See https://stackoverflow.com/questions/38086185/how-to-check-if-a-program-is-run-in-bash-on-ubuntu-on-windows-and-not-just-plain
-      unless ENV.include?('IS_WSL') || ENV.include?('WSL_DISTRO_NAME')
+      begin
         socket.setsockopt(Socket::SOL_SOCKET, Socket::SO_LINGER, false)
+      rescue Errno::EINVAL => e
+        # Ignore if SO_LINGER isn't supported
+        # (this is the case on WSL, Mac, probably others)
+	raise unless e.message.include?('Invalid argument - setsockopt(2)')
       end
       socket.setsockopt(Socket::IPPROTO_TCP, Socket::TCP_NODELAY, true)
       @sockets[cid] = socket

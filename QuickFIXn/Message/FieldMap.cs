@@ -168,6 +168,18 @@ namespace QuickFix
         }
 
         /// <summary>
+        /// Gets a ulong field; saves its value into the parameter object, which is also the return value.
+        /// </summary>
+        /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+        /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+        /// <returns><paramref name="field"/></returns>
+        public Fields.ULongField GetField(Fields.ULongField field)
+        {
+            field.Obj = GetULong(field.Tag);
+            return field;
+        }
+
+        /// <summary>
         /// Gets a decimal field; saves its value into the parameter object, which is also the return value.
         /// </summary>
         /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
@@ -328,6 +340,28 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Gets the ulong value of a field
+        /// </summary>
+        /// <param name="tag">the FIX tag</param>
+        /// <returns>the ulong field value</returns>
+        /// <exception cref="FieldNotFoundException" />
+        public ulong GetULong(int tag)
+        {
+            try
+            {
+                Fields.IField fld = _fields[tag];
+                if (fld.GetType() == typeof(ULongField))
+                    return ((ULongField)fld).Obj;
+                else
+                    return ULongConverter.Convert(fld.ToString());
+            }
+            catch (System.Collections.Generic.KeyNotFoundException)
+            {
+                throw new FieldNotFoundException(tag);
+            }
+        }
+ 
         /// <summary>
         /// Gets the DateTime value of a field
         /// </summary>
@@ -516,20 +550,6 @@ namespace QuickFix
                 throw new FieldNotFoundException(field);
 
             return _groups[field][num - 1] = group;
-        }
-
-
-        /// <summary>
-        /// getField without a type defaults to returning a string
-        /// </summary>
-        /// <param name="tag">fix tag</param>
-        [Obsolete("Use GetString instead.")]
-        public string GetField(int tag)
-        {
-            if (_fields.ContainsKey(tag))
-                return _fields[tag].ToString();
-            else
-                throw new FieldNotFoundException(tag);
         }
 
         /// <summary>

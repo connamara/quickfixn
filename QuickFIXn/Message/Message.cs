@@ -2,6 +2,7 @@
 using System.Text;
 using QuickFix.Fields;
 using System.Text.RegularExpressions;
+using System.Text.Json;
 using System.Collections.Generic;
 
 namespace QuickFix
@@ -433,7 +434,7 @@ namespace QuickFix
 
                     if (Tags.MsgType.Equals(f.Tag))
                     {
-                        msgType = string.Copy(f.Obj);
+                        msgType = f.Obj;
                         if (appDD != null)
                         {
                             msgMap = appDD.GetMapForMessage(msgType);
@@ -489,14 +490,71 @@ namespace QuickFix
             }
         }
 
-
-        [System.Obsolete("Use the version that takes an IMessageFactory instead")]
-        protected int SetGroup(StringField grpNoFld, string msgstr, int pos, FieldMap fieldMap, DataDictionary.IGroupSpec dd,
-            DataDictionary.DataDictionary sessionDataDictionary, DataDictionary.DataDictionary appDD)
+        /// <summary>
+        /// Creates a Message from FIX JSON Encoding.
+        /// See: https://github.com/FIXTradingCommunity/fix-json-encoding-spec
+        /// </summary>
+        /// <param name="json"></param>
+        /// <param name="validate"></param>
+        /// <param name="sessionDD"></param>
+        /// <param name="appDD"></param>
+        /// <param name="msgFactory">If null, any groups will be constructed as generic Group objects</param>
+        public void FromJson(string json, bool validate, DataDictionary.DataDictionary sessionDD, DataDictionary.DataDictionary appDD, IMessageFactory msgFactory)
         {
-            return SetGroup(grpNoFld, msgstr, pos, fieldMap, dd, sessionDataDictionary, appDD, null);
+            this.ApplicationDataDictionary = appDD;
+            Clear();
+
+            using (JsonDocument document = JsonDocument.Parse(json))
+            {
+                string beginString = document.RootElement.GetProperty("Header").GetProperty("BeginString").GetString();
+                string msgType     = document.RootElement.GetProperty("Header").GetProperty("MsgType").GetString();
+                DataDictionary.IFieldMapSpec msgMap = appDD.GetMapForMessage(msgType);
+                FromJson(document.RootElement.GetProperty("Header"),  beginString, msgType, msgMap, msgFactory, sessionDD, this.Header);
+                FromJson(document.RootElement.GetProperty("Body"),    beginString, msgType, msgMap, msgFactory, appDD,     this);
+                FromJson(document.RootElement.GetProperty("Trailer"), beginString, msgType, msgMap, msgFactory, sessionDD, this.Trailer);
+            }
+
+            this.Header.SetField(new BodyLength(BodyLength()), true);
+            this.Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
+
+            if (validate)
+            {
+                Validate();
+            }
         }
 
+        protected void FromJson(JsonElement jsonElement, string beginString, string msgType, DataDictionary.IFieldMapSpec msgMap, IMessageFactory msgFactory, DataDictionary.DataDictionary dataDict, FieldMap fieldMap)
+        {
+            foreach (JsonProperty field in jsonElement.EnumerateObject())
+            {
+                DataDictionary.DDField ddField;
+                if (dataDict.FieldsByName.TryGetValue(field.Name.ToString(), out ddField))
+                {
+                    if ((null != msgMap) && (msgMap.IsGroup(ddField.Tag)) && (JsonValueKind.Array == field.Value.ValueKind))
+                    {
+                        foreach (JsonElement jsonGrp in field.Value.EnumerateArray())
+                        {
+                            Group grp = msgFactory.Create(beginString, msgType, ddField.Tag);
+                            FromJson(jsonGrp, beginString, msgType, msgMap.GetGroupSpec(ddField.Tag), msgFactory, dataDict, grp);
+                            fieldMap.AddGroup(grp);
+                        }
+                    }
+
+                    if (JsonValueKind.Array != field.Value.ValueKind)
+                    {
+                        fieldMap.SetField(new StringField(ddField.Tag, field.Value.ToString()));
+                    }
+                }
+                else
+                {
+                    // this may be a custom tag given by number instead of name
+                    if (Int32.TryParse(field.Name.ToString(), out int customTagNumber))
+                    {
+                        fieldMap.SetField(new StringField(customTagNumber, field.Value.ToString()));
+                    }
+                }
+            }
+        }
 
         /// <summary>
         /// Constructs a group and stores it in this Message object

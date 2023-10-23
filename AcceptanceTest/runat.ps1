@@ -15,7 +15,7 @@ Param(
     [string] $Conf,
 
     [Parameter(Mandatory, Position=4)]
-    [ValidateSet('net461','netcoreapp2.1')]
+    [ValidateSet('net6.0','net461','netcoreapp2.1')]
     [string] $Framework,
 
     [switch]$UseWsl
@@ -31,12 +31,20 @@ function KillChildren {
 
     process {
         foreach ($p in $ProcessId) {
-            Get-CimInstance -Class Win32_Process -Filter "ParentProcessId = '$p' AND NOT Name LIKE 'conhost%'" -Property ProcessId |
-                Select-Object -ExpandProperty ProcessId |
-                KillChildren -PassThru |
-                ForEach-Object {
-                    Stop-Process -Id $_ -ErrorAction Ignore -Force
-                }
+            $ChildPid = if ($IsWindows) {
+                (Get-CimInstance -Class Win32_Process -Filter "ParentProcessId = $p AND Name != 'conhost.exe'" -Property ProcessId).ProcessId
+            } else {
+                (Get-Process | Where-Object { $_.Parent.Id -eq $p }).Id
+            }
+
+            if ($ChildPid)
+            {
+                $ChildPid |
+                    KillChildren -PassThru |
+                    ForEach-Object {
+                        Stop-Process -Id $_ -ErrorAction Ignore -Force
+                    }
+            }
 
             if ($PassThru -and $PassThru.IsPresent) {
                 $p
@@ -58,17 +66,27 @@ function Write-TestResult {
 
     process {
         # Canonicalize the FIX protocal version for the test results being displayed
-        $FixVersion = $TestResult.at.SelectSingleNode('test').name -replace $TestRegex, '${FixVersion}'
+        $FixVersion = $TestResult.FirstChild.SelectSingleNode('test').name -replace $TestRegex, '${FixVersion}'
         $FixVersion = $($FixVersion -replace $FixRegex, 'FIX ${Major}.${Minor} ${Prefix} ${Number}').TrimEnd().ToUpperInvariant()
 
         Write-Host "`nTest Results for:  $FixVersion ($Framework)"
 
         $TestResult.at.test |
             ForEach-Object {
+                $ErrorMessage = ''
+                if ($_.result -ine 'success') {
+                    $ErrorMessage = 'Could not extract message from XML.  See log.'
+                    try {
+                        $ErrorMessage = $_.message.ChildNodes[0].Value.Trim()
+                    }catch{
+                        # ignore
+                    }
+                }
+
                 [PSCustomObject]@{
                     Name = $_.name -replace $TestRegex, '${TestName}'
                     Result = if ($_.result -ieq 'success') { 'PASS' } else { 'FAIL' }
-                    Message = $_.message
+                    Message = $ErrorMessage
                 }
             } |
             Format-Table
@@ -84,6 +102,8 @@ function Write-TestResult {
 
 function StartTests
 {
+    $sep = if ($IsWindows) { "\" } else { "/" }
+
     @"
 [DEFAULT]
 Verbose=Y
@@ -99,39 +119,39 @@ ResetOnLogon=Y
 FileStorePath=store
 [SESSION]
 BeginString=FIX.4.0
-DataDictionary=..\spec\fix\FIX40.xml
+DataDictionary=..${sep}spec${sep}fix${sep}FIX40.xml
 [SESSION]
 BeginString=FIX.4.1
-DataDictionary=..\spec\fix\FIX41.xml
+DataDictionary=..${sep}spec${sep}fix${sep}FIX41.xml
 [SESSION]
 BeginString=FIX.4.2
-DataDictionary=..\spec\fix\FIX42.xml
+DataDictionary=..${sep}spec${sep}fix${sep}FIX42.xml
 [SESSION]
 BeginString=FIX.4.3
-DataDictionary=..\spec\fix\FIX43.xml
+DataDictionary=..${sep}spec${sep}fix${sep}FIX43.xml
 [SESSION]
 BeginString=FIX.4.4
-DataDictionary=..\spec\fix\FIX44.xml
+DataDictionary=..${sep}spec${sep}fix${sep}FIX44.xml
 [SESSION]
 BeginString=FIXT.1.1
 DefaultApplVerID=FIX.5.0SP1
-TransportDataDictionary=..\spec\fix\FIXT11.xml
-AppDataDictionary=..\spec\fix\FIX50SP1.xml
-"@ | Out-File 'cfg\at.cfg' -Encoding utf8
+TransportDataDictionary=..${sep}spec${sep}fix${sep}FIXT11.xml
+AppDataDictionary=..${sep}spec${sep}fix${sep}FIX50SP1.xml
+"@ | Out-File "cfg${sep}at.cfg" -Encoding utf8
 
     # Start the acceptor...
     # (this runs the exe or dll in AcceptanceTest/bin/)
-    $AtProcess = Start-Process -FilePath dotnet.exe -ArgumentList "run -c $Configuration -f $Framework --no-build --no-restore -- $Conf" -NoNewWindow -PassThru
+    Start-Process -FilePath dotnet -ArgumentList "run -c $Configuration -f $Framework --no-build --no-restore -- $Conf" -NoNewWindow -PassThru |
+      Out-Null # suppress process output
 
     if ($UseWsl -and $UseWsl.IsPresent) {
         wsl ruby Runner.rb '127.0.0.1' $Port "$Tests" > TestResult.xml
     } else {
-        ruby Runner.rb '127.0.0.1' $Port "$Tests" > TestResult.xml
+        ruby Runner.rb '127.0.0.1' $Port $Tests > TestResult.xml
     }
 
     if ($LASTEXITCODE -ne 0) { $Result = $LASTEXITCODE }
 
-    #$AtProcess | Stop-Process -ErrorAction Ignore -Force
     KillChildren $pid
 
     [xml]$TestResult = Get-Content TestResult.xml -Raw
@@ -141,3 +161,4 @@ AppDataDictionary=..\spec\fix\FIX50SP1.xml
 }
 
 StartTests
+
