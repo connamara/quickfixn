@@ -25,7 +25,7 @@ if ($LastExitCode -eq 0) {
     Write-Host '* Built QuickFIX/n solution' -ForegroundColor Cyan
 } else {
     Write-Error "There was an error building QuickFIX/n."
-    Exit $ExitCode
+    Exit $LastExitCode
 }
 
 if (Test-Path $zipContentPath) {
