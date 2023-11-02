@@ -7,7 +7,7 @@ Param (
         If ($_ -match '^v[\d]+\.[\d]+\.[\d]+$') {
             $True
         }else{
-            Throw "It $_ does not match pattern 'vN.N.N'"
+            Throw "Value '$_' does not match pattern 'vN.N.N'"
         }
     })]
     [string]$NewVersion
@@ -34,3 +34,22 @@ foreach($proj in $projs) {
 }
 
 Write-Host 'Bump-Version completed successfully.' -ForegroundColor Green
+Write-Host '(Don''t forget to commit these csproj changes after reviewing.)' -ForegroundColor Green
+
+
+
+#-----------------------
+# Not yet sure if I want the rest of this in a script or not
+
+
+#git tag -a $TagVersion -m 'Release version $TagVersion'
+#Write-Host '* Created tag.'
+
+#git checkout -c advice.detachedHead=false $TagVersion
+#$ExitCode = $LASTEXITCODE
+#if ($ExitCode -eq 0) {
+#    Write-Host "* Checked out tag $TagVersion"
+#} else {
+#    Write-Error "There was an error checking out QuickFIX/n $TagVersion"
+#    Exit $ExitCode
+#}
