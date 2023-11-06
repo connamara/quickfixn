@@ -60,13 +60,13 @@ if (Test-Path $zipContentPath) {
 ) | ForEach-Object {
     $fullpath = Join-Path $rootpath $_ | Resolve-Path
 	$filename = Split-Path $fullpath -Leaf
-    $topath = Join-Path $zipContentPath $filename
+    $topath = Join-Path $zipContentPath 'bin' 'net6.0' $filename
 	Copy-Item -Path $_ -Destination $topath
     Write-Host "* Copied file to $fullpath" -ForegroundColor Cyan
 }
 
 $dest = Join-Path $zipContentPath 'spec\fix' | Resolve-Path
-Copy-Item -Path (Join-Path $rootpath 'spec\fix' | Resolve-Path) -Destination $dest -Recurse -Force
+Copy-Item -Path (Join-Path $rootpath 'spec' 'fix' 'FIX*.xml' ) -Destination $dest
 Write-Host "* Copied xml dictionaries to $dest" -ForegroundColor Cyan
 
 $dest = Join-Path $zipContentPath 'config'
