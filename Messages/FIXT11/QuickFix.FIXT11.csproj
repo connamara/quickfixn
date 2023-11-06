@@ -6,7 +6,7 @@
     <Title>QuickFIX/n FIXT1.1 Messages</Title>
     <PackageId>QuickFIXn.FIXT1.1</PackageId>
     <PackageTitle>$(Title)</PackageTitle>
-    <Description>Open-source C# implementation of QuickFIX. This package allows you to create applications targeting the FIX 4.4 protocol.</Description>
+    <Description>Open-source C# implementation of QuickFIX. This package contains message definitions for FIXT1.1.</Description>
     <Copyright>Copyright © 2011 - $([System.DateTime]::UtcNow.Year) QuickFIXn.org. All rights reserved.</Copyright>
     <Authors>Connamara Systems, LLC and QuickFIX/n contributors</Authors>
     <Version>1.11.0</Version>
@@ -26,10 +26,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
+    <None Include="..\..\nuget-enclosures\t11-readme.md" Pack="true" PackagePath="README.md" />
+    <None Include="..\..\spec\fix\FIXT11.xml" Pack="true" PackagePath="DataDictionary\FIXT11.xml" />
   </ItemGroup>
 
 </Project>
