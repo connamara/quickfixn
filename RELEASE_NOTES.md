@@ -10,6 +10,9 @@ What's New
 
 **CAUTION: There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
+### v1.11.2:
+* same as v1.11.1, but I fixed the readme in the pushed nuget packages
+
 ### v1.11.1:
 * #793 - Continuous Markets bugfix: make DD treat SEQNUM as ULong, not Int (gbirchmeier)
 * #790/#787 - break up monolithic release script, add symbols & DD to nugets/zip, delete old scripts (gbirchmeier)
