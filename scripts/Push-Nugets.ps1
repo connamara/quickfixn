@@ -44,7 +44,7 @@ foreach ($rls in 'Core', 'FIXT1.1', 'FIX4.0', 'FIX4.1', 'FIX4.2', 'FIX4.3', 'FIX
         }
     }
 
-    $toPush += $nupkg, $snupkg
+    $toPush += $nupkg
 }
 
 if ($missing) {
@@ -64,8 +64,10 @@ if ($confirmation -cne 'YES') {
 
 Write-Host "Pushing packages to NuGet.org:" -ForegroundColor Cyan
 foreach ($filepath in $toPush) {
+    Write-Host "* Pushing $(Split-Path $filepath -Leaf) and .snupkg" -ForegroundColor Cyan
+
+    # this command also pushes snupkg if present (which it should be)
     dotnet nuget push $filepath -s 'https://api.nuget.org/v3/index.json' -k $NuGetApiKey
-    Write-Host "* Pushed $(Split-Path $filepath -Leaf)" -ForegroundColor Cyan
 }
 
 Write-Host "NuGet pushes complete!" -ForegroundColor Green
