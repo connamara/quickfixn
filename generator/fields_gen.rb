@@ -30,7 +30,7 @@ class FieldGen
       when 'STRING', 'MULTIPLEVALUESTRING',  'MULTIPLECHARVALUE', 
            'DATA', 'EXCHANGE', 'LOCALMKTDATE', 'MONTHYEAR', 'DAYOFMONTH', 
            'COUNTRY', 'TZTIMEONLY', 'MULTIPLESTRINGVALUE', 'XMLDATA',
-	   'LANGUAGE', 'CURRENCY'
+     'LANGUAGE', 'CURRENCY'
         {:cs_class => 'StringField', :base_type=>'string'}
       when nil 
         raise "field type is nil! #{field.inspect}"
@@ -119,7 +119,7 @@ HERE
             :base(Tags.#{field[:name]}, val) {}
         public #{field[:name]}(#{field[:base_type]} val, bool showMilliseconds)
             :base(Tags.#{field[:name]}, val, showMilliseconds) {}
-		public #{field[:name]}(#{field[:base_type]} val, Converters.TimeStampPrecision precision)
+        public #{field[:name]}(#{field[:base_type]} val, Converters.TimeStampPrecision precision)
             :base(Tags.#{field[:name]}, val, precision) {}
 #{fix_values(field)}
     }
@@ -129,31 +129,31 @@ HERE
 
 
   def self.fix_values fld
-		return '' if fld[:values].nil? or fld[:values].empty?
-		vals = ["\n", "        // Field Enumerations"]
-		vals += fld[:values].map do |val|
-			enum = val[:enum].clone
-			desc = val[:desc].clone
+    return '' if fld[:values].nil? or fld[:values].empty?
+    vals = ["\n", "        // Field Enumerations"]
+    vals += fld[:values].map do |val|
+      enum = val[:enum].clone
+      desc = val[:desc].clone
 
-			# make desc ok for C# vars
-		  desc = 'VAL_' + desc if desc =~ /^(\d+)(.*)/
-			desc.gsub!('.','_')
+      # make desc ok for C# vars
+      desc = 'VAL_' + desc if desc =~ /^(\d+)(.*)/
+      desc.gsub!('.','_')
 
-		  case fld[:base_type]
-			when 'int'
-		    "        public const int #{desc} = #{enum};"
-			when 'string'
-		    "        public const string #{desc} = \"#{enum}\";"
-			when 'char'
-		    "        public const char #{desc} = '#{enum}';"
-			when 'Boolean'
-				tf = (enum=='Y' ? "true;" : "false;")
-		    "        public const Boolean #{desc} = #{tf}"
-			else
-				raise "bad field val #{fld[:name]} #{fld[:base_type]} - #{val.inspect}"
-			end
-		end
-		vals.join("\n")
+      case fld[:base_type]
+      when 'int'
+        "        public const int #{desc} = #{enum};"
+      when 'string'
+        "        public const string #{desc} = \"#{enum}\";"
+      when 'char'
+        "        public const char #{desc} = '#{enum}';"
+      when 'Boolean'
+        tf = (enum=='Y' ? "true;" : "false;")
+        "        public const Boolean #{desc} = #{tf}"
+      else
+        raise "bad field val #{fld[:name]} #{fld[:base_type]} - #{val.inspect}"
+      end
+    end
+    vals.join("\n")
   end
 
 end
