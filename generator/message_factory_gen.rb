@@ -24,7 +24,7 @@ namespace QuickFix
         public class MessageFactory : IMessageFactory
         {
 #{get_method_supported_beginstrings(messages,fixver)}
-			
+
 #{gen_method_create(messages,fixver)}
 
 #{gen_method_group(messages,fixver)}
@@ -38,7 +38,7 @@ HERE
 return <<HERE
             public ICollection<string> GetSupportedBeginStrings()
             {
-				return new [] { BeginString.#{fixver} };
+                return new [] { BeginString.#{fixver} };
             }
 HERE
   end
