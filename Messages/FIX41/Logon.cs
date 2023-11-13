@@ -3,7 +3,7 @@
 using QuickFix.Fields;
 namespace QuickFix
 {
-    namespace FIX41 
+    namespace FIX41
     {
         public class Logon : Message
         {
@@ -24,8 +24,8 @@ namespace QuickFix
             }
 
             public QuickFix.Fields.EncryptMethod EncryptMethod
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.EncryptMethod val = new QuickFix.Fields.EncryptMethod();
                     GetField(val);
@@ -33,30 +33,31 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.EncryptMethod val) 
-            { 
+
+            public void Set(QuickFix.Fields.EncryptMethod val)
+            {
                 this.EncryptMethod = val;
             }
-            
-            public QuickFix.Fields.EncryptMethod Get(QuickFix.Fields.EncryptMethod val) 
-            { 
+
+            public QuickFix.Fields.EncryptMethod Get(QuickFix.Fields.EncryptMethod val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.EncryptMethod val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.EncryptMethod val)
+            {
                 return IsSetEncryptMethod();
             }
-            
-            public bool IsSetEncryptMethod() 
-            { 
+
+            public bool IsSetEncryptMethod()
+            {
                 return IsSetField(Tags.EncryptMethod);
             }
+
             public QuickFix.Fields.HeartBtInt HeartBtInt
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.HeartBtInt val = new QuickFix.Fields.HeartBtInt();
                     GetField(val);
@@ -64,30 +65,31 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.HeartBtInt val) 
-            { 
+
+            public void Set(QuickFix.Fields.HeartBtInt val)
+            {
                 this.HeartBtInt = val;
             }
-            
-            public QuickFix.Fields.HeartBtInt Get(QuickFix.Fields.HeartBtInt val) 
-            { 
+
+            public QuickFix.Fields.HeartBtInt Get(QuickFix.Fields.HeartBtInt val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.HeartBtInt val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.HeartBtInt val)
+            {
                 return IsSetHeartBtInt();
             }
-            
-            public bool IsSetHeartBtInt() 
-            { 
+
+            public bool IsSetHeartBtInt()
+            {
                 return IsSetField(Tags.HeartBtInt);
             }
+
             public QuickFix.Fields.RawDataLength RawDataLength
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.RawDataLength val = new QuickFix.Fields.RawDataLength();
                     GetField(val);
@@ -95,30 +97,31 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.RawDataLength val) 
-            { 
+
+            public void Set(QuickFix.Fields.RawDataLength val)
+            {
                 this.RawDataLength = val;
             }
-            
-            public QuickFix.Fields.RawDataLength Get(QuickFix.Fields.RawDataLength val) 
-            { 
+
+            public QuickFix.Fields.RawDataLength Get(QuickFix.Fields.RawDataLength val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.RawDataLength val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.RawDataLength val)
+            {
                 return IsSetRawDataLength();
             }
-            
-            public bool IsSetRawDataLength() 
-            { 
+
+            public bool IsSetRawDataLength()
+            {
                 return IsSetField(Tags.RawDataLength);
             }
+
             public QuickFix.Fields.RawData RawData
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.RawData val = new QuickFix.Fields.RawData();
                     GetField(val);
@@ -126,30 +129,31 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.RawData val) 
-            { 
+
+            public void Set(QuickFix.Fields.RawData val)
+            {
                 this.RawData = val;
             }
-            
-            public QuickFix.Fields.RawData Get(QuickFix.Fields.RawData val) 
-            { 
+
+            public QuickFix.Fields.RawData Get(QuickFix.Fields.RawData val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.RawData val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.RawData val)
+            {
                 return IsSetRawData();
             }
-            
-            public bool IsSetRawData() 
-            { 
+
+            public bool IsSetRawData()
+            {
                 return IsSetField(Tags.RawData);
             }
+
             public QuickFix.Fields.ResetSeqNumFlag ResetSeqNumFlag
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.ResetSeqNumFlag val = new QuickFix.Fields.ResetSeqNumFlag();
                     GetField(val);
@@ -157,27 +161,28 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.ResetSeqNumFlag val) 
-            { 
+
+            public void Set(QuickFix.Fields.ResetSeqNumFlag val)
+            {
                 this.ResetSeqNumFlag = val;
             }
-            
-            public QuickFix.Fields.ResetSeqNumFlag Get(QuickFix.Fields.ResetSeqNumFlag val) 
-            { 
+
+            public QuickFix.Fields.ResetSeqNumFlag Get(QuickFix.Fields.ResetSeqNumFlag val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.ResetSeqNumFlag val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.ResetSeqNumFlag val)
+            {
                 return IsSetResetSeqNumFlag();
             }
-            
-            public bool IsSetResetSeqNumFlag() 
-            { 
+
+            public bool IsSetResetSeqNumFlag()
+            {
                 return IsSetField(Tags.ResetSeqNumFlag);
             }
+
         }
     }
 }

@@ -11,7 +11,7 @@ class MessageGen
     File.open(basemsg_path, 'w') {|f| f.puts(basemsgstr) }
 
     puts "generate #{destdir}*"
-    messages.each do |msg| 
+    messages.each do |msg|
       msgstr = gen_msg(msg, fixver)
       msg_path = File.join(destdir, msg[:name] + '.cs')
       # puts "generate #{msg_path}"
@@ -47,25 +47,26 @@ namespace QuickFix
 HERE
   end
 
-  def self.gen_msg msg, fixver 
+  def self.gen_msg msg, fixver
     s = <<HERE
 // This is a generated file.  Don't edit it directly!
 
 using QuickFix.Fields;
 namespace QuickFix
 {
-    namespace #{fixver} 
+    namespace #{fixver}
     {
         public class #{msg[:name]} : Message
         {
 #{msgtype(msg)}
 #{ctor(msg)}
 #{ctor_req(msg)}
-#{gen_msg_fields(msg[:name], msg[:fields], 12)}
+#{gen_msg_fields(msg[:name], msg[:fields]).map {|s| s.strip.empty? ? '' : ' '*12 + s}.join("\n")}
+
 HERE
 
     if msg[:groups].length > 0
-      s << gen_msg_groups(msg[:groups], 12)
+      s << gen_msg_groups(msg[:groups]).map {|s| s.strip.empty? ? '' : ' '*12 + s}.join("\n")
       s << "\n"
     end
 
@@ -107,12 +108,14 @@ HERE
 HERE
   end
 
-  def self.gen_msg_fields msg_name, fields, prepend_spaces
-    fields.map { |fld| msg_field(msg_name, fld,prepend_spaces) }.join("\n")
+  def self.gen_msg_fields msg_name, fields
+    rv = fields.map { |fld| msg_field(msg_name, fld) }.flatten
+    rv.pop 
+    rv
   end
 
-  def self.gen_msg_groups groups, prepend_spaces
-    groups.map { |grp| msg_grp(grp, prepend_spaces) }.join("\n")
+  def self.gen_msg_groups groups
+    groups.map { |grp| msg_grp(grp) }.flatten
   end
 
 
@@ -120,15 +123,15 @@ HERE
     msg[:fields].select {|f| f[:required] == true and f[:group] == false }
   end
 
-  def self.msg_field msg_name, fld, prepend_spaces
+  def self.msg_field msg_name, fld
     fld_name = fld[:name]
     if fld_name == msg_name
       fld_name = fld_name + '_'
     end
     str = []
     str << "public QuickFix.Fields.#{fld[:name]} #{fld_name}"
-    str << "{ "
-    str << "    get "
+    str << "{"
+    str << "    get"
     str << "    {"
     str << "        QuickFix.Fields.#{fld[:name]} val = new QuickFix.Fields.#{fld[:name]}();"
     str << "        GetField(val);"
@@ -137,37 +140,37 @@ HERE
     str << "    set { SetField(value); }"
     str << "}"
     str << ""
-    str << "public void Set(QuickFix.Fields.#{fld[:name]} val) "
-    str << "{ "
+    str << "public void Set(QuickFix.Fields.#{fld[:name]} val)"
+    str << "{"
     str << "    this.#{fld_name} = val;"
     str << "}"
     str << ""
-    str << "public QuickFix.Fields.#{fld[:name]} Get(QuickFix.Fields.#{fld[:name]} val) "
-    str << "{ "
+    str << "public QuickFix.Fields.#{fld[:name]} Get(QuickFix.Fields.#{fld[:name]} val)"
+    str << "{"
     str << "    GetField(val);"
     str << "    return val;"
     str << "}"
     str << ""
-    str << "public bool IsSet(QuickFix.Fields.#{fld[:name]} val) "
-    str << "{ "
+    str << "public bool IsSet(QuickFix.Fields.#{fld[:name]} val)"
+    str << "{"
     str << "    return IsSet#{fld[:name]}();"
     str << "}"
     str << ""
-    str << "public bool IsSet#{fld[:name]}() "
-    str << "{ "
+    str << "public bool IsSet#{fld[:name]}()"
+    str << "{"
     str << "    return IsSetField(Tags.#{fld[:name]});"
     str << "}"
-    str.map! {|s| ' '*prepend_spaces + s}
-    str.join("\n")
+    str << ""
+    str
   end
 
-  def self.msg_grp grp, prepend_spaces
+  def self.msg_grp grp
     str = []
     str << "public class #{grp[:name]}Group : Group"
     str << "{"
     str << "    public static int[] fieldOrder = {#{grp_field_order grp[:fields] }};"
     str << ""
-    str << "    public #{grp[:name]}Group() "
+    str << "    public #{grp[:name]}Group()"
     str << "      :base( Tags.#{grp[:group_field][:name]}, Tags.#{grp[:fields][0][:name]}, fieldOrder)"
     str << "    {"
     str << "    }"
@@ -179,11 +182,17 @@ HERE
     str << "        return clone;"
     str << "    }"
     str << ""
-    str << gen_msg_fields(grp[:name], grp[:fields], prepend_spaces+4)
-    str.last.lstrip!.prepend(' '*4) # hack to remove accidental extra whitespace on first line of that string
-    str << gen_msg_groups(grp[:groups], prepend_spaces+4)
+    str += gen_msg_fields(grp[:name], grp[:fields]).map {|s| s.strip.empty? ? '' : '    ' + s}
+    str << ""
+
+    # dumb hack to preserve existing spacing after a refactor
+    if grp[:groups].empty?
+      str << ""
+    end
+
+    str += gen_msg_groups(grp[:groups]).map {|s| s.strip.empty? ? '' : '    ' + s}
     str << "}"
-    str.map {|s| ' '*prepend_spaces + s}.join("\n")
+    str
   end
 
   def self.grp_field_order fields
