@@ -3,7 +3,7 @@
 using QuickFix.Fields;
 namespace QuickFix
 {
-    namespace FIX44 
+    namespace FIX44
     {
         public class TestRequest : Message
         {
@@ -22,8 +22,8 @@ namespace QuickFix
             }
 
             public QuickFix.Fields.TestReqID TestReqID
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.TestReqID val = new QuickFix.Fields.TestReqID();
                     GetField(val);
@@ -31,27 +31,28 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.TestReqID val) 
-            { 
+
+            public void Set(QuickFix.Fields.TestReqID val)
+            {
                 this.TestReqID = val;
             }
-            
-            public QuickFix.Fields.TestReqID Get(QuickFix.Fields.TestReqID val) 
-            { 
+
+            public QuickFix.Fields.TestReqID Get(QuickFix.Fields.TestReqID val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.TestReqID val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.TestReqID val)
+            {
                 return IsSetTestReqID();
             }
-            
-            public bool IsSetTestReqID() 
-            { 
+
+            public bool IsSetTestReqID()
+            {
                 return IsSetField(Tags.TestReqID);
             }
+
         }
     }
 }
