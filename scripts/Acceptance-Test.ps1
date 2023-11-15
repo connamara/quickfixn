@@ -5,8 +5,10 @@
     [switch]$UseWsl
 )
 
+$rootpath = Join-Path $PSScriptRoot '..' | Resolve-Path
+
 $ReturnValue=0
-$SuccessString="`r`nTest Suite Results:"
+$SuiteResults = @()
 
 function TestSpec
 {
@@ -33,19 +35,20 @@ function TestSpec
         [switch]$UseWsl
     )
 
-    Write-Host "====="
-    Write-Host "Launching AT for result file $Dest"
+    Write-Host -ForegroundColor Cyan "====="
+    Write-Host -ForegroundColor Cyan "Launching AT for result file $Dest"
 
     .\runat.ps1 $Configuration $Port "$Def" "$Conf" $Framework -UseWsl:$($UseWsl -and $UseWsl.IsPresent)
 
-    if ($LASTEXITCODE -ne 0) { $Script:ReturnValue = $Script:ReturnValue + 1 }
-
-    if (Test-Path TestResult.xml) {
-        Copy-Item TestResult.xml -Destination $Dest
-        Remove-Item TestResult.xml
+    if ($LASTEXITCODE -ne 0) {
+        $Script:ReturnValue += 1
     }
 
-    $Script:SuccessString = "${Script:SuccessString}`r`n`t$Dest tests result: $LASTEXITCODE"
+    if (Test-Path TestResult.xml) {
+        Move-Item TestResult.xml -Destination $Dest
+    }
+
+    $Script:SuiteResults += "$Dest tests result: $LASTEXITCODE"
 }
 
 function RunSuite
@@ -99,19 +102,29 @@ function RunSuite
 }
 
 try {
-    Write-Host "Launching acceptance tests..."
+    Write-Host -ForegroundColor Cyan "Launching acceptance tests..."
 
-    Push-Location -Path "AcceptanceTest" -StackName AcceptanceTest
+    Push-Location -Path (Join-Path $rootpath AcceptanceTest)
 
     Remove-Item AcceptanceTests_*.xml
 
     'net6.0' | RunSuite -Configuration $Configuration -UseWsl:$($UseWsl -and $UseWsl.IsPresent)
 } finally {
-    Pop-Location -StackName AcceptanceTest
+    Pop-Location
 
-    Write-Host $SuccessString
-    Write-Host "Script returns: $ReturnValue"
-    Write-Host "(0 means success)"
+    Write-Host -ForegroundColor Yellow "Test Suite Results:"
+    foreach ($result in $SuiteResults) {
+        $color = If ($result -match "0$") {"Green"} Else {"Red"}
+        Write-Host -ForegroundColor $color "    $result"
+    }
+    Write-Host ""
+
+    if ($ReturnValue -eq 0) {
+        Write-Host -ForegroundColor Green "Success!  All tests passed."
+    } else {
+        Write-Host -ForegroundColor Red "Failures detected.  Check the output above."
+    }
+    Write-Host ""
 }
 
 Exit $ReturnValue

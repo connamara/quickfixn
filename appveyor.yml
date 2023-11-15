@@ -8,7 +8,7 @@ install:
 - set PATH=C:\Ruby26-x64\bin;%PATH%
 - ruby -v
 - ps: |
-    .scripts\Generate-Message-Sources.ps1
+    .\scripts\Generate-Message-Sources.ps1
 
 before_test:
 - ruby -v
@@ -19,4 +19,4 @@ build_script:
 test_script:
 - ps: |
     dotnet test -c Release --no-build --no-restore UnitTests -l trx
-    .\acceptance_test.ps1
+    .\scripts\AcceptanceTest.ps1
