@@ -12,7 +12,8 @@ $fieldFiles = @(
     Join-Path $rootpath QuickFIXn Fields FieldTags.cs
 )
 
-$messageFiles = Join-Path $rootpath Messages FIX* *cs | Resolve-Path
+$messagePath = Join-Path $rootpath Messages FIX* *cs
+$messageFiles = $messagePath | Resolve-Path
 
 
 
@@ -33,11 +34,11 @@ foreach ($file in $fieldFiles) {
 Write-Host 'Message definition files:' -ForegroundColor Cyan
 
 if ($messageFiles.Count -eq 0) {
-    Write-Host "  WARNING: 'Messages/FIX*/*cs' has no matches." -ForegroundColor Red
+    Write-Host "  WARNING: '$messagePath' has no matches." -ForegroundColor Red
     $isErr = $true
 } else {
     Remove-Item $messageFiles
-    Write-Host "* All 'Messages/FIX*/*cs' files are deleted." -ForegroundColor Cyan 
+    Write-Host "* All '$messagePath' files are deleted." -ForegroundColor Cyan
 }
 
 if ($isErr) {
