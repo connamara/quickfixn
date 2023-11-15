@@ -7,8 +7,8 @@ install:
 - dir C:\
 - set PATH=C:\Ruby26-x64\bin;%PATH%
 - ruby -v
-- ps: |
-    .\scripts\Generate-Message-Sources.ps1
+- pwsh --Version
+- pwsh .\scripts\Generate-Message-Sources.ps1
 
 before_test:
 - ruby -v
@@ -17,6 +17,5 @@ build_script:
 - ps: dotnet build -c Release --framework net6.0
 
 test_script:
-- ps: |
-    dotnet test -c Release --no-build --no-restore UnitTests -l trx
-    .\scripts\AcceptanceTest.ps1
+- dotnet test -c Release --no-build --no-restore UnitTests -l trx
+- pwsh .\scripts\Acceptance-Test.ps1
