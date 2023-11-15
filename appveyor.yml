@@ -8,9 +8,7 @@ install:
 - set PATH=C:\Ruby26-x64\bin;%PATH%
 - ruby -v
 - ps: |
-    ruby -v
-    gem install nokogiri
-    ruby generator\generate.rb
+    .scripts\Generate-Message-Sources.ps1
 
 before_test:
 - ruby -v
