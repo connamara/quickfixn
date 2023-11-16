@@ -10,6 +10,9 @@ What's New
 
 **CAUTION: There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
+### NEXT RELEASE
+* #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
+
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages
 
