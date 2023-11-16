@@ -55,7 +55,7 @@ improvements by forking the repo and submitting pull requests.
 Commercial Support
 ------------------
 
-[![Connamara Systems, LLC][1]][0]
+[![Connamara][1]][0]
 
 
 Connamara offers commercial support for developers who are integrating 

@@ -34,9 +34,9 @@ and its creator Oren Miller.
 
 Commercial Backing
 ------------------
-Work on QuickFIX/n is sponsored by Connamara Systems.
+Work on QuickFIX/n is sponsored by Connamara.
 
-[![Connamara Systems, LLC][3]][2]
+[![Connamara][3]][2]
 
 In addition to launching and supporting the QuickFIX/n initiative, Connamara 
 has been involved with the QuickFIX project since its inception. Today, 
