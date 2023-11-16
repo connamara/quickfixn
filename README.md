@@ -82,9 +82,9 @@ Credits
 
 ![Connamara Systems](http://quickfixn.org/web/public/images/Connamara-Logo.png)
 
-QuickFIXn is maintained and funded by [Connamara Systems, LLC](http://connamara.com).
+QuickFIXn is maintained and funded by [Connamara](http://connamara.com).
 
-The names and logos for Connamara Systems are trademarks of Connamara Systems, LLC.
+The names and logos for Connamara are trademarks of Connamara Systems, LLC.
 
 Licensing
 ---------
