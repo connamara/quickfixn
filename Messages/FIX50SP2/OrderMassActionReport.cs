@@ -5824,7 +5824,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.OrigClOrdID, Tags.AffectedOrderID, Tags.AffectedSecondaryOrderID, 0};
 
                 public NoAffectedOrdersGroup()
-                  :base( Tags.NoAffectedOrders, Tags.OrigClOrdID, fieldOrder)
+                  : base(Tags.NoAffectedOrders, Tags.OrigClOrdID, fieldOrder)
                 {
                 }
 
@@ -5938,7 +5938,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0};
 
                 public NoPartyIDsGroup()
-                  :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
+                  : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                 {
                 }
 
@@ -6082,7 +6082,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
 
                     public NoPartySubIDsGroup()
-                      :base( Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
+                      : base(Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
                     {
                     }
 
@@ -6165,7 +6165,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
 
                 public NoSecurityAltIDGroup()
-                  :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
+                  : base(Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                 {
                 }
 
@@ -6247,7 +6247,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.EventType, Tags.EventDate, Tags.EventPx, Tags.EventText, Tags.EventTime, 0};
 
                 public NoEventsGroup()
-                  :base( Tags.NoEvents, Tags.EventType, fieldOrder)
+                  : base(Tags.NoEvents, Tags.EventType, fieldOrder)
                 {
                 }
 
@@ -6425,7 +6425,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.InstrumentPartyID, Tags.InstrumentPartyIDSource, Tags.InstrumentPartyRole, Tags.NoInstrumentPartySubIDs, 0};
 
                 public NoInstrumentPartiesGroup()
-                  :base( Tags.NoInstrumentParties, Tags.InstrumentPartyID, fieldOrder)
+                  : base(Tags.NoInstrumentParties, Tags.InstrumentPartyID, fieldOrder)
                 {
                 }
 
@@ -6569,7 +6569,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.InstrumentPartySubID, Tags.InstrumentPartySubIDType, 0};
 
                     public NoInstrumentPartySubIDsGroup()
-                      :base( Tags.NoInstrumentPartySubIDs, Tags.InstrumentPartySubID, fieldOrder)
+                      : base(Tags.NoInstrumentPartySubIDs, Tags.InstrumentPartySubID, fieldOrder)
                     {
                     }
 
@@ -6652,7 +6652,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.ComplexEventType, Tags.ComplexOptPayoutAmount, Tags.ComplexEventPrice, Tags.ComplexEventPriceBoundaryMethod, Tags.ComplexEventPriceBoundaryPrecision, Tags.ComplexEventPriceTimeType, Tags.ComplexEventCondition, Tags.NoComplexEventDates, 0};
 
                 public NoComplexEventsGroup()
-                  :base( Tags.NoComplexEvents, Tags.ComplexEventType, fieldOrder)
+                  : base(Tags.NoComplexEvents, Tags.ComplexEventType, fieldOrder)
                 {
                 }
 
@@ -6924,7 +6924,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.ComplexEventStartDate, Tags.ComplexEventEndDate, Tags.NoComplexEventTimes, 0};
 
                     public NoComplexEventDatesGroup()
-                      :base( Tags.NoComplexEventDates, Tags.ComplexEventStartDate, fieldOrder)
+                      : base(Tags.NoComplexEventDates, Tags.ComplexEventStartDate, fieldOrder)
                     {
                     }
 
@@ -7036,7 +7036,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.ComplexEventStartTime, Tags.ComplexEventEndTime, 0};
 
                         public NoComplexEventTimesGroup()
-                          :base( Tags.NoComplexEventTimes, Tags.ComplexEventStartTime, fieldOrder)
+                          : base(Tags.NoComplexEventTimes, Tags.ComplexEventStartTime, fieldOrder)
                         {
                         }
 
@@ -7120,7 +7120,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
 
                 public NoUnderlyingSecurityAltIDGroup()
-                  :base( Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingSecurityAltID, fieldOrder)
+                  : base(Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingSecurityAltID, fieldOrder)
                 {
                 }
 
@@ -7202,7 +7202,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.UnderlyingStipType, Tags.UnderlyingStipValue, 0};
 
                 public NoUnderlyingStipsGroup()
-                  :base( Tags.NoUnderlyingStips, Tags.UnderlyingStipType, fieldOrder)
+                  : base(Tags.NoUnderlyingStips, Tags.UnderlyingStipType, fieldOrder)
                 {
                 }
 
@@ -7284,7 +7284,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.UnderlyingInstrumentPartyID, Tags.UnderlyingInstrumentPartyIDSource, Tags.UnderlyingInstrumentPartyRole, Tags.NoUndlyInstrumentPartySubIDs, 0};
 
                 public NoUndlyInstrumentPartiesGroup()
-                  :base( Tags.NoUndlyInstrumentParties, Tags.UnderlyingInstrumentPartyID, fieldOrder)
+                  : base(Tags.NoUndlyInstrumentParties, Tags.UnderlyingInstrumentPartyID, fieldOrder)
                 {
                 }
 
@@ -7428,7 +7428,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.UnderlyingInstrumentPartySubID, Tags.UnderlyingInstrumentPartySubIDType, 0};
 
                     public NoUndlyInstrumentPartySubIDsGroup()
-                      :base( Tags.NoUndlyInstrumentPartySubIDs, Tags.UnderlyingInstrumentPartySubID, fieldOrder)
+                      : base(Tags.NoUndlyInstrumentPartySubIDs, Tags.UnderlyingInstrumentPartySubID, fieldOrder)
                     {
                     }
 
@@ -7511,7 +7511,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.NotAffOrigClOrdID, Tags.NotAffectedOrderID, 0};
 
                 public NoNotAffectedOrdersGroup()
-                  :base( Tags.NoNotAffectedOrders, Tags.NotAffOrigClOrdID, fieldOrder)
+                  : base(Tags.NoNotAffectedOrders, Tags.NotAffOrigClOrdID, fieldOrder)
                 {
                 }
 
@@ -7593,7 +7593,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.TargetPartyID, Tags.TargetPartyIDSource, Tags.TargetPartyRole, 0};
 
                 public NoTargetPartyIDsGroup()
-                  :base( Tags.NoTargetPartyIDs, Tags.TargetPartyID, fieldOrder)
+                  : base(Tags.NoTargetPartyIDs, Tags.TargetPartyID, fieldOrder)
                 {
                 }
 

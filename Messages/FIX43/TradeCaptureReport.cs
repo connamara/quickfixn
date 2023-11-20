@@ -1928,7 +1928,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
 
                 public NoSecurityAltIDGroup()
-                  :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
+                  : base(Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                 {
                 }
 
@@ -2010,7 +2010,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.Side, Tags.OrderID, Tags.SecondaryOrderID, Tags.ClOrdID, Tags.NoPartyIDs, Tags.Account, Tags.AccountType, Tags.ProcessCode, Tags.OddLot, Tags.NoClearingInstructions, Tags.ClearingFeeIndicator, Tags.TradeInputSource, Tags.TradeInputDevice, Tags.Currency, Tags.ComplianceID, Tags.SolicitedFlag, Tags.OrderCapacity, Tags.OrderRestrictions, Tags.CustOrderCapacity, Tags.TransBkdTime, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.Commission, Tags.CommType, Tags.CommCurrency, Tags.FundRenewWaiv, Tags.GrossTradeAmt, Tags.NumDaysInterest, Tags.ExDate, Tags.AccruedInterestRate, Tags.AccruedInterestAmt, Tags.Concession, Tags.TotalTakedown, Tags.NetMoney, Tags.SettlCurrAmt, Tags.SettlCurrency, Tags.SettlCurrFxRate, Tags.SettlCurrFxRateCalc, Tags.PositionEffect, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, Tags.MultiLegReportingType, Tags.NoContAmts, Tags.NoMiscFees, 0};
 
                 public NoSidesGroup()
-                  :base( Tags.NoSides, Tags.Side, fieldOrder)
+                  : base(Tags.NoSides, Tags.Side, fieldOrder)
                 {
                 }
 
@@ -3466,7 +3466,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.PartySubID, 0};
 
                     public NoPartyIDsGroup()
-                      :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
+                      : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                     {
                     }
 
@@ -3612,7 +3612,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.ClearingInstruction, 0};
 
                     public NoClearingInstructionsGroup()
-                      :base( Tags.NoClearingInstructions, Tags.ClearingInstruction, fieldOrder)
+                      : base(Tags.NoClearingInstructions, Tags.ClearingInstruction, fieldOrder)
                     {
                     }
 
@@ -3662,7 +3662,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.ContAmtType, Tags.ContAmtValue, Tags.ContAmtCurr, 0};
 
                     public NoContAmtsGroup()
-                      :base( Tags.NoContAmts, Tags.ContAmtType, fieldOrder)
+                      : base(Tags.NoContAmts, Tags.ContAmtType, fieldOrder)
                     {
                     }
 
@@ -3776,7 +3776,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
 
                     public NoMiscFeesGroup()
-                      :base( Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
+                      : base(Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
                     {
                     }
 

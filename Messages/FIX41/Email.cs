@@ -350,7 +350,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.RelatdSym, Tags.SymbolSfx, Tags.SecurityID, Tags.IDSource, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDay, Tags.PutOrCall, Tags.StrikePrice, Tags.OptAttribute, Tags.SecurityExchange, Tags.Issuer, Tags.SecurityDesc, 0};
 
                 public NoRelatedSymGroup()
-                  :base( Tags.NoRelatedSym, Tags.RelatdSym, fieldOrder)
+                  : base(Tags.NoRelatedSym, Tags.RelatdSym, fieldOrder)
                 {
                 }
 
@@ -784,7 +784,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.Text, 0};
 
                 public LinesOfTextGroup()
-                  :base( Tags.LinesOfText, Tags.Text, fieldOrder)
+                  : base(Tags.LinesOfText, Tags.Text, fieldOrder)
                 {
                 }
 

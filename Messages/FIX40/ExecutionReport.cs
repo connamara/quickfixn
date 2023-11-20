@@ -1486,7 +1486,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
 
                 public NoMiscFeesGroup()
-                  :base( Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
+                  : base(Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
                 {
                 }
 

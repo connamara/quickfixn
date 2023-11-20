@@ -348,7 +348,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.PartySubID, 0};
 
                 public NoPartyIDsGroup()
-                  :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
+                  : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                 {
                 }
 
@@ -494,7 +494,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.SecurityIDSource, Tags.NoSecurityAltID, Tags.Product, Tags.CFICode, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDate, Tags.CouponPaymentDate, Tags.IssueDate, Tags.RepoCollateralSecurityType, Tags.RepurchaseTerm, Tags.RepurchaseRate, Tags.Factor, Tags.CreditRating, Tags.InstrRegistry, Tags.CountryOfIssue, Tags.StateOrProvinceOfIssue, Tags.LocaleOfIssue, Tags.RedemptionDate, Tags.StrikePrice, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, 0};
 
                 public NoQuoteEntriesGroup()
-                  :base( Tags.NoQuoteEntries, Tags.Symbol, fieldOrder)
+                  : base(Tags.NoQuoteEntries, Tags.Symbol, fieldOrder)
                 {
                 }
 
@@ -1566,7 +1566,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
 
                     public NoSecurityAltIDGroup()
-                      :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
+                      : base(Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                     {
                     }
 

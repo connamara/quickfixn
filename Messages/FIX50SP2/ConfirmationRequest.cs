@@ -446,7 +446,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.ClOrdID, Tags.OrderID, Tags.SecondaryOrderID, Tags.SecondaryClOrdID, Tags.ListID, Tags.NoNested2PartyIDs, Tags.OrderQty, Tags.OrderAvgPx, Tags.OrderBookingQty, 0};
 
                 public NoOrdersGroup()
-                  :base( Tags.NoOrders, Tags.ClOrdID, fieldOrder)
+                  : base(Tags.NoOrders, Tags.ClOrdID, fieldOrder)
                 {
                 }
 
@@ -750,7 +750,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.Nested2PartyID, Tags.Nested2PartyIDSource, Tags.Nested2PartyRole, Tags.NoNested2PartySubIDs, 0};
 
                     public NoNested2PartyIDsGroup()
-                      :base( Tags.NoNested2PartyIDs, Tags.Nested2PartyID, fieldOrder)
+                      : base(Tags.NoNested2PartyIDs, Tags.Nested2PartyID, fieldOrder)
                     {
                     }
 
@@ -894,7 +894,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.Nested2PartySubID, Tags.Nested2PartySubIDType, 0};
 
                         public NoNested2PartySubIDsGroup()
-                          :base( Tags.NoNested2PartySubIDs, Tags.Nested2PartySubID, fieldOrder)
+                          : base(Tags.NoNested2PartySubIDs, Tags.Nested2PartySubID, fieldOrder)
                         {
                         }
 

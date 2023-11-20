@@ -282,7 +282,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.Text, 0};
 
                 public LinesOfTextGroup()
-                  :base( Tags.LinesOfText, Tags.Text, fieldOrder)
+                  : base(Tags.LinesOfText, Tags.Text, fieldOrder)
                 {
                 }
 

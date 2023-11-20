@@ -212,7 +212,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.SecurityExchange, Tags.TradSesMethod, Tags.TradSesMode, Tags.UnsolicitedIndicator, Tags.TradSesStatus, Tags.TradSesStatusRejReason, Tags.TradSesStartTime, Tags.TradSesOpenTime, Tags.TradSesPreCloseTime, Tags.TradSesCloseTime, Tags.TradSesEndTime, Tags.TotalVolumeTraded, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, Tags.MarketID, Tags.MarketSegmentID, Tags.TradingSessionDesc, Tags.NoOrdTypeRules, Tags.NoTimeInForceRules, Tags.NoExecInstRules, Tags.NoMatchRules, Tags.NoMDFeedTypes, Tags.TransactTime, Tags.TradSesUpdateAction, 0};
 
                 public NoTradingSessionsGroup()
-                  :base( Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
+                  : base(Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
                 {
                 }
 
@@ -1092,7 +1092,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.OrdType, 0};
 
                     public NoOrdTypeRulesGroup()
-                      :base( Tags.NoOrdTypeRules, Tags.OrdType, fieldOrder)
+                      : base(Tags.NoOrdTypeRules, Tags.OrdType, fieldOrder)
                     {
                     }
 
@@ -1142,7 +1142,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.TimeInForce, 0};
 
                     public NoTimeInForceRulesGroup()
-                      :base( Tags.NoTimeInForceRules, Tags.TimeInForce, fieldOrder)
+                      : base(Tags.NoTimeInForceRules, Tags.TimeInForce, fieldOrder)
                     {
                     }
 
@@ -1192,7 +1192,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.ExecInstValue, 0};
 
                     public NoExecInstRulesGroup()
-                      :base( Tags.NoExecInstRules, Tags.ExecInstValue, fieldOrder)
+                      : base(Tags.NoExecInstRules, Tags.ExecInstValue, fieldOrder)
                     {
                     }
 
@@ -1242,7 +1242,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.MatchAlgorithm, Tags.MatchType, 0};
 
                     public NoMatchRulesGroup()
-                      :base( Tags.NoMatchRules, Tags.MatchAlgorithm, fieldOrder)
+                      : base(Tags.NoMatchRules, Tags.MatchAlgorithm, fieldOrder)
                     {
                     }
 
@@ -1324,7 +1324,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.MDFeedType, Tags.MarketDepth, Tags.MDBookType, 0};
 
                     public NoMDFeedTypesGroup()
-                      :base( Tags.NoMDFeedTypes, Tags.MDFeedType, fieldOrder)
+                      : base(Tags.NoMDFeedTypes, Tags.MDFeedType, fieldOrder)
                     {
                     }
 

@@ -1250,7 +1250,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.IOIQualifier, 0};
 
                 public NoIOIQualifiersGroup()
-                  :base( Tags.NoIOIQualifiers, Tags.IOIQualifier, fieldOrder)
+                  : base(Tags.NoIOIQualifiers, Tags.IOIQualifier, fieldOrder)
                 {
                 }
 
@@ -1300,7 +1300,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.RoutingType, Tags.RoutingID, 0};
 
                 public NoRoutingIDsGroup()
-                  :base( Tags.NoRoutingIDs, Tags.RoutingType, fieldOrder)
+                  : base(Tags.NoRoutingIDs, Tags.RoutingType, fieldOrder)
                 {
                 }
 

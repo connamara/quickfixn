@@ -84,7 +84,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.SecurityExchange, Tags.TradSesMethod, Tags.TradSesMode, Tags.UnsolicitedIndicator, Tags.TradSesStatus, Tags.TradSesStatusRejReason, Tags.TradSesStartTime, Tags.TradSesOpenTime, Tags.TradSesPreCloseTime, Tags.TradSesCloseTime, Tags.TradSesEndTime, Tags.TotalVolumeTraded, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
 
                 public NoTradingSessionsGroup()
-                  :base( Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
+                  : base(Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
                 {
                 }
 

@@ -964,7 +964,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.BidDescriptorType, Tags.BidDescriptor, Tags.SideValueInd, Tags.LiquidityValue, Tags.LiquidityNumSecurities, Tags.LiquidityPctLow, Tags.LiquidityPctHigh, Tags.EFPTrackingError, Tags.FairValue, Tags.OutsideIndexPct, Tags.ValueOfFutures, 0};
 
                 public NoBidDescriptorsGroup()
-                  :base( Tags.NoBidDescriptors, Tags.BidDescriptorType, fieldOrder)
+                  : base(Tags.NoBidDescriptors, Tags.BidDescriptorType, fieldOrder)
                 {
                 }
 
@@ -1334,7 +1334,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.ListID, Tags.Side, Tags.TradingSessionID, Tags.NetGrossInd, Tags.SettlmntTyp, Tags.FutSettDate, Tags.Account, 0};
 
                 public NoBidComponentsGroup()
-                  :base( Tags.NoBidComponents, Tags.ListID, fieldOrder)
+                  : base(Tags.NoBidComponents, Tags.ListID, fieldOrder)
                 {
                 }
 

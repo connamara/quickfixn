@@ -124,7 +124,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.IDSource, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDay, Tags.PutOrCall, Tags.StrikePrice, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, Tags.PrevClosePx, Tags.ClOrdID, Tags.Side, Tags.Price, Tags.Currency, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
 
                 public NoStrikesGroup()
-                  :base( Tags.NoStrikes, Tags.Symbol, fieldOrder)
+                  : base(Tags.NoStrikes, Tags.Symbol, fieldOrder)
                 {
                 }
 

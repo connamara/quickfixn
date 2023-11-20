@@ -188,7 +188,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.RefCompID, Tags.RefSubID, Tags.LocationID, Tags.DeskID, Tags.StatusValue, Tags.StatusText, 0};
 
                 public NoCompIDsGroup()
-                  :base( Tags.NoCompIDs, Tags.RefCompID, fieldOrder)
+                  : base(Tags.NoCompIDs, Tags.RefCompID, fieldOrder)
                 {
                 }
 

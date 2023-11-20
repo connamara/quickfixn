@@ -958,7 +958,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.UnderlyingSymbol, Tags.UnderlyingSymbolSfx, Tags.UnderlyingSecurityID, Tags.UnderlyingIDSource, Tags.UnderlyingSecurityType, Tags.UnderlyingMaturityMonthYear, Tags.UnderlyingMaturityDay, Tags.UnderlyingPutOrCall, Tags.UnderlyingStrikePrice, Tags.UnderlyingOptAttribute, Tags.UnderlyingContractMultiplier, Tags.UnderlyingCouponRate, Tags.UnderlyingSecurityExchange, Tags.UnderlyingIssuer, Tags.EncodedUnderlyingIssuerLen, Tags.EncodedUnderlyingIssuer, Tags.UnderlyingSecurityDesc, Tags.EncodedUnderlyingSecurityDescLen, Tags.EncodedUnderlyingSecurityDesc, Tags.RatioQty, Tags.Side, Tags.UnderlyingCurrency, 0};
 
                 public NoRelatedSymGroup()
-                  :base( Tags.NoRelatedSym, Tags.UnderlyingSymbol, fieldOrder)
+                  : base(Tags.NoRelatedSym, Tags.UnderlyingSymbol, fieldOrder)
                 {
                 }
 

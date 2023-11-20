@@ -930,7 +930,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.IOIQualifier, 0};
 
                 public NoIOIQualifiersGroup()
-                  :base( Tags.NoIOIQualifiers, Tags.IOIQualifier, fieldOrder)
+                  : base(Tags.NoIOIQualifiers, Tags.IOIQualifier, fieldOrder)
                 {
                 }
 

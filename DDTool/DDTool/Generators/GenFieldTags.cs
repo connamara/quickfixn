@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using DDTool.Structures;
@@ -43,6 +44,6 @@ public static class GenFieldTags {
         lines.Add("}");
         lines.Add("");
 
-        return string.Join("\r\n", lines);
+        return string.Join(Environment.NewLine, lines);
     }
 }

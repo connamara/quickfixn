@@ -1852,7 +1852,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
 
                 public NoUnderlyingSecurityAltIDGroup()
-                  :base( Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingSecurityAltID, fieldOrder)
+                  : base(Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingSecurityAltID, fieldOrder)
                 {
                 }
 
@@ -1934,7 +1934,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.UnderlyingStipType, Tags.UnderlyingStipValue, 0};
 
                 public NoUnderlyingStipsGroup()
-                  :base( Tags.NoUnderlyingStips, Tags.UnderlyingStipType, fieldOrder)
+                  : base(Tags.NoUnderlyingStips, Tags.UnderlyingStipType, fieldOrder)
                 {
                 }
 
