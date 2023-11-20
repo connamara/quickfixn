@@ -218,7 +218,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.AltMDSourceID, 0};
 
                 public NoAltMDSourceGroup()
-                  :base( Tags.NoAltMDSource, Tags.AltMDSourceID, fieldOrder)
+                  : base(Tags.NoAltMDSource, Tags.AltMDSourceID, fieldOrder)
                 {
                 }
 

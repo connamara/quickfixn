@@ -698,7 +698,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0};
 
                 public NoPartyIDsGroup()
-                  :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
+                  : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                 {
                 }
 
@@ -842,7 +842,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
 
                     public NoPartySubIDsGroup()
-                      :base( Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
+                      : base(Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
                     {
                     }
 
@@ -925,7 +925,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocAcctIDSource, Tags.AllocPrice, Tags.IndividualAllocID, Tags.IndividualAllocRejCode, Tags.AllocText, Tags.EncodedAllocTextLen, Tags.EncodedAllocText, Tags.SecondaryIndividualAllocID, Tags.AllocCustomerCapacity, Tags.IndividualAllocType, Tags.AllocQty, Tags.NoNestedPartyIDs, Tags.AllocPositionEffect, 0};
 
                 public NoAllocsGroup()
-                  :base( Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
+                  : base(Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
                 {
                 }
 
@@ -1389,7 +1389,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.NestedPartyID, Tags.NestedPartyIDSource, Tags.NestedPartyRole, Tags.NoNestedPartySubIDs, 0};
 
                     public NoNestedPartyIDsGroup()
-                      :base( Tags.NoNestedPartyIDs, Tags.NestedPartyID, fieldOrder)
+                      : base(Tags.NoNestedPartyIDs, Tags.NestedPartyID, fieldOrder)
                     {
                     }
 
@@ -1533,7 +1533,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.NestedPartySubID, Tags.NestedPartySubIDType, 0};
 
                         public NoNestedPartySubIDsGroup()
-                          :base( Tags.NoNestedPartySubIDs, Tags.NestedPartySubID, fieldOrder)
+                          : base(Tags.NoNestedPartySubIDs, Tags.NestedPartySubID, fieldOrder)
                         {
                         }
 

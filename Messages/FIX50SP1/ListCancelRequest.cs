@@ -284,7 +284,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0};
 
                 public NoPartyIDsGroup()
-                  :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
+                  : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                 {
                 }
 
@@ -428,7 +428,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
 
                     public NoPartySubIDsGroup()
-                      :base( Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
+                      : base(Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
                     {
                     }
 

@@ -3686,7 +3686,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.PartySubID, 0};
 
                 public NoPartyIDsGroup()
-                  :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
+                  : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                 {
                 }
 
@@ -3832,7 +3832,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.AllocAccount, Tags.IndividualAllocID, Tags.NoNestedPartyIDs, Tags.AllocQty, 0};
 
                 public NoAllocsGroup()
-                  :base( Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
+                  : base(Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
                 {
                 }
 
@@ -3976,7 +3976,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.NestedPartyID, Tags.NestedPartyIDSource, Tags.NestedPartyRole, Tags.NestedPartySubID, 0};
 
                     public NoNestedPartyIDsGroup()
-                      :base( Tags.NoNestedPartyIDs, Tags.NestedPartyID, fieldOrder)
+                      : base(Tags.NoNestedPartyIDs, Tags.NestedPartyID, fieldOrder)
                     {
                     }
 
@@ -4123,7 +4123,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.TradingSessionID, Tags.TradingSessionSubID, 0};
 
                 public NoTradingSessionsGroup()
-                  :base( Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
+                  : base(Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
                 {
                 }
 
@@ -4205,7 +4205,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
 
                 public NoSecurityAltIDGroup()
-                  :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
+                  : base(Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                 {
                 }
 

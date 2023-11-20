@@ -2280,7 +2280,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.ClOrdID, Tags.OrderID, Tags.SecondaryOrderID, Tags.SecondaryClOrdID, Tags.ListID, 0};
 
                 public NoOrdersGroup()
-                  :base( Tags.NoOrders, Tags.ClOrdID, fieldOrder)
+                  : base(Tags.NoOrders, Tags.ClOrdID, fieldOrder)
                 {
                 }
 
@@ -2458,7 +2458,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.LastQty, Tags.ExecID, Tags.SecondaryExecID, Tags.LastPx, Tags.LastCapacity, 0};
 
                 public NoExecsGroup()
-                  :base( Tags.NoExecs, Tags.LastQty, fieldOrder)
+                  : base(Tags.NoExecs, Tags.LastQty, fieldOrder)
                 {
                 }
 
@@ -2636,7 +2636,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
 
                 public NoSecurityAltIDGroup()
-                  :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
+                  : base(Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                 {
                 }
 
@@ -2718,7 +2718,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.PartySubID, 0};
 
                 public NoPartyIDsGroup()
-                  :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
+                  : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                 {
                 }
 
@@ -2864,7 +2864,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocPrice, Tags.AllocQty, Tags.IndividualAllocID, Tags.ProcessCode, Tags.NoNestedPartyIDs, Tags.NotifyBrokerOfCredit, Tags.AllocHandlInst, Tags.AllocText, Tags.EncodedAllocTextLen, Tags.EncodedAllocText, Tags.Commission, Tags.CommType, Tags.CommCurrency, Tags.FundRenewWaiv, Tags.AllocAvgPx, Tags.AllocNetMoney, Tags.SettlCurrAmt, Tags.SettlCurrency, Tags.SettlCurrFxRate, Tags.SettlCurrFxRateCalc, Tags.AccruedInterestAmt, Tags.SettlInstMode, Tags.NoMiscFees, 0};
 
                 public NoAllocsGroup()
-                  :base( Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
+                  : base(Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
                 {
                 }
 
@@ -3648,7 +3648,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.NestedPartyID, Tags.NestedPartyIDSource, Tags.NestedPartyRole, Tags.NestedPartySubID, 0};
 
                     public NoNestedPartyIDsGroup()
-                      :base( Tags.NoNestedPartyIDs, Tags.NestedPartyID, fieldOrder)
+                      : base(Tags.NoNestedPartyIDs, Tags.NestedPartyID, fieldOrder)
                     {
                     }
 
@@ -3794,7 +3794,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
 
                     public NoMiscFeesGroup()
-                      :base( Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
+                      : base(Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
                     {
                     }
 

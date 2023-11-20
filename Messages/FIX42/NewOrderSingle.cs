@@ -2308,7 +2308,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocShares, 0};
 
                 public NoAllocsGroup()
-                  :base( Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
+                  : base(Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
                 {
                 }
 
@@ -2390,7 +2390,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.TradingSessionID, 0};
 
                 public NoTradingSessionsGroup()
-                  :base( Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
+                  : base(Tags.NoTradingSessions, Tags.TradingSessionID, fieldOrder)
                 {
                 }
 

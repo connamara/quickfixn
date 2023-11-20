@@ -444,7 +444,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.NetGrossInd, Tags.SettlObligID, Tags.SettlObligTransType, Tags.SettlObligRefID, Tags.CcyAmt, Tags.SettlCurrAmt, Tags.Currency, Tags.SettlCurrency, Tags.SettlCurrFxRate, Tags.SettlDate, Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.SecurityIDSource, Tags.NoSecurityAltID, Tags.Product, Tags.CFICode, Tags.SecurityType, Tags.SecuritySubType, Tags.MaturityMonthYear, Tags.MaturityDate, Tags.CouponPaymentDate, Tags.IssueDate, Tags.RepoCollateralSecurityType, Tags.RepurchaseTerm, Tags.RepurchaseRate, Tags.Factor, Tags.CreditRating, Tags.InstrRegistry, Tags.CountryOfIssue, Tags.StateOrProvinceOfIssue, Tags.LocaleOfIssue, Tags.RedemptionDate, Tags.StrikePrice, Tags.StrikeCurrency, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, Tags.Pool, Tags.ContractSettlMonth, Tags.CPProgram, Tags.CPRegType, Tags.NoEvents, Tags.DatedDate, Tags.InterestAccrualDate, Tags.SecurityStatus, Tags.SettleOnOpenFlag, Tags.InstrmtAssignmentMethod, Tags.StrikeMultiplier, Tags.StrikeValue, Tags.MinPriceIncrement, Tags.PositionLimit, Tags.NTPositionLimit, Tags.NoInstrumentParties, Tags.UnitOfMeasure, Tags.TimeUnit, Tags.MaturityTime, Tags.SecurityGroup, Tags.MinPriceIncrementAmount, Tags.UnitOfMeasureQty, Tags.SecurityXMLLen, Tags.SecurityXML, Tags.SecurityXMLSchema, Tags.ProductComplex, Tags.PriceUnitOfMeasure, Tags.PriceUnitOfMeasureQty, Tags.SettlMethod, Tags.ExerciseStyle, Tags.OptPayoutAmount, Tags.PriceQuoteMethod, Tags.ListMethod, Tags.CapPrice, Tags.FloorPrice, Tags.PutOrCall, Tags.FlexibleIndicator, Tags.FlexProductEligibilityIndicator, Tags.ValuationMethod, Tags.ContractMultiplierUnit, Tags.FlowScheduleType, Tags.RestructuringType, Tags.Seniority, Tags.NotionalPercentageOutstanding, Tags.OriginalNotionalPercentageOutstanding, Tags.AttachmentPoint, Tags.DetachmentPoint, Tags.StrikePriceDeterminationMethod, Tags.StrikePriceBoundaryMethod, Tags.StrikePriceBoundaryPrecision, Tags.UnderlyingPriceDeterminationMethod, Tags.OptPayoutType, Tags.NoComplexEvents, Tags.NoPartyIDs, Tags.EffectiveTime, Tags.ExpireTime, Tags.LastUpdateTime, Tags.NoSettlDetails, 0};
 
                 public NoSettlObligGroup()
-                  :base( Tags.NoSettlOblig, Tags.NetGrossInd, fieldOrder)
+                  : base(Tags.NoSettlOblig, Tags.NetGrossInd, fieldOrder)
                 {
                 }
 
@@ -3756,7 +3756,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
 
                     public NoSecurityAltIDGroup()
-                      :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
+                      : base(Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                     {
                     }
 
@@ -3838,7 +3838,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.EventType, Tags.EventDate, Tags.EventPx, Tags.EventText, Tags.EventTime, 0};
 
                     public NoEventsGroup()
-                      :base( Tags.NoEvents, Tags.EventType, fieldOrder)
+                      : base(Tags.NoEvents, Tags.EventType, fieldOrder)
                     {
                     }
 
@@ -4016,7 +4016,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.InstrumentPartyID, Tags.InstrumentPartyIDSource, Tags.InstrumentPartyRole, Tags.NoInstrumentPartySubIDs, 0};
 
                     public NoInstrumentPartiesGroup()
-                      :base( Tags.NoInstrumentParties, Tags.InstrumentPartyID, fieldOrder)
+                      : base(Tags.NoInstrumentParties, Tags.InstrumentPartyID, fieldOrder)
                     {
                     }
 
@@ -4160,7 +4160,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.InstrumentPartySubID, Tags.InstrumentPartySubIDType, 0};
 
                         public NoInstrumentPartySubIDsGroup()
-                          :base( Tags.NoInstrumentPartySubIDs, Tags.InstrumentPartySubID, fieldOrder)
+                          : base(Tags.NoInstrumentPartySubIDs, Tags.InstrumentPartySubID, fieldOrder)
                         {
                         }
 
@@ -4243,7 +4243,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.ComplexEventType, Tags.ComplexOptPayoutAmount, Tags.ComplexEventPrice, Tags.ComplexEventPriceBoundaryMethod, Tags.ComplexEventPriceBoundaryPrecision, Tags.ComplexEventPriceTimeType, Tags.ComplexEventCondition, Tags.NoComplexEventDates, 0};
 
                     public NoComplexEventsGroup()
-                      :base( Tags.NoComplexEvents, Tags.ComplexEventType, fieldOrder)
+                      : base(Tags.NoComplexEvents, Tags.ComplexEventType, fieldOrder)
                     {
                     }
 
@@ -4515,7 +4515,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.ComplexEventStartDate, Tags.ComplexEventEndDate, Tags.NoComplexEventTimes, 0};
 
                         public NoComplexEventDatesGroup()
-                          :base( Tags.NoComplexEventDates, Tags.ComplexEventStartDate, fieldOrder)
+                          : base(Tags.NoComplexEventDates, Tags.ComplexEventStartDate, fieldOrder)
                         {
                         }
 
@@ -4627,7 +4627,7 @@ namespace QuickFix
                             public static int[] fieldOrder = {Tags.ComplexEventStartTime, Tags.ComplexEventEndTime, 0};
 
                             public NoComplexEventTimesGroup()
-                              :base( Tags.NoComplexEventTimes, Tags.ComplexEventStartTime, fieldOrder)
+                              : base(Tags.NoComplexEventTimes, Tags.ComplexEventStartTime, fieldOrder)
                             {
                             }
 
@@ -4711,7 +4711,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0};
 
                     public NoPartyIDsGroup()
-                      :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
+                      : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                     {
                     }
 
@@ -4855,7 +4855,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
 
                         public NoPartySubIDsGroup()
-                          :base( Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
+                          : base(Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
                         {
                         }
 
@@ -4938,7 +4938,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.SettlObligSource, Tags.NoSettlPartyIDs, 0};
 
                     public NoSettlDetailsGroup()
-                      :base( Tags.NoSettlDetails, Tags.SettlObligSource, fieldOrder)
+                      : base(Tags.NoSettlDetails, Tags.SettlObligSource, fieldOrder)
                     {
                     }
 
@@ -5018,7 +5018,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.SettlPartyID, Tags.SettlPartyIDSource, Tags.SettlPartyRole, Tags.NoSettlPartySubIDs, 0};
 
                         public NoSettlPartyIDsGroup()
-                          :base( Tags.NoSettlPartyIDs, Tags.SettlPartyID, fieldOrder)
+                          : base(Tags.NoSettlPartyIDs, Tags.SettlPartyID, fieldOrder)
                         {
                         }
 
@@ -5162,7 +5162,7 @@ namespace QuickFix
                             public static int[] fieldOrder = {Tags.SettlPartySubID, Tags.SettlPartySubIDType, 0};
 
                             public NoSettlPartySubIDsGroup()
-                              :base( Tags.NoSettlPartySubIDs, Tags.SettlPartySubID, fieldOrder)
+                              : base(Tags.NoSettlPartySubIDs, Tags.SettlPartySubID, fieldOrder)
                             {
                             }
 

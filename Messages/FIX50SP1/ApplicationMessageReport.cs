@@ -220,7 +220,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.RefApplID, Tags.ApplNewSeqNum, Tags.RefApplLastSeqNum, 0};
 
                 public NoApplIDsGroup()
-                  :base( Tags.NoApplIDs, Tags.RefApplID, fieldOrder)
+                  : base(Tags.NoApplIDs, Tags.RefApplID, fieldOrder)
                 {
                 }
 

@@ -314,7 +314,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyListResponseType, 0};
 
                 public NoPartyListResponseTypesGroup()
-                  :base( Tags.NoPartyListResponseTypes, Tags.PartyListResponseType, fieldOrder)
+                  : base(Tags.NoPartyListResponseTypes, Tags.PartyListResponseType, fieldOrder)
                 {
                 }
 
@@ -364,7 +364,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0};
 
                 public NoPartyIDsGroup()
-                  :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
+                  : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                 {
                 }
 
@@ -508,7 +508,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
 
                     public NoPartySubIDsGroup()
-                      :base( Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
+                      : base(Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
                     {
                     }
 
@@ -591,7 +591,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.RequestedPartyRole, 0};
 
                 public NoRequestedPartyRolesGroup()
-                  :base( Tags.NoRequestedPartyRoles, Tags.RequestedPartyRole, fieldOrder)
+                  : base(Tags.NoRequestedPartyRoles, Tags.RequestedPartyRole, fieldOrder)
                 {
                 }
 
@@ -641,7 +641,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyRelationship, 0};
 
                 public NoPartyRelationshipsGroup()
-                  :base( Tags.NoPartyRelationships, Tags.PartyRelationship, fieldOrder)
+                  : base(Tags.NoPartyRelationships, Tags.PartyRelationship, fieldOrder)
                 {
                 }
 

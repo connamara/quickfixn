@@ -414,7 +414,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.RefMsgType, Tags.MsgDirection, Tags.RefApplVerID, Tags.RefCstmApplVerID, 0};
 
                 public NoMsgTypesGroup()
-                  :base( Tags.NoMsgTypes, Tags.RefMsgType, fieldOrder)
+                  : base(Tags.NoMsgTypes, Tags.RefMsgType, fieldOrder)
                 {
                 }
 

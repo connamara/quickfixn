@@ -190,7 +190,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.ClOrdID, Tags.CumQty, Tags.CxlQty, Tags.AvgPx, 0};
 
                 public NoOrdersGroup()
-                  :base( Tags.NoOrders, Tags.ClOrdID, fieldOrder)
+                  : base(Tags.NoOrders, Tags.ClOrdID, fieldOrder)
                 {
                 }
 

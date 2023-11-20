@@ -2988,7 +2988,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.ContraBroker, Tags.ContraTrader, Tags.ContraTradeQty, Tags.ContraTradeTime, 0};
 
                 public NoContraBrokersGroup()
-                  :base( Tags.NoContraBrokers, Tags.ContraBroker, fieldOrder)
+                  : base(Tags.NoContraBrokers, Tags.ContraBroker, fieldOrder)
                 {
                 }
 

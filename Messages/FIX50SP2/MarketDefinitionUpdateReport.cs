@@ -1212,7 +1212,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.StartTickPriceRange, Tags.EndTickPriceRange, Tags.TickIncrement, Tags.TickRuleType, 0};
 
                 public NoTickRulesGroup()
-                  :base( Tags.NoTickRules, Tags.StartTickPriceRange, fieldOrder)
+                  : base(Tags.NoTickRules, Tags.StartTickPriceRange, fieldOrder)
                 {
                 }
 
@@ -1358,7 +1358,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.LotType, Tags.MinLotSize, 0};
 
                 public NoLotTypeRulesGroup()
-                  :base( Tags.NoLotTypeRules, Tags.LotType, fieldOrder)
+                  : base(Tags.NoLotTypeRules, Tags.LotType, fieldOrder)
                 {
                 }
 
@@ -1440,7 +1440,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.OrdType, 0};
 
                 public NoOrdTypeRulesGroup()
-                  :base( Tags.NoOrdTypeRules, Tags.OrdType, fieldOrder)
+                  : base(Tags.NoOrdTypeRules, Tags.OrdType, fieldOrder)
                 {
                 }
 
@@ -1490,7 +1490,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.TimeInForce, 0};
 
                 public NoTimeInForceRulesGroup()
-                  :base( Tags.NoTimeInForceRules, Tags.TimeInForce, fieldOrder)
+                  : base(Tags.NoTimeInForceRules, Tags.TimeInForce, fieldOrder)
                 {
                 }
 
@@ -1540,7 +1540,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.ExecInstValue, 0};
 
                 public NoExecInstRulesGroup()
-                  :base( Tags.NoExecInstRules, Tags.ExecInstValue, fieldOrder)
+                  : base(Tags.NoExecInstRules, Tags.ExecInstValue, fieldOrder)
                 {
                 }
 

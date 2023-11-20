@@ -902,7 +902,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.ClOrdID, Tags.OrderID, Tags.ListID, Tags.WaveNo, 0};
 
                 public NoOrdersGroup()
-                  :base( Tags.NoOrders, Tags.ClOrdID, fieldOrder)
+                  : base(Tags.NoOrders, Tags.ClOrdID, fieldOrder)
                 {
                 }
 
@@ -1048,7 +1048,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.ExecID, Tags.LastShares, Tags.LastPx, Tags.LastMkt, 0};
 
                 public NoExecsGroup()
-                  :base( Tags.NoExecs, Tags.ExecID, fieldOrder)
+                  : base(Tags.NoExecs, Tags.ExecID, fieldOrder)
                 {
                 }
 
@@ -1194,7 +1194,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.MiscFeeAmt, Tags.MiscFeeCurr, Tags.MiscFeeType, 0};
 
                 public NoMiscFeesGroup()
-                  :base( Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
+                  : base(Tags.NoMiscFees, Tags.MiscFeeAmt, fieldOrder)
                 {
                 }
 
@@ -1308,7 +1308,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.AllocAccount, Tags.AllocShares, Tags.ProcessCode, Tags.ExecBroker, Tags.ClientID, Tags.Commission, Tags.CommType, Tags.NoDlvyInst, 0};
 
                 public NoAllocsGroup()
-                  :base( Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
+                  : base(Tags.NoAllocs, Tags.AllocAccount, fieldOrder)
                 {
                 }
 
@@ -1580,7 +1580,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.BrokerOfCredit, Tags.DlvyInst, 0};
 
                     public NoDlvyInstGroup()
-                      :base( Tags.NoDlvyInst, Tags.BrokerOfCredit, fieldOrder)
+                      : base(Tags.NoDlvyInst, Tags.BrokerOfCredit, fieldOrder)
                     {
                     }
 

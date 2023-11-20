@@ -282,7 +282,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.QuoteSetID, Tags.UnderlyingSymbol, Tags.UnderlyingSymbolSfx, Tags.UnderlyingSecurityID, Tags.UnderlyingIDSource, Tags.UnderlyingSecurityType, Tags.UnderlyingMaturityMonthYear, Tags.UnderlyingMaturityDay, Tags.UnderlyingPutOrCall, Tags.UnderlyingStrikePrice, Tags.UnderlyingOptAttribute, Tags.UnderlyingContractMultiplier, Tags.UnderlyingCouponRate, Tags.UnderlyingSecurityExchange, Tags.UnderlyingIssuer, Tags.EncodedUnderlyingIssuerLen, Tags.EncodedUnderlyingIssuer, Tags.UnderlyingSecurityDesc, Tags.EncodedUnderlyingSecurityDescLen, Tags.EncodedUnderlyingSecurityDesc, Tags.TotQuoteEntries, Tags.NoQuoteEntries, 0};
 
                 public NoQuoteSetsGroup()
-                  :base( Tags.NoQuoteSets, Tags.QuoteSetID, fieldOrder)
+                  : base(Tags.NoQuoteSets, Tags.QuoteSetID, fieldOrder)
                 {
                 }
 
@@ -1002,7 +1002,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.QuoteEntryID, Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.IDSource, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDay, Tags.PutOrCall, Tags.StrikePrice, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, Tags.QuoteEntryRejectReason, 0};
 
                     public NoQuoteEntriesGroup()
-                      :base( Tags.NoQuoteEntries, Tags.QuoteEntryID, fieldOrder)
+                      : base(Tags.NoQuoteEntries, Tags.QuoteEntryID, fieldOrder)
                     {
                     }
 

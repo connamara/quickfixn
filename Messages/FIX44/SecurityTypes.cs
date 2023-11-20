@@ -414,7 +414,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.SecurityType, Tags.SecuritySubType, Tags.Product, Tags.CFICode, 0};
 
                 public NoSecurityTypesGroup()
-                  :base( Tags.NoSecurityTypes, Tags.SecurityType, fieldOrder)
+                  : base(Tags.NoSecurityTypes, Tags.SecurityType, fieldOrder)
                 {
                 }
 

@@ -3988,7 +3988,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
 
                 public NoSecurityAltIDGroup()
-                  :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
+                  : base(Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                 {
                 }
 
@@ -4070,7 +4070,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.EventType, Tags.EventDate, Tags.EventPx, Tags.EventText, Tags.EventTime, 0};
 
                 public NoEventsGroup()
-                  :base( Tags.NoEvents, Tags.EventType, fieldOrder)
+                  : base(Tags.NoEvents, Tags.EventType, fieldOrder)
                 {
                 }
 
@@ -4248,7 +4248,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.InstrumentPartyID, Tags.InstrumentPartyIDSource, Tags.InstrumentPartyRole, Tags.NoInstrumentPartySubIDs, 0};
 
                 public NoInstrumentPartiesGroup()
-                  :base( Tags.NoInstrumentParties, Tags.InstrumentPartyID, fieldOrder)
+                  : base(Tags.NoInstrumentParties, Tags.InstrumentPartyID, fieldOrder)
                 {
                 }
 
@@ -4392,7 +4392,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.InstrumentPartySubID, Tags.InstrumentPartySubIDType, 0};
 
                     public NoInstrumentPartySubIDsGroup()
-                      :base( Tags.NoInstrumentPartySubIDs, Tags.InstrumentPartySubID, fieldOrder)
+                      : base(Tags.NoInstrumentPartySubIDs, Tags.InstrumentPartySubID, fieldOrder)
                     {
                     }
 
@@ -4475,7 +4475,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.ComplexEventType, Tags.ComplexOptPayoutAmount, Tags.ComplexEventPrice, Tags.ComplexEventPriceBoundaryMethod, Tags.ComplexEventPriceBoundaryPrecision, Tags.ComplexEventPriceTimeType, Tags.ComplexEventCondition, Tags.NoComplexEventDates, 0};
 
                 public NoComplexEventsGroup()
-                  :base( Tags.NoComplexEvents, Tags.ComplexEventType, fieldOrder)
+                  : base(Tags.NoComplexEvents, Tags.ComplexEventType, fieldOrder)
                 {
                 }
 
@@ -4747,7 +4747,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.ComplexEventStartDate, Tags.ComplexEventEndDate, Tags.NoComplexEventTimes, 0};
 
                     public NoComplexEventDatesGroup()
-                      :base( Tags.NoComplexEventDates, Tags.ComplexEventStartDate, fieldOrder)
+                      : base(Tags.NoComplexEventDates, Tags.ComplexEventStartDate, fieldOrder)
                     {
                     }
 
@@ -4859,7 +4859,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.ComplexEventStartTime, Tags.ComplexEventEndTime, 0};
 
                         public NoComplexEventTimesGroup()
-                          :base( Tags.NoComplexEventTimes, Tags.ComplexEventStartTime, fieldOrder)
+                          : base(Tags.NoComplexEventTimes, Tags.ComplexEventStartTime, fieldOrder)
                         {
                         }
 
@@ -4943,7 +4943,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.InstrAttribType, Tags.InstrAttribValue, 0};
 
                 public NoInstrAttribGroup()
-                  :base( Tags.NoInstrAttrib, Tags.InstrAttribType, fieldOrder)
+                  : base(Tags.NoInstrAttrib, Tags.InstrAttribType, fieldOrder)
                 {
                 }
 
@@ -5025,7 +5025,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.UnderlyingSymbol, Tags.UnderlyingSymbolSfx, Tags.UnderlyingSecurityID, Tags.UnderlyingSecurityIDSource, Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingProduct, Tags.UnderlyingCFICode, Tags.UnderlyingSecurityType, Tags.UnderlyingSecuritySubType, Tags.UnderlyingMaturityMonthYear, Tags.UnderlyingMaturityDate, Tags.UnderlyingCouponPaymentDate, Tags.UnderlyingIssueDate, Tags.UnderlyingRepoCollateralSecurityType, Tags.UnderlyingRepurchaseTerm, Tags.UnderlyingRepurchaseRate, Tags.UnderlyingFactor, Tags.UnderlyingCreditRating, Tags.UnderlyingInstrRegistry, Tags.UnderlyingCountryOfIssue, Tags.UnderlyingStateOrProvinceOfIssue, Tags.UnderlyingLocaleOfIssue, Tags.UnderlyingRedemptionDate, Tags.UnderlyingStrikePrice, Tags.UnderlyingStrikeCurrency, Tags.UnderlyingOptAttribute, Tags.UnderlyingContractMultiplier, Tags.UnderlyingCouponRate, Tags.UnderlyingSecurityExchange, Tags.UnderlyingIssuer, Tags.EncodedUnderlyingIssuerLen, Tags.EncodedUnderlyingIssuer, Tags.UnderlyingSecurityDesc, Tags.EncodedUnderlyingSecurityDescLen, Tags.EncodedUnderlyingSecurityDesc, Tags.UnderlyingCPProgram, Tags.UnderlyingCPRegType, Tags.UnderlyingCurrency, Tags.UnderlyingQty, Tags.UnderlyingPx, Tags.UnderlyingDirtyPrice, Tags.UnderlyingEndPrice, Tags.UnderlyingStartValue, Tags.UnderlyingCurrentValue, Tags.UnderlyingEndValue, Tags.NoUnderlyingStips, Tags.UnderlyingAllocationPercent, Tags.UnderlyingSettlementType, Tags.UnderlyingCashAmount, Tags.UnderlyingCashType, Tags.UnderlyingUnitOfMeasure, Tags.UnderlyingTimeUnit, Tags.UnderlyingCapValue, Tags.NoUndlyInstrumentParties, Tags.UnderlyingSettlMethod, Tags.UnderlyingAdjustedQuantity, Tags.UnderlyingFXRate, Tags.UnderlyingFXRateCalc, Tags.UnderlyingMaturityTime, Tags.UnderlyingPutOrCall, Tags.UnderlyingExerciseStyle, Tags.UnderlyingUnitOfMeasureQty, Tags.UnderlyingPriceUnitOfMeasure, Tags.UnderlyingPriceUnitOfMeasureQty, Tags.UnderlyingContractMultiplierUnit, Tags.UnderlyingFlowScheduleType, Tags.UnderlyingRestructuringType, Tags.UnderlyingSeniority, Tags.UnderlyingNotionalPercentageOutstanding, Tags.UnderlyingOriginalNotionalPercentageOutstanding, Tags.UnderlyingAttachmentPoint, Tags.UnderlyingDetachmentPoint, 0};
 
                 public NoUnderlyingsGroup()
-                  :base( Tags.NoUnderlyings, Tags.UnderlyingSymbol, fieldOrder)
+                  : base(Tags.NoUnderlyings, Tags.UnderlyingSymbol, fieldOrder)
                 {
                 }
 
@@ -7345,7 +7345,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.UnderlyingSecurityAltID, Tags.UnderlyingSecurityAltIDSource, 0};
 
                     public NoUnderlyingSecurityAltIDGroup()
-                      :base( Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingSecurityAltID, fieldOrder)
+                      : base(Tags.NoUnderlyingSecurityAltID, Tags.UnderlyingSecurityAltID, fieldOrder)
                     {
                     }
 
@@ -7427,7 +7427,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.UnderlyingStipType, Tags.UnderlyingStipValue, 0};
 
                     public NoUnderlyingStipsGroup()
-                      :base( Tags.NoUnderlyingStips, Tags.UnderlyingStipType, fieldOrder)
+                      : base(Tags.NoUnderlyingStips, Tags.UnderlyingStipType, fieldOrder)
                     {
                     }
 
@@ -7509,7 +7509,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.UnderlyingInstrumentPartyID, Tags.UnderlyingInstrumentPartyIDSource, Tags.UnderlyingInstrumentPartyRole, Tags.NoUndlyInstrumentPartySubIDs, 0};
 
                     public NoUndlyInstrumentPartiesGroup()
-                      :base( Tags.NoUndlyInstrumentParties, Tags.UnderlyingInstrumentPartyID, fieldOrder)
+                      : base(Tags.NoUndlyInstrumentParties, Tags.UnderlyingInstrumentPartyID, fieldOrder)
                     {
                     }
 
@@ -7653,7 +7653,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.UnderlyingInstrumentPartySubID, Tags.UnderlyingInstrumentPartySubIDType, 0};
 
                         public NoUndlyInstrumentPartySubIDsGroup()
-                          :base( Tags.NoUndlyInstrumentPartySubIDs, Tags.UnderlyingInstrumentPartySubID, fieldOrder)
+                          : base(Tags.NoUndlyInstrumentPartySubIDs, Tags.UnderlyingInstrumentPartySubID, fieldOrder)
                         {
                         }
 
@@ -7737,7 +7737,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.LegSymbol, Tags.LegSymbolSfx, Tags.LegSecurityID, Tags.LegSecurityIDSource, Tags.NoLegSecurityAltID, Tags.LegProduct, Tags.LegCFICode, Tags.LegSecurityType, Tags.LegSecuritySubType, Tags.LegMaturityMonthYear, Tags.LegMaturityDate, Tags.LegCouponPaymentDate, Tags.LegIssueDate, Tags.LegRepoCollateralSecurityType, Tags.LegRepurchaseTerm, Tags.LegRepurchaseRate, Tags.LegFactor, Tags.LegCreditRating, Tags.LegInstrRegistry, Tags.LegCountryOfIssue, Tags.LegStateOrProvinceOfIssue, Tags.LegLocaleOfIssue, Tags.LegRedemptionDate, Tags.LegStrikePrice, Tags.LegStrikeCurrency, Tags.LegOptAttribute, Tags.LegContractMultiplier, Tags.LegCouponRate, Tags.LegSecurityExchange, Tags.LegIssuer, Tags.EncodedLegIssuerLen, Tags.EncodedLegIssuer, Tags.LegSecurityDesc, Tags.EncodedLegSecurityDescLen, Tags.EncodedLegSecurityDesc, Tags.LegRatioQty, Tags.LegSide, Tags.LegCurrency, Tags.LegPool, Tags.LegDatedDate, Tags.LegContractSettlMonth, Tags.LegInterestAccrualDate, Tags.LegUnitOfMeasure, Tags.LegTimeUnit, Tags.LegOptionRatio, Tags.LegPrice, Tags.LegMaturityTime, Tags.LegPutOrCall, Tags.LegExerciseStyle, Tags.LegUnitOfMeasureQty, Tags.LegPriceUnitOfMeasure, Tags.LegPriceUnitOfMeasureQty, Tags.LegContractMultiplierUnit, Tags.LegFlowScheduleType, 0};
 
                 public NoLegsGroup()
-                  :base( Tags.NoLegs, Tags.LegSymbol, fieldOrder)
+                  : base(Tags.NoLegs, Tags.LegSymbol, fieldOrder)
                 {
                 }
 
@@ -9481,7 +9481,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.LegSecurityAltID, Tags.LegSecurityAltIDSource, 0};
 
                     public NoLegSecurityAltIDGroup()
-                      :base( Tags.NoLegSecurityAltID, Tags.LegSecurityAltID, fieldOrder)
+                      : base(Tags.NoLegSecurityAltID, Tags.LegSecurityAltID, fieldOrder)
                     {
                     }
 
@@ -9564,7 +9564,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.StipulationType, Tags.StipulationValue, 0};
 
                 public NoStipulationsGroup()
-                  :base( Tags.NoStipulations, Tags.StipulationType, fieldOrder)
+                  : base(Tags.NoStipulations, Tags.StipulationType, fieldOrder)
                 {
                 }
 
@@ -9646,7 +9646,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.MarketID, Tags.MarketSegmentID, Tags.NoTickRules, Tags.NoLotTypeRules, Tags.PriceLimitType, Tags.LowLimitPrice, Tags.HighLimitPrice, Tags.TradingReferencePrice, Tags.ExpirationCycle, Tags.MinTradeVol, Tags.MaxTradeVol, Tags.MaxPriceVariation, Tags.ImpliedMarketIndicator, Tags.TradingCurrency, Tags.RoundLot, Tags.MultilegModel, Tags.MultilegPriceMethod, Tags.PriceType, Tags.NoTradingSessionRules, Tags.NoNestedInstrAttrib, Tags.NoStrikeRules, 0};
 
                 public NoMarketSegmentsGroup()
-                  :base( Tags.NoMarketSegments, Tags.MarketID, fieldOrder)
+                  : base(Tags.NoMarketSegments, Tags.MarketID, fieldOrder)
                 {
                 }
 
@@ -10334,7 +10334,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.StartTickPriceRange, Tags.EndTickPriceRange, Tags.TickIncrement, Tags.TickRuleType, 0};
 
                     public NoTickRulesGroup()
-                      :base( Tags.NoTickRules, Tags.StartTickPriceRange, fieldOrder)
+                      : base(Tags.NoTickRules, Tags.StartTickPriceRange, fieldOrder)
                     {
                     }
 
@@ -10480,7 +10480,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.LotType, Tags.MinLotSize, 0};
 
                     public NoLotTypeRulesGroup()
-                      :base( Tags.NoLotTypeRules, Tags.LotType, fieldOrder)
+                      : base(Tags.NoLotTypeRules, Tags.LotType, fieldOrder)
                     {
                     }
 
@@ -10562,7 +10562,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.NoOrdTypeRules, Tags.NoTimeInForceRules, Tags.NoExecInstRules, Tags.NoMatchRules, Tags.NoMDFeedTypes, 0};
 
                     public NoTradingSessionRulesGroup()
-                      :base( Tags.NoTradingSessionRules, Tags.TradingSessionID, fieldOrder)
+                      : base(Tags.NoTradingSessionRules, Tags.TradingSessionID, fieldOrder)
                     {
                     }
 
@@ -10802,7 +10802,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.OrdType, 0};
 
                         public NoOrdTypeRulesGroup()
-                          :base( Tags.NoOrdTypeRules, Tags.OrdType, fieldOrder)
+                          : base(Tags.NoOrdTypeRules, Tags.OrdType, fieldOrder)
                         {
                         }
 
@@ -10852,7 +10852,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.TimeInForce, 0};
 
                         public NoTimeInForceRulesGroup()
-                          :base( Tags.NoTimeInForceRules, Tags.TimeInForce, fieldOrder)
+                          : base(Tags.NoTimeInForceRules, Tags.TimeInForce, fieldOrder)
                         {
                         }
 
@@ -10902,7 +10902,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.ExecInstValue, 0};
 
                         public NoExecInstRulesGroup()
-                          :base( Tags.NoExecInstRules, Tags.ExecInstValue, fieldOrder)
+                          : base(Tags.NoExecInstRules, Tags.ExecInstValue, fieldOrder)
                         {
                         }
 
@@ -10952,7 +10952,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.MatchAlgorithm, Tags.MatchType, 0};
 
                         public NoMatchRulesGroup()
-                          :base( Tags.NoMatchRules, Tags.MatchAlgorithm, fieldOrder)
+                          : base(Tags.NoMatchRules, Tags.MatchAlgorithm, fieldOrder)
                         {
                         }
 
@@ -11034,7 +11034,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.MDFeedType, Tags.MarketDepth, Tags.MDBookType, 0};
 
                         public NoMDFeedTypesGroup()
-                          :base( Tags.NoMDFeedTypes, Tags.MDFeedType, fieldOrder)
+                          : base(Tags.NoMDFeedTypes, Tags.MDFeedType, fieldOrder)
                         {
                         }
 
@@ -11149,7 +11149,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.NestedInstrAttribType, Tags.NestedInstrAttribValue, 0};
 
                     public NoNestedInstrAttribGroup()
-                      :base( Tags.NoNestedInstrAttrib, Tags.NestedInstrAttribType, fieldOrder)
+                      : base(Tags.NoNestedInstrAttrib, Tags.NestedInstrAttribType, fieldOrder)
                     {
                     }
 
@@ -11231,7 +11231,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.StrikeRuleID, Tags.StartStrikePxRange, Tags.EndStrikePxRange, Tags.StrikeIncrement, Tags.StrikeExerciseStyle, Tags.NoMaturityRules, 0};
 
                     public NoStrikeRulesGroup()
-                      :base( Tags.NoStrikeRules, Tags.StrikeRuleID, fieldOrder)
+                      : base(Tags.NoStrikeRules, Tags.StrikeRuleID, fieldOrder)
                     {
                     }
 
@@ -11439,7 +11439,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.MaturityRuleID, Tags.MaturityMonthYearFormat, Tags.MaturityMonthYearIncrementUnits, Tags.StartMaturityMonthYear, Tags.EndMaturityMonthYear, Tags.MaturityMonthYearIncrement, 0};
 
                         public NoMaturityRulesGroup()
-                          :base( Tags.NoMaturityRules, Tags.MaturityRuleID, fieldOrder)
+                          : base(Tags.NoMaturityRules, Tags.MaturityRuleID, fieldOrder)
                         {
                         }
 

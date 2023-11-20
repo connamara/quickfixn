@@ -442,7 +442,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, Tags.NoPartyAltIDs, Tags.NoContextPartyIDs, Tags.NoRiskLimits, Tags.NoRelatedPartyIDs, 0};
 
                 public NoPartyListGroup()
-                  :base( Tags.NoPartyList, Tags.PartyID, fieldOrder)
+                  : base(Tags.NoPartyList, Tags.PartyID, fieldOrder)
                 {
                 }
 
@@ -714,7 +714,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
 
                     public NoPartySubIDsGroup()
-                      :base( Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
+                      : base(Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
                     {
                     }
 
@@ -796,7 +796,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.PartyAltID, Tags.PartyAltIDSource, Tags.NoPartyAltSubIDs, 0};
 
                     public NoPartyAltIDsGroup()
-                      :base( Tags.NoPartyAltIDs, Tags.PartyAltID, fieldOrder)
+                      : base(Tags.NoPartyAltIDs, Tags.PartyAltID, fieldOrder)
                     {
                     }
 
@@ -908,7 +908,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.PartyAltSubID, Tags.PartyAltSubIDType, 0};
 
                         public NoPartyAltSubIDsGroup()
-                          :base( Tags.NoPartyAltSubIDs, Tags.PartyAltSubID, fieldOrder)
+                          : base(Tags.NoPartyAltSubIDs, Tags.PartyAltSubID, fieldOrder)
                         {
                         }
 
@@ -991,7 +991,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.ContextPartyID, Tags.ContextPartyIDSource, Tags.ContextPartyRole, Tags.NoContextPartySubIDs, 0};
 
                     public NoContextPartyIDsGroup()
-                      :base( Tags.NoContextPartyIDs, Tags.ContextPartyID, fieldOrder)
+                      : base(Tags.NoContextPartyIDs, Tags.ContextPartyID, fieldOrder)
                     {
                     }
 
@@ -1135,7 +1135,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.ContextPartySubID, Tags.ContextPartySubIDType, 0};
 
                         public NoContextPartySubIDsGroup()
-                          :base( Tags.NoContextPartySubIDs, Tags.ContextPartySubID, fieldOrder)
+                          : base(Tags.NoContextPartySubIDs, Tags.ContextPartySubID, fieldOrder)
                         {
                         }
 
@@ -1218,7 +1218,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.RiskLimitType, Tags.RiskLimitAmount, Tags.RiskLimitCurrency, Tags.RiskLimitPlatform, Tags.NoRiskInstruments, Tags.NoRiskWarningLevels, 0};
 
                     public NoRiskLimitsGroup()
-                      :base( Tags.NoRiskLimits, Tags.RiskLimitType, fieldOrder)
+                      : base(Tags.NoRiskLimits, Tags.RiskLimitType, fieldOrder)
                     {
                     }
 
@@ -1426,7 +1426,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.RiskInstrumentOperator, Tags.RiskSymbol, Tags.RiskSymbolSfx, Tags.RiskSecurityID, Tags.RiskSecurityIDSource, Tags.NoRiskSecurityAltID, Tags.RiskProduct, Tags.RiskProductComplex, Tags.RiskSecurityGroup, Tags.RiskCFICode, Tags.RiskSecurityType, Tags.RiskSecuritySubType, Tags.RiskMaturityMonthYear, Tags.RiskMaturityTime, Tags.RiskRestructuringType, Tags.RiskSeniority, Tags.RiskPutOrCall, Tags.RiskFlexibleIndicator, Tags.RiskCouponRate, Tags.RiskSecurityExchange, Tags.RiskSecurityDesc, Tags.RiskEncodedSecurityDescLen, Tags.RiskEncodedSecurityDesc, Tags.RiskInstrumentSettlType, Tags.RiskInstrumentMultiplier, 0};
 
                         public NoRiskInstrumentsGroup()
-                          :base( Tags.NoRiskInstruments, Tags.RiskInstrumentOperator, fieldOrder)
+                          : base(Tags.NoRiskInstruments, Tags.RiskInstrumentOperator, fieldOrder)
                         {
                         }
 
@@ -2242,7 +2242,7 @@ namespace QuickFix
                             public static int[] fieldOrder = {Tags.RiskSecurityAltID, Tags.RiskSecurityAltIDSource, 0};
 
                             public NoRiskSecurityAltIDGroup()
-                              :base( Tags.NoRiskSecurityAltID, Tags.RiskSecurityAltID, fieldOrder)
+                              : base(Tags.NoRiskSecurityAltID, Tags.RiskSecurityAltID, fieldOrder)
                             {
                             }
 
@@ -2325,7 +2325,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.RiskWarningLevelPercent, Tags.RiskWarningLevelName, 0};
 
                         public NoRiskWarningLevelsGroup()
-                          :base( Tags.NoRiskWarningLevels, Tags.RiskWarningLevelPercent, fieldOrder)
+                          : base(Tags.NoRiskWarningLevels, Tags.RiskWarningLevelPercent, fieldOrder)
                         {
                         }
 
@@ -2408,7 +2408,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.RelatedPartyID, Tags.RelatedPartyIDSource, Tags.RelatedPartyRole, Tags.NoRelatedPartySubIDs, Tags.NoRelatedPartyAltIDs, Tags.NoRelatedContextPartyIDs, Tags.NoRelationshipRiskLimits, Tags.NoPartyRelationships, 0};
 
                     public NoRelatedPartyIDsGroup()
-                      :base( Tags.NoRelatedPartyIDs, Tags.RelatedPartyID, fieldOrder)
+                      : base(Tags.NoRelatedPartyIDs, Tags.RelatedPartyID, fieldOrder)
                     {
                     }
 
@@ -2680,7 +2680,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.RelatedPartySubID, Tags.RelatedPartySubIDType, 0};
 
                         public NoRelatedPartySubIDsGroup()
-                          :base( Tags.NoRelatedPartySubIDs, Tags.RelatedPartySubID, fieldOrder)
+                          : base(Tags.NoRelatedPartySubIDs, Tags.RelatedPartySubID, fieldOrder)
                         {
                         }
 
@@ -2762,7 +2762,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.RelatedPartyAltID, Tags.RelatedPartyAltIDSource, Tags.NoRelatedPartyAltSubIDs, 0};
 
                         public NoRelatedPartyAltIDsGroup()
-                          :base( Tags.NoRelatedPartyAltIDs, Tags.RelatedPartyAltID, fieldOrder)
+                          : base(Tags.NoRelatedPartyAltIDs, Tags.RelatedPartyAltID, fieldOrder)
                         {
                         }
 
@@ -2874,7 +2874,7 @@ namespace QuickFix
                             public static int[] fieldOrder = {Tags.RelatedPartyAltSubID, Tags.RelatedPartyAltSubIDType, 0};
 
                             public NoRelatedPartyAltSubIDsGroup()
-                              :base( Tags.NoRelatedPartyAltSubIDs, Tags.RelatedPartyAltSubID, fieldOrder)
+                              : base(Tags.NoRelatedPartyAltSubIDs, Tags.RelatedPartyAltSubID, fieldOrder)
                             {
                             }
 
@@ -2957,7 +2957,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.RelatedContextPartyID, Tags.RelatedContextPartyIDSource, Tags.RelatedContextPartyRole, Tags.NoRelatedContextPartySubIDs, 0};
 
                         public NoRelatedContextPartyIDsGroup()
-                          :base( Tags.NoRelatedContextPartyIDs, Tags.RelatedContextPartyID, fieldOrder)
+                          : base(Tags.NoRelatedContextPartyIDs, Tags.RelatedContextPartyID, fieldOrder)
                         {
                         }
 
@@ -3101,7 +3101,7 @@ namespace QuickFix
                             public static int[] fieldOrder = {Tags.RelatedContextPartySubID, Tags.RelatedContextPartySubIDType, 0};
 
                             public NoRelatedContextPartySubIDsGroup()
-                              :base( Tags.NoRelatedContextPartySubIDs, Tags.RelatedContextPartySubID, fieldOrder)
+                              : base(Tags.NoRelatedContextPartySubIDs, Tags.RelatedContextPartySubID, fieldOrder)
                             {
                             }
 
@@ -3184,7 +3184,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.RelationshipRiskLimitType, Tags.RelationshipRiskLimitAmount, Tags.RelationshipRiskLimitCurrency, Tags.RelationshipRiskLimitPlatform, Tags.NoRelationshipRiskInstruments, Tags.NoRelationshipRiskWarningLevels, 0};
 
                         public NoRelationshipRiskLimitsGroup()
-                          :base( Tags.NoRelationshipRiskLimits, Tags.RelationshipRiskLimitType, fieldOrder)
+                          : base(Tags.NoRelationshipRiskLimits, Tags.RelationshipRiskLimitType, fieldOrder)
                         {
                         }
 
@@ -3392,7 +3392,7 @@ namespace QuickFix
                             public static int[] fieldOrder = {Tags.RelationshipRiskInstrumentOperator, Tags.RelationshipRiskSymbol, Tags.RelationshipRiskSymbolSfx, Tags.RelationshipRiskSecurityID, Tags.RelationshipRiskSecurityIDSource, Tags.NoRelationshipRiskSecurityAltID, Tags.RelationshipRiskProduct, Tags.RelationshipRiskProductComplex, Tags.RelationshipRiskSecurityGroup, Tags.RelationshipRiskCFICode, Tags.RelationshipRiskSecurityType, Tags.RelationshipRiskSecuritySubType, Tags.RelationshipRiskMaturityMonthYear, Tags.RelationshipRiskMaturityTime, Tags.RelationshipRiskRestructuringType, Tags.RelationshipRiskSeniority, Tags.RelationshipRiskPutOrCall, Tags.RelationshipRiskFlexibleIndicator, Tags.RelationshipRiskCouponRate, Tags.RelationshipRiskSecurityExchange, Tags.RelationshipRiskSecurityDesc, Tags.RelationshipRiskEncodedSecurityDescLen, Tags.RelationshipRiskEncodedSecurityDesc, Tags.RelationshipRiskInstrumentSettlType, Tags.RelationshipRiskInstrumentMultiplier, 0};
 
                             public NoRelationshipRiskInstrumentsGroup()
-                              :base( Tags.NoRelationshipRiskInstruments, Tags.RelationshipRiskInstrumentOperator, fieldOrder)
+                              : base(Tags.NoRelationshipRiskInstruments, Tags.RelationshipRiskInstrumentOperator, fieldOrder)
                             {
                             }
 
@@ -4208,7 +4208,7 @@ namespace QuickFix
                                 public static int[] fieldOrder = {Tags.RelationshipRiskSecurityAltID, Tags.RelationshipRiskSecurityAltIDSource, 0};
 
                                 public NoRelationshipRiskSecurityAltIDGroup()
-                                  :base( Tags.NoRelationshipRiskSecurityAltID, Tags.RelationshipRiskSecurityAltID, fieldOrder)
+                                  : base(Tags.NoRelationshipRiskSecurityAltID, Tags.RelationshipRiskSecurityAltID, fieldOrder)
                                 {
                                 }
 
@@ -4291,7 +4291,7 @@ namespace QuickFix
                             public static int[] fieldOrder = {Tags.RelationshipRiskWarningLevelPercent, Tags.RelationshipRiskWarningLevelName, 0};
 
                             public NoRelationshipRiskWarningLevelsGroup()
-                              :base( Tags.NoRelationshipRiskWarningLevels, Tags.RelationshipRiskWarningLevelPercent, fieldOrder)
+                              : base(Tags.NoRelationshipRiskWarningLevels, Tags.RelationshipRiskWarningLevelPercent, fieldOrder)
                             {
                             }
 
@@ -4374,7 +4374,7 @@ namespace QuickFix
                         public static int[] fieldOrder = {Tags.PartyRelationship, 0};
 
                         public NoPartyRelationshipsGroup()
-                          :base( Tags.NoPartyRelationships, Tags.PartyRelationship, fieldOrder)
+                          : base(Tags.NoPartyRelationships, Tags.PartyRelationship, fieldOrder)
                         {
                         }
 

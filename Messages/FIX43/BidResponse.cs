@@ -116,7 +116,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.Commission, Tags.CommType, Tags.CommCurrency, Tags.FundRenewWaiv, Tags.ListID, Tags.Country, Tags.Side, Tags.Price, Tags.PriceType, Tags.FairValue, Tags.NetGrossInd, Tags.SettlmntTyp, Tags.FutSettDate, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
 
                 public NoBidComponentsGroup()
-                  :base( Tags.NoBidComponents, Tags.Commission, fieldOrder)
+                  : base(Tags.NoBidComponents, Tags.Commission, fieldOrder)
                 {
                 }
 

@@ -382,7 +382,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.PartySubID, 0};
 
                 public NoPartyIDsGroup()
-                  :base( Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
+                  : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
                 {
                 }
 
@@ -528,7 +528,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.RegistDetls, Tags.RegistEmail, Tags.MailingDtls, Tags.MailingInst, Tags.NoNestedPartyIDs, Tags.OwnerType, Tags.DateOfBirth, Tags.InvestorCountryOfResidence, 0};
 
                 public NoRegistDtlsGroup()
-                  :base( Tags.NoRegistDtls, Tags.RegistDetls, fieldOrder)
+                  : base(Tags.NoRegistDtls, Tags.RegistDetls, fieldOrder)
                 {
                 }
 
@@ -800,7 +800,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.NestedPartyID, Tags.NestedPartyIDSource, Tags.NestedPartyRole, Tags.NestedPartySubID, 0};
 
                     public NoNestedPartyIDsGroup()
-                      :base( Tags.NoNestedPartyIDs, Tags.NestedPartyID, fieldOrder)
+                      : base(Tags.NoNestedPartyIDs, Tags.NestedPartyID, fieldOrder)
                     {
                     }
 
@@ -947,7 +947,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.DistribPaymentMethod, Tags.DistribPercentage, Tags.CashDistribCurr, Tags.CashDistribAgentName, Tags.CashDistribAgentCode, Tags.CashDistribAgentAcctNumber, Tags.CashDistribPayRef, Tags.CashDistribAgentAcctName, 0};
 
                 public NoDistribInstsGroup()
-                  :base( Tags.NoDistribInsts, Tags.DistribPaymentMethod, fieldOrder)
+                  : base(Tags.NoDistribInsts, Tags.DistribPaymentMethod, fieldOrder)
                 {
                 }
 

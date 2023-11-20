@@ -378,7 +378,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.RoutingType, Tags.RoutingID, 0};
 
                 public NoRoutingIDsGroup()
-                  :base( Tags.NoRoutingIDs, Tags.RoutingType, fieldOrder)
+                  : base(Tags.NoRoutingIDs, Tags.RoutingType, fieldOrder)
                 {
                 }
 
@@ -460,7 +460,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.SecurityIDSource, Tags.NoSecurityAltID, Tags.Product, Tags.CFICode, Tags.SecurityType, Tags.MaturityMonthYear, Tags.MaturityDate, Tags.CouponPaymentDate, Tags.IssueDate, Tags.RepoCollateralSecurityType, Tags.RepurchaseTerm, Tags.RepurchaseRate, Tags.Factor, Tags.CreditRating, Tags.InstrRegistry, Tags.CountryOfIssue, Tags.StateOrProvinceOfIssue, Tags.LocaleOfIssue, Tags.RedemptionDate, Tags.StrikePrice, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, 0};
 
                 public NoRelatedSymGroup()
-                  :base( Tags.NoRelatedSym, Tags.Symbol, fieldOrder)
+                  : base(Tags.NoRelatedSym, Tags.Symbol, fieldOrder)
                 {
                 }
 
@@ -1532,7 +1532,7 @@ namespace QuickFix
                     public static int[] fieldOrder = {Tags.SecurityAltID, Tags.SecurityAltIDSource, 0};
 
                     public NoSecurityAltIDGroup()
-                      :base( Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
+                      : base(Tags.NoSecurityAltID, Tags.SecurityAltID, fieldOrder)
                     {
                     }
 
@@ -1615,7 +1615,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, 0};
 
                 public LinesOfTextGroup()
-                  :base( Tags.LinesOfText, Tags.Text, fieldOrder)
+                  : base(Tags.LinesOfText, Tags.Text, fieldOrder)
                 {
                 }
 

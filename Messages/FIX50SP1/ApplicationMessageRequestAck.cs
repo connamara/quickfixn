@@ -314,7 +314,7 @@ namespace QuickFix
                 public static int[] fieldOrder = {Tags.RefApplID, Tags.ApplBegSeqNum, Tags.ApplEndSeqNum, Tags.RefApplLastSeqNum, Tags.ApplResponseError, 0};
 
                 public NoApplIDsGroup()
-                  :base( Tags.NoApplIDs, Tags.RefApplID, fieldOrder)
+                  : base(Tags.NoApplIDs, Tags.RefApplID, fieldOrder)
                 {
                 }
 
