@@ -47,14 +47,13 @@ public static class GenFields {
 
         lines.Add("}");
         lines.Add("");
-        return string.Join("\r\n", lines);
+        return string.Join(Environment.NewLine, lines);
     }
 
     private static void AppendDateField(List<string> lines, DDField field) {
         lines.Add("    /// <summary>");
         lines.Add($"    /// {field.Name} Field");
-        // TODO remove this trailing slash
-        lines.Add("    /// </summary>/");
+        lines.Add("    /// </summary>");
         lines.Add($"    public sealed class {field.Name} : {field.CsClass}");
         lines.Add("    {");
         lines.Add($"        public const int TAG = {field.Tag};");
@@ -80,8 +79,7 @@ public static class GenFields {
     private static void AppendNonDateField(List<string> lines, DDField field) {
         lines.Add("    /// <summary>");
         lines.Add($"    /// {field.Name} Field");
-        // TODO remove this trailing slash
-        lines.Add("    /// </summary>/");
+        lines.Add("    /// </summary>");
         lines.Add($"    public sealed class {field.Name} : {field.CsClass}");
         lines.Add("    {");
         lines.Add($"        public const int TAG = {field.Tag};");

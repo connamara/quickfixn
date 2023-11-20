@@ -108,7 +108,7 @@ public static class GenMessageFactories {
             ""
         });
 
-        return string.Join("\r\n", lines);
+        return string.Join(Environment.NewLine, lines);
     }
 
     private static void AppendGroupCases(List<string> lines, DDGroup group, string namePath) {

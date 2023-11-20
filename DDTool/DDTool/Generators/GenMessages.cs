@@ -49,7 +49,7 @@ public static class GenMessages {
             "}"
         };
 
-        File.WriteAllText(filePath, string.Join("\r\n", lines) + "\n");
+        File.WriteAllText(filePath, string.Join(Environment.NewLine, lines) + "\n");
 
         return filePath;
     }
@@ -94,7 +94,7 @@ public static class GenMessages {
             "}"
         });
 
-        File.WriteAllText(filePath, string.Join("\r\n", lines) + "\n");
+        File.WriteAllText(filePath, string.Join(Environment.NewLine, lines) + "\n");
 
         return filePath;
     }
@@ -170,6 +170,7 @@ public static class GenMessages {
             "    return val;",
             "}",
             "",
+            // TODO: this "val" param is never used!  I'm going to deprecate this function and then get rid of it.  It's stupid.
             $"public bool IsSet(QuickFix.Fields.{field.Name} val)",
             "{",
             $"    return IsSet{field.Name}();",
@@ -208,8 +209,7 @@ public static class GenMessages {
             $"    public static int[] fieldOrder = {{{string.Join(", ", fieldOrderStrings)}}};",
             "",
             $"    public {group.Name}Group()",
-            $"      :base( Tags.{group.CounterField.Name}, Tags.{group.Delimiter.Name}, fieldOrder)",
-            // TODO  ^    ^  <-- fix those spaces
+            $"      : base(Tags.{group.CounterField.Name}, Tags.{group.Delimiter.Name}, fieldOrder)",
             "    {",
             "    }",
             "",
