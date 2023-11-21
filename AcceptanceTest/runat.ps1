@@ -141,7 +141,7 @@ AppDataDictionary=..${sep}spec${sep}fix${sep}FIX50SP1.xml
 
     # Start the acceptor...
     # (this runs the exe or dll in AcceptanceTest/bin/)
-    Start-Process -FilePath dotnet -ArgumentList "run -c $Configuration -f $Framework --no-build --no-restore -- $Conf" -NoNewWindow -PassThru |
+    Start-Process -FilePath dotnet -ArgumentList "run -c $Configuration -f $Framework -- $Conf" -NoNewWindow -PassThru |
       Out-Null # suppress process output
 
     if ($UseWsl -and $UseWsl.IsPresent) {
