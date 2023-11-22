@@ -8,24 +8,38 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
+**CAUTION: There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
+
+### NEXT RELEASE
+* #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
+
+### v1.11.2:
+* same as v1.11.1, but I fixed the readme in the pushed nuget packages
+
+### v1.11.1:
+* #793 - Continuous Markets bugfix: make DD treat SEQNUM as ULong, not Int (gbirchmeier)
+* #790/#787 - break up monolithic release script, add symbols & DD to nugets/zip, delete old scripts (gbirchmeier)
+
 ### v1.11.0:
 This build removes deprecations, and also updates to .NET 6.0.  
 We decided this wasn't big enough to warrant a v2 release, even though
 it technically violates semantic versioning.
 
 **Breaking changes in release** 
+* #732 - generate FIXT11 msg classes so they can be cracked (mgatny) IMPORTANT: FIX5+ applications now need the new FIXT11 dll!
 * #748 - Update all csproj files to net6.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
 * #749 - All deprecations are removed (gbirchmeier)
 * #746 - remove some unused public `FIXnn_LAST_FIELD` constants; corrected FIX44 DD `UNKOWN_ID` typo (gbirchmeier)
 * #756 - privatize DDField property setters,
          change various Get/SetNextSenderMsgSeqNum & Get/SetNextTargetMsgSeqNum functions to properties (gbirchmeier)
+* #760 - change seqnums to UInt64 to support Continuous Markets (mgatny)  
+         (ATTENTION! Note the INT->SEQNUM changes in FIX40/41/42.xml DDs!  You may need to update your DDs!)
 
 **Non-breaking changes**
 * (minor) #745 - JSON-to-FIX (mgatny)
 * (minor) #724 - FIX-to-JSON serialization, and a ToXML() bugfix (mgatny)
 * (patch) #647 - replace lock with memory barrier to avoid deadlocks (brunobelmondo)
 * (patch) #623 - fix issues with New-Release.ps1 (fourpastmidnight)
-* (minor) #732 - generate FIXT11 msg classes so they can be cracked (mgatny)
 * (patch) #727/#728 - improve dictionary parsing speed (sylr)
 * (minor) #724 - Add methods for serializing to FIX JSON Encoding (mgatny)
 * (patch) #630 - Make DefaultMessageFactory reflect only over QF/n assemblies (gbirchmeier)

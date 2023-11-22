@@ -1,9 +1,21 @@
-# Make all the C# source be crlf
-generator/*rb text eol=crlf
-*.cs text eol=crlf
-*.bat text eol=crlf
-*.csproj text eol=crlf
-*.sln text eol=crlf
-*.cfg text
-*.pfx binary
-*.cer binary
+# Auto detect text files and perform LF normalization
+*          text=auto
+
+*.bat    text
+*.cer    binary
+*.cfg    text
+*.cs     text
+*.csproj text
+*.def    text
+*.erb    text
+*.fmt    text
+*.md     text
+*.pfx    binary
+*.ps1    text
+*.rb     text
+*.sln    text
+*.txt    text
+*.xml    text
+*.xsl    text
+*.yml    text
+
