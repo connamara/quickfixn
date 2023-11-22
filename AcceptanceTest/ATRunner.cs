@@ -5,7 +5,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -184,13 +183,6 @@ namespace AcceptanceTest
 
             string? version = Path.GetFileName(Path.GetDirectoryName(testDefinitions));
 
-            if (version is not null &&
-                Regex.Match(version, @"(?in)^fix(?<Major>\d)(?<Minor>\d)(?<ServicePack>(?<Prefix>SP)(?<Number>\d+))?$") is Match { Success: true } m)
-            {
-                // Format the version e.g. "fix50sp2" => "FIX 5.0 SP 2"
-                version = $"FIX {m.Groups["Major"]}.{m.Groups["Minor"]} {m.Groups["Prefix"]} {m.Groups["Number"]}".TrimEnd().ToUpperInvariant();
-            }
-
             version += $" (net{Environment.Version.Major}.{Environment.Version.Minor})";
 
             Console.WriteLine();
@@ -214,7 +206,7 @@ namespace AcceptanceTest
         /// AcceptanceTest directory, and then call <see cref="Directory.SetCurrentDirectory(string)"/>.
         /// </remarks>
         /// <exception cref="DirectoryNotFoundException">
-        /// The method could not find the AcceptanceTest directory im the current directory path.
+        /// The method could not find the AcceptanceTest directory in the current directory path.
         /// </exception>
         private static void SetCurrentDirectory()
         {
