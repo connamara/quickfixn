@@ -1,11 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFrameworks>net6.0</TargetFrameworks>
-    <Platforms>AnyCPU;x64</Platforms>
+    <TargetFramework>net6.0</TargetFramework>
     <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="NUnit" Version="3.13.3" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
+    <PackageReference Include="NUnit.Analyzers" Version="3.6.1" />
+    <PackageReference Include="coverlet.collector" Version="3.2.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Messages\FIX40\QuickFix.FIX40.csproj" />
@@ -17,6 +24,12 @@
     <ProjectReference Include="..\Messages\FIX50SP2\QuickFix.FIX50SP2.csproj" />
     <ProjectReference Include="..\Messages\FIX50\QuickFix.FIX50.csproj" />
     <ProjectReference Include="..\QuickFIXn\QuickFix.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="cfg\**" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="definitions\**" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\spec\**" CopyToOutputDirectory="PreserveNewest" LinkBase="spec" />
   </ItemGroup>
 
 </Project>

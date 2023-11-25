@@ -1,0 +1,13 @@
+[*.cs]
+
+# NUnit2003: Consider using Assert.That(expr, Is.True) instead of Assert.IsTrue(expr)
+dotnet_diagnostic.NUnit2003.severity = silent
+
+# NUnit2005: Consider using Assert.That(actual, Is.EqualTo(expected)) instead of Assert.AreEqual(expected, actual)
+dotnet_diagnostic.NUnit2005.severity = silent
+
+# NUnit2017: Consider using Assert.That(expr, Is.Null) instead of Assert.IsNull(expr)
+dotnet_diagnostic.NUnit2017.severity = silent
+
+# NUnit2019: Consider using Assert.That(expr, Is.Not.Null) instead of Assert.IsNotNull(expr)
+dotnet_diagnostic.NUnit2019.severity = silent
