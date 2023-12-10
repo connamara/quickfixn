@@ -819,7 +819,7 @@ namespace QuickFix
                 this.Header.SetField(new TargetLocationID(sessionID.TargetLocationID));
         }
 
-        public SessionID GetSessionID(Message m)
+        public static SessionID GetSessionID(Message m)
         {
             bool senderSubIDSet = m.Header.IsSetField(Tags.SenderSubID);
             bool senderLocationIDSet = m.Header.IsSetField(Tags.SenderLocationID);
