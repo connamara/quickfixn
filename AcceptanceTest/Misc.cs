@@ -20,6 +20,6 @@ public class Misc : TestBase
 
     private static IEnumerable<string> Definitions()
     {
-        return Directory.EnumerateFiles(DefinitionsBaseDirPath, "*.def").Select(Path.GetFileName);
+        return Directory.EnumerateFiles(DefinitionsBaseDirPath, "*.def").Select(f => Path.GetFileName(f)!);
     }
 }

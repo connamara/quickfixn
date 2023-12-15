@@ -20,6 +20,6 @@ public class Fix50sp2 : TestBase
 
     private static IEnumerable<string> Definitions()
     {
-        return Directory.EnumerateFiles(DefinitionsBaseDirPath, "*.def").Select(Path.GetFileName);
+        return Directory.EnumerateFiles(DefinitionsBaseDirPath, "*.def").Select(f => Path.GetFileName(f)!);
     }
 }

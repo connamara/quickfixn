@@ -5,14 +5,14 @@ namespace AcceptanceTest
 {
     public class ATApplication : MessageCracker, IApplication
     {
-        public event System.Action StopMeEvent;
+        public event System.Action? StopMeEvent;
 
-        private HashSet<KeyValuePair<string, SessionID>> clOrdIDs_ = new HashSet<KeyValuePair<string, SessionID>>();
-        private FileLog log_;
+        private readonly HashSet<KeyValuePair<string, SessionID>> _clOrdIDs = new();
+        private readonly FileLog _log;
 
         public ATApplication(FileLog debugLog)
         {
-            log_ = debugLog;
+            _log = debugLog;
         }
 
         public void OnMessage(QuickFix.FIX40.NewOrderSingle nos, SessionID sessionID)
@@ -92,22 +92,22 @@ namespace AcceptanceTest
 
         protected void Echo(Message message, SessionID sessionID)
         {
-            Message echo = new Message(message);
+            Message echo = new(message);
             Session.SendToTarget(echo, sessionID);
         }
 
         protected void ProcessNOS(Message message, SessionID sessionID)
         {
-            Message echo = new Message(message);
+            Message echo = new(message);
 
             bool possResend = false;
             if (message.Header.IsSetField(QuickFix.Fields.Tags.PossResend))
                 possResend = message.Header.GetBoolean(QuickFix.Fields.Tags.PossResend);
 
-            KeyValuePair<string, SessionID> pair = new KeyValuePair<string, SessionID>(message.GetString(QuickFix.Fields.Tags.ClOrdID), sessionID);
-            if (possResend && clOrdIDs_.Contains(pair))
+            KeyValuePair<string, SessionID> pair = new(message.GetString(QuickFix.Fields.Tags.ClOrdID), sessionID);
+            if (possResend && _clOrdIDs.Contains(pair))
                 return;
-            clOrdIDs_.Add(pair);
+            _clOrdIDs.Add(pair);
 
             Session.SendToTarget(echo, sessionID);
         }
@@ -121,7 +121,7 @@ namespace AcceptanceTest
         public void OnMessage(QuickFix.FIX50SP1.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
         public void OnMessage(QuickFix.FIX50SP2.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
 
-        public void ProcessNews(QuickFix.Message msg, SessionID sessionID)
+        public void ProcessNews(Message msg, SessionID sessionID)
         {
             if (msg.IsSetField(QuickFix.Fields.Tags.Headline) && (msg.GetString(QuickFix.Fields.Tags.Headline) == "STOPME"))
             {
@@ -144,13 +144,12 @@ namespace AcceptanceTest
             Session session = Session.LookupSession(sessionID);
 
             // Hey QF/N users, don't do this in a real app.
-            if (null != session)
-                session.Reset("AT Session Reset");
+            session?.Reset("AT Session Reset");
         }
 
         public void OnLogout(SessionID sessionID)
         {
-            clOrdIDs_.Clear();
+            _clOrdIDs.Clear();
         }
 
         public void OnLogon(SessionID sessionID)
@@ -166,13 +165,13 @@ namespace AcceptanceTest
 
                 Crack(message, sessionID);
             }
-            catch (QuickFix.UnsupportedMessageType)
+            catch (UnsupportedMessageType)
             {
                 throw;
             }
             catch (System.Exception e)
             {
-                log_.OnEvent("FromApp: " + e.ToString() + " while processing msg (" + message.ToString() + ")");
+                _log.OnEvent("FromApp: " + e.ToString() + " while processing msg (" + message.ToString() + ")");
             }
         }
 
