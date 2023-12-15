@@ -13,7 +13,7 @@ public class Fix44NoReset : TestBase
     protected override SessionSettings Settings => new(@"cfg/at_44_noreset.cfg");
 
     [TestCaseSource(nameof(Definitions))]
-    public void TestCase(string definitionFileName)
+    public void Fix44NoResetTest(string definitionFileName)
     {
         RunTest(Path.Combine(DefinitionsBaseDirPath, definitionFileName));
     }

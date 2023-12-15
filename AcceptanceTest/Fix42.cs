@@ -13,7 +13,7 @@ public class Fix42 : TestBase
     protected override SessionSettings Settings => new(@"cfg/at_42.cfg");
 
     [TestCaseSource(nameof(Definitions))]
-    public void TestCase(string definitionFileName)
+    public void Fix42Test(string definitionFileName)
     {
         RunTest(Path.Combine(DefinitionsBaseDirPath, definitionFileName));
     }
