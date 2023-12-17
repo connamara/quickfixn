@@ -8,19 +8,6 @@ using System.Text.RegularExpressions;
 
 namespace AcceptanceTest;
 
-internal interface IReflector : IDisposable
-{
-    void InitiateConnect();
-
-    void Initiate(string initiateMessage);
-
-    void Expect(string expectedMessage);
-
-    void InitiateDisconnect();
-
-    void ExpectDisconnect();
-}
-
 internal class ReflectorClient : IReflector
 {
     private static readonly Regex s_timeRegex = new(@"\<TIME([+-]\d+)\>", RegexOptions.Compiled);
@@ -37,7 +24,7 @@ internal class ReflectorClient : IReflector
     };
 
     private readonly IPEndPoint _endPoint;
-    private readonly QuickFix.Parser _parser;
+    private readonly ReflectorParser _parser;
     private readonly byte[] _readBuffer;
 
     private Socket? _socket;
@@ -46,7 +33,7 @@ internal class ReflectorClient : IReflector
     public ReflectorClient(IPEndPoint endPoint)
     {
         _endPoint = endPoint;
-        _parser = new QuickFix.Parser();
+        _parser = new ReflectorParser();
         _readBuffer = new byte[1024];
     }
 
@@ -108,10 +95,12 @@ internal class ReflectorClient : IReflector
 
         void AssertAtIndex(int mismatchIndex)
         {
-            Assert.Fail($@"
-Expected: {expectedMessage}
-But was:  {actualMessage}
-          {new string(' ', mismatchIndex)}^");
+            StringBuilder sb = new();
+            sb.AppendLine("");
+            sb.AppendLine($"Expected: {expectedMessage}");
+            sb.AppendLine($"But was:  {actualMessage}");
+            sb.AppendLine($"          {new string(' ', mismatchIndex)}^");
+            Assert.Fail(sb.ToString());
         }
     }
 
