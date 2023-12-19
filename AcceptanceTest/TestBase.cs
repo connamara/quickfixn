@@ -41,6 +41,7 @@ public abstract class TestBase
 
     protected void RunTest(string definitionPath)
     {
+        System.Threading.Thread.Sleep(100);
         using Runner runner = new(new IPEndPoint(IPAddress.Loopback, _port));
         using StreamReader sr = new(definitionPath);
         runner.Run(sr);
