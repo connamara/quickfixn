@@ -18,4 +18,5 @@ build_script:
 
 test_script:
 - dotnet test -c Release --no-build --no-restore UnitTests -l trx
-- pwsh .\scripts\Acceptance-Test.ps1
+- dotnet test UnitTests
+- dotnet test AcceptanceTest
