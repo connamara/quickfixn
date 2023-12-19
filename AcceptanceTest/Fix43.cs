@@ -20,6 +20,8 @@ public class Fix43 : TestBase
 
     private static IEnumerable<string> Definitions()
     {
-        return Directory.EnumerateFiles(DefinitionsBaseDirPath, "*.def").Select(f => Path.GetFileName(f)!);
+        return Directory.EnumerateFiles(DefinitionsBaseDirPath, "*.def")
+            .Select(f => Path.GetFileName(f)!)
+            .OrderBy(s => s);
     }
 }

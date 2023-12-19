@@ -10,6 +10,7 @@ namespace AcceptanceTest
         private readonly HashSet<KeyValuePair<string, SessionID>> _clOrdIDs = new();
         private readonly FileLog _log;
 
+        // TODO debugLog doesn't need to be a QF FileLog (it never writes message logs) .  Should just be a file to write to.
         public ATApplication(FileLog debugLog)
         {
             _log = debugLog;
