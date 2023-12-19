@@ -34,8 +34,16 @@ or their IDE of choice.
 
 The simplest spin-up instructions are:
 * `dotnet build` - to build
-* `dotnet test` - to run unit and acceptance tests (which use NUnit)
+* `dotnet test` - to run all unit and acceptance tests (which use NUnit)
 
+To run *only* UTs or *only* ATs:
+* `dotnet test UnitTests`
+* `dotnet test AcceptanceTests`
+
+For more information:
+* `dotnet test -l "console;verbosity=detailed" AcceptanceTest`
+
+AcceptanceTest logs are output to `bin/Debug/net6.0/log`.
 
 Credits
 -------
