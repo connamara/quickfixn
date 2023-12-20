@@ -97,8 +97,8 @@ internal class ReflectorClient : IReflector
         {
             StringBuilder sb = new();
             sb.AppendLine("");
-            sb.AppendLine($"Expected: {expectedMessage}");
-            sb.AppendLine($"But was:  {actualMessage}");
+            sb.AppendLine($"Expected: {expectedMessage.Replace("\u0001", "|")}");
+            sb.AppendLine($"But was:  {actualMessage.Replace("\u0001", "|")}");
             sb.AppendLine($"          {new string(' ', mismatchIndex)}^");
             Assert.Fail(sb.ToString());
         }
