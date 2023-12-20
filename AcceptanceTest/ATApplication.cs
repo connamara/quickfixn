@@ -8,12 +8,9 @@ namespace AcceptanceTest
         public event System.Action? StopMeEvent;
 
         private readonly HashSet<KeyValuePair<string, SessionID>> _clOrdIDs = new();
-        private readonly FileLog _log;
 
-        // TODO debugLog doesn't need to be a QF FileLog (it never writes message logs) .  Should just be a file to write to.
-        public ATApplication(FileLog debugLog)
+        public ATApplication()
         {
-            _log = debugLog;
         }
 
         public void OnMessage(QuickFix.FIX40.NewOrderSingle nos, SessionID sessionID)
@@ -172,7 +169,7 @@ namespace AcceptanceTest
             }
             catch (System.Exception e)
             {
-                _log.OnEvent("FromApp: " + e.ToString() + " while processing msg (" + message.ToString() + ")");
+                Session.LookupSession(sessionID).Log.OnEvent("Exception during FromApp: " + e.ToString() + "\n while processing msg (" + message.ToString() + ")");
             }
         }
 

@@ -8,7 +8,6 @@ namespace AcceptanceTest;
 public abstract class TestBase
 {
     private int _port;
-    private FileLog _debugLog;
     private ThreadedSocketAcceptor _acceptor;
 
     protected abstract SessionSettings Settings { get; }
@@ -19,8 +18,7 @@ public abstract class TestBase
         SessionSettings settings = Settings;
 
         _port = settings.Get().GetInt(SessionSettings.SOCKET_ACCEPT_PORT);
-        _debugLog = new FileLog("log", new SessionID("AT", "Application", "Debug"));
-        var testApp = new ATApplication(_debugLog);
+        var testApp = new ATApplication();
         var storeFactory = new MemoryStoreFactory();
 
         ILogFactory? logFactory = settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose")
@@ -36,7 +34,6 @@ public abstract class TestBase
     public void TearDown()
     {
         _acceptor?.Dispose();
-        _debugLog?.Dispose();
     }
 
     protected void RunTest(string definitionPath)
