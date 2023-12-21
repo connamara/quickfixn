@@ -85,7 +85,9 @@ internal class Runner : IDisposable
                     messageStartIndex = 1;
                 }
 
-                string message = line.Substring(messageStartIndex);
+                string message = System.Text.Encoding.GetEncoding("iso-8859-1").GetString(
+                                   System.Text.Encoding.UTF8.GetBytes(
+                                       line.Substring(messageStartIndex)));
 
                 if (line[0] == 'I')
                 {
