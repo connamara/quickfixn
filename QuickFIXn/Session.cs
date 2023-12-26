@@ -743,7 +743,7 @@ namespace QuickFix
                 int heartBtInt = logon.GetInt(Fields.Tags.HeartBtInt);
                 state_.HeartBtInt = heartBtInt;
                 GenerateLogon(logon);
-                this.Log.OnEvent("Responding to logon request");
+                this.Log.OnEvent($"Responding to logon request; heartbeat is {heartBtInt} seconds");
             }
 
             state_.SentReset = false;
