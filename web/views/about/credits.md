@@ -85,4 +85,5 @@ Contributors
 - Jaroslav Havel
 - Sylvain Rabot
 - Bruno Belmondo
+- Rob Hague
 
