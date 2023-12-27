@@ -14,6 +14,7 @@ What's New
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
 * #811 - convert AT platform to be NUnit-based, get rid of Ruby runner (Rob-Hague)
 * #813 - fix incorrect logging of acceptor heartbeat (gbirchmeier)
+* #xxx - update broken/neglected example apps & docs (gbirchmeier)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages

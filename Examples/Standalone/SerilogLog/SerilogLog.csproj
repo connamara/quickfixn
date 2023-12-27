@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <Reference Include="QuickFix">
-      <HintPath>..\..\..\QuickFIXn\bin\Release\netstandard2.0\QuickFix.dll</HintPath>
+      <HintPath>..\..\..\QuickFIXn\bin\Debug\net6.0\QuickFix.dll</HintPath>
     </Reference>
   </ItemGroup>
 

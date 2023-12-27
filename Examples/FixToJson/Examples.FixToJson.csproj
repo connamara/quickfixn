@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>FixToJson</RootNamespace>
     <AssemblyName>FixToJson</AssemblyName>
     <Copyright>Copyright © Connamara Systems, LLC 2022</Copyright>
