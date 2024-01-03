@@ -714,5 +714,59 @@ namespace UnitTests
             Util.UtcDateTimeSerializerTests.AssertHackyDateTimeEquality(d5expected, d5actual);
             Assert.AreEqual(DateTimeKind.Local, d5actual.Kind);
         }
+
+
+
+        [Test]
+        public void IsSessionTime_should_return_true_for_weekly_session_only_when_USE_DAILY_TIME_CHECK_is_true_and_date_and_time_in_range()
+        {
+            QuickFix.Dictionary settings = new QuickFix.Dictionary();
+            settings.SetString(QuickFix.SessionSettings.START_TIME, "06:00:00");
+            settings.SetString(QuickFix.SessionSettings.END_TIME, "17:30:00");
+            settings.SetString(QuickFix.SessionSettings.USE_DAILY_TIME_CHECK, "Y");
+
+            settings.SetDay(QuickFix.SessionSettings.START_DAY, System.DayOfWeek.Monday);
+            settings.SetDay(QuickFix.SessionSettings.END_DAY, System.DayOfWeek.Friday);
+            QuickFix.SessionSchedule sched = new QuickFix.SessionSchedule(settings);
+
+            //a Sunday
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 23, 06, 00, 00, DateTimeKind.Utc)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 23, 17, 30, 00, DateTimeKind.Utc)));
+
+
+            // Monday
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 24, 05, 59, 59, 999, DateTimeKind.Utc)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2019, 06, 24, 06, 00, 00, DateTimeKind.Utc)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2019, 06, 24, 17, 30, 00, DateTimeKind.Utc)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 24, 17, 30, 00, 001, DateTimeKind.Utc)));
+
+            // Tuesday
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 25, 05, 59, 59, 999, DateTimeKind.Utc)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2019, 06, 25, 06, 00, 00, DateTimeKind.Utc)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2019, 06, 25, 17, 30, 00, DateTimeKind.Utc)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 25, 17, 30, 00, 001, DateTimeKind.Utc)));
+
+            // Wednesday
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 26, 05, 59, 59, 999, DateTimeKind.Utc)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2019, 06, 26, 06, 00, 00, DateTimeKind.Utc)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2019, 06, 26, 17, 30, 00, DateTimeKind.Utc)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 26, 17, 30, 00, 001, DateTimeKind.Utc)));
+
+            // Thursday
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 27, 05, 59, 59, 999, DateTimeKind.Utc)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2019, 06, 27, 06, 00, 00, DateTimeKind.Utc)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2019, 06, 27, 17, 30, 00, DateTimeKind.Utc)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 27, 17, 30, 00, 001, DateTimeKind.Utc)));
+
+            // Friday
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 28, 05, 59, 59, 999, DateTimeKind.Utc)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2019, 06, 28, 06, 00, 00, DateTimeKind.Utc)));
+            Assert.IsTrue(sched.IsSessionTime(new DateTime(2019, 06, 28, 17, 30, 00, DateTimeKind.Utc)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 28, 17, 30, 00, 001, DateTimeKind.Utc)));
+
+            // Saturday
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 23, 06, 00, 00, DateTimeKind.Utc)));
+            Assert.IsFalse(sched.IsSessionTime(new DateTime(2019, 06, 23, 17, 30, 00, DateTimeKind.Utc)));
+        }
     }
 }
