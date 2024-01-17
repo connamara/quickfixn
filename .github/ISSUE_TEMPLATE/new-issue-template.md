@@ -1,6 +1,6 @@
 ---
 name: New issue template
-about: Choose this one
+about: You should choose this one
 title: ''
 labels: ''
 assignees: ''
