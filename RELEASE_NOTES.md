@@ -20,6 +20,7 @@ What's New
 * #811 - convert AT platform to be NUnit-based, get rid of Ruby runner (Rob-Hague)
 * #813 - fix incorrect logging of acceptor heartbeat (gbirchmeier)
 * #815 - update broken/neglected example apps & docs (gbirchmeier)
+* #764 - fix positive UTC offset parsing in DateTimeConverter (Rob-Hague)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages
