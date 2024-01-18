@@ -6,11 +6,14 @@ namespace QuickFix.Util
 {
     public static class StringUtil
     {
-        static public string FixSlashes(string s)
-        {
-            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                return s.Replace('/', '\\');
-            return s.Replace('\\', '/');
+        public static string FixSlashes(string s) {
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+                ? s.Replace('/', '\\')
+                : s.Replace('\\', '/');
+        }
+
+        public static int InvariantCompareTo(string strA, string strB) {
+            return string.Compare(strA, strB, StringComparison.InvariantCulture);
         }
     }
 }
