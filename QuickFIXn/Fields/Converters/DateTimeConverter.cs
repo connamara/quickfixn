@@ -71,8 +71,8 @@ namespace QuickFix.Fields.Converters
             {
                 // GMT offset
                 int n = dec.Contains("+") ? dec.IndexOf('+') : dec.IndexOf('-');
-                kind = System.DateTimeKind.Utc;
-                offset = int.Parse(dec.Substring(n + 1));
+                kind = System.DateTimeKind.Unspecified;
+                offset = int.Parse(dec.Substring(n));
                 dec = dec.Substring(0, n);
             }
             else
@@ -87,7 +87,7 @@ namespace QuickFix.Fields.Converters
             // apply GMT offset
             if (offset != 0)
             {
-                d = new System.DateTimeOffset(d).ToOffset(System.TimeSpan.FromHours(offset)).DateTime;
+                d = new System.DateTimeOffset(d, System.TimeSpan.FromHours(offset)).UtcDateTime;
             }
 
             long ticks = frac / NanosecondsPerTick;
