@@ -14,6 +14,8 @@ What's New
 
 **Breaking change**
 * #768 - span-ify parser (Rob-Hague) - makes a change to QuickFix.Parser interface, which isn't likely to affect users
+* #820 - cleanup/nullable-ize files (gbirchmeier) - changed some Session Generate* functions to return void instead of null.
+         Very low likelihood that any user code will be affected.
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
