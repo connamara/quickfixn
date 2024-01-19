@@ -4,6 +4,7 @@ using QuickFix.Fields;
 using System.Text.RegularExpressions;
 using System.Text.Json;
 using System.Collections.Generic;
+using QuickFix.Util;
 
 namespace QuickFix
 {
@@ -681,7 +682,7 @@ namespace QuickFix
                 this.Header.RemoveField(Tags.OnBehalfOfLocationID);
                 this.Header.RemoveField(Tags.DeliverToLocationID);
 
-                if (beginString.CompareTo("FIX.4.1") >= 0)
+                if (StringUtil.InvariantCompareTo(beginString, FixValues.BeginString.FIX41) >= 0)
                 {
                     if (header.IsSetField(Tags.OnBehalfOfLocationID))
                     {
