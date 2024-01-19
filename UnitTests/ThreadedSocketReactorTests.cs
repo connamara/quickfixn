@@ -66,7 +66,7 @@ namespace UnitTests
             Assert.IsNotNull(stdOutResult);
 
             Assert.AreEqual(typeof(SocketException), exceptionResult.GetType());
-            Assert.IsTrue(stdOutResult.StartsWith("Error starting listener: "));
+            Assert.IsTrue(stdOutResult.StartsWith("Error starting listener: ", StringComparison.Ordinal));
         }
 
         [TearDown]

@@ -103,7 +103,7 @@ namespace QuickFix
             targetSubID_ = targetSubID;
             targetLocationID_ = targetLocationID;
             sessionQualifier_ = sessionQualifier;
-            isFIXT_ = beginString_.StartsWith("FIXT");
+            isFIXT_ = beginString_.StartsWith("FIXT", StringComparison.Ordinal);
 
             id_ = beginString_
                 + ":"

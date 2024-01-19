@@ -4,7 +4,6 @@ using QuickFix.Fields;
 using System.Text.RegularExpressions;
 using System.Text.Json;
 using System.Collections.Generic;
-using QuickFix.Util;
 
 namespace QuickFix
 {
@@ -121,7 +120,7 @@ namespace QuickFix
 
         public static bool IsAdminMsgType(string msgType)
         {
-            return msgType.Length == 1 && "0A12345n".IndexOf(msgType) != -1;
+            return msgType.Length == 1 && "0A12345n".Contains(msgType[0]);
         }
 
         /// <summary>
@@ -682,7 +681,7 @@ namespace QuickFix
                 this.Header.RemoveField(Tags.OnBehalfOfLocationID);
                 this.Header.RemoveField(Tags.DeliverToLocationID);
 
-                if (StringUtil.InvariantCompareTo(beginString, FixValues.BeginString.FIX41) >= 0)
+                if (string.CompareOrdinal(beginString, "FIX.4.1") >= 0)
                 {
                     if (header.IsSetField(Tags.OnBehalfOfLocationID))
                     {

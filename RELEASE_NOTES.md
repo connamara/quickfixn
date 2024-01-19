@@ -12,7 +12,7 @@ What's New
 
 ### NEXT RELEASE
 
-**Breaking change**
+**Breaking changes**
 * #768 - span-ify parser (Rob-Hague) - makes a change to QuickFix.Parser interface, which isn't likely to affect users
 * #820 - cleanup/nullable-ize files (gbirchmeier) - changed some Session Generate* functions to return void instead of null.
          Very low likelihood that any user code will be affected.
@@ -25,6 +25,7 @@ What's New
 * #813 - fix incorrect logging of acceptor heartbeat (gbirchmeier)
 * #815 - update broken/neglected example apps & docs (gbirchmeier)
 * #764 - fix positive UTC offset parsing in DateTimeConverter (Rob-Hague)
+* #766 - use ordinal string operations (Rob-Hague)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages
