@@ -11,15 +11,13 @@ namespace QuickFix
     /// </summary>
     public class ThreadedSocketAcceptor : IAcceptor
     {
-        
-
-        private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
+        private Dictionary<SessionID, Session> sessions_ = new();
         private SessionSettings settings_;
-        private Dictionary<IPEndPoint, AcceptorSocketDescriptor> socketDescriptorForAddress_ = new Dictionary<IPEndPoint, AcceptorSocketDescriptor>();
+        private Dictionary<IPEndPoint, AcceptorSocketDescriptor> socketDescriptorForAddress_ = new();
         private SessionFactory sessionFactory_;
         private bool isStarted_ = false;
         private bool _disposed = false;
-        private object sync_ = new object();
+        private object sync_ = new();
 
         #region Constructors
 
@@ -56,18 +54,18 @@ namespace QuickFix
             IApplication application,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
-            ILogFactory logFactory,
-            IMessageFactory messageFactory)
+            ILogFactory? logFactory,
+            IMessageFactory? messageFactory)
         {
-            logFactory = logFactory ?? new NullLogFactory();
-            messageFactory = messageFactory ?? new DefaultMessageFactory();
-            SessionFactory sf = new SessionFactory(application, storeFactory, logFactory, messageFactory);
+            ILogFactory lf = logFactory ?? new NullLogFactory();
+            IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
+            SessionFactory sf = new SessionFactory(application, storeFactory, lf, mf);
 
             try
             {
                 CreateSessions(settings, sf);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw new ConfigError(e.Message, e);
             }
@@ -377,7 +375,7 @@ namespace QuickFix
         /// Any override should call base.Dispose(disposing).
         /// </summary>
         /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
+        protected void Dispose(bool disposing)
         {
             if (_disposed) return;
             if (disposing)
@@ -404,6 +402,7 @@ namespace QuickFix
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         ~ThreadedSocketAcceptor() => Dispose(false);
     }
 }

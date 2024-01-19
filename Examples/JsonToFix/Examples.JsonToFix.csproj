@@ -5,6 +5,9 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Copyright>Copyright © Connamara Systems, LLC 2022</Copyright>
+    <Company>Connamara Systems, LLC</Company>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>

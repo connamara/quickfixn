@@ -11,10 +11,10 @@ namespace QuickFix
         {
             public ICollection<string> GetSupportedBeginStrings()
             {
-				return new [] { BeginString.FIX41 };
+                return new [] { BeginString.FIX41 };
             }
 
-			
+
             public QuickFix.Message Create(string beginString, QuickFix.Fields.ApplVerID applVerId, string msgType)
             {
                 return Create(beginString, msgType);

@@ -3,7 +3,7 @@
 using QuickFix.Fields;
 namespace QuickFix
 {
-    namespace FIX41 
+    namespace FIX41
     {
         public class ListExecute : Message
         {
@@ -22,8 +22,8 @@ namespace QuickFix
             }
 
             public QuickFix.Fields.ListID ListID
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.ListID val = new QuickFix.Fields.ListID();
                     GetField(val);
@@ -31,30 +31,31 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.ListID val) 
-            { 
+
+            public void Set(QuickFix.Fields.ListID val)
+            {
                 this.ListID = val;
             }
-            
-            public QuickFix.Fields.ListID Get(QuickFix.Fields.ListID val) 
-            { 
+
+            public QuickFix.Fields.ListID Get(QuickFix.Fields.ListID val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.ListID val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.ListID val)
+            {
                 return IsSetListID();
             }
-            
-            public bool IsSetListID() 
-            { 
+
+            public bool IsSetListID()
+            {
                 return IsSetField(Tags.ListID);
             }
+
             public QuickFix.Fields.WaveNo WaveNo
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.WaveNo val = new QuickFix.Fields.WaveNo();
                     GetField(val);
@@ -62,30 +63,31 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.WaveNo val) 
-            { 
+
+            public void Set(QuickFix.Fields.WaveNo val)
+            {
                 this.WaveNo = val;
             }
-            
-            public QuickFix.Fields.WaveNo Get(QuickFix.Fields.WaveNo val) 
-            { 
+
+            public QuickFix.Fields.WaveNo Get(QuickFix.Fields.WaveNo val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.WaveNo val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.WaveNo val)
+            {
                 return IsSetWaveNo();
             }
-            
-            public bool IsSetWaveNo() 
-            { 
+
+            public bool IsSetWaveNo()
+            {
                 return IsSetField(Tags.WaveNo);
             }
+
             public QuickFix.Fields.Text Text
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.Text val = new QuickFix.Fields.Text();
                     GetField(val);
@@ -93,27 +95,28 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.Text val) 
-            { 
+
+            public void Set(QuickFix.Fields.Text val)
+            {
                 this.Text = val;
             }
-            
-            public QuickFix.Fields.Text Get(QuickFix.Fields.Text val) 
-            { 
+
+            public QuickFix.Fields.Text Get(QuickFix.Fields.Text val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.Text val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.Text val)
+            {
                 return IsSetText();
             }
-            
-            public bool IsSetText() 
-            { 
+
+            public bool IsSetText()
+            {
                 return IsSetField(Tags.Text);
             }
+
         }
     }
 }

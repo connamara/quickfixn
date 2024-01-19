@@ -23,8 +23,8 @@ namespace QuickFix.Fields.Converters
                 if((null == d) || (d.Length < 1))
                     throw new FieldConvertError("The argument string cannot be null or empty");
                 int asciiValOfFirstChar = System.Convert.ToInt32(d[0]);
-                if ((asciiValOfFirstChar < IntConverter.ASCII_ZERO) || (asciiValOfFirstChar > IntConverter.ASCII_NINE))
-                    if (asciiValOfFirstChar != IntConverter.ASCII_MINUS && asciiValOfFirstChar != ASCII_DECIMALPOINT)
+                if ((asciiValOfFirstChar < AsciiValidator.ASCII_ZERO) || (asciiValOfFirstChar > AsciiValidator.ASCII_NINE))
+                    if (asciiValOfFirstChar != AsciiValidator.ASCII_MINUS && asciiValOfFirstChar != ASCII_DECIMALPOINT)
                         throw new FieldConvertError("Could not convert string to decimal (" + d + "): The first character must be a digit, decimal point, or minus sign");
                 return decimal.Parse(d, System.Globalization.NumberStyles.AllowExponent | System.Globalization.NumberStyles.AllowLeadingSign | System.Globalization.NumberStyles.AllowDecimalPoint, System.Globalization.CultureInfo.InvariantCulture);
             }

@@ -7,41 +7,33 @@ namespace QuickFix
     public abstract class AbstractInitiator : IInitiator
     {
         // from constructor
-        private IApplication _app = null;
-        private IMessageStoreFactory _storeFactory = null;
-        private SessionSettings _settings = null;
-        private ILogFactory _logFactory = null;
-        private IMessageFactory _msgFactory = null;
+        private readonly IApplication _app;
+        private readonly IMessageStoreFactory _storeFactory;
+        private readonly SessionSettings _settings;
+        private readonly ILogFactory _logFactory;
+        private readonly IMessageFactory _msgFactory;
 
-        private object sync_ = new object();
-        private Dictionary<SessionID, Session> sessions_ = new Dictionary<SessionID, Session>();
-        private HashSet<SessionID> sessionIDs_ = new HashSet<SessionID>();
-        private HashSet<SessionID> pending_ = new HashSet<SessionID>();
-        private HashSet<SessionID> connected_ = new HashSet<SessionID>();
-        private HashSet<SessionID> disconnected_ = new HashSet<SessionID>();
-        private bool isStopped_ = true;
+        private object sync_ = new();
+        private Dictionary<SessionID, Session> sessions_ = new();
+        private HashSet<SessionID> sessionIDs_ = new();
+        private HashSet<SessionID> pending_ = new();
+        private HashSet<SessionID> connected_ = new();
+        private HashSet<SessionID> disconnected_ = new();
         private Thread thread_;
-        private SessionFactory sessionFactory_ = null;
+        private SessionFactory sessionFactory_;
 
         #region Properties
 
-        public bool IsStopped
-        {
-            get { return isStopped_; }
-        }
+        public bool IsStopped { get; private set; } = true;
 
         #endregion
 
-        public AbstractInitiator(IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(app, storeFactory, settings, null, null)
-        { }
-
-        public AbstractInitiator(IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
-            : this(app, storeFactory, settings, logFactory, null)
-        { }
-
         public AbstractInitiator(
-            IApplication app, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
+            IApplication app,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILogFactory? logFactory,
+            IMessageFactory? messageFactory)
         {
             _app = app;
             _storeFactory = storeFactory;
@@ -71,7 +63,7 @@ namespace QuickFix
                 throw new ConfigError("No sessions defined for initiator");
 
             // start it up
-            isStopped_ = false;
+            IsStopped = false;
             OnConfigure(_settings);
             thread_ = new Thread(new ThreadStart(OnStart));
             thread_.Start();
@@ -205,7 +197,7 @@ namespace QuickFix
                     SetDisconnected(Session.LookupSession(sessionID).SessionID);
             }
 
-            isStopped_ = true;
+            IsStopped = true;
             OnStop();
 
             // Give OnStop() time to finish its business

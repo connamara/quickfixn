@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MessagesBySeqNum = System.Collections.Generic.Dictionary<ulong, QuickFix.Message>;
 
 namespace QuickFix
 {
@@ -29,7 +30,7 @@ namespace QuickFix
         private int logoutTimeout_ = 2;
         private long logoutTimeoutAsMilliSecs_ = 2 * 1000;
         private ResendRange resendRange_ = new ResendRange();
-        private Dictionary<int, Message> msgQueue = new Dictionary<int, Message>();
+        private MessagesBySeqNum msgQueue = new MessagesBySeqNum();
 
         private ILog log_;
 
@@ -147,7 +148,7 @@ namespace QuickFix
             get { lock (sync_) { return logoutTimeoutAsMilliSecs_; } }
         }
 
-        private Dictionary<int, Message> MsgQueue
+        private MessagesBySeqNum MsgQueue
         {
             get { lock (sync_) { return msgQueue; } }
             set { lock (sync_) { msgQueue = value; } }
@@ -273,7 +274,7 @@ namespace QuickFix
             return resendRange_;
         }
 
-        public void Get(int begSeqNo, int endSeqNo, List<string> messages)
+        public void Get(SeqNumType begSeqNo, SeqNumType endSeqNo, List<string> messages)
         {
             lock (sync_)
             {
@@ -281,16 +282,16 @@ namespace QuickFix
             }
         }
 
-        public void SetResendRange(int begin, int end)
+        public void SetResendRange(SeqNumType begin, SeqNumType end)
         {
-            SetResendRange(begin, end, -1);
+            SetResendRange(begin, end, ResendRange.NOT_SET);
         }
 
-        public void SetResendRange(int begin, int end, int chunkEnd)
+        public void SetResendRange(SeqNumType begin, SeqNumType end, SeqNumType chunkEnd)
         {
             resendRange_.BeginSeqNo = begin;
             resendRange_.EndSeqNo = end;
-            resendRange_.ChunkEndSeqNo = chunkEnd == -1 ? end : chunkEnd;
+            resendRange_.ChunkEndSeqNo = chunkEnd == ResendRange.NOT_SET ? end : chunkEnd;
         }
 
         public bool ResendRequested()
@@ -298,7 +299,7 @@ namespace QuickFix
             return !(resendRange_.BeginSeqNo == 0 && resendRange_.EndSeqNo == 0);
         }
 
-        public void Queue(int msgSeqNum, Message msg)
+        public void Queue(SeqNumType msgSeqNum, Message msg)
         {
             if (!MsgQueue.ContainsKey(msgSeqNum))
             {
@@ -311,7 +312,7 @@ namespace QuickFix
             MsgQueue.Clear();
         }
 
-        public QuickFix.Message Dequeue(int num)
+        public QuickFix.Message Dequeue(SeqNumType num)
         {
             if (MsgQueue.ContainsKey(num))
             {
@@ -322,7 +323,7 @@ namespace QuickFix
             return null;
         }
 
-        public Message Retrieve(int msgSeqNum)
+        public Message Retrieve(SeqNumType msgSeqNum)
         {
             Message msg = null;
             if (MsgQueue.ContainsKey(msgSeqNum))
@@ -355,18 +356,18 @@ namespace QuickFix
 
         #region MessageStore-manipulating Members
 
-        public bool Set(int msgSeqNum, string msg)
+        public bool Set(SeqNumType msgSeqNum, string msg)
         {
             lock (sync_) { return this.MessageStore.Set(msgSeqNum, msg); }
         }
 
-        public int NextSenderMsgSeqNum
+        public SeqNumType NextSenderMsgSeqNum
         {
             get { lock (sync_) { return this.MessageStore.NextSenderMsgSeqNum; } }
             set { lock (sync_) { this.MessageStore.NextSenderMsgSeqNum = value; } }
         }
 
-        public int NextTargetMsgSeqNum
+        public SeqNumType NextTargetMsgSeqNum
         {
             get { lock (sync_) { return this.MessageStore.NextTargetMsgSeqNum; } }
             set { lock (sync_) { this.MessageStore.NextTargetMsgSeqNum = value; } }

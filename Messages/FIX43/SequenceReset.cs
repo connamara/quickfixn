@@ -3,7 +3,7 @@
 using QuickFix.Fields;
 namespace QuickFix
 {
-    namespace FIX43 
+    namespace FIX43
     {
         public class SequenceReset : Message
         {
@@ -22,8 +22,8 @@ namespace QuickFix
             }
 
             public QuickFix.Fields.GapFillFlag GapFillFlag
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.GapFillFlag val = new QuickFix.Fields.GapFillFlag();
                     GetField(val);
@@ -31,30 +31,31 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.GapFillFlag val) 
-            { 
+
+            public void Set(QuickFix.Fields.GapFillFlag val)
+            {
                 this.GapFillFlag = val;
             }
-            
-            public QuickFix.Fields.GapFillFlag Get(QuickFix.Fields.GapFillFlag val) 
-            { 
+
+            public QuickFix.Fields.GapFillFlag Get(QuickFix.Fields.GapFillFlag val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.GapFillFlag val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.GapFillFlag val)
+            {
                 return IsSetGapFillFlag();
             }
-            
-            public bool IsSetGapFillFlag() 
-            { 
+
+            public bool IsSetGapFillFlag()
+            {
                 return IsSetField(Tags.GapFillFlag);
             }
+
             public QuickFix.Fields.NewSeqNo NewSeqNo
-            { 
-                get 
+            {
+                get
                 {
                     QuickFix.Fields.NewSeqNo val = new QuickFix.Fields.NewSeqNo();
                     GetField(val);
@@ -62,27 +63,28 @@ namespace QuickFix
                 }
                 set { SetField(value); }
             }
-            
-            public void Set(QuickFix.Fields.NewSeqNo val) 
-            { 
+
+            public void Set(QuickFix.Fields.NewSeqNo val)
+            {
                 this.NewSeqNo = val;
             }
-            
-            public QuickFix.Fields.NewSeqNo Get(QuickFix.Fields.NewSeqNo val) 
-            { 
+
+            public QuickFix.Fields.NewSeqNo Get(QuickFix.Fields.NewSeqNo val)
+            {
                 GetField(val);
                 return val;
             }
-            
-            public bool IsSet(QuickFix.Fields.NewSeqNo val) 
-            { 
+
+            public bool IsSet(QuickFix.Fields.NewSeqNo val)
+            {
                 return IsSetNewSeqNo();
             }
-            
-            public bool IsSetNewSeqNo() 
-            { 
+
+            public bool IsSetNewSeqNo()
+            {
                 return IsSetField(Tags.NewSeqNo);
             }
+
         }
     }
 }

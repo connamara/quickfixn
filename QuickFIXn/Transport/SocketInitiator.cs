@@ -22,22 +22,19 @@ namespace QuickFix.Transport
         private volatile bool shutdownRequested_ = false;
         private DateTime lastConnectTimeDT = DateTime.MinValue;
         private int reconnectInterval_ = 30;
-        private SocketSettings socketSettings_ = new SocketSettings();
-        private Dictionary<SessionID, SocketInitiatorThread> threads_ = new Dictionary<SessionID, SocketInitiatorThread>();
-        private Dictionary<SessionID, int> sessionToHostNum_ = new Dictionary<SessionID, int>();
-        private object sync_ = new object();
+        private SocketSettings socketSettings_ = new();
+        private Dictionary<SessionID, SocketInitiatorThread> threads_ = new();
+        private Dictionary<SessionID, int> sessionToHostNum_ = new();
+        private object sync_ = new();
         
         #endregion
 
-        public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(application, storeFactory, settings, null)
-        { }
-
-        public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
-            : base(application, storeFactory, settings, logFactory)
-        { }
-
-        public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
+        public SocketInitiator(
+            IApplication application,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILogFactory? logFactory = null,
+            IMessageFactory? messageFactory = null)
             : base(application, storeFactory, settings, logFactory, messageFactory)
         { }
 
@@ -80,7 +77,7 @@ namespace QuickFix.Transport
                     exceptionEvent = $"Unexpected exception: {ex}";
                 }
 
-                if (exceptionEvent != null)
+                if (exceptionEvent is not null)
                 {
                     if (t.Session.Disposed)
                     {
@@ -253,10 +250,8 @@ namespace QuickFix.Transport
                 AddThread(t);
 
             }
-            catch (System.Exception e)
-            {
-                if (null != session)
-                    session.Log.OnEvent(e.Message);
+            catch (System.Exception e) {
+                session?.Log.OnEvent(e.Message);
             }
         }
 
