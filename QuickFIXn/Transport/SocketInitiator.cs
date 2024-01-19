@@ -33,9 +33,9 @@ namespace QuickFix.Transport
             IApplication application,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
-            ILogFactory? logFactory = null,
-            IMessageFactory? messageFactory = null)
-            : base(application, storeFactory, settings, logFactory, messageFactory)
+            ILogFactory? logFactoryNullable = null,
+            IMessageFactory? messageFactoryNullable = null)
+            : base(application, storeFactory, settings, logFactoryNullable, messageFactoryNullable)
         { }
 
         public static void SocketInitiatorThreadStart(object socketInitiatorThread)
