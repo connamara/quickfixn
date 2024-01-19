@@ -16,6 +16,8 @@ What's New
 * #768 - span-ify parser (Rob-Hague) - makes a change to QuickFix.Parser interface, which isn't likely to affect users
 * #820 - cleanup/nullable-ize files (gbirchmeier) - changed some Session Generate* functions to return void instead of null.
          Very low likelihood that any user code will be affected.
+* #821 - delete dead code: ByteSizeString class & test, do-nothing ConfigTest (gbirchmeier) -
+         ByteSizeString is public, but probably no one uses it
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
