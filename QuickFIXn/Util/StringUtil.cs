@@ -11,9 +11,6 @@ namespace QuickFix.Util
                 ? s.Replace('/', '\\')
                 : s.Replace('\\', '/');
         }
-
-        public static int InvariantCompareTo(string strA, string strB) {
-            return string.Compare(strA, strB, StringComparison.InvariantCulture);
-        }
     }
 }
+
