@@ -124,7 +124,7 @@ namespace QuickFix
             {
                 if (null == _qfSession)
                 {
-                    _qfSession = Session.LookupSession(Message.GetReverseSessionID(msg));
+                    _qfSession = Session.LookupSession(Message.GetReverseSessionId(msg));
                     if (null == _qfSession)
                     {
                         this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);

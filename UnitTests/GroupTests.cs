@@ -53,7 +53,7 @@ namespace UnitTests
             Assert.AreEqual(linesGroup.Text.Obj, clone.Text.Obj);
             Assert.AreEqual(linesGroup.EncodedText.Obj, clone.EncodedText.Obj);
             Assert.AreEqual(linesGroup.Delim, clone.Delim);
-            Assert.AreEqual(linesGroup.Field, clone.Field);
+            Assert.AreEqual(linesGroup.CounterField, clone.CounterField);
             Assert.AreEqual(linesGroup.FieldOrder, clone.FieldOrder);
         }
     }

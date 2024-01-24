@@ -23,7 +23,7 @@ public abstract class TestBase
 
         ILogFactory? logFactory = settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose")
             ? new FileLogFactory(settings)
-            : null;
+            : new NullLogFactory();
 
         _acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, logFactory);
 

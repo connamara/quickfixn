@@ -961,7 +961,7 @@ namespace UnitTests
             msg.Trailer.SetField(new Signature("woot"));
             msg.Trailer.SetField(new SignatureLength(4));
 
-            string foo = msg.ToString().Replace(Message.SOH, "|");
+            string foo = msg.ToString().Replace(Message.SOH, '|');
             StringAssert.EndsWith("|10=099|", foo);
         }
 
