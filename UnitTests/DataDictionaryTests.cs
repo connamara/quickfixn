@@ -13,6 +13,8 @@ namespace UnitTests
     {
         private QuickFix.IMessageFactory _defaultMsgFactory = new QuickFix.DefaultMessageFactory();
 
+        private const char NUL = Message.SOH;
+
         [Test]
         public void VersionTest()
         {
@@ -305,12 +307,11 @@ namespace UnitTests
 
             QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
 
-            string nul = Message.SOH;
-            string s = "8=FIX.4.2" + nul + "9=148" + nul + "35=D" + nul + "34=2" + nul + "49=TW" + nul + "52=20111011-15:06:23.103" + nul + "56=ISLD" + nul
-                + "11=ID" + nul + "21=1" + nul + "40=1" + nul + "54=1" + nul + "38=200.00" + nul + "55=INTC" + nul
-                + "386=3" + nul + "336=PRE-OPEN" + nul + "336=AFTER-HOURS" + nul
-                + "60=20111011-15:06:23.103" + nul
-                + "10=35" + nul;
+            string s = "8=FIX.4.2" + NUL + "9=148" + NUL + "35=D" + NUL + "34=2" + NUL + "49=TW" + NUL + "52=20111011-15:06:23.103" + NUL + "56=ISLD" + NUL
+                + "11=ID" + NUL + "21=1" + NUL + "40=1" + NUL + "54=1" + NUL + "38=200.00" + NUL + "55=INTC" + NUL
+                + "386=3" + NUL + "336=PRE-OPEN" + NUL + "336=AFTER-HOURS" + NUL
+                + "60=20111011-15:06:23.103" + NUL
+                + "10=35" + NUL;
 
             n.FromString(s, true, dd, dd, _defaultMsgFactory);
 
@@ -333,7 +334,7 @@ namespace UnitTests
                                    "11=clordid", "55=sym", "54=1", "60=20110909-09:09:09.999", "40=1", 
                                    "38=failboat", // should be a decimal
                                    "10=64"};
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+            string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "D";
             string beginString = "FIX.4.4";
@@ -351,10 +352,9 @@ namespace UnitTests
             dd.LoadFIXSpec("FIX42");
             QuickFix.FIX42.MessageFactory f = new QuickFix.FIX42.MessageFactory();
             
-            string nul = Message.SOH;
-            string msgStr = "8=FIX.4.2" + nul + "9=87" + nul + "35=B" + nul + "34=3" + nul + "49=CLIENT1" + nul
-                + "52=20111012-22:15:55.474" + nul + "56=EXECUTOR" + nul + "148=AAAAAAA" + nul
-                + "33=2" + nul + "58=L1" + nul + "58=L2" + nul + "10=016" + nul;
+            string msgStr = "8=FIX.4.2" + NUL + "9=87" + NUL + "35=B" + NUL + "34=3" + NUL + "49=CLIENT1" + NUL
+                + "52=20111012-22:15:55.474" + NUL + "56=EXECUTOR" + NUL + "148=AAAAAAA" + NUL
+                + "33=2" + NUL + "58=L1" + NUL + "58=L2" + NUL + "10=016" + NUL;
 
             QuickFix.Fields.MsgType msgType = Message.IdentifyType(msgStr);
             string beginString = Message.ExtractBeginString(msgStr);
@@ -380,10 +380,10 @@ namespace UnitTests
                 + "1111=mundane|5555=magicfield|6660=1|7770=2|7711=Hoppy|7712=brown|"
                 + "7711=Floppy|7712=white|6661=abracadabra|10=48|";
             // note: length and checksum might be garbage
-            string msgStr = pipedStr.Replace("|", Message.SOH);
+            string msgStr = pipedStr.Replace('|', Message.SOH);
 
             string beginString = Message.ExtractBeginString(msgStr);
-            Message msg = new Message(msgStr, dd, false);
+            Message msg = new Message(msgStr, dd, dd, false);
 
             // true param means body-only, i.e. don't validate length/checksum
             dd.Validate(msg, true, beginString, "magic");
@@ -414,7 +414,7 @@ namespace UnitTests
                                       "146=1", // InstrmtMDReqGrp
                                         "55=sym",
                                       "10=91"};
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+            string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "V";
             string beginString = "FIX.4.4";
@@ -440,7 +440,7 @@ namespace UnitTests
                                          "757=nested2partyid",
                                          "759=failboat", // supposed to be a int
                                      "10=48"};
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+            string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "J";
             string beginString = "FIX.4.4";
@@ -460,7 +460,7 @@ namespace UnitTests
 
             string[] msgFields = { "8=FIX.4.4", "9=104", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
                                      "55=sym", "268=1", "269=0", "272=20111012", "273=22:15:30.444", "10=19" };
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+            string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "W";
             string beginString = "FIX.4.4";
@@ -490,7 +490,7 @@ namespace UnitTests
             // intentionally invalid SendingTime (52/DateTime)
             string[] msgFields = { "8=FIX.4.4", "9=91", "35=W", "34=3", "49=sender", "52=20110909", "56=target",
                                      "55=sym", "268=1", "269=0", "272=20111012", "273=22:15:30.444", "10=51" };
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+            string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "W";
             string beginString = "FIX.4.4";
@@ -511,7 +511,7 @@ namespace UnitTests
             // intentionally invalid MDEntryDate (272/DateOnly)
             string[] msgFields = { "8=FIX.4.4", "9=117", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
                                      "55=sym", "268=1", "269=0", "272=20111012-22:15:30.444", "273=22:15:30.444", "10=175" };
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+            string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "W";
             string beginString = "FIX.4.4";
@@ -532,7 +532,7 @@ namespace UnitTests
             // intentionally invalid MDEntryTime (272/TimeOnly)
             string[] msgFields = { "8=FIX.4.4", "9=113", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
                                      "55=sym", "268=1", "269=0", "272=20111012", "273=20111012-22:15:30.444", "10=200" };
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+            string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "W";
             string beginString = "FIX.4.4";
@@ -563,7 +563,7 @@ namespace UnitTests
 
             string[] msgFields = { "8=FIX.4.4", "9=77", "35=AD", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
                                      "568=tradereqid", "569=0", "10=109" };
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+            string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "AD";
             string beginString = "FIX.4.4";
@@ -583,7 +583,7 @@ namespace UnitTests
 
             string[] msgFields = { "8=FIX.4.4", "9=76", "35=7", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
                                      "2=AdvId", "5=N", "4=B", "53=1", "10=138" };
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+            string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "7";
             string beginString = "FIX.4.4";
@@ -628,13 +628,13 @@ namespace UnitTests
                                    "55=sym",
                                    "268=1", "269=0", "270=123.23", "271=2", "277=A B", 
                                    "10=213"};
-            string msgStr = String.Join( Message.SOH, msgFields ) + Message.SOH;
+            string msgStr = string.Join( Message.SOH, msgFields ) + Message.SOH;
 
             string msgType = "W";
             string beginString = "FIX.4.4";
 
             Message message = f.Create( beginString, msgType );
-            message.FromString( msgStr, true, dd, dd );
+            message.FromString(msgStr, true, dd, dd);
 
             dd.Validate( message, beginString, msgType );
         }
@@ -650,13 +650,13 @@ namespace UnitTests
                                    "55=sym",
                                    "268=1", "269=0", "270=123.23", "271=2", "277=A 1", 
                                    "10=196"};
-            string msgStr = String.Join( Message.SOH, msgFields ) + Message.SOH;
+            string msgStr = string.Join( Message.SOH, msgFields ) + Message.SOH;
 
             string msgType = "W";
             string beginString = "FIX.4.4";
 
             Message message = f.Create( beginString, msgType );
-            message.FromString( msgStr, true, dd, dd );
+            message.FromString(msgStr, true, dd, dd);
 
             Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectTagValue>());
         }
@@ -670,7 +670,7 @@ namespace UnitTests
 
             string[] msgFields = {"8=FIX.4.2", "9=70", "35=B", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
                                    "358=", "148=", "33=0", "10=150"};
-            string msgStr = String.Join(Message.SOH, msgFields) + Message.SOH;
+            string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
 
             string msgType = "B";
             string beginString = "FIX.4.2";
@@ -712,10 +712,7 @@ namespace UnitTests
                 doc.LoadXml(xmlString);
                 return doc.DocumentElement;
             }
-            else
-            {
-                return doc.CreateTextNode(xmlString);
-            }
+            return doc.CreateTextNode(xmlString);
         }
 
         [Test]

@@ -1,4 +1,5 @@
-﻿namespace QuickFix.Fields
+﻿#nullable enable
+namespace QuickFix.Fields
 {
     /// <summary>
     /// Interface for all field classes

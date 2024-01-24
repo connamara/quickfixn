@@ -300,7 +300,7 @@ namespace UnitTests
         public void GroupDelimTest()
         {
             Group g1 = new Group(100, 200);
-            Assert.AreEqual(100, g1.Field); //counter
+            Assert.AreEqual(100, g1.CounterField); //counter
             Assert.AreEqual(200, g1.Delim);
 
             g1.SetField(new StringField(200, "delim!"));

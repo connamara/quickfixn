@@ -50,7 +50,8 @@ namespace QuickFix
                 _validateLengthAndChecksum,
                 _sessionDD,
                 _appDD,
-                _msgFactory);
+                _msgFactory,
+                ignoreBody: false);
             _message = message;
             return _message;
         }

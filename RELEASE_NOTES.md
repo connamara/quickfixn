@@ -14,10 +14,27 @@ What's New
 
 **Breaking changes**
 * #768 - span-ify parser (Rob-Hague) - makes a change to QuickFix.Parser interface, which isn't likely to affect users
-* #820 - cleanup/nullable-ize files (gbirchmeier) - changed some Session Generate* functions to return void instead of null.
-         Very low likelihood that any user code will be affected.
+* #820 - cleanup/nullable-ize initiator/acceptor files (gbirchmeier) -
+         changed some Session Generate* functions to return void instead of null, 
+         very low likelihood that any user code will be affected.
 * #821 - delete dead code: ByteSizeString class & test, do-nothing ConfigTest (gbirchmeier) -
          ByteSizeString is public, but probably no one uses it
+* #822 - cleanup/nullable-ize Message/ classes (gbirchmeier)
+     * FieldMap: getFieldOrder() deleted.  Just call FieldOrder.
+     * FieldMap: GetGroup(int num, Group group) now returns null instead of redundant Group
+     * Group: rename Field to CounterField
+     * Message: changed `SOH`'s type from string to char
+     * Message: ctor Message(string msgstr, DataDictionary.DataDictionary dataDictionary, bool validate) deleted.
+       You can use the 2-DD version, though for FIX4 those DDs will be the same.
+     * Message: ExtractField()'s 2 DD params removed.  They were never used.
+     * Message: static GetFieldOrDefault() changed to private.  Unlikely anyone will notice.
+     * Message: static GetReverseSessionID(Message) changed to private.  Unlikely anyone will notice.
+       (The version with the string param is still public)
+     * Message: FromStringHeader renamed and made private.  Unlikely anyone will notice.
+     * Message: ToXML() and ToJSON() require DD params for any tag/enum translation.
+       (Message no longer stores a DD instance var.)
+       These functions are new, probably not widely used yet.
+       Function docs are now clear on this behavior.
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)

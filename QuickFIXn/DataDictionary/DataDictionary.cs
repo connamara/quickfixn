@@ -90,8 +90,7 @@ namespace QuickFix.DataDictionary
 
             if (((null != sessionDataDict) && sessionDataDict.CheckFieldsOutOfOrder) || ((null != appDataDict) && appDataDict.CheckFieldsOutOfOrder))
             {
-                int field;
-                if (!message.HasValidStructure(out field))
+                if (!message.HasValidStructure(out var field))
                     throw new TagOutOfOrder(field);
             }
 
