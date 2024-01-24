@@ -44,7 +44,7 @@ What's New
 * #764 - fix positive UTC offset parsing in DateTimeConverter (Rob-Hague)
 * #766 - use ordinal string operations (Rob-Hague)
 * #767 - Avoid string conversions in FieldMap.Get{FieldType} where possible (Rob-Hague)
-
+* #785 - use correct SocketError "Shutdown" code when socket is deliberately shutdown (oclancy)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages
