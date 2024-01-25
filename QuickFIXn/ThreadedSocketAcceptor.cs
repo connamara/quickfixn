@@ -89,11 +89,19 @@ namespace QuickFix
             IPEndPoint socketEndPoint;
             if (dict.Has(SessionSettings.SOCKET_ACCEPT_HOST))
             {
-                string host = dict.GetString(SessionSettings.SOCKET_ACCEPT_HOST);                
-                IPAddress[] addrs = Dns.GetHostAddresses(host);
-                socketEndPoint = new IPEndPoint(addrs[0], port);
-                // Set hostname (if it is not already configured)
-                socketSettings.ServerCommonName = socketSettings.ServerCommonName ?? host;
+                string host = dict.GetString(SessionSettings.SOCKET_ACCEPT_HOST);
+
+                if (IsAnyIpAddress(host))
+                {
+                    socketEndPoint = new IPEndPoint(IPAddress.Any, port);
+                }
+                else
+                {
+                    IPAddress[] addrs = Dns.GetHostAddresses(host);
+                    socketEndPoint = new IPEndPoint(addrs[0], port);
+                    // Set hostname (if it is not already configured)
+                    socketSettings.ServerCommonName ??= host;
+                }
             }
             else
             {
@@ -102,7 +110,6 @@ namespace QuickFix
 
             socketSettings.Configure(dict);
 
-
             if (!_socketDescriptorForAddress.TryGetValue(socketEndPoint, out var descriptor))
             {
                 descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
@@ -110,6 +117,18 @@ namespace QuickFix
             }
 
             return descriptor;
+        }
+
+        /// <summary>
+        /// Checks if the host address is the "any" address in either IPv4 (0.0.0.0) or IPv6 (::)
+        /// </summary>
+        /// <param name="host"></param>
+        /// <returns></returns>
+        private static bool IsAnyIpAddress(string host)
+        {
+            return IPAddress.TryParse(host, out IPAddress? address) &&
+                   (address.Equals(IPAddress.Any) ||
+                    address.Equals(IPAddress.IPv6Any));
         }
 
         /// <summary>
