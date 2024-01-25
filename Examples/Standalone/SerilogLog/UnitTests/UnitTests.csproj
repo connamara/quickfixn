@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <Reference Include="QuickFix">
-      <HintPath>..\..\..\..\QuickFIXn\bin\Debug\net6.0\QuickFix.dll</HintPath>
+      <HintPath>..\..\..\..\QuickFIXn\bin\Debug\net8.0\QuickFix.dll</HintPath>
     </Reference>
   </ItemGroup>
 

@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     <Title>QuickFIX/n</Title>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>
-    <PackageId>QuickFIXn.Core</PackageId>
+    <PackageId>ArtexFIX.Core</PackageId>
     <PackageTitle>$(Title)</PackageTitle>
     <Description>
       Open-source C# implementation of QuickFIX.
@@ -15,7 +15,7 @@
     </Description>
     <Copyright>Copyright © 2011 - $([System.DateTime]::UtcNow.Year) QuickFIXn.org. All rights reserved.</Copyright>
     <Authors>Connamara Systems, LLC and QuickFIX/n contributors</Authors>
-    <Version>1.11.2</Version>
+    <Version>1.11.102</Version>
     <NoWarn>$(NoWarn);CS1591</NoWarn>
     <RootNamespace>QuickFix</RootNamespace>
     <Platforms>AnyCPU;x64</Platforms>

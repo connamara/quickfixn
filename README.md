@@ -43,7 +43,7 @@ To run *only* UTs or *only* ATs:
 For more information:
 * `dotnet test -l "console;verbosity=detailed" AcceptanceTest`
 
-AcceptanceTest logs are output to `bin/Debug/net6.0/log`.
+AcceptanceTest logs are output to `bin/Debug/net8.0/log`.
 
 
 Credits

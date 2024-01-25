@@ -644,8 +644,8 @@ namespace QuickFix
             }
             catch (UnsupportedMessageType e)
             {
-                Log.OnEvent("Unsupported message type: " + e.Message);
-                GenerateBusinessMessageReject(message, Fields.BusinessRejectReason.UNKNOWN_MESSAGE_TYPE, 0);
+                this.Log.OnEvent("Unsupported message type: " + e.Message);
+                GenerateBusinessMessageReject(message, Fields.BusinessRejectReason.UNSUPPORTED_MESSAGE_TYPE, 0);
             }
             catch (FieldNotFoundException e)
             {

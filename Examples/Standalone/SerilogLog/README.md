@@ -17,7 +17,7 @@ The solution contains 2 projects:
 The projects are dependent on QuickFix.dll (ILog and ILogFactory interfaces).
 Assuming the standard directory structure, the reference path is:
 
-    <project-root>\QuickFIXn\bin\Debug\net6.0\QuickFix.dll
+    <project-root>\QuickFIXn\bin\Debug\net8.0\QuickFix.dll
 
 You need to build QuickFIXn release configuration to have the DLL available.
 Alternatively, you can change the reference in the both projects.

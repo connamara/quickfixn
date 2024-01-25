@@ -37,7 +37,7 @@ if (Test-Path $zipContentPath) {
 
 @(
     "bin"
-    "bin\net6.0"
+    "bin\net8.0"
     "spec"
     "spec\fix"
     "config"
@@ -47,18 +47,18 @@ if (Test-Path $zipContentPath) {
 }
 
 @(
-    'QuickFIXn\bin\Release\net6.0\QuickFix.dll',
-    'Messages\FIXT11\bin\Release\net6.0\QuickFix.FIXT11.dll',
-    'Messages\FIX40\bin\Release\net6.0\QuickFix.FIX40.dll',
-    'Messages\FIX41\bin\Release\net6.0\QuickFix.FIX41.dll',
-    'Messages\FIX42\bin\Release\net6.0\QuickFix.FIX42.dll',
-    'Messages\FIX43\bin\Release\net6.0\QuickFix.FIX43.dll',
-    'Messages\FIX44\bin\Release\net6.0\QuickFix.FIX44.dll',
-    'Messages\FIX50\bin\Release\net6.0\QuickFix.FIX50.dll',
-    'Messages\FIX50SP1\bin\Release\net6.0\QuickFix.FIX50SP1.dll',
-    'Messages\FIX50SP2\bin\Release\net6.0\QuickFix.FIX50SP2.dll'
+    'QuickFIXn\bin\Release\net8.0\QuickFix.dll',
+    'Messages\FIXT11\bin\Release\net8.0\QuickFix.FIXT11.dll',
+    'Messages\FIX40\bin\Release\net8.0\QuickFix.FIX40.dll',
+    'Messages\FIX41\bin\Release\net8.0\QuickFix.FIX41.dll',
+    'Messages\FIX42\bin\Release\net8.0\QuickFix.FIX42.dll',
+    'Messages\FIX43\bin\Release\net8.0\QuickFix.FIX43.dll',
+    'Messages\FIX44\bin\Release\net8.0\QuickFix.FIX44.dll',
+    'Messages\FIX50\bin\Release\net8.0\QuickFix.FIX50.dll',
+    'Messages\FIX50SP1\bin\Release\net8.0\QuickFix.FIX50SP1.dll',
+    'Messages\FIX50SP2\bin\Release\net8.0\QuickFix.FIX50SP2.dll'
 ) | ForEach-Object {
-    $toPath = Join-Path $zipContentPath 'bin' 'net6.0'
+    $toPath = Join-Path $zipContentPath 'bin' 'net8.0'
 
     $dllPath = Join-Path $rootPath $_ | Resolve-Path
     Copy-Item $_ -Destination $toPath

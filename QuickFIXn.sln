@@ -44,6 +44,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickFix.FIX50SP1", "Messag
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickFix.FIX50SP2", "Messages\FIX50SP2\QuickFix.FIX50SP2.csproj", "{9D978B6F-D2A2-4F85-B3FD-BE4D38378066}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuickFix.FIX50SP2artex", "Messages\FIX50SP2artex\QuickFix.FIX50SP2artex.csproj", "{516BBE42-5071-4D60-A81D-02438D30552C}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickFix.FIXT11", "Messages\FIXT11\QuickFix.FIXT11.csproj", "{6EABF160-E21A-4ABD-82C9-0DCC085BDE07}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcceptanceTest", "AcceptanceTest\AcceptanceTest.csproj", "{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}"
@@ -192,6 +194,14 @@ Global
 		{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}.Release|x64.ActiveCfg = Release|Any CPU
 		{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}.Release|x64.Build.0 = Release|Any CPU
+		{516BBE42-5071-4D60-A81D-02438D30552C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{516BBE42-5071-4D60-A81D-02438D30552C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{516BBE42-5071-4D60-A81D-02438D30552C}.Debug|x64.ActiveCfg = Debug|x64
+		{516BBE42-5071-4D60-A81D-02438D30552C}.Debug|x64.Build.0 = Debug|x64
+		{516BBE42-5071-4D60-A81D-02438D30552C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{516BBE42-5071-4D60-A81D-02438D30552C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{516BBE42-5071-4D60-A81D-02438D30552C}.Release|x64.ActiveCfg = Release|x64
+		{516BBE42-5071-4D60-A81D-02438D30552C}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

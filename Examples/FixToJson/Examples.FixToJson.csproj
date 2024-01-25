@@ -2,8 +2,10 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <RootNamespace>FixToJson</RootNamespace>
+    <AssemblyName>FixToJson</AssemblyName>
     <Copyright>Copyright © Connamara Systems, LLC 2022</Copyright>
     <Company>Connamara Systems, LLC</Company>
     <IsPackable>false</IsPackable>

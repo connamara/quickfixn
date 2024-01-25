@@ -60,7 +60,7 @@ it technically violates semantic versioning.
 
 **Breaking changes in release** 
 * #732 - generate FIXT11 msg classes so they can be cracked (mgatny) IMPORTANT: FIX5+ applications now need the new FIXT11 dll!
-* #748 - Update all csproj files to net6.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
+* #748 - Update all csproj files to net8.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
 * #749 - All deprecations are removed (gbirchmeier)
 * #746 - remove some unused public `FIXnn_LAST_FIELD` constants; corrected FIX44 DD `UNKOWN_ID` typo (gbirchmeier)
 * #756 - privatize DDField property setters,
