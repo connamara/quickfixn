@@ -1,6 +1,7 @@
 [![QuickFIX/N][1]](http://quickfixn.org)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/ccu2yp2coad3oam0?svg=true)](https://ci.appveyor.com/project/cbusbey/quickfixn-jib50)
+![Build status](https://github.com/connamara/quickfixn/actions/workflows/dotnet.yml/badge.svg)
+[![NuGet Version](https://img.shields.io/nuget/v/QuickFIXn.Core)](https://www.nuget.org/packages/QuickFIXn.Core/)
 
 For tutorials on how to use QuickFIX/n, visit the [website](http://quickfixn.org/tutorial/creating-an-application.html).
 
