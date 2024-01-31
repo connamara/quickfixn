@@ -13,88 +13,88 @@ namespace AcceptanceTest
         {
         }
 
-        public void OnMessage(QuickFix.FIX40.NewOrderSingle nos, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX40.NewOrderSingle nos, SessionID sessionId)
         {
-            ProcessNOS(nos, sessionID);
+            ProcessNOS(nos, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX41.NewOrderSingle nos, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX41.NewOrderSingle nos, SessionID sessionId)
         {
-            ProcessNOS(nos, sessionID);
+            ProcessNOS(nos, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX42.NewOrderSingle nos, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX42.NewOrderSingle nos, SessionID sessionId)
         {
-            ProcessNOS(nos, sessionID);
+            ProcessNOS(nos, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX42.SecurityDefinition message, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX42.SecurityDefinition message, SessionID sessionId)
         {
-            Echo(message, sessionID);
+            Echo(message, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX43.NewOrderSingle nos, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX43.NewOrderSingle nos, SessionID sessionId)
         {
-            ProcessNOS(nos, sessionID);
+            ProcessNOS(nos, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX43.SecurityDefinition message, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX43.SecurityDefinition message, SessionID sessionId)
         {
-            Echo(message, sessionID);
+            Echo(message, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX44.NewOrderSingle nos, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX44.NewOrderSingle nos, SessionID sessionId)
         {
-            ProcessNOS(nos, sessionID);
+            ProcessNOS(nos, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX44.SecurityDefinition message, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX44.SecurityDefinition message, SessionID sessionId)
         {
-            Echo(message, sessionID);
+            Echo(message, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX44.QuoteRequest message, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX44.QuoteRequest message, SessionID sessionId)
         {
-            Echo(message, sessionID);
+            Echo(message, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX50.NewOrderSingle nos, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX50.NewOrderSingle nos, SessionID sessionId)
         {
-            ProcessNOS(nos, sessionID);
+            ProcessNOS(nos, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX50.SecurityDefinition message, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX50.SecurityDefinition message, SessionID sessionId)
         {
-            Echo(message, sessionID);
+            Echo(message, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX50SP1.NewOrderSingle nos, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX50SP1.NewOrderSingle nos, SessionID sessionId)
         {
-            ProcessNOS(nos, sessionID);
+            ProcessNOS(nos, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX50SP1.SecurityDefinition message, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX50SP1.SecurityDefinition message, SessionID sessionId)
         {
-            Echo(message, sessionID);
+            Echo(message, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX50SP2.NewOrderSingle nos, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX50SP2.NewOrderSingle nos, SessionID sessionId)
         {
-            ProcessNOS(nos, sessionID);
+            ProcessNOS(nos, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX50SP2.SecurityDefinition message, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX50SP2.SecurityDefinition message, SessionID sessionId)
         {
-            Echo(message, sessionID);
+            Echo(message, sessionId);
         }
 
-        protected void Echo(Message message, SessionID sessionID)
+        private static void Echo(Message message, SessionID sessionId)
         {
             Message echo = new(message);
-            Session.SendToTarget(echo, sessionID);
+            Session.SendToTarget(echo, sessionId);
         }
 
-        protected void ProcessNOS(Message message, SessionID sessionID)
+        private void ProcessNOS(Message message, SessionID sessionId)
         {
             Message echo = new(message);
 
@@ -102,24 +102,24 @@ namespace AcceptanceTest
             if (message.Header.IsSetField(QuickFix.Fields.Tags.PossResend))
                 possResend = message.Header.GetBoolean(QuickFix.Fields.Tags.PossResend);
 
-            KeyValuePair<string, SessionID> pair = new(message.GetString(QuickFix.Fields.Tags.ClOrdID), sessionID);
+            KeyValuePair<string, SessionID> pair = new(message.GetString(QuickFix.Fields.Tags.ClOrdID), sessionId);
             if (possResend && _clOrdIDs.Contains(pair))
                 return;
             _clOrdIDs.Add(pair);
 
-            Session.SendToTarget(echo, sessionID);
+            Session.SendToTarget(echo, sessionId);
         }
 
 
-        public void OnMessage(QuickFix.FIX41.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
-        public void OnMessage(QuickFix.FIX42.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
-        public void OnMessage(QuickFix.FIX43.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
-        public void OnMessage(QuickFix.FIX44.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
-        public void OnMessage(QuickFix.FIX50.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
-        public void OnMessage(QuickFix.FIX50SP1.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
-        public void OnMessage(QuickFix.FIX50SP2.News news, SessionID sessionID) { ProcessNews(news, sessionID); }
+        public void OnMessage(QuickFix.FIX41.News news, SessionID sessionId) { ProcessNews(news, sessionId); }
+        public void OnMessage(QuickFix.FIX42.News news, SessionID sessionId) { ProcessNews(news, sessionId); }
+        public void OnMessage(QuickFix.FIX43.News news, SessionID sessionId) { ProcessNews(news, sessionId); }
+        public void OnMessage(QuickFix.FIX44.News news, SessionID sessionId) { ProcessNews(news, sessionId); }
+        public void OnMessage(QuickFix.FIX50.News news, SessionID sessionId) { ProcessNews(news, sessionId); }
+        public void OnMessage(QuickFix.FIX50SP1.News news, SessionID sessionId) { ProcessNews(news, sessionId); }
+        public void OnMessage(QuickFix.FIX50SP2.News news, SessionID sessionId) { ProcessNews(news, sessionId); }
 
-        public void ProcessNews(Message msg, SessionID sessionID)
+        private void ProcessNews(Message msg, SessionID sessionId)
         {
             if (msg.IsSetField(QuickFix.Fields.Tags.Headline) && (msg.GetString(QuickFix.Fields.Tags.Headline) == "STOPME"))
             {
@@ -127,41 +127,41 @@ namespace AcceptanceTest
                     StopMeEvent();
             }
             else
-                Echo(msg, sessionID);
+                Echo(msg, sessionId);
         }
 
-        public void OnMessage(QuickFix.FIX44.TradeCaptureReportRequest msg, SessionID sessionID)
+        public void OnMessage(QuickFix.FIX44.TradeCaptureReportRequest msg, SessionID sessionId)
         {
             // do nothing, just swallow it.
         }
 
         #region Application Methods
 
-        public void OnCreate(SessionID sessionID)
+        public void OnCreate(SessionID sessionId)
         {
-            Session session = Session.LookupSession(sessionID);
+            Session? session = Session.LookupSession(sessionId);
 
             // Hey QF/N users, don't do this in a real app.
             session?.Reset("AT Session Reset");
         }
 
-        public void OnLogout(SessionID sessionID)
+        public void OnLogout(SessionID sessionId)
         {
             _clOrdIDs.Clear();
         }
 
-        public void OnLogon(SessionID sessionID)
+        public void OnLogon(SessionID sessionId)
         { }
 
-        public void FromApp(Message message, SessionID sessionID)
+        public void FromApp(Message message, SessionID sessionId)
         {
             try
             {
-                string msgType = message.Header.GetString(QuickFix.Fields.Tags.MsgType);
+                //string msgType = message.Header.GetString(QuickFix.Fields.Tags.MsgType);
                 // log_.OnEvent("Got message " + msgType);
                 // System.Console.WriteLine("===got message " + msgType);
 
-                Crack(message, sessionID);
+                Crack(message, sessionId);
             }
             catch (UnsupportedMessageType)
             {
@@ -169,15 +169,15 @@ namespace AcceptanceTest
             }
             catch (System.Exception e)
             {
-                Session.LookupSession(sessionID).Log.OnEvent("Exception during FromApp: " + e.ToString() + "\n while processing msg (" + message.ToString() + ")");
+                Session.LookupSession(sessionId)?.Log.OnEvent($"Exception during FromApp: {e}\n while processing msg ({message})");
             }
         }
 
-        public void FromAdmin(Message message, SessionID sessionID)
+        public void FromAdmin(Message message, SessionID sessionId)
         { }
 
-        public void ToAdmin(Message message, SessionID sessionID) { }
-        public void ToApp(Message message, SessionID sessionID) { }
+        public void ToAdmin(Message message, SessionID sessionId) { }
+        public void ToApp(Message message, SessionID sessionId) { }
 
         #endregion
     }

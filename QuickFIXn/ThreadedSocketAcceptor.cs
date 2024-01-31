@@ -23,27 +23,6 @@ namespace QuickFix
         #region Constructors
 
         /// <summary>
-        /// Create a ThreadedSocketAcceptor with a NullLogFactory and DefaultMessageFactory
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="storeFactory"></param>
-        /// <param name="settings"></param>
-        public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(application, storeFactory, settings, null, null)
-        { }
-
-        /// <summary>
-        /// Create a ThreadedSocketAcceptor with a DefaultMessageFactory
-        /// </summary>
-        /// <param name="application"></param>
-        /// <param name="storeFactory"></param>
-        /// <param name="settings"></param>
-        /// <param name="logFactory"></param>
-        public ThreadedSocketAcceptor(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
-            : this(application, storeFactory, settings, logFactory, null)
-        { }
-
-        /// <summary>
         /// Create a ThreadedSocketAcceptor
         /// </summary>
         /// <param name="application"></param>
@@ -55,8 +34,8 @@ namespace QuickFix
             IApplication application,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
-            ILogFactory? logFactory,
-            IMessageFactory? messageFactory)
+            ILogFactory? logFactory = null,
+            IMessageFactory? messageFactory = null)
         {
             ILogFactory lf = logFactory ?? new NullLogFactory();
             IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
@@ -197,7 +176,6 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    // FIXME logError(session.getSessionID(), "Error during logout", e);
                     System.Console.WriteLine("Error during logout of Session " + session.SessionID + ": " + e.Message);
                 }
             }
@@ -213,7 +191,6 @@ namespace QuickFix
                     }
                     catch (Exception e)
                     {
-                        // FIXME logError(session.getSessionID(), "Error during disconnect", e);
                         System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
                     }
                 }

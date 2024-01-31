@@ -33,7 +33,7 @@ namespace QuickFix
         void IncrNextTargetMsgSeqNum();
 
 
-        System.DateTime? CreationTime { get; }
+        DateTime? CreationTime { get; }
 
         /// <summary>
         /// Reset the message store. Sequence numbers are set back to 1 and stored

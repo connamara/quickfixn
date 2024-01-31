@@ -1,18 +1,16 @@
-﻿using System.Net.Sockets;
+﻿#nullable enable
+using System.Net.Sockets;
 using System.Threading;
 using System;
 
 namespace QuickFix
 {
-    // TODO v2.0 - consider changing to internal
-
-
     /// <summary>
     /// Created by a ThreadedSocketReactor to handle a client connection.
     /// Each ClientHandlerThread has a SocketReader which reads
     /// from the socket.
     /// </summary>
-    public class ClientHandlerThread : IResponder, IDisposable
+    internal class ClientHandlerThread : IResponder, IDisposable
     {
         internal class ExitedEventArgs : EventArgs
         {
@@ -20,35 +18,22 @@ namespace QuickFix
 
             public ExitedEventArgs(ClientHandlerThread clientHandlerThread)
             {
-                this.ClientHandlerThread = clientHandlerThread;
+                ClientHandlerThread = clientHandlerThread;
             }
         }
 
         internal delegate void ExitedEventHandler(object sender, ClientHandlerThread.ExitedEventArgs e);
-        internal event ExitedEventHandler Exited;
+        internal event ExitedEventHandler? Exited;
 
         public long Id { get; private set; }
 
-        private Thread thread_ = null;
-        private volatile bool isShutdownRequested_ = false;
-        private SocketReader socketReader_;
-        private FileLog log_;
-
-        /// <summary>
-        /// Creates a ClientHandlerThread
-        /// </summary>
-        /// <param name="tcpClient"></param>
-        /// <param name="clientId"></param>
-        /// <param name="settingsDict"></param>
-        /// <param name="socketSettings"></param>
-        public ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict, SocketSettings socketSettings)
-            : this(tcpClient, clientId, settingsDict, socketSettings, null)
-        {
-            
-        }
+        private Thread? _thread = null;
+        private volatile bool _isShutdownRequested = false;
+        private readonly SocketReader _socketReader;
+        private readonly FileLog _log;
 
         internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict,
-            SocketSettings socketSettings, AcceptorSocketDescriptor acceptorDescriptor)
+            SocketSettings socketSettings, AcceptorSocketDescriptor? acceptorDescriptor)
         {
             string debugLogFilePath = "log";
             if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
@@ -57,62 +42,60 @@ namespace QuickFix
                 debugLogFilePath = settingsDict.GetString(SessionSettings.FILE_LOG_PATH);
 
             // FIXME - do something more flexible than hardcoding a filelog
-            log_ = new FileLog(debugLogFilePath, new SessionID(
-                    "ClientHandlerThread", clientId.ToString(), "Debug-" + Guid.NewGuid().ToString()));
+            _log = new FileLog(debugLogFilePath, new SessionID(
+                    "ClientHandlerThread", clientId.ToString(), "Debug-" + Guid.NewGuid()));
 
-            this.Id = clientId;
-            socketReader_ = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor);
+            Id = clientId;
+            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor);
         }
 
         public void Start()
         {
-            thread_ = new Thread(new ThreadStart(Run));
-            thread_.Start();
+            _thread = new Thread(Run);
+            _thread.Start();
         }
 
         public void Shutdown(string reason)
         {
             Log("shutdown requested: " + reason);
-            isShutdownRequested_ = true;
+            _isShutdownRequested = true;
         }
 
         public void Join()
         {
-            if(null == thread_)
+            if (_thread is null)
                 return;
-            if(thread_.IsAlive)
-                thread_.Join(5000);
-            thread_ = null;
+            if (_thread.IsAlive)
+                _thread.Join(5000);
+            _thread = null;
         }
 
-        public void Run()
+        private void Run()
         {
-            while (!isShutdownRequested_)
+            while (!_isShutdownRequested)
             {
                 try
                 {
-                    socketReader_.Read();
+                    _socketReader.Read();
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
                     Shutdown(e.Message);
                 }
             }
 
-            this.Log("shutdown");
+            Log("shutdown");
             OnExited();
         }
 
-        protected void OnExited()
-        {
-            if (Exited != null)
-                Exited(this, new ExitedEventArgs(this));
+        private void OnExited() {
+            Exited?.Invoke(this, new ExitedEventArgs(this));
         }
 
         /// FIXME do real logging
         public void Log(string s)
         {
-            log_.OnEvent(s);
+            _log.OnEvent(s);
         }
 
         /// <summary>
@@ -121,14 +104,14 @@ namespace QuickFix
         /// <returns></returns>
         internal ILog GetLog()
         {
-            return log_;
+            return _log;
         }
 
         #region Responder Members
 
         public bool Send(string data)
         {
-            return socketReader_.Send(data) > 0;
+            return _socketReader.Send(data) > 0;
         }
 
         public void Disconnect()
@@ -151,17 +134,8 @@ namespace QuickFix
             if (_disposed) return;
             if (disposing)
             {
-                if (socketReader_ != null)
-                {
-                    socketReader_.Dispose();
-                    socketReader_ = null;
-                }
-
-                if (log_ != null)
-                {
-                    log_.Dispose();
-                    log_ = null;
-                }
+                _socketReader.Dispose();
+                _log.Dispose();
             }
             _disposed = true;
         }

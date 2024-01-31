@@ -1,5 +1,5 @@
+#nullable enable
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 
 namespace QuickFix
@@ -8,58 +8,50 @@ namespace QuickFix
     {
         #region Properties
 
-        public ThreadedSocketReactor SocketReactor
-        {
-            get { return socketReactor_; }
-        }
+        public ThreadedSocketReactor SocketReactor { get; }
 
-        public IPEndPoint Address
-        {
-            get { return socketEndPoint_; }
-        }
+        public IPEndPoint Address { get; }
 
         #endregion
 
         #region Private Members
 
-        private ThreadedSocketReactor socketReactor_;
-        private IPEndPoint socketEndPoint_;
-        private Dictionary<SessionID, Session> acceptedSessions_ = new Dictionary<SessionID, Session>();
+        private readonly Dictionary<SessionID, Session> _acceptedSessions = new ();
 
         #endregion
 
         public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
         {
-            socketEndPoint_ = socketEndPoint;
-            socketReactor_ = new ThreadedSocketReactor(socketEndPoint_, socketSettings, sessionDict, this);
+            Address = socketEndPoint;
+            SocketReactor = new ThreadedSocketReactor(Address, socketSettings, sessionDict, this);
         }
 
         public void AcceptSession(Session session)
         {
-            lock (acceptedSessions_)
+            lock (_acceptedSessions)
             {
-                acceptedSessions_[session.SessionID] = session;
+                _acceptedSessions[session.SessionID] = session;
             }
         }
 
         /// <summary>
         /// Remove a session from those tied to this socket.
         /// </summary>
-        /// <param name="sessionID">ID of session to be removed</param>
+        /// <param name="sessionId">ID of session to be removed</param>
         /// <returns>true if session removed, false if not found</returns>
-        public bool RemoveSession(SessionID sessionID)
+        public bool RemoveSession(SessionID sessionId)
         {
-            lock (acceptedSessions_)
+            lock (_acceptedSessions)
             {
-                return acceptedSessions_.Remove(sessionID);
+                return _acceptedSessions.Remove(sessionId);
             }
         }
 
         public Dictionary<SessionID, Session> GetAcceptedSessions()
         {
-            lock (acceptedSessions_)
+            lock (_acceptedSessions)
             {
-                return new Dictionary<SessionID, Session>(acceptedSessions_);
+                return new Dictionary<SessionID, Session>(_acceptedSessions);
             }
         }
     }

@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using System.Collections.Generic;
 using MessagesBySeqNum = System.Collections.Generic.Dictionary<ulong, QuickFix.Message>;
@@ -12,43 +13,39 @@ namespace QuickFix
     {
         #region Private Members
 
-        private object sync_ = new object();
-        private bool isEnabled_ = true;
-        private bool receivedLogon_ = false;
-        private bool receivedReset_ = false;
-        private bool sentLogon_ = false;
-        private bool sentLogout_ = false;
-        private bool sentReset_ = false;
-        private string logoutReason_ = "";
-        private int testRequestCounter_ = 0;
-        private int heartBtInt_ = 0;
-        private int heartBtIntAsMilliSecs_ = 0;
-        private DateTime lastReceivedTimeDT_ = DateTime.MinValue;
-        private DateTime lastSentTimeDT_ = DateTime.MinValue;
-        private int logonTimeout_ = 10;
-        private long logonTimeoutAsMilliSecs_ = 10 * 1000;
-        private int logoutTimeout_ = 2;
-        private long logoutTimeoutAsMilliSecs_ = 2 * 1000;
-        private ResendRange resendRange_ = new ResendRange();
-        private MessagesBySeqNum msgQueue = new MessagesBySeqNum();
-
-        private ILog log_;
+        private readonly object _sync = new object();
+        private bool _isEnabled = true;
+        private bool _receivedLogon = false;
+        private bool _receivedReset = false;
+        private bool _sentLogon = false;
+        private bool _sentLogout = false;
+        private bool _sentReset = false;
+        private string _logoutReason = "";
+        private int _testRequestCounter = 0;
+        private int _heartBtInt = 0;
+        private int _heartBtIntAsMilliSecs = 0;
+        private DateTime _lastReceivedTimeDt = DateTime.MinValue;
+        private DateTime _lastSentTimeDt = DateTime.MinValue;
+        private int _logonTimeout = 10;
+        private long _logonTimeoutAsMilliSecs = 10 * 1000;
+        private int _logoutTimeout = 2;
+        private long _logoutTimeoutAsMilliSecs = 2 * 1000;
+        private readonly ResendRange _resendRange = new ();
+        private MessagesBySeqNum _msgQueue = new ();
 
         #endregion
 
         #region Unsynchronized Properties
 
         public IMessageStore MessageStore
-        { get; set; }
+        { get; }
 
         public bool IsInitiator
         { get; set; }
 
-        public bool ShouldSendLogon
-        { get { return IsInitiator && !SentLogon; } }
+        public bool ShouldSendLogon => IsInitiator && !SentLogon;
 
-        public ILog Log
-        { get { return log_; } }
+        public ILog Log { get; }
 
         #endregion
 
@@ -56,113 +53,114 @@ namespace QuickFix
 
         public bool IsEnabled
         {
-            get { lock (sync_) { return isEnabled_; } }
-            set { lock (sync_) { isEnabled_ = value; } }
+            get { lock (_sync) { return _isEnabled; } }
+            set { lock (_sync) { _isEnabled = value; } }
         }
 
         public bool ReceivedLogon
         {
-            get { lock (sync_) { return receivedLogon_; } }
-            set { lock (sync_) { receivedLogon_ = value; } }
+            get { lock (_sync) { return _receivedLogon; } }
+            set { lock (_sync) { _receivedLogon = value; } }
         }
 
         public bool ReceivedReset
         {
-            get { lock (sync_) { return receivedReset_; } }
-            set { lock (sync_) { receivedReset_ = value; } }
+            get { lock (_sync) { return _receivedReset; } }
+            set { lock (_sync) { _receivedReset = value; } }
         }
 
         public bool SentLogon
         {
-            get { lock (sync_) { return sentLogon_; } }
-            set { lock (sync_) { sentLogon_ = value; } }
+            get { lock (_sync) { return _sentLogon; } }
+            set { lock (_sync) { _sentLogon = value; } }
         }
 
         public bool SentLogout
         {
-            get { lock (sync_) { return sentLogout_; } }
-            set { lock (sync_) { sentLogout_ = value; } }
+            get { lock (_sync) { return _sentLogout; } }
+            set { lock (_sync) { _sentLogout = value; } }
         }
 
         public bool SentReset
         {
-            get { lock (sync_) { return sentReset_; } }
-            set { lock (sync_) { sentReset_ = value; } }
+            get { lock (_sync) { return _sentReset; } }
+            set { lock (_sync) { _sentReset = value; } }
         }
 
         public string LogoutReason
         {
-            get { lock (sync_) { return logoutReason_; } }
-            set { lock (sync_) { logoutReason_ = value; } }
+            get { lock (_sync) { return _logoutReason; } }
+            set { lock (_sync) { _logoutReason = value; } }
         }
 
         public int TestRequestCounter
         {
-            get { lock (sync_) { return testRequestCounter_; } }
-            set { lock (sync_) { testRequestCounter_ = value; } }
+            get { lock (_sync) { return _testRequestCounter; } }
+            set { lock (_sync) { _testRequestCounter = value; } }
         }
 
         public int HeartBtInt
         {
-            get { lock (sync_) { return heartBtInt_; } }
-            set { lock (sync_) { heartBtInt_ = value; heartBtIntAsMilliSecs_ = 1000 * value; } }
+            get { lock (_sync) { return _heartBtInt; } }
+            set { lock (_sync) { _heartBtInt = value; _heartBtIntAsMilliSecs = 1000 * value; } }
         }
 
         public int HeartBtIntAsMilliSecs
         {
-            get { lock (sync_) { return heartBtIntAsMilliSecs_; } }
+            get { lock (_sync) { return _heartBtIntAsMilliSecs; } }
         }
 
         public DateTime LastReceivedTimeDT
         {
-            get { lock (sync_) { return lastReceivedTimeDT_; } }
-            set { lock (sync_) { lastReceivedTimeDT_ = value; } }
+            get { lock (_sync) { return _lastReceivedTimeDt; } }
+            set { lock (_sync) { _lastReceivedTimeDt = value; } }
         }
 
 
         public DateTime LastSentTimeDT
         {
-            get { lock (sync_) { return lastSentTimeDT_; } }
-            set { lock (sync_) { lastSentTimeDT_ = value; } }
+            get { lock (_sync) { return _lastSentTimeDt; } }
+            set { lock (_sync) { _lastSentTimeDt = value; } }
         }
 
         public int LogonTimeout
         {
-            get { lock (sync_) { return logonTimeout_; } }
-            set { lock (sync_) { logonTimeout_ = value; logonTimeoutAsMilliSecs_ = 1000 * value; } }
+            get { lock (_sync) { return _logonTimeout; } }
+            set { lock (_sync) { _logonTimeout = value; _logonTimeoutAsMilliSecs = 1000 * value; } }
         }
 
         public long LogonTimeoutAsMilliSecs
         {
-            get { lock (sync_) { return logonTimeoutAsMilliSecs_; } }
+            get { lock (_sync) { return _logonTimeoutAsMilliSecs; } }
         }
 
         public int LogoutTimeout
         {
-            get { lock (sync_) { return logoutTimeout_; } }
-            set { lock (sync_) { logoutTimeout_ = value; logoutTimeoutAsMilliSecs_ = 1000 * value; } }
+            get { lock (_sync) { return _logoutTimeout; } }
+            set { lock (_sync) { _logoutTimeout = value; _logoutTimeoutAsMilliSecs = 1000 * value; } }
         }
 
         public long LogoutTimeoutAsMilliSecs
         {
-            get { lock (sync_) { return logoutTimeoutAsMilliSecs_; } }
+            get { lock (_sync) { return _logoutTimeoutAsMilliSecs; } }
         }
 
         private MessagesBySeqNum MsgQueue
         {
-            get { lock (sync_) { return msgQueue; } }
-            set { lock (sync_) { msgQueue = value; } }
+            get { lock (_sync) { return _msgQueue; } }
+            set { lock (_sync) { _msgQueue = value; } }
         }
 
         #endregion
 
-        public SessionState(bool isInitiator, ILog log, int heartBtInt)
+        public SessionState(bool isInitiator, ILog log, int heartBtInt, IMessageStore messageStore)
         {
-            log_ = log;
-            this.HeartBtInt = heartBtInt;
-            this.IsInitiator = isInitiator;
-            lastReceivedTimeDT_ = DateTime.UtcNow;
-            lastSentTimeDT_ = DateTime.UtcNow;
+            Log = log;
+            HeartBtInt = heartBtInt;
+            IsInitiator = isInitiator;
+            _lastReceivedTimeDt = DateTime.UtcNow;
+            _lastSentTimeDt = DateTime.UtcNow;
+            MessageStore = messageStore;
         }
 
         /// <summary>
@@ -174,11 +172,11 @@ namespace QuickFix
         /// <returns></returns>
         public static bool LogonTimedOut(DateTime now, long logonTimeout, DateTime lastReceivedTime)
         {
-            return (now.Subtract(lastReceivedTime).TotalMilliseconds) >= logonTimeout;
+            return now.Subtract(lastReceivedTime).TotalMilliseconds >= logonTimeout;
         }
         public bool LogonTimedOut()
         {
-            return LogonTimedOut(DateTime.UtcNow, this.LogonTimeoutAsMilliSecs, this.LastReceivedTimeDT);
+            return LogonTimedOut(DateTime.UtcNow, LogonTimeoutAsMilliSecs, LastReceivedTimeDT);
         }
 
         /// <summary>
@@ -195,7 +193,7 @@ namespace QuickFix
         }
         public bool TimedOut()
         {
-            return TimedOut(DateTime.UtcNow, this.HeartBtIntAsMilliSecs, this.LastReceivedTimeDT);
+            return TimedOut(DateTime.UtcNow, HeartBtIntAsMilliSecs, LastReceivedTimeDT);
         }
 
         /// <summary>
@@ -208,11 +206,11 @@ namespace QuickFix
         /// <returns></returns>
         public static bool LogoutTimedOut(DateTime now, bool sentLogout, long logoutTimeout, DateTime lastSentTime)
         {
-            return sentLogout && ((now.Subtract(lastSentTime).TotalMilliseconds) >= logoutTimeout);
+            return sentLogout && (now.Subtract(lastSentTime).TotalMilliseconds >= logoutTimeout);
         }
         public bool LogoutTimedOut()
         {
-            return LogoutTimedOut(DateTime.UtcNow, this.SentLogout, this.LogoutTimeoutAsMilliSecs, this.LastSentTimeDT);
+            return LogoutTimedOut(DateTime.UtcNow, SentLogout, LogoutTimeoutAsMilliSecs, LastSentTimeDT);
         }
 
         /// <summary>
@@ -230,7 +228,7 @@ namespace QuickFix
         }
         public bool NeedTestRequest()
         {
-            return NeedTestRequest(DateTime.UtcNow, this.HeartBtIntAsMilliSecs, this.LastReceivedTimeDT, this.TestRequestCounter);
+            return NeedTestRequest(DateTime.UtcNow, HeartBtIntAsMilliSecs, LastReceivedTimeDT, TestRequestCounter);
         }
 
         /// <summary>
@@ -248,7 +246,7 @@ namespace QuickFix
         }
         public bool NeedHeartbeat()
         {
-            return NeedHeartbeat(DateTime.UtcNow, this.HeartBtIntAsMilliSecs, this.LastSentTimeDT, this.TestRequestCounter);
+            return NeedHeartbeat(DateTime.UtcNow, HeartBtIntAsMilliSecs, LastSentTimeDT, TestRequestCounter);
         }
 
         /// <summary>
@@ -261,42 +259,37 @@ namespace QuickFix
         /// <returns>true if within heartbeat interval</returns>
         public static bool WithinHeartbeat(DateTime now, int heartBtIntMillis, DateTime lastSentTime, DateTime lastReceivedTime)
         {
-            return ((now.Subtract(lastSentTime).TotalMilliseconds) < Convert.ToDouble(heartBtIntMillis))
-                && ((now.Subtract(lastReceivedTime).TotalMilliseconds) < Convert.ToDouble(heartBtIntMillis));
+            return (now.Subtract(lastSentTime).TotalMilliseconds < Convert.ToDouble(heartBtIntMillis))
+                && (now.Subtract(lastReceivedTime).TotalMilliseconds < Convert.ToDouble(heartBtIntMillis));
         }
         public bool WithinHeartbeat()
         {
-            return WithinHeartbeat(DateTime.UtcNow, this.HeartBtIntAsMilliSecs, this.LastSentTimeDT, this.LastReceivedTimeDT);
+            return WithinHeartbeat(DateTime.UtcNow, HeartBtIntAsMilliSecs, LastSentTimeDT, LastReceivedTimeDT);
         }
 
         public ResendRange GetResendRange()
         {
-            return resendRange_;
+            return _resendRange;
         }
 
         public void Get(SeqNumType begSeqNo, SeqNumType endSeqNo, List<string> messages)
         {
-            lock (sync_)
+            lock (_sync)
             {
               MessageStore.Get(begSeqNo, endSeqNo, messages);
             }
         }
 
-        public void SetResendRange(SeqNumType begin, SeqNumType end)
+        public void SetResendRange(SeqNumType begin, SeqNumType end, SeqNumType chunkEnd = ResendRange.NOT_SET)
         {
-            SetResendRange(begin, end, ResendRange.NOT_SET);
-        }
-
-        public void SetResendRange(SeqNumType begin, SeqNumType end, SeqNumType chunkEnd)
-        {
-            resendRange_.BeginSeqNo = begin;
-            resendRange_.EndSeqNo = end;
-            resendRange_.ChunkEndSeqNo = chunkEnd == ResendRange.NOT_SET ? end : chunkEnd;
+            _resendRange.BeginSeqNo = begin;
+            _resendRange.EndSeqNo = end;
+            _resendRange.ChunkEndSeqNo = chunkEnd == ResendRange.NOT_SET ? end : chunkEnd;
         }
 
         public bool ResendRequested()
         {
-            return !(resendRange_.BeginSeqNo == 0 && resendRange_.EndSeqNo == 0);
+            return !(_resendRange.BeginSeqNo == 0 && _resendRange.EndSeqNo == 0);
         }
 
         public void Queue(SeqNumType msgSeqNum, Message msg)
@@ -312,7 +305,7 @@ namespace QuickFix
             MsgQueue.Clear();
         }
 
-        public QuickFix.Message Dequeue(SeqNumType num)
+        public QuickFix.Message? Dequeue(SeqNumType num)
         {
             if (MsgQueue.ContainsKey(num))
             {
@@ -323,15 +316,16 @@ namespace QuickFix
             return null;
         }
 
-        public Message Retrieve(SeqNumType msgSeqNum)
+        public Message? Retrieve(SeqNumType msgSeqNum)
         {
-            Message msg = null;
             if (MsgQueue.ContainsKey(msgSeqNum))
             {
-                msg = MsgQueue[msgSeqNum];
+                Message msg = MsgQueue[msgSeqNum];
                 MsgQueue.Remove(msgSeqNum);
+                return msg;
             }
-            return msg;
+
+            return null;
         }
 
         /// <summary>
@@ -342,10 +336,10 @@ namespace QuickFix
         {
             return new System.Text.StringBuilder("SessionState ")
                 .Append("[ Now=").Append(DateTime.UtcNow)
-                .Append(", HeartBtInt=").Append(this.HeartBtIntAsMilliSecs)
-                .Append(", LastSentTime=").Append(this.LastSentTimeDT)
-                .Append(", LastReceivedTime=").Append(this.LastReceivedTimeDT)
-                .Append(", TestRequestCounter=").Append(this.TestRequestCounter)
+                .Append(", HeartBtInt=").Append(HeartBtIntAsMilliSecs)
+                .Append(", LastSentTime=").Append(LastSentTimeDT)
+                .Append(", LastReceivedTime=").Append(LastReceivedTimeDT)
+                .Append(", TestRequestCounter=").Append(TestRequestCounter)
                 .Append(", WithinHeartbeat=").Append(WithinHeartbeat())
                 .Append(", NeedHeartbeat=").Append(NeedHeartbeat())
                 .Append(", NeedTestRequest=").Append(NeedTestRequest())
@@ -358,51 +352,51 @@ namespace QuickFix
 
         public bool Set(SeqNumType msgSeqNum, string msg)
         {
-            lock (sync_) { return this.MessageStore.Set(msgSeqNum, msg); }
+            lock (_sync) { return MessageStore.Set(msgSeqNum, msg); }
         }
 
         public SeqNumType NextSenderMsgSeqNum
         {
-            get { lock (sync_) { return this.MessageStore.NextSenderMsgSeqNum; } }
-            set { lock (sync_) { this.MessageStore.NextSenderMsgSeqNum = value; } }
+            get { lock (_sync) { return MessageStore.NextSenderMsgSeqNum; } }
+            set { lock (_sync) { MessageStore.NextSenderMsgSeqNum = value; } }
         }
 
         public SeqNumType NextTargetMsgSeqNum
         {
-            get { lock (sync_) { return this.MessageStore.NextTargetMsgSeqNum; } }
-            set { lock (sync_) { this.MessageStore.NextTargetMsgSeqNum = value; } }
+            get { lock (_sync) { return MessageStore.NextTargetMsgSeqNum; } }
+            set { lock (_sync) { MessageStore.NextTargetMsgSeqNum = value; } }
         }
 
         public void IncrNextSenderMsgSeqNum()
         {
-            lock (sync_) { this.MessageStore.IncrNextSenderMsgSeqNum(); }
+            lock (_sync) { MessageStore.IncrNextSenderMsgSeqNum(); }
         }
 
         public void IncrNextTargetMsgSeqNum()
         {
-            lock (sync_) { this.MessageStore.IncrNextTargetMsgSeqNum(); }
+            lock (_sync) { MessageStore.IncrNextTargetMsgSeqNum(); }
         }
 
-        public System.DateTime? CreationTime
+        public DateTime? CreationTime
         {
             get
             {
-                lock (sync_) { return this.MessageStore.CreationTime; }
+                lock (_sync) { return MessageStore.CreationTime; }
             }
         }
 
         public void Reset(string reason)
         {
-            lock (sync_)
+            lock (_sync)
             {
-                this.MessageStore.Reset();
-                this.Log.OnEvent("Session reset: " + reason);
+                MessageStore.Reset();
+                Log.OnEvent("Session reset: " + reason);
             }
         }
 
         public void Refresh()
         {
-            lock (sync_) { this.MessageStore.Refresh(); }
+            lock (_sync) { MessageStore.Refresh(); }
         }
 
         #endregion
@@ -419,14 +413,12 @@ namespace QuickFix
             if (_disposed) return;
             if (disposing)
             {
-                if (log_ != null) { log_.Dispose(); }
-                if (MessageStore != null) { MessageStore.Dispose(); }
+                Log.Dispose();
+                MessageStore.Dispose();
             }
             _disposed = true;
         }
 
         ~SessionState() => Dispose(false);
-
     }
 }
-
