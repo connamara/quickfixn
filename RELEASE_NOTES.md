@@ -35,6 +35,13 @@ What's New
        (Message no longer stores a DD instance var.)
        These functions are new, probably not widely used yet.
        Function docs are now clear on this behavior.
+* #826 - cleanup/nullable-ize Socket & Session classes (gbirchmeier)
+     * ClientHandlerThread is now internal.  Unlikely anyone will notice.
+     * SocketReader: delete public ctor.  Probably no one is using it.
+     * Session: rename (capitalize) TargetDefaultApplVerId property
+     * Session: Logon() and Logout() made internal and renamed.  No one should be using these.
+     * SessionState: ctor now requires a MessageStore.  (Existing callers used an object initializer anyway)
+     * Many protected functions were altered, but probably no user code is touching them
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)

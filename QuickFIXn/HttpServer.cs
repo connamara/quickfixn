@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -11,11 +12,9 @@ namespace Acceptor
     public class HttpServer : IDisposable
     {
         private readonly HttpListener _httpListener;
-        private Thread _connectionThread;
-        private Boolean _running, _disposed;
+        private readonly Thread _connectionThread;
+        private bool _running, _disposed;
         private readonly SessionSettings _sessionSettings;
-        private StringBuilder _sbHtmlHeader;
-
 
         public HttpServer(string prefix, SessionSettings settings)
         {
@@ -29,6 +28,7 @@ namespace Acceptor
             _httpListener = new HttpListener();
             _httpListener.Prefixes.Add(prefix);
             _sessionSettings = settings;
+            _connectionThread = new Thread(ConnectionThreadStart);
         }
 
         public void Start()
@@ -38,7 +38,6 @@ namespace Acceptor
                 _httpListener.Start();
                 _running = true;
                 // Use a thread to listen to the Http requests
-                _connectionThread = new Thread(ConnectionThreadStart);
                 _connectionThread.Start();
             }
         }
@@ -62,41 +61,22 @@ namespace Acceptor
                     HttpListenerContext context = _httpListener.GetContext();
                     HttpListenerRequest request = context.Request;
                     HttpListenerResponse response = context.Response;
-                    string responseString;
 
-                    _sbHtmlHeader = new StringBuilder(@"<HEAD><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
-                    _sbHtmlHeader.AppendFormat(@"<CENTER>[<A HREF='/'>HOME</A>]&nbsp;[<A HREF='{0}'>RELOAD</A>]</CENTER><HR/></HEADER><BODY>", request.Url.OriginalString);
+                    StringBuilder pageBuilder = new StringBuilder("<HEAD><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
+                    pageBuilder.Append($"<CENTER>[<A HREF='/'>HOME</A>]&nbsp;[<A HREF='{request.Url?.OriginalString}'>RELOAD</A>]</CENTER><HR/></HEADER><BODY>");
 
-                    switch (request.Url.AbsolutePath)
+                    var responseString = request.Url?.AbsolutePath switch
                     {
-                        case "/":
-                            responseString = ProcessRoot(request);
-                            break;
-                        case "/session":
-                            responseString = SessionDetails(request);
-                            break;
-                        case "/resetSession":
-                            responseString = ResetSession(request);
-                            break;
-                        case "/resetSessions":
-                            responseString = ResetSessions(request);
-                            break;
-                        case "/refreshSession":
-                            responseString = RefreshSession(request);
-                            break;
-                        case "/refreshSessions":
-                            responseString = RefreshSessions(request);
-                            break;
-                        case "/enableSessions":
-                            responseString = EnableSessions(request);
-                            break;
-                        case "/disableSessions":
-                            responseString = DisableSessions(request);
-                            break;
-                        default:
-                            responseString = ProcessRoot(request);
-                            break;
-                    }
+                        "/" => ProcessRoot(request, pageBuilder),
+                        "/session" => SessionDetails(request, pageBuilder),
+                        "/resetSession" => ResetSession(request, pageBuilder),
+                        "/resetSessions" => ResetSessions(request, pageBuilder),
+                        "/refreshSession" => RefreshSession(request, pageBuilder),
+                        "/refreshSessions" => RefreshSessions(request, pageBuilder),
+                        "/enableSessions" => EnableSessions(request, pageBuilder),
+                        "/disableSessions" => DisableSessions(request, pageBuilder),
+                        _ => ProcessRoot(request, pageBuilder)
+                    };
 
                     byte[] buffer = Encoding.UTF8.GetBytes(responseString);
                     response.ContentLength64 = buffer.Length;
@@ -111,83 +91,77 @@ namespace Acceptor
             }
         }
 
-        private string DisableSessions(HttpListenerRequest request)
+        private string DisableSessions(HttpListenerRequest request, StringBuilder pageBuilder)
         {
             bool confirm = false;
-            StringBuilder sbHtmlPageBody = _sbHtmlHeader;
 
-            if (request.QueryString["confirm"] != null)
+            if (request.QueryString["confirm"] is not null)
             {
                 if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
                 {
                     confirm = true;
                     foreach (SessionID session in _sessionSettings.GetSessions())
                     {
-                        Session sessionDetails = Session.LookupSession(session);
-                        sessionDetails.Logout();
+                        Session.LookupSession(session)?.Logout();
                     }
                 }
             }
 
             if (confirm)
             {
-                sbHtmlPageBody = new StringBuilder();
-                sbHtmlPageBody.AppendFormat(@"<HEAD><META http-equiv='refresh' content=2;URL={0} /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>", "/");
-                sbHtmlPageBody.AppendFormat("<CENTER><h2><A HREF='{0}'>Sessions</A> have been disabled</h2></CENTER>", "/");
+                pageBuilder = new StringBuilder();
+                pageBuilder.Append("<HEAD><META http-equiv='refresh' content='2; url=/' /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
+                pageBuilder.Append("<CENTER><h2><A HREF='/'>Sessions</A> have been disabled</h2></CENTER>");
             }
             else
             {
-                sbHtmlPageBody.Append("<CENTER><h2>Are you sure you want to disable all sessions ?</h2></CENTER>");
-                sbHtmlPageBody.AppendFormat("<CENTER>[<A HREF='{0}?confirm=1'>YES, disable sessions</A>]&nbsp;[<A HREF='/'>NO, do not disable sessions</A>]</CENTER>", request.Url.OriginalString);
+                pageBuilder.Append("<CENTER><h2>Are you sure you want to disable all sessions ?</h2></CENTER>");
+                pageBuilder.Append($"<CENTER>[<A HREF='{request.Url?.OriginalString}?confirm=1'>YES, disable sessions</A>]&nbsp;[<A HREF='/'>NO, do not disable sessions</A>]</CENTER>");
             }
-            return sbHtmlPageBody.ToString();
+            return pageBuilder.ToString();
         }
 
-        private string EnableSessions(HttpListenerRequest request)
+        private string EnableSessions(HttpListenerRequest request, StringBuilder pageBuilder)
         {
             bool confirm = false;
-            string urlOriginalString = request.Url.OriginalString;
-            StringBuilder sbHtmlPageBody = _sbHtmlHeader;
-            
-            if (request.QueryString["confirm"] != null)
+
+            if (request.QueryString["confirm"] is not null)
             {
                 if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
                 {
                     confirm = true;
                     foreach (SessionID session in _sessionSettings.GetSessions())
                     {
-                        Session sessionDetails = Session.LookupSession(session);
-                        sessionDetails.Logon();
+                        Session.LookupSession(session)?.SetLogonState();
                     }
                 }
             }
 
             if (confirm)
             {
-                sbHtmlPageBody = new StringBuilder();
-                sbHtmlPageBody.AppendFormat(@"<HEAD><META http-equiv='refresh' content=2;URL={0} /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>", "/");
-                sbHtmlPageBody.AppendFormat("<CENTER><h2><A HREF='{0}'>Sessions</A> have been enabled</h2></CENTER>", "/");
+                pageBuilder = new StringBuilder();
+                pageBuilder.Append("<HEAD><META http-equiv='refresh' content='2; url=/' /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
+                pageBuilder.Append("<CENTER><h2><A HREF='/'>Sessions</A> have been enabled</h2></CENTER>");
             }
             else
             {
-                sbHtmlPageBody.Append("<CENTER><h2>Are you sure you want to enable all sessions ?</h2></CENTER>");
-                sbHtmlPageBody.AppendFormat("<CENTER>[<A HREF='{0}?confirm=1'>YES, enable sessions</A>]&nbsp;[<A HREF='/'>NO, do not enable sessions</A>]</CENTER>", urlOriginalString);
+                pageBuilder.Append("<CENTER><h2>Are you sure you want to enable all sessions ?</h2></CENTER>");
+                pageBuilder.Append($"<CENTER>[<A HREF='{request.Url?.OriginalString}?confirm=1'>YES, enable sessions</A>]&nbsp;[<A HREF='/'>NO, do not enable sessions</A>]</CENTER>");
             }
-            return sbHtmlPageBody.ToString();
+            return pageBuilder.ToString();
         }
 
-        private string RefreshSession(HttpListenerRequest request)
+        private string RefreshSession(HttpListenerRequest request, StringBuilder pageBuilder)
         {
             SessionID sessionId = new SessionID(request.QueryString["beginstring"], request.QueryString["sendercompid"], request.QueryString["targetcompid"]);
-            Session sessionDetails = Session.LookupSession(sessionId);
+            Session? sessionDetails = Session.LookupSession(sessionId);
             if (sessionDetails == null) throw new Exception("Session not found");
-            StringBuilder sbHtmlPageBody = _sbHtmlHeader;
             bool confirm = false;
-            string urlOriginalString = request.Url.OriginalString;
+            string urlOriginalString = request.Url!.OriginalString;
 
             string url = "/session?" + GetParameterList(urlOriginalString);
 
-            if (request.QueryString["confirm"] != null)
+            if (request.QueryString["confirm"] is not null)
             {
                 if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
                 {
@@ -199,98 +173,91 @@ namespace Acceptor
 
             if (confirm)
             {
-                sbHtmlPageBody = new StringBuilder();
-                sbHtmlPageBody.AppendFormat(@"<HEAD><META http-equiv='refresh' content=2;URL=/session?{0} /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>", GetParameterList(urlOriginalString));
-                sbHtmlPageBody.AppendFormat(@"<CENTER>[<A HREF='/'>HOME</A>]&nbsp;[<A HREF='{0}'>RELOAD</A>]</CENTER><HR/></HEAD><BODY>", urlOriginalString);
-                sbHtmlPageBody.AppendFormat("<CENTER><h2><A HREF='/session?{0}'>{1}</A> has been refreshed</h2></CENTER>", GetParameterList(url), sessionId);
+                pageBuilder = new StringBuilder();
+                pageBuilder.Append($"<HEAD><META http-equiv='refresh' content='2; url=/session?{GetParameterList(urlOriginalString)}' /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
+                pageBuilder.Append($"<CENTER>[<A HREF='/'>HOME</A>]&nbsp;[<A HREF='{urlOriginalString}'>RELOAD</A>]</CENTER><HR/></HEAD><BODY>");
+                pageBuilder.Append($"<CENTER><h2><A HREF='/session?{GetParameterList(url)}'>{sessionId}</A> has been refreshed</h2></CENTER>");
             }
             else
             {
-                sbHtmlPageBody.AppendFormat("<CENTER><h2>Are you sure you want to refresh session <A HREF='{0}'>{1}</A>?</h2></CENTER>", url, sessionId);
-                sbHtmlPageBody.AppendFormat("<CENTER>[<A HREF='{0}&confirm=1'>YES, refresh session</A>]&nbsp;[<A HREF='{0}'>NO, do not refresh session</A>]</CENTER>", url);
+                pageBuilder.Append($"<CENTER><h2>Are you sure you want to refresh session <A HREF='{url}'>{sessionId}</A>?</h2></CENTER>");
+                pageBuilder.Append($"<CENTER>[<A HREF='{url}&confirm=1'>YES, refresh session</A>]&nbsp;[<A HREF='{url}'>NO, do not refresh session</A>]</CENTER>");
             }
-            return sbHtmlPageBody.ToString();
+            return pageBuilder.ToString();
         }
 
-        private string RefreshSessions(HttpListenerRequest request)
+        private string RefreshSessions(HttpListenerRequest request, StringBuilder pageBuilder)
         {
             bool confirm = false;
-            string urlOriginalString = request.Url.OriginalString;
-            StringBuilder sbHtmlPageBody = _sbHtmlHeader;
 
-            if (request.QueryString["confirm"] != null)
+            if (request.QueryString["confirm"] is not null)
             {
                 if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
                 {
                     confirm = true;
                     foreach (SessionID session in _sessionSettings.GetSessions())
                     {
-                        Session sessionDetails = Session.LookupSession(session);
-                        sessionDetails.Refresh();
+                        Session.LookupSession(session)?.Refresh();
                     }
                 }
             }
 
             if (confirm)
             {
-                sbHtmlPageBody = new StringBuilder();
-                sbHtmlPageBody.AppendFormat(@"<HEAD><META http-equiv='refresh' content=2;URL={0} /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>", "/");
-                sbHtmlPageBody.AppendFormat("<CENTER><h2><A HREF='{0}'>Sessions</A> have been refreshed</h2></CENTER>", "/");
+                pageBuilder = new StringBuilder();
+                pageBuilder.Append("<HEAD><META http-equiv='refresh' content='2; url=/' /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
+                pageBuilder.Append("<CENTER><h2><A HREF='/'>Sessions</A> have been refreshed</h2></CENTER>");
             }
             else
             {
-                sbHtmlPageBody.Append("<CENTER><h2>Are you sure you want to refresh all sessions ?</h2></CENTER>");
-                sbHtmlPageBody.AppendFormat("<CENTER>[<A HREF='{0}?confirm=1'>YES, refresh sessions</A>]&nbsp;[<A HREF='/'>NO, do not refresh sessions</A>]</CENTER>", urlOriginalString);
+                pageBuilder.Append("<CENTER><h2>Are you sure you want to refresh all sessions ?</h2></CENTER>");
+                pageBuilder.Append($"<CENTER>[<A HREF='{request.Url?.OriginalString}?confirm=1'>YES, refresh sessions</A>]&nbsp;[<A HREF='/'>NO, do not refresh sessions</A>]</CENTER>");
             }
-            return sbHtmlPageBody.ToString();
+            return pageBuilder.ToString();
         }
 
-        private string ResetSessions(HttpListenerRequest request)
+        private string ResetSessions(HttpListenerRequest request, StringBuilder pageBuilder)
         {
             bool confirm = false;
-            string urlOriginalString = request.Url.OriginalString;
-            StringBuilder sbHtmlPageBody = _sbHtmlHeader;
 
-            if (request.QueryString["confirm"] != null)
+            if (request.QueryString["confirm"] is not null)
             {
                 if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
                 {
                     confirm = true;
                     foreach (SessionID session in _sessionSettings.GetSessions())
                     {
-                        Session sessionDetails = Session.LookupSession(session);
-                        sessionDetails.Reset("Reset from WebInterface");
+                        Session.LookupSession(session)?.Reset("Reset from WebInterface");
                     }
                 }
             }
 
             if (confirm)
             {
-                sbHtmlPageBody = new StringBuilder();
-                sbHtmlPageBody.AppendFormat(@"<HEAD><META http-equiv='refresh' content=2;URL={0} /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>", "/");
-                sbHtmlPageBody.AppendFormat("<CENTER><h2><A HREF='{0}'>Sessions</A> have been reset</h2></CENTER>", "/");
+                pageBuilder = new StringBuilder();
+                pageBuilder.Append("<HEAD><META http-equiv='refresh' content='2; url=/' /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
+                pageBuilder.Append("<CENTER><h2><A HREF='/'>Sessions</A> have been reset</h2></CENTER>");
             }
             else
             {
-                sbHtmlPageBody.Append("<CENTER><h2>Are you sure you want to reset all sessions ?</h2></CENTER>");
-                sbHtmlPageBody.AppendFormat("<CENTER>[<A HREF='{0}?confirm=1'>YES, reset sessions</A>]&nbsp;[<A HREF='/'>NO, do not reset sessions</A>]</CENTER>", urlOriginalString);
+                pageBuilder.Append("<CENTER><h2>Are you sure you want to reset all sessions ?</h2></CENTER>");
+                pageBuilder.Append($"<CENTER>[<A HREF='{request.Url?.OriginalString}?confirm=1'>YES, reset sessions</A>]&nbsp;[<A HREF='/'>NO, do not reset sessions</A>]</CENTER>");
             }
-            return sbHtmlPageBody.ToString();
+            return pageBuilder.ToString();
         }
 
-        private string ResetSession(HttpListenerRequest request)
+        private string ResetSession(HttpListenerRequest request, StringBuilder pageBuilder)
         {
             SessionID sessionId = new SessionID(request.QueryString["beginstring"], request.QueryString["sendercompid"], request.QueryString["targetcompid"]);
-            Session sessionDetails = Session.LookupSession(sessionId);
+            Session? sessionDetails = Session.LookupSession(sessionId);
             if (sessionDetails == null) throw new Exception("Session not found");
-            StringBuilder sbHtmlPageBody = _sbHtmlHeader;
 
             bool confirm = false;
-            string urlOriginalString = request.Url.OriginalString;
+            string urlOriginalString = request.Url!.OriginalString;
 
             string url = "/session?" + GetParameterList(urlOriginalString);
 
-            if (request.QueryString["confirm"] != null)
+            if (request.QueryString["confirm"] is not null)
             {
                 if (Convert.ToInt16(request.QueryString["confirm"])!=0)
                 {
@@ -302,202 +269,199 @@ namespace Acceptor
 
             if (confirm)
             {
-                sbHtmlPageBody = new StringBuilder();
-                sbHtmlPageBody.AppendFormat(@"<HEAD><META http-equiv='refresh' content=2;URL=/session?{0} /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>", GetParameterList(urlOriginalString));
-                sbHtmlPageBody.AppendFormat(@"<CENTER>[<A HREF='/'>HOME</A>]&nbsp;[<A HREF='{0}'>RELOAD</A>]</CENTER><HR/></HEAD><BODY>", urlOriginalString);
-                sbHtmlPageBody.AppendFormat("<CENTER><h2><A HREF='/session?{0}'>{1}</A> has been reset</h2></CENTER>",GetParameterList(url), sessionId);
+                pageBuilder = new StringBuilder();
+                pageBuilder.Append($"<HEAD><META http-equiv='refresh' content=2;URL=/session?{GetParameterList(urlOriginalString)} /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
+                pageBuilder.Append($"<CENTER>[<A HREF='/'>HOME</A>]&nbsp;[<A HREF='{urlOriginalString}'>RELOAD</A>]</CENTER><HR/></HEAD><BODY>");
+                pageBuilder.Append($"<CENTER><h2><A HREF='/session?{GetParameterList(url)}'>{sessionId}</A> has been reset</h2></CENTER>");
             }
             else
             {
-                sbHtmlPageBody.AppendFormat("<CENTER><h2>Are you sure you want to reset session <A HREF='{0}'>{1}</A>?</h2></CENTER>", url, sessionId);
-                sbHtmlPageBody.AppendFormat("<CENTER>[<A HREF='{0}&confirm=1'>YES, reset session</A>]&nbsp;[<A HREF='{0}'>NO, do not reset session</A>]</CENTER>", url);
+                pageBuilder.Append($"<CENTER><h2>Are you sure you want to reset session <A HREF='{url}'>{sessionId}</A>?</h2></CENTER>");
+                pageBuilder.Append($"<CENTER>[<A HREF='{url}&confirm=1'>YES, reset session</A>]&nbsp;[<A HREF='{url}'>NO, do not reset session</A>]</CENTER>");
             }
-            return sbHtmlPageBody.ToString();
+            return pageBuilder.ToString();
         }
 
 
-        private string ProcessRoot( HttpListenerRequest request)
+        private string ProcessRoot(HttpListenerRequest request, StringBuilder pageBuilder)
         {
-            StringBuilder sbHtmlPageBody = _sbHtmlHeader;
-
             //Session count
-            sbHtmlPageBody.AppendFormat("<CENTER><b><i>{0} Sessions managed by QuickFIX</b></i></CENTER><HR/>", _sessionSettings.GetSessions().Count);
+            pageBuilder.Append($"<CENTER><b><i>{_sessionSettings.GetSessions().Count} Sessions managed by QuickFIX</b></i></CENTER><HR/>");
 
             //session management links
-            sbHtmlPageBody.AppendFormat(@"<CENTER><A HREF='/resetSessions{0}'>RESET</A>&nbsp;<A HREF='/refreshSessions'>REFRESH</A>&nbsp;<A HREF='/enableSessions'>ENABLE</A>&nbsp;<A HREF='/disableSessions'>DISABLE</A></CENTER><HR/></HEADER><BODY>", GetParameterList(request.Url.OriginalString));
+            pageBuilder.Append($"<CENTER><A HREF='/resetSessions{GetParameterList(request.Url?.OriginalString)}'>RESET</A>&nbsp;<A HREF='/refreshSessions'>REFRESH</A>&nbsp;<A HREF='/enableSessions'>ENABLE</A>&nbsp;<A HREF='/disableSessions'>DISABLE</A></CENTER><HR/></HEADER><BODY>");
             
             //Start the table generation
-            sbHtmlPageBody.Append("<table id=\"sessionlist\" style=\"border-width:1; padding:2; width:100%\">");
+            pageBuilder.Append("<table id=\"sessionlist\" style=\"border-width:1; padding:2; width:100%\">");
             
-            sbHtmlPageBody.Append("<tr>");
-            sbHtmlPageBody.Append(AddCell("Session", true));
-            sbHtmlPageBody.Append(AddCell("Type", true));
-            sbHtmlPageBody.Append(AddCell("Enabled", true));
-            sbHtmlPageBody.Append(AddCell("Session Time", true));
-            sbHtmlPageBody.Append(AddCell("Logged On", true));
-            sbHtmlPageBody.Append(AddCell("Next Incoming", true));
-            sbHtmlPageBody.Append(AddCell("Next Outgoing", true));
-            sbHtmlPageBody.Append("</tr>");
+            pageBuilder.Append("<tr>");
+            pageBuilder.Append(AddCell("Session", true));
+            pageBuilder.Append(AddCell("Type", true));
+            pageBuilder.Append(AddCell("Enabled", true));
+            pageBuilder.Append(AddCell("Session Time", true));
+            pageBuilder.Append(AddCell("Logged On", true));
+            pageBuilder.Append(AddCell("Next Incoming", true));
+            pageBuilder.Append(AddCell("Next Outgoing", true));
+            pageBuilder.Append("</tr>");
 
             foreach (SessionID session in _sessionSettings.GetSessions())
             {
-                Session sessionDetails = Session.LookupSession(session);
-                sbHtmlPageBody.Append("<tr>");
-                sbHtmlPageBody.Append(AddCell(String.Format(
+                Session sessionDetails = Session.LookupSession(session)!;
+                pageBuilder.Append("<tr>");
+                pageBuilder.Append(AddCell(String.Format(
                     "<a href=\"session?BeginString={0}&SenderCompID={1}&TargetCompID={2}\">{0}:{1}->{2}</a>",
                     session.BeginString, session.SenderCompID, session.TargetCompID)));
-                sbHtmlPageBody.Append(AddCell(sessionDetails.IsInitiator ? "initiator" : "acceptor"));
-                sbHtmlPageBody.Append(AddCell(sessionDetails.IsEnabled ? "yes" : "no"));
-                sbHtmlPageBody.Append(AddCell(sessionDetails.IsSessionTime ? "yes" : "no"));
-                sbHtmlPageBody.Append(AddCell(sessionDetails.IsLoggedOn ? "yes" : "no"));
-                sbHtmlPageBody.Append(AddCell(sessionDetails.NextTargetMsgSeqNum.ToString()));
-                sbHtmlPageBody.Append(AddCell(sessionDetails.NextSenderMsgSeqNum.ToString()));
-                sbHtmlPageBody.Append("</tr>");
+                pageBuilder.Append(AddCell(sessionDetails.IsInitiator ? "initiator" : "acceptor"));
+                pageBuilder.Append(AddCell(sessionDetails.IsEnabled ? "yes" : "no"));
+                pageBuilder.Append(AddCell(sessionDetails.IsSessionTime ? "yes" : "no"));
+                pageBuilder.Append(AddCell(sessionDetails.IsLoggedOn ? "yes" : "no"));
+                pageBuilder.Append(AddCell(sessionDetails.NextTargetMsgSeqNum.ToString()));
+                pageBuilder.Append(AddCell(sessionDetails.NextSenderMsgSeqNum.ToString()));
+                pageBuilder.Append("</tr>");
             }
 
-            sbHtmlPageBody.Append("</table>");
-            return sbHtmlPageBody.ToString();
+            pageBuilder.Append("</table>");
+            return pageBuilder.ToString();
         }
 
-        public string SessionDetails(HttpListenerRequest request)
+        private string SessionDetails(HttpListenerRequest request, StringBuilder pageBuilder)
         {
             SessionID sessionId = new SessionID(request.QueryString["beginstring"], request.QueryString["sendercompid"], request.QueryString["targetcompid"]);
-            Session sessionDetails = Session.LookupSession(sessionId);
+            Session? sessionDetails = Session.LookupSession(sessionId);
             if (sessionDetails == null) throw new Exception("Session not found");
-            StringBuilder sbHtmlPageBody = _sbHtmlHeader;
 
-            string url = request.Url.OriginalString;
-            string urlOriginalString = request.Url.OriginalString;
+            string url = request.Url?.OriginalString ?? "(null)";
+            string urlOriginalString = url;
 
-            if (request.QueryString["enabled"] != null)
+            if (request.QueryString["enabled"] is not null)
             {
                 if (!Convert.ToBoolean(request.QueryString["enabled"]))
                     sessionDetails.Logout();
                 else
-                    sessionDetails.Logon();
+                    sessionDetails.SetLogonState();
 
                 url = RemoveQueryStringByKey(urlOriginalString, "Enabled");
             }
 
-            if (request.QueryString["next incoming"] != null)
+            if (request.QueryString["next incoming"] is not null)
             {
                 SeqNumType val = Convert.ToUInt64(request.QueryString["next incoming"]);
                 sessionDetails.NextTargetMsgSeqNum = (val == 0 || val == SeqNumType.MaxValue) ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "next incoming");
             }
 
-            if (request.QueryString["Next Outgoing"] != null)
+            if (request.QueryString["Next Outgoing"] is not null)
             {
                 SeqNumType val = Convert.ToUInt64(request.QueryString["Next Outgoing"]);
                 sessionDetails.NextSenderMsgSeqNum = (val == 0 || val == SeqNumType.MaxValue) ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "Next Outgoing");
             }
 
-            if (request.QueryString["SendRedundantResendRequests"] != null)
+            if (request.QueryString["SendRedundantResendRequests"] is not null)
             {
                 sessionDetails.SendRedundantResendRequests = Convert.ToBoolean(request.QueryString["SendRedundantResendRequests"]);
                 url = RemoveQueryStringByKey(urlOriginalString, "SendRedundantResendRequests");
             }
 
-            if (request.QueryString["CheckCompId"] != null)
+            if (request.QueryString["CheckCompId"] is not null)
             {
                 sessionDetails.CheckCompID = Convert.ToBoolean(request.QueryString["CheckCompId"]);
                 url = RemoveQueryStringByKey(urlOriginalString, "CheckCompId");
             }
 
-            if (request.QueryString["CheckLatency"] != null)
+            if (request.QueryString["CheckLatency"] is not null)
             {
                 sessionDetails.CheckLatency = Convert.ToBoolean(request.QueryString["CheckLatency"]);
                 url = RemoveQueryStringByKey(urlOriginalString, "CheckLatency");
             }
 
-            if (request.QueryString["MaxLatency"] != null)
+            if (request.QueryString["MaxLatency"] is not null)
             {
                 int val = Convert.ToInt16(request.QueryString["MaxLatency"]);
                 sessionDetails.MaxLatency = val <= 0 ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "MaxLatency");
             }
 
-            if (request.QueryString["LogonTimeout"] != null)
+            if (request.QueryString["LogonTimeout"] is not null)
             {
                 int val = Convert.ToInt16(request.QueryString["LogonTimeout"]);
                 sessionDetails.LogonTimeout = val <= 0 ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "LogonTimeout");
             }
 
-            if (request.QueryString["LogoutTimeout"] != null)
+            if (request.QueryString["LogoutTimeout"] is not null)
             {
                 int val = Convert.ToInt16(request.QueryString["LogoutTimeout"]);
                 sessionDetails.LogoutTimeout = val <= 0 ? 1 : val;
                 url = RemoveQueryStringByKey(urlOriginalString, "LogoutTimeout");
             }
 
-            if (request.QueryString["ResetOnLogon"] != null)
+            if (request.QueryString["ResetOnLogon"] is not null)
             {
                 sessionDetails.ResetOnLogon = Convert.ToBoolean(request.QueryString["ResetOnLogon"]);
                 url = RemoveQueryStringByKey(urlOriginalString, "ResetOnLogon");
             }
 
-            if (request.QueryString["ResetOnLogout"] != null)
+            if (request.QueryString["ResetOnLogout"] is not null)
             {
                 sessionDetails.ResetOnLogout = Convert.ToBoolean(request.QueryString["ResetOnLogout"]);
                 url = RemoveQueryStringByKey(urlOriginalString, "ResetOnLogout");
             }
 
-            if (request.QueryString["ResetOnDisconnect"] != null)
+            if (request.QueryString["ResetOnDisconnect"] is not null)
             {
                 sessionDetails.ResetOnDisconnect = Convert.ToBoolean(request.QueryString["ResetOnDisconnect"]);
                 url = RemoveQueryStringByKey(urlOriginalString, "ResetOnDisconnect");
             }
 
-            if (request.QueryString["RefreshOnLogon"] != null)
+            if (request.QueryString["RefreshOnLogon"] is not null)
             {
                 sessionDetails.RefreshOnLogon = Convert.ToBoolean(request.QueryString["RefreshOnLogon"]);
                 url = RemoveQueryStringByKey(urlOriginalString, "RefreshOnLogon");
             }
 
-            if (request.QueryString["MillisecondsInTimestamp"] != null)
+            if (request.QueryString["MillisecondsInTimestamp"] is not null)
             {
                 sessionDetails.MillisecondsInTimeStamp = Convert.ToBoolean(request.QueryString["MillisecondsInTimestamp"]);
                 url = RemoveQueryStringByKey(urlOriginalString, "MillisecondsInTimestamp");
             }
 
-            if (request.QueryString["PersistMessages"] != null)
+            if (request.QueryString["PersistMessages"] is not null)
             {
                 sessionDetails.PersistMessages = Convert.ToBoolean(request.QueryString["PersistMessages"]);
                 url = RemoveQueryStringByKey(urlOriginalString, "PersistMessages");
             }
 
             
-            sbHtmlPageBody.AppendFormat(@"<CENTER>{0}</CENTER><HR/>", sessionId);
-            sbHtmlPageBody.AppendFormat(@"<CENTER>[<A HREF='/resetSession?{0}'>RESET</A>]&nbsp;[<A HREF='/refreshSession?{0}'>REFRESH</A>]</CENTER><HR/></HEADER><BODY>", GetParameterList(urlOriginalString));
+            pageBuilder.Append($"<CENTER>{sessionId}</CENTER><HR/>");
+            pageBuilder.Append($"<CENTER>[<A HREF='/resetSession?{GetParameterList(urlOriginalString)}'>RESET</A>]&nbsp;[<A HREF='/refreshSession?{0}'>REFRESH</A>]</CENTER><HR/></HEADER><BODY>");
 
-            sbHtmlPageBody.Append("<table id=\"session_details\" style=\"border-width:1; padding:2; width:100%\">");
+            pageBuilder.Append("<table id=\"session_details\" style=\"border-width:1; padding:2; width:100%\">");
             
-            sbHtmlPageBody.Append(AddRow("Enabled", sessionDetails.IsEnabled, url));
-            sbHtmlPageBody.Append(AddRow("ConnectionType", sessionDetails.IsInitiator?"initiator": "acceptor"));
-            sbHtmlPageBody.Append(AddRow("SessionTime", sessionDetails.IsSessionTime));
-            sbHtmlPageBody.Append(AddRow("LoggedOn", sessionDetails.IsLoggedOn));
-            sbHtmlPageBody.Append(AddRow("Next Incoming", sessionDetails.NextTargetMsgSeqNum, url));
-            sbHtmlPageBody.Append(AddRow("Next Outgoing", sessionDetails.NextSenderMsgSeqNum, url));
-            sbHtmlPageBody.Append(AddRow("SendRedundantResendRequests", sessionDetails.SendRedundantResendRequests, url));
-            sbHtmlPageBody.Append(AddRow("CheckCompId", sessionDetails.CheckCompID, url));
-            sbHtmlPageBody.Append(AddRow("CheckLatency", sessionDetails.CheckLatency, url));
-            sbHtmlPageBody.Append(AddRow("MaxLatency", sessionDetails.MaxLatency, url));
-            sbHtmlPageBody.Append(AddRow("LogonTimeout", sessionDetails.LogonTimeout, url));
-            sbHtmlPageBody.Append(AddRow("LogoutTimeout", sessionDetails.LogoutTimeout, url));
-            sbHtmlPageBody.Append(AddRow("ResetOnLogon", sessionDetails.ResetOnLogon, url));
-            sbHtmlPageBody.Append(AddRow("ResetOnLogout", sessionDetails.ResetOnLogout, url));
-            sbHtmlPageBody.Append(AddRow("ResetOnDisconnect", sessionDetails.ResetOnDisconnect, url));
-            sbHtmlPageBody.Append(AddRow("RefreshOnLogon", sessionDetails.RefreshOnLogon, url));
-            sbHtmlPageBody.Append(AddRow("MillisecondsInTimestamp", sessionDetails.MillisecondsInTimeStamp, url));
-            sbHtmlPageBody.Append(AddRow("PersistMessages", sessionDetails.PersistMessages, url));
+            pageBuilder.Append(AddRow("Enabled", sessionDetails.IsEnabled, url));
+            pageBuilder.Append(AddRow("ConnectionType", sessionDetails.IsInitiator?"initiator": "acceptor"));
+            pageBuilder.Append(AddRow("SessionTime", sessionDetails.IsSessionTime));
+            pageBuilder.Append(AddRow("LoggedOn", sessionDetails.IsLoggedOn));
+            pageBuilder.Append(AddRow("Next Incoming", sessionDetails.NextTargetMsgSeqNum, url));
+            pageBuilder.Append(AddRow("Next Outgoing", sessionDetails.NextSenderMsgSeqNum, url));
+            pageBuilder.Append(AddRow("SendRedundantResendRequests", sessionDetails.SendRedundantResendRequests, url));
+            pageBuilder.Append(AddRow("CheckCompId", sessionDetails.CheckCompID, url));
+            pageBuilder.Append(AddRow("CheckLatency", sessionDetails.CheckLatency, url));
+            pageBuilder.Append(AddRow("MaxLatency", sessionDetails.MaxLatency, url));
+            pageBuilder.Append(AddRow("LogonTimeout", sessionDetails.LogonTimeout, url));
+            pageBuilder.Append(AddRow("LogoutTimeout", sessionDetails.LogoutTimeout, url));
+            pageBuilder.Append(AddRow("ResetOnLogon", sessionDetails.ResetOnLogon, url));
+            pageBuilder.Append(AddRow("ResetOnLogout", sessionDetails.ResetOnLogout, url));
+            pageBuilder.Append(AddRow("ResetOnDisconnect", sessionDetails.ResetOnDisconnect, url));
+            pageBuilder.Append(AddRow("RefreshOnLogon", sessionDetails.RefreshOnLogon, url));
+            pageBuilder.Append(AddRow("MillisecondsInTimestamp", sessionDetails.MillisecondsInTimeStamp, url));
+            pageBuilder.Append(AddRow("PersistMessages", sessionDetails.PersistMessages, url));
 
-            sbHtmlPageBody.Append("</table>");
-            return sbHtmlPageBody.ToString();
+            pageBuilder.Append("</table>");
+            return pageBuilder.ToString();
         }
 
-        public static string RemoveQueryStringByKey(string url, string key)
+        private static string RemoveQueryStringByKey(string url, string key)
         {
             var uri = new Uri(url);
 
@@ -515,9 +479,13 @@ namespace Acceptor
                 : pagePathWithoutQueryString;
         }
 
-        public static string GetParameterList(string url)
-        {
-            return HttpUtility.ParseQueryString((new Uri(url).Query)).ToString();
+        /// <summary>
+        /// Returns the http parameter string from a url
+        /// </summary>
+        /// <param name="url">e.g. <![CDATA[ http://www.example.com/foo?one=uno&two=dos ]]></param>
+        /// <returns>e.g. <![CDATA[ "one=uno&two=dos" ]]> (or empty string if <paramref name="url"/> is null)</returns>
+        private static string GetParameterList(string? url) {
+            return string.IsNullOrWhiteSpace(url) ? "" : $"{HttpUtility.ParseQueryString(new Uri(url).Query)}";
         }
 
         private static string AddRow(string colName, bool val, string url="")
@@ -585,11 +553,9 @@ namespace Acceptor
                 {
                     Stop();
                 }
-                if (_connectionThread != null)
-                {
-                    _connectionThread.Abort();
-                    _connectionThread = null;
-                }
+#pragma warning disable SYSLIB0006
+                _connectionThread.Abort();
+#pragma warning restore SYSLIB0006
             }
             _disposed = true;
         }

@@ -225,32 +225,28 @@ namespace QuickFix.Transport
             _shutdownRequested = true;
         }
 
-        protected override void DoConnect(SessionID sessionId, Dictionary settings)
+        protected override void DoConnect(Session session, Dictionary settings)
         {
-            Session? session = null;
-
             try
             {
-                session = Session.LookupSession(sessionId);
                 if (!session.IsSessionTime)
                     return;
 
-                IPEndPoint socketEndPoint = GetNextSocketEndPoint(sessionId, settings);
-                SetPending(sessionId);
-                session.Log.OnEvent("Connecting to " + socketEndPoint.Address + " on port " + socketEndPoint.Port);
+                IPEndPoint socketEndPoint = GetNextSocketEndPoint(session.SessionID, settings);
+                SetPending(session.SessionID);
+                session.Log.OnEvent($"Connecting to {socketEndPoint.Address} on port {socketEndPoint.Port}");
 
                 //Setup socket settings based on current section
                 var socketSettings = _socketSettings.Clone();
                 socketSettings.Configure(settings);
 
                 // Create a Ssl-SocketInitiatorThread if a certificate is given
-                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings);                
+                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings);
                 t.Start();
                 AddThread(t);
-
             }
             catch (Exception e) {
-                session?.Log.OnEvent(e.Message);
+                session.Log.OnEvent(e.Message);
             }
         }
 

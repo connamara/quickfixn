@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using QuickFix.Util;
 
@@ -9,21 +10,17 @@ namespace QuickFix
     /// </summary>
     public class SessionFactory
     {
-        protected IApplication application_;
-        protected IMessageStoreFactory messageStoreFactory_;
-        protected ILogFactory logFactory_;
-        protected IMessageFactory messageFactory_;
-        protected Dictionary<string,DataDictionary.DataDictionary> dictionariesByPath_ = new Dictionary<string,DataDictionary.DataDictionary>();
+        protected IApplication _application;
+        protected IMessageStoreFactory _messageStoreFactory;
+        protected ILogFactory _logFactory;
+        protected IMessageFactory _messageFactory;
+        protected Dictionary<string, DataDictionary.DataDictionary> _dictionariesByPath = new();
 
-        public SessionFactory(IApplication app, IMessageStoreFactory storeFactory)
-            : this(app, storeFactory, null, null)
-        { }
-
-        public SessionFactory(IApplication app, IMessageStoreFactory storeFactory, ILogFactory logFactory)
-            : this(app, storeFactory, logFactory, null)
-        { }
-
-        public SessionFactory(IApplication app, IMessageStoreFactory storeFactory, ILogFactory logFactory, IMessageFactory messageFactory)
+        public SessionFactory(
+            IApplication app,
+            IMessageStoreFactory storeFactory,
+            ILogFactory? logFactory = null,
+            IMessageFactory? messageFactory = null)
         {
             // TODO: for V2, consider ONLY instantiating MessageFactory in the Create() method,
             //   and removing instance var messageFactory_ altogether.
@@ -31,13 +28,13 @@ namespace QuickFix
             //   and thus can't create the right FIX-Version factory because we don't know what
             //   session to use to look up the BeginString and DefaultApplVerID.
 
-            application_ = app;
-            messageStoreFactory_ = storeFactory;
-            logFactory_ = logFactory ?? new NullLogFactory();
-            messageFactory_ = messageFactory ?? new DefaultMessageFactory();
+            _application = app;
+            _messageStoreFactory = storeFactory;
+            _logFactory = logFactory ?? new NullLogFactory();
+            _messageFactory = messageFactory ?? new DefaultMessageFactory();
         }
 
-        static private bool DetectIfInitiator(QuickFix.Dictionary settings)
+        private static bool DetectIfInitiator(QuickFix.Dictionary settings)
         {
             switch (settings.GetString(SessionSettings.CONNECTION_TYPE))
             {
@@ -47,7 +44,7 @@ namespace QuickFix
             throw new ConfigError("Invalid ConnectionType");
         }
 
-        public Session Create(SessionID sessionID, QuickFix.Dictionary settings)
+        public Session Create(SessionID sessionId, QuickFix.Dictionary settings)
         {
             bool isInitiator = SessionFactory.DetectIfInitiator(settings);
 
@@ -58,9 +55,9 @@ namespace QuickFix
             if (settings.Has(SessionSettings.USE_DATA_DICTIONARY))
                 useDataDictionary = settings.GetBool(SessionSettings.USE_DATA_DICTIONARY);
 
-            QuickFix.Fields.ApplVerID defaultApplVerID = null;
-            IMessageFactory sessionMsgFactory = messageFactory_;
-            if (sessionID.IsFIXT)
+            QuickFix.Fields.ApplVerID? defaultApplVerId = null;
+            IMessageFactory sessionMsgFactory = _messageFactory;
+            if (sessionId.IsFIXT)
             {
                 if (!settings.Has(SessionSettings.DEFAULT_APPLVERID))
                 {
@@ -68,13 +65,13 @@ namespace QuickFix
                 }
                 string rawDefaultApplVerIdSetting = settings.GetString(SessionSettings.DEFAULT_APPLVERID);
 
-                defaultApplVerID = Message.GetApplVerID(rawDefaultApplVerIdSetting);
+                defaultApplVerId = Message.GetApplVerID(rawDefaultApplVerIdSetting);
 
                 // DefaultMessageFactory as created in the SessionFactory ctor cannot
                 // tell the difference between FIX50 versions (same BeginString, unknown defaultApplVerId).
                 // But we have the real session settings here, so we can fix that.
-                // This is, of course, kind of a hack, and it should be reworked in V2 (TODO!).
-                if (messageFactory_ is DefaultMessageFactory)
+                // This is, of course, kind of a hack, and it should be reworked (TODO!).
+                if (_messageFactory is DefaultMessageFactory)
                 {
                     sessionMsgFactory = new DefaultMessageFactory(
                         FixValues.ApplVerID.FromBeginString(rawDefaultApplVerIdSetting));
@@ -84,10 +81,10 @@ namespace QuickFix
             DataDictionaryProvider dd = new DataDictionaryProvider();
             if (useDataDictionary)
             {
-                if (sessionID.IsFIXT)
-                    ProcessFixTDataDictionaries(sessionID, settings, dd);
+                if (sessionId.IsFIXT)
+                    ProcessFixTDataDictionaries(sessionId, settings, dd);
                 else
-                    ProcessFixDataDictionary(sessionID, settings, dd);
+                    ProcessFixDataDictionary(sessionId, settings, dd);
             }
 
             int heartBtInt = 0;
@@ -98,18 +95,18 @@ namespace QuickFix
                     throw new ConfigError($"{SessionSettings.HEARTBTINT} must be greater or equal to zero");
             }
             string senderDefaultApplVerId = "";
-            if(defaultApplVerID != null)
-                senderDefaultApplVerId = defaultApplVerID.Obj;
+            if(defaultApplVerId is not null)
+                senderDefaultApplVerId = defaultApplVerId.Obj;
 
             Session session = new Session(
                 isInitiator,
-                application_,
-                messageStoreFactory_,
-                sessionID,
+                _application,
+                _messageStoreFactory,
+                sessionId,
                 dd,
                 new SessionSchedule(settings),
                 heartBtInt,
-                logFactory_,
+                _logFactory,
                 sessionMsgFactory,
                 senderDefaultApplVerId);
 
@@ -159,9 +156,8 @@ namespace QuickFix
             return session;
         }
 
-        protected DataDictionary.DataDictionary createDataDictionary(SessionID sessionID, QuickFix.Dictionary settings, string settingsKey, string beginString)
+        protected DataDictionary.DataDictionary CreateDataDictionary(SessionID sessionId, QuickFix.Dictionary settings, string settingsKey, string beginString)
         {
-            DataDictionary.DataDictionary dd;
             string path;
             if (settings.Has(settingsKey))
                 path = settings.GetString(settingsKey);
@@ -170,10 +166,11 @@ namespace QuickFix
 
             path = StringUtil.FixSlashes(path);
 
-            if (!dictionariesByPath_.TryGetValue(path, out dd))
+            DataDictionary.DataDictionary? dd;
+            if (!_dictionariesByPath.TryGetValue(path, out dd))
             {
                 dd = new DataDictionary.DataDictionary(path);
-                dictionariesByPath_[path] = dd;
+                _dictionariesByPath[path] = dd;
             }
 
             DataDictionary.DataDictionary ddCopy = new DataDictionary.DataDictionary(dd);
@@ -190,9 +187,9 @@ namespace QuickFix
             return ddCopy;
         }
 
-        protected void ProcessFixTDataDictionaries(SessionID sessionID, Dictionary settings, DataDictionaryProvider provider)
+        protected void ProcessFixTDataDictionaries(SessionID sessionId, Dictionary settings, DataDictionaryProvider provider)
         {
-            provider.AddTransportDataDictionary(sessionID.BeginString, createDataDictionary(sessionID, settings, SessionSettings.TRANSPORT_DATA_DICTIONARY, sessionID.BeginString));
+            provider.AddTransportDataDictionary(sessionId.BeginString, CreateDataDictionary(sessionId, settings, SessionSettings.TRANSPORT_DATA_DICTIONARY, sessionId.BeginString));
     
             foreach (KeyValuePair<string, string> setting in settings)
             {
@@ -201,29 +198,29 @@ namespace QuickFix
                     if (setting.Key.Equals(SessionSettings.APP_DATA_DICTIONARY, System.StringComparison.CurrentCultureIgnoreCase))
                     {
                         Fields.ApplVerID applVerId = Message.GetApplVerID(settings.GetString(SessionSettings.DEFAULT_APPLVERID));
-                        DataDictionary.DataDictionary dd = createDataDictionary(sessionID, settings, SessionSettings.APP_DATA_DICTIONARY, sessionID.BeginString);
+                        DataDictionary.DataDictionary dd = CreateDataDictionary(sessionId, settings, SessionSettings.APP_DATA_DICTIONARY, sessionId.BeginString);
                         provider.AddApplicationDataDictionary(applVerId.Obj, dd);
                     }
                     else
                     {
                         int offset = setting.Key.IndexOf('.');
                         if (offset == -1)
-                            throw new System.ArgumentException(string.Format("Malformed {0} : {1}", SessionSettings.APP_DATA_DICTIONARY, setting.Key));
+                            throw new ArgumentException(
+                                $"Malformed {SessionSettings.APP_DATA_DICTIONARY} : {setting.Key}");
 
                         string beginStringQualifier = setting.Key.Substring(offset);
-                        DataDictionary.DataDictionary dd = createDataDictionary(sessionID, settings, setting.Key, beginStringQualifier);
+                        DataDictionary.DataDictionary dd = CreateDataDictionary(sessionId, settings, setting.Key, beginStringQualifier);
                         provider.AddApplicationDataDictionary(Message.GetApplVerID(beginStringQualifier).Obj, dd);
                     }
                 }
             }
         }
 
-        protected void ProcessFixDataDictionary(SessionID sessionID, Dictionary settings, DataDictionaryProvider provider)
+        protected void ProcessFixDataDictionary(SessionID sessionId, Dictionary settings, DataDictionaryProvider provider)
         {
-            DataDictionary.DataDictionary dataDictionary = createDataDictionary(sessionID, settings, SessionSettings.DATA_DICTIONARY, sessionID.BeginString);
-            provider.AddTransportDataDictionary(sessionID.BeginString, dataDictionary);
-            provider.AddApplicationDataDictionary(FixValues.ApplVerID.FromBeginString(sessionID.BeginString), dataDictionary);
+            DataDictionary.DataDictionary dataDictionary = CreateDataDictionary(sessionId, settings, SessionSettings.DATA_DICTIONARY, sessionId.BeginString);
+            provider.AddTransportDataDictionary(sessionId.BeginString, dataDictionary);
+            provider.AddApplicationDataDictionary(FixValues.ApplVerID.FromBeginString(sessionId.BeginString), dataDictionary);
         }
-
     }
 }

@@ -25,7 +25,7 @@ namespace QuickFix
 
         #endregion
 
-        public AbstractInitiator(
+        protected AbstractInitiator(
             IApplication app,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
@@ -167,8 +167,8 @@ namespace QuickFix
             {
                 foreach (SessionID sessionId in _connected)
                 {
-                    Session session = Session.LookupSession(sessionId);
-                    if (session.IsEnabled)
+                    Session? session = Session.LookupSession(sessionId);
+                    if (session is not null && session.IsEnabled)
                     {
                         session.Logout();
                     }
@@ -185,8 +185,11 @@ namespace QuickFix
             lock (_sync)
             {
                 HashSet<SessionID> connectedSessionIDs = new HashSet<SessionID>(_connected);
-                foreach (SessionID sessionId in connectedSessionIDs)
-                    SetDisconnected(Session.LookupSession(sessionId).SessionID);
+                foreach (SessionID sessionId in connectedSessionIDs) {
+                    Session? session = Session.LookupSession(sessionId);
+                    if (session is not null)
+                        SetDisconnected(session.SessionID);
+                }
             }
 
             IsStopped = true;
@@ -218,7 +221,7 @@ namespace QuickFix
                 {
                     foreach (SessionID sessionId in _connected)
                     {
-                        Session session = Session.LookupSession(sessionId);
+                        Session? session = Session.LookupSession(sessionId);
                         return session is not null && session.IsLoggedOn;
                     }
                 }
@@ -262,12 +265,13 @@ namespace QuickFix
         /// Implemented to stop a running initiator.
         /// </summary>
         protected abstract void OnStop();
+
         /// <summary>
         /// Implemented to connect a session to its target.
         /// </summary>
-        /// <param name="sessionId"></param>
+        /// <param name="session"></param>
         /// <param name="settings"></param>
-        protected abstract void DoConnect(SessionID sessionId, QuickFix.Dictionary settings);
+        protected abstract void DoConnect(Session session, QuickFix.Dictionary settings);
 
         #endregion
 
@@ -280,13 +284,13 @@ namespace QuickFix
                 HashSet<SessionID> disconnectedSessions = new HashSet<SessionID>(_disconnected);
                 foreach (SessionID sessionId in disconnectedSessions)
                 {
-                    Session session = Session.LookupSession(sessionId);
-                    if (session.IsEnabled)
+                    Session? session = Session.LookupSession(sessionId);
+                    if (session is not null && session.IsEnabled)
                     {
                         if (session.IsNewSession)
                             session.Reset("New session");
                         if (session.IsSessionTime)
-                            DoConnect(sessionId, _settings.Get(sessionId));
+                            DoConnect(session, _settings.Get(sessionId));
                     }
                 }
             }

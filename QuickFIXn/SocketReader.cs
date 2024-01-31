@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿#nullable enable
+using System.Net.Sockets;
 using System.IO;
 using System;
 using System.Linq;
@@ -13,26 +14,22 @@ namespace QuickFix
         public const int BUF_SIZE = 4096;
         private readonly byte[] _readBuffer = new byte[BUF_SIZE];
         private readonly Parser _parser = new();
-        private Session _qfSession; //will be null when initialized
-        private readonly Stream _stream;     //will be null when initialized
+        private Session? _qfSession; //will be null when initialized
+        private readonly Stream _stream;
         private readonly TcpClient _tcpClient;
         private readonly ClientHandlerThread _responder;
-        private readonly AcceptorSocketDescriptor _acceptorDescriptor;
+        private readonly AcceptorSocketDescriptor? _acceptorDescriptor;
 
         /// <summary>
         /// Keep a handle to the current outstanding read request (if any)
         /// </summary>
-        private IAsyncResult _currentReadRequest;
-
-        public SocketReader(TcpClient tcpClient, SocketSettings settings, ClientHandlerThread responder)
-            : this(tcpClient, settings, responder, null)
-        { }
+        private IAsyncResult? _currentReadRequest;
 
         internal SocketReader(
             TcpClient tcpClient,
             SocketSettings settings,
             ClientHandlerThread responder,
-            AcceptorSocketDescriptor acceptorDescriptor)
+            AcceptorSocketDescriptor? acceptorDescriptor)
         {
             _tcpClient = tcpClient;
             _responder = responder;
@@ -40,7 +37,6 @@ namespace QuickFix
             _stream = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
         }
 
-        /// <summary> FIXME </summary>
         public void Read()
         {
             try
@@ -48,8 +44,8 @@ namespace QuickFix
                 int bytesRead = ReadSome(_readBuffer, 1000);
                 if (bytesRead > 0)
                     _parser.AddToStream(_readBuffer, bytesRead);
-                else if (_qfSession is not null)
-                    _qfSession.Next();
+                else
+                    _qfSession?.Next();
 
                 ProcessStream();
             }
@@ -87,7 +83,7 @@ namespace QuickFix
 
                 if (_currentReadRequest.IsCompleted)
                 {
-                    // Make sure to set currentReadRequest_ to before retreiving result 
+                    // Make sure to set _currentReadRequest to before retreiving result
                     // so a new read can be started next time even if an exception is thrown
                     var request = _currentReadRequest;
                     _currentReadRequest = null;
@@ -109,7 +105,7 @@ namespace QuickFix
                     // Nothing read 
                     return 0;
                 }
-                else if (inner != null)
+                else if (inner is not null)
                 {
                     throw inner; //rethrow SocketException part (which we have exception logic for)
                 }
@@ -122,27 +118,28 @@ namespace QuickFix
         {
             try
             {
-                if (null == _qfSession)
+                if (_qfSession is null)
                 {
                     _qfSession = Session.LookupSession(Message.GetReverseSessionId(msg));
-                    if (null == _qfSession)
+                    if (_qfSession is null || IsAssumedSession(_qfSession.SessionID))
                     {
-                        this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
-                        DisconnectClient();
-                        return;
-                    }
-                    else if(IsAssumedSession(_qfSession.SessionID))
-                    {
-                        this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        Log("ERROR: Disconnecting; received message for unknown session: " + msg);
                         _qfSession = null;
                         DisconnectClient();
                         return;
                     }
-                    else
+
+                    if (_qfSession.HasResponder)
                     {
-                        if (!HandleNewSession(msg))
-                            return;
+                        _qfSession.Log.OnIncoming(msg);
+                        _qfSession.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + _tcpClient.Client.RemoteEndPoint + ")");
+                        _qfSession = null;
+                        DisconnectClient();
+                        return;
                     }
+
+                    _qfSession.Log.OnEvent(_qfSession.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + _qfSession.SessionID + " from " + _tcpClient.Client.RemoteEndPoint);
+                    _qfSession.SetResponder(_responder);
                 }
 
                 try
@@ -151,7 +148,7 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    this.Log("Error on Session '" + _qfSession.SessionID + "': " + e.ToString());
+                    Log($"Error on Session '{_qfSession.SessionID}': {e}");
                 }
             }
             catch (InvalidMessage e)
@@ -170,12 +167,12 @@ namespace QuickFix
             {
                 if (Fields.MsgType.LOGON.Equals(Message.GetMsgType(msg)))
                 {
-                    this.Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
+                    Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
                     DisconnectClient();
                 }
                 else
                 {
-                    this.Log("ERROR: Invalid message: " + e.Message);
+                    Log("ERROR: Invalid message: " + e.Message);
                 }
             }
             catch (InvalidMessage)
@@ -207,30 +204,14 @@ namespace QuickFix
             _tcpClient.Close();
         }
 
-        protected bool HandleNewSession(string msg)
-        {
-            if (_qfSession.HasResponder)
-            {
-                _qfSession.Log.OnIncoming(msg);
-                _qfSession.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + _tcpClient.Client.RemoteEndPoint + ")");
-                _qfSession = null;
-                DisconnectClient();
-                return false;
-            }
-            _qfSession.Log.OnEvent(_qfSession.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + _qfSession.SessionID + " from " + _tcpClient.Client.RemoteEndPoint);
-            _qfSession.SetResponder(_responder);
-            return true;
-        }
-
         private bool IsAssumedSession(SessionID sessionId)
         {
-            return _acceptorDescriptor != null
-                   && !_acceptorDescriptor.GetAcceptedSessions().Any(kv => kv.Key.Equals(sessionId));
+            return _acceptorDescriptor is not null
+                && !_acceptorDescriptor.GetAcceptedSessions().Any(kv => kv.Key.Equals(sessionId));
         }
 
-        private void HandleExceptionInternal(Session quickFixSession, Exception cause) {
+        private void HandleExceptionInternal(Session? quickFixSession, Exception cause) {
             bool disconnectNeeded = false;
-            string reason = cause.Message;
 
             Exception realCause = cause;
 
@@ -238,30 +219,34 @@ namespace QuickFix
             if (realCause is IOException && realCause.InnerException is SocketException)
                 realCause = realCause.InnerException;
 
-            if (realCause is SocketException)
-            {
-                if (quickFixSession != null && quickFixSession.IsEnabled)
-                    reason = "Socket exception (" + _tcpClient.Client.RemoteEndPoint + "): " + cause.Message;
-                else
-                    reason = "Socket (" + _tcpClient.Client.RemoteEndPoint + "): " + cause.Message;
-                disconnectNeeded = true;
-            }
-            else if (realCause is MessageParseError)
-            {
-                reason = "Protocol handler exception: " + cause;
-                if (quickFixSession is null)
+            string? reason;
+            switch (realCause) {
+                case SocketException:
+                {
+                    if (quickFixSession is not null && quickFixSession.IsEnabled)
+                        reason = "Socket exception (" + _tcpClient.Client.RemoteEndPoint + "): " + cause.Message;
+                    else
+                        reason = "Socket (" + _tcpClient.Client.RemoteEndPoint + "): " + cause.Message;
                     disconnectNeeded = true;
-            }
-            else
-            {
-                reason = cause.ToString();
+                    break;
+                }
+                case MessageParseError:
+                {
+                    reason = "Protocol handler exception: " + cause;
+                    if (quickFixSession is null)
+                        disconnectNeeded = true;
+                    break;
+                }
+                default:
+                    reason = cause.ToString();
+                    break;
             }
 
-            this.Log("SocketReader Error: " + reason);
+            Log($"SocketReader Error: {reason}");
 
             if (disconnectNeeded)
             {
-                if (null != quickFixSession && quickFixSession.HasResponder)
+                if (quickFixSession is not null && quickFixSession.HasResponder)
                     quickFixSession.Disconnect(reason);
                 else
                     DisconnectClient();
