@@ -84,8 +84,8 @@ namespace QuickFix
 
         #region Private Members
 
-        private QuickFix.Dictionary defaults_ = new QuickFix.Dictionary();
-        private System.Collections.Generic.Dictionary<SessionID, QuickFix.Dictionary> settings_ = new Dictionary<SessionID, Dictionary>();
+        private QuickFix.Dictionary _defaults = new();
+        private readonly System.Collections.Generic.Dictionary<SessionID, QuickFix.Dictionary> _settings = new();
 
         #endregion
 
@@ -101,7 +101,7 @@ namespace QuickFix
             }
             catch (System.Exception e)
             {
-                throw new ConfigError("File " + file + " not found (" + e.Message + ")");
+                throw new ConfigError($"File {file} not found ({e.Message})");
             }
         }
 
@@ -121,9 +121,9 @@ namespace QuickFix
 
             //---- load the DEFAULT section
             LinkedList<QuickFix.Dictionary> section = settings.Get("DEFAULT");
-            QuickFix.Dictionary def = new QuickFix.Dictionary();
+            QuickFix.Dictionary def = new();
             if (section.Count > 0)
-                def = section.First.Value;
+                def = section.First!.Value;
             Set(def);
 
             //---- load each SESSION section
@@ -133,29 +133,29 @@ namespace QuickFix
                 dict.Merge(def);
 
                 string sessionQualifier = SessionID.NOT_SET;
-                string senderSubID = SessionID.NOT_SET;
-                string senderLocID = SessionID.NOT_SET;
-                string targetSubID = SessionID.NOT_SET;
-                string targetLocID = SessionID.NOT_SET;
+                string senderSubId = SessionID.NOT_SET;
+                string senderLocId = SessionID.NOT_SET;
+                string targetSubId = SessionID.NOT_SET;
+                string targetLocId = SessionID.NOT_SET;
 
                 if (dict.Has(SESSION_QUALIFIER))
                     sessionQualifier = dict.GetString(SESSION_QUALIFIER);
                 if (dict.Has(SENDERSUBID))
-                    senderSubID = dict.GetString(SENDERSUBID);
+                    senderSubId = dict.GetString(SENDERSUBID);
                 if (dict.Has(SENDERLOCID))
-                    senderLocID = dict.GetString(SENDERLOCID);
+                    senderLocId = dict.GetString(SENDERLOCID);
                 if (dict.Has(TARGETSUBID))
-                    targetSubID = dict.GetString(TARGETSUBID);
+                    targetSubId = dict.GetString(TARGETSUBID);
                 if (dict.Has(TARGETLOCID))
-                    targetLocID = dict.GetString(TARGETLOCID);
-                SessionID sessionID = new SessionID(dict.GetString(BEGINSTRING), dict.GetString(SENDERCOMPID), senderSubID, senderLocID, dict.GetString(TARGETCOMPID), targetSubID, targetLocID, sessionQualifier);
-                Set(sessionID, dict);
+                    targetLocId = dict.GetString(TARGETLOCID);
+                SessionID sessionId = new SessionID(dict.GetString(BEGINSTRING), dict.GetString(SENDERCOMPID), senderSubId, senderLocId, dict.GetString(TARGETCOMPID), targetSubId, targetLocId, sessionQualifier);
+                Set(sessionId, dict);
             }
         }
 
-        public bool Has(SessionID sessionID)
+        public bool Has(SessionID sessionId)
         {
-            return settings_.ContainsKey(sessionID);
+            return _settings.ContainsKey(sessionId);
         }
 
         /// <summary>
@@ -164,68 +164,67 @@ namespace QuickFix
         /// <returns>Dictionary of settings from the [DEFAULT] section</returns>
         public QuickFix.Dictionary Get()
         {
-            return defaults_;
+            return _defaults;
         }
 
         /// <summary>
         /// Get a dictionary for a session
         /// </summary>
-        /// <param name="sessionID">the ID of the session</param>
+        /// <param name="sessionId">the ID of the session</param>
         /// <returns>Dictionary of settings from the [SESSION] section for the given SessionID</returns>
-        public Dictionary Get(SessionID sessionID)
+        public Dictionary Get(SessionID sessionId)
         {
-            Dictionary dict;
-            if (!settings_.TryGetValue(sessionID, out dict))
-                throw new ConfigError("Session '" + sessionID + "' not found");
+            if (!_settings.TryGetValue(sessionId, out var dict))
+                throw new ConfigError($"Session '{sessionId}' not found");
             return dict;
         }
 
         public void Set(QuickFix.Dictionary defaults)
         {
-            defaults_ = defaults;
-            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in settings_)
-                entry.Value.Merge(defaults_);
+            _defaults = defaults;
+            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in _settings)
+                entry.Value.Merge(_defaults);
         }
 
         /// <summary>
         /// Remove existing session config from the settings
         /// </summary>
-        /// <param name="sessionID">ID of session for which config is to be removed</param>
+        /// <param name="sessionId">ID of session for which config is to be removed</param>
         /// <returns>true if removed, false if config for the session does not exist</returns>
-        public bool Remove(SessionID sessionID)
+        public bool Remove(SessionID sessionId)
         {
-            return settings_.Remove(sessionID);
+            return _settings.Remove(sessionId);
         }
 
         /// <summary>
         /// Add new session config
         /// </summary>
-        /// <param name="sessionID">ID of session for which to add config</param>
+        /// <param name="sessionId">ID of session for which to add config</param>
         /// <param name="settings">session config</param>
-        public void Set(SessionID sessionID, QuickFix.Dictionary settings)
+        public void Set(SessionID sessionId, QuickFix.Dictionary settings)
         {
-            if (Has(sessionID))
-                throw new ConfigError("Duplicate Session " + sessionID.ToString());
-            settings.SetString(BEGINSTRING, sessionID.BeginString);
-            settings.SetString(SENDERCOMPID, sessionID.SenderCompID);
-            if (SessionID.IsSet(sessionID.SenderSubID))
-                settings.SetString(SENDERSUBID, sessionID.SenderSubID);
-            if (SessionID.IsSet(sessionID.SenderLocationID))
-                settings.SetString(SENDERLOCID, sessionID.SenderLocationID);
-            settings.SetString(TARGETCOMPID, sessionID.TargetCompID);
-            if (SessionID.IsSet(sessionID.TargetSubID))
-                settings.SetString(TARGETSUBID, sessionID.TargetSubID);
-            if (SessionID.IsSet(sessionID.TargetLocationID))
-                settings.SetString(TARGETLOCID, sessionID.TargetLocationID);
-            settings.Merge(defaults_);
+            if (Has(sessionId))
+                throw new ConfigError($"Duplicate Session {sessionId}");
+            settings.SetString(BEGINSTRING, sessionId.BeginString);
+            settings.SetString(SENDERCOMPID, sessionId.SenderCompID);
+            if (SessionID.IsSet(sessionId.SenderSubID))
+                settings.SetString(SENDERSUBID, sessionId.SenderSubID);
+            if (SessionID.IsSet(sessionId.SenderLocationID))
+                settings.SetString(SENDERLOCID, sessionId.SenderLocationID);
+            settings.SetString(TARGETCOMPID, sessionId.TargetCompID);
+            if (SessionID.IsSet(sessionId.TargetSubID))
+                settings.SetString(TARGETSUBID, sessionId.TargetSubID);
+            if (SessionID.IsSet(sessionId.TargetLocationID))
+                settings.SetString(TARGETLOCID, sessionId.TargetLocationID);
+            settings.Merge(_defaults);
             Validate(settings);
-            settings_[sessionID] = settings;
+            _settings[sessionId] = settings;
         }
 
         public HashSet<SessionID> GetSessions()
         {
             HashSet<SessionID> result = new HashSet<SessionID>();
-            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in settings_)
+            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in _settings)
                 result.Add(entry.Key);
             return result;
         }
@@ -235,15 +234,15 @@ namespace QuickFix
             System.Text.StringBuilder s = new System.Text.StringBuilder();
             s.AppendLine("[DEFAULT]");
 
-            foreach (System.Collections.Generic.KeyValuePair<string, string> entry in defaults_)
+            foreach (System.Collections.Generic.KeyValuePair<string, string> entry in _defaults)
                 s.Append(entry.Key).Append('=').AppendLine(entry.Value);
 
-            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in settings_)
+            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in _settings)
             {
                 s.AppendLine().AppendLine("[SESSION]");
                 foreach (System.Collections.Generic.KeyValuePair<string, string> kvp in entry.Value)
                 {
-                    if (defaults_.Has(kvp.Key) && defaults_.GetString(kvp.Key).Equals(kvp.Value))
+                    if (_defaults.Has(kvp.Key) && _defaults.GetString(kvp.Key).Equals(kvp.Value))
                         continue;
                     s.Append(kvp.Key).Append('=').AppendLine(kvp.Value);
                 }
@@ -262,13 +261,13 @@ namespace QuickFix
                 beginString != Values.BeginString_FIX44 &&
                 beginString != Values.BeginString_FIXT11)
             {
-                throw new ConfigError(BEGINSTRING + " (" + beginString + ") must be FIX.4.0 to FIX.4.4 or FIXT.1.1");
+                throw new ConfigError($"{BEGINSTRING} ({beginString}) must be FIX.4.0 to FIX.4.4 or FIXT.1.1");
             }
 
             string connectionType = dictionary.GetString(CONNECTION_TYPE);
             if (!"initiator".Equals(connectionType) && !"acceptor".Equals(connectionType))
             {
-                throw new ConfigError(CONNECTION_TYPE + " must be 'initiator' or 'acceptor'");
+                throw new ConfigError($"{CONNECTION_TYPE} must be 'initiator' or 'acceptor'");
             }
         }
     }

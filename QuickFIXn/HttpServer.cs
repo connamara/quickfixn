@@ -153,7 +153,10 @@ namespace Acceptor
 
         private string RefreshSession(HttpListenerRequest request, StringBuilder pageBuilder)
         {
-            SessionID sessionId = new SessionID(request.QueryString["beginstring"], request.QueryString["sendercompid"], request.QueryString["targetcompid"]);
+            SessionID sessionId = new SessionID(
+                request.QueryString["beginstring"] ?? "",
+                request.QueryString["sendercompid"] ?? "",
+                request.QueryString["targetcompid"] ?? "");
             Session? sessionDetails = Session.LookupSession(sessionId);
             if (sessionDetails == null) throw new Exception("Session not found");
             bool confirm = false;
@@ -248,7 +251,10 @@ namespace Acceptor
 
         private string ResetSession(HttpListenerRequest request, StringBuilder pageBuilder)
         {
-            SessionID sessionId = new SessionID(request.QueryString["beginstring"], request.QueryString["sendercompid"], request.QueryString["targetcompid"]);
+            SessionID sessionId = new SessionID(
+                request.QueryString["beginstring"] ?? "",
+                request.QueryString["sendercompid"] ?? "",
+                request.QueryString["targetcompid"] ?? "");
             Session? sessionDetails = Session.LookupSession(sessionId);
             if (sessionDetails == null) throw new Exception("Session not found");
 
@@ -326,7 +332,10 @@ namespace Acceptor
 
         private string SessionDetails(HttpListenerRequest request, StringBuilder pageBuilder)
         {
-            SessionID sessionId = new SessionID(request.QueryString["beginstring"], request.QueryString["sendercompid"], request.QueryString["targetcompid"]);
+            SessionID sessionId = new SessionID(
+                request.QueryString["beginstring"] ?? "",
+                request.QueryString["sendercompid"] ?? "",
+                request.QueryString["targetcompid"] ?? "");
             Session? sessionDetails = Session.LookupSession(sessionId);
             if (sessionDetails == null) throw new Exception("Session not found");
 
