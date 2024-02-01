@@ -7900,13 +7900,6 @@ namespace QuickFix.Fields
         public IOIQty(string val)
             :base(Tags.IOIQty, val) {}
 
-
-        // Field Enumerations
-        public const string VAL_1000000000 = "0";
-        public const string SMALL = "S";
-        public const string MEDIUM = "M";
-        public const string LARGE = "L";
-        public const string UNDISCLOSED_QUANTITY = "U";
     }
 
 

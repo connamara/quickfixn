@@ -57,6 +57,7 @@ What's New
 * #767 - avoid string conversions in FieldMap.Get{FieldType} where possible (Rob-Hague)
 * #785 - use correct SocketError "Shutdown" code when socket is deliberately shutdown (oclancy)
 * #711 - fix explicit 0.0.0.0 address binding (bohdanstefaniuk)
+* #823 - get rid of IOIQty enums in FIX5 DDs, allow free string (gbirchmeier)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages
