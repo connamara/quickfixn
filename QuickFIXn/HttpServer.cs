@@ -100,9 +100,9 @@ namespace Acceptor
                 if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
                 {
                     confirm = true;
-                    foreach (SessionID session in _sessionSettings.GetSessions())
+                    foreach (SessionID sessionId in _sessionSettings.GetSessions())
                     {
-                        Session.LookupSession(session)?.Logout();
+                        Session.LookupSession(sessionId)?.Logout();
                     }
                 }
             }
@@ -130,9 +130,9 @@ namespace Acceptor
                 if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
                 {
                     confirm = true;
-                    foreach (SessionID session in _sessionSettings.GetSessions())
+                    foreach (SessionID sessionId in _sessionSettings.GetSessions())
                     {
-                        Session.LookupSession(session)?.SetLogonState();
+                        Session.LookupSession(sessionId)?.SetLogonState();
                     }
                 }
             }
@@ -198,9 +198,9 @@ namespace Acceptor
                 if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
                 {
                     confirm = true;
-                    foreach (SessionID session in _sessionSettings.GetSessions())
+                    foreach (SessionID sessionId in _sessionSettings.GetSessions())
                     {
-                        Session.LookupSession(session)?.Refresh();
+                        Session.LookupSession(sessionId)?.Refresh();
                     }
                 }
             }
@@ -228,9 +228,9 @@ namespace Acceptor
                 if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
                 {
                     confirm = true;
-                    foreach (SessionID session in _sessionSettings.GetSessions())
+                    foreach (SessionID sessionId in _sessionSettings.GetSessions())
                     {
-                        Session.LookupSession(session)?.Reset("Reset from WebInterface");
+                        Session.LookupSession(sessionId)?.Reset("Reset from WebInterface");
                     }
                 }
             }
@@ -310,13 +310,13 @@ namespace Acceptor
             pageBuilder.Append(AddCell("Next Outgoing", true));
             pageBuilder.Append("</tr>");
 
-            foreach (SessionID session in _sessionSettings.GetSessions())
+            foreach (SessionID sessionId in _sessionSettings.GetSessions())
             {
-                Session sessionDetails = Session.LookupSession(session)!;
+                Session sessionDetails = Session.LookupSession(sessionId)!;
                 pageBuilder.Append("<tr>");
-                pageBuilder.Append(AddCell(String.Format(
-                    "<a href=\"session?BeginString={0}&SenderCompID={1}&TargetCompID={2}\">{0}:{1}->{2}</a>",
-                    session.BeginString, session.SenderCompID, session.TargetCompID)));
+                pageBuilder.Append(AddCell(string.Format(
+                    "<a href=\"session?BeginString={0}&SenderCompID={1}&TargetCompID={2}\">{0}:{1}->{2}</a> {3}",
+                    sessionId.BeginString, sessionId.SenderCompID, sessionId.TargetCompID, sessionId)));
                 pageBuilder.Append(AddCell(sessionDetails.IsInitiator ? "initiator" : "acceptor"));
                 pageBuilder.Append(AddCell(sessionDetails.IsEnabled ? "yes" : "no"));
                 pageBuilder.Append(AddCell(sessionDetails.IsSessionTime ? "yes" : "no"));
