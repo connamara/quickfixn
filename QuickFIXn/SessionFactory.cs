@@ -23,7 +23,7 @@ namespace QuickFix
             IMessageFactory? messageFactory = null)
         {
             // TODO: for V2, consider ONLY instantiating MessageFactory in the Create() method,
-            //   and removing instance var messageFactory_ altogether.
+            //   and removing instance var _messageFactory altogether.
             //   This makes sense because we can't distinguish FIX50 versions here in this constructor,
             //   and thus can't create the right FIX-Version factory because we don't know what
             //   session to use to look up the BeginString and DefaultApplVerID.

@@ -42,6 +42,10 @@ What's New
      * Session: Logon() and Logout() made internal and renamed.  No one should be using these.
      * SessionState: ctor now requires a MessageStore.  (Existing callers used an object initializer anyway)
      * Many protected functions were altered, but probably no user code is touching them
+* #827 - cleanup/nullable-ize StreamFactory, SessionID, Settings, SessionSettings, SessionSchedule (gbirchmeier)
+     * StreamFactory: privatized a lot of members; I don't think users are inheriting from this
+     * SessionSchedule: remove unused LastEndTime()
+
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
