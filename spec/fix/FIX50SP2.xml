@@ -5755,13 +5755,7 @@
    <value enum='M' description='MEDIUM' />
   </field>
   <field number='26' name='IOIRefID' type='STRING' />
-  <field number='27' name='IOIQty' type='STRING'>
-   <value enum='0' description='1000000000' />
-   <value enum='S' description='SMALL' />
-   <value enum='M' description='MEDIUM' />
-   <value enum='L' description='LARGE' />
-   <value enum='U' description='UNDISCLOSED_QUANTITY' />
-  </field>
+  <field number='27' name='IOIQty' type='STRING' />
   <field number='28' name='IOITransType' type='CHAR'>
    <value enum='C' description='CANCEL' />
    <value enum='N' description='NEW' />
