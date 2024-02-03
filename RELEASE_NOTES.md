@@ -39,7 +39,6 @@ What's New
      * ClientHandlerThread is now internal.  Unlikely anyone will notice.
      * SocketReader: delete public ctor.  Probably no one is using it.
      * Session: rename (capitalize) TargetDefaultApplVerId property
-     * Session: Logon() and Logout() made internal and renamed.  No one should be using these.
      * SessionState: ctor now requires a MessageStore.  (Existing callers used an object initializer anyway)
      * Many protected functions were altered, but probably no user code is touching them
 * #827 - cleanup/nullable-ize StreamFactory, SessionID, Settings, SessionSettings, SessionSchedule (gbirchmeier)
@@ -58,6 +57,7 @@ What's New
 * #785 - use correct SocketError "Shutdown" code when socket is deliberately shutdown (oclancy)
 * #711 - fix explicit 0.0.0.0 address binding (bohdanstefaniuk)
 * #823 - get rid of IOIQty enums in FIX5 DDs, allow free string (gbirchmeier)
+* #786 - rewrite HttpServer: better HTML, no crash on errors (gbirchmeier)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages
