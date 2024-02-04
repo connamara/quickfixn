@@ -15,16 +15,21 @@ namespace QuickFix
 
         private string messageLogFileName_;
         private string eventLogFileName_;
+        private bool _isInitialized;
+        private readonly string _prefix;
+        private readonly string _fileLogPath;
 
 
         public FileLog(string fileLogPath)
         {
-            Init(fileLogPath, "GLOBAL");
+            _fileLogPath = fileLogPath;
+            _prefix = "GLOBAL";
         }
 
         public FileLog(string fileLogPath, SessionID sessionID)
         {
-            Init(fileLogPath, Prefix(sessionID));
+            _fileLogPath = fileLogPath;
+            _prefix = Prefix(sessionID);
         }   
         
 
@@ -41,6 +46,7 @@ namespace QuickFix
 
             messageLog_.AutoFlush = true;
             eventLog_.AutoFlush = true;
+            _isInitialized = true;
         }
 
         public static string Prefix(SessionID sessionID)
@@ -77,14 +83,17 @@ namespace QuickFix
 
             lock (sync_)
             {
-                messageLog_.Close();
-                eventLog_.Close();
+                if (_isInitialized)
+                {
+                    messageLog_?.Close();
+                    eventLog_?.Close();
 
-                messageLog_ = new System.IO.StreamWriter(messageLogFileName_, false);
-                eventLog_ = new System.IO.StreamWriter(eventLogFileName_, false);
+                    messageLog_ = new System.IO.StreamWriter(messageLogFileName_, false);
+                    eventLog_ = new System.IO.StreamWriter(eventLogFileName_, false);
 
-                messageLog_.AutoFlush = true;
-                eventLog_.AutoFlush = true;
+                    messageLog_.AutoFlush = true;
+                    eventLog_.AutoFlush = true;
+                }
             }
         }
 
@@ -94,6 +103,8 @@ namespace QuickFix
 
             lock (sync_)
             {
+                if(!_isInitialized)
+                    Init(_fileLogPath, _prefix);
                 messageLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : " + msg);
             }
         }
@@ -104,6 +115,8 @@ namespace QuickFix
 
             lock (sync_)
             {
+                if (!_isInitialized)
+                    Init(_fileLogPath, _prefix);
                 messageLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : " + msg);
             }
         }
@@ -114,6 +127,8 @@ namespace QuickFix
 
             lock (sync_)
             {
+                if (!_isInitialized)
+                    Init(_fileLogPath, _prefix);
                 eventLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : "+ s);
             }
         }
