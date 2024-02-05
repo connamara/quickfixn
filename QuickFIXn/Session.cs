@@ -370,18 +370,19 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Sets some internal state variables.
+        /// Sets some internal state variables to enable the session.
         /// </summary>
-        internal void SetLogonState()
+        public void Logon()
         {
             _state.IsEnabled = true;
             _state.LogoutReason = "";
         }
 
         /// <summary>
-        /// Sets some internal state variables.
+        /// Sets some internal state variables to disable the session.
+        /// Users will be disconnected on next cycle.
         /// </summary>
-        internal void Logout(string reason = "")
+        public void Logout(string reason = "")
         {
             _state.IsEnabled = false;
             _state.LogoutReason = reason;

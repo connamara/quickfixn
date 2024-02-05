@@ -1,572 +1,402 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Web;
-using QuickFix;
 
-namespace Acceptor
-{
-    public class HttpServer : IDisposable
-    {
-        private readonly HttpListener _httpListener;
-        private readonly Thread _connectionThread;
-        private bool _running, _disposed;
-        private readonly SessionSettings _sessionSettings;
+namespace QuickFix;
 
-        public HttpServer(string prefix, SessionSettings settings)
-        {
-            if (!HttpListener.IsSupported)
+public class HttpServer : IDisposable {
+    private readonly HttpListener _httpListener;
+    private readonly Thread _connectionThread;
+    private bool _running, _disposed;
+    private readonly SessionSettings _sessionSettings;
+
+    private readonly IReadOnlyList<Session> _sessions;
+
+    private static class ToggleParam {
+        public const string Enabled = "enabled";
+        public const string SendRedundantResendRequests = "sendRedundantResendRequests";
+        public const string CheckCompId = "checkCompId";
+        public const string CheckLatency = "checkLatency";
+        public const string ResetOnLogon = "resetOnLogon";
+        public const string ResetOnLogout = "resetOnLogout";
+        public const string ResetOnDisconnect = "resetOnDisconnect";
+        public const string RefreshOnLogon = "refreshOnLogon";
+        public const string MsInTimestamp = "msInTimestamp";
+        public const string PersistMessages = "persistMessages";
+    }
+
+    private static class AdjustParam {
+        public const string MaxLatency = "maxLatency";
+        public const string LogonTimeout = "logonTimeout";
+        public const string LogoutTimeout = "logoutTimeout";
+
+        public const string Minus10 = "minus10";
+        public const string Minus1 = "minus1";
+        public const string Plus1 = "plus1";
+        public const string Plus10 = "plus10";
+
+        public static int ToInt(string adjustmentSymbol) {
+            return adjustmentSymbol switch
             {
-                // Requires at least a Windows XP with Service Pack 2
-                throw new NotSupportedException(
-                    "The Http Server cannot run on this operating system.");
-            }
+                Minus10 => -10,
+                Minus1 => -1,
+                Plus1 => 1,
+                Plus10 => 10,
+                _ => throw new ApplicationException($"I don't recognize adjustment symbol {adjustmentSymbol}")
+            };
+        }
+    }
 
-            _httpListener = new HttpListener();
-            _httpListener.Prefixes.Add(prefix);
-            _sessionSettings = settings;
-            _connectionThread = new Thread(ConnectionThreadStart);
+    public HttpServer(string prefix, SessionSettings sessionSettings) {
+        if (!HttpListener.IsSupported) {
+            // Requires at least a Windows XP with Service Pack 2
+            throw new NotSupportedException(
+                "The Http Server cannot run on this operating system.");
         }
 
-        public void Start()
-        {
-            if (!_httpListener.IsListening)
-            {
-                _httpListener.Start();
-                _running = true;
-                // Use a thread to listen to the Http requests
-                _connectionThread.Start();
-            }
+        _httpListener = new HttpListener();
+        _httpListener.Prefixes.Add(prefix);
+        _sessionSettings = sessionSettings;
+
+        List<Session> sessionsList = new();
+        foreach (SessionID sessionId in sessionSettings.GetSessions().OrderBy(x => x.ToString())) {
+            Session session = Session.LookupSession(sessionId)!; // cast away the nullable status
+            sessionsList.Add(session);
         }
 
-        public void Stop()
-        {
-            if (_httpListener.IsListening)
-            {
-                _running = false;
-                _httpListener.Stop();
-            }
+        _sessions = sessionsList.AsReadOnly();
+
+        _connectionThread = new Thread(ConnectionThreadStart);
+    }
+
+    public void Start() {
+        if (!_httpListener.IsListening) {
+            _httpListener.Start();
+            _running = true;
+            // Use a thread to listen to the Http requests
+            _connectionThread.Start();
         }
+    }
 
-        private void ConnectionThreadStart()
-        {
-            try
-            {
-                while (_running)
-                {
-                    // Grab the context and pass it to the processor methods to handle it
-                    HttpListenerContext context = _httpListener.GetContext();
-                    HttpListenerRequest request = context.Request;
-                    HttpListenerResponse response = context.Response;
-
-                    StringBuilder pageBuilder = new StringBuilder("<HEAD><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
-                    pageBuilder.Append($"<CENTER>[<A HREF='/'>HOME</A>]&nbsp;[<A HREF='{request.Url?.OriginalString}'>RELOAD</A>]</CENTER><HR/></HEADER><BODY>");
-
-                    var responseString = request.Url?.AbsolutePath switch
-                    {
-                        "/" => ProcessRoot(request, pageBuilder),
-                        "/session" => SessionDetails(request, pageBuilder),
-                        "/resetSession" => ResetSession(request, pageBuilder),
-                        "/resetSessions" => ResetSessions(request, pageBuilder),
-                        "/refreshSession" => RefreshSession(request, pageBuilder),
-                        "/refreshSessions" => RefreshSessions(request, pageBuilder),
-                        "/enableSessions" => EnableSessions(request, pageBuilder),
-                        "/disableSessions" => DisableSessions(request, pageBuilder),
-                        _ => ProcessRoot(request, pageBuilder)
-                    };
-
-                    byte[] buffer = Encoding.UTF8.GetBytes(responseString);
-                    response.ContentLength64 = buffer.Length;
-                    Stream output = response.OutputStream;
-                    output.Write(buffer, 0, buffer.Length);
-                    output.Close();
-                }
-            }
-            catch (HttpListenerException)
-            {
-                Console.WriteLine("HTTP server was shut down.");
-            }
+    public void Stop() {
+        if (_httpListener.IsListening) {
+            _running = false;
+            _httpListener.Stop();
         }
+    }
 
-        private string DisableSessions(HttpListenerRequest request, StringBuilder pageBuilder)
-        {
-            bool confirm = false;
+    private void ConnectionThreadStart() {
+        try {
+            while (_running) {
+                HttpListenerContext context = _httpListener.GetContext();
+                HttpListenerRequest request = context.Request;
+                HttpListenerResponse response = context.Response;
 
-            if (request.QueryString["confirm"] is not null)
-            {
-                if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
-                {
-                    confirm = true;
-                    foreach (SessionID session in _sessionSettings.GetSessions())
-                    {
-                        Session.LookupSession(session)?.Logout();
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("<html>");
+                sb.AppendLine("  <head>");
+                sb.AppendLine("    <title>QuickFIX/n Engine Simple Web Interface</title>");
+                sb.AppendLine();
+                sb.AppendLine("    <style type=\"text/css\">");
+                sb.AppendLine("      a { display: inline-block; color: #0000EE; padding: 5px 10px; text-align: center; }");
+                sb.AppendLine("      a:hover { background-color: #ccbeff; }");
+                sb.AppendLine("      a:visited { background-color: #ccbeff; color: #0000EE; }");
+                sb.AppendLine("      h1 { text-align: center; }");
+                sb.AppendLine("      h1 a, h1 a:visited { text-decoration: none; color: black; }");
+                sb.AppendLine("      div.header-line { text-align: center; }");
+                sb.AppendLine("      div.header-line a { margin-left: 10px; margin-right: 10px; }");
+                sb.AppendLine("      div.sessions-count { font-weight: bold; font-style: italic; }");
+                sb.AppendLine("      table { border-width: 1px, padding: 2px; width: 100%; }");
+                sb.AppendLine("      table#details-table tr th { font-weight: normal; }");
+                sb.AppendLine("      table#details-table tr.head th { font-weight: bold; }");
+                sb.AppendLine("      table#details-table th,td { padding: 2px 0; }");
+                sb.AppendLine("      th { text-align: left }");
+                sb.AppendLine("      td.adjusters a { margin-left: 7px; margin-right: 7px; min-width: 20px;}");
+                sb.AppendLine("      [data-tooltip]:hover::after {");
+                sb.AppendLine("        display: block;");
+                sb.AppendLine("        position: absolute;");
+                sb.AppendLine("        content: attr(data-tooltip);");
+                sb.AppendLine("        color: black;");
+                sb.AppendLine("        border: 1px solid black;");
+                sb.AppendLine("        border-radius: 6px;");
+                sb.AppendLine("        background: #ffffc2;");
+                sb.AppendLine("        padding: 2px 5px;");
+                sb.AppendLine("        margin-top:-45px;");
+                sb.AppendLine("        margin-left: -20px;");
+                sb.AppendLine("        font-size: 20px;");
+                sb.AppendLine("      }");
+                sb.AppendLine("      .error-message { color: red; font-weight: bold; text-align: center;}");
+                sb.AppendLine("    </style>");
+                sb.AppendLine();
+                sb.AppendLine("  <body>");
+                sb.AppendLine("    <h1><a href=\"/\">QuickFIX/n Engine Simple Web Interface</a></h1>");
+                sb.AppendLine("    <hr/>");
+                sb.AppendLine();
+
+                try {
+                    switch (request.Url?.AbsolutePath) {
+                        case "/":
+                            RenderRoot(sb);
+                            break;
+                        case "/session":
+                            RenderSession(request, sb);
+                            break;
+                        case "/resetAll":
+                            foreach (Session sess in _sessions)
+                                sess.Reset("Reset all sessions from web interface");
+                            response.Redirect("/");
+                            response.Close();
+                            continue;
+                        case "/refreshAll":
+                            foreach (Session sess in _sessions)
+                                sess.Refresh();
+                            response.Redirect("/");
+                            response.Close();
+                            continue;
+                        case "/enableAll":
+                            foreach (Session sess in _sessions)
+                                sess.Logon();
+                            response.Redirect("/");
+                            response.Close();
+                            continue;
+                        case "/disableAll":
+                            foreach (Session sess in _sessions)
+                                sess.Logout();
+                            response.Redirect("/");
+                            response.Close();
+                            continue;
+                        case "/resetSession":
+                            ResetSessionAndRedirect(request, response);
+                            continue;
+                        case "/refreshSession":
+                            RefreshSessionAndRedirect(request, response);
+                            continue;
+
+                        default:
+                            throw new ApplicationException("unrecognized url");
                     }
+                } catch (Exception ex) {
+                    sb.AppendLine("    <h2 class=\"error-message\">An error occurred:</h2>");
+                    sb.AppendLine($"    <h2 class=\"error-message\">{ex.Message}</h2>");
+                    sb.AppendLine("    <div>Full exception info:</div>");
+                    sb.AppendLine($"    <pre>{ex}</pre>");
                 }
-            }
 
-            if (confirm)
-            {
-                pageBuilder = new StringBuilder();
-                pageBuilder.Append("<HEAD><META http-equiv='refresh' content='2; url=/' /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
-                pageBuilder.Append("<CENTER><h2><A HREF='/'>Sessions</A> have been disabled</h2></CENTER>");
+                sb.AppendLine("  </body>");
+                sb.AppendLine("</html>");
+                sb.AppendLine("");
+
+                byte[] buffer = Encoding.UTF8.GetBytes(sb.ToString());
+                response.ContentLength64 = buffer.Length;
+                Stream output = response.OutputStream;
+                output.Write(buffer, 0, buffer.Length);
+                output.Close();
             }
+        } catch (HttpListenerException) {
+            Console.WriteLine("HTTP server was shut down.");
+        }
+    }
+
+    private void RenderRoot(StringBuilder sb) {
+        sb.AppendLine($"    <div class=\"header-line sessions-count\">{_sessionSettings.GetSessions().Count} Sessions managed by QuickFIX/n</div>");
+        sb.AppendLine("    <hr/>");
+        sb.AppendLine();
+
+        sb.AppendLine("    <div class=\"header-line\">");
+        sb.AppendLine("      <a href=\"/resetAll\" onclick=\"return confirm('Reset ALL sessions?')\">RESET ALL</a>");
+        sb.AppendLine("      <a href=\"/refreshAll\" onclick=\"return confirm('Refresh ALL sessions?')\">REFRESH ALL</a>");
+        sb.AppendLine("      <a href=\"/enableAll\" onclick=\"return confirm('Enable ALL sessions?')\">ENABLE ALL</a>");
+        sb.AppendLine("      <a href=\"/disableAll\" onclick=\"return confirm('Disable ALL sessions?')\">DISABLE ALL</a>");
+        sb.AppendLine("    </div>");
+        sb.AppendLine("    <hr/>");
+
+        sb.AppendLine("    <table id=\"sessions-table\">");
+
+        sb.AppendLine("      <tr>");
+        var headers = new[] { "Session", "Type", "Enabled", "Session Time", "Logged On", "Next Incoming", "Next Outgoing" };
+        foreach (string str in headers) {
+            sb.AppendLine($"        <th>{str}</th>");
+        }
+
+        sb.AppendLine("      </tr>");
+
+        for (int idx = 0; idx < _sessions.Count; idx++) {
+            Session session = _sessions[idx];
+
+            sb.AppendLine("      <tr>");
+            sb.AppendLine($"        <td><a href=\"session?idx={idx}\">{session.SessionID}</a>");
+            sb.AppendLine($"        <td>{(session.IsInitiator ? "initiator" : "acceptor")}");
+            sb.AppendLine($"        <td>{(session.IsEnabled ? "yes" : "no")}");
+            sb.AppendLine($"        <td>{(session.IsSessionTime ? "yes" : "no")}");
+            sb.AppendLine($"        <td>{(session.IsLoggedOn ? "yes" : "no")}");
+            sb.AppendLine($"        <td>{session.NextTargetMsgSeqNum.ToString()}");
+            sb.AppendLine($"        <td>{session.NextSenderMsgSeqNum.ToString()}");
+            sb.AppendLine("      </tr>");
+        }
+
+        sb.Append("    </table>");
+    }
+
+    private void RenderSession(HttpListenerRequest request, StringBuilder sb) {
+        (int sessionIdx, Session session) = GetSessionFromRequest(request);
+
+        if (bool.TryParse(request.QueryString[ToggleParam.Enabled], out var toEnabled)) {
+            if (toEnabled)
+                session.Logon();
             else
-            {
-                pageBuilder.Append("<CENTER><h2>Are you sure you want to disable all sessions ?</h2></CENTER>");
-                pageBuilder.Append($"<CENTER>[<A HREF='{request.Url?.OriginalString}?confirm=1'>YES, disable sessions</A>]&nbsp;[<A HREF='/'>NO, do not disable sessions</A>]</CENTER>");
-            }
-            return pageBuilder.ToString();
+                session.Logout();
         }
 
-        private string EnableSessions(HttpListenerRequest request, StringBuilder pageBuilder)
-        {
-            bool confirm = false;
+        if (bool.TryParse(request.QueryString[ToggleParam.SendRedundantResendRequests], out var toSendRrr))
+            session.SendRedundantResendRequests = toSendRrr;
+        if (bool.TryParse(request.QueryString[ToggleParam.CheckCompId], out var toCheckCompId))
+            session.CheckCompID = toCheckCompId;
+        if (bool.TryParse(request.QueryString[ToggleParam.CheckLatency], out var toCheckLatency))
+            session.CheckLatency = toCheckLatency;
 
-            if (request.QueryString["confirm"] is not null)
-            {
-                if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
-                {
-                    confirm = true;
-                    foreach (SessionID session in _sessionSettings.GetSessions())
-                    {
-                        Session.LookupSession(session)?.SetLogonState();
-                    }
-                }
-            }
-
-            if (confirm)
-            {
-                pageBuilder = new StringBuilder();
-                pageBuilder.Append("<HEAD><META http-equiv='refresh' content='2; url=/' /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
-                pageBuilder.Append("<CENTER><h2><A HREF='/'>Sessions</A> have been enabled</h2></CENTER>");
-            }
-            else
-            {
-                pageBuilder.Append("<CENTER><h2>Are you sure you want to enable all sessions ?</h2></CENTER>");
-                pageBuilder.Append($"<CENTER>[<A HREF='{request.Url?.OriginalString}?confirm=1'>YES, enable sessions</A>]&nbsp;[<A HREF='/'>NO, do not enable sessions</A>]</CENTER>");
-            }
-            return pageBuilder.ToString();
+        if (request.QueryString[AdjustParam.MaxLatency] is not null) {
+            string adjustmentSymbol = request.QueryString[AdjustParam.MaxLatency]!;
+            int newVal = session.MaxLatency + AdjustParam.ToInt(adjustmentSymbol);
+            session.MaxLatency = newVal < 0 ? 0 : newVal;
+        }
+        if (request.QueryString[AdjustParam.LogonTimeout] is not null) {
+            string adjustmentSymbol = request.QueryString[AdjustParam.LogonTimeout]!;
+            int newVal = session.LogonTimeout + AdjustParam.ToInt(adjustmentSymbol);
+            session.LogonTimeout = newVal < 0 ? 0 : newVal;
+        }
+        if (request.QueryString[AdjustParam.LogoutTimeout] is not null) {
+            var adjustmentSymbol = request.QueryString[AdjustParam.LogoutTimeout]!;
+            int newVal = session.LogoutTimeout + AdjustParam.ToInt(adjustmentSymbol);
+            session.LogoutTimeout = newVal < 0 ? 0 : newVal;
         }
 
-        private string RefreshSession(HttpListenerRequest request, StringBuilder pageBuilder)
-        {
-            SessionID sessionId = new SessionID(
-                request.QueryString["beginstring"] ?? "",
-                request.QueryString["sendercompid"] ?? "",
-                request.QueryString["targetcompid"] ?? "");
-            Session? sessionDetails = Session.LookupSession(sessionId);
-            if (sessionDetails == null) throw new Exception("Session not found");
-            bool confirm = false;
-            string urlOriginalString = request.Url!.OriginalString;
+        if (bool.TryParse(request.QueryString[ToggleParam.ResetOnLogon], out var toResetOnLogon))
+            session.ResetOnLogon = toResetOnLogon;
+        if (bool.TryParse(request.QueryString[ToggleParam.ResetOnLogout], out var toResetOnLogout))
+            session.ResetOnLogout = toResetOnLogout;
+        if (bool.TryParse(request.QueryString[ToggleParam.ResetOnDisconnect], out var toResetOnDisconnect))
+            session.ResetOnDisconnect = toResetOnDisconnect;
+        if (bool.TryParse(request.QueryString[ToggleParam.RefreshOnLogon], out var toRefreshOnLogon))
+            session.RefreshOnLogon = toRefreshOnLogon;
+        if (bool.TryParse(request.QueryString[ToggleParam.MsInTimestamp], out var toMsInTimestamp))
+            session.MillisecondsInTimeStamp = toMsInTimestamp;
+        if (bool.TryParse(request.QueryString[ToggleParam.PersistMessages], out var toPersistMessages))
+            session.PersistMessages = toPersistMessages;
 
-            string url = "/session?" + GetParameterList(urlOriginalString);
+        sb.AppendLine($"    <div class=\"header-line\">{session.SessionID}</div>");
+        sb.AppendLine("    <hr/>");
 
-            if (request.QueryString["confirm"] is not null)
-            {
-                if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
-                {
-                    confirm = true;
-                    sessionDetails.Refresh();
-                    url = RemoveQueryStringByKey(urlOriginalString, "confirm");
-                }
-            }
+        sb.AppendLine("    <div class=\"header-line\">");
+        sb.AppendLine($"      <a href=\"resetSession?idx={sessionIdx}\" onclick=\"return confirm('Really RESET this session &quot;{session.SessionID}&quot;?')\">RESET this session</a>");
+        sb.AppendLine($"      <a href=\"refreshSession?idx={sessionIdx}\" onclick=\"return confirm('Really REFRESH this session &quot;{session.SessionID}&quot;?')\">REFRESH this session</a>");
+        sb.AppendLine("    </div>");
+        sb.AppendLine("    <hr/>");
 
-            if (confirm)
-            {
-                pageBuilder = new StringBuilder();
-                pageBuilder.Append($"<HEAD><META http-equiv='refresh' content='2; url=/session?{GetParameterList(urlOriginalString)}' /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
-                pageBuilder.Append($"<CENTER>[<A HREF='/'>HOME</A>]&nbsp;[<A HREF='{urlOriginalString}'>RELOAD</A>]</CENTER><HR/></HEAD><BODY>");
-                pageBuilder.Append($"<CENTER><h2><A HREF='/session?{GetParameterList(url)}'>{sessionId}</A> has been refreshed</h2></CENTER>");
-            }
-            else
-            {
-                pageBuilder.Append($"<CENTER><h2>Are you sure you want to refresh session <A HREF='{url}'>{sessionId}</A>?</h2></CENTER>");
-                pageBuilder.Append($"<CENTER>[<A HREF='{url}&confirm=1'>YES, refresh session</A>]&nbsp;[<A HREF='{url}'>NO, do not refresh session</A>]</CENTER>");
-            }
-            return pageBuilder.ToString();
-        }
+        sb.AppendLine("    <table id=\"details-table\">");
+        sb.AppendLine("      <tr class=\"head\">");
+        sb.AppendLine("        <th>Attribute</th>");
+        sb.AppendLine("        <th>Current Value</th>");
+        sb.AppendLine("        <th>Action</th>");
+        sb.AppendLine("      </tr>");
+        RenderDetailToggleRow(sb, sessionIdx, "Enabled", session.IsEnabled, ToggleParam.Enabled);
+        RenderDetailPlainRow(sb, "ConnectionType", session.IsInitiator ? "initiator" : "acceptor");
+        RenderDetailPlainRow(sb, "IsSessionTime", session.IsSessionTime ? "yes" : "no");
+        RenderDetailPlainRow(sb, "LoggedOn", session.IsLoggedOn ? "yes" : "no");
+        RenderDetailPlainRow(sb, "NextIncoming", session.NextTargetMsgSeqNum.ToString());
+        RenderDetailPlainRow(sb, "NextIncoming", session.NextSenderMsgSeqNum.ToString());
+        RenderDetailToggleRow(sb, sessionIdx, "SendRedundantResendRequests", session.SendRedundantResendRequests, ToggleParam.SendRedundantResendRequests);
+        RenderDetailToggleRow(sb, sessionIdx, "CheckCompId", session.CheckCompID, ToggleParam.CheckCompId);
+        RenderDetailToggleRow(sb, sessionIdx, "CheckLatency", session.CheckLatency, ToggleParam.CheckLatency);
+        RenderDetailAdjustableIntRow(sb, sessionIdx, "MaxLatency (seconds)", session.MaxLatency, AdjustParam.MaxLatency);
+        RenderDetailAdjustableIntRow(sb, sessionIdx, "LogonTimeout (seconds)", session.LogonTimeout, AdjustParam.LogonTimeout);
+        RenderDetailAdjustableIntRow(sb, sessionIdx, "LogoutTimeout (seconds)", session.LogoutTimeout, AdjustParam.LogoutTimeout);
+        RenderDetailToggleRow(sb, sessionIdx, "ResetOnLogon", session.ResetOnLogon, ToggleParam.ResetOnLogon);
+        RenderDetailToggleRow(sb, sessionIdx, "ResetOnLogout", session.ResetOnLogout, ToggleParam.ResetOnLogout);
+        RenderDetailToggleRow(sb, sessionIdx, "ResetOnDisconnect", session.ResetOnDisconnect, ToggleParam.ResetOnDisconnect);
+        RenderDetailToggleRow(sb, sessionIdx, "RefreshOnLogon", session.RefreshOnLogon, ToggleParam.RefreshOnLogon);
+        RenderDetailToggleRow(sb, sessionIdx, "MillisecondsInTimestamp", session.MillisecondsInTimeStamp, ToggleParam.MsInTimestamp);
+        RenderDetailToggleRow(sb, sessionIdx, "PersistMessages", session.PersistMessages, ToggleParam.PersistMessages);
+        sb.AppendLine("    </table>");
+    }
 
-        private string RefreshSessions(HttpListenerRequest request, StringBuilder pageBuilder)
-        {
-            bool confirm = false;
+    private (int, Session) GetSessionFromRequest(HttpListenerRequest request) {
+        if (!int.TryParse(request.QueryString["idx"], out var sessionIdx))
+            throw new ApplicationException("Missing or erroneous `idx` (session index) parameter");
 
-            if (request.QueryString["confirm"] is not null)
-            {
-                if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
-                {
-                    confirm = true;
-                    foreach (SessionID session in _sessionSettings.GetSessions())
-                    {
-                        Session.LookupSession(session)?.Refresh();
-                    }
-                }
-            }
+        if (sessionIdx >= _sessions.Count)
+            throw new ApplicationException("Invalid session index (too high)");
 
-            if (confirm)
-            {
-                pageBuilder = new StringBuilder();
-                pageBuilder.Append("<HEAD><META http-equiv='refresh' content='2; url=/' /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
-                pageBuilder.Append("<CENTER><h2><A HREF='/'>Sessions</A> have been refreshed</h2></CENTER>");
-            }
-            else
-            {
-                pageBuilder.Append("<CENTER><h2>Are you sure you want to refresh all sessions ?</h2></CENTER>");
-                pageBuilder.Append($"<CENTER>[<A HREF='{request.Url?.OriginalString}?confirm=1'>YES, refresh sessions</A>]&nbsp;[<A HREF='/'>NO, do not refresh sessions</A>]</CENTER>");
-            }
-            return pageBuilder.ToString();
-        }
+        return (sessionIdx, _sessions[sessionIdx]);
+    }
 
-        private string ResetSessions(HttpListenerRequest request, StringBuilder pageBuilder)
-        {
-            bool confirm = false;
+    private static void RenderDetailToggleRow(StringBuilder sb, int sessionIdx, string label, bool val, string toggleParam) {
+        sb.AppendLine("      <tr>");
+        sb.AppendLine($"        <th>{label}</th>");
+        sb.AppendLine($"        <td>{(val ? "yes" : "no")}</td>");
+        sb.AppendLine($"        <td><a href=\"?idx={sessionIdx}&{toggleParam}={!val}\">toggle</a></td>");
+        sb.AppendLine("      </tr>");
+    }
 
-            if (request.QueryString["confirm"] is not null)
-            {
-                if (Convert.ToInt16(request.QueryString["confirm"]) != 0)
-                {
-                    confirm = true;
-                    foreach (SessionID session in _sessionSettings.GetSessions())
-                    {
-                        Session.LookupSession(session)?.Reset("Reset from WebInterface");
-                    }
-                }
-            }
+    private static void RenderDetailPlainRow(StringBuilder sb, string label, string val) {
+        sb.AppendLine("      <tr>");
+        sb.AppendLine($"        <th>{label}</th>");
+        sb.AppendLine($"        <td>{val}</td>");
+        sb.AppendLine("        <td/>");
+        sb.AppendLine("      </tr>");
+    }
 
-            if (confirm)
-            {
-                pageBuilder = new StringBuilder();
-                pageBuilder.Append("<HEAD><META http-equiv='refresh' content='2; url=/' /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
-                pageBuilder.Append("<CENTER><h2><A HREF='/'>Sessions</A> have been reset</h2></CENTER>");
-            }
-            else
-            {
-                pageBuilder.Append("<CENTER><h2>Are you sure you want to reset all sessions ?</h2></CENTER>");
-                pageBuilder.Append($"<CENTER>[<A HREF='{request.Url?.OriginalString}?confirm=1'>YES, reset sessions</A>]&nbsp;[<A HREF='/'>NO, do not reset sessions</A>]</CENTER>");
-            }
-            return pageBuilder.ToString();
-        }
+    private static void RenderDetailAdjustableIntRow(StringBuilder sb, int sessionIdx, string label, int val, string adjustParam) {
+        sb.AppendLine("      <tr>");
+        sb.AppendLine($"        <th>{label}</th>");
+        sb.AppendLine($"        <td>{val}</td>");
+        sb.AppendLine("        <td class=\"adjusters\">");
+        sb.AppendLine($"         <a href=\"?idx={sessionIdx}&{adjustParam}={AdjustParam.Minus10}\" data-tooltip=\"-10\">&lt;&lt;</a>");
+        sb.AppendLine($"         <a href=\"?idx={sessionIdx}&{adjustParam}={AdjustParam.Minus1}\" data-tooltip=\"-1\">&lt;</a>");
+        sb.AppendLine($"         <a href=\"?idx={sessionIdx}&{adjustParam}={AdjustParam.Plus1}\" data-tooltip=\"+1\">&gt;</a>");
+        sb.AppendLine($"         <a href=\"?idx={sessionIdx}&{adjustParam}={AdjustParam.Plus10}\" data-tooltip=\"+10\">&gt;&gt;</a>");
+        sb.AppendLine("        </td>");
+        sb.AppendLine("      </tr>");
+    }
 
-        private string ResetSession(HttpListenerRequest request, StringBuilder pageBuilder)
-        {
-            SessionID sessionId = new SessionID(
-                request.QueryString["beginstring"] ?? "",
-                request.QueryString["sendercompid"] ?? "",
-                request.QueryString["targetcompid"] ?? "");
-            Session? sessionDetails = Session.LookupSession(sessionId);
-            if (sessionDetails == null) throw new Exception("Session not found");
+    private void ResetSessionAndRedirect(HttpListenerRequest request, HttpListenerResponse response) {
+        (int sessionIdx, Session session) = GetSessionFromRequest(request);
+        session.Reset("Reset single session from web interface");
+        response.Redirect($"/session?idx={sessionIdx}");
+        response.Close();
+    }
 
-            bool confirm = false;
-            string urlOriginalString = request.Url!.OriginalString;
+    private void RefreshSessionAndRedirect(HttpListenerRequest request, HttpListenerResponse response) {
+        (int sessionIdx, Session session) = GetSessionFromRequest(request);
+        session.Refresh();
+        response.Redirect($"/session?idx={sessionIdx}");
+        response.Close();
+    }
 
-            string url = "/session?" + GetParameterList(urlOriginalString);
+    ~HttpServer() => Dispose(false);
 
-            if (request.QueryString["confirm"] is not null)
-            {
-                if (Convert.ToInt16(request.QueryString["confirm"])!=0)
-                {
-                    confirm = true;
-                    sessionDetails.Reset("Reset from WebInterface");
-                    url = RemoveQueryStringByKey(urlOriginalString, "confirm");
-                }
-            }
+    public void Dispose() {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
 
-            if (confirm)
-            {
-                pageBuilder = new StringBuilder();
-                pageBuilder.Append($"<HEAD><META http-equiv='refresh' content=2;URL=/session?{GetParameterList(urlOriginalString)} /><CENTER><TITLE>QuickFIX Engine Web Interface</TITLE><H1>QuickFIX Engine Web Interface</H1></CENTER>");
-                pageBuilder.Append($"<CENTER>[<A HREF='/'>HOME</A>]&nbsp;[<A HREF='{urlOriginalString}'>RELOAD</A>]</CENTER><HR/></HEAD><BODY>");
-                pageBuilder.Append($"<CENTER><h2><A HREF='/session?{GetParameterList(url)}'>{sessionId}</A> has been reset</h2></CENTER>");
-            }
-            else
-            {
-                pageBuilder.Append($"<CENTER><h2>Are you sure you want to reset session <A HREF='{url}'>{sessionId}</A>?</h2></CENTER>");
-                pageBuilder.Append($"<CENTER>[<A HREF='{url}&confirm=1'>YES, reset session</A>]&nbsp;[<A HREF='{url}'>NO, do not reset session</A>]</CENTER>");
-            }
-            return pageBuilder.ToString();
-        }
+    protected virtual void Dispose(bool disposing) {
+        if (_disposed)
+            return;
 
+        if (disposing) {
+            if (_running)
+                Stop();
 
-        private string ProcessRoot(HttpListenerRequest request, StringBuilder pageBuilder)
-        {
-            //Session count
-            pageBuilder.Append($"<CENTER><b><i>{_sessionSettings.GetSessions().Count} Sessions managed by QuickFIX</b></i></CENTER><HR/>");
-
-            //session management links
-            pageBuilder.Append($"<CENTER><A HREF='/resetSessions{GetParameterList(request.Url?.OriginalString)}'>RESET</A>&nbsp;<A HREF='/refreshSessions'>REFRESH</A>&nbsp;<A HREF='/enableSessions'>ENABLE</A>&nbsp;<A HREF='/disableSessions'>DISABLE</A></CENTER><HR/></HEADER><BODY>");
-            
-            //Start the table generation
-            pageBuilder.Append("<table id=\"sessionlist\" style=\"border-width:1; padding:2; width:100%\">");
-            
-            pageBuilder.Append("<tr>");
-            pageBuilder.Append(AddCell("Session", true));
-            pageBuilder.Append(AddCell("Type", true));
-            pageBuilder.Append(AddCell("Enabled", true));
-            pageBuilder.Append(AddCell("Session Time", true));
-            pageBuilder.Append(AddCell("Logged On", true));
-            pageBuilder.Append(AddCell("Next Incoming", true));
-            pageBuilder.Append(AddCell("Next Outgoing", true));
-            pageBuilder.Append("</tr>");
-
-            foreach (SessionID session in _sessionSettings.GetSessions())
-            {
-                Session sessionDetails = Session.LookupSession(session)!;
-                pageBuilder.Append("<tr>");
-                pageBuilder.Append(AddCell(String.Format(
-                    "<a href=\"session?BeginString={0}&SenderCompID={1}&TargetCompID={2}\">{0}:{1}->{2}</a>",
-                    session.BeginString, session.SenderCompID, session.TargetCompID)));
-                pageBuilder.Append(AddCell(sessionDetails.IsInitiator ? "initiator" : "acceptor"));
-                pageBuilder.Append(AddCell(sessionDetails.IsEnabled ? "yes" : "no"));
-                pageBuilder.Append(AddCell(sessionDetails.IsSessionTime ? "yes" : "no"));
-                pageBuilder.Append(AddCell(sessionDetails.IsLoggedOn ? "yes" : "no"));
-                pageBuilder.Append(AddCell(sessionDetails.NextTargetMsgSeqNum.ToString()));
-                pageBuilder.Append(AddCell(sessionDetails.NextSenderMsgSeqNum.ToString()));
-                pageBuilder.Append("</tr>");
-            }
-
-            pageBuilder.Append("</table>");
-            return pageBuilder.ToString();
-        }
-
-        private string SessionDetails(HttpListenerRequest request, StringBuilder pageBuilder)
-        {
-            SessionID sessionId = new SessionID(
-                request.QueryString["beginstring"] ?? "",
-                request.QueryString["sendercompid"] ?? "",
-                request.QueryString["targetcompid"] ?? "");
-            Session? sessionDetails = Session.LookupSession(sessionId);
-            if (sessionDetails == null) throw new Exception("Session not found");
-
-            string url = request.Url?.OriginalString ?? "(null)";
-            string urlOriginalString = url;
-
-            if (request.QueryString["enabled"] is not null)
-            {
-                if (!Convert.ToBoolean(request.QueryString["enabled"]))
-                    sessionDetails.Logout();
-                else
-                    sessionDetails.SetLogonState();
-
-                url = RemoveQueryStringByKey(urlOriginalString, "Enabled");
-            }
-
-            if (request.QueryString["next incoming"] is not null)
-            {
-                SeqNumType val = Convert.ToUInt64(request.QueryString["next incoming"]);
-                sessionDetails.NextTargetMsgSeqNum = (val == 0 || val == SeqNumType.MaxValue) ? 1 : val;
-                url = RemoveQueryStringByKey(urlOriginalString, "next incoming");
-            }
-
-            if (request.QueryString["Next Outgoing"] is not null)
-            {
-                SeqNumType val = Convert.ToUInt64(request.QueryString["Next Outgoing"]);
-                sessionDetails.NextSenderMsgSeqNum = (val == 0 || val == SeqNumType.MaxValue) ? 1 : val;
-                url = RemoveQueryStringByKey(urlOriginalString, "Next Outgoing");
-            }
-
-            if (request.QueryString["SendRedundantResendRequests"] is not null)
-            {
-                sessionDetails.SendRedundantResendRequests = Convert.ToBoolean(request.QueryString["SendRedundantResendRequests"]);
-                url = RemoveQueryStringByKey(urlOriginalString, "SendRedundantResendRequests");
-            }
-
-            if (request.QueryString["CheckCompId"] is not null)
-            {
-                sessionDetails.CheckCompID = Convert.ToBoolean(request.QueryString["CheckCompId"]);
-                url = RemoveQueryStringByKey(urlOriginalString, "CheckCompId");
-            }
-
-            if (request.QueryString["CheckLatency"] is not null)
-            {
-                sessionDetails.CheckLatency = Convert.ToBoolean(request.QueryString["CheckLatency"]);
-                url = RemoveQueryStringByKey(urlOriginalString, "CheckLatency");
-            }
-
-            if (request.QueryString["MaxLatency"] is not null)
-            {
-                int val = Convert.ToInt16(request.QueryString["MaxLatency"]);
-                sessionDetails.MaxLatency = val <= 0 ? 1 : val;
-                url = RemoveQueryStringByKey(urlOriginalString, "MaxLatency");
-            }
-
-            if (request.QueryString["LogonTimeout"] is not null)
-            {
-                int val = Convert.ToInt16(request.QueryString["LogonTimeout"]);
-                sessionDetails.LogonTimeout = val <= 0 ? 1 : val;
-                url = RemoveQueryStringByKey(urlOriginalString, "LogonTimeout");
-            }
-
-            if (request.QueryString["LogoutTimeout"] is not null)
-            {
-                int val = Convert.ToInt16(request.QueryString["LogoutTimeout"]);
-                sessionDetails.LogoutTimeout = val <= 0 ? 1 : val;
-                url = RemoveQueryStringByKey(urlOriginalString, "LogoutTimeout");
-            }
-
-            if (request.QueryString["ResetOnLogon"] is not null)
-            {
-                sessionDetails.ResetOnLogon = Convert.ToBoolean(request.QueryString["ResetOnLogon"]);
-                url = RemoveQueryStringByKey(urlOriginalString, "ResetOnLogon");
-            }
-
-            if (request.QueryString["ResetOnLogout"] is not null)
-            {
-                sessionDetails.ResetOnLogout = Convert.ToBoolean(request.QueryString["ResetOnLogout"]);
-                url = RemoveQueryStringByKey(urlOriginalString, "ResetOnLogout");
-            }
-
-            if (request.QueryString["ResetOnDisconnect"] is not null)
-            {
-                sessionDetails.ResetOnDisconnect = Convert.ToBoolean(request.QueryString["ResetOnDisconnect"]);
-                url = RemoveQueryStringByKey(urlOriginalString, "ResetOnDisconnect");
-            }
-
-            if (request.QueryString["RefreshOnLogon"] is not null)
-            {
-                sessionDetails.RefreshOnLogon = Convert.ToBoolean(request.QueryString["RefreshOnLogon"]);
-                url = RemoveQueryStringByKey(urlOriginalString, "RefreshOnLogon");
-            }
-
-            if (request.QueryString["MillisecondsInTimestamp"] is not null)
-            {
-                sessionDetails.MillisecondsInTimeStamp = Convert.ToBoolean(request.QueryString["MillisecondsInTimestamp"]);
-                url = RemoveQueryStringByKey(urlOriginalString, "MillisecondsInTimestamp");
-            }
-
-            if (request.QueryString["PersistMessages"] is not null)
-            {
-                sessionDetails.PersistMessages = Convert.ToBoolean(request.QueryString["PersistMessages"]);
-                url = RemoveQueryStringByKey(urlOriginalString, "PersistMessages");
-            }
-
-            
-            pageBuilder.Append($"<CENTER>{sessionId}</CENTER><HR/>");
-            pageBuilder.Append($"<CENTER>[<A HREF='/resetSession?{GetParameterList(urlOriginalString)}'>RESET</A>]&nbsp;[<A HREF='/refreshSession?{0}'>REFRESH</A>]</CENTER><HR/></HEADER><BODY>");
-
-            pageBuilder.Append("<table id=\"session_details\" style=\"border-width:1; padding:2; width:100%\">");
-            
-            pageBuilder.Append(AddRow("Enabled", sessionDetails.IsEnabled, url));
-            pageBuilder.Append(AddRow("ConnectionType", sessionDetails.IsInitiator?"initiator": "acceptor"));
-            pageBuilder.Append(AddRow("SessionTime", sessionDetails.IsSessionTime));
-            pageBuilder.Append(AddRow("LoggedOn", sessionDetails.IsLoggedOn));
-            pageBuilder.Append(AddRow("Next Incoming", sessionDetails.NextTargetMsgSeqNum, url));
-            pageBuilder.Append(AddRow("Next Outgoing", sessionDetails.NextSenderMsgSeqNum, url));
-            pageBuilder.Append(AddRow("SendRedundantResendRequests", sessionDetails.SendRedundantResendRequests, url));
-            pageBuilder.Append(AddRow("CheckCompId", sessionDetails.CheckCompID, url));
-            pageBuilder.Append(AddRow("CheckLatency", sessionDetails.CheckLatency, url));
-            pageBuilder.Append(AddRow("MaxLatency", sessionDetails.MaxLatency, url));
-            pageBuilder.Append(AddRow("LogonTimeout", sessionDetails.LogonTimeout, url));
-            pageBuilder.Append(AddRow("LogoutTimeout", sessionDetails.LogoutTimeout, url));
-            pageBuilder.Append(AddRow("ResetOnLogon", sessionDetails.ResetOnLogon, url));
-            pageBuilder.Append(AddRow("ResetOnLogout", sessionDetails.ResetOnLogout, url));
-            pageBuilder.Append(AddRow("ResetOnDisconnect", sessionDetails.ResetOnDisconnect, url));
-            pageBuilder.Append(AddRow("RefreshOnLogon", sessionDetails.RefreshOnLogon, url));
-            pageBuilder.Append(AddRow("MillisecondsInTimestamp", sessionDetails.MillisecondsInTimeStamp, url));
-            pageBuilder.Append(AddRow("PersistMessages", sessionDetails.PersistMessages, url));
-
-            pageBuilder.Append("</table>");
-            return pageBuilder.ToString();
-        }
-
-        private static string RemoveQueryStringByKey(string url, string key)
-        {
-            var uri = new Uri(url);
-
-            // this gets all the query string key value pairs as a collection
-            var newQueryString = HttpUtility.ParseQueryString(uri.Query);
-
-            // this removes the key if exists
-            newQueryString.Remove(key);
-
-            // this gets the page path from root without QueryString
-            string pagePathWithoutQueryString = uri.GetLeftPart(UriPartial.Path);
-
-            return newQueryString.Count > 0
-                ? $"{pagePathWithoutQueryString}?{newQueryString}"
-                : pagePathWithoutQueryString;
-        }
-
-        /// <summary>
-        /// Returns the http parameter string from a url
-        /// </summary>
-        /// <param name="url">e.g. <![CDATA[ http://www.example.com/foo?one=uno&two=dos ]]></param>
-        /// <returns>e.g. <![CDATA[ "one=uno&two=dos" ]]> (or empty string if <paramref name="url"/> is null)</returns>
-        private static string GetParameterList(string? url) {
-            return string.IsNullOrWhiteSpace(url) ? "" : $"{HttpUtility.ParseQueryString(new Uri(url).Query)}";
-        }
-
-        private static string AddRow(string colName, bool val, string url="")
-        {
-            string valueAsStr = val ? "yes" : "no";
-            string innerHtml = url.Length > 0
-                ? $"<a href=\" {url}&{colName}={!val} \">toggle</a>"
-                : "";
-            return AddRow(colName, valueAsStr, innerHtml);
-        }
-
-        private static string AddRow(string colName, int val, string url = "")
-        {
-            string innerHtml = $"<a href=\" {url}&{colName}={val - 10} \"> << </a>" +
-                               $"<a href=\" {url}&{colName}={val - 1} \"> < </a>" +
-                               " | " +
-                               $"<a href=\" {url}&{colName}={val + 1} \"> > </a>" +
-                               $"<a href=\" {url}&{colName}={val + 10} \"> >> </a>";
-            return AddRow(colName, val.ToString(), innerHtml);
-        }
-
-        private static string AddRow(string colName, SeqNumType val, string url = "")
-        {
-            string innerHtml = $"<a href=\" {url}&{colName}={val - 10} \"> << </a>" +
-                               $"<a href=\" {url}&{colName}={val - 1} \"> < </a>" +
-                               " | " +
-                               $"<a href=\" {url}&{colName}={val + 1} \"> > </a>" +
-                               $"<a href=\" {url}&{colName}={val + 10} \"> >> </a>";
-            return AddRow(colName, val.ToString(), innerHtml);
-        }
-
-        private static string AddRow(string colName, string val, string innerHtml = "")
-        {
-            StringBuilder row = new StringBuilder();
-            row.Append("<tr>");
-            row.Append(AddCell(colName));
-            row.Append(AddCell(val));
-            row.Append(AddCell(innerHtml));
-            row.Append("</tr>");
-            return row.ToString();
-        }
-
-        private static string AddCell(string cellContent, bool header = false)
-        {
-            string entryType = header ? "th" : "td";
-            return "<"+entryType+" align=\"left\">" + cellContent + "</"+entryType+">";
-        }
-
-        ~HttpServer() => Dispose(false);
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-            {
-                return;
-            }
-            if (disposing)
-            {
-                if (_running)
-                {
-                    Stop();
-                }
 #pragma warning disable SYSLIB0006
-                _connectionThread.Abort();
+            _connectionThread.Abort();
 #pragma warning restore SYSLIB0006
-            }
-            _disposed = true;
         }
+
+        _disposed = true;
     }
 }
