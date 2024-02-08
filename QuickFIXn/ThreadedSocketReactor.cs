@@ -41,6 +41,7 @@ namespace QuickFix
 
         #endregion
 
+        // TODO: internalize.  Only used by test.
         public ThreadedSocketReactor(
             IPEndPoint serverSocketEndPoint,
             SocketSettings socketSettings,
@@ -137,8 +138,6 @@ namespace QuickFix
                             _clientThreads.Add(t.Id, t);
                         }
 
-                        // FIXME set the client thread's exception handler here
-                        t.Log("connected");
                         t.Start();
                     }
                     else
@@ -214,7 +213,7 @@ namespace QuickFix
                         }
                         catch (Exception e)
                         {
-                            t.Log("Error shutting down: " + e.Message);
+                            Log($"Error shutting down: {e.Message}");
                         }
                         t.Dispose();
                     }

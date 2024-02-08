@@ -109,7 +109,7 @@ namespace QuickFix.Transport
             Stream stream = new NetworkStream(socket, true);
 
             if (settings.UseSSL)
-                stream = new SslStreamFactory(logger, settings).CreateClientStreamAndAuthenticate(stream);
+                stream = new SslStreamFactory(settings).CreateClientStreamAndAuthenticate(stream);
 
             return stream;
         }
@@ -119,10 +119,9 @@ namespace QuickFix.Transport
         /// </summary>
         /// <param name="tcpClient">The TCP client.</param>
         /// <param name="settings">The socket settings.</param>
-        /// <param name="logger">Logger to use.</param>
         /// <returns>an opened and initiated stream which can be read and written to</returns>
         /// <exception cref="System.ArgumentException">tcp client must be connected in order to get stream;tcpClient</exception>
-        public static Stream CreateServerStream(TcpClient tcpClient, SocketSettings settings, ILog logger)
+        public static Stream CreateServerStream(TcpClient tcpClient, SocketSettings settings)
         {
             if (tcpClient.Connected == false)
                 throw new ArgumentException("tcp client must be connected in order to get stream", nameof(tcpClient));
@@ -130,7 +129,7 @@ namespace QuickFix.Transport
             Stream stream = tcpClient.GetStream();
             if (settings.UseSSL)
             {
-                stream = new SslStreamFactory(logger, settings).CreateServerStreamAndAuthenticate(stream);
+                stream = new SslStreamFactory(settings).CreateServerStreamAndAuthenticate(stream);
             }
 
             return stream;
@@ -234,14 +233,12 @@ namespace QuickFix.Transport
         /// </summary>
         private sealed class SslStreamFactory
         {
-            private readonly ILog _log;
             private readonly SocketSettings _socketSettings;
             private const string CLIENT_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.2";
             private const string SERVER_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.1";
 
-            public SslStreamFactory(ILog log, SocketSettings settings)
+            public SslStreamFactory(SocketSettings settings)
             {
-                _log = log;
                 _socketSettings = settings;
             }
 
@@ -272,7 +269,7 @@ namespace QuickFix.Transport
                 }
                 catch (System.Security.Authentication.AuthenticationException ex)
                 {
-                    _log.OnEvent("Unable to perform authentication against server: " + ex.GetFullMessage());
+                    Log($"Unable to perform authentication against server: {ex.GetFullMessage()}");
                     throw;
                 }
 
@@ -313,7 +310,7 @@ namespace QuickFix.Transport
                 }
                 catch (System.Security.Authentication.AuthenticationException ex)
                 {
-                    _log.OnEvent("Unable to perform authentication against server: " + ex.GetFullMessage());
+                    Log($"Unable to perform authentication against server: {ex.GetFullMessage()}");
                     throw;
                 }
 
@@ -383,26 +380,22 @@ namespace QuickFix.Transport
                 // Validate enhanced key usage
                 if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage)) {
                     if (enhancedKeyUsage == CLIENT_AUTHENTICATION_OID)
-                        _log.OnEvent(
-                            "Remote certificate is not intended for client authentication: It is missing enhanced key usage " +
-                            enhancedKeyUsage);
+                        Log($"Remote certificate is not intended for client authentication: It is missing enhanced key usage {enhancedKeyUsage}");
                     else
-                        _log.OnEvent(
-                            "Remote certificate is not intended for server authentication: It is missing enhanced key usage " +
-                            enhancedKeyUsage);
+                        Log($"Remote certificate is not intended for server authentication: It is missing enhanced key usage {enhancedKeyUsage}");
 
                     return false;
                 }
 
                 if (string.IsNullOrEmpty(_socketSettings.CACertificatePath)) {
-                    _log.OnEvent("CACertificatePath is not specified");
+                    Log("CACertificatePath is not specified");
                     return false;
                 }
 
                 // If CA Certficiate is specified then validate agains the CA certificate, otherwise it is validated against the installed certificates
                 X509Certificate2? cert = LoadCertificate(_socketSettings.CACertificatePath, null);
                 if (cert is null) {
-                    _log.OnEvent("Remote certificate was not recognized as a valid certificate: " + sslPolicyErrors);
+                    Log($"Remote certificate was not recognized as a valid certificate: {sslPolicyErrors}");
                     return false;
                 }
 
@@ -427,7 +420,7 @@ namespace QuickFix.Transport
                 // Any basic authentication check failed, do after checking CA
                 if (sslPolicyErrors != SslPolicyErrors.None)
                 {
-                    _log.OnEvent("Remote certificate was not recognized as a valid certificate: " + sslPolicyErrors);
+                    Log($"Remote certificate was not recognized as a valid certificate: {sslPolicyErrors}");
                     return false;
                 }
 
@@ -500,6 +493,11 @@ namespace QuickFix.Transport
                     return localCertificates[0];
 
                 return null;
+            }
+
+            private void Log(string s) {
+                // TODO this is just a temp console log until I do something better
+                Console.WriteLine(s);
             }
         }
     }

@@ -26,7 +26,7 @@ namespace QuickFix
             SocketReactor = new ThreadedSocketReactor(Address, socketSettings, sessionDict, this);
         }
 
-        public void AcceptSession(Session session)
+        internal void AcceptSession(Session session)
         {
             lock (_acceptedSessions)
             {
@@ -39,7 +39,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="sessionId">ID of session to be removed</param>
         /// <returns>true if session removed, false if not found</returns>
-        public bool RemoveSession(SessionID sessionId)
+        internal bool RemoveSession(SessionID sessionId)
         {
             lock (_acceptedSessions)
             {
@@ -47,7 +47,7 @@ namespace QuickFix
             }
         }
 
-        public Dictionary<SessionID, Session> GetAcceptedSessions()
+        internal Dictionary<SessionID, Session> GetAcceptedSessions()
         {
             lock (_acceptedSessions)
             {
