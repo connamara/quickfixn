@@ -34,7 +34,7 @@ namespace QuickFix
             _tcpClient = tcpClient;
             _responder = responder;
             _acceptorDescriptor = acceptorDescriptor;
-            _stream = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
+            _stream = Transport.StreamFactory.CreateServerStream(tcpClient, settings);
         }
 
         public void Read()
@@ -105,12 +105,13 @@ namespace QuickFix
                     // Nothing read 
                     return 0;
                 }
-                else if (inner is not null)
+
+                if (inner is not null)
                 {
                     throw inner; //rethrow SocketException part (which we have exception logic for)
                 }
-                else
-                    throw; //rethrow original exception
+
+                throw; //rethrow original exception
             }
         }
 
@@ -121,9 +122,9 @@ namespace QuickFix
                 if (_qfSession is null)
                 {
                     _qfSession = Session.LookupSession(Message.GetReverseSessionId(msg));
-                    if (_qfSession is null || IsAssumedSession(_qfSession.SessionID))
+                    if (_qfSession is null || IsUnknownSession(_qfSession.SessionID))
                     {
-                        Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        LogSessionEvent("ERROR: Disconnecting; received message for unknown session: " + msg);
                         _qfSession = null;
                         DisconnectClient();
                         return;
@@ -148,7 +149,7 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    Log($"Error on Session '{_qfSession.SessionID}': {e}");
+                    _qfSession.Log.OnEvent($"Error on Session '{_qfSession.SessionID}': {e}");
                 }
             }
             catch (InvalidMessage e)
@@ -167,12 +168,13 @@ namespace QuickFix
             {
                 if (Fields.MsgType.LOGON.Equals(Message.GetMsgType(msg)))
                 {
-                    Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
+                    LogSessionEvent($"ERROR: Invalid LOGON message, disconnecting: {e.Message}");
+                    // TODO: else session-agnostic log
                     DisconnectClient();
                 }
                 else
                 {
-                    Log("ERROR: Invalid message: " + e.Message);
+                    LogSessionEvent($"ERROR: Invalid message: {e.Message}");
                 }
             }
             catch (InvalidMessage)
@@ -204,7 +206,7 @@ namespace QuickFix
             _tcpClient.Close();
         }
 
-        private bool IsAssumedSession(SessionID sessionId)
+        private bool IsUnknownSession(SessionID sessionId)
         {
             return _acceptorDescriptor is not null
                 && !_acceptorDescriptor.GetAcceptedSessions().Any(kv => kv.Key.Equals(sessionId));
@@ -242,7 +244,7 @@ namespace QuickFix
                     break;
             }
 
-            Log($"SocketReader Error: {reason}");
+            LogSessionEvent($"SocketReader Error: {reason}");
 
             if (disconnectNeeded)
             {
@@ -254,12 +256,18 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME do proper logging
+        /// Log event if session can be identified (TODO: logging if not specific to a session)
         /// </summary>
         /// <param name="s"></param>
-        private void Log(string s)
+        private void LogSessionEvent(string s)
         {
-            _responder.Log(s);
+            if(_qfSession is not null)
+                _qfSession.Log.OnEvent(s);
+            else {
+                // Can't tie this to a session, need a generic log.
+                // TODO this is a temp console log until I do something better
+                Console.WriteLine(s);
+            }
         }
 
         public int Send(string data)

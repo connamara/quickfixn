@@ -145,11 +145,9 @@ namespace QuickFix
         {
             lock (_sync)
             {
-                // FIXME StartSessionTimer();
                 foreach (AcceptorSocketDescriptor socketDescriptor in _socketDescriptorForAddress.Values)
                 {
                     socketDescriptor.SocketReactor.Start();
-                    // FIXME log_.Info("Listening for connections on " + socketDescriptor.getAddress());
                 }
             }
         }
@@ -161,7 +159,6 @@ namespace QuickFix
                 foreach (AcceptorSocketDescriptor socketDescriptor in _socketDescriptorForAddress.Values)
                 {
                     socketDescriptor.SocketReactor.Shutdown();
-                    // FIXME log_.Info("No longer accepting connections on " + socketDescriptor.getAddress());
                 }
             }
         }
