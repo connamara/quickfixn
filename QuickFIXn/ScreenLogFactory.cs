@@ -1,40 +1,30 @@
-﻿
+﻿#nullable enable
+
 namespace QuickFix
 {
     public class ScreenLogFactory : ILogFactory
     {
-        public const string SCREEN_LOG_SHOW_INCOMING = "ScreenLogShowIncoming";
-        public const string SCREEN_LOG_SHOW_OUTGOING = "ScreenLogShowOutgoing";
-        public const string SCREEN_LOG_SHOW_EVENTS   = "ScreenLogShowEvents";
+        private const string SCREEN_LOG_SHOW_INCOMING = "ScreenLogShowIncoming";
+        private const string SCREEN_LOG_SHOW_OUTGOING = "ScreenLogShowOutgoing";
+        private const string SCREEN_LOG_SHOW_EVENTS   = "ScreenLogShowEvents";
 
-        private SessionSettings settings_ = null;
-        private bool logIncoming_ = true;
-        private bool logOutgoing_ = true;
-        private bool logEvent_    = true;
+        private readonly SessionSettings _settings;
 
         public ScreenLogFactory(SessionSettings settings)
         {
-            settings_ = settings;
-        }
-
-        public ScreenLogFactory(bool logIncoming, bool logOutgoing, bool logEvent)
-        {
-            logIncoming_ = logIncoming;
-            logOutgoing_ = logOutgoing;
-            logEvent_    = logEvent;
+            _settings = settings;
         }
 
         #region LogFactory Members
 
-        public ILog Create(SessionID sessionID)
-        {
-            bool logIncoming = logIncoming_;
-            bool logOutgoing = logOutgoing_;
-            bool logEvent    = logEvent_;
+        public ILog Create(SessionID sessionId) {
+            bool logIncoming = false;
+            bool logOutgoing = false;
+            bool logEvent = false;
 
-            if(settings_ != null && settings_.Has(sessionID))
+            if(_settings.Has(sessionId))
             {
-                Dictionary dict = settings_.Get(sessionID);
+                Dictionary dict = _settings.Get(sessionId);
                 if (dict.Has(SCREEN_LOG_SHOW_INCOMING))
                     logIncoming = dict.GetBool(SCREEN_LOG_SHOW_INCOMING);
                 if (dict.Has(SCREEN_LOG_SHOW_OUTGOING))
@@ -43,7 +33,7 @@ namespace QuickFix
                     logEvent = dict.GetBool(SCREEN_LOG_SHOW_EVENTS);
             }
 
-            return new ScreenLog(sessionID, logIncoming, logOutgoing, logEvent);
+            return new ScreenLog(logIncoming, logOutgoing, logEvent);
         }
 
         #endregion

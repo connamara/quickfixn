@@ -1,4 +1,5 @@
-﻿
+﻿#nullable enable
+
 namespace QuickFix
 {
     /// <summary>

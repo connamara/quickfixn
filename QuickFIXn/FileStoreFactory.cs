@@ -1,11 +1,13 @@
-﻿namespace QuickFix
+﻿#nullable enable
+
+namespace QuickFix
 {
     /// <summary>
     /// Creates a message store that stores messages in a file
     /// </summary>
     public class FileStoreFactory : IMessageStoreFactory
     {
-        private SessionSettings settings_;
+        private readonly SessionSettings _settings;
 
         /// <summary>
         /// Create the factory with configuration in session settings
@@ -13,17 +15,17 @@
         /// <param name="settings"></param>
         public FileStoreFactory(SessionSettings settings)
         {
-            settings_ = settings;
+            _settings = settings;
         }
 
         /// <summary>
         /// Creates a file-based message store
         /// </summary>
-        /// <param name="sessionID">session ID for the message store</param>
+        /// <param name="sessionId">session ID for the message store</param>
         /// <returns></returns>
-        public IMessageStore Create(SessionID sessionID)
+        public IMessageStore Create(SessionID sessionId)
         {
-            return new FileStore(settings_.Get(sessionID).GetString(SessionSettings.FILE_STORE_PATH), sessionID);
+            return new FileStore(_settings.Get(sessionId).GetString(SessionSettings.FILE_STORE_PATH), sessionId);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿#nullable enable
 using System;
 
 namespace QuickFix
@@ -8,40 +8,40 @@ namespace QuickFix
     /// </summary>
     internal class CompositeLog : ILog
     {
-        private ILog[] logs_;
+        private readonly ILog[] _logs;
 
         private bool _disposed = false;
 
         public CompositeLog(ILog[] logs)
         {
-            logs_ = logs;
+            _logs = logs;
         }
 
         public void Clear()
         {
             DisposedCheck();
-            foreach (var log in logs_)
+            foreach (var log in _logs)
                 log.Clear();
         }
 
         public void OnIncoming(string msg)
         {
             DisposedCheck();
-            foreach (var log in logs_)
+            foreach (var log in _logs)
                 log.OnIncoming(msg);
         }
 
         public void OnOutgoing(string msg)
         {
             DisposedCheck();
-            foreach (var log in logs_)
+            foreach (var log in _logs)
                 log.OnOutgoing(msg);
         }
 
         public void OnEvent(string s)
         {
             DisposedCheck();
-            foreach (var log in logs_)
+            foreach (var log in _logs)
                 log.OnEvent(s);
         }
 
@@ -56,7 +56,7 @@ namespace QuickFix
             if (_disposed) return;
             if (disposing)
             {
-                foreach (var log in logs_)
+                foreach (var log in _logs)
                     log.Dispose();
             }
             _disposed = true;
@@ -65,7 +65,7 @@ namespace QuickFix
         private void DisposedCheck()
         {
             if (_disposed)
-                throw new System.ObjectDisposedException(this.GetType().Name);
+                throw new ObjectDisposedException(GetType().Name);
         }
 
         ~CompositeLog() => Dispose(false);

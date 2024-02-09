@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 
 namespace QuickFix
@@ -8,16 +9,11 @@ namespace QuickFix
     /// </summary>
     public class MemoryStore : IMessageStore
     {
-        #region Private Members
-
-        System.Collections.Generic.Dictionary<SeqNumType, string> messages_;
-        DateTime? creationTime;
-
-        #endregion
+        private readonly Dictionary<SeqNumType, string> _messages;
 
         public MemoryStore()
         {
-            messages_ = new System.Collections.Generic.Dictionary<SeqNumType, string>();
+            _messages = new Dictionary<SeqNumType, string>();
             Reset();
         }
 
@@ -25,8 +21,8 @@ namespace QuickFix
         {
             for (SeqNumType current = begSeqNo; current <= endSeqNo; current++)
             {
-                if (messages_.ContainsKey(current))
-                    messages.Add(messages_[current]);
+                if (_messages.TryGetValue(current, out var message))
+                    messages.Add(message);
             }
         }
 
@@ -34,7 +30,7 @@ namespace QuickFix
 
         public bool Set(SeqNumType msgSeqNum, string msg)
         {
-            messages_[msgSeqNum] = msg;
+            _messages[msgSeqNum] = msg;
             return true;
         }
 
@@ -47,18 +43,14 @@ namespace QuickFix
         public void IncrNextTargetMsgSeqNum()
         { ++NextTargetMsgSeqNum; }
 
-        public System.DateTime? CreationTime
-        {
-            get { return creationTime; }
-            internal set { creationTime = value; }
-        }
+        public DateTime? CreationTime { get; internal set; }
 
         public void Reset()
         {
             NextSenderMsgSeqNum = 1;
             NextTargetMsgSeqNum = 1;
-            messages_.Clear();
-            creationTime = DateTime.UtcNow;
+            _messages.Clear();
+            CreationTime = DateTime.UtcNow;
         }
 
         public void Refresh()
@@ -75,7 +67,7 @@ namespace QuickFix
             if (_disposed) return;
             if (disposing)
             {
-                messages_ = null;
+                _messages.Clear();
             }
             _disposed = true;
         }

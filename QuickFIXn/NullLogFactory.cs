@@ -1,4 +1,6 @@
-﻿namespace QuickFix
+﻿#nullable enable
+
+namespace QuickFix
 {
     public class NullLogFactory : ILogFactory
     {

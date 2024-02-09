@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Text;
 using QuickFix.Util;
@@ -12,99 +13,114 @@ namespace QuickFix
     {
         private class MsgDef
         {
-            public long index { get; private set; }
-            public int size { get; private set; }
+            public long Index { get; }
+            public int Size { get; }
 
             public MsgDef(long index, int size)
             {
-                this.index = index;
-                this.size = size;
+                Index = index;
+                Size = size;
             }
         }
 
-        private string seqNumsFileName_;
-        private string msgFileName_;
-        private string headerFileName_;
-        private string sessionFileName_;
+        private readonly string _seqNumsFileName;
+        private readonly string _msgFileName;
+        private readonly string _headerFileName;
+        private readonly string _sessionFileName;
 
-        private System.IO.FileStream seqNumsFile_;
-        private System.IO.FileStream msgFile_;
-        private System.IO.StreamWriter headerFile_;
+        private System.IO.FileStream _seqNumsFile;
+        private System.IO.FileStream _msgFile;
+        private System.IO.StreamWriter _headerFile;
 
-        private MemoryStore cache_ = new MemoryStore();
+        private readonly MemoryStore _cache = new();
 
-        System.Collections.Generic.Dictionary<SeqNumType, MsgDef> offsets_ = new Dictionary<SeqNumType, MsgDef>();
+        private readonly Dictionary<SeqNumType, MsgDef> _offsets = new();
 
-        public static string Prefix(SessionID sessionID)
+        public static string Prefix(SessionID sessionId)
         {
-            System.Text.StringBuilder prefix = new System.Text.StringBuilder(sessionID.BeginString)
-                .Append('-').Append(sessionID.SenderCompID);
-            if (SessionID.IsSet(sessionID.SenderSubID))
-                prefix.Append('_').Append(sessionID.SenderSubID);
-            if (SessionID.IsSet(sessionID.SenderLocationID))
-                prefix.Append('_').Append(sessionID.SenderLocationID);
-            prefix.Append('-').Append(sessionID.TargetCompID);
-            if (SessionID.IsSet(sessionID.TargetSubID))
-                prefix.Append('_').Append(sessionID.TargetSubID);
-            if (SessionID.IsSet(sessionID.TargetLocationID))
-                prefix.Append('_').Append(sessionID.TargetLocationID);
+            StringBuilder prefix = new StringBuilder(sessionId.BeginString)
+                .Append('-').Append(sessionId.SenderCompID);
+            if (SessionID.IsSet(sessionId.SenderSubID))
+                prefix.Append('_').Append(sessionId.SenderSubID);
+            if (SessionID.IsSet(sessionId.SenderLocationID))
+                prefix.Append('_').Append(sessionId.SenderLocationID);
+            prefix.Append('-').Append(sessionId.TargetCompID);
+            if (SessionID.IsSet(sessionId.TargetSubID))
+                prefix.Append('_').Append(sessionId.TargetSubID);
+            if (SessionID.IsSet(sessionId.TargetLocationID))
+                prefix.Append('_').Append(sessionId.TargetLocationID);
 
-            if (SessionID.IsSet(sessionID.SessionQualifier))
-                prefix.Append('-').Append(sessionID.SessionQualifier);
+            if (SessionID.IsSet(sessionId.SessionQualifier))
+                prefix.Append('-').Append(sessionId.SessionQualifier);
 
             return prefix.ToString();
         }
 
-        public FileStore(string path, SessionID sessionID)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="path">
+        /// All back or forward slashes in this path will be converted as needed to the running platform's preferred
+        /// path separator (i.e. "/" will become "\" on windows, else "\" will become "/" on all other platforms)
+        /// </param>
+        /// <param name="sessionId"></param>
+        public FileStore(string path, SessionID sessionId)
         {
-            if (!System.IO.Directory.Exists(path))
-                System.IO.Directory.CreateDirectory(path);
+            string normalizedPath = StringUtil.FixSlashes(path);
 
-            string prefix = Prefix(sessionID);
+            if (!System.IO.Directory.Exists(normalizedPath))
+                System.IO.Directory.CreateDirectory(normalizedPath);
 
-            seqNumsFileName_ = System.IO.Path.Combine(path, prefix + ".seqnums");
-            msgFileName_ = System.IO.Path.Combine(path, prefix + ".body");
-            headerFileName_ = System.IO.Path.Combine(path, prefix + ".header");
-            sessionFileName_ = System.IO.Path.Combine(path, prefix + ".session");
-            open();
+            string prefix = Prefix(sessionId);
+
+            _seqNumsFileName = System.IO.Path.Combine(normalizedPath, prefix + ".seqnums");
+            _msgFileName = System.IO.Path.Combine(normalizedPath, prefix + ".body");
+            _headerFileName = System.IO.Path.Combine(normalizedPath, prefix + ".header");
+            _sessionFileName = System.IO.Path.Combine(normalizedPath, prefix + ".session");
+
+            // The compiler isn't smart enough to see that Open() initializes these 3 vars,
+            // but we can use "= null!" to make it accept that these are non-null
+            _seqNumsFile = null!;
+            _msgFile = null!;
+            _headerFile = null!;
+            Open();
         }
 
-        private void open()
+        private void Open()
         {
-            close();
+            Close();
 
             ConstructFromFileCache();
             InitializeSessionCreateTime();
 
-            seqNumsFile_ = new System.IO.FileStream(seqNumsFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
-            msgFile_ = new System.IO.FileStream(msgFileName_, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
-            headerFile_ = new System.IO.StreamWriter(headerFileName_, true);
+            _seqNumsFile = new System.IO.FileStream(_seqNumsFileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+            _msgFile = new System.IO.FileStream(_msgFileName, System.IO.FileMode.OpenOrCreate, System.IO.FileAccess.ReadWrite);
+            _headerFile = new System.IO.StreamWriter(_headerFileName, true);
         }
 
-        private void close()
+        private void Close()
         {
-            seqNumsFile_?.Dispose();
-            msgFile_?.Dispose();
-            headerFile_?.Dispose();
+            // these vars will be null only during construction (ctor()->Open()->Close())
+            _seqNumsFile?.Dispose();
+            _msgFile?.Dispose();
+            _headerFile?.Dispose();
         }
 
-        private void PurgeSingleFile(System.IO.Stream stream, string filename)
+        private static void PurgeSingleFile(System.IO.Stream stream, string filename)
         {
-            if (stream != null)
-                stream.Close();
+            stream.Close();
             if (System.IO.File.Exists(filename))
                 System.IO.File.Delete(filename);
         }
 
-        private void PurgeSingleFile(System.IO.StreamWriter stream, string filename)
+        private static void PurgeSingleFile(System.IO.StreamWriter stream, string filename)
         {
-            if (stream != null)
-                stream.Close();
+            stream.Close();
             if (System.IO.File.Exists(filename))
                 System.IO.File.Delete(filename);
         }
 
-        private void PurgeSingleFile(string filename)
+        private static void PurgeSingleFile(string filename)
         {
             if (System.IO.File.Exists(filename))
                 System.IO.File.Delete(filename);
@@ -112,42 +128,41 @@ namespace QuickFix
 
         private void PurgeFileCache()
         {
-            PurgeSingleFile(seqNumsFile_, seqNumsFileName_);
-            PurgeSingleFile(msgFile_, msgFileName_);
-            PurgeSingleFile(headerFile_, headerFileName_);
-            PurgeSingleFile(sessionFileName_);
+            PurgeSingleFile(_seqNumsFile, _seqNumsFileName);
+            PurgeSingleFile(_msgFile, _msgFileName);
+            PurgeSingleFile(_headerFile, _headerFileName);
+            PurgeSingleFile(_sessionFileName);
         }
 
 
         private void ConstructFromFileCache()
         {
-            offsets_.Clear();
-            if (System.IO.File.Exists(headerFileName_))
+            _offsets.Clear();
+            if (System.IO.File.Exists(_headerFileName))
             {
-                using (System.IO.StreamReader reader = new System.IO.StreamReader(headerFileName_))
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(_headerFileName))
                 {
-                    string line;
-                    while ((line = reader.ReadLine()) != null)
+                    while (reader.ReadLine() is { } line)
                     {
                         string[] headerParts = line.Split(',');
                         if (headerParts.Length == 3)
                         {
-                            offsets_[Convert.ToUInt64(headerParts[0])] = new MsgDef(
+                            _offsets[Convert.ToUInt64(headerParts[0])] = new MsgDef(
                                 Convert.ToInt64(headerParts[1]), Convert.ToInt32(headerParts[2]));
                         }
                     }
                 }
             }
 
-            if (System.IO.File.Exists(seqNumsFileName_))
+            if (System.IO.File.Exists(_seqNumsFileName))
             {
-                using (System.IO.StreamReader seqNumReader = new System.IO.StreamReader(seqNumsFileName_))
+                using (System.IO.StreamReader seqNumReader = new System.IO.StreamReader(_seqNumsFileName))
                 {
                     string[] parts = seqNumReader.ReadToEnd().Split(':');
                     if (parts.Length == 2)
                     {
-                        cache_.NextSenderMsgSeqNum = Convert.ToUInt64(parts[0]);
-                        cache_.NextTargetMsgSeqNum = Convert.ToUInt64(parts[1]);
+                        _cache.NextSenderMsgSeqNum = Convert.ToUInt64(parts[0]);
+                        _cache.NextTargetMsgSeqNum = Convert.ToUInt64(parts[1]);
                     }
                 }
             }
@@ -155,19 +170,18 @@ namespace QuickFix
 
         private void InitializeSessionCreateTime()
         {
-            if (System.IO.File.Exists(sessionFileName_) && new System.IO.FileInfo(sessionFileName_).Length > 0)
+            if (System.IO.File.Exists(_sessionFileName) && new System.IO.FileInfo(_sessionFileName).Length > 0)
             {
-                using (System.IO.StreamReader reader = new System.IO.StreamReader(sessionFileName_))
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(_sessionFileName))
                 {
                     string s = reader.ReadToEnd();
-                    cache_.CreationTime = UtcDateTimeSerializer.FromString(s);
+                    _cache.CreationTime = UtcDateTimeSerializer.FromString(s);
                 }
             }
             else
             {
-                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(sessionFileName_, false))
-                {
-                    writer.Write(UtcDateTimeSerializer.ToString(cache_.CreationTime.Value));
+                using (System.IO.StreamWriter writer = new System.IO.StreamWriter(_sessionFileName, false)) {
+                    writer.Write(UtcDateTimeSerializer.ToString(_cache.CreationTime ?? new DateTime()));
                 }
             }
         }
@@ -185,11 +199,11 @@ namespace QuickFix
         {
             for (SeqNumType i = startSeqNum; i <= endSeqNum; i++)
             {
-                if (offsets_.ContainsKey(i))
+                if (_offsets.ContainsKey(i))
                 {
-                    msgFile_.Seek(offsets_[i].index, System.IO.SeekOrigin.Begin);
-                    byte[] msgBytes = new byte[offsets_[i].size];
-                    msgFile_.Read(msgBytes, 0, msgBytes.Length);
+                    _msgFile.Seek(_offsets[i].Index, System.IO.SeekOrigin.Begin);
+                    byte[] msgBytes = new byte[_offsets[i].Size];
+                    _msgFile.Read(msgBytes, 0, msgBytes.Length);
 
                     messages.Add(CharEncoding.DefaultEncoding.GetString(msgBytes));
                 }
@@ -205,82 +219,76 @@ namespace QuickFix
         /// <returns></returns>
         public bool Set(SeqNumType msgSeqNum, string msg)
         {
-            msgFile_.Seek(0, System.IO.SeekOrigin.End);
+            _msgFile.Seek(0, System.IO.SeekOrigin.End);
 
-            long offset = msgFile_.Position;
+            long offset = _msgFile.Position;
             byte[] msgBytes = CharEncoding.DefaultEncoding.GetBytes(msg);
             int size = msgBytes.Length;
 
             StringBuilder b = new StringBuilder();
-            b.Append(msgSeqNum).Append(",").Append(offset).Append(",").Append(size);
-            headerFile_.WriteLine(b.ToString());
-            headerFile_.Flush();
+            b.Append(msgSeqNum).Append(',').Append(offset).Append(',').Append(size);
+            _headerFile.WriteLine(b.ToString());
+            _headerFile.Flush();
 
-            offsets_[msgSeqNum] = new MsgDef(offset, size);
+            _offsets[msgSeqNum] = new MsgDef(offset, size);
 
-            msgFile_.Write(msgBytes, 0, size);
-            msgFile_.Flush();
+            _msgFile.Write(msgBytes, 0, size);
+            _msgFile.Flush();
 
 
             return true;
         }
 
         public SeqNumType NextSenderMsgSeqNum {
-          get { return cache_.NextSenderMsgSeqNum; }
+          get => _cache.NextSenderMsgSeqNum;
           set {
-            cache_.NextSenderMsgSeqNum = value;
-            setSeqNum();
+            _cache.NextSenderMsgSeqNum = value;
+            SetSeqNum();
           }
         }
 
         public SeqNumType NextTargetMsgSeqNum {
-          get { return cache_.NextTargetMsgSeqNum; }
+          get => _cache.NextTargetMsgSeqNum;
           set {
-            cache_.NextTargetMsgSeqNum = value;
-            setSeqNum();
+            _cache.NextTargetMsgSeqNum = value;
+            SetSeqNum();
           }
         }
 
         public void IncrNextSenderMsgSeqNum()
         {
-            cache_.IncrNextSenderMsgSeqNum();
-            setSeqNum();
+            _cache.IncrNextSenderMsgSeqNum();
+            SetSeqNum();
         }
 
         public void IncrNextTargetMsgSeqNum()
         {
-            cache_.IncrNextTargetMsgSeqNum();
-            setSeqNum();
+            _cache.IncrNextTargetMsgSeqNum();
+            SetSeqNum();
         }
 
-        private void setSeqNum()
+        private void SetSeqNum()
         {
-            seqNumsFile_.Seek(0, System.IO.SeekOrigin.Begin);
-            System.IO.StreamWriter writer = new System.IO.StreamWriter(seqNumsFile_);
+            _seqNumsFile.Seek(0, System.IO.SeekOrigin.Begin);
+            System.IO.StreamWriter writer = new System.IO.StreamWriter(_seqNumsFile);
 
             writer.Write(NextSenderMsgSeqNum.ToString("D20") + " : " + NextTargetMsgSeqNum.ToString("D20") + "  ");
             writer.Flush();
         }
 
-        public DateTime? CreationTime
-        {
-            get
-            {
-                return cache_.CreationTime;
-            }
-        }
+        public DateTime? CreationTime => _cache.CreationTime;
 
         public void Reset()
         {
-            cache_.Reset();
+            _cache.Reset();
             PurgeFileCache();
-            open();
+            Open();
         }
 
         public void Refresh()
         {
-            cache_.Reset();
-            open();
+            _cache.Reset();
+            Open();
         }
 
         #endregion
@@ -291,7 +299,6 @@ namespace QuickFix
         {
             Dispose(true);
             GC.SuppressFinalize(this);
-
         }
         private bool _disposed = false;
         protected virtual void Dispose(bool disposing)
@@ -299,7 +306,7 @@ namespace QuickFix
             if (_disposed) return;
             if (disposing)
             {
-                close();
+                Close();
             }
             _disposed = true;
         }

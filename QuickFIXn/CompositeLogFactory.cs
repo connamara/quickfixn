@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿#nullable enable
 using System.Linq;
 
 namespace QuickFix
@@ -8,11 +8,11 @@ namespace QuickFix
     /// </summary>
     public class CompositeLogFactory : ILogFactory
     {
-        private ILogFactory[] factories_;
+        private readonly ILogFactory[] _factories;
 
         public CompositeLogFactory(ILogFactory[] factories)
         {
-            factories_ = factories;
+            _factories = factories;
         }
 
         /// <summary>
@@ -22,7 +22,7 @@ namespace QuickFix
         /// <returns></returns>
         public ILog Create(SessionID sessionID)
         {
-            return new CompositeLog(factories_.Select(f => f.Create(sessionID)).ToArray());
+            return new CompositeLog(_factories.Select(f => f.Create(sessionID)).ToArray());
         }
     }
 }

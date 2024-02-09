@@ -1,64 +1,65 @@
-﻿
+﻿#nullable enable
 using System;
+using QuickFix.Util;
 
 namespace QuickFix
 {
     /// <summary>
     /// File log implementation
     /// </summary>
-    public class FileLog : ILog, System.IDisposable
+    public class FileLog : ILog
     {
-        private object sync_ = new object();
+        private readonly object _sync = new();
 
-        private System.IO.StreamWriter messageLog_;
-        private System.IO.StreamWriter eventLog_;
+        private System.IO.StreamWriter _messageLog;
+        private System.IO.StreamWriter _eventLog;
 
-        private string messageLogFileName_;
-        private string eventLogFileName_;
+        private readonly string _messageLogFileName;
+        private readonly string _eventLogFileName;
 
-
-        public FileLog(string fileLogPath)
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="fileLogPath">
+        /// All back or forward slashes in this path will be converted as needed to the running platform's preferred
+        /// path separator (i.e. "/" will become "\" on windows, else "\" will become "/" on all other platforms)
+        /// </param>
+        /// <param name="sessionId"></param>
+        public FileLog(string fileLogPath, SessionID sessionId)
         {
-            Init(fileLogPath, "GLOBAL");
+            string prefix = Prefix(sessionId);
+
+            string normalizedPath = StringUtil.FixSlashes(fileLogPath);
+
+            if (!System.IO.Directory.Exists(normalizedPath))
+                System.IO.Directory.CreateDirectory(normalizedPath);
+
+            _messageLogFileName = System.IO.Path.Combine(normalizedPath, prefix + ".messages.current.log");
+            _eventLogFileName = System.IO.Path.Combine(normalizedPath, prefix + ".event.current.log");
+
+            _messageLog = new System.IO.StreamWriter(_messageLogFileName, true);
+            _eventLog = new System.IO.StreamWriter(_eventLogFileName, true);
+
+            _messageLog.AutoFlush = true;
+            _eventLog.AutoFlush = true;
         }
 
-        public FileLog(string fileLogPath, SessionID sessionID)
+        public static string Prefix(SessionID sessionId)
         {
-            Init(fileLogPath, Prefix(sessionID));
-        }   
-        
+            System.Text.StringBuilder prefix = new System.Text.StringBuilder(sessionId.BeginString)
+                .Append('-').Append(sessionId.SenderCompID);
+            if (SessionID.IsSet(sessionId.SenderSubID))
+                prefix.Append('_').Append(sessionId.SenderSubID);
+            if (SessionID.IsSet(sessionId.SenderLocationID))
+                prefix.Append('_').Append(sessionId.SenderLocationID);
+            prefix.Append('-').Append(sessionId.TargetCompID);
+            if (SessionID.IsSet(sessionId.TargetSubID))
+                prefix.Append('_').Append(sessionId.TargetSubID);
+            if (SessionID.IsSet(sessionId.TargetLocationID))
+                prefix.Append('_').Append(sessionId.TargetLocationID);
 
-        private void Init(string fileLogPath, string prefix)
-        {
-            if (!System.IO.Directory.Exists(fileLogPath))
-                System.IO.Directory.CreateDirectory(fileLogPath);
-
-            messageLogFileName_ = System.IO.Path.Combine(fileLogPath, prefix + ".messages.current.log");
-            eventLogFileName_ = System.IO.Path.Combine(fileLogPath, prefix + ".event.current.log");
-
-            messageLog_ = new System.IO.StreamWriter(messageLogFileName_,true);
-            eventLog_ = new System.IO.StreamWriter(eventLogFileName_,true);
-
-            messageLog_.AutoFlush = true;
-            eventLog_.AutoFlush = true;
-        }
-
-        public static string Prefix(SessionID sessionID)
-        {
-            System.Text.StringBuilder prefix = new System.Text.StringBuilder(sessionID.BeginString)
-                .Append('-').Append(sessionID.SenderCompID);
-            if (SessionID.IsSet(sessionID.SenderSubID))
-                prefix.Append('_').Append(sessionID.SenderSubID);
-            if (SessionID.IsSet(sessionID.SenderLocationID))
-                prefix.Append('_').Append(sessionID.SenderLocationID);
-            prefix.Append('-').Append(sessionID.TargetCompID);
-            if (SessionID.IsSet(sessionID.TargetSubID))
-                prefix.Append('_').Append(sessionID.TargetSubID);
-            if (SessionID.IsSet(sessionID.TargetLocationID))
-                prefix.Append('_').Append(sessionID.TargetLocationID);
-
-            if (SessionID.IsSet(sessionID.SessionQualifier))
-                prefix.Append('-').Append(sessionID.SessionQualifier);
+            if (SessionID.IsSet(sessionId.SessionQualifier))
+                prefix.Append('-').Append(sessionId.SessionQualifier);
 
             return prefix.ToString();
         }
@@ -66,7 +67,7 @@ namespace QuickFix
         private void DisposedCheck()
         {
             if (_disposed)
-                throw new System.ObjectDisposedException(this.GetType().Name);
+                throw new ObjectDisposedException(GetType().Name);
         }
 
         #region Log Members
@@ -75,16 +76,16 @@ namespace QuickFix
         {
             DisposedCheck();
 
-            lock (sync_)
+            lock (_sync)
             {
-                messageLog_.Close();
-                eventLog_.Close();
+                _messageLog.Close();
+                _eventLog.Close();
 
-                messageLog_ = new System.IO.StreamWriter(messageLogFileName_, false);
-                eventLog_ = new System.IO.StreamWriter(eventLogFileName_, false);
+                _messageLog = new System.IO.StreamWriter(_messageLogFileName, false);
+                _eventLog = new System.IO.StreamWriter(_eventLogFileName, false);
 
-                messageLog_.AutoFlush = true;
-                eventLog_.AutoFlush = true;
+                _messageLog.AutoFlush = true;
+                _eventLog.AutoFlush = true;
             }
         }
 
@@ -92,9 +93,9 @@ namespace QuickFix
         {
             DisposedCheck();
 
-            lock (sync_)
+            lock (_sync)
             {
-                messageLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : " + msg);
+                _messageLog.WriteLine(Fields.Converters.DateTimeConverter.Convert(DateTime.UtcNow) + " : " + msg);
             }
         }
 
@@ -102,9 +103,9 @@ namespace QuickFix
         {
             DisposedCheck();
 
-            lock (sync_)
+            lock (_sync)
             {
-                messageLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : " + msg);
+                _messageLog.WriteLine(Fields.Converters.DateTimeConverter.Convert(DateTime.UtcNow) + " : " + msg);
             }
         }
 
@@ -112,9 +113,9 @@ namespace QuickFix
         {
             DisposedCheck();
 
-            lock (sync_)
+            lock (_sync)
             {
-                eventLog_.WriteLine(Fields.Converters.DateTimeConverter.Convert(System.DateTime.UtcNow) + " : "+ s);
+                _eventLog.WriteLine(Fields.Converters.DateTimeConverter.Convert(DateTime.UtcNow) + " : "+ s);
             }
         }
 
@@ -133,11 +134,8 @@ namespace QuickFix
             if (_disposed) return;
             if (disposing)
             {
-                if (messageLog_ != null) { messageLog_.Dispose(); }
-                if (eventLog_ != null) { eventLog_.Dispose(); }
-
-                messageLog_ = null;
-                eventLog_ = null;
+                _messageLog.Dispose();
+                _eventLog.Dispose();
             }
             _disposed = true;
         }

@@ -8,7 +8,7 @@ namespace QuickFix
     {
         #region MessageStoreFactory Members
 
-        public IMessageStore Create(SessionID sessionID)
+        public IMessageStore Create(SessionID sessionId)
         {
             return new MemoryStore();
         }

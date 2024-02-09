@@ -44,6 +44,10 @@ What's New
 * #827 - cleanup/nullable-ize StreamFactory, SessionID, Settings, SessionSettings, SessionSchedule (gbirchmeier)
      * StreamFactory: privatized a lot of members; I don't think users are inheriting from this
      * SessionSchedule: remove unused LastEndTime()
+* #xxx - cleanup/nullable-ize Logging/Store classes (gbirchmeier)
+     * FileLog: remove the single-param ctor, no reason for anyone to use it
+     * ScreenLogFactory ctor: removed unused sessionId param
+     * ScreenLogFactory: remove public vars and a ctor that no one should be using
 
 
 **Non-breaking changes**

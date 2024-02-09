@@ -1,4 +1,5 @@
-﻿
+﻿#nullable enable
+
 namespace QuickFix
 {
     /// <summary>
@@ -6,16 +7,16 @@ namespace QuickFix
     /// </summary>
     public class ScreenLog : ILog
     {
-        private object sync_ = new object();
-        private bool logIncoming_;
-        private bool logOutgoing_;
-        private bool logEvent_;
+        private readonly object _sync = new ();
+        private readonly bool _logIncoming;
+        private readonly bool _logOutgoing;
+        private readonly bool _logEvent;
 
-        public ScreenLog(SessionID sessionID, bool logIncoming, bool logOutgoing, bool logEvent)
+        public ScreenLog(bool logIncoming, bool logOutgoing, bool logEvent)
         {
-            logIncoming_ = logIncoming;
-            logOutgoing_ = logOutgoing;
-            logEvent_    = logEvent;
+            _logIncoming = logIncoming;
+            _logOutgoing = logOutgoing;
+            _logEvent    = logEvent;
         }
 
         #region ILog Members
@@ -25,10 +26,10 @@ namespace QuickFix
 
         public void OnIncoming(string msg)
         {
-            if (!logIncoming_)
+            if (!_logIncoming)
                 return;
             
-            lock (sync_)
+            lock (_sync)
             {
                 System.Console.WriteLine("<incoming> " + msg);
             }
@@ -36,10 +37,10 @@ namespace QuickFix
 
         public void OnOutgoing(string msg)
         {
-            if (!logOutgoing_)
+            if (!_logOutgoing)
                 return;
 
-            lock (sync_)
+            lock (_sync)
             {
                 System.Console.WriteLine("<outgoing> " + msg);
             }
@@ -47,10 +48,10 @@ namespace QuickFix
 
         public void OnEvent(string s)
         {
-            if (!logEvent_)
+            if (!_logEvent)
                 return;
 
-            lock (sync_)
+            lock (_sync)
             {
                 System.Console.WriteLine("<event> " + s);
             }

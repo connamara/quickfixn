@@ -1,4 +1,5 @@
-﻿
+﻿#nullable enable
+
 namespace QuickFix
 {
     /// <summary>
@@ -6,23 +7,23 @@ namespace QuickFix
     /// </summary>
     public class FileLogFactory : ILogFactory
     {
-        SessionSettings settings_;
+        private readonly SessionSettings _settings;
 
         #region LogFactory Members
 
         public FileLogFactory(SessionSettings settings)
         {
-            settings_ = settings;
+            _settings = settings;
         }
 
         /// <summary>
         /// Creates a file-based message store
         /// </summary>
-        /// <param name="sessionID">session ID for the message store</param>
+        /// <param name="sessionId">session ID for the message store</param>
         /// <returns></returns>
-        public ILog Create(SessionID sessionID)
+        public ILog Create(SessionID sessionId)
         {
-            return new FileLog(settings_.Get(sessionID).GetString(SessionSettings.FILE_LOG_PATH), sessionID);
+            return new FileLog(_settings.Get(sessionId).GetString(SessionSettings.FILE_LOG_PATH), sessionId);
         }
 
         #endregion
