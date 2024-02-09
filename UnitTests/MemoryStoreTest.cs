@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
+using QuickFix.Store;
 
 namespace UnitTests
 {

@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using QuickFix.Logger;
+using QuickFix.Store;
 
 namespace UnitTests
 {

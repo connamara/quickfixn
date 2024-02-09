@@ -2,6 +2,8 @@
 using System.Threading;
 using System.Collections.Generic;
 using System;
+using QuickFix.Logger;
+using QuickFix.Store;
 
 namespace QuickFix
 {

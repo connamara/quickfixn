@@ -6,6 +6,8 @@ using System.Net.Sockets;
 using System.Net;
 using System.Threading;
 using System.IO;
+using QuickFix.Logger;
+using QuickFix.Store;
 
 namespace QuickFix.Transport
 {

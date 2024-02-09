@@ -9,6 +9,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Diagnostics;
 using System.Net;
+using QuickFix.Logger;
 
 namespace QuickFix.Transport
 {

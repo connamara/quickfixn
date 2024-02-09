@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using QuickFix;
+using QuickFix.Logger;
+using QuickFix.Store;
 
 namespace Executor
 {
