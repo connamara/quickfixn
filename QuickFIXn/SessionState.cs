@@ -1,6 +1,7 @@
 #nullable enable
 using System;
 using System.Collections.Generic;
+using QuickFix.Logger;
 using MessagesBySeqNum = System.Collections.Generic.Dictionary<ulong, QuickFix.Message>;
 
 namespace QuickFix

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using NUnit.Framework;
 using QuickFix;
+using QuickFix.Logger;
 
 namespace UnitTests
 {

@@ -2,6 +2,7 @@ using NUnit.Framework;
 using QuickFix;
 using System.IO;
 using System.Net;
+using QuickFix.Logger;
 
 namespace AcceptanceTest;
 

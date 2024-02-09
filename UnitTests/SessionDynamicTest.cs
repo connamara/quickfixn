@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 
 using NUnit.Framework;
 using QuickFix;
+using QuickFix.Logger;
 using QuickFix.Transport;
 
 namespace UnitTests

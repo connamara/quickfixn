@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using NUnit.Framework;
 using System.Threading;
+using QuickFix.Logger;
 
 namespace UnitTests
 {
@@ -194,7 +195,7 @@ namespace UnitTests
             config.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
             settings.Set(sessionID, config);
 
-            var logFactory = new QuickFix.NullLogFactory(); // use QuickFix.ScreenLogFactory(settings) if you need to see output
+            var logFactory = new NullLogFactory(); // use QuickFix.ScreenLogFactory(settings) if you need to see output
 
             // acceptor
             session = new QuickFix.Session(false, application, new QuickFix.MemoryStoreFactory(), sessionID,
@@ -920,7 +921,7 @@ namespace UnitTests
         {
             var mockApp = new MockApplicationExt();
             session = new QuickFix.Session(true, mockApp, new QuickFix.MemoryStoreFactory(), sessionID,
-                new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), 0, new QuickFix.NullLogFactory(), new QuickFix.DefaultMessageFactory(), "blah");
+                new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), 0, new NullLogFactory(), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
             session.CheckLatency = false;
 
