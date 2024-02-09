@@ -44,11 +44,12 @@ What's New
 * #827 - cleanup/nullable-ize StreamFactory, SessionID, Settings, SessionSettings, SessionSchedule (gbirchmeier)
      * StreamFactory: privatized a lot of members; I don't think users are inheriting from this
      * SessionSchedule: remove unused LastEndTime()
-* #xxx - cleanup/nullable-ize Logging/Store classes (gbirchmeier)
+* #831 - cleanup/nullable-ize Logging/Store classes, fix path-separator bug (gbirchmeier)
+     * Move all logger classes to new QuickFix.Logger namespace
+     * Move all store classes to new QuickFix.Store namespace
      * FileLog: remove the single-param ctor, no reason for anyone to use it
-     * ScreenLogFactory ctor: removed unused sessionId param
+     * ScreenLog ctor: removed unused sessionId param
      * ScreenLogFactory: remove public vars and a ctor that no one should be using
-
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)

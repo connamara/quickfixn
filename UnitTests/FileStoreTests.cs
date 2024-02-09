@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using System.Threading;
+using QuickFix.Store;
 
 namespace UnitTests
 {
     [TestFixture]
     public class FileStoreTests
     {
-        private QuickFix.FileStore _store;
-        private QuickFix.FileStoreFactory _factory;
+        private FileStore _store;
+        private FileStoreFactory _factory;
 
         private QuickFix.SessionSettings _settings;
         private QuickFix.SessionID _sessionID;
@@ -33,9 +34,9 @@ namespace UnitTests
 
             _settings = new QuickFix.SessionSettings();
             _settings.Set(_sessionID, config);
-            _factory = new QuickFix.FileStoreFactory(_settings);
+            _factory = new FileStoreFactory(_settings);
 
-            _store = (QuickFix.FileStore)_factory.Create(_sessionID);
+            _store = (FileStore)_factory.Create(_sessionID);
         }
 
         void RebuildStore()
@@ -45,7 +46,7 @@ namespace UnitTests
                 _store.Dispose();
             }
 
-            _store = (QuickFix.FileStore)_factory.Create(_sessionID);
+            _store = (FileStore)_factory.Create(_sessionID);
         }
 
 
@@ -60,10 +61,10 @@ namespace UnitTests
         public void TestPrefixForSessionWithSubsAndLoc()
         {
             QuickFix.SessionID sessionIDWithSubsAndLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", "SENDERLOC", "TARGETCOMP", "TARGETSUB", "TARGETLOC");
-            Assert.That(QuickFix.FileStore.Prefix(sessionIDWithSubsAndLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB_SENDERLOC-TARGETCOMP_TARGETSUB_TARGETLOC"));
+            Assert.That(FileStore.Prefix(sessionIDWithSubsAndLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB_SENDERLOC-TARGETCOMP_TARGETSUB_TARGETLOC"));
 
             QuickFix.SessionID sessionIDWithSubsNoLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", "TARGETCOMP", "TARGETSUB");
-            Assert.That(QuickFix.FileStore.Prefix(sessionIDWithSubsNoLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB"));
+            Assert.That(FileStore.Prefix(sessionIDWithSubsNoLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB"));
         }
 
         [Test]

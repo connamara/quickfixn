@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using QuickFix.Logger;
+using QuickFix.Store;
 using QuickFix.Util;
 
 namespace QuickFix

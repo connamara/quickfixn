@@ -1,18 +1,16 @@
-﻿
-namespace QuickFix
+﻿namespace QuickFix.Store;
+
+/// <summary>
+/// Creates a message store that stores all data in memory
+/// </summary>
+public class MemoryStoreFactory : IMessageStoreFactory
 {
-    /// <summary>
-    /// Creates a message store that stores all data in memory
-    /// </summary>
-    public class MemoryStoreFactory : IMessageStoreFactory
+    #region MessageStoreFactory Members
+
+    public IMessageStore Create(SessionID sessionId)
     {
-        #region MessageStoreFactory Members
-
-        public IMessageStore Create(SessionID sessionId)
-        {
-            return new MemoryStore();
-        }
-
-        #endregion
+        return new MemoryStore();
     }
+
+    #endregion
 }

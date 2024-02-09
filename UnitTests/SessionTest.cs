@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using NUnit.Framework;
 using System.Threading;
 using QuickFix.Logger;
+using QuickFix.Store;
 
 namespace UnitTests
 {
@@ -198,13 +199,13 @@ namespace UnitTests
             var logFactory = new NullLogFactory(); // use QuickFix.ScreenLogFactory(settings) if you need to see output
 
             // acceptor
-            session = new QuickFix.Session(false, application, new QuickFix.MemoryStoreFactory(), sessionID,
+            session = new QuickFix.Session(false, application, new MemoryStoreFactory(), sessionID,
                 new QuickFix.DataDictionaryProvider(),new QuickFix.SessionSchedule(config), 0, logFactory, new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
             session.CheckLatency = false;
 
             // initiator
-            session2 = new QuickFix.Session(true, application, new QuickFix.MemoryStoreFactory(), new QuickFix.SessionID("FIX.4.2", "OTHER_SENDER", "OTHER_TARGET"),
+            session2 = new QuickFix.Session(true, application, new MemoryStoreFactory(), new QuickFix.SessionID("FIX.4.2", "OTHER_SENDER", "OTHER_TARGET"),
                 new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), 0, logFactory, new QuickFix.DefaultMessageFactory(), "blah");
             session2.SetResponder(responder);
             session2.CheckLatency = false;
@@ -920,7 +921,7 @@ namespace UnitTests
         public void TestApplicationExtension()
         {
             var mockApp = new MockApplicationExt();
-            session = new QuickFix.Session(true, mockApp, new QuickFix.MemoryStoreFactory(), sessionID,
+            session = new QuickFix.Session(true, mockApp, new MemoryStoreFactory(), sessionID,
                 new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(config), 0, new NullLogFactory(), new QuickFix.DefaultMessageFactory(), "blah");
             session.SetResponder(responder);
             session.CheckLatency = false;

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System;
 using QuickFix.Logger;
+using QuickFix.Store;
 
 namespace QuickFix
 {

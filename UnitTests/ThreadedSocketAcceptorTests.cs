@@ -6,6 +6,7 @@ using System.Text;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Logger;
+using QuickFix.Store;
 
 namespace UnitTests
 {
