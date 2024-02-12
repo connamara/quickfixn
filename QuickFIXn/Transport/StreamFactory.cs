@@ -73,8 +73,13 @@ namespace QuickFix.Transport
         /// <returns>an opened and initiated stream which can be read and written to</returns>
         public static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILog logger)
         {
-            // If system has configured a proxy for this config, use it.
-            Socket? socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port);
+            Socket? socket = null;
+
+            if (!settings.SocketIgnoreProxy)
+            {
+                // If system has configured a proxy for this config, use it.
+                socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port);
+            }
 
             // No proxy.  Set up a regular socket.
             if (socket is null)
