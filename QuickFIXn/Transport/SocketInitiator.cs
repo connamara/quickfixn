@@ -195,13 +195,20 @@ namespace QuickFix.Transport
 
             while(!_shutdownRequested)
             {
-                double reconnectIntervalAsMilliseconds = 1000 * _reconnectInterval;
-                DateTime nowDt = DateTime.UtcNow;
-
-                if ((nowDt.Subtract(_lastConnectTimeDt).TotalMilliseconds) >= reconnectIntervalAsMilliseconds)
+                try
                 {
-                    Connect();
-                    _lastConnectTimeDt = nowDt;
+                    double reconnectIntervalAsMilliseconds = 1000 * _reconnectInterval;
+                    DateTime nowDt = DateTime.UtcNow;
+
+                    if ((nowDt.Subtract(_lastConnectTimeDt).TotalMilliseconds) >= reconnectIntervalAsMilliseconds)
+                    {
+                        Connect();
+                        _lastConnectTimeDt = nowDt;
+                    }
+                }
+                catch (Exception e)
+                {
+                    session.Log.OnEvent(e.Message);
                 }
 
                 Thread.Sleep(1 * 1000);
