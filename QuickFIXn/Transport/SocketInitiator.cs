@@ -89,6 +89,7 @@ namespace QuickFix.Transport
                         // so we resort to storing it in a local file.
                         try
                         {
+                            // TODO: temporary hack, need to implement a session-independent log
                             File.AppendAllText("DisposedSessionEvents.log", $"{DateTime.Now:G}: {exceptionEvent}{Environment.NewLine}");
                         }
                         catch (IOException)
@@ -196,13 +197,21 @@ namespace QuickFix.Transport
 
             while(!_shutdownRequested)
             {
-                double reconnectIntervalAsMilliseconds = 1000 * _reconnectInterval;
-                DateTime nowDt = DateTime.UtcNow;
-
-                if ((nowDt.Subtract(_lastConnectTimeDt).TotalMilliseconds) >= reconnectIntervalAsMilliseconds)
+                try
                 {
-                    Connect();
-                    _lastConnectTimeDt = nowDt;
+                    double reconnectIntervalAsMilliseconds = 1000 * _reconnectInterval;
+                    DateTime nowDt = DateTime.UtcNow;
+
+                    if ((nowDt.Subtract(_lastConnectTimeDt).TotalMilliseconds) >= reconnectIntervalAsMilliseconds)
+                    {
+                        Connect();
+                        _lastConnectTimeDt = nowDt;
+                    }
+                }
+                catch (Exception e)
+                {
+                    // TODO: temporary hack, need to implement a session-independent log
+                    File.AppendAllText("SocketInitiator-OnStart-Failure.log", $"{DateTime.Now:G}: {e}{Environment.NewLine}");
                 }
 
                 Thread.Sleep(1 * 1000);
