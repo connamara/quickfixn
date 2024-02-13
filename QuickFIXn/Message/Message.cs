@@ -83,6 +83,39 @@ namespace QuickFix
             return new MsgType(GetMsgType(fixstring));
         }
 
+        public static int ExtractFieldTag(string msgstr, int pos)
+        {
+            int tagend = msgstr.IndexOf('=', pos);
+            int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
+            return tag;
+        }
+
+        public static StringField ExtractDataField(string msgstr, int dataLength, ref int pos)
+        {
+            try
+            {
+                int tagend = msgstr.IndexOf('=', pos);
+                int tag = Convert.ToInt32(msgstr.Substring(pos, tagend - pos));
+                pos = tagend + 1;
+                StringField field = new StringField(tag, msgstr.Substring(pos, dataLength));
+
+                pos += dataLength + 1;
+                return field;
+            }
+            catch (ArgumentOutOfRangeException e)
+            {
+                throw new MessageParseError($"Error at position ({pos}) while parsing msg ({msgstr})", e);
+            }
+            catch (OverflowException e)
+            {
+                throw new MessageParseError($"Error at position ({pos}) while parsing msg ({msgstr})", e);
+            }
+            catch (FormatException e)
+            {
+                throw new MessageParseError($"Error at position ({pos}) while parsing msg ({msgstr})", e);
+            }
+        }
+
         public static StringField ExtractField(string msgstr, ref int pos)
         {
             try
@@ -314,9 +347,20 @@ namespace QuickFix
 
             while (pos < msgstr.Length)
             {
-                StringField f = ExtractField(msgstr, ref pos);
-                
-                if (validate && count < 3 && Header.HEADER_FIELD_ORDER[count++] != f.Tag)
+                StringField? f = null;
+
+                int fieldTag = ExtractFieldTag(msgstr, pos);
+                if (fieldTag == Tags.XmlData)
+                {
+                    if (IsHeaderField(Tags.XmlDataLen))
+                        f = ExtractDataField(msgstr, Header.GetInt(Tags.XmlDataLen), ref pos);
+                    else if (IsSetField(Tags.XmlDataLen))
+                        f = ExtractDataField(msgstr, GetInt(Tags.XmlDataLen), ref pos);
+                }
+
+                f ??= ExtractField(msgstr, ref pos);
+
+                if (validate && (count < 3) && (Header.HEADER_FIELD_ORDER[count++] != f.Tag))
                     throw new InvalidMessage("Header fields out of order");
 
                 if (IsHeaderField(f.Tag, transportDict))

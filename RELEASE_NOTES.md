@@ -66,6 +66,7 @@ What's New
 * #697 - new SocketIgnoreProxy setting (ABSJ415)
 * #740 - Capture inner exception messages when handling authentication exceptions (rars)
 * #833 - Add Try/Catch logic to SocketInitiator.OnStart() (Falcz)
+* #782 - proper handling of XmlData field (larsope)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages

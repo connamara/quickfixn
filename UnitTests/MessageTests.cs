@@ -13,6 +13,8 @@ namespace UnitTests
     {
         private IMessageFactory _defaultMsgFactory = new DefaultMessageFactory();
 
+        private const char Nul = Message.SOH;
+
         [Test]
         public void IdentifyTypeTest()
         {
@@ -372,6 +374,52 @@ namespace UnitTests
             Assert.That(subGrp.GetString(Tags.PartySubID), Is.EqualTo("OHAI123"));
         }
 
+        [Test]
+        public void ReadXmlDataTest() {
+            // Use tag 212/XmlDataLen to properly read 213/XmlData
+
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX42");
+
+            QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
+
+            string s = "8=FIX.4.2" + Nul + "9=495" + Nul + "35=n" + Nul + "34=31420" + Nul + "369=1003" + Nul +
+                       "52=20200701-20:34:33.978" + Nul + "49=CME" + Nul + "50=84" +
+                       Nul + "56=DUMMY11" + Nul + "57=SID1" + Nul + "143=US,IL" + Nul + "212=392" + Nul +
+                       "213=<RTRF>8=FIX.4.2" + Nul + "9=356" + Nul + "35=8" + Nul + "34=36027" + Nul +
+                       "369=18623" + Nul + "52=20200701-20:34:33.977" + Nul + "49=CME" + Nul + "50=84" + Nul +
+                       "56=M2L000N" + Nul + "57=DUMMY" + Nul + "143=US,IL" + Nul + "1=00331" + Nul +
+                       "6=0" + Nul + "11=ACP1593635673935" + Nul + "14=0" + Nul + "17=84618:1342652" + Nul + "20=0" +
+                       Nul + "37=84778833500" + Nul + "38=10" + Nul + "39=0" + Nul + "40=2" + Nul +
+                       "41=0" + Nul + "44=139.203125" + Nul + "48=204527" + Nul + "54=1" + Nul + "55=ZN" + Nul +
+                       "59=0" + Nul + "60=20200701-20:34:33.976" + Nul + "107=ZNH1" + Nul + "150=0" + Nul +
+                       "151=10" + Nul + "167=FUT" + Nul + "432=20200701" + Nul + "1028=Y" + Nul + "1031=Y" + Nul +
+                       "5979=1593635673976364291" + Nul + "9717=ACP1593635673935" + Nul + "10=124" + Nul + "</RTRF>" +
+                       Nul + "10=028" + Nul;
+
+            n.FromString(s, true, dd, dd, _defaultMsgFactory);
+
+            //verify that the data field was read correctly
+            Assert.AreEqual(n.Header.GetInt(212), n.Header.GetString(213).Length);
+        }
+
+        [Test]
+        public void XmlDataWithoutLengthTest() {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX42");
+
+            QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
+
+            string s = "8=FIX.4.2" + Nul + "9=495" + Nul + "35=n" + Nul + "34=31420" + Nul + "369=1003" + Nul +
+                       "52=20200701-20:34:33.978" + Nul + "49=CME" + Nul + "50=84" +
+                       Nul + "56=DUMMY11" + Nul + "57=SID1" + Nul + "143=US,IL" + Nul +
+                       "213=oops my length field 212 is missing" +
+                       Nul + "10=028" + Nul;
+
+            FieldNotFoundException ex =
+                Assert.Throws<FieldNotFoundException>(delegate { n.FromString(s, true, dd, dd, _defaultMsgFactory); });
+            Assert.AreEqual("field not found for tag: 212", ex!.Message);
+        }
 
 
         [Test]
