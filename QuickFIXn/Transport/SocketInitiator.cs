@@ -1,13 +1,14 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Net;
-using System.Threading;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
 using QuickFix.Logger;
 using QuickFix.Store;
+using QuickFix.Util;
 
 namespace QuickFix.Transport
 {
@@ -73,7 +74,7 @@ namespace QuickFix.Transport
                 }
                 catch (System.Security.Authentication.AuthenticationException ex) // some certificate problems
                 {
-                    exceptionEvent = $"Connection failed (AuthenticationException): {ex.Message}";
+                    exceptionEvent = $"Connection failed (AuthenticationException): {ex.GetFullMessage()}";
                 }
                 catch (Exception ex)
                 {

@@ -1,15 +1,16 @@
 ﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using System.Net.Sockets;
-using System.Security.Cryptography.X509Certificates;
-using System.Net.Security;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.Security;
+using System.Net.Sockets;
+using System.Text;
+using System.Security.Cryptography.X509Certificates;
 using QuickFix.Logger;
+using QuickFix.Util;
 
 namespace QuickFix.Transport
 {
@@ -271,7 +272,7 @@ namespace QuickFix.Transport
                 }
                 catch (System.Security.Authentication.AuthenticationException ex)
                 {
-                    _log.OnEvent("Unable to perform authentication against server: " + ex.Message);
+                    _log.OnEvent("Unable to perform authentication against server: " + ex.GetFullMessage());
                     throw;
                 }
 
@@ -312,7 +313,7 @@ namespace QuickFix.Transport
                 }
                 catch (System.Security.Authentication.AuthenticationException ex)
                 {
-                    _log.OnEvent("Unable to perform authentication against server: " + ex.Message);
+                    _log.OnEvent("Unable to perform authentication against server: " + ex.GetFullMessage());
                     throw;
                 }
 
