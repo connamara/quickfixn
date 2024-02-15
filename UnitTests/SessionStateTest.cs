@@ -5,6 +5,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
+using QuickFix.Logger;
+using QuickFix.Store;
 
 namespace UnitTests
 {
@@ -152,14 +154,14 @@ namespace UnitTests
             NullLog log = new NullLog();
 
             //Set up sessionstate
-            SessionState state = new SessionState(true, log, 1) {MessageStore = store};
+            SessionState state = new SessionState(true, log, 1, store);
 
             Hashtable errorsTable = Hashtable.Synchronized(new Hashtable());//used in more than 1 thread at a time
             Hashtable setTable = new Hashtable(1000);//only used in 1 thread at a time
             Hashtable getTable = new Hashtable(1000);//only used in 1 thread at a time
 
             //Synchronously populate 1000 messages
-            for (int i = 1; i < 1000; i++) {
+            for (SeqNumType i = 1; i < 1000; i++) {
                 string msg = "msg" + i;
                 state.Set(i, msg);
                 setTable[i] = msg;
@@ -170,7 +172,7 @@ namespace UnitTests
             ThreadPool.QueueUserWorkItem(delegate(object stateObject) {
                 AutoResetEvent internalSetEvent = (AutoResetEvent)((object[])stateObject)[0];
                 SessionState internalState = (SessionState)((object[])stateObject)[1];
-                for (int i = 1001; i < 2000; i++) {
+                for (SeqNumType i = 1001; i < 2000; i++) {
                     try {
                         internalState.Set(i, "msg" + i);
                     }
@@ -188,7 +190,7 @@ namespace UnitTests
             ThreadPool.QueueUserWorkItem(delegate(object stateObject){
                 AutoResetEvent internalGetEvent = (AutoResetEvent)((object[])stateObject)[0];
                 SessionState internalState = (SessionState)((object[])stateObject)[1];
-                for (int i = 1; i < 1000; i++) {
+                for (SeqNumType i = 1; i < 1000; i++) {
                     try {
                         List<string> lst = new List<string>(1);
                         internalState.Get(i, i, lst);

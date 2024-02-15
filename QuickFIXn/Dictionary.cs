@@ -105,6 +105,22 @@ namespace QuickFix
             }
         }
 
+        public ulong GetULong(string key)
+        {
+            try
+            {
+                return Convert.ToUInt64(GetString(key));
+            }
+            catch(FormatException)
+            {
+                throw new ConfigError("Incorrect data type");
+            }
+            catch(QuickFIXException)
+            {
+                throw new ConfigError("No value for key: " + key);
+            }
+        }
+
         public double GetDouble(string key)
         {
             try

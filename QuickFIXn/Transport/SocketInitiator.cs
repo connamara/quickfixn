@@ -1,13 +1,14 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Net.Sockets;
-using QuickFix.Config;
-using System.Net;
-using System.Diagnostics;
-using System.Threading;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+using QuickFix.Logger;
+using QuickFix.Store;
+using QuickFix.Util;
 
 namespace QuickFix.Transport
 {
@@ -20,43 +21,33 @@ namespace QuickFix.Transport
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
         public const string RECONNECT_INTERVAL  = "ReconnectInterval";
 
-        #region Properties
-
-        [System.Obsolete("Has never worked.  Always returns false.  Will be removed.")]
-        public bool Connected { get { return false; } }
-
-        #endregion
-
         #region Private Members
 
-        private volatile bool shutdownRequested_ = false;
-        private DateTime lastConnectTimeDT = DateTime.MinValue;
-        private int reconnectInterval_ = 30;
-        private SocketSettings socketSettings_ = new SocketSettings();
-        private Dictionary<SessionID, SocketInitiatorThread> threads_ = new Dictionary<SessionID, SocketInitiatorThread>();
-        private Dictionary<SessionID, int> sessionToHostNum_ = new Dictionary<SessionID, int>();
-        private object sync_ = new object();
+        private volatile bool _shutdownRequested = false;
+        private DateTime _lastConnectTimeDt = DateTime.MinValue;
+        private int _reconnectInterval = 30;
+        private readonly SocketSettings _socketSettings = new();
+        private readonly Dictionary<SessionID, SocketInitiatorThread> _threads = new();
+        private readonly Dictionary<SessionID, int> _sessionToHostNum = new();
+        private readonly object _sync = new();
         
         #endregion
 
-        public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings)
-            : this(application, storeFactory, settings, null)
-        { }
-
-        public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory)
-            : base(application, storeFactory, settings, logFactory)
-        { }
-
-        public SocketInitiator(IApplication application, IMessageStoreFactory storeFactory, SessionSettings settings, ILogFactory logFactory, IMessageFactory messageFactory)
-            : base(application, storeFactory, settings, logFactory, messageFactory)
+        public SocketInitiator(
+            IApplication application,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILogFactory? logFactoryNullable = null,
+            IMessageFactory? messageFactoryNullable = null)
+            : base(application, storeFactory, settings, logFactoryNullable, messageFactoryNullable)
         { }
 
         public static void SocketInitiatorThreadStart(object socketInitiatorThread)
         {
-            SocketInitiatorThread t = socketInitiatorThread as SocketInitiatorThread;
+            SocketInitiatorThread? t = socketInitiatorThread as SocketInitiatorThread;
             if (t == null) return;
 
-            string exceptionEvent = null;
+            string? exceptionEvent = null;
             try
             {
                 try
@@ -83,14 +74,14 @@ namespace QuickFix.Transport
                 }
                 catch (System.Security.Authentication.AuthenticationException ex) // some certificate problems
                 {
-                    exceptionEvent = $"Connection failed (AuthenticationException): {ex.Message}";
+                    exceptionEvent = $"Connection failed (AuthenticationException): {ex.GetFullMessage()}";
                 }
                 catch (Exception ex)
                 {
                     exceptionEvent = $"Unexpected exception: {ex}";
                 }
 
-                if (exceptionEvent != null)
+                if (exceptionEvent is not null)
                 {
                     if (t.Session.Disposed)
                     {
@@ -98,7 +89,8 @@ namespace QuickFix.Transport
                         // so we resort to storing it in a local file.
                         try
                         {
-                            File.AppendAllText("DisposedSessionEvents.log", $"{System.DateTime.Now:G}: {exceptionEvent}{Environment.NewLine}");
+                            // TODO: temporary hack, need to implement a session-independent log
+                            File.AppendAllText("DisposedSessionEvents.log", $"{DateTime.Now:G}: {exceptionEvent}{Environment.NewLine}");
                         }
                         catch (IOException)
                         {
@@ -120,9 +112,9 @@ namespace QuickFix.Transport
         
         private void AddThread(SocketInitiatorThread thread)
         {
-            lock (sync_)
+            lock (_sync)
             {
-                threads_[thread.Session.SessionID] = thread;
+                _threads[thread.Session.SessionID] = thread;
             }
         }
 
@@ -131,30 +123,28 @@ namespace QuickFix.Transport
             RemoveThread(thread.Session.SessionID);
         }
 
-        private void RemoveThread(SessionID sessionID)
+        private void RemoveThread(SessionID sessionId)
         {
             // We can come in here on the thread being removed, and on another thread too in the case 
             // of dynamic session removal, so make sure we won't deadlock...
-            if (Monitor.TryEnter(sync_))
+            if (Monitor.TryEnter(_sync))
             {
-                SocketInitiatorThread thread = null;
-                if (threads_.TryGetValue(sessionID, out thread))
+                if (_threads.TryGetValue(sessionId, out var thread))
                 {
                     try
                     {
                         thread.Join();
                     }
                     catch { }
-                    threads_.Remove(sessionID);
+                    _threads.Remove(sessionId);
                 }
-                Monitor.Exit(sync_);
+                Monitor.Exit(_sync);
             }
         }
 
-        private IPEndPoint GetNextSocketEndPoint(SessionID sessionID, QuickFix.Dictionary settings)
+        private IPEndPoint GetNextSocketEndPoint(SessionID sessionId, QuickFix.Dictionary settings)
         {
-            int num;
-            if (!sessionToHostNum_.TryGetValue(sessionID, out num))
+            if (!_sessionToHostNum.TryGetValue(sessionId, out var num))
                 num = 0;
 
             string hostKey = SessionSettings.SOCKET_CONNECT_HOST + num;
@@ -171,12 +161,12 @@ namespace QuickFix.Transport
                 var hostName = settings.GetString(hostKey);
                 IPAddress[] addrs = Dns.GetHostAddresses(hostName);
                 int port = System.Convert.ToInt32(settings.GetLong(portKey));
-                sessionToHostNum_[sessionID] = ++num;
+                _sessionToHostNum[sessionId] = ++num;
 
-                socketSettings_.SocketConnectHost = socketSettings_.ServerCommonName = hostName;
+                _socketSettings.SocketConnectHost = _socketSettings.ServerCommonName = hostName;
                 return new IPEndPoint(addrs.First(a => a.AddressFamily == AddressFamily.InterNetwork), port);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw new ConfigError(e.Message, e);
             }
@@ -192,28 +182,36 @@ namespace QuickFix.Transport
         {
             try
             {
-                reconnectInterval_ = Convert.ToInt32(settings.Get().GetLong(SessionSettings.RECONNECT_INTERVAL));
+                _reconnectInterval = Convert.ToInt32(settings.Get().GetLong(SessionSettings.RECONNECT_INTERVAL));
             }
-            catch (System.Exception)
+            catch (Exception)
             { }
 
             // Don't know if this is required in order to handle settings in the general section
-            socketSettings_.Configure(settings.Get());
+            _socketSettings.Configure(settings.Get());
         }       
 
         protected override void OnStart()
         {
-            shutdownRequested_ = false;
+            _shutdownRequested = false;
 
-            while(!shutdownRequested_)
+            while(!_shutdownRequested)
             {
-                double reconnectIntervalAsMilliseconds = 1000 * reconnectInterval_;
-                DateTime nowDT = DateTime.UtcNow;
-
-                if ((nowDT.Subtract(lastConnectTimeDT).TotalMilliseconds) >= reconnectIntervalAsMilliseconds)
+                try
                 {
-                    Connect();
-                    lastConnectTimeDT = nowDT;
+                    double reconnectIntervalAsMilliseconds = 1000 * _reconnectInterval;
+                    DateTime nowDt = DateTime.UtcNow;
+
+                    if ((nowDt.Subtract(_lastConnectTimeDt).TotalMilliseconds) >= reconnectIntervalAsMilliseconds)
+                    {
+                        Connect();
+                        _lastConnectTimeDt = nowDt;
+                    }
+                }
+                catch (Exception e)
+                {
+                    // TODO: temporary hack, need to implement a session-independent log
+                    File.AppendAllText("SocketInitiator-OnStart-Failure.log", $"{DateTime.Now:G}: {e}{Environment.NewLine}");
                 }
 
                 Thread.Sleep(1 * 1000);
@@ -223,10 +221,10 @@ namespace QuickFix.Transport
         /// <summary>
         /// Ad-hoc session removal
         /// </summary>
-        /// <param name="sessionID">ID of session being removed</param>
-        protected override void OnRemove(SessionID sessionID)
+        /// <param name="sessionId">ID of session being removed</param>
+        protected override void OnRemove(SessionID sessionId)
         {
-            RemoveThread(sessionID);
+            RemoveThread(sessionId);
         }
 
         protected override bool OnPoll(double timeout)
@@ -236,37 +234,31 @@ namespace QuickFix.Transport
 
         protected override void OnStop()
         {
-            shutdownRequested_ = true;
+            _shutdownRequested = true;
         }
 
-        protected override void DoConnect(SessionID sessionID, Dictionary settings)
+        protected override void DoConnect(Session session, Dictionary settings)
         {
-            Session session = null;
-
             try
             {
-                session = Session.LookupSession(sessionID);
                 if (!session.IsSessionTime)
                     return;
 
-                IPEndPoint socketEndPoint = GetNextSocketEndPoint(sessionID, settings);
-                SetPending(sessionID);
-                session.Log.OnEvent("Connecting to " + socketEndPoint.Address + " on port " + socketEndPoint.Port);
+                IPEndPoint socketEndPoint = GetNextSocketEndPoint(session.SessionID, settings);
+                SetPending(session.SessionID);
+                session.Log.OnEvent($"Connecting to {socketEndPoint.Address} on port {socketEndPoint.Port}");
 
                 //Setup socket settings based on current section
-                var socketSettings = socketSettings_.Clone();
+                var socketSettings = _socketSettings.Clone();
                 socketSettings.Configure(settings);
 
                 // Create a Ssl-SocketInitiatorThread if a certificate is given
-                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings);                
+                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings);
                 t.Start();
                 AddThread(t);
-
             }
-            catch (System.Exception e)
-            {
-                if (null != session)
-                    session.Log.OnEvent(e.Message);
+            catch (Exception e) {
+                session.Log.OnEvent(e.Message);
             }
         }
 

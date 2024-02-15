@@ -178,7 +178,7 @@ namespace UnitTests
             Assert.That(DateTimeConverter.ConvertToDateTime("20021201-11:03:05.231116500Z", TimeStampPrecision.Nanosecond), Is.EqualTo(dt));
 
             // convert nanosecond time with non-UTC positive offset time zone to full DateTime
-            Assert.That(DateTimeConverter.ConvertToDateTime("20021201-06:03:05.231116500+05", TimeStampPrecision.Nanosecond), Is.EqualTo(dt));
+            Assert.That(DateTimeConverter.ConvertToDateTime("20021201-16:03:05.231116500+05", TimeStampPrecision.Nanosecond), Is.EqualTo(dt));
 
             // convert nanosecond time with non-UTC negative offset time zone to full DateTime
             Assert.That(DateTimeConverter.ConvertToDateTime("20021201-08:03:05.231116500-03", TimeStampPrecision.Nanosecond), Is.EqualTo(dt));

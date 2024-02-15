@@ -1,71 +1,69 @@
-﻿using QuickFix.Fields;
+﻿#nullable enable
 
 namespace QuickFix
 {
     internal class MessageBuilder
     {
-        private string _msgStr;
-        private bool _validateLengthAndChecksum;
-        private DataDictionary.DataDictionary _sessionDD;
-        private DataDictionary.DataDictionary _appDD;
-        private IMessageFactory _msgFactory;
+        private readonly string _msgStr;
+        private readonly bool _validateLengthAndChecksum;
+        private readonly DataDictionary.DataDictionary _sessionDict;
+        private readonly DataDictionary.DataDictionary _appDict;
+        private readonly IMessageFactory _msgFactory;
 
-        private QuickFix.Fields.MsgType _msgType;
-        private string _beginString;
+        private Message? _message;
+        private readonly Fields.ApplVerID _defaultApplVerId;
 
-        private Message _message;
-        private QuickFix.Fields.ApplVerID _defaultApplVerId;
-
-        public string OriginalString { get { return _msgStr; } }
-        public QuickFix.Fields.MsgType MsgType { get { return _msgType; } }
+        public string OriginalString => _msgStr;
+        public Fields.MsgType MsgType { get; }
 
         /// <summary>
         /// The BeginString from the raw FIX message
         /// </summary>
-        public string BeginString { get { return _beginString; } }
+        public string BeginString { get; }
 
         internal MessageBuilder(
             string msgStr,
             string defaultApplVerId,
             bool validateLengthAndChecksum,
-            DataDictionary.DataDictionary sessionDD,
-            DataDictionary.DataDictionary appDD,
+            DataDictionary.DataDictionary sessionDict,
+            DataDictionary.DataDictionary appDict,
             IMessageFactory msgFactory)
         {
             _msgStr = msgStr;
-            _defaultApplVerId = new ApplVerID(defaultApplVerId);
+            _defaultApplVerId = new Fields.ApplVerID(defaultApplVerId);
             _validateLengthAndChecksum = validateLengthAndChecksum;
-            _sessionDD = sessionDD;
-            _appDD = appDD;
+            _sessionDict = sessionDict;
+            _appDict = appDict;
             _msgFactory = msgFactory;
-            _msgType = Message.IdentifyType(_msgStr);
-            _beginString = Message.ExtractBeginString(_msgStr);
+            MsgType = Message.IdentifyType(_msgStr);
+            BeginString = Message.ExtractBeginString(_msgStr);
         }
 
         internal Message Build()
         {
-            Message message = _msgFactory.Create(_beginString, _defaultApplVerId, _msgType.Obj);
+            Message message = _msgFactory.Create(BeginString, _defaultApplVerId, MsgType.Obj);
             message.FromString(
                 _msgStr,
                 _validateLengthAndChecksum,
-                _sessionDD,
-                _appDD,
-                _msgFactory);
+                _sessionDict,
+                _appDict,
+                _msgFactory,
+                ignoreBody: false);
             _message = message;
             return _message;
         }
 
         internal Message RejectableMessage()
         {
-            if (_message != null)
+            if (_message is not null)
                 return _message;
 
-            Message message = _msgFactory.Create(_beginString, _msgType.Obj);
+            Message message = _msgFactory.Create(BeginString, MsgType.Obj);
             message.FromString(
                 _msgStr,
                 false,
-                _sessionDD,
-                _appDD,
+                _sessionDict,
+                _appDict,
                 _msgFactory,
                 true);
             return message;

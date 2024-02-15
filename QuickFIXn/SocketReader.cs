@@ -1,77 +1,62 @@
-﻿using System.Net.Sockets;
+﻿#nullable enable
+using System.Net.Sockets;
 using System.IO;
 using System;
 using System.Linq;
 
 namespace QuickFix
 {
-
     /// <summary>
     /// TODO merge with SocketInitiatorThread
     /// </summary>
     public class SocketReader : IDisposable
     {
         public const int BUF_SIZE = 4096;
-        byte[] readBuffer_ = new byte[BUF_SIZE];
-        private Parser parser_ = new Parser();
-        private Session qfSession_; //will be null when initialized
-        private Stream stream_;     //will be null when initialized
-        private TcpClient tcpClient_;
-        private ClientHandlerThread responder_;
-        private readonly AcceptorSocketDescriptor acceptorDescriptor_;
+        private readonly byte[] _readBuffer = new byte[BUF_SIZE];
+        private readonly Parser _parser = new();
+        private Session? _qfSession; //will be null when initialized
+        private readonly Stream _stream;
+        private readonly TcpClient _tcpClient;
+        private readonly ClientHandlerThread _responder;
+        private readonly AcceptorSocketDescriptor? _acceptorDescriptor;
 
         /// <summary>
         /// Keep a handle to the current outstanding read request (if any)
         /// </summary>
-        private IAsyncResult currentReadRequest_;
-
-        [Obsolete("Use other constructor")]
-        public SocketReader(TcpClient tcpClient, ClientHandlerThread responder)
-            : this(tcpClient, new SocketSettings(), responder)
-        {
-        }
-
-        public SocketReader(TcpClient tcpClient, SocketSettings settings, ClientHandlerThread responder)
-            : this(tcpClient, settings, responder, null)
-        {
-            
-        }
+        private IAsyncResult? _currentReadRequest;
 
         internal SocketReader(
             TcpClient tcpClient,
             SocketSettings settings,
             ClientHandlerThread responder,
-            AcceptorSocketDescriptor acceptorDescriptor)
+            AcceptorSocketDescriptor? acceptorDescriptor)
         {
-            tcpClient_ = tcpClient;
-            responder_ = responder;
-            acceptorDescriptor_ = acceptorDescriptor;
-            stream_ = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
+            _tcpClient = tcpClient;
+            _responder = responder;
+            _acceptorDescriptor = acceptorDescriptor;
+            _stream = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
         }
 
-        /// <summary> FIXME </summary>
         public void Read()
         {
             try
             {
-                int bytesRead = ReadSome(readBuffer_, 1000);
+                int bytesRead = ReadSome(_readBuffer, 1000);
                 if (bytesRead > 0)
-                    parser_.AddToStream(readBuffer_, bytesRead);
-                else if (null != qfSession_)
-                {
-                    qfSession_.Next();
-                }
+                    _parser.AddToStream(_readBuffer, bytesRead);
+                else
+                    _qfSession?.Next();
 
                 ProcessStream();
             }
             catch (MessageParseError e)
             {
-                HandleExceptionInternal(qfSession_, e);
+                HandleExceptionInternal(_qfSession, e);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
-                HandleExceptionInternal(qfSession_, e);
-                throw e;
+                HandleExceptionInternal(_qfSession, e);
+                throw;
             }
         }
 
@@ -91,37 +76,36 @@ namespace QuickFix
             try
             {
                 // Begin read if it is not already started
-                if (currentReadRequest_ == null)
-                    currentReadRequest_ = stream_.BeginRead(buffer, 0, buffer.Length, null, null);
+                _currentReadRequest ??= _stream.BeginRead(buffer, 0, buffer.Length, null, null);
 
                 // Wait for it to complete (given timeout)
-                currentReadRequest_.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
+                _currentReadRequest.AsyncWaitHandle.WaitOne(timeoutMilliseconds);
 
-                if (currentReadRequest_.IsCompleted)
+                if (_currentReadRequest.IsCompleted)
                 {
-                    // Make sure to set currentReadRequest_ to before retreiving result 
+                    // Make sure to set _currentReadRequest to before retreiving result
                     // so a new read can be started next time even if an exception is thrown
-                    var request = currentReadRequest_;
-                    currentReadRequest_ = null;
+                    var request = _currentReadRequest;
+                    _currentReadRequest = null;
 
-                    int bytesRead = stream_.EndRead(request);
+                    int bytesRead = _stream.EndRead(request);
                     if (0 == bytesRead)
-                        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+                        throw new SocketException(System.Convert.ToInt32(SocketError.Shutdown));
 
                     return bytesRead;
                 }
-                else
-                    return 0;
+
+                return 0;
             }
-            catch (System.IO.IOException ex) // Timeout
+            catch (IOException ex) // Timeout
             {
                 var inner = ex.InnerException as SocketException;
-                if (inner != null && inner.SocketErrorCode == SocketError.TimedOut)
+                if (inner?.SocketErrorCode == SocketError.TimedOut)
                 {
                     // Nothing read 
                     return 0;
                 }
-                else if (inner != null)
+                else if (inner is not null)
                 {
                     throw inner; //rethrow SocketException part (which we have exception logic for)
                 }
@@ -130,46 +114,41 @@ namespace QuickFix
             }
         }
 
-        [Obsolete("This should be made private")]
-        public void OnMessageFound(string msg)
-        {
-            OnMessageFoundInternal(msg);
-        }
-
-        protected void OnMessageFoundInternal(string msg)
+        private void OnMessageFound(string msg)
         {
             try
             {
-                if (null == qfSession_)
+                if (_qfSession is null)
                 {
-                    qfSession_ = Session.LookupSession(Message.GetReverseSessionID(msg));
-                    if (null == qfSession_)
+                    _qfSession = Session.LookupSession(Message.GetReverseSessionId(msg));
+                    if (_qfSession is null || IsAssumedSession(_qfSession.SessionID))
                     {
-                        this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        Log("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        _qfSession = null;
                         DisconnectClient();
                         return;
                     }
-                    else if(IsAssumedSession(qfSession_.SessionID))
+
+                    if (_qfSession.HasResponder)
                     {
-                        this.Log("ERROR: Disconnecting; received message for unknown session: " + msg);
-                        qfSession_ = null;
+                        _qfSession.Log.OnIncoming(msg);
+                        _qfSession.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + _tcpClient.Client.RemoteEndPoint + ")");
+                        _qfSession = null;
                         DisconnectClient();
                         return;
                     }
-                    else
-                    {
-                        if (!HandleNewSession(msg))
-                            return;
-                    }
+
+                    _qfSession.Log.OnEvent(_qfSession.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + _qfSession.SessionID + " from " + _tcpClient.Client.RemoteEndPoint);
+                    _qfSession.SetResponder(_responder);
                 }
 
                 try
                 {
-                    qfSession_.Next(msg);
+                    _qfSession.Next(msg);
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
-                    this.Log("Error on Session '" + qfSession_.SessionID + "': " + e.ToString());
+                    Log($"Error on Session '{_qfSession.SessionID}': {e}");
                 }
             }
             catch (InvalidMessage e)
@@ -182,18 +161,18 @@ namespace QuickFix
             }
         }
 
-        protected void HandleBadMessage(string msg, System.Exception e)
+        protected void HandleBadMessage(string msg, Exception e)
         {
             try
             {
                 if (Fields.MsgType.LOGON.Equals(Message.GetMsgType(msg)))
                 {
-                    this.Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
+                    Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
                     DisconnectClient();
                 }
                 else
                 {
-                    this.Log("ERROR: Invalid message: " + e.Message);
+                    Log("ERROR: Invalid message: " + e.Message);
                 }
             }
             catch (InvalidMessage)
@@ -204,115 +183,70 @@ namespace QuickFix
         {
             try
             {
-                return parser_.ReadFixMessage(out msg);
+                return _parser.ReadFixMessage(out msg);
             }
-            catch (MessageParseError e)
+            catch (MessageParseError)
             {
                 msg = "";
-                throw e;
+                throw;
             }
         }
 
         protected void ProcessStream()
         {
-            string msg;
-            while (ReadMessage(out msg))
-                OnMessageFoundInternal(msg);
-        }
-
-        [Obsolete("Static function can't close stream properly")]
-        protected static void DisconnectClient(TcpClient client)
-        {
-            client.Client.Close();
-            client.Close();
+            while (ReadMessage(out var msg))
+                OnMessageFound(msg);
         }
 
         protected void DisconnectClient()
         {
-            stream_.Close();
-            tcpClient_.Close();
+            _stream.Close();
+            _tcpClient.Close();
         }
 
-        protected bool HandleNewSession(string msg)
+        private bool IsAssumedSession(SessionID sessionId)
         {
-            if (qfSession_.HasResponder)
-            {
-                qfSession_.Log.OnIncoming(msg);
-                qfSession_.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + tcpClient_.Client.RemoteEndPoint + ")");
-                qfSession_ = null;
-                DisconnectClient();
-                return false;
-            }
-            qfSession_.Log.OnEvent(qfSession_.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + qfSession_.SessionID + " from " + tcpClient_.Client.RemoteEndPoint);
-            // FIXME do this here? qfSession_.HeartBtInt = QuickFix.Fields.Converters.IntConverter.Convert(message.GetField(Fields.Tags.HeartBtInt)); /// FIXME
-            qfSession_.Log.OnEvent(qfSession_.SessionID + " Acceptor heartbeat set to " + qfSession_.HeartBtInt + " seconds");
-            qfSession_.SetResponder(responder_);
-            return true;
+            return _acceptorDescriptor is not null
+                && !_acceptorDescriptor.GetAcceptedSessions().Any(kv => kv.Key.Equals(sessionId));
         }
 
-        [Obsolete("This should be made private/protected")]
-        public void HandleException(Session quickFixSession, System.Exception cause, TcpClient client)
-        {
-            HandleExceptionInternal(quickFixSession, cause);
-        }
+        private void HandleExceptionInternal(Session? quickFixSession, Exception cause) {
+            bool disconnectNeeded = false;
 
-        private bool IsAssumedSession(SessionID sessionID)
-        {
-            return acceptorDescriptor_ != null 
-                   && !acceptorDescriptor_.GetAcceptedSessions().Any(kv => kv.Key.Equals(sessionID));
-        }
-
-        private void HandleExceptionInternal(Session quickFixSession, System.Exception cause)
-        {
-            bool disconnectNeeded = true;
-            string reason = cause.Message;
-
-            System.Exception realCause = cause;
+            Exception realCause = cause;
 
             // Unwrap socket exceptions from IOException in order for code below to work
             if (realCause is IOException && realCause.InnerException is SocketException)
                 realCause = realCause.InnerException;
 
-            /*
-             TODO
-            if(cause is FIXMessageDecoder.DecodeError && cause.InnerException != null)
-                realCause = cause.getCause();
-            */
-            if (realCause is System.Net.Sockets.SocketException)
-            {
-                if (quickFixSession != null && quickFixSession.IsEnabled)
-                    reason = "Socket exception (" + tcpClient_.Client.RemoteEndPoint + "): " + cause.Message;
-                else
-                    reason = "Socket (" + tcpClient_.Client.RemoteEndPoint + "): " + cause.Message;
-                disconnectNeeded = true;
-            }
-            /*
-             TODO
-            else if(realCause is FIXMessageDecoder.CriticalDecodeError)
-            {
-                reason = "Critical protocol codec error: " + cause;
-                disconnectNeeded = true;
-            }
-            */
-            else if (realCause is MessageParseError)
-            {
-                reason = "Protocol handler exception: " + cause;
-                if (quickFixSession == null)
+            string? reason;
+            switch (realCause) {
+                case SocketException:
+                {
+                    if (quickFixSession is not null && quickFixSession.IsEnabled)
+                        reason = "Socket exception (" + _tcpClient.Client.RemoteEndPoint + "): " + cause.Message;
+                    else
+                        reason = "Socket (" + _tcpClient.Client.RemoteEndPoint + "): " + cause.Message;
                     disconnectNeeded = true;
-                else
-                    disconnectNeeded = false;
-            }
-            else
-            {
-                reason = cause.ToString();
-                disconnectNeeded = false;
+                    break;
+                }
+                case MessageParseError:
+                {
+                    reason = "Protocol handler exception: " + cause;
+                    if (quickFixSession is null)
+                        disconnectNeeded = true;
+                    break;
+                }
+                default:
+                    reason = cause.ToString();
+                    break;
             }
 
-            this.Log("SocketReader Error: " + reason);
+            Log($"SocketReader Error: {reason}");
 
             if (disconnectNeeded)
             {
-                if (null != quickFixSession && quickFixSession.HasResponder)
+                if (quickFixSession is not null && quickFixSession.HasResponder)
                     quickFixSession.Disconnect(reason);
                 else
                     DisconnectClient();
@@ -325,13 +259,13 @@ namespace QuickFix
         /// <param name="s"></param>
         private void Log(string s)
         {
-            responder_.Log(s);
+            _responder.Log(s);
         }
 
         public int Send(string data)
         {
             byte[] rawData = CharEncoding.DefaultEncoding.GetBytes(data);
-            stream_.Write(rawData, 0, rawData.Length);
+            _stream.Write(rawData, 0, rawData.Length);
             return rawData.Length;
         }
 
@@ -345,8 +279,8 @@ namespace QuickFix
         {
             if (disposing)
             {
-                stream_.Dispose();
-                tcpClient_.Close();
+                _stream.Dispose();
+                _tcpClient.Close();
             }
         }
         ~SocketReader() => Dispose(false);

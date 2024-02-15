@@ -151,7 +151,7 @@ namespace QuickFix
 
                     int bytesRead = stream_.EndRead(request);
                     if (0 == bytesRead)
-                        throw new SocketException(System.Convert.ToInt32(SocketError.ConnectionReset));
+                        throw new SocketException(System.Convert.ToInt32(SocketError.Shutdown));
 
                     return bytesRead;
                 }

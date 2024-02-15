@@ -130,10 +130,10 @@ namespace UnitTests
             fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(1, 1, 1, 1, 2, 3), false));
             MDEntryTime et = new MDEntryTime();
             fieldmap.GetField(et);
-            Assert.AreEqual(new DateTime(1, 1, 1, 1, 2, 3).TimeOfDay, et.Obj.TimeOfDay);
+            Assert.AreEqual(new DateTime(1980, 01, 01, 1, 2, 3), et.Obj);
             fieldmap.SetField(new MDEntryTime(new DateTime(1, 1, 1, 1, 2, 5)));
             TimeOnlyField r = fieldmap.GetField(et);
-            Assert.AreEqual(new DateTime(1, 1, 1, 1, 2, 5).TimeOfDay, et.getValue().TimeOfDay);
+            Assert.AreEqual(new DateTime(1980, 01, 01, 1, 2, 5), et.getValue());
             
             Assert.AreSame(r, et);
             Assert.AreEqual("01:02:05.000", et.ToString());
@@ -163,9 +163,9 @@ namespace UnitTests
         public void GetTimeOnlyTest()
         {
             fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(2009, 12, 10, 1, 2, 3)));
-            Assert.AreEqual(new DateTime(2009, 12, 10, 1, 2, 3).TimeOfDay, fieldmap.GetDateTime(Tags.MDEntryTime).TimeOfDay);
+            Assert.AreEqual(new DateTime(1980, 01, 01, 1, 2, 3), fieldmap.GetDateTime(Tags.MDEntryTime));
             fieldmap.SetField(new StringField(233, "07:30:47"));
-            Assert.AreEqual(new DateTime(2009, 12, 11, 7, 30, 47).TimeOfDay, fieldmap.GetTimeOnly(233).TimeOfDay);
+            Assert.AreEqual(new DateTime(1980, 01, 01, 7, 30, 47), fieldmap.GetTimeOnly(233));
         }
 
         [Test]
@@ -300,7 +300,7 @@ namespace UnitTests
         public void GroupDelimTest()
         {
             Group g1 = new Group(100, 200);
-            Assert.AreEqual(100, g1.Field); //counter
+            Assert.AreEqual(100, g1.CounterField); //counter
             Assert.AreEqual(200, g1.Delim);
 
             g1.SetField(new StringField(200, "delim!"));

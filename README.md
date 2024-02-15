@@ -1,6 +1,7 @@
 [![QuickFIX/N][1]](http://quickfixn.org)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/ccu2yp2coad3oam0?svg=true)](https://ci.appveyor.com/project/cbusbey/quickfixn-jib50)
+![Build status](https://github.com/connamara/quickfixn/actions/workflows/dotnet.yml/badge.svg)
+[![NuGet Version](https://img.shields.io/nuget/v/QuickFIXn.Core)](https://www.nuget.org/packages/QuickFIXn.Core/)
 
 For tutorials on how to use QuickFIX/n, visit the [website](http://quickfixn.org/tutorial/creating-an-application.html).
 
@@ -9,117 +10,51 @@ development.
 
 System Setup
 ------------
-This project requires the following:
 
-**To build and run tests**
+* This project uses .NET 6.
 
-* [Ruby (2.5+ recommended)](http://rubyinstaller.org/) (used to generate message and field classes from the DataDictionary xml file)
-* From the command-line: dotnet 2.0.0 or higher
-* From Visual Studio: version 2017 or higher
+* All scripts are in Powershell, and should work on both Windows and Unix-based platforms.
+
 
 Code Generation
 ---------------
-To regenerate the message and field class source from the Data Dictionaries,
-you need Ruby and the Nokogiri gem:
+DDTool is a C#-based tool for analyzing DataDictionary files and
+regenerating the source for message and field classes.
+
+Check out the DDTool directory to learn more, or you can just run this script:
 
 ```
-gem install nokogiri
-ruby generator\generate.rb
+pwsh scripts\Generate-Message-Sources.ps1
 ```
 
-Build
------
-To build the project, run:
 
-```
-build.bat
-```
+Build and Test
+--------------
+It is assumed that developers know how to use `dotnet` cli tools
+or their IDE of choice.
 
-You can also override the default configuration (Release) by giving a command line argument:
+The simplest spin-up instructions are:
+* `dotnet build` - to build
+* `dotnet test` - to run all unit and acceptance tests (which use NUnit)
 
-```
-build.bat Debug
-```
+To run *only* UTs or *only* ATs:
+* `dotnet test UnitTests`
+* `dotnet test AcceptanceTests`
 
-The build.bat script expects dotnet to be on your PATH.
+For more information:
+* `dotnet test -l "console;verbosity=detailed" AcceptanceTest`
 
-Alternatively, simply use the dotnet tools.
+AcceptanceTest logs are output to `bin/Debug/net6.0/log`.
 
-Unit Tests
-----------
-To run the NUnit tests, run:
-
-```
-unit_test.bat
-```
-
-(This script expects `dotnet` to be on your PATH.)
-
-TRX reports of the test results (one each for NET Framework 4.5.2 and NET Standard 2.0) will then be available here:
-
-```
-UnitTests\TestResults
-```
-
-Alternatively, simply use `dotnet`:
-
-```
-dotnet test UnitTests
-```
-
-To run a Unit Test in the debugger:
-
-1. Open the TestExplorer from Test -> Windows -> Test Explorer
-2. Navigate to the test
-3. Right-click and select "Debug Selected Tests"
-
-
-Acceptance Tests
-----------------
-To run the full suite of acceptance tests:
-
-```
-acceptance_test.ps1
-```
-
-An HTML report of the test results will then be available here:
-
-    AcceptanceTests\AcceptanceTests.html
-
-To run one particular acceptance test, e.g. fix42\14e_IncorrectEnumValue.def:
-
-```
-cd AcceptanceTest
-pwsh runat.ps1 release 5003 definitions\server\fix42\14e_IncorrectEnumValue.def cfg\at_42.cfg netcoreapp2.1
-```
-
-The final param must be "net461" or "netcoreapp2.1".
-
-(See acceptance_test.ps1 for the proper port numbers and config files to use in the above command.)
-
-The test results will then be available in AcceptanceTests\TestResults.xml and
-debug information will be available in the AcceptanceTests\log directory.
-
-To run a test with the debugger,
-
-  1. Open the solution file in Visual Studio
-  2. Right click on "AcceptanceTest" project and choose "Properties" from the menu
-  3. Click "Debug" on the left hand nav bar
-  4. Set "Command line arguments" to the relevant "cfg\at_XX.cfg" for your test
-  5. Set the working directory to "[yourpath]\quickfixn\AcceptanceTest"
-  6. Save the properties
-  7. Right click the "AcceptanceTest" project, go to Debug -> Start New Instance
-  8. In command terminal, go into "AcceptanceTest" directory
-  9. Run: `ruby Runner.rb 127.0.0.1 5001 definitions\server\fix42\YourTestName.def`
 
 Credits
 -------
 
 ![Connamara Systems](http://quickfixn.org/web/public/images/Connamara-Logo.png)
 
-QuickFIXn is maintained and funded by [Connamara Systems, LLC](http://connamara.com).
+QuickFIXn is maintained and funded by [Connamara](http://connamara.com).
 
-The names and logos for Connamara Systems are trademarks of Connamara Systems, LLC.
+The names and logos for Connamara are trademarks of Connamara Systems, LLC.
 
 Licensing
 ---------

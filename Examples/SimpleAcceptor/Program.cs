@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using QuickFix;
+using QuickFix.Logger;
+using QuickFix.Store;
 using QuickFix.Transport;
 
 namespace SimpleAcceptor

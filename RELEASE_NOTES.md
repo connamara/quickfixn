@@ -8,7 +8,95 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
-### NEXT VERSION:
+**CAUTION: There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
+
+### NEXT RELEASE
+
+**Breaking changes**
+* #768 - span-ify parser (Rob-Hague) - makes a change to QuickFix.Parser interface, which isn't likely to affect users
+* #820 - cleanup/nullable-ize initiator/acceptor files (gbirchmeier) -
+         changed some Session Generate* functions to return void instead of null, 
+         very low likelihood that any user code will be affected.
+* #821 - delete dead code: ByteSizeString class & test, do-nothing ConfigTest (gbirchmeier) -
+         ByteSizeString is public, but probably no one uses it
+* #822 - cleanup/nullable-ize Message/ classes (gbirchmeier)
+     * FieldMap: getFieldOrder() deleted.  Just call FieldOrder.
+     * FieldMap: GetGroup(int num, Group group) now returns null instead of redundant Group
+     * Group: rename Field to CounterField
+     * Message: changed `SOH`'s type from string to char
+     * Message: ctor Message(string msgstr, DataDictionary.DataDictionary dataDictionary, bool validate) deleted.
+       You can use the 2-DD version, though for FIX4 those DDs will be the same.
+     * Message: ExtractField()'s 2 DD params removed.  They were never used.
+     * Message: static GetFieldOrDefault() changed to private.  Unlikely anyone will notice.
+     * Message: static GetReverseSessionID(Message) changed to private.  Unlikely anyone will notice.
+       (The version with the string param is still public)
+     * Message: FromStringHeader renamed and made private.  Unlikely anyone will notice.
+     * Message: ToXML() and ToJSON() require DD params for any tag/enum translation.
+       (Message no longer stores a DD instance var.)
+       These functions are new, probably not widely used yet.
+       Function docs are now clear on this behavior.
+* #826 - cleanup/nullable-ize Socket & Session classes (gbirchmeier)
+     * ClientHandlerThread is now internal.  Unlikely anyone will notice.
+     * SocketReader: delete public ctor.  Probably no one is using it.
+     * Session: rename (capitalize) TargetDefaultApplVerId property
+     * SessionState: ctor now requires a MessageStore.  (Existing callers used an object initializer anyway)
+     * Many protected functions were altered, but probably no user code is touching them
+* #827 - cleanup/nullable-ize StreamFactory, SessionID, Settings, SessionSettings, SessionSchedule (gbirchmeier)
+     * StreamFactory: privatized a lot of members; I don't think users are inheriting from this
+     * SessionSchedule: remove unused LastEndTime()
+* #831 - cleanup/nullable-ize Logging/Store classes, fix path-separator bug (gbirchmeier)
+     * Move all logger classes to new QuickFix.Logger namespace
+     * Move all store classes to new QuickFix.Store namespace
+     * FileLog: remove the single-param ctor, no reason for anyone to use it
+     * ScreenLog ctor: removed unused sessionId param
+     * ScreenLogFactory: remove public vars and a ctor that no one should be using
+
+**Non-breaking changes**
+* #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
+* #811 - convert AT platform to be NUnit-based, get rid of Ruby runner (Rob-Hague)
+* #813 - fix incorrect logging of acceptor heartbeat (gbirchmeier)
+* #815 - update broken/neglected example apps & docs (gbirchmeier)
+* #764 - fix positive UTC offset parsing in DateTimeConverter (Rob-Hague)
+* #766 - use ordinal string operations (Rob-Hague)
+* #767 - avoid string conversions in FieldMap.Get{FieldType} where possible (Rob-Hague)
+* #785 - use correct SocketError "Shutdown" code when socket is deliberately shutdown (oclancy)
+* #711 - fix explicit 0.0.0.0 address binding (bohdanstefaniuk)
+* #823 - get rid of IOIQty enums in FIX5 DDs, allow free string (gbirchmeier)
+* #786 - rewrite HttpServer: better HTML, no crash on errors (gbirchmeier)
+* #697 - new SocketIgnoreProxy setting (ABSJ415)
+* #740 - Capture inner exception messages when handling authentication exceptions (rars)
+* #833 - Add Try/Catch logic to SocketInitiator.OnStart() (Falcz)
+* #782 - proper handling of XmlData field (larsope)
+
+### v1.11.2:
+* same as v1.11.1, but I fixed the readme in the pushed nuget packages
+
+### v1.11.1:
+* #793 - Continuous Markets bugfix: make DD treat SEQNUM as ULong, not Int (gbirchmeier)
+* #790/#787 - break up monolithic release script, add symbols & DD to nugets/zip, delete old scripts (gbirchmeier)
+
+### v1.11.0:
+This build removes deprecations, and also updates to .NET 6.0.  
+We decided this wasn't big enough to warrant a v2 release, even though
+it technically violates semantic versioning.
+
+**Breaking changes in release** 
+* #732 - generate FIXT11 msg classes so they can be cracked (mgatny) IMPORTANT: FIX5+ applications now need the new FIXT11 dll!
+* #748 - Update all csproj files to net6.0, fix .NET deprecations, update pwsh scripts, remove some non-pwsh scripts (gbirchmeier)
+* #749 - All deprecations are removed (gbirchmeier)
+* #746 - remove some unused public `FIXnn_LAST_FIELD` constants; corrected FIX44 DD `UNKOWN_ID` typo (gbirchmeier)
+* #756 - privatize DDField property setters,
+         change various Get/SetNextSenderMsgSeqNum & Get/SetNextTargetMsgSeqNum functions to properties (gbirchmeier)
+* #760 - change seqnums to UInt64 to support Continuous Markets (mgatny)  
+         (ATTENTION! Note the INT->SEQNUM changes in FIX40/41/42.xml DDs!  You may need to update your DDs!)
+
+**Non-breaking changes**
+* (minor) #745 - JSON-to-FIX (mgatny)
+* (minor) #724 - FIX-to-JSON serialization, and a ToXML() bugfix (mgatny)
+* (patch) #647 - replace lock with memory barrier to avoid deadlocks (brunobelmondo)
+* (patch) #623 - fix issues with New-Release.ps1 (fourpastmidnight)
+* (patch) #727/#728 - improve dictionary parsing speed (sylr)
+* (minor) #724 - Add methods for serializing to FIX JSON Encoding (mgatny)
 * (patch) #630 - Make DefaultMessageFactory reflect only over QF/n assemblies (gbirchmeier)
 * (patch) #643 - add 1156 (ApplExtId) to FIXT11.xml (gbirchmeier)
 * (patch) #642 - allow decimal fields to have exponential notation (rakker91)

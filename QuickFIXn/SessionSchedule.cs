@@ -1,47 +1,48 @@
-﻿
+﻿#nullable enable
 using System;
+
 namespace QuickFix
 {
     public class SessionSchedule
     {
-        public System.TimeSpan StartTime { get; private set; }
-        public System.TimeSpan EndTime { get; private set; }
+        public TimeSpan? StartTime { get; }
+        public TimeSpan? EndTime { get; }
 
-        public bool WeeklySession { get; private set; }
-        public System.DayOfWeek StartDay { get; private set; }
-        public System.DayOfWeek EndDay { get; private set; }
+        public bool WeeklySession { get; }
+        public DayOfWeek? StartDay { get; }
+        public DayOfWeek? EndDay { get; }
 
-        public bool NonStopSession { get; private set; }
+        public bool NonStopSession { get; }
 
-        public bool UseLocalTime { get; private set; }
-        public System.TimeZoneInfo TimeZone { get; private set; }
+        public bool UseLocalTime { get; }
+        public TimeZoneInfo? TimeZone { get; }
 
 
         /// <summary>
         /// Returns true if testtime is in a different and newer session than old time
         /// (or more explicitly: oldtime &lt;= some EndTime &lt; testtime)
         /// </summary>
-        /// <param name="oldtime_utc"></param>
-        /// <param name="testtime_utc"></param>
+        /// <param name="oldtimeUtc"></param>
+        /// <param name="testtimeUtc"></param>
         /// <returns></returns>
-        public bool IsNewSession(DateTime oldtime_utc, DateTime testtime_utc)
+        public bool IsNewSession(DateTime oldtimeUtc, DateTime testtimeUtc)
         {
             if (NonStopSession)
             {
                 return false;
             }
 
-            if (oldtime_utc.Kind != System.DateTimeKind.Utc)
-                throw new System.ArgumentException("Only UTC time is supported", "oldtime");
-            if (testtime_utc.Kind != System.DateTimeKind.Utc)
-                throw new System.ArgumentException("Only UTC time is supported", "testtime");
+            if (oldtimeUtc.Kind != DateTimeKind.Utc)
+                throw new ArgumentException("Only UTC time is supported", nameof(oldtimeUtc));
+            if (testtimeUtc.Kind != DateTimeKind.Utc)
+                throw new ArgumentException("Only UTC time is supported", nameof(testtimeUtc));
 
-            DateTime old = AdjustUtcDateTime(oldtime_utc);
-            DateTime test = AdjustUtcDateTime(testtime_utc);
+            DateTime old = AdjustUtcDateTime(oldtimeUtc);
+            DateTime test = AdjustUtcDateTime(testtimeUtc);
 
             if (DateTime.Compare(old, test) < 0) // old is earlier than test
             {
-                DateTime nextend = NextEndTime(oldtime_utc);
+                DateTime nextend = NextEndTime(oldtimeUtc);
                 return (DateTime.Compare(old, nextend) <= 0) && (DateTime.Compare(nextend, test) < 0);
             }
 
@@ -55,28 +56,23 @@ namespace QuickFix
         /// <returns></returns>
         public DateTime AdjustUtcDateTime(DateTime utc)
         {
-            if (utc.Kind != System.DateTimeKind.Utc)
-                throw new System.ArgumentException("Only UTC time is supported", "time");
+            if (utc.Kind != DateTimeKind.Utc)
+                throw new ArgumentException("Only UTC time is supported", nameof(utc));
 
             if(UseLocalTime)
                 return utc.ToLocalTime();
-            else if (TimeZone==null)
-                return utc;
-            else
-                return System.TimeZoneInfo.ConvertTimeFromUtc(utc, TimeZone);
+
+            return TimeZone==null ? utc : TimeZoneInfo.ConvertTimeFromUtc(utc, TimeZone);
         }
 
-        public bool IsSessionTime(System.DateTime utc)
+        public bool IsSessionTime(DateTime utc)
         {
-            if (utc.Kind != System.DateTimeKind.Utc)
-                throw new System.ArgumentException("Only UTC time is supported", "time");
+            if (utc.Kind != DateTimeKind.Utc)
+                throw new ArgumentException("Only UTC time is supported", nameof(utc));
 
-            System.DateTime adjusted = AdjustUtcDateTime(utc);
+            DateTime adjusted = AdjustUtcDateTime(utc);
 
-            if (WeeklySession)
-                return CheckDay(adjusted);
-            else
-                return CheckTime(adjusted.TimeOfDay);
+            return WeeklySession ? CheckDay(adjusted) : CheckTime(adjusted.TimeOfDay);
         }
 
         /// <summary>
@@ -87,19 +83,19 @@ namespace QuickFix
         public DateTime NextEndTime(DateTime utc)
         {
             if (NonStopSession)
-            {
                 throw new NotSupportedException("NonStopSession");
-            }
+
+            TimeSpan vEndTime = EndTime ?? throw new QuickFix.ConfigError("EndTime is null");
 
             if (utc.Kind != DateTimeKind.Utc)
-                throw new ArgumentException("Only UTC time is supported", "time");
+                throw new ArgumentException("Only UTC time is supported", nameof(utc));
 
             DateTime d = AdjustUtcDateTime(utc);
             DateTime end = DateTime.MinValue;
 
             if (WeeklySession)
             {
-                end = new DateTime(d.Year, d.Month, d.Day, EndTime.Hours, EndTime.Minutes, EndTime.Seconds, d.Kind);
+                end = new DateTime(d.Year, d.Month, d.Day, vEndTime.Hours, vEndTime.Minutes, vEndTime.Seconds, d.Kind);
                 while (end.DayOfWeek != EndDay)
                     end = end.AddDays(1);
                 if (DateTime.Compare(d, end) > 0) // d is later than end
@@ -107,7 +103,7 @@ namespace QuickFix
             }
             else
             {
-                end = new DateTime(d.Year, d.Month, d.Day, EndTime.Hours, EndTime.Minutes, EndTime.Seconds, d.Kind);
+                end = new DateTime(d.Year, d.Month, d.Day, vEndTime.Hours, vEndTime.Minutes, vEndTime.Seconds, d.Kind);
                 if (DateTime.Compare(d, end) > 0) // d is later than end
                     end = end.AddDays(1);
             }
@@ -115,83 +111,48 @@ namespace QuickFix
             return end;
         }
 
-        // TODO: consider removing this function in v2.0, as it's not used.
-        /// <summary>
-        /// Return the latest EndTime (in UTC) before time.
-        /// </summary>
-        /// <param name="utc"></param>
-        /// <returns></returns>
-        public DateTime LastEndTime(DateTime utc)
-        {
-            if (NonStopSession)
-            {
-                throw new NotSupportedException("NonStopSession");
-            }
-
-            if (utc.Kind != DateTimeKind.Utc)
-                throw new ArgumentException("Only UTC time is supported", "time");
-
-            DateTime n = NextEndTime(utc);
-            if (WeeklySession)
-                n = n.AddDays(-7);
-            else
-                n = n.AddDays(-1);
-
-            if (UseLocalTime)
-                return n.ToUniversalTime();
-            if (TimeZone != null)
-                return TimeZoneInfo.ConvertTimeBySystemTimeZoneId(n, this.TimeZone.Id, "UTC");
-            return n;
-        }
-
         /// <summary>
         /// return true if time falls within StartTime/EndTime
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        private bool CheckDay(System.DateTime time)
+        private bool CheckDay(DateTime time)
         {
             if (NonStopSession)
-            {
                 throw new InvalidOperationException("NonStopSession is set -- this should never be called.");
-            }
-            if (StartDay < EndDay)
+
+            DayOfWeek vStartDay = StartDay ?? throw new QuickFix.ConfigError("StartDay is null");
+            DayOfWeek vEndDay = EndDay ?? throw new QuickFix.ConfigError("EndDay is null");
+            TimeSpan vStartTime = StartTime ?? throw new QuickFix.ConfigError("StartTime is null");
+            TimeSpan vEndTime = EndTime ?? throw new QuickFix.ConfigError("EndTime is null");
+
+            if (vStartDay < vEndDay)
             {
-                if (time.DayOfWeek < StartDay || time.DayOfWeek > EndDay)
-                {
+                if (time.DayOfWeek < vStartDay || time.DayOfWeek > vEndDay)
                     return false;
-                }
-                else if (time.DayOfWeek < EndDay)
-                {
-                    return (StartDay < time.DayOfWeek) || (StartTime.CompareTo(time.TimeOfDay) <= 0);
-                }
-                else
-                {
-                    return (time.DayOfWeek < EndDay) || (EndTime.CompareTo(time.TimeOfDay) >= 0);
-                }
+
+                if (time.DayOfWeek < vEndDay)
+                    return (vStartDay < time.DayOfWeek) || (vStartTime.CompareTo(time.TimeOfDay) <= 0);
+
+                return (time.DayOfWeek < vEndDay) || (vEndTime.CompareTo(time.TimeOfDay) >= 0);
             }
 
-            if (EndDay < StartDay)
+            if (vEndDay < vStartDay)
             {
-                if (EndDay < time.DayOfWeek && time.DayOfWeek < StartDay)
-                {
+                if (vEndDay < time.DayOfWeek && time.DayOfWeek < vStartDay)
                     return false;
-                }
-                else if (time.DayOfWeek < StartDay)
-                {
-                    return (time.DayOfWeek < EndDay) || (EndTime.CompareTo(time.TimeOfDay) >= 0);
-                }
-                else
-                {
-                    return (time.DayOfWeek > StartDay) || (StartTime.CompareTo(time.TimeOfDay) <= 0);
-                }
+
+                if (time.DayOfWeek < vStartDay)
+                    return (time.DayOfWeek < vEndDay) || (vEndTime.CompareTo(time.TimeOfDay) >= 0);
+
+                return (time.DayOfWeek > vStartDay) || (vStartTime.CompareTo(time.TimeOfDay) <= 0);
             }
 
             //start day must be same as end day
-            if (StartTime >= EndTime)
-                return time.DayOfWeek != StartDay || CheckTime(time.TimeOfDay);
-            else
-                return time.DayOfWeek == StartDay && CheckTime(time.TimeOfDay);
+            if (vStartTime >= vEndTime)
+                return time.DayOfWeek != vStartDay || CheckTime(time.TimeOfDay);
+
+            return time.DayOfWeek == vStartDay && CheckTime(time.TimeOfDay);
         }
 
         /// <summary>
@@ -199,22 +160,24 @@ namespace QuickFix
         /// </summary>
         /// <param name="time"></param>
         /// <returns></returns>
-        private bool CheckTime(System.TimeSpan time)
+        private bool CheckTime(TimeSpan time)
         {
             if (NonStopSession)
-            {
                 return true;
+
+            TimeSpan vStartTime = StartTime ?? throw new QuickFix.ConfigError("StartTime is null");
+            TimeSpan vEndTime = EndTime ?? throw new QuickFix.ConfigError("EndTime is null");
+
+            if (vStartTime.CompareTo(vEndTime) < 0)
+            {
+                return (time.CompareTo(vStartTime) >= 0 &&
+                    time.CompareTo(vEndTime) <= 0);
             }
 
-            if (StartTime.CompareTo(EndTime) < 0)
+            if (vStartTime.CompareTo(vEndTime) > 0)
             {
-                return (time.CompareTo(StartTime) >= 0 &&
-                    time.CompareTo(EndTime) <= 0);
-            }
-            else if (StartTime.CompareTo(EndTime) > 0)
-            {
-                return (time.CompareTo(StartTime) >= 0 ||
-                    time.CompareTo(EndTime) <= 0);
+                return time.CompareTo(vStartTime) >= 0 ||
+                    time.CompareTo(vEndTime) <= 0;
             }
 
             return true;
@@ -226,23 +189,16 @@ namespace QuickFix
         public SessionSchedule(QuickFix.Dictionary settings)
         {
             if (settings.Has(SessionSettings.NON_STOP_SESSION))
-            {
                 NonStopSession = settings.GetBool(SessionSettings.NON_STOP_SESSION);
-            }
+
             if (NonStopSession)
-            {
                 return;
-            }
 
             if (!settings.Has(SessionSettings.START_DAY) && settings.Has(SessionSettings.END_DAY))
-            {
                 throw new QuickFix.ConfigError("EndDay used without StartDay");
-            }
 
             if (settings.Has(SessionSettings.START_DAY) && !settings.Has(SessionSettings.END_DAY))
-            {
                 throw new QuickFix.ConfigError("StartDay used without EndDay");
-            }
 
             if (settings.Has(SessionSettings.START_DAY) && settings.Has(SessionSettings.END_DAY))
             {
@@ -264,18 +220,18 @@ namespace QuickFix
                         SessionSettings.TIME_ZONE + " conflicts with " + SessionSettings.USE_LOCAL_TIME);
                 }
                 string id = settings.GetString(SessionSettings.TIME_ZONE);
-                TimeZone = System.TimeZoneInfo.FindSystemTimeZoneById(id);
+                TimeZone = TimeZoneInfo.FindSystemTimeZoneById(id);
             }
 
             try
             {
-                this.StartTime = System.TimeSpan.Parse(
+                StartTime = TimeSpan.Parse(
                     settings.GetString(SessionSettings.START_TIME));
 
-                this.EndTime = System.TimeSpan.Parse(
+                EndTime = TimeSpan.Parse(
                     settings.GetString(SessionSettings.END_TIME));
             }
-            catch (System.FormatException e)
+            catch (FormatException e)
             {
                 throw new ConfigError(e.Message);
             }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Text;
 using System.Globalization;
 
 namespace QuickFix.Fields.Converters
@@ -61,18 +60,18 @@ namespace QuickFix.Fields.Converters
             System.DateTimeKind kind;
             int offset = 0;
 
-            if (dec.EndsWith("Z"))
+            if (dec.EndsWith('Z'))
             {
                 // UTC
                 dec = dec.Substring(0, dec.Length - 1);
                 kind = System.DateTimeKind.Utc;
             }
-            else if (dec.Contains("+") || dec.Contains("-"))
+            else if (dec.Contains('+') || dec.Contains('-'))
             {
                 // GMT offset
-                int n = dec.Contains("+") ? dec.IndexOf('+') : dec.IndexOf('-');
-                kind = System.DateTimeKind.Utc;
-                offset = int.Parse(dec.Substring(n + 1));
+                int n = dec.Contains('+') ? dec.IndexOf('+') : dec.IndexOf('-');
+                kind = System.DateTimeKind.Unspecified;
+                offset = int.Parse(dec.Substring(n));
                 dec = dec.Substring(0, n);
             }
             else
@@ -87,7 +86,7 @@ namespace QuickFix.Fields.Converters
             // apply GMT offset
             if (offset != 0)
             {
-                d = new System.DateTimeOffset(d).ToOffset(System.TimeSpan.FromHours(offset)).DateTime;
+                d = new System.DateTimeOffset(d, System.TimeSpan.FromHours(offset)).UtcDateTime;
             }
 
             long ticks = frac / NanosecondsPerTick;

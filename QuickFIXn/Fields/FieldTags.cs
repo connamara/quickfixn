@@ -1,10 +1,12 @@
+// This is a generated file.  Don't edit it directly!
+
 using System;
 
 namespace QuickFix.Fields
 {
     /// <summary>
     /// FIX Field Tag Values
-    /// </summary>/
+    /// </summary>
     public static class Tags
     {
         public const int Account = 1;

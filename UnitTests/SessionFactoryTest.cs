@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 using QuickFix;
+using QuickFix.Store;
 
 namespace UnitTests
 {

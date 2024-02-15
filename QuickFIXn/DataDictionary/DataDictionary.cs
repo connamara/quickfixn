@@ -68,11 +68,11 @@ namespace QuickFix.DataDictionary
             this.FieldsByName = src.FieldsByName;
             this.FieldsByTag = src.FieldsByTag;
             if (null != src.MajorVersion)
-                this.MajorVersion = string.Copy(src.MajorVersion);
+                this.MajorVersion = src.MajorVersion;
             if (null != src.MinorVersion)
-                this.MinorVersion = string.Copy(src.MinorVersion);
+                this.MinorVersion = src.MinorVersion;
             if (null != src.Version)
-                this.Version = string.Copy(src.Version);
+                this.Version = src.Version;
             this.CheckFieldsHaveValues = src.CheckFieldsHaveValues;
             this.CheckFieldsOutOfOrder = src.CheckFieldsOutOfOrder;
             this.CheckUserDefinedFields = src.CheckUserDefinedFields;
@@ -90,8 +90,7 @@ namespace QuickFix.DataDictionary
 
             if (((null != sessionDataDict) && sessionDataDict.CheckFieldsOutOfOrder) || ((null != appDataDict) && appDataDict.CheckFieldsOutOfOrder))
             {
-                int field;
-                if (!message.HasValidStructure(out field))
+                if (!message.HasValidStructure(out var field))
                     throw new TagOutOfOrder(field);
             }
 
