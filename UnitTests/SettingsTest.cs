@@ -32,14 +32,14 @@ EqualsInValue=We can have '=' in the value
 ";
             Settings settings = new Settings(new System.IO.StringReader(configuration));
 
-            LinkedList<QuickFix.Dictionary> foo = settings.Get("FOO");
+            LinkedList<QuickFix.SettingsDictionary> foo = settings.Get("FOO");
             Assert.That(foo.Count, Is.EqualTo(1));
             Assert.That(foo.First.Value.GetLong("bar"), Is.EqualTo(24));
             Assert.That(foo.First.Value.GetString("baz"), Is.EqualTo("moo"));
             Assert.That(foo.First.Value.GetString("baz"), Is.EqualTo("moo"));
             Assert.That(foo.First.Value.Count, Is.EqualTo(2));
 
-            LinkedList<QuickFix.Dictionary> oren = settings.Get("OREN");
+            LinkedList<QuickFix.SettingsDictionary> oren = settings.Get("OREN");
             Assert.That(oren.Count, Is.EqualTo(2));            
             Assert.That(oren.First.Value.Count, Is.EqualTo(1));
             Assert.That(oren.First.Value.GetString("Nero"), Is.EqualTo("TW"));
@@ -48,7 +48,7 @@ EqualsInValue=We can have '=' in the value
             Assert.That(oren.First.Value.GetString("ISLD"), Is.EqualTo("Nero"));
             Assert.That(oren.First.Value.GetString("STUFF"), Is.EqualTo("./\\:"));
 
-            LinkedList<QuickFix.Dictionary> nero = settings.Get("NERO");
+            LinkedList<QuickFix.SettingsDictionary> nero = settings.Get("NERO");
             Assert.That(nero.Count, Is.EqualTo(1));
             Assert.That(nero.First.Value.Count, Is.EqualTo(5));
             Assert.That(nero.First.Value.GetString("WINDIR"), Is.EqualTo("D:\\This Is\\A-Directory\\Connamara\\"));
@@ -68,14 +68,14 @@ two=dos
 what=huh";
             Settings settings = new Settings(new System.IO.StringReader(configuration));
 
-            LinkedList<QuickFix.Dictionary> byLower = settings.Get("foo");
+            LinkedList<QuickFix.SettingsDictionary> byLower = settings.Get("foo");
             Assert.AreEqual(1, byLower.Count);
             Assert.AreEqual(2, byLower.First.Value.Count);
             Assert.AreEqual("uno", byLower.First.Value.GetString("one"));
             Assert.AreEqual("dos", byLower.First.Value.GetString("two"));
 
             // too lazy to write a QuickFix.Dictionary#Equals method (which would only be used by this test)
-            LinkedList<QuickFix.Dictionary> byUpper = settings.Get("FOO");
+            LinkedList<QuickFix.SettingsDictionary> byUpper = settings.Get("FOO");
             Assert.AreEqual(byLower.Count, byUpper.Count);
             Assert.AreEqual(byLower.First.Value.Count, byUpper.First.Value.Count);
             Assert.AreEqual(byUpper.First.Value.GetString("one"), byUpper.First.Value.GetString("one"));

@@ -33,7 +33,7 @@ namespace QuickFix
         private readonly SocketReader _socketReader;
         private readonly FileLog _log;
 
-        internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.Dictionary settingsDict,
+        internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.SettingsDictionary settingsDict,
             SocketSettings socketSettings, AcceptorSocketDescriptor? acceptorDescriptor)
         {
             string debugLogFilePath = "log";

@@ -51,6 +51,11 @@ What's New
      * ScreenLog ctor: removed unused sessionId param
      * ScreenLogFactory: remove public vars and a ctor that no one should be using
 * #708 - In FIX50, rename field SecurityStat to SecurityStatus, to match SP1 and SP2 (gbirchmeier)
+* #639 - address Dictionary ctor bug, then cleanup/nullable-ize (gbirchmeier)
+     * rename to SettingsDictionary to reduce name confusion with System.Collections.Generic.Dictionary
+     * privatize a ctor that takes a generic Dict; apps shouldn't use it
+     * remove the copy ctor that takes only a SessionDict; replace it with one
+       that explicitly requires a name also
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)

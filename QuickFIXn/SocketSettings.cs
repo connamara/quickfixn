@@ -166,63 +166,63 @@ namespace QuickFix
         /// used "Configure" as name since it is used in a lot of other places, 
         /// alternative names are ReadSettings or FromDictionary 
         /// </remarks>
-        /// <param name="dictionary">the dictionary to read the settings from</param>
-        public void Configure(QuickFix.Dictionary dictionary)
+        /// <param name="settingsDictionary">the dictionary to read the settings from</param>
+        public void Configure(QuickFix.SettingsDictionary settingsDictionary)
         {
-            if (dictionary.Has(SessionSettings.SOCKET_IGNORE_PROXY))
-                SocketIgnoreProxy = dictionary.GetBool(SessionSettings.SOCKET_IGNORE_PROXY);
+            if (settingsDictionary.Has(SessionSettings.SOCKET_IGNORE_PROXY))
+                SocketIgnoreProxy = settingsDictionary.GetBool(SessionSettings.SOCKET_IGNORE_PROXY);
 
-            if (dictionary.Has(SessionSettings.SOCKET_NODELAY))
-                SocketNodelay = dictionary.GetBool(SessionSettings.SOCKET_NODELAY);
+            if (settingsDictionary.Has(SessionSettings.SOCKET_NODELAY))
+                SocketNodelay = settingsDictionary.GetBool(SessionSettings.SOCKET_NODELAY);
 
-            if (dictionary.Has(SessionSettings.SOCKET_RECEIVE_BUFFER_SIZE))
-                SocketReceiveBufferSize = dictionary.GetInt(SessionSettings.SOCKET_RECEIVE_BUFFER_SIZE);
+            if (settingsDictionary.Has(SessionSettings.SOCKET_RECEIVE_BUFFER_SIZE))
+                SocketReceiveBufferSize = settingsDictionary.GetInt(SessionSettings.SOCKET_RECEIVE_BUFFER_SIZE);
 
-            if (dictionary.Has(SessionSettings.SOCKET_SEND_BUFFER_SIZE))
-                SocketSendBufferSize = dictionary.GetInt(SessionSettings.SOCKET_SEND_BUFFER_SIZE);
+            if (settingsDictionary.Has(SessionSettings.SOCKET_SEND_BUFFER_SIZE))
+                SocketSendBufferSize = settingsDictionary.GetInt(SessionSettings.SOCKET_SEND_BUFFER_SIZE);
 
-            if (dictionary.Has(SessionSettings.SOCKET_RECEIVE_TIMEOUT))
-                SocketReceiveTimeout = dictionary.GetInt(SessionSettings.SOCKET_RECEIVE_TIMEOUT);
+            if (settingsDictionary.Has(SessionSettings.SOCKET_RECEIVE_TIMEOUT))
+                SocketReceiveTimeout = settingsDictionary.GetInt(SessionSettings.SOCKET_RECEIVE_TIMEOUT);
 
-            if (dictionary.Has(SessionSettings.SOCKET_SEND_TIMEOUT))
-                SocketSendTimeout = dictionary.GetInt(SessionSettings.SOCKET_SEND_TIMEOUT);
+            if (settingsDictionary.Has(SessionSettings.SOCKET_SEND_TIMEOUT))
+                SocketSendTimeout = settingsDictionary.GetInt(SessionSettings.SOCKET_SEND_TIMEOUT);
 
-            if (dictionary.Has(SessionSettings.SSL_SERVERNAME))
-                ServerCommonName = dictionary.GetString(SessionSettings.SSL_SERVERNAME);
+            if (settingsDictionary.Has(SessionSettings.SSL_SERVERNAME))
+                ServerCommonName = settingsDictionary.GetString(SessionSettings.SSL_SERVERNAME);
 
-            if (dictionary.Has(SessionSettings.SSL_CA_CERTIFICATE))
-                CACertificatePath = dictionary.GetString(SessionSettings.SSL_CA_CERTIFICATE);
+            if (settingsDictionary.Has(SessionSettings.SSL_CA_CERTIFICATE))
+                CACertificatePath = settingsDictionary.GetString(SessionSettings.SSL_CA_CERTIFICATE);
 
-            if (dictionary.Has(SessionSettings.SSL_CERTIFICATE))
-                CertificatePath = dictionary.GetString(SessionSettings.SSL_CERTIFICATE);
+            if (settingsDictionary.Has(SessionSettings.SSL_CERTIFICATE))
+                CertificatePath = settingsDictionary.GetString(SessionSettings.SSL_CERTIFICATE);
 
-            if (dictionary.Has(SessionSettings.SSL_CERTIFICATE_PASSWORD))
-                CertificatePassword = dictionary.GetString(SessionSettings.SSL_CERTIFICATE_PASSWORD);
+            if (settingsDictionary.Has(SessionSettings.SSL_CERTIFICATE_PASSWORD))
+                CertificatePassword = settingsDictionary.GetString(SessionSettings.SSL_CERTIFICATE_PASSWORD);
 
-            if (dictionary.Has(SessionSettings.SSL_VALIDATE_CERTIFICATES))
-                ValidateCertificates = dictionary.GetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES);
+            if (settingsDictionary.Has(SessionSettings.SSL_VALIDATE_CERTIFICATES))
+                ValidateCertificates = settingsDictionary.GetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES);
 
-            if (dictionary.Has(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION))
+            if (settingsDictionary.Has(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION))
             {
                 // can only be true if ValdateCertificates is true (this is noted in the config docs)
-                CheckCertificateRevocation = ValidateCertificates && dictionary.GetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION);
+                CheckCertificateRevocation = ValidateCertificates && settingsDictionary.GetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION);
             }
 
             // Use setting for client certificate check if one exist 
             // otherwise enable client certificate check if a ca certificate is specified
-            if (dictionary.Has(SessionSettings.SSL_REQUIRE_CLIENT_CERTIFICATE))
-                RequireClientCertificate = dictionary.GetBool(SessionSettings.SSL_REQUIRE_CLIENT_CERTIFICATE);
+            if (settingsDictionary.Has(SessionSettings.SSL_REQUIRE_CLIENT_CERTIFICATE))
+                RequireClientCertificate = settingsDictionary.GetBool(SessionSettings.SSL_REQUIRE_CLIENT_CERTIFICATE);
 
             // Use setting for SSL if one exist 
             // otherwise enable ssl if certificate path is specified 
-            if (dictionary.Has(SessionSettings.SSL_ENABLE))
-                UseSSL = dictionary.GetBool(SessionSettings.SSL_ENABLE);
+            if (settingsDictionary.Has(SessionSettings.SSL_ENABLE))
+                UseSSL = settingsDictionary.GetBool(SessionSettings.SSL_ENABLE);
             else
                 UseSSL = !string.IsNullOrEmpty(CertificatePath);
 
-            if (dictionary.Has(SessionSettings.SSL_PROTOCOLS))
+            if (settingsDictionary.Has(SessionSettings.SSL_PROTOCOLS))
             {
-                var protocolString = dictionary.GetString(SessionSettings.SSL_PROTOCOLS);
+                var protocolString = settingsDictionary.GetString(SessionSettings.SSL_PROTOCOLS);
 
                 try
                 {

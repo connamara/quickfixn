@@ -49,7 +49,7 @@ namespace QuickFix
         /// <param name="sessionID">ID of session to be added</param>
         /// <param name="dict">session settings</param>
         /// <returns>>true if session added successfully, false if session already exists or is not an acceptor</returns>
-        bool AddSession(SessionID sessionID, QuickFix.Dictionary dict);
+        bool AddSession(SessionID sessionID, QuickFix.SettingsDictionary dict);
 
         /// <summary>
         /// Remove an existing session after acceptor has been started
