@@ -273,7 +273,7 @@ namespace QuickFix
 
             public class NoMDEntriesGroup : Group
             {
-                public static int[] fieldOrder = {Tags.MDUpdateAction, Tags.DeleteReason, Tags.MDEntryType, Tags.MDEntryID, Tags.MDEntryRefID, Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.SecurityIDSource, Tags.NoSecurityAltID, Tags.Product, Tags.CFICode, Tags.SecurityType, Tags.SecuritySubType, Tags.MaturityMonthYear, Tags.MaturityDate, Tags.CouponPaymentDate, Tags.IssueDate, Tags.RepoCollateralSecurityType, Tags.RepurchaseTerm, Tags.RepurchaseRate, Tags.Factor, Tags.CreditRating, Tags.InstrRegistry, Tags.CountryOfIssue, Tags.StateOrProvinceOfIssue, Tags.LocaleOfIssue, Tags.RedemptionDate, Tags.StrikePrice, Tags.StrikeCurrency, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, Tags.Pool, Tags.ContractSettlMonth, Tags.CPProgram, Tags.CPRegType, Tags.NoEvents, Tags.DatedDate, Tags.InterestAccrualDate, Tags.SecurityStat, Tags.SettleOnOpenFlag, Tags.InstrmtAssignmentMethod, Tags.StrikeMultiplier, Tags.StrikeValue, Tags.MinPriceIncrement, Tags.PositionLimit, Tags.NTPositionLimit, Tags.NoInstrumentParties, Tags.UnitOfMeasure, Tags.TimeUnit, Tags.MaturityTime, Tags.NoUnderlyings, Tags.NoLegs, Tags.FinancialStatus, Tags.CorporateAction, Tags.MDEntryPx, Tags.Currency, Tags.MDEntrySize, Tags.MDEntryDate, Tags.MDEntryTime, Tags.TickDirection, Tags.MDMkt, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.QuoteCondition, Tags.TradeCondition, Tags.MDEntryOriginator, Tags.LocationID, Tags.DeskID, Tags.OpenCloseSettlFlag, Tags.TimeInForce, Tags.ExpireDate, Tags.ExpireTime, Tags.MinQty, Tags.ExecInst, Tags.SellerDays, Tags.OrderID, Tags.QuoteEntryID, Tags.MDEntryBuyer, Tags.MDEntrySeller, Tags.NumberOfOrders, Tags.MDEntryPositionNo, Tags.Scope, Tags.PriceDelta, Tags.NetChgPrevDay, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, Tags.OrderCapacity, Tags.MDOriginType, Tags.HighPx, Tags.LowPx, Tags.TradeVolume, Tags.SettlType, Tags.SettlDate, Tags.MDQuoteType, Tags.RptSeq, Tags.DealingCapacity, Tags.MDEntrySpotRate, Tags.MDEntryForwardPoints, Tags.MDPriceLevel, Tags.NoPartyIDs, Tags.SecondaryOrderID, Tags.OrdType, 0};
+                public static int[] fieldOrder = {Tags.MDUpdateAction, Tags.DeleteReason, Tags.MDEntryType, Tags.MDEntryID, Tags.MDEntryRefID, Tags.Symbol, Tags.SymbolSfx, Tags.SecurityID, Tags.SecurityIDSource, Tags.NoSecurityAltID, Tags.Product, Tags.CFICode, Tags.SecurityType, Tags.SecuritySubType, Tags.MaturityMonthYear, Tags.MaturityDate, Tags.CouponPaymentDate, Tags.IssueDate, Tags.RepoCollateralSecurityType, Tags.RepurchaseTerm, Tags.RepurchaseRate, Tags.Factor, Tags.CreditRating, Tags.InstrRegistry, Tags.CountryOfIssue, Tags.StateOrProvinceOfIssue, Tags.LocaleOfIssue, Tags.RedemptionDate, Tags.StrikePrice, Tags.StrikeCurrency, Tags.OptAttribute, Tags.ContractMultiplier, Tags.CouponRate, Tags.SecurityExchange, Tags.Issuer, Tags.EncodedIssuerLen, Tags.EncodedIssuer, Tags.SecurityDesc, Tags.EncodedSecurityDescLen, Tags.EncodedSecurityDesc, Tags.Pool, Tags.ContractSettlMonth, Tags.CPProgram, Tags.CPRegType, Tags.NoEvents, Tags.DatedDate, Tags.InterestAccrualDate, Tags.SecurityStatus, Tags.SettleOnOpenFlag, Tags.InstrmtAssignmentMethod, Tags.StrikeMultiplier, Tags.StrikeValue, Tags.MinPriceIncrement, Tags.PositionLimit, Tags.NTPositionLimit, Tags.NoInstrumentParties, Tags.UnitOfMeasure, Tags.TimeUnit, Tags.MaturityTime, Tags.NoUnderlyings, Tags.NoLegs, Tags.FinancialStatus, Tags.CorporateAction, Tags.MDEntryPx, Tags.Currency, Tags.MDEntrySize, Tags.MDEntryDate, Tags.MDEntryTime, Tags.TickDirection, Tags.MDMkt, Tags.TradingSessionID, Tags.TradingSessionSubID, Tags.QuoteCondition, Tags.TradeCondition, Tags.MDEntryOriginator, Tags.LocationID, Tags.DeskID, Tags.OpenCloseSettlFlag, Tags.TimeInForce, Tags.ExpireDate, Tags.ExpireTime, Tags.MinQty, Tags.ExecInst, Tags.SellerDays, Tags.OrderID, Tags.QuoteEntryID, Tags.MDEntryBuyer, Tags.MDEntrySeller, Tags.NumberOfOrders, Tags.MDEntryPositionNo, Tags.Scope, Tags.PriceDelta, Tags.NetChgPrevDay, Tags.Text, Tags.EncodedTextLen, Tags.EncodedText, Tags.OrderCapacity, Tags.MDOriginType, Tags.HighPx, Tags.LowPx, Tags.TradeVolume, Tags.SettlType, Tags.SettlDate, Tags.MDQuoteType, Tags.RptSeq, Tags.DealingCapacity, Tags.MDEntrySpotRate, Tags.MDEntryForwardPoints, Tags.MDPriceLevel, Tags.NoPartyIDs, Tags.SecondaryOrderID, Tags.OrdType, 0};
 
                 public NoMDEntriesGroup()
                   : base(Tags.NoMDEntries, Tags.MDUpdateAction, fieldOrder)
@@ -1791,36 +1791,36 @@ namespace QuickFix
                     return IsSetField(Tags.InterestAccrualDate);
                 }
 
-                public QuickFix.Fields.SecurityStat SecurityStat
+                public QuickFix.Fields.SecurityStatus SecurityStatus
                 {
                     get
                     {
-                        QuickFix.Fields.SecurityStat val = new QuickFix.Fields.SecurityStat();
+                        QuickFix.Fields.SecurityStatus val = new QuickFix.Fields.SecurityStatus();
                         GetField(val);
                         return val;
                     }
                     set { SetField(value); }
                 }
 
-                public void Set(QuickFix.Fields.SecurityStat val)
+                public void Set(QuickFix.Fields.SecurityStatus val)
                 {
-                    this.SecurityStat = val;
+                    this.SecurityStatus = val;
                 }
 
-                public QuickFix.Fields.SecurityStat Get(QuickFix.Fields.SecurityStat val)
+                public QuickFix.Fields.SecurityStatus Get(QuickFix.Fields.SecurityStatus val)
                 {
                     GetField(val);
                     return val;
                 }
 
-                public bool IsSet(QuickFix.Fields.SecurityStat val)
+                public bool IsSet(QuickFix.Fields.SecurityStatus val)
                 {
-                    return IsSetSecurityStat();
+                    return IsSetSecurityStatus();
                 }
 
-                public bool IsSetSecurityStat()
+                public bool IsSetSecurityStatus()
                 {
-                    return IsSetField(Tags.SecurityStat);
+                    return IsSetField(Tags.SecurityStatus);
                 }
 
                 public QuickFix.Fields.SettleOnOpenFlag SettleOnOpenFlag
