@@ -50,6 +50,7 @@ What's New
      * FileLog: remove the single-param ctor, no reason for anyone to use it
      * ScreenLog ctor: removed unused sessionId param
      * ScreenLogFactory: remove public vars and a ctor that no one should be using
+* #708 - In FIX50, rename field SecurityStat to SecurityStatus, to match SP1 and SP2 (gbirchmeier)
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)

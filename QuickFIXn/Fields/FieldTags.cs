@@ -998,7 +998,7 @@ namespace QuickFix.Fields
         public const int SideTimeInForce = 962;
         public const int MDReportID = 963;
         public const int SecurityReportID = 964;
-        public const int SecurityStat = 965;
+        public const int SecurityStatus = 965;
         public const int SettleOnOpenFlag = 966;
         public const int StrikeMultiplier = 967;
         public const int StrikeValue = 968;
@@ -1167,7 +1167,6 @@ namespace QuickFix.Fields
         public const int DefaultApplVerID = 1137;
         public const int DisplayQty = 1138;
         public const int ExchangeSpecialInstructions = 1139;
-        public const int SecurityStatus = 965;
         public const int ExpirationQtyType = 982;
         public const int MaxTradeVol = 1140;
         public const int NoMDFeedTypes = 1141;
