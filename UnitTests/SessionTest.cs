@@ -176,7 +176,7 @@ namespace UnitTests
         MockApplication application = null;
         QuickFix.Session session = null;
         QuickFix.Session session2 = null;
-        QuickFix.Dictionary config = null;
+        QuickFix.SettingsDictionary config = null;
         SeqNumType seqNum = 1;
         Regex msRegex = new Regex(@"\.[\d]{1,3}$");
         Regex microsecondRegex = new Regex(@"\.[\d]{1,6}$");
@@ -189,7 +189,7 @@ namespace UnitTests
             application = new MockApplication();
             settings = new QuickFix.SessionSettings();
 
-            config = new QuickFix.Dictionary();
+            config = new QuickFix.SettingsDictionary();
             config.SetBool(QuickFix.SessionSettings.PERSIST_MESSAGES, false);
             config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
             config.SetString(QuickFix.SessionSettings.START_TIME, "00:00:00");

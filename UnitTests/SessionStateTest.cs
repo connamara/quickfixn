@@ -141,7 +141,7 @@ namespace UnitTests
 
             SessionID sessionId = new SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
 
-            Dictionary config = new Dictionary();
+            SettingsDictionary config = new SettingsDictionary();
             config.SetString(SessionSettings.CONNECTION_TYPE, "initiator");
             config.SetString(SessionSettings.FILE_STORE_PATH, storeDirectory);
 

@@ -196,20 +196,20 @@ namespace UnitTests
             SessionID sessionID = new SessionID("FIX.4.2", "SenderCompID", "TargetCompID");
             
             // ConnectionType not set
-            QuickFix.Dictionary dictionary = new QuickFix.Dictionary();
-            Assert.Throws<ConfigError>(delegate { settings.Set(sessionID, dictionary); });
+            QuickFix.SettingsDictionary settingsDictionary = new QuickFix.SettingsDictionary();
+            Assert.Throws<ConfigError>(delegate { settings.Set(sessionID, settingsDictionary); });
 
             // ConnectionType set to invalid value
-            dictionary.SetString(SessionSettings.CONNECTION_TYPE, "badvalue");
-            Assert.Throws<ConfigError>(delegate { settings.Set(sessionID, dictionary); });
+            settingsDictionary.SetString(SessionSettings.CONNECTION_TYPE, "badvalue");
+            Assert.Throws<ConfigError>(delegate { settings.Set(sessionID, settingsDictionary); });
 
             // ConnectionType set to valid value
-            dictionary.SetString(SessionSettings.CONNECTION_TYPE, "initiator");
-            Assert.DoesNotThrow(delegate { settings.Set(sessionID, dictionary); });
+            settingsDictionary.SetString(SessionSettings.CONNECTION_TYPE, "initiator");
+            Assert.DoesNotThrow(delegate { settings.Set(sessionID, settingsDictionary); });
             
             // Invalid BeginString
             sessionID = new SessionID("FIX4.2", "SenderCompID", "TargetCompID");
-            Assert.Throws<ConfigError>(delegate { settings.Set(sessionID, dictionary); });
+            Assert.Throws<ConfigError>(delegate { settings.Set(sessionID, settingsDictionary); });
         }
 
         [Test]

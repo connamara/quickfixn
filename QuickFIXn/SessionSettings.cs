@@ -85,8 +85,8 @@ namespace QuickFix
 
         #region Private Members
 
-        private QuickFix.Dictionary _defaults = new();
-        private readonly System.Collections.Generic.Dictionary<SessionID, QuickFix.Dictionary> _settings = new();
+        private SettingsDictionary _defaults = new();
+        private readonly Dictionary<SessionID, SettingsDictionary> _settings = new();
 
         #endregion
 
@@ -121,15 +121,15 @@ namespace QuickFix
             Settings settings = new Settings(conf);
 
             //---- load the DEFAULT section
-            LinkedList<QuickFix.Dictionary> section = settings.Get("DEFAULT");
-            QuickFix.Dictionary def = new();
-            if (section.Count > 0)
-                def = section.First!.Value;
+            LinkedList<SettingsDictionary> section = settings.Get("DEFAULT");
+            SettingsDictionary def = section.Count > 0
+                ? section.First!.Value
+                : new SettingsDictionary(name: "DEFAULT");
             Set(def);
 
             //---- load each SESSION section
             section = settings.Get("SESSION");
-            foreach (QuickFix.Dictionary dict in section)
+            foreach (SettingsDictionary dict in section)
             {
                 dict.Merge(def);
 
@@ -163,7 +163,7 @@ namespace QuickFix
         /// Get global default settings
         /// </summary>
         /// <returns>Dictionary of settings from the [DEFAULT] section</returns>
-        public QuickFix.Dictionary Get()
+        public QuickFix.SettingsDictionary Get()
         {
             return _defaults;
         }
@@ -173,17 +173,17 @@ namespace QuickFix
         /// </summary>
         /// <param name="sessionId">the ID of the session</param>
         /// <returns>Dictionary of settings from the [SESSION] section for the given SessionID</returns>
-        public Dictionary Get(SessionID sessionId)
+        public SettingsDictionary Get(SessionID sessionId)
         {
             if (!_settings.TryGetValue(sessionId, out var dict))
                 throw new ConfigError($"Session '{sessionId}' not found");
             return dict;
         }
 
-        public void Set(QuickFix.Dictionary defaults)
+        public void Set(QuickFix.SettingsDictionary defaults)
         {
             _defaults = defaults;
-            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in _settings)
+            foreach (KeyValuePair<SessionID, QuickFix.SettingsDictionary> entry in _settings)
                 entry.Value.Merge(_defaults);
         }
 
@@ -202,7 +202,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="sessionId">ID of session for which to add config</param>
         /// <param name="settings">session config</param>
-        public void Set(SessionID sessionId, QuickFix.Dictionary settings)
+        public void Set(SessionID sessionId, QuickFix.SettingsDictionary settings)
         {
             if (Has(sessionId))
                 throw new ConfigError($"Duplicate Session {sessionId}");
@@ -225,7 +225,7 @@ namespace QuickFix
         public HashSet<SessionID> GetSessions()
         {
             HashSet<SessionID> result = new HashSet<SessionID>();
-            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in _settings)
+            foreach (KeyValuePair<SessionID, QuickFix.SettingsDictionary> entry in _settings)
                 result.Add(entry.Key);
             return result;
         }
@@ -238,7 +238,7 @@ namespace QuickFix
             foreach (System.Collections.Generic.KeyValuePair<string, string> entry in _defaults)
                 s.Append(entry.Key).Append('=').AppendLine(entry.Value);
 
-            foreach (KeyValuePair<SessionID, QuickFix.Dictionary> entry in _settings)
+            foreach (KeyValuePair<SessionID, QuickFix.SettingsDictionary> entry in _settings)
             {
                 s.AppendLine().AppendLine("[SESSION]");
                 foreach (System.Collections.Generic.KeyValuePair<string, string> kvp in entry.Value)
@@ -252,9 +252,9 @@ namespace QuickFix
             return s.ToString();
         }
 
-        protected void Validate(QuickFix.Dictionary dictionary)
+        protected void Validate(QuickFix.SettingsDictionary settingsDictionary)
         {
-            string beginString = dictionary.GetString(BEGINSTRING);
+            string beginString = settingsDictionary.GetString(BEGINSTRING);
             if (beginString != Values.BeginString_FIX40 &&
                 beginString != Values.BeginString_FIX41 &&
                 beginString != Values.BeginString_FIX42 &&
@@ -265,7 +265,7 @@ namespace QuickFix
                 throw new ConfigError($"{BEGINSTRING} ({beginString}) must be FIX.4.0 to FIX.4.4 or FIXT.1.1");
             }
 
-            string connectionType = dictionary.GetString(CONNECTION_TYPE);
+            string connectionType = settingsDictionary.GetString(CONNECTION_TYPE);
             if (!"initiator".Equals(connectionType) && !"acceptor".Equals(connectionType))
             {
                 throw new ConfigError($"{CONNECTION_TYPE} must be 'initiator' or 'acceptor'");

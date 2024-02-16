@@ -48,7 +48,7 @@ namespace QuickFix
             {
                 foreach (SessionID sessionId in settings.GetSessions())
                 {
-                    QuickFix.Dictionary dict = settings.Get(sessionId);
+                    QuickFix.SettingsDictionary dict = settings.Get(sessionId);
                     CreateSession(sessionId, dict);
                 }
             }
@@ -62,7 +62,7 @@ namespace QuickFix
 
         #region Private Methods
 
-        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(Dictionary dict)
+        private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(SettingsDictionary dict)
         {
             int port = System.Convert.ToInt32(dict.GetLong(SessionSettings.SOCKET_ACCEPT_PORT));
             SocketSettings socketSettings = new SocketSettings();
@@ -118,7 +118,7 @@ namespace QuickFix
         /// <param name="sessionId">ID of new session</param>
         /// <param name="dict">config settings for new session</param>
         /// <returns>true if session added successfully, false if session already exists or is not an acceptor</returns>
-        private bool CreateSession(SessionID sessionId, Dictionary dict)
+        private bool CreateSession(SessionID sessionId, SettingsDictionary dict)
         {
             if (!_sessions.ContainsKey(sessionId))
             {
@@ -318,7 +318,7 @@ namespace QuickFix
         /// <param name="sessionId">ID of new session</param>
         /// <param name="dict">config settings for new session</param>
         /// <returns>true if session added successfully, false if session already exists or is not an acceptor</returns>
-        public bool AddSession(SessionID sessionId, Dictionary dict)
+        public bool AddSession(SessionID sessionId, SettingsDictionary dict)
         {
             lock (_settings)
                 if (!_settings.Has(sessionId)) // session won't be in settings if ad-hoc creation after startup

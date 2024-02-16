@@ -20,7 +20,7 @@ namespace QuickFix
 
         #endregion
 
-        public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.Dictionary sessionDict)
+        public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.SettingsDictionary sessionDict)
         {
             Address = socketEndPoint;
             SocketReactor = new ThreadedSocketReactor(Address, socketSettings, sessionDict, this);

@@ -53,7 +53,7 @@ public class FileLogTests
         QuickFix.SessionID sessionId = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
         QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
 
-        QuickFix.Dictionary config = new QuickFix.Dictionary();
+        QuickFix.SettingsDictionary config = new QuickFix.SettingsDictionary();
         config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
         config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, logDirectory);
 
@@ -74,7 +74,7 @@ public class FileLogTests
     public void TestThrowsIfNoConfig()
     {
         QuickFix.SessionID sessionId = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
-        QuickFix.Dictionary config = new QuickFix.Dictionary();
+        QuickFix.SettingsDictionary config = new QuickFix.SettingsDictionary();
         config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
         QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
         settings.Set(sessionId, config);

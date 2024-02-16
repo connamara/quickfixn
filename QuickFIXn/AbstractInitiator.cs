@@ -52,7 +52,7 @@ namespace QuickFix
             // create all sessions
             foreach (SessionID sessionId in _settings.GetSessions())
             {
-                Dictionary dict = _settings.Get(sessionId);
+                SettingsDictionary dict = _settings.Get(sessionId);
                 CreateSession(sessionId, dict);
             }
 
@@ -72,7 +72,7 @@ namespace QuickFix
         /// <param name="sessionId">ID of new session</param>
         /// <param name="dict">config settings for new session</param>
         /// <returns>true if session added successfully, false if session already exists or is not an initiator</returns>
-        public bool AddSession(SessionID sessionId, Dictionary dict)
+        public bool AddSession(SessionID sessionId, SettingsDictionary dict)
         {
             lock (_settings)
                 if (!_settings.Has(sessionId)) // session won't be in settings if ad-hoc creation after startup
@@ -94,7 +94,7 @@ namespace QuickFix
         /// <param name="sessionId">ID of new session</param>
         /// <param name="dict">config settings for new session</param>
         /// <returns>true if session added successfully, false if session already exists or is not an initiator</returns>
-        private bool CreateSession(SessionID sessionId, Dictionary dict)
+        private bool CreateSession(SessionID sessionId, SettingsDictionary dict)
         {
             if (dict.GetString(SessionSettings.CONNECTION_TYPE) == "initiator" && !_sessionIDs.Contains(sessionId))
             {
@@ -273,7 +273,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="session"></param>
         /// <param name="settings"></param>
-        protected abstract void DoConnect(Session session, QuickFix.Dictionary settings);
+        protected abstract void DoConnect(Session session, QuickFix.SettingsDictionary settings);
 
         #endregion
 

@@ -36,7 +36,7 @@ namespace QuickFix
             _messageFactory = messageFactory ?? new DefaultMessageFactory();
         }
 
-        private static bool DetectIfInitiator(QuickFix.Dictionary settings)
+        private static bool DetectIfInitiator(QuickFix.SettingsDictionary settings)
         {
             switch (settings.GetString(SessionSettings.CONNECTION_TYPE))
             {
@@ -46,7 +46,7 @@ namespace QuickFix
             throw new ConfigError("Invalid ConnectionType");
         }
 
-        public Session Create(SessionID sessionId, QuickFix.Dictionary settings)
+        public Session Create(SessionID sessionId, QuickFix.SettingsDictionary settings)
         {
             bool isInitiator = SessionFactory.DetectIfInitiator(settings);
 
@@ -158,7 +158,7 @@ namespace QuickFix
             return session;
         }
 
-        protected DataDictionary.DataDictionary CreateDataDictionary(SessionID sessionId, QuickFix.Dictionary settings, string settingsKey, string beginString)
+        protected DataDictionary.DataDictionary CreateDataDictionary(SessionID sessionId, QuickFix.SettingsDictionary settings, string settingsKey, string beginString)
         {
             string path;
             if (settings.Has(settingsKey))
@@ -189,7 +189,7 @@ namespace QuickFix
             return ddCopy;
         }
 
-        protected void ProcessFixTDataDictionaries(SessionID sessionId, Dictionary settings, DataDictionaryProvider provider)
+        protected void ProcessFixTDataDictionaries(SessionID sessionId, SettingsDictionary settings, DataDictionaryProvider provider)
         {
             provider.AddTransportDataDictionary(sessionId.BeginString, CreateDataDictionary(sessionId, settings, SessionSettings.TRANSPORT_DATA_DICTIONARY, sessionId.BeginString));
     
@@ -218,7 +218,7 @@ namespace QuickFix
             }
         }
 
-        protected void ProcessFixDataDictionary(SessionID sessionId, Dictionary settings, DataDictionaryProvider provider)
+        protected void ProcessFixDataDictionary(SessionID sessionId, SettingsDictionary settings, DataDictionaryProvider provider)
         {
             DataDictionary.DataDictionary dataDictionary = CreateDataDictionary(sessionId, settings, SessionSettings.DATA_DICTIONARY, sessionId.BeginString);
             provider.AddTransportDataDictionary(sessionId.BeginString, dataDictionary);

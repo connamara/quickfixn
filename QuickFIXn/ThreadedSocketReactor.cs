@@ -35,7 +35,7 @@ namespace QuickFix
         private readonly Dictionary<long, ClientHandlerThread> _clientThreads = new ();
         private readonly TcpListener _tcpListener;
         private readonly SocketSettings _socketSettings;
-        private readonly QuickFix.Dictionary _sessionDict;
+        private readonly QuickFix.SettingsDictionary _sessionDict;
         private readonly IPEndPoint _serverSocketEndPoint;
         private readonly AcceptorSocketDescriptor? _acceptorSocketDescriptor;
 
@@ -44,14 +44,14 @@ namespace QuickFix
         public ThreadedSocketReactor(
             IPEndPoint serverSocketEndPoint,
             SocketSettings socketSettings,
-            QuickFix.Dictionary sessionDict
+            QuickFix.SettingsDictionary sessionDict
         ) : this(serverSocketEndPoint, socketSettings, sessionDict, null) {
         }
 
         internal ThreadedSocketReactor(
             IPEndPoint serverSocketEndPoint,
             SocketSettings socketSettings,
-            QuickFix.Dictionary sessionDict,
+            QuickFix.SettingsDictionary sessionDict,
             AcceptorSocketDescriptor? acceptorSocketDescriptor)
         {
             _socketSettings = socketSettings;

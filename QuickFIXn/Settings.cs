@@ -5,11 +5,11 @@ namespace QuickFix
 {
     public class Settings
     {
-        private readonly LinkedList<QuickFix.Dictionary> _sections = new();
+        private readonly LinkedList<QuickFix.SettingsDictionary> _sections = new();
 
         public Settings(System.IO.TextReader conf)
         {
-            QuickFix.Dictionary? currentSection = null;
+            QuickFix.SettingsDictionary? currentSection = null;
 
             string? line;
             while ((line = conf.ReadLine()) != null)
@@ -22,7 +22,7 @@ namespace QuickFix
 
                 if (IsSection(line))
                 {
-                    currentSection = Add(new Dictionary(SplitSection(line)));
+                    currentSection = Add(new SettingsDictionary(SplitSection(line)));
                 }
                 else if (IsKeyValue(line) && currentSection != null)
                 {
@@ -61,7 +61,7 @@ namespace QuickFix
             return s[0] == '[' && s[^1] == ']';
         }
 
-        public QuickFix.Dictionary Add(QuickFix.Dictionary section)
+        public QuickFix.SettingsDictionary Add(QuickFix.SettingsDictionary section)
         {
             _sections.AddLast(section);
             return section;
@@ -73,10 +73,10 @@ namespace QuickFix
         /// </summary>
         /// <param name="sectionName">(case is ignored)</param>
         /// <returns></returns>
-        public LinkedList<QuickFix.Dictionary> Get(string sectionName)
+        public LinkedList<QuickFix.SettingsDictionary> Get(string sectionName)
         {
-            LinkedList<QuickFix.Dictionary> result = new();
-            foreach (QuickFix.Dictionary dict in _sections)
+            LinkedList<QuickFix.SettingsDictionary> result = new();
+            foreach (QuickFix.SettingsDictionary dict in _sections)
                 if (sectionName.ToUpperInvariant() == dict.Name.ToUpperInvariant())
                     result.AddLast(dict);
             return result;

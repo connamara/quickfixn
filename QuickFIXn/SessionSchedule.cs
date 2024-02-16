@@ -186,7 +186,7 @@ namespace QuickFix
         /// <summary>
         /// </summary>
         /// <param name="settings"></param>
-        public SessionSchedule(QuickFix.Dictionary settings)
+        public SessionSchedule(QuickFix.SettingsDictionary settings)
         {
             if (settings.Has(SessionSettings.NON_STOP_SESSION))
                 NonStopSession = settings.GetBool(SessionSettings.NON_STOP_SESSION);

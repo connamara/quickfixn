@@ -77,9 +77,9 @@ namespace UnitTests
         HashSet<string> _loggedOnCompIDs;
         Socket _listenSocket;
 
-        Dictionary CreateSessionConfig(string targetCompID, bool isInitiator)
+        SettingsDictionary CreateSessionConfig(string targetCompID, bool isInitiator)
         {
-            Dictionary settings = new Dictionary();
+            SettingsDictionary settings = new SettingsDictionary();
             settings.SetString(SessionSettings.CONNECTION_TYPE, isInitiator ? "initiator" : "acceptor");
             settings.SetString(SessionSettings.USE_DATA_DICTIONARY, "N");
             settings.SetString(SessionSettings.START_TIME, "12:00:00");
@@ -120,7 +120,7 @@ namespace UnitTests
             TestApplication application = new TestApplication(LogonCallback, LogoffCallback);
             IMessageStoreFactory storeFactory = new MemoryStoreFactory();
             SessionSettings settings = new SessionSettings();
-            Dictionary defaults = new Dictionary();
+            SettingsDictionary defaults = new SettingsDictionary();
             defaults.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, _logPath);
 
             // Put IP endpoint settings into default section to verify that that defaults get merged into

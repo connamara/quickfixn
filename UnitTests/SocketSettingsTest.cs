@@ -29,9 +29,9 @@ namespace UnitTests
             Assert.IsTrue(socketSettings.RequireClientCertificate);
         }
 
-        private Dictionary BaseTestDict()
+        private SettingsDictionary BaseTestDict()
         {
-            Dictionary dict = new Dictionary();
+            SettingsDictionary dict = new SettingsDictionary();
             dict.SetBool(SessionSettings.SOCKET_IGNORE_PROXY, false);
             dict.SetBool(SessionSettings.SOCKET_NODELAY, false);
             dict.SetLong(SessionSettings.SOCKET_RECEIVE_BUFFER_SIZE, 1);

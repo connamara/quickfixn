@@ -28,7 +28,7 @@ namespace UnitTests
 
             _sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
 
-            QuickFix.Dictionary config = new QuickFix.Dictionary();
+            QuickFix.SettingsDictionary config = new QuickFix.SettingsDictionary();
             config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
             config.SetString(QuickFix.SessionSettings.FILE_STORE_PATH, _storeDirectory);
 

@@ -24,7 +24,7 @@ public class ScreenLogFactory : ILogFactory
 
         if(_settings.Has(sessionId))
         {
-            Dictionary dict = _settings.Get(sessionId);
+            SettingsDictionary dict = _settings.Get(sessionId);
             if (dict.Has(SCREEN_LOG_SHOW_INCOMING))
                 logIncoming = dict.GetBool(SCREEN_LOG_SHOW_INCOMING);
             if (dict.Has(SCREEN_LOG_SHOW_OUTGOING))
