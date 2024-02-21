@@ -21,8 +21,6 @@ namespace QuickFix.Transport
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
         public const string RECONNECT_INTERVAL  = "ReconnectInterval";
 
-        #region Private Members
-
         private volatile bool _shutdownRequested = false;
         private DateTime _lastConnectTimeDt = DateTime.MinValue;
         private int _reconnectInterval = 30;
@@ -31,8 +29,6 @@ namespace QuickFix.Transport
         private readonly Dictionary<SessionID, int> _sessionToHostNum = new();
         private readonly object _sync = new();
         
-        #endregion
-
         public SocketInitiator(
             IApplication application,
             IMessageStoreFactory storeFactory,
@@ -42,7 +38,7 @@ namespace QuickFix.Transport
             : base(application, storeFactory, settings, logFactoryNullable, messageFactoryNullable)
         { }
 
-        public static void SocketInitiatorThreadStart(object socketInitiatorThread)
+        public static void SocketInitiatorThreadStart(object? socketInitiatorThread)
         {
             SocketInitiatorThread? t = socketInitiatorThread as SocketInitiatorThread;
             if (t == null) return;
