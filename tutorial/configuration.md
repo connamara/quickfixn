@@ -652,6 +652,16 @@ QuickFIX Settings
     <td class='default'>0</td>
   </tr>
 
+  <tr>
+    <td class='setting'>SocketIgnoreProxy</td>
+    <td class='description'>(Windows-specific) If the platform has a proxy configured, the engine will ignore it.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
+
 </table>
 
 <a name='storage'></a>

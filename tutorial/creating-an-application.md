@@ -104,6 +104,8 @@ instantiate an `Acceptor`:
 
 ```csharp
 using QuickFix;
+using QuickFix.Logger;
+using QuickFix.Store;
 
 public class MyQuickFixApp : IApplication
 {
