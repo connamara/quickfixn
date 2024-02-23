@@ -85,6 +85,16 @@ public class SettingsDictionaryTests
     }
 
     [Test]
+    public void IsBoolPresentAndTrue() {
+        SettingsDictionary d = new();
+        d.SetBool("BOOLKEY-T", true);
+        d.SetBool("BOOLKEY-F", false);
+        Assert.IsTrue(d.IsBoolPresentAndTrue("BOOLKEY-T"));
+        Assert.IsFalse(d.IsBoolPresentAndTrue("BOOLKEY-F"));
+        Assert.IsFalse(d.IsBoolPresentAndTrue("nonexistent key"));
+    }
+
+    [Test]
     public void SetGetDay()
     {
         SettingsDictionary d = new();
