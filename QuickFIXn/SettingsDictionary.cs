@@ -141,6 +141,15 @@ public class SettingsDictionary : System.Collections.IEnumerable
         }
     }
 
+    /// <summary>
+    /// Return true if key is present AND value is true, else false
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
+    public bool IsBoolPresentAndTrue(string key) {
+        return Has(key) && GetBool(key);
+    }
+
     public DayOfWeek GetDay(string key) {
         string abbr = GetString(key).Substring(0, 2).ToUpperInvariant();
         return abbr switch

@@ -10,27 +10,38 @@ public class ScreenLogFactory : ILogFactory
 
     private readonly SessionSettings _settings;
 
+    private readonly bool _logIncoming = false;
+    private readonly bool _logOutgoing = false;
+    private readonly bool _logEvent = false;
+
     public ScreenLogFactory(SessionSettings settings)
     {
         _settings = settings;
     }
 
+    public ScreenLogFactory(bool logIncoming, bool logOutgoing, bool logEvent)
+    {
+        _logIncoming = logIncoming;
+        _logOutgoing = logOutgoing;
+        _logEvent    = logEvent;
+
+        _settings = new SessionSettings();
+    }
+
     #region LogFactory Members
 
     public ILog Create(SessionID sessionId) {
-        bool logIncoming = false;
-        bool logOutgoing = false;
-        bool logEvent = false;
+        bool logIncoming = _logIncoming;
+        bool logOutgoing = _logOutgoing;
+        bool logEvent = _logEvent;
 
         if(_settings.Has(sessionId))
         {
             SettingsDictionary dict = _settings.Get(sessionId);
-            if (dict.Has(SCREEN_LOG_SHOW_INCOMING))
-                logIncoming = dict.GetBool(SCREEN_LOG_SHOW_INCOMING);
-            if (dict.Has(SCREEN_LOG_SHOW_OUTGOING))
-                logOutgoing = dict.GetBool(SCREEN_LOG_SHOW_OUTGOING);
-            if (dict.Has(SCREEN_LOG_SHOW_EVENTS))
-                logEvent = dict.GetBool(SCREEN_LOG_SHOW_EVENTS);
+
+            logIncoming = _logIncoming || dict.IsBoolPresentAndTrue(SCREEN_LOG_SHOW_INCOMING);
+            logOutgoing = _logOutgoing || dict.IsBoolPresentAndTrue(SCREEN_LOG_SHOW_OUTGOING);
+            logEvent = _logEvent || dict.IsBoolPresentAndTrue(SCREEN_LOG_SHOW_EVENTS);
         }
 
         return new ScreenLog(logIncoming, logOutgoing, logEvent);

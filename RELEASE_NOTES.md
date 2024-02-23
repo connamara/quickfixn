@@ -49,7 +49,7 @@ What's New
      * Move all store classes to new QuickFix.Store namespace
      * FileLog: remove the single-param ctor, no reason for anyone to use it
      * ScreenLog ctor: removed unused sessionId param
-     * ScreenLogFactory: remove public vars and a ctor that no one should be using
+     * ScreenLogFactory: remove unused public vars
 * #708 - In FIX50, rename field SecurityStat to SecurityStatus, to match SP1 and SP2 (gbirchmeier)
 * #639 - address Dictionary ctor bug, then cleanup/nullable-ize (gbirchmeier)
      * rename to SettingsDictionary to reduce name confusion with System.Collections.Generic.Dictionary
@@ -77,6 +77,7 @@ What's New
     * Perform socket read operations according to Task-based asynchronous pattern (TAP) instead of Asynchronous
       Programming Model (APM), in order to catch unobserved SocketExceptions (nmandzyk)
     * Cleanup/nullable-ize SocketInitiatorThread (gbirchmeier)
+* #839 - change ScreenLog to output FIX messages with "|" instead of non-visible SOH (gbirchmeier)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages
