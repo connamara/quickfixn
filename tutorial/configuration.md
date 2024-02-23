@@ -223,7 +223,7 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>RefreshOnLogon</td>
-    <td class='description'>Determines if session state should be restored from persistence layer when logging on.  Useful for creating hot failover sessions.</td>
+    <td class='description'>Determines if session state should be restored from persistence layer at logon.  Useful for creating hot failover sessions.</td>
     <td class='valid'>
       <div>Y</div>
       <div>N</div>
@@ -682,16 +682,46 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>FileLogPath</td>
-    <td class='description'>Directory to store logs.</td>
+    <td class='description'>(FileLogFactory only) Directory to store logs.</td>
     <td class='valid'>Valid directory for storing files, must have write access</td>
     <td class='default'>-</td>
   </tr>
 
   <tr>
     <td class='setting'>DebugFileLogPath</td>
-    <td class='description'>Directory to store ThreadedClientAcceptor thread logs.</td>
+    <td class='description'>(Acceptors only) Directory to store ThreadedClientAcceptor thread logs.</td>
     <td class='valid'>Valid directory for storing files, must have write access</td>
     <td class='default'>Value of <tt>FileLogPath</tt> if present, else "log".</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>ScreenLogShowIncoming</td>
+    <td class='description'>(ScreenLogFactory only) Whether to print incoming FIX messages to the screen</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>ScreenLogShowOutgoing</td>
+    <td class='description'>(ScreenLogFactory only) Whether to print outgoing FIX messages to the screen</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>ScreenLogShowEvents</td>
+    <td class='description'>(ScreenLogFactory only) Whether to print event-log information to the screen</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
   </tr>
 </table>
 
