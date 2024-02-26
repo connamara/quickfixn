@@ -163,7 +163,7 @@ namespace QuickFix.Transport
                 int port = System.Convert.ToInt32(settings.GetLong(portKey));
                 _sessionToHostNum[sessionId] = ++num;
 
-                _socketSettings.SocketConnectHost = _socketSettings.ServerCommonName = hostName;
+                _socketSettings.ServerCommonName = hostName;
                 return new IPEndPoint(addrs.First(a => a.AddressFamily == AddressFamily.InterNetwork), port);
             }
             catch (Exception e)

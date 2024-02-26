@@ -15,14 +15,6 @@ namespace QuickFix
         #region Socket Settings
 
         /// <summary>
-        /// Store the socket host name so we can use it to connect via proxy if required.
-        /// </summary>
-        /// <value>
-        /// The host name (without port number) to send to the proxy server for acl matching.
-        /// </value>
-        public string SocketConnectHost { get; internal set; }
-
-        /// <summary>
         /// Gets a value that specifies whether the <see cref="T:System.Net.Sockets.Socket"/> is using the Nagle algorithm.
         /// </summary>
         /// <value>

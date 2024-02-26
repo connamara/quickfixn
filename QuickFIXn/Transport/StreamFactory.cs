@@ -81,7 +81,7 @@ namespace QuickFix.Transport
             if (!settings.SocketIgnoreProxy)
             {
                 // If system has configured a proxy for this config, use it.
-                socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port, settings.SocketConnectHost);
+                socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port, settings.ServerCommonName);
             }
 
             // No proxy.  Set up a regular socket.
