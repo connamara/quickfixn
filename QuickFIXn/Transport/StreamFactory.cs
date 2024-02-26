@@ -50,9 +50,7 @@ namespace QuickFix.Transport
             Socket socketThruProxy = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socketThruProxy.Connect(proxyEndPoint);
 
-            string proxyMsg = !string.IsNullOrWhiteSpace(destHostName)
-                ? $"CONNECT {destHostName}:{destPort} HTTP/1.1\nHost: {destHostName}:{destPort}\n\n"
-                : $"CONNECT {destIp}:{destPort} HTTP/1.1\n\n";
+            string proxyMsg = $"CONNECT {destHostName}:{destPort} HTTP/1.1\nHost: {destHostName}:{destPort}\n\n";
             byte[] buffer = Encoding.ASCII.GetBytes(proxyMsg);
             byte[] buffer12 = new byte[500];
             socketThruProxy.Send(buffer, buffer.Length, 0);
