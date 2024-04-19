@@ -118,11 +118,16 @@ namespace QuickFix.Fields
         public const int Username = 553;
         public const int SecurityListRequestType = 559;
         public const int SecurityRequestResult = 560;
+        public const int MassStatusReqID = 584;
+        public const int MassStatusReqType = 585;
         public const int LastUpdateTime = 779;
+        public const int OrdStatusReqID = 790;
         public const int NoPartySubIDs = 802;
         public const int PartySubIDType = 803;
         public const int TrdMatchID = 880;
         public const int LastFragment = 893;
+        public const int TotNumReports = 911;
+        public const int LastRptRequested = 912;
         public const int TradeID = 1003;
         public const int DefaultApplVerID = 1137;
         public const int QuoteMsgID = 1166;

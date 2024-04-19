@@ -2680,6 +2680,48 @@ namespace QuickFix.Fields
 
 
     /// <summary>
+    /// MassStatusReqID Field
+    /// </summary>
+    public sealed class MassStatusReqID : StringField
+    {
+        public const int TAG = 584;
+
+        public MassStatusReqID()
+            :base(Tags.MassStatusReqID) {}
+        public MassStatusReqID(string val)
+            :base(Tags.MassStatusReqID, val) {}
+
+    }
+
+
+    /// <summary>
+    /// MassStatusReqType Field
+    /// </summary>
+    public sealed class MassStatusReqType : IntField
+    {
+        public const int TAG = 585;
+
+        public MassStatusReqType()
+            :base(Tags.MassStatusReqType) {}
+        public MassStatusReqType(int val)
+            :base(Tags.MassStatusReqType, val) {}
+
+
+        // Field Enumerations
+        public const int STATUS_FOR_ORDERS_FOR_A_SECURITY = 1;
+        public const int STATUS_FOR_ORDERS_FOR_AN_UNDERLYING_SECURITY = 2;
+        public const int STATUS_FOR_ORDERS_FOR_A_PRODUCT = 3;
+        public const int STATUS_FOR_ORDERS_FOR_A_CFICODE = 4;
+        public const int STATUS_FOR_ORDERS_FOR_A_SECURITYTYPE = 5;
+        public const int STATUS_FOR_ORDERS_FOR_A_TRADING_SESSION = 6;
+        public const int STATUS_FOR_ALL_ORDERS = 7;
+        public const int STATUS_FOR_ORDERS_FOR_A_PARTYID = 8;
+        public const int STATUS_FOR_SECURITY_ISSUER = 9;
+        public const int STATUS_FOR_ISSUER_OF_UNDERLYING_SECURITY = 10;
+    }
+
+
+    /// <summary>
     /// LastUpdateTime Field
     /// </summary>
     public sealed class LastUpdateTime : DateTimeField
@@ -2694,6 +2736,21 @@ namespace QuickFix.Fields
             :base(Tags.LastUpdateTime, val, showMilliseconds) {}
         public LastUpdateTime(DateTime val, Converters.TimeStampPrecision precision)
             :base(Tags.LastUpdateTime, val, precision) {}
+
+    }
+
+
+    /// <summary>
+    /// OrdStatusReqID Field
+    /// </summary>
+    public sealed class OrdStatusReqID : StringField
+    {
+        public const int TAG = 790;
+
+        public OrdStatusReqID()
+            :base(Tags.OrdStatusReqID) {}
+        public OrdStatusReqID(string val)
+            :base(Tags.OrdStatusReqID, val) {}
 
     }
 
@@ -2790,6 +2847,40 @@ namespace QuickFix.Fields
         public LastFragment(Boolean val)
             :base(Tags.LastFragment, val) {}
 
+    }
+
+
+    /// <summary>
+    /// TotNumReports Field
+    /// </summary>
+    public sealed class TotNumReports : IntField
+    {
+        public const int TAG = 911;
+
+        public TotNumReports()
+            :base(Tags.TotNumReports) {}
+        public TotNumReports(int val)
+            :base(Tags.TotNumReports, val) {}
+
+    }
+
+
+    /// <summary>
+    /// LastRptRequested Field
+    /// </summary>
+    public sealed class LastRptRequested : BooleanField
+    {
+        public const int TAG = 912;
+
+        public LastRptRequested()
+            :base(Tags.LastRptRequested) {}
+        public LastRptRequested(Boolean val)
+            :base(Tags.LastRptRequested, val) {}
+
+
+        // Field Enumerations
+        public const Boolean NO = false;
+        public const Boolean YES = true;
     }
 
 

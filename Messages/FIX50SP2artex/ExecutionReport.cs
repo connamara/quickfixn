@@ -161,6 +161,134 @@ namespace QuickFix
                 return IsSetField(Tags.OrigClOrdID);
             }
 
+            public QuickFix.Fields.OrdStatusReqID OrdStatusReqID
+            {
+                get
+                {
+                    QuickFix.Fields.OrdStatusReqID val = new QuickFix.Fields.OrdStatusReqID();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.OrdStatusReqID val)
+            {
+                this.OrdStatusReqID = val;
+            }
+
+            public QuickFix.Fields.OrdStatusReqID Get(QuickFix.Fields.OrdStatusReqID val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.OrdStatusReqID val)
+            {
+                return IsSetOrdStatusReqID();
+            }
+
+            public bool IsSetOrdStatusReqID()
+            {
+                return IsSetField(Tags.OrdStatusReqID);
+            }
+
+            public QuickFix.Fields.MassStatusReqID MassStatusReqID
+            {
+                get
+                {
+                    QuickFix.Fields.MassStatusReqID val = new QuickFix.Fields.MassStatusReqID();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.MassStatusReqID val)
+            {
+                this.MassStatusReqID = val;
+            }
+
+            public QuickFix.Fields.MassStatusReqID Get(QuickFix.Fields.MassStatusReqID val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.MassStatusReqID val)
+            {
+                return IsSetMassStatusReqID();
+            }
+
+            public bool IsSetMassStatusReqID()
+            {
+                return IsSetField(Tags.MassStatusReqID);
+            }
+
+            public QuickFix.Fields.TotNumReports TotNumReports
+            {
+                get
+                {
+                    QuickFix.Fields.TotNumReports val = new QuickFix.Fields.TotNumReports();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.TotNumReports val)
+            {
+                this.TotNumReports = val;
+            }
+
+            public QuickFix.Fields.TotNumReports Get(QuickFix.Fields.TotNumReports val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.TotNumReports val)
+            {
+                return IsSetTotNumReports();
+            }
+
+            public bool IsSetTotNumReports()
+            {
+                return IsSetField(Tags.TotNumReports);
+            }
+
+            public QuickFix.Fields.LastRptRequested LastRptRequested
+            {
+                get
+                {
+                    QuickFix.Fields.LastRptRequested val = new QuickFix.Fields.LastRptRequested();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.LastRptRequested val)
+            {
+                this.LastRptRequested = val;
+            }
+
+            public QuickFix.Fields.LastRptRequested Get(QuickFix.Fields.LastRptRequested val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.LastRptRequested val)
+            {
+                return IsSetLastRptRequested();
+            }
+
+            public bool IsSetLastRptRequested()
+            {
+                return IsSetField(Tags.LastRptRequested);
+            }
+
             public QuickFix.Fields.NoPartyIDs NoPartyIDs
             {
                 get

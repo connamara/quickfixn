@@ -6,6 +6,10 @@
    <field name='SecondaryOrderID' required='N' />
    <field name='ClOrdID' required='N' />
    <field name='OrigClOrdID' required='N' />
+   <field name='OrdStatusReqID' required='N' />
+   <field name='MassStatusReqID' required='N' />
+   <field name='TotNumReports' required='N' />
+   <field name='LastRptRequested' required='N' />
    <component name='Parties' required='N' />
    <field name='TrdMatchID' required='N' />
    <field name='ExecID' required='Y' />
@@ -215,6 +219,8 @@
    <field name='SecurityRequestResult' required='N' />
   </message>
   <message name='OrderMassStatusRequest' msgtype='AF' msgcat='app'>
+   <field name='MassStatusReqID' required='Y' />
+   <field name='MassStatusReqType' required='Y' />
    <component name='Parties' required='N' />
    <field name='Account' required='N' />
    <component name='Instrument' required='N' />
@@ -1331,7 +1337,21 @@
    <value enum='4' description='INSTRUMENT_DATA_TEMPORARILY_UNAVAILABLE' />
    <value enum='5' description='REQUEST_FOR_INSTRUMENT_DATA_NOT_SUPPORTED' />
   </field>
+  <field number='584' name='MassStatusReqID' type='STRING' />
+  <field number='585' name='MassStatusReqType' type='INT'>
+   <value enum='1' description='STATUS_FOR_ORDERS_FOR_A_SECURITY' />
+   <value enum='2' description='STATUS_FOR_ORDERS_FOR_AN_UNDERLYING_SECURITY' />
+   <value enum='3' description='STATUS_FOR_ORDERS_FOR_A_PRODUCT' />
+   <value enum='4' description='STATUS_FOR_ORDERS_FOR_A_CFICODE' />
+   <value enum='5' description='STATUS_FOR_ORDERS_FOR_A_SECURITYTYPE' />
+   <value enum='6' description='STATUS_FOR_ORDERS_FOR_A_TRADING_SESSION' />
+   <value enum='7' description='STATUS_FOR_ALL_ORDERS' />
+   <value enum='8' description='STATUS_FOR_ORDERS_FOR_A_PARTYID' />
+   <value enum='9' description='STATUS_FOR_SECURITY_ISSUER' />
+   <value enum='10' description='STATUS_FOR_ISSUER_OF_UNDERLYING_SECURITY' />
+  </field>
   <field number='779' name='LastUpdateTime' type='UTCTIMESTAMP' />
+  <field number='790' name='OrdStatusReqID' type='STRING' />
   <field number='802' name='NoPartySubIDs' type='NUMINGROUP' />
   <field number='803' name='PartySubIDType' type='INT'>
    <value enum='1' description='FIRM' />
@@ -1370,6 +1390,11 @@
   </field>
   <field number='880' name='TrdMatchID' type='STRING' />
   <field number='893' name='LastFragment' type='BOOLEAN' />
+  <field number='911' name='TotNumReports' type='INT' />
+  <field number='912' name='LastRptRequested' type='BOOLEAN'>
+   <value enum='N' description='NO' />
+   <value enum='Y' description='YES' />
+  </field>
   <field number='1003' name='TradeID' type='STRING' />
   <field number='1137' name='DefaultApplVerID' type='STRING' />
   <field number='1166' name='QuoteMsgID' type='STRING' />

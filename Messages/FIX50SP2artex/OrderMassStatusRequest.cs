@@ -14,6 +14,78 @@ namespace QuickFix
                 this.Header.SetField(new QuickFix.Fields.MsgType("AF"));
             }
 
+            public OrderMassStatusRequest(
+                    QuickFix.Fields.MassStatusReqID aMassStatusReqID,
+                    QuickFix.Fields.MassStatusReqType aMassStatusReqType
+                ) : this()
+            {
+                this.MassStatusReqID = aMassStatusReqID;
+                this.MassStatusReqType = aMassStatusReqType;
+            }
+
+            public QuickFix.Fields.MassStatusReqID MassStatusReqID
+            {
+                get
+                {
+                    QuickFix.Fields.MassStatusReqID val = new QuickFix.Fields.MassStatusReqID();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.MassStatusReqID val)
+            {
+                this.MassStatusReqID = val;
+            }
+
+            public QuickFix.Fields.MassStatusReqID Get(QuickFix.Fields.MassStatusReqID val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.MassStatusReqID val)
+            {
+                return IsSetMassStatusReqID();
+            }
+
+            public bool IsSetMassStatusReqID()
+            {
+                return IsSetField(Tags.MassStatusReqID);
+            }
+
+            public QuickFix.Fields.MassStatusReqType MassStatusReqType
+            {
+                get
+                {
+                    QuickFix.Fields.MassStatusReqType val = new QuickFix.Fields.MassStatusReqType();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.MassStatusReqType val)
+            {
+                this.MassStatusReqType = val;
+            }
+
+            public QuickFix.Fields.MassStatusReqType Get(QuickFix.Fields.MassStatusReqType val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.MassStatusReqType val)
+            {
+                return IsSetMassStatusReqType();
+            }
+
+            public bool IsSetMassStatusReqType()
+            {
+                return IsSetField(Tags.MassStatusReqType);
+            }
 
             public QuickFix.Fields.NoPartyIDs NoPartyIDs
             {
