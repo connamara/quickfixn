@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.Collections.Generic;
 
 namespace QuickFix
 {
@@ -12,6 +13,9 @@ namespace QuickFix
         public DayOfWeek? StartDay { get; }
         public DayOfWeek? EndDay { get; }
 
+        private readonly bool _isWeekdaySession;
+        private readonly HashSet<DayOfWeek> _weekdays;
+        
         public bool NonStopSession { get; }
 
         public bool UseLocalTime { get; }
@@ -72,6 +76,9 @@ namespace QuickFix
 
             DateTime adjusted = AdjustUtcDateTime(utc);
 
+            if (_isWeekdaySession)
+                return CheckWeekDay(adjusted);
+
             return WeeklySession ? CheckDay(adjusted) : CheckTime(adjusted.TimeOfDay);
         }
 
@@ -93,7 +100,14 @@ namespace QuickFix
             DateTime d = AdjustUtcDateTime(utc);
             DateTime end = DateTime.MinValue;
 
-            if (WeeklySession)
+
+            if (_isWeekdaySession)
+            {
+                end = new DateTime(d.Year, d.Month, d.Day, vEndTime.Hours, vEndTime.Minutes, vEndTime.Seconds, d.Kind);
+                if (DateTime.Compare(d, end) > 0) // d is later than end
+                    end = end.AddDays(1);
+            }
+            else if (WeeklySession)
             {
                 end = new DateTime(d.Year, d.Month, d.Day, vEndTime.Hours, vEndTime.Minutes, vEndTime.Seconds, d.Kind);
                 while (end.DayOfWeek != EndDay)
@@ -183,6 +197,18 @@ namespace QuickFix
             return true;
         }
 
+        private bool CheckWeekDay(System.DateTime time)
+        {
+            if (NonStopSession)
+            {
+                throw new InvalidOperationException("NonStopSession is set -- this should never be called.");
+            }
+
+            if (_weekdays.Contains(time.DayOfWeek))
+                return CheckTime(time.TimeOfDay);
+            return false;
+        }
+        
         /// <summary>
         /// </summary>
         /// <param name="settings"></param>
@@ -194,6 +220,15 @@ namespace QuickFix
             if (NonStopSession)
                 return;
 
+            if (settings.Has(SessionSettings.WEEK_DAYS))
+            {
+                _isWeekdaySession = true;
+                if (settings.Has(SessionSettings.START_DAY) || settings.Has(SessionSettings.END_DAY) )
+                    throw new ConfigError("Usage of StartDay or EndDay is not compatible with setting Weekdays");
+
+                _weekdays = settings.GetDays(SessionSettings.WEEK_DAYS);
+            }
+            
             if (!settings.Has(SessionSettings.START_DAY) && settings.Has(SessionSettings.END_DAY))
                 throw new QuickFix.ConfigError("EndDay used without StartDay");
 

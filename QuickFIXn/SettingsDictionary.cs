@@ -150,6 +150,36 @@ public class SettingsDictionary : System.Collections.IEnumerable
         return Has(key) && GetBool(key);
     }
 
+    public HashSet<DayOfWeek> GetDays(string key)
+    {
+        string[] weekdayNameArray = GetString(key).Split(",");
+        var result = new HashSet<DayOfWeek>(weekdayNameArray.Length);
+        foreach (var weekDayName in weekdayNameArray)
+        {
+            string abbr = weekDayName.Trim().Substring(0, 2).ToUpper();
+            switch (abbr)
+            {
+                case "SU": result.Add(DayOfWeek.Sunday);
+                    break;
+                case "MO": result.Add(DayOfWeek.Monday);
+                    break;
+                case "TU": result.Add(DayOfWeek.Tuesday);
+                    break;
+                case "WE": result.Add(DayOfWeek.Wednesday);
+                    break;
+                case "TH": result.Add(DayOfWeek.Thursday);
+                    break;
+                case "FR": result.Add(DayOfWeek.Friday);
+                    break;
+                case "SA": result.Add(DayOfWeek.Saturday);
+                    break;
+                default: throw new ConfigError("Illegal value " + weekDayName.Trim() + " for " + key);
+            }
+        }
+
+        return result;
+    }
+    
     public DayOfWeek GetDay(string key) {
         string abbr = GetString(key).Substring(0, 2).ToUpperInvariant();
         return abbr switch
