@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System;
+using System.IO;
 using QuickFix.Util;
 
 namespace QuickFix.Logger;
@@ -34,9 +35,10 @@ public class FileLog : ILog
         if (!System.IO.Directory.Exists(normalizedPath))
             System.IO.Directory.CreateDirectory(normalizedPath);
 
-        _messageLogFileName = System.IO.Path.Combine(normalizedPath, prefix + ".messages.current.log");
-        _eventLogFileName = System.IO.Path.Combine(normalizedPath, prefix + ".event.current.log");
-
+        string currentDate = DateTime.Now.ToString("yyyyMMdd");
+        _messageLogFileName = Path.Combine(fileLogPath, $"{currentDate}.{prefix}.messages.log");
+        _eventLogFileName = Path.Combine(fileLogPath, $"{currentDate}.{prefix}.event.log");
+       
         _messageLog = new System.IO.StreamWriter(_messageLogFileName, true);
         _eventLog = new System.IO.StreamWriter(_eventLogFileName, true);
 
