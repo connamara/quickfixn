@@ -12,12 +12,12 @@ namespace QuickFix.Fields.Converters
         public const int NanosPerMicro = 1000;
         public const int TicksPerMicrosecond = 10;
         public const int NanosecondsPerTick = 100;
-        public const string DATE_TIME_FORMAT_WITH_NANOSECONDS = "{0:yyyyMMdd-HH:mm:ss}.{1}";
+        public const string DATE_TIME_FORMAT_WITH_NANOSECONDS = "{0:yyyyMMdd-HH:mm:ss}.{1:D9}";
         public const string DATE_TIME_FORMAT_WITH_MICROSECONDS = "{0:yyyyMMdd-HH:mm:ss.ffffff}";
         public const string DATE_TIME_FORMAT_WITH_MILLISECONDS = "{0:yyyyMMdd-HH:mm:ss.fff}";
         public const string DATE_TIME_FORMAT_WITHOUT_MILLISECONDS = "{0:yyyyMMdd-HH:mm:ss}";
         public const string DATE_ONLY_FORMAT = "{0:yyyyMMdd}";
-        public const string TIME_ONLY_FORMAT_WITH_NANOSECONDS = "{0:HH:mm:ss}.{1}";
+        public const string TIME_ONLY_FORMAT_WITH_NANOSECONDS = "{0:HH:mm:ss}.{1:D9}";
         public const string TIME_ONLY_FORMAT_WITH_MICROSECONDS = "{0:HH:mm:ss.ffffff}";
         public const string TIME_ONLY_FORMAT_WITH_MILLISECONDS = "{0:HH:mm:ss.fff}";
         public const string TIME_ONLY_FORMAT_WITHOUT_MILLISECONDS = "{0:HH:mm:ss}";

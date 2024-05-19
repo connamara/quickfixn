@@ -81,16 +81,6 @@ public class DatetimeConverterTests {
         // convert nanosecond DateTime to string with option
         Assert.That(DateTimeConverter.Convert(dt, TimeStampPrecision.Nanosecond), Is.EqualTo("20021201-11:03:05.231116500"));
 
-        /*
-        // convert nanosecond DateTime to string with option
-        DateTime dt4 = DateTime.SpecifyKind(TimeHelper.makeDateTime(2002, 12, 01, 11, 03, 05, 0, 0, 100), DateTimeKind.Utc);
-        Console.WriteLine(dt4);
-        Console.WriteLine(dt4.Millisecond);
-        Console.WriteLine(dt4.Nanosecond());
-        Console.WriteLine(dt4.Ticks);
-        Assert.That(DateTimeConverter.Convert(dt4, TimeStampPrecision.Nanosecond), Is.EqualTo("20021201-11:03:05.000000001"));
-        */
-
         // convert nanosecond DateTime to time-only string
         Assert.That(DateTimeConverter.ConvertTimeOnly(dt, TimeStampPrecision.Nanosecond), Is.EqualTo("11:03:05.231116500"));
 
@@ -113,5 +103,37 @@ public class DatetimeConverterTests {
         // convert nanosecond time in local time (no time zone) to full DateTime
         DateTime local = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Local);
         Assert.That(DateTimeConverter.ConvertToDateTime("20021201-11:03:05.231116500", TimeStampPrecision.Nanosecond), Is.EqualTo(local));
+    }
+
+    [Test]
+    public void Convert_NanosecondBug() {
+        Assert.That(
+            DateTimeConverter.Convert(
+                DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Utc),
+                TimeStampPrecision.Nanosecond),
+            Is.EqualTo("20021201-11:03:05.231116500"));
+
+        // reported in #468 & #842
+        Assert.That(
+            DateTimeConverter.Convert(
+                DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 000, 000, 500), DateTimeKind.Utc),
+                TimeStampPrecision.Nanosecond),
+            Is.EqualTo("20021201-11:03:05.000000500"));
+    }
+
+    [Test]
+    public void ConvertTimeOnly_NanosecondBug() {
+        Assert.That(
+            DateTimeConverter.ConvertTimeOnly(
+                DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Utc),
+                TimeStampPrecision.Nanosecond),
+            Is.EqualTo("11:03:05.231116500"));
+
+        // reported in #468 & #842
+        Assert.That(
+            DateTimeConverter.ConvertTimeOnly(
+                DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 000, 000, 500), DateTimeKind.Utc),
+                TimeStampPrecision.Nanosecond),
+            Is.EqualTo("11:03:05.000000500"));
     }
 }
