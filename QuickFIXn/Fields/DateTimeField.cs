@@ -31,7 +31,7 @@ namespace QuickFix.Fields
 
         protected override string makeString()
         {
-            return Converters.DateTimeConverter.Convert(Obj, timePrecision);
+            return Converters.DateTimeConverter.ToFIX(Obj, timePrecision);
         }
     }
 
@@ -51,7 +51,7 @@ namespace QuickFix.Fields
 
         protected override string makeString()
         {
-            return Converters.DateTimeConverter.ConvertDateOnly(Obj);
+            return Converters.DateTimeConverter.ToFIXDateOnly(Obj);
         }
     }
 
@@ -71,7 +71,7 @@ namespace QuickFix.Fields
 
         protected override string makeString()
         {
-            return Converters.DateTimeConverter.ConvertTimeOnly(Obj, base.timePrecision); 
+            return Converters.DateTimeConverter.ToFIXTimeOnly(Obj, base.timePrecision);
         }
     }
 }

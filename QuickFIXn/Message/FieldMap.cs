@@ -360,7 +360,7 @@ namespace QuickFix
                 DateOnlyField dateOnlyField => dateOnlyField.Obj.Date,
                 TimeOnlyField timeOnlyField => new DateTime(1980, 01, 01).Add(timeOnlyField.Obj.TimeOfDay),
                 FieldBase<DateTime> dateTimeField => dateTimeField.Obj,
-                _ => DateTimeConverter.ConvertToDateTime(fld.ToString())
+                _ => DateTimeConverter.ParseToDateTime(fld.ToString())
             };
         }
 
@@ -378,7 +378,7 @@ namespace QuickFix
             if (fld is FieldBase<DateTime> dateTimeField)
                 return dateTimeField.Obj.Date;
 
-            return DateTimeConverter.ConvertToDateOnly(fld.ToString());
+            return DateTimeConverter.ParseToDateOnly(fld.ToString());
         }
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace QuickFix
             if (fld is FieldBase<DateTime> dateTimeField)
                 return new DateTime(1980, 01, 01).Add(dateTimeField.Obj.TimeOfDay);
 
-            return DateTimeConverter.ConvertToTimeOnly(fld.ToString());
+            return DateTimeConverter.ParseToTimeOnly(fld.ToString());
         }
 
         /// <summary>
