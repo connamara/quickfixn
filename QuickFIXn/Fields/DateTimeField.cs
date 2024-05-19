@@ -47,7 +47,7 @@ namespace QuickFix.Fields
             : base(tag, dt, showMilliseconds) { }
 
         public DateOnlyField(int tag, DateTime dt, TimeStampPrecision timeFormatPrecision)
-    : base(tag, dt, timeFormatPrecision) { }
+            : base(tag, dt, timeFormatPrecision) { }
 
         protected override string makeString()
         {
