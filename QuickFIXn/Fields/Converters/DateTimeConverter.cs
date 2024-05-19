@@ -111,14 +111,9 @@ namespace QuickFix.Fields.Converters
             try
             {
                 //Avoid NanoString Path parsing if not possible from string length
-                if (str.Length > DATE_TIME_MAXLENGTH_WITHOUT_NANOSECONDS)
-                {
-                    return DateTimeFromNanoString(str);
-                }
-                else
-                {
-                    return System.DateTime.ParseExact(str, DATE_TIME_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
-                }
+                return (str.Length > DATE_TIME_MAXLENGTH_WITHOUT_NANOSECONDS)
+                    ? DateTimeFromNanoString(str)
+                    : System.DateTime.ParseExact(str, DATE_TIME_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
             }
             catch (System.Exception e)
             {
@@ -159,22 +154,16 @@ namespace QuickFix.Fields.Converters
         /// Check if string is TimeOnly and, if yes, convert to DateTime.  Optional time stamp precision up to 
         /// </summary>
         /// <param name="str"></param>
-        /// /// <param name="precision"></param>
+        /// <param name="precision"></param>
         /// <returns></returns>
         /// <exception cref="FieldConvertError"/>
         public static System.DateTime ConvertToTimeOnly(string str, TimeStampPrecision precision)
         {
-            try
-            {
-                System.DateTime d;
-                if (precision == TimeStampPrecision.Nanosecond)
-                {
-                    d = TimeOnlyFromNanoString(str);
-                }
-                else
-                {
-                    d = System.DateTime.ParseExact(str, TIME_ONLY_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
-                }
+            try {
+                System.DateTime d = (precision == TimeStampPrecision.Nanosecond)
+                    ? TimeOnlyFromNanoString(str)
+                    : System.DateTime.ParseExact(str, TIME_ONLY_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
+
                 return new System.DateTime(1980, 1, 1) + d.TimeOfDay;
             }
             catch (System.Exception e)
@@ -208,11 +197,12 @@ namespace QuickFix.Fields.Converters
         /// <param name="dt">the DateTime to convert</param>
         /// <param name="includeMilliseconds">if true, include milliseconds in the result</param>
         /// <returns>FIX-formatted DataTime</returns>
-        public static string Convert( System.DateTime dt, bool includeMilliseconds )
-        {
-            return includeMilliseconds ? Convert(dt, TimeStampPrecision.Millisecond): Convert( dt, TimeStampPrecision.Second );
+        public static string Convert(System.DateTime dt, bool includeMilliseconds = true) {
+            return includeMilliseconds
+                ? Convert(dt, TimeStampPrecision.Millisecond)
+                : Convert(dt, TimeStampPrecision.Second);
         }
-        
+
         /// <summary>
         /// Gets the nanoseconds component of the date represented by this instance truncated to 100 nanosecond resolution
         /// </summary>
@@ -238,27 +228,11 @@ namespace QuickFix.Fields.Converters
         /// <param name="dt">The dt.</param>
         /// <param name="precision">The precision.</param>
         /// <returns></returns>
-        public static string Convert(System.DateTime dt, TimeStampPrecision precision )
+        public static string Convert(System.DateTime dt, TimeStampPrecision precision)
         {
-            if (precision == TimeStampPrecision.Nanosecond)
-            {
-                return string.Format(DATE_TIME_FORMAT_WITH_NANOSECONDS, dt, dt.SubsecondAsNanoseconds());
-            }
-            else
-            {
-                var format = DATE_TIME_PRECISION_TO_FORMAT[precision];
-                return string.Format(format, dt);
-            }
-        }
-
-        /// <summary>
-        /// Convert DateTime to string in FIX Format, with milliseconds
-        /// </summary>
-        /// <param name="dt">the DateTime to convert</param>
-        /// <returns>FIX-formatted DateTime</returns>
-        public static string Convert(System.DateTime dt)
-        {
-            return DateTimeConverter.Convert(dt, true);
+            return (precision == TimeStampPrecision.Nanosecond)
+                ? string.Format(DATE_TIME_FORMAT_WITH_NANOSECONDS, dt, dt.SubsecondAsNanoseconds())
+                : string.Format(DATE_TIME_PRECISION_TO_FORMAT[precision], dt);
         }
 
         public static string ConvertDateOnly(System.DateTime dt)
@@ -266,27 +240,17 @@ namespace QuickFix.Fields.Converters
             return string.Format(DATE_ONLY_FORMAT, dt);
         }
 
-        public static string ConvertTimeOnly(System.DateTime dt)
-        {
-            return DateTimeConverter.ConvertTimeOnly(dt, true);
-        }
-
-        public static string ConvertTimeOnly( System.DateTime dt, bool includeMilliseconds )
-        {
-            return includeMilliseconds ? ConvertTimeOnly( dt, TimeStampPrecision.Millisecond ) : ConvertTimeOnly( dt, TimeStampPrecision.Second );
+        public static string ConvertTimeOnly(System.DateTime dt, bool includeMilliseconds = true) {
+            return includeMilliseconds
+                ? ConvertTimeOnly(dt, TimeStampPrecision.Millisecond)
+                : ConvertTimeOnly(dt, TimeStampPrecision.Second);
         }
 
         public static string ConvertTimeOnly(System.DateTime dt, TimeStampPrecision precision)
         {
-            if (precision == TimeStampPrecision.Nanosecond)
-            {
-                return string.Format(TIME_ONLY_FORMAT_WITH_NANOSECONDS, dt, dt.SubsecondAsNanoseconds());
-            }
-            else
-            {
-                var format = TIME_ONLY_PRECISION_TO_FORMAT[precision];
-                return string.Format(format, dt);
-            }
+            return (precision == TimeStampPrecision.Nanosecond)
+                ? string.Format(TIME_ONLY_FORMAT_WITH_NANOSECONDS, dt, dt.SubsecondAsNanoseconds())
+                : string.Format(TIME_ONLY_PRECISION_TO_FORMAT[precision], dt);
         }
     }
 }

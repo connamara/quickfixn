@@ -76,7 +76,7 @@ public class DatetimeConverterTests {
     public void TestNanosecondPrecision()
     {
         // seeded DateTime
-        DateTime dt = DateTime.SpecifyKind(TimeHelper.makeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Utc);
+        DateTime dt = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Utc);
 
         // convert nanosecond DateTime to string with option
         Assert.That(DateTimeConverter.Convert(dt, TimeStampPrecision.Nanosecond), Is.EqualTo("20021201-11:03:05.231116500"));
@@ -95,7 +95,7 @@ public class DatetimeConverterTests {
         Assert.That(DateTimeConverter.ConvertTimeOnly(dt, TimeStampPrecision.Nanosecond), Is.EqualTo("11:03:05.231116500"));
 
         // convert nanosecond time string to DateTime time portion only
-        DateTime timeOnly = TimeHelper.makeTimeOnly(11, 03, 05, 231, 116, 500);
+        DateTime timeOnly = TimeHelper.MakeTimeOnly(11, 03, 05, 231, 116, 500);
         Assert.That(DateTimeConverter.ConvertToTimeOnly("11:03:05.231116500", TimeStampPrecision.Nanosecond), Is.EqualTo(timeOnly));
 
         // convert nanosecond time string to full DateTime
@@ -111,7 +111,7 @@ public class DatetimeConverterTests {
         Assert.That(DateTimeConverter.ConvertToDateTime("20021201-08:03:05.231116500-03", TimeStampPrecision.Nanosecond), Is.EqualTo(dt));
 
         // convert nanosecond time in local time (no time zone) to full DateTime
-        DateTime local = DateTime.SpecifyKind(TimeHelper.makeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Local);
+        DateTime local = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Local);
         Assert.That(DateTimeConverter.ConvertToDateTime("20021201-11:03:05.231116500", TimeStampPrecision.Nanosecond), Is.EqualTo(local));
     }
 }
