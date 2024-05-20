@@ -26,11 +26,15 @@ public static class DateTimeConverter
 
     public const string DATE_TIME_WITH_MICROSECONDS = "yyyyMMdd-HH:mm:ss.ffffff";
     public static int DATE_TIME_MAXLENGTH_WITHOUT_NANOSECONDS = DATE_TIME_WITH_MICROSECONDS.Length;
+    public const string TIME_ONLY_WITH_MICROSECONDS = "HH:mm:ss.ffffff";
+    public static int TIME_ONLY_MAXLENGTH_WITHOUT_NANOSECONDS = TIME_ONLY_WITH_MICROSECONDS.Length;
+
     public static string[] DATE_TIME_FORMATS = { DATE_TIME_WITH_MICROSECONDS, "yyyyMMdd-HH:mm:ss.fff", "yyyyMMdd-HH:mm:ss" };
     public static string[] DATE_ONLY_FORMATS = { "yyyyMMdd" };
-    public static string[] TIME_ONLY_FORMATS = { "HH:mm:ss.ffffff", "HH:mm:ss.fff", "HH:mm:ss" };
+    public static string[] TIME_ONLY_FORMATS = { TIME_ONLY_WITH_MICROSECONDS, "HH:mm:ss.fff", "HH:mm:ss" };
     public static DateTimeStyles DATE_TIME_STYLES = DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal;
     public static CultureInfo DATE_TIME_CULTURE_INFO = CultureInfo.InvariantCulture;
+
     private static IDictionary<TimeStampPrecision, string> DATE_TIME_PRECISION_TO_FORMAT = new Dictionary<TimeStampPrecision, string>
     {
         {TimeStampPrecision.Second, DATE_TIME_FORMAT_WITHOUT_MILLISECONDS},
@@ -110,7 +114,6 @@ public static class DateTimeConverter
     {
         try
         {
-            //Avoid NanoString Path parsing if not possible from string length
             return (str.Length > DATE_TIME_MAXLENGTH_WITHOUT_NANOSECONDS)
                 ? DateTimeFromNanoString(str)
                 : DateTime.ParseExact(str, DATE_TIME_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
@@ -143,13 +146,12 @@ public static class DateTimeConverter
     /// Check if string is TimeOnly and, if yes, convert to DateTime.
     /// </summary>
     /// <param name="str"></param>
-    /// <param name="precision"></param>
     /// <returns></returns>
     /// <exception cref="FieldConvertError"/>
-    public static DateTime ParseToTimeOnly(string str, TimeStampPrecision precision = TimeStampPrecision.Millisecond)
+    public static DateTime ParseToTimeOnly(string str)
     {
         try {
-            DateTime d = (precision == TimeStampPrecision.Nanosecond)
+            DateTime d = (str.Length > TIME_ONLY_MAXLENGTH_WITHOUT_NANOSECONDS)
                 ? TimeOnlyFromNanoString(str)
                 : DateTime.ParseExact(str, TIME_ONLY_FORMATS, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES);
 
@@ -197,6 +199,11 @@ public static class DateTimeConverter
         return (precision == TimeStampPrecision.Nanosecond)
             ? string.Format(TIME_ONLY_FORMAT_WITH_NANOSECONDS, dt, dt.SubsecondAsNanoseconds())
             : string.Format(TIME_ONLY_PRECISION_TO_FORMAT[precision], dt);
+    }
+
+    [Obsolete("Use ParseToTimeOnly(str).  The 'precision' parameter is unnecessary.")]
+    public static DateTime ParseToTimeOnly(string str, TimeStampPrecision precision = TimeStampPrecision.Millisecond) {
+        return ParseToTimeOnly(str);
     }
 
     [Obsolete("Renamed to ParseToDateTime(str) - the precision parameter was unused internally, so discard it")]

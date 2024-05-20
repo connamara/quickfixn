@@ -74,19 +74,16 @@ public class DateTimeConverterTests {
         var targetTicks = new DateTime(1980, 1, 1, 4, 22, 1, 0, DateTimeKind.Utc).Ticks;
         Assert.That(targetTicks, Is.EqualTo(624511453210000000)); // for human reader reference
 
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700", TimeStampPrecision.Nanosecond).Ticks, Is.EqualTo(targetTicks + 1234567));
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700Z", TimeStampPrecision.Nanosecond).Ticks, Is.EqualTo(targetTicks + 1234567));
+        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700").Ticks, Is.EqualTo(targetTicks + 1234567));
+        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700Z").Ticks, Is.EqualTo(targetTicks + 1234567));
 
         var ticksInHour = 36000000000;
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700+01", TimeStampPrecision.Nanosecond).Ticks, Is.EqualTo(targetTicks + 1234567 - ticksInHour));
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700-01", TimeStampPrecision.Nanosecond).Ticks, Is.EqualTo(targetTicks + 1234567 + ticksInHour));
+        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700+01").Ticks, Is.EqualTo(targetTicks + 1234567 - ticksInHour));
+        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700-01").Ticks, Is.EqualTo(targetTicks + 1234567 + ticksInHour));
 
         var ticksIn90mins = 54000000000;
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700+01:30", TimeStampPrecision.Nanosecond).Ticks, Is.EqualTo(targetTicks + 1234567 - ticksIn90mins));
-        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700-01:30", TimeStampPrecision.Nanosecond).Ticks, Is.EqualTo(targetTicks + 1234567 + ticksIn90mins));
-
-        // TODO: without second param
-        //Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700").Ticks, Is.EqualTo(targetTicks + 1234567));
+        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700+01:30").Ticks, Is.EqualTo(targetTicks + 1234567 - ticksIn90mins));
+        Assert.That(DateTimeConverter.ParseToTimeOnly("04:22:01.123456700-01:30").Ticks, Is.EqualTo(targetTicks + 1234567 + ticksIn90mins));
     }
 
     [Test]
