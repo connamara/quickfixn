@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using QuickFix.Fields;
+using UnitTests.TestHelpers;
 
 namespace UnitTests
 {
@@ -90,8 +91,8 @@ namespace UnitTests
         [Test]
         public void DateTimeFieldNanoTest()
         {
-            DateTime val = ConverterTests.makeDateTime(2009, 9, 4, 3, 44, 1, 100, 310, 300);
-            DateTime newval = ConverterTests.makeDateTime(2009, 9, 4, 3, 44, 1, 100, 310, 300);
+            DateTime val = TimeHelper.MakeDateTime(2009, 9, 4, 3, 44, 1, 100, 310, 300);
+            DateTime newval = TimeHelper.MakeDateTime(2009, 9, 4, 3, 44, 1, 100, 310, 300);
             DateTimeField field = new DateTimeField(200, val, QuickFix.Fields.Converters.TimeStampPrecision.Nanosecond);
             Assert.That(field.Obj, Is.EqualTo(val));
             Assert.That(field.getValue(), Is.EqualTo(val));

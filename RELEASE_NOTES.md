@@ -21,7 +21,7 @@ What's New
          ByteSizeString is public, but probably no one uses it
 * #822 - cleanup/nullable-ize Message/ classes (gbirchmeier)
      * FieldMap: getFieldOrder() deleted.  Just call FieldOrder.
-     * FieldMap: GetGroup(int num, Group group) now returns null instead of redundant Group
+     * FieldMap: GetGroup(int num, Group group) now returns void instead of redundant Group
      * Group: rename Field to CounterField
      * Message: changed `SOH`'s type from string to char
      * Message: ctor Message(string msgstr, DataDictionary.DataDictionary dataDictionary, bool validate) deleted.
@@ -56,6 +56,8 @@ What's New
      * privatize a ctor that takes a generic Dict; apps shouldn't use it
      * remove the copy ctor that takes only a SessionDict; replace it with one
        that explicitly requires a name also
+* #842 - Fix nano-datetime-to-string bug (gbirchmeier)
+     * Also refactor the heck out of DateTimeConverter & tests: many functions renamed/deprecated
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
