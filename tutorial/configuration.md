@@ -167,13 +167,29 @@ QuickFIX Settings
   </tr>
   
   <tr>
-    <td class='setting'>MillisecondsInTimeStamp</td>
+    <td class='setting'>
+      MillisecondsInTimeStamp<br/>
+      <b>DEPRECATED</b><br/>
+      <i>Use TimeStampPrecision</i>
+    </td>
     <td class='description'>Determines if milliseconds should be added to timestamps. Only available for FIX.4.2 and greater.</td>
     <td class='valid'>
       <div>Y</div>
       <div>N</div>
     </td>
     <td class='default'>Y</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>TimeStampPrecision</td>
+    <td class='description'>Determines if milliseconds should be added to timestamps. Only available for FIX.4.2 and greater.</td>
+    <td class='valid'>
+      <div>Seconds</div>
+      <div>Milliseconds</div>
+      <div>Microseconds</div>
+      <div>Nanoseconds</div>
+    </td>
+    <td class='default'>Milliseconds</td>
   </tr>
 
   <tr>
