@@ -112,6 +112,11 @@ namespace QuickFix
                 sessionMsgFactory,
                 senderDefaultApplVerId);
 
+            if (settings.Has("MillisecondsInTimeStamp")) {
+                throw new ApplicationException(
+                    "Setting 'MillisecondsInTimeStamp' was removed.  Use 'TimeStampPrecision=Milliseconds' instead.");
+            }
+
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
                 session.SendRedundantResendRequests = settings.GetBool(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS);
             if (settings.Has(SessionSettings.RESEND_SESSION_LEVEL_REJECTS))
@@ -138,8 +143,6 @@ namespace QuickFix
                 session.RefreshOnLogon = settings.GetBool(SessionSettings.REFRESH_ON_LOGON);
             if (settings.Has(SessionSettings.PERSIST_MESSAGES))
                 session.PersistMessages = settings.GetBool(SessionSettings.PERSIST_MESSAGES);
-            if (settings.Has(SessionSettings.MILLISECONDS_IN_TIMESTAMP))
-                session.MillisecondsInTimeStamp = settings.GetBool(SessionSettings.MILLISECONDS_IN_TIMESTAMP);
             if( settings.Has( SessionSettings.TIMESTAMP_PRECISION ) )
                 session.TimeStampPrecision = settings.GetTimeStampPrecision( SessionSettings.TIMESTAMP_PRECISION );
             if (settings.Has(SessionSettings.ENABLE_LAST_MSG_SEQ_NUM_PROCESSED))

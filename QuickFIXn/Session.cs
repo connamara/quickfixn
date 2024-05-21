@@ -163,16 +163,6 @@ namespace QuickFix
         public bool CheckCompID { get; set; }
 
         /// <summary>
-        /// Determines if milliseconds should be added to timestamps.
-        /// Only avilable on FIX4.2. or greater
-        /// </summary>
-        public bool MillisecondsInTimeStamp
-        {
-            get => TimeStampPrecision == TimeStampPrecision.Millisecond;
-            set => TimeStampPrecision = value ? TimeStampPrecision.Millisecond : TimeStampPrecision.Second;
-        }
-
-        /// <summary>
         /// Gets or sets the time stamp precision.
         /// </summary>
         /// <value>
