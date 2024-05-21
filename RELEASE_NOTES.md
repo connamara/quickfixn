@@ -58,6 +58,8 @@ What's New
        that explicitly requires a name also
 * #842 - Fix nano-datetime-to-string bug (gbirchmeier)
      * Also refactor the heck out of DateTimeConverter & tests: many functions renamed/deprecated
+* #847 - remove setting MillisecondsInTimeStamp (gbirchmeier)
+     * Use TimeStampPrecision instead (same as QF/j)
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)

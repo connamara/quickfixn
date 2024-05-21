@@ -165,24 +165,18 @@ public class SettingsDictionary : System.Collections.IEnumerable
         };
     }
 
-    public TimeStampPrecision GetTimeStampPrecision( string key )
+    public TimeStampPrecision GetTimeStampPrecision(string key)
     {
-        string precision = GetString( key ).ToUpperInvariant();
-        switch( precision )
-        {
-            case "SECOND":
-                return TimeStampPrecision.Second;
-            case "MILLISECOND":
-            case "MILLI":
-                return TimeStampPrecision.Millisecond;
-            case "MICROSECOND":
-            case "MICRO":
-                return TimeStampPrecision.Microsecond;
-            case "NANOSECOND":
-            case "NANO":
-                return TimeStampPrecision.Nanosecond;
-            default: throw new ConfigError($"Illegal value {GetString(key)} for {key}");
-        }
+        string precision = GetString(key).ToUpperInvariant();
+        if (precision.StartsWith("SECOND", StringComparison.InvariantCulture))
+            return TimeStampPrecision.Second;
+        if (precision.StartsWith("MILLI", StringComparison.InvariantCulture))
+            return TimeStampPrecision.Millisecond;
+        if (precision.StartsWith("MICRO", StringComparison.InvariantCulture))
+            return TimeStampPrecision.Microsecond;
+        if (precision.StartsWith("NANO", StringComparison.InvariantCulture))
+            return TimeStampPrecision.Nanosecond;
+        throw new ConfigError($"Illegal value {GetString(key)} for {key}");
     }
 
     public void SetString(string key, string val)

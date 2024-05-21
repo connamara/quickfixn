@@ -253,7 +253,6 @@ namespace UnitTests
                 .AppendLine("TargetSubID=HedgeFund")
                 .AppendLine("TargetLocationID=NYC")
                 .AppendLine("SendRedundantResendRequests=Y")
-                .AppendLine("MillisecondsInTimeStamp=Y")
                 .AppendLine("EnableLastMsgSeqNumProcessed=Y")
                 .AppendLine("MaxMessagesInResendRequest=2500")
                 .AppendLine("StartTime=06:00:00")
@@ -272,7 +271,6 @@ namespace UnitTests
             Assert.That(settings.Get(id).GetString("TargetSubID"), Is.EqualTo("HedgeFund"));
             Assert.That(settings.Get(id).GetString("TargetLocationID"), Is.EqualTo("NYC"));
             Assert.That(settings.Get(id).GetString("SendRedundantResendRequests"), Is.EqualTo("Y"));
-            Assert.That(settings.Get(id).GetString("MillisecondsInTimeStamp"), Is.EqualTo("Y"));
             Assert.That(settings.Get(id).GetString("EnableLastMsgSeqNumProcessed"), Is.EqualTo("Y"));
             Assert.That(settings.Get(id).GetString("MaxMessagesInResendRequest"), Is.EqualTo("2500"));
             Assert.That(settings.Get(id).GetString("StartTime"), Is.EqualTo("06:00:00"));
