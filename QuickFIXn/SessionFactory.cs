@@ -114,7 +114,7 @@ namespace QuickFix
 
             if (settings.Has("MillisecondsInTimeStamp")) {
                 throw new ApplicationException(
-                    "Setting 'MillisecondsInTimeStamp' was removed.  Use 'TimeStampPrecision=Milliseconds' instead.");
+                    "Setting 'MillisecondsInTimeStamp' was removed.  Use 'TimestampPrecision=Milliseconds' instead.");
             }
 
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
