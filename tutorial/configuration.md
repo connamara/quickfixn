@@ -168,9 +168,9 @@ QuickFIX Settings
   
   <tr>
     <td class='setting'>
-      MillisecondsInTimeStamp<br/>
+      MillisecondsInTimestamp<br/>
       <b>DEPRECATED</b><br/>
-      <i>Use TimeStampPrecision</i>
+      <i>Use TimestampPrecision</i>
     </td>
     <td class='description'>Determines if milliseconds should be added to timestamps. Only available for FIX.4.2 and greater.</td>
     <td class='valid'>
@@ -181,7 +181,7 @@ QuickFIX Settings
   </tr>
 
   <tr>
-    <td class='setting'>TimeStampPrecision</td>
+    <td class='setting'>TimestampPrecision</td>
     <td class='description'>
       How much precision should go into timestamps.<br/>
       Note: C# precision is limited to ticks, which are 100ns, thus nanosecond timestamps will always be rounded down
