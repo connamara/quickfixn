@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using System;
 using NUnit.Framework;
 using QuickFix;
 
@@ -14,7 +15,7 @@ public class SettingsDictionaryTests
     }
 
     [Test]
-    public void SetGetString()
+    public void TestSetGetString()
     {
         SettingsDictionary d = new();
         d.SetString("STRINGKEY1", "STRINGVALUE1");
@@ -26,7 +27,7 @@ public class SettingsDictionaryTests
     }
 
     [Test]
-    public void SetGetLong()
+    public void TestSetGetLong()
     {
         SettingsDictionary d = new();
         d.SetLong("LONGKEY1", 12);
@@ -39,7 +40,7 @@ public class SettingsDictionaryTests
     }
 
     [Test]
-    public void SetDouble()
+    public void TestSetDouble()
     {
         // make sure that QF/n uses the invariant culture, no matter what the current culture is
         System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
@@ -53,7 +54,7 @@ public class SettingsDictionaryTests
     }
 
     [Test]
-    public void GetDouble()
+    public void TestGetDouble()
     {
         // make sure that QF/n uses the invariant culture, no matter what the current culture is
         System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("fr-FR");
@@ -72,7 +73,7 @@ public class SettingsDictionaryTests
     }
 
     [Test]
-    public void SetGetBool()
+    public void TestSetGetBool()
     {
         SettingsDictionary d = new();
         d.SetBool("BOOLKEY1", true);
@@ -85,7 +86,7 @@ public class SettingsDictionaryTests
     }
 
     [Test]
-    public void IsBoolPresentAndTrue() {
+    public void TestIsBoolPresentAndTrue() {
         SettingsDictionary d = new();
         d.SetBool("BOOLKEY-T", true);
         d.SetBool("BOOLKEY-F", false);
@@ -95,7 +96,7 @@ public class SettingsDictionaryTests
     }
 
     [Test]
-    public void SetGetDay()
+    public void TestGetDay()
     {
         SettingsDictionary d = new();
 
@@ -106,32 +107,34 @@ public class SettingsDictionaryTests
         d.SetString("DAY5", "TH");
         d.SetString("DAY6", "FR");
         d.SetString("DAY7", "SA");
-        Assert.That(d.GetDay("DAY1"), Is.EqualTo(System.DayOfWeek.Sunday));
-        Assert.That(d.GetDay("DAY2"), Is.EqualTo(System.DayOfWeek.Monday));
-        Assert.That(d.GetDay("DAY3"), Is.EqualTo(System.DayOfWeek.Tuesday));
-        Assert.That(d.GetDay("DAY4"), Is.EqualTo(System.DayOfWeek.Wednesday));
-        Assert.That(d.GetDay("DAY5"), Is.EqualTo(System.DayOfWeek.Thursday));
-        Assert.That(d.GetDay("DAY6"), Is.EqualTo(System.DayOfWeek.Friday));
-        Assert.That(d.GetDay("DAY7"), Is.EqualTo(System.DayOfWeek.Saturday));
+        Assert.That(d.GetDay("DAY1"), Is.EqualTo(DayOfWeek.Sunday));
+        Assert.That(d.GetDay("DAY2"), Is.EqualTo(DayOfWeek.Monday));
+        Assert.That(d.GetDay("DAY3"), Is.EqualTo(DayOfWeek.Tuesday));
+        Assert.That(d.GetDay("DAY4"), Is.EqualTo(DayOfWeek.Wednesday));
+        Assert.That(d.GetDay("DAY5"), Is.EqualTo(DayOfWeek.Thursday));
+        Assert.That(d.GetDay("DAY6"), Is.EqualTo(DayOfWeek.Friday));
+        Assert.That(d.GetDay("DAY7"), Is.EqualTo(DayOfWeek.Saturday));
 
-        d.SetDay("NEXTDAY1", System.DayOfWeek.Sunday);
-        d.SetDay("NEXTDAY2", System.DayOfWeek.Monday);
-        d.SetDay("NEXTDAY3", System.DayOfWeek.Tuesday);
-        d.SetDay("NEXTDAY4", System.DayOfWeek.Wednesday);
-        d.SetDay("NEXTDAY5", System.DayOfWeek.Thursday);
-        d.SetDay("NEXTDAY6", System.DayOfWeek.Friday);
-        d.SetDay("NEXTDAY7", System.DayOfWeek.Saturday);
-        Assert.That(d.GetDay("NEXTDAY1"), Is.EqualTo(System.DayOfWeek.Sunday));
-        Assert.That(d.GetDay("NEXTDAY2"), Is.EqualTo(System.DayOfWeek.Monday));
-        Assert.That(d.GetDay("NEXTDAY3"), Is.EqualTo(System.DayOfWeek.Tuesday));
-        Assert.That(d.GetDay("NEXTDAY4"), Is.EqualTo(System.DayOfWeek.Wednesday));
-        Assert.That(d.GetDay("NEXTDAY5"), Is.EqualTo(System.DayOfWeek.Thursday));
-        Assert.That(d.GetDay("NEXTDAY6"), Is.EqualTo(System.DayOfWeek.Friday));
-        Assert.That(d.GetDay("NEXTDAY7"), Is.EqualTo(System.DayOfWeek.Saturday));
+        d.SetString("DAY_X", "invalid");
+        var ex = Assert.Throws(typeof(ArgumentException), delegate { d.GetDay("DAY_X"); });
+        StringAssert.Contains("Cannot recognize this day: 'invalid'", ex.Message);
     }
 
     [Test]
-    public void Merge()
+    public void TestSetDay() {
+        SettingsDictionary d = new();
+        d.SetDay("DAY1", DayOfWeek.Monday);
+        d.SetDay("DAY4", DayOfWeek.Thursday);
+
+        Assert.That(d.GetString("DAY1"), Is.EqualTo("Monday"));
+        Assert.That(d.GetString("DAY4"), Is.EqualTo("Thursday"));
+
+        var ex = Assert.Throws(typeof(ArgumentException), delegate { d.SetDay("X", (DayOfWeek)9); });
+        StringAssert.Contains("Not a valid DayOfWeek value", ex.Message);
+    }
+
+    [Test]
+    public void TestMerge()
     {
         SettingsDictionary first = new();
         first.SetString("FIRSTKEY", "FIRSTVALUE");
@@ -148,7 +151,7 @@ public class SettingsDictionaryTests
     }
 
     [Test]
-    public void ValueEquality()
+    public void TestValueEquality()
     {
         SettingsDictionary first = new("MyName");
         SettingsDictionary second = new("MyName");
@@ -175,7 +178,7 @@ public class SettingsDictionaryTests
     }
 
     [Test]
-    public void CopyCtor() {
+    public void TestCopyCtor() {
         SettingsDictionary orig = new("orig");
         orig.SetString("uno", "One");
         orig.SetLong("dos", 2);

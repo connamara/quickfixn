@@ -150,7 +150,6 @@ public class SettingsDictionary : System.Collections.IEnumerable
         return Has(key) && GetBool(key);
     }
 
-    // TODO: unify this func's switch with the one in GetDay
     public HashSet<DayOfWeek> GetDays(string key)
     {
         string[] weekdayNameArray = GetString(key).Split(",");
@@ -158,31 +157,18 @@ public class SettingsDictionary : System.Collections.IEnumerable
         foreach (var weekDayName in weekdayNameArray)
         {
             string abbr = weekDayName.Trim().Substring(0, 2).ToUpper();
-            switch (abbr)
-            {
-                case "SU": result.Add(DayOfWeek.Sunday);
-                    break;
-                case "MO": result.Add(DayOfWeek.Monday);
-                    break;
-                case "TU": result.Add(DayOfWeek.Tuesday);
-                    break;
-                case "WE": result.Add(DayOfWeek.Wednesday);
-                    break;
-                case "TH": result.Add(DayOfWeek.Thursday);
-                    break;
-                case "FR": result.Add(DayOfWeek.Friday);
-                    break;
-                case "SA": result.Add(DayOfWeek.Saturday);
-                    break;
-                default: throw new ConfigError("Illegal value " + weekDayName.Trim() + " for " + key);
-            }
+            result.Add(DeduceDay(abbr));
         }
 
         return result;
     }
 
     public DayOfWeek GetDay(string key) {
-        string abbr = GetString(key).Substring(0, 2).ToUpperInvariant();
+        return DeduceDay(GetString(key));
+    }
+
+    private static DayOfWeek DeduceDay(string dayStr) {
+        string abbr = dayStr.Substring(0, 2).ToUpperInvariant();
         return abbr switch
         {
             "SU" => DayOfWeek.Sunday,
@@ -192,7 +178,7 @@ public class SettingsDictionary : System.Collections.IEnumerable
             "TH" => DayOfWeek.Thursday,
             "FR" => DayOfWeek.Friday,
             "SA" => DayOfWeek.Saturday,
-            _ => throw new ConfigError($"Illegal value {GetString(key)} for {key}")
+            _ => throw new ArgumentException($"Cannot recognize this day: '{dayStr}'")
         };
     }
 
@@ -230,20 +216,12 @@ public class SettingsDictionary : System.Collections.IEnumerable
         SetString(key, BoolConverter.Convert(val));
     }
 
-    // TODO: this func is only used by tests!  Get it out of here
-    public void SetDay(string key, DayOfWeek val)
-    {
-        switch(val)
-        {
-            case DayOfWeek.Sunday: SetString(key, "SU"); break;
-            case DayOfWeek.Monday: SetString(key, "MO"); break;
-            case DayOfWeek.Tuesday: SetString(key, "TU"); break;
-            case DayOfWeek.Wednesday: SetString(key, "WE"); break;
-            case DayOfWeek.Thursday: SetString(key, "TH"); break;
-            case DayOfWeek.Friday: SetString(key, "FR"); break;
-            case DayOfWeek.Saturday: SetString(key, "SA"); break;
-            default: throw new ConfigError($"Illegal value {val} for {key}");
+    public void SetDay(string key, DayOfWeek val) {
+        if (Enum.IsDefined(val)) {
+            SetString(key, val.ToString());
+            return;
         }
+        throw new ArgumentException("Not a valid DayOfWeek value");
     }
 
     public bool Has(string key)
