@@ -27,6 +27,7 @@ namespace QuickFix
         public const string TIME_ZONE = "TimeZone";
         public const string START_DAY = "StartDay";
         public const string END_DAY = "EndDay";
+        public const string WEEKDAYS = "Weekdays";
         public const string START_TIME = "StartTime";
         public const string END_TIME = "EndTime";
         public const string HEARTBTINT = "HeartBtInt";

@@ -60,6 +60,7 @@ What's New
      * Also refactor the heck out of DateTimeConverter & tests: many functions renamed/deprecated
 * #847 - remove setting MillisecondsInTimeStamp (gbirchmeier)
      * Use TimestampPrecision instead (same as QF/j)
+* #844 - implement "Weekdays" setting (MichalUssuri/gbirchmeier)
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
