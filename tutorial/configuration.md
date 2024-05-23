@@ -167,6 +167,19 @@ QuickFIX Settings
   </tr>
   
   <tr>
+    <td class='setting'>NonStopSession</td>
+    <td class='description'>
+      The session runs forever without interruption.
+      <br/>Incompatible with StartDay/EndDay and StartTime/EndTime
+    </td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
+  
+  <tr>
     <td class='setting'>
       MillisecondsInTimestamp<br/>
       <b>DEPRECATED</b><br/>
