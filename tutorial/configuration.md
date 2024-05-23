@@ -165,7 +165,23 @@ QuickFIX Settings
     </td>
     <td class='default'>-</td>
   </tr>
-  
+
+  <tr>
+    <td class='setting'>Weekdays</td>
+    <td class='description'>
+      For daily sessions that are active on specific days of the week.
+      <br/>Use in combination with StartTime and EndTime.
+      <br/>Incompatible with StartDay and EndDay.
+      <br/>If StartTime is before EndTime then the day corresponds to the StartTime.
+    </td>
+    <td class='valid'>
+      Comma-delimited list of days of the week (in English).
+      <br/>(Only the first two letters of each day are needed,
+      <br/>e.g. "Tu,We,Th" and "Tues,Wed,Thurs" both work)
+    </td>
+    <td class='default'>-</td>
+  </tr>
+
   <tr>
     <td class='setting'>NonStopSession</td>
     <td class='description'>
