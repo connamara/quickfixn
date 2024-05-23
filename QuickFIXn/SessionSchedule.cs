@@ -225,10 +225,20 @@ namespace QuickFix
         /// <summary>
         /// </summary>
         /// <param name="settings"></param>
-        public SessionSchedule(QuickFix.SettingsDictionary settings)
+        public SessionSchedule(SettingsDictionary settings)
         {
-            if (settings.Has(SessionSettings.NON_STOP_SESSION)) {
-                NonStopSession = settings.GetBool(SessionSettings.NON_STOP_SESSION);
+            if (settings.IsBoolPresentAndTrue(SessionSettings.NON_STOP_SESSION)) {
+                NonStopSession = true;
+
+                if (settings.Has(SessionSettings.START_DAY)
+                    || settings.Has(SessionSettings.END_DAY)
+                    || settings.Has(SessionSettings.START_TIME)
+                    || settings.Has(SessionSettings.END_TIME))
+                {
+                    throw new ConfigError(
+                        "NonStopSession is not compatible with StartDay/EndDay and StartTime/EndTime");
+                }
+
                 return;
             }
 

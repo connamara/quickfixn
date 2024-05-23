@@ -224,6 +224,11 @@ public class SettingsDictionary : System.Collections.IEnumerable
         throw new ArgumentException("Not a valid DayOfWeek value");
     }
 
+    /// <summary>
+    /// returns true if this SettingsDictionary has a value set for this key
+    /// </summary>
+    /// <param name="key"></param>
+    /// <returns></returns>
     public bool Has(string key)
     {
         return _data.ContainsKey(key.ToUpperInvariant());
