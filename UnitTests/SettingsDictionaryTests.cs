@@ -117,7 +117,7 @@ public class SettingsDictionaryTests
 
         d.SetString("DAY_X", "invalid");
         var ex = Assert.Throws(typeof(ArgumentException), delegate { d.GetDay("DAY_X"); });
-        StringAssert.Contains("Cannot recognize this day: 'invalid'", ex.Message);
+        StringAssert.Contains("Cannot recognize this day: 'invalid'", ex!.Message);
     }
 
     [Test]
@@ -130,7 +130,7 @@ public class SettingsDictionaryTests
         Assert.That(d.GetString("DAY4"), Is.EqualTo("Thursday"));
 
         var ex = Assert.Throws(typeof(ArgumentException), delegate { d.SetDay("X", (DayOfWeek)9); });
-        StringAssert.Contains("Not a valid DayOfWeek value", ex.Message);
+        StringAssert.Contains("Not a valid DayOfWeek value", ex!.Message);
     }
 
     [Test]

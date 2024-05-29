@@ -60,7 +60,6 @@ What's New
      * Also refactor the heck out of DateTimeConverter & tests: many functions renamed/deprecated
 * #847 - remove setting MillisecondsInTimeStamp (gbirchmeier)
      * Use TimestampPrecision instead (same as QF/j)
-* #844 - implement "Weekdays" setting (MichalUssuri/gbirchmeier)
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
@@ -83,6 +82,7 @@ What's New
       Programming Model (APM), in order to catch unobserved SocketExceptions (nmandzyk)
     * Cleanup/nullable-ize SocketInitiatorThread (gbirchmeier)
 * #839 - change ScreenLog to output FIX messages with "|" instead of non-visible SOH (gbirchmeier)
+* #844 - implement "Weekdays" setting (MichalUssuri/gbirchmeier)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages

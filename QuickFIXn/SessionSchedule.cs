@@ -14,7 +14,7 @@ namespace QuickFix
         public DayOfWeek? EndDay { get; }
 
         private readonly bool _isWeekdaysSession;
-        private readonly HashSet<DayOfWeek> _weekdays;
+        private readonly HashSet<DayOfWeek> _weekdays = new();
 
         public bool NonStopSession { get; }
 
@@ -90,7 +90,7 @@ namespace QuickFix
             if (NonStopSession)
                 throw new InvalidOperationException("NonStopSession is set; this statement should be unreachable");
 
-            TimeSpan vEndTime = EndTime ?? throw new QuickFix.ConfigError("EndTime is null");
+            TimeSpan vEndTime = EndTime ?? throw new ConfigError("EndTime is null");
 
             if (utc.Kind != DateTimeKind.Utc)
                 throw new ArgumentException("Only UTC time is supported", nameof(utc));
@@ -133,10 +133,10 @@ namespace QuickFix
             if (NonStopSession)
                 throw new InvalidOperationException("NonStopSession is set; this statement should be unreachable");
 
-            DayOfWeek vStartDay = StartDay ?? throw new QuickFix.ConfigError("StartDay is null");
-            DayOfWeek vEndDay = EndDay ?? throw new QuickFix.ConfigError("EndDay is null");
-            TimeSpan vStartTime = StartTime ?? throw new QuickFix.ConfigError("StartTime is null");
-            TimeSpan vEndTime = EndTime ?? throw new QuickFix.ConfigError("EndTime is null");
+            DayOfWeek vStartDay = StartDay ?? throw new ConfigError("StartDay is null");
+            DayOfWeek vEndDay = EndDay ?? throw new ConfigError("EndDay is null");
+            TimeSpan vStartTime = StartTime ?? throw new ConfigError("StartTime is null");
+            TimeSpan vEndTime = EndTime ?? throw new ConfigError("EndTime is null");
 
             if (vStartDay < vEndDay)
             {
@@ -177,8 +177,8 @@ namespace QuickFix
             if (NonStopSession)
                 return true;
 
-            TimeSpan vStartTime = StartTime ?? throw new QuickFix.ConfigError("StartTime is null");
-            TimeSpan vEndTime = EndTime ?? throw new QuickFix.ConfigError("EndTime is null");
+            TimeSpan vStartTime = StartTime ?? throw new ConfigError("StartTime is null");
+            TimeSpan vEndTime = EndTime ?? throw new ConfigError("EndTime is null");
 
             if (vStartTime.CompareTo(vEndTime) < 0)
             {
@@ -195,8 +195,8 @@ namespace QuickFix
             if (NonStopSession)
                 throw new InvalidOperationException("NonStopSession is set; this statement should be unreachable");
 
-            TimeSpan vStartTime = StartTime ?? throw new QuickFix.ConfigError("StartTime is null");
-            TimeSpan vEndTime = EndTime ?? throw new QuickFix.ConfigError("EndTime is null");
+            TimeSpan vStartTime = StartTime ?? throw new ConfigError("StartTime is null");
+            TimeSpan vEndTime = EndTime ?? throw new ConfigError("EndTime is null");
 
             TimeSpan tod = dt.TimeOfDay;
 
@@ -216,7 +216,7 @@ namespace QuickFix
             return _weekdays.Contains(targetDay);
         }
 
-        private DayOfWeek PreviousDay(DayOfWeek d) {
+        private static DayOfWeek PreviousDay(DayOfWeek d) {
             return d == DayOfWeek.Sunday
                 ? DayOfWeek.Saturday
                 : d - 1;
@@ -252,10 +252,10 @@ namespace QuickFix
             }
 
             if (!settings.Has(SessionSettings.START_DAY) && settings.Has(SessionSettings.END_DAY))
-                throw new QuickFix.ConfigError("EndDay used without StartDay");
+                throw new ConfigError("EndDay used without StartDay");
 
             if (settings.Has(SessionSettings.START_DAY) && !settings.Has(SessionSettings.END_DAY))
-                throw new QuickFix.ConfigError("StartDay used without EndDay");
+                throw new ConfigError("StartDay used without EndDay");
 
             if (settings.Has(SessionSettings.START_DAY) && settings.Has(SessionSettings.END_DAY))
             {
