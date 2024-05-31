@@ -661,10 +661,7 @@ namespace QuickFix
 
         protected void NextLogon(Message logon)
         {
-            Fields.ResetSeqNumFlag resetSeqNumFlag = new Fields.ResetSeqNumFlag(false);
-            if (logon.IsSetField(resetSeqNumFlag))
-                logon.GetField(resetSeqNumFlag);
-            _state.ReceivedReset = resetSeqNumFlag.Obj;
+            _state.ReceivedReset = logon.IsSetField(ResetSeqNumFlag.TAG) && logon.GetBoolean(ResetSeqNumFlag.TAG);
 
             if (_state.ReceivedReset)
             {
@@ -704,7 +701,7 @@ namespace QuickFix
             _state.ReceivedReset = false;
 
             SeqNumType msgSeqNum = logon.Header.GetULong(Fields.Tags.MsgSeqNum);
-            if (IsTargetTooHigh(msgSeqNum) && !resetSeqNumFlag.Obj)
+            if (IsTargetTooHigh(msgSeqNum) && !_state.ReceivedReset)
             {
                 DoTargetTooHigh(logon, msgSeqNum);
             }
@@ -1186,6 +1183,10 @@ namespace QuickFix
             _state.SetResendRange(beginSeqNum, endRangeSeqNum, endChunkSeqNum);
         }
 
+        /// <summary>
+        /// Create and send a logon
+        /// </summary>
+        /// <returns>true of logon was successfully sent</returns>
         protected bool GenerateLogon()
         {
             Message logon = _msgFactory.Create(SessionID.BeginString, Fields.MsgType.LOGON);
