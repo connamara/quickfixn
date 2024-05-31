@@ -387,6 +387,10 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Reset the MessageStore
+        /// </summary>
+        /// <param name="reason">this is for the log statement</param>
         public void Reset(string reason)
         {
             lock (_sync)
