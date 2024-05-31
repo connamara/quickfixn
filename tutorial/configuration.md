@@ -225,7 +225,7 @@ QuickFIX Settings
 
   <tr>
     <td class='setting'>ResetOnLogon</td>
-    <td class='description'>Determines if sequence numbers should be reset when receiving a logon request. Acceptors only.</td>
+    <td class='description'>Determines if sequence numbers should be reset when receiving a logon request.</td>
     <td class='valid'>
       <div>Y</div>
       <div>N</div>
