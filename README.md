@@ -41,8 +41,12 @@ To run *only* UTs or *only* ATs:
 * `dotnet test UnitTests`
 * `dotnet test AcceptanceTests`
 
-For more information:
+To get more detail in the test ouput:
 * `dotnet test -l "console;verbosity=detailed" AcceptanceTest`
+
+To run a specific suite, use ``--filter``, e.g.
+* `dotnet test --filter Fix44Test AcceptanceTest`
+(`Fix44Test` is the `TestCaseSource` function in Fix44.cs)
 
 AcceptanceTest logs are output to `bin/Debug/net6.0/log`.
 
