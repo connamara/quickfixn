@@ -23,7 +23,7 @@ namespace QuickFix
         private readonly byte[] _readBuffer = new byte[BUF_SIZE];
         private readonly Parser _parser = new();
         private Stream? _stream;
-        private CancellationTokenSource _readCancellationTokenSource = new();
+        private readonly CancellationTokenSource _readCancellationTokenSource = new();
         private readonly IPEndPoint _socketEndPoint;
         private readonly SocketSettings _socketSettings;
         private bool _isDisconnectRequested = false;
@@ -127,8 +127,8 @@ namespace QuickFix
                 _currentReadTask ??= _stream.ReadAsync(buffer, 0, buffer.Length, _readCancellationTokenSource.Token);
 
                 if (_currentReadTask.Wait(timeoutMilliseconds)) {
-                    // Dispose/nullify currentReadTask *before* retreiving .Result.
-                    //   Accessting .Result can throw an exception, so we need to reset currentReadTask
+                    // Dispose/nullify currentReadTask *before* retrieving .Result.
+                    //   Accessing .Result can throw an exception, so we need to reset currentReadTask
                     //   first, to set us up for the next read even if an exception is thrown.
                     Task<int>? request = _currentReadTask;
                     _currentReadTask = null;

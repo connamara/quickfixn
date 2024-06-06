@@ -78,8 +78,8 @@ namespace QuickFix
                 _currentReadTask ??= _stream.ReadAsync(buffer, 0, buffer.Length, _readCancellationTokenSource.Token);
 
                 if (_currentReadTask.Wait(timeoutMilliseconds)) {
-                    // Dispose/nullify currentReadTask *before* retreiving .Result.
-                    //   Accessting .Result can throw an exception, so we need to reset currentReadTask
+                    // Dispose/nullify currentReadTask *before* retrieving .Result.
+                    //   Accessing .Result can throw an exception, so we need to reset currentReadTask
                     //   first, to set us up for the next read even if an exception is thrown.
                     Task<int>? request = _currentReadTask;
                     _currentReadTask = null;
@@ -96,7 +96,6 @@ namespace QuickFix
             catch (AggregateException ex) // Timeout
             {
                 _currentReadTask = null;
-
                 IOException? ioException = ex.InnerException as IOException;
                 SocketException? inner = ioException?.InnerException as SocketException;
                 if (inner is not null && inner.SocketErrorCode == SocketError.TimedOut) {
@@ -104,8 +103,7 @@ namespace QuickFix
                     return 0;
                 }
 
-                if (inner is not null)
-                {
+                if (inner is not null) {
                     throw inner; //rethrow SocketException part (which we have exception logic for)
                 }
 
@@ -122,8 +120,8 @@ namespace QuickFix
                     _qfSession = Session.LookupSession(Message.GetReverseSessionId(msg));
                     if (_qfSession is null || IsUnknownSession(_qfSession.SessionID))
                     {
-                        LogSessionEvent("ERROR: Disconnecting; received message for unknown session: " + msg);
                         _qfSession = null;
+                        LogSessionEvent("ERROR: Disconnecting; received message for unknown session: " + msg);
                         DisconnectClient();
                         return;
                     }
@@ -150,6 +148,11 @@ namespace QuickFix
                     _qfSession.Log.OnEvent($"Error on Session '{_qfSession.SessionID}': {e}");
                 }
             }
+            /*
+             * TODO: Are these catches reachable?  I don't think they are!
+             *       The only line that could throw them is _qfSession.Next above,
+             *       but it has its own catch.
+             */
             catch (InvalidMessage e)
             {
                 HandleBadMessage(msg, e);
@@ -253,7 +256,7 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Log event if session can be identified (TODO: logging if not specific to a session)
+        /// Log event to session if known, else do... TODO
         /// </summary>
         /// <param name="s"></param>
         private void LogSessionEvent(string s)

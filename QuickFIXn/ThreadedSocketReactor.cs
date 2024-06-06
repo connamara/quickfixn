@@ -17,16 +17,10 @@ namespace QuickFix
     {
         public enum State { RUNNING, SHUTDOWN_REQUESTED, SHUTDOWN_COMPLETE }
 
-        #region Properties
-
         public State ReactorState
         {
             get { lock (_sync) { return _state; } }
         }
-
-        #endregion
-
-        #region Private Members
 
         private readonly object _sync = new ();
         private State _state = State.RUNNING;
@@ -35,24 +29,22 @@ namespace QuickFix
         private readonly Dictionary<long, ClientHandlerThread> _clientThreads = new ();
         private readonly TcpListener _tcpListener;
         private readonly SocketSettings _socketSettings;
-        private readonly QuickFix.SettingsDictionary _sessionDict;
+        private readonly SettingsDictionary _sessionDict;
         private readonly IPEndPoint _serverSocketEndPoint;
         private readonly AcceptorSocketDescriptor? _acceptorSocketDescriptor;
-
-        #endregion
 
         // TODO: internalize.  Only used by test.
         public ThreadedSocketReactor(
             IPEndPoint serverSocketEndPoint,
             SocketSettings socketSettings,
-            QuickFix.SettingsDictionary sessionDict
+            SettingsDictionary sessionDict
         ) : this(serverSocketEndPoint, socketSettings, sessionDict, null) {
         }
 
         internal ThreadedSocketReactor(
             IPEndPoint serverSocketEndPoint,
             SocketSettings socketSettings,
-            QuickFix.SettingsDictionary sessionDict,
+            SettingsDictionary sessionDict,
             AcceptorSocketDescriptor? acceptorSocketDescriptor)
         {
             _socketSettings = socketSettings;

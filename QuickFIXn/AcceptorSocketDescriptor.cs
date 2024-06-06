@@ -6,19 +6,10 @@ namespace QuickFix
 {
     internal class AcceptorSocketDescriptor
     {
-        #region Properties
-
         public ThreadedSocketReactor SocketReactor { get; }
-
         public IPEndPoint Address { get; }
 
-        #endregion
-
-        #region Private Members
-
         private readonly Dictionary<SessionID, Session> _acceptedSessions = new ();
-
-        #endregion
 
         public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.SettingsDictionary sessionDict)
         {

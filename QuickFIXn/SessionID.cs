@@ -11,20 +11,12 @@ namespace QuickFix
     /// </summary>
     public class SessionID
     {
-        #region Properties
-        
         public string BeginString { get; }
-
         public string SenderCompID { get; }
-
         public string SenderSubID { get; }
-
         public string SenderLocationID { get; }
-
         public string TargetCompID { get; }
-
         public string TargetSubID { get; }
-
         public string TargetLocationID { get; }
 
         /// <summary>
@@ -39,16 +31,10 @@ namespace QuickFix
         /// </summary>
         public bool IsFIXT { get; }
 
-        #endregion
-
-        #region Public Members
+        // TODO just make the values nullable, jeez
         public const string NOT_SET = "";
-        #endregion
 
-        #region Private Members
         private readonly string _id;
-
-        #endregion
 
         public SessionID(string beginString, string senderCompId, string senderSubId, string senderLocationId, string targetCompId, string targetSubId, string targetLocationId, string? sessionQualifier = NOT_SET)
         {

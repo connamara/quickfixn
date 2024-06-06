@@ -34,7 +34,7 @@ internal sealed class SslStreamFactory
             false,
             ValidateServerCertificate,
 #pragma warning disable CS8621 // Nullability of reference types in return type doesn't match the target delegate (possibly because of nullability attributes).
-            // Per MS docs, this delete /should/ have a nullable return type
+            // Per MS docs, this delegate /should/ have a nullable return type
             SelectLocalCertificate);
 #pragma warning restore CS8621 // Nullability of reference types in return type doesn't match the target delegate (possibly because of nullability attributes).
 
@@ -68,7 +68,7 @@ internal sealed class SslStreamFactory
             false,
             ValidateClientCertificate,
 #pragma warning disable CS8621 // Nullability of reference types in return type doesn't match the target delegate (possibly because of nullability attributes).
-            // Per MS docs, this delete /should/ have a nullable return type
+            // Per MS docs, this delegate /should/ have a nullable return type
             SelectLocalCertificate);
 #pragma warning restore CS8621 // Nullability of reference types in return type doesn't match the target delegate (possibly because of nullability attributes).
 
