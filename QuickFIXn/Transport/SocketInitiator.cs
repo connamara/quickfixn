@@ -138,7 +138,7 @@ namespace QuickFix.Transport
             }
         }
 
-        private IPEndPoint GetNextSocketEndPoint(SessionID sessionId, QuickFix.SettingsDictionary settings)
+        private IPEndPoint GetNextSocketEndPoint(SessionID sessionId, SettingsDictionary settings)
         {
             if (!_sessionToHostNum.TryGetValue(sessionId, out var num))
                 num = 0;

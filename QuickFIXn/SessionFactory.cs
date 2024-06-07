@@ -36,7 +36,7 @@ namespace QuickFix
             _messageFactory = messageFactory ?? new DefaultMessageFactory();
         }
 
-        private static bool DetectIfInitiator(QuickFix.SettingsDictionary settings)
+        private static bool DetectIfInitiator(SettingsDictionary settings)
         {
             switch (settings.GetString(SessionSettings.CONNECTION_TYPE))
             {
@@ -46,7 +46,7 @@ namespace QuickFix
             throw new ConfigError("Invalid ConnectionType");
         }
 
-        public Session Create(SessionID sessionId, QuickFix.SettingsDictionary settings)
+        public Session Create(SessionID sessionId, SettingsDictionary settings)
         {
             bool isInitiator = SessionFactory.DetectIfInitiator(settings);
 
@@ -161,7 +161,7 @@ namespace QuickFix
             return session;
         }
 
-        protected DataDictionary.DataDictionary CreateDataDictionary(SessionID sessionId, QuickFix.SettingsDictionary settings, string settingsKey, string beginString)
+        protected DataDictionary.DataDictionary CreateDataDictionary(SessionID sessionId, SettingsDictionary settings, string settingsKey, string beginString)
         {
             string path;
             if (settings.Has(settingsKey))
