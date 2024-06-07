@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using QuickFix.Util;
 
-namespace QuickFix;
+namespace QuickFix.Transport;
 
 internal static class SslCertCache {
 
@@ -16,9 +17,10 @@ internal static class SslCertCache {
     /// <summary>
     /// Loads the specified certificate given a path, DistinguishedName or subject name
     /// </summary>
-    /// <param name="name">The certificate path or DistinguishedName/subjectname if it should be loaded from the personal certificate store.</param>
+    /// <param name="name">The certificate path or DistinguishedName/subjectname
+    /// if it should be loaded from the personal certificate store.</param>
     /// <param name="password">The certificate password.</param>
-    /// <returns>The specified certificate, or null if no certificate is found</returns>
+    /// <returns>The specified certificate</returns>
     internal static X509Certificate2? LoadCertificate(string name, string? password)
     {
         // TODO: Change _certificateCache's type to ConcurrentDictionary once we start targeting .NET 4,
@@ -29,12 +31,16 @@ internal static class SslCertCache {
             if (CertificateCache.TryGetValue(name, out X509Certificate2? certificate))
                 return certificate;
 
-            certificate = LoadCertificateInner(name, password);
-
-            if (certificate is not null)
+            try {
+                certificate = LoadCertificateInner(name, password);
                 CertificateCache.Add(name, certificate);
 
-            return certificate;
+                return certificate;
+            } catch (ApplicationException) {
+                // TODO refactor this function+callers to throw an exception up the stack instead of returning null
+                // Callers should log as appropriate
+                return null;
+            }
         }
     }
 
@@ -43,22 +49,29 @@ internal static class SslCertCache {
     /// </summary>
     /// <param name="name">The certificate path or DistinguishedName/subjectname if it should be loaded from the personal certificate store.</param>
     /// <param name="password">The certificate password.</param>
-    /// <returns>The specified certificate, or null if no certificate is found</returns>
-    private static X509Certificate2? LoadCertificateInner(string name, string? password)
+    /// <exception cref="ApplicationException">Certificate could not be loaded from file or store</exception>
+    /// <returns>The specified certificate</returns>
+    private static X509Certificate2 LoadCertificateInner(string name, string? password)
     {
-        X509Certificate2? certificate;
+        var certPath = StringUtil.FixSlashes(name);
 
         // If no extension is found try to get from certificate store
-        if (!File.Exists(name))
+        if (!File.Exists(certPath))
         {
-            certificate = GetCertificateFromStore(name);
+            var certFromStore = GetCertificateFromStore(StringUtil.FixSlashes(name));
+            if (certFromStore is not null)
+                return certFromStore;
+
+            // see TODO in LoadCertificate()
+            string msg =
+                $"Certificate '{name}' could not be loaded from store or path '{Directory.GetCurrentDirectory()}'";
+            Console.WriteLine(msg);
+            throw new ApplicationException(msg);
         }
-        else {
-            certificate = password is not null
+
+        return password is not null
                 ? new X509Certificate2(name, password)
                 : new X509Certificate2(name);
-        }
-        return certificate;
     }
 
     /// <summary>

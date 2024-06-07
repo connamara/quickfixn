@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using QuickFix.Logger;
 
 namespace QuickFix
 {
@@ -19,6 +20,7 @@ namespace QuickFix
         private readonly TcpClient _tcpClient;
         private readonly ClientHandlerThread _responder;
         private readonly AcceptorSocketDescriptor? _acceptorDescriptor;
+        private readonly NonSessionLog _nonSessionLog;
 
         /// <summary>
         /// Keep a task for handling async read
@@ -29,12 +31,14 @@ namespace QuickFix
             TcpClient tcpClient,
             SocketSettings settings,
             ClientHandlerThread responder,
-            AcceptorSocketDescriptor? acceptorDescriptor)
+            AcceptorSocketDescriptor? acceptorDescriptor,
+            NonSessionLog nonSessionLog)
         {
             _tcpClient = tcpClient;
             _responder = responder;
             _acceptorDescriptor = acceptorDescriptor;
-            _stream = Transport.StreamFactory.CreateServerStream(tcpClient, settings);
+            _stream = Transport.StreamFactory.CreateServerStream(tcpClient, settings, nonSessionLog);
+            _nonSessionLog = nonSessionLog;
         }
 
         public void Read()
@@ -121,7 +125,7 @@ namespace QuickFix
                     if (_qfSession is null || IsUnknownSession(_qfSession.SessionID))
                     {
                         _qfSession = null;
-                        LogSessionEvent("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        _nonSessionLog.OnEvent("ERROR: Disconnecting; received message for unknown session: " + msg);
                         DisconnectClient();
                         return;
                     }
@@ -169,13 +173,12 @@ namespace QuickFix
             {
                 if (Fields.MsgType.LOGON.Equals(Message.GetMsgType(msg)))
                 {
-                    LogSessionEvent($"ERROR: Invalid LOGON message, disconnecting: {e.Message}");
-                    // TODO: else session-agnostic log
+                    LogEvent($"ERROR: Invalid LOGON message, disconnecting: {e.Message}");
                     DisconnectClient();
                 }
                 else
                 {
-                    LogSessionEvent($"ERROR: Invalid message: {e.Message}");
+                    LogEvent($"ERROR: Invalid message: {e.Message}");
                 }
             }
             catch (InvalidMessage)
@@ -244,7 +247,7 @@ namespace QuickFix
                     break;
             }
 
-            LogSessionEvent($"SocketReader Error: {reason}");
+            LogEvent($"SocketReader Error: {reason}");
 
             if (disconnectNeeded)
             {
@@ -256,18 +259,15 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// Log event to session if known, else do... TODO
+        /// Log event to session log if session is known, else to nonSessionLog
         /// </summary>
         /// <param name="s"></param>
-        private void LogSessionEvent(string s)
+        private void LogEvent(string s)
         {
             if(_qfSession is not null)
                 _qfSession.Log.OnEvent(s);
-            else {
-                // Can't tie this to a session, need a generic log.
-                // TODO this is a temp console log until I do something better
-                Console.WriteLine(s);
-            }
+            else
+                _nonSessionLog.OnEvent(s);
         }
 
         public int Send(string data)

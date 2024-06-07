@@ -21,6 +21,7 @@ namespace QuickFix
         private bool _isStarted = false;
         private bool _disposed = false;
         private readonly object _sync = new();
+        private readonly NonSessionLog _nonSessionLog;
 
         #region Constructors
 
@@ -43,12 +44,13 @@ namespace QuickFix
             IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
             _settings = settings;
             _sessionFactory = new SessionFactory(application, storeFactory, lf, mf);
+            _nonSessionLog = new NonSessionLog(lf);
 
             try
             {
                 foreach (SessionID sessionId in settings.GetSessions())
                 {
-                    QuickFix.SettingsDictionary dict = settings.Get(sessionId);
+                    SettingsDictionary dict = settings.Get(sessionId);
                     CreateSession(sessionId, dict);
                 }
             }
@@ -93,7 +95,7 @@ namespace QuickFix
 
             if (!_socketDescriptorForAddress.TryGetValue(socketEndPoint, out var descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, dict, _nonSessionLog);
                 _socketDescriptorForAddress[socketEndPoint] = descriptor;
             }
 
@@ -175,7 +177,7 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    System.Console.WriteLine("Error during logout of Session " + session.SessionID + ": " + e.Message);
+                    session.Log.OnEvent($"Error during logout of Session {session.SessionID}: {e.Message}");
                 }
             }
 
@@ -190,7 +192,7 @@ namespace QuickFix
                     }
                     catch (Exception e)
                     {
-                        System.Console.WriteLine("Error during disconnect of Session " + session.SessionID + ": " + e.Message);
+                        session.Log.OnEvent($"Error during disconnect of Session {session.SessionID}: {e.Message}");
                     }
                 }
             }
@@ -200,11 +202,10 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME implement WaitForLogout
+        /// TODO implement WaitForLogout
         /// </summary>
         private void WaitForLogout()
         {
-            System.Console.WriteLine("TODO - ThreadedSocketAcceptor.WaitForLogout not implemented!");
             /*
             int start = System.Environment.TickCount;
             HashSet<Session> sessions = new HashSet<Session>(sessions_.Values);

@@ -3,10 +3,12 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Security;
+using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
+using QuickFix.Logger;
 using QuickFix.Util;
 
-namespace QuickFix;
+namespace QuickFix.Transport;
 
 /// <summary>
 /// The SSLClientStreamFactory is responsible for setting up a SSLStream in either client or server mode
@@ -14,12 +16,14 @@ namespace QuickFix;
 internal sealed class SslStreamFactory
 {
     private readonly SocketSettings _socketSettings;
+    private readonly NonSessionLog _nonSessionLog;
     private const string CLIENT_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.2";
     private const string SERVER_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.1";
 
-    public SslStreamFactory(SocketSettings settings)
+    public SslStreamFactory(SocketSettings settings, NonSessionLog nonSessionLog)
     {
         _socketSettings = settings;
+        _nonSessionLog = nonSessionLog;
     }
 
     /// <summary>
@@ -47,9 +51,9 @@ internal sealed class SslStreamFactory
                 _socketSettings.SslProtocol,
                 _socketSettings.CheckCertificateRevocation);
         }
-        catch (System.Security.Authentication.AuthenticationException ex)
+        catch (AuthenticationException ex)
         {
-            Log($"Unable to perform authentication against server: {ex.GetFullMessage()}");
+            _nonSessionLog.OnEvent($"Unable to perform authentication against server: {ex.GetFullMessage()}");
             throw;
         }
 
@@ -79,6 +83,10 @@ internal sealed class SslStreamFactory
 
             // Setup secure SSL Communication
             X509Certificate2? serverCertificate = SslCertCache.LoadCertificate(_socketSettings.CertificatePath, _socketSettings.CertificatePassword);
+            if (serverCertificate is null) {
+                throw new AuthenticationException("Failed to load ServerCertificate");
+            }
+
             sslStream.AuthenticateAsServer(new SslServerAuthenticationOptions
             {
                 ServerCertificate = serverCertificate,
@@ -88,9 +96,9 @@ internal sealed class SslStreamFactory
                 EncryptionPolicy = EncryptionPolicy.RequireEncryption
             });
         }
-        catch (System.Security.Authentication.AuthenticationException ex)
+        catch (AuthenticationException ex)
         {
-            Log($"Unable to perform authentication against server: {ex.GetFullMessage()}");
+            _nonSessionLog.OnEvent($"Unable to perform authentication against server: {ex.GetFullMessage()}");
             throw;
         }
 
@@ -159,23 +167,22 @@ internal sealed class SslStreamFactory
 
         // Validate enhanced key usage
         if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage)) {
-            if (enhancedKeyUsage == CLIENT_AUTHENTICATION_OID)
-                Log($"Remote certificate is not intended for client authentication: It is missing enhanced key usage {enhancedKeyUsage}");
-            else
-                Log($"Remote certificate is not intended for server authentication: It is missing enhanced key usage {enhancedKeyUsage}");
-
+            var role = enhancedKeyUsage == CLIENT_AUTHENTICATION_OID ? "client" : "server";
+            _nonSessionLog.OnEvent(
+                $"Remote certificate is not intended for {role} authentication: It is missing enhanced key usage {enhancedKeyUsage}");
             return false;
         }
 
         if (string.IsNullOrEmpty(_socketSettings.CACertificatePath)) {
-            Log("CACertificatePath is not specified");
+            _nonSessionLog.OnEvent("CACertificatePath is not specified");
             return false;
         }
 
-        // If CA Certficiate is specified then validate agains the CA certificate, otherwise it is validated against the installed certificates
+        // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
         X509Certificate2? cert = SslCertCache.LoadCertificate(_socketSettings.CACertificatePath, null);
         if (cert is null) {
-            Log($"Remote certificate was not recognized as a valid certificate: {sslPolicyErrors}");
+            _nonSessionLog.OnEvent(
+                $"Certificate '{_socketSettings.CACertificatePath}' could not be loaded from store or path '{Directory.GetCurrentDirectory()}'");
             return false;
         }
 
@@ -200,7 +207,7 @@ internal sealed class SslStreamFactory
         // Any basic authentication check failed, do after checking CA
         if (sslPolicyErrors != SslPolicyErrors.None)
         {
-            Log($"Remote certificate was not recognized as a valid certificate: {sslPolicyErrors}");
+            _nonSessionLog.OnEvent($"Remote certificate was not recognized as a valid certificate: {sslPolicyErrors}");
             return false;
         }
 
@@ -273,10 +280,5 @@ internal sealed class SslStreamFactory
             return localCertificates[0];
 
         return null;
-    }
-
-    private void Log(string s) {
-        // TODO this is just a temp console log until I do something better
-        Console.WriteLine(s);
     }
 }

@@ -87,7 +87,7 @@ namespace QuickFix
         public bool ValidateCertificates { get; internal set; }
 
         /// <summary>
-        /// Gets the path the the client/server-certificate.
+        /// Gets the path to the client/server-certificate.
         /// </summary>
         /// <value>
         /// The certificate path.

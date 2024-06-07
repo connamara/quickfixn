@@ -1,6 +1,7 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Net;
+using QuickFix.Logger;
 
 namespace QuickFix
 {
@@ -11,10 +12,14 @@ namespace QuickFix
 
         private readonly Dictionary<SessionID, Session> _acceptedSessions = new ();
 
-        public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.SettingsDictionary sessionDict)
+        public AcceptorSocketDescriptor(
+            IPEndPoint socketEndPoint,
+            SocketSettings socketSettings,
+            SettingsDictionary sessionDict,
+            NonSessionLog nonSessionLog)
         {
             Address = socketEndPoint;
-            SocketReactor = new ThreadedSocketReactor(Address, socketSettings, sessionDict, this);
+            SocketReactor = new ThreadedSocketReactor(Address, socketSettings, sessionDict, this, nonSessionLog);
         }
 
         internal void AcceptSession(Session session)

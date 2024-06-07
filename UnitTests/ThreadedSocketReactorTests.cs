@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using QuickFix.Logger;
 
 namespace UnitTests
 {
@@ -45,28 +46,18 @@ namespace UnitTests
             var port = OccupyAPort();
 
             var settings = new SocketSettings();
-            var testingObject = new ThreadedSocketReactor(new IPEndPoint(IPAddress.Loopback, port), settings, sessionDict: null);
+            var testingObject = new ThreadedSocketReactor(
+                new IPEndPoint(IPAddress.Loopback, port),
+                settings,
+                sessionDict: null,
+                acceptorSocketDescriptor: null,
+                new NonSessionLog(new ScreenLogFactory(true, true, true)));
 
             var stdOut = GetStdOut();
+            var ex = Assert.Throws<SocketException>(delegate { testingObject.Run(); })!;
 
-            Exception exceptionResult = null;
-            string stdOutResult = null;
-
-            try
-            {
-                testingObject.Run();
-            }
-            catch (Exception ex)
-            {
-                exceptionResult = ex;
-                stdOutResult = stdOut.ToString();
-            }
-
-            Assert.IsNotNull(exceptionResult);
-            Assert.IsNotNull(stdOutResult);
-
-            Assert.AreEqual(typeof(SocketException), exceptionResult.GetType());
-            Assert.IsTrue(stdOutResult.StartsWith("Error starting listener: ", StringComparison.Ordinal));
+            StringAssert.StartsWith("<event> Error starting listener:", stdOut.ToString());
+            StringAssert.StartsWith("Address already in use", ex.Message);
         }
 
         [TearDown]

@@ -32,11 +32,15 @@ namespace QuickFix
         private volatile bool _isShutdownRequested = false;
         private readonly SocketReader _socketReader;
 
-        internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.SettingsDictionary settingsDict,
-            SocketSettings socketSettings, AcceptorSocketDescriptor? acceptorDescriptor)
-        {
+        internal ClientHandlerThread(
+            TcpClient tcpClient,
+            long clientId,
+            SocketSettings socketSettings,
+            AcceptorSocketDescriptor? acceptorDescriptor,
+            NonSessionLog nonSessionLog
+        ) {
             Id = clientId;
-            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor);
+            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor, nonSessionLog);
         }
 
         public void Start()

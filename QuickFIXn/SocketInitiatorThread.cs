@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using QuickFix.Logger;
 
 namespace QuickFix
 {
@@ -27,18 +28,25 @@ namespace QuickFix
         private readonly IPEndPoint _socketEndPoint;
         private readonly SocketSettings _socketSettings;
         private bool _isDisconnectRequested = false;
+        private readonly NonSessionLog _nonSessionLog;
 
         /// <summary>
         /// Keep a task for handling async read
         /// </summary>
         private Task<int>? _currentReadTask;
 
-        public SocketInitiatorThread(Transport.SocketInitiator initiator, Session session, IPEndPoint socketEndPoint, SocketSettings socketSettings)
+        public SocketInitiatorThread(
+            Transport.SocketInitiator initiator,
+            Session session,
+            IPEndPoint socketEndPoint,
+            SocketSettings socketSettings,
+            NonSessionLog nonSessionLog)
         {
             Initiator = initiator;
             Session = session;
             _socketEndPoint = socketEndPoint;
             _socketSettings = socketSettings;
+            _nonSessionLog = nonSessionLog;
         }
 
         public void Start()
@@ -74,7 +82,7 @@ namespace QuickFix
         /// <returns>Stream representing the (network)connection to the other party</returns>
         protected virtual Stream SetupStream()
         {
-            return Transport.StreamFactory.CreateClientStream(_socketEndPoint, _socketSettings, Session.Log);
+            return Transport.StreamFactory.CreateClientStream(_socketEndPoint, _socketSettings, _nonSessionLog);
         }
 
         public bool Read()
