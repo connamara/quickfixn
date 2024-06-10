@@ -396,7 +396,7 @@ namespace QuickFix
                 }
                 else
                 {
-                    Log.OnEvent("Session {SessionID} already disconnected: {reason}");
+                    Log.OnEvent($"Session {SessionID} already disconnected: {reason}");
                 }
 
                 if (_state.ReceivedLogon || _state.SentLogon)

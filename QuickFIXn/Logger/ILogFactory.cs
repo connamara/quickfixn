@@ -19,8 +19,8 @@ public interface ILogFactory
     /// This log will
     /// (1) only be used for messages that cannot be linked to a session
     /// (2) only have its OnEvent() method called
-    /// (3) only be created when the first message is logged (to avoid e.g. empty log files)
-    /// This log is written to only on rare occasions.  It's possible you may never see it created.
+    /// (3) only be created when a message is logged (to avoid empty log files)
+    /// Messages are written to this log only on rare occasions.  It's possible you may never see it created.
     /// </summary>
     /// <returns></returns>
     ILog CreateNonSessionLog();
