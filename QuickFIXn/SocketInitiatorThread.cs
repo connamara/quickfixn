@@ -17,6 +17,7 @@ namespace QuickFix
     {
         public Session Session { get; }
         public Transport.SocketInitiator Initiator { get; }
+        public NonSessionLog NonSessionLog { get; }
 
         public const int BUF_SIZE = 512;
 
@@ -28,7 +29,6 @@ namespace QuickFix
         private readonly IPEndPoint _socketEndPoint;
         private readonly SocketSettings _socketSettings;
         private bool _isDisconnectRequested = false;
-        private readonly NonSessionLog _nonSessionLog;
 
         /// <summary>
         /// Keep a task for handling async read
@@ -44,9 +44,9 @@ namespace QuickFix
         {
             Initiator = initiator;
             Session = session;
+            NonSessionLog = nonSessionLog;
             _socketEndPoint = socketEndPoint;
             _socketSettings = socketSettings;
-            _nonSessionLog = nonSessionLog;
         }
 
         public void Start()
@@ -82,7 +82,7 @@ namespace QuickFix
         /// <returns>Stream representing the (network)connection to the other party</returns>
         protected virtual Stream SetupStream()
         {
-            return Transport.StreamFactory.CreateClientStream(_socketEndPoint, _socketSettings, _nonSessionLog);
+            return Transport.StreamFactory.CreateClientStream(_socketEndPoint, _socketSettings, NonSessionLog);
         }
 
         public bool Read()
