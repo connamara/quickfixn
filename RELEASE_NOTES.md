@@ -88,6 +88,7 @@ What's New
     * Cleanup/nullable-ize SocketInitiatorThread (gbirchmeier)
 * #839 - change ScreenLog to output FIX messages with "|" instead of non-visible SOH (gbirchmeier)
 * #844 - implement "Weekdays" setting (MichalUssuri/gbirchmeier)
+* #859 - implement proper path searching for CA certs in config (gbirchmeier)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages

@@ -55,14 +55,13 @@ internal static class SslCertCache {
     {
         var certPath = StringUtil.FixSlashes(name);
 
-        // If no extension is found try to get from certificate store
+        // If cert file not found, then try to get from certificate store
         if (!File.Exists(certPath))
         {
             var certFromStore = GetCertificateFromStore(StringUtil.FixSlashes(name));
             if (certFromStore is not null)
                 return certFromStore;
 
-            // see TODO in LoadCertificate()
             string msg =
                 $"Certificate '{name}' could not be loaded from store or path '{Directory.GetCurrentDirectory()}'";
             Console.WriteLine(msg);

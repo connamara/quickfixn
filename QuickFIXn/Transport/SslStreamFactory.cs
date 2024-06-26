@@ -178,11 +178,13 @@ internal sealed class SslStreamFactory
             return false;
         }
 
+        string caCertPath = StringUtil.FixSlashes(_socketSettings.CACertificatePath);
+
         // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
-        X509Certificate2? cert = SslCertCache.LoadCertificate(_socketSettings.CACertificatePath, null);
+        X509Certificate2? cert = SslCertCache.LoadCertificate(caCertPath, null);
         if (cert is null) {
             _nonSessionLog.OnEvent(
-                $"Certificate '{_socketSettings.CACertificatePath}' could not be loaded from store or path '{Directory.GetCurrentDirectory()}'");
+                $"Certificate '{caCertPath}' could not be loaded from store or path '{Directory.GetCurrentDirectory()}'");
             return false;
         }
 
