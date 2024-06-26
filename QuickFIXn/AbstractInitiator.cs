@@ -21,11 +21,9 @@ namespace QuickFix
         private readonly SessionFactory _sessionFactory;
         private Thread? _thread;
 
-        #region Properties
+        protected readonly NonSessionLog _nonSessionLog;
 
         public bool IsStopped { get; private set; } = true;
-
-        #endregion
 
         protected AbstractInitiator(
             IApplication app,
@@ -38,6 +36,7 @@ namespace QuickFix
             var logFactory = logFactoryNullable ?? new NullLogFactory();
             var msgFactory = messageFactoryNullable ?? new DefaultMessageFactory();
             _sessionFactory = new SessionFactory(app, storeFactory, logFactory, msgFactory);
+            _nonSessionLog = new NonSessionLog(logFactory);
 
             HashSet<SessionID> definedSessions = _settings.GetSessions();
             if (0 == definedSessions.Count)

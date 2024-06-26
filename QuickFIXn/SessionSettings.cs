@@ -37,7 +37,6 @@ namespace QuickFix
         public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
         public const string RECONNECT_INTERVAL = "ReconnectInterval";
         public const string FILE_LOG_PATH = "FileLogPath";
-        public const string DEBUG_FILE_LOG_PATH = "DebugFileLogPath";
         public const string FILE_STORE_PATH = "FileStorePath";
         public const string REFRESH_ON_LOGON = "RefreshOnLogon";
         public const string RESET_ON_LOGON = "ResetOnLogon";
@@ -163,7 +162,7 @@ namespace QuickFix
         /// Get global default settings
         /// </summary>
         /// <returns>Dictionary of settings from the [DEFAULT] section</returns>
-        public QuickFix.SettingsDictionary Get()
+        public SettingsDictionary Get()
         {
             return _defaults;
         }
@@ -180,10 +179,10 @@ namespace QuickFix
             return dict;
         }
 
-        public void Set(QuickFix.SettingsDictionary defaults)
+        public void Set(SettingsDictionary defaults)
         {
             _defaults = defaults;
-            foreach (KeyValuePair<SessionID, QuickFix.SettingsDictionary> entry in _settings)
+            foreach (KeyValuePair<SessionID, SettingsDictionary> entry in _settings)
                 entry.Value.Merge(_defaults);
         }
 
@@ -202,7 +201,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="sessionId">ID of session for which to add config</param>
         /// <param name="settings">session config</param>
-        public void Set(SessionID sessionId, QuickFix.SettingsDictionary settings)
+        public void Set(SessionID sessionId, SettingsDictionary settings)
         {
             if (Has(sessionId))
                 throw new ConfigError($"Duplicate Session {sessionId}");
@@ -225,7 +224,7 @@ namespace QuickFix
         public HashSet<SessionID> GetSessions()
         {
             HashSet<SessionID> result = new HashSet<SessionID>();
-            foreach (KeyValuePair<SessionID, QuickFix.SettingsDictionary> entry in _settings)
+            foreach (KeyValuePair<SessionID, SettingsDictionary> entry in _settings)
                 result.Add(entry.Key);
             return result;
         }
@@ -238,7 +237,7 @@ namespace QuickFix
             foreach (System.Collections.Generic.KeyValuePair<string, string> entry in _defaults)
                 s.Append(entry.Key).Append('=').AppendLine(entry.Value);
 
-            foreach (KeyValuePair<SessionID, QuickFix.SettingsDictionary> entry in _settings)
+            foreach (KeyValuePair<SessionID, SettingsDictionary> entry in _settings)
             {
                 s.AppendLine().AppendLine("[SESSION]");
                 foreach (System.Collections.Generic.KeyValuePair<string, string> kvp in entry.Value)
@@ -252,7 +251,7 @@ namespace QuickFix
             return s.ToString();
         }
 
-        protected void Validate(QuickFix.SettingsDictionary settingsDictionary)
+        protected void Validate(SettingsDictionary settingsDictionary)
         {
             string beginString = settingsDictionary.GetString(BEGINSTRING);
             if (beginString != Values.BeginString_FIX40 &&

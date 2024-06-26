@@ -10,4 +10,9 @@ public class NullLogFactory : ILogFactory
     {
         return new NullLog();
     }
+
+    public ILog CreateNonSessionLog()
+    {
+        return new NullLog();
+    }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using QuickFix.Logger;
 
 namespace QuickFix
 {
@@ -19,6 +20,7 @@ namespace QuickFix
         private readonly TcpClient _tcpClient;
         private readonly ClientHandlerThread _responder;
         private readonly AcceptorSocketDescriptor? _acceptorDescriptor;
+        private readonly NonSessionLog _nonSessionLog;
 
         /// <summary>
         /// Keep a task for handling async read
@@ -29,12 +31,14 @@ namespace QuickFix
             TcpClient tcpClient,
             SocketSettings settings,
             ClientHandlerThread responder,
-            AcceptorSocketDescriptor? acceptorDescriptor)
+            AcceptorSocketDescriptor? acceptorDescriptor,
+            NonSessionLog nonSessionLog)
         {
             _tcpClient = tcpClient;
             _responder = responder;
             _acceptorDescriptor = acceptorDescriptor;
-            _stream = Transport.StreamFactory.CreateServerStream(tcpClient, settings, responder.GetLog());
+            _stream = Transport.StreamFactory.CreateServerStream(tcpClient, settings, nonSessionLog);
+            _nonSessionLog = nonSessionLog;
         }
 
         public void Read()
@@ -78,8 +82,8 @@ namespace QuickFix
                 _currentReadTask ??= _stream.ReadAsync(buffer, 0, buffer.Length, _readCancellationTokenSource.Token);
 
                 if (_currentReadTask.Wait(timeoutMilliseconds)) {
-                    // Dispose/nullify currentReadTask *before* retreiving .Result.
-                    //   Accessting .Result can throw an exception, so we need to reset currentReadTask
+                    // Dispose/nullify currentReadTask *before* retrieving .Result.
+                    //   Accessing .Result can throw an exception, so we need to reset currentReadTask
                     //   first, to set us up for the next read even if an exception is thrown.
                     Task<int>? request = _currentReadTask;
                     _currentReadTask = null;
@@ -96,7 +100,6 @@ namespace QuickFix
             catch (AggregateException ex) // Timeout
             {
                 _currentReadTask = null;
-
                 IOException? ioException = ex.InnerException as IOException;
                 SocketException? inner = ioException?.InnerException as SocketException;
                 if (inner is not null && inner.SocketErrorCode == SocketError.TimedOut) {
@@ -119,10 +122,10 @@ namespace QuickFix
                 if (_qfSession is null)
                 {
                     _qfSession = Session.LookupSession(Message.GetReverseSessionId(msg));
-                    if (_qfSession is null || IsAssumedSession(_qfSession.SessionID))
+                    if (_qfSession is null || IsUnknownSession(_qfSession.SessionID))
                     {
-                        Log("ERROR: Disconnecting; received message for unknown session: " + msg);
                         _qfSession = null;
+                        _nonSessionLog.OnEvent("ERROR: Disconnecting; received message for unknown session: " + msg);
                         DisconnectClient();
                         return;
                     }
@@ -146,9 +149,14 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    Log($"Error on Session '{_qfSession.SessionID}': {e}");
+                    _qfSession.Log.OnEvent($"Error on Session '{_qfSession.SessionID}': {e}");
                 }
             }
+            /*
+             * TODO: Are these catches reachable?  I don't think they are!
+             *       The only line that could throw them is _qfSession.Next above,
+             *       but it has its own catch.
+             */
             catch (InvalidMessage e)
             {
                 HandleBadMessage(msg, e);
@@ -165,12 +173,12 @@ namespace QuickFix
             {
                 if (Fields.MsgType.LOGON.Equals(Message.GetMsgType(msg)))
                 {
-                    Log("ERROR: Invalid LOGON message, disconnecting: " + e.Message);
+                    LogEvent($"ERROR: Invalid LOGON message, disconnecting: {e.Message}");
                     DisconnectClient();
                 }
                 else
                 {
-                    Log("ERROR: Invalid message: " + e.Message);
+                    LogEvent($"ERROR: Invalid message: {e.Message}");
                 }
             }
             catch (InvalidMessage)
@@ -201,7 +209,7 @@ namespace QuickFix
             Dispose();
         }
 
-        private bool IsAssumedSession(SessionID sessionId)
+        private bool IsUnknownSession(SessionID sessionId)
         {
             return _acceptorDescriptor is not null
                 && !_acceptorDescriptor.GetAcceptedSessions().Any(kv => kv.Key.Equals(sessionId));
@@ -239,7 +247,7 @@ namespace QuickFix
                     break;
             }
 
-            Log($"SocketReader Error: {reason}");
+            LogEvent($"SocketReader Error: {reason}");
 
             if (disconnectNeeded)
             {
@@ -251,12 +259,15 @@ namespace QuickFix
         }
 
         /// <summary>
-        /// FIXME do proper logging
+        /// Log event to session log if session is known, else to nonSessionLog
         /// </summary>
         /// <param name="s"></param>
-        private void Log(string s)
+        private void LogEvent(string s)
         {
-            _responder.Log(s);
+            if(_qfSession is not null)
+                _qfSession.Log.OnEvent(s);
+            else
+                _nonSessionLog.OnEvent(s);
         }
 
         public int Send(string data)

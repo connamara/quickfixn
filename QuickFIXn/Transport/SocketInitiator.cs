@@ -8,7 +8,6 @@ using System.Net.Sockets;
 using System.Threading;
 using QuickFix.Logger;
 using QuickFix.Store;
-using QuickFix.Util;
 
 namespace QuickFix.Transport
 {
@@ -43,61 +42,34 @@ namespace QuickFix.Transport
             SocketInitiatorThread? t = socketInitiatorThread as SocketInitiatorThread;
             if (t == null) return;
 
-            string? exceptionEvent = null;
             try
             {
-                try
-                {
-                    t.Connect();
-                    t.Initiator.SetConnected(t.Session.SessionID);
-                    t.Session.Log.OnEvent("Connection succeeded");
-                    t.Session.Next();
-                    while (t.Read())
-                    {
-                    }
-
-                    if (t.Initiator.IsStopped)
-                        t.Initiator.RemoveThread(t);
-                    t.Initiator.SetDisconnected(t.Session.SessionID);
-                }
-                catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
-                {
-                    exceptionEvent = $"Connection failed: {ex.Message}";
-                }
-                catch (SocketException e)
-                {
-                    exceptionEvent = $"Connection failed: {e.Message}";
-                }
-                catch (System.Security.Authentication.AuthenticationException ex) // some certificate problems
-                {
-                    exceptionEvent = $"Connection failed (AuthenticationException): {ex.GetFullMessage()}";
-                }
-                catch (Exception ex)
-                {
-                    exceptionEvent = $"Unexpected exception: {ex}";
+                t.Connect();
+                t.Initiator.SetConnected(t.Session.SessionID);
+                t.Session.Log.OnEvent("Connection succeeded");
+                t.Session.Next();
+                while (t.Read()) {
                 }
 
-                if (exceptionEvent is not null)
-                {
-                    if (t.Session.Disposed)
-                    {
-                        // The session is disposed, and so is its log. We cannot use it to log the event,
-                        // so we resort to storing it in a local file.
-                        try
-                        {
-                            // TODO: temporary hack, need to implement a session-independent log
-                            File.AppendAllText("DisposedSessionEvents.log", $"{DateTime.Now:G}: {exceptionEvent}{Environment.NewLine}");
-                        }
-                        catch (IOException)
-                        {
-                            // Prevent IO exceptions from crashing the application
-                        }
-                    }
-                    else
-                    {
-                        t.Session.Log.OnEvent(exceptionEvent);
-                    }
-                }
+                if (t.Initiator.IsStopped)
+                    t.Initiator.RemoveThread(t);
+                t.Initiator.SetDisconnected(t.Session.SessionID);
+            }
+            catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
+            {
+                LogThreadStartConnectionFailed(t, ex);
+            }
+            catch (SocketException ex)
+            {
+                LogThreadStartConnectionFailed(t, ex);
+            }
+            catch (System.Security.Authentication.AuthenticationException ex) // some certificate problems
+            {
+                LogThreadStartConnectionFailed(t, ex);
+            }
+            catch (Exception ex)
+            {
+                LogThreadStartConnectionFailed(t, ex);
             }
             finally
             {
@@ -105,7 +77,15 @@ namespace QuickFix.Transport
                 t.Initiator.SetDisconnected(t.Session.SessionID);
             }
         }
-        
+
+        private static void LogThreadStartConnectionFailed(SocketInitiatorThread t, Exception e) {
+            if (t.Session.Disposed) {
+                t.NonSessionLog.OnEvent($"Connection failed [session {t.Session.SessionID}]: {e}");
+                return;
+            }
+            t.Session.Log.OnEvent($"Connection failed: {e}");
+        }
+
         private void AddThread(SocketInitiatorThread thread)
         {
             lock (_sync)
@@ -138,7 +118,7 @@ namespace QuickFix.Transport
             }
         }
 
-        private IPEndPoint GetNextSocketEndPoint(SessionID sessionId, QuickFix.SettingsDictionary settings)
+        private IPEndPoint GetNextSocketEndPoint(SessionID sessionId, SettingsDictionary settings)
         {
             if (!_sessionToHostNum.TryGetValue(sessionId, out var num))
                 num = 0;
@@ -249,7 +229,8 @@ namespace QuickFix.Transport
                 socketSettings.Configure(settings);
 
                 // Create a Ssl-SocketInitiatorThread if a certificate is given
-                SocketInitiatorThread t = new SocketInitiatorThread(this, session, socketEndPoint, socketSettings);
+                SocketInitiatorThread t = new SocketInitiatorThread(
+                    this, session, socketEndPoint, socketSettings, _nonSessionLog);
                 t.Start();
                 AddThread(t);
             }

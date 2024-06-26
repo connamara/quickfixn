@@ -5,11 +5,11 @@ namespace QuickFix
 {
     public class Settings
     {
-        private readonly LinkedList<QuickFix.SettingsDictionary> _sections = new();
+        private readonly LinkedList<SettingsDictionary> _sections = new();
 
         public Settings(System.IO.TextReader conf)
         {
-            QuickFix.SettingsDictionary? currentSection = null;
+            SettingsDictionary? currentSection = null;
 
             string? line;
             while ((line = conf.ReadLine()) != null)
@@ -61,7 +61,7 @@ namespace QuickFix
             return s[0] == '[' && s[^1] == ']';
         }
 
-        public QuickFix.SettingsDictionary Add(QuickFix.SettingsDictionary section)
+        public SettingsDictionary Add(SettingsDictionary section)
         {
             _sections.AddLast(section);
             return section;
@@ -73,10 +73,10 @@ namespace QuickFix
         /// </summary>
         /// <param name="sectionName">(case is ignored)</param>
         /// <returns></returns>
-        public LinkedList<QuickFix.SettingsDictionary> Get(string sectionName)
+        public LinkedList<SettingsDictionary> Get(string sectionName)
         {
-            LinkedList<QuickFix.SettingsDictionary> result = new();
-            foreach (QuickFix.SettingsDictionary dict in _sections)
+            LinkedList<SettingsDictionary> result = new();
+            foreach (SettingsDictionary dict in _sections)
                 if (sectionName.ToUpperInvariant() == dict.Name.ToUpperInvariant())
                     result.AddLast(dict);
             return result;

@@ -31,23 +31,16 @@ namespace QuickFix
         private Thread? _thread = null;
         private volatile bool _isShutdownRequested = false;
         private readonly SocketReader _socketReader;
-        private readonly FileLog _log;
 
-        internal ClientHandlerThread(TcpClient tcpClient, long clientId, QuickFix.SettingsDictionary settingsDict,
-            SocketSettings socketSettings, AcceptorSocketDescriptor? acceptorDescriptor)
-        {
-            string debugLogFilePath = "log";
-            if (settingsDict.Has(SessionSettings.DEBUG_FILE_LOG_PATH))
-                debugLogFilePath = settingsDict.GetString(SessionSettings.DEBUG_FILE_LOG_PATH);
-            else if (settingsDict.Has(SessionSettings.FILE_LOG_PATH))
-                debugLogFilePath = settingsDict.GetString(SessionSettings.FILE_LOG_PATH);
-
-            // FIXME - do something more flexible than hardcoding a filelog
-            _log = new FileLog(debugLogFilePath, new SessionID(
-                    "ClientHandlerThread", clientId.ToString(), "Debug-" + Guid.NewGuid()));
-
+        internal ClientHandlerThread(
+            TcpClient tcpClient,
+            long clientId,
+            SocketSettings socketSettings,
+            AcceptorSocketDescriptor? acceptorDescriptor,
+            NonSessionLog nonSessionLog
+        ) {
             Id = clientId;
-            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor);
+            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor, nonSessionLog);
         }
 
         public void Start()
@@ -58,7 +51,7 @@ namespace QuickFix
 
         public void Shutdown(string reason)
         {
-            Log("shutdown requested: " + reason);
+            // TODO - need the reason param?
             _isShutdownRequested = true;
         }
 
@@ -85,27 +78,11 @@ namespace QuickFix
                 }
             }
 
-            Log("shutdown");
             OnExited();
         }
 
         private void OnExited() {
             Exited?.Invoke(this, new ExitedEventArgs(this));
-        }
-
-        /// FIXME do real logging
-        public void Log(string s)
-        {
-            _log.OnEvent(s);
-        }
-
-        /// <summary>
-        /// Provide StreamReader with access to the log
-        /// </summary>
-        /// <returns></returns>
-        internal ILog GetLog()
-        {
-            return _log;
         }
 
         #region Responder Members
@@ -136,7 +113,6 @@ namespace QuickFix
             if (disposing)
             {
                 _socketReader.Dispose();
-                _log.Dispose();
             }
             _disposed = true;
         }

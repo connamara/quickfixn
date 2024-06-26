@@ -28,8 +28,6 @@ public class ScreenLogFactory : ILogFactory
         _settings = new SessionSettings();
     }
 
-    #region LogFactory Members
-
     public ILog Create(SessionID sessionId) {
         bool logIncoming = _logIncoming;
         bool logOutgoing = _logOutgoing;
@@ -47,5 +45,7 @@ public class ScreenLogFactory : ILogFactory
         return new ScreenLog(logIncoming, logOutgoing, logEvent);
     }
 
-    #endregion
+    public ILog CreateNonSessionLog() {
+        return new ScreenLog(true, true, true);
+    }
 }

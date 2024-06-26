@@ -1,32 +1,28 @@
 #nullable enable
 using System.Collections.Generic;
 using System.Net;
+using QuickFix.Logger;
 
 namespace QuickFix
 {
     internal class AcceptorSocketDescriptor
     {
-        #region Properties
-
         public ThreadedSocketReactor SocketReactor { get; }
-
         public IPEndPoint Address { get; }
-
-        #endregion
-
-        #region Private Members
 
         private readonly Dictionary<SessionID, Session> _acceptedSessions = new ();
 
-        #endregion
-
-        public AcceptorSocketDescriptor(IPEndPoint socketEndPoint, SocketSettings socketSettings, QuickFix.SettingsDictionary sessionDict)
+        public AcceptorSocketDescriptor(
+            IPEndPoint socketEndPoint,
+            SocketSettings socketSettings,
+            SettingsDictionary sessionDict,
+            NonSessionLog nonSessionLog)
         {
             Address = socketEndPoint;
-            SocketReactor = new ThreadedSocketReactor(Address, socketSettings, sessionDict, this);
+            SocketReactor = new ThreadedSocketReactor(Address, socketSettings, sessionDict, this, nonSessionLog);
         }
 
-        public void AcceptSession(Session session)
+        internal void AcceptSession(Session session)
         {
             lock (_acceptedSessions)
             {
@@ -39,7 +35,7 @@ namespace QuickFix
         /// </summary>
         /// <param name="sessionId">ID of session to be removed</param>
         /// <returns>true if session removed, false if not found</returns>
-        public bool RemoveSession(SessionID sessionId)
+        internal bool RemoveSession(SessionID sessionId)
         {
             lock (_acceptedSessions)
             {
@@ -47,7 +43,7 @@ namespace QuickFix
             }
         }
 
-        public Dictionary<SessionID, Session> GetAcceptedSessions()
+        internal Dictionary<SessionID, Session> GetAcceptedSessions()
         {
             lock (_acceptedSessions)
             {

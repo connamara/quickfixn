@@ -9,22 +9,24 @@ public class FileLogFactory : ILogFactory
 {
     private readonly SessionSettings _settings;
 
-    #region LogFactory Members
-
     public FileLogFactory(SessionSettings settings)
     {
         _settings = settings;
     }
 
     /// <summary>
-    /// Creates a file-based message store
+    /// Creates a file-based message log
     /// </summary>
-    /// <param name="sessionId">session ID for the message store</param>
+    /// <param name="sessionId">session ID for the message log</param>
     /// <returns></returns>
     public ILog Create(SessionID sessionId)
     {
         return new FileLog(_settings.Get(sessionId).GetString(SessionSettings.FILE_LOG_PATH), sessionId);
     }
 
-    #endregion
+    public ILog CreateNonSessionLog() {
+        return new FileLog(
+            _settings.Get().GetString(SessionSettings.FILE_LOG_PATH),
+            new SessionID("Non", "Session", "Log"));
+    }
 }
