@@ -178,7 +178,7 @@ namespace QuickFix.Transport
                     double reconnectIntervalAsMilliseconds = 1000 * _reconnectInterval;
                     DateTime nowDt = DateTime.UtcNow;
 
-                    if ((nowDt.Subtract(_lastConnectTimeDt).TotalMilliseconds) >= reconnectIntervalAsMilliseconds)
+                    if (nowDt.Subtract(_lastConnectTimeDt).TotalMilliseconds >= reconnectIntervalAsMilliseconds)
                     {
                         Connect();
                         _lastConnectTimeDt = nowDt;
@@ -186,8 +186,7 @@ namespace QuickFix.Transport
                 }
                 catch (Exception e)
                 {
-                    // TODO: temporary hack, need to implement a session-independent log
-                    File.AppendAllText("SocketInitiator-OnStart-Failure.log", $"{DateTime.Now:G}: {e}{Environment.NewLine}");
+                    _nonSessionLog.OnEvent($"Failed to start: {e}");
                 }
 
                 Thread.Sleep(1 * 1000);
