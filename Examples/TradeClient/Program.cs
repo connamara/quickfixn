@@ -35,6 +35,7 @@ namespace TradeClient
                 TradeClientApp application = new TradeClientApp();
                 IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
                 ILogFactory logFactory = new ScreenLogFactory(settings);
+                //ILogFactory logFactory = new FileLogFactory(settings);
                 QuickFix.Transport.SocketInitiator initiator = new QuickFix.Transport.SocketInitiator(application, storeFactory, settings, logFactory);
 
                 // this is a developer-test kludge.  do not emulate.
