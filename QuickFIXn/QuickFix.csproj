@@ -28,11 +28,13 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>qfn-icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="..\LICENSE" Pack="true" PackagePath=""/>
     <None Include="..\nuget-enclosures\core-readme.md" Pack="true" PackagePath="README.md" />
+    <None Include="..\nuget-enclosures\qfn-icon.png" Pack="True" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
