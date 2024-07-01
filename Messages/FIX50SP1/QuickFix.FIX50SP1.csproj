@@ -20,6 +20,7 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>qfn-icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,6 +31,7 @@
     <None Include="..\..\LICENSE" Pack="true" PackagePath=""/>
     <None Include="..\..\nuget-enclosures\50sp1-readme.md" Pack="true" PackagePath="README.md" />
     <None Include="..\..\spec\fix\FIX50SP1.xml" Pack="true" PackagePath="DataDictionary\FIX50SP1.xml" />
+    <None Include="..\..\nuget-enclosures\qfn-icon.png" Pack="True" PackagePath="" />
   </ItemGroup>
 
 </Project>
