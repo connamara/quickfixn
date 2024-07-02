@@ -13,8 +13,6 @@ namespace QuickFix
     /// </summary>
     public class DefaultMessageFactory : IMessageFactory
     {
-        private static int _dllLoadFlag;
-
         /// <summary>
         /// key is BeginString (including the fake FIX50 beginstrings)
         /// </summary>
@@ -119,40 +117,47 @@ namespace QuickFix
             return dict;
         }
 
+        private static bool _dllsAreLoaded = false;
+        private static object _dllLoadSync = new object();
+
         private static void LoadLocalDlls()
         {
-            const int @true = 1;
-
-            // Because we want to attempt load assemblies once only
-            var loadFlag = Interlocked.Exchange(ref _dllLoadFlag, @true);
-            if (loadFlag == @true)
-            {
+            if (_dllsAreLoaded)
                 return;
-            }
 
-            try
+            lock (_dllLoadSync)
             {
-                var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-                if (String.IsNullOrWhiteSpace(assemblyLocation))
-                {
+                // check again in case the load happened while this thread was waiting for the lock
+                if (_dllsAreLoaded)
                     return;
-                }
 
-                var directory = Path.GetDirectoryName(assemblyLocation);
-                if (String.IsNullOrWhiteSpace(directory))
+                try
                 {
-                    return;
-                }
+                    var assemblyLocation = Assembly.GetExecutingAssembly().Location;
+                    if (String.IsNullOrWhiteSpace(assemblyLocation))
+                    {
+                        return;
+                    }
 
-                var dlls = Directory.GetFiles(directory, "QuickFix.*.dll");
-                foreach (var path in dlls)
-                {
-                    Assembly.LoadFrom(path);
+                    var directory = Path.GetDirectoryName(assemblyLocation);
+                    if (String.IsNullOrWhiteSpace(directory))
+                    {
+                        return;
+                    }
+
+                    var dlls = Directory.GetFiles(directory, "QuickFix.*.dll");
+                    foreach (var path in dlls)
+                    {
+                        Assembly.LoadFrom(path);
+                    }
+
+                    _dllsAreLoaded = true;
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine("Found quickfix.*.dll dlls but failed to load them, " + ex);
+                catch (Exception ex)
+                {
+                    // TODO: can we log this properly instead of Console write?
+                    Console.Error.WriteLine("Found quickfix.*.dll dlls but failed to load them, " + ex);
+                }
             }
         }
 
