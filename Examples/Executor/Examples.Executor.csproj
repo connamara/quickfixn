@@ -12,15 +12,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\QuickFixn-TestCA.cer" Link="QuickFixn-TestCA.cer">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\QuickFixn-TestServer.pfx" Link="QuickFixn-TestServer.pfx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Messages\FIX40\QuickFix.FIX40.csproj" />
     <ProjectReference Include="..\..\Messages\FIX41\QuickFix.FIX41.csproj" />
     <ProjectReference Include="..\..\Messages\FIX42\QuickFix.FIX42.csproj" />
