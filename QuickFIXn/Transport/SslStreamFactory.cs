@@ -86,7 +86,13 @@ internal sealed class SslStreamFactory
             if (serverCertificate is null) {
                 throw new AuthenticationException("Failed to load ServerCertificate");
             }
-
+#if(NETSTANDARD2_1)
+            sslStream.AuthenticateAsServer(
+                serverCertificate, 
+                _socketSettings.RequireClientCertificate, 
+                _socketSettings.CheckCertificateRevocation
+            );
+#else
             sslStream.AuthenticateAsServer(new SslServerAuthenticationOptions
             {
                 ServerCertificate = serverCertificate,
@@ -95,6 +101,7 @@ internal sealed class SslStreamFactory
                 CertificateRevocationCheckMode = _socketSettings.CheckCertificateRevocation ? X509RevocationMode.Online : X509RevocationMode.NoCheck,
                 EncryptionPolicy = EncryptionPolicy.RequireEncryption
             });
+#endif
         }
         catch (AuthenticationException ex)
         {

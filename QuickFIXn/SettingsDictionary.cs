@@ -217,7 +217,7 @@ public class SettingsDictionary : System.Collections.IEnumerable
     }
 
     public void SetDay(string key, DayOfWeek val) {
-        if (Enum.IsDefined(val)) {
+        if (Enum.IsDefined(typeof(DayOfWeek), val)) {
             SetString(key, val.ToString());
             return;
         }

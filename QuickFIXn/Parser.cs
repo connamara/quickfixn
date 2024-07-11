@@ -182,7 +182,7 @@ namespace QuickFix
                 _bufferStartIndex += bytesConsumed;
                 _usedBufferLength -= bytesConsumed;
                 bytesConsumed = 0;
-                throw new MessageParseError($"Invalid BodyLength value \"{bodyLengthChars.Slice(0, charsWritten)}\"");
+                throw new MessageParseError($"Invalid BodyLength value \"{bodyLengthChars.Slice(0, charsWritten).ToString()}\"");
             }
 
             bytesConsumed += pos + 1; // +1 to include the terminating SOH
