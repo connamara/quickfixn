@@ -55,7 +55,7 @@ if ($missing) {
 Write-Host "==============================================" -ForegroundColor Red
 Write-Host "          * * * ATTENTION * * *               " -ForegroundColor Yellow
 Write-Host "==============================================" -ForegroundColor Red
-Write-Host "I am about to push packages to Nuget.org "
+Write-Host "I am about to push packages to NuGet.org "
 $confirmation = (Read-Host "If you want to proceed, enter 'YES' in all-caps").Trim()
 if ($confirmation -cne 'YES') {
     Write-Host "User entered '$confirmation' -- aborting."
