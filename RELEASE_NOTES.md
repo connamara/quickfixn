@@ -8,9 +8,12 @@ QuickFIX/n is a .NET port of QuickFIX, an open source C++ FIX engine.
 What's New
 ----------
 
-**CAUTION: There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
+**CAUTION:**  
+* **There are breaking changes between 1.11 and 1.12!  Please review the 1.12.0 notes below.**
+* **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
-### NEXT RELEASE
+
+### v1.12.0
 
 **Breaking changes**
 * #768 - span-ify parser (Rob-Hague) - makes a change to QuickFix.Parser interface, which isn't likely to affect users
