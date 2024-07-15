@@ -28,7 +28,7 @@ Builds zips for each project and puts them in `<reporoot>/tmp/zip`.
 
 It will also leave unzipped archive dirs as artifacts.  
 You can delete those if you don't need to see them.  
-(This script deletes them when it starts each run.)
+(This script deletes old artifacts when it starts each run.)
 
 ### `Build-NuGets.ps1`
 
@@ -45,30 +45,6 @@ And then Grant needs to add you to the project.
 (You could instead manually upload all 10 packages to nuget.org via the web page,
 but that is painfully tedious.)
 
-
-AWS S3 tools setup (for uploading zips)
----------------------------------------
-
-These are Powershell modules.
-
-You'll need to have an AWS S3 account, and get AWS Access and Secret keys.
-
-```
-pwsh
-# `pwsh` puts you into powershell
-Install-Module -Name AWS.Tools.S3
-Update-Module -Name AWS.Tools.S3
-```
-
-The following command creates a local profile that stores your creds.  
-It will be written to `~/.aws/credentials`  
-Storing it as "default" makes powershell/AWS use it by default.
-
-```
-Set-AWSCredentials -AccessKey <youraccesskey> -SecretKey <yoursecretkey> -StoreAs default
-```
-
-Now you can use the `Write-S3Object` to upload the zip.
 
 
 Release-Creation Procedure
