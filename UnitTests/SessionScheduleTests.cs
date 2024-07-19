@@ -19,7 +19,7 @@ namespace UnitTests
             {
                 return TimeZoneInfo.GetSystemTimeZones().Any(x => x.Id == "Eastern Standard Time")
                     ? "Eastern Standard Time"
-                    : "US/Eastern";
+                    : "America/New_York";
             }
         }
 
@@ -33,7 +33,7 @@ namespace UnitTests
             {
                 return TimeZoneInfo.GetSystemTimeZones().Any(x => x.Id == "Pacific Standard Time")
                     ? "Pacific Standard Time"
-                    : "US/Pacific";
+                    : "America/Los_Angeles";
             }
         }
         #endregion
@@ -75,7 +75,8 @@ namespace UnitTests
         }
 
         [Test]
-        public void TestCtor_WeekdaysSession() {
+        public void TestCtor_WeekdaysSession()
+        {
             SettingsDictionary settings = new SettingsDictionary();
             settings.SetString(SessionSettings.WEEKDAYS, "Sun,Tue,Fri");
 
@@ -92,7 +93,8 @@ namespace UnitTests
         }
 
         [Test]
-        public void TestCtor_NonStopSession() {
+        public void TestCtor_NonStopSession()
+        {
             SettingsDictionary settings = new SettingsDictionary();
             settings.SetBool(SessionSettings.NON_STOP_SESSION, true);
             Assert.DoesNotThrow(delegate { new SessionSchedule(settings); });
@@ -133,7 +135,7 @@ namespace UnitTests
             settings.SetDay(SessionSettings.START_DAY, DayOfWeek.Monday);
             settings.SetDay(SessionSettings.END_DAY, DayOfWeek.Monday);
             SessionSchedule sched = new SessionSchedule(settings);
-	    
+
             //a sunday
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0, DateTimeKind.Utc)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59, DateTimeKind.Utc)));
@@ -159,7 +161,7 @@ namespace UnitTests
             settings.SetDay(SessionSettings.START_DAY, DayOfWeek.Monday);
             settings.SetDay(SessionSettings.END_DAY, DayOfWeek.Monday);
             SessionSchedule sched = new SessionSchedule(settings);
-	    
+
             //a sunday
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59, DateTimeKind.Utc)));
             Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0, DateTimeKind.Utc)));
@@ -184,7 +186,7 @@ namespace UnitTests
             settings.SetDay(SessionSettings.START_DAY, DayOfWeek.Monday);
             settings.SetDay(SessionSettings.END_DAY, DayOfWeek.Monday);
             SessionSchedule sched = new SessionSchedule(settings);
-	    
+
             //a sunday
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59, DateTimeKind.Utc)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0, DateTimeKind.Utc)));
@@ -310,7 +312,7 @@ namespace UnitTests
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 7, 00, 1, DateTimeKind.Utc)));
             Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 15, 30, 0, DateTimeKind.Utc)));
         }
-        
+
 
         [Test]
         public void TestDailyIsSessionTime()
@@ -355,7 +357,7 @@ namespace UnitTests
             settings.SetString(SessionSettings.END_TIME, "00:12:00");
             settings.SetString(SessionSettings.TIME_ZONE, "Doh");
 
-            Assert.Throws(typeof (TimeZoneNotFoundException), delegate { new SessionSchedule(settings); });
+            Assert.Throws(typeof(TimeZoneNotFoundException), delegate { new SessionSchedule(settings); });
         }
 
         [Test]
@@ -368,7 +370,7 @@ namespace UnitTests
             settings.SetString(SessionSettings.USE_LOCAL_TIME, "Y");
             settings.SetString(SessionSettings.TIME_ZONE, EasternStandardTimeZoneId);
 
-            Assert.Throws(typeof (ConfigError), delegate { new SessionSchedule(settings); });
+            Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); });
         }
 
         [Test]
