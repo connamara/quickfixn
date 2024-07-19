@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>TradeClient</RootNamespace>
     <AssemblyName>TradeClient</AssemblyName>
     <Copyright>Copyright © Connamara Systems, LLC 2011</Copyright>
