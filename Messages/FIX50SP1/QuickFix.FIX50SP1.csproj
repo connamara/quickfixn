@@ -9,7 +9,7 @@
     <Description>Open-source C# implementation of QuickFIX. This package contains message definitions for FIX 5.0SP1.</Description>
     <Copyright>Copyright © 2011 - $([System.DateTime]::UtcNow.Year) QuickFIXn.org. All rights reserved.</Copyright>
     <Authors>Connamara Systems, LLC and QuickFIX/n contributors</Authors>
-    <Version>1.11.2</Version>
+    <Version>1.12.0</Version>
     <Platforms>AnyCPU;x64</Platforms>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
