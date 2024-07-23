@@ -1,10 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0;netstandard2.1</TargetFrameworks>
     <Title>QuickFIX/n</Title>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>
+    <LangVersion>latest</LangVersion>
     <PackageId>QuickFIXn.Core</PackageId>
     <PackageTitle>$(Title)</PackageTitle>
     <Description>
@@ -32,7 +33,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\LICENSE" Pack="true" PackagePath=""/>
+    <None Include="..\LICENSE" Pack="true" PackagePath="" />
     <None Include="..\nuget-enclosures\core-readme.md" Pack="true" PackagePath="README.md" />
     <None Include="..\nuget-enclosures\qfn-icon.png" Pack="True" PackagePath="" />
   </ItemGroup>
@@ -41,5 +42,9 @@
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>UnitTests</_Parameter1>
     </AssemblyAttribute>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.4" />
   </ItemGroup>
 </Project>
