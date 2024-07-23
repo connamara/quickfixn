@@ -86,4 +86,12 @@ Contributors
 - Sylvain Rabot
 - Bruno Belmondo
 - Rob Hague
+- Oliver Clancy
+- Bohdan Stefaniuk
+- Stanislav Jamriska
+- Peter Larson
+- Richard Russell
+- M. Lahner
+- Nazar Mandzyk
+- Michal Dachs
 
