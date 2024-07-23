@@ -93,4 +93,5 @@ Contributors
 - Richard Russell
 - M. Lahner
 - Nazar Mandzyk
+- Michal Dachs
 
