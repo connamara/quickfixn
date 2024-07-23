@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <RootNamespace>Executor</RootNamespace>
     <AssemblyName>Executor</AssemblyName>
     <Copyright>Copyright © Connamara Systems, LLC 2011</Copyright>
