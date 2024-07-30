@@ -92,6 +92,10 @@ What's New
 * #839 - change ScreenLog to output FIX messages with "|" instead of non-visible SOH (gbirchmeier)
 * #844 - implement "Weekdays" setting (MichalUssuri/gbirchmeier)
 * #859 - implement proper path searching for CA certs in config (gbirchmeier)
+* #864 - when multiple threads race to init DefaultMessageFactory,
+         fix it so that later threads do not return before the first thread
+         finishes loading all the dlls (gbirchmeier, with thanks to diagnosis by Brian Leach aka baffled)
+         (Note: this may be the cause of spurious "incorrect BeginString" issues that have been observed)
 
 ### v1.11.2:
 * same as v1.11.1, but I fixed the readme in the pushed nuget packages
