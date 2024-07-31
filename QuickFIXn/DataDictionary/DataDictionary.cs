@@ -26,6 +26,8 @@ namespace QuickFix.DataDictionary
         public bool CheckUserDefinedFields { get; set; }
         public bool AllowUnknownMessageFields { get; set; }
 
+        public bool CheckEnumValues { get; set; }
+
         public DDMap Header = new DDMap();
         public DDMap Trailer = new DDMap();
 
@@ -34,6 +36,7 @@ namespace QuickFix.DataDictionary
             CheckFieldsHaveValues = true;
             CheckFieldsOutOfOrder = true;
             CheckUserDefinedFields = true;
+            CheckEnumValues = true;
             AllowUnknownMessageFields = false;
         }
 
@@ -76,6 +79,7 @@ namespace QuickFix.DataDictionary
             this.CheckFieldsHaveValues = src.CheckFieldsHaveValues;
             this.CheckFieldsOutOfOrder = src.CheckFieldsOutOfOrder;
             this.CheckUserDefinedFields = src.CheckUserDefinedFields;
+            this.CheckEnumValues = src.CheckEnumValues;
             this.Header = src.Header;
             this.Trailer = src.Trailer;
         }
@@ -353,7 +357,7 @@ namespace QuickFix.DataDictionary
         {
             if (FieldsByTag.TryGetValue(field.Tag, out var fld))
             {
-                if (fld.HasEnums())
+                if (fld.HasEnums() && this.CheckEnumValues)
                 {
                     if (fld.IsMultipleValueFieldWithEnums)
                     {
