@@ -191,6 +191,7 @@ namespace QuickFix
 
         public void Disconnect()
         {
+            if (_isDisconnectRequested) return;
             _isDisconnectRequested = true;
             _readCancellationTokenSource.Cancel();
             _readCancellationTokenSource.Dispose();
