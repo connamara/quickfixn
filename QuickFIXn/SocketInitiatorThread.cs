@@ -192,8 +192,11 @@ namespace QuickFix
         public void Disconnect()
         {
             _isDisconnectRequested = true;
-            _readCancellationTokenSource.Cancel();
-            _readCancellationTokenSource.Dispose();
+            if (_readCancellationTokenSource.IsCancellationRequested)
+            {
+                _readCancellationTokenSource.Cancel();
+                _readCancellationTokenSource.Dispose();
+            }
 
             // just wait when read task will be cancelled
             _currentReadTask?.ContinueWith(_ => { }).Wait(1000);
