@@ -121,9 +121,6 @@ namespace QuickFix
 
         private static void LoadLocalDlls()
         {
-            if (_dllsAreLoaded)
-                return;
-
             lock (_dllLoadSync)
             {
                 // check again in case the load happened while this thread was waiting for the lock
