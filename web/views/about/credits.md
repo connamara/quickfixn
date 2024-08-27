@@ -91,7 +91,7 @@ Contributors
 - Stanislav Jamriska
 - Peter Larson
 - Richard Russell
-- M. Lahner
+- Matt Lahner
 - Nazar Mandzyk
 - Michal Dachs
 
