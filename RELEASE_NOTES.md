@@ -13,6 +13,13 @@ What's New
 * **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
 
+### (next release)
+
+**Breaking changes**
+* #878 - corrections to tag 45 "Side" in various DDs (gbirchmeier)
+     * fix typo in FIX50 and FIX50SP1: `CROSS_SHORT_EXXMPT` fixed to `CROSS_SHORT_EXEMPT`
+     * correction in FIX41 and FIX42: `D` to `UNDISCLOSED`
+
 ### v1.12.0
 
 **Breaking changes**
