@@ -1796,7 +1796,7 @@
       <value enum="4" description="SELL_PLUS"/>
       <value enum="5" description="SELL_SHORT"/>
       <value enum="6" description="SELL_SHORT_EXEMPT"/>
-      <value enum="7" description="D"/>
+      <value enum="7" description="UNDISCLOSED"/>
       <value enum="8" description="CROSS"/>
       <value enum="9" description="CROSS_SHORT"/>
     </field>

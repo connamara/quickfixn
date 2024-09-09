@@ -1286,8 +1286,6 @@ namespace QuickFix.Fields
         public const char REDEEM = 'E';
         public const char LEND = 'F';
         public const char BORROW = 'G';
-        public const char CROSS_SHORT_EXXMPT = 'A';
-        public const char D = '7';
     }
 
 
