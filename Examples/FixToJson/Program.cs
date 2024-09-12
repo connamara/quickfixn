@@ -23,7 +23,7 @@ namespace Examples.FixToJson
                     {
                         line = line.Trim();
                         msg.FromString(line, false, sessionDataDictionary, appDataDictionary, msgFactory);
-                        Console.WriteLine(comma + msg.ToJSON(humanReadableValues: humanReadableValues));
+                        Console.WriteLine(comma + msg.ToJSON(convertEnumsToDescriptions: humanReadableValues));
                         comma = ",";
                     }
                 }

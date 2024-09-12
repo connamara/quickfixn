@@ -88,14 +88,21 @@ namespace UnitTests
             QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
             msg.FromString(msgStr, true, dd, dd, null); // <-- null factory!
 
-            string expected = "{\"Header\":{\"BeginString\":\"FIX.4.4\",\"BodyLength\":\"638\",\"MsgSeqNum\":\"360\",\"MsgType\":\"8\",\"SenderCompID\":\"BLPTSOX\",\"SendingTime\":\"20130321-15:21:23\",\"TargetCompID\":\"THINKTSOX\",\"TargetSubID\":\"6804469\",\"DeliverToCompID\":\"ZERO\"},\"Body\":{\"AvgPx\":\"122.255\",\"ClOrdID\":\"61101189\",\"CumQty\":\"1990000\",\"Currency\":\"GBP\",\"ExecID\":\"VCON:20130321:50018:5:12\",\"SecurityIDSource\":\"4\",\"LastPx\":\"122.255\",\"LastQty\":\"1990000\",\"OrderID\":\"116\",\"OrderQty\":\"1990000\",\"OrdStatus\":\"2\",\"SecurityID\":\"GB0032452392\",\"Side\":\"1\",\"Symbol\":\"[N/A]\",\"TransactTime\":\"20130321-15:21:23\",\"SettlDate\":\"20130322\",\"TradeDate\":\"20130321\",\"Issuer\":\"UK TSY 4 1/4% 2036\",\"NetMoney\":\"2436321.85\",\"ExecType\":\"F\",\"LeavesQty\":\"0\",\"NumDaysInterest\":\"15\",\"AccruedInterestAmt\":\"3447.35\",\"OrderQty2\":\"0\",\"SecondaryOrderID\":\"3739:20130321:50018:5\",\"CouponRate\":\"0.0425\",\"Factor\":\"1\",\"Yield\":\"0.0291371041\",\"Concession\":\"0\",\"GrossTradeAmt\":\"2432874.5\",\"PriceType\":\"1\",\"CountryOfIssue\":\"GB\",\"MaturityDate\":\"20360307\",\"NoPartyIDs\":[{\"PartyIDSource\":\"D\",\"PartyID\":\"VCON\",\"PartyRole\":\"1\",\"NoPartySubIDs\":[{\"PartySubID\":\"14\",\"PartySubIDType\":\"4\"}]},{\"PartyIDSource\":\"D\",\"PartyID\":\"TFOLIO:6804469\",\"PartyRole\":\"12\"},{\"PartyIDSource\":\"D\",\"PartyID\":\"TFOLIO\",\"PartyRole\":\"11\"},{\"PartyIDSource\":\"D\",\"PartyID\":\"THINKFOLIO LTD\",\"PartyRole\":\"13\"},{\"PartyIDSource\":\"D\",\"PartyID\":\"SXT\",\"PartyRole\":\"16\"},{\"PartyIDSource\":\"D\",\"PartyID\":\"TFOLIO:6804469\",\"PartyRole\":\"36\"}]},\"Trailer\":{}}";
-            Assert.AreEqual(expected, msg.ToJSON(dataDictionary: dd, humanReadableValues: false));
+            // CASE 1: params (dd, false) => tags converted to names, enums are not converted
+            const string expected = "{\"Header\":{\"BeginString\":\"FIX.4.4\",\"BodyLength\":\"638\",\"MsgSeqNum\":\"360\",\"MsgType\":\"8\",\"SenderCompID\":\"BLPTSOX\",\"SendingTime\":\"20130321-15:21:23\",\"TargetCompID\":\"THINKTSOX\",\"TargetSubID\":\"6804469\",\"DeliverToCompID\":\"ZERO\"},\"Body\":{\"AvgPx\":\"122.255\",\"ClOrdID\":\"61101189\",\"CumQty\":\"1990000\",\"Currency\":\"GBP\",\"ExecID\":\"VCON:20130321:50018:5:12\",\"SecurityIDSource\":\"4\",\"LastPx\":\"122.255\",\"LastQty\":\"1990000\",\"OrderID\":\"116\",\"OrderQty\":\"1990000\",\"OrdStatus\":\"2\",\"SecurityID\":\"GB0032452392\",\"Side\":\"1\",\"Symbol\":\"[N/A]\",\"TransactTime\":\"20130321-15:21:23\",\"SettlDate\":\"20130322\",\"TradeDate\":\"20130321\",\"Issuer\":\"UK TSY 4 1/4% 2036\",\"NetMoney\":\"2436321.85\",\"ExecType\":\"F\",\"LeavesQty\":\"0\",\"NumDaysInterest\":\"15\",\"AccruedInterestAmt\":\"3447.35\",\"OrderQty2\":\"0\",\"SecondaryOrderID\":\"3739:20130321:50018:5\",\"CouponRate\":\"0.0425\",\"Factor\":\"1\",\"Yield\":\"0.0291371041\",\"Concession\":\"0\",\"GrossTradeAmt\":\"2432874.5\",\"PriceType\":\"1\",\"CountryOfIssue\":\"GB\",\"MaturityDate\":\"20360307\",\"NoPartyIDs\":[{\"PartyIDSource\":\"D\",\"PartyID\":\"VCON\",\"PartyRole\":\"1\",\"NoPartySubIDs\":[{\"PartySubID\":\"14\",\"PartySubIDType\":\"4\"}]},{\"PartyIDSource\":\"D\",\"PartyID\":\"TFOLIO:6804469\",\"PartyRole\":\"12\"},{\"PartyIDSource\":\"D\",\"PartyID\":\"TFOLIO\",\"PartyRole\":\"11\"},{\"PartyIDSource\":\"D\",\"PartyID\":\"THINKFOLIO LTD\",\"PartyRole\":\"13\"},{\"PartyIDSource\":\"D\",\"PartyID\":\"SXT\",\"PartyRole\":\"16\"},{\"PartyIDSource\":\"D\",\"PartyID\":\"TFOLIO:6804469\",\"PartyRole\":\"36\"}]},\"Trailer\":{}}";
+            Assert.AreEqual(expected, msg.ToJSON(dataDictionary: dd, convertEnumsToDescriptions: false));
 
-            // emit enums as human-readable strings
-            StringAssert.Contains("\"MsgType\":\"EXECUTION_REPORT\"", msg.ToJSON(dataDictionary: dd, humanReadableValues: true));
+            // CASE 2: params (dd, true) => tags converted to names, enums are converted to names
+            StringAssert.Contains("\"MsgType\":\"EXECUTION_REPORT\"", msg.ToJSON(dataDictionary: dd, convertEnumsToDescriptions: true));
 
-            // Without a DD: tags aren't translated, and you don't get enums either
-            StringAssert.Contains("\"35\":\"8\"", msg.ToJSON(dataDictionary: null, humanReadableValues: true));
+            // CASE 3: params (null, false) => tags are numbers, enums are not converted
+            StringAssert.Contains("\"35\":\"8\"", msg.ToJSON(dataDictionary: null));
+
+            // EXCEPTION CASE: params (null, true) => Exception
+            var ex = Assert.Throws<ArgumentNullException>(delegate { msg.ToJSON(null, true); });
+            StringAssert.Contains(
+                "Must be non-null if 'convertEnumsToDescriptions' is true. (Parameter 'dataDictionary')",
+                ex.Message);
         }
     }
 }

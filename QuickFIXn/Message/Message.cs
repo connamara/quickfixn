@@ -946,17 +946,22 @@ namespace QuickFix
         /// Per the FIX JSON Encoding spec, tags are converted to human-readable form, but values are not.
         /// </summary>
         /// <param name="dataDictionary">Needed if you want tag names emitted or humanReadableValues to work</param>
-        /// <param name="humanReadableValues">
-        ///   True will cause enums to be converted to human strings.
-        ///   Will not (and cannot!) work if dataDictionary is null.
+        /// <param name="convertEnumsToDescriptions">
+        ///   True will cause enums to be converted to their description strings, but only if dataDictionary is provided.
+        ///   If true and dataDictionary is null, then throws an ArgumentNullException.
         /// </param>
         /// <returns>a JSON string</returns>
-        public string ToJSON(DD? dataDictionary = null, bool humanReadableValues = false)
-        {
-            StringBuilder sb = new StringBuilder().Append("{").Append("\"Header\":{");
-            FieldMapToJSON(sb, dataDictionary, Header,  humanReadableValues).Append("},\"Body\":{");
-            FieldMapToJSON(sb, dataDictionary, this,    humanReadableValues).Append("},\"Trailer\":{");
-            FieldMapToJSON(sb, dataDictionary, Trailer, humanReadableValues).Append("}}");
+        public string ToJSON(DD? dataDictionary = null, bool convertEnumsToDescriptions = false) {
+            if (convertEnumsToDescriptions && dataDictionary is null) {
+                throw new ArgumentNullException(
+                    nameof(dataDictionary),
+                    $"Must be non-null if '{nameof(convertEnumsToDescriptions)}' is true.");
+            }
+
+            StringBuilder sb = new StringBuilder().Append('{').Append("\"Header\":{");
+            FieldMapToJSON(sb, dataDictionary, Header, convertEnumsToDescriptions).Append("},\"Body\":{");
+            FieldMapToJSON(sb, dataDictionary, this, convertEnumsToDescriptions).Append("},\"Trailer\":{");
+            FieldMapToJSON(sb, dataDictionary, Trailer, convertEnumsToDescriptions).Append("}}");
             return sb.ToString();
         }
     }
