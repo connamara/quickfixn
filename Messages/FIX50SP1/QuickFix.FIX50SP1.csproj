@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     <GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>
     <Title>QuickFIX/n FIX5.0 SP1 Messages</Title>
     <PackageId>QuickFIXn.FIX5.0SP1</PackageId>
