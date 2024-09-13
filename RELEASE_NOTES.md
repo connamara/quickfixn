@@ -9,13 +9,16 @@ What's New
 ----------
 
 **CAUTION:**  
+* **1.13.0 has moved to .NET 8 (as Microsoft is ending .NET 6 support on Nov 12, 2024)
+* **There are breaking changes between 1.12 and 1.13!  Please review the 1.12.0 notes below.**
 * **There are breaking changes between 1.11 and 1.12!  Please review the 1.12.0 notes below.**
 * **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
 
-### (next release)
+### upcoming v1.13.0
 
 **Breaking changes**
+* #883 - Moved to .NET 8
 * #878 - corrections to tag 45 "Side" in various DDs (gbirchmeier) - most people won't notice, easy fix if they do
      * fix typo in FIX50 and FIX50SP1: `CROSS_SHORT_EXXMPT` fixed to `CROSS_SHORT_EXEMPT`
      * correction in FIX41 and FIX42: `D` to `UNDISCLOSED`

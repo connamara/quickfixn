@@ -24,11 +24,5 @@ namespace QuickFix
         public FieldNotFoundException(string message, System.Exception inner)
             : base(message, inner)
         { Field = -1; }
-
-        protected FieldNotFoundException(
-            System.Runtime.Serialization.SerializationInfo info,
-            System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
-        { }
     }
 }
