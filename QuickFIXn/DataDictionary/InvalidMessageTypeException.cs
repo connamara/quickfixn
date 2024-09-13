@@ -1,20 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace QuickFix
 {
+    [Obsolete("This class will be removed in a future release (because it's unused)")]
     public class InvalidMessageTypeException : ApplicationException
     {
+        [Obsolete("This class will be removed in a future release (because it's unused)")]
         public InvalidMessageTypeException() { }
+
+        [Obsolete("This class will be removed in a future release (because it's unused)")]
         public InvalidMessageTypeException(string message)
             : base(message) { }
+
+        [Obsolete("This class will be removed in a future release (because it's unused)")]
         public InvalidMessageTypeException(string message, System.Exception inner)
             : base(message, inner) { }
-        protected InvalidMessageTypeException(
-            System.Runtime.Serialization.SerializationInfo info,
-            System.Runtime.Serialization.StreamingContext context)
-            : base(info, context) { }
     }
 }

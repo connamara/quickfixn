@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 namespace QuickFix
 {
@@ -15,10 +14,6 @@ namespace QuickFix
 
         public QuickFIXException(string msg, System.Exception innerException)
             : base(msg, innerException)
-        { }
-
-        public QuickFIXException(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
         { }
     }
 
@@ -108,10 +103,6 @@ namespace QuickFix
 
         public InvalidMessage(string msg, System.Exception innerException)
             : base("Invalid message: " + msg, innerException)
-        { }
-
-        public InvalidMessage(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
-            : base(info, context)
         { }
     }
 
