@@ -18,7 +18,7 @@ What's New
 ### upcoming v1.13.0
 
 **Breaking changes**
-* #883 - Moved to .NET 8
+* #883 - Moved to .NET 8 (huypn12)
 * #878 - corrections to tag 45 "Side" in various DDs (gbirchmeier) - most people won't notice, easy fix if they do
      * fix typo in FIX50 and FIX50SP1: `CROSS_SHORT_EXXMPT` fixed to `CROSS_SHORT_EXEMPT`
      * correction in FIX41 and FIX42: `D` to `UNDISCLOSED`
