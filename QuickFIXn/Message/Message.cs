@@ -793,16 +793,31 @@ namespace QuickFix
                 m.Header.GetString(Tags.TargetCompID));
         }
 
-        private Object lock_ToString = new Object();
-        public override string ToString()
+        private Object lock_ConstructString = new Object();
+        /// <summary>
+        /// Update BodyLength in Header, update CheckSum in Trailer, and return a FIX string.
+        /// (This function changes the object state!)
+        /// </summary>
+        /// <returns></returns>
+        public string ConstructString()
         {
-            lock (lock_ToString)
+            lock (lock_ConstructString)
             {
                 Header.SetField(new BodyLength(BodyLength()), true);
                 Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
 
                 return Header.CalculateString() + CalculateString() + Trailer.CalculateString();
             }
+        }
+
+        /// <summary>
+        /// Create a FIX-style string from the message.
+        /// This does NOT add/update BodyLength or CheckSum to the message header, or otherwise change the object state.
+        /// (Use <see cref="ConstructString"/> to compute and add/update BodyLength &amp; CheckSum.)
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString() {
+            return Header.CalculateString() + CalculateString() + Trailer.CalculateString();
         }
 
         protected int BodyLength()

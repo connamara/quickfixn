@@ -348,7 +348,7 @@ namespace UnitTests
             msg.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
             msg.SetField(new QuickFix.Fields.HeartBtInt(300));
             // Simple logon message
-            s.Send(CharEncoding.DefaultEncoding.GetBytes(msg.ToString()));
+            s.Send(CharEncoding.DefaultEncoding.GetBytes(msg.ConstructString()));
         }
 
         void ClearLogs()

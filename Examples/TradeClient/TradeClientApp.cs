@@ -27,7 +27,7 @@ namespace TradeClient
 
         public void FromApp(Message message, SessionID sessionID)
         {
-            Console.WriteLine("IN:  " + message.ToString());
+            Console.WriteLine("IN:  " + message.ConstructString());
             try
             {
                 Crack(message, sessionID);
@@ -57,7 +57,7 @@ namespace TradeClient
             { }
 
             Console.WriteLine();
-            Console.WriteLine("OUT: " + message.ToString());
+            Console.WriteLine("OUT: " + message.ConstructString());
         }
         #endregion
 

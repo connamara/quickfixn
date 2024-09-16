@@ -11,7 +11,7 @@ namespace Examples.JsonToFix
         {
             var msg = new Message();
             msg.FromJson(json, true, sessionDataDictionary, appDataDictionary, msgFactory);
-            Console.WriteLine(msg.ToString());
+            Console.WriteLine(msg.ConstructString());
         }
 
         static void JsonToFix(string fname, QuickFix.DataDictionary.DataDictionary sessionDataDictionary, QuickFix.DataDictionary.DataDictionary appDataDictionary)

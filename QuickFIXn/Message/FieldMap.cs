@@ -579,11 +579,21 @@ namespace QuickFix
             return total;
         }
 
+        /// <summary>
+        /// Creates a FIX (ish) string representation of this FieldMap (does not change the object state)
+        /// </summary>
+        /// <returns></returns>
         public virtual string CalculateString()
         {
             return CalculateString(new StringBuilder(), FieldOrder);
         }
 
+        /// <summary>
+        /// Creates a FIX (ish) string representation of this FieldMap (does not change the object state)
+        /// </summary>
+        /// <param name="sb"></param>
+        /// <param name="preFields"></param>
+        /// <returns></returns>
         public virtual string CalculateString(StringBuilder sb, int[] preFields)
         {
             HashSet<int> groupCounterTags = new HashSet<int>(_groups.Keys);
