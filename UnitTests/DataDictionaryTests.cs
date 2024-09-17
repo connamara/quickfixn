@@ -318,7 +318,7 @@ namespace UnitTests
             //verify that FromString didn't correct the counter
             //HEY YOU, READ THIS NOW: if these fail, first check if MessageTests::FromString_DoNotCorrectCounter() passes
             Assert.AreEqual("386=3", n.NoTradingSessions.toStringField());  
-            StringAssert.Contains("386=3", n.ToString());
+            StringAssert.Contains("386=3", n.ConstructString());
 
             Assert.Throws<QuickFix.RepeatingGroupCountMismatch>(delegate { dd.CheckGroupCount(n.NoTradingSessions, n, "D"); });
         }

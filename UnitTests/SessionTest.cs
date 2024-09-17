@@ -64,7 +64,7 @@ namespace UnitTests
                 Console.WriteLine(String.Format("  {0}: count {1}", key, msgLookup[key].Count));
                 foreach (QuickFix.Message m in msgLookup[key])
                 {
-                    Console.WriteLine("  - " + m.ToString());
+                    Console.WriteLine("  - " + m.ConstructString());
                 }
             }
         }
@@ -230,7 +230,7 @@ namespace UnitTests
             msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
             msg.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
             msg.SetField(new QuickFix.Fields.HeartBtInt(1));
-            session.Next(msg.ToString());
+            session.Next(msg.ConstructString());
         }
 
         public bool SENT_SEQUENCE_RESET()
@@ -347,7 +347,7 @@ namespace UnitTests
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
             order.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
 
-            session.Next(order.ToString());
+            session.Next(order.ConstructString());
         }
 
         public void SendResendRequest(SeqNumType begin, SeqNumType end)
@@ -370,7 +370,7 @@ namespace UnitTests
             msg.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
             msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum++));
 
-            session.Next(msg.ToString());
+            session.Next(msg.ConstructString());
         }
 
         [Test]
@@ -721,10 +721,10 @@ namespace UnitTests
 
             reset.Header.SetField(new QuickFix.Fields.MsgSeqNum(2));
             reset.SetField(new QuickFix.Fields.NewSeqNo(2501));
-            session.Next(reset.ToString());
+            session.Next(reset.ConstructString());
 
             order.Header.SetField(new QuickFix.Fields.MsgSeqNum(2501));
-            session.Next(order.ToString());
+            session.Next(order.ConstructString());
 
             // Should have triggered next resend (2502->5001), check this
             //Console.WriteLine(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count);
@@ -736,10 +736,10 @@ namespace UnitTests
             // Jump forward to the end of the resend chunk with a fillgap reset message
             reset.Header.SetField(new QuickFix.Fields.MsgSeqNum(2502));
             reset.SetField(new QuickFix.Fields.NewSeqNo(5001));
-            session.Next(reset.ToString());
+            session.Next(reset.ConstructString());
 
             order.Header.SetField(new QuickFix.Fields.MsgSeqNum(5001));
-            session.Next(order.ToString());   // Triggers next resend (5002->5005)
+            session.Next(order.ConstructString());   // Triggers next resend (5002->5005)
 
             //Console.WriteLine(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count);
             Assert.That(responder.msgLookup[QuickFix.Fields.MsgType.RESENDREQUEST].Count == 1);
@@ -939,7 +939,7 @@ namespace UnitTests
             order.Header.SetField(new QuickFix.Fields.SenderCompID(sessionID.TargetCompID));
             order.Header.SetField(new QuickFix.Fields.MsgSeqNum(2));
 
-            session.Next(order.ToString());
+            session.Next(order.ConstructString());
 
             Assert.That(mockApp.InterceptedMessageTypes.Count, Is.EqualTo(2));
             Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.LOGON));

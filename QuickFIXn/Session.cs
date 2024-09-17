@@ -789,7 +789,7 @@ namespace QuickFix
                             {
                                 GenerateSequenceReset(resendReq, begin, msgSeqNum);
                             }
-                            Send(msg.ToString());
+                            Send(msg.ConstructString());
                             begin = 0;
                         }
                         current = msgSeqNum + 1;
@@ -1517,7 +1517,7 @@ namespace QuickFix
                 }
                 else
                 {
-                    NextMessage(msg.ToString());
+                    NextMessage(msg.ConstructString());
                 }
                 return true;
             }
@@ -1567,7 +1567,7 @@ namespace QuickFix
                     }
                 }
 
-                string messageString = message.ToString();
+                string messageString = message.ConstructString();
                 if (0 == seqNum)
                     Persist(message, messageString);
                 return Send(messageString);
