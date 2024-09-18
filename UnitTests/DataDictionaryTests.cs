@@ -268,6 +268,11 @@ namespace UnitTests
             // multiple-value field, one value is invalid
             Assert.Throws(typeof(IncorrectTagValue),
                delegate { dd.CheckValue(new QuickFix.Fields.QuoteCondition("A @ D")); });
+
+
+            dd.CheckEnumValues = false;
+            dd.CheckValue(new QuickFix.Fields.TickDirection('9'));
+            dd.CheckValue(new QuickFix.Fields.QuoteCondition("A @ D"));
         }
 
         [Test]
@@ -300,6 +305,7 @@ namespace UnitTests
         }
 
         [Test]
+        [Category("Integration")]
         public void CheckGroupCountTest()
         {
             QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
