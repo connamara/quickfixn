@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
-using System.Xml.XPath;
 using QuickFix.Fields;
 
 namespace QuickFix.DataDictionary
@@ -12,22 +12,21 @@ namespace QuickFix.DataDictionary
     /// </summary>
     public class DataDictionary
     {
-        public string MajorVersion { get; private set; }
-        public string MinorVersion { get; private set; }
-        public string Version { get; private set; }
-        public Dictionary<int, DDField> FieldsByTag = new Dictionary<int, DDField>();
-        public Dictionary<String, DDField> FieldsByName = new Dictionary<string, DDField>();
-        public Dictionary<String, DDMap> Messages = new Dictionary<string, DDMap>();
-        private XmlDocument RootDoc;
-        private Dictionary<String, XmlNode> ComponentsByName = new Dictionary<string, XmlNode>();
+        public string? MajorVersion { get; private set; }
+        public string? MinorVersion { get; private set; }
+        public string? Version { get; private set; }
+        public readonly Dictionary<int, DDField> FieldsByTag = new();
+        public readonly Dictionary<string, DDField> FieldsByName = new();
+        public readonly Dictionary<string, DDMap> Messages = new();
+        private readonly Dictionary<string, XmlNode> _componentsByName = new();
 
         public bool CheckFieldsOutOfOrder { get; set; }
         public bool CheckFieldsHaveValues { get; set; }
         public bool CheckUserDefinedFields { get; set; }
         public bool AllowUnknownMessageFields { get; set; }
 
-        public DDMap Header = new DDMap();
-        public DDMap Trailer = new DDMap();
+        public DDMap Header = new();
+        public DDMap Trailer = new();
 
         public DataDictionary()
         {
@@ -41,7 +40,7 @@ namespace QuickFix.DataDictionary
         /// Initialize a data dictionary from a file path
         /// </summary>
         /// <param name="path"></param>
-        public DataDictionary(String path)
+        public DataDictionary(string path)
             : this()
         {
             Load(path);
@@ -64,69 +63,53 @@ namespace QuickFix.DataDictionary
         public DataDictionary(DataDictionary src)
             : this()
         {
-            this.Messages = src.Messages;
-            this.FieldsByName = src.FieldsByName;
-            this.FieldsByTag = src.FieldsByTag;
-            if (null != src.MajorVersion)
-                this.MajorVersion = src.MajorVersion;
-            if (null != src.MinorVersion)
-                this.MinorVersion = src.MinorVersion;
-            if (null != src.Version)
-                this.Version = src.Version;
-            this.CheckFieldsHaveValues = src.CheckFieldsHaveValues;
-            this.CheckFieldsOutOfOrder = src.CheckFieldsOutOfOrder;
-            this.CheckUserDefinedFields = src.CheckUserDefinedFields;
-            this.Header = src.Header;
-            this.Trailer = src.Trailer;
+            Messages = src.Messages;
+            FieldsByName = src.FieldsByName;
+            FieldsByTag = src.FieldsByTag;
+            MajorVersion = src.MajorVersion;
+            MinorVersion = src.MinorVersion;
+            Version = src.Version;
+            CheckFieldsHaveValues = src.CheckFieldsHaveValues;
+            CheckFieldsOutOfOrder = src.CheckFieldsOutOfOrder;
+            CheckUserDefinedFields = src.CheckUserDefinedFields;
+            Header = src.Header;
+            Trailer = src.Trailer;
         }
 
-        public static void Validate(Message message, DataDictionary sessionDataDict, DataDictionary appDataDict, string beginString, string msgType)
+        public static void Validate(Message message, DataDictionary? transportDataDict, DataDictionary appDataDict, string beginString, string msgType)
         {
-            bool bodyOnly = (null == sessionDataDict);
+            if (transportDataDict?.Version is not null && !transportDataDict.Version.Equals(beginString)) {
+                throw new UnsupportedVersion(beginString);
+            }
 
-            if ((null != sessionDataDict) && (null != sessionDataDict.Version))
-                if (!sessionDataDict.Version.Equals(beginString))
-                    throw new UnsupportedVersion(beginString);
-
-            if (((null != sessionDataDict) && sessionDataDict.CheckFieldsOutOfOrder) || ((null != appDataDict) && appDataDict.CheckFieldsOutOfOrder))
-            {
+            // TODO: this check is not well-designed. The ex is only triggered if Message.FromString sets an invalid state.
+            // (no other Message function can set this state!)
+            // Furthermore, this is the only time we throw a TagOutOfOrder exception.
+            // It's not clear to me that this logic is useful.
+            if(transportDataDict?.CheckFieldsOutOfOrder == true || appDataDict.CheckFieldsOutOfOrder) {
                 if (!message.HasValidStructure(out var field))
                     throw new TagOutOfOrder(field);
             }
 
-            if ((null != appDataDict) && (null != appDataDict.Version))
+            if(appDataDict.Version is not null)
             {
                 appDataDict.CheckMsgType(msgType);
                 appDataDict.CheckHasRequired(message, msgType);
             }
 
-            if (!bodyOnly)
+            if (transportDataDict is not null)
             {
-                sessionDataDict.Iterate(message.Header, msgType);
-                sessionDataDict.Iterate(message.Trailer, msgType);
+                transportDataDict.Iterate(message.Header, msgType);
+                transportDataDict.Iterate(message.Trailer, msgType);
             }
 
             appDataDict.Iterate(message, msgType);
         }
 
+        // TODO Get rid of this.  All calls can use the static call.
         public void Validate(Message message, string beginString, string msgType)
         {
-            Validate(message, false, beginString, msgType);
-        }
-
-        /// <summary>
-        /// Validate the message body, with header and trailer fields being validated conditionally
-        /// </summary>
-        /// <param name="message">the message</param>
-        /// <param name="bodyOnly">whether to validate just the message body, or to validate the header and trailer sections as well</param>
-        /// <param name="beginString"></param>
-        /// <param name="msgType"></param>
-        public void Validate(Message message, bool bodyOnly, string beginString, string msgType)
-        {
-            DataDictionary sessionDataDict = null;
-            if (!bodyOnly)
-                sessionDataDict = this;
-            Validate(message, sessionDataDict, this, beginString, msgType);
+            Validate(message, this, this, beginString, msgType);
         }
 
         public static void CheckHasNoRepeatedTags(FieldMap map)
@@ -135,13 +118,10 @@ namespace QuickFix.DataDictionary
                 throw new RepeatedTag(map.RepeatedTags[0].Tag);
         }
 
-        public DDMap GetMapForMessage(string msgType)
-        {
-            if (Messages.ContainsKey(msgType))
-            {
-                return Messages[msgType];
-            }
-            return null;
+        public DDMap? GetMapForMessage(string msgType) {
+            return Messages.ContainsKey(msgType)
+                ? Messages[msgType]
+                : null;
         }
 
         public void CheckMsgType(string msgType)
@@ -179,13 +159,13 @@ namespace QuickFix.DataDictionary
 
         public void Iterate(FieldMap map, string msgType)
         {
-            DataDictionary.CheckHasNoRepeatedTags(map);
+            CheckHasNoRepeatedTags(map);
 
             // check non-group fields
             int lastField = 0;
-            foreach (KeyValuePair<int, Fields.IField> kvp in map)
+            foreach (KeyValuePair<int, IField> kvp in map)
             {
-                Fields.IField field = kvp.Value;
+                IField field = kvp.Value;
                 if (lastField != 0 && field.Tag == lastField)
                     throw new RepeatedTag(lastField);
                 CheckHasValue(field);
@@ -222,12 +202,12 @@ namespace QuickFix.DataDictionary
 
         public void IterateGroup(Group group, DDGrp ddgroup, string msgType)
         {
-            DataDictionary.CheckHasNoRepeatedTags(group);
+            CheckHasNoRepeatedTags(group);
 
             int lastField = 0;
-            foreach (KeyValuePair<int, Fields.IField> kvp in group)
+            foreach (KeyValuePair<int, IField> kvp in group)
             {
-                Fields.IField field = kvp.Value;
+                IField field = kvp.Value;
                 if (lastField != 0 && field.Tag == lastField)
                     throw new RepeatedTag(lastField);
                 CheckHasValue(field);
@@ -265,7 +245,7 @@ namespace QuickFix.DataDictionary
         /// does nothing if configuration has "ValidateFieldsHaveValues=N".
         /// </summary>
         /// <param name="field"></param>
-        public void CheckHasValue(Fields.IField field)
+        public void CheckHasValue(IField field)
         {
             if (this.CheckFieldsHaveValues && (field.ToString().Length < 1))
                 throw new NoTagValue(field.Tag);
@@ -275,7 +255,7 @@ namespace QuickFix.DataDictionary
         /// Check that the field contents match the DataDictionary-defined type
         /// </summary>
         /// <param name="field"></param>
-        public void CheckValidFormat(Fields.IField field)
+        public void CheckValidFormat(IField field)
         {
             try
             {
@@ -309,8 +289,6 @@ namespace QuickFix.DataDictionary
                     Fields.Converters.DateTimeConverter.ParseToDateOnly(field.ToString());
                 else if (type == typeof(TimeOnlyField))
                     Fields.Converters.DateTimeConverter.ParseToTimeOnly(field.ToString());
-                return;
-
             }
             catch (FieldConvertError e)
             {
@@ -320,13 +298,12 @@ namespace QuickFix.DataDictionary
 
         public bool TryGetFieldType(int tag, out Type result)
         {
-
-            if (FieldsByTag.ContainsKey(tag))
+            if (FieldsByTag.TryGetValue(tag, out DDField? value))
             {
-                result = FieldsByTag[tag].FieldType;
+                result = value.FieldType;
                 return true;
             }
-            result = null;
+            result = typeof(object); // doesn't matter
             return false;
         }
 
@@ -339,9 +316,7 @@ namespace QuickFix.DataDictionary
             if (AllowUnknownMessageFields)
                 return;
             if (!FieldsByTag.ContainsKey(tag))
-            {
                 throw new InvalidTagNumber(tag);
-            }
         }
 
         /// <summary>
@@ -349,19 +324,18 @@ namespace QuickFix.DataDictionary
         /// (If field is unknown, ignore it.  It's not this function's job to test that.)
         /// </summary>
         /// <param name="field"></param>
-        public void CheckValue(Fields.IField field)
+        public void CheckValue(IField field)
         {
             if (FieldsByTag.TryGetValue(field.Tag, out var fld))
             {
                 if (fld.HasEnums())
                 {
-                    if (fld.IsMultipleValueFieldWithEnums)
-                    {
+                    if (fld.IsMultipleValueFieldWithEnums) {
                         string[] splitted = field.ToString().Split(' ');
 
-                        foreach (string value in splitted)
-                            if (!fld.EnumDict.ContainsKey(value))
-                                throw new IncorrectTagValue(field.Tag);
+                        if (splitted.Any(value => !fld.EnumDict.ContainsKey(value))) {
+                            throw new IncorrectTagValue(field.Tag);
+                        }
                     }
                     else if (!fld.EnumDict.ContainsKey(field.ToString()))
                         throw new IncorrectTagValue(field.Tag);
@@ -374,12 +348,11 @@ namespace QuickFix.DataDictionary
         /// </summary>
         /// <param name="field"></param>
         /// <param name="msgType"></param>
-        public void CheckIsInMessage(Fields.IField field, string msgType)
+        public void CheckIsInMessage(IField field, string msgType)
         {
             if (AllowUnknownMessageFields)
                 return;
-            DDMap dd;
-            if (Messages.TryGetValue(msgType, out dd))
+            if (Messages.TryGetValue(msgType, out DDMap? dd))
                 if (dd.Fields.ContainsKey(field.Tag))
                     return;
             throw new TagNotDefinedForMessage(field.Tag, msgType);
@@ -391,7 +364,7 @@ namespace QuickFix.DataDictionary
         /// <param name="field"></param>
         /// <param name="ddgrp"></param>
         /// <param name="msgType">Message type that contains the group (included in exceptions thrown on failure)</param>
-        public void CheckIsInGroup(Fields.IField field, DDGrp ddgrp, string msgType)
+        public static void CheckIsInGroup(IField field, DDGrp ddgrp, string msgType)
         {
             if (ddgrp.IsField(field.Tag))
                 return;
@@ -404,7 +377,7 @@ namespace QuickFix.DataDictionary
         /// <param name="field">a group's counter field</param>
         /// <param name="map">the FieldMap that contains the group being checked</param>
         /// <param name="msgType">msg type of message that is/contains <paramref name="map"/></param>
-        public void CheckGroupCount(Fields.IField field, FieldMap map, string msgType)
+        public void CheckGroupCount(IField field, FieldMap map, string msgType)
         {
             if (IsGroup(msgType, field.Tag))
             {
@@ -417,11 +390,7 @@ namespace QuickFix.DataDictionary
 
         public bool IsGroup(string msgType, int tag)
         {
-            if (Messages.ContainsKey(msgType))
-            {
-                return Messages[msgType].IsGroup(tag);
-            }
-            return false;
+            return Messages.ContainsKey(msgType) && Messages[msgType].IsGroup(tag);
         }
 
         /// <summary>
@@ -429,11 +398,9 @@ namespace QuickFix.DataDictionary
         /// </summary>
         /// <param name="field"></param>
         /// <returns></returns>
-        public bool ShouldCheckTag(Fields.IField field)
+        public bool ShouldCheckTag(IField field)
         {
-            if (!this.CheckUserDefinedFields && (field.Tag >= Fields.Limits.USER_MIN))
-                return false;
-            return true;
+            return this.CheckUserDefinedFields || field.Tag < Fields.Limits.USER_MIN;
         }
 
         public bool IsHeaderField(int tag)
@@ -446,7 +413,7 @@ namespace QuickFix.DataDictionary
             return Trailer.IsField(tag);
         }
 
-        public void Load(String path)
+        public void Load(string path)
         {
             var stream = new FileStream(path, FileMode.Open, FileAccess.Read);
             Load(stream);
@@ -454,47 +421,53 @@ namespace QuickFix.DataDictionary
 
         public void Load(Stream stream)
         {
-            XmlReaderSettings readerSettings = new XmlReaderSettings();
-            readerSettings.IgnoreComments = true;
-
-            using (XmlReader reader = XmlReader.Create(stream, readerSettings))
+            XmlReaderSettings readerSettings = new()
             {
-                RootDoc = new XmlDocument();
-                RootDoc.Load(reader);
-                SetVersionInfo(RootDoc);
-                ParseFields(RootDoc);
-                CacheComponents(RootDoc);
-                ParseMessages(RootDoc);
-                ParseHeader(RootDoc);
-                ParseTrailer(RootDoc);
+                IgnoreComments = true
+            };
+
+            using (XmlReader reader = XmlReader.Create(stream, readerSettings)) {
+                XmlDocument rootDoc = new();
+                rootDoc.Load(reader);
+                SetVersionInfo(rootDoc);
+                ParseFields(rootDoc);
+                CacheComponents(rootDoc);
+                ParseMessages(rootDoc);
+                ParseHeader(rootDoc);
+                ParseTrailer(rootDoc);
             }
         }
 
-        public Boolean FieldHasValue(int tag, String val)
+        public bool FieldHasValue(int tag, string val)
         {
             return FieldsByTag[tag].EnumDict.ContainsKey(val);
         }
 
         private void SetVersionInfo(XmlDocument doc)
         {
-            MajorVersion = doc.SelectSingleNode("/fix/@major").Value;
-            MinorVersion = doc.SelectSingleNode("/fix/@minor").Value;
-            string type;
-            XmlNode node = doc.SelectSingleNode("/fix/@type");
-            if (node == null)
-                type = "FIX";//FIXME has to be a better way to do this, but for now, only >=5.0 have type
-            else
-                type = node.Value;
+            XmlNode? majorVerNode = doc.SelectSingleNode("/fix/@major");
+            XmlNode? minorVerNode = doc.SelectSingleNode("/fix/@minor");
 
+            if (majorVerNode is null || minorVerNode is null) {
+                throw new DictionaryParseException("Failed to find attributes 'major' and 'minor' in <fix> tag");
+            }
 
-            if (!type.Equals("FIX") && !type.Equals("FIXT"))
-                throw new System.ArgumentException("Type must be FIX of FIXT in cofig");
-            Version = String.Format("{0}.{1}.{2}", type, MajorVersion, MinorVersion);
+            MajorVersion = majorVerNode.Value;
+            MinorVersion = minorVerNode.Value;
+            XmlNode? node = doc.SelectSingleNode("/fix/@type");
+
+            string typeAtt = node?.Value ?? "FIX"; // att is omitted in non-FIXT DDs
+
+            if (!typeAtt.Equals("FIX") && !typeAtt.Equals("FIXT"))
+                throw new DictionaryParseException("<fix> 'type' attribute must be FIX or FIXT (assumes FIX if not present)");
+            Version = $"{typeAtt}.{MajorVersion}.{MinorVersion}";
         }
 
         private void ParseFields(XmlDocument doc)
         {
-            XmlNodeList nodeList = doc.SelectNodes("//fields/field");
+            XmlNodeList? nodeList = doc.SelectNodes("//fields/field");
+            if (nodeList is null)
+                throw new DictionaryParseException("No <fields> tag in dictionary");
             foreach (XmlNode fldEl in nodeList)
             {
                 DDField fld = NewField(fldEl);
@@ -505,28 +478,54 @@ namespace QuickFix.DataDictionary
 
         private void CacheComponents(XmlDocument doc)
         {
-            XmlNodeList nodeList = doc.SelectNodes("//components/component");
+            XmlNodeList? nodeList = doc.SelectNodes("//components/component");
+            if(nodeList is null)
+                throw new DictionaryParseException("No <components> tag in dictionary");
             foreach (XmlNode compEl in nodeList)
             {
-                ComponentsByName[compEl.Attributes["name"].Value] = compEl;
+                XmlAttribute? nameAtt = compEl.Attributes?["name"];
+                if (nameAtt != null)
+                    _componentsByName[nameAtt.Value] = compEl;
             }
         }
 
         private DDField NewField(XmlNode fldEl)
         {
-            String tagstr = fldEl.Attributes["number"].Value;
-            String name = fldEl.Attributes["name"].Value;
-            String fldType = fldEl.Attributes["type"].Value;
+            XmlAttribute? tagAtt = fldEl.Attributes?["number"];
+            XmlAttribute? nameAtt = fldEl.Attributes?["name"];
+            XmlAttribute? typeAtt = fldEl.Attributes?["type"];
+
+            if (tagAtt is null)
+                throw new DictionaryParseException("A <field> is missing its 'number' attribute");
+            string tagstr = tagAtt.Value;
+
+            if(nameAtt is null)
+                throw new DictionaryParseException($"<field number='{tagstr}'> is missing its 'name' attribute");
+            if(typeAtt is null)
+                throw new DictionaryParseException($"<field number='{tagstr}'> is missing its 'type' attribute");
+
+            string name = nameAtt.Value;
+            string fldType = typeAtt.Value;
+
             int tag = QuickFix.Fields.Converters.IntConverter.Convert(tagstr);
-            Dictionary<String, String> enums = new Dictionary<String, String>();
+            Dictionary<string, string> enums = new Dictionary<string, string>();
             if (fldEl.HasChildNodes)
             {
-                foreach (XmlNode enumEl in fldEl.SelectNodes(".//value"))
+                XmlNodeList? enumNodeList = fldEl.SelectNodes(".//value");
+                if (enumNodeList is not null)
                 {
-                    string description = String.Empty;
-                    if (enumEl.Attributes["description"] != null)
-                        description = enumEl.Attributes["description"].Value;
-                    enums[enumEl.Attributes["enum"].Value] = description;
+                    foreach (XmlNode enumEl in enumNodeList)
+                    {
+                        string description = string.Empty;
+                        if (enumEl.Attributes?["description"] is not null)
+                            description = enumEl.Attributes["description"]!.Value;
+
+                        XmlAttribute? enumAtt = enumEl.Attributes?["enum"];
+                        if (enumAtt is null)
+                            throw new DictionaryParseException(
+                                $"Field {tagstr} has an <value> that is missing its 'enum' attribute");
+                        enums[enumAtt.Value] = description;
+                    }
                 }
             }
             return new DDField(tag, name, enums, fldType);
@@ -534,24 +533,34 @@ namespace QuickFix.DataDictionary
 
         private void ParseMessages(XmlDocument doc)
         {
-            XmlNodeList nodeList = doc.SelectNodes("//messages/message");
+            XmlNodeList? nodeList = doc.SelectNodes("//messages/message");
+            if (nodeList is null)
+                throw new DictionaryParseException("No <messages> tag in dictionary");
             foreach (XmlNode msgEl in nodeList)
             {
                 DDMap msg = new DDMap();
-                ParseMsgEl(msgEl, msg);
-                String msgtype = msgEl.Attributes["msgtype"].Value;
+                ParseMsgNode(msgEl, msg);
+                string? msgtype = msgEl.Attributes?["msgtype"]?.Value;
+                if (msgtype is null)
+                    throw new DictionaryParseException("A <message> is missing its 'msgtype' attribute");
                 Messages.Add(msgtype, msg);
             }
         }
 
         private void ParseHeader(XmlDocument doc)
         {
-            ParseMsgEl(doc.SelectSingleNode("//header"), Header);
+            XmlNode? node = doc.SelectSingleNode("//header");
+            if (node is null)
+                throw new DictionaryParseException("No <header> tag in the dictionary");
+            ParseMsgNode(node, Header);
         }
 
         private void ParseTrailer(XmlDocument doc)
         {
-            ParseMsgEl(doc.SelectSingleNode("//trailer"), Trailer);
+            XmlNode? node = doc.SelectSingleNode("//trailer");
+            if (node is null)
+                throw new DictionaryParseException("No <trailer> tag in the dictionary");
+            ParseMsgNode(node, Trailer);
         }
 
         /// <summary>
@@ -568,23 +577,13 @@ namespace QuickFix.DataDictionary
             }
             if (childNode.Attributes["name"] == null)
             {
-                string messageTypeName = (parentNode.Attributes["name"] != null) ? parentNode.Attributes["name"].Value : parentNode.Name;
+                string messageTypeName = parentNode.Attributes?["name"]?.Value ?? parentNode.Name;
                 throw new DictionaryParseException($"Malformed data dictionary: Found '{childNode.Name}' node without 'name' within parent '{parentNode.Name}/{messageTypeName}'");
             }
         }
 
         /// <summary>
-        /// Parse a message element.  Its data is added to parameter `ddmap`.
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="ddmap"></param>
-        private void ParseMsgEl(XmlNode node, DDMap ddmap)
-        {
-            ParseMsgEl(node, ddmap, null);
-        }
-
-        /// <summary>
-        /// Parse a message element.  Its data is added to parameter `ddmap`.
+        /// Parse a message node (message, group, or component).  Its data is added to parameter `ddmap`.
         /// </summary>
         /// <param name="node">a message, group, or component node</param>
         /// <param name="ddmap">the still-being-constructed DDMap for this node</param>
@@ -592,7 +591,7 @@ namespace QuickFix.DataDictionary
         /// If non-null, parsing is inside a component that is required (true) or not (false).
         /// If null, parser is not inside a component.
         /// </param>
-        private void ParseMsgEl(XmlNode node, DDMap ddmap, bool? componentRequired)
+        private void ParseMsgNode(XmlNode node, DDMap ddmap, bool? componentRequired = null)
         {
             /* 
             // This code is great for debugging DD parsing issues.
@@ -602,7 +601,8 @@ namespace QuickFix.DataDictionary
             Console.WriteLine(s);
             */
 
-            string messageTypeName = (node.Attributes["name"] != null) ? node.Attributes["name"].Value : node.Name;
+            // TODO: I don't think node.Name is an acceptable alternative
+            string messageTypeName = node.Attributes?["name"]?.Value ?? node.Name;
 
             if (!node.HasChildNodes) { return; }
             foreach (XmlNode childNode in node.ChildNodes)
@@ -617,20 +617,24 @@ namespace QuickFix.DataDictionary
 
                 VerifyChildNode(childNode, node);
 
-                var nameAttribute = childNode.Attributes["name"].Value;
+                string? nameAttribute = childNode.Attributes?["name"]?.Value;
+                if (nameAttribute is null)
+                {
+                    throw new DictionaryParseException(
+                        $"A child node within '{messageTypeName} is missing its 'name' attribute");
+                }
 
                 switch (childNode.Name)
                 {
                     case "field":
                     case "group":
-                        if (FieldsByName.ContainsKey(nameAttribute) == false)
+                        if (FieldsByName.TryGetValue(nameAttribute, out DDField? fld) == false)
                         {
                             throw new DictionaryParseException(
                                 $"Field '{nameAttribute}' is not defined in <fields> section.");
                         }
-                        DDField fld = FieldsByName[nameAttribute];
 
-                        bool required = (childNode.Attributes["required"]?.Value == "Y") && componentRequired.GetValueOrDefault(true);
+                        bool required = childNode.Attributes?["required"]?.Value == "Y" && componentRequired.GetValueOrDefault(true);
 
                         if (required)
                             ddmap.ReqFields.Add(fld.Tag);
@@ -644,19 +648,19 @@ namespace QuickFix.DataDictionary
 
                         if (childNode.Name == "group")
                         {
-                            DDGrp grp = new DDGrp();
+                            DDGrp grp = new();
                             grp.NumFld = fld.Tag;
                             if (required)
                                 grp.Required = true;
 
-                            ParseMsgEl(childNode, grp);
+                            ParseMsgNode(childNode, grp);
                             ddmap.Groups.Add(fld.Tag, grp);
                         }
                         break;
 
                     case "component":
-                        XmlNode compNode = ComponentsByName[nameAttribute];
-                        ParseMsgEl(compNode, ddmap, (childNode.Attributes["required"]?.Value == "Y"));
+                        XmlNode compNode = _componentsByName[nameAttribute];
+                        ParseMsgNode(compNode, ddmap, (childNode.Attributes?["required"]?.Value == "Y"));
                         break;
 
                     default:

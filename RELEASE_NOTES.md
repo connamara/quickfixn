@@ -24,6 +24,9 @@ What's New
      * correction in FIX41 and FIX42: `D` to `UNDISCLOSED`
 * #863 - Change Message.ToString() to not alter object state anymore. (gbirchmeier)
          Use new function Message.ConstructString() if you need BodyLength/CheckSum to be updated.
+* #xxx - cleanup/nullable-ize XXX (gbirchmeier)
+     * DataDictionary.CheckIsInGroup is now static
+     * Get rid of non-static DataDictionary.Validate functions.
 
 **Non-breaking changes**
 * #864 - when multiple threads race to init DefaultMessageFactory,
