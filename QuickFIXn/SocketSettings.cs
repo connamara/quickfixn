@@ -76,7 +76,7 @@ namespace QuickFix
         /// The common name is the name of the Server's certificate and it is usually
         /// the DNS name of the server.
         /// </value>
-        public string ServerCommonName { get; internal set; }
+        public string? ServerCommonName { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating whether certificates of the other endpoint should be validated.
@@ -92,7 +92,7 @@ namespace QuickFix
         /// <value>
         /// The certificate path.
         /// </value>
-        public string CertificatePath { get; internal set; }
+        public string? CertificatePath { get; internal set; }
 
         /// <summary>
         /// Gets the certificate password.
@@ -100,7 +100,7 @@ namespace QuickFix
         /// <value>
         /// The certificate password.
         /// </value>
-        public string CertificatePassword { get; internal set; }
+        public string? CertificatePassword { get; internal set; }
 
         /// <summary>
         /// Gets the SSL protocol to use (for initiator) or accept (for acceptor)
@@ -126,14 +126,13 @@ namespace QuickFix
         /// </value>
         public bool UseSSL { get; private set; }
 
-
         /// <summary>
         /// Path to .cer with the public part of the Certificate CA to validate clients against (acceptor setting).
         /// </summary>
         /// <value>
         /// The CA certificate path.
         /// </value>
-        public string CACertificatePath { get; set; }
+        public string? CACertificatePath { get; set; }
 
         /// <summary>
         /// Gets a value indicating whether client certificate are required (acceptor setting).

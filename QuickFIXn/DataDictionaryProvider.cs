@@ -4,49 +4,43 @@ namespace QuickFix
 {
     public class DataDictionaryProvider
     {
-        private Dictionary<string, DataDictionary.DataDictionary> transportDataDictionaries_;
-        private Dictionary<string, DataDictionary.DataDictionary> applicationDataDictionaries_;
-        private DataDictionary.DataDictionary emptyDataDictionary_;
+        private readonly Dictionary<string, DataDictionary.DataDictionary> _transportDataDictionaries;
+        private readonly Dictionary<string, DataDictionary.DataDictionary> _applicationDataDictionaries;
+        private readonly DataDictionary.DataDictionary _emptyDataDictionary;
 
         public DataDictionaryProvider()
         {
-            transportDataDictionaries_ = new Dictionary<string, DataDictionary.DataDictionary>();
-            applicationDataDictionaries_ = new Dictionary<string, DataDictionary.DataDictionary>();
-            emptyDataDictionary_ = new DataDictionary.DataDictionary();
+            _transportDataDictionaries = new Dictionary<string, DataDictionary.DataDictionary>();
+            _applicationDataDictionaries = new Dictionary<string, DataDictionary.DataDictionary>();
+            _emptyDataDictionary = new DataDictionary.DataDictionary();
         }
 
         /// TODO need to make deeper copy?
         public DataDictionaryProvider(DataDictionaryProvider src)
         {
-            transportDataDictionaries_ = new Dictionary<string, DataDictionary.DataDictionary>(src.transportDataDictionaries_);
-            applicationDataDictionaries_ = new Dictionary<string, DataDictionary.DataDictionary>(src.applicationDataDictionaries_);
-            emptyDataDictionary_ = new DataDictionary.DataDictionary(src.emptyDataDictionary_);
+            _transportDataDictionaries = new Dictionary<string, DataDictionary.DataDictionary>(src._transportDataDictionaries);
+            _applicationDataDictionaries = new Dictionary<string, DataDictionary.DataDictionary>(src._applicationDataDictionaries);
+            _emptyDataDictionary = new DataDictionary.DataDictionary(src._emptyDataDictionary);
         }
 
         public void AddTransportDataDictionary(string beginString, DataDictionary.DataDictionary dataDictionary)
         {
-            transportDataDictionaries_[beginString] = dataDictionary;
+            _transportDataDictionaries[beginString] = dataDictionary;
         }
 
-        public void AddApplicationDataDictionary(string applVerID, DataDictionary.DataDictionary dataDictionary)
+        public void AddApplicationDataDictionary(string applVerId, DataDictionary.DataDictionary dataDictionary)
         {
-            applicationDataDictionaries_[applVerID] = dataDictionary;
+            _applicationDataDictionaries[applVerId] = dataDictionary;
         }
 
         public DataDictionary.DataDictionary GetSessionDataDictionary(string beginString)
         {
-            DataDictionary.DataDictionary dd;
-            if (!transportDataDictionaries_.TryGetValue(beginString, out dd))
-                return emptyDataDictionary_;
-            return dd;
+            return _transportDataDictionaries.GetValueOrDefault(beginString, _emptyDataDictionary);
         }
 
-        public DataDictionary.DataDictionary GetApplicationDataDictionary(string applVerID)
+        public DataDictionary.DataDictionary GetApplicationDataDictionary(string applVerId)
         {
-            DataDictionary.DataDictionary dd;
-            if (!applicationDataDictionaries_.TryGetValue(applVerID, out dd))
-                return emptyDataDictionary_;
-            return dd;
+            return _applicationDataDictionaries.GetValueOrDefault(applVerId, _emptyDataDictionary);
         }
     }
 }
