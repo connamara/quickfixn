@@ -569,7 +569,7 @@ namespace QuickFix
                 }
                 else
                 {
-                    SessionDataDictionary.Validate(message, beginString, msgType);
+                    DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, SessionDataDictionary, beginString, msgType);
                 }
 
                 if (MsgType.LOGON.Equals(msgType))

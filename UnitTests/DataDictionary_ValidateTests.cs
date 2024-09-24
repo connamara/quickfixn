@@ -13,10 +13,6 @@ public class DataDictionary_ValidateTests
 {
     [Test]
     public void UnsupportedVersionTest() {
-        //string ddFileContent =
-        //    "<fix type='foo' major='666' minor='777'><header></header><trailer></trailer><messages></messages><components></components><fields></fields></fix>";
-        //DataDictionary txDd = new(new MemoryStream(Encoding.Unicode.GetBytes(ddFileContent)));
-
         DataDictionary dd = new();
         dd.LoadFIXSpec("FIX44");
 
@@ -58,19 +54,18 @@ public class DataDictionary_ValidateTests
         dd.LoadFIXSpec("FIX44");
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
-        string[] msgFields = {"8=FIX.4.4", "9=120", "35=D", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-                               "11=clordid", "55=sym", "54=1", "60=20110909-09:09:09.999", "40=1",
-                               "38=failboat", // should be a decimal
-                               "10=64"};
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=120|35=D|34=3|49=sender|52=20110909-09:09:09.999|56=target|" +
+                         "11=clordid|55=sym|54=1|60=20110909-09:09:09.999|40=1|" +
+                         "38=failboat|" + // should be a decimal
+                         "10=64|").Replace('|', Message.SOH);
         string msgType = "D";
         string beginString = "FIX.4.4";
 
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd, f);
 
-        Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
+        Assert.That(() => DataDictionary.Validate(message, dd, dd, beginString, msgType),
+            Throws.TypeOf<IncorrectDataFormat>());
     }
 
     [Test]
@@ -83,14 +78,13 @@ public class DataDictionary_ValidateTests
         string msgStr = ("8=FIX.4.2|9=87|35=B|34=3|49=CLIENT1|"
                          + "52=20111012-22:15:55.474|56=EXECUTOR|148=AAAAAAA|"
                          + "33=2|58=L1|58=L2|10=016|").Replace('|', Message.SOH);
-
-        QuickFix.Fields.MsgType msgType = Message.IdentifyType(msgStr);
+        MsgType msgType = Message.IdentifyType(msgStr);
         string beginString = Message.ExtractBeginString(msgStr);
 
         Message message = f.Create(beginString, msgType.Obj);
         message.FromString(msgStr, true, dd, dd, f);
 
-        dd.Validate(message, beginString, msgType.Obj);
+        DataDictionary.Validate(message, dd, dd, beginString, msgType.Obj);
     }
 
     [Test]
@@ -99,11 +93,9 @@ public class DataDictionary_ValidateTests
         DataDictionary dd = new DataDictionary();
         dd.LoadTestFIXSpec("group_begins_group");
 
-        string pipedStr = "8=FIX.9.9|9=167|35=magic|34=3|49=CLIENT1|52=20111012-22:15:55.474|56=EXECUTOR|"
-            + "1111=mundane|5555=magicfield|6660=1|7770=2|7711=Hoppy|7712=brown|"
-            + "7711=Floppy|7712=white|6661=abracadabra|10=48|";
-        string msgStr = pipedStr.Replace('|', Message.SOH);
-
+        string msgStr = ("8=FIX.9.9|9=167|35=magic|34=3|49=CLIENT1|52=20111012-22:15:55.474|56=EXECUTOR|"
+                         + "1111=mundane|5555=magicfield|6660=1|7770=2|7711=Hoppy|7712=brown|"
+                         + "7711=Floppy|7712=white|6661=abracadabra|10=48|").Replace('|', Message.SOH);
         string beginString = Message.ExtractBeginString(msgStr);
         Message msg = new Message(msgStr, dd, dd, false);
 
@@ -128,22 +120,20 @@ public class DataDictionary_ValidateTests
         dd.LoadFIXSpec("FIX44");
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
-        string[] msgFields = {"8=FIX.4.4", "9=111", "35=V", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-                                  "262=mdreqid", "263=0", "264=5",
-                                  "267=1", // MDReqGrp
-                                    "269=failboat", // should be a char
-                                  "146=1", // InstrmtMDReqGrp
-                                    "55=sym",
-                                  "10=91"};
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=111|35=V|34=3|49=sender|52=20110909-09:09:09.999|56=target|" +
+                         "262=mdreqid|263=0|264=5|" +
+                         "267=1|" + // MDReqGrp
+                         "269=failboat|" + // should be a char
+                         "146=1|" + // InstrmtMDReqGrp
+                         "55=sym|" +
+                         "10=91|").Replace('|', Message.SOH);
         string msgType = "V";
         string beginString = "FIX.4.4";
 
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd, f);
 
-        Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
+        Assert.Throws<IncorrectDataFormat>(() => DataDictionary.Validate(message, dd, dd, beginString, msgType));
     }
 
     [Test]
@@ -153,23 +143,21 @@ public class DataDictionary_ValidateTests
         dd.LoadFIXSpec("FIX44");
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
-        string[] msgFields = {"8=FIX.4.4", "9=185", "35=J", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-                                 "70=AllocID", "71=0", "626=1", "857=0", "54=1", "55=sym", "53=1", "6=5.5", "75=20110909-09:09:09.999",
-                                 "73=1", // NoOrders
-                                   "11=clordid",
-                                   "756=1", // NoNested2PartyIDs
-                                     "757=nested2partyid",
-                                     "759=failboat", // supposed to be a int
-                                 "10=48"};
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=185|35=J|34=3|49=sender|52=20110909-09:09:09.999|56=target|" +
+                         "70=AllocID|71=0|626=1|857=0|54=1|55=sym|53=1|6=5.5|75=20110909-09:09:09.999|" +
+                         "73=1|" + // NoOrders
+                         "11=clordid|" +
+                         "756=1|" + // NoNested2PartyIDs
+                         "757=nested2partyid|" +
+                         "759=failboat|" + // supposed to be a int
+                         "10=48|").Replace('|', Message.SOH);
         string msgType = "J";
         string beginString = "FIX.4.4";
 
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd, f);
 
-        Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
+        Assert.Throws<IncorrectDataFormat>(() => DataDictionary.Validate(message, dd, dd, beginString, msgType));
     }
 
     [Test]
@@ -179,17 +167,15 @@ public class DataDictionary_ValidateTests
         dd.LoadFIXSpec("FIX44");
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
-        string[] msgFields = { "8=FIX.4.4", "9=104", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-                                 "55=sym", "268=1", "269=0", "272=20111012", "273=22:15:30.444", "10=19" };
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=104|35=W|34=3|49=sender|52=20110909-09:09:09.999|56=target|" +
+                         "55=sym|268=1|269=0|272=20111012|273=22:15:30.444|10=19|").Replace('|', Message.SOH);
         string msgType = "W";
         string beginString = "FIX.4.4";
 
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd, f);
 
-        dd.Validate(message, beginString, msgType);
+        DataDictionary.Validate(message, dd, dd, beginString, msgType);
     }
 
     [Test]
@@ -200,17 +186,15 @@ public class DataDictionary_ValidateTests
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
         // intentionally invalid SendingTime (52/DateTime)
-        string[] msgFields = { "8=FIX.4.4", "9=91", "35=W", "34=3", "49=sender", "52=20110909", "56=target",
-                                 "55=sym", "268=1", "269=0", "272=20111012", "273=22:15:30.444", "10=51" };
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=91|35=W|34=3|49=sender|52=20110909|56=target|" +
+                         "55=sym|268=1|269=0|272=20111012|273=22:15:30.444|10=51|").Replace('|', Message.SOH);
         string msgType = "W";
         string beginString = "FIX.4.4";
 
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd, f);
 
-        Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
+        Assert.Throws<IncorrectDataFormat>(() => DataDictionary.Validate(message, dd, dd, beginString, msgType));
     }
 
     [Test]
@@ -221,17 +205,16 @@ public class DataDictionary_ValidateTests
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
         // intentionally invalid MDEntryDate (272/DateOnly)
-        string[] msgFields = { "8=FIX.4.4", "9=117", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-                                 "55=sym", "268=1", "269=0", "272=20111012-22:15:30.444", "273=22:15:30.444", "10=175" };
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=117|35=W|34=3|49=sender|52=20110909-09:09:09.999|56=target|" +
+                         "55=sym|268=1|269=0|272=20111012-22:15:30.444|273=22:15:30.444|10=175|")
+            .Replace('|', Message.SOH);
         string msgType = "W";
         string beginString = "FIX.4.4";
 
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd, f);
 
-        Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
+        Assert.Throws<IncorrectDataFormat>(() => DataDictionary.Validate(message, dd, dd, beginString, msgType));
     }
 
     [Test]
@@ -242,17 +225,15 @@ public class DataDictionary_ValidateTests
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
         // intentionally invalid MDEntryTime (272/TimeOnly)
-        string[] msgFields = { "8=FIX.4.4", "9=113", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-                                 "55=sym", "268=1", "269=0", "272=20111012", "273=20111012-22:15:30.444", "10=200" };
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=113|35=W|34=3|49=sender|52=20110909-09:09:09.999|56=target|" +
+                         "55=sym|268=1|269=0|272=20111012|273=20111012-22:15:30.444|10=200|").Replace('|', Message.SOH);
         string msgType = "W";
         string beginString = "FIX.4.4";
 
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd, f);
 
-        Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectDataFormat>());
+        Assert.Throws<IncorrectDataFormat>(() => DataDictionary.Validate(message, dd, dd, beginString, msgType));
     }
 
     [Test]
@@ -265,10 +246,8 @@ public class DataDictionary_ValidateTests
         dd.LoadFIXSpec("FIX44");
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
-        string[] msgFields = { "8=FIX.4.4", "9=77", "35=AD", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-            "568=tradereqid", "569=0", "10=109" };
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=77|35=AD|34=3|49=sender|52=20110909-09:09:09.999|56=target|" +
+                         "568=tradereqid|569=0|10=109|").Replace('|', Message.SOH);
         string msgType = "AD";
         string beginString = "FIX.4.4";
 
@@ -277,7 +256,7 @@ public class DataDictionary_ValidateTests
 
         // AD only requires 568 and 569.
         // It has components, but none are required.
-        dd.Validate(message, beginString, msgType);
+        DataDictionary.Validate(message, dd, dd, beginString, msgType);
     }
 
     [Test]
@@ -287,17 +266,16 @@ public class DataDictionary_ValidateTests
         dd.LoadFIXSpec("FIX44");
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
-        string[] msgFields = { "8=FIX.4.4", "9=76", "35=7", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-            "2=AdvId", "5=N", "4=B", "53=1", "10=138" };
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=76|35=7|34=3|49=sender|52=20110909-09:09:09.999|56=target|" +
+                         "2=AdvId|5=N|4=B|53=1|10=138|").Replace('|', Message.SOH);
         string msgType = "7";
         string beginString = "FIX.4.4";
 
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd, f);
 
-        var ex = Assert.Throws<QuickFix.RequiredTagMissing>(delegate { dd.Validate(message, beginString, msgType); });
+        var ex = Assert.Throws<RequiredTagMissing>(() =>
+            DataDictionary.Validate(message, dd, dd, beginString, msgType));
         Assert.AreEqual(55, ex!.Field);
     }
 
@@ -308,22 +286,17 @@ public class DataDictionary_ValidateTests
         dd.LoadFIXSpec("FIX44");
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
-        string[] msgFields =
-        {
-            "8=FIX.4.4", "9=99", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-            "55=sym",
-            "268=1", "269=0", "270=123.23", "271=2", "277=A B",
-            "10=213"
-        };
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=99|35=W|34=3|49=sender|52=20110909-09:09:09.999|56=target|" +
+                         "55=sym|" +
+                         "268=1|269=0|270=123.23|271=2|277=A B|" +
+                         "10=213|").Replace('|', Message.SOH);
         string msgType = "W";
         string beginString = "FIX.4.4";
 
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd);
 
-        dd.Validate(message, beginString, msgType);
+        DataDictionary.Validate(message, dd, dd, beginString, msgType);
     }
 
     [Test] // Issue #66
@@ -333,22 +306,17 @@ public class DataDictionary_ValidateTests
         dd.LoadFIXSpec("FIX44");
         QuickFix.FIX44.MessageFactory f = new QuickFix.FIX44.MessageFactory();
 
-        string[] msgFields =
-        {
-            "8=FIX.4.4", "9=99", "35=W", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-            "55=sym",
-            "268=1", "269=0", "270=123.23", "271=2", "277=A 1",
-            "10=196"
-        };
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = ("8=FIX.4.4|9=99|35=W|34=3|49=sender|52=20110909-09:09:09.999|56=target|" +
+                         "55=sym|" +
+                         "268=1|269=0|270=123.23|271=2|277=A 1|" +
+                         "10=196|").Replace('|', Message.SOH);
         string msgType = "W";
         string beginString = "FIX.4.4";
 
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd);
 
-        Assert.That(() => dd.Validate(message, beginString, msgType), Throws.TypeOf<QuickFix.IncorrectTagValue>());
+        Assert.Throws<IncorrectTagValue>(() => DataDictionary.Validate(message, dd, dd, beginString, msgType));
     }
 
     [Test] // Issue #282
@@ -358,13 +326,8 @@ public class DataDictionary_ValidateTests
         dd.LoadFIXSpec("FIX42");
         QuickFix.FIX42.MessageFactory f = new QuickFix.FIX42.MessageFactory();
 
-        string[] msgFields =
-        {
-            "8=FIX.4.2", "9=70", "35=B", "34=3", "49=sender", "52=20110909-09:09:09.999", "56=target",
-            "358=", "148=", "33=0", "10=150"
-        };
-        string msgStr = string.Join(Message.SOH, msgFields) + Message.SOH;
-
+        string msgStr = "8=FIX.4.2|9=70|35=B|34=3|49=sender|52=20110909-09:09:09.999|56=target|358=|148=|33=0|10=150|"
+            .Replace('|', Message.SOH);
         string msgType = "B";
         string beginString = "FIX.4.2";
 
@@ -372,9 +335,9 @@ public class DataDictionary_ValidateTests
         message.FromString(msgStr, true, dd, dd);
 
         dd.CheckFieldsHaveValues = true;
-        Assert.Throws<QuickFix.NoTagValue>(delegate { dd.Validate(message, beginString, msgType); });
+        Assert.Throws<NoTagValue>(delegate { DataDictionary.Validate(message, dd, dd, beginString, msgType); });
 
         dd.CheckFieldsHaveValues = false;
-        Assert.DoesNotThrow(delegate { dd.Validate(message, beginString, msgType); });
+        Assert.DoesNotThrow(delegate { DataDictionary.Validate(message, dd, dd, beginString, msgType); });
     }
 }

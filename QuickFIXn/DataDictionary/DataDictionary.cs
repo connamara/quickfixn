@@ -106,12 +106,6 @@ namespace QuickFix.DataDictionary
             appDataDict.Iterate(message, msgType);
         }
 
-        // TODO Get rid of this.  All calls can use the static call.
-        public void Validate(Message message, string beginString, string msgType)
-        {
-            Validate(message, this, this, beginString, msgType);
-        }
-
         public static void CheckHasNoRepeatedTags(FieldMap map)
         {
             if (map.RepeatedTags.Count > 0)

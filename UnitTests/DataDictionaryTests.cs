@@ -134,7 +134,7 @@ namespace UnitTests
             dd.LoadFIXSpec("FIX44");
             DDMap headerMap = dd.Header;
             Assert.True(headerMap.IsGroup(627));
-            QuickFix.DataDictionary.DDGrp grpMap = headerMap.GetGroup(627);
+            DDGrp grpMap = headerMap.GetGroup(627);
             Assert.True(dd.Header.GetGroup(627).IsField(628));
             Assert.True(grpMap.IsField(628));
         }
@@ -363,11 +363,11 @@ namespace UnitTests
 
             // The fact that it doesn't throw is sufficient, but we'll do some other checks anyway.
 
-            var logon = dd.GetMapForMessage("A");
+            DDMap logon = dd.GetMapForMessage("A")!;
             Assert.True(logon.IsField(108)); // HeartBtInt
             Assert.True(logon.IsField(9000)); // CustomField
 
-            var news = dd.GetMapForMessage("B");
+            DDMap news = dd.GetMapForMessage("B")!;
             Assert.True(news.IsField(148)); // Headline
             Assert.True(news.IsGroup(33)); // LinesOfText
             Assert.True(news.GetGroup(33).IsField(355)); // EncodedText
