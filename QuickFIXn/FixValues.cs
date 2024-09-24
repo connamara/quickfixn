@@ -2,7 +2,7 @@
 
 namespace QuickFix
 {
-    public class FixValue<T>
+    public class FixValue<T> where T : notnull
     {
         private T _value;
 
