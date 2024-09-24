@@ -335,7 +335,10 @@ namespace UnitTests
         {
             DataDictionary dd = new DataDictionary();
             dd.LoadFIXSpec("FIX44");
+
+            // AD => Instrument component (optional) => 55 (Symbol)
             Assert.False(dd.Messages["AD"].ReqFields.Contains(55));
+            // 7 => Instrument component (required) => 55 (Symbol)
             Assert.True(dd.Messages["7"].ReqFields.Contains(55));
         }
 
@@ -382,20 +385,25 @@ namespace UnitTests
         }
 
         [Test]
-        public void VerifyChildNode()
-        {
-            XmlNode parentNode = MakeNode("<message name='Daddy'/>");
+        public void VerifyChildNodeAndReturnNameAtt() {
+            XmlNode parentNode = MakeNode("<parentnode name='Daddy'/>");
 
-            Assert.DoesNotThrow(
-                delegate { DataDictionary.VerifyChildNode(MakeNode("<field name='qty'/>"), parentNode); });
+            Assert.AreEqual("qty", DataDictionary.VerifyChildNodeAndReturnNameAtt(
+                MakeNode("<sometag name='qty'/>"), parentNode));
 
             DictionaryParseException dpx = Assert.Throws<DictionaryParseException>(
-                delegate { DataDictionary.VerifyChildNode(MakeNode("foo"), parentNode); });
+                delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("foo"), parentNode); });
             Assert.AreEqual("Malformed data dictionary: Found text-only node containing 'foo'", dpx!.Message);
 
             dpx = Assert.Throws<DictionaryParseException>(
-                delegate { DataDictionary.VerifyChildNode(MakeNode("<field>qty</field>"), parentNode); });
-            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'message/Daddy'", dpx!.Message);
+                delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("<field>qty</field>"), parentNode); });
+            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'parentnode/Daddy'", dpx!.Message);
+
+            // alt error message, where parent has no name
+            parentNode = MakeNode("<parentnode/>");
+            dpx = Assert.Throws<DictionaryParseException>(
+                delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("<field>qty</field>"), parentNode); });
+            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'parentnode/parentnode'", dpx!.Message);
         }
     }
 }

@@ -275,6 +275,8 @@ public class DataDictionary_ValidateTests
         Message message = f.Create(beginString, msgType);
         message.FromString(msgStr, true, dd, dd, f);
 
+        // AD only requires 568 and 569.
+        // It has components, but none are required.
         dd.Validate(message, beginString, msgType);
     }
 

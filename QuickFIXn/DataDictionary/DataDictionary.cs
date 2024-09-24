@@ -569,17 +569,22 @@ namespace QuickFix.DataDictionary
         /// </summary>
         /// <param name="childNode"></param>
         /// <param name="parentNode"></param>
-        internal static void VerifyChildNode(XmlNode childNode, XmlNode parentNode)
+        internal static string VerifyChildNodeAndReturnNameAtt(XmlNode childNode, XmlNode parentNode)
         {
             if (childNode.Attributes == null)
             {
                 throw new DictionaryParseException($"Malformed data dictionary: Found text-only node containing '{childNode.InnerText.Trim()}'");
             }
-            if (childNode.Attributes["name"] == null)
+
+            string? nameatt = childNode.Attributes["name"]?.Value;
+
+            if (nameatt is null)
             {
                 string messageTypeName = parentNode.Attributes?["name"]?.Value ?? parentNode.Name;
                 throw new DictionaryParseException($"Malformed data dictionary: Found '{childNode.Name}' node without 'name' within parent '{parentNode.Name}/{messageTypeName}'");
             }
+
+            return nameatt;
         }
 
         /// <summary>
@@ -601,8 +606,15 @@ namespace QuickFix.DataDictionary
             Console.WriteLine(s);
             */
 
-            // TODO: I don't think node.Name is an acceptable alternative
-            string messageTypeName = node.Attributes?["name"]?.Value ?? node.Name;
+            string? messageTypeName = node.Name switch
+            {
+                "header" => "header",
+                "trailer" => "trailer",
+                _ => node.Attributes?["name"]?.Value
+            };
+
+            if (messageTypeName is null)
+                throw new DictionaryParseException($"Found <{node.Name}> that is missing its 'name' attribute");
 
             if (!node.HasChildNodes) { return; }
             foreach (XmlNode childNode in node.ChildNodes)
@@ -615,14 +627,7 @@ namespace QuickFix.DataDictionary
                 Console.WriteLine(s);
                 */
 
-                VerifyChildNode(childNode, node);
-
-                string? nameAttribute = childNode.Attributes?["name"]?.Value;
-                if (nameAttribute is null)
-                {
-                    throw new DictionaryParseException(
-                        $"A child node within '{messageTypeName} is missing its 'name' attribute");
-                }
+                string nameAttribute = VerifyChildNodeAndReturnNameAtt(childNode, node);
 
                 switch (childNode.Name)
                 {
@@ -634,6 +639,8 @@ namespace QuickFix.DataDictionary
                                 $"Field '{nameAttribute}' is not defined in <fields> section.");
                         }
 
+                        // If this child is in non-required component (componentRequired=false),
+                        //   then ignore the "required" attribute
                         bool required = childNode.Attributes?["required"]?.Value == "Y" && componentRequired.GetValueOrDefault(true);
 
                         if (required)
@@ -648,8 +655,7 @@ namespace QuickFix.DataDictionary
 
                         if (childNode.Name == "group")
                         {
-                            DDGrp grp = new();
-                            grp.NumFld = fld.Tag;
+                            DDGrp grp = new() { NumFld = fld.Tag };
                             if (required)
                                 grp.Required = true;
 
@@ -660,7 +666,7 @@ namespace QuickFix.DataDictionary
 
                     case "component":
                         XmlNode compNode = _componentsByName[nameAttribute];
-                        ParseMsgNode(compNode, ddmap, (childNode.Attributes?["required"]?.Value == "Y"));
+                        ParseMsgNode(compNode, ddmap, childNode.Attributes?["required"]?.Value == "Y");
                         break;
 
                     default:
