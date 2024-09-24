@@ -46,6 +46,10 @@ internal sealed class SslStreamFactory
         {
             // Setup secure SSL Communication
             X509CertificateCollection clientCertificates = GetClientCertificates();
+            if (_socketSettings.ServerCommonName is null) {
+                throw new AuthenticationException(
+                    $"QuickFIX/n configuration '{SessionSettings.SSL_SERVERNAME}' is unset");
+            }
             sslStream.AuthenticateAsClient(_socketSettings.ServerCommonName,
                 clientCertificates,
                 _socketSettings.SslProtocol,

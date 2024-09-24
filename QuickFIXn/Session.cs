@@ -569,7 +569,7 @@ namespace QuickFix
                 }
                 else
                 {
-                    SessionDataDictionary.Validate(message, beginString, msgType);
+                    DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, SessionDataDictionary, beginString, msgType);
                 }
 
                 if (MsgType.LOGON.Equals(msgType))
@@ -922,7 +922,7 @@ namespace QuickFix
                     DoTargetTooHigh(msg, msgSeqNum);
                     return false;
                 }
-                else if (checkTooLow && IsTargetTooLow(msgSeqNum))
+                if (checkTooLow && IsTargetTooLow(msgSeqNum))
                 {
                     DoTargetTooLow(msg, msgSeqNum);
                     return false;
@@ -1025,7 +1025,7 @@ namespace QuickFix
                 && SessionID.TargetCompID.Equals(senderCompId);
         }
 
-        /// FIXME - this fn always returns true-- should it ever be false?
+        /// TODO - this fn always returns true-- should it ever be false?
         protected bool IsTimeToGenerateLogon()
         {
             return true;
@@ -1151,11 +1151,9 @@ namespace QuickFix
                 Log.OnEvent("Sent ResendRequest FROM: " + startSeqNum + " TO: " + endSeqNum);
                 return true;
             }
-            else
-            {
-                Log.OnEvent("Error sending ResendRequest (" + startSeqNum + " ," + endSeqNum + ")");
-                return false;
-            }
+
+            Log.OnEvent("Error sending ResendRequest (" + startSeqNum + " ," + endSeqNum + ")");
+            return false;
         }
 
         protected void GenerateResendRequest(string beginString, SeqNumType msgSeqNum)
@@ -1336,8 +1334,10 @@ namespace QuickFix
                     msgSeqNum = message.Header.GetULong(Fields.Tags.MsgSeqNum);
                     reject.SetField(new Fields.RefSeqNum(msgSeqNum));
                 }
-                catch (Exception)
-                { }
+                catch (Exception ex)
+                {
+                    Log.OnEvent($"Exception while setting RefSeqNum: {ex}");
+                }
             }
 
             if (string.CompareOrdinal(beginString, FixValues.BeginString.FIX42) >= 0)

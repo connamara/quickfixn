@@ -205,6 +205,7 @@ namespace QuickFix
                     return false;
             }
         }
+
         public static bool IsTrailerField(int tag, DD? dd)
         {
             if (IsTrailerField(tag))
@@ -454,7 +455,7 @@ namespace QuickFix
                         $"JSON message has invalid/missing beginString ({beginString}) and/or msgType ({msgType})");
                 }
 
-                IFieldMapSpec msgMap = appDict.GetMapForMessage(msgType);
+                IFieldMapSpec? msgMap = appDict.GetMapForMessage(msgType);
                 FromJson(document.RootElement.GetProperty("Header"),  beginString, msgType, msgMap, msgFactory, transportDict, Header);
                 FromJson(document.RootElement.GetProperty("Body"),    beginString, msgType, msgMap, msgFactory, appDict, this);
                 FromJson(document.RootElement.GetProperty("Trailer"), beginString, msgType, msgMap, msgFactory, transportDict, Trailer);
@@ -472,7 +473,7 @@ namespace QuickFix
         protected void FromJson(JsonElement jsonElement,
             string beginString,
             string msgType,
-            IFieldMapSpec msgMap,
+            IFieldMapSpec? msgMap,
             IMessageFactory? msgFactory,
             DD dataDict,
             FieldMap fieldMap)
@@ -793,7 +794,7 @@ namespace QuickFix
                 m.Header.GetString(Tags.TargetCompID));
         }
 
-        private Object lock_ConstructString = new Object();
+        private readonly Object _lockConstructString = new Object();
         /// <summary>
         /// Update BodyLength in Header, update CheckSum in Trailer, and return a FIX string.
         /// (This function changes the object state!)
@@ -801,7 +802,7 @@ namespace QuickFix
         /// <returns></returns>
         public string ConstructString()
         {
-            lock (lock_ConstructString)
+            lock (_lockConstructString)
             {
                 Header.SetField(new BodyLength(BodyLength()), true);
                 Trailer.SetField(new CheckSum(Fields.Converters.CheckSumConverter.Convert(CheckSum())), true);
@@ -825,7 +826,7 @@ namespace QuickFix
             return Header.CalculateLength() + CalculateLength() + Trailer.CalculateLength();
         }
 
-        private static string FieldMapToXML(DD? dd, FieldMap fields, int space)
+        private static string FieldMapToXml(DD? dd, FieldMap fields)
         {
             StringBuilder s = new StringBuilder();
 
@@ -848,7 +849,7 @@ namespace QuickFix
                 for (int counter = 1; counter <= fields.GroupCount(groupTag); counter++)
                 {
                     s.Append("<group>");
-                    s.Append(FieldMapToXML(dd, fields.GetGroup(counter, groupTag), space+1));
+                    s.Append(FieldMapToXml(dd, fields.GetGroup(counter, groupTag)));
                     s.Append("</group>");
                 }
             }
@@ -861,7 +862,7 @@ namespace QuickFix
         /// ToJSON() helper method.
         /// </summary>
         /// <returns>an XML string</returns>
-        private static StringBuilder FieldMapToJSON(StringBuilder sb, DD? dd, FieldMap fields, bool humanReadableValues)
+        private static StringBuilder FieldMapToJson(StringBuilder sb, DD? dd, FieldMap fields, bool humanReadableValues)
         {
             IList<int> numInGroupTagList = fields.GetGroupTags();
             IList<IField> numInGroupFieldList = new List<IField>();
@@ -905,16 +906,16 @@ namespace QuickFix
             foreach(IField numInGroupField in numInGroupFieldList)
             {
                 // The name of the NumInGroup field is the key of the JSON list containing the Group items
-                if (dd is not null && dd.FieldsByTag.ContainsKey(numInGroupField.Tag))
-                    sb.Append("\"" + dd.FieldsByTag[numInGroupField.Tag].Name + "\":[");
+                if (dd is not null && dd.FieldsByTag.TryGetValue(numInGroupField.Tag, out DDField? field))
+                    sb.Append("\"" + field.Name + "\":[");
                 else
                     sb.Append("\"" + numInGroupField.Tag + "\":[");
 
                 // Populate the JSON list with the Group items
                 for (int counter = 1; counter <= fields.GroupCount(numInGroupField.Tag); counter++)
                 {
-                    sb.Append("{");
-                    FieldMapToJSON(sb, dd, fields.GetGroup(counter, numInGroupField.Tag), humanReadableValues);
+                    sb.Append('{');
+                    FieldMapToJson(sb, dd, fields.GetGroup(counter, numInGroupField.Tag), humanReadableValues);
                     sb.Append("},");
                 }
 
@@ -942,13 +943,13 @@ namespace QuickFix
             StringBuilder s = new StringBuilder();
             s.Append("<message>");
             s.Append("<header>");
-            s.Append(FieldMapToXML(dataDictionary, Header, 4));
+            s.Append(FieldMapToXml(dataDictionary, Header));
             s.Append("</header>");
             s.Append("<body>");
-            s.Append(FieldMapToXML(dataDictionary, this, 4));
+            s.Append(FieldMapToXml(dataDictionary, this));
             s.Append("</body>");
             s.Append("<trailer>");
-            s.Append(FieldMapToXML(dataDictionary, Trailer, 4));
+            s.Append(FieldMapToXml(dataDictionary, Trailer));
             s.Append("</trailer>");
             s.Append("</message>");
             return s.ToString();
@@ -974,9 +975,9 @@ namespace QuickFix
             }
 
             StringBuilder sb = new StringBuilder().Append('{').Append("\"Header\":{");
-            FieldMapToJSON(sb, dataDictionary, Header, convertEnumsToDescriptions).Append("},\"Body\":{");
-            FieldMapToJSON(sb, dataDictionary, this, convertEnumsToDescriptions).Append("},\"Trailer\":{");
-            FieldMapToJSON(sb, dataDictionary, Trailer, convertEnumsToDescriptions).Append("}}");
+            FieldMapToJson(sb, dataDictionary, Header, convertEnumsToDescriptions).Append("},\"Body\":{");
+            FieldMapToJson(sb, dataDictionary, this, convertEnumsToDescriptions).Append("},\"Trailer\":{");
+            FieldMapToJson(sb, dataDictionary, Trailer, convertEnumsToDescriptions).Append("}}");
             return sb.ToString();
         }
     }
