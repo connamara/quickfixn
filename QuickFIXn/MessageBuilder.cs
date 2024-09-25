@@ -41,7 +41,7 @@ namespace QuickFix
 
         internal Message Build()
         {
-            Message message = _msgFactory.Create(BeginString, _defaultApplVerId, MsgType.Obj);
+            Message message = _msgFactory.Create(BeginString, _defaultApplVerId, MsgType.Value);
             message.FromString(
                 _msgStr,
                 _validateLengthAndChecksum,
@@ -58,7 +58,7 @@ namespace QuickFix
             if (_message is not null)
                 return _message;
 
-            Message message = _msgFactory.Create(BeginString, MsgType.Obj);
+            Message message = _msgFactory.Create(BeginString, MsgType.Value);
             message.FromString(
                 _msgStr,
                 false,

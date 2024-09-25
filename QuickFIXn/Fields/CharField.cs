@@ -1,30 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace QuickFix.Fields;
 
-namespace QuickFix.Fields
-{
-    /// <summary>
-    /// A character message field
-    /// </summary>
-    public class CharField : FieldBase<Char>
-    {
-        public CharField(int tag)
-            :base(tag, '\0') {}
+/// <summary>
+/// FIX character field
+/// </summary>
+public class CharField : FieldBase<char> {
+    public CharField(int tag)
+        : base(tag, '\0') {
+    }
 
-        public CharField(int tag, char c)
-            : base(tag, c) { }
+    public CharField(int tag, char c)
+        : base(tag, c) {
+    }
 
-        // quickfix compat
-        public char getValue()
-        { return Obj; }
-
-        public void setValue(char c)
-        { Obj = c; }
-
-        protected override string makeString()
-        {
-            return Converters.CharConverter.Convert(Obj);
-        }
+    protected override string MakeString() {
+        return Converters.CharConverter.Convert(Value);
     }
 }

@@ -146,7 +146,7 @@ namespace QuickFix
         public static string ExtractBeginString(string msgstr)
         {
             int i = 0;
-            return ExtractField(msgstr, ref i).Obj;
+            return ExtractField(msgstr, ref i).Value;
         }
 
         public static bool IsHeaderField(int tag)
@@ -375,7 +375,7 @@ namespace QuickFix
 
                     if (Tags.MsgType.Equals(f.Tag))
                     {
-                        string msgType = f.Obj;
+                        string msgType = f.Value;
                         if (appDict is not null)
                         {
                             msgMap = appDict.GetMapForMessage(msgType);
@@ -655,48 +655,48 @@ namespace QuickFix
             {
                 SenderCompID senderCompId = new SenderCompID();
                 header.GetField(senderCompId);
-                if (senderCompId.Obj.Length > 0)
-                    Header.SetField(new TargetCompID(senderCompId.Obj));
+                if (senderCompId.Value.Length > 0)
+                    Header.SetField(new TargetCompID(senderCompId.Value));
             }
 
             if (header.IsSetField(Tags.SenderSubID))
             {
                 SenderSubID senderSubId = new SenderSubID();
                 header.GetField(senderSubId);
-                if (senderSubId.Obj.Length > 0)
-                    Header.SetField(new TargetSubID(senderSubId.Obj));
+                if (senderSubId.Value.Length > 0)
+                    Header.SetField(new TargetSubID(senderSubId.Value));
             }
 
             if (header.IsSetField(Tags.SenderLocationID))
             {
                 SenderLocationID senderLocationId = new SenderLocationID();
                 header.GetField(senderLocationId);
-                if (senderLocationId.Obj.Length > 0)
-                    Header.SetField(new TargetLocationID(senderLocationId.Obj));
+                if (senderLocationId.Value.Length > 0)
+                    Header.SetField(new TargetLocationID(senderLocationId.Value));
             }
 
             if (header.IsSetField(Tags.TargetCompID))
             {
                 TargetCompID targetCompId = new TargetCompID();
                 header.GetField(targetCompId);
-                if (targetCompId.Obj.Length > 0)
-                    Header.SetField(new SenderCompID(targetCompId.Obj));
+                if (targetCompId.Value.Length > 0)
+                    Header.SetField(new SenderCompID(targetCompId.Value));
             }
 
             if (header.IsSetField(Tags.TargetSubID))
             {
                 TargetSubID targetSubId = new TargetSubID();
                 header.GetField(targetSubId);
-                if (targetSubId.Obj.Length > 0)
-                    Header.SetField(new SenderSubID(targetSubId.Obj));
+                if (targetSubId.Value.Length > 0)
+                    Header.SetField(new SenderSubID(targetSubId.Value));
             }
 
             if (header.IsSetField(Tags.TargetLocationID))
             {
                 TargetLocationID targetLocationId = new TargetLocationID();
                 header.GetField(targetLocationId);
-                if (targetLocationId.Obj.Length > 0)
-                    Header.SetField(new SenderLocationID(targetLocationId.Obj));
+                if (targetLocationId.Value.Length > 0)
+                    Header.SetField(new SenderLocationID(targetLocationId.Value));
             }
 
             // optional routing tags

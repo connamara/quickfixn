@@ -81,10 +81,10 @@ public class DataDictionary_ValidateTests
         MsgType msgType = Message.IdentifyType(msgStr);
         string beginString = Message.ExtractBeginString(msgStr);
 
-        Message message = f.Create(beginString, msgType.Obj);
+        Message message = f.Create(beginString, msgType.Value);
         message.FromString(msgStr, true, dd, dd, f);
 
-        DataDictionary.Validate(message, dd, dd, beginString, msgType.Obj);
+        DataDictionary.Validate(message, dd, dd, beginString, msgType.Value);
     }
 
     [Test]

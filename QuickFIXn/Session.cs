@@ -550,7 +550,7 @@ namespace QuickFix
                 if (_appDoesEarlyIntercept)
                     ((IApplicationExt)Application).FromEarlyIntercept(message, SessionID);
 
-                string msgType = msgBuilder.MsgType.Obj;
+                string msgType = msgBuilder.MsgType.Value;
                 string beginString = msgBuilder.BeginString;
 
                 if (!beginString.Equals(SessionID.BeginString))
@@ -600,7 +600,7 @@ namespace QuickFix
 
                 try
                 {
-                    if (MsgType.LOGON.Equals(msgBuilder.MsgType.Obj))
+                    if (MsgType.LOGON.Equals(msgBuilder.MsgType.Value))
                         Disconnect("Logon message is not valid");
                 }
                 catch (MessageParseError)
@@ -616,7 +616,7 @@ namespace QuickFix
             }
             catch (UnsupportedVersion uvx)
             {
-                if (MsgType.LOGOUT.Equals(msgBuilder.MsgType.Obj))
+                if (MsgType.LOGOUT.Equals(msgBuilder.MsgType.Value))
                 {
                     NextLogout(message!);
                 }
@@ -641,7 +641,7 @@ namespace QuickFix
                 }
                 else
                 {
-                    if (MsgType.LOGON.Equals(msgBuilder.MsgType.Obj))
+                    if (MsgType.LOGON.Equals(msgBuilder.MsgType.Value))
                     {
                         Log.OnEvent("Required field missing from logon");
                         Disconnect("Required field missing from logon");
@@ -1547,12 +1547,12 @@ namespace QuickFix
                         Fields.ResetSeqNumFlag resetSeqNumFlag = new Fields.ResetSeqNumFlag(false);
                         if (message.IsSetField(resetSeqNumFlag))
                             message.GetField(resetSeqNumFlag);
-                        if (resetSeqNumFlag.getValue())
+                        if (resetSeqNumFlag.Value)
                         {
                             _state.Reset("ResetSeqNumFlag");
                             message.Header.SetField(new Fields.MsgSeqNum(_state.NextSenderMsgSeqNum));
                         }
-                        _state.SentReset = resetSeqNumFlag.Obj;
+                        _state.SentReset = resetSeqNumFlag.Value;
                     }
                 }
                 else

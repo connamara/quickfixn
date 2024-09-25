@@ -68,7 +68,7 @@ namespace QuickFix
             if (beginString == QuickFix.Values.BeginString_FIXT11 && !Message.IsAdminMsgType(msgType))
             {
                 _factories.TryGetValue(
-                    QuickFix.FixValues.ApplVerID.ToBeginString(applVerId.Obj),
+                    QuickFix.FixValues.ApplVerID.ToBeginString(applVerId.Value),
                     out messageFactory);
             }
 
@@ -85,7 +85,7 @@ namespace QuickFix
         {
             string key = beginString;
             if(beginString.Equals(FixValues.BeginString.FIXT11))
-                key = QuickFix.FixValues.ApplVerID.ToBeginString(_defaultApplVerId.getValue());
+                key = QuickFix.FixValues.ApplVerID.ToBeginString(_defaultApplVerId.Value);
 
             if (_factories.TryGetValue(key, out IMessageFactory? factory))
                 return factory.Create(beginString, msgType, groupCounterTag);

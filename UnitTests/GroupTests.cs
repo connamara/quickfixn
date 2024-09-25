@@ -50,8 +50,8 @@ namespace UnitTests
 
             QuickFix.FIX42.News.LinesOfTextGroup clone = linesGroup.Clone() as QuickFix.FIX42.News.LinesOfTextGroup;
 
-            Assert.AreEqual(linesGroup.Text.Obj, clone.Text.Obj);
-            Assert.AreEqual(linesGroup.EncodedText.Obj, clone.EncodedText.Obj);
+            Assert.AreEqual(linesGroup.Text.Value, clone.Text.Value);
+            Assert.AreEqual(linesGroup.EncodedText.Value, clone.EncodedText.Value);
             Assert.AreEqual(linesGroup.Delim, clone.Delim);
             Assert.AreEqual(linesGroup.CounterField, clone.CounterField);
             Assert.AreEqual(linesGroup.FieldOrder, clone.FieldOrder);

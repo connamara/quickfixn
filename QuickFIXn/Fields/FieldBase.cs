@@ -1,104 +1,102 @@
-﻿namespace QuickFix.Fields
+﻿using System;
+
+namespace QuickFix.Fields
 {
     /// <summary>
     /// Base class for all field types
     /// </summary>
     /// <typeparam name="T">Internal storage type</typeparam>
     public abstract class FieldBase<T> : IField
+        where T : notnull
     {
+        /// Set _stringVal (val only) and _stringField (tag=val)
+
+        private T _value;
+        private int _tag;
+        private bool _changed;
+        private string _stringVal; // field value (not tag) formatted for fix
+        private string _stringField; // field string e.g. tag=val (no SOH)
+
         /// <summary>
         /// Constructs a new field with the specified tag and value
         /// </summary>
         /// <param name="tag">the FIX tag number</param>
-        /// <param name="obj">the value of the field</param>
-        public FieldBase(int tag, T obj)
+        /// <param name="value">the value of the field</param>
+        public FieldBase(int tag, T value)
         {
             _tag = tag;
-            _obj = obj;
+            _value = value;
             _changed = true;
+
+            // We can't set these properly here because makeString() is abstract.
+            // See https://stackoverflow.com/a/119543/650475
+            _stringVal = "";
+            _stringField = "";
         }
 
-        #region Properties
-        public T Obj
+        public T Value
         {
-            get { return _obj; }
+            get => _value;
             set
             {
-                _obj = value;
+                _value = value;
                 _changed = true;
             }
         }
 
+        //-----------------------------------
+        // IField implementations
+
         /// <summary>
         /// the FIX tag number
         /// </summary>
-        public override int Tag
+        public int Tag
         {
-            get { return _tag; }
+            get => _tag;
             set
             {
                 _tag = value;
                 _changed = true;
             }
         }
-        #endregion
 
         /// <summary>
         /// returns full fix string (e.g. "tag=val")
         /// </summary>
-        public override string toStringField()
+        public string ToStringField()
         {
-            if (_changed.Equals(true))
-                makeStringFields();
+            if (_changed)
+                MakeStringFields();
             return _stringField;
         }
 
         /// <summary>
-        /// returns field value formatted for fix
+        /// returns field value (not tag) formatted for fix
         /// </summary>
         public override string ToString()
         {
             if (_changed)
-                makeStringFields();
+                MakeStringFields();
             return _stringVal;
         }
 
         /// <summary>
-        /// Value equality test
+        /// length of formatted field (including the trailing SOH) e.g. tag=val\001
         /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        public override bool Equals(object obj)
-        {
-            if (obj == null || GetType() != obj.GetType())
-                return false;
-
-            FieldBase<T> f = (FieldBase<T>)obj;
-            return this.Tag == f.Tag && this.Obj.Equals(f.Obj);
-        }
-
-        public override int GetHashCode()
-        {
-            return Tag ^ Obj.GetHashCode();
-        }
-
-        /// <summary>
-        /// length of formatted field (including tag=val\001)
-        /// </summary>
-        public override int getLength()
+        public int GetLength()
         {
             if (_changed)
-                makeStringFields();
+                MakeStringFields();
             return CharEncoding.DefaultEncoding.GetByteCount(_stringField) + 1; // +1 for SOH
         }
 
         /// <summary>
-        /// checksum
+        /// Sum of bytes; used in calculating checksum
         /// </summary>
-        public override int getTotal()
+        public int GetTotal()
         {
             if (_changed)
-                makeStringFields();
+                MakeStringFields();
 
             int sum = 0;
             byte[] array = CharEncoding.DefaultEncoding.GetBytes(_stringField);
@@ -106,27 +104,66 @@
             {
                 sum += b;
             }
-            return (sum + 1); // +1 for SOH
+            return sum + 1; // +1 for SOH
         }
 
-        protected abstract string makeString();
+        //-----------------------------------
+        // C# Equals/HashCode overrides
 
         /// <summary>
-        /// returns tag=val
+        /// Value equality test
         /// </summary>
-        private void makeStringFields()
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object? obj)
         {
-            _stringVal = makeString();
+            if (obj is null || GetType() != obj.GetType())
+                return false;
+
+            FieldBase<T> f = (FieldBase<T>)obj;
+            return this.Tag == f.Tag && this.Value.Equals(f.Value);
+        }
+
+        public override int GetHashCode()
+        {
+            return Tag ^ Value.GetHashCode();
+        }
+
+        /// <summary>
+        /// Convert underlying field value to fix-ready string
+        /// </summary>
+        /// <returns></returns>
+        protected abstract string MakeString();
+
+        /// <summary>
+        /// Set _stringVal (val only) and _stringField (tag=val)
+        /// </summary>
+        private void MakeStringFields()
+        {
+            _stringVal = MakeString();
             _stringField = Tag + "=" + _stringVal;
             _changed = false;
         }
 
-        #region Private members
-        private string _stringField;
-        private bool _changed;
-        private T _obj;
-        private int _tag;
-        private string _stringVal;
-        #endregion
+        [Obsolete("Use capitalized ToStringField() instead")]
+        public string toStringField() { return ToStringField(); }
+        [Obsolete("Use capitalized GetLength() instead")]
+        public int getLength() { return GetLength(); }
+        [Obsolete("Use capitalized GetTotal() instead")]
+        public int getTotal() { return GetTotal(); }
+        [Obsolete("Renamed to 'Value'")]
+        public T Obj
+        {
+            get => _value;
+            set
+            {
+                _value = value;
+                _changed = true;
+            }
+        }
+        [Obsolete("Use Value getter property")]
+        public T getValue() { return Value; }
+        [Obsolete("Use Value setter property")]
+        public void setValue(T v) { Value = v; }
     }
 }

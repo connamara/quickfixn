@@ -120,7 +120,7 @@ namespace QuickFix
         /// <returns><paramref name="field"/></returns>
         public BooleanField GetField(BooleanField field)
         {
-            field.Obj = GetBoolean(field.Tag);
+            field.Value = GetBoolean(field.Tag);
             return field;
         }
 
@@ -132,7 +132,7 @@ namespace QuickFix
         /// <returns><paramref name="field"/></returns>
         public StringField GetField(StringField field)
         {
-            field.Obj = GetString(field.Tag);
+            field.Value = GetString(field.Tag);
             return field;
         }
 
@@ -144,7 +144,7 @@ namespace QuickFix
         /// <returns><paramref name="field"/></returns>
         public CharField GetField(CharField field)
         {
-            field.Obj = GetChar(field.Tag);
+            field.Value = GetChar(field.Tag);
             return field;
         }
 
@@ -156,7 +156,7 @@ namespace QuickFix
         /// <returns><paramref name="field"/></returns>
         public IntField GetField(IntField field)
         {
-            field.Obj = GetInt(field.Tag);
+            field.Value = GetInt(field.Tag);
             return field;
         }
 
@@ -168,7 +168,7 @@ namespace QuickFix
         /// <returns><paramref name="field"/></returns>
         public ULongField GetField(ULongField field)
         {
-            field.Obj = GetULong(field.Tag);
+            field.Value = GetULong(field.Tag);
             return field;
         }
 
@@ -180,7 +180,7 @@ namespace QuickFix
         /// <returns><paramref name="field"/></returns>
         public DecimalField GetField(DecimalField field)
         {
-            field.Obj = GetDecimal(field.Tag);
+            field.Value = GetDecimal(field.Tag);
             return field;
         }
 
@@ -192,7 +192,7 @@ namespace QuickFix
         /// <returns><paramref name="field"/></returns>
         public DateTimeField GetField(DateTimeField field)
         {
-            field.Obj = GetDateTime(field.Tag);
+            field.Value = GetDateTime(field.Tag);
             return field;
         }
 
@@ -204,7 +204,7 @@ namespace QuickFix
         /// <returns><paramref name="field"/></returns>
         public DateOnlyField GetField(DateOnlyField field)
         {
-            field.Obj = GetDateOnly(field.Tag);
+            field.Value = GetDateOnly(field.Tag);
             return field;
         }
 
@@ -216,7 +216,7 @@ namespace QuickFix
         /// <returns><paramref name="field"/></returns>
         public TimeOnlyField GetField(TimeOnlyField field)
         {
-            field.Obj = GetTimeOnly(field.Tag);
+            field.Value = GetTimeOnly(field.Tag);
             return field;
         }
 
@@ -318,7 +318,7 @@ namespace QuickFix
                 throw new FieldNotFoundException(tag);
 
             if (fld is FieldBase<int> intField)
-                return intField.Obj;
+                return intField.Value;
 
             return IntConverter.Convert(fld.ToString());
         }
@@ -335,7 +335,7 @@ namespace QuickFix
             {
                 IField fld = _fields[tag];
                 if (fld.GetType() == typeof(ULongField))
-                    return ((ULongField)fld).Obj;
+                    return ((ULongField)fld).Value;
                 return ULongConverter.Convert(fld.ToString());
             }
             catch (System.Collections.Generic.KeyNotFoundException)
@@ -357,9 +357,9 @@ namespace QuickFix
 
             return fld switch
             {
-                DateOnlyField dateOnlyField => dateOnlyField.Obj.Date,
-                TimeOnlyField timeOnlyField => new DateTime(1980, 01, 01).Add(timeOnlyField.Obj.TimeOfDay),
-                FieldBase<DateTime> dateTimeField => dateTimeField.Obj,
+                DateOnlyField dateOnlyField => dateOnlyField.Value.Date,
+                TimeOnlyField timeOnlyField => new DateTime(1980, 01, 01).Add(timeOnlyField.Value.TimeOfDay),
+                FieldBase<DateTime> dateTimeField => dateTimeField.Value,
                 _ => DateTimeConverter.ParseToDateTime(fld.ToString())
             };
         }
@@ -376,7 +376,7 @@ namespace QuickFix
                 throw new FieldNotFoundException(tag);
 
             if (fld is FieldBase<DateTime> dateTimeField)
-                return dateTimeField.Obj.Date;
+                return dateTimeField.Value.Date;
 
             return DateTimeConverter.ParseToDateOnly(fld.ToString());
         }
@@ -393,7 +393,7 @@ namespace QuickFix
                 throw new FieldNotFoundException(tag);
 
             if (fld is FieldBase<DateTime> dateTimeField)
-                return new DateTime(1980, 01, 01).Add(dateTimeField.Obj.TimeOfDay);
+                return new DateTime(1980, 01, 01).Add(dateTimeField.Value.TimeOfDay);
 
             return DateTimeConverter.ParseToTimeOnly(fld.ToString());
         }
@@ -410,7 +410,7 @@ namespace QuickFix
                 throw new FieldNotFoundException(tag);
 
             if (fld is FieldBase<bool> boolField)
-                return boolField.Obj;
+                return boolField.Value;
 
             return BoolConverter.Convert(fld.ToString());
         }
@@ -441,7 +441,7 @@ namespace QuickFix
                 throw new FieldNotFoundException(tag);
 
             if (fld is FieldBase<char> charField)
-                return charField.Obj;
+                return charField.Value;
 
             return CharConverter.Convert(fld.ToString());
         }
@@ -458,7 +458,7 @@ namespace QuickFix
                 throw new FieldNotFoundException(tag);
 
             if (fld is FieldBase<decimal> decimalField)
-                return decimalField.Obj;
+                return decimalField.Value;
 
             return DecimalConverter.Convert(fld.ToString());
         }
@@ -528,13 +528,13 @@ namespace QuickFix
             foreach (IField field in _fields.Values)
             {
                 if (field.Tag != Fields.Tags.CheckSum)
-                    total += field.getTotal();
+                    total += field.GetTotal();
             }
 
             foreach (IField field in this.RepeatedTags)
             {
                 if (field.Tag != Fields.Tags.CheckSum)
-                    total += field.getTotal();
+                    total += field.GetTotal();
             }
 
             foreach (List<Group> groupList in _groups.Values)
@@ -550,23 +550,21 @@ namespace QuickFix
             int total = 0;
             foreach (IField field in _fields.Values)
             {
-                if (field != null
-                    && field.Tag != Tags.BeginString
+                if (field.Tag != Tags.BeginString
                     && field.Tag != Tags.BodyLength
                     && field.Tag != Tags.CheckSum)
                 {
-                    total += field.getLength();
+                    total += field.GetLength();
                 }
             }
 
             foreach (IField field in this.RepeatedTags)
             {
-                if (field != null
-                    && field.Tag != Tags.BeginString
+                if (field.Tag != Tags.BeginString
                     && field.Tag != Tags.BodyLength
                     && field.Tag != Tags.CheckSum)
                 {
-                    total += field.getLength();
+                    total += field.GetLength();
                 }
             }
 
@@ -596,7 +594,7 @@ namespace QuickFix
         /// <returns></returns>
         public virtual string CalculateString(StringBuilder sb, int[] preFields)
         {
-            HashSet<int> groupCounterTags = new HashSet<int>(_groups.Keys);
+            HashSet<int> groupCounterTags = new(_groups.Keys);
             
             foreach (int preField in preFields)
             {
@@ -618,7 +616,7 @@ namespace QuickFix
                     continue;
                 if (preFields.Contains(field.Tag))
                     continue; //already did this one
-                sb.Append(field.Tag.ToString() + "=" + field.ToString());
+                sb.Append($"{field.Tag}={field.ToString()}");
                 sb.Append(Message.SOH);
             }
 
@@ -631,7 +629,7 @@ namespace QuickFix
                 if (groupList.Count == 0)
                     continue; //probably unnecessary, but it doesn't hurt to check
 
-                sb.Append(_fields[counterTag].toStringField());
+                sb.Append(_fields[counterTag].ToStringField());
                 sb.Append(Message.SOH);
 
                 foreach (Group group in groupList)
@@ -647,7 +645,7 @@ namespace QuickFix
         /// <param name="fieldNo">the counter tag of the group</param>
         /// <returns></returns>
         public int GroupCount(int fieldNo) {
-            return _groups.ContainsKey(fieldNo) ? _groups[fieldNo].Count : 0;
+            return _groups.TryGetValue(fieldNo, out var group) ? group.Count : 0;
         }
 
         /// <summary>

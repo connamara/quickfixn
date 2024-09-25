@@ -15,16 +15,9 @@ namespace QuickFix.Fields
         public StringField(int tag, string str)
             : base(tag, str) { }
 
-        // quickfix compat
-        public string getValue()
-        { return Obj; }
-
-        public void setValue(string val)
-        { Obj = val; }
-
-        protected override string makeString()
+        protected override string MakeString()
         {
-            return Obj;
+            return Value;
         }
     }
 }
