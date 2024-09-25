@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using QuickFix.Logger;
 using QuickFix.Store;
@@ -98,7 +97,7 @@ namespace QuickFix
             }
             string senderDefaultApplVerId = "";
             if(defaultApplVerId is not null)
-                senderDefaultApplVerId = defaultApplVerId.Obj;
+                senderDefaultApplVerId = defaultApplVerId.Value;
 
             Session session = new Session(
                 isInitiator,
@@ -204,7 +203,7 @@ namespace QuickFix
                     {
                         Fields.ApplVerID applVerId = Message.GetApplVerID(settings.GetString(SessionSettings.DEFAULT_APPLVERID));
                         DataDictionary.DataDictionary dd = CreateDataDictionary(sessionId, settings, SessionSettings.APP_DATA_DICTIONARY, sessionId.BeginString);
-                        provider.AddApplicationDataDictionary(applVerId.Obj, dd);
+                        provider.AddApplicationDataDictionary(applVerId.Value, dd);
                     }
                     else
                     {
@@ -215,7 +214,7 @@ namespace QuickFix
 
                         string beginStringQualifier = setting.Key.Substring(offset);
                         DataDictionary.DataDictionary dd = CreateDataDictionary(sessionId, settings, setting.Key, beginStringQualifier);
-                        provider.AddApplicationDataDictionary(Message.GetApplVerID(beginStringQualifier).Obj, dd);
+                        provider.AddApplicationDataDictionary(Message.GetApplVerID(beginStringQualifier).Value, dd);
                     }
                 }
             }

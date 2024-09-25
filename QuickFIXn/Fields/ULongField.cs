@@ -15,16 +15,9 @@ namespace QuickFix.Fields
         public ULongField(int tag, ulong val)
             : base(tag, val) {}
 
-        // quickfix compat
-        public ulong getValue()
-        { return Obj; }
-
-        public void setValue(ulong v)
-        { Obj = v; }
-
-        protected override string makeString()
+        protected override string MakeString()
         {
-            return Converters.ULongConverter.Convert(Obj);
+            return Converters.ULongConverter.Convert(Value);
         }
     }
 }

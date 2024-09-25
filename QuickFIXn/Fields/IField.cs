@@ -1,33 +1,39 @@
-﻿#nullable enable
+﻿using System;
+
 namespace QuickFix.Fields
 {
     /// <summary>
     /// Interface for all field classes
     /// </summary>
-    public abstract class IField
+    public interface IField
     {
-        #region Properties
-        public abstract int Tag { get; set; }
-        #endregion
+        public int Tag { get; set; }
 
         /// <summary>
         /// returns full fix string: tag=val
         /// </summary>
-        public abstract string toStringField();
+        public string ToStringField();
 
         /// <summary>
-        /// returns formatted string for fix
+        /// returns field value (not tag) formatted for FIX
         /// </summary>
-        public abstract override string ToString();
+        public string ToString();
 
         /// <summary>
-        /// length of formatted field (including tag=val\001)
+        /// length of formatted field (including the trailing SOH) e.g. tag=val\001
         /// </summary>
-        public abstract int getLength();
+        public int GetLength();
 
         /// <summary>
-        /// checksum
+        /// Sum of bytes; used in calculating checksum
         /// </summary>
-        public abstract int getTotal();
+        public int GetTotal();
+
+        [Obsolete("Use capitalized ToStringField() instead")]
+        public string toStringField();
+        [Obsolete("Use capitalized GetLength() instead")]
+        public int getLength();
+        [Obsolete("Use capitalized GetTotal() instead")]
+        public int getTotal();
     }
 }

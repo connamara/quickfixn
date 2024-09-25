@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.IO;
 using System;
 using System.Linq;

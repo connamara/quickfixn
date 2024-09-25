@@ -35,6 +35,10 @@ What's New
          finishes loading all the dlls (gbirchmeier, with thanks to diagnosis by Brian Leach aka baffled)
          (Note: this may be the cause of spurious "incorrect BeginString" issues that have been observed)
 * #877 - throw an exception if Message.ToJSON(dd=null,convertEnumsToDescriptions=true) is called (gbirchmeier)
+* #888 - cleanup/nullable-ize IField-derived classes (gbirchmeier)
+     * deprecate lower-case-starting function names (renamed to upper-case-starting)
+     * deprecate <Foo>Field.Obj (renamed to Value)
+     * deprecate <Foo>Field.getValue/setValue (just use Value getter/setter)
 
 ### v1.12.0
 

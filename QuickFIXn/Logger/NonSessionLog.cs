@@ -1,6 +1,3 @@
-#nullable enable
-using System;
-
 namespace QuickFix.Logger;
 
 /// <summary>

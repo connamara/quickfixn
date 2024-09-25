@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace QuickFix.Logger;
+﻿namespace QuickFix.Logger;
 
 /// <summary>
 /// FIXME - needs to log sessionIDs, timestamps, etc.

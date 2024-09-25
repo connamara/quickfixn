@@ -15,16 +15,9 @@ namespace QuickFix.Fields
         public DecimalField(int tag, Decimal val)
             : base(tag, val) { }
 
-        // quickfix compat
-        public Decimal getValue()
-        { return Obj; }
-
-        public void setValue(Decimal d)
-        { Obj = d; }
-
-        protected override string makeString()
+        protected override string MakeString()
         {
-            return Converters.DecimalConverter.Convert(Obj);
+            return Converters.DecimalConverter.Convert(Value);
         }
     }
 }
