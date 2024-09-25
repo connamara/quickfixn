@@ -2,35 +2,39 @@
 using QuickFix;
 using QuickFix.Fields;
 using System.Collections.Generic;
+using ApplicationException = System.ApplicationException;
+using Exception = System.Exception;
 
 namespace TradeClient
 {
     public class TradeClientApp : QuickFix.MessageCracker, QuickFix.IApplication
     {
-        Session _session = null;
+        private Session? _session = null;
 
         // This variable is a kludge for developer test purposes.  Don't do this on a production application.
-        public IInitiator MyInitiator = null;
+        public IInitiator? MyInitiator = null;
 
         #region IApplication interface overrides
 
-        public void OnCreate(SessionID sessionID)
+        public void OnCreate(SessionID sessionId)
         {
-            _session = Session.LookupSession(sessionID);
+            _session = Session.LookupSession(sessionId);
+            if (_session is null)
+                throw new ApplicationException("Somehow session is not found");
         }
 
-        public void OnLogon(SessionID sessionID) { Console.WriteLine("Logon - " + sessionID.ToString()); }
-        public void OnLogout(SessionID sessionID) { Console.WriteLine("Logout - " + sessionID.ToString()); }
+        public void OnLogon(SessionID sessionId) { Console.WriteLine("Logon - " + sessionId); }
+        public void OnLogout(SessionID sessionId) { Console.WriteLine("Logout - " + sessionId); }
 
-        public void FromAdmin(Message message, SessionID sessionID) { }
-        public void ToAdmin(Message message, SessionID sessionID) { }
+        public void FromAdmin(Message message, SessionID sessionId) { }
+        public void ToAdmin(Message message, SessionID sessionId) { }
 
-        public void FromApp(Message message, SessionID sessionID)
+        public void FromApp(Message message, SessionID sessionId)
         {
             Console.WriteLine("IN:  " + message.ConstructString());
             try
             {
-                Crack(message, sessionID);
+                Crack(message, sessionId);
             }
             catch (Exception ex)
             {
@@ -40,15 +44,14 @@ namespace TradeClient
             }
         }
 
-        public void ToApp(Message message, SessionID sessionID)
+        public void ToApp(Message message, SessionID sessionId)
         {
             try
             {
                 bool possDupFlag = false;
-                if (message.Header.IsSetField(QuickFix.Fields.Tags.PossDupFlag))
+                if (message.Header.IsSetField(Tags.PossDupFlag))
                 {
-                    possDupFlag = QuickFix.Fields.Converters.BoolConverter.Convert(
-                        message.Header.GetString(QuickFix.Fields.Tags.PossDupFlag)); /// FIXME
+                    possDupFlag = message.Header.GetBoolean(Tags.PossDupFlag);
                 }
                 if (possDupFlag)
                     throw new DoNotSend();
@@ -77,6 +80,9 @@ namespace TradeClient
 
         public void Run()
         {
+            if (this.MyInitiator is null)
+                throw new ApplicationException("Somehow this.MyInitiator is not set");
+
             while (true)
             {
                 try
@@ -113,7 +119,7 @@ namespace TradeClient
                     else if (action == 'q' || action == 'Q')
                         break;
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
                     Console.WriteLine("Message Not Sent: " + e.Message);
                     Console.WriteLine("StackTrace: " + e.StackTrace);
@@ -124,13 +130,20 @@ namespace TradeClient
 
         private void SendMessage(Message m)
         {
-            if (_session != null)
+            if (_session is not null)
                 _session.Send(m);
             else
             {
                 // This probably won't ever happen.
                 Console.WriteLine("Can't send message: session not created.");
             }
+        }
+
+        private static string ReadCommand() {
+            string? inp = Console.ReadLine();
+            if (inp is null)
+                throw new ApplicationException("Input no longer available");
+            return inp.Trim();
         }
 
         private char QueryAction()
@@ -147,7 +160,7 @@ namespace TradeClient
 
             HashSet<string> validActions = new HashSet<string>("1,2,3,4,q,Q,g,x".Split(','));
 
-            string cmd = Console.ReadLine().Trim();
+            string cmd = ReadCommand();
             if (cmd.Length != 1 || validActions.Contains(cmd) == false)
                 throw new System.Exception("Invalid action");
 
@@ -160,7 +173,7 @@ namespace TradeClient
 
             QuickFix.FIX44.NewOrderSingle m = QueryNewOrderSingle44();
 
-            if (m != null && QueryConfirm("Send order"))
+            if (m is not null && QueryConfirm("Send order"))
             {
                 m.Header.GetString(Tags.BeginString);
 
@@ -194,7 +207,7 @@ namespace TradeClient
 
             QuickFix.FIX44.MarketDataRequest m = QueryMarketDataRequest44();
 
-            if (m != null && QueryConfirm("Send market data request"))
+            if (QueryConfirm("Send market data request"))
                 SendMessage(m);
         }
 
@@ -202,28 +215,28 @@ namespace TradeClient
         {
             Console.WriteLine();
             Console.WriteLine(query + "?: ");
-            string line = Console.ReadLine().Trim();
+            string line = ReadCommand();
             return (line[0].Equals('y') || line[0].Equals('Y'));
         }
 
         #region Message creation functions
         private QuickFix.FIX44.NewOrderSingle QueryNewOrderSingle44()
         {
-            QuickFix.Fields.OrdType ordType = null;
+            OrdType ordType = QueryOrdType();
 
             QuickFix.FIX44.NewOrderSingle newOrderSingle = new QuickFix.FIX44.NewOrderSingle(
-                QueryClOrdID(),
+                QueryClOrdId(),
                 QuerySymbol(),
                 QuerySide(),
                 new TransactTime(DateTime.Now),
-                ordType = QueryOrdType());
+                ordType);
 
             newOrderSingle.Set(new HandlInst('1'));
             newOrderSingle.Set(QueryOrderQty());
             newOrderSingle.Set(QueryTimeInForce());
-            if (ordType.getValue() == OrdType.LIMIT || ordType.getValue() == OrdType.STOP_LIMIT)
+            if (ordType.Value == OrdType.LIMIT || ordType.Value == OrdType.STOP_LIMIT)
                 newOrderSingle.Set(QueryPrice());
-            if (ordType.getValue() == OrdType.STOP || ordType.getValue() == OrdType.STOP_LIMIT)
+            if (ordType.Value == OrdType.STOP || ordType.Value == OrdType.STOP_LIMIT)
                 newOrderSingle.Set(QueryStopPx());
 
             return newOrderSingle;
@@ -232,8 +245,8 @@ namespace TradeClient
         private QuickFix.FIX44.OrderCancelRequest QueryOrderCancelRequest44()
         {
             QuickFix.FIX44.OrderCancelRequest orderCancelRequest = new QuickFix.FIX44.OrderCancelRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
+                QueryOrigClOrdId(),
+                QueryClOrdId(),
                 QuerySymbol(),
                 QuerySide(),
                 new TransactTime(DateTime.Now));
@@ -245,8 +258,8 @@ namespace TradeClient
         private QuickFix.FIX44.OrderCancelReplaceRequest QueryCancelReplaceRequest44()
         {
             QuickFix.FIX44.OrderCancelReplaceRequest ocrr = new QuickFix.FIX44.OrderCancelReplaceRequest(
-                QueryOrigClOrdID(),
-                QueryClOrdID(),
+                QueryOrigClOrdId(),
+                QueryClOrdId(),
                 QuerySymbol(),
                 QuerySide(),
                 new TransactTime(DateTime.Now),
@@ -282,25 +295,25 @@ namespace TradeClient
         #endregion
 
         #region field query private methods
-        private ClOrdID QueryClOrdID()
+        private ClOrdID QueryClOrdId()
         {
             Console.WriteLine();
             Console.Write("ClOrdID? ");
-            return new ClOrdID(Console.ReadLine().Trim());
+            return new ClOrdID(ReadCommand());
         }
 
-        private OrigClOrdID QueryOrigClOrdID()
+        private OrigClOrdID QueryOrigClOrdId()
         {
             Console.WriteLine();
             Console.Write("OrigClOrdID? ");
-            return new OrigClOrdID(Console.ReadLine().Trim());
+            return new OrigClOrdID(ReadCommand());
         }
 
         private Symbol QuerySymbol()
         {
             Console.WriteLine();
             Console.Write("Symbol? ");
-            return new Symbol(Console.ReadLine().Trim());
+            return new Symbol(ReadCommand());
         }
 
         private Side QuerySide()
@@ -314,7 +327,7 @@ namespace TradeClient
             Console.WriteLine("6) Cross Short");
             Console.WriteLine("7) Cross Short Exempt");
             Console.Write("Side? ");
-            string s = Console.ReadLine().Trim();
+            string s = ReadCommand();
 
             char c = ' ';
             switch (s)
@@ -339,7 +352,7 @@ namespace TradeClient
             Console.WriteLine("3) Stop");
             Console.WriteLine("4) Stop Limit");
             Console.Write("OrdType? ");
-            string s = Console.ReadLine().Trim();
+            string s = ReadCommand();
 
             char c = ' ';
             switch (s)
@@ -357,7 +370,7 @@ namespace TradeClient
         {
             Console.WriteLine();
             Console.Write("OrderQty? ");
-            return new OrderQty(Convert.ToDecimal(Console.ReadLine().Trim()));
+            return new OrderQty(Convert.ToDecimal(ReadCommand()));
         }
 
         private TimeInForce QueryTimeInForce()
@@ -369,7 +382,7 @@ namespace TradeClient
             Console.WriteLine("4) GTC");
             Console.WriteLine("5) GTX");
             Console.Write("TimeInForce? ");
-            string s = Console.ReadLine().Trim();
+            string s = ReadCommand();
 
             char c = ' ';
             switch (s)
@@ -388,14 +401,14 @@ namespace TradeClient
         {
             Console.WriteLine();
             Console.Write("Price? ");
-            return new Price(Convert.ToDecimal(Console.ReadLine().Trim()));
+            return new Price(Convert.ToDecimal(ReadCommand()));
         }
 
         private StopPx QueryStopPx()
         {
             Console.WriteLine();
             Console.Write("StopPx? ");
-            return new StopPx(Convert.ToDecimal(Console.ReadLine().Trim()));
+            return new StopPx(Convert.ToDecimal(ReadCommand()));
         }
 
         #endregion

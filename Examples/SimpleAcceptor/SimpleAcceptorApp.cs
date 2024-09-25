@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using QuickFix;
-using QuickFix.Fields;
 
 namespace SimpleAcceptor
 {
@@ -16,8 +11,6 @@ namespace SimpleAcceptor
 
     public class SimpleAcceptorApp : /*QuickFix.MessageCracker,*/ QuickFix.IApplication
     {
-        #region QuickFix.Application Methods
-
         public void FromApp(Message message, SessionID sessionID)
         {
             Console.WriteLine("IN:  " + message);
@@ -42,6 +35,5 @@ namespace SimpleAcceptor
         public void OnCreate(SessionID sessionID) { }
         public void OnLogout(SessionID sessionID) { }
         public void OnLogon(SessionID sessionID) { }
-        #endregion
     }
 }

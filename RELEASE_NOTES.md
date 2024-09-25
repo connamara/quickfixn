@@ -39,6 +39,7 @@ What's New
      * deprecate lower-case-starting function names (renamed to upper-case-starting)
      * deprecate <Foo>Field.Obj (renamed to Value)
      * deprecate <Foo>Field.getValue/setValue (just use Value getter/setter)
+* #889 - nullable-ize Examples and fix deprecations (gbirchmeier)
 
 ### v1.12.0
 
