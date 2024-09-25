@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using QuickFix.Fields.Converters;
 using QuickFix.Util;
 

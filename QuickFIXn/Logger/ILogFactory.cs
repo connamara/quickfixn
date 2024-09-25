@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-namespace QuickFix.Logger;
+﻿namespace QuickFix.Logger;
 
 /// <summary>
 /// Creates a log instance

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Text;
 using QuickFix.Fields;
 using System.Text.RegularExpressions;

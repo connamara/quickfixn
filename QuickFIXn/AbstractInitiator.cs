@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Threading;
+﻿using System.Threading;
 using System.Collections.Generic;
 using System;
 using QuickFix.Logger;
