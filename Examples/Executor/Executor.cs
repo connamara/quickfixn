@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using QuickFix;
 using QuickFix.Fields;
@@ -48,7 +45,7 @@ namespace Executor
             Price price = new Price(DEFAULT_MARKET_PRICE);
             ClOrdID clOrdID = n.ClOrdID;
 
-            switch (ordType.getValue())
+            switch (ordType.Value)
             {
                 case OrdType.LIMIT:
                     price = n.Price;
@@ -67,10 +64,10 @@ namespace Executor
                 symbol,
                 side,
                 orderQty,
-                new LastShares(orderQty.getValue()),
-                new LastPx(price.getValue()),
-                new CumQty(orderQty.getValue()),
-                new AvgPx(price.getValue()));
+                new LastShares(orderQty.Value),
+                new LastPx(price.Value),
+                new CumQty(orderQty.Value),
+                new AvgPx(price.Value));
 
             exReport.Set(clOrdID);
 
@@ -101,7 +98,7 @@ namespace Executor
             Price price = new Price(DEFAULT_MARKET_PRICE);
             ClOrdID clOrdID = n.ClOrdID;
 
-            switch (ordType.getValue())
+            switch (ordType.Value)
             {
                 case OrdType.LIMIT:
                     price = n.Price;
@@ -121,11 +118,11 @@ namespace Executor
                 symbol,
                 side,
                 orderQty,
-                new LastShares(orderQty.getValue()),
-                new LastPx(price.getValue()),
+                new LastShares(orderQty.Value),
+                new LastPx(price.Value),
                 new LeavesQty(0),
-                new CumQty(orderQty.getValue()),
-                new AvgPx(price.getValue()));
+                new CumQty(orderQty.Value),
+                new AvgPx(price.Value));
 
             exReport.Set(clOrdID);
 
@@ -156,7 +153,7 @@ namespace Executor
             ClOrdID clOrdID = n.ClOrdID;
             Price price = new Price(DEFAULT_MARKET_PRICE);
 
-            switch (ordType.getValue())
+            switch (ordType.Value)
             {
                 case OrdType.LIMIT:
                     price = n.Price;
@@ -176,13 +173,13 @@ namespace Executor
                 symbol,
                 side,
                 new LeavesQty(0),
-                new CumQty(orderQty.getValue()),
-                new AvgPx(price.getValue()));
+                new CumQty(orderQty.Value),
+                new AvgPx(price.Value));
 
             exReport.Set(clOrdID);
             exReport.Set(orderQty);
-            exReport.Set(new LastShares(orderQty.getValue()));
-            exReport.Set(new LastPx(price.getValue()));
+            exReport.Set(new LastShares(orderQty.Value));
+            exReport.Set(new LastPx(price.Value));
 
             if (n.IsSetAccount())
                 exReport.SetField(n.Account);
@@ -211,7 +208,7 @@ namespace Executor
             Price price = new Price(DEFAULT_MARKET_PRICE);
             ClOrdID clOrdID = n.ClOrdID;
 
-            switch (ordType.getValue())
+            switch (ordType.Value)
             {
                 case OrdType.LIMIT:
                     price = n.Price;
@@ -230,14 +227,14 @@ namespace Executor
                 symbol, // Shouldn't be here?
                 side,
                 new LeavesQty(0),
-                new CumQty(orderQty.getValue()),
-                new AvgPx(price.getValue()));
+                new CumQty(orderQty.Value),
+                new AvgPx(price.Value));
 
             exReport.Set(clOrdID);
             exReport.Set(symbol);
             exReport.Set(orderQty);
-            exReport.Set(new LastQty(orderQty.getValue()));
-            exReport.Set(new LastPx(price.getValue()));
+            exReport.Set(new LastQty(orderQty.Value));
+            exReport.Set(new LastPx(price.Value));
 
             if (n.IsSetAccount())
                 exReport.SetField(n.Account);
@@ -266,7 +263,7 @@ namespace Executor
             Price price = new Price(DEFAULT_MARKET_PRICE);
             ClOrdID clOrdID = n.ClOrdID;
 
-            switch (ordType.getValue())
+            switch (ordType.Value)
             {
                 case OrdType.LIMIT:
                     price = n.Price;
@@ -285,14 +282,14 @@ namespace Executor
                 symbol, //shouldn't be here?
                 side,
                 new LeavesQty(0),
-                new CumQty(orderQty.getValue()),
-                new AvgPx(price.getValue()));
+                new CumQty(orderQty.Value),
+                new AvgPx(price.Value));
 
             exReport.Set(clOrdID);
             exReport.Set(symbol);
             exReport.Set(orderQty);
-            exReport.Set(new LastQty(orderQty.getValue()));
-            exReport.Set(new LastPx(price.getValue()));
+            exReport.Set(new LastQty(orderQty.Value));
+            exReport.Set(new LastPx(price.Value));
 
             if (n.IsSetAccount())
                 exReport.SetField(n.Account);
@@ -321,7 +318,7 @@ namespace Executor
             Price price = new Price(DEFAULT_MARKET_PRICE);
             ClOrdID clOrdID = n.ClOrdID;
 
-            switch (ordType.getValue())
+            switch (ordType.Value)
             {
                 case OrdType.LIMIT:
                     price = n.Price;
@@ -339,14 +336,14 @@ namespace Executor
                 new OrdStatus(OrdStatus.FILLED),
                 side,
                 new LeavesQty(0),
-                new CumQty(orderQty.getValue()));
+                new CumQty(orderQty.Value));
 
             exReport.Set(clOrdID);
             exReport.Set(symbol);
             exReport.Set(orderQty);
-            exReport.Set(new LastQty(orderQty.getValue()));
-            exReport.Set(new LastPx(price.getValue()));
-            exReport.Set(new AvgPx(price.getValue()));
+            exReport.Set(new LastQty(orderQty.Value));
+            exReport.Set(new LastPx(price.Value));
+            exReport.Set(new AvgPx(price.Value));
 
             if (n.IsSetAccount())
                 exReport.SetField(n.Account);

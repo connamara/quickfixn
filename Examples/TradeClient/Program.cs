@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using QuickFix.Logger;
 using QuickFix.Store;
 
@@ -45,7 +42,7 @@ namespace TradeClient
                 application.Run();
                 initiator.Stop();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.StackTrace);
