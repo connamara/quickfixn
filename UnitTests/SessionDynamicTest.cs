@@ -20,8 +20,8 @@ namespace UnitTests
     {
         public class TestApplication : IApplication
         {
-            Action<string> _logonNotify;
-            Action<string> _logoffNotify;
+            private readonly Action<string> _logonNotify;
+            private readonly Action<string> _logoffNotify;
             public TestApplication(Action<string> logonNotify, Action<string> logoffNotify)
             {
                 _logonNotify = logonNotify;
@@ -55,7 +55,7 @@ namespace UnitTests
             public Socket _socket;
             public byte[] _rxBuffer = new byte[1024];
             public string _messageFragment = string.Empty;
-            public string _exMessage;
+            public string _exMessage = "unset";
         }
 
         const string Host = "127.0.0.1";

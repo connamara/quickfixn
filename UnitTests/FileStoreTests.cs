@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using System.Threading;
+using QuickFix;
 using QuickFix.Store;
 
 namespace UnitTests
@@ -10,13 +11,13 @@ namespace UnitTests
     [TestFixture]
     public class FileStoreTests
     {
-        private FileStore _store;
-        private FileStoreFactory _factory;
+        private FileStore? _store;
+        private FileStoreFactory? _factory;
 
-        private QuickFix.SessionSettings _settings;
-        private QuickFix.SessionID _sessionID;
+        private QuickFix.SessionSettings _settings = new();
+        private QuickFix.SessionID _sessionId = new("unset", "unset", "unset");
 
-        private string _storeDirectory;
+        private string _storeDirectory = "unset";
 
         [SetUp]
         public void Setup()
@@ -26,34 +27,30 @@ namespace UnitTests
             if (System.IO.Directory.Exists(_storeDirectory))
                 System.IO.Directory.Delete(_storeDirectory, true);
 
-            _sessionID = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
+            _sessionId = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
 
             QuickFix.SettingsDictionary config = new QuickFix.SettingsDictionary();
             config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
             config.SetString(QuickFix.SessionSettings.FILE_STORE_PATH, _storeDirectory);
 
             _settings = new QuickFix.SessionSettings();
-            _settings.Set(_sessionID, config);
+            _settings.Set(_sessionId, config);
             _factory = new FileStoreFactory(_settings);
 
-            _store = (FileStore)_factory.Create(_sessionID);
+            _store = (FileStore)_factory.Create(_sessionId);
         }
 
         void RebuildStore()
         {
-            if(_store != null)
-            {
-                _store.Dispose();
-            }
-
-            _store = (FileStore)_factory.Create(_sessionID);
+            _store?.Dispose();
+            _store = (FileStore)_factory!.Create(_sessionId);
         }
 
 
         [TearDown]
         public void Teardown()
         {
-            _store.Dispose();
+            _store!.Dispose();
             Directory.Delete(_storeDirectory, true);
         }
 
@@ -79,7 +76,7 @@ namespace UnitTests
         [Test]
         public void NextSenderMsgSeqNumTest()
         {
-            Assert.AreEqual(1, _store.NextSenderMsgSeqNum);
+            Assert.AreEqual(1, _store!.NextSenderMsgSeqNum);
             _store.NextSenderMsgSeqNum = 5;
             Assert.AreEqual(5, _store.NextSenderMsgSeqNum);
             RebuildStore();
@@ -89,7 +86,7 @@ namespace UnitTests
         [Test]
         public void IncNextSenderMsgSeqNumTest()
         {
-            _store.IncrNextSenderMsgSeqNum();
+            _store!.IncrNextSenderMsgSeqNum();
             Assert.AreEqual(2, _store.NextSenderMsgSeqNum);
             RebuildStore();
             Assert.AreEqual(2, _store.NextSenderMsgSeqNum);
@@ -98,7 +95,7 @@ namespace UnitTests
         [Test]
         public void NextTargetMsgSeqNumTest()
         {
-            Assert.AreEqual(1, _store.NextTargetMsgSeqNum);
+            Assert.AreEqual(1, _store!.NextTargetMsgSeqNum);
             _store.NextTargetMsgSeqNum = 6;
             Assert.AreEqual(6, _store.NextTargetMsgSeqNum);
             RebuildStore();
@@ -108,7 +105,7 @@ namespace UnitTests
         [Test]
         public void IncNextTargetMsgSeqNumTest()
         {
-            _store.IncrNextTargetMsgSeqNum();
+            _store!.IncrNextTargetMsgSeqNum();
             Assert.AreEqual(2, _store.NextTargetMsgSeqNum);
             RebuildStore();
             Assert.AreEqual(2, _store.NextTargetMsgSeqNum);
@@ -119,7 +116,7 @@ namespace UnitTests
         public void TestSeqNumLimitsForContinuousMarkets()
         {
             // Given the next seqnums are UInt64.MaxValue - 1
-            _store.NextSenderMsgSeqNum = System.UInt64.MaxValue - 1;
+            _store!.NextSenderMsgSeqNum = System.UInt64.MaxValue - 1;
             _store.NextTargetMsgSeqNum = _store.NextSenderMsgSeqNum;
 
             // When the next seqnums are incremented
@@ -157,7 +154,7 @@ namespace UnitTests
         public void ResetTest()
         {
             // seq nums reset
-            _store.NextTargetMsgSeqNum = 5;
+            _store!.NextTargetMsgSeqNum = 5;
             _store.NextSenderMsgSeqNum = 4;
             _store.Reset();
             Assert.AreEqual(1, _store.NextTargetMsgSeqNum);
@@ -179,7 +176,7 @@ namespace UnitTests
         [Test]
         public void CreationTimeTest()
         {
-            DateTime d1 = _store.CreationTime.Value;
+            DateTime d1 = _store!.CreationTime!.Value;
             RebuildStore();
             DateTime d2 = _store.CreationTime.Value;
             Util.UtcDateTimeSerializerTests.AssertHackyDateTimeEquality(d1, d2);
@@ -194,7 +191,7 @@ namespace UnitTests
         [Test]
         public void GetTest()
         {
-            _store.Set(1, "dude");
+            _store!.Set(1, "dude");
             _store.Set(2, "pude");
             _store.Set(3, "ok");
             _store.Set(4, "ohai");

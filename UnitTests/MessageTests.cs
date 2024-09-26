@@ -367,8 +367,8 @@ namespace UnitTests
                         + "10=028|").Replace('|', Message.SOH);
 
             FieldNotFoundException ex =
-                Assert.Throws<FieldNotFoundException>(delegate { n.FromString(s, true, dd, dd, _defaultMsgFactory); });
-            Assert.AreEqual("field not found for tag: 212", ex!.Message);
+                Assert.Throws<FieldNotFoundException>(delegate { n.FromString(s, true, dd, dd, _defaultMsgFactory); })!;
+            Assert.AreEqual("field not found for tag: 212", ex.Message);
         }
 
         [Test]
