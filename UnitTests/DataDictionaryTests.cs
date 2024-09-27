@@ -379,7 +379,7 @@ namespace UnitTests
             if (xmlString.StartsWith('<'))
             {
                 doc.LoadXml(xmlString);
-                return doc.DocumentElement;
+                return doc.DocumentElement!;
             }
             return doc.CreateTextNode(xmlString);
         }
@@ -392,18 +392,18 @@ namespace UnitTests
                 MakeNode("<sometag name='qty'/>"), parentNode));
 
             DictionaryParseException dpx = Assert.Throws<DictionaryParseException>(
-                delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("foo"), parentNode); });
-            Assert.AreEqual("Malformed data dictionary: Found text-only node containing 'foo'", dpx!.Message);
+                delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("foo"), parentNode); })!;
+            Assert.AreEqual("Malformed data dictionary: Found text-only node containing 'foo'", dpx.Message);
 
             dpx = Assert.Throws<DictionaryParseException>(
-                delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("<field>qty</field>"), parentNode); });
-            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'parentnode/Daddy'", dpx!.Message);
+                delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("<field>qty</field>"), parentNode); })!;
+            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'parentnode/Daddy'", dpx.Message);
 
             // alt error message, where parent has no name
             parentNode = MakeNode("<parentnode/>");
             dpx = Assert.Throws<DictionaryParseException>(
-                delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("<field>qty</field>"), parentNode); });
-            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'parentnode/parentnode'", dpx!.Message);
+                delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("<field>qty</field>"), parentNode); })!;
+            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'parentnode/parentnode'", dpx.Message);
         }
     }
 }

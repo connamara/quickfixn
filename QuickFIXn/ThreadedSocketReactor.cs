@@ -36,7 +36,6 @@ namespace QuickFix
         internal ThreadedSocketReactor(
             IPEndPoint serverSocketEndPoint,
             SocketSettings socketSettings,
-            SettingsDictionary sessionDict,
             AcceptorSocketDescriptor? acceptorSocketDescriptor,
             NonSessionLog nonSessionLog)
         {

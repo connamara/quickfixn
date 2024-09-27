@@ -1,6 +1,3 @@
-#nullable enable
-
-using System;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.DataDictionary;

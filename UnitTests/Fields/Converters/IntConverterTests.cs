@@ -19,6 +19,6 @@ public class IntConverterTests {
         Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert("AB"); });
         Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert("2.3234"); });
         Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert(""); });
-        Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert(null); });
+        Assert.Throws(typeof(FieldConvertError), delegate { IntConverter.Convert(null!); });
     }
 }

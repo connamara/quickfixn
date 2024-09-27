@@ -11,17 +11,16 @@ namespace UnitTests
     [TestFixture]
     public class ThreadedSocketReactorTests
     {
-        static readonly Random _random = new Random();
-        static TcpListener _tcpListener;
+        static TcpListener? _tcpListener;
 
         private int OccupyAPort()
         {
-            int randomPort;
+            Random random = new();
             for (int i = 0; i < 10; i++)
             {
                 try
                 {
-                    randomPort = _random.Next(5000, 6000);
+                    int randomPort = random.Next(5000, 6000);
                     _tcpListener = new TcpListener(IPAddress.Loopback, randomPort);
                     _tcpListener.Start();
                     
@@ -49,7 +48,6 @@ namespace UnitTests
             var testingObject = new ThreadedSocketReactor(
                 new IPEndPoint(IPAddress.Loopback, port),
                 settings,
-                sessionDict: null,
                 acceptorSocketDescriptor: null,
                 new NonSessionLog(new ScreenLogFactory(true, true, true)));
 
@@ -61,10 +59,8 @@ namespace UnitTests
         }
 
         [TearDown]
-        public void TearDown()
-        {
-            if (_tcpListener != null)
-                _tcpListener.Stop();
+        public void TearDown() {
+            _tcpListener?.Stop();
         }
     }
 }
