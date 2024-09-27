@@ -44,15 +44,15 @@ namespace UnitTests
         public void TestCtor_BasicDailySchedule()
         {
             SettingsDictionary settings = new SettingsDictionary();
-            var ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); });
+            Exception ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
             StringAssert.Contains("No value for key: StartTime", ex.Message);
 
             settings.SetString(SessionSettings.START_TIME, "00:00:00");
-            ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); });
+            ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
             StringAssert.Contains("No value for key: EndTime", ex.Message);
 
             settings.SetString(SessionSettings.END_TIME, "00:0blkajsdf");
-            ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); });
+            ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
             StringAssert.Contains("String '00:0blkajsdf' was not recognized as a valid TimeSpan", ex.Message);
 
             settings.SetString(SessionSettings.END_TIME, "00:00:00");
@@ -67,7 +67,7 @@ namespace UnitTests
             settings.SetString(SessionSettings.END_TIME, "00:00:00");
 
             settings.SetDay(SessionSettings.START_DAY, DayOfWeek.Thursday);
-            var ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); });
+            Exception ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
             StringAssert.Contains("StartDay used without EndDay", ex.Message);
 
             settings.SetDay(SessionSettings.END_DAY, DayOfWeek.Friday);
@@ -80,7 +80,7 @@ namespace UnitTests
             SettingsDictionary settings = new SettingsDictionary();
             settings.SetString(SessionSettings.WEEKDAYS, "Sun,Tue,Fri");
 
-            var ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); });
+            Exception ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
             StringAssert.Contains("No value for key: StartTime", ex.Message);
 
             settings.SetString(SessionSettings.START_TIME, "00:00:00");
@@ -88,7 +88,7 @@ namespace UnitTests
             Assert.DoesNotThrow(delegate { new SessionSchedule(settings); });
 
             settings.SetString(SessionSettings.START_DAY, "Tue");
-            ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); });
+            ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
             StringAssert.Contains("StartDay/EndDay are not compatible with 'Weekdays' setting", ex.Message);
         }
 
@@ -100,13 +100,13 @@ namespace UnitTests
             Assert.DoesNotThrow(delegate { new SessionSchedule(settings); });
 
             settings.SetString(SessionSettings.START_DAY, "Monday");
-            var ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); });
+            Exception ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
             StringAssert.Contains("NonStopSession is not compatible with StartDay/EndDay and StartTime/EndTime", ex.Message);
 
             settings = new SettingsDictionary();
             settings.SetBool(SessionSettings.NON_STOP_SESSION, true);
             settings.SetString(SessionSettings.START_TIME, "05:00:00");
-            ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); });
+            ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
             StringAssert.Contains("NonStopSession is not compatible with StartDay/EndDay and StartTime/EndTime", ex.Message);
         }
 

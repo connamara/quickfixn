@@ -169,8 +169,8 @@ namespace UnitTests
 
             //Simulate background sending of messages that populate into the store
             AutoResetEvent setEvent = new AutoResetEvent(false);
-            ThreadPool.QueueUserWorkItem(delegate(object stateObject) {
-                AutoResetEvent internalSetEvent = (AutoResetEvent)((object[])stateObject)[0];
+            ThreadPool.QueueUserWorkItem(delegate(object? stateObject) {
+                AutoResetEvent internalSetEvent = (AutoResetEvent)((object[])stateObject!)[0];
                 SessionState internalState = (SessionState)((object[])stateObject)[1];
                 for (SeqNumType i = 1001; i < 2000; i++) {
                     try {
@@ -187,8 +187,8 @@ namespace UnitTests
 
             //Simulate background reading of messages from the store - like is done in a resend request answer
             AutoResetEvent getEvent = new AutoResetEvent(false);
-            ThreadPool.QueueUserWorkItem(delegate(object stateObject){
-                AutoResetEvent internalGetEvent = (AutoResetEvent)((object[])stateObject)[0];
+            ThreadPool.QueueUserWorkItem(delegate(object? stateObject){
+                AutoResetEvent internalGetEvent = (AutoResetEvent)((object[])stateObject!)[0];
                 SessionState internalState = (SessionState)((object[])stateObject)[1];
                 for (SeqNumType i = 1; i < 1000; i++) {
                     try {

@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 using QuickFix;
-using QuickFix.Fields;
 using System.Reflection;
-
 
 namespace UnitTests
 {
     [TestFixture]
     public class MessageCrackerTests
     {
-        private readonly SessionID _DummySessionID = new SessionID("a","b","c");
+        private readonly SessionID _dummySessionId = new ("a","b","c");
 
         [SetUp]
         public void Setup()
@@ -87,21 +83,21 @@ namespace UnitTests
         public void GoldenPath()
         {
             MessageCracker mc = new TestCracker();
-            TestCracker tc = mc as TestCracker;
+            TestCracker tc = (mc as TestCracker)!;
 
-            mc.Crack(new QuickFix.FIX42.News(), _DummySessionID);
+            mc.Crack(new QuickFix.FIX42.News(), _dummySessionId);
             Assert.IsTrue(tc.CrackedNews42);
             Assert.IsFalse(tc.CrackedNews44);
 
             // reset and do the opposite
             tc.CrackedNews42 = false;
 
-            mc.Crack(new QuickFix.FIX44.News(), _DummySessionID);
+            mc.Crack(new QuickFix.FIX44.News(), _dummySessionId);
             Assert.IsFalse(tc.CrackedNews42);
             Assert.IsTrue(tc.CrackedNews44);
 
             Assert.IsFalse(tc.CrackedLogonFIXT11);
-            mc.Crack(new QuickFix.FIXT11.Logon(), _DummySessionID);
+            mc.Crack(new QuickFix.FIXT11.Logon(), _dummySessionId);
             Assert.IsTrue(tc.CrackedLogonFIXT11);
         }
 
@@ -109,8 +105,8 @@ namespace UnitTests
         public void UnsupportedMessage()
         {
             MessageCracker mc = new TestCracker();
-            Assert.Throws<UnsupportedMessageType>(delegate { mc.Crack(new QuickFix.FIX42.Email(), _DummySessionID); });
-            Assert.Throws<UnsupportedMessageType>(delegate { mc.Crack(new QuickFix.FIX43.News(), _DummySessionID); });
+            Assert.Throws<UnsupportedMessageType>(delegate { mc.Crack(new QuickFix.FIX42.Email(), _dummySessionId); });
+            Assert.Throws<UnsupportedMessageType>(delegate { mc.Crack(new QuickFix.FIX43.News(), _dummySessionId); });
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿#nullable enable
-
-using System.IO;
+﻿using System.IO;
 using NUnit.Framework;
 using QuickFix.Logger;
 

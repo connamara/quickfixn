@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using QuickFix.Logger;
@@ -14,12 +15,19 @@ namespace QuickFix
         public AcceptorSocketDescriptor(
             IPEndPoint socketEndPoint,
             SocketSettings socketSettings,
-            SettingsDictionary sessionDict,
             NonSessionLog nonSessionLog)
         {
             Address = socketEndPoint;
-            SocketReactor = new ThreadedSocketReactor(Address, socketSettings, sessionDict, this, nonSessionLog);
+            SocketReactor = new ThreadedSocketReactor(Address, socketSettings, this, nonSessionLog);
         }
+
+        [Obsolete("Param 'sessionDict' is unused.  Use the alt constructor without it.")]
+        public AcceptorSocketDescriptor(
+            IPEndPoint socketEndPoint,
+            SocketSettings socketSettings,
+            SettingsDictionary sessionDict,
+            NonSessionLog nonSessionLog) : this(socketEndPoint, socketSettings, nonSessionLog)
+        { }
 
         internal void AcceptSession(Session session)
         {

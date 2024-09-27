@@ -99,7 +99,7 @@ namespace UnitTests
             StringAssert.Contains("\"35\":\"8\"", msg.ToJSON(dataDictionary: null));
 
             // EXCEPTION CASE: params (null, true) => Exception
-            var ex = Assert.Throws<ArgumentNullException>(delegate { msg.ToJSON(null, true); });
+            var ex = Assert.Throws<ArgumentNullException>(delegate { msg.ToJSON(null, true); })!;
             StringAssert.Contains(
                 "Must be non-null if 'convertEnumsToDescriptions' is true. (Parameter 'dataDictionary')",
                 ex.Message);

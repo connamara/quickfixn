@@ -40,6 +40,8 @@ What's New
      * deprecate <Foo>Field.Obj (renamed to Value)
      * deprecate <Foo>Field.getValue/setValue (just use Value getter/setter)
 * #889 - nullable-ize Examples and fix deprecations (gbirchmeier)
+* #892 - nullable-ize UnitTests project (gbirchmeier)
+     * also deprecate a AcceptorSocketDescriptor ctor due to unused param
 
 ### v1.12.0
 

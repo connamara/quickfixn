@@ -16,68 +16,68 @@ namespace UnitTests
 {
     [TestFixture]
     [Category("DynamicSession")]
-    class SessionDynamicTest
+    public class SessionDynamicTest
     {
         public class TestApplication : IApplication
         {
-            Action<string> _logonNotify;
-            Action<string> _logoffNotify;
+            private readonly Action<string> _logonNotify;
+            private readonly Action<string> _logoffNotify;
             public TestApplication(Action<string> logonNotify, Action<string> logoffNotify)
             {
                 _logonNotify = logonNotify;
                 _logoffNotify = logoffNotify;
             }
-            public void FromAdmin(Message message, SessionID sessionID)
+            public void FromAdmin(Message message, SessionID sessionId)
             { }
 
-            public void FromApp(Message message, SessionID sessionID)
+            public void FromApp(Message message, SessionID sessionId)
             { }
 
-            public void OnCreate(SessionID sessionID) { }
-            public void OnLogout(SessionID sessionID)
+            public void OnCreate(SessionID sessionId) { }
+            public void OnLogout(SessionID sessionId)
             {
-                _logoffNotify(sessionID.TargetCompID);
+                _logoffNotify(sessionId.TargetCompID);
             }
-            public void OnLogon(SessionID sessionID)
+            public void OnLogon(SessionID sessionId)
             {
-                _logonNotify(sessionID.TargetCompID);
+                _logonNotify(sessionId.TargetCompID);
             }
 
-            public void ToAdmin(Message message, SessionID sessionID) { }
-            public void ToApp(Message message, SessionID sessionID) { }
+            public void ToAdmin(Message message, SessionID sessionId) { }
+            public void ToApp(Message message, SessionID sessionId) { }
         }
+
         class SocketState
         {
             public SocketState(Socket s)
             {
-                _socket = s;
+                Socket = s;
             }
-            public Socket _socket;
-            public byte[] _rxBuffer = new byte[1024];
-            public string _messageFragment = string.Empty;
-            public string _exMessage;
+            public readonly Socket Socket;
+            public readonly byte[] RxBuffer = new byte[1024];
+            public string MessageFragment = string.Empty;
         }
 
-        const string Host = "127.0.0.1";
-        const int ConnectPort = 55100;
-        const int AcceptPort = 55101;
-        const int AcceptPort2 = 55102;
-        const string ServerCompID = "dummy";
-        const string StaticInitiatorCompID = "ini01";
-        const string StaticAcceptorCompID = "acc01";
-        const string StaticAcceptorCompID2 = "acc02";
+        private const string Host = "127.0.0.1";
+        private const int ConnectPort = 55100;
+        private const int AcceptPort = 55101;
+        private const int AcceptPort2 = 55102;
+        private const string ServerCompId = "dummy";
+        private const string StaticInitiatorCompId = "ini01";
+        private const string StaticAcceptorCompId = "acc01";
+        private const string StaticAcceptorCompId2 = "acc02";
 
-        const string FIXMessageEnd = @"\x0110=\d{3}\x01";
-        const string FIXMessageDelimit = @"(8=FIX|\A).*?(" + FIXMessageEnd + @"|\z)";
+        private const string FixMessageEnd = @"\x0110=\d{3}\x01";
+        private const string FixMessageDelimit = @"(8=FIX|\A).*?(" + FixMessageEnd + @"|\z)";
 
-        string _logPath;
-        SocketInitiator _initiator;
-        ThreadedSocketAcceptor _acceptor;
-        Dictionary<string, SocketState> _sessions;
-        HashSet<string> _loggedOnCompIDs;
-        Socket _listenSocket;
+        private string _logPath = "unset";
+        private SocketInitiator? _initiator;
+        private ThreadedSocketAcceptor? _acceptor;
+        private Dictionary<string, SocketState> _sessions = new();
+        private HashSet<string> _loggedOnCompIDs = new();
+        private Socket? _listenSocket;
 
-        SettingsDictionary CreateSessionConfig(string targetCompID, bool isInitiator)
+        private static SettingsDictionary CreateSessionConfig(bool isInitiator)
         {
             SettingsDictionary settings = new SettingsDictionary();
             settings.SetString(SessionSettings.CONNECTION_TYPE, isInitiator ? "initiator" : "acceptor");
@@ -88,40 +88,36 @@ namespace UnitTests
             return settings;
         }
 
-        SessionID CreateSessionID(string targetCompID)
+        private static SessionID CreateSessionId(string targetCompId)
         {
-            return new SessionID(QuickFix.Values.BeginString_FIX42, ServerCompID, targetCompID);
+            return new SessionID(QuickFix.Values.BeginString_FIX42, ServerCompId, targetCompId);
         }
 
-        void LogonCallback(string compID)
+        private void LogonCallback(string compId)
         {
             lock (_loggedOnCompIDs)
             {
-                _loggedOnCompIDs.Add(compID);
-                Monitor.Pulse(_loggedOnCompIDs);
-            }
-        }
-        void LogoffCallback(string compID)
-        {
-            lock (_loggedOnCompIDs)
-            {
-                _loggedOnCompIDs.Remove(compID);
+                _loggedOnCompIDs.Add(compId);
                 Monitor.Pulse(_loggedOnCompIDs);
             }
         }
 
-        void StartEngine(bool initiator)
+        private void LogoffCallback(string compId)
         {
-            StartEngine(initiator, false);
+            lock (_loggedOnCompIDs)
+            {
+                _loggedOnCompIDs.Remove(compId);
+                Monitor.Pulse(_loggedOnCompIDs);
+            }
         }
 
-        void StartEngine(bool initiator, bool twoSessions)
+        private void StartEngine(bool initiator, bool twoSessions = false)
         {
             TestApplication application = new TestApplication(LogonCallback, LogoffCallback);
             IMessageStoreFactory storeFactory = new MemoryStoreFactory();
             SessionSettings settings = new SessionSettings();
             SettingsDictionary defaults = new SettingsDictionary();
-            defaults.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, _logPath);
+            defaults.SetString(SessionSettings.FILE_LOG_PATH, _logPath);
 
             // Put IP endpoint settings into default section to verify that that defaults get merged into
             // session-specific settings not only for static sessions, but also for dynamic ones
@@ -136,18 +132,18 @@ namespace UnitTests
             if (initiator)
             {
                 defaults.SetString(SessionSettings.RECONNECT_INTERVAL, "1");
-                settings.Set(CreateSessionID(StaticInitiatorCompID), CreateSessionConfig(StaticInitiatorCompID, true));
+                settings.Set(CreateSessionId(StaticInitiatorCompId), CreateSessionConfig(true));
                 _initiator = new SocketInitiator(application, storeFactory, settings, logFactory);
                 _initiator.Start();
             }
             else
             {
-                settings.Set(CreateSessionID(StaticAcceptorCompID), CreateSessionConfig(StaticAcceptorCompID, false));
+                settings.Set(CreateSessionId(StaticAcceptorCompId), CreateSessionConfig(false));
 
                 if (twoSessions)
                 {
-                    var id = CreateSessionID(StaticAcceptorCompID2);
-                    var conf = CreateSessionConfig(StaticAcceptorCompID2, false);
+                    var id = CreateSessionId(StaticAcceptorCompId2);
+                    var conf = CreateSessionConfig(false);
 
                     conf.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort2.ToString());
                     conf.SetString(SessionSettings.FILE_LOG_PATH, _logPath + "2");
@@ -160,68 +156,70 @@ namespace UnitTests
             }
         }
 
-        void StartListener()
+        private void StartListener()
         {
             var address = IPAddress.Parse(Host);
             var listenEndpoint = new IPEndPoint(address, ConnectPort);
             _listenSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             _listenSocket.Bind(listenEndpoint);
             _listenSocket.Listen(10);
-            _listenSocket.BeginAccept(new AsyncCallback(ProcessInboundConnect), null);
+            _listenSocket.BeginAccept(ProcessInboundConnect, null);
         }
 
-        void ProcessInboundConnect(IAsyncResult ar)
+        private void ProcessInboundConnect(IAsyncResult ar)
         {
-            Socket handler = null;
+            if (_listenSocket == null)
+                return;
+
             try
             {
-                handler = _listenSocket.EndAccept(ar);
+                Socket handler = _listenSocket.EndAccept(ar);
+                ReceiveAsync(new SocketState(handler));
+                _listenSocket.BeginAccept(ProcessInboundConnect, null);
             }
             catch
             {
                 _listenSocket = null; // Assume listener has been closed
             }
-
-            if (handler != null)
-            {
-                ReceiveAsync(new SocketState(handler));
-                _listenSocket.BeginAccept(new AsyncCallback(ProcessInboundConnect), null);
-            }
         }
 
-        void ProcessRXData(IAsyncResult ar)
+        void ProcessRxData(IAsyncResult ar)
         {
-            SocketState socketState = (SocketState)ar.AsyncState;
+            SocketState? socketState = (SocketState?)ar.AsyncState;
+            if (socketState is null)
+                throw new AssertionException("socketState is null");
+
             int bytesReceived = 0;
             try
             {
-                bytesReceived = socketState._socket.EndReceive(ar);
+                bytesReceived = socketState.Socket.EndReceive(ar);
             }
             catch (Exception ex)
             {
-                socketState._exMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                // don't know what else to do with this
+                Console.WriteLine(ex.InnerException == null ? ex.Message : ex.InnerException.Message);
             }
 
             if (bytesReceived == 0)
             {
-                socketState._socket.Close();
-                lock (socketState._socket)
-                    Monitor.Pulse(socketState._socket);
+                socketState.Socket.Close();
+                lock (socketState.Socket)
+                    Monitor.Pulse(socketState.Socket);
                 return;
             }
-            string msgText = CharEncoding.DefaultEncoding.GetString(socketState._rxBuffer, 0, bytesReceived);
-            foreach (Match m in Regex.Matches(msgText, FIXMessageDelimit))
+            string msgText = CharEncoding.DefaultEncoding.GetString(socketState.RxBuffer, 0, bytesReceived);
+            foreach (Match m in Regex.Matches(msgText, FixMessageDelimit))
             {
-                socketState._messageFragment += m.Value;
-                if (Regex.IsMatch(socketState._messageFragment, FIXMessageEnd))
+                socketState.MessageFragment += m.Value;
+                if (Regex.IsMatch(socketState.MessageFragment, FixMessageEnd))
                 {
-                    Message message = new Message(socketState._messageFragment);
-                    socketState._messageFragment = string.Empty;
-                    string targetCompID = message.Header.GetString(QuickFix.Fields.Tags.TargetCompID);
+                    Message message = new Message(socketState.MessageFragment);
+                    socketState.MessageFragment = string.Empty;
+                    string targetCompId = message.Header.GetString(QuickFix.Fields.Tags.TargetCompID);
                     if (message.Header.GetString(QuickFix.Fields.Tags.MsgType) == QuickFix.Fields.MsgType.LOGON)
                         lock (_sessions)
                         {
-                            _sessions[targetCompID] = socketState;
+                            _sessions[targetCompId] = socketState;
                             Monitor.Pulse(_sessions);
                         }
                 }
@@ -231,7 +229,7 @@ namespace UnitTests
             {
                 ReceiveAsync(socketState);
             }
-            catch (System.ObjectDisposedException)
+            catch (ObjectDisposedException)
             {
                 // ignore socket disposed
             }
@@ -239,20 +237,10 @@ namespace UnitTests
 
         void ReceiveAsync(SocketState socketState)
         {
-            socketState._socket.BeginReceive(socketState._rxBuffer, 0, socketState._rxBuffer.Length, SocketFlags.None, new AsyncCallback(ProcessRXData), socketState);
+            socketState.Socket.BeginReceive(socketState.RxBuffer, 0, socketState.RxBuffer.Length, SocketFlags.None, ProcessRxData, socketState);
         }
 
-        Socket ConnectToEngine()
-        {
-            return ConnectToEngine(AcceptPort);
-        }
-
-        Socket ConnectToEngine(int port)
-        {
-            return ConnectToEngine(port, 3);
-        }
-
-        Socket ConnectToEngine(int port, int numRetries)
+        private Socket ConnectToEngine(int port = AcceptPort, int numRetries = 3)
         {
             var address = IPAddress.Parse(Host);
             var endpoint = new IPEndPoint(address, port);
@@ -261,49 +249,46 @@ namespace UnitTests
             {
                 socket.Connect(endpoint);
                 ReceiveAsync(new SocketState(socket));
-                return socket;
             }
             catch (Exception ex)
             {
-                string errorMsg = string.Format("Failed to connect: {0}", ex.Message);
+                string errorMsg = $"Failed to connect: {ex.Message}";
                 if (numRetries > 0)
                 {
                     numRetries--;
-                    TestContext.Out.WriteLine(string.Format("{0}: Retries Remaining: {1}: Retrying...", errorMsg, numRetries));
+                    TestContext.Out.WriteLine($"{errorMsg}: Retries Remaining: {numRetries}: Retrying...");
                     Thread.Sleep(500);
                     return ConnectToEngine(port, numRetries);
                 }
-                else
-                {
-                    Assert.Fail(errorMsg);
-                    return null;
-                }
+
+                Assert.Fail(errorMsg);
             }
+            return socket;
         }
 
-        Socket GetSocket(string compID)
+        Socket GetSocket(string compId)
         {
             lock (_sessions)
-                return _sessions[compID]._socket;
+                return _sessions[compId].Socket;
         }
 
-        bool WaitForLogonStatus(string targetCompID)
+        bool WaitForLogonStatus(string targetCompId)
         {
             lock (_loggedOnCompIDs)
             {
-                if (!_loggedOnCompIDs.Contains(targetCompID))
+                if (!_loggedOnCompIDs.Contains(targetCompId))
                     Monitor.Wait(_loggedOnCompIDs, 10000);
-                return _loggedOnCompIDs.Contains(targetCompID);
+                return _loggedOnCompIDs.Contains(targetCompId);
             }
         }
 
-        bool WaitForLogonMessage(string targetCompID)
+        bool WaitForLogonMessage(string targetCompId)
         {
             lock (_sessions)
             {
-                if (!_sessions.ContainsKey(targetCompID))
+                if (!_sessions.ContainsKey(targetCompId))
                     Monitor.Wait(_sessions, 10000);
-                return _sessions.ContainsKey(targetCompID);
+                return _sessions.ContainsKey(targetCompId);
             }
         }
 
@@ -317,33 +302,33 @@ namespace UnitTests
             }
         }
 
-        bool WaitForDisconnect(string compID)
+        bool WaitForDisconnect(string compId)
         {
-            return WaitForDisconnect(GetSocket(compID));
+            return WaitForDisconnect(GetSocket(compId));
         }
 
-        bool HasReceivedMessage(string compID)
+        bool HasReceivedMessage(string compId)
         {
             lock (_sessions)
-                return _sessions.ContainsKey(compID);
+                return _sessions.ContainsKey(compId);
         }
 
-        bool IsLoggedOn(string compID)
+        bool IsLoggedOn(string compId)
         {
             lock (_loggedOnCompIDs)
-                return _loggedOnCompIDs.Contains(compID);
+                return _loggedOnCompIDs.Contains(compId);
         }
 
-        void SendInitiatorLogon(string senderCompID)
+        void SendInitiatorLogon(string senderCompId)
         {
-            SendLogon(GetSocket(senderCompID), senderCompID);
+            SendLogon(GetSocket(senderCompId), senderCompId);
         }
 
-        void SendLogon(Socket s, string senderCompID)
+        void SendLogon(Socket s, string senderCompId)
         {
             var msg = new QuickFix.FIX42.Logon();
-            msg.Header.SetField(new QuickFix.Fields.TargetCompID(ServerCompID));
-            msg.Header.SetField(new QuickFix.Fields.SenderCompID(senderCompID));
+            msg.Header.SetField(new QuickFix.Fields.TargetCompID(ServerCompId));
+            msg.Header.SetField(new QuickFix.Fields.SenderCompID(senderCompId));
             msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(1));
             msg.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
             msg.SetField(new QuickFix.Fields.HeartBtInt(300));
@@ -373,12 +358,9 @@ namespace UnitTests
         [TearDown]
         public void TearDown()
         {
-            if (_listenSocket != null)
-                _listenSocket.Close();
-            if (_initiator != null)
-                _initiator.Stop(true);
-            if (_acceptor != null)
-                _acceptor.Stop(true);
+            _listenSocket?.Close();
+            _initiator?.Stop(true);
+            _acceptor?.Stop(true);
 
             _initiator = null;
             _acceptor = null;
@@ -391,7 +373,7 @@ namespace UnitTests
         public void DifferentPortForAcceptorTest()
         {
             //create two sessions with two different SOCKET_ACCEPT_PORT
-            StartEngine(false, true);
+            StartEngine(false, twoSessions: true);
 
             Thread.Sleep(100);
 
@@ -399,15 +381,15 @@ namespace UnitTests
             using (var socket11 = ConnectToEngine(AcceptPort))
             {
                 Assert.IsTrue(socket11.Connected, "Failed to connect to 1st accept port");
-                SendLogon(socket11, StaticAcceptorCompID);
-                Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon 1st acceptor session");
+                SendLogon(socket11, StaticAcceptorCompId);
+                Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompId), "Failed to logon 1st acceptor session");
             }
 
             // Ensure we can't log on 2nd session to 1st port
             using (var socket12 = ConnectToEngine(AcceptPort))
             {
                 Assert.IsTrue(socket12.Connected, "Failed to connect to 1st accept port");
-                SendLogon(socket12, StaticAcceptorCompID2);
+                SendLogon(socket12, StaticAcceptorCompId2);
                 Assert.IsTrue(WaitForDisconnect(socket12), "Server failed to disconnect 2nd CompID from 1st port");
             }
         }
@@ -418,68 +400,71 @@ namespace UnitTests
             StartEngine(false);
 
             // Add the dynamic acceptor with another port and ensure that we can now log on
-            string dynamicCompID = "acc10";
-            var sessionID = CreateSessionID(dynamicCompID);
-            var sessionConfig = CreateSessionConfig(dynamicCompID, false);
+            const string dynamicCompId = "acc10";
+            SessionID sessionId = CreateSessionId(dynamicCompId);
+            SettingsDictionary sessionConfig = CreateSessionConfig(false);
             sessionConfig.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort2.ToString());
 
-            _acceptor.AddSession(sessionID, sessionConfig);
+            if (_acceptor is null)
+                throw new AssertionException("_acceptor is null");
+            _acceptor.AddSession(sessionId, sessionConfig);
 
             var socket = ConnectToEngine(AcceptPort2);
-            SendLogon(socket, dynamicCompID);
+            SendLogon(socket, dynamicCompId);
 
-            Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failed to logon dynamic added acceptor session with another port");
+            Assert.IsTrue(WaitForLogonStatus(dynamicCompId), "Failed to logon dynamic added acceptor session with another port");
         }
         
         [Test]
         public void DynamicAcceptor()
         {
             StartEngine(false);
+            if (_acceptor is null)
+                throw new AssertionException("_acceptor is null");
 
             // Ensure we can log on statically (normally) configured acceptor
             var socket01 = ConnectToEngine();
-            SendLogon(socket01, StaticAcceptorCompID);
-            Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon static acceptor session");
+            SendLogon(socket01, StaticAcceptorCompId);
+            Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompId), "Failed to logon static acceptor session");
 
             // Ensure that attempt to log on as yet un-added dynamic acceptor fails
             var socket02 = ConnectToEngine();
-            string dynamicCompID = "acc10";
-            SendLogon(socket02, dynamicCompID);
+            string dynamicCompId = "acc10";
+            SendLogon(socket02, dynamicCompId);
             Assert.IsTrue(WaitForDisconnect(socket02), "Server failed to disconnect unconfigured CompID");
-            Assert.False(HasReceivedMessage(dynamicCompID), "Unexpected message received for unconfigured CompID");
+            Assert.False(HasReceivedMessage(dynamicCompId), "Unexpected message received for unconfigured CompID");
 
             // Add the dynamic acceptor and ensure that we can now log on
-            var sessionID = CreateSessionID(dynamicCompID);
-            var sessionConfig = CreateSessionConfig(dynamicCompID, false);
-            Assert.IsTrue(_acceptor.AddSession(sessionID, sessionConfig), "Failed to add dynamic session to acceptor");
+            SessionID sessionId = CreateSessionId(dynamicCompId);
+            SettingsDictionary sessionConfig = CreateSessionConfig(false);
+            Assert.IsTrue(_acceptor.AddSession(sessionId, sessionConfig), "Failed to add dynamic session to acceptor");
             var socket03 = ConnectToEngine();
-            SendLogon(socket03, dynamicCompID);
-            Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failed to logon dynamic acceptor session");
+            SendLogon(socket03, dynamicCompId);
+            Assert.IsTrue(WaitForLogonStatus(dynamicCompId), "Failed to logon dynamic acceptor session");
 
             // Ensure that we can't add the same session again
-            Assert.IsFalse(_acceptor.AddSession(sessionID, sessionConfig), "Added dynamic session twice");
+            Assert.IsFalse(_acceptor.AddSession(sessionId, sessionConfig), "Added dynamic session twice");
 
             // Now that dynamic acceptor is logged on, ensure that unforced attempt to remove session fails
-            Assert.IsFalse(_acceptor.RemoveSession(sessionID, false), "Unexpected success removing active session");
+            Assert.IsFalse(_acceptor.RemoveSession(sessionId, false), "Unexpected success removing active session");
             Assert.IsTrue(socket03.Connected, "Unexpected loss of connection");
 
             // Ensure that forced attempt to remove session dynamic session succeeds, even though it is in logged on state
-            Assert.IsTrue(_acceptor.RemoveSession(sessionID, true), "Failed to remove active session");
+            Assert.IsTrue(_acceptor.RemoveSession(sessionId, true), "Failed to remove active session");
             Assert.IsTrue(WaitForDisconnect(socket03), "Socket still connected after session removed");
-            Assert.IsFalse(IsLoggedOn(dynamicCompID), "Session still logged on after being removed");
+            Assert.IsFalse(IsLoggedOn(dynamicCompId), "Session still logged on after being removed");
 
             // Ensure that we can perform unforced removal of a dynamic session that is not logged on.
-            string dynamicCompID2 = "acc20";
-            var sessionID2 = CreateSessionID(dynamicCompID2);
-            Assert.IsTrue(_acceptor.AddSession(sessionID2, CreateSessionConfig(dynamicCompID2, false)), "Failed to add dynamic session to acceptor");
-            Assert.IsTrue(_acceptor.RemoveSession(sessionID2, false), "Failed to remove inactive session");
+            string dynamicCompId2 = "acc20";
+            var sessionId2 = CreateSessionId(dynamicCompId2);
+            Assert.IsTrue(_acceptor.AddSession(sessionId2, CreateSessionConfig(false)), "Failed to add dynamic session to acceptor");
+            Assert.IsTrue(_acceptor.RemoveSession(sessionId2, false), "Failed to remove inactive session");
 
             // Ensure that we can remove statically configured session
-            Assert.IsTrue(IsLoggedOn(StaticAcceptorCompID), "Unexpected logoff");
-            Assert.IsTrue(_acceptor.RemoveSession(CreateSessionID(StaticAcceptorCompID), true), "Failed to remove active session");
+            Assert.IsTrue(IsLoggedOn(StaticAcceptorCompId), "Unexpected logoff");
+            Assert.IsTrue(_acceptor.RemoveSession(CreateSessionId(StaticAcceptorCompId), true), "Failed to remove active session");
             Assert.IsTrue(WaitForDisconnect(socket01), "Socket still connected after session removed");
-            Assert.IsFalse(IsLoggedOn(StaticAcceptorCompID), "Session still logged on after being removed");
-
+            Assert.IsFalse(IsLoggedOn(StaticAcceptorCompId), "Session still logged on after being removed");
         }
 
         [Test]
@@ -487,46 +472,48 @@ namespace UnitTests
         {
             StartListener();
             StartEngine(true);
+            if (_initiator is null)
+                throw new AssertionException("_initiator is null");
 
             // Ensure we can log on statically (normally) configured initiator
-            Assert.IsTrue(WaitForLogonMessage(StaticInitiatorCompID), "Failed to get logon message for static initiator session");
-            SendInitiatorLogon(StaticInitiatorCompID);
+            Assert.IsTrue(WaitForLogonMessage(StaticInitiatorCompId), "Failed to get logon message for static initiator session");
+            SendInitiatorLogon(StaticInitiatorCompId);
 
             // Add the dynamic initator and ensure that we can log on
-            string dynamicCompID = "ini10";
-            var sessionID = CreateSessionID(dynamicCompID);
-            var sessionConfig = CreateSessionConfig(dynamicCompID, true);
-            Assert.IsTrue(_initiator.AddSession(sessionID, sessionConfig), "Failed to add dynamic session to initiator");
-            Assert.IsTrue(WaitForLogonMessage(dynamicCompID), "Failed to get logon message for dynamic initiator session");
-            SendInitiatorLogon(dynamicCompID);
-            Assert.IsTrue(WaitForLogonStatus(dynamicCompID), "Failed to logon dynamic initiator session");
+            string dynamicCompId = "ini10";
+            var sessionId = CreateSessionId(dynamicCompId);
+            var sessionConfig = CreateSessionConfig(true);
+            Assert.IsTrue(_initiator.AddSession(sessionId, sessionConfig), "Failed to add dynamic session to initiator");
+            Assert.IsTrue(WaitForLogonMessage(dynamicCompId), "Failed to get logon message for dynamic initiator session");
+            SendInitiatorLogon(dynamicCompId);
+            Assert.IsTrue(WaitForLogonStatus(dynamicCompId), "Failed to logon dynamic initiator session");
 
             // Ensure that we can't add the same session again
-            Assert.IsFalse(_initiator.AddSession(sessionID, sessionConfig), "Added dynamic session twice");
+            Assert.IsFalse(_initiator.AddSession(sessionId, sessionConfig), "Added dynamic session twice");
 
             // Now that dynamic initiator is logged on, ensure that unforced attempt to remove session fails
-            Assert.IsFalse(_initiator.RemoveSession(sessionID, false), "Unexpected success removing active session");
-            Assert.IsTrue(IsLoggedOn(dynamicCompID), "Unexpected logoff");
+            Assert.IsFalse(_initiator.RemoveSession(sessionId, false), "Unexpected success removing active session");
+            Assert.IsTrue(IsLoggedOn(dynamicCompId), "Unexpected logoff");
 
             // Ensure that forced attempt to remove session dynamic session succeeds, even though it is in logged on state
-            Assert.IsTrue(_initiator.RemoveSession(sessionID, true), "Failed to remove active session");
-            Assert.IsTrue(WaitForDisconnect(dynamicCompID), "Socket still connected after session removed");
-            Assert.IsFalse(IsLoggedOn(dynamicCompID), "Session still logged on after being removed");
+            Assert.IsTrue(_initiator.RemoveSession(sessionId, true), "Failed to remove active session");
+            Assert.IsTrue(WaitForDisconnect(dynamicCompId), "Socket still connected after session removed");
+            Assert.IsFalse(IsLoggedOn(dynamicCompId), "Session still logged on after being removed");
 
             // Ensure that we can perform unforced removal of a dynamic session that is not logged on.
-            string dynamicCompID2 = "ini20";
-            var sessionID2 = CreateSessionID(dynamicCompID2);
-            Assert.IsTrue(_initiator.AddSession(sessionID2, CreateSessionConfig(dynamicCompID2, true)), "Failed to add dynamic session to initiator");
-            Assert.IsTrue(WaitForLogonMessage(dynamicCompID2), "Failed to get logon message for dynamic initiator session");
-            Assert.IsFalse(IsLoggedOn(dynamicCompID2), "Session logged on");
-            Assert.IsTrue(_initiator.RemoveSession(sessionID2, false), "Failed to remove inactive session");
-            Assert.IsTrue(WaitForDisconnect(dynamicCompID2), "Socket still connected after session removed");
+            string dynamicCompId2 = "ini20";
+            var sessionId2 = CreateSessionId(dynamicCompId2);
+            Assert.IsTrue(_initiator.AddSession(sessionId2, CreateSessionConfig(true)), "Failed to add dynamic session to initiator");
+            Assert.IsTrue(WaitForLogonMessage(dynamicCompId2), "Failed to get logon message for dynamic initiator session");
+            Assert.IsFalse(IsLoggedOn(dynamicCompId2), "Session logged on");
+            Assert.IsTrue(_initiator.RemoveSession(sessionId2, false), "Failed to remove inactive session");
+            Assert.IsTrue(WaitForDisconnect(dynamicCompId2), "Socket still connected after session removed");
 
             // Ensure that we can remove statically configured session
-            Assert.IsTrue(IsLoggedOn(StaticInitiatorCompID), "Unexpected loss of connection");
-            Assert.IsTrue(_initiator.RemoveSession(CreateSessionID(StaticInitiatorCompID), true), "Failed to remove active session");
-            Assert.IsTrue(WaitForDisconnect(StaticInitiatorCompID), "Socket still connected after session removed");
-            Assert.IsFalse(IsLoggedOn(StaticInitiatorCompID), "Session still logged on after being removed");
+            Assert.IsTrue(IsLoggedOn(StaticInitiatorCompId), "Unexpected loss of connection");
+            Assert.IsTrue(_initiator.RemoveSession(CreateSessionId(StaticInitiatorCompId), true), "Failed to remove active session");
+            Assert.IsTrue(WaitForDisconnect(StaticInitiatorCompId), "Socket still connected after session removed");
+            Assert.IsFalse(IsLoggedOn(StaticInitiatorCompId), "Session still logged on after being removed");
 
             // Check that log directory default setting has been effective
             Assert.Greater(System.IO.Directory.GetFiles(_logPath, QuickFix.Values.BeginString_FIX42 + "*.log").Length, 0);
