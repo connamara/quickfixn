@@ -15,7 +15,7 @@ public class DataDictionary_ValidateTests
 
         var ex = Assert.Throws<UnsupportedVersion>(delegate {
             DataDictionary.Validate(new Message(), dd, dd, "foobar", "X"); });
-        StringAssert.Contains("Incorrect BeginString (foobar)", ex!.Message);
+        Assert.That(ex!.Message, Does.Contain("Incorrect BeginString (foobar)"));
     }
 
     [Test]
@@ -41,7 +41,7 @@ public class DataDictionary_ValidateTests
 
         var ex = Assert.Throws<TagOutOfOrder>(delegate {
             DataDictionary.Validate(msg, dd, dd, "FIX.4.4", "B"); });
-        StringAssert.Contains("Tag specified out of required order", ex!.Message);
+        Assert.That(ex!.Message, Does.Contain("Tag specified out of required order"));
     }
 
     [Test]
@@ -105,9 +105,9 @@ public class DataDictionary_ValidateTests
         Group rabbitGroup = new Group(7770, 7711, new[] { 7711, 7722 });
         magicGroup.GetGroup(2, rabbitGroup);
 
-        Assert.AreEqual("abracadabra", magicGroup.GetString(6661));
-        Assert.AreEqual("Floppy", rabbitGroup.GetString(7711));
-        Assert.AreEqual("white", rabbitGroup.GetString(7712));
+        Assert.That(magicGroup.GetString(6661), Is.EqualTo("abracadabra"));
+        Assert.That(rabbitGroup.GetString(7711), Is.EqualTo("Floppy"));
+        Assert.That(rabbitGroup.GetString(7712), Is.EqualTo("white"));
     }
 
     [Test]
@@ -273,7 +273,7 @@ public class DataDictionary_ValidateTests
 
         var ex = Assert.Throws<RequiredTagMissing>(() =>
             DataDictionary.Validate(message, dd, dd, beginString, msgType));
-        Assert.AreEqual(55, ex!.Field);
+        Assert.That(ex!.Field, Is.EqualTo(55));
     }
 
     [Test] // Issue #66

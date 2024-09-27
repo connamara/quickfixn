@@ -12,21 +12,21 @@ namespace UnitTests
         {
             SocketSettings socketSettings = new SocketSettings();
 
-            Assert.IsFalse(socketSettings.SocketIgnoreProxy);
-            Assert.IsTrue(socketSettings.SocketNodelay);
-            Assert.IsNull(socketSettings.SocketReceiveBufferSize);
-            Assert.IsNull(socketSettings.SocketSendBufferSize);
-            Assert.IsNull(socketSettings.SocketReceiveTimeout);
-            Assert.IsNull(socketSettings.SocketSendTimeout);
-            Assert.IsNull(socketSettings.ServerCommonName);
-            Assert.IsTrue(socketSettings.ValidateCertificates);
-            Assert.IsNull(socketSettings.CertificatePath);
-            Assert.IsNull(socketSettings.CertificatePassword);
-            Assert.AreEqual(SslProtocols.None, socketSettings.SslProtocol);
-            Assert.IsTrue(socketSettings.CheckCertificateRevocation);
-            Assert.IsFalse(socketSettings.UseSSL);
-            Assert.IsNull(socketSettings.CACertificatePath);
-            Assert.IsTrue(socketSettings.RequireClientCertificate);
+            Assert.That(socketSettings.SocketIgnoreProxy, Is.False);
+            Assert.That(socketSettings.SocketNodelay, Is.True);
+            Assert.That(socketSettings.SocketReceiveBufferSize, Is.Null);
+            Assert.That(socketSettings.SocketSendBufferSize, Is.Null);
+            Assert.That(socketSettings.SocketReceiveTimeout, Is.Null);
+            Assert.That(socketSettings.SocketSendTimeout, Is.Null);
+            Assert.That(socketSettings.ServerCommonName, Is.Null);
+            Assert.That(socketSettings.ValidateCertificates, Is.True);
+            Assert.That(socketSettings.CertificatePath, Is.Null);
+            Assert.That(socketSettings.CertificatePassword, Is.Null);
+            Assert.That(socketSettings.SslProtocol, Is.EqualTo(SslProtocols.None));
+            Assert.That(socketSettings.CheckCertificateRevocation, Is.True);
+            Assert.That(socketSettings.UseSSL, Is.False);
+            Assert.That(socketSettings.CACertificatePath, Is.Null);
+            Assert.That(socketSettings.RequireClientCertificate, Is.True);
         }
 
         private SettingsDictionary BaseTestDict()
@@ -56,21 +56,21 @@ namespace UnitTests
             SocketSettings socketSettings = new SocketSettings();
             socketSettings.Configure(BaseTestDict());
 
-            Assert.IsFalse(socketSettings.SocketIgnoreProxy);
-            Assert.IsFalse(socketSettings.SocketNodelay);
-            Assert.AreEqual(1, socketSettings.SocketReceiveBufferSize);
-            Assert.AreEqual(2, socketSettings.SocketSendBufferSize);
-            Assert.AreEqual(3, socketSettings.SocketReceiveTimeout);
-            Assert.AreEqual(4, socketSettings.SocketSendTimeout);
-            Assert.AreEqual("SSL_SERVERNAME", socketSettings.ServerCommonName);
-            Assert.IsFalse(socketSettings.ValidateCertificates);
-            Assert.AreEqual("SSL_CERTIFICATE", socketSettings.CertificatePath);
-            Assert.AreEqual("SSL_CA_CERTIFICATE", socketSettings.CACertificatePath);
-            Assert.AreEqual("SSL_CERTIFICATE_PASSWORD", socketSettings.CertificatePassword);
-            Assert.AreEqual(SslProtocols.Tls12, socketSettings.SslProtocol);
-            Assert.IsFalse(socketSettings.CheckCertificateRevocation);
-            Assert.IsTrue(socketSettings.UseSSL);
-            Assert.IsFalse(socketSettings.RequireClientCertificate);
+            Assert.That(socketSettings.SocketIgnoreProxy, Is.False);
+            Assert.That(socketSettings.SocketNodelay, Is.False);
+            Assert.That(socketSettings.SocketReceiveBufferSize, Is.EqualTo(1));
+            Assert.That(socketSettings.SocketSendBufferSize, Is.EqualTo(2));
+            Assert.That(socketSettings.SocketReceiveTimeout, Is.EqualTo(3));
+            Assert.That(socketSettings.SocketSendTimeout, Is.EqualTo(4));
+            Assert.That(socketSettings.ServerCommonName, Is.EqualTo("SSL_SERVERNAME"));
+            Assert.That(socketSettings.ValidateCertificates, Is.False);
+            Assert.That(socketSettings.CertificatePath, Is.EqualTo("SSL_CERTIFICATE"));
+            Assert.That(socketSettings.CACertificatePath, Is.EqualTo("SSL_CA_CERTIFICATE"));
+            Assert.That(socketSettings.CertificatePassword, Is.EqualTo("SSL_CERTIFICATE_PASSWORD"));
+            Assert.That(socketSettings.SslProtocol, Is.EqualTo(SslProtocols.Tls12));
+            Assert.That(socketSettings.CheckCertificateRevocation, Is.False);
+            Assert.That(socketSettings.UseSSL, Is.True);
+            Assert.That(socketSettings.RequireClientCertificate, Is.False);
         }
 
         private SocketSettings CreateWithSslConfig(bool sslValidateCertificates, bool sslCheckCertificateRevocation)
@@ -88,21 +88,21 @@ namespace UnitTests
         {
             // SSLValidateCertificates=true does not affect SSLCheckCertificateRevocation
             var socketSettings = CreateWithSslConfig(true, false);
-            Assert.IsTrue(socketSettings.ValidateCertificates);
-            Assert.IsFalse(socketSettings.CheckCertificateRevocation);
+            Assert.That(socketSettings.ValidateCertificates, Is.True);
+            Assert.That(socketSettings.CheckCertificateRevocation, Is.False);
 
             socketSettings = CreateWithSslConfig(true, true);
-            Assert.IsTrue(socketSettings.ValidateCertificates);
-            Assert.IsTrue(socketSettings.CheckCertificateRevocation);
+            Assert.That(socketSettings.ValidateCertificates, Is.True);
+            Assert.That(socketSettings.CheckCertificateRevocation, Is.True);
 
             // SSLValidateCertificates=false means SSLCheckCertificateRevocation must be false
             socketSettings = CreateWithSslConfig(false, true);
-            Assert.IsFalse(socketSettings.ValidateCertificates);
-            Assert.IsFalse(socketSettings.CheckCertificateRevocation);
+            Assert.That(socketSettings.ValidateCertificates, Is.False);
+            Assert.That(socketSettings.CheckCertificateRevocation, Is.False);
 
             socketSettings = CreateWithSslConfig(false, false);
-            Assert.IsFalse(socketSettings.ValidateCertificates);
-            Assert.IsFalse(socketSettings.CheckCertificateRevocation);
+            Assert.That(socketSettings.ValidateCertificates, Is.False);
+            Assert.That(socketSettings.CheckCertificateRevocation, Is.False);
         }
     }
 }

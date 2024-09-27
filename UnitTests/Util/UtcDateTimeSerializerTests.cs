@@ -16,12 +16,12 @@ namespace UnitTests.Util
         /// <param name="d2"></param>
         static public void AssertHackyDateTimeEquality(DateTime d1, DateTime d2)
         {
-            Assert.AreEqual(d1.Kind, d2.Kind, "kind");
-            Assert.AreEqual(d1.Date, d2.Date, "date");
-            Assert.AreEqual(d1.Hour, d2.Hour, "hours");
-            Assert.AreEqual(d1.Minute, d2.Minute, "minutes");
-            Assert.AreEqual(d1.Second, d2.Second, "seconds");
-            Assert.AreEqual(d1.Millisecond, d2.Millisecond, "milliseconds");
+            Assert.That(d2.Kind, Is.EqualTo(d1.Kind), "kind");
+            Assert.That(d2.Date, Is.EqualTo(d1.Date), "date");
+            Assert.That(d2.Hour, Is.EqualTo(d1.Hour), "hours");
+            Assert.That(d2.Minute, Is.EqualTo(d1.Minute), "minutes");
+            Assert.That(d2.Second, Is.EqualTo(d1.Second), "seconds");
+            Assert.That(d2.Millisecond, Is.EqualTo(d1.Millisecond), "milliseconds");
         }
 
         [Test]

@@ -26,8 +26,8 @@ public class FileLogTests
         QuickFix.SessionID someSessionId = new QuickFix.SessionID("FIX.4.4", "sender", "target");
         QuickFix.SessionID someSessionIdWithQualifier = new QuickFix.SessionID("FIX.4.3", "sender", "target", "foo");
 
-        Assert.AreEqual("FIX.4.4-sender-target", FileLog.Prefix(someSessionId));
-        Assert.AreEqual("FIX.4.3-sender-target-foo", FileLog.Prefix(someSessionIdWithQualifier));
+        Assert.That(FileLog.Prefix(someSessionId), Is.EqualTo("FIX.4.4-sender-target"));
+        Assert.That(FileLog.Prefix(someSessionIdWithQualifier), Is.EqualTo("FIX.4.3-sender-target-foo"));
     }
 
     [Test]
