@@ -26,11 +26,11 @@ namespace UnitTests
             System.DateTime lastReceivedTime = now;
 
             now = now.AddMilliseconds(heartBtIntMillis);
-            Assert.False(SessionState.TimedOut(now, heartBtIntMillis, lastReceivedTime));
+            Assert.That(SessionState.TimedOut(now, heartBtIntMillis, lastReceivedTime), Is.False);
             now = now.AddMilliseconds(heartBtIntMillis);
-            Assert.False(SessionState.TimedOut(now, heartBtIntMillis, lastReceivedTime));
+            Assert.That(SessionState.TimedOut(now, heartBtIntMillis, lastReceivedTime), Is.False);
             now = now.AddMilliseconds(heartBtIntMillis);
-            Assert.True(SessionState.TimedOut(now, heartBtIntMillis, lastReceivedTime));
+            Assert.That(SessionState.TimedOut(now, heartBtIntMillis, lastReceivedTime), Is.True);
         }
         
         [Test]
@@ -42,11 +42,11 @@ namespace UnitTests
             System.DateTime lastRecvTime = now;
 
             now = now.AddMilliseconds(4000);
-            Assert.False(SessionState.LogonTimedOut(now, logonTimeout, lastRecvTime));
+            Assert.That(SessionState.LogonTimedOut(now, logonTimeout, lastRecvTime), Is.False);
             now = now.AddMilliseconds(1000);
-            Assert.True(SessionState.LogonTimedOut(now, logonTimeout, lastRecvTime));
+            Assert.That(SessionState.LogonTimedOut(now, logonTimeout, lastRecvTime), Is.True);
             now = now.AddMilliseconds(1);
-            Assert.True(SessionState.LogonTimedOut(now, logonTimeout, lastRecvTime));
+            Assert.That(SessionState.LogonTimedOut(now, logonTimeout, lastRecvTime), Is.True);
         }
 
         [Test]
@@ -59,12 +59,12 @@ namespace UnitTests
             System.DateTime lastSentTime = now;
 
             now = now.AddMilliseconds(1000);
-            Assert.False(SessionState.LogoutTimedOut(now, sentLogout, logoutTimeout, lastSentTime));
+            Assert.That(SessionState.LogoutTimedOut(now, sentLogout, logoutTimeout, lastSentTime), Is.False);
             now = now.AddMilliseconds(1000);
-            Assert.True(SessionState.LogoutTimedOut(now, sentLogout, logoutTimeout, lastSentTime));
+            Assert.That(SessionState.LogoutTimedOut(now, sentLogout, logoutTimeout, lastSentTime), Is.True);
            
             sentLogout = false; 
-            Assert.False(SessionState.LogoutTimedOut(now, sentLogout, logoutTimeout, lastSentTime));
+            Assert.That(SessionState.LogoutTimedOut(now, sentLogout, logoutTimeout, lastSentTime), Is.False);
         }
 
         [Test]
@@ -77,14 +77,14 @@ namespace UnitTests
             System.DateTime lastReceivedTime = now;
 
             now = now.AddMilliseconds(heartBtIntMillis);
-            Assert.False(SessionState.NeedTestRequest(now, heartBtIntMillis, lastReceivedTime, testRequestCounter));
+            Assert.That(SessionState.NeedTestRequest(now, heartBtIntMillis, lastReceivedTime, testRequestCounter), Is.False);
             now = now.AddMilliseconds(heartBtIntMillis);
-            Assert.True(SessionState.NeedTestRequest(now, heartBtIntMillis, lastReceivedTime, testRequestCounter));
+            Assert.That(SessionState.NeedTestRequest(now, heartBtIntMillis, lastReceivedTime, testRequestCounter), Is.True);
 
             testRequestCounter += 1;
-            Assert.False(SessionState.NeedTestRequest(now, heartBtIntMillis, lastReceivedTime, testRequestCounter));
+            Assert.That(SessionState.NeedTestRequest(now, heartBtIntMillis, lastReceivedTime, testRequestCounter), Is.False);
             now = now.AddMilliseconds(heartBtIntMillis);
-            Assert.True(SessionState.NeedTestRequest(now, heartBtIntMillis, lastReceivedTime, testRequestCounter));
+            Assert.That(SessionState.NeedTestRequest(now, heartBtIntMillis, lastReceivedTime, testRequestCounter), Is.True);
 
         }
 
@@ -98,18 +98,18 @@ namespace UnitTests
             System.DateTime lastSentTime = now;
 
             now = now.AddMilliseconds(heartBtIntMillis / 3);
-            Assert.False(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter));
+            Assert.That(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter), Is.False);
             now = now.AddMilliseconds(heartBtIntMillis / 3);
-            Assert.False(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter));
+            Assert.That(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter), Is.False);
             now = now.AddMilliseconds(heartBtIntMillis / 2);
-            Assert.True(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter));
+            Assert.That(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter), Is.True);
 
             testRequestCounter = 1;
-            Assert.False(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter));
+            Assert.That(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter), Is.False);
             now = now.AddMilliseconds(2 * heartBtIntMillis);
-            Assert.False(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter));
+            Assert.That(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter), Is.False);
             testRequestCounter = 0;
-            Assert.True(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter));
+            Assert.That(SessionState.NeedHeartbeat(now, heartBtIntMillis, lastSentTime, testRequestCounter), Is.True);
         }
 
         [Test]
@@ -122,13 +122,13 @@ namespace UnitTests
             System.DateTime lastReceivedTime = now;
 
             now = now.AddMilliseconds(heartBtIntMillis - 1);
-            Assert.True(SessionState.WithinHeartbeat(now, heartBtIntMillis, lastSentTime, lastReceivedTime));
+            Assert.That(SessionState.WithinHeartbeat(now, heartBtIntMillis, lastSentTime, lastReceivedTime), Is.True);
             now = now.AddMilliseconds(1);
-            Assert.False(SessionState.WithinHeartbeat(now, heartBtIntMillis, lastSentTime, lastReceivedTime));
+            Assert.That(SessionState.WithinHeartbeat(now, heartBtIntMillis, lastSentTime, lastReceivedTime), Is.False);
 
             lastSentTime = lastSentTime.AddMilliseconds(1);
             lastReceivedTime = lastReceivedTime.AddMilliseconds(1);
-            Assert.True(SessionState.WithinHeartbeat(now, heartBtIntMillis, lastSentTime, lastReceivedTime));
+            Assert.That(SessionState.WithinHeartbeat(now, heartBtIntMillis, lastSentTime, lastReceivedTime), Is.True);
         }
 
         [Test]
@@ -211,10 +211,10 @@ namespace UnitTests
             , new object[]{getEvent, state});
 
             //wait till done and assert results
-            Assert.True(setEvent.WaitOne(10000), "Get or Set hung/timed out during concurrent usage");
-            Assert.True(getEvent.WaitOne(10000), "Get or Set hung/timed out during concurrent usage");
-            Assert.AreEqual(setTable, getTable, "Garbled data read in concurrent set and get (like between resendrequest and send)");
-            Assert.AreEqual(errorsTable.Count, 0, "IOException occured in concurrent set and get (like between resendrequest and send)");
+            Assert.That(setEvent.WaitOne(10000), Is.True, "Get or Set hung/timed out during concurrent usage");
+            Assert.That(getEvent.WaitOne(10000), Is.True, "Get or Set hung/timed out during concurrent usage");
+            Assert.That(getTable, Is.EqualTo(setTable), "Garbled data read in concurrent set and get (like between resendrequest and send)");
+            Assert.That(0, Is.EqualTo(errorsTable.Count), "IOException occured in concurrent set and get (like between resendrequest and send)");
 
             //Tear down filestore
             state.Dispose();

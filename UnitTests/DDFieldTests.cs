@@ -18,14 +18,14 @@ namespace UnitTests
 
             DDField ddf = new DDField(5, "Foo", enums, "STRING");
 
-            Assert.AreEqual(ddf.Tag, 5);
-            Assert.AreEqual(ddf.Name, "Foo");
-            Assert.AreEqual(ddf.EnumDict, enums);
-            Assert.AreEqual(ddf.FixFldType, "STRING");
-            Assert.AreEqual(ddf.FieldType, typeof(QuickFix.Fields.StringField));
+            Assert.That(5, Is.EqualTo(ddf.Tag));
+            Assert.That("Foo", Is.EqualTo(ddf.Name));
+            Assert.That(enums, Is.EqualTo(ddf.EnumDict));
+            Assert.That("STRING", Is.EqualTo(ddf.FixFldType));
+            Assert.That(typeof(QuickFix.Fields.StringField), Is.EqualTo(ddf.FieldType));
 
-            Assert.IsFalse(ddf.IsMultipleValueFieldWithEnums);
-            Assert.IsTrue(ddf.HasEnums());
+            Assert.That(ddf.IsMultipleValueFieldWithEnums, Is.False);
+            Assert.That(ddf.HasEnums(), Is.True);
         }
 
         [Test]
@@ -33,14 +33,14 @@ namespace UnitTests
         {
             DDField ddf = new DDField(111, "MultiX", new Dictionary<string, string>(), "MULTIPLEVALUESTRING");
 
-            Assert.AreEqual(ddf.Tag, 111);
-            Assert.AreEqual(ddf.Name, "MultiX");
-            Assert.AreEqual(ddf.EnumDict.Count, 0);
-            Assert.AreEqual(ddf.FixFldType, "MULTIPLEVALUESTRING");
-            Assert.AreEqual(ddf.FieldType, typeof(QuickFix.Fields.StringField));
+            Assert.That(111, Is.EqualTo(ddf.Tag));
+            Assert.That("MultiX", Is.EqualTo(ddf.Name));
+            Assert.That(0, Is.EqualTo(ddf.EnumDict.Count));
+            Assert.That("MULTIPLEVALUESTRING", Is.EqualTo(ddf.FixFldType));
+            Assert.That(typeof(QuickFix.Fields.StringField), Is.EqualTo(ddf.FieldType));
 
-            Assert.IsTrue(ddf.IsMultipleValueFieldWithEnums);
-            Assert.IsFalse(ddf.HasEnums());
+            Assert.That(ddf.IsMultipleValueFieldWithEnums, Is.True);
+            Assert.That(ddf.HasEnums(), Is.False);
         }
     }
 }

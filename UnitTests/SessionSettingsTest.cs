@@ -278,7 +278,7 @@ namespace UnitTests
             Assert.That(settings.Get(id).GetString("EndTime"), Is.EqualTo("05:59:00"));
 
             id = settings.GetSessions().First();
-            Assert.NotNull(id);
+            Assert.That(id, Is.Not.Null);
             Assert.That(id.BeginString, Is.EqualTo("FIX.4.2"));
             Assert.That(id.SenderCompID, Is.EqualTo("Company"));
             Assert.That(id.SenderSubID, Is.EqualTo("FixedIncome"));

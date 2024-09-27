@@ -160,7 +160,7 @@ namespace UnitTests
             QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup partyGroup = new QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup();
             msg.GetGroup(2, partyGroup);
 
-            Assert.False(partyGroup.IsSetNoPartySubIDs());
+            Assert.That(partyGroup.IsSetNoPartySubIDs(), Is.False);
         }
 
         [Test]
@@ -178,8 +178,8 @@ namespace UnitTests
                         + "10=35|").Replace('|', Message.SOH);
 
             n.FromString(s, true, dd, dd, _defaultMsgFactory);
-            Assert.AreEqual("386=3", n.NoTradingSessions.ToStringField());
-            StringAssert.Contains("386=3", n.ConstructString()); //should not be "corrected" to 2!
+            Assert.That(n.NoTradingSessions.ToStringField(), Is.EqualTo("386=3"));
+            Assert.That(n.ConstructString(), Does.Contain("386=3")); //should not be "corrected" to 2!
         }
 
         [Test]
@@ -239,17 +239,17 @@ namespace UnitTests
             int numHeaderFields = 0;
             foreach (KeyValuePair<int, IField> unused in msg.Header)
                 ++numHeaderFields;
-            Assert.AreEqual(7, numHeaderFields);
+            Assert.That(numHeaderFields, Is.EqualTo(7));
 
             int numTrailerFields = 0;
             foreach (KeyValuePair<int, IField> unused in msg.Trailer)
                 ++numTrailerFields;
-            Assert.AreEqual(1, numTrailerFields);
+            Assert.That(numTrailerFields, Is.EqualTo(1));
 
             int numBodyFields = 0;
             foreach (KeyValuePair<int, IField> unused in msg)
                 ++numBodyFields;
-            Assert.AreEqual(1, numBodyFields);
+            Assert.That(numBodyFields, Is.EqualTo(1));
         }
 
         [Test]
@@ -258,14 +258,14 @@ namespace UnitTests
             string msgStr = ("8=FIX.4.2|9=72|35=0|34=3|49=TW|49=BOGUS|52=20000426-12:05:06|56=ISLD|"
                              + "1=acct123|1=bogus|10=052|10=000|").Replace('|', Message.SOH);
             Message msg = new Message(msgStr);
-            Assert.AreEqual(1, msg.Header.RepeatedTags.Count);
-            Assert.AreEqual(49, msg.Header.RepeatedTags[0].Tag);
+            Assert.That(msg.Header.RepeatedTags.Count, Is.EqualTo(1));
+            Assert.That(msg.Header.RepeatedTags[0].Tag, Is.EqualTo(49));
 
-            Assert.AreEqual(1, msg.Trailer.RepeatedTags.Count);
-            Assert.AreEqual(10, msg.Trailer.RepeatedTags[0].Tag);
+            Assert.That(msg.Trailer.RepeatedTags.Count, Is.EqualTo(1));
+            Assert.That(msg.Trailer.RepeatedTags[0].Tag, Is.EqualTo(10));
 
-            Assert.AreEqual(1, msg.RepeatedTags.Count);
-            Assert.AreEqual(1, msg.RepeatedTags[0].Tag);
+            Assert.That(msg.RepeatedTags.Count, Is.EqualTo(1));
+            Assert.That(msg.RepeatedTags[0].Tag, Is.EqualTo(1));
         }
 
         [Test]
@@ -350,7 +350,7 @@ namespace UnitTests
             n.FromString(s, true, dd, dd, _defaultMsgFactory);
 
             //verify that the data field was read correctly
-            Assert.AreEqual(n.Header.GetInt(212), n.Header.GetString(213).Length);
+            Assert.That(n.Header.GetString(213).Length, Is.EqualTo(n.Header.GetInt(212)));
         }
 
         [Test]
@@ -368,7 +368,7 @@ namespace UnitTests
 
             FieldNotFoundException ex =
                 Assert.Throws<FieldNotFoundException>(delegate { n.FromString(s, true, dd, dd, _defaultMsgFactory); })!;
-            Assert.AreEqual("field not found for tag: 212", ex.Message);
+            Assert.That(ex.Message, Is.EqualTo("field not found for tag: 212"));
         }
 
         [Test]
@@ -390,7 +390,7 @@ namespace UnitTests
         [Test]
         public void MsgType()
         {
-            Assert.AreEqual("B", QuickFix.FIX42.News.MsgType);
+            Assert.That(QuickFix.FIX42.News.MsgType, Is.EqualTo("B"));
         }
 
         [Test]
@@ -399,8 +399,8 @@ namespace UnitTests
             string m1 = "8=FIX4.2|9999=99999|".Replace('|', Message.SOH);;
             string m2 = "987=pants|xxxxxxxxxxxxxxxxxxxxxx".Replace('|', Message.SOH);;
 
-            Assert.AreEqual("FIX4.2", Message.ExtractBeginString(m1));
-            Assert.AreEqual("pants", Message.ExtractBeginString(m2));
+            Assert.That(Message.ExtractBeginString(m1), Is.EqualTo("FIX4.2"));
+            Assert.That(Message.ExtractBeginString(m2), Is.EqualTo("pants"));
         }
 
         [Test]
@@ -419,20 +419,20 @@ namespace UnitTests
             n.FromString(s, true, dd, dd, _defaultMsgFactory);
 
             // string values are good?
-            Assert.AreEqual("Y", n.SolicitedFlag.ToString()); //bool, 377
-            Assert.AreEqual("1", n.Side.ToString()); //char, 54
-            Assert.AreEqual("20110901-13:41:31.804", n.TransactTime.ToString()); //datetime, 60
-            Assert.AreEqual("5.5", n.OrderQty.ToString()); //decimal, 38
-            Assert.AreEqual("1", n.PutOrCall.ToString()); //int, 201
-            Assert.AreEqual("asdf", n.ClOrdID.ToString()); //string, 11
+            Assert.That(n.SolicitedFlag.ToString(), Is.EqualTo("Y")); //bool, 377
+            Assert.That(n.Side.ToString(), Is.EqualTo("1")); //char, 54
+            Assert.That(n.TransactTime.ToString(), Is.EqualTo("20110901-13:41:31.804")); //datetime, 60
+            Assert.That(n.OrderQty.ToString(), Is.EqualTo("5.5")); //decimal, 38
+            Assert.That(n.PutOrCall.ToString(), Is.EqualTo("1")); //int, 201
+            Assert.That(n.ClOrdID.ToString(), Is.EqualTo("asdf")); //string, 11
 
             // type-converted values are good?
-            Assert.AreEqual(true, n.SolicitedFlag.Value);
-            Assert.AreEqual('1', n.Side.Value);
-            Assert.AreEqual(DateTime.Parse("2011-09-01 13:41:31.804"), n.TransactTime.Value);
-            Assert.AreEqual(5.5m, n.OrderQty.Value);
-            Assert.AreEqual(1, n.PutOrCall.Value);
-            Assert.AreEqual("asdf", n.ClOrdID.Value);
+            Assert.That(n.SolicitedFlag.Value, Is.EqualTo(true));
+            Assert.That(n.Side.Value, Is.EqualTo('1'));
+            Assert.That(n.TransactTime.Value, Is.EqualTo(DateTime.Parse("2011-09-01 13:41:31.804")));
+            Assert.That(n.OrderQty.Value, Is.EqualTo(5.5m));
+            Assert.That(n.PutOrCall.Value, Is.EqualTo(1));
+            Assert.That(n.ClOrdID.Value, Is.EqualTo("asdf"));
         }
 
         [Test]
@@ -442,16 +442,16 @@ namespace UnitTests
             int n = 0;
 
             var x = QuickFix.Message.ExtractField(msgstr, ref n);
-            Assert.AreEqual(8, n);
-            Assert.AreEqual("100=200", x.ToStringField());
+            Assert.That(n, Is.EqualTo(8));
+            Assert.That(x.ToStringField(), Is.EqualTo("100=200"));
 
             x = QuickFix.Message.ExtractField(msgstr, ref n);
-            Assert.AreEqual(16, n);
-            Assert.AreEqual("300=400", x.ToStringField());
+            Assert.That(n, Is.EqualTo(16));
+            Assert.That(x.ToStringField(), Is.EqualTo("300=400"));
 
             x = QuickFix.Message.ExtractField(msgstr, ref n);
-            Assert.AreEqual(24, n);
-            Assert.AreEqual("500=600", x.ToStringField());
+            Assert.That(n, Is.EqualTo(24));
+            Assert.That(x.ToStringField(), Is.EqualTo("500=600"));
         }
 
         [Test]
@@ -475,7 +475,7 @@ namespace UnitTests
 
             string raw = news.ConstructString();
 
-            StringAssert.Contains("33=2|58=line1|354=3|355=aaa|58=line2|355=bbb|", raw.Replace(Message.SOH, '|'));
+            Assert.That(raw.Replace(Message.SOH, '|'), Does.Contain("33=2|58=line1|354=3|355=aaa|58=line2|355=bbb|"));
         }
 
         [Test]
@@ -493,7 +493,7 @@ namespace UnitTests
             news.AddGroup(group);
 
             string raw = news.ConstructString();
-            StringAssert.Contains("|33=2|58=line1|58=line2|", raw.Replace(Message.SOH, '|'));
+            Assert.That(raw.Replace(Message.SOH, '|'), Does.Contain("|33=2|58=line1|58=line2|"));
         }
 
         [Test]
@@ -584,12 +584,12 @@ namespace UnitTests
         public void GetMsgTypeTest() {
             string msgStr = ("8=FIX.4.4|9=104|35=W|34=3|49=sender|52=20110909-09:09:09.999|56=target"
                              + "55=sym|268=1|269=0|272=20111012|273=22:15:30.444|10=19|").Replace('|', Message.SOH);
-            Assert.AreEqual("W", Message.GetMsgType(msgStr));
+            Assert.That(Message.GetMsgType(msgStr), Is.EqualTo("W"));
 
             // invalid 35 value, let it ride
             string msgStr2 = ("8=FIX.4.4|9=68|35=*|34=3|49=sender|52=20110909-09:09:09.999|56=target"
                               + "55=sym|268=0|10=9|").Replace('|', Message.SOH);
-            Assert.AreEqual("*", Message.GetMsgType(msgStr2));
+            Assert.That(Message.GetMsgType(msgStr2), Is.EqualTo("*"));
         }
 
         [Test]
@@ -618,7 +618,7 @@ namespace UnitTests
             string msgString = msg.ConstructString();
             string expected = "146=2|55=FOO1|48=secid1|55=FOO2|48=secid2|".Replace('|', Message.SOH);
 
-            StringAssert.Contains(expected, msgString);
+            Assert.That(msgString, Does.Contain(expected));
         }
 
         [Test]
@@ -653,7 +653,7 @@ namespace UnitTests
             string expected = "146=2|55=FOO1|65=sfx1|48=secid1|22=src1|55=FOO2|65=sfx2|48=secid2|22=src2|"
                 .Replace('|', Message.SOH);
 
-            StringAssert.Contains(expected, msgString);
+            Assert.That(msgString, Does.Contain(expected));
         }
 
         [Test]
@@ -662,7 +662,7 @@ namespace UnitTests
             QuickFix.FIX50.News msg = new();
             msg.Headline = new Headline("FOO");
 
-            StringAssert.StartsWith("8=FIXT.1.1" + Message.SOH, msg.ConstructString());
+            Assert.That(msg.ConstructString(), Does.StartWith("8=FIXT.1.1" + Message.SOH));
         }
 
         [Test]
@@ -702,7 +702,7 @@ namespace UnitTests
             });
 
             //Console.WriteLine(ci.ToString());
-            StringAssert.Contains(expected, msgString);
+            Assert.That(msgString, Does.Contain(expected));
         }
 
         [Test]
@@ -716,16 +716,16 @@ namespace UnitTests
                              + "148=AAAAAAA|33=2|58=L1|58=L2|10=016|").Replace('|', Message.SOH);
             QuickFix.FIX42.News msg = new QuickFix.FIX42.News();
             msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
-            Assert.AreEqual(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
+            Assert.That(msg.GroupCount(Tags.LinesOfText), Is.EqualTo(2)); // for sanity
 
             // the test
             var grp1 = msg.GetGroup(1, Tags.LinesOfText);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(grp1);
-            Assert.AreEqual("L1", (grp1 as QuickFix.FIX42.News.LinesOfTextGroup)!.Text.Value);
+            Assert.That(grp1, Is.InstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>());
+            Assert.That((grp1 as QuickFix.FIX42.News.LinesOfTextGroup)!.Text.Value, Is.EqualTo("L1"));
 
             var grp2 = msg.GetGroup(2, Tags.LinesOfText);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(grp2);
-            Assert.AreEqual("L2", (grp2 as QuickFix.FIX42.News.LinesOfTextGroup)!.Text.Value);
+            Assert.That(grp2, Is.InstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>());
+            Assert.That((grp2 as QuickFix.FIX42.News.LinesOfTextGroup)!.Text.Value, Is.EqualTo("L2"));
         }
 
         [Test]
@@ -739,16 +739,16 @@ namespace UnitTests
                              + "148=AAAAAAA|33=2|58=L1|58=L2|10=016|").Replace('|', Message.SOH);
             QuickFix.FIX42.News msg = new QuickFix.FIX42.News();
             msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
-            Assert.AreEqual(2, msg.GroupCount(Tags.LinesOfText)); // for sanity
+            Assert.That(msg.GroupCount(Tags.LinesOfText), Is.EqualTo(2)); // for sanity
 
             // the test
             QuickFix.FIX42.News.LinesOfTextGroup grp = new QuickFix.FIX42.News.LinesOfTextGroup(); // for return value
 
             msg.GetGroup(1, grp);
-            Assert.AreEqual("L1", grp.Text.Value);
+            Assert.That(grp.Text.Value, Is.EqualTo("L1"));
 
             msg.GetGroup(2, grp);
-            Assert.AreEqual("L2", grp.Text.Value);
+            Assert.That(grp.Text.Value, Is.EqualTo("L2"));
         }
 
         [Test]
@@ -769,8 +769,8 @@ namespace UnitTests
 
             GroupDelimiterTagException ex =
                 Assert.Throws<GroupDelimiterTagException>(delegate { msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory); })!;
-            Assert.AreEqual(702, ex.Field);
-            Assert.AreEqual("Group 702's first entry does not start with delimiter 703", ex.Message);
+            Assert.That(ex.Field, Is.EqualTo(702));
+            Assert.That(ex.Message, Is.EqualTo("Group 702's first entry does not start with delimiter 703"));
         }
 
         [Test]
@@ -792,9 +792,9 @@ namespace UnitTests
             msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
             QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup gentry1 = new();
             msg.GetGroup(1, gentry1);
-            Assert.AreEqual(new DateTime(2012, 10, 24), gentry1.MDEntryDate.Value);
-            Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30, 47).TimeOfDay, gentry1.MDEntryTime.Value.TimeOfDay);
-            Assert.AreEqual(new DateTime(2012, 10, 24, 7, 30, 47), gentry1.MDEntryDate.Value + gentry1.MDEntryTime.Value.TimeOfDay);
+            Assert.That(gentry1.MDEntryDate.Value, Is.EqualTo(new DateTime(2012, 10, 24)));
+            Assert.That(gentry1.MDEntryTime.Value.TimeOfDay, Is.EqualTo(new DateTime(2012, 10, 24, 7, 30, 47).TimeOfDay));
+            Assert.That(gentry1.MDEntryDate.Value + gentry1.MDEntryTime.Value.TimeOfDay, Is.EqualTo(new DateTime(2012, 10, 24, 7, 30, 47)));
         }
 
         [Test]
@@ -840,7 +840,7 @@ namespace UnitTests
                  + "269=1|270=108.08|15=EUR|271=884000|272=20121024|273=07:30:47|276=I|282=BEARGB21XXX|299=15467902|")
                 .Replace('|', Message.SOH);
 
-            StringAssert.Contains(expected, msgString);
+            Assert.That(msgString, Does.Contain(expected));
         }
 
         [Test]
@@ -858,7 +858,7 @@ namespace UnitTests
             QuickFix.FIX44.ExecutionReport msg = new QuickFix.FIX44.ExecutionReport();
             msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
 
-            Assert.AreEqual(0.23, msg.Factor.Value);
+            Assert.That(msg.Factor.Value, Is.EqualTo(0.23));
         }
 
         [Test]
@@ -876,11 +876,11 @@ namespace UnitTests
             QuickFix.FIX42.Heartbeat heartbeat = new QuickFix.FIX42.Heartbeat();
             heartbeat.FromString(hbStr, true, dd, dd, _defaultMsgFactory);
 
-            Assert.False(news.IsAdmin());
-            Assert.True(news.IsApp());
+            Assert.That(news.IsAdmin(), Is.False);
+            Assert.That(news.IsApp(), Is.True);
 
-            Assert.True(heartbeat.IsAdmin());
-            Assert.False(heartbeat.IsApp());
+            Assert.That(heartbeat.IsAdmin(), Is.True);
+            Assert.That(heartbeat.IsApp(), Is.False);
         }
 
         [Test]
@@ -902,15 +902,14 @@ namespace UnitTests
             msg.FromString(msgStr, false, dd, dd, _defaultMsgFactory);
 
             // make sure no fields were dropped in parsing
-            Assert.AreEqual(msgStr.Length, msg.ConstructString().Length);
+            Assert.That(msg.ConstructString().Length, Is.EqualTo(msgStr.Length));
 
             // make sure repeating groups are not rearranged
             // 1 level deep
-            StringAssert.Contains("55=ABC|65=CD|48=securityid|22=1|".Replace('|', Message.SOH), msg.ConstructString());
+            Assert.That(msg.ConstructString(), Does.Contain("55=ABC|65=CD|48=securityid|22=1|".Replace('|', Message.SOH)));
+
             // 2 levels deep
-            StringAssert.Contains(
-                "311=underlyingsymbol|312=WI|309=underlyingsecurityid|305=1|".Replace('|', Message.SOH),
-                msg.ConstructString());
+            Assert.That(msg.ConstructString(), Does.Contain("311=underlyingsymbol|312=WI|309=underlyingsecurityid|305=1|".Replace('|', Message.SOH)));
         }
 
         [Test]
@@ -922,14 +921,14 @@ namespace UnitTests
             var allocAccountType = new AllocAccountType(AllocAccountType.HOUSE_TRADER);
             message.SetFields(new IField[] { allocAccount, allocAccountType, allocId });
 
-            Assert.AreEqual(true, message.IsSetField(Tags.AllocID));
-            Assert.AreEqual("123456", message.GetString(Tags.AllocID));
+            Assert.That(message.IsSetField(Tags.AllocID), Is.EqualTo(true));
+            Assert.That(message.GetString(Tags.AllocID), Is.EqualTo("123456"));
 
-            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccount));
-            Assert.AreEqual("QuickFixAccount", message.GetString(Tags.AllocAccount));
+            Assert.That(message.IsSetField(Tags.AllocAccount), Is.EqualTo(true));
+            Assert.That(message.GetString(Tags.AllocAccount), Is.EqualTo("QuickFixAccount"));
 
-            Assert.AreEqual(true, message.IsSetField(Tags.AllocAccountType));
-            Assert.AreEqual(AllocAccountType.HOUSE_TRADER, message.GetInt(Tags.AllocAccountType));
+            Assert.That(message.IsSetField(Tags.AllocAccountType), Is.EqualTo(true));
+            Assert.That(message.GetInt(Tags.AllocAccountType), Is.EqualTo(AllocAccountType.HOUSE_TRADER));
         }
 
         [Test]
@@ -943,7 +942,7 @@ namespace UnitTests
             msg.Trailer.SetField(new SignatureLength(4));
 
             string foo = msg.ConstructString().Replace(Message.SOH, '|');
-            StringAssert.EndsWith("|10=099|", foo);
+            Assert.That(foo, Does.EndWith("|10=099|"));
         }
 
         [Test]
@@ -1053,7 +1052,7 @@ namespace UnitTests
             QuickFix.FIX44.News msg = CreateStringResultInput();
             // ToString() does not add BodyLength or CheckSum -- it does not change object state
             string expected = "8=FIX.4.4|35=B|148=myHeadline|33=2|58=line1|58=line2|";
-            Assert.AreEqual(expected, msg.ToString().Replace(Message.SOH, '|'));
+            Assert.That(expected, Is.EqualTo(msg.ToString().Replace(Message.SOH, '|')));
         }
 
         [Test]
@@ -1061,10 +1060,10 @@ namespace UnitTests
             QuickFix.FIX44.News msg = CreateStringResultInput();
             // ConstructString() adds BodyLength and CheckSum
             string expected = "8=FIX.4.4|9=43|35=B|148=myHeadline|33=2|58=line1|58=line2|10=161|";
-            Assert.AreEqual(expected, msg.ConstructString().Replace(Message.SOH, '|'));
+            Assert.That(expected, Is.EqualTo(msg.ConstructString().Replace(Message.SOH, '|')));
 
             // the object state is changed
-            Assert.AreEqual(expected, msg.ToString().Replace(Message.SOH, '|'));
+            Assert.That(expected, Is.EqualTo(msg.ToString().Replace(Message.SOH, '|')));
         }
     }
 }

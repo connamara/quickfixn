@@ -274,6 +274,8 @@ namespace QuickFix
             LogoutAllSessions(force);
             DisposeSessions();
             _sessions.Clear();
+            _nonSessionLog.Dispose();
+            _isStarted = false;
 
             // FIXME StopSessionTimer();
             // FIXME Session.UnregisterSessions(GetSessions());

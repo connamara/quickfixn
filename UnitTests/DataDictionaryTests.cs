@@ -54,8 +54,8 @@ namespace UnitTests
             dd.LoadFIXSpec("FIX44");
             Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "1"), Is.EqualTo(true));
             Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "CONNECTED"), Is.EqualTo(false));
-            Assert.False(dd.FieldsByTag[1].HasEnums());
-            Assert.True(dd.FieldsByTag[945].HasEnums());
+            Assert.That(dd.FieldsByTag[1].HasEnums(), Is.False);
+            Assert.That(dd.FieldsByTag[945].HasEnums(), Is.True);
         }
 
         [Test]
@@ -63,9 +63,9 @@ namespace UnitTests
         {
             DataDictionary dd = new DataDictionary();
             dd.LoadFIXSpec("FIX44");
-            Assert.AreEqual(typeof (Dictionary<string, string>), dd.FieldsByTag[945].EnumDict.GetType());
+            Assert.That(dd.FieldsByTag[945].EnumDict.GetType(), Is.EqualTo(typeof(Dictionary<string, string>)));
             Assert.That("COMPLETED", Is.EqualTo(dd.FieldsByTag[945].EnumDict["2"]));
-            Assert.AreNotEqual("HEARTBEAT", dd.FieldsByTag[35].EnumDict["A"]);
+            Assert.That(dd.FieldsByTag[35].EnumDict["A"], Is.Not.EqualTo("HEARTBEAT"));
         }
 
         [Test]
@@ -82,8 +82,8 @@ namespace UnitTests
             DataDictionary dd = new DataDictionary();
             dd.LoadFIXSpec("FIX44");
             DDMap tcr = dd.Messages["AE"];
-            Assert.True(tcr.Fields.ContainsKey(55));
-            Assert.False(tcr.Fields.ContainsKey(5995));
+            Assert.That(tcr.Fields.ContainsKey(55), Is.True);
+            Assert.That(tcr.Fields.ContainsKey(5995), Is.False);
         }
 
         [Test]
@@ -92,9 +92,9 @@ namespace UnitTests
             DataDictionary dd = new DataDictionary();
             dd.LoadFIXSpec("FIX44");
             DDMap tcrr = dd.Messages["AD"];
-            Assert.True(tcrr.IsGroup(711));
-            Assert.True(tcrr.IsField(711));  // No Field also a field
-            Assert.True(tcrr.GetGroup(711).IsField(311));
+            Assert.That(tcrr.IsGroup(711), Is.True);
+            Assert.That(tcrr.IsField(711), Is.True);  // No Field also a field
+            Assert.That(tcrr.GetGroup(711).IsField(311), Is.True);
             Assert.That(tcrr.Groups[711].Fields[311].Name, Is.EqualTo("UnderlyingSymbol"));
             Assert.That(tcrr.Groups[711].Delim, Is.EqualTo(311));
             DDMap tcr = dd.Messages["AE"];
@@ -108,9 +108,9 @@ namespace UnitTests
             dd.LoadFIXSpec("FIX44");
             DDMap msgJ = dd.Messages["J"];
 
-            Assert.True(msgJ.IsGroup(73));
-            Assert.False(msgJ.IsGroup(756));
-            Assert.True(msgJ.GetGroup(73).IsGroup(756));
+            Assert.That(msgJ.IsGroup(73), Is.True);
+            Assert.That(msgJ.IsGroup(756), Is.False);
+            Assert.That(msgJ.GetGroup(73).IsGroup(756), Is.True);
         }
 
         [Test]
@@ -119,12 +119,12 @@ namespace UnitTests
             DataDictionary dd = new DataDictionary();
             dd.LoadTestFIXSpec("group_begins_group");
             DDMap msg = dd.Messages["magic"];
-            Assert.True(msg.IsGroup(6660)); // NoMagics group
-            Assert.True(msg.GetGroup(6660).IsGroup(7770)); // NoMagics/NoRabbits
-            Assert.True(msg.GetGroup(6660).IsField(6661)); // NoMagics/MagicWord
-            Assert.True(msg.GetGroup(6660).GetGroup(7770).IsField(7711)); // NoMagics/NoRabbits/RabbitName
-            Assert.AreEqual(7770, msg.GetGroup(6660).Delim); // NoMagics delim is NoRabbits counter
-            Assert.AreEqual(7711, msg.GetGroup(6660).GetGroup(7770).Delim); // NoRabbits delim is RabbitName
+            Assert.That(msg.IsGroup(6660), Is.True); // NoMagics group
+            Assert.That(msg.GetGroup(6660).IsGroup(7770), Is.True); // NoMagics/NoRabbits
+            Assert.That(msg.GetGroup(6660).IsField(6661), Is.True); // NoMagics/MagicWord
+            Assert.That(msg.GetGroup(6660).GetGroup(7770).IsField(7711), Is.True); // NoMagics/NoRabbits/RabbitName
+            Assert.That(msg.GetGroup(6660).Delim, Is.EqualTo(7770)); // NoMagics delim is NoRabbits counter
+            Assert.That(msg.GetGroup(6660).GetGroup(7770).Delim, Is.EqualTo(7711)); // NoRabbits delim is RabbitName
         }
 
         [Test]
@@ -133,10 +133,10 @@ namespace UnitTests
             DataDictionary dd = new DataDictionary();
             dd.LoadFIXSpec("FIX44");
             DDMap headerMap = dd.Header;
-            Assert.True(headerMap.IsGroup(627));
+            Assert.That(headerMap.IsGroup(627), Is.True);
             DDGrp grpMap = headerMap.GetGroup(627);
-            Assert.True(dd.Header.GetGroup(627).IsField(628));
-            Assert.True(grpMap.IsField(628));
+            Assert.That(dd.Header.GetGroup(627).IsField(628), Is.True);
+            Assert.That(grpMap.IsField(628), Is.True);
         }
 
         [Test]
@@ -144,8 +144,8 @@ namespace UnitTests
         {
             DataDictionary dd = new DataDictionary();
             dd.LoadFIXSpec("FIX44");
-            Assert.True(dd.Messages["AE"].ReqFields.Contains(571));
-            Assert.False(dd.Messages["AE"].ReqFields.Contains(828));
+            Assert.That(dd.Messages["AE"].ReqFields.Contains(571), Is.True);
+            Assert.That(dd.Messages["AE"].ReqFields.Contains(828), Is.False);
         }
 
         [Test]
@@ -153,7 +153,7 @@ namespace UnitTests
         {
             DataDictionary dd = new DataDictionary();
             dd.LoadFIXSpec("FIX44");
-            Assert.True(dd.Header.ReqFields.Contains(9));
+            Assert.That(dd.Header.ReqFields.Contains(9), Is.True);
             Assert.That(dd.Header.Fields.Count, Is.EqualTo(27));
         }
 
@@ -162,7 +162,7 @@ namespace UnitTests
         {
             DataDictionary dd = new DataDictionary();
             dd.LoadFIXSpec("FIX44");
-            Assert.True(dd.Trailer.ReqFields.Contains(10));
+            Assert.That(dd.Trailer.ReqFields.Contains(10), Is.True);
             Assert.That(dd.Trailer.Fields.Count, Is.EqualTo(3));
         }
 
@@ -315,8 +315,8 @@ namespace UnitTests
 
             //verify that FromString didn't correct the counter
             //HEY YOU, READ THIS NOW: if these fail, first check if MessageTests::FromString_DoNotCorrectCounter() passes
-            Assert.AreEqual("386=3", n.NoTradingSessions.ToStringField());
-            StringAssert.Contains("386=3", n.ConstructString());
+            Assert.That(n.NoTradingSessions.ToStringField(), Is.EqualTo("386=3"));
+            Assert.That(n.ConstructString(), Does.Contain("386=3"));
 
             Assert.Throws<RepeatingGroupCountMismatch>(delegate { dd.CheckGroupCount(n.NoTradingSessions, n, "D"); });
         }
@@ -337,9 +337,9 @@ namespace UnitTests
             dd.LoadFIXSpec("FIX44");
 
             // AD => Instrument component (optional) => 55 (Symbol)
-            Assert.False(dd.Messages["AD"].ReqFields.Contains(55));
+            Assert.That(dd.Messages["AD"].ReqFields.Contains(55), Is.False);
             // 7 => Instrument component (required) => 55 (Symbol)
-            Assert.True(dd.Messages["7"].ReqFields.Contains(55));
+            Assert.That(dd.Messages["7"].ReqFields.Contains(55), Is.True);
         }
 
         [Test]
@@ -347,12 +347,12 @@ namespace UnitTests
         {
             DataDictionary dd = new DataDictionary();
             dd.LoadTestFIXSpec("required_is_optional");
-            Assert.True(dd.Messages["magic"].ReqFields.Contains(1111));  //base required field
-            Assert.False(dd.Messages["magic"].ReqFields.Contains(5555)); //base optional field
-            Assert.False(dd.Messages["magic"].ReqFields.Contains(5556)); //component optional field
+            Assert.That(dd.Messages["magic"].ReqFields.Contains(1111), Is.True);  //base required field
+            Assert.That(dd.Messages["magic"].ReqFields.Contains(5555), Is.False); //base optional field
+            Assert.That(dd.Messages["magic"].ReqFields.Contains(5556), Is.False); //component optional field
 
-            Assert.False(dd.Messages["magic"].Groups[6660].Required); // group isn't required
-            Assert.False(dd.Messages["magic"].Groups[6660].ReqFields.Contains(6662)); // group optional field
+            Assert.That(dd.Messages["magic"].Groups[6660].Required, Is.False); // group isn't required
+            Assert.That(dd.Messages["magic"].Groups[6660].ReqFields.Contains(6662), Is.False); // group optional field
         }
 
         [Test] // Issue #493
@@ -364,13 +364,13 @@ namespace UnitTests
             // The fact that it doesn't throw is sufficient, but we'll do some other checks anyway.
 
             DDMap logon = dd.GetMapForMessage("A")!;
-            Assert.True(logon.IsField(108)); // HeartBtInt
-            Assert.True(logon.IsField(9000)); // CustomField
+            Assert.That(logon.IsField(108), Is.True); // HeartBtInt
+            Assert.That(logon.IsField(9000), Is.True); // CustomField
 
             DDMap news = dd.GetMapForMessage("B")!;
-            Assert.True(news.IsField(148)); // Headline
-            Assert.True(news.IsGroup(33)); // LinesOfText
-            Assert.True(news.GetGroup(33).IsField(355)); // EncodedText
+            Assert.That(news.IsField(148), Is.True); // Headline
+            Assert.That(news.IsGroup(33), Is.True); // LinesOfText
+            Assert.That(news.GetGroup(33).IsField(355), Is.True); // EncodedText
         }
 
         private static XmlNode MakeNode(string xmlString)
@@ -388,22 +388,22 @@ namespace UnitTests
         public void VerifyChildNodeAndReturnNameAtt() {
             XmlNode parentNode = MakeNode("<parentnode name='Daddy'/>");
 
-            Assert.AreEqual("qty", DataDictionary.VerifyChildNodeAndReturnNameAtt(
-                MakeNode("<sometag name='qty'/>"), parentNode));
+            Assert.That(DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("<sometag name='qty'/>"), parentNode),
+                Is.EqualTo("qty"));
 
             DictionaryParseException dpx = Assert.Throws<DictionaryParseException>(
                 delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("foo"), parentNode); })!;
-            Assert.AreEqual("Malformed data dictionary: Found text-only node containing 'foo'", dpx.Message);
+            Assert.That(dpx.Message, Is.EqualTo("Malformed data dictionary: Found text-only node containing 'foo'"));
 
             dpx = Assert.Throws<DictionaryParseException>(
                 delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("<field>qty</field>"), parentNode); })!;
-            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'parentnode/Daddy'", dpx.Message);
+            Assert.That(dpx.Message, Is.EqualTo("Malformed data dictionary: Found 'field' node without 'name' within parent 'parentnode/Daddy'"));
 
             // alt error message, where parent has no name
             parentNode = MakeNode("<parentnode/>");
             dpx = Assert.Throws<DictionaryParseException>(
                 delegate { DataDictionary.VerifyChildNodeAndReturnNameAtt(MakeNode("<field>qty</field>"), parentNode); })!;
-            Assert.AreEqual("Malformed data dictionary: Found 'field' node without 'name' within parent 'parentnode/parentnode'", dpx.Message);
+            Assert.That(dpx.Message, Is.EqualTo("Malformed data dictionary: Found 'field' node without 'name' within parent 'parentnode/parentnode'"));
         }
     }
 }
