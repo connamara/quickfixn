@@ -44,6 +44,7 @@ What's New
      * also deprecate a AcceptorSocketDescriptor ctor due to unused param
 * #900 - correct CompositeLog to use IFactory.CreateNonSessionLog when appropriate (gbirchmeier)
 * #891 - make NonSessionLog implement IDisposable and fix the IOException (VAllens)
+* #893 - Upgrade the unit testing framework to the latest version and remove obsolete Assert methods (VAllens)
 
 ### v1.12.0
 

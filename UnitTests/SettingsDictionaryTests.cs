@@ -48,8 +48,8 @@ public class SettingsDictionaryTests
         d.SetDouble("DOUBLEKEY1", 12.3);
         d.SetDouble("DOUBLEKEY2", 987362.987362);
 
-        Assert.AreEqual("12.3", d.GetString("DOUBLEKEY1"));
-        Assert.AreEqual("987362.987362", d.GetString("DOUBLEKEY2"));
+        Assert.That(d.GetString("DOUBLEKEY1"), Is.EqualTo("12.3"));
+        Assert.That(d.GetString("DOUBLEKEY2"), Is.EqualTo("987362.987362"));
     }
 
     [Test]
@@ -89,9 +89,9 @@ public class SettingsDictionaryTests
         SettingsDictionary d = new();
         d.SetBool("BOOLKEY-T", true);
         d.SetBool("BOOLKEY-F", false);
-        Assert.IsTrue(d.IsBoolPresentAndTrue("BOOLKEY-T"));
-        Assert.IsFalse(d.IsBoolPresentAndTrue("BOOLKEY-F"));
-        Assert.IsFalse(d.IsBoolPresentAndTrue("nonexistent key"));
+        Assert.That(d.IsBoolPresentAndTrue("BOOLKEY-T"), Is.True);
+        Assert.That(d.IsBoolPresentAndTrue("BOOLKEY-F"), Is.False);
+        Assert.That(d.IsBoolPresentAndTrue("nonexistent key"), Is.False);
     }
 
     [Test]
@@ -116,7 +116,7 @@ public class SettingsDictionaryTests
 
         d.SetString("DAY_X", "invalid");
         var ex = Assert.Throws(typeof(ArgumentException), delegate { d.GetDay("DAY_X"); });
-        StringAssert.Contains("Cannot recognize this day: 'invalid'", ex!.Message);
+        Assert.That(ex!.Message, Does.Contain("Cannot recognize this day: 'invalid'"));
     }
 
     [Test]
@@ -129,7 +129,7 @@ public class SettingsDictionaryTests
         Assert.That(d.GetString("DAY4"), Is.EqualTo("Thursday"));
 
         var ex = Assert.Throws(typeof(ArgumentException), delegate { d.SetDay("X", (DayOfWeek)9); });
-        StringAssert.Contains("Not a valid DayOfWeek value", ex!.Message);
+        Assert.That(ex!.Message, Does.Contain("Not a valid DayOfWeek value"));
     }
 
     [Test]
@@ -154,26 +154,26 @@ public class SettingsDictionaryTests
     {
         SettingsDictionary first = new("MyName");
         SettingsDictionary second = new("MyName");
-        Assert.True(first.Equals(second));
+        Assert.That(first.Equals(second), Is.True);
 
         first.SetString("THIRDKEY", "FIRST");
         second.SetString("THIRDKEY", "SECOND");
-        Assert.False(first.Equals(second));
+        Assert.That(first.Equals(second), Is.False);
 
         first.SetString("THIRDKEY", "SECOND");
-        Assert.True(first.Equals(second));
+        Assert.That(first.Equals(second), Is.True);
 
         first.SetString("FIRSTKEY", "FIRSTVALUE");
         second.SetString("SECONDKEY", "SECONDVALUE");
-        Assert.False(first.Equals(second));
+        Assert.That(first.Equals(second), Is.False);
 
         first.SetString("SECONDKEY", "SECONDVALUE");
         second.SetString("FIRSTKEY", "FIRSTVALUE");
-        Assert.True(first.Equals(second));
+        Assert.That(first.Equals(second), Is.True);
 
         SettingsDictionary third = new("Name1");
         SettingsDictionary fourth = new("Name2");
-        Assert.False(third.Equals(fourth));
+        Assert.That(third.Equals(fourth), Is.False);
     }
 
     [Test]
@@ -184,8 +184,8 @@ public class SettingsDictionaryTests
 
         SettingsDictionary dupe = new("dupe", orig);
 
-        Assert.AreEqual(2, dupe.Count);
-        Assert.AreEqual("One", dupe.GetString("uNo"));
-        Assert.AreEqual("2", dupe.GetString("DOs"));
+        Assert.That(dupe.Count, Is.EqualTo(2));
+        Assert.That(dupe.GetString("uNo"), Is.EqualTo("One"));
+        Assert.That(dupe.GetString("DOs"), Is.EqualTo("2"));
     }
 }

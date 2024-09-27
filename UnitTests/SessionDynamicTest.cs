@@ -380,17 +380,17 @@ namespace UnitTests
             // Ensure we can log on 1st session to 1st port
             using (var socket11 = ConnectToEngine(AcceptPort))
             {
-                Assert.IsTrue(socket11.Connected, "Failed to connect to 1st accept port");
+                Assert.That(socket11.Connected, Is.True, "Failed to connect to 1st accept port");
                 SendLogon(socket11, StaticAcceptorCompId);
-                Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompId), "Failed to logon 1st acceptor session");
+                Assert.That(WaitForLogonStatus(StaticAcceptorCompId), Is.True, "Failed to logon 1st acceptor session");
             }
 
             // Ensure we can't log on 2nd session to 1st port
             using (var socket12 = ConnectToEngine(AcceptPort))
             {
-                Assert.IsTrue(socket12.Connected, "Failed to connect to 1st accept port");
+                Assert.That(socket12.Connected, Is.True, "Failed to connect to 1st accept port");
                 SendLogon(socket12, StaticAcceptorCompId2);
-                Assert.IsTrue(WaitForDisconnect(socket12), "Server failed to disconnect 2nd CompID from 1st port");
+                Assert.That(WaitForDisconnect(socket12), Is.True, "Server failed to disconnect 2nd CompID from 1st port");
             }
         }
 
@@ -412,7 +412,7 @@ namespace UnitTests
             var socket = ConnectToEngine(AcceptPort2);
             SendLogon(socket, dynamicCompId);
 
-            Assert.IsTrue(WaitForLogonStatus(dynamicCompId), "Failed to logon dynamic added acceptor session with another port");
+            Assert.That(WaitForLogonStatus(dynamicCompId), Is.True, "Failed to logon dynamic added acceptor session with another port");
         }
         
         [Test]
@@ -425,46 +425,46 @@ namespace UnitTests
             // Ensure we can log on statically (normally) configured acceptor
             var socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompId);
-            Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompId), "Failed to logon static acceptor session");
+            Assert.That(WaitForLogonStatus(StaticAcceptorCompId), Is.True, "Failed to logon static acceptor session");
 
             // Ensure that attempt to log on as yet un-added dynamic acceptor fails
             var socket02 = ConnectToEngine();
             string dynamicCompId = "acc10";
             SendLogon(socket02, dynamicCompId);
-            Assert.IsTrue(WaitForDisconnect(socket02), "Server failed to disconnect unconfigured CompID");
-            Assert.False(HasReceivedMessage(dynamicCompId), "Unexpected message received for unconfigured CompID");
+            Assert.That(WaitForDisconnect(socket02), Is.True, "Server failed to disconnect unconfigured CompID");
+            Assert.That(HasReceivedMessage(dynamicCompId), Is.False, "Unexpected message received for unconfigured CompID");
 
             // Add the dynamic acceptor and ensure that we can now log on
             SessionID sessionId = CreateSessionId(dynamicCompId);
             SettingsDictionary sessionConfig = CreateSessionConfig(false);
-            Assert.IsTrue(_acceptor.AddSession(sessionId, sessionConfig), "Failed to add dynamic session to acceptor");
+            Assert.That(_acceptor.AddSession(sessionId, sessionConfig), Is.True, "Failed to add dynamic session to acceptor");
             var socket03 = ConnectToEngine();
             SendLogon(socket03, dynamicCompId);
-            Assert.IsTrue(WaitForLogonStatus(dynamicCompId), "Failed to logon dynamic acceptor session");
+            Assert.That(WaitForLogonStatus(dynamicCompId), Is.True, "Failed to logon dynamic acceptor session");
 
             // Ensure that we can't add the same session again
-            Assert.IsFalse(_acceptor.AddSession(sessionId, sessionConfig), "Added dynamic session twice");
+            Assert.That(_acceptor.AddSession(sessionId, sessionConfig), Is.False, "Added dynamic session twice");
 
             // Now that dynamic acceptor is logged on, ensure that unforced attempt to remove session fails
-            Assert.IsFalse(_acceptor.RemoveSession(sessionId, false), "Unexpected success removing active session");
-            Assert.IsTrue(socket03.Connected, "Unexpected loss of connection");
+            Assert.That(_acceptor.RemoveSession(sessionId, false), Is.False, "Unexpected success removing active session");
+            Assert.That(socket03.Connected, Is.True, "Unexpected loss of connection");
 
             // Ensure that forced attempt to remove session dynamic session succeeds, even though it is in logged on state
-            Assert.IsTrue(_acceptor.RemoveSession(sessionId, true), "Failed to remove active session");
-            Assert.IsTrue(WaitForDisconnect(socket03), "Socket still connected after session removed");
-            Assert.IsFalse(IsLoggedOn(dynamicCompId), "Session still logged on after being removed");
+            Assert.That(_acceptor.RemoveSession(sessionId, true), Is.True, "Failed to remove active session");
+            Assert.That(WaitForDisconnect(socket03), Is.True, "Socket still connected after session removed");
+            Assert.That(IsLoggedOn(dynamicCompId), Is.False, "Session still logged on after being removed");
 
             // Ensure that we can perform unforced removal of a dynamic session that is not logged on.
             string dynamicCompId2 = "acc20";
             var sessionId2 = CreateSessionId(dynamicCompId2);
-            Assert.IsTrue(_acceptor.AddSession(sessionId2, CreateSessionConfig(false)), "Failed to add dynamic session to acceptor");
-            Assert.IsTrue(_acceptor.RemoveSession(sessionId2, false), "Failed to remove inactive session");
+            Assert.That(_acceptor.AddSession(sessionId2, CreateSessionConfig(false)), Is.True, "Failed to add dynamic session to acceptor");
+            Assert.That(_acceptor.RemoveSession(sessionId2, false), Is.True, "Failed to remove inactive session");
 
             // Ensure that we can remove statically configured session
-            Assert.IsTrue(IsLoggedOn(StaticAcceptorCompId), "Unexpected logoff");
-            Assert.IsTrue(_acceptor.RemoveSession(CreateSessionId(StaticAcceptorCompId), true), "Failed to remove active session");
-            Assert.IsTrue(WaitForDisconnect(socket01), "Socket still connected after session removed");
-            Assert.IsFalse(IsLoggedOn(StaticAcceptorCompId), "Session still logged on after being removed");
+            Assert.That(IsLoggedOn(StaticAcceptorCompId), Is.True, "Unexpected logoff");
+            Assert.That(_acceptor.RemoveSession(CreateSessionId(StaticAcceptorCompId), true), Is.True, "Failed to remove active session");
+            Assert.That(WaitForDisconnect(socket01), Is.True, "Socket still connected after session removed");
+            Assert.That(IsLoggedOn(StaticAcceptorCompId), Is.False, "Session still logged on after being removed");
         }
 
         [Test]
@@ -476,47 +476,47 @@ namespace UnitTests
                 throw new AssertionException("_initiator is null");
 
             // Ensure we can log on statically (normally) configured initiator
-            Assert.IsTrue(WaitForLogonMessage(StaticInitiatorCompId), "Failed to get logon message for static initiator session");
+            Assert.That(WaitForLogonMessage(StaticInitiatorCompId), Is.True, "Failed to get logon message for static initiator session");
             SendInitiatorLogon(StaticInitiatorCompId);
 
             // Add the dynamic initator and ensure that we can log on
             string dynamicCompId = "ini10";
             var sessionId = CreateSessionId(dynamicCompId);
             var sessionConfig = CreateSessionConfig(true);
-            Assert.IsTrue(_initiator.AddSession(sessionId, sessionConfig), "Failed to add dynamic session to initiator");
-            Assert.IsTrue(WaitForLogonMessage(dynamicCompId), "Failed to get logon message for dynamic initiator session");
+            Assert.That(_initiator.AddSession(sessionId, sessionConfig), Is.True, "Failed to add dynamic session to initiator");
+            Assert.That(WaitForLogonMessage(dynamicCompId), Is.True, "Failed to get logon message for dynamic initiator session");
             SendInitiatorLogon(dynamicCompId);
-            Assert.IsTrue(WaitForLogonStatus(dynamicCompId), "Failed to logon dynamic initiator session");
+            Assert.That(WaitForLogonStatus(dynamicCompId), Is.True, "Failed to logon dynamic initiator session");
 
             // Ensure that we can't add the same session again
-            Assert.IsFalse(_initiator.AddSession(sessionId, sessionConfig), "Added dynamic session twice");
+            Assert.That(_initiator.AddSession(sessionId, sessionConfig), Is.False, "Added dynamic session twice");
 
             // Now that dynamic initiator is logged on, ensure that unforced attempt to remove session fails
-            Assert.IsFalse(_initiator.RemoveSession(sessionId, false), "Unexpected success removing active session");
-            Assert.IsTrue(IsLoggedOn(dynamicCompId), "Unexpected logoff");
+            Assert.That(_initiator.RemoveSession(sessionId, false), Is.False, "Unexpected success removing active session");
+            Assert.That(IsLoggedOn(dynamicCompId), Is.True, "Unexpected logoff");
 
             // Ensure that forced attempt to remove session dynamic session succeeds, even though it is in logged on state
-            Assert.IsTrue(_initiator.RemoveSession(sessionId, true), "Failed to remove active session");
-            Assert.IsTrue(WaitForDisconnect(dynamicCompId), "Socket still connected after session removed");
-            Assert.IsFalse(IsLoggedOn(dynamicCompId), "Session still logged on after being removed");
+            Assert.That(_initiator.RemoveSession(sessionId, true), Is.True, "Failed to remove active session");
+            Assert.That(WaitForDisconnect(dynamicCompId), Is.True, "Socket still connected after session removed");
+            Assert.That(IsLoggedOn(dynamicCompId), Is.False, "Session still logged on after being removed");
 
             // Ensure that we can perform unforced removal of a dynamic session that is not logged on.
             string dynamicCompId2 = "ini20";
             var sessionId2 = CreateSessionId(dynamicCompId2);
-            Assert.IsTrue(_initiator.AddSession(sessionId2, CreateSessionConfig(true)), "Failed to add dynamic session to initiator");
-            Assert.IsTrue(WaitForLogonMessage(dynamicCompId2), "Failed to get logon message for dynamic initiator session");
-            Assert.IsFalse(IsLoggedOn(dynamicCompId2), "Session logged on");
-            Assert.IsTrue(_initiator.RemoveSession(sessionId2, false), "Failed to remove inactive session");
-            Assert.IsTrue(WaitForDisconnect(dynamicCompId2), "Socket still connected after session removed");
+            Assert.That(_initiator.AddSession(sessionId2, CreateSessionConfig(true)), Is.True, "Failed to add dynamic session to initiator");
+            Assert.That(WaitForLogonMessage(dynamicCompId2), Is.True, "Failed to get logon message for dynamic initiator session");
+            Assert.That(IsLoggedOn(dynamicCompId2), Is.False, "Session logged on");
+            Assert.That(_initiator.RemoveSession(sessionId2, false), Is.True, "Failed to remove inactive session");
+            Assert.That(WaitForDisconnect(dynamicCompId2), Is.True, "Socket still connected after session removed");
 
             // Ensure that we can remove statically configured session
-            Assert.IsTrue(IsLoggedOn(StaticInitiatorCompId), "Unexpected loss of connection");
-            Assert.IsTrue(_initiator.RemoveSession(CreateSessionId(StaticInitiatorCompId), true), "Failed to remove active session");
-            Assert.IsTrue(WaitForDisconnect(StaticInitiatorCompId), "Socket still connected after session removed");
-            Assert.IsFalse(IsLoggedOn(StaticInitiatorCompId), "Session still logged on after being removed");
+            Assert.That(IsLoggedOn(StaticInitiatorCompId), Is.True, "Unexpected loss of connection");
+            Assert.That(_initiator.RemoveSession(CreateSessionId(StaticInitiatorCompId), true), Is.True, "Failed to remove active session");
+            Assert.That(WaitForDisconnect(StaticInitiatorCompId), Is.True, "Socket still connected after session removed");
+            Assert.That(IsLoggedOn(StaticInitiatorCompId), Is.False, "Session still logged on after being removed");
 
             // Check that log directory default setting has been effective
-            Assert.Greater(System.IO.Directory.GetFiles(_logPath, QuickFix.Values.BeginString_FIX42 + "*.log").Length, 0);
+            Assert.That(System.IO.Directory.GetFiles(_logPath, QuickFix.Values.BeginString_FIX42 + "*.log").Length, Is.GreaterThan(0));
         }
     }
 }

@@ -176,11 +176,11 @@ public class DateTimeConverterTests {
 #pragma warning restore CS0618
 
         //THEN - the date time object is setup correctly
-        Assert.AreEqual(13, convertedTime.Hours);
-        Assert.AreEqual(22, convertedTime.Minutes);
-        Assert.AreEqual(12, convertedTime.Seconds);
-        Assert.AreEqual(123, convertedTime.Milliseconds);
-        Assert.AreEqual(timeStringWithMicroseconds, string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks)));
+        Assert.That(convertedTime.Hours, Is.EqualTo(13));
+        Assert.That(convertedTime.Minutes, Is.EqualTo(22));
+        Assert.That(convertedTime.Seconds, Is.EqualTo(12));
+        Assert.That(convertedTime.Milliseconds, Is.EqualTo(123));
+        Assert.That(timeStringWithMicroseconds, Is.EqualTo(string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks))));
     }
 
     [Test]
@@ -195,10 +195,10 @@ public class DateTimeConverterTests {
 #pragma warning restore CS0618
 
         //THEN - the date time object is setup correctly
-        Assert.AreEqual(13, convertedTime.Hours);
-        Assert.AreEqual(22, convertedTime.Minutes);
-        Assert.AreEqual(12, convertedTime.Seconds);
-        Assert.AreEqual(123, convertedTime.Milliseconds);
-        Assert.AreEqual(timeStringWithMilliseconds + "000", string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks)));
+        Assert.That(convertedTime.Hours, Is.EqualTo(13));
+        Assert.That(convertedTime.Minutes, Is.EqualTo(22));
+        Assert.That(convertedTime.Seconds, Is.EqualTo(12));
+        Assert.That(convertedTime.Milliseconds, Is.EqualTo(123));
+        Assert.That(timeStringWithMilliseconds + "000", Is.EqualTo(string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks))));
     }
 }
