@@ -2277,6 +2277,21 @@ namespace QuickFix.Fields
 
 
     /// <summary>
+    /// ExpireDate Field
+    /// </summary>
+    public sealed class ExpireDate : StringField
+    {
+        public const int TAG = 432;
+
+        public ExpireDate()
+            :base(Tags.ExpireDate) {}
+        public ExpireDate(string val)
+            :base(Tags.ExpireDate, val) {}
+
+    }
+
+
+    /// <summary>
     /// CxlRejResponseTo Field
     /// </summary>
     public sealed class CxlRejResponseTo : CharField

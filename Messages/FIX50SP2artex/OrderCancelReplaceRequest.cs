@@ -507,6 +507,38 @@ namespace QuickFix
                 return IsSetField(Tags.TimeInForce);
             }
 
+            public QuickFix.Fields.ExpireDate ExpireDate
+            {
+                get
+                {
+                    QuickFix.Fields.ExpireDate val = new QuickFix.Fields.ExpireDate();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.ExpireDate val)
+            {
+                this.ExpireDate = val;
+            }
+
+            public QuickFix.Fields.ExpireDate Get(QuickFix.Fields.ExpireDate val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.ExpireDate val)
+            {
+                return IsSetExpireDate();
+            }
+
+            public bool IsSetExpireDate()
+            {
+                return IsSetField(Tags.ExpireDate);
+            }
+
             public QuickFix.Fields.Text Text
             {
                 get

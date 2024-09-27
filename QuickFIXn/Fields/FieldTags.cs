@@ -106,6 +106,7 @@ namespace QuickFix.Fields
         public const int SessionRejectReason = 373;
         public const int BusinessRejectReason = 380;
         public const int TotNoRelatedSym = 393;
+        public const int ExpireDate = 432;
         public const int CxlRejResponseTo = 434;
         public const int PartyIDSource = 447;
         public const int PartyID = 448;

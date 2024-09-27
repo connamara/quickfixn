@@ -85,6 +85,38 @@ namespace QuickFix
                 return IsSetField(Tags.ClOrdID);
             }
 
+            public QuickFix.Fields.OrigClOrdID OrigClOrdID
+            {
+                get
+                {
+                    QuickFix.Fields.OrigClOrdID val = new QuickFix.Fields.OrigClOrdID();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.OrigClOrdID val)
+            {
+                this.OrigClOrdID = val;
+            }
+
+            public QuickFix.Fields.OrigClOrdID Get(QuickFix.Fields.OrigClOrdID val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.OrigClOrdID val)
+            {
+                return IsSetOrigClOrdID();
+            }
+
+            public bool IsSetOrigClOrdID()
+            {
+                return IsSetField(Tags.OrigClOrdID);
+            }
+
             public QuickFix.Fields.NoPartyIDs NoPartyIDs
             {
                 get

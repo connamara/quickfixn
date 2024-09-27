@@ -539,6 +539,38 @@ namespace QuickFix
                 return IsSetField(Tags.OrderOrigination);
             }
 
+            public QuickFix.Fields.ExpireDate ExpireDate
+            {
+                get
+                {
+                    QuickFix.Fields.ExpireDate val = new QuickFix.Fields.ExpireDate();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.ExpireDate val)
+            {
+                this.ExpireDate = val;
+            }
+
+            public QuickFix.Fields.ExpireDate Get(QuickFix.Fields.ExpireDate val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.ExpireDate val)
+            {
+                return IsSetExpireDate();
+            }
+
+            public bool IsSetExpireDate()
+            {
+                return IsSetField(Tags.ExpireDate);
+            }
+
             public class NoPartyIDsGroup : Group
             {
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, Tags.PartyRoleQualifier, 0};
