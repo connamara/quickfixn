@@ -94,4 +94,5 @@ Contributors
 - Matt Lahner
 - Nazar Mandzyk
 - Michal Dachs
+- Phung Nhat-Huy
 
