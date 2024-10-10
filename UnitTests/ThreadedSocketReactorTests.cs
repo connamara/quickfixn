@@ -55,7 +55,7 @@ namespace UnitTests
             var ex = Assert.Throws<SocketException>(delegate { testingObject.Run(); })!;
 
             StringAssert.StartsWith("<event> Error starting listener:", stdOut.ToString());
-            StringAssert.StartsWith("Address already in use", ex.Message);
+            Assert.That(ex.SocketErrorCode, Is.EqualTo(SocketError.AddressAlreadyInUse));
         }
 
         [TearDown]
