@@ -16,12 +16,23 @@ public class NonSessionLog : System.IDisposable {
     }
 
     internal void OnEvent(string s) {
+        if (_disposed) return;
+
         lock (_sync) {
             _log ??= _logFactory.CreateNonSessionLog();
         }
-        _log.OnEvent(s);
+        _log?.OnEvent(s);
     }
 
-    public void Dispose() => _log?.Dispose();
+    private bool _disposed;
+    public void Dispose() {
+        if (_disposed) return;
+
+        if (_log != null) {
+            _log.Dispose();
+            _log = null;
+            _disposed = true;
+        }
+    }
 }
 
