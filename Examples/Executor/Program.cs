@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Extensions.Logging;
 using QuickFix;
 using QuickFix.Logger;
 using QuickFix.Store;
@@ -27,9 +28,10 @@ namespace Executor
                 SessionSettings settings = new SessionSettings(args[0]);
                 IApplication executorApp = new Executor();
                 IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                ILogFactory logFactory = new ScreenLogFactory(settings);
-                //ILogFactory logFactory = new FileLogFactory(settings);
-                ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(executorApp, storeFactory, settings, logFactory);
+                var loggerFactory = new LoggerFactory([new ScreenLoggerProvider(settings)]);
+                // var loggerFactory = new LoggerFactory([new FileLogProvider(settings)]);
+                ThreadedSocketAcceptor acceptor =
+                    new ThreadedSocketAcceptor(executorApp, storeFactory, settings, loggerFactory);
                 HttpServer srv = new HttpServer(HttpServerPrefix, settings);
                 
                 acceptor.Start();

@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using QuickFix.Logger;
+using Microsoft.Extensions.Logging;
 using QuickFix.Store;
 using MessagesBySeqNum = System.Collections.Generic.Dictionary<ulong, QuickFix.Message>;
 
@@ -46,7 +46,7 @@ namespace QuickFix
 
         public bool ShouldSendLogon => IsInitiator && !SentLogon;
 
-        public ILog Log { get; }
+        public ILogger Log { get; }
 
         #endregion
 
@@ -154,9 +154,9 @@ namespace QuickFix
 
         #endregion
 
-        public SessionState(bool isInitiator, ILog log, int heartBtInt, IMessageStore messageStore)
+        public SessionState(bool isInitiator, ILogger logger, int heartBtInt, IMessageStore messageStore)
         {
-            Log = log;
+            Log = logger;
             HeartBtInt = heartBtInt;
             IsInitiator = isInitiator;
             _lastReceivedTimeDt = DateTime.UtcNow;
@@ -395,7 +395,7 @@ namespace QuickFix
             lock (_sync)
             {
                 MessageStore.Reset();
-                Log.OnEvent("Session reset: " + reason);
+                Log.Log(LogLevel.Debug, "Session reset: {Reason}", reason);
             }
         }
 
@@ -418,7 +418,6 @@ namespace QuickFix
             if (_disposed) return;
             if (disposing)
             {
-                Log.Dispose();
                 MessageStore.Dispose();
             }
             _disposed = true;

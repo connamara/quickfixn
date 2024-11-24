@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Logger;
@@ -42,7 +43,7 @@ BeginString = FIX.4.4
                 new NullApplication(),
                 new FileStoreFactory(settings),
                 settings,
-                new FileLogFactory(settings));
+                new LoggerFactory([new FileLoggerProvider(settings)]));
         }
 
         [Test]

@@ -4,7 +4,7 @@ using System.IO;
 using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
-using QuickFix.Logger;
+using Microsoft.Extensions.Logging;
 using QuickFix.Util;
 
 namespace QuickFix.Transport;
@@ -15,11 +15,11 @@ namespace QuickFix.Transport;
 internal sealed class SslStreamFactory
 {
     private readonly SocketSettings _socketSettings;
-    private readonly NonSessionLog _nonSessionLog;
+    private readonly ILogger _nonSessionLog;
     internal const string CLIENT_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.2";
     internal const string SERVER_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.1";
 
-    public SslStreamFactory(SocketSettings settings, NonSessionLog nonSessionLog)
+    public SslStreamFactory(SocketSettings settings, ILogger nonSessionLog)
     {
         _socketSettings = settings;
         _nonSessionLog = nonSessionLog;
@@ -56,7 +56,8 @@ internal sealed class SslStreamFactory
         }
         catch (AuthenticationException ex)
         {
-            _nonSessionLog.OnEvent($"Unable to perform authentication against server: {ex.GetFullMessage()}");
+            _nonSessionLog.Log(LogLevel.Error, ex, "Unable to perform authentication against server: {Message}",
+                ex.GetFullMessage());
             throw;
         }
 
@@ -101,7 +102,8 @@ internal sealed class SslStreamFactory
         }
         catch (AuthenticationException ex)
         {
-            _nonSessionLog.OnEvent($"Unable to perform authentication against server: {ex.GetFullMessage()}");
+            _nonSessionLog.Log(LogLevel.Error, ex, "Unable to perform authentication against server: {Message}",
+                ex.GetFullMessage());
             throw;
         }
 
@@ -171,23 +173,26 @@ internal sealed class SslStreamFactory
         // Validate enhanced key usage
         if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage)) {
             var role = enhancedKeyUsage.Equals(CLIENT_AUTHENTICATION_OID, StringComparison.Ordinal) ? "client" : "server";
-            _nonSessionLog.OnEvent(
-                $"Remote certificate is not intended for {role} authentication: It is missing enhanced key usage {enhancedKeyUsage}");
+            _nonSessionLog.Log(LogLevel.Warning,
+                "Remote certificate is not intended for {Role} authentication: It is missing enhanced key usage {KeyUsage}",
+                role, enhancedKeyUsage);
             return false;
         }
 
         // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
         if (string.IsNullOrEmpty(_socketSettings.CACertificatePath)) {
-            _nonSessionLog.OnEvent("CACertificatePath is not specified");
+            _nonSessionLog.Log(LogLevel.Warning, "CACertificatePath is not specified");
         }
         else
         {
             string caCertPath = StringUtil.FixSlashes(_socketSettings.CACertificatePath);
-            
+
             X509Certificate2? caCert = SslCertCache.LoadCertificate(caCertPath, null);
-            if (caCert is null) {
-                _nonSessionLog.OnEvent(
-                    $"Certificate '{caCertPath}' could not be loaded from store or path '{Directory.GetCurrentDirectory()}'");
+            if (caCert is null)
+            {
+                _nonSessionLog.Log(LogLevel.Warning,
+                    "Certificate '{CertificatePath}' could not be loaded from store or path '{Directory}'", caCertPath,
+                    Directory.GetCurrentDirectory());
                 return false;
             }
 
@@ -219,8 +224,10 @@ internal sealed class SslStreamFactory
         }
 
         // Any basic authentication check failed, do after checking CA
-        if (sslPolicyErrors != SslPolicyErrors.None) {
-            _nonSessionLog.OnEvent($"Remote certificate was not recognized as a valid certificate: {sslPolicyErrors}");
+        if (sslPolicyErrors != SslPolicyErrors.None)
+        {
+            _nonSessionLog.Log(LogLevel.Warning,
+                "Remote certificate was not recognized as a valid certificate: {Errors}", sslPolicyErrors);
             return false;
         }
 

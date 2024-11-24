@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Net;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using QuickFix.Logger;
 using QuickFix.Store;
 
@@ -20,10 +22,9 @@ namespace QuickFix
         private bool _isStarted = false;
         private bool _disposed = false;
         private readonly object _sync = new();
-        private readonly NonSessionLog _nonSessionLog;
+        private readonly ILogger _nonSessionLog;
 
         #region Constructors
-
         /// <summary>
         /// Create a ThreadedSocketAcceptor
         /// </summary>
@@ -32,6 +33,7 @@ namespace QuickFix
         /// <param name="settings"></param>
         /// <param name="logFactory">If null, a NullFactory will be used.</param>
         /// <param name="messageFactory">If null, a DefaultMessageFactory will be created (using settings parameters)</param>
+        [Obsolete]
         public ThreadedSocketAcceptor(
             IApplication application,
             IMessageStoreFactory storeFactory,
@@ -39,11 +41,47 @@ namespace QuickFix
             ILogFactory? logFactory = null,
             IMessageFactory? messageFactory = null)
         {
-            ILogFactory lf = logFactory ?? new NullLogFactory();
+            ILoggerFactory lf = logFactory is null
+                ? NullLoggerFactory.Instance
+                : new LogFactoryAdapter(logFactory, settings);
             IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
             _settings = settings;
             _sessionFactory = new SessionFactory(application, storeFactory, lf, mf);
-            _nonSessionLog = new NonSessionLog(lf);
+            _nonSessionLog = lf.CreateLogger("QuickFix");
+
+            try
+            {
+                foreach (SessionID sessionId in settings.GetSessions())
+                {
+                    SettingsDictionary dict = settings.Get(sessionId);
+                    CreateSession(sessionId, dict);
+                }
+            }
+            catch (Exception e)
+            {
+                throw new ConfigError(e.Message, e);
+            }
+        }
+        /// <summary>
+        /// Create a ThreadedSocketAcceptor
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="storeFactory"></param>
+        /// <param name="settings"></param>
+        /// <param name="loggerFactory">If null, a NullFactory will be used.</param>
+        /// <param name="messageFactory">If null, a DefaultMessageFactory will be created (using settings parameters)</param>
+        public ThreadedSocketAcceptor(
+            IApplication application,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILoggerFactory? loggerFactory = null,
+            IMessageFactory? messageFactory = null)
+        {
+            ILoggerFactory lf = loggerFactory ?? new NullLoggerFactory();
+            IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
+            _settings = settings;
+            _sessionFactory = new SessionFactory(application, storeFactory, lf, mf);
+            _nonSessionLog = lf.CreateLogger("QuickFix");
 
             try
             {
@@ -176,7 +214,8 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    session.Log.OnEvent($"Error during logout of Session {session.SessionID}: {e.Message}");
+                    session.Log.Log(LogLevel.Error, e, "Error during logout of Session {SessionID}: {Message}",
+                        session.SessionID, e.Message);
                 }
             }
 
@@ -191,7 +230,8 @@ namespace QuickFix
                     }
                     catch (Exception e)
                     {
-                        session.Log.OnEvent($"Error during disconnect of Session {session.SessionID}: {e.Message}");
+                        session.Log.Log(LogLevel.Error, e, "Error during disconnect of Session {SessionID}: {Message}",
+                            session.SessionID, e.Message);
                     }
                 }
             }
@@ -274,7 +314,6 @@ namespace QuickFix
             LogoutAllSessions(force);
             DisposeSessions();
             _sessions.Clear();
-            _nonSessionLog.Dispose();
             _isStarted = false;
 
             // FIXME StopSessionTimer();
