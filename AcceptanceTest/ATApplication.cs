@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using QuickFix;
 
 namespace AcceptanceTest
@@ -169,7 +170,8 @@ namespace AcceptanceTest
             }
             catch (System.Exception e)
             {
-                Session.LookupSession(sessionId)?.Log.OnEvent($"Exception during FromApp: {e}\n while processing msg ({message})");
+                Session.LookupSession(sessionId)?.Log.Log(LogLevel.Error, e,
+                    "Exception during FromApp: {Error}\n while processing msg ({Message})", e, message);
             }
         }
 

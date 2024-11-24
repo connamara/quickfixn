@@ -151,7 +151,7 @@ namespace UnitTests
 
             FileStore store = (FileStore)factory.Create(sessionId);
 
-            NullLog log = new NullLog();
+            NullLogger log = new NullLogger();
 
             //Set up sessionstate
             SessionState state = new SessionState(true, log, 1, store);

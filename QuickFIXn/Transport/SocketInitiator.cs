@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 using QuickFix.Store;
 
@@ -26,12 +27,22 @@ namespace QuickFix.Transport
         private readonly Dictionary<SessionID, SocketInitiatorThread> _threads = new();
         private readonly Dictionary<SessionID, int> _sessionToHostNum = new();
         private readonly object _sync = new();
-        
+
+        [Obsolete]
         public SocketInitiator(
             IApplication application,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
             ILogFactory? logFactoryNullable = null,
+            IMessageFactory? messageFactoryNullable = null)
+            : base(application, storeFactory, settings, logFactoryNullable, messageFactoryNullable)
+        { }
+
+        public SocketInitiator(
+            IApplication application,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILoggerFactory? logFactoryNullable = null,
             IMessageFactory? messageFactoryNullable = null)
             : base(application, storeFactory, settings, logFactoryNullable, messageFactoryNullable)
         { }
@@ -45,7 +56,7 @@ namespace QuickFix.Transport
             {
                 t.Connect();
                 t.Initiator.SetConnected(t.Session.SessionID);
-                t.Session.Log.OnEvent("Connection succeeded");
+                t.Session.Log.Log(LogLevel.Debug, "Connection succeeded");
                 t.Session.Next();
                 while (t.Read()) {
                 }
@@ -78,11 +89,13 @@ namespace QuickFix.Transport
         }
 
         private static void LogThreadStartConnectionFailed(SocketInitiatorThread t, Exception e) {
-            if (t.Session.Disposed) {
-                t.NonSessionLog.OnEvent($"Connection failed [session {t.Session.SessionID}]: {e}");
+            if (t.Session.Disposed)
+            {
+                t.NonSessionLog.Log(LogLevel.Error, e, "Connection failed [session {SessionID}]: {Message}",
+                    t.Session.SessionID, e);
                 return;
             }
-            t.Session.Log.OnEvent($"Connection failed: {e}");
+            t.Session.Log.Log(LogLevel.Error, e, "Connection failed: {Error}", e);
         }
 
         private void AddThread(SocketInitiatorThread thread)
@@ -185,7 +198,7 @@ namespace QuickFix.Transport
                 }
                 catch (Exception e)
                 {
-                    _nonSessionLog.OnEvent($"Failed to start: {e}");
+                    _nonSessionLog.Log(LogLevel.Error, e, "Failed to start: {Error}", e);
                 }
 
                 Thread.Sleep(1 * 1000);
@@ -220,7 +233,7 @@ namespace QuickFix.Transport
 
                 IPEndPoint socketEndPoint = GetNextSocketEndPoint(session.SessionID, settings);
                 SetPending(session.SessionID);
-                session.Log.OnEvent($"Connecting to {socketEndPoint.Address} on port {socketEndPoint.Port}");
+                session.Log.Log(LogLevel.Debug, "Connecting to {Address} on port {Port}", socketEndPoint.Address, socketEndPoint.Port);
 
                 //Setup socket settings based on current section
                 var socketSettings = _socketSettings.Clone();
@@ -233,7 +246,7 @@ namespace QuickFix.Transport
                 AddThread(t);
             }
             catch (Exception e) {
-                session.Log.OnEvent(e.Message);
+                session.Log.Log(LogLevel.Error, e, "{Exception}", e);
             }
         }
 

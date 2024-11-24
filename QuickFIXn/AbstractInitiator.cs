@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Collections.Generic;
 using System;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using QuickFix.Logger;
 using QuickFix.Store;
 
@@ -20,22 +22,43 @@ namespace QuickFix
         private readonly SessionFactory _sessionFactory;
         private Thread? _thread;
 
-        protected readonly NonSessionLog _nonSessionLog;
+        protected readonly ILogger _nonSessionLog;
 
         public bool IsStopped { get; private set; } = true;
+
+        [Obsolete]
+        protected AbstractInitiator(
+            IApplication app,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILogFactory? logFactoryNullable = null,
+            IMessageFactory? messageFactoryNullable = null)
+        {
+            _settings = settings;
+            ILoggerFactory logFactory = logFactoryNullable is null
+                ? NullLoggerFactory.Instance
+                : new LogFactoryAdapter(logFactoryNullable, settings);
+            var msgFactory = messageFactoryNullable ?? new DefaultMessageFactory();
+            _sessionFactory = new SessionFactory(app, storeFactory, logFactory, msgFactory);
+            _nonSessionLog = logFactory.CreateLogger("QuickFix");
+
+            HashSet<SessionID> definedSessions = _settings.GetSessions();
+            if (0 == definedSessions.Count)
+                throw new ConfigError("No sessions defined");
+        }
 
         protected AbstractInitiator(
             IApplication app,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
-            ILogFactory? logFactoryNullable,
-            IMessageFactory? messageFactoryNullable)
+            ILoggerFactory? logFactoryNullable = null,
+            IMessageFactory? messageFactoryNullable = null)
         {
             _settings = settings;
-            var logFactory = logFactoryNullable ?? new NullLogFactory();
+            var logFactory = logFactoryNullable ?? new NullLoggerFactory();
             var msgFactory = messageFactoryNullable ?? new DefaultMessageFactory();
             _sessionFactory = new SessionFactory(app, storeFactory, logFactory, msgFactory);
-            _nonSessionLog = new NonSessionLog(logFactory);
+            _nonSessionLog = logFactory.CreateLogger("QuickFix");
 
             HashSet<SessionID> definedSessions = _settings.GetSessions();
             if (0 == definedSessions.Count)
