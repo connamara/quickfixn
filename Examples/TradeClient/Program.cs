@@ -1,5 +1,5 @@
 ﻿using System;
-using QuickFix.Logger;
+using Microsoft.Extensions.Logging;
 using QuickFix.Store;
 
 namespace TradeClient
@@ -31,9 +31,11 @@ namespace TradeClient
                 QuickFix.SessionSettings settings = new QuickFix.SessionSettings(file);
                 TradeClientApp application = new TradeClientApp();
                 IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                ILogFactory logFactory = new ScreenLogFactory(settings);
-                //ILogFactory logFactory = new FileLogFactory(settings);
-                QuickFix.Transport.SocketInitiator initiator = new QuickFix.Transport.SocketInitiator(application, storeFactory, settings, logFactory);
+                using var loggerFactory = LoggerFactory.Create(builder =>
+                {
+                    builder.AddConsole();
+                });
+                QuickFix.Transport.SocketInitiator initiator = new QuickFix.Transport.SocketInitiator(application, storeFactory, settings, loggerFactory);
 
                 // this is a developer-test kludge.  do not emulate.
                 application.MyInitiator = initiator;

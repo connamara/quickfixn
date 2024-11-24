@@ -1,8 +1,11 @@
-﻿namespace QuickFix.Logger;
+﻿using System;
+
+namespace QuickFix.Logger;
 
 /// <summary>
 /// FIXME - needs to log sessionIDs, timestamps, etc.
 /// </summary>
+[Obsolete("Use Microsoft.Extensions.Logging instead.")]
 public class ScreenLog : ILog
 {
     private readonly bool _logIncoming;
@@ -26,7 +29,7 @@ public class ScreenLog : ILog
         if (!_logIncoming)
             return;
 
-        System.Console.WriteLine("<incoming> " + msg.Replace(Message.SOH, '|'));
+        Console.WriteLine("<incoming> " + msg.Replace(Message.SOH, '|'));
     }
 
     public void OnOutgoing(string msg)
@@ -34,7 +37,7 @@ public class ScreenLog : ILog
         if (!_logOutgoing)
             return;
 
-        System.Console.WriteLine("<outgoing> " + msg.Replace(Message.SOH, '|'));
+        Console.WriteLine("<outgoing> " + msg.Replace(Message.SOH, '|'));
     }
 
     public void OnEvent(string s)
@@ -42,7 +45,7 @@ public class ScreenLog : ILog
         if (!_logEvent)
             return;
 
-        System.Console.WriteLine("<event> " + s);
+        Console.WriteLine("<event> " + s);
     }
     #endregion
 
@@ -54,7 +57,8 @@ public class ScreenLog : ILog
     }
     protected virtual void Dispose(bool disposing)
     {
-        // Nothing to dispose of...
+        // Nothing to dispose of
     }
+    ~ScreenLog() => Dispose(false);
     #endregion
 }

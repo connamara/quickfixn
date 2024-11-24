@@ -5,6 +5,7 @@ namespace QuickFix.Logger;
 /// <summary>
 /// File log implementation
 /// </summary>
+[Obsolete("Use Microsoft.Extensions.Logging instead.")]
 internal class CompositeLog : ILog
 {
     private readonly ILog[] _logs;

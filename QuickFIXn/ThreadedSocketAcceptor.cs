@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System;
+using System.Threading;
+using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 using QuickFix.Store;
-using System.Threading;
 
 namespace QuickFix
 {
@@ -22,7 +23,8 @@ namespace QuickFix
         private readonly SessionFactory _sessionFactory;
         private bool _disposed = false;
         private readonly object _sync = new();
-        private readonly NonSessionLog _nonSessionLog;
+        private readonly IQuickFixLoggerFactory _loggerFactory;
+        private readonly LogFactoryAdapter? _logFactoryAdapter;
 
         /// <summary>
         /// Create a ThreadedSocketAcceptor
@@ -32,18 +34,56 @@ namespace QuickFix
         /// <param name="settings"></param>
         /// <param name="logFactory">If null, a NullFactory will be used.</param>
         /// <param name="messageFactory">If null, a DefaultMessageFactory will be created (using settings parameters)</param>
+        [Obsolete("Use \"Microsoft.Extensions.Logging.ILoggerFactory\" instead of \"QuickFix.Logger.ILogFactory\".")]
         public ThreadedSocketAcceptor(
             IApplication application,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
             ILogFactory? logFactory = null,
+            IMessageFactory? messageFactory = null) : this(application, storeFactory, settings,
+            logFactory is null ? NullQuickFixLoggerFactory.Instance : new LogFactoryAdapter(logFactory),
+            messageFactory)
+        {
+        }
+
+        /// <summary>
+        /// Create a ThreadedSocketAcceptor
+        /// </summary>
+        /// <param name="application"></param>
+        /// <param name="storeFactory"></param>
+        /// <param name="settings"></param>
+        /// <param name="loggerFactory">If null, a NullFactory will be used.</param>
+        /// <param name="messageFactory">If null, a DefaultMessageFactory will be created (using settings parameters)</param>
+        public ThreadedSocketAcceptor(
+            IApplication application,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILoggerFactory? loggerFactory = null,
+            IMessageFactory? messageFactory = null) : this(application, storeFactory, settings,
+            loggerFactory is null ? NullQuickFixLoggerFactory.Instance : new MelQuickFixLoggerFactory(loggerFactory),
+            messageFactory)
+        {
+        }
+
+        private ThreadedSocketAcceptor(
+            IApplication application,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            IQuickFixLoggerFactory loggerFactory,
             IMessageFactory? messageFactory = null)
         {
-            ILogFactory lf = logFactory ?? new NullLogFactory();
+            if (loggerFactory is LogFactoryAdapter lfa)
+            {
+                // LogFactoryAdapter is only ever created in the constructor marked obsolete, which means we own it and
+                // must save a ref to it so we can dispose it later. Any other loggerFactory is owned by someone else
+                // so we'll leave the dispose up to them. This should be removed eventually together with the old ILog
+                // and ILogFactory.
+                _logFactoryAdapter = lfa;
+            }
             IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
             _settings = settings;
-            _sessionFactory = new SessionFactory(application, storeFactory, lf, mf);
-            _nonSessionLog = new NonSessionLog(lf);
+            _sessionFactory = new SessionFactory(application, storeFactory, loggerFactory, mf);
+            _loggerFactory = loggerFactory;
 
             try
             {
@@ -92,7 +132,7 @@ namespace QuickFix
 
             if (!_socketDescriptorForAddress.TryGetValue(socketEndPoint, out var descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, _nonSessionLog);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, _loggerFactory);
                 _socketDescriptorForAddress[socketEndPoint] = descriptor;
             }
 
@@ -174,7 +214,8 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    session.Log.OnEvent($"Error during logon of Session {session.SessionID}: {e.Message}");
+                    session.Log.Log(LogLevel.Error, e, "Error during logon of Session {SessionID}: {Message}",
+                        session.SessionID, e.Message);
                 }
             }
         }
@@ -189,7 +230,8 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    session.Log.OnEvent($"Error during logout of Session {session.SessionID}: {e.Message}");
+                    session.Log.Log(LogLevel.Error, e, "Error during logout of Session {SessionID}: {Message}",
+                        session.SessionID, e.Message);
                 }
             }
 
@@ -226,7 +268,8 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    session.Log.OnEvent($"Error during disconnect of Session {session.SessionID}: {e.Message}");
+                    session.Log.Log(LogLevel.Error, e, "Error during disconnect of Session {SessionID}, {Message}",
+                        session.SessionID, e.Message);
                 }
             }
         }

@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System;
+using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 
 namespace QuickFix
@@ -33,18 +34,20 @@ namespace QuickFix
         private readonly TcpListener _tcpListener;
         private readonly SocketSettings _socketSettings;
         private readonly AcceptorSocketDescriptor? _acceptorSocketDescriptor;
-        private readonly NonSessionLog _nonSessionLog;
+        private readonly ILogger _nonSessionLog;
+        private readonly IQuickFixLoggerFactory _loggerFactory;
 
         internal ThreadedSocketReactor(
             IPEndPoint serverSocketEndPoint,
             SocketSettings socketSettings,
             AcceptorSocketDescriptor? acceptorSocketDescriptor,
-            NonSessionLog nonSessionLog)
+            IQuickFixLoggerFactory loggerFactory)
         {
             _socketSettings = socketSettings;
             _tcpListener = new TcpListener(serverSocketEndPoint);
             _acceptorSocketDescriptor = acceptorSocketDescriptor;
-            _nonSessionLog = nonSessionLog;
+            _loggerFactory = loggerFactory;
+            _nonSessionLog = loggerFactory.CreateNonSessionLogger<ThreadedSocketReactor>();
         }
 
         public void Start()
@@ -59,9 +62,8 @@ namespace QuickFix
                         _state = State.RUNNING;
                         _tcpListener.BeginAcceptTcpClient(AcceptTcpClientCallback, _tcpListener);
                     }
-                    catch (Exception e)
-                    {
-                        LogError("Error starting listener", e);
+                    catch (Exception e) {
+                        _nonSessionLog.LogError(e, "Error starting listener");
                         throw;
                     }
                 }
@@ -83,7 +85,7 @@ namespace QuickFix
                     }
                     catch (Exception e)
                     {
-                        LogError("Error while closing server socket", e);
+                        _nonSessionLog.LogError(e, "Error while closing server socket");
                     }
                 }
             }
@@ -103,7 +105,7 @@ namespace QuickFix
                 TcpClient client = listener.EndAcceptTcpClient(ar);
                 ApplySocketOptions(client, _socketSettings);
                 ClientHandlerThread t = new ClientHandlerThread(
-                    client, _nextClientId++, _socketSettings, _acceptorSocketDescriptor, _nonSessionLog);
+                    client, _nextClientId++, _socketSettings, _acceptorSocketDescriptor, _loggerFactory);
                 t.Exited += OnClientHandlerThreadExited;
                 lock (_sync)
                 {
@@ -115,7 +117,7 @@ namespace QuickFix
             catch (Exception e)
             {
                 if (IsRunning)
-                    LogError("Error accepting connection: " + e.Message);
+                    _nonSessionLog.LogError(e, "Error accepting connection");
             }
             if( IsRunning )
             {
@@ -179,7 +181,7 @@ namespace QuickFix
                         }
                         catch (Exception e)
                         {
-                            LogError("Error shutting down", e);
+                            _nonSessionLog.LogError(e, "Error shutting down");
                         }
                         t.Dispose();
                     }
@@ -187,15 +189,6 @@ namespace QuickFix
                     _state = State.SHUTDOWN_COMPLETE;
                 }
             }
-        }
-
-        /// <summary>
-        /// Write to the NonSessionLog
-        /// </summary>
-        /// <param name="s"></param>
-        /// <param name="ex"></param>
-        private void LogError(string s, Exception? ex = null) {
-            _nonSessionLog.OnEvent(ex is null ? $"{s}" : $"{s}: {ex}");
         }
     }
 }
