@@ -349,14 +349,22 @@ namespace QuickFix
         /// Sends a message
         /// </summary>
         /// <param name="message"></param>
+        /// <param name="messageType"></param>
         /// <returns></returns>
-        public bool Send(string message)
+        public bool Send(string message, string messageType)
         {
             lock (_sync)
             {
                 if (_responder is null)
                     return false;
-                Log.Log(LogLevel.Information, LogEventIds.OutgoingMessage, "{Message}", message);
+                using (Log.BeginScope(new Dictionary<string, object>
+                       {
+                           {"MessageType", messageType}
+                       }))
+                {
+                    Log.Log(LogLevel.Information, LogEventIds.OutgoingMessage, "{Message}", message);
+                }
+
                 return _responder.Send(message);
             }
         }
@@ -513,7 +521,21 @@ namespace QuickFix
         /// <param name="msgStr"></param>
         private void NextMessage(string msgStr)
         {
-            Log.Log(LogLevel.Information, LogEventIds.IncomingMessage, "{Message}", msgStr);
+            try
+            {
+                var messageType = Message.IdentifyType(msgStr);
+                using (Log.BeginScope(new Dictionary<string, object>
+                       {
+                           {"MessageType", messageType.Value}
+                       }))
+                {
+                    Log.Log(LogLevel.Information, LogEventIds.IncomingMessage, "{Message}", msgStr);
+                }
+            }
+            catch (Exception)
+            {
+                Log.Log(LogLevel.Information, LogEventIds.IncomingMessage, "{Message}", msgStr);
+            }
 
             MessageBuilder msgBuilder = new MessageBuilder(
                     msgStr,
@@ -789,7 +811,7 @@ namespace QuickFix
                             {
                                 GenerateSequenceReset(resendReq, begin, msgSeqNum);
                             }
-                            Send(msg.ConstructString());
+                            Send(msg.ConstructString(), msg.Header.GetString(Tags.MsgType));
                             begin = 0;
                         }
                         current = msgSeqNum + 1;
@@ -1572,7 +1594,7 @@ namespace QuickFix
                 string messageString = message.ConstructString();
                 if (0 == seqNum)
                     Persist(message, messageString);
-                return Send(messageString);
+                return Send(messageString, message.Header.GetString(Tags.MsgType));
             }
         }
 
