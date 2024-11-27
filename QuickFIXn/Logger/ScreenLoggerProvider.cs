@@ -4,6 +4,9 @@ using Microsoft.Extensions.Logging;
 
 namespace QuickFix.Logger;
 
+[Obsolete("This class is provided to ease migration from the old logging system to Microsoft.Extensions.Logging." +
+          "It is an attempt to maintain the behavior of the previous ScreenLog and ScreenLogFactory while plugging into the Microsoft.Extensions.Logging ecosystem. " +
+          "Consider using the more robust logging options available in the .NET ecosystem, like the MS Console logging provider, Serilog and NLog.")]
 public class ScreenLoggerProvider : ILoggerProvider
 {
     private const string SCREEN_LOG_SHOW_INCOMING = "ScreenLogShowIncoming";

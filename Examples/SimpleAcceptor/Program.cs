@@ -31,7 +31,10 @@ namespace SimpleAcceptor
                 SessionSettings settings = new SessionSettings(args[0]);
                 IApplication app = new SimpleAcceptorApp();
                 IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                var loggerFactory = new LoggerFactory([new FileLoggerProvider(settings)]);
+                var loggerFactory = LoggerFactory.Create(builder =>
+                {
+                    builder.AddProvider(new FileLoggerProvider(settings));
+                });
                 IAcceptor acceptor = new ThreadedSocketAcceptor(app, storeFactory, settings, loggerFactory);
 
                 acceptor.Start();
