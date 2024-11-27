@@ -33,7 +33,7 @@ namespace QuickFix
         /// <param name="settings"></param>
         /// <param name="logFactory">If null, a NullFactory will be used.</param>
         /// <param name="messageFactory">If null, a DefaultMessageFactory will be created (using settings parameters)</param>
-        [Obsolete]
+        [Obsolete("Use \"Microsoft.Extensions.Logging.ILoggerFactory\" instead of \"QuickFix.Logger.ILogFactory\".")]
         public ThreadedSocketAcceptor(
             IApplication application,
             IMessageStoreFactory storeFactory,

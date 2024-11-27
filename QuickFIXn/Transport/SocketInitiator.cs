@@ -28,7 +28,7 @@ namespace QuickFix.Transport
         private readonly Dictionary<SessionID, int> _sessionToHostNum = new();
         private readonly object _sync = new();
 
-        [Obsolete]
+        [Obsolete("Use \"Microsoft.Extensions.Logging.ILoggerFactory\" instead of \"QuickFix.Logger.ILogFactory\".")]
         public SocketInitiator(
             IApplication application,
             IMessageStoreFactory storeFactory,
