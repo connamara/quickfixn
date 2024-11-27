@@ -1,8 +1,11 @@
-﻿namespace QuickFix.Logger;
+﻿using System;
+
+namespace QuickFix.Logger;
 
 /// <summary>
 /// Creates a log instance
 /// </summary>
+[Obsolete("Use Microsoft.Extensions.Logging instead.")]
 public interface ILogFactory
 {
     /// <summary>

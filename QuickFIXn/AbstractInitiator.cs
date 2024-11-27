@@ -26,7 +26,7 @@ namespace QuickFix
 
         public bool IsStopped { get; private set; } = true;
 
-        [Obsolete]
+        [Obsolete("Use \"Microsoft.Extensions.Logging.ILoggerFactory\" instead of \"QuickFix.Logger.ILogFactory\".")]
         protected AbstractInitiator(
             IApplication app,
             IMessageStoreFactory storeFactory,
