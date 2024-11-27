@@ -32,8 +32,11 @@ namespace TradeClient
                 QuickFix.SessionSettings settings = new QuickFix.SessionSettings(file);
                 TradeClientApp application = new TradeClientApp();
                 IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                var loggerFactory = new LoggerFactory([new ScreenLoggerProvider(settings)]);
-                // var loggerFactory = new LoggerFactory([new FileLogProvider(settings)]);
+                var loggerFactory = LoggerFactory.Create(builder =>
+                {
+                    builder.AddProvider(new ScreenLoggerProvider(settings));
+                    // builder.AddProvider(new FileLogProvider(settings));
+                });
                 QuickFix.Transport.SocketInitiator initiator = new QuickFix.Transport.SocketInitiator(application, storeFactory, settings, loggerFactory);
 
                 // this is a developer-test kludge.  do not emulate.
