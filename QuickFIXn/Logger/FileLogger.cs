@@ -87,10 +87,7 @@ public class FileLogger : ILogger, IDisposable
 
     public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
 
-    public IDisposable? BeginScope<TState>(TState state) where TState : notnull
-    {
-        throw new NotImplementedException();
-    }
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull => default!;
 
     public void Dispose()
     {
