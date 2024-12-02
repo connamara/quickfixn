@@ -66,6 +66,9 @@ public class FileLogTests
 
         Assert.That(File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log")));
         Assert.That(File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log")));
+
+        // cleanup
+        Directory.Delete(logDirectory, true);
     }
 
     [Test]

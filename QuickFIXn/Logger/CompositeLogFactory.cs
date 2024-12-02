@@ -26,6 +26,6 @@ public class CompositeLogFactory : ILogFactory
     }
 
     public ILog CreateNonSessionLog() {
-        return new CompositeLog(_factories.Select(f => f.Create(new SessionID("Non", "Session", "Log"))).ToArray());
+        return new CompositeLog(_factories.Select(f => f.CreateNonSessionLog()).ToArray());
     }
 }

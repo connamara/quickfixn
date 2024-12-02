@@ -2,7 +2,7 @@ namespace QuickFix.Logger;
 
 /// <summary>
 /// A logger that can be used when the calling logic cannot identify a session (which is rare).
-/// Does not create a file until first write.
+/// Does not create a log artifact until first write.
 /// </summary>
 public class NonSessionLog {
 

@@ -25,6 +25,10 @@ public class SettingsDictionary : System.Collections.IEnumerable
         : this("unnamed")
     { }
 
+    /// <summary>
+    /// Create a new SettingsDictionary withy specified name
+    /// </summary>
+    /// <param name="name">Section name (usually "DEFAULT" or "SESSION")</param>
     public SettingsDictionary(string name)
         : this(name, new Dictionary<string,string>())
     { }
@@ -33,7 +37,7 @@ public class SettingsDictionary : System.Collections.IEnumerable
     /// Create a new SettingsDictionary with specified name but data copied from
     /// the dataSource SettingsDictionary
     /// </summary>
-    /// <param name="name"></param>
+    /// <param name="name">Section name (usually "DEFAULT" or "SESSION")</param>
     /// <param name="dataSource"></param>
     public SettingsDictionary(string name, SettingsDictionary dataSource)
         : this(name, dataSource._data)
