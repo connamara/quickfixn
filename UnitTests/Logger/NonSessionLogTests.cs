@@ -8,6 +8,15 @@ namespace UnitTests.Logger;
 public class NonSessionLogTests {
     private readonly string _logDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "log");
 
+    private NonSessionLog? _nslog;
+
+    [TearDown]
+    public void Teardown()
+    {
+        _nslog?.Dispose();
+        _nslog = null;
+    }
+    
     private FileLogFactory CreateFileLogFactory() {
         if (Directory.Exists(_logDirectory))
             Directory.Delete(_logDirectory, true);
@@ -32,34 +41,38 @@ public class NonSessionLogTests {
     [Test]
     public void TestWithFileLogFactory() {
         FileLogFactory flf = CreateFileLogFactory();
-        NonSessionLog nslog = new NonSessionLog(flf);
+        _nslog = new NonSessionLog(flf);
 
         // Log artifact not created before first log-write
         Assert.False(Directory.Exists(_logDirectory));
 
         // Log artifact exists after first log-write
-        nslog.OnEvent("some text");
+        _nslog.OnEvent("some text");
         Assert.True(Directory.Exists(_logDirectory));
         Assert.True(File.Exists(Path.Combine(_logDirectory, "Non-Session-Log.event.current.log")));
 
-        // cleanup
+        // cleanup (don't delete log unless success)
+        _nslog.Dispose();
+        _nslog = null;
         Directory.Delete(_logDirectory, true);
     }
 
     [Test]
     public void TestWithCompositeLogFactory() {
         CompositeLogFactory clf = new CompositeLogFactory([CreateFileLogFactory(), new NullLogFactory()]);
-        NonSessionLog nslog = new NonSessionLog(clf);
+        _nslog = new NonSessionLog(clf);
 
         // Log artifact not created before first log-write
         Assert.False(Directory.Exists(_logDirectory));
 
         // Log artifact exists after first log-write
-        nslog.OnEvent("some text");
+        _nslog.OnEvent("some text");
         Assert.True(Directory.Exists(_logDirectory));
         Assert.True(File.Exists(Path.Combine(_logDirectory, "Non-Session-Log.event.current.log")));
 
-        // cleanup
+        // cleanup (don't delete log unless success)
+        _nslog.Dispose();
+        _nslog = null;
         Directory.Delete(_logDirectory, true);
     }
 }
