@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using QuickFix.Logger;
+using Microsoft.Extensions.Logging;
 
 namespace QuickFix
 {
@@ -16,7 +16,7 @@ namespace QuickFix
     {
         public Session Session { get; }
         public Transport.SocketInitiator Initiator { get; }
-        public NonSessionLog NonSessionLog { get; }
+        public ILogger NonSessionLog { get; }
 
         public const int BUF_SIZE = 512;
 
@@ -39,7 +39,7 @@ namespace QuickFix
             Session session,
             IPEndPoint socketEndPoint,
             SocketSettings socketSettings,
-            NonSessionLog nonSessionLog)
+            ILogger nonSessionLog)
         {
             Initiator = initiator;
             Session = session;
@@ -105,7 +105,7 @@ namespace QuickFix
             }
             catch (Exception e)
             {
-                Session.Log.OnEvent(e.ToString());
+                Session.Log.Log(LogLevel.Error, e, "{Exception}", e);
                 Disconnect();
             }
             return false;

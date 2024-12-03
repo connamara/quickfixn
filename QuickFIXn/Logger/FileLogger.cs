@@ -1,16 +1,14 @@
-﻿using System;
+using System;
+using Microsoft.Extensions.Logging;
 using QuickFix.Fields.Converters;
 using QuickFix.Util;
 
 namespace QuickFix.Logger;
 
-/// <summary>
-/// File log implementation
-/// </summary>
-[Obsolete("Use Microsoft.Extensions.Logging instead")]
-public class FileLog : ILog
+public class FileLogger : ILogger, IDisposable
 {
-    private readonly object _sync = new();
+    private readonly object _messagesLock = new();
+    private readonly object _eventsLock = new();
 
     private System.IO.StreamWriter _messageLog;
     private System.IO.StreamWriter _eventLog;
@@ -19,14 +17,14 @@ public class FileLog : ILog
     private readonly string _eventLogFileName;
 
     /// <summary>
-    ///
+    /// 
     /// </summary>
     /// <param name="fileLogPath">
     /// All back or forward slashes in this path will be converted as needed to the running platform's preferred
     /// path separator (i.e. "/" will become "\" on windows, else "\" will become "/" on all other platforms)
     /// </param>
     /// <param name="sessionId"></param>
-    public FileLog(string fileLogPath, SessionID sessionId)
+    internal FileLogger(string fileLogPath, SessionID sessionId)
     {
         string prefix = Prefix(sessionId);
 
@@ -65,81 +63,35 @@ public class FileLog : ILog
         return prefix.ToString();
     }
 
-    private void DisposedCheck()
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception,
+        Func<TState, Exception?, string> formatter)
     {
-        if (_disposed)
-            throw new ObjectDisposedException(GetType().Name);
-    }
-
-    #region Log Members
-
-    public void Clear()
-    {
-        DisposedCheck();
-
-        lock (_sync)
+        if (!IsEnabled(logLevel)) return;
+        if (eventId == LogEventIds.IncomingMessage || eventId == LogEventIds.OutgoingMessage)
         {
-            _messageLog.Close();
-            _eventLog.Close();
-
-            _messageLog = new System.IO.StreamWriter(_messageLogFileName, false);
-            _eventLog = new System.IO.StreamWriter(_eventLogFileName, false);
-
-            _messageLog.AutoFlush = true;
-            _eventLog.AutoFlush = true;
+            lock (_messagesLock)
+            {
+                _messageLog.WriteLine(
+                    $"{DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond)} : {formatter(state, exception)}");
+            }
+        }
+        else
+        {
+            lock (_eventsLock)
+            {
+                _eventLog.WriteLine(
+                    $"{DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond)} : {formatter(state, exception)}");
+            }
         }
     }
 
-    public void OnIncoming(string msg)
-    {
-        DisposedCheck();
+    public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
 
-        lock (_sync)
-        {
-            _messageLog.WriteLine(DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond) + " : " + msg);
-        }
-    }
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull => default!;
 
-    public void OnOutgoing(string msg)
-    {
-        DisposedCheck();
-
-        lock (_sync)
-        {
-            _messageLog.WriteLine(DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond) + " : " + msg);
-        }
-    }
-
-    public void OnEvent(string s)
-    {
-        DisposedCheck();
-
-        lock (_sync)
-        {
-            _eventLog.WriteLine(DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond) + " : " + s);
-        }
-    }
-
-    #endregion
-
-    #region IDisposable Members
     public void Dispose()
     {
-        Dispose(true);
-        GC.SuppressFinalize(this);
+        _messageLog.Dispose();
+        _eventLog.Dispose();
     }
-
-    private bool _disposed = false;
-    protected virtual void Dispose(bool disposing)
-    {
-        if (_disposed) return;
-        if (disposing)
-        {
-            _messageLog.Dispose();
-            _eventLog.Dispose();
-        }
-        _disposed = true;
-    }
-    ~FileLog() => Dispose(false);
-    #endregion
 }
