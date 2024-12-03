@@ -152,6 +152,12 @@ namespace QuickFix
             catch (AggregateException ex) // Timeout
             {
                 _currentReadTask = null;
+
+                if (ex.InnerException is OperationCanceledException) {
+                    // Nothing read 
+                    return 0;
+                }
+                
                 var ioException = ex.InnerException as IOException;
                 var inner = ioException?.InnerException as SocketException;
                 if (inner is not null && inner.SocketErrorCode == SocketError.TimedOut) {
