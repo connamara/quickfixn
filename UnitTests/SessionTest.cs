@@ -276,7 +276,7 @@ public class SessionTest
 
         SendResendRequest(1, 4);
         Assert.That(SENT_SEQUENCE_RESET());
-        Assert.IsFalse(RESENT());
+        Assert.That(RESENT(), Is.False);
     }
 
     [Test]
@@ -326,22 +326,22 @@ public class SessionTest
         _responder.MsgLookup.Clear();
         SendResendRequest(1, 100);
 
-        Assert.AreEqual(_responder.GetCount(QuickFix.Fields.MsgType.NEWORDERSINGLE), orderCount);
-        Assert.AreEqual(_responder.GetCount(QuickFix.Fields.MsgType.SEQUENCE_RESET), gapStarts.Length);
+        Assert.That(orderCount, Is.EqualTo(_responder.GetCount(QuickFix.Fields.MsgType.NEWORDERSINGLE)));
+        Assert.That(gapStarts.Length, Is.EqualTo(_responder.GetCount(QuickFix.Fields.MsgType.SEQUENCE_RESET)));
 
         int count = -1;
         foreach (QuickFix.Message sequenceResestMsg in _responder.MsgLookup[QuickFix.Fields.MsgType.SEQUENCE_RESET])
         {
-            Assert.AreEqual(sequenceResestMsg.GetString(QuickFix.Fields.Tags.GapFillFlag), "Y");
-            Assert.AreEqual(sequenceResestMsg.Header.GetULong(QuickFix.Fields.Tags.MsgSeqNum), gapStarts[++count]);
-            Assert.AreEqual(sequenceResestMsg.GetInt(QuickFix.Fields.Tags.NewSeqNo), gapEnds[count]);
+            Assert.That("Y", Is.EqualTo(sequenceResestMsg.GetString(QuickFix.Fields.Tags.GapFillFlag)));
+            Assert.That(gapStarts[++count], Is.EqualTo(sequenceResestMsg.Header.GetULong(QuickFix.Fields.Tags.MsgSeqNum)));
+            Assert.That(gapEnds[count], Is.EqualTo(sequenceResestMsg.GetInt(QuickFix.Fields.Tags.NewSeqNo)));
         }
     }
 
     [Test]
     public void TestResendSessionLevelReject()
     {
-        Assert.False(_session!.ResendSessionLevelRejects); // check for correct default
+        Assert.That(_session!.ResendSessionLevelRejects, Is.False); // check for correct default
         Logon();
 
         QuickFix.FIX42.Reject reject = new QuickFix.FIX42.Reject(
@@ -359,7 +359,7 @@ public class SessionTest
         _responder.MsgLookup.Clear();
         _session.ResendSessionLevelRejects = false;
         SendResendRequest(1, 100);
-        Assert.False(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT));
+        Assert.That(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT), Is.False);
     }
 
     public void AssertMsInTag(string msgType, int tag, bool shouldHaveMs)
@@ -711,7 +711,7 @@ public class SessionTest
 
         SendTheMessage(sr);
 
-        Assert.False(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT));
+        Assert.That(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT), Is.False);
     }
     [Test]
     public void TestToAppDoNotSend()
@@ -727,7 +727,7 @@ public class SessionTest
 
         _application.DoNotSendException = new QuickFix.DoNotSend();
         _session!.Send(order);
-        Assert.False(SENT_NOS());
+        Assert.That(SENT_NOS(), Is.False);
     }
 
     [Test]
@@ -743,13 +743,13 @@ public class SessionTest
              new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
 
         _session!.Send(order);
-        Assert.True(SENT_NOS());
+        Assert.That(SENT_NOS(), Is.True);
 
         _responder.MsgLookup.Remove(QuickFix.Fields.MsgType.NEWORDERSINGLE);
         _application.DoNotSendException = new QuickFix.DoNotSend();
 
         SendResendRequest(1, 0);
-        Assert.False(SENT_NOS());
+        Assert.That(SENT_NOS(), Is.False);
     }
 
 
@@ -778,8 +778,8 @@ public class SessionTest
         _session.Next(order.ConstructString());
 
         Assert.That(mockApp.InterceptedMessageTypes.Count, Is.EqualTo(2));
-        Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.LOGON));
-        Assert.True(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.NEWORDERSINGLE));
+        Assert.That(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.LOGON), Is.True);
+        Assert.That(mockApp.InterceptedMessageTypes.Contains(QuickFix.Fields.MsgType.NEWORDERSINGLE), Is.True);
     }
 
     [Test]

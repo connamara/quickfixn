@@ -33,7 +33,7 @@ namespace UnitTests
                               + "523=subDEF|803=31|";
 
             //Console.WriteLine(msgString);
-            StringAssert.Contains(expected, msgString.Replace(Message.SOH, '|'));
+            Assert.That(msgString.Replace(Message.SOH, '|'), Does.Contain(expected));
         }
 
         [Test]
@@ -45,11 +45,11 @@ namespace UnitTests
 
             QuickFix.FIX42.News.LinesOfTextGroup clone = (linesGroup.Clone() as QuickFix.FIX42.News.LinesOfTextGroup)!;
 
-            Assert.AreEqual(linesGroup.Text.Value, clone.Text.Value);
-            Assert.AreEqual(linesGroup.EncodedText.Value, clone.EncodedText.Value);
-            Assert.AreEqual(linesGroup.Delim, clone.Delim);
-            Assert.AreEqual(linesGroup.CounterField, clone.CounterField);
-            Assert.AreEqual(linesGroup.FieldOrder, clone.FieldOrder);
+            Assert.That(clone.Text.Value, Is.EqualTo(linesGroup.Text.Value));
+            Assert.That(clone.EncodedText.Value, Is.EqualTo(linesGroup.EncodedText.Value));
+            Assert.That(clone.Delim, Is.EqualTo(linesGroup.Delim));
+            Assert.That(clone.CounterField, Is.EqualTo(linesGroup.CounterField));
+            Assert.That(clone.FieldOrder, Is.EqualTo(linesGroup.FieldOrder));
         }
     }
 }

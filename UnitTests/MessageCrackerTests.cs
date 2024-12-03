@@ -61,9 +61,9 @@ namespace UnitTests
                 }
             }
 
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreEqual(handlers[0].GetParameters()[0].ParameterType, typeof(QuickFix.FIX42.News));
-            Assert.AreEqual(handlers[1].GetParameters()[0].ParameterType, typeof(QuickFix.FIXT11.Logon));
+            Assert.That(handlers.Count, Is.EqualTo(2));
+            Assert.That(typeof(QuickFix.FIX42.News), Is.EqualTo(handlers[0].GetParameters()[0].ParameterType));
+            Assert.That(typeof(QuickFix.FIXT11.Logon), Is.EqualTo(handlers[1].GetParameters()[0].ParameterType));
         }
 
 
@@ -86,19 +86,19 @@ namespace UnitTests
             TestCracker tc = (mc as TestCracker)!;
 
             mc.Crack(new QuickFix.FIX42.News(), _dummySessionId);
-            Assert.IsTrue(tc.CrackedNews42);
-            Assert.IsFalse(tc.CrackedNews44);
+            Assert.That(tc.CrackedNews42, Is.True);
+            Assert.That(tc.CrackedNews44, Is.False);
 
             // reset and do the opposite
             tc.CrackedNews42 = false;
 
             mc.Crack(new QuickFix.FIX44.News(), _dummySessionId);
-            Assert.IsFalse(tc.CrackedNews42);
-            Assert.IsTrue(tc.CrackedNews44);
+            Assert.That(tc.CrackedNews42, Is.False);
+            Assert.That(tc.CrackedNews44, Is.True);
 
-            Assert.IsFalse(tc.CrackedLogonFIXT11);
+            Assert.That(tc.CrackedLogonFIXT11, Is.False);
             mc.Crack(new QuickFix.FIXT11.Logon(), _dummySessionId);
-            Assert.IsTrue(tc.CrackedLogonFIXT11);
+            Assert.That(tc.CrackedLogonFIXT11, Is.True);
         }
 
         [Test]

@@ -13,9 +13,9 @@ namespace UnitTests
         public void Tag()
         {
             // three paths to this value
-            Assert.AreEqual(1, QuickFix.Fields.Account.TAG);
-            Assert.AreEqual(1, new QuickFix.Fields.Account().Tag);
-            Assert.AreEqual(1, QuickFix.Fields.Tags.Account);
+            Assert.That(QuickFix.Fields.Account.TAG, Is.EqualTo(1));
+            Assert.That(new QuickFix.Fields.Account().Tag, Is.EqualTo(1));
+            Assert.That(QuickFix.Fields.Tags.Account, Is.EqualTo(1));
         }
 
         [Test]
@@ -121,8 +121,8 @@ namespace UnitTests
 
             // latin-1-specific character
             obj = new StringField(359, "olé!"); // the é is single-byte in iso-8859-1, but is 2 bytes in ascii or utf-8
-            Assert.AreEqual(708, obj.GetTotal()); // sum of all bytes in "359=olé!"+nul
-            Assert.AreEqual(9, obj.GetLength());  // 8 single-byte chars + 1 nul char
+            Assert.That(obj.GetTotal(), Is.EqualTo(708)); // sum of all bytes in "359=olé!"+nul
+            Assert.That(obj.GetLength(), Is.EqualTo(9));  // 8 single-byte chars + 1 nul char
         }
 
         [Test]
@@ -170,17 +170,17 @@ namespace UnitTests
         public void DateOnlyFieldTest()
         {
             MDEntryDate d = new MDEntryDate(new DateTime(2011, 11, 30, 8, 9, 10, 555));
-            Assert.AreEqual("20111130", d.ToString());
+            Assert.That(d.ToString(), Is.EqualTo("20111130"));
         }
 
         [Test]
         public void TimeOnlyFieldTest()
         {
             MDEntryTime t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), true);
-            Assert.AreEqual("08:09:10.555", t.ToString());
+            Assert.That(t.ToString(), Is.EqualTo("08:09:10.555"));
 
             t = new MDEntryTime(new DateTime(2011, 11, 30, 8, 9, 10, 555), false);
-            Assert.AreEqual("08:09:10", t.ToString());
+            Assert.That(t.ToString(), Is.EqualTo("08:09:10"));
         }
 
         [Test]
@@ -193,11 +193,11 @@ namespace UnitTests
             StringField diffTag = new StringField(999, "a");
             IField diffType = new CharField(123, 'a');
 
-            Assert.True(a1.Equals(aSame));
-            Assert.True(a1.Equals(a2));
-            Assert.False(a1.Equals(diffValue));
-            Assert.False(a1.Equals(diffTag));
-            Assert.False(a1.Equals(diffType));
+            Assert.That(a1.Equals(aSame), Is.True);
+            Assert.That(a1.Equals(a2), Is.True);
+            Assert.That(a1.Equals(diffValue), Is.False);
+            Assert.That(a1.Equals(diffTag), Is.False);
+            Assert.That(a1.Equals(diffType), Is.False);
         }
     }
 }

@@ -39,7 +39,7 @@ internal class ReflectorClient : IReflector
 
     public void Expect(string expectedMessage)
     {
-        Assert.IsNotNull(_socket);
+        Assert.That(_socket, Is.Not.Null);
 
         string actualMessage;
         while (!_parser.ReadFixMessage(out actualMessage))
@@ -107,7 +107,7 @@ internal class ReflectorClient : IReflector
     public void Initiate(string initiateMessage)
     {
         string decoratedMessage = Decorate(initiateMessage);
-        Assert.IsNotNull(_socket);
+        Assert.That(_socket, Is.Not.Null);
         _socket.Send(Encoding.Latin1.GetBytes(decoratedMessage));
     }
 
@@ -180,7 +180,7 @@ internal class ReflectorClient : IReflector
 
     public void InitiateConnect()
     {
-        Assert.IsNull(_socket);
+        Assert.That(_socket, Is.Null);
 
         _socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
         _socket.Connect(_endPoint);
@@ -188,17 +188,17 @@ internal class ReflectorClient : IReflector
 
     public void InitiateDisconnect()
     {
-        Assert.IsNotNull(_socket);
+        Assert.That(_socket, Is.Not.Null);
 
         ShutdownSocket();
     }
 
     public void ExpectDisconnect()
     {
-        Assert.IsNotNull(_socket);
+        Assert.That(_socket, Is.Not.Null);
 
         int bytesRead = _socket.Receive(_readBuffer);
-        Assert.AreEqual(0, bytesRead);
+        Assert.That(bytesRead, Is.EqualTo(0));
 
         ShutdownSocket();
     }

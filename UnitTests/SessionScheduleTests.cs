@@ -45,15 +45,15 @@ namespace UnitTests
         {
             SettingsDictionary settings = new SettingsDictionary();
             Exception ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
-            StringAssert.Contains("No value for key: StartTime", ex.Message);
+            Assert.That(ex.Message, Does.Contain("No value for key: StartTime"));
 
             settings.SetString(SessionSettings.START_TIME, "00:00:00");
             ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
-            StringAssert.Contains("No value for key: EndTime", ex.Message);
+            Assert.That(ex.Message, Does.Contain("No value for key: EndTime"));
 
             settings.SetString(SessionSettings.END_TIME, "00:0blkajsdf");
             ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
-            StringAssert.Contains("String '00:0blkajsdf' was not recognized as a valid TimeSpan", ex.Message);
+            Assert.That(ex.Message, Does.Contain("String '00:0blkajsdf' was not recognized as a valid TimeSpan"));
 
             settings.SetString(SessionSettings.END_TIME, "00:00:00");
             Assert.DoesNotThrow(delegate { new SessionSchedule(settings); });
@@ -68,7 +68,7 @@ namespace UnitTests
 
             settings.SetDay(SessionSettings.START_DAY, DayOfWeek.Thursday);
             Exception ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
-            StringAssert.Contains("StartDay used without EndDay", ex.Message);
+            Assert.That(ex.Message, Does.Contain("StartDay used without EndDay"));
 
             settings.SetDay(SessionSettings.END_DAY, DayOfWeek.Friday);
             Assert.DoesNotThrow(delegate { new SessionSchedule(settings); });
@@ -81,7 +81,7 @@ namespace UnitTests
             settings.SetString(SessionSettings.WEEKDAYS, "Sun,Tue,Fri");
 
             Exception ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
-            StringAssert.Contains("No value for key: StartTime", ex.Message);
+            Assert.That(ex.Message, Does.Contain("No value for key: StartTime"));
 
             settings.SetString(SessionSettings.START_TIME, "00:00:00");
             settings.SetString(SessionSettings.END_TIME, "00:00:00");
@@ -89,7 +89,7 @@ namespace UnitTests
 
             settings.SetString(SessionSettings.START_DAY, "Tue");
             ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
-            StringAssert.Contains("StartDay/EndDay are not compatible with 'Weekdays' setting", ex.Message);
+            Assert.That(ex.Message, Does.Contain("StartDay/EndDay are not compatible with 'Weekdays' setting"));
         }
 
         [Test]
@@ -101,13 +101,13 @@ namespace UnitTests
 
             settings.SetString(SessionSettings.START_DAY, "Monday");
             Exception ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
-            StringAssert.Contains("NonStopSession is not compatible with StartDay/EndDay and StartTime/EndTime", ex.Message);
+            Assert.That(ex.Message, Does.Contain("NonStopSession is not compatible with StartDay/EndDay and StartTime/EndTime"));
 
             settings = new SettingsDictionary();
             settings.SetBool(SessionSettings.NON_STOP_SESSION, true);
             settings.SetString(SessionSettings.START_TIME, "05:00:00");
             ex = Assert.Throws(typeof(ConfigError), delegate { new SessionSchedule(settings); })!;
-            StringAssert.Contains("NonStopSession is not compatible with StartDay/EndDay and StartTime/EndTime", ex.Message);
+            Assert.That(ex.Message, Does.Contain("NonStopSession is not compatible with StartDay/EndDay and StartTime/EndTime"));
         }
 
         [Test]
@@ -119,10 +119,10 @@ namespace UnitTests
 
             SessionSchedule sched = new SessionSchedule(settings);
 
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 23, 59, 59, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 23, 59, 59, DateTimeKind.Utc)), Is.True);
         }
 
         [Test]
@@ -137,18 +137,18 @@ namespace UnitTests
             SessionSchedule sched = new SessionSchedule(settings);
 
             //a sunday
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0, DateTimeKind.Utc)), Is.True);
 
             //a monday
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 23, 59, 59, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 23, 59, 59, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 0, DateTimeKind.Utc)), Is.True);
 
             //a tuesday
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0, DateTimeKind.Utc)), Is.True);
         }
 
         [Test]
@@ -163,17 +163,17 @@ namespace UnitTests
             SessionSchedule sched = new SessionSchedule(settings);
 
             //a sunday
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0, DateTimeKind.Utc)), Is.True);
 
             //a monday
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 1, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 4, 0, 1, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 23, 59, 59, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 1, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 4, 0, 1, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 23, 59, 59, DateTimeKind.Utc)), Is.True);
 
             //a tuesday
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0, DateTimeKind.Utc)), Is.True);
         }
 
         [Test]
@@ -188,17 +188,17 @@ namespace UnitTests
             SessionSchedule sched = new SessionSchedule(settings);
 
             //a sunday
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 16, 23, 59, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 16, 0, 0, 0, DateTimeKind.Utc)), Is.False);
 
             //a monday
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 1, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 4, 0, 1, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 59, 59, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 1, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 4, 0, 1, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 59, 59, DateTimeKind.Utc)), Is.False);
 
             //a tuesday
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 0, 0, DateTimeKind.Utc)), Is.False);
         }
 
 
@@ -216,16 +216,16 @@ namespace UnitTests
             SessionSchedule sched = new SessionSchedule(settings);
 
             //a monday
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 0, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0, DateTimeKind.Utc)), Is.True);
 
             // a thursday
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 20, 23, 59, 59, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 20, 23, 59, 59, DateTimeKind.Utc)), Is.True);
 
             //a fri, sat, sun
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 23, 59, 59, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 0, 0, 0, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 21, 23, 59, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 22, 0, 0, 0, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0, DateTimeKind.Utc)), Is.False);
         }
 
         [Test]
@@ -242,17 +242,17 @@ namespace UnitTests
             SessionSchedule sched = new SessionSchedule(settings);
 
             //wed-monday
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 20, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 22, 9, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 19, 9, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 20, 9, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 21, 9, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 22, 9, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 16, 9, 43, 0, DateTimeKind.Utc)), Is.True);
 
             //monday
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 9, 43, 0, DateTimeKind.Utc)), Is.False);
 
             //tuesday
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 9, 43, 0, DateTimeKind.Utc)), Is.False);
         }
 
         [Test]
@@ -269,24 +269,24 @@ namespace UnitTests
             SessionSchedule sched = new SessionSchedule(settings);
 
             //Monday Scenarios
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 59, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 7, 30, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 15, 30, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 59, 0, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 7, 30, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 15, 30, 0, DateTimeKind.Utc)), Is.True);
 
             //Midweek Scenarios
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 6, 59, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 7, 30, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 19, 15, 30, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 19, 6, 59, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 19, 7, 30, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 19, 15, 30, 0, DateTimeKind.Utc)), Is.True);
 
             //Friday Scenarios
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 6, 59, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 7, 30, 0, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 30, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 21, 6, 59, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 21, 7, 30, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 30, 0, DateTimeKind.Utc)), Is.False);
 
             //Weekend
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 6, 59, 0, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 7, 30, 0, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 15, 30, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 22, 6, 59, 0, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 22, 7, 30, 0, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 22, 15, 30, 0, DateTimeKind.Utc)), Is.False);
         }
 
         [Test]
@@ -303,14 +303,14 @@ namespace UnitTests
             SessionSchedule sched = new SessionSchedule(settings);
 
             //weekdays
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 15, 30, 0, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 30, 0, DateTimeKind.Utc)), "foo");
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 15, 30, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 30, 0, DateTimeKind.Utc)), Is.False, "foo");
 
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 21, 5, 30, 59, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 30, 59, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 6, 59, 59, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 7, 00, 1, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 22, 15, 30, 0, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 21, 5, 30, 59, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 21, 15, 30, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 22, 6, 59, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 22, 7, 00, 1, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 22, 15, 30, 0, DateTimeKind.Utc)), Is.False);
         }
 
 
@@ -323,12 +323,12 @@ namespace UnitTests
 
             SessionSchedule sched = new SessionSchedule(settings);
 
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 12, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 5, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 6, 0, 23, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 0, 12, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 5, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 6, 0, 23, DateTimeKind.Utc)), Is.True);
 
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 11, 0, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 6, 0, 24, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 11, 0, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 6, 0, 24, DateTimeKind.Utc)), Is.False);
         }
 
         [Test]
@@ -340,12 +340,12 @@ namespace UnitTests
 
             SessionSchedule sched = new SessionSchedule(settings);
 
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 0, 23, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 8, 43, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 12, 00, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 6, 0, 23, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 8, 43, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 12, 00, DateTimeKind.Utc)), Is.True);
 
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 12, 1, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 18, 6, 0, 22, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 0, 12, 1, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 18, 6, 0, 22, DateTimeKind.Utc)), Is.False);
 
         }
 
@@ -383,10 +383,10 @@ namespace UnitTests
 
             SessionSchedule sched = new SessionSchedule(settings);
 
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 13, 29, 59, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 13, 30, 0, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2011, 10, 17, 20, 0, 0, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2011, 10, 17, 20, 0, 1, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 13, 29, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 13, 30, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 20, 0, 0, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2011, 10, 17, 20, 0, 1, DateTimeKind.Utc)), Is.False);
         }
 
         [Test]
@@ -412,12 +412,12 @@ namespace UnitTests
             settings.SetString(SessionSettings.END_TIME, "16:00:00");
             SessionSchedule sched = new SessionSchedule(settings);
 
-            Assert.AreEqual("20121018-16:00:00",
-                sched.NextEndTime(new DateTime(2012, 10, 18, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20121018-16:00:00",
-                sched.NextEndTime(new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20121019-16:00:00",
-                sched.NextEndTime(new DateTime(2012, 10, 18, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 10, 18, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121018-16:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121018-16:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 10, 18, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121019-16:00:00"));
 
             // ==========
             // Settings file is specified in a zone (est, -5)
@@ -427,12 +427,12 @@ namespace UnitTests
             settings.SetString(SessionSettings.TIME_ZONE, EasternStandardTimeZoneId); //-5
             sched = new SessionSchedule(settings);
 
-            Assert.AreEqual("20121218-11:00:00",
-                sched.NextEndTime(new DateTime(2012, 12, 18, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20121218-11:00:00",
-                sched.NextEndTime(new DateTime(2012, 12, 18, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20121219-11:00:00",
-                sched.NextEndTime(new DateTime(2012, 12, 18, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 12, 18, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121218-11:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 12, 18, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121218-11:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 12, 18, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121219-11:00:00"));
 
             // ==========
             // Time zone during Daylight Savings
@@ -442,12 +442,12 @@ namespace UnitTests
             settings.SetString(SessionSettings.TIME_ZONE, EasternStandardTimeZoneId); //-4 for DST
             sched = new SessionSchedule(settings);
 
-            Assert.AreEqual("20120618-12:00:00",
-                sched.NextEndTime(new DateTime(2012, 06, 18, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20120618-12:00:00",
-                sched.NextEndTime(new DateTime(2012, 06, 18, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20120619-12:00:00",
-                sched.NextEndTime(new DateTime(2012, 06, 18, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 06, 18, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20120618-12:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 06, 18, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20120618-12:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 06, 18, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20120619-12:00:00"));
         }
 
         [Test]
@@ -461,12 +461,12 @@ namespace UnitTests
             SessionSchedule sched = new SessionSchedule(settings);
 
             // Oct 15 and 22 are Mondays, 19 and 26 are Fridays
-            Assert.AreEqual("20121019-16:00:00",
-                sched.NextEndTime(new DateTime(2012, 10, 19, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20121019-16:00:00",
-                sched.NextEndTime(new DateTime(2012, 10, 19, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20121026-16:00:00",
-                sched.NextEndTime(new DateTime(2012, 10, 19, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 10, 19, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121019-16:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 10, 19, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121019-16:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 10, 19, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121026-16:00:00"));
 
             // ==========
             // Settings file is specified in a zone (est, -5)
@@ -479,12 +479,12 @@ namespace UnitTests
             sched = new SessionSchedule(settings);
 
             // Dec 14 and 21 are Fridays
-            Assert.AreEqual("20121214-11:00:00",
-                sched.NextEndTime(new DateTime(2012, 12, 14, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20121214-11:00:00",
-                sched.NextEndTime(new DateTime(2012, 12, 14, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20121221-11:00:00",
-                sched.NextEndTime(new DateTime(2012, 12, 14, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 12, 14, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121214-11:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 12, 14, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121214-11:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 12, 14, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20121221-11:00:00"));
 
             // ==========
             // Time zone during Daylight Savings
@@ -497,13 +497,12 @@ namespace UnitTests
             sched = new SessionSchedule(settings);
 
             // June 15 and 22 are Fridays
-            Assert.AreEqual("20120615-12:00:00",
-                sched.NextEndTime(new DateTime(2012, 06, 15, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20120615-12:00:00",
-                sched.NextEndTime(new DateTime(2012, 06, 15, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt));
-            Assert.AreEqual("20120622-12:00:00",
-                sched.NextEndTime(new DateTime(2012, 06, 15, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt));
-
+            Assert.That(sched.NextEndTime(new DateTime(2012, 06, 15, 15, 59, 59, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20120615-12:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 06, 15, 16, 00, 00, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20120615-12:00:00"));
+            Assert.That(sched.NextEndTime(new DateTime(2012, 06, 15, 16, 00, 01, DateTimeKind.Utc)).ToString(DtFmt),
+                Is.EqualTo("20120622-12:00:00"));
         }
 
         [Test]
@@ -532,18 +531,18 @@ namespace UnitTests
             settings.SetString(SessionSettings.END_TIME, "16:00:00");
             SessionSchedule sched = new SessionSchedule(settings);
 
-            Assert.False(sched.IsNewSession(
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 10, 18, 15, 59, 58, DateTimeKind.Utc),
-                new DateTime(2012, 10, 18, 15, 59, 59, DateTimeKind.Utc)));
-            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 10, 18, 15, 59, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 10, 18, 15, 59, 59, DateTimeKind.Utc),
-                new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc)));
-            Assert.True(sched.IsNewSession(
+                new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 10, 18, 16, 00, 00, DateTimeKind.Utc),
-                new DateTime(2012, 10, 18, 16, 00, 01, DateTimeKind.Utc)));
-            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 10, 18, 16, 00, 01, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 10, 18, 16, 00, 01, DateTimeKind.Utc),
-                new DateTime(2012, 10, 18, 16, 00, 02, DateTimeKind.Utc)));
+                new DateTime(2012, 10, 18, 16, 00, 02, DateTimeKind.Utc)), Is.False);
 
             // ==========
             // Settings file is specified in a zone (est, -5)
@@ -553,18 +552,18 @@ namespace UnitTests
             settings.SetString(SessionSettings.TIME_ZONE, EasternStandardTimeZoneId); //-5
             sched = new SessionSchedule(settings);
 
-            Assert.False(sched.IsNewSession(
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 12, 18, 15, 59, 58, DateTimeKind.Utc),
-                new DateTime(2012, 12, 18, 15, 59, 59, DateTimeKind.Utc)));
-            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 12, 18, 15, 59, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 12, 18, 15, 59, 59, DateTimeKind.Utc),
-                new DateTime(2012, 12, 18, 16, 00, 00, DateTimeKind.Utc)));
-            Assert.True(sched.IsNewSession(
+                new DateTime(2012, 12, 18, 16, 00, 00, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 12, 18, 16, 00, 00, DateTimeKind.Utc),
-                new DateTime(2012, 12, 18, 16, 00, 01, DateTimeKind.Utc)));
-            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 12, 18, 16, 00, 01, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 12, 18, 16, 00, 01, DateTimeKind.Utc),
-                new DateTime(2012, 12, 18, 16, 00, 02, DateTimeKind.Utc)));
+                new DateTime(2012, 12, 18, 16, 00, 02, DateTimeKind.Utc)), Is.False);
 
             // ==========
             // Time zone during Daylight savings
@@ -574,18 +573,18 @@ namespace UnitTests
             settings.SetString(SessionSettings.TIME_ZONE, EasternStandardTimeZoneId); //-4 during dst
             sched = new SessionSchedule(settings);
 
-            Assert.False(sched.IsNewSession(
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 06, 18, 15, 59, 58, DateTimeKind.Utc),
-                new DateTime(2012, 06, 18, 15, 59, 59, DateTimeKind.Utc)));
-            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 06, 18, 15, 59, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 06, 18, 15, 59, 59, DateTimeKind.Utc),
-                new DateTime(2012, 06, 18, 16, 00, 00, DateTimeKind.Utc)));
-            Assert.True(sched.IsNewSession(
+                new DateTime(2012, 06, 18, 16, 00, 00, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 06, 18, 16, 00, 00, DateTimeKind.Utc),
-                new DateTime(2012, 06, 18, 16, 00, 01, DateTimeKind.Utc)));
-            Assert.False(sched.IsNewSession(
+                new DateTime(2012, 06, 18, 16, 00, 01, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsNewSession(
                 new DateTime(2012, 06, 18, 16, 00, 01, DateTimeKind.Utc),
-                new DateTime(2012, 06, 18, 16, 00, 02, DateTimeKind.Utc)));
+                new DateTime(2012, 06, 18, 16, 00, 02, DateTimeKind.Utc)), Is.False);
         }
 
         [Test]
@@ -604,7 +603,7 @@ namespace UnitTests
 
             // 2) if settings is UTC, don't convert
             DateTime d2 = new DateTime(2013, 01, 15, 12, 00, 00, DateTimeKind.Utc);
-            Assert.AreEqual(d2, sched.AdjustUtcDateTime(d2));
+            Assert.That(sched.AdjustUtcDateTime(d2), Is.EqualTo(d2));
 
             // 3) if settings has a TimeZone, convert to TimeZone
             settings = new SettingsDictionary();
@@ -653,7 +652,7 @@ namespace UnitTests
             DateTime d5expected = d5.ToLocalTime();
             DateTime d5actual = sched.AdjustUtcDateTime(d5);
             Util.UtcDateTimeSerializerTests.AssertHackyDateTimeEquality(d5expected, d5actual);
-            Assert.AreEqual(DateTimeKind.Local, d5actual.Kind);
+            Assert.That(d5actual.Kind, Is.EqualTo(DateTimeKind.Local));
         }
 
         [Test]
@@ -667,20 +666,20 @@ namespace UnitTests
             SessionSchedule sched = new SessionSchedule(settings);
 
             // bounds of Tuesday
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 21, 07, 59, 59, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 21, 08, 00, 00, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 21, 08, 00, 10, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 21, 16, 59, 59, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 21, 17, 00, 00, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 21, 17, 00, 10, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 21, 07, 59, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 21, 08, 00, 00, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 21, 08, 00, 10, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 21, 16, 59, 59, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 21, 17, 00, 00, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 21, 17, 00, 10, DateTimeKind.Utc)), Is.False);
 
             // bounds of Thursday
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 23, 07, 59, 59, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 23, 08, 00, 00, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 23, 08, 00, 10, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 23, 16, 59, 59, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 23, 17, 00, 00, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 23, 17, 00, 10, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 23, 07, 59, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 23, 08, 00, 00, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 23, 08, 00, 10, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 23, 16, 59, 59, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 23, 17, 00, 00, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 23, 17, 00, 10, DateTimeKind.Utc)), Is.False);
         }
 
         [Test]
@@ -694,20 +693,20 @@ namespace UnitTests
             SessionSchedule sched = new SessionSchedule(settings);
 
             // bounds of Tuesday-Wednesday
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 21, 16, 59, 59, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 21, 17, 00, 00, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 21, 17, 00, 10, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 22, 10, 59, 59, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 22, 11, 00, 00, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 22, 11, 00, 10, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 21, 16, 59, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 21, 17, 00, 00, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 21, 17, 00, 10, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 22, 10, 59, 59, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 22, 11, 00, 00, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 22, 11, 00, 10, DateTimeKind.Utc)), Is.False);
 
             // bounds of Thursday-Friday
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 23, 16, 59, 59, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 23, 17, 00, 00, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 23, 17, 00, 10, DateTimeKind.Utc)));
-            Assert.IsTrue(sched.IsSessionTime(new DateTime(2024, 05, 24, 10, 59, 59, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 24, 11, 00, 00, DateTimeKind.Utc)));
-            Assert.IsFalse(sched.IsSessionTime(new DateTime(2024, 05, 24, 11, 00, 10, DateTimeKind.Utc)));
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 23, 16, 59, 59, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 23, 17, 00, 00, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 23, 17, 00, 10, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 24, 10, 59, 59, DateTimeKind.Utc)), Is.True);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 24, 11, 00, 00, DateTimeKind.Utc)), Is.False);
+            Assert.That(sched.IsSessionTime(new DateTime(2024, 05, 24, 11, 00, 10, DateTimeKind.Utc)), Is.False);
         }
     }
 }

@@ -7,16 +7,16 @@ namespace UnitTests.Fields.Converters;
 public class CheckSumConverterTests {
     [Test]
     public void ConvertStringToInt() {
-        Assert.AreEqual(1, CheckSumConverter.Convert("1"));
-        Assert.AreEqual(123, CheckSumConverter.Convert("123"));
-        Assert.AreEqual(12, CheckSumConverter.Convert("012"));
+        Assert.That(CheckSumConverter.Convert("1"), Is.EqualTo(1));
+        Assert.That(CheckSumConverter.Convert("123"), Is.EqualTo(123));
+        Assert.That(CheckSumConverter.Convert("012"), Is.EqualTo(12));
     }
 
     [Test]
     public void ConvertIntToString() {
-        Assert.AreEqual("001", CheckSumConverter.Convert(1));
-        Assert.AreEqual("012", CheckSumConverter.Convert(12));
-        Assert.AreEqual("123", CheckSumConverter.Convert(123));
-        Assert.AreEqual("1234", CheckSumConverter.Convert(1234));
+        Assert.That(CheckSumConverter.Convert(1), Is.EqualTo("001"));
+        Assert.That(CheckSumConverter.Convert(12), Is.EqualTo("012"));
+        Assert.That(CheckSumConverter.Convert(123), Is.EqualTo("123"));
+        Assert.That(CheckSumConverter.Convert(1234), Is.EqualTo("1234"));
     }
 }
