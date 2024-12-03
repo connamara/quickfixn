@@ -69,17 +69,17 @@ what=huh";
             Settings settings = new Settings(new System.IO.StringReader(configuration));
 
             LinkedList<QuickFix.SettingsDictionary> byLower = settings.Get("foo");
-            Assert.AreEqual(1, byLower.Count);
-            Assert.AreEqual(2, byLower.First!.Value.Count);
-            Assert.AreEqual("uno", byLower.First.Value.GetString("one"));
-            Assert.AreEqual("dos", byLower.First.Value.GetString("two"));
+            Assert.That(byLower.Count, Is.EqualTo(1));
+            Assert.That(byLower.First!.Value.Count, Is.EqualTo(2));
+            Assert.That(byLower.First.Value.GetString("one"), Is.EqualTo("uno"));
+            Assert.That(byLower.First.Value.GetString("two"), Is.EqualTo("dos"));
 
             // too lazy to write a QuickFix.Dictionary#Equals method (which would only be used by this test)
             LinkedList<QuickFix.SettingsDictionary> byUpper = settings.Get("FOO");
-            Assert.AreEqual(byLower.Count, byUpper.Count);
-            Assert.AreEqual(byLower.First.Value.Count, byUpper.First!.Value.Count);
-            Assert.AreEqual(byUpper.First.Value.GetString("one"), byUpper.First.Value.GetString("one"));
-            Assert.AreEqual(byUpper.First.Value.GetString("two"), byUpper.First.Value.GetString("two"));
+            Assert.That(byUpper.Count, Is.EqualTo(byLower.Count));
+            Assert.That(byUpper.First!.Value.Count, Is.EqualTo(byLower.First!.Value.Count));
+            Assert.That(byUpper.First.Value.GetString("one"), Is.EqualTo(byUpper.First.Value.GetString("one")));
+            Assert.That(byUpper.First.Value.GetString("two"), Is.EqualTo(byUpper.First.Value.GetString("two")));
         }
     }
 }

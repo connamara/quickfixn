@@ -29,7 +29,7 @@ namespace UnitTests
             CharField r = _fieldmap.GetField(refield);
             Assert.That('e', Is.EqualTo(refield.Value));
 
-            Assert.AreSame(refield, r);
+            Assert.That(r, Is.SameAs(refield));
         }
 
 
@@ -69,7 +69,7 @@ namespace UnitTests
             StringField r = _fieldmap.GetField(acct);
             Assert.That("helloworld", Is.EqualTo(acct.Value));
 
-            Assert.AreSame(r, acct);
+            Assert.That(acct, Is.SameAs(r));
         }
 
         [Test]
@@ -93,7 +93,7 @@ namespace UnitTests
             DateTimeField r = _fieldmap.GetField(tt);
             Assert.That(new DateTime(2010, 12, 10), Is.EqualTo(tt.Value));
 
-            Assert.AreSame(r, tt);
+            Assert.That(tt, Is.SameAs(r));
         }
 
         [Test]
@@ -112,13 +112,13 @@ namespace UnitTests
             _fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
             MDEntryDate ed = new MDEntryDate();
             _fieldmap.GetField(ed);
-            Assert.AreEqual(new DateTime(2009, 12, 10), ed.Value);
+            Assert.That(ed.Value, Is.EqualTo(new DateTime(2009, 12, 10)));
             _fieldmap.SetField(new MDEntryDate(new DateTime(2010, 12, 10)));
             DateOnlyField r = _fieldmap.GetField(ed);
-            Assert.AreEqual(new DateTime(2010, 12, 10), ed.Value);
+            Assert.That(ed.Value, Is.EqualTo(new DateTime(2010, 12, 10)));
 
-            Assert.AreSame(r, ed);
-            Assert.AreEqual("20101210", ed.ToString());
+            Assert.That(ed, Is.SameAs(r));
+            Assert.That(ed.ToString(), Is.EqualTo("20101210"));
         }
 
         [Test]
@@ -127,13 +127,13 @@ namespace UnitTests
             _fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(1, 1, 1, 1, 2, 3), false));
             MDEntryTime et = new MDEntryTime();
             _fieldmap.GetField(et);
-            Assert.AreEqual(new DateTime(1980, 01, 01, 1, 2, 3), et.Value);
+            Assert.That(et.Value, Is.EqualTo(new DateTime(1980, 01, 01, 1, 2, 3)));
             _fieldmap.SetField(new MDEntryTime(new DateTime(1, 1, 1, 1, 2, 5)));
             TimeOnlyField r = _fieldmap.GetField(et);
-            Assert.AreEqual(new DateTime(1980, 01, 01, 1, 2, 5), et.Value);
+            Assert.That(et.Value, Is.EqualTo(new DateTime(1980, 01, 01, 1, 2, 5)));
 
-            Assert.AreSame(r, et);
-            Assert.AreEqual("01:02:05.000", et.ToString());
+            Assert.That(et, Is.SameAs(r));
+            Assert.That(et.ToString(), Is.EqualTo("01:02:05.000"));
         }
 
         [Test]
@@ -151,18 +151,18 @@ namespace UnitTests
         public void GetDateOnlyTest()
         {
             _fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
-            Assert.AreEqual(new DateTime(2009, 12, 10), _fieldmap.GetDateTime(Tags.MDEntryDate));
+            Assert.That(_fieldmap.GetDateTime(Tags.MDEntryDate), Is.EqualTo(new DateTime(2009, 12, 10)));
             _fieldmap.SetField(new StringField(233, "20091211"));
-            Assert.AreEqual(new DateTime(2009, 12, 11), _fieldmap.GetDateOnly(233));
+            Assert.That(_fieldmap.GetDateOnly(233), Is.EqualTo(new DateTime(2009, 12, 11)));
         }
 
         [Test]
         public void GetTimeOnlyTest()
         {
             _fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(2009, 12, 10, 1, 2, 3)));
-            Assert.AreEqual(new DateTime(1980, 01, 01, 1, 2, 3), _fieldmap.GetDateTime(Tags.MDEntryTime));
+            Assert.That(_fieldmap.GetDateTime(Tags.MDEntryTime), Is.EqualTo(new DateTime(1980, 01, 01, 1, 2, 3)));
             _fieldmap.SetField(new StringField(233, "07:30:47"));
-            Assert.AreEqual(new DateTime(1980, 01, 01, 7, 30, 47), _fieldmap.GetTimeOnly(233));
+            Assert.That(_fieldmap.GetTimeOnly(233), Is.EqualTo(new DateTime(1980, 01, 01, 7, 30, 47)));
         }
 
         [Test]
@@ -178,7 +178,7 @@ namespace UnitTests
             BooleanField r = _fieldmap.GetField(refield);
             Assert.That(false, Is.EqualTo(refield.Value));
 
-            Assert.AreSame(r, refield);
+            Assert.That(refield, Is.SameAs(r));
         }
 
         [Test]
@@ -206,7 +206,7 @@ namespace UnitTests
             IntField r = _fieldmap.GetField(refield);
             Assert.That(102, Is.EqualTo(refield.Value));
 
-            Assert.AreSame(r, refield);
+            Assert.That(refield, Is.SameAs(r));
         }
 
         [Test]
@@ -235,7 +235,7 @@ namespace UnitTests
             DecimalField r = _fieldmap.GetField(refield);
             Assert.That(101.0002, Is.EqualTo(refield.Value));
 
-            Assert.AreSame(r, refield);
+            Assert.That(refield, Is.SameAs(r));
         }
 
         [Test]
@@ -297,19 +297,19 @@ namespace UnitTests
         public void GroupDelimTest()
         {
             Group g1 = new Group(100, 200);
-            Assert.AreEqual(100, g1.CounterField); //counter
-            Assert.AreEqual(200, g1.Delim);
+            Assert.That(g1.CounterField, Is.EqualTo(100)); //counter
+            Assert.That(g1.Delim, Is.EqualTo(200));
 
             g1.SetField(new StringField(200, "delim!"));
 
             FieldMap fm = new FieldMap();
             fm.AddGroup(g1);
-            Assert.AreEqual(1, fm.GetInt(100));
+            Assert.That(fm.GetInt(100), Is.EqualTo(1));
 
             Group g2 = new Group(100, 200);
             g2.SetField(new StringField(200, "again!"));
             fm.AddGroup(g2);
-            Assert.AreEqual(2, fm.GetInt(100));
+            Assert.That(fm.GetInt(100), Is.EqualTo(2));
         }
 
         [Test]
@@ -421,7 +421,7 @@ namespace UnitTests
             fm.AddGroup(linesGroup);
 
             var rvGroup = fm.GetGroup(1, Tags.LinesOfText);
-            Assert.IsInstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>(rvGroup);
+            Assert.That(rvGroup, Is.InstanceOf<QuickFix.FIX42.News.LinesOfTextGroup>());
         }
     }
 }

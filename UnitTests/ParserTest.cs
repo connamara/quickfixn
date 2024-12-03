@@ -28,28 +28,28 @@ namespace UnitTests
 
             int len = 0;
             int pos = 0;
-            Assert.True(parser.ExtractLength(out len, out pos, normalLength));
-            Assert.AreEqual(12, len);
-            Assert.AreEqual(15, pos);
+            Assert.That(parser.ExtractLength(out len, out pos, normalLength), Is.True);
+            Assert.That(len, Is.EqualTo(12));
+            Assert.That(pos, Is.EqualTo(15));
 
-            Assert.True(parser.ExtractLength(out len, out pos, zeroLength));
-            Assert.AreEqual(0, len);
-            Assert.AreEqual(14, pos);
+            Assert.That(parser.ExtractLength(out len, out pos, zeroLength), Is.True);
+            Assert.That(len, Is.EqualTo(0));
+            Assert.That(pos, Is.EqualTo(14));
 
             Assert.Throws<QuickFix.MessageParseError>(delegate { parser.ExtractLength(out len, out pos, badLength); });
-            Assert.AreEqual(0, pos);
+            Assert.That(pos, Is.EqualTo(0));
 
             Assert.Throws<QuickFix.MessageParseError>(delegate { parser.ExtractLength(out len, out pos, negativeLength); });
-            Assert.AreEqual(0, pos);
+            Assert.That(pos, Is.EqualTo(0));
 
-            Assert.False(parser.ExtractLength(out len, out pos, incomplete_1));
-            Assert.AreEqual(0, pos);
+            Assert.That(parser.ExtractLength(out len, out pos, incomplete_1), Is.False);
+            Assert.That(pos, Is.EqualTo(0));
 
-            Assert.False(parser.ExtractLength(out len, out pos, incomplete_2));
-            Assert.AreEqual(0, pos);
+            Assert.That(parser.ExtractLength(out len, out pos, incomplete_2), Is.False);
+            Assert.That(pos, Is.EqualTo(0));
 
-            Assert.False(parser.ExtractLength(out len, out pos, ""));
-            Assert.AreEqual(0, pos);
+            Assert.That(parser.ExtractLength(out len, out pos, ""), Is.False);
+            Assert.That(pos, Is.EqualTo(0));
         }
 
         [Test]
@@ -82,11 +82,11 @@ namespace UnitTests
 
                 for (int i = 0; i < batchSize; i++)
                 {
-                    Assert.True(parser.ReadFixMessage(out string message));
-                    Assert.AreEqual(batch[i], message);
+                    Assert.That(parser.ReadFixMessage(out string message), Is.True);
+                    Assert.That(message, Is.EqualTo(batch[i]));
                 }
 
-                Assert.False(parser.ReadFixMessage(out _));
+                Assert.That(parser.ReadFixMessage(out _), Is.False);
             }
         }
 
@@ -110,14 +110,14 @@ namespace UnitTests
             for(int i = 0; i < messageParts.Count - 1; i++)
             {
                 parser.AddToStream(CharEncoding.DefaultEncoding.GetBytes(messageParts[i]));
-                Assert.False(parser.ReadFixMessage(out _));
+                Assert.That(parser.ReadFixMessage(out _), Is.False);
             }
 
             string expectedMessage = string.Join("", messageParts.Skip(1));
 
             parser.AddToStream(CharEncoding.DefaultEncoding.GetBytes(messageParts[^1]));
-            Assert.True(parser.ReadFixMessage(out string actualMessage));
-            Assert.AreEqual(expectedMessage, actualMessage);
+            Assert.That(parser.ReadFixMessage(out string actualMessage), Is.True);
+            Assert.That(actualMessage, Is.EqualTo(expectedMessage));
         }
 
         [Test]
@@ -132,8 +132,8 @@ namespace UnitTests
             Assert.Throws<QuickFix.MessageParseError>(delegate { parser.ReadFixMessage(out _); });
             
             // nothing thrown now because the previous call removes bad data from buffer:
-            Assert.True(parser.ReadFixMessage(out string readFixMsg));
-            Assert.AreEqual(normalLength, readFixMsg);
+            Assert.That(parser.ReadFixMessage(out string readFixMsg), Is.True);
+            Assert.That(readFixMsg, Is.EqualTo(normalLength));
         }
 
         [Test]
@@ -142,8 +142,8 @@ namespace UnitTests
             string[] fixMsgFields1 = { "8=FIX.4.4", "9=19", "35=B", "148=Ole!", "33=0", "10=0" };
             string fixMsg1 = String.Join(Message.SOH, fixMsgFields1) + Message.SOH;
 
-            Assert.AreEqual("é", "\x00E9");
-            Assert.AreEqual("é", "\xE9");
+            Assert.That("\x00E9", Is.EqualTo("é"));
+            Assert.That("\xE9", Is.EqualTo("é"));
 
             // In 1.8 and earlier, the default encoding was UTF-8, which treated "é" as 2 bytes,
             // and this message had 9=20, which didn't agree with other implementations.
@@ -157,12 +157,12 @@ namespace UnitTests
             parser.AddToStream(combined, combined.Length);
 
             string readFixMsg1;
-            Assert.True(parser.ReadFixMessage(out readFixMsg1));
-            Assert.AreEqual(fixMsg1, readFixMsg1);
+            Assert.That(parser.ReadFixMessage(out readFixMsg1), Is.True);
+            Assert.That(readFixMsg1, Is.EqualTo(fixMsg1));
 
             string readFixMsg2;
-            Assert.True(parser.ReadFixMessage(out readFixMsg2), "parser.ReadFixMessage(readFixMsg2) failure");
-            Assert.AreEqual(fixMsg2, readFixMsg2);
+            Assert.That(parser.ReadFixMessage(out readFixMsg2), Is.True, "parser.ReadFixMessage(readFixMsg2) failure");
+            Assert.That(readFixMsg2, Is.EqualTo(fixMsg2));
         }
 
         [Test] // Issue #282 investigation
@@ -176,8 +176,8 @@ namespace UnitTests
             parser.AddToStream(bytesMsg, bytesMsg.Length);
 
             string readFixMsg1;
-            Assert.True(parser.ReadFixMessage(out readFixMsg1));
-            Assert.AreEqual(fixMsg1, readFixMsg1);
+            Assert.That(parser.ReadFixMessage(out readFixMsg1), Is.True);
+            Assert.That(readFixMsg1, Is.EqualTo(fixMsg1));
         }
     }
 }

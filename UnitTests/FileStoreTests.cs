@@ -76,39 +76,39 @@ namespace UnitTests
         [Test]
         public void NextSenderMsgSeqNumTest()
         {
-            Assert.AreEqual(1, _store!.NextSenderMsgSeqNum);
+            Assert.That(_store!.NextSenderMsgSeqNum, Is.EqualTo(1));
             _store.NextSenderMsgSeqNum = 5;
-            Assert.AreEqual(5, _store.NextSenderMsgSeqNum);
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(5));
             RebuildStore();
-            Assert.AreEqual(5, _store.NextSenderMsgSeqNum);
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(5));
         }
 
         [Test]
         public void IncNextSenderMsgSeqNumTest()
         {
             _store!.IncrNextSenderMsgSeqNum();
-            Assert.AreEqual(2, _store.NextSenderMsgSeqNum);
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(2));
             RebuildStore();
-            Assert.AreEqual(2, _store.NextSenderMsgSeqNum);
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(2));
         }
 
         [Test]
         public void NextTargetMsgSeqNumTest()
         {
-            Assert.AreEqual(1, _store!.NextTargetMsgSeqNum);
+            Assert.That(_store!.NextTargetMsgSeqNum, Is.EqualTo(1));
             _store.NextTargetMsgSeqNum = 6;
-            Assert.AreEqual(6, _store.NextTargetMsgSeqNum);
+            Assert.That(_store.NextTargetMsgSeqNum, Is.EqualTo(6));
             RebuildStore();
-            Assert.AreEqual(6, _store.NextTargetMsgSeqNum);
+            Assert.That(_store.NextTargetMsgSeqNum, Is.EqualTo(6));
         }
 
         [Test]
         public void IncNextTargetMsgSeqNumTest()
         {
             _store!.IncrNextTargetMsgSeqNum();
-            Assert.AreEqual(2, _store.NextTargetMsgSeqNum);
+            Assert.That(_store.NextTargetMsgSeqNum, Is.EqualTo(2));
             RebuildStore();
-            Assert.AreEqual(2, _store.NextTargetMsgSeqNum);
+            Assert.That(_store.NextTargetMsgSeqNum, Is.EqualTo(2));
         }
 
         /// Using UInt64 seqnums per FIX Trading Community Continuous Markets Working Group recommendations.
@@ -124,30 +124,30 @@ namespace UnitTests
             _store.IncrNextTargetMsgSeqNum();
 
             // Then the next seqnums should be UInt64.MaxValue
-            Assert.AreEqual(System.UInt64.MaxValue, _store.NextSenderMsgSeqNum);
-            Assert.AreEqual(System.UInt64.MaxValue, _store.NextTargetMsgSeqNum);
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(System.UInt64.MaxValue));
+            Assert.That(_store.NextTargetMsgSeqNum, Is.EqualTo(System.UInt64.MaxValue));
 
             // When the store is reloaded from files
             RebuildStore();
 
             // Then the next seqnums should still be UInt64.MaxValue
-            Assert.AreEqual(System.UInt64.MaxValue, _store.NextSenderMsgSeqNum);
-            Assert.AreEqual(System.UInt64.MaxValue, _store.NextTargetMsgSeqNum);
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(System.UInt64.MaxValue));
+            Assert.That(_store.NextTargetMsgSeqNum, Is.EqualTo(System.UInt64.MaxValue));
 
             // When the next seqnums are incremented again
             _store.IncrNextSenderMsgSeqNum();
             _store.IncrNextTargetMsgSeqNum();
 
             // Then the next seqnums should overflow to zero
-            Assert.AreEqual(0, _store.NextSenderMsgSeqNum);
-            Assert.AreEqual(0, _store.NextTargetMsgSeqNum);
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(0));
+            Assert.That(_store.NextTargetMsgSeqNum, Is.EqualTo(0));
             
             // When the store is reloaded from files
             RebuildStore();
 
             // Then the next seqnums should still be zero
-            Assert.AreEqual(0, _store.NextSenderMsgSeqNum);
-            Assert.AreEqual(0, _store.NextTargetMsgSeqNum);
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(0));
+            Assert.That(_store.NextTargetMsgSeqNum, Is.EqualTo(0));
         }
 
         [Test]
@@ -157,8 +157,8 @@ namespace UnitTests
             _store!.NextTargetMsgSeqNum = 5;
             _store.NextSenderMsgSeqNum = 4;
             _store.Reset();
-            Assert.AreEqual(1, _store.NextTargetMsgSeqNum);
-            Assert.AreEqual(1, _store.NextSenderMsgSeqNum);
+            Assert.That(_store.NextTargetMsgSeqNum, Is.EqualTo(1));
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(1));
 
             // Check that messages do not persist after reset
             _store.Set(1, "dude");
@@ -184,7 +184,7 @@ namespace UnitTests
             Thread.Sleep(1000);
             _store.Reset();
             DateTime d3 = _store.CreationTime.Value;
-            Assert.AreEqual(-1, DateTimeOffset.Compare(d1, d3)); // e.g. d1 is earlier than d3
+            Assert.That(DateTimeOffset.Compare(d1, d3), Is.EqualTo(-1)); // e.g. d1 is earlier than d3
         }
 
 
@@ -200,14 +200,14 @@ namespace UnitTests
             _store.Get(2, 3, msgs);
             var expected = new List<string>() { "pude", "ok" };
 
-            Assert.AreEqual(expected, msgs);
+            Assert.That(msgs, Is.EqualTo(expected));
 
             RebuildStore();
 
             msgs = new List<string>();
             _store.Get(2, 3, msgs);
 
-            Assert.AreEqual(expected, msgs);
+            Assert.That(msgs, Is.EqualTo(expected));
         }
     }
 }
