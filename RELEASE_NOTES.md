@@ -43,6 +43,7 @@ What's New
 * #892 - nullable-ize UnitTests project (gbirchmeier)
      * also deprecate a AcceptorSocketDescriptor ctor due to unused param
 * #900 - correct CompositeLog to use IFactory.CreateNonSessionLog when appropriate (gbirchmeier)
+* #891 - make NonSessionLog implement IDisposable and fix the IOException (VAllens)
 
 ### v1.12.0
 
