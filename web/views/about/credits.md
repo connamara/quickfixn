@@ -95,4 +95,5 @@ Contributors
 - Nazar Mandzyk
 - Michal Dachs
 - Phung Nhat-Huy
+- VAllens
 
