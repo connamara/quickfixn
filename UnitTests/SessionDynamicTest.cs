@@ -5,7 +5,7 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
-
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Logger;
@@ -127,13 +127,13 @@ namespace UnitTests
             defaults.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort.ToString());
 
             settings.Set(defaults);
-            ILogFactory logFactory = new FileLogFactory(settings);
+            var loggerFactory = new LoggerFactory([new FileLoggerProvider(settings)]);
 
             if (initiator)
             {
                 defaults.SetString(SessionSettings.RECONNECT_INTERVAL, "1");
                 settings.Set(CreateSessionId(StaticInitiatorCompId), CreateSessionConfig(true));
-                _initiator = new SocketInitiator(application, storeFactory, settings, logFactory);
+                _initiator = new SocketInitiator(application, storeFactory, settings, loggerFactory);
                 _initiator.Start();
             }
             else
@@ -151,7 +151,7 @@ namespace UnitTests
                     settings.Set(id, conf);
                 }
 
-                _acceptor = new ThreadedSocketAcceptor(application, storeFactory, settings, logFactory);
+                _acceptor = new ThreadedSocketAcceptor(application, storeFactory, settings, loggerFactory);
                 _acceptor.Start();
             }
         }

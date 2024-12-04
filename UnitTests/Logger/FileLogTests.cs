@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using QuickFix.Logger;
 
@@ -7,7 +8,7 @@ namespace UnitTests.Logger;
 [TestFixture]
 public class FileLogTests
 {
-    private FileLog? _log;
+    private FileLogger? _log;
 
     [SetUp]
     public void Setup()
@@ -26,18 +27,18 @@ public class FileLogTests
         QuickFix.SessionID someSessionId = new QuickFix.SessionID("FIX.4.4", "sender", "target");
         QuickFix.SessionID someSessionIdWithQualifier = new QuickFix.SessionID("FIX.4.3", "sender", "target", "foo");
 
-        Assert.That(FileLog.Prefix(someSessionId), Is.EqualTo("FIX.4.4-sender-target"));
-        Assert.That(FileLog.Prefix(someSessionIdWithQualifier), Is.EqualTo("FIX.4.3-sender-target-foo"));
+        Assert.That(FileLogger.Prefix(someSessionId), Is.EqualTo("FIX.4.4-sender-target"));
+        Assert.That(FileLogger.Prefix(someSessionIdWithQualifier), Is.EqualTo("FIX.4.3-sender-target-foo"));
     }
 
     [Test]
     public void TestPrefixForSubsAndLocation()
     {
         QuickFix.SessionID sessionIdWithSubsAndLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", "SENDERLOC", "TARGETCOMP", "TARGETSUB", "TARGETLOC");
-        Assert.That(FileLog.Prefix(sessionIdWithSubsAndLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB_SENDERLOC-TARGETCOMP_TARGETSUB_TARGETLOC"));
+        Assert.That(FileLogger.Prefix(sessionIdWithSubsAndLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB_SENDERLOC-TARGETCOMP_TARGETSUB_TARGETLOC"));
 
         QuickFix.SessionID sessionIdWithSubsNoLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", "TARGETCOMP", "TARGETSUB");
-        Assert.That(FileLog.Prefix(sessionIdWithSubsNoLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB"));
+        Assert.That(FileLogger.Prefix(sessionIdWithSubsNoLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB"));
     }
 
     [Test]
@@ -57,12 +58,12 @@ public class FileLogTests
 
         settings.Set(sessionId, config);
 
-        FileLogFactory factory = new FileLogFactory(settings);
-        _log = (FileLog)factory.Create(sessionId);
+        var fileLogProvider = new FileLoggerProvider(settings);
+        _log = (FileLogger) fileLogProvider.CreateLogger($"QuickFix.{sessionId}");
 
-        _log.OnEvent("some event");
-        _log.OnIncoming("some incoming");
-        _log.OnOutgoing("some outgoing");
+        _log.Log(LogLevel.Debug, "some event");
+        _log.Log(LogLevel.Information, LogEventIds.IncomingMessage, "some incoming");
+        _log.Log(LogLevel.Information, LogEventIds.OutgoingMessage, "some outgoing");
 
         Assert.That(File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log")));
         Assert.That(File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log")));
@@ -82,8 +83,8 @@ public class FileLogTests
         QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
         settings.Set(sessionId, config);
 
-        FileLogFactory factory = new FileLogFactory(settings);
+        var loggerFactory = new LoggerFactory([new FileLoggerProvider(settings)]);
 
-        Assert.Throws<QuickFix.ConfigError>(delegate { factory.Create(sessionId); });
+        Assert.Throws<QuickFix.ConfigError>(() => loggerFactory.CreateLogger($"QuickFix.{sessionId}"));
     }
 }

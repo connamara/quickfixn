@@ -1,8 +1,11 @@
-﻿namespace QuickFix.Logger;
+﻿using System;
+
+namespace QuickFix.Logger;
 
 /// <summary>
 /// FIXME - needs to log sessionIDs, timestamps, etc.
 /// </summary>
+[Obsolete("Use Microsoft.Extensions.Logging instead.")]
 public class ScreenLog : ILog
 {
     private readonly object _sync = new ();
