@@ -25,7 +25,14 @@ public class FileLog : ILog
     /// path separator (i.e. "/" will become "\" on windows, else "\" will become "/" on all other platforms)
     /// </param>
     /// <param name="sessionId"></param>
-    public FileLog(string fileLogPath, SessionID sessionId)
+    public FileLog(string fileLogPath, SessionID sessionId) : this(fileLogPath, sessionId, false)
+    {
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="createDailyLogFile"></param>
+    public FileLog(string fileLogPath, SessionID sessionId, bool createDailyLogFile)
     {
         string prefix = Prefix(sessionId);
 
@@ -34,8 +41,17 @@ public class FileLog : ILog
         if (!System.IO.Directory.Exists(normalizedPath))
             System.IO.Directory.CreateDirectory(normalizedPath);
 
-        _messageLogFileName = System.IO.Path.Combine(normalizedPath, prefix + ".messages.current.log");
-        _eventLogFileName = System.IO.Path.Combine(normalizedPath, prefix + ".event.current.log");
+        if (createDailyLogFile)
+        {
+            string currentDate = DateTime.UtcNow.ToString("yyyyMMdd");
+            _messageLogFileName = System.IO.Path.Combine(fileLogPath, $"{currentDate}.{prefix}.messages.log");
+            _eventLogFileName = System.IO.Path.Combine(fileLogPath, $"{currentDate}.{prefix}.event.log");
+        }
+        else
+        {
+            _messageLogFileName = System.IO.Path.Combine(normalizedPath, prefix + ".messages.current.log");
+            _eventLogFileName = System.IO.Path.Combine(normalizedPath, prefix + ".event.current.log");
+        }    
 
         _messageLog = new System.IO.StreamWriter(_messageLogFileName, true);
         _eventLog = new System.IO.StreamWriter(_eventLogFileName, true);
