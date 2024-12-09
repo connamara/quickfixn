@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using QuickFix;
+using QuickFix.Fields;
 
 namespace AcceptanceTest
 {
@@ -110,6 +111,18 @@ namespace AcceptanceTest
             Session.SendToTarget(echo, sessionId);
         }
 
+        private void AcknowledgeXmlMessage(Message msg, SessionID sessionId) {
+            string beginString = Message.ExtractBeginString(msg.ToString());
+            string seqNo = msg.Header.GetString(34);
+
+            Message response = new();
+            response.Header.SetField(new BeginString(beginString));
+            response.Header.SetField(new MsgType("B"));
+            response.SetField(new Headline($"Successfully received 'n' message with seqNo={seqNo}"));
+            response.SetField(new NoLinesOfText(0));
+
+            Session.SendToTarget(response, sessionId);
+        }
 
         public void OnMessage(QuickFix.FIX41.News news, SessionID sessionId) { ProcessNews(news, sessionId); }
         public void OnMessage(QuickFix.FIX42.News news, SessionID sessionId) { ProcessNews(news, sessionId); }
@@ -173,8 +186,10 @@ namespace AcceptanceTest
             }
         }
 
-        public void FromAdmin(Message message, SessionID sessionId)
-        { }
+        public void FromAdmin(Message message, SessionID sessionId) {
+            if (message.Header.GetString(35) == "n")
+                AcknowledgeXmlMessage(message, sessionId);
+        }
 
         public void ToAdmin(Message message, SessionID sessionId) { }
         public void ToApp(Message message, SessionID sessionId) { }

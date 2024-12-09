@@ -12,8 +12,8 @@ internal class ReflectorClient : IReflector
 {
     private static readonly Regex s_timeRegex = new(@"\<TIME([+-]\d+)\>", RegexOptions.Compiled);
     private static readonly Regex s_beginStringRegex = new(@"^8=.*?[\001]", RegexOptions.Compiled);
-    private static readonly Regex s_bodyLengthRegex = new(@"[\001]9=.*?[\001]", RegexOptions.Compiled);
-    private static readonly Regex s_checksumRegex = new(@"[\001]10=.*[\001]$", RegexOptions.Compiled);
+    private static readonly Regex s_bodyLengthRegex = new(@"^8=[^\001]*[\001]9=[^\001]*", RegexOptions.Compiled);
+    private static readonly Regex s_checksumRegex = new(@"[\001]10=[0-9]+[\001]$", RegexOptions.Compiled);
     private static readonly Dictionary<string, Regex> s_expectPatterns = new()
     {
         { "10", new Regex(@"\d{3}", RegexOptions.Compiled) },
