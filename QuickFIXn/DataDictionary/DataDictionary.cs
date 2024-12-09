@@ -15,9 +15,12 @@ namespace QuickFix.DataDictionary
         public string? MajorVersion { get; private set; }
         public string? MinorVersion { get; private set; }
         public string? Version { get; private set; }
-        public readonly Dictionary<int, DDField> FieldsByTag = new();
-        public readonly Dictionary<string, DDField> FieldsByName = new();
+
         public readonly Dictionary<string, DDMap> Messages = new();
+        public readonly Dictionary<string, DDField> FieldsByName = new();
+
+        // TODO: Audit these Dict usages for unprotected [] lookups.
+        public readonly Dictionary<int, DDField> FieldsByTag = new();
         private readonly Dictionary<string, XmlNode> _componentsByName = new();
 
         public bool CheckFieldsOutOfOrder { get; set; }
@@ -118,10 +121,19 @@ namespace QuickFix.DataDictionary
                 : null;
         }
 
+        /// <summary>
+        /// If DD defines this message type, returns with no side effect; else throws InvalidMessageType.
+        /// </summary>
+        /// <param name="msgType"></param>
+        /// <exception cref="InvalidMessageType"></exception>
         public void CheckMsgType(string msgType)
         {
-            if (!Messages.ContainsKey(msgType))
-                throw new InvalidMessageType();
+            if (Messages.ContainsKey(msgType))
+                return;
+            if (FieldsByTag[35].EnumDict.ContainsKey(msgType))
+                return;
+            throw new InvalidMessageType();
+
         }
 
         public void CheckHasRequired(Message message, string msgType)
@@ -138,10 +150,13 @@ namespace QuickFix.DataDictionary
                     throw new RequiredTagMissing(field);
             }
 
-            foreach (int field in Messages[msgType].ReqFields)
+            if (Messages.TryGetValue(msgType, out DDMap? ddmap))
             {
-                if (!message.IsSetField(field))
-                    throw new RequiredTagMissing(field);
+                foreach (int field in ddmap.ReqFields)
+                {
+                    if (!message.IsSetField(field))
+                        throw new RequiredTagMissing(field);
+                }
             }
 
             /* FIXME TODO group stuff
@@ -183,13 +198,23 @@ namespace QuickFix.DataDictionary
             }
 
             // check contents of each group
-            foreach (int groupTag in map.GetGroupTags())
-            {
-                for (int i = 1; i <= map.GroupCount(groupTag); i++)
+            List<int> groupTagList = map.GetGroupTags();
+            if (groupTagList.Count > 0) {
+                if (!Messages.TryGetValue(msgType, out DDMap? msgDdMap))
                 {
-                    Group g = map.GetGroup(i, groupTag);
-                    DDGrp ddg = this.Messages[msgType].GetGroup(groupTag);
-                    IterateGroup(g, ddg, msgType);
+                    // This shouldn't be possible
+                    throw new MessageParseError(
+                        $"Cannot locate msgType='{msgType}' message groups in DataDictionary (Please report this error)");
+                }
+
+                foreach (int groupTag in groupTagList)
+                {
+                    for (int i = 1; i <= map.GroupCount(groupTag); i++)
+                    {
+                        Group g = map.GetGroup(i, groupTag);
+                        DDGrp ddg = msgDdMap.GetGroup(groupTag);
+                        IterateGroup(g, ddg, msgType);
+                    }
                 }
             }
         }

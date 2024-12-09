@@ -709,7 +709,7 @@ namespace QuickFix.Fields
         public const string BID_REQUEST = "k";
         public const string BID_RESPONSE = "l";
         public const string LIST_STRIKE_PRICE = "m";
-        public const string XML_MESSAGE = "n";
+        public const string XML_NON_FIX = "n";
         public const string REGISTRATION_INSTRUCTIONS = "o";
         public const string REGISTRATION_INSTRUCTIONS_RESPONSE = "p";
         public const string ORDER_MASS_CANCEL_REQUEST = "q";
@@ -859,7 +859,6 @@ namespace QuickFix.Fields
         public const string BIDREQUEST = "k";
         public const string BIDRESPONSE = "l";
         public const string LISTSTRIKEPRICE = "m";
-        public const string XML_NON_FIX = "n";
         public const string REGISTRATIONINSTRUCTIONS = "o";
         public const string REGISTRATIONINSTRUCTIONSRESPONSE = "p";
         public const string ORDERMASSCANCELREQUEST = "q";

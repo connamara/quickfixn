@@ -4160,7 +4160,7 @@
       <value enum="k" description="BID_REQUEST" />
       <value enum="l" description="BID_RESPONSE" />
       <value enum="m" description="LIST_STRIKE_PRICE" />
-      <value enum="n" description="XML_MESSAGE" />
+      <value enum="n" description="XML_NON_FIX" />
       <value enum="o" description="REGISTRATION_INSTRUCTIONS" />
       <value enum="p" description="REGISTRATION_INSTRUCTIONS_RESPONSE" />
       <value enum="q" description="ORDER_MASS_CANCEL_REQUEST" />
