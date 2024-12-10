@@ -5382,7 +5382,7 @@
    <value enum='L' description='LIST_EXECUTE' />
    <value enum='m' description='LIST_STRIKE_PRICE' />
    <value enum='M' description='LIST_STATUS_REQUEST' />
-   <value enum='n' description='XML_MESSAGE' />
+   <value enum='n' description='XML_NON_FIX' />
    <value enum='N' description='LIST_STATUS' />
    <value enum='o' description='REGISTRATION_INSTRUCTIONS' />
    <value enum='p' description='REGISTRATION_INSTRUCTIONS_RESPONSE' />

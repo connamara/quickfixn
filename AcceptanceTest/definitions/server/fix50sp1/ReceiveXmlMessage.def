@@ -1,0 +1,18 @@
+# Engine can receive complex type 'n' messages
+# and is not confused if the xml content contains SOH or FIX tags
+
+iCONNECT
+I8=FIXT.1.135=A34=149=TW52=<TIME>56=ISLD98=0108=61137=8
+E8=FIXT.1.135=A34=149=ISLD52=00000000-00:00:00.00056=TW98=0108=61137=810=0
+
+# Receive encapsulated ExecutionReport and get News response.
+# (Need the News response to ensure that FIX parses it and passes it up to the app;
+#  without this response, the test will false pass)
+I8=FIXT.1.135=n34=249=TW52=<TIME>56=ISLD212=55213=<RTRF>8=FIX.4.39=37735=834=208blah blah blah</RTRF>
+E8=FIXT.1.135=B34=249=ISLD52=00000000-00:00:00.00056=TW33=0148=Successfully received 'n' message with seqNo=210=0
+
+# logout message and response
+I8=FIXT.1.135=534=349=TW52=<TIME>56=ISLD
+E8=FIXT.1.135=534=349=ISLD52=00000000-00:00:00.00056=TW10=0
+eDISCONNECT
+
