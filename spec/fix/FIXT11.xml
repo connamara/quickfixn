@@ -80,6 +80,9 @@
       <field name='DefaultApplVerID' required='Y'/>
       <component name='MsgTypeGrp' required='N'/>
     </message>
+    <message name="XMLnonFIX" msgtype="n" msgcat="admin">
+      <!-- this message has no body fields -->
+    </message>
   </messages>
   <components>
     <component name='HopGrp'>

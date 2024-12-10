@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- for DataDictionaryTests.TestCheckMsgType -->
+
+<fix minor="9" major="9">
+    <header/>
+    <trailer/>
+    <messages>
+        <message name="News" msgtype="B" msgcat="admin">
+            <!-- body not important for test -->
+        </message>
+    </messages>
+
+    <fields>
+        <field number="35" name="MsgType" type="STRING">
+            <value enum="B" description="NEWS" />
+            <value enum="bar" description="BAR_MESSAGE" />
+        </field>
+    </fields>
+</fix>

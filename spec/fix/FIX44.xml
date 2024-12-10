@@ -82,6 +82,9 @@
       <field name="EncodedTextLen" required="N" />
       <field name="EncodedText" required="N" />
     </message>
+    <message name="XMLnonFIX" msgtype="n" msgcat="admin">
+      <!-- this message has no body fields -->
+    </message>
     <message name="BusinessMessageReject" msgtype="j" msgcat="app">
       <field name="RefSeqNum" required="N" />
       <field name="RefMsgType" required="Y" />

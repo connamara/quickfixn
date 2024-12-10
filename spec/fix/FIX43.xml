@@ -91,6 +91,9 @@
       <field name="EncodedTextLen" required="N" />
       <field name="EncodedText" required="N" />
     </message>
+    <message name="XMLnonFIX" msgtype="n" msgcat="admin">
+      <!-- this message has no body fields -->
+    </message>
     <message name="Advertisement" msgtype="7" msgcat="app">
       <field name="AdvId" required="Y" />
       <field name="AdvTransType" required="Y" />

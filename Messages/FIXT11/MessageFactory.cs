@@ -32,6 +32,7 @@ namespace QuickFix
                     case QuickFix.FIXT11.SequenceReset.MsgType: return new QuickFix.FIXT11.SequenceReset();
                     case QuickFix.FIXT11.Logout.MsgType: return new QuickFix.FIXT11.Logout();
                     case QuickFix.FIXT11.Logon.MsgType: return new QuickFix.FIXT11.Logon();
+                    case QuickFix.FIXT11.XMLnonFIX.MsgType: return new QuickFix.FIXT11.XMLnonFIX();
                 }
 
                 return new QuickFix.Message();

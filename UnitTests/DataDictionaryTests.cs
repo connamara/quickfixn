@@ -376,7 +376,7 @@ namespace UnitTests
         [Test]
         public void TestCheckMsgType() {
             DataDictionary dd = new DataDictionary();
-            dd.LoadFIXSpec("FIX44");
+            dd.LoadTestFIXSpec("msg_type_test");
 
             Assert.Throws(typeof(InvalidMessageType), delegate { dd.CheckMsgType("foo"); });
 
@@ -384,8 +384,8 @@ namespace UnitTests
             Assert.DoesNotThrow(delegate { dd.CheckMsgType("B"); });
 
             // True check, case 2: Type is in field 35, but there is no Message type
-            Assert.That(dd.Messages, Does.Not.ContainKey("n")); // Sanity check; if fails, fix the test.
-            Assert.DoesNotThrow(delegate { dd.CheckMsgType("n"); });
+            Assert.That(dd.Messages, Does.Not.ContainKey("bar")); // Sanity check; if fails, fix the test.
+            Assert.DoesNotThrow(delegate { dd.CheckMsgType("bar"); });
         }
 
         private static XmlNode MakeNode(string xmlString)
