@@ -39,29 +39,12 @@ namespace QuickFix
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
             ILogFactory? logFactory = null,
-            IMessageFactory? messageFactory = null)
+            IMessageFactory? messageFactory = null) : this(application, storeFactory, settings,
+            logFactory is null ? NullLoggerFactory.Instance : new LogFactoryAdapter(logFactory, settings),
+            messageFactory)
         {
-            ILoggerFactory lf = logFactory is null
-                ? NullLoggerFactory.Instance
-                : new LogFactoryAdapter(logFactory, settings);
-            IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
-            _settings = settings;
-            _sessionFactory = new SessionFactory(application, storeFactory, lf, mf);
-            _nonSessionLog = lf.CreateLogger("QuickFix");
-
-            try
-            {
-                foreach (SessionID sessionId in settings.GetSessions())
-                {
-                    SettingsDictionary dict = settings.Get(sessionId);
-                    CreateSession(sessionId, dict);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new ConfigError(e.Message, e);
-            }
         }
+
         /// <summary>
         /// Create a ThreadedSocketAcceptor
         /// </summary>
@@ -214,6 +197,7 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
+                    session.Log.Log(LogLevel.Critical, new EventId(), "", new Exception(), (a, b) => "");
                     session.Log.Log(LogLevel.Error, e, "Error during logout of Session {SessionID}: {Message}",
                         session.SessionID, e.Message);
                 }

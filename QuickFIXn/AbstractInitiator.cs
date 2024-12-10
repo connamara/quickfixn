@@ -32,19 +32,11 @@ namespace QuickFix
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
             ILogFactory? logFactoryNullable = null,
-            IMessageFactory? messageFactoryNullable = null)
-        {
-            _settings = settings;
-            ILoggerFactory logFactory = logFactoryNullable is null
+            IMessageFactory? messageFactoryNullable = null) : this(app, storeFactory, settings,
+            logFactoryNullable is null
                 ? NullLoggerFactory.Instance
-                : new LogFactoryAdapter(logFactoryNullable, settings);
-            var msgFactory = messageFactoryNullable ?? new DefaultMessageFactory();
-            _sessionFactory = new SessionFactory(app, storeFactory, logFactory, msgFactory);
-            _nonSessionLog = logFactory.CreateLogger("QuickFix");
-
-            HashSet<SessionID> definedSessions = _settings.GetSessions();
-            if (0 == definedSessions.Count)
-                throw new ConfigError("No sessions defined");
+                : new LogFactoryAdapter(logFactoryNullable, settings), messageFactoryNullable)
+        {
         }
 
         protected AbstractInitiator(
