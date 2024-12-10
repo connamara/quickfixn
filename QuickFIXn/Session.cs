@@ -356,20 +356,24 @@ namespace QuickFix
         /// Sends a message
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="messageType"></param>
         /// <returns></returns>
-        public bool Send(string message, string messageType)
+        public bool Send(string message)
         {
             lock (_sync)
             {
                 if (_responder is null)
                     return false;
-                using (Log.BeginScope(new Dictionary<string, object>
-                       {
-                           {"MessageType", messageType}
-                       }))
+
+                const LogLevel messagesLogLevel = LogLevel.Information;
+                if (Log.IsEnabled(messagesLogLevel))
                 {
-                    Log.Log(LogLevel.Information, LogEventIds.OutgoingMessage, "{Message}", message);
+                    using (Log.BeginScope(new Dictionary<string, object>
+                           {
+                               {"MessageType", Message.GetMsgType(message)}
+                           }))
+                    {
+                        Log.Log(messagesLogLevel, LogEventIds.OutgoingMessage, "{Message}", message);
+                    }
                 }
 
                 return _responder.Send(message);
@@ -528,20 +532,23 @@ namespace QuickFix
         /// <param name="msgStr"></param>
         private void NextMessage(string msgStr)
         {
+            const LogLevel messageLogLevel = LogLevel.Information;
             try
             {
-                var messageType = Message.IdentifyType(msgStr);
-                using (Log.BeginScope(new Dictionary<string, object>
-                       {
-                           {"MessageType", messageType.Value}
-                       }))
+                if (Log.IsEnabled(messageLogLevel))
                 {
-                    Log.Log(LogLevel.Information, LogEventIds.IncomingMessage, "{Message}", msgStr);
+                    using (Log.BeginScope(new Dictionary<string, object>
+                           {
+                               {"MessageType", Message.GetMsgType(msgStr)}
+                           }))
+                    {
+                        Log.Log(messageLogLevel, LogEventIds.IncomingMessage, "{Message}", msgStr);
+                    }
                 }
             }
             catch (Exception)
             {
-                Log.Log(LogLevel.Information, LogEventIds.IncomingMessage, "{Message}", msgStr);
+                Log.Log(messageLogLevel, LogEventIds.IncomingMessage, "{Message}", msgStr);
             }
 
             MessageBuilder msgBuilder = new MessageBuilder(
@@ -818,7 +825,7 @@ namespace QuickFix
                             {
                                 GenerateSequenceReset(resendReq, begin, msgSeqNum);
                             }
-                            Send(msg.ConstructString(), msg.Header.GetString(Tags.MsgType));
+                            Send(msg.ConstructString());
                             begin = 0;
                         }
                         current = msgSeqNum + 1;
@@ -1644,7 +1651,7 @@ namespace QuickFix
                 string messageString = message.ConstructString();
                 if (0UL == seqNum)
                     Persist(message, messageString);
-                return Send(messageString, message.Header.GetString(Tags.MsgType));
+                return Send(messageString);
             }
         }
 
