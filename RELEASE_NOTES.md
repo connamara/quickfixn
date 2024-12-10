@@ -46,6 +46,7 @@ What's New
 * #891 - make NonSessionLog implement IDisposable and fix the IOException (VAllens)
 * #893 - Upgrade the unit testing framework to the latest version and remove obsolete Assert methods (VAllens)
 * #907 - A fix to make body-less messages work, specifically 35=n aka XMLnonFIX (gbirchmeier)
+* #910 - faster Message.GetMsgType that doesn't use Regex (jkulubya)
 
 ### v1.12.0
 
