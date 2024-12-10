@@ -586,10 +586,14 @@ namespace UnitTests
                              + "55=sym|268=1|269=0|272=20111012|273=22:15:30.444|10=19|").Replace('|', Message.SOH);
             Assert.That(Message.GetMsgType(msgStr), Is.EqualTo("W"));
 
+            string msgStr2 = ("8=FIX.4.4|9=104|35=AW|34=3|49=sender|52=20110909-09:09:09.999|56=target"
+                             + "55=sym|268=1|269=0|272=20111012|273=22:15:30.444|10=19|").Replace('|', Message.SOH);
+            Assert.That(Message.GetMsgType(msgStr2), Is.EqualTo("AW"));
+
             // invalid 35 value, let it ride
-            string msgStr2 = ("8=FIX.4.4|9=68|35=*|34=3|49=sender|52=20110909-09:09:09.999|56=target"
+            string msgStr3 = ("8=FIX.4.4|9=68|35=*|34=3|49=sender|52=20110909-09:09:09.999|56=target"
                               + "55=sym|268=0|10=9|").Replace('|', Message.SOH);
-            Assert.That(Message.GetMsgType(msgStr2), Is.EqualTo("*"));
+            Assert.That(Message.GetMsgType(msgStr3), Is.EqualTo("*"));
         }
 
         [Test]

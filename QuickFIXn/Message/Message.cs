@@ -256,9 +256,34 @@ namespace QuickFix
         /// <exception cref="MessageParseError">if 35 tag is missing or malformed</exception>
         public static string GetMsgType(string fixstring)
         {
-            Match match = Regex.Match(fixstring, SOH + "35=([^" + SOH + "]*)" + SOH);
-            if (match.Success)
-                return match.Groups[1].Value;
+            // 2=3|3=E|35=0|55=ab|545=xx|    -> good message, msg type = 0
+            // 2=3|3=E|35=AX|55=ab|545=xx|   -> good message, msg type = AX
+            // 35=5|   -> these two are garbled messages but the old regex behavior
+            // |35=A|  -> read them just fine, so this one does as well
+            var chars = fixstring.AsSpan();
+            var l = 0;
+            var r = 1;
+
+            if (chars.Length > 0 && chars[0] == SOH) l = 1;
+            while (r < chars.Length)
+            {
+                if (chars[r] == SOH)
+                {
+                    if (r - l >= 4 && 
+                        chars[l] == '3' && 
+                        chars[l + 1] == '5' && 
+                        chars[l + 2] == '=')
+                    {
+                        return new string(chars[(l + 3)..r]);
+                    }
+                    else
+                    {
+                        l = r + 1;
+                    }
+                }
+
+                r++;
+            }
 
             throw new MessageParseError("missing or malformed tag 35 in msg: " + fixstring);
         }
