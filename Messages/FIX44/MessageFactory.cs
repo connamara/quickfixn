@@ -32,6 +32,7 @@ namespace QuickFix
                     case QuickFix.FIX44.Reject.MsgType: return new QuickFix.FIX44.Reject();
                     case QuickFix.FIX44.SequenceReset.MsgType: return new QuickFix.FIX44.SequenceReset();
                     case QuickFix.FIX44.Logout.MsgType: return new QuickFix.FIX44.Logout();
+                    case QuickFix.FIX44.XMLnonFIX.MsgType: return new QuickFix.FIX44.XMLnonFIX();
                     case QuickFix.FIX44.BusinessMessageReject.MsgType: return new QuickFix.FIX44.BusinessMessageReject();
                     case QuickFix.FIX44.UserRequest.MsgType: return new QuickFix.FIX44.UserRequest();
                     case QuickFix.FIX44.UserResponse.MsgType: return new QuickFix.FIX44.UserResponse();
