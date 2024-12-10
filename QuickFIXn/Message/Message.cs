@@ -256,17 +256,10 @@ namespace QuickFix
         /// <exception cref="MessageParseError">if 35 tag is missing or malformed</exception>
         public static string GetMsgType(string fixstring)
         {
-            // ------------------- haystack
-            // |           |
-            // v           v
-            // 2=3|3=E|35=0|55=ab|545=xx|
-            //            ^
-            //            |
-            //            ---------needle
-            //
-            // 2=3|3=E|35=0|55=ab|545=xx|   -> good message
-            // 35=5|   -> these two are garbled messages but the old regex behavior read them just fine, so the new one does as well
-            // |35=A|
+            // 2=3|3=E|35=0|55=ab|545=xx|    -> good message, msg type = 0
+            // 2=3|3=E|35=AX|55=ab|545=xx|   -> good message, msg type = AX
+            // 35=5|   -> these two are garbled messages but the old regex behavior
+            // |35=A|  -> read them just fine, so this one does as well
             var chars = fixstring.AsSpan();
             var l = 0;
             var r = 1;
