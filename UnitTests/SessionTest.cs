@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 using NUnit.Framework;
 using System.Threading;
 using Microsoft.Extensions.Logging;
-using QuickFix.Logger;
+using Microsoft.Extensions.Logging.Abstractions;
 using QuickFix.Store;
 
 namespace UnitTests;
@@ -40,7 +40,7 @@ public class SessionTest
         _config.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
         _settings.Set(_sessionId, _config);
 
-        var loggerFactory = new LoggerFactory([new NullLoggerProvider()]); // use QuickFix.ScreenLogFactory(settings) if you need to see output
+        var loggerFactory = new LoggerFactory([NullLoggerProvider.Instance]); // use QuickFix.ScreenLogFactory(settings) if you need to see output
 
         // acceptor
         _session = new QuickFix.Session(false, _application, new MemoryStoreFactory(), _sessionId,
@@ -801,7 +801,7 @@ public class SessionTest
         var mockApp = new SessionTestSupport.MockApplicationExt();
         _session = new QuickFix.Session(true, mockApp, new MemoryStoreFactory(), _sessionId,
             new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(_config), 0,
-            new LoggerFactory([new NullLoggerProvider()]), new QuickFix.DefaultMessageFactory(), "blah");
+            new LoggerFactory([NullLoggerProvider.Instance]), new QuickFix.DefaultMessageFactory(), "blah");
         _session.SetResponder(_responder);
         _session.CheckLatency = false;
 

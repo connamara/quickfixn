@@ -3,6 +3,7 @@ using QuickFix;
 using System.IO;
 using System.Net;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using QuickFix.Logger;
 using QuickFix.Store;
 
@@ -31,7 +32,7 @@ public abstract class TestBase
         }
         else
         {
-            loggerFactory.AddProvider(new NullLoggerProvider());
+            loggerFactory.AddProvider(NullLoggerProvider.Instance);
         }
 
         _acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, loggerFactory);

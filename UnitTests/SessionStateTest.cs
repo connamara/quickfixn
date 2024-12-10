@@ -1,11 +1,10 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using QuickFix;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
-using QuickFix.Logger;
+using Microsoft.Extensions.Logging.Abstractions;
 using QuickFix.Store;
 
 namespace UnitTests
@@ -151,10 +150,8 @@ namespace UnitTests
 
             FileStore store = (FileStore)factory.Create(sessionId);
 
-            NullLogger log = new NullLogger();
-
             //Set up sessionstate
-            SessionState state = new SessionState(true, log, 1, store);
+            SessionState state = new SessionState(true, NullLogger.Instance, 1, store);
 
             Hashtable errorsTable = Hashtable.Synchronized(new Hashtable());//used in more than 1 thread at a time
             Hashtable setTable = new Hashtable(1000);//only used in 1 thread at a time
