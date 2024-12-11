@@ -8,11 +8,11 @@ namespace QuickFix.Logger;
 /// </summary>
 internal class NonSessionFileLogger : ILogger
 {
-    private readonly Lazy<FileLogger> _fileLog;
+    private readonly Lazy<FileLog> _fileLog;
 
     internal NonSessionFileLogger(string fileLogPath, SessionID sessionId)
     {
-        _fileLog = new Lazy<FileLogger>(() => new FileLogger(fileLogPath, sessionId));
+        _fileLog = new Lazy<FileLog>(() => new FileLog(fileLogPath, sessionId));
     }
 
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception,

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
+using Microsoft.Extensions.Logging;
 using QuickFix.Fields.Converters;
 using QuickFix.Util;
 
@@ -11,7 +12,7 @@ namespace QuickFix.Logger;
 /// File log implementation
 /// </summary>
 [Obsolete("Use Microsoft.Extensions.Logging instead")]
-public class FileLog : ILog
+public class FileLog : ILog, ILogger
 {
     private readonly object _sync = new();
 
@@ -134,6 +135,36 @@ public class FileLog : ILog
             _eventLog.WriteLine(DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond) + " : " + s);
         }
     }
+
+    public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception,
+        Func<TState, Exception?, string> formatter)
+    {
+        if (!IsEnabled(logLevel)) return;
+        if (eventId == LogEventIds.IncomingMessage || eventId == LogEventIds.OutgoingMessage)
+        {
+            lock (_sync)
+            {
+                DisposedCheck();
+                EnsureMessageLogInit();
+                _messageLog.WriteLine(
+                    $"{DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond)} : {formatter(state, exception)}");
+            }
+        }
+        else
+        {
+            lock (_sync)
+            {
+                DisposedCheck();
+                EnsureEventLogInit();
+                _eventLog.WriteLine(
+                    $"{DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond)} : {formatter(state, exception)}");
+            }
+        }
+    }
+
+    public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
+
+    public IDisposable BeginScope<TState>(TState state) where TState : notnull => default!;
 
     #endregion
 

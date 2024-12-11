@@ -49,7 +49,7 @@ public class ScreenLoggerProvider : ILoggerProvider
             logEvent = _logEvent || dict.IsBoolPresentAndTrue(SCREEN_LOG_SHOW_EVENTS);
         }
 
-        return new ScreenLogger(logIncoming, logOutgoing, logEvent);
+        return new ScreenLog(logIncoming, logOutgoing, logEvent);
     }
 
     public void Dispose()

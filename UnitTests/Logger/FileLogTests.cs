@@ -8,7 +8,7 @@ namespace UnitTests.Logger;
 [TestFixture]
 public class FileLogTests
 {
-    private FileLogger? _log;
+    private FileLog? _log;
 
     [SetUp]
     public void Setup()
@@ -27,18 +27,18 @@ public class FileLogTests
         QuickFix.SessionID someSessionId = new QuickFix.SessionID("FIX.4.4", "sender", "target");
         QuickFix.SessionID someSessionIdWithQualifier = new QuickFix.SessionID("FIX.4.3", "sender", "target", "foo");
 
-        Assert.That(FileLogger.Prefix(someSessionId), Is.EqualTo("FIX.4.4-sender-target"));
-        Assert.That(FileLogger.Prefix(someSessionIdWithQualifier), Is.EqualTo("FIX.4.3-sender-target-foo"));
+        Assert.That(FileLog.Prefix(someSessionId), Is.EqualTo("FIX.4.4-sender-target"));
+        Assert.That(FileLog.Prefix(someSessionIdWithQualifier), Is.EqualTo("FIX.4.3-sender-target-foo"));
     }
 
     [Test]
     public void TestPrefixForSubsAndLocation()
     {
         QuickFix.SessionID sessionIdWithSubsAndLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", "SENDERLOC", "TARGETCOMP", "TARGETSUB", "TARGETLOC");
-        Assert.That(FileLogger.Prefix(sessionIdWithSubsAndLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB_SENDERLOC-TARGETCOMP_TARGETSUB_TARGETLOC"));
+        Assert.That(FileLog.Prefix(sessionIdWithSubsAndLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB_SENDERLOC-TARGETCOMP_TARGETSUB_TARGETLOC"));
 
         QuickFix.SessionID sessionIdWithSubsNoLocation = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "SENDERSUB", "TARGETCOMP", "TARGETSUB");
-        Assert.That(FileLogger.Prefix(sessionIdWithSubsNoLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB"));
+        Assert.That(FileLog.Prefix(sessionIdWithSubsNoLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB"));
     }
 
     [Test]
@@ -62,7 +62,7 @@ public class FileLogTests
         string expectedMessagesLogFilePath = Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log");
 
         var fileLogProvider = new FileLoggerProvider(settings);
-        _log = (FileLogger) fileLogProvider.CreateLogger($"QuickFix.{sessionId}");
+        _log = (FileLog) fileLogProvider.CreateLogger($"QuickFix.{sessionId}");
 
         Assert.That(!File.Exists(expectedEventLogFilePath));
         Assert.That(!File.Exists(expectedMessagesLogFilePath));
