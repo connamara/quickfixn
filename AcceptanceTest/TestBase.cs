@@ -13,6 +13,7 @@ public abstract class TestBase
 {
     private int _port;
     private ThreadedSocketAcceptor _acceptor;
+    private LoggerFactory? _loggerFactory;
 
     protected abstract SessionSettings Settings { get; }
 
@@ -25,17 +26,17 @@ public abstract class TestBase
         var testApp = new ATApplication();
         var storeFactory = new MemoryStoreFactory();
 
-        var loggerFactory = new LoggerFactory();
+        _loggerFactory = new LoggerFactory();
         if (settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose"))
         {
-            loggerFactory.AddProvider(new FileLoggerProvider(settings));
+            _loggerFactory.AddProvider(new FileLoggerProvider(settings));
         }
         else
         {
-            loggerFactory.AddProvider(NullLoggerProvider.Instance);
+            _loggerFactory.AddProvider(NullLoggerProvider.Instance);
         }
 
-        _acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, loggerFactory);
+        _acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, _loggerFactory);
 
         _acceptor.Start();
     }
@@ -44,6 +45,7 @@ public abstract class TestBase
     public void TearDown()
     {
         _acceptor?.Dispose();
+        _loggerFactory?.Dispose();
     }
 
     protected void RunTest(string definitionPath)

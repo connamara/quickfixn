@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace QuickFix.Logger;
 
-internal class LogFactoryAdapter : ILoggerFactory
+internal class LogFactoryAdapter : ILoggerFactory, IDisposable
 {
     private readonly ILogFactory _logFactory;
     private readonly SessionSettings _settings;
@@ -38,6 +38,19 @@ internal class LogFactoryAdapter : ILoggerFactory
 
     public void Dispose()
     {
+        foreach (var (_, logger) in _loggers)
+        {
+            if (logger is IDisposable disposable)
+            {
+                try
+                {
+                    disposable.Dispose();
+                }
+                catch
+                {
+                }
+            }
+        }
     }
 }
 

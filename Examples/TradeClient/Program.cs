@@ -32,7 +32,7 @@ namespace TradeClient
                 QuickFix.SessionSettings settings = new QuickFix.SessionSettings(file);
                 TradeClientApp application = new TradeClientApp();
                 IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                var loggerFactory = LoggerFactory.Create(builder =>
+                using var loggerFactory = LoggerFactory.Create(builder =>
                 {
                     builder.AddProvider(new ScreenLoggerProvider(settings));
                     // builder.AddProvider(new FileLogProvider(settings));

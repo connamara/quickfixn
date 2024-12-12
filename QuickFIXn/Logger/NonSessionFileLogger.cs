@@ -6,7 +6,7 @@ namespace QuickFix.Logger;
 /// <summary>
 /// Like the file logger, but only creates the files on first write
 /// </summary>
-internal class NonSessionFileLogger : ILogger
+internal class NonSessionFileLogger : ILogger, IDisposable
 {
     private readonly Lazy<FileLog> _fileLog;
 
@@ -24,4 +24,9 @@ internal class NonSessionFileLogger : ILogger
 #pragma warning disable CS8633
     public IDisposable BeginScope<TState>(TState state) where TState : notnull => _fileLog.Value.BeginScope(state);
 #pragma warning restore CS8633
+
+    public void Dispose()
+    {
+        if (_fileLog.IsValueCreated) _fileLog.Value.Dispose();
+    }
 }

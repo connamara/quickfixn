@@ -23,6 +23,7 @@ namespace QuickFix
         private bool _disposed = false;
         private readonly object _sync = new();
         private readonly ILogger _nonSessionLog;
+        private readonly ILoggerFactory? _loggerFactoryToDispose;
 
         #region Constructors
         /// <summary>
@@ -60,7 +61,13 @@ namespace QuickFix
             ILoggerFactory? loggerFactory = null,
             IMessageFactory? messageFactory = null)
         {
-            ILoggerFactory lf = loggerFactory ?? NullLoggerFactory.Instance;
+            var lf = loggerFactory ?? NullLoggerFactory.Instance;
+            if (lf is LogFactoryAdapter)
+            {
+                // LogFactoryAdapter is internal, and can only have been created in the obsolete ctor, and must be
+                // disposed by us later. This should be removed eventually together with the old ILog and ILogFactory.
+                _loggerFactoryToDispose = lf;
+            }
             IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
             _settings = settings;
             _sessionFactory = new SessionFactory(application, storeFactory, lf, mf);
@@ -298,6 +305,7 @@ namespace QuickFix
             DisposeSessions();
             _sessions.Clear();
             _isStarted = false;
+            _loggerFactoryToDispose?.Dispose();
 
             // FIXME StopSessionTimer();
             // FIXME Session.UnregisterSessions(GetSessions());

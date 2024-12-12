@@ -93,7 +93,7 @@ public class FileLogTests
         QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
         settings.Set(sessionId, config);
 
-        var loggerFactory = new LoggerFactory([new FileLoggerProvider(settings)]);
+        using var loggerFactory = new LoggerFactory([new FileLoggerProvider(settings)]);
 
         Assert.Throws<QuickFix.ConfigError>(() => loggerFactory.CreateLogger($"QuickFix.{sessionId}"));
     }

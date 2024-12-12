@@ -31,7 +31,7 @@ namespace SimpleAcceptor
                 SessionSettings settings = new SessionSettings(args[0]);
                 IApplication app = new SimpleAcceptorApp();
                 IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                var loggerFactory = LoggerFactory.Create(builder =>
+                using var loggerFactory = LoggerFactory.Create(builder =>
                 {
                     builder.AddProvider(new FileLoggerProvider(settings));
                 });

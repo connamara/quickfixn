@@ -23,6 +23,7 @@ namespace QuickFix
         private Thread? _thread;
 
         protected readonly ILogger _nonSessionLog;
+        private readonly ILoggerFactory? _loggerFactoryToDispose;
 
         public bool IsStopped { get; private set; } = true;
 
@@ -48,6 +49,12 @@ namespace QuickFix
         {
             _settings = settings;
             var logFactory = logFactoryNullable ?? NullLoggerFactory.Instance;
+            if (logFactory is LogFactoryAdapter)
+            {
+                // LogFactoryAdapter is internal, and can only have been created in the obsolete ctor, and must be
+                // disposed by us later. This should be removed eventually together with the old ILog and ILogFactory.
+                _loggerFactoryToDispose = logFactory;
+            }
             var msgFactory = messageFactoryNullable ?? new DefaultMessageFactory();
             _sessionFactory = new SessionFactory(app, storeFactory, logFactory, msgFactory);
             _nonSessionLog = logFactory.CreateLogger("QuickFix");
@@ -226,6 +233,8 @@ namespace QuickFix
                 _connected.Clear();
                 _disconnected.Clear();
             }
+
+            _loggerFactoryToDispose?.Dispose();
         }
 
         public bool IsLoggedOn

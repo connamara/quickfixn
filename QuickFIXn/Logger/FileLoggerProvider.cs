@@ -34,5 +34,16 @@ public class FileLoggerProvider : ILoggerProvider
 
     public void Dispose()
     {
+        foreach (var (_, logger) in _loggers)
+        {
+            try
+            {
+                if (logger is IDisposable disposable)
+                {
+                    disposable.Dispose();
+                }
+            }
+            catch { }
+        }
     }
 }

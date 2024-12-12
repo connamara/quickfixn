@@ -28,7 +28,7 @@ namespace Executor
                 SessionSettings settings = new SessionSettings(args[0]);
                 IApplication executorApp = new Executor();
                 IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                var loggerFactory = LoggerFactory.Create(builder =>
+                using var loggerFactory = LoggerFactory.Create(builder =>
                 {
                     builder.SetMinimumLevel(LogLevel.Trace);
                     builder.AddProvider(new ScreenLoggerProvider(settings));

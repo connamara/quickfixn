@@ -36,16 +36,6 @@ BeginString = FIX.4.4
             return new SessionSettings(new StringReader(Config));
         }
 
-        private static ThreadedSocketAcceptor CreateAcceptor()
-        {
-            var settings = CreateSettings();
-            return new ThreadedSocketAcceptor(
-                new NullApplication(),
-                new FileStoreFactory(settings),
-                settings,
-                new LoggerFactory([new FileLoggerProvider(settings)]));
-        }
-
         [Test]
         public void TestRecreation()
         {
@@ -56,7 +46,14 @@ BeginString = FIX.4.4
 
         private static void StartStopAcceptor()
         {
-            var acceptor = CreateAcceptor();
+            var settings = CreateSettings();
+            using var lf = new LoggerFactory([new FileLoggerProvider(settings)]);
+
+            var acceptor = new ThreadedSocketAcceptor(
+                new NullApplication(),
+                new FileStoreFactory(settings),
+                settings,
+                lf);
             acceptor.Start();
             acceptor.Dispose();
         }
