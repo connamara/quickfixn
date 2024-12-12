@@ -26,8 +26,8 @@ internal class LogFactoryAdapter : ILoggerFactory
                 s.ToString().Equals(sessionIdString, StringComparison.InvariantCulture));
         var defaultSessionId = new SessionID("Non", "Session", "Log");
 
-        return _loggers.GetOrAdd(sessionId ?? defaultSessionId, sessionId is not null
-            ? new LogAdapter(_logFactory.Create(sessionId))
+        return _loggers.GetOrAdd(sessionId ?? defaultSessionId, sid => sessionId is not null
+            ? new LogAdapter(_logFactory.Create(sid))
             : new LogAdapter(_logFactory.CreateNonSessionLog()));
     }
 

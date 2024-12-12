@@ -27,9 +27,9 @@ public class FileLoggerProvider : ILoggerProvider
                 s.ToString().Equals(sessionIdString, StringComparison.InvariantCulture));
         var defaultSessionId = new SessionID("Non", "Session", "Log");
 
-        return _loggers.GetOrAdd(sessionId ?? defaultSessionId, sessionId is not null
-            ? new FileLog(_settings.Get(sessionId).GetString(SessionSettings.FILE_LOG_PATH), sessionId)
-            : new NonSessionFileLogger(_settings.Get().GetString(SessionSettings.FILE_LOG_PATH), defaultSessionId));
+        return _loggers.GetOrAdd(sessionId ?? defaultSessionId, sId => sessionId is not null
+            ? new FileLog(_settings.Get(sId).GetString(SessionSettings.FILE_LOG_PATH), sId)
+            : new NonSessionFileLogger(_settings.Get().GetString(SessionSettings.FILE_LOG_PATH), sId));
     }
 
     public void Dispose()
