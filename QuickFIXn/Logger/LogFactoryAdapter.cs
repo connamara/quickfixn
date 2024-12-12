@@ -70,5 +70,7 @@ internal class LogAdapter : ILogger
 
     public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
 
-    public IDisposable? BeginScope<TState>(TState state) where TState : notnull => default!;
+#pragma warning disable CS8633
+    public IDisposable BeginScope<TState>(TState state) where TState : notnull => default!;
+#pragma warning restore CS8633
 }

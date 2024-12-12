@@ -21,5 +21,7 @@ internal class NonSessionFileLogger : ILogger
 
     public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
 
-    public IDisposable? BeginScope<TState>(TState state) where TState : notnull => _fileLog.Value.BeginScope(state);
+#pragma warning disable CS8633
+    public IDisposable BeginScope<TState>(TState state) where TState : notnull => _fileLog.Value.BeginScope(state);
+#pragma warning restore CS8633
 }
