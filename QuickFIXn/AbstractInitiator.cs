@@ -47,7 +47,7 @@ namespace QuickFix
             IMessageFactory? messageFactoryNullable = null)
         {
             _settings = settings;
-            var logFactory = logFactoryNullable ?? new NullLoggerFactory();
+            var logFactory = logFactoryNullable ?? NullLoggerFactory.Instance;
             var msgFactory = messageFactoryNullable ?? new DefaultMessageFactory();
             _sessionFactory = new SessionFactory(app, storeFactory, logFactory, msgFactory);
             _nonSessionLog = logFactory.CreateLogger("QuickFix");

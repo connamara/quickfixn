@@ -60,7 +60,7 @@ namespace QuickFix
             ILoggerFactory? loggerFactory = null,
             IMessageFactory? messageFactory = null)
         {
-            ILoggerFactory lf = loggerFactory ?? new NullLoggerFactory();
+            ILoggerFactory lf = loggerFactory ?? NullLoggerFactory.Instance;
             IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
             _settings = settings;
             _sessionFactory = new SessionFactory(application, storeFactory, lf, mf);
