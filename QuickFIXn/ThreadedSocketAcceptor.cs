@@ -197,7 +197,6 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    session.Log.Log(LogLevel.Critical, new EventId(), "", new Exception(), (a, b) => "");
                     session.Log.Log(LogLevel.Error, e, "Error during logout of Session {SessionID}: {Message}",
                         session.SessionID, e.Message);
                 }
