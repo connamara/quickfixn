@@ -128,7 +128,8 @@ public class SessionDynamicTest
         defaults.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort.ToString());
 
         settings.Set(defaults);
-        _loggerFactory = new LoggerFactory([new FileLoggerProvider(settings)]);
+        _loggerFactory = new LoggerFactory();
+        _loggerFactory.AddProvider(new FileLoggerProvider(settings));
 
         if (initiator)
         {

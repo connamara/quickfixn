@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using QuickFix;
@@ -47,7 +43,8 @@ BeginString = FIX.4.4
         private static void StartStopAcceptor()
         {
             var settings = CreateSettings();
-            using var lf = new LoggerFactory([new FileLoggerProvider(settings)]);
+            using var lf = new LoggerFactory();
+            lf.AddProvider(new FileLoggerProvider(settings));
 
             var acceptor = new ThreadedSocketAcceptor(
                 new NullApplication(),
