@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Text;
 using QuickFix.Fields;
-using System.Text.RegularExpressions;
 using System.Text.Json;
 using System.Collections.Generic;
 using QuickFix.DataDictionary;
@@ -256,11 +255,31 @@ namespace QuickFix
         /// <exception cref="MessageParseError">if 35 tag is missing or malformed</exception>
         public static string GetMsgType(string fixstring)
         {
-            Match match = Regex.Match(fixstring, SOH + "35=([^" + SOH + "]*)" + SOH);
-            if (match.Success)
-                return match.Groups[1].Value;
+            // Note: This is faster than regex.  See stats from https://github.com/connamara/quickfixn/pull/910
+            ReadOnlySpan<char> chars = fixstring.AsSpan();
+            int l = 0;
+            int r = 1;
 
-            throw new MessageParseError("missing or malformed tag 35 in msg: " + fixstring);
+            if (chars.Length > 0 && chars[0] == SOH) l = 1;
+            while (r < chars.Length)
+            {
+                if (chars[r] == SOH)
+                {
+                    if (r - l >= 4 &&
+                        chars[l] == '3' &&
+                        chars[l + 1] == '5' &&
+                        chars[l + 2] == '=')
+                    {
+                        return new string(chars[(l + 3)..r]);
+                    }
+
+                    l = r + 1;
+                }
+
+                r++;
+            }
+
+            throw new MessageParseError("Missing or malformed tag 35 in msg: " + fixstring);
         }
 
         public static ApplVerID GetApplVerID(string beginString)

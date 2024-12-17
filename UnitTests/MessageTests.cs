@@ -580,16 +580,23 @@ namespace UnitTests
             Assert.That(getSessionId.TargetLocationID, Is.EqualTo(""));
         }
 
-        [Test]
-        public void GetMsgTypeTest() {
-            string msgStr = ("8=FIX.4.4|9=104|35=W|34=3|49=sender|52=20110909-09:09:09.999|56=target"
-                             + "55=sym|268=1|269=0|272=20111012|273=22:15:30.444|10=19|").Replace('|', Message.SOH);
-            Assert.That(Message.GetMsgType(msgStr), Is.EqualTo("W"));
+        [TestCase("8=FIX.4.4|9=104|35=W|34=3|49=sender|52=20110909-09:09:09.999|56=target|55=sym|268=1|269=0|272=20111012|273=22:15:30.444|10=19|", "W")]
+        [TestCase("8=FIX.4.4|9=104|35=AW|34=3|49=sender|52=20110909-09:09:09.999|56=target|55=sym|268=1|269=0|272=20111012|273=22:15:30.444|10=19|", "AW")]
+        [TestCase("8=FIX.4.4|9=68|35=*|34=3|49=sender|52=20110909-09:09:09.999|56=target|55=sym|268=0|10=9|", "*")]
+        public void GetMsgTypeTest(string message, string expectedMessageType)
+        {
+            var msgStr = message.Replace('|', Message.SOH);
+            Assert.That(Message.GetMsgType(msgStr), Is.EqualTo(expectedMessageType));
+        }
 
-            // invalid 35 value, let it ride
-            string msgStr2 = ("8=FIX.4.4|9=68|35=*|34=3|49=sender|52=20110909-09:09:09.999|56=target"
-                              + "55=sym|268=0|10=9|").Replace('|', Message.SOH);
-            Assert.That(Message.GetMsgType(msgStr2), Is.EqualTo("*"));
+        [TestCase("")]
+        [TestCase("8=FIX.4.4|9=68|34=3|49=sender|52=20110909-09:09:09.999|56=target|55=sym|268=0|10=9|")]
+        [TestCase("8=FIX.4.4|9=68|35=|34=3|49=sender|52=20110909-09:09:09.999|56=target|55=sym|268=0|10=9|")]
+        [TestCase("8=FIX.4.4|9=68|35=")]
+        public void GetInvalidMsgTypeTest(string message)
+        {
+            var msgStr = message.Replace('|', Message.SOH);
+            Assert.Throws<MessageParseError>(() => Message.GetMsgType(msgStr));
         }
 
         [Test]
