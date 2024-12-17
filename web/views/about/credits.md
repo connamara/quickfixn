@@ -95,5 +95,6 @@ Contributors
 - Nazar Mandzyk
 - Michal Dachs
 - Phung Nhat-Huy
-- VAllens
+- Allen Cai
+- James Kitamirike
 
