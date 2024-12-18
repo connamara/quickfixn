@@ -18,7 +18,6 @@ public class HttpServer : IDisposable {
     private readonly IReadOnlyList<Session> _sessions;
 
     private static class ToggleParam {
-        public const string Enabled = "enabled";
         public const string SendRedundantResendRequests = "sendRedundantResendRequests";
         public const string CheckCompId = "checkCompId";
         public const string CheckLatency = "checkLatency";
@@ -158,18 +157,6 @@ public class HttpServer : IDisposable {
                             response.Redirect("/");
                             response.Close();
                             continue;
-                        case "/enableAll":
-                            foreach (Session sess in _sessions)
-                                sess.Logon();
-                            response.Redirect("/");
-                            response.Close();
-                            continue;
-                        case "/disableAll":
-                            foreach (Session sess in _sessions)
-                                sess.Logout();
-                            response.Redirect("/");
-                            response.Close();
-                            continue;
                         case "/resetSession":
                             ResetSessionAndRedirect(request, response);
                             continue;
@@ -210,15 +197,13 @@ public class HttpServer : IDisposable {
         sb.AppendLine("    <div class=\"header-line\">");
         sb.AppendLine("      <a href=\"/resetAll\" onclick=\"return confirm('Reset ALL sessions?')\">RESET ALL</a>");
         sb.AppendLine("      <a href=\"/refreshAll\" onclick=\"return confirm('Refresh ALL sessions?')\">REFRESH ALL</a>");
-        sb.AppendLine("      <a href=\"/enableAll\" onclick=\"return confirm('Enable ALL sessions?')\">ENABLE ALL</a>");
-        sb.AppendLine("      <a href=\"/disableAll\" onclick=\"return confirm('Disable ALL sessions?')\">DISABLE ALL</a>");
         sb.AppendLine("    </div>");
         sb.AppendLine("    <hr/>");
 
         sb.AppendLine("    <table id=\"sessions-table\">");
 
         sb.AppendLine("      <tr>");
-        var headers = new[] { "Session", "Type", "Enabled", "Session Time", "Logged On", "Next Incoming", "Next Outgoing" };
+        var headers = new[] { "Session", "Type", "Session Time", "Logged On", "Next Incoming", "Next Outgoing" };
         foreach (string str in headers) {
             sb.AppendLine($"        <th>{str}</th>");
         }
@@ -231,7 +216,6 @@ public class HttpServer : IDisposable {
             sb.AppendLine("      <tr>");
             sb.AppendLine($"        <td><a href=\"session?idx={idx}\">{session.SessionID}</a>");
             sb.AppendLine($"        <td>{(session.IsInitiator ? "initiator" : "acceptor")}");
-            sb.AppendLine($"        <td>{(session.IsEnabled ? "yes" : "no")}");
             sb.AppendLine($"        <td>{(session.IsSessionTime ? "yes" : "no")}");
             sb.AppendLine($"        <td>{(session.IsLoggedOn ? "yes" : "no")}");
             sb.AppendLine($"        <td>{session.NextTargetMsgSeqNum.ToString()}");
@@ -244,13 +228,6 @@ public class HttpServer : IDisposable {
 
     private void RenderSession(HttpListenerRequest request, StringBuilder sb) {
         (int sessionIdx, Session session) = GetSessionFromRequest(request);
-
-        if (bool.TryParse(request.QueryString[ToggleParam.Enabled], out var toEnabled)) {
-            if (toEnabled)
-                session.Logon();
-            else
-                session.Logout();
-        }
 
         if (bool.TryParse(request.QueryString[ToggleParam.SendRedundantResendRequests], out var toSendRrr))
             session.SendRedundantResendRequests = toSendRrr;
@@ -303,7 +280,6 @@ public class HttpServer : IDisposable {
         sb.AppendLine("        <th>Current Value</th>");
         sb.AppendLine("        <th>Action</th>");
         sb.AppendLine("      </tr>");
-        RenderDetailToggleRow(sb, sessionIdx, "Enabled", session.IsEnabled, ToggleParam.Enabled);
         RenderDetailPlainRow(sb, "ConnectionType", session.IsInitiator ? "initiator" : "acceptor");
         RenderDetailPlainRow(sb, "IsSessionTime", session.IsSessionTime ? "yes" : "no");
         RenderDetailPlainRow(sb, "LoggedOn", session.IsLoggedOn ? "yes" : "no");
