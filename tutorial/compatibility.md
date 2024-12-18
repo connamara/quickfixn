@@ -1,9 +1,9 @@
 ---
 layout: page
-title: QuickFIX .NET Wrapper Compatibility
-menu_title: QuickFIX .NET Wrapper Compatibility
+title: Compatibility with old QuickFIX .NET Wrapper
+menu_title: Compatibility with old QuickFIX .NET Wrapper
 type: tutorial
-weight: 16
+weight: 50
 ---
 
 QuickFIX/n is not compatible with the [QuickFIX C++ .NET wrapper][0]. This means
