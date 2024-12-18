@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using QuickFix.Logger;
+using Microsoft.Extensions.Logging;
 
 namespace QuickFix.Transport
 {
@@ -66,7 +66,7 @@ namespace QuickFix.Transport
         /// <param name="settings">The socket settings.</param>
         /// <param name="nonSessionLog">Logger that is not tied to a particular session</param>
         /// <returns>an opened and initiated stream which can be read and written to</returns>
-        internal static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, NonSessionLog nonSessionLog)
+        internal static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILogger nonSessionLog)
         {
             Socket? socket = null;
 
@@ -116,7 +116,7 @@ namespace QuickFix.Transport
         /// <param name="nonSessionLog">Logger that is not tied to a particular session</param>
         /// <returns>an opened and initiated stream which can be read and written to</returns>
         /// <exception cref="System.ArgumentException">tcp client must be connected in order to get stream;tcpClient</exception>
-        internal static Stream CreateServerStream(TcpClient tcpClient, SocketSettings settings, NonSessionLog nonSessionLog)
+        internal static Stream CreateServerStream(TcpClient tcpClient, SocketSettings settings, ILogger nonSessionLog)
         {
             if (tcpClient.Connected == false)
                 throw new ArgumentException("tcp client must be connected in order to get stream", nameof(tcpClient));

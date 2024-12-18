@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System;
-using QuickFix.Logger;
+using Microsoft.Extensions.Logging;
 
 namespace QuickFix
 {
@@ -31,13 +31,13 @@ namespace QuickFix
         private readonly SocketSettings _socketSettings;
         private readonly IPEndPoint _serverSocketEndPoint;
         private readonly AcceptorSocketDescriptor? _acceptorSocketDescriptor;
-        private readonly NonSessionLog _nonSessionLog;
+        private readonly ILogger _nonSessionLog;
 
         internal ThreadedSocketReactor(
             IPEndPoint serverSocketEndPoint,
             SocketSettings socketSettings,
             AcceptorSocketDescriptor? acceptorSocketDescriptor,
-            NonSessionLog nonSessionLog)
+            ILogger nonSessionLog)
         {
             _socketSettings = socketSettings;
             _serverSocketEndPoint = serverSocketEndPoint;
@@ -211,7 +211,14 @@ namespace QuickFix
         /// <param name="s"></param>
         /// <param name="ex"></param>
         private void LogError(string s, Exception? ex = null) {
-            _nonSessionLog.OnEvent(ex is null ? $"{s}" : $"{s}: {ex}");
+            if (ex is null)
+            {
+                _nonSessionLog.LogError("{Message}", s);
+            }
+            else
+            {
+                _nonSessionLog.LogError(ex, "{Message}: {Error}", s, ex);
+            }
         }
     }
 }

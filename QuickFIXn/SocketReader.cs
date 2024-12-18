@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 
 namespace QuickFix
@@ -19,7 +20,15 @@ namespace QuickFix
         private readonly TcpClient _tcpClient;
         private readonly ClientHandlerThread _responder;
         private readonly AcceptorSocketDescriptor? _acceptorDescriptor;
-        private readonly NonSessionLog _nonSessionLog;
+        private readonly ILogger _nonSessionLog;
+        private ILogger UnconditionalLogger
+        {
+            get
+            {
+                if (_qfSession?.Log is { } logger) return logger;
+                return _nonSessionLog;
+            }
+        }
 
         /// <summary>
         /// Keep a task for handling async read
@@ -31,7 +40,7 @@ namespace QuickFix
             SocketSettings settings,
             ClientHandlerThread responder,
             AcceptorSocketDescriptor? acceptorDescriptor,
-            NonSessionLog nonSessionLog)
+            ILogger nonSessionLog)
         {
             _tcpClient = tcpClient;
             _responder = responder;
@@ -124,21 +133,26 @@ namespace QuickFix
                     if (_qfSession is null || IsUnknownSession(_qfSession.SessionID))
                     {
                         _qfSession = null;
-                        _nonSessionLog.OnEvent("ERROR: Disconnecting; received message for unknown session: " + msg);
+                        _nonSessionLog.Log(LogLevel.Error,
+                            "ERROR: Disconnecting; received message for unknown session: {Message}", msg);
                         DisconnectClient();
                         return;
                     }
 
                     if (_qfSession.HasResponder)
                     {
-                        _qfSession.Log.OnIncoming(msg);
-                        _qfSession.Log.OnEvent("Multiple logons/connections for this session are not allowed (" + _tcpClient.Client.RemoteEndPoint + ")");
+                        _qfSession.Log.Log(LogLevel.Information, LogEventIds.IncomingMessage, "{Message}", msg);
+                        _qfSession.Log.Log(LogLevel.Error,
+                            "Multiple logons/connections for this session are not allowed ({Endpoint})",
+                            _tcpClient.Client.RemoteEndPoint);
                         _qfSession = null;
                         DisconnectClient();
                         return;
                     }
 
-                    _qfSession.Log.OnEvent(_qfSession.SessionID + " Socket Reader " + GetHashCode() + " accepting session " + _qfSession.SessionID + " from " + _tcpClient.Client.RemoteEndPoint);
+                    _qfSession.Log.Log(LogLevel.Debug,
+                        "{SessionId} Socket Reader {ReaderId} accepting session {AcceptedSessionId} from {Endpoint}",
+                        _qfSession.SessionID, GetHashCode(), _qfSession.SessionID, _tcpClient.Client.RemoteEndPoint);
                     _qfSession.SetResponder(_responder);
                 }
 
@@ -148,7 +162,8 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    _qfSession.Log.OnEvent($"Error on Session '{_qfSession.SessionID}': {e}");
+                    _qfSession.Log.Log(LogLevel.Error, e, "Error on Session '{SessionId}': {Exception}",
+                        _qfSession.SessionID, e);
                 }
             }
             /*
@@ -172,12 +187,13 @@ namespace QuickFix
             {
                 if (Fields.MsgType.LOGON.Equals(Message.GetMsgType(msg)))
                 {
-                    LogEvent($"ERROR: Invalid LOGON message, disconnecting: {e.Message}");
+                    UnconditionalLogger.Log(LogLevel.Error, e, "ERROR: Invalid LOGON message, disconnecting: {Message}",
+                        e.Message);
                     DisconnectClient();
                 }
                 else
                 {
-                    LogEvent($"ERROR: Invalid message: {e.Message}");
+                    UnconditionalLogger.Log(LogLevel.Error, e, "ERROR: Invalid message: {Message}", e.Message);
                 }
             }
             catch (InvalidMessage)
@@ -246,7 +262,7 @@ namespace QuickFix
                     break;
             }
 
-            LogEvent($"SocketReader Error: {reason}");
+            UnconditionalLogger.Log(LogLevel.Error, realCause, "SocketReader Error: {Reason}", reason);
 
             if (disconnectNeeded)
             {
@@ -255,18 +271,6 @@ namespace QuickFix
                 else
                     DisconnectClient();
             }
-        }
-
-        /// <summary>
-        /// Log event to session log if session is known, else to nonSessionLog
-        /// </summary>
-        /// <param name="s"></param>
-        private void LogEvent(string s)
-        {
-            if(_qfSession is not null)
-                _qfSession.Log.OnEvent(s);
-            else
-                _nonSessionLog.OnEvent(s);
         }
 
         public int Send(string data)
