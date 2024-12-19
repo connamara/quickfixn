@@ -324,11 +324,11 @@ namespace UnitTests
             Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
 
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetGroup(0, 101); });
+                delegate { fm.GetGroup(1, 101); }); // group counter 101 not found
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetGroup(3, 100); });
+                delegate { fm.GetGroup(0, 100); }); // num too low
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetGroup(1, 101); });
+                delegate { fm.GetGroup(3, 100); }); // num too high
         }
 
         [Test]
@@ -339,22 +339,25 @@ namespace UnitTests
             FieldMap fm = new FieldMap();
             fm.AddGroup(g1);
             fm.AddGroup(g2);
-            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
-            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
 
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.RemoveGroup(0, 101); });
+                delegate { fm.RemoveGroup(1, 101); }); // group counter 101 not found
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.RemoveGroup(3, 100); });
+                delegate { fm.RemoveGroup(0, 100); }); // num too low
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.RemoveGroup(1, 101); });
+                delegate { fm.RemoveGroup(3, 101); }); // num too high
 
             fm.RemoveGroup(1, 100);
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetGroup(2, 100); });
+                delegate { fm.GetGroup(2, 100); }); // try to remove item 2 (of 1)
+
+            Assert.That(fm.GetGroupTags().Contains(100)); // still true, because there's still 1 group
+
             fm.RemoveGroup(1, 100);
+            Assert.That(fm.GetGroupTags().Contains(100), Is.False);
+
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetGroup(1, 100); });
+                delegate { fm.GetGroup(1, 100); }); // try to remove item 1 (of 0)
         }
 
         [Test]
@@ -365,16 +368,14 @@ namespace UnitTests
             FieldMap fm = new FieldMap();
             fm.AddGroup(g1);
             fm.AddGroup(g2);
-            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
-            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
 
             Group g3 = new Group(100, 202);
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.ReplaceGroup(0, 101, g3); });
+                delegate { fm.ReplaceGroup(1, 101, g3); }); // group counter 101 not found
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.ReplaceGroup(3, 100, g3); });
+                delegate { fm.ReplaceGroup(0, 100, g3); }); // num too low
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.ReplaceGroup(1, 101, g3); });
+                delegate { fm.ReplaceGroup(3, 100, g3); }); // num too high
 
             fm.ReplaceGroup(1, 100, g3);
             fm.ReplaceGroup(2, 100, g3);
