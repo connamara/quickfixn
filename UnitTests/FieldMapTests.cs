@@ -9,64 +9,63 @@ namespace UnitTests
     [TestFixture]
     public class FieldMapTests
     {
-        private FieldMap _fieldmap;
-        public FieldMapTests()
-        {
-            this._fieldmap = new FieldMap();
-        }
-
         [Test]
         public void CharFieldTest()
         {
-
+            FieldMap fm = new();
             CharField field = new CharField(100, 'd');
-            _fieldmap.SetField(field);
+            fm.SetField(field);
             CharField refield = new CharField(100);
-            _fieldmap.GetField(refield);
+            fm.GetField(refield);
             Assert.That('d', Is.EqualTo(refield.Value));
+
             field.Value = 'e';
-            _fieldmap.SetField(field);
-            CharField r = _fieldmap.GetField(refield);
+            fm.SetField(field);
+            CharField r = fm.GetField(refield);
             Assert.That('e', Is.EqualTo(refield.Value));
 
             Assert.That(r, Is.SameAs(refield));
         }
 
-
         [Test]
         public void GetCharTest()
         {
-            _fieldmap.SetField(new CharField(20, 'a'));
-            Assert.That(_fieldmap.GetChar(20), Is.EqualTo('a'));
-            _fieldmap.SetField(new StringField(21, "b"));
-            Assert.That(_fieldmap.GetChar(21), Is.EqualTo('b'));
+            FieldMap fm = new();
+            fm.SetField(new CharField(20, 'a'));
+            Assert.That(fm.GetChar(20), Is.EqualTo('a'));
+
+            fm.SetField(new StringField(21, "b"));
+            Assert.That(fm.GetChar(21), Is.EqualTo('b'));
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetString(99900); });
+                delegate { fm.GetString(99900); });
         }
 
         [Test]
         public void GetDecimalTest()
         {
+            FieldMap fm = new();
             var val = new Decimal(20.4);
-            _fieldmap.SetField(new DecimalField(200, val));
-            Assert.That(_fieldmap.GetDecimal(200), Is.EqualTo(val));
-            _fieldmap.SetField(new StringField(201, "33.22"));
-            Assert.That(_fieldmap.GetDecimal(201), Is.EqualTo(new Decimal(33.22)));
+            fm.SetField(new DecimalField(200, val));
+            Assert.That(fm.GetDecimal(200), Is.EqualTo(val));
+
+            fm.SetField(new StringField(201, "33.22"));
+            Assert.That(fm.GetDecimal(201), Is.EqualTo(new Decimal(33.22)));
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetString(99900); });
+                delegate { fm.GetString(99900); });
         }
 
 
         [Test]
         public void StringFieldTest()
         {
-
-            _fieldmap.SetField(new Account("hello"));
+            FieldMap fm = new();
+            fm.SetField(new Account("hello"));
             Account acct = new Account();
-            _fieldmap.GetField(acct);
+            fm.GetField(acct);
             Assert.That("hello", Is.EqualTo(acct.Value));
-            _fieldmap.SetField(new Account("helloworld"));
-            StringField r = _fieldmap.GetField(acct);
+
+            fm.SetField(new Account("helloworld"));
+            StringField r = fm.GetField(acct);
             Assert.That("helloworld", Is.EqualTo(acct.Value));
 
             Assert.That(acct, Is.SameAs(r));
@@ -75,22 +74,24 @@ namespace UnitTests
         [Test]
         public void GetStringTest()
         {
-            _fieldmap.SetField(new Account("hello"));
-            Assert.That(_fieldmap.GetString(QuickFix.Fields.Tags.Account), Is.EqualTo("hello"));
+            FieldMap fm = new();
+            fm.SetField(new Account("hello"));
+            Assert.That(fm.GetString(Tags.Account), Is.EqualTo("hello"));
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetString(99900); });
+                delegate { fm.GetString(99900); });
         }
 
         [Test]
         public void DateTimeFieldTest()
         {
-
-            _fieldmap.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
+            FieldMap fm = new();
+            fm.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
             TransactTime tt = new TransactTime();
-            _fieldmap.GetField(tt);
+            fm.GetField(tt);
             Assert.That(new DateTime(2009, 12, 10), Is.EqualTo(tt.Value));
-            _fieldmap.SetField(new TransactTime(new DateTime(2010, 12, 10)));
-            DateTimeField r = _fieldmap.GetField(tt);
+
+            fm.SetField(new TransactTime(new DateTime(2010, 12, 10)));
+            DateTimeField r = fm.GetField(tt);
             Assert.That(new DateTime(2010, 12, 10), Is.EqualTo(tt.Value));
 
             Assert.That(tt, Is.SameAs(r));
@@ -99,9 +100,10 @@ namespace UnitTests
         [Test]
         public void DateTimeFieldNanoTest()
         {
-            _fieldmap.SetField(new StringField(Tags.TransactTime, "20200309-20:53:10.643649215"));
+            FieldMap fm = new();
+            fm.SetField(new StringField(Tags.TransactTime, "20200309-20:53:10.643649215"));
             TransactTime tt = new TransactTime();
-            _fieldmap.GetField(tt);
+            fm.GetField(tt);
             // Ticks resolution is 100 nanoseconds, so we lose the last 2 decimal points
             Assert.That(tt.Value.Ticks, Is.EqualTo(637193839906436492));
         }
@@ -109,12 +111,14 @@ namespace UnitTests
         [Test]
         public void DateOnlyFieldTest()
         {
-            _fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
+            FieldMap fm = new();
+            fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
             MDEntryDate ed = new MDEntryDate();
-            _fieldmap.GetField(ed);
+            fm.GetField(ed);
             Assert.That(ed.Value, Is.EqualTo(new DateTime(2009, 12, 10)));
-            _fieldmap.SetField(new MDEntryDate(new DateTime(2010, 12, 10)));
-            DateOnlyField r = _fieldmap.GetField(ed);
+
+            fm.SetField(new MDEntryDate(new DateTime(2010, 12, 10)));
+            DateOnlyField r = fm.GetField(ed);
             Assert.That(ed.Value, Is.EqualTo(new DateTime(2010, 12, 10)));
 
             Assert.That(ed, Is.SameAs(r));
@@ -124,12 +128,14 @@ namespace UnitTests
         [Test]
         public void TimeOnlyFieldTest()
         {
-            _fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(1, 1, 1, 1, 2, 3), false));
+            FieldMap fm = new();
+            fm.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(1, 1, 1, 1, 2, 3), false));
             MDEntryTime et = new MDEntryTime();
-            _fieldmap.GetField(et);
+            fm.GetField(et);
             Assert.That(et.Value, Is.EqualTo(new DateTime(1980, 01, 01, 1, 2, 3)));
-            _fieldmap.SetField(new MDEntryTime(new DateTime(1, 1, 1, 1, 2, 5)));
-            TimeOnlyField r = _fieldmap.GetField(et);
+
+            fm.SetField(new MDEntryTime(new DateTime(1, 1, 1, 1, 2, 5)));
+            TimeOnlyField r = fm.GetField(et);
             Assert.That(et.Value, Is.EqualTo(new DateTime(1980, 01, 01, 1, 2, 5)));
 
             Assert.That(et, Is.SameAs(r));
@@ -139,43 +145,58 @@ namespace UnitTests
         [Test]
         public void GetDateTimeTest()
         {
-            _fieldmap.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
-            Assert.That(_fieldmap.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
-            _fieldmap.SetField(new StringField(233, "20091211-12:12:44"));
-            Assert.That(_fieldmap.GetDateTime(233), Is.EqualTo(new DateTime(2009, 12, 11, 12, 12, 44)));
+            FieldMap fm = new();
+            fm.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
+            Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
+
+            fm.SetField(new StringField(Tags.TransactTime, "20091211-12:12:44"));
+            Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 11, 12, 12, 44)));
+
             Assert.Throws(typeof(FieldNotFoundException),
-                    delegate { _fieldmap.GetDateTime(99900); });
+                    delegate { fm.GetDateTime(99900); });
         }
 
         [Test]
         public void GetDateOnlyTest()
         {
-            _fieldmap.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
-            Assert.That(_fieldmap.GetDateTime(Tags.MDEntryDate), Is.EqualTo(new DateTime(2009, 12, 10)));
-            _fieldmap.SetField(new StringField(233, "20091211"));
-            Assert.That(_fieldmap.GetDateOnly(233), Is.EqualTo(new DateTime(2009, 12, 11)));
+            FieldMap fm = new();
+            fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
+            Assert.That(fm.GetDateTime(Tags.MDEntryDate), Is.EqualTo(new DateTime(2009, 12, 10)));
+
+            fm.SetField(new StringField(Tags.MDEntryDate, "20091211"));
+            Assert.That(fm.GetDateOnly(Tags.MDEntryDate), Is.EqualTo(new DateTime(2009, 12, 11)));
+
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fm.GetDateOnly(99900); });
         }
 
         [Test]
         public void GetTimeOnlyTest()
         {
-            _fieldmap.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(2009, 12, 10, 1, 2, 3)));
-            Assert.That(_fieldmap.GetDateTime(Tags.MDEntryTime), Is.EqualTo(new DateTime(1980, 01, 01, 1, 2, 3)));
-            _fieldmap.SetField(new StringField(233, "07:30:47"));
-            Assert.That(_fieldmap.GetTimeOnly(233), Is.EqualTo(new DateTime(1980, 01, 01, 7, 30, 47)));
+            FieldMap fm = new();
+            fm.SetField(new TimeOnlyField(Tags.MDEntryTime, new DateTime(2009, 12, 10, 1, 2, 3)));
+            Assert.That(fm.GetDateTime(Tags.MDEntryTime), Is.EqualTo(new DateTime(1980, 01, 01, 1, 2, 3)));
+
+            fm.SetField(new StringField(Tags.MDEntryTime, "07:30:47"));
+            Assert.That(fm.GetTimeOnly(Tags.MDEntryTime), Is.EqualTo(new DateTime(1980, 01, 01, 7, 30, 47)));
+
+            Assert.Throws(typeof(FieldNotFoundException),
+                delegate { fm.GetTimeOnly(99900); });
         }
 
         [Test]
         public void BooleanFieldTest()
         {
+            FieldMap fm = new();
             BooleanField field = new BooleanField(200, true);
             BooleanField refield = new BooleanField(200);
-            _fieldmap.SetField(field);
-            _fieldmap.GetField(refield);
+            fm.SetField(field);
+            fm.GetField(refield);
             Assert.That(true, Is.EqualTo(refield.Value));
+
             field.Value = false;
-            _fieldmap.SetField(field);
-            BooleanField r = _fieldmap.GetField(refield);
+            fm.SetField(field);
+            BooleanField r = fm.GetField(refield);
             Assert.That(false, Is.EqualTo(refield.Value));
 
             Assert.That(refield, Is.SameAs(r));
@@ -184,26 +205,29 @@ namespace UnitTests
         [Test]
         public void GetBooleanTest()
         {
-            _fieldmap.SetField(new BooleanField(200, true));
-            Assert.That(_fieldmap.GetBoolean(200), Is.EqualTo(true));
-            _fieldmap.SetField(new StringField(201, "N"));
-            Assert.That(_fieldmap.GetBoolean(201), Is.EqualTo(false));
+            FieldMap fm = new();
+            fm.SetField(new BooleanField(200, true));
+            Assert.That(fm.GetBoolean(200), Is.EqualTo(true));
+
+            fm.SetField(new StringField(201, "N"));
+            Assert.That(fm.GetBoolean(201), Is.EqualTo(false));
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetString(99900); });
+                delegate { fm.GetString(99900); });
         }
 
         [Test]
         public void IntFieldTest()
         {
-
+            FieldMap fm = new();
             IntField field = new IntField(200, 101);
             IntField refield = new IntField(200);
-            _fieldmap.SetField(field);
-            _fieldmap.GetField(refield);
+            fm.SetField(field);
+            fm.GetField(refield);
             Assert.That(101, Is.EqualTo(refield.Value));
+
             field.Value = 102;
-            _fieldmap.SetField(field);
-            IntField r = _fieldmap.GetField(refield);
+            fm.SetField(field);
+            IntField r = fm.GetField(refield);
             Assert.That(102, Is.EqualTo(refield.Value));
 
             Assert.That(refield, Is.SameAs(r));
@@ -212,27 +236,30 @@ namespace UnitTests
         [Test]
         public void GetIntTest()
         {
-
+            FieldMap fm = new();
             IntField field = new IntField(200, 101);
-            _fieldmap.SetField(field);
-            Assert.That(_fieldmap.GetInt(200), Is.EqualTo(101));
-            _fieldmap.SetField(new StringField(202, "2222"));
-            Assert.That(_fieldmap.GetInt(202), Is.EqualTo(2222));
+            fm.SetField(field);
+            Assert.That(fm.GetInt(200), Is.EqualTo(101));
+
+            fm.SetField(new StringField(202, "2222"));
+            Assert.That(fm.GetInt(202), Is.EqualTo(2222));
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetInt(99900); });
+                delegate { fm.GetInt(99900); });
         }
 
         [Test]
         public void DecimalFieldTest()
         {
+            FieldMap fm = new();
             DecimalField field = new DecimalField(200, new Decimal(101.0001));
             DecimalField refield = new DecimalField(200);
-            _fieldmap.SetField(field);
-            _fieldmap.GetField(refield);
+            fm.SetField(field);
+            fm.GetField(refield);
             Assert.That(101.0001, Is.EqualTo(refield.Value));
+
             field.Value = 101.0002m;
-            _fieldmap.SetField(field);
-            DecimalField r = _fieldmap.GetField(refield);
+            fm.SetField(field);
+            DecimalField r = fm.GetField(refield);
             Assert.That(101.0002, Is.EqualTo(refield.Value));
 
             Assert.That(refield, Is.SameAs(r));
@@ -241,48 +268,53 @@ namespace UnitTests
         [Test]
         public void DefaultFieldTest()
         {
+            FieldMap fm = new();
             DecimalField field = new DecimalField(200, new Decimal(101.0001));
-            _fieldmap.SetField(field);
-            string refield = _fieldmap.GetString(200);
+            fm.SetField(field);
+            string refield = fm.GetString(200);
             Assert.That("101.0001", Is.EqualTo(refield));
         }
 
         [Test]
         public void SetFieldOverwriteTest()
         {
+            FieldMap fm = new();
             IntField field = new IntField(21901, 1011);
             IntField refield = new IntField(21901);
-            _fieldmap.SetField(field, false);
-            _fieldmap.GetField(refield);
+            fm.SetField(field, false);
+            fm.GetField(refield);
             Assert.That(1011, Is.EqualTo(refield.Value));
+
             field.Value = 1021;
             IntField refield2 = new IntField(21901);
-            _fieldmap.SetField(field, false);
-            _fieldmap.GetField(refield2);
+            fm.SetField(field, false);
+            fm.GetField(refield2);
             Assert.That(refield.Value, Is.EqualTo(1011));
-            _fieldmap.SetField(field, true);
+
+            fm.SetField(field, true);
             IntField refield3 = new IntField(21901);
-            _fieldmap.GetField(refield3);
+            fm.GetField(refield3);
             Assert.That(1021, Is.EqualTo(refield3.Value));
         }
 
         [Test]
         public void FieldNotFoundTest()
         {
+            FieldMap fm = new();
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetString(99900); });
+                delegate { fm.GetString(99900); });
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetField(new DateTimeField(1002030)); });
+                delegate { fm.GetField(new DateTimeField(1002030)); });
             Assert.Throws(typeof(FieldNotFoundException),
-                 delegate { _fieldmap.GetField(new CharField(23099)); });
+                 delegate { fm.GetField(new CharField(23099)); });
             Assert.Throws(typeof(FieldNotFoundException),
-                 delegate { _fieldmap.GetField(new BooleanField(99900)); });
+                 delegate { fm.GetField(new BooleanField(99900)); });
             Assert.Throws(typeof(FieldNotFoundException),
-                 delegate { _fieldmap.GetField(new StringField(99900)); });
+                 delegate { fm.GetField(new StringField(99900)); });
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetField(new IntField(99900)); });
+                delegate { fm.GetField(new IntField(99900)); });
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetField(new DecimalField(99900)); });
+                delegate { fm.GetField(new DecimalField(99900)); });
         }
 
         [Test]
@@ -324,11 +356,11 @@ namespace UnitTests
             Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
 
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetGroup(0, 101); });
+                delegate { fm.GetGroup(1, 101); }); // group counter 101 not found
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetGroup(3, 100); });
+                delegate { fm.GetGroup(0, 100); }); // num too low
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetGroup(1, 101); });
+                delegate { fm.GetGroup(3, 100); }); // num too high
         }
 
         [Test]
@@ -339,22 +371,25 @@ namespace UnitTests
             FieldMap fm = new FieldMap();
             fm.AddGroup(g1);
             fm.AddGroup(g2);
-            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
-            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
 
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.RemoveGroup(0, 101); });
+                delegate { fm.RemoveGroup(1, 101); }); // group counter 101 not found
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.RemoveGroup(3, 100); });
+                delegate { fm.RemoveGroup(0, 100); }); // num too low
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.RemoveGroup(1, 101); });
+                delegate { fm.RemoveGroup(3, 101); }); // num too high
 
             fm.RemoveGroup(1, 100);
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetGroup(2, 100); });
+                delegate { fm.GetGroup(2, 100); }); // try to remove item 2 (of 1)
+
+            Assert.That(fm.GetGroupTags().Contains(100)); // still true, because there's still 1 group
+
             fm.RemoveGroup(1, 100);
+            Assert.That(fm.GetGroupTags().Contains(100), Is.False);
+
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.GetGroup(1, 100); });
+                delegate { fm.GetGroup(1, 100); }); // try to remove item 1 (of 0)
         }
 
         [Test]
@@ -365,16 +400,14 @@ namespace UnitTests
             FieldMap fm = new FieldMap();
             fm.AddGroup(g1);
             fm.AddGroup(g2);
-            Assert.That(fm.GetGroup(1, 100), Is.EqualTo(g1));
-            Assert.That(fm.GetGroup(2, 100), Is.EqualTo(g2));
 
             Group g3 = new Group(100, 202);
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.ReplaceGroup(0, 101, g3); });
+                delegate { fm.ReplaceGroup(1, 101, g3); }); // group counter 101 not found
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.ReplaceGroup(3, 100, g3); });
+                delegate { fm.ReplaceGroup(0, 100, g3); }); // num too low
             Assert.Throws(typeof(FieldNotFoundException),
-                delegate { _fieldmap.ReplaceGroup(1, 101, g3); });
+                delegate { fm.ReplaceGroup(3, 100, g3); }); // num too high
 
             fm.ReplaceGroup(1, 100, g3);
             fm.ReplaceGroup(2, 100, g3);
@@ -417,7 +450,7 @@ namespace UnitTests
             // bug found during issue 56 - Group object was losing type after being added
             FieldMap fm = new FieldMap();
             QuickFix.FIX42.News.LinesOfTextGroup linesGroup = new QuickFix.FIX42.News.LinesOfTextGroup();
-            linesGroup.Text = new QuickFix.Fields.Text("foo");
+            linesGroup.Text = new Text("foo");
             fm.AddGroup(linesGroup);
 
             var rvGroup = fm.GetGroup(1, Tags.LinesOfText);
