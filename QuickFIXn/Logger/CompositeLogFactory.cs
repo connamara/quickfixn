@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace QuickFix.Logger;
 
@@ -6,6 +7,7 @@ namespace QuickFix.Logger;
 /// Allows multiple log factories to be used with QuickFIX/N.
 /// For example, you could log events to the console and also log all events and messages to a file.
 /// </summary>
+[Obsolete("Use Microsoft.Extensions.Logging instead")]
 public class CompositeLogFactory : ILogFactory
 {
     private readonly ILogFactory[] _factories;

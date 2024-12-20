@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 using QuickFix.Util;
 
@@ -15,11 +16,11 @@ namespace QuickFix.Transport;
 internal sealed class SslStreamFactory
 {
     private readonly SocketSettings _socketSettings;
-    private readonly NonSessionLog _nonSessionLog;
+    private readonly ILogger _nonSessionLog;
     private const string CLIENT_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.2";
     private const string SERVER_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.1";
 
-    public SslStreamFactory(SocketSettings settings, NonSessionLog nonSessionLog)
+    public SslStreamFactory(SocketSettings settings, ILogger nonSessionLog)
     {
         _socketSettings = settings;
         _nonSessionLog = nonSessionLog;
@@ -56,7 +57,8 @@ internal sealed class SslStreamFactory
         }
         catch (AuthenticationException ex)
         {
-            _nonSessionLog.OnEvent($"Unable to perform authentication against server: {ex.GetFullMessage()}");
+            _nonSessionLog.Log(LogLevel.Error, ex, "Unable to perform authentication against server: {Message}",
+                ex.GetFullMessage());
             throw;
         }
 
@@ -101,7 +103,8 @@ internal sealed class SslStreamFactory
         }
         catch (AuthenticationException ex)
         {
-            _nonSessionLog.OnEvent($"Unable to perform authentication against server: {ex.GetFullMessage()}");
+            _nonSessionLog.Log(LogLevel.Error, ex, "Unable to perform authentication against server: {Message}",
+                ex.GetFullMessage());
             throw;
         }
 
@@ -171,13 +174,14 @@ internal sealed class SslStreamFactory
         // Validate enhanced key usage
         if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage)) {
             var role = enhancedKeyUsage == CLIENT_AUTHENTICATION_OID ? "client" : "server";
-            _nonSessionLog.OnEvent(
-                $"Remote certificate is not intended for {role} authentication: It is missing enhanced key usage {enhancedKeyUsage}");
+            _nonSessionLog.Log(LogLevel.Warning,
+                "Remote certificate is not intended for {Role} authentication: It is missing enhanced key usage {KeyUsage}",
+                role, enhancedKeyUsage);
             return false;
         }
 
         if (string.IsNullOrEmpty(_socketSettings.CACertificatePath)) {
-            _nonSessionLog.OnEvent("CACertificatePath is not specified");
+            _nonSessionLog.Log(LogLevel.Warning, "CACertificatePath is not specified");
             return false;
         }
 
@@ -185,9 +189,11 @@ internal sealed class SslStreamFactory
 
         // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
         X509Certificate2? cert = SslCertCache.LoadCertificate(caCertPath, null);
-        if (cert is null) {
-            _nonSessionLog.OnEvent(
-                $"Certificate '{caCertPath}' could not be loaded from store or path '{Directory.GetCurrentDirectory()}'");
+        if (cert is null)
+        {
+            _nonSessionLog.Log(LogLevel.Warning,
+                "Certificate '{CertificatePath}' could not be loaded from store or path '{Directory}'", caCertPath,
+                Directory.GetCurrentDirectory());
             return false;
         }
 
@@ -212,7 +218,8 @@ internal sealed class SslStreamFactory
         // Any basic authentication check failed, do after checking CA
         if (sslPolicyErrors != SslPolicyErrors.None)
         {
-            _nonSessionLog.OnEvent($"Remote certificate was not recognized as a valid certificate: {sslPolicyErrors}");
+            _nonSessionLog.Log(LogLevel.Warning,
+                "Remote certificate was not recognized as a valid certificate: {Errors}", sslPolicyErrors);
             return false;
         }
 
