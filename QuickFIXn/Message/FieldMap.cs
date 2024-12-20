@@ -657,22 +657,39 @@ namespace QuickFix
             return new List<int>(_groups.Keys);
         }
 
-        #region IEnumerable<KeyValuePair<int,IField>> Members
+        /// <summary>
+        /// Read groups via IEnumerable.
+        /// </summary>
+        /// <typeparam name="TGroup">The group class type retrieved by groupCountTag</typeparam>
+        /// <param name="groupCountTag">The FIX group tag</param>
+        /// <returns>retrieved enumerable groups</returns>
+        /// <exception cref="InvalidCastException">If groupCountTag retreives a group that can't be cast to TGroup</exception>
+        public IEnumerable<TGroup> ReadGroups<TGroup>(int groupCountTag) where TGroup : Group
+        {
+            if (IsSetField(groupCountTag) && GetGroupTags().Contains(groupCountTag))
+            {
+                int grpCount = GetInt(groupCountTag);
 
+                for (int grpIndex = 1; grpIndex <= grpCount; grpIndex += 1)
+                {
+                    Group group = GetGroup(grpIndex, groupCountTag);
+                    if(group is not TGroup tgroup)
+                        throw new InvalidCastException($"Can't cast {group.GetType()} to {typeof(TGroup)}");
+                    yield return tgroup;
+                }
+            }
+        }
+
+        // IEnumerable<KeyValuePair<int,IField>> Member
         public IEnumerator<KeyValuePair<int, IField>> GetEnumerator()
         {
             return _fields.GetEnumerator();
         }
 
-        #endregion
-
-        #region IEnumerable Members
-
+        // IEnumerable Member
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return _fields.GetEnumerator();
         }
-
-        #endregion
     }
 }
