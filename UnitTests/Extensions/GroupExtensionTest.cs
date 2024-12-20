@@ -28,15 +28,15 @@ namespace UnitTests.Extensions
             {
                 Assert.That(item.GetString(336), Is.EqualTo($"OHHAI_{iterator++}"));
             }
-            Assert.True(iterator == 100);
+            Assert.That(iterator == 100);
 
             // Wrong tag
-            Assert.IsEmpty(nos.ReadGroups<QuickFix.FIX42.NewOrderSingle.NoTradingSessionsGroup>(1));
+            Assert.That(nos.ReadGroups<QuickFix.FIX42.NewOrderSingle.NoTradingSessionsGroup>(1), Is.Empty);
 
             // Wrong group
             foreach (var item in nos.ReadGroups<QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup>(Tags.NoTradingSessions))
             {
-                Assert.IsNull(item);
+                Assert.That(item, Is.Null);
             }
 
             //--
@@ -54,8 +54,8 @@ namespace UnitTests.Extensions
             msg.FromString(data, false, dd, dd, _defaultMsgFactory);
 
             var eRNoPartyIDsGroup = msg.ReadGroups<QuickFix.FIX44.ExecutionReport.NoPartyIDsGroup>(Tags.NoPartyIDs).ToList();
-            Assert.That(eRNoPartyIDsGroup[0].PartyID?.Obj, Is.EqualTo("AAA35791"));
-            Assert.That(eRNoPartyIDsGroup[2].PartyID?.Obj, Is.EqualTo("FIX11"));
+            Assert.That(eRNoPartyIDsGroup[0].PartyID?.Value, Is.EqualTo("AAA35791"));
+            Assert.That(eRNoPartyIDsGroup[2].PartyID?.Value, Is.EqualTo("FIX11"));
         }
     }
 }
