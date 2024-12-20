@@ -72,3 +72,15 @@ for(int grpIndex = 1; grpIndex<= message.GetInt(Tags.NoSides); grpIndex += 1)
 }
 ```
 
+New in 1.13 - ReadGroups() iterator
+===================================
+
+In v1.13 we introduced a new method, `ReadGroups`, that allows you to iterate through
+a set of groups with `foreach`:
+
+```csharp
+foreach (var grp in msg.ReadGroups<QuickFix.FIX44.TradeCaptureReport.NoSidesGroup>(552)) {
+    // ...do stuff with grp...
+}
+```
+
