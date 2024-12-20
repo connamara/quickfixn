@@ -48,6 +48,7 @@ What's New
 * #907 - A fix to make body-less messages work, specifically 35=n aka XMLnonFIX (gbirchmeier)
 * #910 - faster Message.GetMsgType that doesn't use Regex (jkulubya)
 * #516 - remove ability to toggle Session-enable via HttpServer because it never really worked (gbirchmeier)
+* #913/#741 - new FieldMap.ReadGroups for iterating on groups (NoviProg/gbirchmeier)
 
 ### v1.12.0
 

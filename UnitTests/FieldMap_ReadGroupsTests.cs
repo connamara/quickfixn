@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using NUnit.Framework;
-using QuickFix;
 using QuickFix.FIX42;
 using QuickFix.Fields;
-using QuickFix.Extensions;
-using UnitTests.TestHelpers;
-using Message = QuickFix.Message;
 
-namespace UnitTests.Extensions
-{
-    [TestFixture]
+namespace UnitTests;
+
+[TestFixture]
+public class FieldMap_ReadGroupsTests {
     public class GroupExtensionTest
     {
-        private readonly IMessageFactory _defaultMsgFactory = new DefaultMessageFactory();
-
         private static News CreateNewsForTest(int numberOfLines) {
             News msg = new();
             msg.Headline = new Headline("Blah headline");
