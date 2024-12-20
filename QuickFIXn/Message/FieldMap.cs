@@ -279,19 +279,19 @@ namespace QuickFix
         /// your group as the proper subtype (e.g. NoPartyIDsGroup instead of the generic Group)
         /// </summary>
         /// <param name="num">index of desired group (starting at 1)</param>
-        /// <param name="field">counter tag of repeating group</param>
+        /// <param name="counterTag">counter tag of repeating group</param>
         /// <returns>retrieved group object</returns>
         /// <exception cref="FieldNotFoundException" />
-        public Group GetGroup(int num, int field)
+        public Group GetGroup(int num, int counterTag)
         {
-            if (!_groups.ContainsKey(field))
-                throw new FieldNotFoundException(field);
+            if (!_groups.ContainsKey(counterTag))
+                throw new FieldNotFoundException(counterTag);
             if (num <= 0)
-                throw new FieldNotFoundException(field);
-            if (_groups[field].Count < num)
-                throw new FieldNotFoundException(field);
+                throw new FieldNotFoundException(counterTag);
+            if (_groups[counterTag].Count < num)
+                throw new FieldNotFoundException(counterTag);
 
-            return _groups[field][num - 1];
+            return _groups[counterTag][num - 1];
         }
 
         /// <summary>
