@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace QuickFix.Extensions
 {
@@ -17,17 +15,16 @@ namespace QuickFix.Extensions
         /// <exception cref="FieldNotFoundException"/>
         public static IEnumerable<TGroup> ReadGroups<TGroup>(this FieldMap message, int noGroupTag) where TGroup : Group //, new()
         {
-            if (message != null && message.IsSetField(noGroupTag))
+            if (message.IsSetField(noGroupTag) && message.GetGroupTags().Contains(noGroupTag))
             {
                 int grpCount = message.GetInt(noGroupTag);
+
                 for (int grpIndex = 1; grpIndex <= grpCount; grpIndex += 1)
                 {
-                    //var group = new TGroup();
-                    //message.GetGroup(grpIndex, group);
-                    var group = message.GetGroup(grpIndex, noGroupTag) as TGroup;
-                    //if (group == null)
-                    //    throw new InvalidCastException($"Can't cast {message.GetGroup(grpIndex, noGroupTag).GetType()} to {typeof(TGroup)}");
-                    yield return group;
+                    Group group = message.GetGroup(grpIndex, noGroupTag);
+                    if(group is not TGroup tgroup)
+                        throw new InvalidCastException($"Can't cast {group.GetType()} to {typeof(TGroup)}");
+                    yield return tgroup;
                 }
             }
         }
