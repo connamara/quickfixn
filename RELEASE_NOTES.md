@@ -49,6 +49,7 @@ What's New
 * #910 - faster Message.GetMsgType that doesn't use Regex (jkulubya)
 * #516 - remove ability to toggle Session-enable via HttpServer because it never really worked (gbirchmeier)
 * #913/#741 - new FieldMap.ReadGroups for iterating on groups (NoviProg/gbirchmeier)
+* #914 - Optimize MessageCracker.IsHandlerMethod (vasily-balansea)
 
 ### v1.12.0
 
