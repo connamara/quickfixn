@@ -97,5 +97,5 @@ Contributors
 - Phung Nhat-Huy
 - Allen Cai
 - James Kitamirike
-- NoviProg
+- Vasily Petruhin
 
