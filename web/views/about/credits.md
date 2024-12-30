@@ -98,4 +98,5 @@ Contributors
 - Allen Cai
 - James Kitamirike
 - Vasily Petruhin
+- Ian Lee Claxton
 
