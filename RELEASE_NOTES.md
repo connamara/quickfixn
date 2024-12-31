@@ -51,6 +51,7 @@ What's New
 * #913/#741 - new FieldMap.ReadGroups for iterating on groups (NoviProg/gbirchmeier)
 * #914 - Optimize MessageCracker.IsHandlerMethod (vasily-balansea)
 * #742 - Improvements to HTTP web proxy (IanLeeClaxton)
+* #277 - change FileStore.SetSeqNum() to dispose StreamWriter (hlibman)
 
 ### v1.12.0
 
