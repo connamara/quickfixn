@@ -11,7 +11,7 @@ development.
 System Setup
 ------------
 
-* This project uses .NET 6.
+* This project uses .NET 8 starting with version 1.13.
 
 * All scripts are in Powershell, and should work on both Windows and Unix-based platforms.
 

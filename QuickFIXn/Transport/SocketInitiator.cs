@@ -15,10 +15,6 @@ namespace QuickFix.Transport
     /// </summary>
     public class SocketInitiator : AbstractInitiator
     {
-        public const string SOCKET_CONNECT_HOST = "SocketConnectHost";
-        public const string SOCKET_CONNECT_PORT = "SocketConnectPort";
-        public const string RECONNECT_INTERVAL  = "ReconnectInterval";
-
         private volatile bool _shutdownRequested = false;
         private DateTime _lastConnectTimeDt = DateTime.MinValue;
         private int _reconnectInterval = 30;
