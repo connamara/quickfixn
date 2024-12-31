@@ -53,7 +53,6 @@ What's New
 * #742 - Improvements to HTTP web proxy (IanLeeClaxton)
 * #277 - change FileStore.SetSeqNum() to dispose StreamWriter (hlibman)
 
-
 ### v1.12.0
 
 **Breaking changes**
