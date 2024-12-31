@@ -99,4 +99,5 @@ Contributors
 - James Kitamirike
 - Vasily Petruhin
 - Ian Lee Claxton
+- Hank Libman
 
