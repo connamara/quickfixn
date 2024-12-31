@@ -53,12 +53,13 @@ namespace QuickFix
 
         public static bool IsHandlerMethod(MethodInfo m)
         {
+            ParameterInfo[] parameters;
             return m.IsPublic
+                   && m.ReturnType == typeof(void)
                    && m.Name.Equals("OnMessage")
-                   && m.GetParameters().Length == 2
-                   && m.GetParameters()[0].ParameterType.IsSubclassOf(typeof(Message))
-                   && typeof(SessionID).IsAssignableFrom(m.GetParameters()[1].ParameterType)
-                   && m.ReturnType == typeof(void);
+                   && (parameters = m.GetParameters()).Length == 2
+                   && parameters[0].ParameterType.IsSubclassOf(typeof(Message))
+                   && typeof(SessionID).IsAssignableFrom(parameters[1].ParameterType);
         }
 
 

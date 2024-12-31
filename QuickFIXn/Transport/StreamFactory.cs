@@ -14,12 +14,12 @@ namespace QuickFix.Transport
     /// </summary>
     internal static class StreamFactory
     {
-        private static Socket? CreateTunnelThruProxy(string destIp, int destPort)
+        private static Socket? CreateTunnelThruProxy(string destIp, int destPort, string destHostName)
         {
             string destUriWithPort = $"{destIp}:{destPort}";
             UriBuilder uriBuilder = new UriBuilder(destUriWithPort);
             Uri destUri = uriBuilder.Uri;
-            IWebProxy webProxy = WebRequest.GetSystemWebProxy();
+            IWebProxy webProxy = WebRequest.DefaultWebProxy ?? WebRequest.GetSystemWebProxy();
 
             try
             {
@@ -44,7 +44,7 @@ namespace QuickFix.Transport
             Socket socketThruProxy = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             socketThruProxy.Connect(proxyEndPoint);
 
-            string proxyMsg = $"CONNECT {destIp}:{destPort} HTTP/1.1 \n\n";
+            string proxyMsg = $"CONNECT {destHostName}:{destPort} HTTP/1.1\nHost: {destHostName}:{destPort}\n\n";
             byte[] buffer = Encoding.ASCII.GetBytes(proxyMsg);
             byte[] buffer12 = new byte[500];
             socketThruProxy.Send(buffer, buffer.Length, 0);
@@ -73,7 +73,7 @@ namespace QuickFix.Transport
             if (!settings.SocketIgnoreProxy)
             {
                 // If system has configured a proxy for this config, use it.
-                socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port);
+                socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port, settings.ServerCommonName);
             }
 
             // No proxy.  Set up a regular socket.
