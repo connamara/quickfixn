@@ -72,6 +72,10 @@ namespace QuickFix.Transport
 
             if (!settings.SocketIgnoreProxy)
             {
+                if (settings.ServerCommonName is null) {
+                    throw new ConfigError(
+                        $"{SessionSettings.SOCKET_IGNORE_PROXY}=Y needs {SessionSettings.SSL_SERVERNAME} to be set");
+                }
                 // If system has configured a proxy for this config, use it.
                 socket = CreateTunnelThruProxy(endpoint.Address.ToString(), endpoint.Port, settings.ServerCommonName);
             }
