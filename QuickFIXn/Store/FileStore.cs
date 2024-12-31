@@ -268,12 +268,9 @@ public class FileStore : IMessageStore
 
     private void SetSeqNum()
     {
-        if (System.IO.File.Exists(_seqNumsFileName))
+        using (System.IO.StreamWriter writer = new System.IO.StreamWriter(_seqNumsFile, leaveOpen: true))
         {
-            using (System.IO.StreamWriter writer = new System.IO.StreamWriter(_seqNumsFile, leaveOpen: true))
-            {
-                writer.Write(NextSenderMsgSeqNum.ToString("D20") + " : " + NextTargetMsgSeqNum.ToString("D20") + "  ");
-            }
+            writer.Write(NextSenderMsgSeqNum.ToString("D20") + " : " + NextTargetMsgSeqNum.ToString("D20") + "  ");
         }
     }
 
