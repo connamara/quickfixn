@@ -135,7 +135,7 @@ public class MessageFactory : IMessageFactory
         };
     }
 
-    public Group Create(string beginString, string msgType, int correspondingFieldId)
+    public Group? Create(string beginString, string msgType, int correspondingFieldId)
     {
         if (QuickFix.FIX50SP2.IOI.MsgType.Equals(msgType))
         {

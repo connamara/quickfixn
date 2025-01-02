@@ -93,7 +93,7 @@ public class MessageFactory : IMessageFactory
         };
     }
 
-    public Group Create(string beginString, string msgType, int correspondingFieldId)
+    public Group? Create(string beginString, string msgType, int correspondingFieldId)
     {
         if (QuickFix.FIX43.Logon.MsgType.Equals(msgType))
         {

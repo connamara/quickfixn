@@ -62,7 +62,7 @@ public static class GenMessageFactories {
             "        };",
             "    }",
             "",
-            "    public Group Create(string beginString, string msgType, int correspondingFieldId)",
+            "    public Group? Create(string beginString, string msgType, int correspondingFieldId)",
             "    {"
         });
 
