@@ -26,21 +26,18 @@ public static class GenFieldTags {
         {
             "// This is a generated file.  Don't edit it directly!",
             "",
-            "using System;",
+            "namespace QuickFix.Fields;",
             "",
-            "namespace QuickFix.Fields",
-            "{",
-            "    /// <summary>",
-            "    /// FIX Field Tag Values",
-            "    /// </summary>",
-            "    public static class Tags",
-            "    {"
+            "/// <summary>",
+            "/// FIX Field Tag Values",
+            "/// </summary>",
+            "public static class Tags",
+            "{"
         };
 
         foreach (var fld in fields)
-            lines.Add($"        public const int {fld.Name} = {fld.Tag};");
+            lines.Add($"    public const int {fld.Name} = {fld.Tag};");
 
-        lines.Add("    }");
         lines.Add("}");
         lines.Add("");
 

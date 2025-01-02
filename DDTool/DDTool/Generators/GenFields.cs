@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using DDTool.Structures;
 
@@ -29,11 +30,11 @@ public static class GenFields {
             "",
             "using System;",
             "",
-            "namespace QuickFix.Fields",
-            "{"
+            "namespace QuickFix.Fields;",
         };
 
         foreach (var field in fields) {
+            lines.Add("");
             switch (field.CsClass) {
                 case "DateTimeField":
                 case "TimeOnlyField":
@@ -45,56 +46,54 @@ public static class GenFields {
             }
         }
 
-        lines.Add("}");
         lines.Add("");
         return string.Join(Environment.NewLine, lines);
     }
 
     private static void AppendDateField(List<string> lines, DDField field) {
-        lines.Add("    /// <summary>");
-        lines.Add($"    /// {field.Name} Field");
-        lines.Add("    /// </summary>");
-        lines.Add($"    public sealed class {field.Name} : {field.CsClass}");
-        lines.Add("    {");
-        lines.Add($"        public const int TAG = {field.Tag};");
+        lines.Add("/// <summary>");
+        lines.Add($"/// {field.Name} Field");
+        lines.Add("/// </summary>");
+        lines.Add($"public sealed class {field.Name} : {field.CsClass}");
+        lines.Add("{");
+        lines.Add($"    public const int TAG = {field.Tag};");
         lines.Add("");
 
-        lines.Add($"        public {field.Name}()");
-        lines.Add($"            :base(Tags.{field.Name}) {{}}");
-        lines.Add($"        public {field.Name}({field.BaseType} val)");
-        lines.Add($"            :base(Tags.{field.Name}, val) {{}}");
-        lines.Add($"        public {field.Name}({field.BaseType} val, bool showMilliseconds)");
-        lines.Add($"            :base(Tags.{field.Name}, val, showMilliseconds) {{}}");
-        lines.Add($"        public {field.Name}({field.BaseType} val, Converters.TimeStampPrecision precision)");
-        lines.Add($"            :base(Tags.{field.Name}, val, precision) {{}}");
+        lines.Add($"    public {field.Name}()");
+        lines.Add($"        : base(Tags.{field.Name}) {{}}");
+        lines.Add($"    public {field.Name}({field.BaseType} val)");
+        lines.Add($"        : base(Tags.{field.Name}, val) {{}}");
+        lines.Add($"    public {field.Name}({field.BaseType} val, bool showMilliseconds)");
+        lines.Add($"        : base(Tags.{field.Name}, val, showMilliseconds) {{}}");
+        lines.Add($"    public {field.Name}({field.BaseType} val, Converters.TimeStampPrecision precision)");
+        lines.Add($"        : base(Tags.{field.Name}, val, precision) {{}}");
         lines.Add("");
 
         AppendFieldEnumerations(lines, field);
 
-        lines.Add("    }");
-        lines.Add("");
+        lines.Add("}");
         lines.Add("");
     }
 
     private static void AppendNonDateField(List<string> lines, DDField field) {
-        lines.Add("    /// <summary>");
-        lines.Add($"    /// {field.Name} Field");
-        lines.Add("    /// </summary>");
-        lines.Add($"    public sealed class {field.Name} : {field.CsClass}");
-        lines.Add("    {");
-        lines.Add($"        public const int TAG = {field.Tag};");
+        lines.Add("/// <summary>");
+        lines.Add($"/// {field.Name} Field");
+        lines.Add("/// </summary>");
+        lines.Add($"public sealed class {field.Name} : {field.CsClass}");
+        lines.Add("{");
+        lines.Add($"    public const int TAG = {field.Tag};");
         lines.Add("");
 
-        lines.Add($"        public {field.Name}()");
-        lines.Add($"            :base(Tags.{field.Name}) {{}}");
-        lines.Add($"        public {field.Name}({field.BaseType} val)");
-        lines.Add($"            :base(Tags.{field.Name}, val) {{}}");
-        lines.Add("");
+        lines.Add($"    public {field.Name}()");
+        lines.Add($"        : base(Tags.{field.Name}) {{}}");
+        lines.Add($"    public {field.Name}({field.BaseType} val)");
+        lines.Add($"        : base(Tags.{field.Name}, val) {{}}");
 
-        AppendFieldEnumerations(lines, field);
+        if (lines.Count > 0) {
+            AppendFieldEnumerations(lines, field);
+        }
 
-        lines.Add("    }");
-        lines.Add("");
+        lines.Add("}");
         lines.Add("");
     }
 
@@ -103,7 +102,7 @@ public static class GenFields {
             return;
 
         lines.Add("");
-        lines.Add("        // Field Enumerations");
+        lines.Add("    // Field Enumerations");
 
         foreach (var enumVal in field.Enums) {
             string desc = enumVal.Desc.Replace('.', '_');
@@ -122,7 +121,7 @@ public static class GenFields {
                     $"unsupported field type '{field.BaseType}' ({field})")
             };
 
-            lines.Add($"        public const {field.BaseType} {desc} = {outVal};");
+            lines.Add($"    public const {field.BaseType} {desc} = {outVal};");
         }
     }
 }
