@@ -52,6 +52,9 @@ What's New
 * #914 - Optimize MessageCracker.IsHandlerMethod (vasily-balansea)
 * #742 - Improvements to HTTP web proxy (IanLeeClaxton)
 * #277 - change FileStore.SetSeqNum() to dispose StreamWriter (hlibman)
+* #921 - clean up generated code (gbirchmeier)
+     * enable nullable in Messages projects
+     * mark IMessageFactory.Create's Group return value as nullable
 
 ### v1.12.0
 

@@ -30,46 +30,40 @@ public static class GenMessageFactories {
             "using System.Collections.Generic;",
             "using QuickFix.FixValues;",
             "",
-            "namespace QuickFix",
+            $"namespace QuickFix.{dd.IdentifierNoDots};",
+            "",
+            "public class MessageFactory : IMessageFactory",
             "{",
-            $"    namespace {dd.IdentifierNoDots}",
+            "    public ICollection<string> GetSupportedBeginStrings()",
             "    {",
-            "        public class MessageFactory : IMessageFactory",
-            "        {",
-            "            public ICollection<string> GetSupportedBeginStrings()",
-            "            {",
-            $"                return new [] {{ BeginString.{dd.IdentifierNoDots} }};",
-            "            }",
+            $"       return new [] {{ BeginString.{dd.IdentifierNoDots} }};",
+            "    }",
             "",
+            "    public QuickFix.Message Create(string beginString, QuickFix.Fields.ApplVerID applVerId, string msgType)",
+            "    {",
+            "        return Create(beginString, msgType);",
+            "    }",
             "",
-            "            public QuickFix.Message Create(string beginString, QuickFix.Fields.ApplVerID applVerId, string msgType)",
-            "            {",
-            "                return Create(beginString, msgType);",
-            "            }",
-            "",
-            "",
-            "            public QuickFix.Message Create(string beginString, string msgType)",
-            "            {",
-            "                switch (msgType)",
-            "                {"
+            "    public QuickFix.Message Create(string beginString, string msgType)",
+            "    {",
+            "        return msgType switch",
+            "        {"
         };
 
         // TODO: foreach order is technically non-deterministic (though not in practice)
         foreach (var msg in dd.Messages.Values) {
             var fullname = $"QuickFix.{dd.IdentifierNoDots}.{msg.Name}";
-            lines.Add(new string(' ', 20) + $"case {fullname}.MsgType: return new {fullname}();");
+            lines.Add(new string(' ', 12) + $"{fullname}.MsgType => new {fullname}(),");
         }
 
         lines.AddRange(new List<string>
         {
-            "                }",
+            "            _ => new QuickFix.Message()",
+            "        };",
+            "    }",
             "",
-            "                return new QuickFix.Message();",
-            "            }",
-            "",
-            "",
-            "            public Group Create(string beginString, string msgType, int correspondingFieldID)",
-            "            {"
+            "    public Group? Create(string beginString, string msgType, int correspondingFieldId)",
+            "    {"
         });
 
         // TODO: foreach order is technically non-deterministic (though not in practice)
@@ -83,7 +77,7 @@ public static class GenMessageFactories {
 
             xLines.Add($"if (QuickFix.{dd.IdentifierNoDots}.{msg.Name}.MsgType.Equals(msgType))");
             xLines.Add("{");
-            xLines.Add("    switch (correspondingFieldID)");
+            xLines.Add("    switch (correspondingFieldId)");
             xLines.Add("    {");
 
             foreach (var group in groups) {
@@ -94,15 +88,12 @@ public static class GenMessageFactories {
             xLines.Add("}");
 
             // indent lines
-            lines.AddRange(xLines.Select(xl => new string(' ', 16) + xl));
+            lines.AddRange(xLines.Select(xl => new string(' ', 8) + xl));
             lines.Add("");
         }
 
         lines.AddRange(new List<string>{
-            "                return null;",
-            "            }",
-            "",
-            "        }",
+            "        return null;",
             "    }",
             "}",
             ""

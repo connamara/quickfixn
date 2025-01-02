@@ -3,110 +3,101 @@
 using System.Collections.Generic;
 using QuickFix.FixValues;
 
-namespace QuickFix
+namespace QuickFix.FIX40;
+
+public class MessageFactory : IMessageFactory
 {
-    namespace FIX40
+    public ICollection<string> GetSupportedBeginStrings()
     {
-        public class MessageFactory : IMessageFactory
+       return new [] { BeginString.FIX40 };
+    }
+
+    public QuickFix.Message Create(string beginString, QuickFix.Fields.ApplVerID applVerId, string msgType)
+    {
+        return Create(beginString, msgType);
+    }
+
+    public QuickFix.Message Create(string beginString, string msgType)
+    {
+        return msgType switch
         {
-            public ICollection<string> GetSupportedBeginStrings()
+            QuickFix.FIX40.Heartbeat.MsgType => new QuickFix.FIX40.Heartbeat(),
+            QuickFix.FIX40.Logon.MsgType => new QuickFix.FIX40.Logon(),
+            QuickFix.FIX40.TestRequest.MsgType => new QuickFix.FIX40.TestRequest(),
+            QuickFix.FIX40.ResendRequest.MsgType => new QuickFix.FIX40.ResendRequest(),
+            QuickFix.FIX40.Reject.MsgType => new QuickFix.FIX40.Reject(),
+            QuickFix.FIX40.SequenceReset.MsgType => new QuickFix.FIX40.SequenceReset(),
+            QuickFix.FIX40.Logout.MsgType => new QuickFix.FIX40.Logout(),
+            QuickFix.FIX40.Advertisement.MsgType => new QuickFix.FIX40.Advertisement(),
+            QuickFix.FIX40.IndicationofInterest.MsgType => new QuickFix.FIX40.IndicationofInterest(),
+            QuickFix.FIX40.News.MsgType => new QuickFix.FIX40.News(),
+            QuickFix.FIX40.Email.MsgType => new QuickFix.FIX40.Email(),
+            QuickFix.FIX40.QuoteRequest.MsgType => new QuickFix.FIX40.QuoteRequest(),
+            QuickFix.FIX40.Quote.MsgType => new QuickFix.FIX40.Quote(),
+            QuickFix.FIX40.NewOrderSingle.MsgType => new QuickFix.FIX40.NewOrderSingle(),
+            QuickFix.FIX40.ExecutionReport.MsgType => new QuickFix.FIX40.ExecutionReport(),
+            QuickFix.FIX40.DontKnowTrade.MsgType => new QuickFix.FIX40.DontKnowTrade(),
+            QuickFix.FIX40.OrderCancelReplaceRequest.MsgType => new QuickFix.FIX40.OrderCancelReplaceRequest(),
+            QuickFix.FIX40.OrderCancelRequest.MsgType => new QuickFix.FIX40.OrderCancelRequest(),
+            QuickFix.FIX40.OrderCancelReject.MsgType => new QuickFix.FIX40.OrderCancelReject(),
+            QuickFix.FIX40.OrderStatusRequest.MsgType => new QuickFix.FIX40.OrderStatusRequest(),
+            QuickFix.FIX40.Allocation.MsgType => new QuickFix.FIX40.Allocation(),
+            QuickFix.FIX40.AllocationACK.MsgType => new QuickFix.FIX40.AllocationACK(),
+            QuickFix.FIX40.NewOrderList.MsgType => new QuickFix.FIX40.NewOrderList(),
+            QuickFix.FIX40.ListStatus.MsgType => new QuickFix.FIX40.ListStatus(),
+            QuickFix.FIX40.ListExecute.MsgType => new QuickFix.FIX40.ListExecute(),
+            QuickFix.FIX40.ListCancelRequest.MsgType => new QuickFix.FIX40.ListCancelRequest(),
+            QuickFix.FIX40.ListStatusRequest.MsgType => new QuickFix.FIX40.ListStatusRequest(),
+            _ => new QuickFix.Message()
+        };
+    }
+
+    public Group? Create(string beginString, string msgType, int correspondingFieldId)
+    {
+        if (QuickFix.FIX40.News.MsgType.Equals(msgType))
+        {
+            switch (correspondingFieldId)
             {
-                return new [] { BeginString.FIX40 };
+                case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.News.LinesOfTextGroup();
             }
-
-
-            public QuickFix.Message Create(string beginString, QuickFix.Fields.ApplVerID applVerId, string msgType)
-            {
-                return Create(beginString, msgType);
-            }
-
-
-            public QuickFix.Message Create(string beginString, string msgType)
-            {
-                switch (msgType)
-                {
-                    case QuickFix.FIX40.Heartbeat.MsgType: return new QuickFix.FIX40.Heartbeat();
-                    case QuickFix.FIX40.Logon.MsgType: return new QuickFix.FIX40.Logon();
-                    case QuickFix.FIX40.TestRequest.MsgType: return new QuickFix.FIX40.TestRequest();
-                    case QuickFix.FIX40.ResendRequest.MsgType: return new QuickFix.FIX40.ResendRequest();
-                    case QuickFix.FIX40.Reject.MsgType: return new QuickFix.FIX40.Reject();
-                    case QuickFix.FIX40.SequenceReset.MsgType: return new QuickFix.FIX40.SequenceReset();
-                    case QuickFix.FIX40.Logout.MsgType: return new QuickFix.FIX40.Logout();
-                    case QuickFix.FIX40.Advertisement.MsgType: return new QuickFix.FIX40.Advertisement();
-                    case QuickFix.FIX40.IndicationofInterest.MsgType: return new QuickFix.FIX40.IndicationofInterest();
-                    case QuickFix.FIX40.News.MsgType: return new QuickFix.FIX40.News();
-                    case QuickFix.FIX40.Email.MsgType: return new QuickFix.FIX40.Email();
-                    case QuickFix.FIX40.QuoteRequest.MsgType: return new QuickFix.FIX40.QuoteRequest();
-                    case QuickFix.FIX40.Quote.MsgType: return new QuickFix.FIX40.Quote();
-                    case QuickFix.FIX40.NewOrderSingle.MsgType: return new QuickFix.FIX40.NewOrderSingle();
-                    case QuickFix.FIX40.ExecutionReport.MsgType: return new QuickFix.FIX40.ExecutionReport();
-                    case QuickFix.FIX40.DontKnowTrade.MsgType: return new QuickFix.FIX40.DontKnowTrade();
-                    case QuickFix.FIX40.OrderCancelReplaceRequest.MsgType: return new QuickFix.FIX40.OrderCancelReplaceRequest();
-                    case QuickFix.FIX40.OrderCancelRequest.MsgType: return new QuickFix.FIX40.OrderCancelRequest();
-                    case QuickFix.FIX40.OrderCancelReject.MsgType: return new QuickFix.FIX40.OrderCancelReject();
-                    case QuickFix.FIX40.OrderStatusRequest.MsgType: return new QuickFix.FIX40.OrderStatusRequest();
-                    case QuickFix.FIX40.Allocation.MsgType: return new QuickFix.FIX40.Allocation();
-                    case QuickFix.FIX40.AllocationACK.MsgType: return new QuickFix.FIX40.AllocationACK();
-                    case QuickFix.FIX40.NewOrderList.MsgType: return new QuickFix.FIX40.NewOrderList();
-                    case QuickFix.FIX40.ListStatus.MsgType: return new QuickFix.FIX40.ListStatus();
-                    case QuickFix.FIX40.ListExecute.MsgType: return new QuickFix.FIX40.ListExecute();
-                    case QuickFix.FIX40.ListCancelRequest.MsgType: return new QuickFix.FIX40.ListCancelRequest();
-                    case QuickFix.FIX40.ListStatusRequest.MsgType: return new QuickFix.FIX40.ListStatusRequest();
-                }
-
-                return new QuickFix.Message();
-            }
-
-
-            public Group Create(string beginString, string msgType, int correspondingFieldID)
-            {
-                if (QuickFix.FIX40.News.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.News.LinesOfTextGroup();
-                    }
-                }
-
-                if (QuickFix.FIX40.Email.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.Email.LinesOfTextGroup();
-                    }
-                }
-
-                if (QuickFix.FIX40.ExecutionReport.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.ExecutionReport.NoMiscFeesGroup();
-                    }
-                }
-
-                if (QuickFix.FIX40.Allocation.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.Allocation.NoOrdersGroup();
-                        case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX40.Allocation.NoExecsGroup();
-                        case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.Allocation.NoMiscFeesGroup();
-                        case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX40.Allocation.NoAllocsGroup();
-                        case QuickFix.Fields.Tags.NoDlvyInst: return new QuickFix.FIX40.Allocation.NoAllocsGroup.NoDlvyInstGroup();
-                    }
-                }
-
-                if (QuickFix.FIX40.ListStatus.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.ListStatus.NoOrdersGroup();
-                    }
-                }
-
-                return null;
-            }
-
         }
+
+        if (QuickFix.FIX40.Email.MsgType.Equals(msgType))
+        {
+            switch (correspondingFieldId)
+            {
+                case QuickFix.Fields.Tags.LinesOfText: return new QuickFix.FIX40.Email.LinesOfTextGroup();
+            }
+        }
+
+        if (QuickFix.FIX40.ExecutionReport.MsgType.Equals(msgType))
+        {
+            switch (correspondingFieldId)
+            {
+                case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.ExecutionReport.NoMiscFeesGroup();
+            }
+        }
+
+        if (QuickFix.FIX40.Allocation.MsgType.Equals(msgType))
+        {
+            switch (correspondingFieldId)
+            {
+                case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.Allocation.NoOrdersGroup();
+                case QuickFix.Fields.Tags.NoExecs: return new QuickFix.FIX40.Allocation.NoExecsGroup();
+                case QuickFix.Fields.Tags.NoMiscFees: return new QuickFix.FIX40.Allocation.NoMiscFeesGroup();
+                case QuickFix.Fields.Tags.NoAllocs: return new QuickFix.FIX40.Allocation.NoAllocsGroup();
+                case QuickFix.Fields.Tags.NoDlvyInst: return new QuickFix.FIX40.Allocation.NoAllocsGroup.NoDlvyInstGroup();
+            }
+        }
+
+        if (QuickFix.FIX40.ListStatus.MsgType.Equals(msgType))
+        {
+            switch (correspondingFieldId)
+            {
+                case QuickFix.Fields.Tags.NoOrders: return new QuickFix.FIX40.ListStatus.NoOrdersGroup();
+            }
+        }
+
+        return null;
     }
 }

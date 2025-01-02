@@ -3,55 +3,46 @@
 using System.Collections.Generic;
 using QuickFix.FixValues;
 
-namespace QuickFix
+namespace QuickFix.FIXT11;
+
+public class MessageFactory : IMessageFactory
 {
-    namespace FIXT11
+    public ICollection<string> GetSupportedBeginStrings()
     {
-        public class MessageFactory : IMessageFactory
+       return new [] { BeginString.FIXT11 };
+    }
+
+    public QuickFix.Message Create(string beginString, QuickFix.Fields.ApplVerID applVerId, string msgType)
+    {
+        return Create(beginString, msgType);
+    }
+
+    public QuickFix.Message Create(string beginString, string msgType)
+    {
+        return msgType switch
         {
-            public ICollection<string> GetSupportedBeginStrings()
+            QuickFix.FIXT11.Heartbeat.MsgType => new QuickFix.FIXT11.Heartbeat(),
+            QuickFix.FIXT11.TestRequest.MsgType => new QuickFix.FIXT11.TestRequest(),
+            QuickFix.FIXT11.ResendRequest.MsgType => new QuickFix.FIXT11.ResendRequest(),
+            QuickFix.FIXT11.Reject.MsgType => new QuickFix.FIXT11.Reject(),
+            QuickFix.FIXT11.SequenceReset.MsgType => new QuickFix.FIXT11.SequenceReset(),
+            QuickFix.FIXT11.Logout.MsgType => new QuickFix.FIXT11.Logout(),
+            QuickFix.FIXT11.Logon.MsgType => new QuickFix.FIXT11.Logon(),
+            QuickFix.FIXT11.XMLnonFIX.MsgType => new QuickFix.FIXT11.XMLnonFIX(),
+            _ => new QuickFix.Message()
+        };
+    }
+
+    public Group? Create(string beginString, string msgType, int correspondingFieldId)
+    {
+        if (QuickFix.FIXT11.Logon.MsgType.Equals(msgType))
+        {
+            switch (correspondingFieldId)
             {
-                return new [] { BeginString.FIXT11 };
+                case QuickFix.Fields.Tags.NoMsgTypes: return new QuickFix.FIXT11.Logon.NoMsgTypesGroup();
             }
-
-
-            public QuickFix.Message Create(string beginString, QuickFix.Fields.ApplVerID applVerId, string msgType)
-            {
-                return Create(beginString, msgType);
-            }
-
-
-            public QuickFix.Message Create(string beginString, string msgType)
-            {
-                switch (msgType)
-                {
-                    case QuickFix.FIXT11.Heartbeat.MsgType: return new QuickFix.FIXT11.Heartbeat();
-                    case QuickFix.FIXT11.TestRequest.MsgType: return new QuickFix.FIXT11.TestRequest();
-                    case QuickFix.FIXT11.ResendRequest.MsgType: return new QuickFix.FIXT11.ResendRequest();
-                    case QuickFix.FIXT11.Reject.MsgType: return new QuickFix.FIXT11.Reject();
-                    case QuickFix.FIXT11.SequenceReset.MsgType: return new QuickFix.FIXT11.SequenceReset();
-                    case QuickFix.FIXT11.Logout.MsgType: return new QuickFix.FIXT11.Logout();
-                    case QuickFix.FIXT11.Logon.MsgType: return new QuickFix.FIXT11.Logon();
-                    case QuickFix.FIXT11.XMLnonFIX.MsgType: return new QuickFix.FIXT11.XMLnonFIX();
-                }
-
-                return new QuickFix.Message();
-            }
-
-
-            public Group Create(string beginString, string msgType, int correspondingFieldID)
-            {
-                if (QuickFix.FIXT11.Logon.MsgType.Equals(msgType))
-                {
-                    switch (correspondingFieldID)
-                    {
-                        case QuickFix.Fields.Tags.NoMsgTypes: return new QuickFix.FIXT11.Logon.NoMsgTypesGroup();
-                    }
-                }
-
-                return null;
-            }
-
         }
+
+        return null;
     }
 }

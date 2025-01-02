@@ -80,7 +80,7 @@ namespace QuickFix
             return message;
         }
 
-        public Group Create(string beginString, string msgType, int groupCounterTag)
+        public Group? Create(string beginString, string msgType, int groupCounterTag)
         {
             string key = beginString;
             if(beginString.Equals(FixValues.BeginString.FIXT11))
