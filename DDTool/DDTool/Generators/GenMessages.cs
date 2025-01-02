@@ -33,23 +33,19 @@ public static class GenMessages {
         {
             "// This is a generated file.  Don't edit it directly!",
             "",
-            "namespace QuickFix",
+            $"namespace QuickFix.{dd.IdentifierNoDots};",
+            "",
+            "public abstract class Message : QuickFix.Message",
             "{",
-            $"    namespace {dd.IdentifierNoDots}",
+            "    protected Message() : base()",
             "    {",
-            "        public abstract class Message : QuickFix.Message",
-            "        {",
-            "            public Message()",
-            "                : base()",
-            "            {",
-            $"                this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.{beginString}));",
-            "            }",
-            "        }",
+            $"        Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.{beginString}));",
             "    }",
-            "}"
+            "}",
+            ""
         };
 
-        File.WriteAllText(filePath, string.Join(Environment.NewLine, lines) + "\n");
+        File.WriteAllText(filePath, string.Join(Environment.NewLine, lines));
 
         return filePath;
     }
@@ -100,12 +96,12 @@ public static class GenMessages {
     }
 
     private static List<string> GenerateCtorWithRequiredFields(DDMessage msg) {
-        List<string> rv = new();
+        List<string> rv = [];
 
         var requiredFields = msg.RequiredFields;
 
         if (requiredFields.Count < 1) {
-            return new();
+            return rv;
         }
 
         var reqArgs = requiredFields.Select(rf => $"{new string(' ', 20)}QuickFix.Fields.{rf.Name} a{rf.Name}");
@@ -131,7 +127,7 @@ public static class GenMessages {
     }
 
     private static List<string> GenerateFields(IElementSequence seq, int indentSpaces) {
-        List<string> rv = new();
+        List<string> rv = [];
 
         foreach (IElement el in seq.Elements.Values) {
             rv.AddRange(GenerateSingleField(el, seq, indentSpaces));
@@ -189,7 +185,7 @@ public static class GenMessages {
     }
 
     private static List<string> GenerateGroups(IElementSequence seq, int indentSpaces) {
-        List<string> rv = new();
+        List<string> rv = [];
 
         foreach (DDGroup grp in seq.Groups) {
             rv.AddRange(GenerateSingleGroup(grp, indentSpaces));

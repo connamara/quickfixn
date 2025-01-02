@@ -1,16 +1,11 @@
 // This is a generated file.  Don't edit it directly!
 
-namespace QuickFix
+namespace QuickFix.FIX41;
+
+public abstract class Message : QuickFix.Message
 {
-    namespace FIX41
+    protected Message() : base()
     {
-        public abstract class Message : QuickFix.Message
-        {
-            public Message()
-                : base()
-            {
-                this.Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.FIX41));
-            }
-        }
+        Header.SetField(new QuickFix.Fields.BeginString(QuickFix.FixValues.BeginString.FIX41));
     }
 }
