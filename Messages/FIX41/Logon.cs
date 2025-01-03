@@ -1,188 +1,105 @@
 // This is a generated file.  Don't edit it directly!
 
+using System;
 using QuickFix.Fields;
-namespace QuickFix
+
+namespace QuickFix.FIX41;
+
+public class Logon : Message
 {
-    namespace FIX41
+    public const string MsgType = "A";
+
+    public Logon() : base()
     {
-        public class Logon : Message
-        {
-            public const string MsgType = "A";
-
-            public Logon() : base()
-            {
-                this.Header.SetField(new QuickFix.Fields.MsgType("A"));
-            }
-
-            public Logon(
-                    QuickFix.Fields.EncryptMethod aEncryptMethod,
-                    QuickFix.Fields.HeartBtInt aHeartBtInt
-                ) : this()
-            {
-                this.EncryptMethod = aEncryptMethod;
-                this.HeartBtInt = aHeartBtInt;
-            }
-
-            public QuickFix.Fields.EncryptMethod EncryptMethod
-            {
-                get
-                {
-                    QuickFix.Fields.EncryptMethod val = new QuickFix.Fields.EncryptMethod();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.EncryptMethod val)
-            {
-                this.EncryptMethod = val;
-            }
-
-            public QuickFix.Fields.EncryptMethod Get(QuickFix.Fields.EncryptMethod val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.EncryptMethod val)
-            {
-                return IsSetEncryptMethod();
-            }
-
-            public bool IsSetEncryptMethod()
-            {
-                return IsSetField(Tags.EncryptMethod);
-            }
-
-            public QuickFix.Fields.HeartBtInt HeartBtInt
-            {
-                get
-                {
-                    QuickFix.Fields.HeartBtInt val = new QuickFix.Fields.HeartBtInt();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.HeartBtInt val)
-            {
-                this.HeartBtInt = val;
-            }
-
-            public QuickFix.Fields.HeartBtInt Get(QuickFix.Fields.HeartBtInt val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.HeartBtInt val)
-            {
-                return IsSetHeartBtInt();
-            }
-
-            public bool IsSetHeartBtInt()
-            {
-                return IsSetField(Tags.HeartBtInt);
-            }
-
-            public QuickFix.Fields.RawDataLength RawDataLength
-            {
-                get
-                {
-                    QuickFix.Fields.RawDataLength val = new QuickFix.Fields.RawDataLength();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.RawDataLength val)
-            {
-                this.RawDataLength = val;
-            }
-
-            public QuickFix.Fields.RawDataLength Get(QuickFix.Fields.RawDataLength val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.RawDataLength val)
-            {
-                return IsSetRawDataLength();
-            }
-
-            public bool IsSetRawDataLength()
-            {
-                return IsSetField(Tags.RawDataLength);
-            }
-
-            public QuickFix.Fields.RawData RawData
-            {
-                get
-                {
-                    QuickFix.Fields.RawData val = new QuickFix.Fields.RawData();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.RawData val)
-            {
-                this.RawData = val;
-            }
-
-            public QuickFix.Fields.RawData Get(QuickFix.Fields.RawData val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.RawData val)
-            {
-                return IsSetRawData();
-            }
-
-            public bool IsSetRawData()
-            {
-                return IsSetField(Tags.RawData);
-            }
-
-            public QuickFix.Fields.ResetSeqNumFlag ResetSeqNumFlag
-            {
-                get
-                {
-                    QuickFix.Fields.ResetSeqNumFlag val = new QuickFix.Fields.ResetSeqNumFlag();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.ResetSeqNumFlag val)
-            {
-                this.ResetSeqNumFlag = val;
-            }
-
-            public QuickFix.Fields.ResetSeqNumFlag Get(QuickFix.Fields.ResetSeqNumFlag val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.ResetSeqNumFlag val)
-            {
-                return IsSetResetSeqNumFlag();
-            }
-
-            public bool IsSetResetSeqNumFlag()
-            {
-                return IsSetField(Tags.ResetSeqNumFlag);
-            }
-
-        }
+        Header.SetField(new MsgType("A"));
     }
+
+    public Logon(
+            EncryptMethod aEncryptMethod,
+            HeartBtInt aHeartBtInt
+        ) : this()
+    {
+        EncryptMethod = aEncryptMethod;
+        HeartBtInt = aHeartBtInt;
+    }
+
+    public EncryptMethod EncryptMethod
+    {
+        get
+        {
+            EncryptMethod val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(EncryptMethod val) { EncryptMethod = val; }
+    public EncryptMethod Get(EncryptMethod val) { GetField(val); return val; }
+    public bool IsSet(EncryptMethod val) { return IsSetEncryptMethod(); }
+    public bool IsSetEncryptMethod() { return IsSetField(Tags.EncryptMethod); }
+
+    public HeartBtInt HeartBtInt
+    {
+        get
+        {
+            HeartBtInt val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(HeartBtInt val) { HeartBtInt = val; }
+    public HeartBtInt Get(HeartBtInt val) { GetField(val); return val; }
+    public bool IsSet(HeartBtInt val) { return IsSetHeartBtInt(); }
+    public bool IsSetHeartBtInt() { return IsSetField(Tags.HeartBtInt); }
+
+    public RawDataLength RawDataLength
+    {
+        get
+        {
+            RawDataLength val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(RawDataLength val) { RawDataLength = val; }
+    public RawDataLength Get(RawDataLength val) { GetField(val); return val; }
+    public bool IsSet(RawDataLength val) { return IsSetRawDataLength(); }
+    public bool IsSetRawDataLength() { return IsSetField(Tags.RawDataLength); }
+
+    public RawData RawData
+    {
+        get
+        {
+            RawData val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(RawData val) { RawData = val; }
+    public RawData Get(RawData val) { GetField(val); return val; }
+    public bool IsSet(RawData val) { return IsSetRawData(); }
+    public bool IsSetRawData() { return IsSetField(Tags.RawData); }
+
+    public ResetSeqNumFlag ResetSeqNumFlag
+    {
+        get
+        {
+            ResetSeqNumFlag val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(ResetSeqNumFlag val) { ResetSeqNumFlag = val; }
+    public ResetSeqNumFlag Get(ResetSeqNumFlag val) { GetField(val); return val; }
+    public bool IsSet(ResetSeqNumFlag val) { return IsSetResetSeqNumFlag(); }
+    public bool IsSetResetSeqNumFlag() { return IsSetField(Tags.ResetSeqNumFlag); }
 }

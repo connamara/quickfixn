@@ -1,250 +1,135 @@
 // This is a generated file.  Don't edit it directly!
 
+using System;
 using QuickFix.Fields;
-namespace QuickFix
+
+namespace QuickFix.FIX43;
+
+public class Reject : Message
 {
-    namespace FIX43
+    public const string MsgType = "3";
+
+    public Reject() : base()
     {
-        public class Reject : Message
-        {
-            public const string MsgType = "3";
-
-            public Reject() : base()
-            {
-                this.Header.SetField(new QuickFix.Fields.MsgType("3"));
-            }
-
-            public Reject(
-                    QuickFix.Fields.RefSeqNum aRefSeqNum
-                ) : this()
-            {
-                this.RefSeqNum = aRefSeqNum;
-            }
-
-            public QuickFix.Fields.RefSeqNum RefSeqNum
-            {
-                get
-                {
-                    QuickFix.Fields.RefSeqNum val = new QuickFix.Fields.RefSeqNum();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.RefSeqNum val)
-            {
-                this.RefSeqNum = val;
-            }
-
-            public QuickFix.Fields.RefSeqNum Get(QuickFix.Fields.RefSeqNum val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.RefSeqNum val)
-            {
-                return IsSetRefSeqNum();
-            }
-
-            public bool IsSetRefSeqNum()
-            {
-                return IsSetField(Tags.RefSeqNum);
-            }
-
-            public QuickFix.Fields.RefTagID RefTagID
-            {
-                get
-                {
-                    QuickFix.Fields.RefTagID val = new QuickFix.Fields.RefTagID();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.RefTagID val)
-            {
-                this.RefTagID = val;
-            }
-
-            public QuickFix.Fields.RefTagID Get(QuickFix.Fields.RefTagID val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.RefTagID val)
-            {
-                return IsSetRefTagID();
-            }
-
-            public bool IsSetRefTagID()
-            {
-                return IsSetField(Tags.RefTagID);
-            }
-
-            public QuickFix.Fields.RefMsgType RefMsgType
-            {
-                get
-                {
-                    QuickFix.Fields.RefMsgType val = new QuickFix.Fields.RefMsgType();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.RefMsgType val)
-            {
-                this.RefMsgType = val;
-            }
-
-            public QuickFix.Fields.RefMsgType Get(QuickFix.Fields.RefMsgType val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.RefMsgType val)
-            {
-                return IsSetRefMsgType();
-            }
-
-            public bool IsSetRefMsgType()
-            {
-                return IsSetField(Tags.RefMsgType);
-            }
-
-            public QuickFix.Fields.SessionRejectReason SessionRejectReason
-            {
-                get
-                {
-                    QuickFix.Fields.SessionRejectReason val = new QuickFix.Fields.SessionRejectReason();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.SessionRejectReason val)
-            {
-                this.SessionRejectReason = val;
-            }
-
-            public QuickFix.Fields.SessionRejectReason Get(QuickFix.Fields.SessionRejectReason val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.SessionRejectReason val)
-            {
-                return IsSetSessionRejectReason();
-            }
-
-            public bool IsSetSessionRejectReason()
-            {
-                return IsSetField(Tags.SessionRejectReason);
-            }
-
-            public QuickFix.Fields.Text Text
-            {
-                get
-                {
-                    QuickFix.Fields.Text val = new QuickFix.Fields.Text();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.Text val)
-            {
-                this.Text = val;
-            }
-
-            public QuickFix.Fields.Text Get(QuickFix.Fields.Text val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.Text val)
-            {
-                return IsSetText();
-            }
-
-            public bool IsSetText()
-            {
-                return IsSetField(Tags.Text);
-            }
-
-            public QuickFix.Fields.EncodedTextLen EncodedTextLen
-            {
-                get
-                {
-                    QuickFix.Fields.EncodedTextLen val = new QuickFix.Fields.EncodedTextLen();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.EncodedTextLen val)
-            {
-                this.EncodedTextLen = val;
-            }
-
-            public QuickFix.Fields.EncodedTextLen Get(QuickFix.Fields.EncodedTextLen val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.EncodedTextLen val)
-            {
-                return IsSetEncodedTextLen();
-            }
-
-            public bool IsSetEncodedTextLen()
-            {
-                return IsSetField(Tags.EncodedTextLen);
-            }
-
-            public QuickFix.Fields.EncodedText EncodedText
-            {
-                get
-                {
-                    QuickFix.Fields.EncodedText val = new QuickFix.Fields.EncodedText();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.EncodedText val)
-            {
-                this.EncodedText = val;
-            }
-
-            public QuickFix.Fields.EncodedText Get(QuickFix.Fields.EncodedText val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.EncodedText val)
-            {
-                return IsSetEncodedText();
-            }
-
-            public bool IsSetEncodedText()
-            {
-                return IsSetField(Tags.EncodedText);
-            }
-
-        }
+        Header.SetField(new MsgType("3"));
     }
+
+    public Reject(
+            RefSeqNum aRefSeqNum
+        ) : this()
+    {
+        RefSeqNum = aRefSeqNum;
+    }
+
+    public RefSeqNum RefSeqNum
+    {
+        get
+        {
+            RefSeqNum val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(RefSeqNum val) { RefSeqNum = val; }
+    public RefSeqNum Get(RefSeqNum val) { GetField(val); return val; }
+    public bool IsSet(RefSeqNum val) { return IsSetRefSeqNum(); }
+    public bool IsSetRefSeqNum() { return IsSetField(Tags.RefSeqNum); }
+
+    public RefTagID RefTagID
+    {
+        get
+        {
+            RefTagID val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(RefTagID val) { RefTagID = val; }
+    public RefTagID Get(RefTagID val) { GetField(val); return val; }
+    public bool IsSet(RefTagID val) { return IsSetRefTagID(); }
+    public bool IsSetRefTagID() { return IsSetField(Tags.RefTagID); }
+
+    public RefMsgType RefMsgType
+    {
+        get
+        {
+            RefMsgType val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(RefMsgType val) { RefMsgType = val; }
+    public RefMsgType Get(RefMsgType val) { GetField(val); return val; }
+    public bool IsSet(RefMsgType val) { return IsSetRefMsgType(); }
+    public bool IsSetRefMsgType() { return IsSetField(Tags.RefMsgType); }
+
+    public SessionRejectReason SessionRejectReason
+    {
+        get
+        {
+            SessionRejectReason val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(SessionRejectReason val) { SessionRejectReason = val; }
+    public SessionRejectReason Get(SessionRejectReason val) { GetField(val); return val; }
+    public bool IsSet(SessionRejectReason val) { return IsSetSessionRejectReason(); }
+    public bool IsSetSessionRejectReason() { return IsSetField(Tags.SessionRejectReason); }
+
+    public Text Text
+    {
+        get
+        {
+            Text val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(Text val) { Text = val; }
+    public Text Get(Text val) { GetField(val); return val; }
+    public bool IsSet(Text val) { return IsSetText(); }
+    public bool IsSetText() { return IsSetField(Tags.Text); }
+
+    public EncodedTextLen EncodedTextLen
+    {
+        get
+        {
+            EncodedTextLen val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(EncodedTextLen val) { EncodedTextLen = val; }
+    public EncodedTextLen Get(EncodedTextLen val) { GetField(val); return val; }
+    public bool IsSet(EncodedTextLen val) { return IsSetEncodedTextLen(); }
+    public bool IsSetEncodedTextLen() { return IsSetField(Tags.EncodedTextLen); }
+
+    public EncodedText EncodedText
+    {
+        get
+        {
+            EncodedText val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(EncodedText val) { EncodedText = val; }
+    public EncodedText Get(EncodedText val) { GetField(val); return val; }
+    public bool IsSet(EncodedText val) { return IsSetEncodedText(); }
+    public bool IsSetEncodedText() { return IsSetField(Tags.EncodedText); }
 }

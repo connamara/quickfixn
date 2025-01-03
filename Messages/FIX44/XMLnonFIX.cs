@@ -1,20 +1,16 @@
 // This is a generated file.  Don't edit it directly!
 
+using System;
 using QuickFix.Fields;
-namespace QuickFix
+
+namespace QuickFix.FIX44;
+
+public class XMLnonFIX : Message
 {
-    namespace FIX44
+    public const string MsgType = "n";
+
+    public XMLnonFIX() : base()
     {
-        public class XMLnonFIX : Message
-        {
-            public const string MsgType = "n";
-
-            public XMLnonFIX() : base()
-            {
-                this.Header.SetField(new QuickFix.Fields.MsgType("n"));
-            }
-
-
-        }
+        Header.SetField(new MsgType("n"));
     }
 }

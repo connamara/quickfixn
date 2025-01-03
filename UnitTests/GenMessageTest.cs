@@ -111,7 +111,7 @@ namespace UnitTests
             ];
             QuickFix.FIX44.TradeCaptureReport.NoSidesGroup noSides = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup();
             Assert.That(noSides.FieldOrder, Is.EqualTo(expFieldOrder));
-            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.fieldOrder, Is.EqualTo(expFieldOrder));
+            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.DefaultFieldOrder, Is.EqualTo(expFieldOrder));
         }
 
         [Test]
@@ -120,7 +120,7 @@ namespace UnitTests
             int[] expFieldOrder = [757, 758, 759, 806, 0];
             QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup grp = new QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup();
             Assert.That(grp.FieldOrder, Is.EqualTo(expFieldOrder));
-            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup.fieldOrder, Is.EqualTo(expFieldOrder));
+            Assert.That(QuickFix.FIX44.TradeCaptureReport.NoSidesGroup.NoAllocsGroup.NoNested2PartyIDsGroup.DefaultFieldOrder, Is.EqualTo(expFieldOrder));
         }
 
         [Test]
