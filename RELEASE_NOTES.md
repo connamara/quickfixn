@@ -55,6 +55,8 @@ What's New
 * #921 - clean up generated code (gbirchmeier)
      * enable nullable in Messages projects
      * mark IMessageFactory.Create's Group return value as nullable
+     * rename/deprecate a name-convention-breaking static const
+     * reduce code size and unnecessary empty lines
 
 ### v1.12.0
 

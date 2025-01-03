@@ -1,691 +1,411 @@
 // This is a generated file.  Don't edit it directly!
 
+using System;
 using QuickFix.Fields;
-namespace QuickFix
+
+namespace QuickFix.FIX50SP2;
+
+public class PartyDetailsListRequest : Message
 {
-    namespace FIX50SP2
+    public const string MsgType = "CF";
+
+    public PartyDetailsListRequest() : base()
     {
-        public class PartyDetailsListRequest : Message
+        Header.SetField(new MsgType("CF"));
+    }
+
+    public PartyDetailsListRequest(
+            PartyDetailsListRequestID aPartyDetailsListRequestID
+        ) : this()
+    {
+        PartyDetailsListRequestID = aPartyDetailsListRequestID;
+    }
+
+    public PartyDetailsListRequestID PartyDetailsListRequestID
+    {
+        get
         {
-            public const string MsgType = "CF";
-
-            public PartyDetailsListRequest() : base()
-            {
-                this.Header.SetField(new QuickFix.Fields.MsgType("CF"));
-            }
-
-            public PartyDetailsListRequest(
-                    QuickFix.Fields.PartyDetailsListRequestID aPartyDetailsListRequestID
-                ) : this()
-            {
-                this.PartyDetailsListRequestID = aPartyDetailsListRequestID;
-            }
-
-            public QuickFix.Fields.PartyDetailsListRequestID PartyDetailsListRequestID
-            {
-                get
-                {
-                    QuickFix.Fields.PartyDetailsListRequestID val = new QuickFix.Fields.PartyDetailsListRequestID();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.PartyDetailsListRequestID val)
-            {
-                this.PartyDetailsListRequestID = val;
-            }
-
-            public QuickFix.Fields.PartyDetailsListRequestID Get(QuickFix.Fields.PartyDetailsListRequestID val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.PartyDetailsListRequestID val)
-            {
-                return IsSetPartyDetailsListRequestID();
-            }
-
-            public bool IsSetPartyDetailsListRequestID()
-            {
-                return IsSetField(Tags.PartyDetailsListRequestID);
-            }
-
-            public QuickFix.Fields.NoPartyListResponseTypes NoPartyListResponseTypes
-            {
-                get
-                {
-                    QuickFix.Fields.NoPartyListResponseTypes val = new QuickFix.Fields.NoPartyListResponseTypes();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.NoPartyListResponseTypes val)
-            {
-                this.NoPartyListResponseTypes = val;
-            }
-
-            public QuickFix.Fields.NoPartyListResponseTypes Get(QuickFix.Fields.NoPartyListResponseTypes val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.NoPartyListResponseTypes val)
-            {
-                return IsSetNoPartyListResponseTypes();
-            }
-
-            public bool IsSetNoPartyListResponseTypes()
-            {
-                return IsSetField(Tags.NoPartyListResponseTypes);
-            }
-
-            public QuickFix.Fields.NoPartyIDs NoPartyIDs
-            {
-                get
-                {
-                    QuickFix.Fields.NoPartyIDs val = new QuickFix.Fields.NoPartyIDs();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.NoPartyIDs val)
-            {
-                this.NoPartyIDs = val;
-            }
-
-            public QuickFix.Fields.NoPartyIDs Get(QuickFix.Fields.NoPartyIDs val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.NoPartyIDs val)
-            {
-                return IsSetNoPartyIDs();
-            }
-
-            public bool IsSetNoPartyIDs()
-            {
-                return IsSetField(Tags.NoPartyIDs);
-            }
-
-            public QuickFix.Fields.NoRequestedPartyRoles NoRequestedPartyRoles
-            {
-                get
-                {
-                    QuickFix.Fields.NoRequestedPartyRoles val = new QuickFix.Fields.NoRequestedPartyRoles();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.NoRequestedPartyRoles val)
-            {
-                this.NoRequestedPartyRoles = val;
-            }
-
-            public QuickFix.Fields.NoRequestedPartyRoles Get(QuickFix.Fields.NoRequestedPartyRoles val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.NoRequestedPartyRoles val)
-            {
-                return IsSetNoRequestedPartyRoles();
-            }
-
-            public bool IsSetNoRequestedPartyRoles()
-            {
-                return IsSetField(Tags.NoRequestedPartyRoles);
-            }
-
-            public QuickFix.Fields.NoPartyRelationships NoPartyRelationships
-            {
-                get
-                {
-                    QuickFix.Fields.NoPartyRelationships val = new QuickFix.Fields.NoPartyRelationships();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.NoPartyRelationships val)
-            {
-                this.NoPartyRelationships = val;
-            }
-
-            public QuickFix.Fields.NoPartyRelationships Get(QuickFix.Fields.NoPartyRelationships val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.NoPartyRelationships val)
-            {
-                return IsSetNoPartyRelationships();
-            }
-
-            public bool IsSetNoPartyRelationships()
-            {
-                return IsSetField(Tags.NoPartyRelationships);
-            }
-
-            public QuickFix.Fields.SubscriptionRequestType SubscriptionRequestType
-            {
-                get
-                {
-                    QuickFix.Fields.SubscriptionRequestType val = new QuickFix.Fields.SubscriptionRequestType();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.SubscriptionRequestType val)
-            {
-                this.SubscriptionRequestType = val;
-            }
-
-            public QuickFix.Fields.SubscriptionRequestType Get(QuickFix.Fields.SubscriptionRequestType val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.SubscriptionRequestType val)
-            {
-                return IsSetSubscriptionRequestType();
-            }
-
-            public bool IsSetSubscriptionRequestType()
-            {
-                return IsSetField(Tags.SubscriptionRequestType);
-            }
-
-            public QuickFix.Fields.Text Text
-            {
-                get
-                {
-                    QuickFix.Fields.Text val = new QuickFix.Fields.Text();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.Text val)
-            {
-                this.Text = val;
-            }
-
-            public QuickFix.Fields.Text Get(QuickFix.Fields.Text val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.Text val)
-            {
-                return IsSetText();
-            }
-
-            public bool IsSetText()
-            {
-                return IsSetField(Tags.Text);
-            }
-
-            public QuickFix.Fields.EncodedTextLen EncodedTextLen
-            {
-                get
-                {
-                    QuickFix.Fields.EncodedTextLen val = new QuickFix.Fields.EncodedTextLen();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.EncodedTextLen val)
-            {
-                this.EncodedTextLen = val;
-            }
-
-            public QuickFix.Fields.EncodedTextLen Get(QuickFix.Fields.EncodedTextLen val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.EncodedTextLen val)
-            {
-                return IsSetEncodedTextLen();
-            }
-
-            public bool IsSetEncodedTextLen()
-            {
-                return IsSetField(Tags.EncodedTextLen);
-            }
-
-            public QuickFix.Fields.EncodedText EncodedText
-            {
-                get
-                {
-                    QuickFix.Fields.EncodedText val = new QuickFix.Fields.EncodedText();
-                    GetField(val);
-                    return val;
-                }
-                set { SetField(value); }
-            }
-
-            public void Set(QuickFix.Fields.EncodedText val)
-            {
-                this.EncodedText = val;
-            }
-
-            public QuickFix.Fields.EncodedText Get(QuickFix.Fields.EncodedText val)
-            {
-                GetField(val);
-                return val;
-            }
-
-            public bool IsSet(QuickFix.Fields.EncodedText val)
-            {
-                return IsSetEncodedText();
-            }
-
-            public bool IsSetEncodedText()
-            {
-                return IsSetField(Tags.EncodedText);
-            }
-
-            public class NoPartyListResponseTypesGroup : Group
-            {
-                public static int[] fieldOrder = {Tags.PartyListResponseType, 0};
-
-                public NoPartyListResponseTypesGroup()
-                  : base(Tags.NoPartyListResponseTypes, Tags.PartyListResponseType, fieldOrder)
-                {
-                }
-
-                public override Group Clone()
-                {
-                    var clone = new NoPartyListResponseTypesGroup();
-                    clone.CopyStateFrom(this);
-                    return clone;
-                }
-
-                public QuickFix.Fields.PartyListResponseType PartyListResponseType
-                {
-                    get
-                    {
-                        QuickFix.Fields.PartyListResponseType val = new QuickFix.Fields.PartyListResponseType();
-                        GetField(val);
-                        return val;
-                    }
-                    set { SetField(value); }
-                }
-
-                public void Set(QuickFix.Fields.PartyListResponseType val)
-                {
-                    this.PartyListResponseType = val;
-                }
-
-                public QuickFix.Fields.PartyListResponseType Get(QuickFix.Fields.PartyListResponseType val)
-                {
-                    GetField(val);
-                    return val;
-                }
-
-                public bool IsSet(QuickFix.Fields.PartyListResponseType val)
-                {
-                    return IsSetPartyListResponseType();
-                }
-
-                public bool IsSetPartyListResponseType()
-                {
-                    return IsSetField(Tags.PartyListResponseType);
-                }
-
-
-            }
-            public class NoPartyIDsGroup : Group
-            {
-                public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0};
-
-                public NoPartyIDsGroup()
-                  : base(Tags.NoPartyIDs, Tags.PartyID, fieldOrder)
-                {
-                }
-
-                public override Group Clone()
-                {
-                    var clone = new NoPartyIDsGroup();
-                    clone.CopyStateFrom(this);
-                    return clone;
-                }
-
-                public QuickFix.Fields.PartyID PartyID
-                {
-                    get
-                    {
-                        QuickFix.Fields.PartyID val = new QuickFix.Fields.PartyID();
-                        GetField(val);
-                        return val;
-                    }
-                    set { SetField(value); }
-                }
-
-                public void Set(QuickFix.Fields.PartyID val)
-                {
-                    this.PartyID = val;
-                }
-
-                public QuickFix.Fields.PartyID Get(QuickFix.Fields.PartyID val)
-                {
-                    GetField(val);
-                    return val;
-                }
-
-                public bool IsSet(QuickFix.Fields.PartyID val)
-                {
-                    return IsSetPartyID();
-                }
-
-                public bool IsSetPartyID()
-                {
-                    return IsSetField(Tags.PartyID);
-                }
-
-                public QuickFix.Fields.PartyIDSource PartyIDSource
-                {
-                    get
-                    {
-                        QuickFix.Fields.PartyIDSource val = new QuickFix.Fields.PartyIDSource();
-                        GetField(val);
-                        return val;
-                    }
-                    set { SetField(value); }
-                }
-
-                public void Set(QuickFix.Fields.PartyIDSource val)
-                {
-                    this.PartyIDSource = val;
-                }
-
-                public QuickFix.Fields.PartyIDSource Get(QuickFix.Fields.PartyIDSource val)
-                {
-                    GetField(val);
-                    return val;
-                }
-
-                public bool IsSet(QuickFix.Fields.PartyIDSource val)
-                {
-                    return IsSetPartyIDSource();
-                }
-
-                public bool IsSetPartyIDSource()
-                {
-                    return IsSetField(Tags.PartyIDSource);
-                }
-
-                public QuickFix.Fields.PartyRole PartyRole
-                {
-                    get
-                    {
-                        QuickFix.Fields.PartyRole val = new QuickFix.Fields.PartyRole();
-                        GetField(val);
-                        return val;
-                    }
-                    set { SetField(value); }
-                }
-
-                public void Set(QuickFix.Fields.PartyRole val)
-                {
-                    this.PartyRole = val;
-                }
-
-                public QuickFix.Fields.PartyRole Get(QuickFix.Fields.PartyRole val)
-                {
-                    GetField(val);
-                    return val;
-                }
-
-                public bool IsSet(QuickFix.Fields.PartyRole val)
-                {
-                    return IsSetPartyRole();
-                }
-
-                public bool IsSetPartyRole()
-                {
-                    return IsSetField(Tags.PartyRole);
-                }
-
-                public QuickFix.Fields.NoPartySubIDs NoPartySubIDs
-                {
-                    get
-                    {
-                        QuickFix.Fields.NoPartySubIDs val = new QuickFix.Fields.NoPartySubIDs();
-                        GetField(val);
-                        return val;
-                    }
-                    set { SetField(value); }
-                }
-
-                public void Set(QuickFix.Fields.NoPartySubIDs val)
-                {
-                    this.NoPartySubIDs = val;
-                }
-
-                public QuickFix.Fields.NoPartySubIDs Get(QuickFix.Fields.NoPartySubIDs val)
-                {
-                    GetField(val);
-                    return val;
-                }
-
-                public bool IsSet(QuickFix.Fields.NoPartySubIDs val)
-                {
-                    return IsSetNoPartySubIDs();
-                }
-
-                public bool IsSetNoPartySubIDs()
-                {
-                    return IsSetField(Tags.NoPartySubIDs);
-                }
-
-                public class NoPartySubIDsGroup : Group
-                {
-                    public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
-
-                    public NoPartySubIDsGroup()
-                      : base(Tags.NoPartySubIDs, Tags.PartySubID, fieldOrder)
-                    {
-                    }
-
-                    public override Group Clone()
-                    {
-                        var clone = new NoPartySubIDsGroup();
-                        clone.CopyStateFrom(this);
-                        return clone;
-                    }
-
-                    public QuickFix.Fields.PartySubID PartySubID
-                    {
-                        get
-                        {
-                            QuickFix.Fields.PartySubID val = new QuickFix.Fields.PartySubID();
-                            GetField(val);
-                            return val;
-                        }
-                        set { SetField(value); }
-                    }
-
-                    public void Set(QuickFix.Fields.PartySubID val)
-                    {
-                        this.PartySubID = val;
-                    }
-
-                    public QuickFix.Fields.PartySubID Get(QuickFix.Fields.PartySubID val)
-                    {
-                        GetField(val);
-                        return val;
-                    }
-
-                    public bool IsSet(QuickFix.Fields.PartySubID val)
-                    {
-                        return IsSetPartySubID();
-                    }
-
-                    public bool IsSetPartySubID()
-                    {
-                        return IsSetField(Tags.PartySubID);
-                    }
-
-                    public QuickFix.Fields.PartySubIDType PartySubIDType
-                    {
-                        get
-                        {
-                            QuickFix.Fields.PartySubIDType val = new QuickFix.Fields.PartySubIDType();
-                            GetField(val);
-                            return val;
-                        }
-                        set { SetField(value); }
-                    }
-
-                    public void Set(QuickFix.Fields.PartySubIDType val)
-                    {
-                        this.PartySubIDType = val;
-                    }
-
-                    public QuickFix.Fields.PartySubIDType Get(QuickFix.Fields.PartySubIDType val)
-                    {
-                        GetField(val);
-                        return val;
-                    }
-
-                    public bool IsSet(QuickFix.Fields.PartySubIDType val)
-                    {
-                        return IsSetPartySubIDType();
-                    }
-
-                    public bool IsSetPartySubIDType()
-                    {
-                        return IsSetField(Tags.PartySubIDType);
-                    }
-
-
-                }
-            }
-            public class NoRequestedPartyRolesGroup : Group
-            {
-                public static int[] fieldOrder = {Tags.RequestedPartyRole, 0};
-
-                public NoRequestedPartyRolesGroup()
-                  : base(Tags.NoRequestedPartyRoles, Tags.RequestedPartyRole, fieldOrder)
-                {
-                }
-
-                public override Group Clone()
-                {
-                    var clone = new NoRequestedPartyRolesGroup();
-                    clone.CopyStateFrom(this);
-                    return clone;
-                }
-
-                public QuickFix.Fields.RequestedPartyRole RequestedPartyRole
-                {
-                    get
-                    {
-                        QuickFix.Fields.RequestedPartyRole val = new QuickFix.Fields.RequestedPartyRole();
-                        GetField(val);
-                        return val;
-                    }
-                    set { SetField(value); }
-                }
-
-                public void Set(QuickFix.Fields.RequestedPartyRole val)
-                {
-                    this.RequestedPartyRole = val;
-                }
-
-                public QuickFix.Fields.RequestedPartyRole Get(QuickFix.Fields.RequestedPartyRole val)
-                {
-                    GetField(val);
-                    return val;
-                }
-
-                public bool IsSet(QuickFix.Fields.RequestedPartyRole val)
-                {
-                    return IsSetRequestedPartyRole();
-                }
-
-                public bool IsSetRequestedPartyRole()
-                {
-                    return IsSetField(Tags.RequestedPartyRole);
-                }
-
-
-            }
-            public class NoPartyRelationshipsGroup : Group
-            {
-                public static int[] fieldOrder = {Tags.PartyRelationship, 0};
-
-                public NoPartyRelationshipsGroup()
-                  : base(Tags.NoPartyRelationships, Tags.PartyRelationship, fieldOrder)
-                {
-                }
-
-                public override Group Clone()
-                {
-                    var clone = new NoPartyRelationshipsGroup();
-                    clone.CopyStateFrom(this);
-                    return clone;
-                }
-
-                public QuickFix.Fields.PartyRelationship PartyRelationship
-                {
-                    get
-                    {
-                        QuickFix.Fields.PartyRelationship val = new QuickFix.Fields.PartyRelationship();
-                        GetField(val);
-                        return val;
-                    }
-                    set { SetField(value); }
-                }
-
-                public void Set(QuickFix.Fields.PartyRelationship val)
-                {
-                    this.PartyRelationship = val;
-                }
-
-                public QuickFix.Fields.PartyRelationship Get(QuickFix.Fields.PartyRelationship val)
-                {
-                    GetField(val);
-                    return val;
-                }
-
-                public bool IsSet(QuickFix.Fields.PartyRelationship val)
-                {
-                    return IsSetPartyRelationship();
-                }
-
-                public bool IsSetPartyRelationship()
-                {
-                    return IsSetField(Tags.PartyRelationship);
-                }
-
-
-            }
+            PartyDetailsListRequestID val = new();
+            GetField(val);
+            return val;
         }
+        set  => SetField(value);
+    }
+
+    public void Set(PartyDetailsListRequestID val) { PartyDetailsListRequestID = val; }
+    public PartyDetailsListRequestID Get(PartyDetailsListRequestID val) { GetField(val); return val; }
+    public bool IsSet(PartyDetailsListRequestID val) { return IsSetPartyDetailsListRequestID(); }
+    public bool IsSetPartyDetailsListRequestID() { return IsSetField(Tags.PartyDetailsListRequestID); }
+
+    public NoPartyListResponseTypes NoPartyListResponseTypes
+    {
+        get
+        {
+            NoPartyListResponseTypes val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(NoPartyListResponseTypes val) { NoPartyListResponseTypes = val; }
+    public NoPartyListResponseTypes Get(NoPartyListResponseTypes val) { GetField(val); return val; }
+    public bool IsSet(NoPartyListResponseTypes val) { return IsSetNoPartyListResponseTypes(); }
+    public bool IsSetNoPartyListResponseTypes() { return IsSetField(Tags.NoPartyListResponseTypes); }
+
+    public NoPartyIDs NoPartyIDs
+    {
+        get
+        {
+            NoPartyIDs val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(NoPartyIDs val) { NoPartyIDs = val; }
+    public NoPartyIDs Get(NoPartyIDs val) { GetField(val); return val; }
+    public bool IsSet(NoPartyIDs val) { return IsSetNoPartyIDs(); }
+    public bool IsSetNoPartyIDs() { return IsSetField(Tags.NoPartyIDs); }
+
+    public NoRequestedPartyRoles NoRequestedPartyRoles
+    {
+        get
+        {
+            NoRequestedPartyRoles val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(NoRequestedPartyRoles val) { NoRequestedPartyRoles = val; }
+    public NoRequestedPartyRoles Get(NoRequestedPartyRoles val) { GetField(val); return val; }
+    public bool IsSet(NoRequestedPartyRoles val) { return IsSetNoRequestedPartyRoles(); }
+    public bool IsSetNoRequestedPartyRoles() { return IsSetField(Tags.NoRequestedPartyRoles); }
+
+    public NoPartyRelationships NoPartyRelationships
+    {
+        get
+        {
+            NoPartyRelationships val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(NoPartyRelationships val) { NoPartyRelationships = val; }
+    public NoPartyRelationships Get(NoPartyRelationships val) { GetField(val); return val; }
+    public bool IsSet(NoPartyRelationships val) { return IsSetNoPartyRelationships(); }
+    public bool IsSetNoPartyRelationships() { return IsSetField(Tags.NoPartyRelationships); }
+
+    public SubscriptionRequestType SubscriptionRequestType
+    {
+        get
+        {
+            SubscriptionRequestType val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(SubscriptionRequestType val) { SubscriptionRequestType = val; }
+    public SubscriptionRequestType Get(SubscriptionRequestType val) { GetField(val); return val; }
+    public bool IsSet(SubscriptionRequestType val) { return IsSetSubscriptionRequestType(); }
+    public bool IsSetSubscriptionRequestType() { return IsSetField(Tags.SubscriptionRequestType); }
+
+    public Text Text
+    {
+        get
+        {
+            Text val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(Text val) { Text = val; }
+    public Text Get(Text val) { GetField(val); return val; }
+    public bool IsSet(Text val) { return IsSetText(); }
+    public bool IsSetText() { return IsSetField(Tags.Text); }
+
+    public EncodedTextLen EncodedTextLen
+    {
+        get
+        {
+            EncodedTextLen val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(EncodedTextLen val) { EncodedTextLen = val; }
+    public EncodedTextLen Get(EncodedTextLen val) { GetField(val); return val; }
+    public bool IsSet(EncodedTextLen val) { return IsSetEncodedTextLen(); }
+    public bool IsSetEncodedTextLen() { return IsSetField(Tags.EncodedTextLen); }
+
+    public EncodedText EncodedText
+    {
+        get
+        {
+            EncodedText val = new();
+            GetField(val);
+            return val;
+        }
+        set  => SetField(value);
+    }
+
+    public void Set(EncodedText val) { EncodedText = val; }
+    public EncodedText Get(EncodedText val) { GetField(val); return val; }
+    public bool IsSet(EncodedText val) { return IsSetEncodedText(); }
+    public bool IsSetEncodedText() { return IsSetField(Tags.EncodedText); }
+
+    public class NoPartyListResponseTypesGroup : Group
+    {
+        public static int[] DefaultFieldOrder = [Tags.PartyListResponseType, 0];
+
+        [Obsolete("Use DefaultFieldOrder instead.  This will be removed in a future release.")]
+        public static int[] fieldOrder = {Tags.PartyListResponseType, 0};
+
+        public NoPartyListResponseTypesGroup()
+          : base(Tags.NoPartyListResponseTypes, Tags.PartyListResponseType, DefaultFieldOrder)
+        {
+        }
+
+        public override Group Clone()
+        {
+            var clone = new NoPartyListResponseTypesGroup();
+            clone.CopyStateFrom(this);
+            return clone;
+        }
+
+        public PartyListResponseType PartyListResponseType
+        {
+            get
+            {
+                PartyListResponseType val = new();
+                GetField(val);
+                return val;
+            }
+            set  => SetField(value);
+        }
+
+        public void Set(PartyListResponseType val) { PartyListResponseType = val; }
+        public PartyListResponseType Get(PartyListResponseType val) { GetField(val); return val; }
+        public bool IsSet(PartyListResponseType val) { return IsSetPartyListResponseType(); }
+        public bool IsSetPartyListResponseType() { return IsSetField(Tags.PartyListResponseType); }
+    }
+
+    public class NoPartyIDsGroup : Group
+    {
+        public static int[] DefaultFieldOrder = [Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0];
+
+        [Obsolete("Use DefaultFieldOrder instead.  This will be removed in a future release.")]
+        public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, 0};
+
+        public NoPartyIDsGroup()
+          : base(Tags.NoPartyIDs, Tags.PartyID, DefaultFieldOrder)
+        {
+        }
+
+        public override Group Clone()
+        {
+            var clone = new NoPartyIDsGroup();
+            clone.CopyStateFrom(this);
+            return clone;
+        }
+
+        public PartyID PartyID
+        {
+            get
+            {
+                PartyID val = new();
+                GetField(val);
+                return val;
+            }
+            set  => SetField(value);
+        }
+
+        public void Set(PartyID val) { PartyID = val; }
+        public PartyID Get(PartyID val) { GetField(val); return val; }
+        public bool IsSet(PartyID val) { return IsSetPartyID(); }
+        public bool IsSetPartyID() { return IsSetField(Tags.PartyID); }
+
+        public PartyIDSource PartyIDSource
+        {
+            get
+            {
+                PartyIDSource val = new();
+                GetField(val);
+                return val;
+            }
+            set  => SetField(value);
+        }
+
+        public void Set(PartyIDSource val) { PartyIDSource = val; }
+        public PartyIDSource Get(PartyIDSource val) { GetField(val); return val; }
+        public bool IsSet(PartyIDSource val) { return IsSetPartyIDSource(); }
+        public bool IsSetPartyIDSource() { return IsSetField(Tags.PartyIDSource); }
+
+        public PartyRole PartyRole
+        {
+            get
+            {
+                PartyRole val = new();
+                GetField(val);
+                return val;
+            }
+            set  => SetField(value);
+        }
+
+        public void Set(PartyRole val) { PartyRole = val; }
+        public PartyRole Get(PartyRole val) { GetField(val); return val; }
+        public bool IsSet(PartyRole val) { return IsSetPartyRole(); }
+        public bool IsSetPartyRole() { return IsSetField(Tags.PartyRole); }
+
+        public NoPartySubIDs NoPartySubIDs
+        {
+            get
+            {
+                NoPartySubIDs val = new();
+                GetField(val);
+                return val;
+            }
+            set  => SetField(value);
+        }
+
+        public void Set(NoPartySubIDs val) { NoPartySubIDs = val; }
+        public NoPartySubIDs Get(NoPartySubIDs val) { GetField(val); return val; }
+        public bool IsSet(NoPartySubIDs val) { return IsSetNoPartySubIDs(); }
+        public bool IsSetNoPartySubIDs() { return IsSetField(Tags.NoPartySubIDs); }
+
+        public class NoPartySubIDsGroup : Group
+        {
+            public static int[] DefaultFieldOrder = [Tags.PartySubID, Tags.PartySubIDType, 0];
+
+            [Obsolete("Use DefaultFieldOrder instead.  This will be removed in a future release.")]
+            public static int[] fieldOrder = {Tags.PartySubID, Tags.PartySubIDType, 0};
+
+            public NoPartySubIDsGroup()
+              : base(Tags.NoPartySubIDs, Tags.PartySubID, DefaultFieldOrder)
+            {
+            }
+
+            public override Group Clone()
+            {
+                var clone = new NoPartySubIDsGroup();
+                clone.CopyStateFrom(this);
+                return clone;
+            }
+
+            public PartySubID PartySubID
+            {
+                get
+                {
+                    PartySubID val = new();
+                    GetField(val);
+                    return val;
+                }
+                set  => SetField(value);
+            }
+
+            public void Set(PartySubID val) { PartySubID = val; }
+            public PartySubID Get(PartySubID val) { GetField(val); return val; }
+            public bool IsSet(PartySubID val) { return IsSetPartySubID(); }
+            public bool IsSetPartySubID() { return IsSetField(Tags.PartySubID); }
+
+            public PartySubIDType PartySubIDType
+            {
+                get
+                {
+                    PartySubIDType val = new();
+                    GetField(val);
+                    return val;
+                }
+                set  => SetField(value);
+            }
+
+            public void Set(PartySubIDType val) { PartySubIDType = val; }
+            public PartySubIDType Get(PartySubIDType val) { GetField(val); return val; }
+            public bool IsSet(PartySubIDType val) { return IsSetPartySubIDType(); }
+            public bool IsSetPartySubIDType() { return IsSetField(Tags.PartySubIDType); }
+        }
+    }
+
+    public class NoRequestedPartyRolesGroup : Group
+    {
+        public static int[] DefaultFieldOrder = [Tags.RequestedPartyRole, 0];
+
+        [Obsolete("Use DefaultFieldOrder instead.  This will be removed in a future release.")]
+        public static int[] fieldOrder = {Tags.RequestedPartyRole, 0};
+
+        public NoRequestedPartyRolesGroup()
+          : base(Tags.NoRequestedPartyRoles, Tags.RequestedPartyRole, DefaultFieldOrder)
+        {
+        }
+
+        public override Group Clone()
+        {
+            var clone = new NoRequestedPartyRolesGroup();
+            clone.CopyStateFrom(this);
+            return clone;
+        }
+
+        public RequestedPartyRole RequestedPartyRole
+        {
+            get
+            {
+                RequestedPartyRole val = new();
+                GetField(val);
+                return val;
+            }
+            set  => SetField(value);
+        }
+
+        public void Set(RequestedPartyRole val) { RequestedPartyRole = val; }
+        public RequestedPartyRole Get(RequestedPartyRole val) { GetField(val); return val; }
+        public bool IsSet(RequestedPartyRole val) { return IsSetRequestedPartyRole(); }
+        public bool IsSetRequestedPartyRole() { return IsSetField(Tags.RequestedPartyRole); }
+    }
+
+    public class NoPartyRelationshipsGroup : Group
+    {
+        public static int[] DefaultFieldOrder = [Tags.PartyRelationship, 0];
+
+        [Obsolete("Use DefaultFieldOrder instead.  This will be removed in a future release.")]
+        public static int[] fieldOrder = {Tags.PartyRelationship, 0};
+
+        public NoPartyRelationshipsGroup()
+          : base(Tags.NoPartyRelationships, Tags.PartyRelationship, DefaultFieldOrder)
+        {
+        }
+
+        public override Group Clone()
+        {
+            var clone = new NoPartyRelationshipsGroup();
+            clone.CopyStateFrom(this);
+            return clone;
+        }
+
+        public PartyRelationship PartyRelationship
+        {
+            get
+            {
+                PartyRelationship val = new();
+                GetField(val);
+                return val;
+            }
+            set  => SetField(value);
+        }
+
+        public void Set(PartyRelationship val) { PartyRelationship = val; }
+        public PartyRelationship Get(PartyRelationship val) { GetField(val); return val; }
+        public bool IsSet(PartyRelationship val) { return IsSetPartyRelationship(); }
+        public bool IsSetPartyRelationship() { return IsSetField(Tags.PartyRelationship); }
     }
 }
