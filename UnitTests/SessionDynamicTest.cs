@@ -5,7 +5,7 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
-
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Logger;
@@ -73,6 +73,7 @@ namespace UnitTests
         private string _logPath = "unset";
         private SocketInitiator? _initiator;
         private ThreadedSocketAcceptor? _acceptor;
+        private ILoggerFactory? _loggerFactory;
         private Dictionary<string, SocketState> _sessions = new();
         private HashSet<string> _loggedOnCompIDs = new();
         private Socket? _listenSocket;
@@ -127,13 +128,14 @@ namespace UnitTests
             defaults.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort.ToString());
 
             settings.Set(defaults);
-            ILogFactory logFactory = new FileLogFactory(settings);
+            _loggerFactory = new LoggerFactory();
+            _loggerFactory.AddProvider(new FileLoggerProvider(settings));
 
             if (initiator)
             {
                 defaults.SetString(SessionSettings.RECONNECT_INTERVAL, "1");
                 settings.Set(CreateSessionId(StaticInitiatorCompId), CreateSessionConfig(true));
-                _initiator = new SocketInitiator(application, storeFactory, settings, logFactory);
+                _initiator = new SocketInitiator(application, storeFactory, settings, _loggerFactory);
                 _initiator.Start();
             }
             else
@@ -151,7 +153,7 @@ namespace UnitTests
                     settings.Set(id, conf);
                 }
 
-                _acceptor = new ThreadedSocketAcceptor(application, storeFactory, settings, logFactory);
+                _acceptor = new ThreadedSocketAcceptor(application, storeFactory, settings, _loggerFactory);
                 _acceptor.Start();
             }
         }
@@ -361,9 +363,11 @@ namespace UnitTests
             _listenSocket?.Close();
             _initiator?.Stop(true);
             _acceptor?.Stop(true);
+            _loggerFactory?.Dispose();
 
             _initiator = null;
             _acceptor = null;
+            _loggerFactory = null;
 
             Thread.Sleep(500);
             ClearLogs();

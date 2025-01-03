@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using QuickFix.Logger;
+using Microsoft.Extensions.Logging;
 
 namespace QuickFix
 {
@@ -15,7 +15,7 @@ namespace QuickFix
         public AcceptorSocketDescriptor(
             IPEndPoint socketEndPoint,
             SocketSettings socketSettings,
-            NonSessionLog nonSessionLog)
+            ILogger nonSessionLog)
         {
             Address = socketEndPoint;
             SocketReactor = new ThreadedSocketReactor(Address, socketSettings, this, nonSessionLog);
@@ -26,7 +26,7 @@ namespace QuickFix
             IPEndPoint socketEndPoint,
             SocketSettings socketSettings,
             SettingsDictionary sessionDict,
-            NonSessionLog nonSessionLog) : this(socketEndPoint, socketSettings, nonSessionLog)
+            ILogger nonSessionLog) : this(socketEndPoint, socketSettings, nonSessionLog)
         { }
 
         internal void AcceptSession(Session session)

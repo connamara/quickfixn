@@ -2,6 +2,8 @@ using NUnit.Framework;
 using QuickFix;
 using System.IO;
 using System.Net;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using QuickFix.Logger;
 using QuickFix.Store;
 
@@ -11,6 +13,7 @@ public abstract class TestBase
 {
     private int _port;
     private ThreadedSocketAcceptor _acceptor;
+    private LoggerFactory? _loggerFactory;
 
     protected abstract SessionSettings Settings { get; }
 
@@ -23,11 +26,17 @@ public abstract class TestBase
         var testApp = new ATApplication();
         var storeFactory = new MemoryStoreFactory();
 
-        ILogFactory? logFactory = settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose")
-            ? new FileLogFactory(settings)
-            : new NullLogFactory();
+        _loggerFactory = new LoggerFactory();
+        if (settings.Get().Has("Verbose") && settings.Get().GetBool("Verbose"))
+        {
+            _loggerFactory.AddProvider(new FileLoggerProvider(settings));
+        }
+        else
+        {
+            _loggerFactory.AddProvider(NullLoggerProvider.Instance);
+        }
 
-        _acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, logFactory);
+        _acceptor = new ThreadedSocketAcceptor(testApp, storeFactory, settings, _loggerFactory);
 
         _acceptor.Start();
     }
@@ -36,6 +45,7 @@ public abstract class TestBase
     public void TearDown()
     {
         _acceptor?.Dispose();
+        _loggerFactory?.Dispose();
     }
 
     protected void RunTest(string definitionPath)
