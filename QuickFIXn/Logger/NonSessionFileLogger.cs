@@ -6,6 +6,7 @@ namespace QuickFix.Logger;
 /// <summary>
 /// Like the file logger, but only creates the files on first write
 /// </summary>
+[Obsolete("Use Microsoft.Extensions.Logging instead")]
 internal class NonSessionFileLogger : ILogger, IDisposable
 {
     private readonly Lazy<FileLog> _fileLog;
