@@ -164,9 +164,7 @@ public class FileLog : ILog, ILogger
 
     public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
 
-#pragma warning disable CS8633
-    public IDisposable BeginScope<TState>(TState state) where TState : notnull => default!;
-#pragma warning restore CS8633
+    public IDisposable BeginScope<TState>(TState state) => default!;
 
     #endregion
 
