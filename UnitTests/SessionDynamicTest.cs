@@ -207,7 +207,7 @@ namespace UnitTests
                     Monitor.Pulse(socketState.Socket);
                 return;
             }
-            string msgText = CharEncoding.DefaultEncoding.GetString(socketState.RxBuffer, 0, bytesReceived);
+            string msgText = CharEncoding.SelectedEncoding.GetString(socketState.RxBuffer, 0, bytesReceived);
             foreach (Match m in Regex.Matches(msgText, FixMessageDelimit))
             {
                 socketState.MessageFragment += m.Value;
@@ -333,7 +333,7 @@ namespace UnitTests
             msg.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
             msg.SetField(new QuickFix.Fields.HeartBtInt(300));
             // Simple logon message
-            s.Send(CharEncoding.DefaultEncoding.GetBytes(msg.ConstructString()));
+            s.Send(CharEncoding.GetBytes(msg.ConstructString()));
         }
 
         void ClearLogs()

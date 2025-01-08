@@ -189,7 +189,7 @@ namespace QuickFix
                 throw new ApplicationException("Initiator is not connected (uninitialized stream)");
             }
 
-            byte[] rawData = CharEncoding.DefaultEncoding.GetBytes(data);
+            byte[] rawData = CharEncoding.GetBytes(data);
             _stream.Write(rawData, 0, rawData.Length);
             return true;
         }

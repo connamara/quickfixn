@@ -19,7 +19,7 @@ namespace QuickFix
         private int _usedBufferLength = 0;
         private int _bufferStartIndex = 0;
 
-        public Parser() : this(CharEncoding.DefaultEncoding)
+        public Parser() : this(CharEncoding.SelectedEncoding)
         { }
 
         public Parser(Encoding encoding)
@@ -59,6 +59,12 @@ namespace QuickFix
             }
         }
 
+        /// <summary>
+        /// Attempt to read a messagef from the instance's buffer.
+        /// If no message can be read, then instance vars are not changed.
+        /// </summary>
+        /// <param name="msg">a message or an empty string</param>
+        /// <returns>true if a message can be read</returns>
         public bool ReadFixMessage(out string msg)
         {
             msg = "";

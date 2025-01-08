@@ -204,7 +204,7 @@ public class FileStore : IMessageStore
                 byte[] msgBytes = new byte[_offsets[i].Size];
                 _msgFile.Read(msgBytes, 0, msgBytes.Length);
 
-                messages.Add(CharEncoding.DefaultEncoding.GetString(msgBytes));
+                messages.Add(CharEncoding.SelectedEncoding.GetString(msgBytes));
             }
         }
 
@@ -221,7 +221,7 @@ public class FileStore : IMessageStore
         _msgFile.Seek(0, System.IO.SeekOrigin.End);
 
         long offset = _msgFile.Position;
-        byte[] msgBytes = CharEncoding.DefaultEncoding.GetBytes(msg);
+        byte[] msgBytes = CharEncoding.GetBytes(msg);
         int size = msgBytes.Length;
 
         StringBuilder b = new StringBuilder();

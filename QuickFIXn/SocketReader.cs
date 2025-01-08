@@ -271,7 +271,7 @@ namespace QuickFix
 
         public int Send(string data)
         {
-            byte[] rawData = CharEncoding.DefaultEncoding.GetBytes(data);
+            byte[] rawData = CharEncoding.GetBytes(data);
             _stream.Write(rawData, 0, rawData.Length);
             return rawData.Length;
         }

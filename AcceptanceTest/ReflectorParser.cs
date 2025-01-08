@@ -10,7 +10,7 @@ public class ReflectorParser
     private byte[] buffer_ = new byte[512];
     int usedBufferLength = 0;
 
-    static readonly System.Text.Encoding DefaultEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
+    static readonly System.Text.Encoding SelectedEncoding = System.Text.Encoding.GetEncoding("iso-8859-1");
 
     public void AddToStream(byte[] data, int bytesAdded)
     {
@@ -62,7 +62,7 @@ public class ReflectorParser
 
     public static bool ExtractLength(out int length, out int pos, string buf)
     {
-        return ExtractLength(out length, out pos, DefaultEncoding.GetBytes(buf));
+        return ExtractLength(out length, out pos, SelectedEncoding.GetBytes(buf));
     }
 
     public static bool ExtractLength(out int length, out int pos, byte[] buf)
@@ -93,7 +93,7 @@ public class ReflectorParser
 
     private static int IndexOf(byte[] arrayToSearchThrough, string stringPatternToFind, int offset)
     {
-        byte[] patternToFind = DefaultEncoding.GetBytes(stringPatternToFind);
+        byte[] patternToFind = SelectedEncoding.GetBytes(stringPatternToFind);
         if (patternToFind.Length > arrayToSearchThrough.Length)
             return -1;
         for (int i = offset; i <= arrayToSearchThrough.Length - patternToFind.Length; i++)
@@ -127,6 +127,6 @@ public class ReflectorParser
     {
         byte[] returnByte = new byte[length];
         Buffer.BlockCopy(array, startIndex, returnByte, 0, length);
-        return DefaultEncoding.GetString(returnByte);
+        return SelectedEncoding.GetString(returnByte);
     }
 }

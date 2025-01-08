@@ -116,6 +116,10 @@ namespace QuickFix
                     "Setting 'MillisecondsInTimeStamp' was removed.  Use 'TimestampPrecision=Milliseconds' instead.");
             }
 
+            if (settings.Has("Encoding")){
+                CharEncoding.SetEncoding(settings.GetString(SessionSettings.ENCODING));
+            }
+
             if (settings.Has(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS))
                 session.SendRedundantResendRequests = settings.GetBool(SessionSettings.SEND_REDUNDANT_RESENDREQUESTS);
             if (settings.Has(SessionSettings.RESEND_SESSION_LEVEL_REJECTS))
