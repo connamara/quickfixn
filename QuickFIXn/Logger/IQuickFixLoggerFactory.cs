@@ -57,5 +57,5 @@ internal class NullQuickFixLoggerFactory : IQuickFixLoggerFactory
 {
     public ILogger CreateSessionLogger(SessionID sessionId) => NullLogger.Instance;
     public ILogger CreateNonSessionLogger<T>() => NullLogger<T>.Instance;
-    public static NullQuickFixLoggerFactory Instance = new NullQuickFixLoggerFactory();
+    public static readonly NullQuickFixLoggerFactory Instance = new NullQuickFixLoggerFactory();
 }

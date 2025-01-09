@@ -679,7 +679,7 @@ namespace QuickFix
                 {
                     if (MsgType.LOGON.Equals(msgBuilder.MsgType.Value))
                     {
-                        Log.Log(LogLevel.Warning, "Required field missing from logon");
+                        Log.Log(LogLevel.Error, "Required field missing from logon");
                         Disconnect("Required field missing from logon");
                     }
                     else
@@ -701,7 +701,7 @@ namespace QuickFix
 
             if (_state.ReceivedReset)
             {
-                Log.Log(LogLevel.Warning, "Sequence numbers reset due to ResetSeqNumFlag=Y");
+                Log.Log(LogLevel.Debug, "Sequence numbers reset due to ResetSeqNumFlag=Y");
                 if (!_state.SentReset)
                 {
                     _state.Reset("Reset requested by counterparty");
@@ -724,13 +724,13 @@ namespace QuickFix
             }
 
             _state.ReceivedLogon = true;
-            Log.Log(LogLevel.Warning, "Received logon");
+            Log.Log(LogLevel.Debug, "Received logon");
             if (IsAcceptor)
             {
                 int heartBtInt = logon.GetInt(Fields.Tags.HeartBtInt);
                 _state.HeartBtInt = heartBtInt;
                 GenerateLogon(logon);
-                Log.Log(LogLevel.Warning, $"Responding to logon request; heartbeat is {heartBtInt} seconds");
+                Log.Log(LogLevel.Debug, $"Responding to logon request; heartbeat is {heartBtInt} seconds");
             }
 
             _state.SentReset = false;
@@ -1014,7 +1014,7 @@ namespace QuickFix
 
                 if (!IsGoodTime(msg))
                 {
-                    Log.Log(LogLevel.Warning, "Sending time accuracy problem");
+                    Log.Log(LogLevel.Error, "Sending time accuracy problem");
                     GenerateReject(msg, FixValues.SessionRejectReason.SENDING_TIME_ACCURACY_PROBLEM);
                     GenerateLogout();
                     return false;
@@ -1201,7 +1201,7 @@ namespace QuickFix
 
 
             reject.SetField(new Text(reason));
-            Log.Log(LogLevel.Warning, "Reject sent for Message: {MsgSeqNum} Reason: {Reason}", msgSeqNum, reason);
+            Log.Log(LogLevel.Debug, "Reject sent for Message: {MsgSeqNum} Reason: {Reason}", msgSeqNum, reason);
             SendRaw(reject);
         }
 
