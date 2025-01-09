@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 using QuickFix;
-using QuickFix.Logger;
 using QuickFix.Store;
 
 namespace Executor
@@ -31,8 +30,7 @@ namespace Executor
                 using var loggerFactory = LoggerFactory.Create(builder =>
                 {
                     builder.SetMinimumLevel(LogLevel.Trace);
-                    builder.AddProvider(new ScreenLoggerProvider(settings));
-                    builder.AddProvider(new FileLoggerProvider(settings));
+                    builder.AddConsole();
                 });
                 ThreadedSocketAcceptor acceptor =
                     new ThreadedSocketAcceptor(executorApp, storeFactory, settings, loggerFactory);

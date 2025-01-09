@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
-using QuickFix.Logger;
 using QuickFix.Store;
 
 namespace TradeClient
@@ -34,8 +33,7 @@ namespace TradeClient
                 IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
                 using var loggerFactory = LoggerFactory.Create(builder =>
                 {
-                    builder.AddProvider(new ScreenLoggerProvider(settings));
-                    // builder.AddProvider(new FileLogProvider(settings));
+                    builder.AddConsole();
                 });
                 QuickFix.Transport.SocketInitiator initiator = new QuickFix.Transport.SocketInitiator(application, storeFactory, settings, loggerFactory);
 

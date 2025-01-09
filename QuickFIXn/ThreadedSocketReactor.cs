@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System;
 using Microsoft.Extensions.Logging;
+using QuickFix.Logger;
 
 namespace QuickFix
 {
@@ -32,18 +33,20 @@ namespace QuickFix
         private readonly IPEndPoint _serverSocketEndPoint;
         private readonly AcceptorSocketDescriptor? _acceptorSocketDescriptor;
         private readonly ILogger _nonSessionLog;
+        private readonly IQuickFixLoggerFactory _loggerFactory;
 
         internal ThreadedSocketReactor(
             IPEndPoint serverSocketEndPoint,
             SocketSettings socketSettings,
             AcceptorSocketDescriptor? acceptorSocketDescriptor,
-            ILogger nonSessionLog)
+            IQuickFixLoggerFactory loggerFactory)
         {
             _socketSettings = socketSettings;
             _serverSocketEndPoint = serverSocketEndPoint;
             _tcpListener = new TcpListener(_serverSocketEndPoint);
             _acceptorSocketDescriptor = acceptorSocketDescriptor;
-            _nonSessionLog = nonSessionLog;
+            _loggerFactory = loggerFactory;
+            _nonSessionLog = loggerFactory.CreateNonSessionLogger<ThreadedSocketReactor>();
         }
 
         public void Start()
@@ -111,7 +114,7 @@ namespace QuickFix
                     {
                         ApplySocketOptions(client, _socketSettings);
                         ClientHandlerThread t = new ClientHandlerThread(
-                            client, _nextClientId++, _socketSettings, _acceptorSocketDescriptor, _nonSessionLog);
+                            client, _nextClientId++, _socketSettings, _acceptorSocketDescriptor, _loggerFactory);
                         t.Exited += OnClientHandlerThreadExited;
                         lock (_sync)
                         {

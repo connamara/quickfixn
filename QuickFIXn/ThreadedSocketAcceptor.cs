@@ -3,7 +3,6 @@ using System.Linq;
 using System.Net;
 using System;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using QuickFix.Logger;
 using QuickFix.Store;
 
@@ -22,7 +21,7 @@ namespace QuickFix
         private bool _isStarted = false;
         private bool _disposed = false;
         private readonly object _sync = new();
-        private readonly ILogger _nonSessionLog;
+        private readonly IQuickFixLoggerFactory _loggerFactory;
         private readonly LogFactoryAdapter? _logFactoryAdapter;
 
         #region Constructors
@@ -41,7 +40,7 @@ namespace QuickFix
             SessionSettings settings,
             ILogFactory? logFactory = null,
             IMessageFactory? messageFactory = null) : this(application, storeFactory, settings,
-            logFactory is null ? NullLoggerFactory.Instance : new LogFactoryAdapter(logFactory, settings),
+            logFactory is null ? NullQuickFixLoggerFactory.Instance : new LogFactoryAdapter(logFactory),
             messageFactory)
         {
         }
@@ -59,21 +58,31 @@ namespace QuickFix
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
             ILoggerFactory? loggerFactory = null,
+            IMessageFactory? messageFactory = null) : this(application, storeFactory, settings,
+            loggerFactory is null ? NullQuickFixLoggerFactory.Instance : new MelQuickFixLoggerFactory(loggerFactory),
+            messageFactory)
+        {
+        }
+
+        private ThreadedSocketAcceptor(
+            IApplication application,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            IQuickFixLoggerFactory loggerFactory,
             IMessageFactory? messageFactory = null)
         {
-            var lf = loggerFactory ?? NullLoggerFactory.Instance;
-            if (lf is LogFactoryAdapter lfa)
+            if (loggerFactory is LogFactoryAdapter lfa)
             {
                 // LogFactoryAdapter is only ever created in the constructor marked obsolete, which means we own it and
-                // must save a ref to it so we can dispose it later. Any other ILoggerFactory is owned by someone else
+                // must save a ref to it so we can dispose it later. Any other loggerFactory is owned by someone else
                 // so we'll leave the dispose up to them. This should be removed eventually together with the old ILog
                 // and ILogFactory.
                 _logFactoryAdapter = lfa;
             }
             IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
             _settings = settings;
-            _sessionFactory = new SessionFactory(application, storeFactory, lf, mf);
-            _nonSessionLog = lf.CreateLogger("QuickFix");
+            _sessionFactory = new SessionFactory(application, storeFactory, loggerFactory, mf);
+            _loggerFactory = loggerFactory;
 
             try
             {
@@ -124,7 +133,7 @@ namespace QuickFix
 
             if (!_socketDescriptorForAddress.TryGetValue(socketEndPoint, out var descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, _nonSessionLog);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, _loggerFactory);
                 _socketDescriptorForAddress[socketEndPoint] = descriptor;
             }
 

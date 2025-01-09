@@ -43,8 +43,7 @@ BeginString = FIX.4.4
         private static void StartStopAcceptor()
         {
             var settings = CreateSettings();
-            using var lf = new LoggerFactory();
-            lf.AddProvider(new FileLoggerProvider(settings));
+            var lf = new FileLogFactory(settings);
 
             var acceptor = new ThreadedSocketAcceptor(
                 new NullApplication(),

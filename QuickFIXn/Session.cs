@@ -233,7 +233,7 @@ namespace QuickFix
             DataDictionaryProvider dataDictProvider,
             SessionSchedule sessionSchedule,
             int heartBtInt,
-            ILoggerFactory loggerFactory,
+            IQuickFixLoggerFactory loggerFactory,
             IMessageFactory msgFactory,
             string senderDefaultApplVerId)
         {
@@ -251,7 +251,7 @@ namespace QuickFix
                 ? DataDictionaryProvider.GetApplicationDataDictionary(SenderDefaultApplVerID)
                 : SessionDataDictionary;
 
-            var logger = loggerFactory.CreateLogger($"QuickFix.{sessId}");
+            var logger = loggerFactory.CreateSessionLogger(sessId);
 
             _state = new SessionState(isInitiator, logger, heartBtInt, storeFactory.Create(sessId));
 

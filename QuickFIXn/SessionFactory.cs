@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
+using QuickFix.Logger;
 using QuickFix.Store;
 using QuickFix.Util;
 
@@ -14,14 +13,14 @@ public class SessionFactory
 {
     protected IApplication _application;
     protected IMessageStoreFactory _messageStoreFactory;
-    protected ILoggerFactory _loggerFactory;
+    protected IQuickFixLoggerFactory _loggerFactory;
     protected IMessageFactory _messageFactory;
     protected Dictionary<string, DataDictionary.DataDictionary> _dictionariesByPath = new();
 
     public SessionFactory(
         IApplication app,
         IMessageStoreFactory storeFactory,
-        ILoggerFactory? loggerFactory = null,
+        IQuickFixLoggerFactory? loggerFactory = null,
         IMessageFactory? messageFactory = null)
     {
         // TODO: for V2, consider ONLY instantiating MessageFactory in the Create() method,
@@ -32,7 +31,7 @@ public class SessionFactory
 
         _application = app;
         _messageStoreFactory = storeFactory;
-        _loggerFactory = loggerFactory ?? NullLoggerFactory.Instance;
+        _loggerFactory = loggerFactory ?? NullQuickFixLoggerFactory.Instance;
         _messageFactory = messageFactory ?? new DefaultMessageFactory();
     }
 

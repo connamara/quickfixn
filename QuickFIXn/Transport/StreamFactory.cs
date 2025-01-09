@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using Microsoft.Extensions.Logging;
+using QuickFix.Logger;
 
 namespace QuickFix.Transport
 {
@@ -64,9 +64,9 @@ namespace QuickFix.Transport
         /// </summary>
         /// <param name="endpoint">The endpoint.</param>
         /// <param name="settings">The socket settings.</param>
-        /// <param name="nonSessionLog">Logger that is not tied to a particular session</param>
+        /// <param name="loggerFactory"></param>
         /// <returns>an opened and initiated stream which can be read and written to</returns>
-        internal static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, ILogger nonSessionLog)
+        internal static Stream CreateClientStream(IPEndPoint endpoint, SocketSettings settings, IQuickFixLoggerFactory loggerFactory)
         {
             Socket? socket = null;
 
@@ -107,7 +107,7 @@ namespace QuickFix.Transport
             Stream stream = new NetworkStream(socket, true);
 
             if (settings.UseSSL)
-                stream = new SslStreamFactory(settings, nonSessionLog).CreateClientStreamAndAuthenticate(stream);
+                stream = new SslStreamFactory(settings, loggerFactory).CreateClientStreamAndAuthenticate(stream);
 
             return stream;
         }
@@ -117,10 +117,10 @@ namespace QuickFix.Transport
         /// </summary>
         /// <param name="tcpClient">The TCP client.</param>
         /// <param name="settings">The socket settings.</param>
-        /// <param name="nonSessionLog">Logger that is not tied to a particular session</param>
+        /// <param name="loggerFactory"></param>
         /// <returns>an opened and initiated stream which can be read and written to</returns>
         /// <exception cref="System.ArgumentException">tcp client must be connected in order to get stream;tcpClient</exception>
-        internal static Stream CreateServerStream(TcpClient tcpClient, SocketSettings settings, ILogger nonSessionLog)
+        internal static Stream CreateServerStream(TcpClient tcpClient, SocketSettings settings, IQuickFixLoggerFactory loggerFactory)
         {
             if (tcpClient.Connected == false)
                 throw new ArgumentException("tcp client must be connected in order to get stream", nameof(tcpClient));
@@ -128,7 +128,7 @@ namespace QuickFix.Transport
             Stream stream = tcpClient.GetStream();
             if (settings.UseSSL)
             {
-                stream = new SslStreamFactory(settings, nonSessionLog).CreateServerStreamAndAuthenticate(stream);
+                stream = new SslStreamFactory(settings, loggerFactory).CreateServerStreamAndAuthenticate(stream);
             }
 
             return stream;

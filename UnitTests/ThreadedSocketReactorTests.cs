@@ -49,7 +49,7 @@ namespace UnitTests
                 new IPEndPoint(IPAddress.Loopback, port),
                 settings,
                 acceptorSocketDescriptor: null,
-                new ScreenLog(true, true, true));
+                new LogFactoryAdapter(new ScreenLogFactory(true, true, true)));
 
             var stdOut = GetStdOut();
             var ex = Assert.Throws<SocketException>(delegate { testingObject.Start(); })!;

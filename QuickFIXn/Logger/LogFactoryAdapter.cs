@@ -1,40 +1,25 @@
 using System;
 using System.Collections.Concurrent;
-using System.Linq;
 using Microsoft.Extensions.Logging;
 
 namespace QuickFix.Logger;
 
-internal class LogFactoryAdapter : ILoggerFactory, IDisposable
+internal class LogFactoryAdapter : IQuickFixLoggerFactory, IDisposable
 {
     private readonly ILogFactory _logFactory;
-    private readonly SessionSettings _settings;
     private readonly ConcurrentDictionary<SessionID, ILogger> _loggers = new();
+    private readonly Lazy<ILogger> _nonSessionLogger;
 
-    internal LogFactoryAdapter(ILogFactory logFactory, SessionSettings settings)
+    internal LogFactoryAdapter(ILogFactory logFactory)
     {
         _logFactory = logFactory;
-        _settings = settings;
+        _nonSessionLogger = new Lazy<ILogger>(() => new LogAdapter(_logFactory.CreateNonSessionLog()));
     }
 
-    public ILogger CreateLogger(string categoryName)
-    {
-        // category will be "QuickFix" for non-session logger and "QuickFix.<session ID>" for session logger
-        var sessionIdString = categoryName.Length > "QuickFix.".Length ? categoryName.Substring(9) : "";
-        var sessionId = _settings.GetSessions()
-            .SingleOrDefault(s =>
-                s.ToString().Equals(sessionIdString, StringComparison.InvariantCulture));
-        var defaultSessionId = new SessionID("Non", "Session", "Log");
+    public ILogger CreateSessionLogger(SessionID sessionId) =>
+        _loggers.GetOrAdd(sessionId, sId => new LogAdapter(_logFactory.Create(sId)));
 
-        return _loggers.GetOrAdd(sessionId ?? defaultSessionId, sid => sessionId is not null
-            ? new LogAdapter(_logFactory.Create(sid))
-            : new LogAdapter(_logFactory.CreateNonSessionLog()));
-    }
-
-    public void AddProvider(ILoggerProvider provider)
-    {
-        throw new NotImplementedException();
-    }
+    public ILogger CreateNonSessionLogger<T>() => _nonSessionLogger.Value;
 
     public void Dispose()
     {
@@ -51,10 +36,21 @@ internal class LogFactoryAdapter : ILoggerFactory, IDisposable
                 }
             }
         }
+
+        try
+        {
+            if (_nonSessionLogger.IsValueCreated && _nonSessionLogger.Value is IDisposable disposable)
+            {
+                disposable.Dispose();
+            }
+        }
+        catch
+        {
+        }
     }
 }
 
-internal class LogAdapter : ILogger
+internal class LogAdapter : ILogger, IDisposable
 {
     private readonly ILog _log;
 
@@ -84,4 +80,9 @@ internal class LogAdapter : ILogger
     public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
 
     public IDisposable BeginScope<TState>(TState state) => default!;
+
+    public void Dispose()
+    {
+        _log.Dispose();
+    }
 }

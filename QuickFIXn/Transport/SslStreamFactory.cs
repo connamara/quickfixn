@@ -5,6 +5,7 @@ using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.Extensions.Logging;
+using QuickFix.Logger;
 using QuickFix.Util;
 
 namespace QuickFix.Transport;
@@ -19,10 +20,10 @@ internal sealed class SslStreamFactory
     internal const string CLIENT_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.2";
     internal const string SERVER_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.1";
 
-    public SslStreamFactory(SocketSettings settings, ILogger nonSessionLog)
+    public SslStreamFactory(SocketSettings settings, IQuickFixLoggerFactory loggerFactory)
     {
         _socketSettings = settings;
-        _nonSessionLog = nonSessionLog;
+        _nonSessionLog = loggerFactory.CreateNonSessionLogger<SslStreamFactory>();
     }
 
     /// <summary>

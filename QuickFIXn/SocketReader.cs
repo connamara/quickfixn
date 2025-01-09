@@ -40,13 +40,13 @@ public class SocketReader : IDisposable
         SocketSettings settings,
         ClientHandlerThread responder,
         AcceptorSocketDescriptor? acceptorDescriptor,
-        ILogger nonSessionLog)
+        IQuickFixLoggerFactory loggerFactory)
     {
         _tcpClient = tcpClient;
         _responder = responder;
         _acceptorDescriptor = acceptorDescriptor;
-        _stream = Transport.StreamFactory.CreateServerStream(tcpClient, settings, nonSessionLog);
-        _nonSessionLog = nonSessionLog;
+        _stream = Transport.StreamFactory.CreateServerStream(tcpClient, settings, loggerFactory);
+        _nonSessionLog = loggerFactory.CreateNonSessionLogger<SocketReader>();
     }
 
     public void Read()

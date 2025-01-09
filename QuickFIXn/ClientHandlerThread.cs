@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Threading;
 using System;
-using Microsoft.Extensions.Logging;
+using QuickFix.Logger;
 
 namespace QuickFix
 {
@@ -36,10 +36,10 @@ namespace QuickFix
             long clientId,
             SocketSettings socketSettings,
             AcceptorSocketDescriptor? acceptorDescriptor,
-            ILogger nonSessionLog
+            IQuickFixLoggerFactory loggerFactory
         ) {
             Id = clientId;
-            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor, nonSessionLog);
+            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor, loggerFactory);
         }
 
         public void Start()

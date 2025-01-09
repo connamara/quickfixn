@@ -23,6 +23,7 @@ namespace QuickFix.Transport
         private readonly Dictionary<SessionID, SocketInitiatorThread> _threads = new();
         private readonly Dictionary<SessionID, int> _sessionToHostNum = new();
         private readonly object _sync = new();
+        private readonly ILogger _nonSessionLog;
 
         [Obsolete("Use \"Microsoft.Extensions.Logging.ILoggerFactory\" instead of \"QuickFix.Logger.ILogFactory\".")]
         public SocketInitiator(
@@ -32,16 +33,20 @@ namespace QuickFix.Transport
             ILogFactory? logFactoryNullable = null,
             IMessageFactory? messageFactoryNullable = null)
             : base(application, storeFactory, settings, logFactoryNullable, messageFactoryNullable)
-        { }
+        {
+            _nonSessionLog = LoggerFactory.CreateNonSessionLogger<SocketInitiator>();
+        }
 
         public SocketInitiator(
             IApplication application,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
-            ILoggerFactory? logFactoryNullable = null,
+            ILoggerFactory? loggerFactoryNullable = null,
             IMessageFactory? messageFactoryNullable = null)
-            : base(application, storeFactory, settings, logFactoryNullable, messageFactoryNullable)
-        { }
+            : base(application, storeFactory, settings, loggerFactoryNullable, messageFactoryNullable)
+        {
+            _nonSessionLog = LoggerFactory.CreateNonSessionLogger<SocketInitiator>();
+        }
 
         public static void SocketInitiatorThreadStart(object? socketInitiatorThread)
         {
@@ -237,7 +242,7 @@ namespace QuickFix.Transport
 
                 // Create a Ssl-SocketInitiatorThread if a certificate is given
                 SocketInitiatorThread t = new SocketInitiatorThread(
-                    this, session, socketEndPoint, socketSettings, _nonSessionLog);
+                    this, session, socketEndPoint, socketSettings, LoggerFactory);
                 t.Start();
                 AddThread(t);
             }
