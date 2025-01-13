@@ -61,6 +61,7 @@ What's New
 * #392 - move tcpListener.Start from ThreadedSocketReactor.Run to .Start() so application doesn't
          crash if an exception occurs when starting the listener (hlibman-connamara)
 * #658 - new "AllowUnknownEnumValues" setting (akamyshanov/rakker91/hlibman-connamara)
+* #925 - Make ToAdmin() support DoNotSend (zsojma)
 
 ### v1.12.0
 
