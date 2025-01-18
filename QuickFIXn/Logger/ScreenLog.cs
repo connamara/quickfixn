@@ -5,7 +5,6 @@
 /// </summary>
 public class ScreenLog : ILog
 {
-    private readonly object _sync = new ();
     private readonly bool _logIncoming;
     private readonly bool _logOutgoing;
     private readonly bool _logEvent;
@@ -27,10 +26,7 @@ public class ScreenLog : ILog
         if (!_logIncoming)
             return;
 
-        lock (_sync)
-        {
-            System.Console.WriteLine("<incoming> " + msg.Replace(Message.SOH, '|'));
-        }
+        System.Console.WriteLine("<incoming> " + msg.Replace(Message.SOH, '|'));
     }
 
     public void OnOutgoing(string msg)
@@ -38,10 +34,7 @@ public class ScreenLog : ILog
         if (!_logOutgoing)
             return;
 
-        lock (_sync)
-        {
-            System.Console.WriteLine("<outgoing> " + msg.Replace(Message.SOH, '|'));
-        }
+        System.Console.WriteLine("<outgoing> " + msg.Replace(Message.SOH, '|'));
     }
 
     public void OnEvent(string s)
@@ -49,10 +42,7 @@ public class ScreenLog : ILog
         if (!_logEvent)
             return;
 
-        lock (_sync)
-        {
-            System.Console.WriteLine("<event> " + s);
-        }
+        System.Console.WriteLine("<event> " + s);
     }
     #endregion
 
@@ -66,6 +56,5 @@ public class ScreenLog : ILog
     {
         // Nothing to dispose of...
     }
-    ~ScreenLog() => Dispose(false);
     #endregion
 }
