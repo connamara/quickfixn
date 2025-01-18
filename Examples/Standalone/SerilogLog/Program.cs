@@ -1,7 +1,6 @@
 ﻿using Serilog;
 using Serilog.Core;
 using Serilog.Filters;
-using Serilog.Formatting.Json;
 
 namespace SerilogLog;
 

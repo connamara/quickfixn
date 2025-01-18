@@ -60,7 +60,7 @@ public class FileLogTests
         string expectedEventLogFilePath = Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log");
         string expectedMessagesLogFilePath = Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log");
 
-        var factory = new FileLogFactory(settings);
+        FileLogFactory factory = new FileLogFactory(settings);
         _log = (FileLog)factory.Create(sessionId);
 
         Assert.That(!File.Exists(expectedEventLogFilePath));
