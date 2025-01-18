@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
 namespace QuickFix.Logger;
@@ -7,7 +7,8 @@ namespace QuickFix.Logger;
 internal class LogFactoryAdapter : IQuickFixLoggerFactory, IDisposable
 {
     private readonly ILogFactory _logFactory;
-    private readonly ConcurrentDictionary<SessionID, ILogger> _loggers = new();
+    private readonly object _dictionaryLock = new();
+    private readonly Dictionary<SessionID, ILogger> _loggers = new();
     private readonly Lazy<ILogger> _nonSessionLogger;
 
     internal LogFactoryAdapter(ILogFactory logFactory)
@@ -16,23 +17,37 @@ internal class LogFactoryAdapter : IQuickFixLoggerFactory, IDisposable
         _nonSessionLogger = new Lazy<ILogger>(() => new LogAdapter(_logFactory.CreateNonSessionLog()));
     }
 
-    public ILogger CreateSessionLogger(SessionID sessionId) =>
-        _loggers.GetOrAdd(sessionId, sId => new LogAdapter(_logFactory.Create(sId)));
+    public ILogger CreateSessionLogger(SessionID sessionId)
+    {
+        lock (_dictionaryLock)
+        {
+            if (!_loggers.TryGetValue(sessionId, out var logger))
+            {
+                logger = new LogAdapter(_logFactory.Create(sessionId));
+                _loggers.Add(sessionId, logger);
+            }
+
+            return logger;
+        }
+    }
 
     public ILogger CreateNonSessionLogger<T>() => _nonSessionLogger.Value;
 
     public void Dispose()
     {
-        foreach (var (_, logger) in _loggers)
+        lock (_dictionaryLock)
         {
-            if (logger is IDisposable disposable)
+            foreach (var (_, logger) in _loggers)
             {
-                try
+                if (logger is IDisposable disposable)
                 {
-                    disposable.Dispose();
-                }
-                catch
-                {
+                    try
+                    {
+                        disposable.Dispose();
+                    }
+                    catch
+                    {
+                    }
                 }
             }
         }
