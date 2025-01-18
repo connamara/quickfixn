@@ -1,6 +1,7 @@
 ﻿using Serilog;
 using Serilog.Core;
 using Serilog.Filters;
+using Serilog.Formatting.Json;
 
 namespace SerilogLog;
 
@@ -20,7 +21,7 @@ class Program
                 .WriteTo.Map(Constants.SourceContextPropertyName, "", (source, lc) =>
                 {
                     var fileName = GetSessionIdFromSourceContext(source);
-                    lc.File($"log/{fileName}.messages.log", rollingInterval: RollingInterval.Minute, outputTemplate:"{Message:lj}{NewLine}");
+                    lc.File($"log/{fileName}.messages.log", rollingInterval: RollingInterval.Hour, outputTemplate:"{Message:lj}{NewLine}");
                 })
             )
             .WriteTo.Logger(l => l
