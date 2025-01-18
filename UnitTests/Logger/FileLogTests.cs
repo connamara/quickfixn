@@ -57,15 +57,25 @@ public class FileLogTests
 
         settings.Set(sessionId, config);
 
+        string expectedEventLogFilePath = Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log");
+        string expectedMessagesLogFilePath = Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log");
+
         FileLogFactory factory = new FileLogFactory(settings);
         _log = (FileLog)factory.Create(sessionId);
 
+        Assert.That(!File.Exists(expectedEventLogFilePath));
+        Assert.That(!File.Exists(expectedMessagesLogFilePath));
+
         _log.OnEvent("some event");
+
+        Assert.That(File.Exists(expectedEventLogFilePath));
+        Assert.That(!File.Exists(expectedMessagesLogFilePath));
+
         _log.OnIncoming("some incoming");
         _log.OnOutgoing("some outgoing");
 
-        Assert.That(File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log")));
-        Assert.That(File.Exists(Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log")));
+        Assert.That(File.Exists(expectedEventLogFilePath));
+        Assert.That(File.Exists(expectedMessagesLogFilePath));
 
         // cleanup (don't delete log unless success)
         _log.Dispose();

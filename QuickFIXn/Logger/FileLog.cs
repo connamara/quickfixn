@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
+using System.Threading;
 using QuickFix.Fields.Converters;
 using QuickFix.Util;
 
@@ -11,8 +14,8 @@ public class FileLog : ILog
 {
     private readonly object _sync = new();
 
-    private System.IO.StreamWriter _messageLog;
-    private System.IO.StreamWriter _eventLog;
+    private System.IO.StreamWriter? _messageLog;
+    private System.IO.StreamWriter? _eventLog;
 
     private readonly string _messageLogFileName;
     private readonly string _eventLogFileName;
@@ -36,12 +39,6 @@ public class FileLog : ILog
 
         _messageLogFileName = System.IO.Path.Combine(normalizedPath, prefix + ".messages.current.log");
         _eventLogFileName = System.IO.Path.Combine(normalizedPath, prefix + ".event.current.log");
-
-        _messageLog = new System.IO.StreamWriter(_messageLogFileName, true);
-        _eventLog = new System.IO.StreamWriter(_eventLogFileName, true);
-
-        _messageLog.AutoFlush = true;
-        _eventLog.AutoFlush = true;
     }
 
     public static string Prefix(SessionID sessionId)
@@ -66,55 +63,73 @@ public class FileLog : ILog
 
     private void DisposedCheck()
     {
-        if (_disposed)
-            throw new ObjectDisposedException(GetType().Name);
+        ObjectDisposedException.ThrowIf(_disposed, this);
+    }
+
+    [MemberNotNull(nameof(_messageLog))]
+    private void EnsureMessageLogInit(bool append = true)
+    {
+        Debug.Assert(Monitor.IsEntered(_sync), "Expected to hold the lock");
+
+        _messageLog ??= new System.IO.StreamWriter(_messageLogFileName, append)
+        {
+            AutoFlush = true
+        };
+    }
+
+    [MemberNotNull(nameof(_eventLog))]
+    private void EnsureEventLogInit(bool append = true)
+    {
+        Debug.Assert(Monitor.IsEntered(_sync), "Expected to hold the lock");
+
+        _eventLog ??= new System.IO.StreamWriter(_eventLogFileName, append)
+        {
+            AutoFlush = true
+        };
     }
 
     #region Log Members
 
     public void Clear()
     {
-        DisposedCheck();
-
         lock (_sync)
         {
-            _messageLog.Close();
-            _eventLog.Close();
+            DisposedCheck();
 
-            _messageLog = new System.IO.StreamWriter(_messageLogFileName, false);
-            _eventLog = new System.IO.StreamWriter(_eventLogFileName, false);
+            _messageLog?.Dispose();
+            _eventLog?.Dispose();
 
-            _messageLog.AutoFlush = true;
-            _eventLog.AutoFlush = true;
+            EnsureMessageLogInit(append: false);
+            EnsureEventLogInit(append: false);
         }
     }
 
     public void OnIncoming(string msg)
     {
-        DisposedCheck();
-
         lock (_sync)
         {
+            DisposedCheck();
+            EnsureMessageLogInit();
             _messageLog.WriteLine(DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond) + " : " + msg);
         }
     }
 
     public void OnOutgoing(string msg)
     {
-        DisposedCheck();
-
         lock (_sync)
         {
+            DisposedCheck();
+            EnsureMessageLogInit();
             _messageLog.WriteLine(DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond) + " : " + msg);
         }
     }
 
     public void OnEvent(string s)
     {
-        DisposedCheck();
-
         lock (_sync)
         {
+            DisposedCheck();
+            EnsureEventLogInit();
             _eventLog.WriteLine(DateTimeConverter.ToFIX(DateTime.UtcNow, TimeStampPrecision.Millisecond) + " : " + s);
         }
     }
@@ -131,14 +146,23 @@ public class FileLog : ILog
     private bool _disposed = false;
     protected virtual void Dispose(bool disposing)
     {
-        if (_disposed) return;
-        if (disposing)
+        if (!disposing)
         {
-            _messageLog.Dispose();
-            _eventLog.Dispose();
+            return;
         }
-        _disposed = true;
+
+        lock (_sync)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _messageLog?.Dispose();
+            _eventLog?.Dispose();
+
+            _disposed = true;
+        }
     }
-    ~FileLog() => Dispose(false);
     #endregion
 }
