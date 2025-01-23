@@ -344,6 +344,21 @@ QuickFIX Settings
     </td>
     <td class='default'>Y</td>
   </tr>
+
+  <tr>
+    <td class='setting'>Encoding</td>
+    <td class='description'>
+      Specify an alternate character encoding, if your counterparty is using an encoding other than the FIX-mandated iso-8859-1.
+      <br/>
+      <strong>Note: This is a global setting.  This setting will apply to ALL sessions.</strong>
+    </td>
+    <td class='valid'>
+      An value that is a valid parameter to `System.Text.Encoding.GetEncoding()` on your platform.
+      For instance: iso-8859-1, windows-1251, utf-8
+    </td>
+    <td class='default'>iso-8859-1</td>
+  </tr>
+
 </table>
 
 
