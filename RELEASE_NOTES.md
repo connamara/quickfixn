@@ -51,7 +51,7 @@ What's New
 * #913/#741 - new FieldMap.ReadGroups for iterating on groups (NoviProg/gbirchmeier)
 * #914 - Optimize MessageCracker.IsHandlerMethod (vasily-balansea)
 * #742 - Improvements to HTTP web proxy (IanLeeClaxton)
-* #277 - change FileStore.SetSeqNum() to dispose StreamWriter (hlibman)
+* #277 - change FileStore.SetSeqNum() to dispose StreamWriter (hlibman-connamara)
 * #921 - clean up generated code (gbirchmeier)
      * enable nullable in Messages projects
      * mark IMessageFactory.Create's Group return value as nullable
@@ -59,7 +59,8 @@ What's New
      * reduce code size and unnecessary empty lines
 * #739 - add "Encoding" setting to allow an alternate encoding (SNORRIS721/gbirchmeier)
 * #392 - move tcpListener.Start from ThreadedSocketReactor.Run to .Start() so application doesn't
-         crash if an exception occurs when starting the listener (hlibman)
+         crash if an exception occurs when starting the listener (hlibman-connamara)
+* #658 - new "AllowUnknownEnumValues" setting (akamyshanov/rakker91/hlibman-connamara)
 
 ### v1.12.0
 

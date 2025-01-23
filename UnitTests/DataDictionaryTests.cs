@@ -266,6 +266,13 @@ namespace UnitTests
             // multiple-value field, one value is invalid
             Assert.Throws(typeof(IncorrectTagValue),
                delegate { dd.CheckValue(new QuickFix.Fields.QuoteCondition("A @ D")); });
+
+            // Disable some checks
+            dd.AllowUnknownEnumValues = true;
+            // regular enum, invalid value
+            Assert.DoesNotThrow(delegate { dd.CheckValue(new QuickFix.Fields.TickDirection('9')); });
+            // multiple-value field, one value is invalid
+            Assert.DoesNotThrow(delegate { dd.CheckValue(new QuickFix.Fields.QuoteCondition("A @ D")); });
         }
 
         [Test]
