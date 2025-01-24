@@ -101,3 +101,4 @@ Contributors
 - Ian Lee Claxton
 - Hank Libman
 - Sam Norris
+- Zdeněk Sojma
