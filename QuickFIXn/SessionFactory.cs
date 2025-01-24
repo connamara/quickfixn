@@ -189,6 +189,8 @@ public class SessionFactory
             ddCopy.CheckFieldsHaveValues = settings.GetBool(SessionSettings.VALIDATE_FIELDS_HAVE_VALUES);
         if (settings.Has(SessionSettings.VALIDATE_USER_DEFINED_FIELDS))
             ddCopy.CheckUserDefinedFields = settings.GetBool(SessionSettings.VALIDATE_USER_DEFINED_FIELDS);
+        if (settings.Has(SessionSettings.ALLOW_UNKNOWN_ENUM_VALUES))
+            ddCopy.AllowUnknownEnumValues = settings.GetBool(SessionSettings.ALLOW_UNKNOWN_ENUM_VALUES);
         if (settings.Has(SessionSettings.ALLOW_UNKNOWN_MSG_FIELDS))
             ddCopy.AllowUnknownMessageFields = settings.GetBool(SessionSettings.ALLOW_UNKNOWN_MSG_FIELDS);
 
