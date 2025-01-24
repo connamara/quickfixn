@@ -713,6 +713,7 @@ public class SessionTest
 
         Assert.That(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT), Is.False);
     }
+
     [Test]
     public void TestToAppDoNotSend()
     {
@@ -725,7 +726,7 @@ public class SessionTest
              new QuickFix.Fields.TransactTime(),
              new QuickFix.Fields.OrdType(QuickFix.Fields.OrdType.LIMIT));
 
-        _application.DoNotSendException = new QuickFix.DoNotSend();
+        _application.ToAppException = new QuickFix.DoNotSend();
         _session!.Send(order);
         Assert.That(SENT_NOS(), Is.False);
     }
@@ -746,12 +747,22 @@ public class SessionTest
         Assert.That(SENT_NOS(), Is.True);
 
         _responder.MsgLookup.Remove(QuickFix.Fields.MsgType.NEWORDERSINGLE);
-        _application.DoNotSendException = new QuickFix.DoNotSend();
+        _application.ToAppException = new QuickFix.DoNotSend();
 
         SendResendRequest(1, 0);
         Assert.That(SENT_NOS(), Is.False);
     }
 
+    [Test]
+    public void TestToAdminDoNotSend()
+    {
+        Logon();
+        QuickFix.FIX42.Reject reject = new();
+
+        _application.ToAdminException = new QuickFix.DoNotSend();
+        _session!.Send(reject);
+        Assert.That(SENT_REJECT(), Is.False);
+    }
 
     [Test]
     public void TestApplicationExtension()

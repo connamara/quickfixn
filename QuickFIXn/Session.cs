@@ -1539,7 +1539,14 @@ namespace QuickFix
 
                 if (Message.IsAdminMsgType(msgType))
                 {
-                    Application.ToAdmin(message, SessionID);
+                    try
+                    {
+                        Application.ToAdmin(message, SessionID);
+                    }
+                    catch (DoNotSend)
+                    {
+                        return false;
+                    }
 
                     if (MsgType.LOGON.Equals(msgType) && !_state.ReceivedReset)
                     {
