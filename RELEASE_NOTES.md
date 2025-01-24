@@ -62,6 +62,7 @@ What's New
          crash if an exception occurs when starting the listener (hlibman-connamara)
 * #658 - new "AllowUnknownEnumValues" setting (akamyshanov/rakker91/hlibman-connamara)
 * #925 - Make ToAdmin() support DoNotSend (zsojma)
+* #927 - Remove lock from ScreenLog as Console.WriteLine is thread safe and remove unnecessary Dispose call (Rob-Hague)
 
 ### v1.12.0
 
