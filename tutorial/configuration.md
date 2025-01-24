@@ -502,6 +502,16 @@ QuickFIX Settings
   </tr>
 
   <tr>
+    <td class='setting'>AllowUnknownEnumValues</td>
+    <td class='description'>If set to Y, values of enum fields will not be validated against the list of enum values.  Unrecognized values will be permitted and not cause a reject.</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
+
+  <tr>
     <td class="setting">CheckLatency</td>
     <td class="description">If Y, messages must be received from the counterparty within a defined number of seconds (see MaxLatency). It is useful to turn this off if a system uses localtime for its timestamps instead of GMT.</td>
     <td class="valid">
