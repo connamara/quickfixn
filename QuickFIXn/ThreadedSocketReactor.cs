@@ -52,6 +52,18 @@ namespace QuickFix
             {
                 if (_state == State.RUNNING && _serverThread is null)
                 {
+                    if (State.SHUTDOWN_REQUESTED != _state)
+                    {
+                        try
+                        {
+                            _tcpListener.Start();
+                        }
+                        catch(Exception e)
+                        {
+                            LogError("Error starting listener", e);
+                            throw;
+                        }
+                    }
                     _serverThread = new Thread(Run);
                     _serverThread.Start();
                 }
@@ -90,22 +102,6 @@ namespace QuickFix
 
         public void Run()
         {
-            lock (_sync)
-            {
-                if (State.SHUTDOWN_REQUESTED != _state)
-                {
-                    try
-                    {
-                        _tcpListener.Start();
-                    }
-                    catch(Exception e)
-                    {
-                        LogError("Error starting listener", e);
-                        throw;
-                    }
-                }
-            }
-
             while (State.RUNNING == ReactorState)
             {
                 try

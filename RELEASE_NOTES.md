@@ -58,6 +58,8 @@ What's New
      * rename/deprecate a name-convention-breaking static const
      * reduce code size and unnecessary empty lines
 * #739 - add "Encoding" setting to allow an alternate encoding (SNORRIS721/gbirchmeier)
+* #392 - move tcpListener.Start from ThreadedSocketReactor.Run to .Start() so application doesn't
+         crash if an exception occurs when starting the listener (hlibman)
 
 ### v1.12.0
 

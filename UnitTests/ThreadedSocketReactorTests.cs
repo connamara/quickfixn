@@ -52,7 +52,7 @@ namespace UnitTests
                 new NonSessionLog(new ScreenLogFactory(true, true, true)));
 
             var stdOut = GetStdOut();
-            var ex = Assert.Throws<SocketException>(delegate { testingObject.Run(); })!;
+            var ex = Assert.Throws<SocketException>(delegate { testingObject.Start(); })!;
 
             Assert.That(stdOut.ToString(), Does.StartWith("<event> Error starting listener:"));
             Assert.That(ex.SocketErrorCode, Is.EqualTo(SocketError.AddressAlreadyInUse));
