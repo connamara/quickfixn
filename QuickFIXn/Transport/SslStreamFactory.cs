@@ -45,7 +45,8 @@ internal sealed class SslStreamFactory
         {
             // Setup secure SSL Communication
             X509CertificateCollection clientCertificates = GetClientCertificates();
-            if (_socketSettings.ServerCommonName is null) {
+            if (_socketSettings.ServerCommonName is null)
+            {
                 throw new AuthenticationException(
                     $"QuickFIX/n configuration '{SessionSettings.SSL_SERVERNAME}' is unset");
             }
@@ -86,7 +87,8 @@ internal sealed class SslStreamFactory
 
             // Setup secure SSL Communication
             X509Certificate2? serverCertificate = SslCertCache.LoadCertificate(_socketSettings.CertificatePath, _socketSettings.CertificatePassword);
-            if (serverCertificate is null) {
+            if (serverCertificate is null)
+            {
                 throw new AuthenticationException("Failed to load ServerCertificate");
             }
 
@@ -169,23 +171,51 @@ internal sealed class SslStreamFactory
             return false;
 
         // Validate enhanced key usage
-        if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage)) {
+        if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage))
+        {
             var role = enhancedKeyUsage == CLIENT_AUTHENTICATION_OID ? "client" : "server";
             _nonSessionLog.OnEvent(
                 $"Remote certificate is not intended for {role} authentication: It is missing enhanced key usage {enhancedKeyUsage}");
             return false;
         }
 
-        if (string.IsNullOrEmpty(_socketSettings.CACertificatePath)) {
+        if (string.IsNullOrEmpty(_socketSettings.CACertificatePath))
+        {
             _nonSessionLog.OnEvent("CACertificatePath is not specified");
-            return false;
+            var chain = new X509Chain();
+
+            // Set the chain policy
+            chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+            chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
+            chain.ChainPolicy.VerificationFlags = X509VerificationFlags.NoFlag;
+            //chain.ChainPolicy.VerificationTime = DateTime.Now;
+
+            // Build the chain
+            bool isBuiltInValid = chain.Build((X509Certificate2)certificate);
+            if (isBuiltInValid)
+            {
+                // resets the sslPolicyErrors.RemoteCertificateChainErrors status
+                sslPolicyErrors &= ~SslPolicyErrors.RemoteCertificateChainErrors;
+            }
+            else
+            {
+                sslPolicyErrors |= SslPolicyErrors.RemoteCertificateChainErrors;
+            }
+
+            if (sslPolicyErrors != SslPolicyErrors.None)
+            {
+                _nonSessionLog.OnEvent($"Remote certificate was not recognized as a valid certificate: {sslPolicyErrors}");
+                return false;
+            }
+            return true;
         }
 
         string caCertPath = StringUtil.FixSlashes(_socketSettings.CACertificatePath);
 
         // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
         X509Certificate2? cert = SslCertCache.LoadCertificate(caCertPath, null);
-        if (cert is null) {
+        if (cert is null)
+        {
             _nonSessionLog.OnEvent(
                 $"Certificate '{caCertPath}' could not be loaded from store or path '{Directory.GetCurrentDirectory()}'");
             return false;
