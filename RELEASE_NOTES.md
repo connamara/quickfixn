@@ -27,7 +27,7 @@ What's New
 * #887 - cleanup/nullable-ize FixValues, Session, DataDictionary, DataDictionaryProvider, Message, MessageCracker,
          SocketSettings, SslStreamFactory (gbirchmeier)
      * DataDictionary.CheckIsInGroup is now static
-     * Get rid of non-static DataDictionary.Validate functions
+     * Get rid of non-static DataDictionary.Validate functions; callers must use their static variants
 
 **Non-breaking changes**
 * #864 - when multiple threads race to init DefaultMessageFactory,
