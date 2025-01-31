@@ -27,7 +27,7 @@ What's New
 * #887 - cleanup/nullable-ize FixValues, Session, DataDictionary, DataDictionaryProvider, Message, MessageCracker,
          SocketSettings, SslStreamFactory (gbirchmeier)
      * DataDictionary.CheckIsInGroup is now static
-     * Get rid of non-static DataDictionary.Validate functions
+     * Get rid of non-static DataDictionary.Validate functions; callers must use their static variants
 
 **Non-breaking changes**
 * #864 - when multiple threads race to init DefaultMessageFactory,
@@ -64,6 +64,7 @@ What's New
 * #925 - Make ToAdmin() support DoNotSend (zsojma)
 * #927 - Remove lock from ScreenLog as Console.WriteLine is thread safe and remove unnecessary Dispose call (Rob-Hague)
 * #926 - don't init FileLog writers until first use (Rob-Hague)
+* #931 - bugfix in FixToJson example program
 
 ### v1.12.0
 
