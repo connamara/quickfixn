@@ -193,8 +193,7 @@ internal sealed class SslStreamFactory
             string caCertPath = StringUtil.FixSlashes(_socketSettings.CACertificatePath);
 
             X509Certificate2? cert = SslCertCache.LoadCertificate(caCertPath, null);
-            if (cert is null)
-            {
+            if (cert is null) {
                 _nonSessionLog.OnEvent(
                     $"Certificate '{caCertPath}' could not be loaded from store or path '{Directory.GetCurrentDirectory()}'");
                 return false;
