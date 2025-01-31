@@ -45,8 +45,7 @@ internal sealed class SslStreamFactory
         {
             // Setup secure SSL Communication
             X509CertificateCollection clientCertificates = GetClientCertificates();
-            if (_socketSettings.ServerCommonName is null)
-            {
+            if (_socketSettings.ServerCommonName is null) {
                 throw new AuthenticationException(
                     $"QuickFIX/n configuration '{SessionSettings.SSL_SERVERNAME}' is unset");
             }
@@ -87,8 +86,7 @@ internal sealed class SslStreamFactory
 
             // Setup secure SSL Communication
             X509Certificate2? serverCertificate = SslCertCache.LoadCertificate(_socketSettings.CertificatePath, _socketSettings.CertificatePassword);
-            if (serverCertificate is null)
-            {
+            if (serverCertificate is null) {
                 throw new AuthenticationException("Failed to load ServerCertificate");
             }
 
@@ -171,8 +169,7 @@ internal sealed class SslStreamFactory
             return false;
 
         // Validate enhanced key usage
-        if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage))
-        {
+        if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage)) {
             var role = enhancedKeyUsage == CLIENT_AUTHENTICATION_OID ? "client" : "server";
             _nonSessionLog.OnEvent(
                 $"Remote certificate is not intended for {role} authentication: It is missing enhanced key usage {enhancedKeyUsage}");
