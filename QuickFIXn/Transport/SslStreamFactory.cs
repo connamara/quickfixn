@@ -176,9 +176,9 @@ internal sealed class SslStreamFactory
             return false;
         }
 
+        // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
         X509Chain chain;
-        if (string.IsNullOrEmpty(_socketSettings.CACertificatePath))
-        {
+        if (string.IsNullOrEmpty(_socketSettings.CACertificatePath)) {
             _nonSessionLog.OnEvent("CACertificatePath is not specified");
             chain = new X509Chain();
 
@@ -192,7 +192,6 @@ internal sealed class SslStreamFactory
         {
             string caCertPath = StringUtil.FixSlashes(_socketSettings.CACertificatePath);
 
-            // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
             X509Certificate2? cert = SslCertCache.LoadCertificate(caCertPath, null);
             if (cert is null)
             {
