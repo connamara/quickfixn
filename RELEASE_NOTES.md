@@ -64,6 +64,7 @@ What's New
 * #925 - Make ToAdmin() support DoNotSend (zsojma)
 * #927 - Remove lock from ScreenLog as Console.WriteLine is thread safe and remove unnecessary Dispose call (Rob-Hague)
 * #926 - don't init FileLog writers until first use (Rob-Hague)
+* #931 - bugfix in FixToJson example program
 
 ### v1.12.0
 
