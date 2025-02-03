@@ -54,11 +54,7 @@ namespace UnitTests
             var rsa = RSA.Create();
             var request = new CertificateRequest("CN=127.0.0.1 Test CA", rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
             request.CertificateExtensions.Add(new X509BasicConstraintsExtension(true, false, 0, true));
-
-            // Add key usage extension
             request.CertificateExtensions.Add(new X509KeyUsageExtension(X509KeyUsageFlags.KeyCertSign | X509KeyUsageFlags.CrlSign, true));
-
-            // Add subject key identifier
             request.CertificateExtensions.Add(new X509SubjectKeyIdentifierExtension(request.PublicKey, false));
 
             X509Certificate2 certificate = request.CreateSelfSigned(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(5));
