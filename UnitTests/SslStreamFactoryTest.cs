@@ -14,19 +14,21 @@ namespace UnitTests
     [TestFixture]
     public class SslStreamFactoryTest
     {
-        const string ValidCaCertificatePath = "ValidCaCertificate.cer";
-        const string InvalidCaCertificatePath = "InvalidCaCertificate.cer";
+        const string CaCertificatePath = "CaCertificate.cer";
+        const string DifferentCaCertificatePath = "OtherCaCertificate.cer";
         const string ServerCertificatePath = "serverCertificate.cer";
         const string ClientCertificatePath = "clientCertificate.cer";
 
-        X509Certificate2 ClientCertificate { get; set; }
-        X509Certificate2 ServerCertificate { get; set; }
+        X509Certificate2 CaCertificate { get; set; } = null!;
+        X509Certificate2 ClientCertificate { get; set; } = null!;
+        X509Certificate2 ServerCertificate { get; set; } = null!;
 
         [OneTimeSetUp]
         public void BuildCerts()
         {
             var caCertificate = CreateCACertificate();
-            File.WriteAllBytes(ValidCaCertificatePath, caCertificate.Export(X509ContentType.Cert));
+            File.WriteAllBytes(CaCertificatePath, caCertificate.Export(X509ContentType.Cert));
+            CaCertificate = caCertificate;
 
             var serverCertificate = CreateServerCertificate(caCertificate);
             File.WriteAllBytes(ServerCertificatePath, serverCertificate.Export(X509ContentType.Cert));
@@ -36,15 +38,15 @@ namespace UnitTests
             File.WriteAllBytes(ClientCertificatePath, clientCertificate.Export(X509ContentType.Cert));
             ClientCertificate = clientCertificate;
 
-            var invalidCaCertificate = CreateCACertificate();
-            File.WriteAllBytes(InvalidCaCertificatePath, invalidCaCertificate.Export(X509ContentType.Cert));
+            var differentCaCertificate = CreateCACertificate();
+            File.WriteAllBytes(DifferentCaCertificatePath, differentCaCertificate.Export(X509ContentType.Cert));
         }
 
         [OneTimeTearDown]
         public void ClearCerts()
         {
-            File.Delete(ValidCaCertificatePath);
-            File.Delete(InvalidCaCertificatePath);
+            File.Delete(CaCertificatePath);
+            File.Delete(DifferentCaCertificatePath);
             File.Delete(ServerCertificatePath);
             File.Delete(ClientCertificatePath);
         }
@@ -73,8 +75,6 @@ namespace UnitTests
             request.CertificateExtensions.Add(new X509EnhancedKeyUsageExtension(enhancedKeyUsages, false));
 
             X509Certificate2 certificate = request.Create(caCertificate, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(1), [0, 0, 0, 0, 0, 0, 0, 1]);
-            byte[] cerBytes = certificate.Export(X509ContentType.Cert);
-            File.WriteAllBytes("serverCertificate.cer", cerBytes);
             return certificate;
         }
 
@@ -90,8 +90,6 @@ namespace UnitTests
             request.CertificateExtensions.Add(new X509EnhancedKeyUsageExtension(enhancedKeyUsages, false));
 
             X509Certificate2 certificate = request.Create(caCertificate, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(1), [0, 0, 0, 0, 0, 0, 0, 2]);
-            byte[] cerBytes = certificate.Export(X509ContentType.Cert);
-            File.WriteAllBytes(ClientCertificatePath, cerBytes);
             return certificate;
         }
 
@@ -102,7 +100,7 @@ namespace UnitTests
             dict.SetBool(SessionSettings.SSL_ENABLE, true);
             dict.SetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES, true);
             dict.SetString(SessionSettings.SSL_CERTIFICATE, ServerCertificatePath);
-            dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, ValidCaCertificatePath);
+            dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, CaCertificatePath);
             dict.SetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION, true);
 
             var settings = new SocketSettings();
@@ -125,7 +123,7 @@ namespace UnitTests
             dict.SetBool(SessionSettings.SSL_ENABLE, true);
             dict.SetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES, true);
             dict.SetString(SessionSettings.SSL_CERTIFICATE, ServerCertificatePath);
-            dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, InvalidCaCertificatePath);
+            dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, DifferentCaCertificatePath);
             dict.SetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION, true);
 
             var settings = new SocketSettings();
@@ -148,7 +146,7 @@ namespace UnitTests
             dict.SetBool(SessionSettings.SSL_ENABLE, true);
             dict.SetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES, true);
             dict.SetString(SessionSettings.SSL_CERTIFICATE, ClientCertificatePath);
-            dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, ValidCaCertificatePath);
+            dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, CaCertificatePath);
             dict.SetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION, true);
 
             var settings = new SocketSettings();
@@ -171,7 +169,7 @@ namespace UnitTests
             dict.SetBool(SessionSettings.SSL_ENABLE, true);
             dict.SetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES, true);
             dict.SetString(SessionSettings.SSL_CERTIFICATE, ClientCertificatePath);
-            dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, InvalidCaCertificatePath);
+            dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, DifferentCaCertificatePath);
             dict.SetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION, true);
 
             var settings = new SocketSettings();
