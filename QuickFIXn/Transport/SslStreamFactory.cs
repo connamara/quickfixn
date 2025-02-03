@@ -16,8 +16,8 @@ internal sealed class SslStreamFactory
 {
     private readonly SocketSettings _socketSettings;
     private readonly NonSessionLog _nonSessionLog;
-    private const string CLIENT_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.2";
-    private const string SERVER_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.1";
+    internal const string CLIENT_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.2";
+    internal const string SERVER_AUTHENTICATION_OID = "1.3.6.1.5.5.7.3.1";
 
     public SslStreamFactory(SocketSettings settings, NonSessionLog nonSessionLog)
     {
@@ -156,7 +156,7 @@ internal sealed class SslStreamFactory
     /// <param name="sslPolicyErrors">The SSL policy errors supplied by .Net.</param>
     /// <param name="enhancedKeyUsage">Enhanced key usage, which the remote computers certificate should contain.</param>
     /// <returns> <c>true</c> if the certificate should be treated as trusted; otherwise <c>false</c> </returns>
-    private bool VerifyRemoteCertificate(
+    internal bool VerifyRemoteCertificate(
         X509Certificate? certificate,
         SslPolicyErrors sslPolicyErrors,
         string enhancedKeyUsage)
@@ -183,7 +183,12 @@ internal sealed class SslStreamFactory
             chain = new X509Chain();
 
             // Set the chain policy
-            chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+            if (_socketSettings.CheckCertificateRevocation) {
+                chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
+            }
+            else {
+                chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
+            }
             chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
             chain.ChainPolicy.VerificationFlags = X509VerificationFlags.NoFlag;
             chain.ChainPolicy.VerificationTime = DateTime.Now;
@@ -191,7 +196,7 @@ internal sealed class SslStreamFactory
         else
         {
             string caCertPath = StringUtil.FixSlashes(_socketSettings.CACertificatePath);
-
+            
             X509Certificate2? cert = SslCertCache.LoadCertificate(caCertPath, null);
             if (cert is null) {
                 _nonSessionLog.OnEvent(
@@ -245,7 +250,7 @@ internal sealed class SslStreamFactory
             {
                 foreach (System.Security.Cryptography.Oid oid in keyUsage.EnhancedKeyUsages)
                 {
-                    if (oid.Value == enhancedKeyOid)
+                    if (oid.Value.Equals(enhancedKeyOid, StringComparison.Ordinal))
                         return true;
                 }
             }
