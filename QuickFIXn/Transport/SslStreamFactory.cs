@@ -170,7 +170,7 @@ internal sealed class SslStreamFactory
 
         // Validate enhanced key usage
         if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage)) {
-            var role = enhancedKeyUsage == CLIENT_AUTHENTICATION_OID ? "client" : "server";
+            var role = enhancedKeyUsage.Equals(CLIENT_AUTHENTICATION_OID, StringComparison.Ordinal) ? "client" : "server";
             _nonSessionLog.OnEvent(
                 $"Remote certificate is not intended for {role} authentication: It is missing enhanced key usage {enhancedKeyUsage}");
             return false;
@@ -189,7 +189,6 @@ internal sealed class SslStreamFactory
                 chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
             chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
             chain.ChainPolicy.VerificationFlags = X509VerificationFlags.NoFlag;
-            chain.ChainPolicy.VerificationTime = DateTime.Now;
         }
         else
         {
