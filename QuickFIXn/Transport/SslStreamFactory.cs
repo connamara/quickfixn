@@ -183,12 +183,10 @@ internal sealed class SslStreamFactory
             chain = new X509Chain();
 
             // Set the chain policy
-            if (_socketSettings.CheckCertificateRevocation) {
+            if (_socketSettings.CheckCertificateRevocation)
                 chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
-            }
-            else {
+            else
                 chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-            }
             chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
             chain.ChainPolicy.VerificationFlags = X509VerificationFlags.NoFlag;
             chain.ChainPolicy.VerificationTime = DateTime.Now;
