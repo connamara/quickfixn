@@ -219,6 +219,21 @@ namespace QuickFix.Fields
 
 
     /// <summary>
+    /// LastMkt Field
+    /// </summary>
+    public sealed class LastMkt : StringField
+    {
+        public const int TAG = 30;
+
+        public LastMkt()
+            :base(Tags.LastMkt) {}
+        public LastMkt(string val)
+            :base(Tags.LastMkt, val) {}
+
+    }
+
+
+    /// <summary>
     /// LastPx Field
     /// </summary>
     public sealed class LastPx : DecimalField
@@ -1442,6 +1457,21 @@ namespace QuickFix.Fields
 
 
     /// <summary>
+    /// SecurityExchange Field
+    /// </summary>
+    public sealed class SecurityExchange : StringField
+    {
+        public const int TAG = 207;
+
+        public SecurityExchange()
+            :base(Tags.SecurityExchange) {}
+        public SecurityExchange(string val)
+            :base(Tags.SecurityExchange, val) {}
+
+    }
+
+
+    /// <summary>
     /// MDReqID Field
     /// </summary>
     public sealed class MDReqID : StringField
@@ -2545,6 +2575,21 @@ namespace QuickFix.Fields
 
 
     /// <summary>
+    /// SecondaryClOrdID Field
+    /// </summary>
+    public sealed class SecondaryClOrdID : StringField
+    {
+        public const int TAG = 526;
+
+        public SecondaryClOrdID()
+            :base(Tags.SecondaryClOrdID) {}
+        public SecondaryClOrdID(string val)
+            :base(Tags.SecondaryClOrdID, val) {}
+
+    }
+
+
+    /// <summary>
     /// MassCancelRequestType Field
     /// </summary>
     public sealed class MassCancelRequestType : CharField
@@ -2691,6 +2736,27 @@ namespace QuickFix.Fields
         public const int NOT_AUTHORIZED_TO_RETRIEVE_INSTRUMENT_DATA = 3;
         public const int INSTRUMENT_DATA_TEMPORARILY_UNAVAILABLE = 4;
         public const int REQUEST_FOR_INSTRUMENT_DATA_NOT_SUPPORTED = 5;
+    }
+
+
+    /// <summary>
+    /// CustOrderCapacity Field
+    /// </summary>
+    public sealed class CustOrderCapacity : IntField
+    {
+        public const int TAG = 582;
+
+        public CustOrderCapacity()
+            :base(Tags.CustOrderCapacity) {}
+        public CustOrderCapacity(int val)
+            :base(Tags.CustOrderCapacity, val) {}
+
+
+        // Field Enumerations
+        public const int MEMBER_TRADING_FOR_THEIR_OWN_ACCOUNT = 1;
+        public const int CLEARING_FIRM_TRADING_FOR_ITS_PROPRIETARY_ACCOUNT = 2;
+        public const int MEMBER_TRADING_FOR_ANOTHER_MEMBER = 3;
+        public const int ALL_OTHER = 4;
     }
 
 
@@ -3102,6 +3168,51 @@ namespace QuickFix.Fields
         public const int SUPERVISOR = 27;
         public const int TRI_PARTY = 28;
         public const int LENDER = 29;
+    }
+
+
+    /// <summary>
+    /// RoutingInstruction Field
+    /// </summary>
+    public sealed class RoutingInstruction : StringField
+    {
+        public const int TAG = 9487;
+
+        public RoutingInstruction()
+            :base(Tags.RoutingInstruction) {}
+        public RoutingInstruction(string val)
+            :base(Tags.RoutingInstruction, val) {}
+
+    }
+
+
+    /// <summary>
+    /// BookType Field
+    /// </summary>
+    public sealed class BookType : StringField
+    {
+        public const int TAG = 26561;
+
+        public BookType()
+            :base(Tags.BookType) {}
+        public BookType(string val)
+            :base(Tags.BookType, val) {}
+
+    }
+
+
+    /// <summary>
+    /// BookSubType Field
+    /// </summary>
+    public sealed class BookSubType : StringField
+    {
+        public const int TAG = 26562;
+
+        public BookSubType()
+            :base(Tags.BookSubType) {}
+        public BookSubType(string val)
+            :base(Tags.BookSubType, val) {}
+
     }
 
 

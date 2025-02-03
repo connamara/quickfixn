@@ -21,6 +21,7 @@ namespace QuickFix.Fields
         public const int EndSeqNo = 16;
         public const int ExecID = 17;
         public const int SecurityIDSource = 22;
+        public const int LastMkt = 30;
         public const int LastPx = 31;
         public const int LastQty = 32;
         public const int NoLinesOfText = 33;
@@ -72,6 +73,7 @@ namespace QuickFix.Fields
         public const int ExecType = 150;
         public const int LeavesQty = 151;
         public const int SecondaryOrderID = 198;
+        public const int SecurityExchange = 207;
         public const int MDReqID = 262;
         public const int SubscriptionRequestType = 263;
         public const int MarketDepth = 264;
@@ -113,12 +115,14 @@ namespace QuickFix.Fields
         public const int PartyRole = 452;
         public const int NoPartyIDs = 453;
         public const int PartySubID = 523;
+        public const int SecondaryClOrdID = 526;
         public const int MassCancelRequestType = 530;
         public const int MassCancelResponse = 531;
         public const int MassCancelRejectReason = 532;
         public const int Username = 553;
         public const int SecurityListRequestType = 559;
         public const int SecurityRequestResult = 560;
+        public const int CustOrderCapacity = 582;
         public const int MassStatusReqID = 584;
         public const int MassStatusReqType = 585;
         public const int LastUpdateTime = 779;
@@ -140,6 +144,9 @@ namespace QuickFix.Fields
         public const int BidQuoteID = 1747;
         public const int OfferQuoteID = 1748;
         public const int PartyRoleQualifier = 2376;
+        public const int RoutingInstruction = 9487;
+        public const int BookType = 26561;
+        public const int BookSubType = 26562;
         public const int Signature = 89;
         public const int SecureDataLen = 90;
         public const int SecureData = 91;

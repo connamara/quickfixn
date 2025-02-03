@@ -245,6 +245,38 @@ namespace QuickFix
                 return IsSetField(Tags.Currency);
             }
 
+            public QuickFix.Fields.SecurityExchange SecurityExchange
+            {
+                get
+                {
+                    QuickFix.Fields.SecurityExchange val = new QuickFix.Fields.SecurityExchange();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.SecurityExchange val)
+            {
+                this.SecurityExchange = val;
+            }
+
+            public QuickFix.Fields.SecurityExchange Get(QuickFix.Fields.SecurityExchange val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.SecurityExchange val)
+            {
+                return IsSetSecurityExchange();
+            }
+
+            public bool IsSetSecurityExchange()
+            {
+                return IsSetField(Tags.SecurityExchange);
+            }
+
             public QuickFix.Fields.Side Side
             {
                 get

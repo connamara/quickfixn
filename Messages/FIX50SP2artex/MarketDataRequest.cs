@@ -301,7 +301,7 @@ namespace QuickFix
             }
             public class NoRelatedSymGroup : Group
             {
-                public static int[] fieldOrder = {Tags.Symbol, Tags.SecurityID, Tags.SecurityIDSource, Tags.Currency, 0};
+                public static int[] fieldOrder = {Tags.Symbol, Tags.SecurityID, Tags.SecurityIDSource, Tags.Currency, Tags.SecurityExchange, 0};
 
                 public NoRelatedSymGroup()
                   : base(Tags.NoRelatedSym, Tags.Symbol, fieldOrder)
@@ -441,6 +441,38 @@ namespace QuickFix
                 public bool IsSetCurrency()
                 {
                     return IsSetField(Tags.Currency);
+                }
+
+                public QuickFix.Fields.SecurityExchange SecurityExchange
+                {
+                    get
+                    {
+                        QuickFix.Fields.SecurityExchange val = new QuickFix.Fields.SecurityExchange();
+                        GetField(val);
+                        return val;
+                    }
+                    set { SetField(value); }
+                }
+
+                public void Set(QuickFix.Fields.SecurityExchange val)
+                {
+                    this.SecurityExchange = val;
+                }
+
+                public QuickFix.Fields.SecurityExchange Get(QuickFix.Fields.SecurityExchange val)
+                {
+                    GetField(val);
+                    return val;
+                }
+
+                public bool IsSet(QuickFix.Fields.SecurityExchange val)
+                {
+                    return IsSetSecurityExchange();
+                }
+
+                public bool IsSetSecurityExchange()
+                {
+                    return IsSetField(Tags.SecurityExchange);
                 }
 
 

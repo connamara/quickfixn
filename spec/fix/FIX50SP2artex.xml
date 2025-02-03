@@ -4,6 +4,7 @@
         <message name='ExecutionReport' msgtype='8' msgcat='app'>
             <field name='OrderID' required='Y' />
             <field name='SecondaryOrderID' required='N' />
+            <field name='SecondaryClOrdID' required='N' />
             <field name='ClOrdID' required='N' />
             <field name='OrigClOrdID' required='N' />
             <field name='OrdStatusReqID' required='N' />
@@ -32,6 +33,12 @@
             <field name='Text' required='N' />
             <field name='OrderOrigination' required='N' />
             <field name='QuoteMsgID' required='N' />
+            <field name='ExpireDate' required='N' />
+            <field name='TradingSessionID' required='N' />
+            <field name='CustOrderCapacity' required='N' />
+            <field name='RoutingInstruction' required='N' />
+            <field name='BookType' required='N' />
+            <field name='BookSubType' required='N' />
         </message>
         <message name='OrderCancelReject' msgtype='9' msgcat='app'>
             <field name='OrderID' required='Y' />
@@ -57,6 +64,7 @@
         </message>
         <message name='NewOrderSingle' msgtype='D' msgcat='app'>
             <field name='ClOrdID' required='Y' />
+            <field name='SecondaryClOrdID' required='N' />
             <component name='Parties' required='N' />
             <field name='Account' required='N' />
             <component name='Instrument' required='Y' />
@@ -70,6 +78,8 @@
             <field name='Text' required='N' />
             <field name='OrderOrigination' required='N' />
             <field name='ExpireDate' required='N' />
+            <field name='CustOrderCapacity' required='N' />
+            <field name='RoutingInstruction' required='N' />
         </message>
         <message name='OrderCancelRequest' msgtype='F' msgcat='app'>
             <field name='OrigClOrdID' required='N' />
@@ -82,6 +92,7 @@
             <field name='TransactTime' required='Y' />
             <component name='OrderQtyData' required='N' />
             <field name='Text' required='N' />
+            <field name='RoutingInstruction' required='N' />
         </message>
         <message name='OrderCancelReplaceRequest' msgtype='G' msgcat='app'>
             <field name='OrderID' required='N' />
@@ -99,6 +110,8 @@
             <field name='ExpireDate' required='N' />
             <field name='Text' required='N' />
             <field name='OrderOrigination' required='N' />
+            <field name='CustOrderCapacity' required='N' />
+            <field name='RoutingInstruction' required='N' />
         </message>
         <message name='OrderStatusRequest' msgtype='H' msgcat='app'>
             <field name='OrderID' required='N' />
@@ -261,6 +274,7 @@
             <field name='SecurityID' required='N' />
             <field name='SecurityIDSource' required='N' />
             <field name='Currency' required='N' />
+            <field name='SecurityExchange' required='N' />
         </component>
         <component name='InstrmtGrp'>
             <group name='NoRelatedSym' required='N'>
@@ -393,6 +407,7 @@
             <value enum='W' description='INDEX_NAME' />
             <value enum='X' description='UNIFORM_SYMBOL' />
         </field>
+        <field number='30' name='LastMkt' type='EXCHANGE' />
         <field number='31' name='LastPx' type='PRICE' />
         <field number='32' name='LastQty' type='QTY' />
         <field number='33' name='NoLinesOfText' type='NUMINGROUP' />
@@ -774,6 +789,7 @@
         </field>
         <field number='151' name='LeavesQty' type='QTY' />
         <field number='198' name='SecondaryOrderID' type='STRING' />
+        <field number='207' name='SecurityExchange' type='EXCHANGE' />
         <field number='262' name='MDReqID' type='STRING' />
         <field number='263' name='SubscriptionRequestType' type='CHAR'>
             <value enum='0' description='SNAPSHOT' />
@@ -1280,6 +1296,7 @@
         </field>
         <field number='453' name='NoPartyIDs' type='NUMINGROUP' />
         <field number='523' name='PartySubID' type='STRING' />
+        <field number='526' name='SecondaryClOrdID' type='STRING' />
         <field number='530' name='MassCancelRequestType' type='CHAR'>
             <value enum='1' description='CANCEL_ORDERS_FOR_A_SECURITY' />
             <value enum='2' description='CANCEL_ORDERS_FOR_AN_UNDERLYING_SECURITY' />
@@ -1340,6 +1357,12 @@
             <value enum='3' description='NOT_AUTHORIZED_TO_RETRIEVE_INSTRUMENT_DATA' />
             <value enum='4' description='INSTRUMENT_DATA_TEMPORARILY_UNAVAILABLE' />
             <value enum='5' description='REQUEST_FOR_INSTRUMENT_DATA_NOT_SUPPORTED' />
+        </field>
+        <field number='582' name='CustOrderCapacity' type='INT'>
+            <value enum='1' description='MEMBER_TRADING_FOR_THEIR_OWN_ACCOUNT' />
+            <value enum='2' description='CLEARING_FIRM_TRADING_FOR_ITS_PROPRIETARY_ACCOUNT' />
+            <value enum='3' description='MEMBER_TRADING_FOR_ANOTHER_MEMBER' />
+            <value enum='4' description='ALL_OTHER' />
         </field>
         <field number='584' name='MassStatusReqID' type='STRING' />
         <field number='585' name='MassStatusReqType' type='INT'>
@@ -1449,5 +1472,9 @@
             <value enum='28' description='TRI_PARTY' />
             <value enum='29' description='LENDER' />
         </field>
+        <!-- FIX STI Custom fields --> 
+        <field number='9487' name='RoutingInstruction' type='STRING' />
+        <field number='26561' name='BookType' type='STRING' />
+        <field number='26562' name='BookSubType' type='STRING' />
     </fields>
 </fix>

@@ -315,6 +315,38 @@ namespace QuickFix
                 return IsSetField(Tags.Currency);
             }
 
+            public QuickFix.Fields.SecurityExchange SecurityExchange
+            {
+                get
+                {
+                    QuickFix.Fields.SecurityExchange val = new QuickFix.Fields.SecurityExchange();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.SecurityExchange val)
+            {
+                this.SecurityExchange = val;
+            }
+
+            public QuickFix.Fields.SecurityExchange Get(QuickFix.Fields.SecurityExchange val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.SecurityExchange val)
+            {
+                return IsSetSecurityExchange();
+            }
+
+            public bool IsSetSecurityExchange()
+            {
+                return IsSetField(Tags.SecurityExchange);
+            }
+
             public QuickFix.Fields.Side Side
             {
                 get
@@ -601,6 +633,70 @@ namespace QuickFix
             public bool IsSetOrderOrigination()
             {
                 return IsSetField(Tags.OrderOrigination);
+            }
+
+            public QuickFix.Fields.CustOrderCapacity CustOrderCapacity
+            {
+                get
+                {
+                    QuickFix.Fields.CustOrderCapacity val = new QuickFix.Fields.CustOrderCapacity();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.CustOrderCapacity val)
+            {
+                this.CustOrderCapacity = val;
+            }
+
+            public QuickFix.Fields.CustOrderCapacity Get(QuickFix.Fields.CustOrderCapacity val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.CustOrderCapacity val)
+            {
+                return IsSetCustOrderCapacity();
+            }
+
+            public bool IsSetCustOrderCapacity()
+            {
+                return IsSetField(Tags.CustOrderCapacity);
+            }
+
+            public QuickFix.Fields.RoutingInstruction RoutingInstruction
+            {
+                get
+                {
+                    QuickFix.Fields.RoutingInstruction val = new QuickFix.Fields.RoutingInstruction();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.RoutingInstruction val)
+            {
+                this.RoutingInstruction = val;
+            }
+
+            public QuickFix.Fields.RoutingInstruction Get(QuickFix.Fields.RoutingInstruction val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.RoutingInstruction val)
+            {
+                return IsSetRoutingInstruction();
+            }
+
+            public bool IsSetRoutingInstruction()
+            {
+                return IsSetField(Tags.RoutingInstruction);
             }
 
             public class NoPartyIDsGroup : Group
