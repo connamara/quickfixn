@@ -94,14 +94,13 @@ namespace UnitTests
         }
 
         [Test]
-        public void VerifyServerCertificateEnhancedUsage()
+        public void VerifyServerCertificateChainEnhancedUsage()
         {
             SettingsDictionary dict = new();
             dict.SetBool(SessionSettings.SSL_ENABLE, true);
             dict.SetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES, true);
             dict.SetString(SessionSettings.SSL_CERTIFICATE, ServerCertificatePath);
             dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, CaCertificatePath);
-            dict.SetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION, true);
 
             var settings = new SocketSettings();
             settings.Configure(dict);
@@ -117,14 +116,13 @@ namespace UnitTests
         }
 
         [Test]
-        public void VerifyServerCertificateFailsWithWrongCA()
+        public void VerifyServerCertificateChainFailsWithoutRightCA()
         {
             SettingsDictionary dict = new();
             dict.SetBool(SessionSettings.SSL_ENABLE, true);
             dict.SetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES, true);
             dict.SetString(SessionSettings.SSL_CERTIFICATE, ServerCertificatePath);
             dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, DifferentCaCertificatePath);
-            dict.SetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION, true);
 
             var settings = new SocketSettings();
             settings.Configure(dict);
@@ -140,14 +138,13 @@ namespace UnitTests
         }
 
         [Test]
-        public void VerifyClientCertificateEnhancedUsage()
+        public void VerifyClientCertificateChainEnhancedUsage()
         {
             SettingsDictionary dict = new();
             dict.SetBool(SessionSettings.SSL_ENABLE, true);
             dict.SetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES, true);
             dict.SetString(SessionSettings.SSL_CERTIFICATE, ClientCertificatePath);
             dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, CaCertificatePath);
-            dict.SetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION, true);
 
             var settings = new SocketSettings();
             settings.Configure(dict);
@@ -163,14 +160,13 @@ namespace UnitTests
         }
 
         [Test]
-        public void VerifyClientCertificateFailsWithWrongCA()
+        public void VerifyClientCertificateChainFailsWithoutRightCA()
         {
             SettingsDictionary dict = new();
             dict.SetBool(SessionSettings.SSL_ENABLE, true);
             dict.SetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES, true);
             dict.SetString(SessionSettings.SSL_CERTIFICATE, ClientCertificatePath);
             dict.SetString(SessionSettings.SSL_CA_CERTIFICATE, DifferentCaCertificatePath);
-            dict.SetBool(SessionSettings.SSL_CHECK_CERTIFICATE_REVOCATION, true);
 
             var settings = new SocketSettings();
             settings.Configure(dict);
