@@ -191,7 +191,7 @@ internal sealed class SslStreamFactory
                 return false;
             }
 
-            var chain = new X509Chain();
+            X509Chain chain = new();
             chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
             // add all your extra certificate chain
 
