@@ -237,7 +237,7 @@ internal sealed class SslStreamFactory
             {
                 foreach (System.Security.Cryptography.Oid oid in keyUsage.EnhancedKeyUsages)
                 {
-                    if (oid.Value.Equals(enhancedKeyOid, StringComparison.Ordinal))
+                    if (enhancedKeyOid.Equals(oid.Value, StringComparison.Ordinal))
                         return true;
                 }
             }
