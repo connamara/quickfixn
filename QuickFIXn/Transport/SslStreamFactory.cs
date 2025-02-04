@@ -177,18 +177,8 @@ internal sealed class SslStreamFactory
         }
 
         // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
-        X509Chain chain;
         if (string.IsNullOrEmpty(_socketSettings.CACertificatePath)) {
             _nonSessionLog.OnEvent("CACertificatePath is not specified");
-            chain = new X509Chain();
-
-            // Set the chain policy
-            if (_socketSettings.CheckCertificateRevocation)
-                chain.ChainPolicy.RevocationMode = X509RevocationMode.Online;
-            else
-                chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
-            chain.ChainPolicy.RevocationFlag = X509RevocationFlag.EntireChain;
-            chain.ChainPolicy.VerificationFlags = X509VerificationFlags.NoFlag;
         }
         else
         {
@@ -201,23 +191,23 @@ internal sealed class SslStreamFactory
                 return false;
             }
 
-            chain = new X509Chain();
+            var chain = new X509Chain();
             chain.ChainPolicy.RevocationMode = X509RevocationMode.NoCheck;
             // add all your extra certificate chain
 
             chain.ChainPolicy.ExtraStore.Add(cert);
             chain.ChainPolicy.VerificationFlags = X509VerificationFlags.AllowUnknownCertificateAuthority;
-        }
 
-        bool isValid = chain.Build((X509Certificate2)certificate);
-        if (isValid)
-        {
-            // resets the sslPolicyErrors.RemoteCertificateChainErrors status
-            sslPolicyErrors &= ~SslPolicyErrors.RemoteCertificateChainErrors;
-        }
-        else
-        {
-            sslPolicyErrors |= SslPolicyErrors.RemoteCertificateChainErrors;
+            bool isValid = chain.Build((X509Certificate2)certificate);
+            if (isValid)
+            {
+                // resets the sslPolicyErrors.RemoteCertificateChainErrors status
+                sslPolicyErrors &= ~SslPolicyErrors.RemoteCertificateChainErrors;
+            }
+            else
+            {
+                sslPolicyErrors |= SslPolicyErrors.RemoteCertificateChainErrors;
+            }
         }
 
         // Any basic authentication check failed, do after checking CA
