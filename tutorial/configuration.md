@@ -344,6 +344,21 @@ QuickFIX Settings
     </td>
     <td class='default'>Y</td>
   </tr>
+
+  <tr>
+    <td class='setting'>Encoding</td>
+    <td class='description'>
+      Specify an alternate character encoding, if your counterparty is using an encoding other than the FIX-mandated iso-8859-1.
+      <br/>
+      <strong>Note: This is a global setting.  This setting will apply to ALL sessions.</strong>
+    </td>
+    <td class='valid'>
+      An value that is a valid parameter to `System.Text.Encoding.GetEncoding()` on your platform.
+      For instance: iso-8859-1, windows-1251, utf-8
+    </td>
+    <td class='default'>iso-8859-1</td>
+  </tr>
+
 </table>
 
 
@@ -479,6 +494,16 @@ QuickFIX Settings
     <td class='setting'>AllowUnknownMsgFields</td>
     <td class='description'>If set to Y, non user-defined fields (field with tag < 5000) will not be rejected if they are not defined in the data dictionary, or are present in messages they do not belong to.
                             <br/>(Only applies to fields outside repeating groups; fields in groups must still obey the configured data dictionary or be rejected.)</td>
+    <td class='valid'>
+      <div>Y</div>
+      <div>N</div>
+    </td>
+    <td class='default'>N</td>
+  </tr>
+
+  <tr>
+    <td class='setting'>AllowUnknownEnumValues</td>
+    <td class='description'>If set to Y, values of enum fields will not be validated against the list of enum values.  Unrecognized values will be permitted and not cause a reject.</td>
     <td class='valid'>
       <div>Y</div>
       <div>N</div>

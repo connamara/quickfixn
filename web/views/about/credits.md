@@ -94,4 +94,11 @@ Contributors
 - Matt Lahner
 - Nazar Mandzyk
 - Michal Dachs
-
+- Phung Nhat-Huy
+- Allen Cai
+- James Kitamirike
+- Vasily Petruhin
+- Ian Lee Claxton
+- Hank Libman
+- Sam Norris
+- Zdeněk Sojma
