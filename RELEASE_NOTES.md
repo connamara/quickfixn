@@ -14,8 +14,10 @@ What's New
 * **There are breaking changes between 1.11 and 1.12!  Please review the 1.12.0 notes below.**
 * **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
+### next release
+* #nnn - placeholder
 
-### upcoming v1.13.0
+### v1.13.0
 
 **Breaking changes**
 * #883 - Moved to .NET 8 (huypn12)
