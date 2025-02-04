@@ -8,6 +8,7 @@ using QuickFix.Logger;
 using QuickFix.Transport;
 using System;
 using System.IO;
+using System.Net.Security;
 
 namespace UnitTests
 {
@@ -108,8 +109,8 @@ namespace UnitTests
             var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
             var factory = new SslStreamFactory(settings, logger);
 
-            var resultServer = factory.VerifyRemoteCertificate(ServerCertificate, System.Net.Security.SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
-            var resultClient = factory.VerifyRemoteCertificate(ServerCertificate, System.Net.Security.SslPolicyErrors.None, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
+            var resultServer = factory.VerifyRemoteCertificate(ServerCertificate, SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
+            var resultClient = factory.VerifyRemoteCertificate(ServerCertificate, SslPolicyErrors.None, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
 
             Assert.That(resultServer, Is.True);
             Assert.That(resultClient, Is.False);
@@ -130,8 +131,8 @@ namespace UnitTests
             var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
             var factory = new SslStreamFactory(settings, logger);
 
-            var resultServer = factory.VerifyRemoteCertificate(ServerCertificate, System.Net.Security.SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
-            var resultClient = factory.VerifyRemoteCertificate(ServerCertificate, System.Net.Security.SslPolicyErrors.None, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
+            var resultServer = factory.VerifyRemoteCertificate(ServerCertificate, SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
+            var resultClient = factory.VerifyRemoteCertificate(ServerCertificate, SslPolicyErrors.None, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
 
             Assert.That(resultServer, Is.False);
             Assert.That(resultClient, Is.False);
@@ -152,8 +153,8 @@ namespace UnitTests
             var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
             var factory = new SslStreamFactory(settings, logger);
 
-            var resultServer = factory.VerifyRemoteCertificate(ClientCertificate, System.Net.Security.SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
-            var resultClient = factory.VerifyRemoteCertificate(ClientCertificate, System.Net.Security.SslPolicyErrors.None, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
+            var resultServer = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
+            var resultClient = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.None, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
 
             Assert.That(resultServer, Is.False);
             Assert.That(resultClient, Is.True);
@@ -174,8 +175,8 @@ namespace UnitTests
             var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
             var factory = new SslStreamFactory(settings, logger);
 
-            var resultServer = factory.VerifyRemoteCertificate(ClientCertificate, System.Net.Security.SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
-            var resultClient = factory.VerifyRemoteCertificate(ClientCertificate, System.Net.Security.SslPolicyErrors.None, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
+            var resultServer = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
+            var resultClient = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.None, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
 
             Assert.That(resultServer, Is.False);
             Assert.That(resultClient, Is.False);
