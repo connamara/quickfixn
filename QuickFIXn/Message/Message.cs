@@ -594,6 +594,13 @@ namespace QuickFix
                     // f is a counter for a nested group.  Recurse!
                     pos = SetGroup(f, msgstr, pos, grp, groupSpec.GetGroupSpec(f.Tag), msgFactory);
                 }
+
+                // rare situation: if message ends on an in-group field (which means it lacks a checksum),
+                //   then this logic is needed here to actually write the group (because this loop won't run again)
+                if (pos == msgstr.Length) {
+                    fieldMap.AddGroup(grp, false);
+                    return pos;
+                }
             }
             
             return grpPos;

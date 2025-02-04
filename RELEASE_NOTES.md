@@ -65,6 +65,7 @@ What's New
 * #927 - Remove lock from ScreenLog as Console.WriteLine is thread safe and remove unnecessary Dispose call (Rob-Hague)
 * #926 - don't init FileLog writers until first use (Rob-Hague)
 * #931 - bugfix in FixToJson example program
+* #934 - fix an obscure failure of Message.FromString when a message ends in a group (and lacks a checksum) (gbirchmeier)
 
 ### v1.12.0
 

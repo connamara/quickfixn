@@ -1072,5 +1072,24 @@ namespace UnitTests
             // the object state is changed
             Assert.That(expected, Is.EqualTo(msg.ToString().Replace(Message.SOH, '|')));
         }
+
+        [Test]
+        public void FromString_EndsWithGroup() {
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX42");
+
+            string s = ("8=FIX.4.2|9=91|35=B|34=2|49=TW|52=20111011-15:06:23.103|56=ISLD|"
+                        + "148=headline|33=1|"
+                        + "58=line1|354=3|355=uno|"
+                    // no checksum!
+                ).Replace('|', Message.SOH);
+
+            QuickFix.FIX42.News n = new QuickFix.FIX42.News();
+            n.FromString(s, false, dd, dd);
+
+            Assert.That(n.ToString().Replace(Message.SOH, '|'), Is.EqualTo(
+                "8=FIX.4.2|9=91|35=B|34=2|49=TW|52=20111011-15:06:23.103|56=ISLD|148=headline|33=1|58=line1|354=3|355=uno|"
+            ));
+        }
     }
 }
