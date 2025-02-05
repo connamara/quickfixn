@@ -34,8 +34,8 @@ foreach ($rls in 'Core', 'FIXT1.1', 'FIX4.0', 'FIX4.1', 'FIX4.2', 'FIX4.3', 'FIX
     $snupkg = Join-Path $nugetPath "QuickFIXn.$rls.$ver.snupkg"
 
     foreach ($file in $nupkg, $snupkg) {
-        Write-Host -NoNewline "* Looking for $nupkg ... " -ForegroundColor Cyan
-        If (Test-Path $nupkg) { 
+        Write-Host -NoNewline "* Looking for $file ... " -ForegroundColor Cyan
+        If (Test-Path $file) {
             Write-Host "Found" -ForegroundColor Green
         } else { 
             # The PSStyle.Reset is to work around a bgcolor-bleeding bug
