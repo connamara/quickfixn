@@ -117,6 +117,27 @@ namespace UnitTests
         }
 
         [Test]
+        public void VerifyServerCertificateChainFailsWithoutCA()
+        {
+            SettingsDictionary dict = new();
+            dict.SetBool(SessionSettings.SSL_ENABLE, true);
+            dict.SetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES, true);
+            dict.SetString(SessionSettings.SSL_CERTIFICATE, ServerCertificatePath);
+
+            var settings = new SocketSettings();
+            settings.Configure(dict);
+
+            var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
+            var factory = new SslStreamFactory(settings, logger);
+
+            var resultServer = factory.VerifyRemoteCertificate(ServerCertificate, SslPolicyErrors.RemoteCertificateChainErrors, SslStreamFactory.SERVER_AUTHENTICATION_OID);
+            var resultClient = factory.VerifyRemoteCertificate(ServerCertificate, SslPolicyErrors.RemoteCertificateChainErrors, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
+
+            Assert.That(resultServer, Is.False);
+            Assert.That(resultClient, Is.False);
+        }
+
+        [Test]
         public void VerifyServerCertificateChainFailsWithoutRightCA()
         {
             SettingsDictionary dict = new();
@@ -158,6 +179,27 @@ namespace UnitTests
 
             Assert.That(resultServer, Is.False);
             Assert.That(resultClient, Is.True);
+        }
+
+        [Test]
+        public void VerifyClientCertificateChainFailsWithoutCA()
+        {
+            SettingsDictionary dict = new();
+            dict.SetBool(SessionSettings.SSL_ENABLE, true);
+            dict.SetBool(SessionSettings.SSL_VALIDATE_CERTIFICATES, true);
+            dict.SetString(SessionSettings.SSL_CERTIFICATE, ClientCertificatePath);
+
+            var settings = new SocketSettings();
+            settings.Configure(dict);
+
+            var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
+            var factory = new SslStreamFactory(settings, logger);
+
+            var resultServer = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
+            var resultClient = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.None, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
+
+            Assert.That(resultServer, Is.False);
+            Assert.That(resultClient, Is.False);
         }
 
         [Test]
