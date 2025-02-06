@@ -3,12 +3,12 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography;
 using NUnit.Framework;
 using QuickFix;
-using QuickFix.Fields;
 using QuickFix.Logger;
 using QuickFix.Transport;
 using System;
 using System.IO;
 using System.Net.Security;
+using System.Net.Sockets;
 
 namespace UnitTests
 {
@@ -138,7 +138,7 @@ namespace UnitTests
         }
 
         [Test]
-        public void VerifyServerCertificateChainFailsWithoutRightCA()
+        public void VerifyServerCertificateChainFailsWithWrongCA()
         {
             SettingsDictionary dict = new();
             dict.SetBool(SessionSettings.SSL_ENABLE, true);
@@ -195,15 +195,15 @@ namespace UnitTests
             var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
             var factory = new SslStreamFactory(settings, logger);
 
-            var resultServer = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
-            var resultClient = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.None, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
+            var resultServer = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.RemoteCertificateChainErrors, SslStreamFactory.SERVER_AUTHENTICATION_OID);
+            var resultClient = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.RemoteCertificateChainErrors, SslStreamFactory.CLIENT_AUTHENTICATION_OID);
 
             Assert.That(resultServer, Is.False);
             Assert.That(resultClient, Is.False);
         }
 
         [Test]
-        public void VerifyClientCertificateChainFailsWithoutRightCA()
+        public void VerifyClientCertificateChainFailsWithWrongCA()
         {
             SettingsDictionary dict = new();
             dict.SetBool(SessionSettings.SSL_ENABLE, true);
