@@ -1,0 +1,50 @@
+# Enhanced resend - client does not repeat ResendRequests when server lags on starting the resend
+
+iCONNECT
+I8=FIX.4.435=A34=149=TW52=<TIME>56=ISLD369=098=0108=30
+E8=FIX.4.435=A34=149=ISLD52=00000000-00:00:00.00056=TW369=198=0108=30
+
+# Do a test request just to increment the counters
+I8=FIX.4.435=134=249=TW52=<TIME>56=ISLD112=TEST
+E8=FIX.4.435=034=249=ISLD52=00000000-00:00:00.00056=TW369=2112=TEST
+
+# App (ISLD) expects 34=3 next
+
+# Send it 34=6
+I8=FIX.4.435=B34=649=TW56=ISLD52=<TIME>148=sending 6 when 3 is expected
+
+# App resends for 3 to 5
+# NOTIFY:Expect initial resend
+E8=FIX.4.435=234=349=ISLD52=00000000-00:00:00.00056=TW369=67=316=5
+
+# NOTIFY:Server does not start resend yet
+# Send 34=7
+I8=FIX.4.435=B34=749=TW56=ISLD52=<TIME>148=sending 7, ignoring that resend request
+
+# Send 34=8
+I8=FIX.4.435=B34=849=TW56=ISLD52=<TIME>148=sending 8, still not addressing that resend request
+
+# App has not repeated any resends
+# NOTIFY:Server starts resend now
+
+# Start the resend for real
+I8=FIX.4.435=B34=349=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.003148=ok, here is that 3
+I8=FIX.4.435=B34=449=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.004148=this is 4
+I8=FIX.4.435=B34=549=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.005148=this is 5
+I8=FIX.4.435=B34=649=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.006148=this is 6
+
+# App expects seqno 34=9 next
+
+# Send a regular message
+I8=FIX.4.435=B34=949=TW56=ISLD52=<TIME>148=back to normal
+
+# Do another TestRequest to confirm
+I8=FIX.4.435=134=1049=TW52=<TIME>56=ISLD112=TESTEND
+E8=FIX.4.435=034=449=ISLD52=00000000-00:00:00.00056=TW369=10112=TESTEND
+
+# logout message and response
+I8=FIX.4.435=534=1149=TW52=<TIME>56=ISLD
+E8=FIX.4.435=534=549=ISLD52=00000000-00:00:00.00056=TW369=11
+
+eDISCONNECT
+

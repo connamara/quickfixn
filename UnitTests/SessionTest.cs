@@ -706,7 +706,6 @@ public class SessionTest : SessionTestBase
         var resendRequest = (QuickFix.FIX42.ResendRequest)_responder.MsgLookup[MsgType.RESEND_REQUEST].Dequeue();
         Assert.That(resendRequest.BeginSeqNo.Value, Is.EqualTo(3));
         Assert.That(resendRequest.EndSeqNo.Value, Is.EqualTo(0)); // 0 is infinity, but actually we just want until 5
-
         Assert.That(_session.IsResendRequested, Is.True);
 
         // Server sends 3 resent messages and 2 new messages
@@ -716,18 +715,20 @@ public class SessionTest : SessionTestBase
             if (i < 7) {
                 msg.Header.SetField(new PossDupFlag(true));
                 msg.Header.SetField(new OrigSendingTime(DateTime.MinValue)); // (value doesn't matter for test)
-                _session.Next(msg.ConstructString());
             }
             _session.Next(msg.ConstructString());
 
-            // When EndSeqNo is 0, we mark the ResendResend as 'finished' after the first resent message is received
-            Assert.That(_session.IsResendRequested, Is.False, $"seq num {i}");
+            if (i < 5)
+                Assert.That(_session.IsResendRequested, Is.True, $"seq num {i}");
+            else
+                Assert.That(_session.IsResendRequested, Is.False, $"seq num {i}");
         }
     }
 
     [Test]
     public void TestBasicResendRequest_WithMax() {
         // just a regular boring resend request scenario, when MaxMessagesInResendRequest is configured
+        // aka "chunked"
 
         // Setup: Establish connection.  Server sends Seq too high, causing client to ResendRequest.
         _session!.MaxMessagesInResendRequest = 100;
@@ -861,4 +862,58 @@ public class SessionTest : SessionTestBase
         //   it must not discard the GapFill 5.
         Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(7));
     }
+
+    public void TestResendRequestGapFillBeforeFinish() {
+        // Setup: Establish connection.  Server sends Seq too high, causing client to ResendRequest.
+        Logon();
+        SendNOSMessage();
+        Assert.That(_session!.NextTargetMsgSeqNum, Is.EqualTo(3));
+        SendNOSMessage(8);
+
+        var resendReq = _responder.MsgLookup[MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(resendReq.GetULong(Tags.BeginSeqNo), Is.EqualTo(3));
+        Assert.That(resendReq.GetULong(Tags.EndSeqNo), Is.EqualTo(0));
+        Assert.That(_session.IsResendRequested);
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(3));
+
+        // Server sends gapfill to cover 3-6...
+        var seqReset = new QuickFix.FIX42.SequenceReset(new NewSeqNo(7));
+        seqReset.GapFillFlag = new GapFillFlag(true);
+        SendTheMessage(seqReset);
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(7));
+
+        // ...then resends 7 to complete the ResendRequest.
+        var nos = CreateNOSMessage(7);
+        nos.Header.SetField(new PossDupFlag(true));
+        nos.Header.SetField(new OrigSendingTime(DateTime.MinValue));
+        _session.Next(nos.ConstructString());
+
+        // After 7, the client processes 8 from its backlog queue.
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(9));
+    }
+
+    [Test]
+    public void TestResendRequestGapFillToFinish() {
+        // Setup: Establish connection.  Server sends Seq too high, causing client to ResendRequest.
+        Logon();
+        SendNOSMessage();
+        Assert.That(_session!.NextTargetMsgSeqNum, Is.EqualTo(3));
+        SendNOSMessage(8);
+
+        var resendReq = _responder.MsgLookup[MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(resendReq.GetULong(Tags.BeginSeqNo), Is.EqualTo(3));
+        Assert.That(resendReq.GetULong(Tags.EndSeqNo), Is.EqualTo(0));
+        Assert.That(_session.IsResendRequested);
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(3));
+
+        // Server sends gapfill to cover 3-7, which completes the ResendRequest.
+        // Then client processes 8 from its backlog queue.
+        var seqReset = new QuickFix.FIX42.SequenceReset(new NewSeqNo(8));
+        seqReset.GapFillFlag = new GapFillFlag(true);
+        SendTheMessage(seqReset);
+        // After the seqReset, engine processes 8 from the queue
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(9));
+        Assert.That(_session.IsResendRequested, Is.False);
+    }
 }
+
