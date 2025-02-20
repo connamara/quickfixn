@@ -15,7 +15,9 @@ What's New
 * **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
 ### next release
-* #nnn - placeholder
+
+**Non-breaking changes**
+* #939 - minor checkTooHigh/checkTooLow refactor in Session.cs (gbirchmeier)
 
 ### v1.13.0
 

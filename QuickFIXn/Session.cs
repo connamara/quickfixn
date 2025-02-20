@@ -897,7 +897,6 @@ namespace QuickFix
 
         public bool Verify(Message msg, bool checkTooHigh = true, bool checkTooLow = true)
         {
-            SeqNumType msgSeqNum = 0;
             string msgType;
 
             try
@@ -914,33 +913,35 @@ namespace QuickFix
                 }
 
                 if (checkTooHigh || checkTooLow)
-                    msgSeqNum = msg.Header.GetULong(Fields.Tags.MsgSeqNum);
+                {
+                    SeqNumType msgSeqNum = msg.Header.GetULong(Fields.Tags.MsgSeqNum);
 
-                if (checkTooHigh && IsTargetTooHigh(msgSeqNum))
-                {
-                    DoTargetTooHigh(msg, msgSeqNum);
-                    return false;
-                }
-                if (checkTooLow && IsTargetTooLow(msgSeqNum))
-                {
-                    DoTargetTooLow(msg, msgSeqNum);
-                    return false;
-                }
-
-                if ((checkTooHigh || checkTooLow) && _state.ResendRequested())
-                {
-                    ResendRange range = _state.GetResendRange();
-                    if (msgSeqNum >= range.EndSeqNo)
+                    if (checkTooHigh && IsTargetTooHigh(msgSeqNum))
                     {
-                        Log.OnEvent("ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.EndSeqNo + " has been satisfied.");
-                        _state.SetResendRange(0, 0);
+                        DoTargetTooHigh(msg, msgSeqNum);
+                        return false;
                     }
-                    else if (msgSeqNum >= range.ChunkEndSeqNo)
+                    if (checkTooLow && IsTargetTooLow(msgSeqNum))
                     {
-                        Log.OnEvent("Chunked ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.ChunkEndSeqNo + " has been satisfied.");
-                        SeqNumType newChunkEndSeqNo = Math.Min(range.EndSeqNo, range.ChunkEndSeqNo + MaxMessagesInResendRequest);
-                        GenerateResendRequestRange(msg.Header.GetString(Fields.Tags.BeginString), range.ChunkEndSeqNo + 1, newChunkEndSeqNo);
-                        range.ChunkEndSeqNo = newChunkEndSeqNo;
+                        DoTargetTooLow(msg, msgSeqNum);
+                        return false;
+                    }
+
+                    if (_state.ResendRequested())
+                    {
+                        ResendRange range = _state.GetResendRange();
+                        if (msgSeqNum >= range.EndSeqNo)
+                        {
+                            Log.OnEvent("ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.EndSeqNo + " has been satisfied.");
+                            _state.SetResendRange(0, 0);
+                        }
+                        else if (msgSeqNum >= range.ChunkEndSeqNo)
+                        {
+                            Log.OnEvent("Chunked ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.ChunkEndSeqNo + " has been satisfied.");
+                            SeqNumType newChunkEndSeqNo = Math.Min(range.EndSeqNo, range.ChunkEndSeqNo + MaxMessagesInResendRequest);
+                            GenerateResendRequestRange(msg.Header.GetString(Fields.Tags.BeginString), range.ChunkEndSeqNo + 1, newChunkEndSeqNo);
+                            range.ChunkEndSeqNo = newChunkEndSeqNo;
+                        }
                     }
                 }
 
