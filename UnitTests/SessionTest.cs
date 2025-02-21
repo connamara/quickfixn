@@ -702,23 +702,27 @@ public class SessionTest
     }
 
     [Test]
-    public void TestRequiresOrigSendingTime_Y()
+    public void TestPossDupFlagTrueRequiresOrigSendingTime_Y()
     {
         // Under default configuration, session should reject a ResendRequest that lacks OrigSendingTime unset
-
+        // When PossDupFlag is true
+        
         // Check default is as expected
         Assert.That(_session!.RequiresOrigSendingTime, Is.EqualTo(true));
 
         Logon();
-
+        
         QuickFix.FIX42.SequenceReset sr = new(new QuickFix.Fields.NewSeqNo(5));
         sr.GapFillFlag = new QuickFix.Fields.GapFillFlag(true);
         sr.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
 
-        sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(_seqNum--)); // so it triggers DoTargetTooLow code
+        sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(_seqNum--)); // even if it doesn't trigger DoTargetTooLow code
 
         SendTheMessage(sr);
 
+        Console.WriteLine($"MsgLookup Keys: {string.Join(",", _responder.MsgLookup.Keys)}");
+
+        Assert.That(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT));
         Assert.That(_responder.MsgLookup[QuickFix.Fields.MsgType.REJECT].Count == 1);
         QuickFix.FIX42.Reject rej =
             (_responder.MsgLookup[QuickFix.Fields.MsgType.REJECT].Peek() as QuickFix.FIX42.Reject)!;
@@ -726,9 +730,10 @@ public class SessionTest
     }
 
     [Test]
-    public void TestRequiresOrigSendingTime_N()
+    public void TestPossDupFlagTrueRequiresOrigSendingTime_N()
     {
         // Under OrigSendingTime=N, session will allow ResendRequest that lacks OrigSendingTime
+        // When PossDupFlag is true
         _session!.RequiresOrigSendingTime = false;
 
         Logon();
@@ -737,10 +742,55 @@ public class SessionTest
         sr.GapFillFlag = new QuickFix.Fields.GapFillFlag(true);
         sr.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
 
-        sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(_seqNum--)); // so it triggers DoTargetTooLow code
+        sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(_seqNum--)); // even if it doesn't trigger DoTargetTooLow code
 
         SendTheMessage(sr);
 
+        Assert.That(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT), Is.False);
+    }
+    
+    [Test]
+    public void TestPossDupFlagFalseRequiresOrigSendingTime_Y()
+    {
+        // Under default configuration, session should not reject a ResendRequest that lacks OrigSendingTime unset
+        // When PossDupFlag is false
+
+        // Check default is as expected
+        Assert.That(_session!.RequiresOrigSendingTime, Is.EqualTo(true));
+
+        Logon();
+        
+        QuickFix.FIX42.SequenceReset sr = new(new QuickFix.Fields.NewSeqNo(5));
+        sr.GapFillFlag = new QuickFix.Fields.GapFillFlag(true);
+        sr.Header.SetField(new QuickFix.Fields.PossDupFlag(false)); // so it triggers DoTargetTooLow code
+
+        sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(_seqNum)); // so it doesn't fail on MsgSeqNum too low
+
+        SendTheMessage(sr);
+
+        Console.WriteLine($"MsgLookup Keys: {string.Join(",", _responder.MsgLookup.Keys)}");
+        
+        Assert.That(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT), Is.False);
+    }
+
+    [Test]
+    public void TestPossDupFlagFalseRequiresOrigSendingTime_N()
+    {
+        // Under OrigSendingTime=N, session will allow ResendRequest that lacks OrigSendingTime
+        // When PossDupFlag is false
+        _session!.RequiresOrigSendingTime = false;
+
+        Logon();
+
+        QuickFix.FIX42.SequenceReset sr = new(new QuickFix.Fields.NewSeqNo(5));
+        sr.GapFillFlag = new QuickFix.Fields.GapFillFlag(true);
+        sr.Header.SetField(new QuickFix.Fields.PossDupFlag(false)); // so it triggers DoTargetTooLow code
+
+        sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(_seqNum)); // so it doesn't fail on MsgSeqNum too low
+
+        SendTheMessage(sr);
+
+        Console.WriteLine($"MsgLookup Keys: {string.Join(",", _responder.MsgLookup.Keys)}");
         Assert.That(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT), Is.False);
     }
 
