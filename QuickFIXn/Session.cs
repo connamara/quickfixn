@@ -913,6 +913,11 @@ namespace QuickFix
             try
             {
                 msgType = msg.Header.GetString(Fields.Tags.MsgType);
+                
+                bool possDupFlag = false;
+                if (msg.Header.IsSetField(Fields.Tags.PossDupFlag))
+                    possDupFlag = msg.Header.GetBoolean(Fields.Tags.PossDupFlag);
+                
                 string senderCompId = msg.Header.GetString(Fields.Tags.SenderCompID);
                 string targetCompId = msg.Header.GetString(Fields.Tags.TargetCompID);
 
@@ -935,6 +940,11 @@ namespace QuickFix
                     if (checkTooLow && IsTargetTooLow(msgSeqNum))
                     {
                         DoTargetTooLow(msg, msgSeqNum);
+                        return false;
+                    }
+                    else if (possDupFlag && RequiresOrigSendingTime && !msg.Header.IsSetField(Fields.Tags.OrigSendingTime))
+                    {
+                        GenerateReject(msg, FixValues.SessionRejectReason.REQUIRED_TAG_MISSING, Fields.Tags.OrigSendingTime);
                         return false;
                     }
 
