@@ -690,8 +690,6 @@ public class SessionTest
 
         SendTheMessage(sr);
 
-        Console.WriteLine($"MsgLookup Keys: {string.Join(",", _responder.MsgLookup.Keys)}");
-
         Assert.That(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT));
         Assert.That(_responder.MsgLookup[QuickFix.Fields.MsgType.REJECT].Count == 1);
         QuickFix.FIX42.Reject rej =
@@ -737,8 +735,6 @@ public class SessionTest
         sr.Header.SetField(new QuickFix.Fields.MsgSeqNum(_seqNum)); // so it doesn't fail on MsgSeqNum too low
 
         SendTheMessage(sr);
-
-        Console.WriteLine($"MsgLookup Keys: {string.Join(",", _responder.MsgLookup.Keys)}");
         
         Assert.That(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT), Is.False);
     }
@@ -760,7 +756,6 @@ public class SessionTest
 
         SendTheMessage(sr);
 
-        Console.WriteLine($"MsgLookup Keys: {string.Join(",", _responder.MsgLookup.Keys)}");
         Assert.That(_responder.MsgLookup.ContainsKey(QuickFix.Fields.MsgType.REJECT), Is.False);
     }
 
