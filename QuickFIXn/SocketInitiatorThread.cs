@@ -90,7 +90,7 @@ public class SocketInitiatorThread : IResponder
         {
             int bytesRead = ReadSome(_readBuffer, 1000);
             if (bytesRead > 0)
-                _parser.AddToStream(_readBuffer, bytesRead);
+                _parser.AddToStream(new ReadOnlySpan<byte>(_readBuffer, 0, bytesRead));
             else
                 Session.Next();
 
@@ -189,8 +189,10 @@ public class SocketInitiatorThread : IResponder
             throw new ApplicationException("Initiator is not connected (uninitialized stream)");
         }
 
-        byte[] rawData = CharEncoding.GetBytes(data);
-        _stream.Write(rawData, 0, rawData.Length);
+        ValueDisposable disposable = CharEncoding.GetBytes(data, out ReadOnlySpan<byte> rawData);
+        _stream.Write(rawData);
+        disposable.Dispose();
+
         return true;
     }
 
