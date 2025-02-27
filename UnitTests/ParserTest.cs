@@ -12,11 +12,6 @@ public class ParserTest
 {
     private const string NormalLength   = "8=FIX.4.2\x01" + "9=12\x01" + "35=A\x01" + " 108=30\x01" + "10=31\x01";
 
-    public byte[] StrToBytes(string str)
-    {
-        return CharEncoding.GetBytes(str);
-    }
-
     [Test]
     public void ExtractLength()
     {
@@ -77,7 +72,10 @@ public class ParserTest
                 };
 
                 batch.Add(message);
-                parser.AddToStream(CharEncoding.GetBytes(message));
+                using (IDisposable _ = CharEncoding.GetBytes(message, out ArraySegment<byte> bytesMsg))
+                {
+                    parser.AddToStream(new Span<byte>(bytesMsg.Array, bytesMsg.Offset, bytesMsg.Count));
+                }
             }
 
             for (int i = 0; i < batchSize; i++)
@@ -109,13 +107,19 @@ public class ParserTest
 
         for(int i = 0; i < messageParts.Count - 1; i++)
         {
-            parser.AddToStream(CharEncoding.GetBytes(messageParts[i]));
+            using (IDisposable _ = CharEncoding.GetBytes(messageParts[i], out ArraySegment<byte> bytesMsg))
+            {
+                parser.AddToStream(new Span<byte>(bytesMsg.Array, bytesMsg.Offset, bytesMsg.Count));
+            }
             Assert.That(parser.ReadFixMessage(out _), Is.False);
         }
 
         string expectedMessage = string.Join("", messageParts.Skip(1));
 
-        parser.AddToStream(CharEncoding.GetBytes(messageParts[^1]));
+        using (IDisposable _ = CharEncoding.GetBytes(messageParts[^1], out ArraySegment<byte> bytesMsg2))
+        {
+            parser.AddToStream(new Span<byte>(bytesMsg2.Array, bytesMsg2.Offset, bytesMsg2.Count));
+        }
         Assert.That(parser.ReadFixMessage(out string actualMessage), Is.True);
         Assert.That(actualMessage, Is.EqualTo(expectedMessage));
     }
@@ -123,11 +127,17 @@ public class ParserTest
     [Test]
     public void ReadFixMessageWithBadLength()
     {
-        byte[] fixMsg = StrToBytes("8=TEST\x01" + "9=TEST\x01" + "35=TEST\x01" + "49=SS1\x01" + "56=RORE\x01" + "34=3\x01" + "52=20050222-16:45:53\x01" + "10=TEST\x01");
+        const string fixMsg1 = "8=TEST\x01" + "9=TEST\x01" + "35=TEST\x01" + "49=SS1\x01" + "56=RORE\x01" + "34=3\x01" + "52=20050222-16:45:53\x01" + "10=TEST\x01";
 
         Parser parser = new Parser();
-        parser.AddToStream(fixMsg);
-        parser.AddToStream(StrToBytes(NormalLength));
+        using (IDisposable _ = CharEncoding.GetBytes(fixMsg1, out ArraySegment<byte> bytesMsg1))
+        {
+            parser.AddToStream(new Span<byte>(bytesMsg1.Array, bytesMsg1.Offset, bytesMsg1.Count));
+        }
+        using (IDisposable _ = CharEncoding.GetBytes(NormalLength, out ArraySegment<byte> bytesMsg2))
+        {
+            parser.AddToStream(new Span<byte>(bytesMsg2.Array, bytesMsg2.Offset, bytesMsg2.Count));
+        }
 
         Assert.Throws<MessageParseError>(delegate { parser.ReadFixMessage(out _); });
         
@@ -153,8 +163,10 @@ public class ParserTest
         string fixMsg2 = string.Join(Message.SOH, fixMsgFields2) + Message.SOH;
 
         Parser parser = new Parser();
-        byte[] combined = StrToBytes(fixMsg1 + fixMsg2);
-        parser.AddToStream(combined, combined.Length);
+        using (IDisposable _ = CharEncoding.GetBytes(fixMsg1 + fixMsg2, out ArraySegment<byte> combined))
+        {
+            parser.AddToStream(new Span<byte>(combined.Array, combined.Offset, combined.Count));
+        }
 
         Assert.That(parser.ReadFixMessage(out string readFixMsg1), Is.True);
         Assert.That(readFixMsg1, Is.EqualTo(fixMsg1));
@@ -170,8 +182,10 @@ public class ParserTest
         string fixMsg1 = string.Join("\x01", fixMsgFields1) + "\x01";
 
         Parser parser = new Parser();
-        byte[] bytesMsg = StrToBytes(fixMsg1);
-        parser.AddToStream(bytesMsg, bytesMsg.Length);
+        using (IDisposable _ = CharEncoding.GetBytes(fixMsg1, out ArraySegment<byte> bytesMsg))
+        {
+            parser.AddToStream(new Span<byte>(bytesMsg.Array, bytesMsg.Offset, bytesMsg.Count));
+        }
 
         Assert.That(parser.ReadFixMessage(out string readFixMsg1), Is.True);
         Assert.That(readFixMsg1, Is.EqualTo(fixMsg1));
@@ -198,11 +212,11 @@ public class ParserTest
         byte[] bytes = BytesForEncodingTest();
 
         Parser parserIso = new Parser(encodingIso8859);
-        parserIso.AddToStream(bytes, bytes.Length);
+        parserIso.AddToStream(new Span<byte>(bytes, 0, bytes.Length));
         Assert.That(parserIso.ReadFixMessage(out string isoMessage), Is.True);
 
         Parser parserAlt = new Parser(encodingAlt);
-        parserAlt.AddToStream(bytes, bytes.Length);
+        parserAlt.AddToStream(new Span<byte>(bytes, 0, bytes.Length));
         Assert.That(parserAlt.ReadFixMessage(out string altMessage), Is.True);
 
         Assert.That(isoMessage, Contains.Substring("148=ïèâî"));
