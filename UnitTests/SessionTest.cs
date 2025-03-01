@@ -170,7 +170,7 @@ public class SessionTest
         return refTagField.Value == refTag;
     }
 
-    public void SendNOSMessage()
+    public QuickFix.FIX42.NewOrderSingle CreateNOSMessage(SeqNumType n)
     {
         QuickFix.FIX42.NewOrderSingle order = new QuickFix.FIX42.NewOrderSingle(
             new QuickFix.Fields.ClOrdID("1"),
@@ -182,9 +182,19 @@ public class SessionTest
 
         order.Header.SetField(new QuickFix.Fields.TargetCompID(_sessionId.SenderCompID));
         order.Header.SetField(new QuickFix.Fields.SenderCompID(_sessionId.TargetCompID));
-        order.Header.SetField(new QuickFix.Fields.MsgSeqNum(_seqNum++));
+        order.Header.SetField(new QuickFix.Fields.SendingTime(DateTime.UtcNow));
+        order.Header.SetField(new QuickFix.Fields.MsgSeqNum(n));
+        return order;
+    }
 
-        _session!.Next(order.ConstructString());
+    public void SendNOSMessage()
+    {
+        _session!.Next(CreateNOSMessage(_seqNum++).ConstructString());
+    }
+
+    public void SendNOSMessage(SeqNumType n)
+    {
+        _session!.Next(CreateNOSMessage(n).ConstructString());
     }
 
     public void SendResendRequest(SeqNumType begin, SeqNumType end)
@@ -823,6 +833,113 @@ public class SessionTest
 
         SendNOSMessage();
         Assert.That(!SENT_RESEND_REQUEST());
+    }
+
+    [Test]
+    public void TestGenerateResendRequest() {
+        _session!.NextTargetMsgSeqNum = 100;
+
+        // <= FIX41
+        _session.GenerateResendRequest(QuickFix.FixValues.BeginString.FIX41, 125);
+        Assert.That(_responder.GetCount(QuickFix.Fields.MsgType.RESEND_REQUEST), Is.EqualTo(1));
+        var rr = _responder.MsgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(rr.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(100));
+        Assert.That(rr.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(999999));
+
+        // >= FIX42
+        _session.GenerateResendRequest(QuickFix.FixValues.BeginString.FIX42, 125);
+        Assert.That(_responder.GetCount(QuickFix.Fields.MsgType.RESEND_REQUEST), Is.EqualTo(1));
+        rr = _responder.MsgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(rr.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(100));
+        Assert.That(rr.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(0));
+
+        // Max resend is set: request is greater than max resend
+        _session.MaxMessagesInResendRequest = 100;
+        _session.GenerateResendRequest(QuickFix.FixValues.BeginString.FIX42, 225);
+        Assert.That(_responder.GetCount(QuickFix.Fields.MsgType.RESEND_REQUEST), Is.EqualTo(1));
+        rr = _responder.MsgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(rr.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(100));
+        Assert.That(rr.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(199));
+
+        // Max resend is set: request is lesser than max resend
+        _session.GenerateResendRequest(QuickFix.FixValues.BeginString.FIX42, 175);
+        Assert.That(_responder.GetCount(QuickFix.Fields.MsgType.RESEND_REQUEST), Is.EqualTo(1));
+        rr = _responder.MsgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(rr.GetInt(QuickFix.Fields.Tags.BeginSeqNo), Is.EqualTo(100));
+        Assert.That(rr.GetInt(QuickFix.Fields.Tags.EndSeqNo), Is.EqualTo(174));
+    }
+
+    [Test]
+    public void TestBasicResendRequest_NoMax() {
+        // just a regular boring resend request scenario, when MaxMessagesInResendRequest is unset
+
+        // Setup: Establish connection.  Server sends Seq too high, causing client to ResendRequest.
+        Logon();
+        SendNOSMessage();
+        Assert.That(_session!.NextTargetMsgSeqNum, Is.EqualTo(3));
+
+        SendNOSMessage(6);
+        Assert.That(_responder.GetCount(QuickFix.Fields.MsgType.RESEND_REQUEST), Is.EqualTo(1));
+
+        var resendRequest =
+            (QuickFix.FIX42.ResendRequest)_responder.MsgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(resendRequest.BeginSeqNo.Value, Is.EqualTo(3));
+        Assert.That(resendRequest.EndSeqNo.Value, Is.EqualTo(0)); // 0 is infinity, but actually we just want until 5
+
+        Assert.That(_session.IsResendRequested, Is.True);
+
+        // Server sends 3 resent messages and 2 new messages
+        // (client already got seq=6)
+        foreach (SeqNumType i in new[] { 3, 4, 5, 7, 8 }) {
+            var msg = CreateNOSMessage(i);
+            if (i < 7) {
+                msg.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
+                msg.Header.SetField(new QuickFix.Fields.OrigSendingTime(DateTime.MinValue)); // (value doesn't matter for test)
+                _session.Next(msg.ConstructString());
+            }
+            _session.Next(msg.ConstructString());
+
+            // When EndSeqNo is 0, we mark the ResendResend as 'finished' after the first resent message is received
+            Assert.That(_session.IsResendRequested, Is.False, $"seq num {i}");
+        }
+    }
+
+    [Test]
+    public void TestBasicResendRequest_WithMax() {
+        // just a regular boring resend request scenario, when MaxMessagesInResendRequest is configured
+
+        // Setup: Establish connection.  Server sends Seq too high, causing client to ResendRequest.
+        _session!.MaxMessagesInResendRequest = 100;
+        Logon();
+        SendNOSMessage();
+        Assert.That(_session!.NextTargetMsgSeqNum, Is.EqualTo(3));
+
+        SendNOSMessage(6);
+        Assert.That(_responder.GetCount(QuickFix.Fields.MsgType.RESEND_REQUEST), Is.EqualTo(1));
+
+        var resendRequest =
+            (QuickFix.FIX42.ResendRequest)_responder.MsgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(resendRequest.BeginSeqNo.Value, Is.EqualTo(3));
+        Assert.That(resendRequest.EndSeqNo.Value, Is.EqualTo(5));
+
+        Assert.That(_session.IsResendRequested, Is.True);
+
+        // Server sends 3 resent messages and 2 new messages
+        // (client already got seq=6)
+        foreach (SeqNumType i in new[] { 3, 4, 5, 7, 8 }) {
+            var msg = CreateNOSMessage(i);
+            if (i < 7) {
+                msg.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
+                msg.Header.SetField(new QuickFix.Fields.OrigSendingTime(DateTime.MinValue)); // (value doesn't matter for test)
+                _session.Next(msg.ConstructString());
+            }
+            _session.Next(msg.ConstructString());
+
+            if (i < 5)
+                Assert.That(_session.IsResendRequested, Is.True, $"seq num {i}");
+            else
+                Assert.That(_session.IsResendRequested, Is.False, $"seq num {i}");
+        }
     }
 }
 
