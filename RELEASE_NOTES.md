@@ -19,6 +19,7 @@ What's New
 **Non-breaking changes**
 * #939 - minor checkTooHigh/checkTooLow refactor in Session.cs (gbirchmeier)
 * #941 - clarify ResendRequest-related log message, add UT coverage for Session (gbirchmeier)
+* #895 - fix: When SSLCACertificate is empty an error is logged and it fails to start (dckorben)
 
 ### v1.13.0
 
