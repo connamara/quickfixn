@@ -18,6 +18,7 @@ What's New
 
 **Non-breaking changes**
 * #939 - minor checkTooHigh/checkTooLow refactor in Session.cs (gbirchmeier)
+* #941 - clarify ResendRequest-related log message, add UT coverage for Session (gbirchmeier)
 
 ### v1.13.0
 
