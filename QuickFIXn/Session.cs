@@ -55,7 +55,6 @@ namespace QuickFix
             }
         }
 
-
         /// <summary>
         /// Session setting for heartbeat interval (in seconds)
         /// </summary>
@@ -214,6 +213,14 @@ namespace QuickFix
         /// part of a resend request (PossDup=Y) to omit the OrigSendingTime
         /// </summary>
         public bool RequiresOrigSendingTime { get; set; }
+
+        /// <summary>
+        /// True if session is waiting for ResendRequest content.
+        /// If the RR's EndSeqNo is 0 aka infinite, then this becomes
+        /// false after the first resent message is received.
+        /// Else it remains true until EndSeqNo is received.
+        /// </summary>
+        internal bool IsResendRequested => _state.ResendRequested();
 
         #endregion
 
@@ -927,19 +934,22 @@ namespace QuickFix
                         return false;
                     }
 
-                    if (_state.ResendRequested())
+                    if (IsResendRequested)
                     {
                         ResendRange range = _state.GetResendRange();
                         if (msgSeqNum >= range.EndSeqNo)
                         {
-                            Log.OnEvent("ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.EndSeqNo + " has been satisfied.");
+                            Log.OnEvent(
+                                range.EndSeqNo == 0
+                                    ? $"ResendRequest for messages FROM: {range.BeginSeqNo} TO: {range.EndSeqNo} has been satisfied."
+                                    : $"ResendRequest for messages FROM: {range.BeginSeqNo} TO: {range.EndSeqNo} has been started.");
                             _state.SetResendRange(0, 0);
                         }
                         else if (msgSeqNum >= range.ChunkEndSeqNo)
                         {
                             Log.OnEvent("Chunked ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.ChunkEndSeqNo + " has been satisfied.");
                             SeqNumType newChunkEndSeqNo = Math.Min(range.EndSeqNo, range.ChunkEndSeqNo + MaxMessagesInResendRequest);
-                            GenerateResendRequestRange(msg.Header.GetString(Fields.Tags.BeginString), range.ChunkEndSeqNo + 1, newChunkEndSeqNo);
+                            GenerateResendRequestRange(msg.Header.GetString(Tags.BeginString), range.ChunkEndSeqNo + 1, newChunkEndSeqNo);
                             range.ChunkEndSeqNo = newChunkEndSeqNo;
                         }
                     }
@@ -1048,7 +1058,7 @@ namespace QuickFix
             Log.OnEvent("MsgSeqNum too high, expecting " + _state.NextTargetMsgSeqNum + " but received " + msgSeqNum);
             _state.Queue(msgSeqNum, msg);
 
-            if (_state.ResendRequested())
+            if (IsResendRequested)
             {
                 ResendRange range = _state.GetResendRange();
 
@@ -1156,7 +1166,8 @@ namespace QuickFix
             return false;
         }
 
-        protected void GenerateResendRequest(string beginString, SeqNumType msgSeqNum)
+        // internal so it can be unit tested
+        internal void GenerateResendRequest(string beginString, SeqNumType msgSeqNum)
         {
             SeqNumType beginSeqNum = _state.NextTargetMsgSeqNum;
             SeqNumType endRangeSeqNum = msgSeqNum - 1;
