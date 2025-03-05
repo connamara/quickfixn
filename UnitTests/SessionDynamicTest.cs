@@ -333,7 +333,10 @@ public class SessionDynamicTest
         msg.Header.SetField(new QuickFix.Fields.SendingTime(System.DateTime.UtcNow));
         msg.SetField(new QuickFix.Fields.HeartBtInt(300));
         // Simple logon message
-        s.Send(CharEncoding.GetBytes(msg.ConstructString()));
+        using (IDisposable _ = CharEncoding.GetBytes(msg.ConstructString(), out ArraySegment<byte> bytes))
+        {
+            s.Send(new ReadOnlySpan<byte>(bytes.Array, bytes.Offset, bytes.Count), SocketFlags.None);
+        }
     }
 
     void ClearLogs()
