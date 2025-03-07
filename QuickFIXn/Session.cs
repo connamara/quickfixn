@@ -1196,7 +1196,7 @@ namespace QuickFix
         /// Create and send a logon
         /// </summary>
         /// <returns>true of logon was successfully sent</returns>
-        protected bool GenerateLogon()
+        internal bool GenerateLogon()
         {
             Message logon = _msgFactory.Create(SessionID.BeginString, Fields.MsgType.LOGON);
             logon.SetField(new Fields.EncryptMethod(0));
