@@ -622,11 +622,11 @@ namespace QuickFix
             {
                 int receivedBodyLength = Header.GetInt(Tags.BodyLength);
                 if (BodyLength() != receivedBodyLength)
-                    throw new InvalidMessage("Expected BodyLength=" + BodyLength() + ", Received BodyLength=" + receivedBodyLength + ", Message.SeqNum=" + Header.GetInt(Tags.MsgSeqNum));
+                    throw new InvalidMessage("Expected BodyLength=" + BodyLength() + ", Received BodyLength=" + receivedBodyLength + ", Message.SeqNum=" + Header.GetULong(Tags.MsgSeqNum));
 
                 int receivedCheckSum = Trailer.GetInt(Tags.CheckSum);
                 if (CheckSum() != receivedCheckSum)
-                    throw new InvalidMessage("Expected CheckSum=" + CheckSum() + ", Received CheckSum=" + receivedCheckSum + ", Message.SeqNum=" + Header.GetInt(Tags.MsgSeqNum));
+                    throw new InvalidMessage("Expected CheckSum=" + CheckSum() + ", Received CheckSum=" + receivedCheckSum + ", Message.SeqNum=" + Header.GetULong(Tags.MsgSeqNum));
             }
             catch (FieldNotFoundException e)
             {
