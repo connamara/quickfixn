@@ -20,6 +20,7 @@ What's New
 * #939 - minor checkTooHigh/checkTooLow refactor in Session.cs (gbirchmeier)
 * #941 - clarify ResendRequest-related log message, add UT coverage for Session (gbirchmeier)
 * #895 - fix: When SSLCACertificate is empty an error is logged and it fails to start (dckorben)
+* #942 - fix #942: field 369 (LastMsgSeqNumProcessed) wrong in ResendRequest message (gbirchmeier)
 
 ### v1.13.0
 

@@ -348,7 +348,7 @@ namespace QuickFix
         {
             message.Header.RemoveField(Fields.Tags.PossDupFlag);
             message.Header.RemoveField(Fields.Tags.OrigSendingTime);
-            return SendRaw(message, 0);
+            return SendRaw(message);
         }
 
         /// <summary>
@@ -948,8 +948,19 @@ namespace QuickFix
                         else if (msgSeqNum >= range.ChunkEndSeqNo)
                         {
                             Log.OnEvent("Chunked ResendRequest for messages FROM: " + range.BeginSeqNo + " TO: " + range.ChunkEndSeqNo + " has been satisfied.");
+                            SeqNumType newStart = range.ChunkEndSeqNo + 1;
                             SeqNumType newChunkEndSeqNo = Math.Min(range.EndSeqNo, range.ChunkEndSeqNo + MaxMessagesInResendRequest);
-                            GenerateResendRequestRange(msg.Header.GetString(Tags.BeginString), range.ChunkEndSeqNo + 1, newChunkEndSeqNo);
+
+                            Message resendRequest = CreateResendRequest(msg.Header.GetString(Tags.BeginString),
+                                newStart, newChunkEndSeqNo);
+                            if (EnableLastMsgSeqNumProcessed)
+                                resendRequest.Header.SetField(new LastMsgSeqNumProcessed(msgSeqNum));
+
+                            if (SendRaw(resendRequest))
+                                Log.OnEvent($"Sent ResendRequest FROM: {newStart} TO: {newChunkEndSeqNo}");
+                            else
+                                Log.OnEvent($"Error sending ResendRequest ({newStart}, {newChunkEndSeqNo})");
+
                             range.ChunkEndSeqNo = newChunkEndSeqNo;
                         }
                     }
@@ -1145,28 +1156,18 @@ namespace QuickFix
 
             reject.SetField(new Text(reason));
             Log.OnEvent("Reject sent for Message: " + msgSeqNum + " Reason:" + reason);
-            SendRaw(reject, 0);
+            SendRaw(reject);
         }
 
-        protected bool GenerateResendRequestRange(string beginString, SeqNumType startSeqNum, SeqNumType endSeqNum)
+        private Message CreateResendRequest(string beginString, SeqNumType startSeqNum, SeqNumType endSeqNum)
         {
             Message resendRequest = _msgFactory.Create(beginString, MsgType.RESEND_REQUEST);
-
-            resendRequest.SetField(new Fields.BeginSeqNo(startSeqNum));
-            resendRequest.SetField(new Fields.EndSeqNo(endSeqNum));
-
+            resendRequest.SetField(new BeginSeqNo(startSeqNum));
+            resendRequest.SetField(new EndSeqNo(endSeqNum));
             InitializeHeader(resendRequest);
-            if (SendRaw(resendRequest, 0))
-            {
-                Log.OnEvent("Sent ResendRequest FROM: " + startSeqNum + " TO: " + endSeqNum);
-                return true;
-            }
-
-            Log.OnEvent("Error sending ResendRequest (" + startSeqNum + " ," + endSeqNum + ")");
-            return false;
+            return resendRequest;
         }
 
-        // internal so it can be unit tested
         internal void GenerateResendRequest(string beginString, SeqNumType msgSeqNum)
         {
             SeqNumType beginSeqNum = _state.NextTargetMsgSeqNum;
@@ -1185,11 +1186,19 @@ namespace QuickFix
                 endChunkSeqNum = endRangeSeqNum;
             }
 
-            if (!GenerateResendRequestRange(beginString, beginSeqNum, endChunkSeqNum)) {
+            Message resendRequest = CreateResendRequest(beginString, beginSeqNum, endChunkSeqNum);
+
+            if (EnableLastMsgSeqNumProcessed)
+                resendRequest.Header.SetField(new LastMsgSeqNumProcessed(msgSeqNum));
+
+            if (SendRaw(resendRequest))
+            {
+                Log.OnEvent($"Sent ResendRequest FROM: {beginSeqNum} TO: {endChunkSeqNum}");
+                _state.SetResendRange(beginSeqNum, endRangeSeqNum, endChunkSeqNum);
                 return;
             }
 
-            _state.SetResendRange(beginSeqNum, endRangeSeqNum, endChunkSeqNum);
+            Log.OnEvent("Error sending ResendRequest (" + beginSeqNum + " ," + endChunkSeqNum + ")");
         }
 
         /// <summary>
@@ -1214,7 +1223,7 @@ namespace QuickFix
             InitializeHeader(logon);
             _state.LastReceivedTimeDT = DateTime.UtcNow;
             _state.TestRequestCounter = 0;
-            _state.SentLogon = SendRaw(logon, 0);
+            _state.SentLogon = SendRaw(logon);
             return _state.SentLogon;
         }
 
@@ -1230,7 +1239,7 @@ namespace QuickFix
                 logon.Header.SetField(new Fields.LastMsgSeqNumProcessed(otherLogon.Header.GetULong(Tags.MsgSeqNum)));
 
             InitializeHeader(logon);
-            _state.SentLogon = SendRaw(logon, 0);
+            _state.SentLogon = SendRaw(logon);
             return _state.SentLogon;
         }
 
@@ -1239,7 +1248,7 @@ namespace QuickFix
             Message testRequest = _msgFactory.Create(SessionID.BeginString, Fields.MsgType.TEST_REQUEST);
             InitializeHeader(testRequest);
             testRequest.SetField(new Fields.TestReqID(id));
-            SendRaw(testRequest, 0);
+            SendRaw(testRequest);
         }
 
         /// <summary>
@@ -1294,14 +1303,14 @@ namespace QuickFix
                     Log.OnEvent("Error: No message sequence number: " + other);
                 }
             }
-            _state.SentLogout = SendRaw(logout, 0);
+            _state.SentLogout = SendRaw(logout);
         }
 
         public void GenerateHeartbeat()
         {
             Message heartbeat = _msgFactory.Create(SessionID.BeginString, Fields.MsgType.HEARTBEAT);
             InitializeHeader(heartbeat);
-            SendRaw(heartbeat, 0);
+            SendRaw(heartbeat);
         }
 
         public void GenerateHeartbeat(Message testRequest)
@@ -1318,7 +1327,7 @@ namespace QuickFix
             }
             catch (FieldNotFoundException)
             { }
-            SendRaw(heartbeat, 0);
+            SendRaw(heartbeat);
         }
 
         internal void GenerateReject(MessageBuilder msgBuilder, FixValues.SessionRejectReason reason, int field)
@@ -1391,7 +1400,7 @@ namespace QuickFix
             if (!_state.ReceivedLogon)
                 throw new QuickFIXException("Tried to send a reject while not logged on");
 
-            SendRaw(reject, 0);
+            SendRaw(reject);
         }
 
         protected void PopulateSessionRejectReason(Message reject, int field, string text, bool includeFieldInfo)
@@ -1541,7 +1550,13 @@ namespace QuickFix
             return AdminMsgTypes.Contains(msgType);
         }
 
-        protected bool SendRaw(Message message, SeqNumType seqNum)
+        /// <summary>
+        /// Update the header as needed and send the message
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="seqNum">if non-zero, set this seqno in the message (else leave existing value alone)</param>
+        /// <returns></returns>
+        protected bool SendRaw(Message message, SeqNumType seqNum = 0UL)
         {
             lock (_sync)
             {
@@ -1586,7 +1601,7 @@ namespace QuickFix
                 }
 
                 string messageString = message.ConstructString();
-                if (0 == seqNum)
+                if (0UL == seqNum)
                     Persist(message, messageString);
                 return Send(messageString);
             }
