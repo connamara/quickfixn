@@ -9,7 +9,7 @@ namespace AcceptanceTest;
 
 internal class Runner : IDisposable
 {
-    private readonly IPEndPoint _endPoint;
+    private readonly IPEndPoint _endPoint;   
     private readonly Dictionary<int, IReflector> _connections;
 
     public Runner(IPEndPoint endPoint)
