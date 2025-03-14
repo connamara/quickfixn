@@ -66,11 +66,11 @@ public class SessionTest
         SendLogon(new QuickFix.FIX40.Logon());
     }
 
-    private void SendLogon(QuickFix.Message msg)
+    private void SendLogon(QuickFix.Message msg, SeqNumType n = 0)
     {
         msg.Header.SetField(new QuickFix.Fields.TargetCompID(_sessionId.SenderCompID));
         msg.Header.SetField(new QuickFix.Fields.SenderCompID(_sessionId.TargetCompID));
-        msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(_seqNum++));
+        msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(n == 0 ? _seqNum++ : n));
         msg.Header.SetField(new QuickFix.Fields.SendingTime(DateTime.UtcNow));
         msg.SetField(new QuickFix.Fields.HeartBtInt(1));
         _session!.Next(msg.ConstructString());
@@ -521,6 +521,26 @@ public class SessionTest
         msg = _responder.MsgLookup[QuickFix.Fields.MsgType.NEW_ORDER_D].Last();
         lastSeqNumProcessed = msg.Header.GetULong(QuickFix.Fields.Tags.LastMsgSeqNumProcessed);
         Assert.That(lastSeqNumProcessed == 1);
+    }
+
+    [Test]
+    public void TestLastMsgSeqNumProcessedAfterTooHighLogon()
+    {
+        // issue #942
+        _session!.EnableLastMsgSeqNumProcessed = true;
+        _session.NextTargetMsgSeqNum = 666;
+
+        // Logon initiated by session
+        _session.GenerateLogon();
+
+        // Logon response with seqnum too high
+        var logonMsg = new QuickFix.FIX42.Logon();
+        SendLogon(logonMsg, 800);
+
+        // Session responds with a ResendRequest
+        Assert.That(_responder.MsgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Count, Is.EqualTo(1));
+        QuickFix.Message rr = _responder.MsgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(rr.Header.GetULong(QuickFix.Fields.Tags.LastMsgSeqNumProcessed), Is.EqualTo(800));
     }
 
     [Test]
