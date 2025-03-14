@@ -32,21 +32,32 @@ public static class CharEncoding
     public static byte[] GetBytes(string data) => SelectedEncoding.GetBytes(data);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static IDisposable GetBytes(ReadOnlySpan<char> data, out ArraySegment<byte> bytes)
+    internal static ValueDisposable GetBytes(ReadOnlySpan<char> data, out ReadOnlySpan<byte> bytes)
     {
+        if (data.IsEmpty)
+        {
+            bytes = ReadOnlySpan<byte>.Empty;
+            return ValueDisposable.Empty;
+        }
+
         System.Text.Encoding encoding = SelectedEncoding;
         int byteCount = encoding.GetByteCount(data);
-        byte[] arr = ArrayPool<byte>.Shared.Rent(byteCount);
+        byte[] buffer = ArrayPool<byte>.Shared.Rent(byteCount);
 
-        byteCount = encoding.GetBytes(data, arr);
-        bytes = new ArraySegment<byte>(arr, 0, byteCount);
+        encoding.GetBytes(data, new Span<byte>(buffer, 0, byteCount));
+        bytes = new ReadOnlySpan<byte>(buffer, 0, byteCount);
 
-        return new ValueDisposable(arr);
+        return new ValueDisposable(buffer);
     }
+}
 
-    private readonly struct ValueDisposable(byte[] bytes) : IDisposable
+internal readonly struct ValueDisposable(byte[] bytes) : IDisposable
+{
+    public static readonly ValueDisposable Empty = new(Array.Empty<byte>());
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void Dispose()
     {
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Dispose() => ArrayPool<byte>.Shared.Return(bytes);
+        if (bytes.Length > 0) ArrayPool<byte>.Shared.Return(bytes);
     }
 }

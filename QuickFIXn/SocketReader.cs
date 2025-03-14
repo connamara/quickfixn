@@ -46,7 +46,7 @@ public class SocketReader : IDisposable
         {
             int bytesRead = ReadSome(_readBuffer, 1000);
             if (bytesRead > 0)
-                _parser.AddToStream(new Span<byte>(_readBuffer, 0, bytesRead));
+                _parser.AddToStream(new ReadOnlySpan<byte>(_readBuffer, 0, bytesRead));
             else
                 _qfSession?.Next();
 
@@ -271,10 +271,15 @@ public class SocketReader : IDisposable
 
     public int Send(string data)
     {
-        using (IDisposable _ = CharEncoding.GetBytes(data, out ArraySegment<byte> rawData))
+        ValueDisposable disposable = CharEncoding.GetBytes(data, out ReadOnlySpan<byte> rawData);
+        try
         {
-            _stream.Write(new ReadOnlySpan<byte>(rawData.Array, rawData.Offset, rawData.Count));
-            return rawData.Count;
+            _stream.Write(rawData);
+            return rawData.Length;
+        }
+        finally
+        {
+            disposable.Dispose();
         }
     }
 

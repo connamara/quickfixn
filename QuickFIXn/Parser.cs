@@ -32,9 +32,9 @@ public class Parser
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public void AddToStream(byte[] data, int bytesAdded) => AddToStream(data.AsSpan(0, bytesAdded));
+    public void AddToStream(byte[] data, int bytesAdded) => AddToStream(new ReadOnlySpan<byte>(data, 0, bytesAdded));
 
-    public void AddToStream(Span<byte> data)
+    public void AddToStream(ReadOnlySpan<byte> data)
     {
         // We attempt to copy the new bytes into the existing buffer.
         if (data.TryCopyTo(_buffer.AsSpan(_bufferStartIndex + _usedBufferLength)))
