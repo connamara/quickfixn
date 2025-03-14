@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Text;
 using QuickFix.Util;
@@ -10,16 +11,11 @@ namespace QuickFix.Store;
 /// </summary>
 public class FileStore : IMessageStore
 {
-    private class MsgDef
+    private readonly struct MsgDef(long index, int size)
     {
-        public long Index { get; }
-        public int Size { get; }
+        public long Index { get; } = index;
 
-        public MsgDef(long index, int size)
-        {
-            Index = index;
-            Size = size;
-        }
+        public int Size { get; } = size;
     }
 
     private readonly string _seqNumsFileName;
@@ -198,13 +194,19 @@ public class FileStore : IMessageStore
     {
         for (SeqNumType i = startSeqNum; i <= endSeqNum; i++)
         {
-            if (_offsets.ContainsKey(i))
+            if (_offsets.TryGetValue(i, out MsgDef msgDef))
             {
-                _msgFile.Seek(_offsets[i].Index, System.IO.SeekOrigin.Begin);
-                byte[] msgBytes = new byte[_offsets[i].Size];
-                _msgFile.Read(msgBytes, 0, msgBytes.Length);
-
-                messages.Add(CharEncoding.SelectedEncoding.GetString(msgBytes));
+                _msgFile.Seek(msgDef.Index, System.IO.SeekOrigin.Begin);
+                byte[] msgBytes = ArrayPool<byte>.Shared.Rent(msgDef.Size);
+                try
+                {
+                    _ = _msgFile.Read(new Span<byte>(msgBytes, 0, msgDef.Size));
+                    messages.Add(CharEncoding.SelectedEncoding.GetString(new ReadOnlySpan<byte>(msgBytes, 0, msgDef.Size)));
+                }
+                finally
+                {
+                    ArrayPool<byte>.Shared.Return(msgBytes);
+                }
             }
         }
 
@@ -221,21 +223,26 @@ public class FileStore : IMessageStore
         _msgFile.Seek(0, System.IO.SeekOrigin.End);
 
         long offset = _msgFile.Position;
-        byte[] msgBytes = CharEncoding.GetBytes(msg);
-        int size = msgBytes.Length;
 
-        StringBuilder b = new StringBuilder();
-        b.Append(msgSeqNum).Append(',').Append(offset).Append(',').Append(size);
-        _headerFile.WriteLine(b.ToString());
-        _headerFile.Flush();
+        ValueDisposable disposable = CharEncoding.GetBytes(msg, out ReadOnlySpan<byte> msgBytes);
+        try
+        {
+            StringBuilder b = new StringBuilder();
+            b.Append(msgSeqNum).Append(',').Append(offset).Append(',').Append(msgBytes.Length);
+            _headerFile.WriteLine(b.ToString());
+            _headerFile.Flush();
 
-        _offsets[msgSeqNum] = new MsgDef(offset, size);
+            _offsets[msgSeqNum] = new MsgDef(offset, msgBytes.Length);
 
-        _msgFile.Write(msgBytes, 0, size);
-        _msgFile.Flush();
+            _msgFile.Write(msgBytes);
+            _msgFile.Flush();
 
-
-        return true;
+            return true;
+        }
+        finally
+        {
+            disposable.Dispose();
+        }
     }
 
     public SeqNumType NextSenderMsgSeqNum {
@@ -299,7 +306,7 @@ public class FileStore : IMessageStore
         Dispose(true);
         GC.SuppressFinalize(this);
     }
-    private bool _disposed = false;
+    private bool _disposed;
     protected virtual void Dispose(bool disposing)
     {
         if (_disposed) return;

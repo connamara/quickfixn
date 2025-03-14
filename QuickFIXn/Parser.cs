@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace QuickFix;
@@ -30,10 +31,10 @@ public class Parser
         _checkSumBytes = encoding.GetBytes('\u0001' + "10=");
     }
 
-    public void AddToStream(byte[] data, int bytesAdded)
-        => AddToStream(data.AsSpan(0, bytesAdded));
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public void AddToStream(byte[] data, int bytesAdded) => AddToStream(new ReadOnlySpan<byte>(data, 0, bytesAdded));
 
-    public void AddToStream(Span<byte> data)
+    public void AddToStream(ReadOnlySpan<byte> data)
     {
         // We attempt to copy the new bytes into the existing buffer.
         if (data.TryCopyTo(_buffer.AsSpan(_bufferStartIndex + _usedBufferLength)))
