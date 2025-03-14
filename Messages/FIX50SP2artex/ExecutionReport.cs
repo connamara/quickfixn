@@ -801,6 +801,38 @@ namespace QuickFix
                 return IsSetField(Tags.OrdType);
             }
 
+            public QuickFix.Fields.PriceType PriceType
+            {
+                get
+                {
+                    QuickFix.Fields.PriceType val = new QuickFix.Fields.PriceType();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.PriceType val)
+            {
+                this.PriceType = val;
+            }
+
+            public QuickFix.Fields.PriceType Get(QuickFix.Fields.PriceType val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.PriceType val)
+            {
+                return IsSetPriceType();
+            }
+
+            public bool IsSetPriceType()
+            {
+                return IsSetField(Tags.PriceType);
+            }
+
             public QuickFix.Fields.Price Price
             {
                 get
@@ -865,6 +897,38 @@ namespace QuickFix
                 return IsSetField(Tags.TimeInForce);
             }
 
+            public QuickFix.Fields.OrderCapacity OrderCapacity
+            {
+                get
+                {
+                    QuickFix.Fields.OrderCapacity val = new QuickFix.Fields.OrderCapacity();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.OrderCapacity val)
+            {
+                this.OrderCapacity = val;
+            }
+
+            public QuickFix.Fields.OrderCapacity Get(QuickFix.Fields.OrderCapacity val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.OrderCapacity val)
+            {
+                return IsSetOrderCapacity();
+            }
+
+            public bool IsSetOrderCapacity()
+            {
+                return IsSetField(Tags.OrderCapacity);
+            }
+
             public QuickFix.Fields.LastQty LastQty
             {
                 get
@@ -927,6 +991,38 @@ namespace QuickFix
             public bool IsSetLastPx()
             {
                 return IsSetField(Tags.LastPx);
+            }
+
+            public QuickFix.Fields.LastMkt LastMkt
+            {
+                get
+                {
+                    QuickFix.Fields.LastMkt val = new QuickFix.Fields.LastMkt();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.LastMkt val)
+            {
+                this.LastMkt = val;
+            }
+
+            public QuickFix.Fields.LastMkt Get(QuickFix.Fields.LastMkt val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.LastMkt val)
+            {
+                return IsSetLastMkt();
+            }
+
+            public bool IsSetLastMkt()
+            {
+                return IsSetField(Tags.LastMkt);
             }
 
             public QuickFix.Fields.LeavesQty LeavesQty

@@ -2307,6 +2307,41 @@ namespace QuickFix.Fields
 
 
     /// <summary>
+    /// PriceType Field
+    /// </summary>
+    public sealed class PriceType : IntField
+    {
+        public const int TAG = 423;
+
+        public PriceType()
+            :base(Tags.PriceType) {}
+        public PriceType(int val)
+            :base(Tags.PriceType, val) {}
+
+
+        // Field Enumerations
+        public const int PERCENTAGE = 1;
+        public const int FIXED_CABINET_TRADE_PRICE = 10;
+        public const int VARIABLE_CABINET_TRADE_PRICE = 11;
+        public const int PER_UNIT = 2;
+        public const int FIXED_AMOUNT = 3;
+        public const int DISCOUNT = 4;
+        public const int PREMIUM = 5;
+        public const int SPREAD = 6;
+        public const int TED_PRICE = 7;
+        public const int TED_YIELD = 8;
+        public const int YIELD = 9;
+        public const int PRODUCT_TICKS_IN_HALFS = 13;
+        public const int PRODUCT_TICKS_IN_FOURTHS = 14;
+        public const int PRODUCT_TICKS_IN_EIGHTS = 15;
+        public const int PRODUCT_TICKS_IN_SIXTEENTHS = 16;
+        public const int PRODUCT_TICKS_IN_THIRTY_SECONDS = 17;
+        public const int PRODUCT_TICKS_IN_SIXTY_FORTHS = 18;
+        public const int PRODUCT_TICKS_IN_ONE_TWENTY_EIGHTS = 19;
+    }
+
+
+    /// <summary>
     /// ExpireDate Field
     /// </summary>
     public sealed class ExpireDate : StringField
@@ -2586,6 +2621,29 @@ namespace QuickFix.Fields
         public SecondaryClOrdID(string val)
             :base(Tags.SecondaryClOrdID, val) {}
 
+    }
+
+
+    /// <summary>
+    /// OrderCapacity Field
+    /// </summary>
+    public sealed class OrderCapacity : CharField
+    {
+        public const int TAG = 528;
+
+        public OrderCapacity()
+            :base(Tags.OrderCapacity) {}
+        public OrderCapacity(char val)
+            :base(Tags.OrderCapacity, val) {}
+
+
+        // Field Enumerations
+        public const char AGENCY = 'A';
+        public const char PROPRIETARY = 'G';
+        public const char INDIVIDUAL = 'I';
+        public const char PRINCIPAL = 'P';
+        public const char RISKLESS_PRINCIPAL = 'R';
+        public const char AGENT_FOR_OTHER_MEMBER = 'W';
     }
 
 

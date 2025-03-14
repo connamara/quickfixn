@@ -108,6 +108,7 @@ namespace QuickFix.Fields
         public const int SessionRejectReason = 373;
         public const int BusinessRejectReason = 380;
         public const int TotNoRelatedSym = 393;
+        public const int PriceType = 423;
         public const int ExpireDate = 432;
         public const int CxlRejResponseTo = 434;
         public const int PartyIDSource = 447;
@@ -116,6 +117,7 @@ namespace QuickFix.Fields
         public const int NoPartyIDs = 453;
         public const int PartySubID = 523;
         public const int SecondaryClOrdID = 526;
+        public const int OrderCapacity = 528;
         public const int MassCancelRequestType = 530;
         public const int MassCancelResponse = 531;
         public const int MassCancelRejectReason = 532;

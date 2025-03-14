@@ -441,6 +441,70 @@ namespace QuickFix
                 return IsSetField(Tags.OrderQty);
             }
 
+            public QuickFix.Fields.OrderCapacity OrderCapacity
+            {
+                get
+                {
+                    QuickFix.Fields.OrderCapacity val = new QuickFix.Fields.OrderCapacity();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.OrderCapacity val)
+            {
+                this.OrderCapacity = val;
+            }
+
+            public QuickFix.Fields.OrderCapacity Get(QuickFix.Fields.OrderCapacity val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.OrderCapacity val)
+            {
+                return IsSetOrderCapacity();
+            }
+
+            public bool IsSetOrderCapacity()
+            {
+                return IsSetField(Tags.OrderCapacity);
+            }
+
+            public QuickFix.Fields.CustOrderCapacity CustOrderCapacity
+            {
+                get
+                {
+                    QuickFix.Fields.CustOrderCapacity val = new QuickFix.Fields.CustOrderCapacity();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.CustOrderCapacity val)
+            {
+                this.CustOrderCapacity = val;
+            }
+
+            public QuickFix.Fields.CustOrderCapacity Get(QuickFix.Fields.CustOrderCapacity val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.CustOrderCapacity val)
+            {
+                return IsSetCustOrderCapacity();
+            }
+
+            public bool IsSetCustOrderCapacity()
+            {
+                return IsSetField(Tags.CustOrderCapacity);
+            }
+
             public QuickFix.Fields.Text Text
             {
                 get

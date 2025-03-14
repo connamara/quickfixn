@@ -22,10 +22,13 @@
             <field name='Side' required='Y' />
             <component name='OrderQtyData' required='N' />
             <field name='OrdType' required='N' />
+            <field name='PriceType' required='N' />
             <field name='Price' required='N' />
             <field name='TimeInForce' required='N' />
+            <field name='OrderCapacity' required='N' />
             <field name='LastQty' required='N' />
             <field name='LastPx' required='N' />
+            <field name='LastMkt' required='N' />
             <field name='LeavesQty' required='Y' />
             <field name='CumQty' required='Y' />
             <field name='AvgPx' required='N' />
@@ -72,13 +75,15 @@
             <field name='TransactTime' required='Y' />
             <component name='OrderQtyData' required='Y' />
             <field name='OrdType' required='Y' />
+            <field name='PriceType' required='N' />
             <field name='Price' required='N' />
             <field name='QuoteID' required='N' />
             <field name='TimeInForce' required='N' />
+            <field name='OrderCapacity' required='N' />
+            <field name='CustOrderCapacity' required='N' />
             <field name='Text' required='N' />
             <field name='OrderOrigination' required='N' />
             <field name='ExpireDate' required='N' />
-            <field name='CustOrderCapacity' required='N' />
             <field name='RoutingInstruction' required='N' />
         </message>
         <message name='OrderCancelRequest' msgtype='F' msgcat='app'>
@@ -91,6 +96,8 @@
             <field name='Side' required='Y' />
             <field name='TransactTime' required='Y' />
             <component name='OrderQtyData' required='N' />
+            <field name='OrderCapacity' required='N' />
+            <field name='CustOrderCapacity' required='N' />
             <field name='Text' required='N' />
             <field name='RoutingInstruction' required='N' />
         </message>
@@ -1129,6 +1136,26 @@
             <value enum='10' description='THROTTLED_MESSAGES_REJECTED_ON_REQUEST' />
         </field>
         <field number='393' name='TotNoRelatedSym' type='INT' />
+        <field number='423' name='PriceType' type='INT'>
+            <value enum='1' description='PERCENTAGE' />
+            <value enum='10' description='FIXED_CABINET_TRADE_PRICE' />
+            <value enum='11' description='VARIABLE_CABINET_TRADE_PRICE' />
+            <value enum='2' description='PER_UNIT' />
+            <value enum='3' description='FIXED_AMOUNT' />
+            <value enum='4' description='DISCOUNT' />
+            <value enum='5' description='PREMIUM' />
+            <value enum='6' description='SPREAD' />
+            <value enum='7' description='TED_PRICE' />
+            <value enum='8' description='TED_YIELD' />
+            <value enum='9' description='YIELD' />
+            <value enum='13' description='PRODUCT_TICKS_IN_HALFS' />
+            <value enum='14' description='PRODUCT_TICKS_IN_FOURTHS' />
+            <value enum='15' description='PRODUCT_TICKS_IN_EIGHTS' />
+            <value enum='16' description='PRODUCT_TICKS_IN_SIXTEENTHS' />
+            <value enum='17' description='PRODUCT_TICKS_IN_THIRTY_SECONDS' />
+            <value enum='18' description='PRODUCT_TICKS_IN_SIXTY_FORTHS' />
+            <value enum='19' description='PRODUCT_TICKS_IN_ONE_TWENTY_EIGHTS' />
+        </field>
         <field number='432' name='ExpireDate' type='LOCALMKTDATE' />
         <field number='434' name='CxlRejResponseTo' type='CHAR'>
             <value enum='1' description='ORDER_CANCEL_REQUEST' />
@@ -1297,6 +1324,14 @@
         <field number='453' name='NoPartyIDs' type='NUMINGROUP' />
         <field number='523' name='PartySubID' type='STRING' />
         <field number='526' name='SecondaryClOrdID' type='STRING' />
+        <field number='528' name='OrderCapacity' type='CHAR'>
+            <value enum='A' description='AGENCY' />
+            <value enum='G' description='PROPRIETARY' />
+            <value enum='I' description='INDIVIDUAL' />
+            <value enum='P' description='PRINCIPAL' />
+            <value enum='R' description='RISKLESS_PRINCIPAL' />
+            <value enum='W' description='AGENT_FOR_OTHER_MEMBER' />
+        </field>
         <field number='530' name='MassCancelRequestType' type='CHAR'>
             <value enum='1' description='CANCEL_ORDERS_FOR_A_SECURITY' />
             <value enum='2' description='CANCEL_ORDERS_FOR_AN_UNDERLYING_SECURITY' />
