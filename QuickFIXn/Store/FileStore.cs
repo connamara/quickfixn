@@ -224,25 +224,21 @@ public class FileStore : IMessageStore
 
         long offset = _msgFile.Position;
 
-        ValueDisposable disposable = CharEncoding.GetBytes(msg, out ReadOnlySpan<byte> msgBytes);
-        try
-        {
-            StringBuilder b = new StringBuilder();
-            b.Append(msgSeqNum).Append(',').Append(offset).Append(',').Append(msgBytes.Length);
-            _headerFile.WriteLine(b.ToString());
-            _headerFile.Flush();
+        ValueDisposable disposable = CharEncoding.GetBytes(msg.AsSpan(), out ReadOnlySpan<byte> msgBytes);
 
-            _offsets[msgSeqNum] = new MsgDef(offset, msgBytes.Length);
+        StringBuilder b = new StringBuilder();
+        b.Append(msgSeqNum).Append(',').Append(offset).Append(',').Append(msgBytes.Length);
+        _headerFile.WriteLine(b.ToString());
+        _headerFile.Flush();
 
-            _msgFile.Write(msgBytes);
-            _msgFile.Flush();
+        _offsets[msgSeqNum] = new MsgDef(offset, msgBytes.Length);
 
-            return true;
-        }
-        finally
-        {
-            disposable.Dispose();
-        }
+        _msgFile.Write(msgBytes);
+        _msgFile.Flush();
+
+        disposable.Dispose();
+
+        return true;
     }
 
     public SeqNumType NextSenderMsgSeqNum {

@@ -272,15 +272,10 @@ public class SocketReader : IDisposable
     public int Send(string data)
     {
         ValueDisposable disposable = CharEncoding.GetBytes(data, out ReadOnlySpan<byte> rawData);
-        try
-        {
-            _stream.Write(rawData);
-            return rawData.Length;
-        }
-        finally
-        {
-            disposable.Dispose();
-        }
+        _stream.Write(rawData);
+        disposable.Dispose();
+
+        return rawData.Length;
     }
 
     public void Dispose()

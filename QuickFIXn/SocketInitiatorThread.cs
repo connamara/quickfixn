@@ -190,15 +190,10 @@ public class SocketInitiatorThread : IResponder
         }
 
         ValueDisposable disposable = CharEncoding.GetBytes(data, out ReadOnlySpan<byte> rawData);
-        try
-        {
-            _stream.Write(rawData);
-            return true;
-        }
-        finally
-        {
-            disposable.Dispose();
-        }
+        _stream.Write(rawData);
+        disposable.Dispose();
+
+        return true;
     }
 
     public void Disconnect()

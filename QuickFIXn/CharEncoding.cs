@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Buffers;
-using System.Runtime.CompilerServices;
 
 namespace QuickFix;
 
@@ -22,24 +21,14 @@ public static class CharEncoding
         SelectedEncoding = System.Text.Encoding.GetEncoding(DefaultCharEncoding);
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void ResetToDefaultEncoding() => SetEncoding(DefaultCharEncoding);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static void SetEncoding(string encoding) => SelectedEncoding = System.Text.Encoding.GetEncoding(encoding);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static byte[] GetBytes(string data) => SelectedEncoding.GetBytes(data);
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     internal static ValueDisposable GetBytes(ReadOnlySpan<char> data, out ReadOnlySpan<byte> bytes)
     {
-        if (data.IsEmpty)
-        {
-            bytes = ReadOnlySpan<byte>.Empty;
-            return ValueDisposable.Empty;
-        }
-
         System.Text.Encoding encoding = SelectedEncoding;
         int byteCount = encoding.GetByteCount(data);
         byte[] buffer = ArrayPool<byte>.Shared.Rent(byteCount);
@@ -51,13 +40,11 @@ public static class CharEncoding
     }
 }
 
-internal readonly ref struct ValueDisposable(byte[] bytes)
+internal readonly ref struct ValueDisposable(byte[]? bytes)
 {
-    public static readonly ValueDisposable Empty = new(Array.Empty<byte>());
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public void Dispose()
     {
+        if (bytes == null) return;
         if (bytes.Length > 0) ArrayPool<byte>.Shared.Return(bytes);
     }
 }

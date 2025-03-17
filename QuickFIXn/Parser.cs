@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace QuickFix;
@@ -31,7 +30,7 @@ public class Parser
         _checkSumBytes = encoding.GetBytes('\u0001' + "10=");
     }
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete]
     public void AddToStream(byte[] data, int bytesAdded) => AddToStream(new ReadOnlySpan<byte>(data, 0, bytesAdded));
 
     public void AddToStream(ReadOnlySpan<byte> data)

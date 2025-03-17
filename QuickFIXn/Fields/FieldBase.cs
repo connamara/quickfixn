@@ -98,20 +98,16 @@ public abstract class FieldBase<T> : IField
         if (_changed)
             MakeStringFields();
 
+        int sum = 0;
+
         ValueDisposable disposable = CharEncoding.GetBytes(_stringField, out ReadOnlySpan<byte> array);
-        try
+        foreach (byte b in array)
         {
-            int sum = 0;
-            foreach (byte b in array)
-            {
-                sum += b;
-            }
-            return sum + 1; // +1 for SOH
+            sum += b;
         }
-        finally
-        {
-            disposable.Dispose();
-        }
+        disposable.Dispose();
+
+        return sum + 1; // +1 for SOH
     }
 
     //-----------------------------------
