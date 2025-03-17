@@ -200,7 +200,7 @@ public class FileStore : IMessageStore
                 byte[] msgBytes = ArrayPool<byte>.Shared.Rent(msgDef.Size);
                 try
                 {
-                    _ = _msgFile.Read(new Span<byte>(msgBytes, 0, msgDef.Size));
+                    _msgFile.ReadExactly(new Span<byte>(msgBytes, 0, msgDef.Size));
                     messages.Add(CharEncoding.SelectedEncoding.GetString(new ReadOnlySpan<byte>(msgBytes, 0, msgDef.Size)));
                 }
                 finally
