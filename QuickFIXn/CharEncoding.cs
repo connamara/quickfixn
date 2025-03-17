@@ -51,7 +51,7 @@ public static class CharEncoding
     }
 }
 
-internal readonly struct ValueDisposable(byte[] bytes) : IDisposable
+internal readonly ref struct ValueDisposable(byte[] bytes)
 {
     public static readonly ValueDisposable Empty = new(Array.Empty<byte>());
 
