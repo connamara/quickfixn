@@ -102,7 +102,7 @@ public abstract class FieldBase<T> : IField
         try
         {
             int sum = 0;
-            foreach (ref readonly byte b in array)
+            foreach (byte b in array)
             {
                 sum += b;
             }
