@@ -17,6 +17,7 @@ namespace QuickFix.Transport
     {
         private volatile bool _shutdownRequested = false;
         private DateTime _lastConnectTimeDt = DateTime.MinValue;
+        private bool _forceInstantConnect = false;
         private int _reconnectInterval = 30;
         private readonly SocketSettings _socketSettings = new();
         private readonly Dictionary<SessionID, SocketInitiatorThread> _threads = new();
@@ -31,6 +32,8 @@ namespace QuickFix.Transport
             IMessageFactory? messageFactoryNullable = null)
             : base(application, storeFactory, settings, logFactoryNullable, messageFactoryNullable)
         { }
+
+        public void ForceInstantConnect() => this._forceInstantConnect = true;
 
         public static void SocketInitiatorThreadStart(object? socketInitiatorThread)
         {
@@ -173,10 +176,11 @@ namespace QuickFix.Transport
                     double reconnectIntervalAsMilliseconds = 1000 * _reconnectInterval;
                     DateTime nowDt = DateTime.UtcNow;
 
-                    if (nowDt.Subtract(_lastConnectTimeDt).TotalMilliseconds >= reconnectIntervalAsMilliseconds)
+                    if (nowDt.Subtract(_lastConnectTimeDt).TotalMilliseconds >= reconnectIntervalAsMilliseconds || _forceInstantConnect)
                     {
                         Connect();
                         _lastConnectTimeDt = nowDt;
+                        _forceInstantConnect = false;
                     }
                 }
                 catch (Exception e)
