@@ -33,7 +33,10 @@ namespace QuickFix.Transport
             : base(application, storeFactory, settings, logFactoryNullable, messageFactoryNullable)
         { }
 
-        public void ForceInstantConnect() => this._forceInstantConnect = true;
+        public void ForceInstantConnect()
+        {
+          SetForceInstantConnect(true);
+        }
 
         public static void SocketInitiatorThreadStart(object? socketInitiatorThread)
         {
@@ -146,6 +149,14 @@ namespace QuickFix.Transport
             }
         }
 
+        private void SetForceInstantConnect(bool value)
+        {
+            lock (_sync)
+            {
+              this._forceInstantConnect = value;
+            }
+        }
+
         #region Initiator Methods
         
         /// <summary>
@@ -180,7 +191,7 @@ namespace QuickFix.Transport
                     {
                         Connect();
                         _lastConnectTimeDt = nowDt;
-                        _forceInstantConnect = false;
+                        SetForceInstantConnect(false);
                     }
                 }
                 catch (Exception e)
