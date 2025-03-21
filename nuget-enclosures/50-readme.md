@@ -2,13 +2,11 @@ QuickFIX/n message definitions for FIX 5.0.
 
 You also need the QuickFIXn.Core package, and the QuickFIXn.FIXT11 package.
 
-**This is an official NuGet package from QuickFIXn.org.**
+**This is an official NuGet package from QuickFIXEngine.org.**
 
-# Attention: This package's name will change starting with v1.14!
+# Attention: This package had a minor name change starting with v1.14!
 
-## In v1.14, this package will be renamed to "QuickFIXn.FIX50.{version}"
-
-We're getting rid of the extra period.
+## (Prior to v1.14, this package had this extra period "FIX5.0" in the name.)
 
 ---
 

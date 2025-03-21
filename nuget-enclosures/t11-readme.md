@@ -5,11 +5,9 @@ If you're using a QuickFIXn.FIX5* package, then you also need this package
 
 **This is an official NuGet package from QuickFIXEngine.org.**
 
-# Attention: This package's name will change starting with v1.14!
+# Attention: This package had a minor name change starting with v1.14!
 
-## In v1.14, this package will be renamed to "QuickFIXn.FIXT11.{version}"
-
-We're getting rid of the extra period.
+## (Prior to v1.14, this package had this extra period "FIXT1.1" in the name.)
 
 ---
 
@@ -19,8 +17,8 @@ We're getting rid of the extra period.
 
 QuickFIX/n is 100% free and open source with a liberal license.
 
-Visit [QuickFIXn.org](http://quickfixn.org) for more information.  
-Checkout the [tutorial](http://quickfixn.org/tutorial/creating-an-application),
-or [examine some example applications](http://quickfixn.org/tutorial/example-applications).
+Visit [QuickFIXEngine.org](http://quickfixengine.org) for more information.  
+Checkout the [tutorial](https://quickfixengine.org/n/documentation/).
+or [examine some example applications](https://quickfixengine.org/n/documentation/#section-example-applications).
 
 Commercial support provided by [Connamara](https://www.connamara.com/).

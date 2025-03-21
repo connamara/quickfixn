@@ -29,7 +29,7 @@ cd $nugetPath
 Write-Host "Checking presence of packages: " -ForegroundColor Cyan
 $missing = $false
 $toPush = @()
-foreach ($rls in 'Core', 'FIXT1.1', 'FIX4.0', 'FIX4.1', 'FIX4.2', 'FIX4.3', 'FIX4.4', 'FIX5.0', 'FIX5.0SP1', 'FIX5.0SP2') {
+foreach ($rls in 'Core', 'FIXT11', 'FIX40', 'FIX41', 'FIX42', 'FIX43', 'FIX44', 'FIX50', 'FIX50SP1', 'FIX50SP2') {
     $nupkg = Join-Path $nugetPath "QuickFIXn.$rls.$ver.nupkg"
     $snupkg = Join-Path $nugetPath "QuickFIXn.$rls.$ver.snupkg"
 
