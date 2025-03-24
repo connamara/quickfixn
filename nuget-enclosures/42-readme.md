@@ -2,11 +2,9 @@ QuickFIX/n message definitions for FIX 4.2.  (You also need the QuickFIXn.Core p
 
 **This is an official NuGet package from QuickFIXEngine.org.**
 
-# Attention: This package's name will change starting with v1.14!
+# Attention: This package had a minor name change starting with v1.14!
 
-## In v1.14, this package will be renamed to "QuickFIXn.FIX42.{version}"
-
-We're getting rid of the extra period.
+## (Prior to v1.14, this package had this extra period "FIX4.2" in the name.)
 
 ---
 
