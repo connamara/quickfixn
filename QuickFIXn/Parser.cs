@@ -30,7 +30,7 @@ public class Parser
         _checkSumBytes = encoding.GetBytes('\u0001' + "10=");
     }
 
-    [Obsolete]
+    [Obsolete("Use AddToStream(ReadOnlySpan<byte>) instead.  This will be removed in v1.15")]
     public void AddToStream(byte[] data, int bytesAdded) => AddToStream(new ReadOnlySpan<byte>(data, 0, bytesAdded));
 
     public void AddToStream(ReadOnlySpan<byte> data)

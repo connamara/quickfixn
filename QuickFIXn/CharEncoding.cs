@@ -25,8 +25,22 @@ public static class CharEncoding
 
     public static void SetEncoding(string encoding) => SelectedEncoding = System.Text.Encoding.GetEncoding(encoding);
 
+    /// <summary>
+    /// Convert a string to a byte array using the current globally-set encoding.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <returns></returns>
     public static byte[] GetBytes(string data) => SelectedEncoding.GetBytes(data);
 
+    /// <summary>
+    /// Convert a string to a byte array using the current globally-set encoding.
+    /// This function uses a shared byte-pool for efficiency.
+    /// The return value needs to be disposed; `using` is recommended (see existing usages).
+    /// This function is still internal; we're not sure if we want to make it part of the public interface.
+    /// </summary>
+    /// <param name="data"></param>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
     internal static ValueDisposable GetBytes(ReadOnlySpan<char> data, out ReadOnlySpan<byte> bytes)
     {
         System.Text.Encoding encoding = SelectedEncoding;
