@@ -30,13 +30,11 @@ public class CharEncodingTests
     public void GetBytes_Pooled()
     {
         CharEncoding.SetEncoding("iso-8859-1");
-        ValueDisposable disposable = CharEncoding.GetBytes("ïèâî", out ReadOnlySpan<byte> isoByteSpan);
+        using ValueDisposable _ = CharEncoding.GetBytes("ïèâî", out ReadOnlySpan<byte> isoByteSpan);
         Assert.That(isoByteSpan.ToArray(), Is.EqualTo(new byte[] {0xEF, 0xE8, 0xE2, 0xEE}));
-        disposable.Dispose();
 
         CharEncoding.SetEncoding("windows-1251");
-        disposable = CharEncoding.GetBytes("пиво", out ReadOnlySpan<byte> altByteSpan);
+        using ValueDisposable _2 = CharEncoding.GetBytes("пиво", out ReadOnlySpan<byte> altByteSpan);
         Assert.That(altByteSpan.ToArray(), Is.EqualTo(new byte[] {0xEF, 0xE8, 0xE2, 0xEE}));
-        disposable.Dispose();
     }
 }

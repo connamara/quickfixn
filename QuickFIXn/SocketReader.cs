@@ -271,9 +271,8 @@ public class SocketReader : IDisposable
 
     public int Send(string data)
     {
-        ValueDisposable disposable = CharEncoding.GetBytes(data, out ReadOnlySpan<byte> rawData);
+        using ValueDisposable _ = CharEncoding.GetBytes(data, out ReadOnlySpan<byte> rawData);
         _stream.Write(rawData);
-        disposable.Dispose();
 
         return rawData.Length;
     }

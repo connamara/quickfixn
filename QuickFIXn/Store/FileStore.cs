@@ -224,7 +224,7 @@ public class FileStore : IMessageStore
 
         long offset = _msgFile.Position;
 
-        ValueDisposable disposable = CharEncoding.GetBytes(msg.AsSpan(), out ReadOnlySpan<byte> msgBytes);
+        using ValueDisposable _ = CharEncoding.GetBytes(msg.AsSpan(), out ReadOnlySpan<byte> msgBytes);
 
         StringBuilder b = new StringBuilder();
         b.Append(msgSeqNum).Append(',').Append(offset).Append(',').Append(msgBytes.Length);
@@ -235,8 +235,6 @@ public class FileStore : IMessageStore
 
         _msgFile.Write(msgBytes);
         _msgFile.Flush();
-
-        disposable.Dispose();
 
         return true;
     }

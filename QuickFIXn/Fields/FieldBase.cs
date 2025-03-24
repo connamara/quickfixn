@@ -100,12 +100,11 @@ public abstract class FieldBase<T> : IField
 
         int sum = 0;
 
-        ValueDisposable disposable = CharEncoding.GetBytes(_stringField, out ReadOnlySpan<byte> array);
+        using ValueDisposable _ = CharEncoding.GetBytes(_stringField, out ReadOnlySpan<byte> array);
         foreach (byte b in array)
         {
             sum += b;
         }
-        disposable.Dispose();
 
         return sum + 1; // +1 for SOH
     }

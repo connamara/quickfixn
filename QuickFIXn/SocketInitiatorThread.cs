@@ -189,9 +189,8 @@ public class SocketInitiatorThread : IResponder
             throw new ApplicationException("Initiator is not connected (uninitialized stream)");
         }
 
-        ValueDisposable disposable = CharEncoding.GetBytes(data, out ReadOnlySpan<byte> rawData);
+        using ValueDisposable _ = CharEncoding.GetBytes(data, out ReadOnlySpan<byte> rawData);
         _stream.Write(rawData);
-        disposable.Dispose();
 
         return true;
     }
