@@ -192,9 +192,12 @@ public class SessionTest
         _session!.Next(CreateNOSMessage(_seqNum++).ConstructString());
     }
 
-    public void SendNOSMessage(SeqNumType n)
+    public void SendNOSMessage(SeqNumType n, bool possDupFlag=false)
     {
-        _session!.Next(CreateNOSMessage(n).ConstructString());
+        var msg = CreateNOSMessage(n);
+        if (possDupFlag)
+            msg.Header.SetField(new QuickFix.Fields.PossDupFlag(possDupFlag));
+        _session!.Next(msg.ConstructString());
     }
 
     public void SendResendRequest(SeqNumType begin, SeqNumType end)
@@ -213,10 +216,14 @@ public class SessionTest
 
     private void SendTheMessage(QuickFix.Message msg)
     {
+        SendTheMessage(msg, _seqNum++);
+    }
+
+    private void SendTheMessage(QuickFix.Message msg, SeqNumType seqNum)
+    {
         msg.Header.SetField(new QuickFix.Fields.TargetCompID(_sessionId.SenderCompID));
         msg.Header.SetField(new QuickFix.Fields.SenderCompID(_sessionId.TargetCompID));
-        msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(_seqNum++));
-
+        msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(seqNum));
         _session!.Next(msg.ConstructString());
     }
 
@@ -960,6 +967,101 @@ public class SessionTest
             else
                 Assert.That(_session.IsResendRequested, Is.False, $"seq num {i}");
         }
+    }
+
+    [Test]
+    public void TestSequenceResetNoGapFillIsProcessed()
+    {
+        Assert.That(_session!.IgnorePossDupResendRequests, Is.EqualTo(false));
+        Logon();
+        SendNOSMessage();
+        SendNOSMessage();
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(4));
+
+        QuickFix.FIX42.SequenceReset sr = new(new QuickFix.Fields.NewSeqNo(150));
+        SendTheMessage(sr);
+
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(150));
+    }
+
+    [Test]
+    public void TestSequenceResetWithGapFillIsProcessed()
+    {
+        Assert.That(_session!.IgnorePossDupResendRequests, Is.EqualTo(false));
+        Logon();
+        SendNOSMessage();
+        SendNOSMessage();
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(4));
+
+        QuickFix.FIX42.SequenceReset sr = new(new QuickFix.Fields.NewSeqNo(150));
+        sr.GapFillFlag = new QuickFix.Fields.GapFillFlag(true);
+        SendTheMessage(sr);
+
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(150));
+    }
+
+    [Test]
+    public void TestSequenceResetDuringResendRequestIsProcessed()
+    {
+        Assert.That(_session!.IgnorePossDupResendRequests, Is.EqualTo(false));
+        _session.RequiresOrigSendingTime = false; // default is true
+        Logon();
+        SendNOSMessage(); // seq 2
+        SendNOSMessage(10); // causes ResendRequest to be sent
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(3));
+
+        var resendRequest =
+            (QuickFix.FIX42.ResendRequest)_responder.MsgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(resendRequest.BeginSeqNo.Value, Is.EqualTo(3));
+        Assert.That(resendRequest.EndSeqNo.Value, Is.EqualTo(0));
+
+        // Resend & GapFill through seq=9
+        SendNOSMessage(3);
+        SendNOSMessage(4);
+        QuickFix.FIX42.SequenceReset sr = new(new QuickFix.Fields.NewSeqNo(9));
+        SendTheMessage(sr, 5);
+        SendNOSMessage(9);
+
+        // We already processed 10, so the next one is 11
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(11));
+    }
+
+    [Test]
+    public void TestGapFillShouldNotBeIgnoredIfPossDup()
+    {
+        Assert.That(_session!.IgnorePossDupResendRequests, Is.EqualTo(false));
+        _session.RequiresOrigSendingTime = false; // default is true
+        Logon();
+        SendNOSMessage(); // seq 2
+
+        QuickFix.FIX42.Heartbeat hb = new();
+        SendTheMessage(hb, 5); // seq=5, causes ResendRequest to be sent
+
+        // Verify the ResendRequest that was just sent
+        var resendRequest =
+            (QuickFix.FIX42.ResendRequest)_responder.MsgLookup[QuickFix.Fields.MsgType.RESEND_REQUEST].Dequeue();
+        Assert.That(resendRequest.BeginSeqNo.Value, Is.EqualTo(3));
+        Assert.That(resendRequest.EndSeqNo.Value, Is.EqualTo(0));
+
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(3));
+
+        // Resends
+        SendNOSMessage(3, possDupFlag: true);
+        SendNOSMessage(4, possDupFlag: true);
+        // Now the session processes the Heartbeat/seq=5 from its queue.
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(6));
+
+        // But the counterparty still needs to resend the seq=5!
+        // The 5 is a Heartbeat, an admin message, so it's a gapfill.
+        // The gapfill goes to 7, omitting ever sending a 6.
+        QuickFix.FIX42.SequenceReset sr = new(new QuickFix.Fields.NewSeqNo(7));
+        sr.Header.SetField(new QuickFix.Fields.PossDupFlag(true));
+        sr.SetField(new QuickFix.Fields.GapFillFlag(true));
+        SendTheMessage(sr, 5);
+
+        // Even though client already processed the original Heartbeat/seq=5,
+        //   it must not discard the GapFill 5.
+        Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(7));
     }
 }
 
