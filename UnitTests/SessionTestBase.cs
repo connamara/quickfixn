@@ -183,9 +183,12 @@ public abstract class SessionTestBase
         _session!.Next(CreateNOSMessage(_seqNum++).ConstructString());
     }
 
-    public void SendNOSMessage(SeqNumType n)
+    public void SendNOSMessage(SeqNumType n, bool possDupFlag=false)
     {
-        _session!.Next(CreateNOSMessage(n).ConstructString());
+        var msg = CreateNOSMessage(n);
+        if (possDupFlag)
+            msg.Header.SetField(new QuickFix.Fields.PossDupFlag(possDupFlag));
+        _session!.Next(msg.ConstructString());
     }
 
     public void SendResendRequest(SeqNumType begin, SeqNumType end)
@@ -207,7 +210,6 @@ public abstract class SessionTestBase
         msg.Header.SetField(new QuickFix.Fields.TargetCompID(_sessionId.SenderCompID));
         msg.Header.SetField(new QuickFix.Fields.SenderCompID(_sessionId.TargetCompID));
         msg.Header.SetField(new QuickFix.Fields.MsgSeqNum(n == 0 ? _seqNum++ : n));
-
         _session!.Next(msg.ConstructString());
     }
 }
