@@ -48,6 +48,12 @@ namespace QuickFix
 
         public ILogger Log { get; }
 
+        /// <summary>
+        /// True if the last message processed was an admin message from the queue.
+        /// Needed for an obscure SequenceReset scenario (see issue #390).
+        /// </summary>
+        internal bool LastProcessedMessageWasQueued { get; set; }
+
         #endregion
 
         #region Synchronized Properties

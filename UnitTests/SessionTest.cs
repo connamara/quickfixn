@@ -821,8 +821,11 @@ public class SessionTest : SessionTestBase
     }
 
     [Test]
-    public void TestGapFillShouldNotBeIgnoredIfPossDup()
+    public void TestObeyGapFillIfItReplacesAMessageOffTheQueue()
     {
+        // issue #309: If GapFill has the same seqno of a message that was
+        //   processed off the queue, obey it anyway
+
         Assert.That(_session!.IgnorePossDupResendRequests, Is.EqualTo(false));
         _session.RequiresOrigSendingTime = false; // default is true
         Logon();
@@ -838,6 +841,7 @@ public class SessionTest : SessionTestBase
         Assert.That(resendRequest.EndSeqNo.Value, Is.EqualTo(0));
 
         Assert.That(_session.NextTargetMsgSeqNum, Is.EqualTo(3));
+        Assert.That(_session.IsResendRequested);
 
         // Resends
         SendNOSMessage(3, possDupFlag: true);
