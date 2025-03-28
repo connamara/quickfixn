@@ -9,12 +9,31 @@ What's New
 ----------
 
 **CAUTION:**  
-* **1.13.0 has moved to .NET 8 (as Microsoft is ending .NET 6 support on Nov 12, 2024)
+* **Starting with 1.14, the QuickFIX message **nuget** packages have been renamed!**
+    **Please remove the old package and import the new package!**
+    (See issue #627 for more information.)
+
+    The new names are as follows (note the deleted period):
+    * ~~QuickFIX.FIX4.0.{ver}~~ becomes **QuickFIX.FIX40.{ver}**
+    * ~~QuickFIX.FIX4.1.{ver}~~ becomes **QuickFIX.FIX41.{ver}**
+    * ~~QuickFIX.FIX4.2.{ver}~~ becomes **QuickFIX.FIX42.{ver}**
+    * ~~QuickFIX.FIX4.3.{ver}~~ becomes **QuickFIX.FIX43.{ver}**
+    * ~~QuickFIX.FIX4.4.{ver}~~ becomes **QuickFIX.FIX44.{ver}**
+    * ~~QuickFIX.FIX5.0.{ver}~~ becomes **QuickFIX.FIX50.{ver}**
+    * ~~QuickFIX.FIX5.0SP1.{ver}~~ becomes **QuickFIX.FIX50SP1.{ver}**
+    * ~~QuickFIX.FIX5.0SP2.{ver}~~ becomes **QuickFIX.FIX50SP2.{ver}**
+    * ~~QuickFIX.FIXT1.1.{ver}~~ becomes **QuickFIX.FIXT11.{ver}**
+  
+* **1.13.0 has moved to .NET 8 (as Microsoft is ending .NET 6 support on Nov 12, 2024)**
 * **There are breaking changes between 1.12 and 1.13!  Please review the 1.13.0 notes below.**
 * **There are breaking changes between 1.11 and 1.12!  Please review the 1.12.0 notes below.**
 * **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
 ### next release
+
+**Breaking changes**
+* #627 - rename message packages to get rid of superfluous period (gbirchmeier)
+    * e.g. QuickFIX.FIX4.4 is now QuickFIX.FIX44, etc.
 
 **Non-breaking changes**
 * #939 - minor checkTooHigh/checkTooLow refactor in Session.cs (gbirchmeier)
