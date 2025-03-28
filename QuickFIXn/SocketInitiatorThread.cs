@@ -103,6 +103,12 @@ public class SocketInitiatorThread : IResponder
             if (_isDisconnectRequested == false)
                 Disconnect();
         }
+        catch (SocketException e)
+        {
+            Session.Log.OnEvent(e.ToString());
+            Session.Disconnect(e.Message);
+            Disconnect();
+        }
         catch (Exception e)
         {
             Session.Log.OnEvent(e.ToString());
@@ -196,6 +202,8 @@ public class SocketInitiatorThread : IResponder
 
     public void Disconnect()
     {
+        if (_isDisconnectRequested)
+            return;
         _isDisconnectRequested = true;
         _readCancellationTokenSource.Cancel();
         _readCancellationTokenSource.Dispose();
