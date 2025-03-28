@@ -99,11 +99,13 @@ public abstract class FieldBase<T> : IField
             MakeStringFields();
 
         int sum = 0;
-        byte[] array = CharEncoding.GetBytes(_stringField);
+
+        using ValueDisposable _ = CharEncoding.GetBytes(_stringField, out ReadOnlySpan<byte> array);
         foreach (byte b in array)
         {
             sum += b;
         }
+
         return sum + 1; // +1 for SOH
     }
 
