@@ -41,6 +41,7 @@ What's New
 * #895 - fix: When SSLCACertificate is empty an error is logged and it fails to start (dckorben)
 * #942 - fix #942: field 369 (LastMsgSeqNumProcessed) wrong in ResendRequest message (gbirchmeier)
 * #940 - Create an alternate CharEncoding.GetBytes impl which uses ArrayPool to improve memory performance (VAllens)
+* #951 - fix: restore Session disconnect during SocketInitiatorThread.Read exception (gbirchmeier/trevor-bush)
 
 ### v1.13.0
 

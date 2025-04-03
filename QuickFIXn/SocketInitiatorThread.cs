@@ -97,16 +97,21 @@ public class SocketInitiatorThread : IResponder
             ProcessStream();
             return true;
         }
-        catch (ObjectDisposedException)
+        catch (ObjectDisposedException e)
         {
             // this exception means _socket is already closed when poll() is called
             if (_isDisconnectRequested == false)
-                Disconnect();
+            {
+                if (!Session.Disposed) // should not be disposed, but just in case...
+                    Session.Disconnect(e.ToString()); // also calls this instance's Disconnect()
+                else
+                    Disconnect();
+            }
         }
         catch (Exception e)
         {
             Session.Log.OnEvent(e.ToString());
-            Disconnect();
+            Session.Disconnect(e.ToString()); // also calls this instance's Disconect()
         }
         return false;
     }
