@@ -6,9 +6,9 @@ weight: 4
 permalink: /download/
 ---
 
-The latest version of QuickFIX/n is v1.13.0
+The latest version of QuickFIX/n is v1.13.1
 
-[Click here to download it](http://quickfixn.s3.amazonaws.com/quickfixn-v1.13.0.zip)
+[Click here to download it](http://quickfixn.s3.amazonaws.com/quickfixn-v1.13.1.zip)
 
 Source Code
 -----------
@@ -39,8 +39,8 @@ parties (and most of them got the project's name wrong!).
 
 Previous Versions
 -----------------
-  * [v1.12.0](http://quickfixn.s3.amazonaws.com/quickfixn-v1.12.0.zip)
-  * [v1.11.2](http://quickfixn.s3.amazonaws.com/quickfixn-v1.10.0.zip)
+  * [v1.12.2](http://quickfixn.s3.amazonaws.com/quickfixn-v1.12.2.zip)
+  * [v1.11.2](http://quickfixn.s3.amazonaws.com/quickfixn-v1.11.2.zip)
   * [v1.10.0](http://quickfixn.s3.amazonaws.com/quickfixn-v1.10.0.zip)
   * [v1.9.0](http://quickfixn.s3.amazonaws.com/quickfixn-v1.9.0.zip)
   * [v1.8.0](http://quickfixn.s3.amazonaws.com/quickfixn-v1.8.0.zip)
