@@ -28,7 +28,6 @@ namespace QuickFix
         private readonly CancellationTokenSource _readCancellationTokenSource = new();
         private readonly IPEndPoint _socketEndPoint;
         private readonly SocketSettings _socketSettings;
-        private bool _isDisconnectRequested = false;
 
         /// <summary>
         /// Keep a task for handling async read
@@ -51,7 +50,6 @@ namespace QuickFix
 
         public void Start()
         {
-            _isDisconnectRequested = false;
             _thread = new Thread(Transport.SocketInitiator.SocketInitiatorThreadStart);
             _thread.Start(this);
         }
@@ -98,16 +96,9 @@ namespace QuickFix
                 ProcessStream();
                 return true;
             }
-            catch (ObjectDisposedException)
-            {
-                // this exception means _socket is already closed when poll() is called
-                if (_isDisconnectRequested == false)
-                    Disconnect();
-            }
             catch (Exception e)
             {
-                Session.Log.OnEvent(e.ToString());
-                Disconnect();
+                Session.Disconnect(e.ToString()); // also calls this instance's Disconect()
             }
             return false;
         }
@@ -191,7 +182,6 @@ namespace QuickFix
 
         public void Disconnect()
         {
-            _isDisconnectRequested = true;
             _readCancellationTokenSource.Cancel();
             _readCancellationTokenSource.Dispose();
 
