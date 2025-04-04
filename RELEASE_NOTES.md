@@ -12,6 +12,10 @@ What's New
 * **There are breaking changes between 1.11 and 1.12!  Please review the 1.12.0 notes below.**
 * **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
+### v1.12.1
+
+* #951 - fix: restore Session disconnect during SocketInitiatorThread.Read exception (gbirchmeier/trevor-bush)
+    * (Without this fix, broken connections may cause the engine to go into an invalid state!)
 
 ### v1.12.0
 
@@ -67,7 +71,6 @@ What's New
      * ILogFactory extended with a `CreateNonSessionLog()`.  Pretty easy to implement though.
      * Some classes were internalized, but I can't imagine people are using them in their app code.
      * See details/explanation at https://github.com/connamara/quickfixn/pull/830
-
 
 **Non-breaking changes**
 * #400 - added DDTool, a C#-based codegen, and deleted Ruby-based generator (gbirchmeier)
