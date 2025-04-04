@@ -17,6 +17,11 @@ What's New
 ### next release
 * #nnn - placeholder
 
+### v1.13.1
+
+* #951 - fix: restore Session disconnect during SocketInitiatorThread.Read exception (gbirchmeier/trevor-bush)
+    * (Without this fix, broken connections may cause the engine to go into an invalid state!)
+
 ### v1.13.0
 
 **Breaking changes**
@@ -68,6 +73,14 @@ What's New
 * #926 - don't init FileLog writers until first use (Rob-Hague)
 * #931 - bugfix in FixToJson example program
 * #934 - fix an obscure failure of Message.FromString when a message ends in a group (and lacks a checksum) (gbirchmeier)
+
+### v1.12.2
+
+* #951 - fix: restore Session disconnect during SocketInitiatorThread.Read exception (gbirchmeier/trevor-bush)
+    * (Without this fix, broken connections may cause the engine to go into an invalid state!)
+
+### v1.12.1
+The package uploaded to nuget.org was built wrong, so this number is dead and skipped.
 
 ### v1.12.0
 
