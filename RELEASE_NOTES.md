@@ -12,7 +12,7 @@ What's New
 * **There are breaking changes between 1.11 and 1.12!  Please review the 1.12.0 notes below.**
 * **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
-### v1.12.1
+### v1.12.2
 
 * #951 - fix: restore Session disconnect during SocketInitiatorThread.Read exception (gbirchmeier/trevor-bush)
     * (Without this fix, broken connections may cause the engine to go into an invalid state!)
