@@ -43,6 +43,9 @@ What's New
 * #940 - Create an alternate CharEncoding.GetBytes impl which uses ArrayPool to improve memory performance (VAllens)
 * #951 - fix: restore Session disconnect during SocketInitiatorThread.Read exception (gbirchmeier/trevor-bush)
 
+### v1.13.1
+* backport #951 to 1.13
+
 ### v1.13.0
 
 **Breaking changes**
@@ -94,6 +97,12 @@ What's New
 * #926 - don't init FileLog writers until first use (Rob-Hague)
 * #931 - bugfix in FixToJson example program
 * #934 - fix an obscure failure of Message.FromString when a message ends in a group (and lacks a checksum) (gbirchmeier)
+
+### v1.12.2
+* backport #951 to 1.12
+
+### v1.12.1
+There is no v1.12.1.  (A bad build was uploaded to nuget, so this number is dead.)
 
 ### v1.12.0
 
