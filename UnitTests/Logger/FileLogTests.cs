@@ -96,4 +96,54 @@ public class FileLogTests
 
         Assert.Throws<QuickFix.ConfigError>(delegate { factory.Create(sessionId); });
     }
+
+
+    [Test]
+    public void TestClear()
+    {
+        var logDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "log");
+
+        if (Directory.Exists(logDirectory))
+            Directory.Delete(logDirectory, true);
+
+        QuickFix.SessionID sessionId = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
+        QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
+
+        QuickFix.SettingsDictionary config = new QuickFix.SettingsDictionary();
+        config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
+        config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, logDirectory);
+
+        settings.Set(sessionId, config);
+
+        string expectedEventLogFilePath = Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log");
+        string expectedMessagesLogFilePath = Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log");
+
+        FileLogFactory factory = new FileLogFactory(settings);
+        _log = (FileLog)factory.Create(sessionId);
+
+        Assert.That(!File.Exists(expectedEventLogFilePath));
+        Assert.That(!File.Exists(expectedMessagesLogFilePath));
+
+        _log.OnEvent("some event");
+        _log.OnIncoming("some incoming");
+
+        Assert.That(File.Exists(expectedEventLogFilePath));
+        Assert.That(File.Exists(expectedMessagesLogFilePath));
+
+        _log.Clear();
+
+        Assert.That(new FileInfo(expectedEventLogFilePath).Length == 0);
+        Assert.That(new FileInfo(expectedMessagesLogFilePath).Length == 0);
+
+        _log.OnEvent("another event");
+        _log.OnIncoming("another incoming");
+
+        Assert.That(new FileInfo(expectedEventLogFilePath).Length > 0);
+        Assert.That(new FileInfo(expectedMessagesLogFilePath).Length > 0);
+
+        // cleanup (don't delete log unless success)
+        _log.Dispose();
+        _log = null;
+        Directory.Delete(logDirectory, true);
+    }
 }
