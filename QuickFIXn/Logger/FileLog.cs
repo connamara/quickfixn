@@ -99,6 +99,9 @@ public class FileLog : ILog
             _messageLog?.Dispose();
             _eventLog?.Dispose();
 
+            _messageLog = null;
+            _eventLog = null;
+
             EnsureMessageLogInit(append: false);
             EnsureEventLogInit(append: false);
         }
