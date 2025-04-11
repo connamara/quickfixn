@@ -134,13 +134,22 @@ namespace AcceptanceTest
 
         private void ProcessNews(Message msg, SessionID sessionId)
         {
-            if (msg.IsSetField(QuickFix.Fields.Tags.Headline) && (msg.GetString(QuickFix.Fields.Tags.Headline) == "STOPME"))
+            string headlineUpcase = msg.GetString(Tags.Headline).ToUpperInvariant();
+
+            if (headlineUpcase.Contains("STOPME"))
             {
-                if (this.StopMeEvent != null)
-                    StopMeEvent();
+                StopMeEvent?.Invoke();
+                return;
             }
-            else
-                Echo(msg, sessionId);
+
+            if(headlineUpcase.Contains("NOECHO")
+               || headlineUpcase.Contains("NO-ECHO")
+               || headlineUpcase.Contains("NO_ECHO"))
+            {
+                return;
+            }
+
+            Echo(msg, sessionId);
         }
 
         public void OnMessage(QuickFix.FIX44.TradeCaptureReportRequest msg, SessionID sessionId)
