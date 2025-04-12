@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
+using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Logger;
@@ -35,16 +32,6 @@ BeginString = FIX.4.4
             return new SessionSettings(new StringReader(Config));
         }
 
-        private static ThreadedSocketAcceptor CreateAcceptor()
-        {
-            var settings = CreateSettings();
-            return new ThreadedSocketAcceptor(
-                new NullApplication(),
-                new FileStoreFactory(settings),
-                settings,
-                new FileLogFactory(settings));
-        }
-
         [Test]
         public void TestRecreation()
         {
@@ -55,7 +42,14 @@ BeginString = FIX.4.4
 
         private static void StartStopAcceptor()
         {
-            var acceptor = CreateAcceptor();
+            var settings = CreateSettings();
+            var lf = new FileLogFactory(settings);
+
+            var acceptor = new ThreadedSocketAcceptor(
+                new NullApplication(),
+                new FileStoreFactory(settings),
+                settings,
+                lf);
             acceptor.Start();
             acceptor.Dispose();
         }

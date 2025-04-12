@@ -36,10 +36,10 @@ namespace QuickFix
             long clientId,
             SocketSettings socketSettings,
             AcceptorSocketDescriptor? acceptorDescriptor,
-            NonSessionLog nonSessionLog
+            IQuickFixLoggerFactory loggerFactory
         ) {
             Id = clientId;
-            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor, nonSessionLog);
+            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor, loggerFactory);
         }
 
         public void Start()

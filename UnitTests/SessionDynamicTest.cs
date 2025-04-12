@@ -5,7 +5,6 @@ using System.Threading;
 using System.Net;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
-
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Logger;

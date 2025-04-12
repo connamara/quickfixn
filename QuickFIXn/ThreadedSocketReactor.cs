@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System;
+using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 
 namespace QuickFix
@@ -31,19 +32,21 @@ namespace QuickFix
         private readonly SocketSettings _socketSettings;
         private readonly IPEndPoint _serverSocketEndPoint;
         private readonly AcceptorSocketDescriptor? _acceptorSocketDescriptor;
-        private readonly NonSessionLog _nonSessionLog;
+        private readonly ILogger _nonSessionLog;
+        private readonly IQuickFixLoggerFactory _loggerFactory;
 
         internal ThreadedSocketReactor(
             IPEndPoint serverSocketEndPoint,
             SocketSettings socketSettings,
             AcceptorSocketDescriptor? acceptorSocketDescriptor,
-            NonSessionLog nonSessionLog)
+            IQuickFixLoggerFactory loggerFactory)
         {
             _socketSettings = socketSettings;
             _serverSocketEndPoint = serverSocketEndPoint;
             _tcpListener = new TcpListener(_serverSocketEndPoint);
             _acceptorSocketDescriptor = acceptorSocketDescriptor;
-            _nonSessionLog = nonSessionLog;
+            _loggerFactory = loggerFactory;
+            _nonSessionLog = loggerFactory.CreateNonSessionLogger<ThreadedSocketReactor>();
         }
 
         public void Start()
@@ -111,7 +114,7 @@ namespace QuickFix
                     {
                         ApplySocketOptions(client, _socketSettings);
                         ClientHandlerThread t = new ClientHandlerThread(
-                            client, _nextClientId++, _socketSettings, _acceptorSocketDescriptor, _nonSessionLog);
+                            client, _nextClientId++, _socketSettings, _acceptorSocketDescriptor, _loggerFactory);
                         t.Exited += OnClientHandlerThreadExited;
                         lock (_sync)
                         {
@@ -207,7 +210,14 @@ namespace QuickFix
         /// <param name="s"></param>
         /// <param name="ex"></param>
         private void LogError(string s, Exception? ex = null) {
-            _nonSessionLog.OnEvent(ex is null ? $"{s}" : $"{s}: {ex}");
+            if (ex is null)
+            {
+                _nonSessionLog.LogError("{Message}", s);
+            }
+            else
+            {
+                _nonSessionLog.LogError(ex, "{Message}: {Error}", s, ex);
+            }
         }
     }
 }

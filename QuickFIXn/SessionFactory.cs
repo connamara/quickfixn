@@ -13,14 +13,14 @@ public class SessionFactory
 {
     protected IApplication _application;
     protected IMessageStoreFactory _messageStoreFactory;
-    protected ILogFactory _logFactory;
+    protected IQuickFixLoggerFactory _loggerFactory;
     protected IMessageFactory _messageFactory;
     protected Dictionary<string, DataDictionary.DataDictionary> _dictionariesByPath = new();
 
     public SessionFactory(
         IApplication app,
         IMessageStoreFactory storeFactory,
-        ILogFactory? logFactory = null,
+        IQuickFixLoggerFactory? loggerFactory = null,
         IMessageFactory? messageFactory = null)
     {
         // TODO: for V2, consider ONLY instantiating MessageFactory in the Create() method,
@@ -31,7 +31,7 @@ public class SessionFactory
 
         _application = app;
         _messageStoreFactory = storeFactory;
-        _logFactory = logFactory ?? new NullLogFactory();
+        _loggerFactory = loggerFactory ?? NullQuickFixLoggerFactory.Instance;
         _messageFactory = messageFactory ?? new DefaultMessageFactory();
     }
 
@@ -107,7 +107,7 @@ public class SessionFactory
             dd,
             new SessionSchedule(settings),
             heartBtInt,
-            _logFactory,
+            _loggerFactory,
             sessionMsgFactory,
             senderDefaultApplVerId);
 

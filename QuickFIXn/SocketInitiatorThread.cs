@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 
 namespace QuickFix;
@@ -16,7 +17,7 @@ public class SocketInitiatorThread : IResponder
 {
     public Session Session { get; }
     public Transport.SocketInitiator Initiator { get; }
-    public NonSessionLog NonSessionLog { get; }
+    public ILogger NonSessionLog { get; }
 
     public const int BUF_SIZE = 512;
 
@@ -27,6 +28,8 @@ public class SocketInitiatorThread : IResponder
     private readonly CancellationTokenSource _readCancellationTokenSource = new();
     private readonly IPEndPoint _socketEndPoint;
     private readonly SocketSettings _socketSettings;
+    private bool _isDisconnectRequested = false;
+    private readonly IQuickFixLoggerFactory _loggerFactory;
 
     /// <summary>
     /// Keep a task for handling async read
@@ -38,11 +41,12 @@ public class SocketInitiatorThread : IResponder
         Session session,
         IPEndPoint socketEndPoint,
         SocketSettings socketSettings,
-        NonSessionLog nonSessionLog)
+        IQuickFixLoggerFactory loggerFactory)
     {
         Initiator = initiator;
         Session = session;
-        NonSessionLog = nonSessionLog;
+        _loggerFactory = loggerFactory;
+        NonSessionLog = _loggerFactory.CreateNonSessionLogger<SocketInitiatorThread>();
         _socketEndPoint = socketEndPoint;
         _socketSettings = socketSettings;
     }
@@ -79,7 +83,7 @@ public class SocketInitiatorThread : IResponder
     /// <returns>Stream representing the (network)connection to the other party</returns>
     protected virtual Stream SetupStream()
     {
-        return Transport.StreamFactory.CreateClientStream(_socketEndPoint, _socketSettings, NonSessionLog);
+        return Transport.StreamFactory.CreateClientStream(_socketEndPoint, _socketSettings, _loggerFactory);
     }
 
     public bool Read()

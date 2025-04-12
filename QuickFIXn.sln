@@ -48,6 +48,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickFix.FIXT11", "Messages
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AcceptanceTest", "AcceptanceTest\AcceptanceTest.csproj", "{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{80B846FF-780C-4D04-ADF9-BAED00CCC403}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Standalone", "Standalone", "{31A77EBD-3A37-4C51-8124-0E6FF68BD890}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerilogLog", "Examples\Standalone\SerilogLog\SerilogLog.csproj", "{8F64D9A5-0E63-4705-B37B-346F6D2C0B82}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -192,11 +198,23 @@ Global
 		{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}.Release|x64.ActiveCfg = Release|Any CPU
 		{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}.Release|x64.Build.0 = Release|Any CPU
+		{8F64D9A5-0E63-4705-B37B-346F6D2C0B82}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F64D9A5-0E63-4705-B37B-346F6D2C0B82}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F64D9A5-0E63-4705-B37B-346F6D2C0B82}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8F64D9A5-0E63-4705-B37B-346F6D2C0B82}.Debug|x64.Build.0 = Debug|Any CPU
+		{8F64D9A5-0E63-4705-B37B-346F6D2C0B82}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F64D9A5-0E63-4705-B37B-346F6D2C0B82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F64D9A5-0E63-4705-B37B-346F6D2C0B82}.Release|x64.ActiveCfg = Release|Any CPU
+		{8F64D9A5-0E63-4705-B37B-346F6D2C0B82}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4BE64B0D-00E7-4D43-8578-311E1F10FD80}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{31A77EBD-3A37-4C51-8124-0E6FF68BD890} = {80B846FF-780C-4D04-ADF9-BAED00CCC403}
+		{8F64D9A5-0E63-4705-B37B-346F6D2C0B82} = {31A77EBD-3A37-4C51-8124-0E6FF68BD890}
 	EndGlobalSection
 EndGlobal
