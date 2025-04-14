@@ -28,7 +28,7 @@ namespace UnitTests
         private const string FIXMessageDelimit = @"(8=FIX|\A).*?(" + FIXMessageEnd + @"|\z)";
         private Dictionary<string, SocketState> _sessions;
         private HashSet<string> _loggedOnCompIDs;
-        private int _senderSequenceNumber = 1;
+        private ulong _senderSequenceNumber = 1;
 
         public class TestApplication : IApplication
         {
@@ -105,7 +105,7 @@ namespace UnitTests
             settings.SetString(SessionSettings.SOCKET_CONNECT_PORT, ConnectPort.ToString());
             settings.SetString(SessionSettings.SOCKET_ACCEPT_HOST, Host);
             settings.SetString(SessionSettings.SOCKET_ACCEPT_PORT, AcceptPort.ToString());
-            settings.SetString(SessionSettings.DEBUG_FILE_LOG_PATH, Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath), "log"));
+            settings.SetString(SessionSettings.FILE_LOG_PATH, Path.Combine(Path.GetDirectoryName(new Uri(Assembly.GetExecutingAssembly().CodeBase).LocalPath), "log"));
             return settings;
         }
 
