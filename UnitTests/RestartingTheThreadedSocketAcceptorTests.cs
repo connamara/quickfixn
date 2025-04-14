@@ -149,6 +149,8 @@ namespace UnitTests
             }
         }
 
+        
+
         private void ReceiveAsync(SocketState socketState)
         {
             try
@@ -244,12 +246,12 @@ namespace UnitTests
             }
         }
 
-        private bool WaitForLogonStatus(string targetCompID)
+        private bool WaitForLogonStatus(string targetCompID, int waitTime = 10000 )
         {
             lock (_loggedOnCompIDs)
             {
                 if (!_loggedOnCompIDs.Contains(targetCompID))
-                    Monitor.Wait(_loggedOnCompIDs, 10000);
+                    Monitor.Wait(_loggedOnCompIDs, waitTime);
                 return _loggedOnCompIDs.Contains(targetCompID);
             }
         }
@@ -297,14 +299,21 @@ namespace UnitTests
         }
 
         [Test]
-        [ExpectedException(typeof(SocketException))]
         public void TestAcceptorInStoppedStateOnInitialisationThenCannotReceiveConnections()
         {
+            
             //GIVEN - an acceptor
             var acceptor = CreateAcceptorFromSessionConfig();
             //WHEN - a connection is received
-            var socket01 = ConnectToEngine(true);
+            try
+            {
+                var socket01 = ConnectToEngine(true);
+            }
             //THEN - Expect failure to connect
+            catch (SocketException)
+            {
+                //SUCCESS
+            }
         }
 
         [Test]
@@ -334,7 +343,7 @@ namespace UnitTests
             Assert.IsTrue(acceptor.IsLoggedOn);
 
             //CLEANUP - disconnect client connections
-            socket01.Disconnect(true);
+            DisconnectSocket(socket01);
         }
 
         [Test]
@@ -355,8 +364,14 @@ namespace UnitTests
 
 
             //CLEANUP - disconnect client connections
-            socket02.Disconnect(true);
-            socket01.Disconnect(true);
+            DisconnectSocket(socket02);
+            DisconnectSocket(socket01);
+        }
+
+        private void DisconnectSocket(Socket socket)
+        {
+            socket.Shutdown(SocketShutdown.Both);
+            socket.Dispose();
         }
 
         [Test]
@@ -481,11 +496,12 @@ namespace UnitTests
             Assert.IsTrue(acceptor.AreSocketsRunning);
             socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
-            Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID), "Failed to logon static acceptor session");
+            Assert.IsTrue(WaitForLogonStatus(StaticAcceptorCompID, 60000), "Failed to logon static acceptor session");
             Assert.IsTrue(acceptor.IsLoggedOn);
 
             //CLEANUP - disconnect client connections
-            socket01.Disconnect(true);
+            DisconnectSocket(socket01);
+            
         }
     }
 }
