@@ -83,7 +83,7 @@ namespace QuickFix
         private void OnExited() {
             Exited?.Invoke(this, new ExitedEventArgs(this));
         }
-        
+
         #region Responder Members
 
         public bool Send(string data)

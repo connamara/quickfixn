@@ -2,14 +2,12 @@
 using System.Linq;
 using System.Net;
 using System;
-using System.Threading;
 using QuickFix.Logger;
 using QuickFix.Store;
+using System.Threading;
 
 namespace QuickFix
 {
-    // TODO v2.0 - consider changing to internal
-
     /// <summary>
     /// Acceptor implementation - with threads
     /// Creates a ThreadedSocketReactor for every listening endpoint.
@@ -192,7 +190,7 @@ namespace QuickFix
                 {
                     session.Logout();
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
                     LogEvent(session.Log, "Error during logout of Session " + session.SessionID + ": " + e.Message);
                 }
@@ -218,7 +216,7 @@ namespace QuickFix
         private const int TenSecondsInTicks = 10000;
 
         /// <summary>
-        /// FIXME
+        /// TODO implement WaitForLogout
         /// </summary>
         private void WaitForLogout()
         {
@@ -296,8 +294,8 @@ namespace QuickFix
                     StopAcceptingConnections();
                 }
             }
-            /// FIXME StopSessionTimer();
-            /// FIXME Session.UnregisterSessions(GetSessions());
+            // FIXME StopSessionTimer();
+            // FIXME Session.UnregisterSessions(GetSessions());
         }
 
         /// <summary>
@@ -412,9 +410,9 @@ namespace QuickFix
         /// Any override should call base.Dispose(disposing).
         /// </summary>
         /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
+        protected void Dispose(bool disposing)
         {
-            if( _disposed ) return;
+            if(_disposed) { return; }
             try
             {
                 Stop();
@@ -427,7 +425,6 @@ namespace QuickFix
                 // ignore
             }
         }
-        
         /// <summary>
         /// Disposes created sessions
         /// </summary>
@@ -439,5 +436,7 @@ namespace QuickFix
             Dispose( true );
             GC.SuppressFinalize( this );
         }
+
+        ~ThreadedSocketAcceptor() => Dispose(false);
     }
 }
