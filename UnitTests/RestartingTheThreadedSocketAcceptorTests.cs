@@ -341,7 +341,7 @@ namespace UnitTests
             var socket01 = ConnectToEngine();
             SendLogon( socket01, StaticAcceptorCompID );
             //THEN - is be running
-            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.EqualTo("Failed to logon static acceptor session"));
+            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.True); //"Failed to logon static acceptor session
             Assert.That(acceptor.IsLoggedOn, Is.True);
 
             //CLEANUP - disconnect client connections
@@ -360,8 +360,8 @@ namespace UnitTests
             var socket02 = ConnectToEngine();
             SendLogon(socket02, StaticAcceptorCompID2);
             //THEN - is be running
-            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.EqualTo("Failed to logon static acceptor session:" + StaticAcceptorCompID));
-            Assert.That(WaitForLogonStatus(StaticAcceptorCompID2), Is.EqualTo("Failed to logon static acceptor session:" + StaticAcceptorCompID2));
+            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.True); //"Failed to logon static acceptor session:" + StaticAcceptorCompI
+            Assert.That(WaitForLogonStatus(StaticAcceptorCompID2), Is.True); //"Failed to logon static acceptor session:" + StaticAcceptorCompID
             Assert.That(acceptor.IsLoggedOn, Is.True);
 
 
@@ -401,7 +401,7 @@ namespace UnitTests
             //WHEN - it is stopped with forced disconnection
             acceptor.Stop(true);
             //THEN - it should no longer be running
-            Assert.That(WaitForDisconnect(socket01), Is.EqualTo("Failed to disconnect session"));
+            Assert.That(WaitForDisconnect(socket01), Is.True); //"Failed to disconnect session
             Assert.That(acceptor.AreSocketsRunning, Is.False);
         }
 
@@ -413,13 +413,13 @@ namespace UnitTests
             acceptor.Start();
             var socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
-            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.EqualTo("Failed to logon static acceptor session"));
+            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.True); //"Failed to logon static acceptor session
             //WHEN - it is stopped
             acceptor.Stop();
             //THEN - it should no longer be running
-            Assert.That(WaitForDisconnect(socket01), Is.EqualTo("Failed to disconnect session"));
+            Assert.That(WaitForDisconnect(socket01), Is.True); //"Failed to disconnect session
             Assert.That(_loggedOnCompIDs.Contains( StaticAcceptorCompID ) , Is.False);
-            Assert.That(_sessions.ContainsKey(StaticAcceptorCompID), !Is.EqualTo("Failed to receive a logout message"));
+            Assert.That(_sessions.ContainsKey(StaticAcceptorCompID), Is.True); //"Failed to receive a logout message
             Assert.That(acceptor.AreSocketsRunning, Is.False);
             Assert.That(acceptor.IsLoggedOn, Is.False);
         }
@@ -453,9 +453,9 @@ namespace UnitTests
             Assert.That(acceptor.AreSocketsRunning, Is.True);
             var socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
-            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.EqualTo("Failed to logon static acceptor session"));
+            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.True); //"Failed to logon static acceptor session
             Assert.That(acceptor.IsLoggedOn, Is.True);
-            Assert.That(WaitForSessionStatus(StaticAcceptorCompID), Is.EqualTo("Logon messages was not recevied"));
+            Assert.That(WaitForSessionStatus(StaticAcceptorCompID), Is.True); //"Logon messages was not recevied
         }
 
         [Test]
@@ -466,7 +466,7 @@ namespace UnitTests
             acceptor.Start();
             var socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
-            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.EqualTo("Failed to logon static acceptor session"));
+            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.True); //"Failed to logon static acceptor session
             acceptor.Stop();
             //WHEN - it is started again
             acceptor.Start();
@@ -475,9 +475,9 @@ namespace UnitTests
             Assert.That(acceptor.AreSocketsRunning, Is.True);
             socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
-            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.EqualTo("Failed to logon static acceptor session"));
+            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.True); //"Failed to logon static acceptor session
             Assert.That(acceptor.IsLoggedOn, Is.True);
-            Assert.That(WaitForSessionStatus( StaticAcceptorCompID ) , Is.True);
+            Assert.That(WaitForSessionStatus(StaticAcceptorCompID) ,Is.True);
         }
 
 
@@ -489,7 +489,7 @@ namespace UnitTests
             acceptor.Start();
             var socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
-            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.EqualTo("Failed to logon static acceptor session"));
+            Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.True); //"Failed to logon static acceptor session
             acceptor.Stop(true);
             //WHEN - it is started again
             acceptor.Start();
@@ -498,7 +498,7 @@ namespace UnitTests
             Assert.That(acceptor.AreSocketsRunning, Is.True);
             socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
-            Assert.That(WaitForLogonStatus(StaticAcceptorCompID, 60000),Is.EqualTo("Failed to logon static acceptor session"));
+            Assert.That(WaitForLogonStatus(StaticAcceptorCompID, 60000), Is.True); //"Failed to logon static acceptor session
             Assert.That(acceptor.IsLoggedOn, Is.True);
 
             //CLEANUP - disconnect client connections

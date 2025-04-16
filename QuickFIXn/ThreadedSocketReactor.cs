@@ -66,9 +66,17 @@ namespace QuickFix
             {
                 if( State.SHUTDOWN_COMPLETE == _state )
                 {
-                    _state = State.RUNNING;
-                    _tcpListener.Start();
-                    _tcpListener.BeginAcceptTcpClient(AcceptTcpClientCallback, _tcpListener);
+                    try
+                    {
+                        _state = State.RUNNING;
+                        _tcpListener.Start();
+                        _tcpListener.BeginAcceptTcpClient(AcceptTcpClientCallback, _tcpListener);
+                    }
+                    catch(Exception e)
+                    {
+                        LogError("Error starting listener", e);
+                        throw;
+                    }
                 }
             }
         }
