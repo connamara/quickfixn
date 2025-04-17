@@ -418,7 +418,7 @@ namespace UnitTests
             acceptor.Stop();
             //THEN - it should no longer be running
             Assert.That(WaitForDisconnect(socket01), Is.True); //"Failed to disconnect session
-            Assert.That(_loggedOnCompIDs.Contains( StaticAcceptorCompID ) , Is.False);
+            Assert.That(_loggedOnCompIDs.Contains( StaticAcceptorCompID ), Is.False);
             Assert.That(_sessions.ContainsKey(StaticAcceptorCompID), Is.True); //"Failed to receive a logout message
             Assert.That(acceptor.AreSocketsRunning, Is.False);
             Assert.That(acceptor.IsLoggedOn, Is.False);
