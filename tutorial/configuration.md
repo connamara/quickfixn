@@ -172,7 +172,7 @@ QuickFIX Settings
       For daily sessions that are active on specific days of the week.
       <br/>Use in combination with StartTime and EndTime.
       <br/>Incompatible with StartDay and EndDay.
-      <br/>If StartTime is before EndTime then the day corresponds to the StartTime.
+      <br/>The session starts at StartTime on each day indicated.
     </td>
     <td class='valid'>
       Comma-delimited list of days of the week (in English).
