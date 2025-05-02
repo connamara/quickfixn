@@ -887,7 +887,7 @@ namespace QuickFix
         /// ToJSON() helper method.
         /// </summary>
         /// <returns>an XML string</returns>
-        private static StringBuilder FieldMapToJson(StringBuilder sb, DD? dd, FieldMap fields, bool humanReadableValues)
+        private static StringBuilder FieldMapToJson(StringBuilder sb, DD? dd, FieldMap fields, bool humanReadableValues, List<int>? tagsToMask, string maskText)
         {
             IList<int> numInGroupTagList = fields.GetGroupTags();
             IList<IField> numInGroupFieldList = new List<IField>();
@@ -907,7 +907,10 @@ namespace QuickFix
                 if (dd is not null && dd.FieldsByTag.ContainsKey(field.Tag))
                 {
                     sb.Append("\"" + dd.FieldsByTag[field.Tag].Name + "\":");
-                    if (humanReadableValues) {
+                    if (tagsToMask != null && tagsToMask.Contains(field.Tag)) {
+                        sb.Append("\"" + maskText + "\",");
+                    }
+                    else if (humanReadableValues) {
                         if (dd.FieldsByTag[field.Tag].EnumDict.TryGetValue(field.ToString(), out var valueDescription))
                         {
                             sb.Append("\"" + valueDescription + "\",");
@@ -940,7 +943,7 @@ namespace QuickFix
                 for (int counter = 1; counter <= fields.GroupCount(numInGroupField.Tag); counter++)
                 {
                     sb.Append('{');
-                    FieldMapToJson(sb, dd, fields.GetGroup(counter, numInGroupField.Tag), humanReadableValues);
+                    FieldMapToJson(sb, dd, fields.GetGroup(counter, numInGroupField.Tag), humanReadableValues, tagsToMask, maskText);
                     sb.Append("},");
                 }
 
@@ -991,8 +994,10 @@ namespace QuickFix
         ///   True will cause enums to be converted to their description strings, but only if dataDictionary is provided.
         ///   If true and dataDictionary is null, then throws an ArgumentNullException.
         /// </param>
+        /// <param name="tagsToMask">Optional list containing field tags to mask from FIX JSON output</param>
+        /// <param name="maskText">Text to use in place of masked values. Defaults to '[HIDDEN]'</param>
         /// <returns>a JSON string</returns>
-        public string ToJSON(DD? dataDictionary = null, bool convertEnumsToDescriptions = false) {
+        public string ToJSON(DD? dataDictionary = null, bool convertEnumsToDescriptions = false, List<int>? tagsToMask = null, string maskText = "[HIDDEN]") {
             if (convertEnumsToDescriptions && dataDictionary is null) {
                 throw new ArgumentNullException(
                     nameof(dataDictionary),
@@ -1000,9 +1005,9 @@ namespace QuickFix
             }
 
             StringBuilder sb = new StringBuilder().Append('{').Append("\"Header\":{");
-            FieldMapToJson(sb, dataDictionary, Header, convertEnumsToDescriptions).Append("},\"Body\":{");
-            FieldMapToJson(sb, dataDictionary, this, convertEnumsToDescriptions).Append("},\"Trailer\":{");
-            FieldMapToJson(sb, dataDictionary, Trailer, convertEnumsToDescriptions).Append("}}");
+            FieldMapToJson(sb, dataDictionary, Header, convertEnumsToDescriptions, tagsToMask, maskText).Append("},\"Body\":{");
+            FieldMapToJson(sb, dataDictionary, this, convertEnumsToDescriptions, tagsToMask, maskText).Append("},\"Trailer\":{");
+            FieldMapToJson(sb, dataDictionary, Trailer, convertEnumsToDescriptions, tagsToMask, maskText).Append("}}");
             return sb.ToString();
         }
     }
