@@ -110,7 +110,6 @@ namespace QuickFix
                     _clientThreads.Add(t.Id, t);
                 }
                 // FIXME set the client thread's exception handler here
-                LogError("connected");
                 t.Start();
             }
             catch (Exception e)
