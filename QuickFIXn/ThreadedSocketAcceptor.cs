@@ -300,12 +300,13 @@ namespace QuickFix
         public bool IsStarted { get; private set; } = false;
 
         /// <summary>
+        /// (For use by Unit Tests)
         /// Gets a value indicating whether this instance is started.
         /// </summary>
         /// <value>
         /// <c>true</c> if this instance is started; otherwise, <c>false</c>.
         /// </value>
-        public bool AreSocketsRunning
+        internal bool AreSocketsRunning
         {
             get
             {
