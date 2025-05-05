@@ -17,13 +17,12 @@ namespace UnitTests
     [TestFixture]
     public class RestartingTheThreadedSocketAcceptorTests
     {
-
         private const string Host = "127.0.0.1";
         private const int AcceptPort = 55101;
         private const string StaticAcceptorCompID = "acc01";
         private const string StaticAcceptorCompID2 = "acc02";
         private const string ServerCompID = "dummy";
-        private ThreadedSocketAcceptor _acceptor;
+        private ThreadedSocketAcceptor? _acceptor;
         private const string FIXMessageEnd = @"\x0110=\d{3}\x01";
         private const string FIXMessageDelimit = @"(8=FIX|\A).*?(" + FIXMessageEnd + @"|\z)";
         private Dictionary<string, SocketState> _sessions = new Dictionary<string, SocketState>();
@@ -358,7 +357,7 @@ namespace UnitTests
         [TearDown]
         public void TearDown()
         {
-            _acceptor.Stop( true );
+            _acceptor!.Stop( true );
             _acceptor.Dispose();
         }
 
@@ -368,7 +367,7 @@ namespace UnitTests
         {
             //GIVEN - an acceptor created in SetUp
             //THEN - is should be stopped
-            Assert.That(_acceptor.IsStarted, Is.False);
+            Assert.That(_acceptor!.IsStarted, Is.False);
             Assert.That(_acceptor.AreSocketsRunning, Is.False);
             Assert.That(_acceptor.IsLoggedOn, Is.False);
         }
@@ -376,7 +375,6 @@ namespace UnitTests
         [Test]
         public void TestAcceptorInStoppedStateOnInitialisationThenCannotReceiveConnections()
         {
-            
             //GIVEN - an acceptor created in SetUp
             // a connection is received
             bool exceptionFound = false;
@@ -398,7 +396,7 @@ namespace UnitTests
         {
             //GIVEN - an acceptor created in SetUp
             //WHEN - it is started
-            _acceptor.Start();
+            _acceptor!.Start();
             //THEN - is be running
             Assert.That(_acceptor.IsStarted, Is.True);
             Assert.That(_acceptor.AreSocketsRunning, Is.True);
@@ -409,7 +407,7 @@ namespace UnitTests
         public void TestStartedAcceptorAndReceiveConnection()
         {
             //GIVEN - a started acceptor created in SetUp
-            _acceptor.Start();
+            _acceptor!.Start();
             //WHEN - a connection is received
             var socket01 = ConnectToEngine();
             SendLogon( socket01, StaticAcceptorCompID );
@@ -425,7 +423,7 @@ namespace UnitTests
         public void TestStartedAcceptorAndReceiveMultipleConnections()
         {
             //GIVEN - a started acceptor created in SetUp
-            _acceptor.Start();
+            _acceptor!.Start();
             //WHEN - a connection is received
             var socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
@@ -452,7 +450,7 @@ namespace UnitTests
         public void TestCanStopAcceptor()
         {
             //GIVEN - started acceptor created in SetUp
-            _acceptor.Start();
+            _acceptor!.Start();
             //WHEN - it is stopped
             _acceptor.Stop();
             //THEN - it should no longer be running
@@ -465,7 +463,7 @@ namespace UnitTests
         public void TestCanForceStopAcceptorAndLogOffCounterpartyIfLoggedOn()
         {
             //GIVEN - started acceptor with a logged on session created in SetUp
-            _acceptor.Start();
+            _acceptor!.Start();
             var socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
             //WHEN - it is stopped with forced disconnection
@@ -479,7 +477,7 @@ namespace UnitTests
         public void TestCanStopAcceptorAndLogOffCounterpartyIfLoggedOn()
         {
             //GIVEN - started acceptor with a logged on session created in SetUp
-            _acceptor.Start();
+            _acceptor!.Start();
             var socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
             Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.True);
@@ -497,7 +495,7 @@ namespace UnitTests
         public void TestCanRestartAcceptorAfterStopping()
         {
             //GIVEN - a started then stopped acceptor created in SetUp
-            _acceptor.Start();
+            _acceptor!.Start();
             _acceptor.Stop();
             //WHEN - it is started again
             _acceptor.Start();
@@ -511,7 +509,7 @@ namespace UnitTests
         public void TestCanRestartAcceptorAfterStoppingAndCounterPartyCanThenLogon()
         {
             //GIVEN - a started then stopped acceptor created in SetUp
-            _acceptor.Start();
+            _acceptor!.Start();
             _acceptor.Stop();
             //WHEN - it is started again
             _acceptor.Start();
@@ -529,7 +527,7 @@ namespace UnitTests
         public void TestCanRestartAcceptorAndCounterPartyCanLogonAfterCounterParttyLoggedOnThenAcceptorStopped()
         {
             //GIVEN - a started then stopped acceptor created in SetUp
-            _acceptor.Start();
+            _acceptor!.Start();
             var socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
             Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.True);
@@ -551,7 +549,7 @@ namespace UnitTests
         public void TestCanRestartAcceptorAndCounterPartyCanLogonAfterCounterParttyLoggedOnThenAcceptorForceStopped()
         {
             //GIVEN - a started then stopped acceptor created in SetUp
-            _acceptor.Start();
+            _acceptor!.Start();
             var socket01 = ConnectToEngine();
             SendLogon(socket01, StaticAcceptorCompID);
             Assert.That(WaitForLogonStatus(StaticAcceptorCompID), Is.True);

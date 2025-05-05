@@ -14,16 +14,15 @@ namespace QuickFix
     /// </summary>
     public class ThreadedSocketAcceptor : IAcceptor
     {
+        private const int TenSecondsInTicks = 10000;
+
         private readonly Dictionary<SessionID, Session> _sessions = new();
         private readonly SessionSettings _settings;
         private readonly Dictionary<IPEndPoint, AcceptorSocketDescriptor> _socketDescriptorForAddress = new();
         private readonly SessionFactory _sessionFactory;
-        private bool _isStarted = false;
         private bool _disposed = false;
         private readonly object _sync = new();
         private readonly NonSessionLog _nonSessionLog;
-
-        #region Constructors
 
         /// <summary>
         /// Create a ThreadedSocketAcceptor
@@ -60,13 +59,11 @@ namespace QuickFix
             }
         }
 
-        #endregion
-
         #region Private Methods
 
         private AcceptorSocketDescriptor GetAcceptorSocketDescriptor(SettingsDictionary dict)
         {
-            int port = System.Convert.ToInt32(dict.GetLong(SessionSettings.SOCKET_ACCEPT_PORT));
+            int port = Convert.ToInt32(dict.GetLong(SessionSettings.SOCKET_ACCEPT_PORT));
             SocketSettings socketSettings = new SocketSettings();
 
             IPEndPoint socketEndPoint;
@@ -134,7 +131,7 @@ namespace QuickFix
 
                     // start SocketReactor if it was created via AddSession call
                     // and if acceptor is already started
-                    if (_isStarted && !_disposed)
+                    if (IsStarted && !_disposed)
                     {
                         descriptor.SocketReactor.Start();
                     }
@@ -175,9 +172,9 @@ namespace QuickFix
                 {
                     session.Logon();
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
-                    LogEvent( session.Log, "Error during logon of Session " + session.SessionID + ": " + e.Message);
+                    session.Log.OnEvent($"Error during logon of Session {session.SessionID}: {e.Message}");
                 }
             }
         }
@@ -192,32 +189,19 @@ namespace QuickFix
                 }
                 catch (Exception e)
                 {
-                    LogEvent(session.Log, "Error during logout of Session " + session.SessionID + ": " + e.Message);
+                    session.Log.OnEvent($"Error during logout of Session {session.SessionID}: {e.Message}");
                 }
             }
 
             if (force && IsLoggedOn)
             {
-                DisconnectSessions("Forcibly disconnecting session");
+                DisconnectSessions("Forcibly disconnecting sessions");
             }
 
             if (!force)
                 WaitForLogout();
         }
 
-        private static void LogEvent( ILog log, string message )
-        {
-            if( log != null )
-            {
-                log.OnEvent( message );
-            }
-        }
-
-        private const int TenSecondsInTicks = 10000;
-
-        /// <summary>
-        /// TODO implement WaitForLogout
-        /// </summary>
         private void WaitForLogout()
         {
             int start = Environment.TickCount;
@@ -240,9 +224,9 @@ namespace QuickFix
                     if (session.IsLoggedOn)
                         session.Disconnect(disconnectMessage);
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
-                    LogEvent( session.Log, "Error during disconnect of Session " + session.SessionID + ": " + e.Message );
+                    session.Log.OnEvent($"Error during disconnect of Session {session.SessionID}: {e.Message}");
                 }
             }
         }
@@ -266,11 +250,11 @@ namespace QuickFix
 
             lock (_sync)
             {
-                if (!_isStarted)
+                if (!IsStarted)
                 {
                     LogonAllSessions();
                     StartAcceptingConnections();
-                    _isStarted = true;
+                    IsStarted = true;
                 }
             }
         }
@@ -282,20 +266,17 @@ namespace QuickFix
 
         public void Stop(bool force)
         {
-            if (_disposed)
-                throw new ObjectDisposedException(GetType().Name);
+            ObjectDisposedException.ThrowIf(_disposed, this);
 
             lock( _sync )
             {
-                if( _isStarted )
+                if( IsStarted )
                 {
-                    _isStarted = false;
+                    IsStarted = false;
                     LogoutAllSessions(force);
                     StopAcceptingConnections();
                 }
             }
-            // FIXME StopSessionTimer();
-            // FIXME Session.UnregisterSessions(GetSessions());
         }
 
         /// <summary>
@@ -316,13 +297,7 @@ namespace QuickFix
         /// <value>
         /// <c>true</c> if this instance is started; otherwise, <c>false</c>.
         /// </value>
-        public bool IsStarted
-        {
-            get
-            {
-                return _isStarted;
-            }
-        }
+        public bool IsStarted { get; private set; } = false;
 
         /// <summary>
         /// Gets a value indicating whether this instance is started.
@@ -409,7 +384,7 @@ namespace QuickFix
         /// Any subclasses of ThreadedSocketAcceptor should override this if they have resources to dispose
         /// Any override should call base.Dispose(disposing).
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">true if called from Dispose()</param>
         protected void Dispose(bool disposing)
         {
             if(_disposed) { return; }

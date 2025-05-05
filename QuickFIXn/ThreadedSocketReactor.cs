@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using System.Threading;
 using System;
-using QuickFix.Logger;
 using QuickFix.Logger;
 
 namespace QuickFix
@@ -18,10 +16,7 @@ namespace QuickFix
     {
         public enum State { RUNNING, SHUTDOWN_REQUESTED, SHUTDOWN_COMPLETE }
 
-        public State ReactorState
-        {
-            get { return _state; }
-        }
+        public State ReactorState => _state;
 
         /// <summary>
         /// Gets a value indicating whether this instance is running.
@@ -29,22 +24,14 @@ namespace QuickFix
         /// <value>
         /// <c>true</c> if this instance is running; otherwise, <c>false</c>.
         /// </value>
-        public bool IsRunning
-        {
-            get
-            {
-                return ReactorState == State.RUNNING;
-            }
-        }
+        public bool IsRunning => ReactorState == State.RUNNING;
 
         private readonly object _sync = new ();
         private State _state = State.SHUTDOWN_COMPLETE;
         private long _nextClientId = 0;
-        private Thread? _serverThread = null;
         private readonly Dictionary<long, ClientHandlerThread> _clientThreads = new ();
-        private TcpListener _tcpListener;
+        private readonly TcpListener _tcpListener;
         private readonly SocketSettings _socketSettings;
-        private readonly IPEndPoint _serverSocketEndPoint;
         private readonly AcceptorSocketDescriptor? _acceptorSocketDescriptor;
         private readonly NonSessionLog _nonSessionLog;
 
@@ -55,21 +42,17 @@ namespace QuickFix
             NonSessionLog nonSessionLog)
         {
             _socketSettings = socketSettings;
-            _serverSocketEndPoint = serverSocketEndPoint;
-            _tcpListener = new TcpListener(_serverSocketEndPoint);
-            _tcpListener.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-            _tcpListener.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Linger, new LingerOption(true, 0));
+            _tcpListener = new TcpListener(serverSocketEndPoint);
             _acceptorSocketDescriptor = acceptorSocketDescriptor;
             _nonSessionLog = nonSessionLog;
         }
 
         public void Start()
         {
-            lock( _sync )
+            lock (_sync)
             {
                 if( State.SHUTDOWN_COMPLETE == _state )
                 {
-
                     try
                     {
                         _tcpListener.Start();
@@ -108,18 +91,19 @@ namespace QuickFix
 
         private void AcceptTcpClientCallback( IAsyncResult ar )
         {
-            //if socket is in process of shutting down then a client may still be able to connect until it has shutdown but really we don't want to do anything with the connection so just ignore it
+            // If socket is in process of shutting down then a client may
+            // still be able to connect until it has shutdown
+            // but really we don't want to do anything with the connection so just ignore it
             if (!IsRunning)
-            {
                 return;
-            }
-            TcpListener listener = (TcpListener)ar.AsyncState;
+
+            TcpListener listener = (TcpListener)ar.AsyncState!;
             try
             {
-
                 TcpClient client = listener.EndAcceptTcpClient(ar);
                 ApplySocketOptions(client, _socketSettings);
-                ClientHandlerThread t = new ClientHandlerThread(client, _nextClientId++, _socketSettings, _acceptorSocketDescriptor, _nonSessionLog);
+                ClientHandlerThread t = new ClientHandlerThread(
+                    client, _nextClientId++, _socketSettings, _acceptorSocketDescriptor, _nonSessionLog);
                 t.Exited += OnClientHandlerThreadExited;
                 lock (_sync)
                 {
