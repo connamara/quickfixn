@@ -90,6 +90,9 @@ public class FileLog : ILog
 
     #region Log Members
 
+    /// <summary>
+    /// Delete log content and leave ready for next log message
+    /// </summary>
     public void Clear()
     {
         lock (_sync)
