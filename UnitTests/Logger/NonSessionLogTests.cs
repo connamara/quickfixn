@@ -9,14 +9,17 @@ public class NonSessionLogTests {
     private readonly string _logDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "log");
 
     private NonSessionLog? _nslog;
+    private NonSessionLog? _nslog2;
 
     [TearDown]
     public void Teardown()
     {
         _nslog?.Dispose();
         _nslog = null;
+        _nslog2?.Dispose();
+        _nslog2 = null;
     }
-    
+
     private FileLogFactory CreateFileLogFactory() {
         if (Directory.Exists(_logDirectory))
             Directory.Delete(_logDirectory, true);
@@ -54,6 +57,24 @@ public class NonSessionLogTests {
         // cleanup (don't delete log unless success)
         _nslog.Dispose();
         _nslog = null;
+        Directory.Delete(_logDirectory, true);
+    }
+
+    [Test]
+    public void TestTwoFileLogs()
+    {
+        FileLogFactory flf = CreateFileLogFactory();
+        _nslog = new NonSessionLog(flf);
+        _nslog.OnEvent("log1");
+
+        _nslog2 = new NonSessionLog(flf);
+        _nslog2.OnEvent("log2");
+
+        // cleanup (don't delete log unless success)
+        _nslog.Dispose();
+        _nslog = null;
+        _nslog2.Dispose();
+        _nslog2 = null;
         Directory.Delete(_logDirectory, true);
     }
 
