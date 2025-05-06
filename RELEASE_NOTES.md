@@ -43,6 +43,7 @@ What's New
 * #940 - Create an alternate CharEncoding.GetBytes impl which uses ArrayPool to improve memory performance (VAllens)
 * #951 - fix: restore Session disconnect during SocketInitiatorThread.Read exception (gbirchmeier/trevor-bush)
 * #963 - fix: concurrency bug with NonSessionLog on Windows (gbirchmeier)
+* #195 - fix: Acceptor.Stop() then restart now works (huwmjenkins/vyourtchenko)
 
 ### v1.13.1
 * backport #951 to 1.13
