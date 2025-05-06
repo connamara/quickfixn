@@ -2,6 +2,7 @@
 using System.Buffers;
 using System.Collections.Generic;
 using System.Text;
+using QuickFix.ObjectPooling;
 using QuickFix.Util;
 
 namespace QuickFix.Store;
@@ -33,7 +34,8 @@ public class FileStore : IMessageStore
 
     public static string Prefix(SessionID sessionId)
     {
-        StringBuilder prefix = new StringBuilder(sessionId.BeginString)
+        using PooledStringBuilder pooledSb = new PooledStringBuilder();
+        StringBuilder prefix = pooledSb.Builder.Append(sessionId.BeginString)
             .Append('-').Append(sessionId.SenderCompID);
         if (SessionID.IsSet(sessionId.SenderSubID))
             prefix.Append('_').Append(sessionId.SenderSubID);
@@ -226,8 +228,8 @@ public class FileStore : IMessageStore
 
         using ValueDisposable _ = CharEncoding.GetBytes(msg.AsSpan(), out ReadOnlySpan<byte> msgBytes);
 
-        StringBuilder b = new StringBuilder();
-        b.Append(msgSeqNum).Append(',').Append(offset).Append(',').Append(msgBytes.Length);
+        using PooledStringBuilder pooledSb = new PooledStringBuilder();
+        StringBuilder b = pooledSb.Builder.Append(msgSeqNum).Append(',').Append(offset).Append(',').Append(msgBytes.Length);
         _headerFile.WriteLine(b.ToString());
         _headerFile.Flush();
 
