@@ -102,4 +102,6 @@ Contributors
 - Hank Libman
 - Sam Norris
 - Zdeněk Sojma
+- Vlad Yourtchenko
+- Trevor Bush
 <!--- declined: dckorben -->
