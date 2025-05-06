@@ -4,34 +4,31 @@ namespace QuickFix.Logger;
 /// A logger that can be used when the calling logic cannot identify a session (which is rare).
 /// Does not create a log artifact until first write.
 /// </summary>
-public class NonSessionLog : System.IDisposable {
+public class NonSessionLog {
 
     private readonly ILogFactory _logFactory;
-    private ILog? _log;
 
-    private readonly object _sync = new();
+    private readonly static object _sync = new();
 
     internal NonSessionLog(ILogFactory logFactory) {
         _logFactory = logFactory;
     }
 
+    /// <summary>
+    /// Write to a log that is not tied to a session.
+    /// Calls to this should be rare, and only to record problem events that
+    /// cannot be tied to a specific session.
+    /// (Think errors and maybe warnings, NOT infos.)
+    /// </summary>
+    /// <param name="s">message to log</param>
     internal void OnEvent(string s) {
-        if (_disposed) return;
-
+        // Atomic open/write/close operation.
+        // This function should not be called often enough
+        //   for this overhead to cause a performance issue.
         lock (_sync) {
-            _log ??= _logFactory.CreateNonSessionLog();
-        }
-        _log?.OnEvent(s);
-    }
-
-    private bool _disposed;
-    public void Dispose() {
-        if (_disposed) return;
-
-        if (_log != null) {
+            ILog _log = _logFactory.CreateNonSessionLog();
+            _log.OnEvent(s);
             _log.Dispose();
-            _log = null;
-            _disposed = true;
         }
     }
 }
