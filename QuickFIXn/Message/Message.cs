@@ -5,6 +5,7 @@ using System.Text.Json;
 using System.Collections.Generic;
 using QuickFix.DataDictionary;
 using DD = QuickFix.DataDictionary.DataDictionary;
+using QuickFix.ObjectPooling;
 
 namespace QuickFix
 {
@@ -853,7 +854,8 @@ namespace QuickFix
 
         private static string FieldMapToXml(DD? dd, FieldMap fields)
         {
-            StringBuilder s = new StringBuilder();
+            using PooledStringBuilder pooledSb = new PooledStringBuilder();
+            StringBuilder s = pooledSb.Builder;
 
             // fields
             foreach (var f in fields)
@@ -861,10 +863,10 @@ namespace QuickFix
                s.Append("<field ");
                if (dd is not null && dd.FieldsByTag.TryGetValue(f.Key, out var value))
                {
-                   s.Append("name=\"" + value.Name + "\" ");
+                   s.Append("name=\"").Append(value.Name).Append("\" ");
                }
-               s.Append("number=\"" + f.Key + "\">");
-               s.Append("<![CDATA[" + f.Value + "]]>");
+               s.Append("number=\"").Append(f.Key).Append("\">");
+               s.Append("<![CDATA[").Append(f.Value).Append("]]>");
                s.Append("</field>");
             }
             // now groups
@@ -965,7 +967,8 @@ namespace QuickFix
         /// <returns>an XML string</returns>
         public string ToXML(DD? dataDictionary = null)
         {
-            StringBuilder s = new StringBuilder();
+            using PooledStringBuilder pooledSb = new PooledStringBuilder();
+            StringBuilder s = pooledSb.Builder;
             s.Append("<message>");
             s.Append("<header>");
             s.Append(FieldMapToXml(dataDictionary, Header));
@@ -999,7 +1002,8 @@ namespace QuickFix
                     $"Must be non-null if '{nameof(convertEnumsToDescriptions)}' is true.");
             }
 
-            StringBuilder sb = new StringBuilder().Append('{').Append("\"Header\":{");
+            using PooledStringBuilder pooledSb = new PooledStringBuilder();
+            StringBuilder sb = pooledSb.Builder.Append('{').Append("\"Header\":{");
             FieldMapToJson(sb, dataDictionary, Header, convertEnumsToDescriptions).Append("},\"Body\":{");
             FieldMapToJson(sb, dataDictionary, this, convertEnumsToDescriptions).Append("},\"Trailer\":{");
             FieldMapToJson(sb, dataDictionary, Trailer, convertEnumsToDescriptions).Append("}}");
