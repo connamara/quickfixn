@@ -42,6 +42,7 @@ What's New
 * #942 - fix #942: field 369 (LastMsgSeqNumProcessed) wrong in ResendRequest message (gbirchmeier)
 * #940 - Create an alternate CharEncoding.GetBytes impl which uses ArrayPool to improve memory performance (VAllens)
 * #951 - fix: restore Session disconnect during SocketInitiatorThread.Read exception (gbirchmeier/trevor-bush)
+* #963 - fix: concurrency bug with NonSessionLog on Windows (gbirchmeier)
 
 ### v1.13.1
 * backport #951 to 1.13
