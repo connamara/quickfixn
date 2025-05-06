@@ -260,16 +260,22 @@ namespace QuickFix
             // copy, in case user code reuses input object
             Group group = grp.Clone();
 
-            if (!_groups.ContainsKey(group.CounterField))
-                _groups.Add(group.CounterField, new List<Group>());
-            _groups[group.CounterField].Add(group);
+            if (!_groups.TryGetValue(group.CounterField, out var groupList))
+            {
+                groupList = new List<Group> { group };
+                _groups.Add(group.CounterField, groupList);
+            }
+            else
+            {
+                groupList.Add(group);
+            }
 
             if (autoIncCounter)
             {
                 // increment group size
-                int groupsize = _groups[group.CounterField].Count;
-                int counttag = group.CounterField;
-                IntField count = new IntField(counttag, groupsize);
+                int groupSize = groupList.Count;
+                int countTag = group.CounterField;
+                IntField count = new IntField(countTag, groupSize);
                 this.SetField(count, true);
             }
         }
@@ -284,14 +290,10 @@ namespace QuickFix
         /// <exception cref="FieldNotFoundException" />
         public Group GetGroup(int num, int counterTag)
         {
-            if (!_groups.ContainsKey(counterTag))
-                throw new FieldNotFoundException(counterTag);
-            if (num <= 0)
-                throw new FieldNotFoundException(counterTag);
-            if (_groups[counterTag].Count < num)
+            if (!_groups.TryGetValue(counterTag, out var groupList) || num <= 0 || groupList.Count < num)
                 throw new FieldNotFoundException(counterTag);
 
-            return _groups[counterTag][num - 1];
+            return groupList[num - 1];
         }
 
         /// <summary>
@@ -470,17 +472,13 @@ namespace QuickFix
         /// <exception cref="FieldNotFoundException" />
         public void RemoveGroup(int num, int field)
         {
-            if (!_groups.ContainsKey(field))
-                throw new FieldNotFoundException(field);
-            if (num <= 0)
-                throw new FieldNotFoundException(field);
-            if (_groups[field].Count < num)
+            if (!_groups.TryGetValue(field, out List<Group>? groupList) || num <= 0 || groupList.Count < num)
                 throw new FieldNotFoundException(field);
 
-            if (_groups[field].Count.Equals(1))
+            if (groupList.Count.Equals(1))
                 _groups.Remove(field);
             else
-                _groups[field].RemoveAt(num - 1);
+                groupList.RemoveAt(num - 1);
         }
 
         /// <summary>
@@ -493,14 +491,10 @@ namespace QuickFix
         /// <exception cref="FieldNotFoundException" />
         public Group ReplaceGroup(int num, int field, Group group)
         {
-            if (!_groups.ContainsKey(field))
-                throw new FieldNotFoundException(field);
-            if (num <= 0)
-                throw new FieldNotFoundException(field);
-            if (_groups[field].Count < num)
+            if (!_groups.TryGetValue(field, out List<Group>? groupList) || num <= 0 || groupList.Count < num)
                 throw new FieldNotFoundException(field);
 
-            return _groups[field][num - 1] = group;
+            return groupList[num - 1] = group;
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 
 namespace QuickFix.DataDictionary
@@ -12,11 +13,11 @@ namespace QuickFix.DataDictionary
         /// <param name="name"></param>
         /// <param name="enums">dictionary of enum=>description values</param>
         /// <param name="fixFldType"></param>
-        public DDField(int tag, String name, Dictionary<String, String> enums, String fixFldType)
+        public DDField(int tag, String name, IReadOnlyDictionary<String, String> enums, String fixFldType)
         {
             this.Tag = tag;
             this.Name = name;
-            this.EnumDict = enums;
+            this.EnumDict = enums.ToFrozenDictionary();
             this.FixFldType = fixFldType;
             this.FieldType = FieldTypeFromFix(this.FixFldType, out bool isMVFWE);
             this.IsMultipleValueFieldWithEnums = isMVFWE;
@@ -24,7 +25,9 @@ namespace QuickFix.DataDictionary
 
         public int Tag { get; private set; }
         public String Name { get; private set; }
-        public Dictionary<String, String> EnumDict { get; private set; }
+
+        public IReadOnlyDictionary<String, String> EnumDict { get; }
+
         public String FixFldType { get; private set; }
         public Type FieldType { get; private set; }
 

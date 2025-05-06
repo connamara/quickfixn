@@ -904,17 +904,17 @@ namespace QuickFix
                     continue; // Groups will be handled below
                 }
 
-                if (dd is not null && dd.FieldsByTag.ContainsKey(field.Tag))
+                if (dd is not null && dd.FieldsByTag.TryGetValue(field.Tag, out DDField? ddField))
                 {
-                    sb.Append("\"" + dd.FieldsByTag[field.Tag].Name + "\":");
-                    if (tagsToMask != null && tagsToMask.Contains(field.Tag)) {
+                    sb.Append("\"" + ddField.Name + "\":");
+                    if (tagsToMask != null && tagsToMask.Contains(field.Tag))
+                    {
                         sb.Append("\"" + maskText + "\",");
                     }
-                    else if (humanReadableValues) {
+                    else if (humanReadableValues)
+                    {
                         if (dd.FieldsByTag[field.Tag].EnumDict.TryGetValue(field.ToString(), out var valueDescription))
-                        {
                             sb.Append("\"" + valueDescription + "\",");
-                        }
                         else
                             sb.Append("\"" + field + "\",");
                     }

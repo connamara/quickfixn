@@ -47,6 +47,7 @@ What's New
 * #956 - fix: FileLog.Clear() broke in 1.13, now fixed again (hansw96/gbirchmeier)
 * #950 - added the ability to mask fields when converting a FIX message to FIX JSON (trevor-bush)
 * #765 - overhaul of DateTimeConverter (Rob-Hague/vyourtchenko/gbirchmeier)
+* #964 - Reduce unnecessary ContainsKey function calls to avoid multiple duplicate key lookups (VAllens)
 
 ### v1.13.1
 * backport #951 to 1.13

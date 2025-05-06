@@ -63,7 +63,7 @@ namespace UnitTests
         {
             DataDictionary dd = new DataDictionary();
             dd.LoadFIXSpec("FIX44");
-            Assert.That(dd.FieldsByTag[945].EnumDict.GetType(), Is.EqualTo(typeof(Dictionary<string, string>)));
+            //Assert.That(dd.FieldsByTag[945].EnumDict.GetType(), Is.EqualTo(typeof(Dictionary<string, string>)));
             Assert.That("COMPLETED", Is.EqualTo(dd.FieldsByTag[945].EnumDict["2"]));
             Assert.That(dd.FieldsByTag[35].EnumDict["A"], Is.Not.EqualTo("HEARTBEAT"));
         }
