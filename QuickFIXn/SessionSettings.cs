@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using QuickFix.ObjectPooling;
+using System.Collections.Generic;
 using System.IO;
 
 namespace QuickFix;
@@ -233,8 +234,8 @@ public class SessionSettings
 
     public override string ToString()
     {
-        System.Text.StringBuilder s = new System.Text.StringBuilder();
-        s.AppendLine("[DEFAULT]");
+        using PooledStringBuilder pooledSb = new PooledStringBuilder();
+        System.Text.StringBuilder s = pooledSb.Builder.AppendLine("[DEFAULT]");
 
         foreach (System.Collections.Generic.KeyValuePair<string, string> entry in _defaults)
             s.Append(entry.Key).Append('=').AppendLine(entry.Value);

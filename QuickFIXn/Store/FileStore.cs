@@ -2,6 +2,7 @@
 using System.Buffers;
 using System.Collections.Generic;
 using System.Text;
+using QuickFix.ObjectPooling;
 using QuickFix.Util;
 
 namespace QuickFix.Store;
@@ -226,8 +227,8 @@ public class FileStore : IMessageStore
 
         using ValueDisposable _ = CharEncoding.GetBytes(msg.AsSpan(), out ReadOnlySpan<byte> msgBytes);
 
-        StringBuilder b = new StringBuilder();
-        b.Append(msgSeqNum).Append(',').Append(offset).Append(',').Append(msgBytes.Length);
+        using PooledStringBuilder pooledSb = new PooledStringBuilder();
+        StringBuilder b = pooledSb.Builder.Append(msgSeqNum).Append(',').Append(offset).Append(',').Append(msgBytes.Length);
         _headerFile.WriteLine(b.ToString());
         _headerFile.Flush();
 
