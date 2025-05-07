@@ -35,12 +35,12 @@ namespace QuickFix
 
         public DataDictionary.DataDictionary GetSessionDataDictionary(string beginString)
         {
-            return _transportDataDictionaries.GetValueOrDefault(beginString, _emptyDataDictionary);
+            return _transportDataDictionaries.TryGetValue(beginString, out var value) ? value : _emptyDataDictionary;
         }
 
         public DataDictionary.DataDictionary GetApplicationDataDictionary(string applVerId)
         {
-            return _applicationDataDictionaries.GetValueOrDefault(applVerId, _emptyDataDictionary);
+            return _applicationDataDictionaries.TryGetValue(applVerId, out var value) ? value : _emptyDataDictionary;
         }
     }
 }

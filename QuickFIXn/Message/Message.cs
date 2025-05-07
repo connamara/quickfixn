@@ -904,9 +904,9 @@ namespace QuickFix
                     continue; // Groups will be handled below
                 }
 
-                if (dd is not null && dd.FieldsByTag.ContainsKey(field.Tag))
+                if (dd is not null && dd.FieldsByTag.TryGetValue(field.Tag, out DDField? ddField))
                 {
-                    sb.Append("\"" + dd.FieldsByTag[field.Tag].Name + "\":");
+                    sb.Append("\"" + ddField.Name + "\":");
                     if (humanReadableValues) {
                         if (dd.FieldsByTag[field.Tag].EnumDict.TryGetValue(field.ToString(), out var valueDescription))
                         {
