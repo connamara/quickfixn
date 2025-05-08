@@ -14,16 +14,6 @@ public static class DateTimeConverter
     public const int NanosPerMicro = 1000;
     public const int NanosecondsPerTick = 100;
     
-    public const string TIME_ONLY_FORMAT_WITH_MICROSECONDS = "{0:HH:mm:ss.ffffff}";
-    public const string DATE_TIME_WITH_MICROSECONDS = "yyyyMMdd-HH:mm:ss.ffffff";
-    public const string TIME_ONLY_WITH_MICROSECONDS = "HH:mm:ss.ffffff";
-
-    public static string[] DATE_TIME_FORMATS = { DATE_TIME_WITH_MICROSECONDS, "yyyyMMdd-HH:mm:ss.fff", "yyyyMMdd-HH:mm:ss" };
-    public static string[] TIME_ONLY_FORMATS = { TIME_ONLY_WITH_MICROSECONDS, "HH:mm:ss.fff", "HH:mm:ss" };
-    public static DateTimeStyles DATE_TIME_STYLES = DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal;
-    public static CultureInfo DATE_TIME_CULTURE_INFO = CultureInfo.InvariantCulture;
-    
-    
     /// <summary>
     /// Converts the specified span to a <see cref="DateTime"/> and, when the span contains 
     /// UTC offset information, a <see cref="DateTimeOffset"/> containing that information.
@@ -634,63 +624,6 @@ public static class DateTimeConverter
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is an invalid value.</exception>
     public static string ToFIXTimeOnly(DateTime dt, TimeStampPrecision precision)
         => ToFIXTimeOnly(TimeOnly.FromDateTime(dt), precision);
-
-    private static DateTime TimeOnlyFromNanoString(string str)
-    {
-        return ConvertFromNanoString(str, TIME_ONLY_FORMATS);
-    }
-
-    private static DateTime DateTimeFromNanoString(string str)
-    {
-        return ConvertFromNanoString(str, DATE_TIME_FORMATS);
-    }
-
-    private static DateTime ConvertFromNanoString(string str, string[] formats)
-    {
-        int i = str.IndexOf('.');
-        string dec = str.Substring(i+1);
-        DateTimeKind kind;
-        int offsetMinutes = 0;
-
-        if (dec.EndsWith('Z'))
-        {
-            // UTC
-            dec = dec.Substring(0, dec.Length - 1);
-            kind = DateTimeKind.Utc;
-        }
-        else if (dec.Contains('+') || dec.Contains('-'))
-        {
-            // GMT offset
-            int n = dec.Contains('+') ? dec.IndexOf('+') : dec.IndexOf('-');
-            kind = DateTimeKind.Unspecified;
-
-            var offsetParts = dec.Substring(n).Split(":");
-            offsetMinutes = int.Parse(offsetParts[0]) * 60;
-            if (offsetParts.Length > 1) {
-                var mins = int.Parse(offsetParts[1]);
-                offsetMinutes += (offsetMinutes >= 0) ? mins : -mins;
-            }
-
-            dec = dec.Substring(0, n);
-        }
-        else
-        {
-            // local time
-            kind = DateTimeKind.Local;
-        }
-        long frac = long.Parse(dec);
-        string tm = str.Substring(0, i);
-        DateTime d = DateTime.SpecifyKind(DateTime.ParseExact(tm, formats, DATE_TIME_CULTURE_INFO, DATE_TIME_STYLES), kind);
-
-        // apply GMT offset
-        if (offsetMinutes != 0)
-        {
-            d = new DateTimeOffset(d, TimeSpan.FromMinutes(offsetMinutes)).UtcDateTime;
-        }
-
-        long ticks = frac / NanosecondsPerTick;
-        return d.AddTicks(ticks);
-    }
 
     [Obsolete("Use ParseToTimeOnly(str).  The 'precision' parameter is unnecessary.")]
     public static DateTime ParseToTimeOnly(string str, TimeStampPrecision precision = TimeStampPrecision.Millisecond) {

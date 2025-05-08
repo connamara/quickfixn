@@ -8,6 +8,8 @@ namespace UnitTests.Fields.Converters;
 
 [TestFixture]
 public class DateTimeConverterTests {
+    
+    private const string TIME_ONLY_FORMAT_WITH_MICROSECONDS = "{0:HH:mm:ss.ffffff}";
 
     [SetUp]
     public void SetUp() {
@@ -163,7 +165,7 @@ public class DateTimeConverterTests {
         Assert.That(convertedTime.Minutes, Is.EqualTo(22));
         Assert.That(convertedTime.Seconds, Is.EqualTo(12));
         Assert.That(convertedTime.Milliseconds, Is.EqualTo(123));
-        Assert.That(timeStringWithMicroseconds, Is.EqualTo(string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks))));
+        Assert.That(timeStringWithMicroseconds, Is.EqualTo(string.Format(TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks))));
     }
 
     [Test]
@@ -182,6 +184,6 @@ public class DateTimeConverterTests {
         Assert.That(convertedTime.Minutes, Is.EqualTo(22));
         Assert.That(convertedTime.Seconds, Is.EqualTo(12));
         Assert.That(convertedTime.Milliseconds, Is.EqualTo(123));
-        Assert.That(timeStringWithMilliseconds + "000", Is.EqualTo(string.Format(DateTimeConverter.TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks))));
+        Assert.That(timeStringWithMilliseconds + "000", Is.EqualTo(string.Format(TIME_ONLY_FORMAT_WITH_MICROSECONDS, new DateTime(convertedTime.Ticks))));
     }
 }
