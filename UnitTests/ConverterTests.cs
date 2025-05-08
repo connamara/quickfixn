@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields.Converters;
@@ -152,10 +150,6 @@ namespace UnitTests
             Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToTimeOnly(""); });
             Assert.Throws(typeof(FieldConvertError), delegate { DateTimeConverter.ParseToTimeOnly("20021201-11:03:00"); });
         }
-
-        private const int MinutesPerHour = 60;
-        private const int SecondsPerMinute = 60;
-        private const int MillisPerSecond = 1000;
 
         [Test]
         public void TestNanosecondPrecision()
