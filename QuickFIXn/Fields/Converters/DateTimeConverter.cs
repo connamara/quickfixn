@@ -140,12 +140,12 @@ public static class DateTimeConverter
     /// However, the conversion can be lossy since <see cref="DateTime"/> objects can only retain
     /// fractional second precision to 100ns.
     /// <br/><br/>
-    /// This method calls <see cref="ConvertToDateTime(ReadOnlySpan{char}, out DateTimeOffset?)"/>
+    /// This method calls <see cref="ParseToDateTime(ReadOnlySpan{char}, out DateTimeOffset?)"/>
     /// which also returns a <see cref="DateTimeOffset"/> when UTC offset information is present.
     /// Consider calling the latter for flexibility.
     /// </remarks>
     /// <exception cref="FieldConvertError">The conversion cannot be performed successfully.</exception>
-    /// <seealso cref="ConvertToDateTime(ReadOnlySpan{char}, out DateTimeOffset?)"/>
+    /// <seealso cref="ParseToDateTime(ReadOnlySpan{char}, out DateTimeOffset?)"/>
     public static DateTime ParseToDateTime(string str)
     {
         return ParseToDateTime(str, out _);
@@ -168,7 +168,7 @@ public static class DateTimeConverter
     /// A value representing the time in <paramref name="str"/>. The value is unaffected by the value
     /// of <paramref name="offset"/>. For example, for the string "11:03:15 +05:30" the returned
     /// <see cref="TimeOnly"/> will be equivalent to 11:03:15. This behaviour differs to
-    /// <see cref="ConvertToDateTime(ReadOnlySpan{char}, out DateTimeOffset?)"/> where the returned
+    /// <see cref="ParseToDateTime(ReadOnlySpan{char}, out DateTimeOffset?)"/> where the returned
     /// <see cref="DateTime"/> is adjusted to UTC when offset information is present (with its
     /// <see cref="DateTime.Kind"/> equal to <see cref="DateTimeKind.Utc"/>).
     /// </returns>
@@ -267,7 +267,7 @@ public static class DateTimeConverter
     /// However, the conversion can be lossy since <see cref="DateTime"/> objects can only retain
     /// fractional second precision to 100ns.
     /// <br/><br/>
-    /// This method calls <see cref="ConvertToTimeOnly(ReadOnlySpan{char}, out TimeSpan?)"/> which returns a <see cref="TimeOnly"/>
+    /// This method calls <see cref="ParsToTimeOnly(ReadOnlySpan{char}, out TimeSpan?)"/> which returns a <see cref="TimeOnly"/>
     /// and, when UTC offset information is present, a <see cref="TimeSpan"/> containing that information.
     /// Consider calling the latter for flexibility.
     /// </remarks>
@@ -455,7 +455,7 @@ public static class DateTimeConverter
     /// its <see cref="DateTime.Kind"/> equal to <see cref="DateTimeKind.Unspecified"/>.
     /// </returns>
     /// <remarks>
-    /// This method calls <see cref="ConvertToDateOnly(ReadOnlySpan{char})"/> which returns a <see cref="DateOnly"/>.
+    /// This method calls <see cref="ParseToDateOnly(ReadOnlySpan{char})"/> which returns a <see cref="DateOnly"/>.
     /// Consider calling the latter for correctness.
     /// </remarks>
     /// <exception cref="FieldConvertError">The conversion cannot be performed successfully.</exception>
@@ -662,7 +662,7 @@ public static class DateTimeConverter
     /// However, the conversion can be lossy since <see cref="TimeSpan"/> objects can only retain
     /// fractional second precision to 100ns.
     /// <br/><br/>
-    /// This method calls <see cref="ConvertToTimeOnly(ReadOnlySpan{char}, out TimeSpan?)"/> which returns a <see cref="TimeOnly"/>
+    /// This method calls <see cref="ParseToTimeOnly(ReadOnlySpan{char}, out TimeSpan?)"/> which returns a <see cref="TimeOnly"/>
     /// and, when UTC offset information is present, a <see cref="TimeSpan"/> containing that information.
     /// Consider calling the latter for flexibility.
     /// </remarks>
