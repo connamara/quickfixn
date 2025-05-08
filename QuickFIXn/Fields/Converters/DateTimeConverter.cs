@@ -267,7 +267,7 @@ public static class DateTimeConverter
     /// However, the conversion can be lossy since <see cref="DateTime"/> objects can only retain
     /// fractional second precision to 100ns.
     /// <br/><br/>
-    /// This method calls <see cref="ParsToTimeOnly(ReadOnlySpan{char}, out TimeSpan?)"/> which returns a <see cref="TimeOnly"/>
+    /// This method calls <see cref="ParseToTimeOnly(ReadOnlySpan{char}, out TimeSpan?)"/> which returns a <see cref="TimeOnly"/>
     /// and, when UTC offset information is present, a <see cref="TimeSpan"/> containing that information.
     /// Consider calling the latter for flexibility.
     /// </remarks>

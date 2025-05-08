@@ -10,6 +10,55 @@ namespace UnitTests.Fields.Converters
     [TestFixture]
     public class DateTimeConverterMicrosecondTests
     {
+        public static DateTime makeDateTime(int y, int m, int d, int h, int min, int s, int ms, int us, int ns)
+        {
+            // already includes ms
+            DateTime dt = new DateTime(y, m, d, h, min, s, ms);
+
+            const int TicksPerMicrosecond = 10;
+            const int NanosecondsPerTick = 100;
+
+            return dt.AddTicks((us * TicksPerMicrosecond) + (ns / NanosecondsPerTick));
+        }
+
+        public static DateTime makeTimeOnly(int h, int m, int s, int ms, int us, int ns)
+        {
+            return makeDateTime(1980, 1, 1, h, m, s, ms, us, ns);
+        }
+        
+        [Test]
+        public void TestNanosecondPrecision()
+        {
+            // seeded DateTime
+            DateTime dt = DateTime.SpecifyKind(makeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Utc);
+
+            // convert nanosecond DateTime to string with option
+            Assert.That(DateTimeConverter.ToFIX(dt, TimeStampPrecision.Nanosecond), Is.EqualTo("20021201-11:03:05.231116500"));
+
+            // convert nanosecond DateTime to time-only string
+            Assert.That(DateTimeConverter.ToFIXTimeOnly(dt, TimeStampPrecision.Nanosecond), Is.EqualTo("11:03:05.231116500"));
+
+            // convert nanosecond time string to DateTime time portion only
+            DateTime timeOnly = makeTimeOnly(11, 03, 05, 231, 116, 500);
+            Assert.That(DateTimeConverter.ParseToTimeOnly("11:03:05.231116500"), Is.EqualTo(timeOnly));
+
+            // convert nanosecond time string to full DateTime
+            Assert.That(DateTimeConverter.ParseToDateTime("20021201-11:03:05.231116500"), Is.EqualTo(dt));
+
+            // convert nanosecond time with UTC time zone to full DateTime
+            Assert.That(DateTimeConverter.ParseToDateTime("20021201-11:03:05.231116500Z"), Is.EqualTo(dt));
+
+            // convert nanosecond time with non-UTC positive offset time zone to full DateTime
+            Assert.That(DateTimeConverter.ParseToDateTime("20021201-16:03:05.231116500+05"), Is.EqualTo(dt));
+
+            // convert nanosecond time with non-UTC negative offset time zone to full DateTime
+            Assert.That(DateTimeConverter.ParseToDateTime("20021201-08:03:05.231116500-03"), Is.EqualTo(dt));
+
+            // convert nanosecond time in local time (no time zone) to full DateTime
+            DateTime local = DateTime.SpecifyKind(makeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Local);
+            Assert.That(DateTimeConverter.ParseToDateTime("20021201-11:03:05.231116500"), Is.EqualTo(local));
+        }
+        
         [Test]
         public void CanConvertFromDateTimeStringWithNanosecondsToValidDateTimeObject()
         {
@@ -65,7 +114,7 @@ namespace UnitTests.Fields.Converters
         private static void AssertEqual(DateTimeOffset? expected, DateTimeOffset? actual)
         {
             Assert.That(expected, Is.EqualTo(actual));
-            if (expected != null)
+            if (expected != null && actual != null)
             {
                 Assert.That(expected.Value.EqualsExact(actual.Value), Is.EqualTo(true));
             }
@@ -578,8 +627,9 @@ namespace UnitTests.Fields.Converters
             var timeStringWithMicroseconds = "13:22:12.123456";
 
             //WHEN - it is converted to a  timespan object
+#pragma warning disable CS0618 // obsolete warning
             var convertedTime = DateTimeConverter.ConvertToTimeSpan(timeStringWithMicroseconds);
-
+#pragma warning disable CS0618
             //THEN - the date time object is setup correctly
             Assert.That(13, Is.EqualTo(convertedTime.Hours));
             Assert.That(22, Is.EqualTo(convertedTime.Minutes));
@@ -595,8 +645,9 @@ namespace UnitTests.Fields.Converters
             var timeStringWithMilliseconds = "13:22:12.123";
 
             //WHEN - it is converted to a timespan object
+#pragma warning disable CS0618 // obsolete warning
             var convertedTime = DateTimeConverter.ConvertToTimeSpan(timeStringWithMilliseconds);
-
+#pragma warning disable CS0618
             //THEN - the date time object is setup correctly
             Assert.That(13, Is.EqualTo(convertedTime.Hours));
             Assert.That(22, Is.EqualTo(convertedTime.Minutes));
