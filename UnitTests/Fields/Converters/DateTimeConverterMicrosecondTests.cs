@@ -81,10 +81,7 @@ namespace UnitTests.Fields.Converters
             AssertEqual(t.ExpectedDateTime, actualDateTime);
             AssertEqual(t.ExpectedDateTimeOffset, actualDateTimeOffset);
             Assert.That(t.ExpectedStringSeconds, Is.EqualTo(DateTimeConverter.ToFIX(actualDateTime, TimeStampPrecision.Second)));
-            Assert.That(t.ExpectedStringSeconds, Is.EqualTo(DateTimeConverter.ToFIX(actualDateTime, includeMilliseconds: false)));
             Assert.That(t.ExpectedStringMillis, Is.EqualTo(DateTimeConverter.ToFIX(actualDateTime, TimeStampPrecision.Millisecond)));
-            Assert.That(t.ExpectedStringMillis, Is.EqualTo(DateTimeConverter.ToFIX(actualDateTime, includeMilliseconds: true)));
-            Assert.That(t.ExpectedStringMillis, Is.EqualTo(DateTimeConverter.ToFIX(actualDateTime)));
             Assert.That(t.ExpectedStringMicros, Is.EqualTo(DateTimeConverter.ToFIX(actualDateTime, TimeStampPrecision.Microsecond)));
             Assert.That(t.ExpectedStringNanos, Is.EqualTo(DateTimeConverter.ToFIX(actualDateTime, TimeStampPrecision.Nanosecond)));
         }

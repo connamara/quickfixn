@@ -130,21 +130,6 @@ public class DateTimeConverterTests {
         var dtNanoFull = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 123, 654, 700), DateTimeKind.Utc);
         var dtNano100 = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 000, 000, 100), DateTimeKind.Utc);
 
-        // ToFIX(DateTime dt) - assumes millisecond precision
-        Assert.That(DateTimeConverter.ToFIX(dtSec), Is.EqualTo("20021201-11:03:05.000"));
-        Assert.That(DateTimeConverter.ToFIX(dtMs), Is.EqualTo("20021201-11:03:05.123"));
-        Assert.That(DateTimeConverter.ToFIX(dtMicro), Is.EqualTo("20021201-11:03:05.000")); // truncated, not rounded
-
-        // ToFIX(DateTime dt, bool includeMilliseconds) - param false
-        Assert.That(DateTimeConverter.ToFIX(dtSec, false), Is.EqualTo("20021201-11:03:05"));
-        Assert.That(DateTimeConverter.ToFIX(dtMs, false), Is.EqualTo("20021201-11:03:05"));
-        Assert.That(DateTimeConverter.ToFIX(dtMicro, false), Is.EqualTo("20021201-11:03:05"));
-
-        // ToFIX(DateTime dt, bool includeMilliseconds) - param true
-        Assert.That(DateTimeConverter.ToFIX(dtSec, true), Is.EqualTo("20021201-11:03:05.000"));
-        Assert.That(DateTimeConverter.ToFIX(dtMs, true), Is.EqualTo("20021201-11:03:05.123"));
-        Assert.That(DateTimeConverter.ToFIX(dtMicro, true), Is.EqualTo("20021201-11:03:05.000"));
-
         // ToFIX(DateTime dt, TimeStampPrecision precision)
         Assert.That(DateTimeConverter.ToFIX(dtSec, TimeStampPrecision.Second), Is.EqualTo("20021201-11:03:05"));
         Assert.That(DateTimeConverter.ToFIX(dtMs, TimeStampPrecision.Second), Is.EqualTo("20021201-11:03:05"));

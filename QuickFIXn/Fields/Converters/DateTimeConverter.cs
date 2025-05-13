@@ -481,32 +481,6 @@ public static class DateTimeConverter
     }
 
     /// <summary>
-    /// Converts the specified <see cref="DateTime"/> to a <see cref="string"/> in the format "yyyyMMdd-HH:mm:ss.fff".
-    /// </summary>
-    /// <param name="dt">The value to convert.</param>
-    /// <returns>A value representing <paramref name="dt"/> in the format "yyyyMMdd-HH:mm:ss.fff".</returns>
-    public static string ToFIX(DateTime dt)
-    {
-        return ToFIX(dt, TimeStampPrecision.Millisecond);
-    }
-
-    // TODO: deprecate - use ToFIX(dt,precision) instead
-    /// <summary>
-    /// Converts the specified <see cref="DateTime"/> to a <see cref="string"/>.
-    /// </summary>
-    /// <param name="dt">The value to convert.</param>
-    /// <param name="includeMilliseconds">Whether fractional seconds (to the millisecond) should be in the returned value.</param>
-    /// <returns>
-    /// A value representing <paramref name="dt"/>. If <paramref name="includeMilliseconds"/>
-    /// is <see langword="true"/>, the value will be in the format "yyyyMMdd-HH:mm:ss.fff". Otherwise, the value
-    /// will be in the format "yyyyMMdd-HH:mm:ss".
-    /// </returns>
-    public static string ToFIX(DateTime dt, bool includeMilliseconds)
-    {
-        return ToFIX(dt, includeMilliseconds ? TimeStampPrecision.Millisecond : TimeStampPrecision.Second);
-    }
-
-    /// <summary>
     /// Converts the specified <see cref="DateTime"/> to a <see cref="string"/>.
     /// </summary>
     /// <param name="dt">The value to convert.</param>
