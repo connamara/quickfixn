@@ -191,21 +191,6 @@ public class DateTimeConverterTests {
         var tNanoFull = TimeHelper.MakeTimeOnly(11, 03, 05, 123, 654, 700);
         var tNano100 = TimeHelper.MakeTimeOnly(11, 03, 05, 000, 000, 100);
 
-        // ToFIXTimeOnly(TimeOnly time) - assumes milliseconds
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(tSec), Is.EqualTo("11:03:05.000"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(tMs), Is.EqualTo("11:03:05.123"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(tMicro), Is.EqualTo("11:03:05.000")); // truncated, not rounded
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(tNanoFull), Is.EqualTo("11:03:05.123")); // truncated, not rounded
-
-        // ToFIXTimeOnly(TimeOnly time, bool includeMilliseconds)
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(tSec, false), Is.EqualTo("11:03:05"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(tMs, false), Is.EqualTo("11:03:05"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(tMicro, false), Is.EqualTo("11:03:05"));
-
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(tSec, true), Is.EqualTo("11:03:05.000"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(tMs, true), Is.EqualTo("11:03:05.123"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(tMicro, true), Is.EqualTo("11:03:05.000"));
-
         // ToFIXTimeOnly(TimeOnly time, TimeStampPrecision precision)
         Assert.That(DateTimeConverter.ToFIXTimeOnly(tSec, TimeStampPrecision.Second), Is.EqualTo("11:03:05"));
         Assert.That(DateTimeConverter.ToFIXTimeOnly(tMs, TimeStampPrecision.Second), Is.EqualTo("11:03:05"));
@@ -233,27 +218,12 @@ public class DateTimeConverterTests {
     }
 
     [Test]
-    public void ToFIXTimeOnlyTest() {
+    public void ToFIXTimeOnlyTest_DateTimeParam() {
         var dtSec = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 0, 0, 0), DateTimeKind.Utc);
         var dtMs = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 123, 0, 0), DateTimeKind.Utc);
         var dtMicro = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 0, 654, 0), DateTimeKind.Utc);
         var dtNanoFull = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 123, 654, 700), DateTimeKind.Utc);
         var dtNano100 = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 000, 000, 100), DateTimeKind.Utc);
-
-        // string ToFIXTimeOnly(DateTime dt) - assumes milliseconds
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(dtSec), Is.EqualTo("11:03:05.000"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(dtMs), Is.EqualTo("11:03:05.123"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(dtMicro), Is.EqualTo("11:03:05.000")); // truncated, not rounded
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(dtNanoFull), Is.EqualTo("11:03:05.123")); // truncated, not rounded
-
-        // string ToFIXTimeOnly(DateTime dt, bool includeMilliseconds)
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(dtSec, false), Is.EqualTo("11:03:05"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(dtMs, false), Is.EqualTo("11:03:05"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(dtMicro, false), Is.EqualTo("11:03:05"));
-
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(dtSec, true), Is.EqualTo("11:03:05.000"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(dtMs, true), Is.EqualTo("11:03:05.123"));
-        Assert.That(DateTimeConverter.ToFIXTimeOnly(dtMicro, true), Is.EqualTo("11:03:05.000"));
 
         // string ToFIXTimeOnly(DateTime dt, TimeStampPrecision precision)
         Assert.That(DateTimeConverter.ToFIXTimeOnly(dtSec, TimeStampPrecision.Second), Is.EqualTo("11:03:05"));

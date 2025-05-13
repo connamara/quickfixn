@@ -378,10 +378,7 @@ namespace UnitTests.Fields.Converters
             Assert.That(t.ExpectedTimeOnly, Is.EqualTo(actualTimeOnly));
             Assert.That(t.ExpectedOffset, Is.EqualTo(actualOffset));
             Assert.That(t.ExpectedStringSeconds, Is.EqualTo(DateTimeConverter.ToFIXTimeOnly(actualTimeOnly, TimeStampPrecision.Second)));
-            Assert.That(t.ExpectedStringSeconds, Is.EqualTo(DateTimeConverter.ToFIXTimeOnly(actualTimeOnly, includeMilliseconds: false)));
             Assert.That(t.ExpectedStringMillis, Is.EqualTo(DateTimeConverter.ToFIXTimeOnly(actualTimeOnly, TimeStampPrecision.Millisecond)));
-            Assert.That(t.ExpectedStringMillis, Is.EqualTo(DateTimeConverter.ToFIXTimeOnly(actualTimeOnly, includeMilliseconds: true)));
-            Assert.That(t.ExpectedStringMillis, Is.EqualTo(DateTimeConverter.ToFIXTimeOnly(actualTimeOnly)));
             Assert.That(t.ExpectedStringMicros, Is.EqualTo(DateTimeConverter.ToFIXTimeOnly(actualTimeOnly, TimeStampPrecision.Microsecond)));
             Assert.That(t.ExpectedStringNanos, Is.EqualTo(DateTimeConverter.ToFIXTimeOnly(actualTimeOnly, TimeStampPrecision.Nanosecond)));
         }
@@ -535,6 +532,7 @@ namespace UnitTests.Fields.Converters
             Assert.That(timeStringWithMicroseconds, Is.EqualTo(DateTimeConverter.ToFIXTimeOnly(convertedDateTime, TimeStampPrecision.Microsecond)));
         }
 
+
         [Test]
         public void CanConvertTimeSpanWithMicroSecondsToStringWithMicroseconds()
         {
@@ -549,33 +547,6 @@ namespace UnitTests.Fields.Converters
             Assert.That("13:22:12.123456", Is.EqualTo(serialisedDateTime));
         }
 
-        [Test]
-        public void CanConvertTimeSpanWithMicroSecondsToStringWithSeconds()
-        {
-            //GIVEN - a time string with microseconds
-            var timeWithMicroSeconds = new TimeSpan(13, 22, 12) + new TimeSpan(1234560);
-            var dateTimeWithMicroseconds = new DateTime(timeWithMicroSeconds.Ticks, DateTimeKind.Utc);
-
-            //WHEN - it is seralised with Microseconds
-            var serialisedDateTime = DateTimeConverter.ToFIXTimeOnly(dateTimeWithMicroseconds, false);
-
-            //THEN - the serialised time contains microseconds
-            Assert.That("13:22:12", Is.EqualTo(serialisedDateTime));
-        }
-
-        [Test]
-        public void CanConvertTimeSpanWithMicroSecondsToStringWithMilliSeconds()
-        {
-            //GIVEN - a time string with microseconds
-            var timeWithMicroSeconds = new TimeSpan(13, 22, 12) + new TimeSpan(1234560);
-            var dateTimeWithMicroseconds = new DateTime(timeWithMicroSeconds.Ticks, DateTimeKind.Utc);
-
-            //WHEN - it is seralised with Microseconds
-            var serialisedDateTime = DateTimeConverter.ToFIXTimeOnly(dateTimeWithMicroseconds);
-
-            //THEN - the serialised time contains microseconds
-            Assert.That("13:22:12.123", Is.EqualTo(serialisedDateTime));
-        }
 
         [Test]
         public void CanConvertTimeSpanWithMilliSecondsToStringWithMicroseconds()

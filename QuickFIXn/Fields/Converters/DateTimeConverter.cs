@@ -548,61 +548,13 @@ public static class DateTimeConverter
     public static string ToFIXDateOnly(DateTime dt) => ToFIXDateOnly(DateOnly.FromDateTime(dt));
 
     /// <summary>
-    /// Converts the specified <see cref="TimeOnly"/> to a <see cref="string"/> in the format "HH:mm:ss.fff".
-    /// </summary>
-    /// <param name="time">The value to convert.</param>
-    /// <returns>A value representing <paramref name="time"/> in the format "HH:mm:ss.fff".</returns>
-    public static string ToFIXTimeOnly(TimeOnly time)
-    {
-        return ToFIXTimeOnly(time, TimeStampPrecision.Millisecond);
-    }
-
-    /// <summary>
-    /// Converts the time component of the specified <see cref="DateTime"/> to
-    /// a <see cref="string"/> in the format "HH:mm:ss.fff".
-    /// </summary>
-    /// <param name="dt">The value to convert.</param>
-    /// <returns>A value representing the time component of <paramref name="dt"/> in the format "HH:mm:ss.fff".</returns>
-    public static string ToFIXTimeOnly(DateTime dt) => ToFIXTimeOnly(TimeOnly.FromDateTime(dt));
-
-    /// <summary>
-    /// Converts the specified <see cref="TimeOnly"/> to a <see cref="string"/>.
-    /// </summary>
-    /// <param name="time">The value to convert.</param>
-    /// <param name="includeMilliseconds">Whether fractional seconds (to the millisecond)
-    /// should be in the returned value.</param>
-    /// <returns>
-    /// A value representing <paramref name="time"/>. If <paramref name="includeMilliseconds"/>
-    /// is <see langword="true"/>, the value will be in the format "HH:mm:ss.fff". Otherwise, the value
-    /// will be in the format "HH:mm:ss".
-    /// </returns>
-    public static string ToFIXTimeOnly(TimeOnly time, bool includeMilliseconds)
-    {
-        return ToFIXTimeOnly(time, includeMilliseconds ? TimeStampPrecision.Millisecond : TimeStampPrecision.Second);
-    }
-
-    /// <summary>
-    /// Converts the time component of the specified <see cref="DateTime"/> to a <see cref="string"/>.
-    /// </summary>
-    /// <param name="dt">The value to convert.</param>
-    /// <param name="includeMilliseconds">Whether fractional seconds (to the millisecond) should
-    /// be in the returned value.</param>
-    /// <returns>
-    /// A value representing the time component of <paramref name="dt"/>. If <paramref name="includeMilliseconds"/>
-    /// is <see langword="true"/>, the value will be in the format "HH:mm:ss.fff". Otherwise, the value
-    /// will be in the format "HH:mm:ss".
-    /// </returns>
-    public static string ToFIXTimeOnly(DateTime dt, bool includeMilliseconds)
-        => ToFIXTimeOnly(TimeOnly.FromDateTime(dt), includeMilliseconds);
-
-    /// <summary>
     /// Converts the specified <see cref="TimeOnly"/> to a <see cref="string"/>.
     /// </summary>
     /// <param name="time">The value to convert.</param>
     /// <param name="precision">The level of precision with which to format the fractional seconds
     /// component of <paramref name="time"/>.</param>
     /// <returns>
-    /// A value representing <paramref name="time"/>. The value will begin in the format "yyyyMMdd-HH:mm:ss"
+    /// A value representing <paramref name="time"/>. The value will begin in the format "HH:mm:ss"
     /// and end in fractional seconds whose precision is determined by <paramref name="precision"/>.
     /// </returns>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is an invalid value.</exception>
@@ -626,7 +578,7 @@ public static class DateTimeConverter
     /// seconds component of <paramref name="dt"/>.</param>
     /// <returns>
     /// A value representing the time component of <paramref name="dt"/>.
-    /// The value will begin in the format "yyyyMMdd-HH:mm:ss"
+    /// The value will begin in the format "HH:mm:ss"
     /// and end in fractional seconds whose precision is determined by <paramref name="precision"/>.
     /// </returns>
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is an invalid value.</exception>
