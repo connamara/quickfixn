@@ -4,33 +4,24 @@ using System.Globalization;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields.Converters;
+using UnitTests.TestHelpers;
 
 namespace UnitTests.Fields.Converters
 {
     [TestFixture]
     public class DateTimeConverterMicrosecondTests
     {
-        public static DateTime makeDateTime(int y, int m, int d, int h, int min, int s, int ms, int us, int ns)
-        {
-            // already includes ms
-            DateTime dt = new DateTime(y, m, d, h, min, s, ms);
-
-            const int TicksPerMicrosecond = 10;
-            const int NanosecondsPerTick = 100;
-
-            return dt.AddTicks((us * TicksPerMicrosecond) + (ns / NanosecondsPerTick));
-        }
-
         public static DateTime makeTimeOnly(int h, int m, int s, int ms, int us, int ns)
         {
-            return makeDateTime(1980, 1, 1, h, m, s, ms, us, ns);
+            return TimeHelper.MakeDateTime(1980, 1, 1, h, m, s, ms, us, ns);
         }
         
         [Test]
         public void TestNanosecondPrecision()
         {
             // seeded DateTime
-            DateTime dt = DateTime.SpecifyKind(makeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Utc);
+            DateTime dt = DateTime.SpecifyKind(
+                TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Utc);
 
             // convert nanosecond DateTime to string with option
             Assert.That(DateTimeConverter.ToFIX(dt, TimeStampPrecision.Nanosecond), Is.EqualTo("20021201-11:03:05.231116500"));
@@ -55,7 +46,8 @@ namespace UnitTests.Fields.Converters
             Assert.That(DateTimeConverter.ParseToDateTime("20021201-08:03:05.231116500-03"), Is.EqualTo(dt));
 
             // convert nanosecond time in local time (no time zone) to full DateTime
-            DateTime local = DateTime.SpecifyKind(makeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Local);
+            DateTime local = DateTime.SpecifyKind(
+                TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 231, 116, 500), DateTimeKind.Local);
             Assert.That(DateTimeConverter.ParseToDateTime("20021201-11:03:05.231116500"), Is.EqualTo(local));
         }
         

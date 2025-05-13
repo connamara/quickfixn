@@ -46,7 +46,7 @@ What's New
 * #195 - fix: Acceptor.Stop() then restart now works (huwmjenkins/vyourtchenko)
 * #956 - fix: FileLog.Clear() broke in 1.13, now fixed again (hansw96/gbirchmeier)
 * #950 - added the ability to mask fields when converting a FIX message to FIX JSON (trevor-bush)
-* #765 - overhaul of DateTimeConverter (Rob-Hague)
+* #765 - overhaul of DateTimeConverter (Rob-Hague/vyourtchenko/gbirchmeier)
 
 ### v1.13.1
 * backport #951 to 1.13
