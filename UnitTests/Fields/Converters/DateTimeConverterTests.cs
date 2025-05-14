@@ -117,12 +117,6 @@ public class DateTimeConverterTests {
     }
 
     [Test]
-    public void NanosecondTest() {
-        Assert.That(new DateTime(2000, 12, 31).Nanosecond, Is.EqualTo(0));
-        Assert.That(TimeHelper.MakeDateTime(2010, 9, 12, 4, 22, 1, 123, 456, 700).Nanosecond, Is.EqualTo(700));
-    }
-
-    [Test]
     public void ToFIXTest() {
         var dtSec = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 0, 0, 0), DateTimeKind.Utc);
         var dtMs = DateTime.SpecifyKind(TimeHelper.MakeDateTime(2002, 12, 01, 11, 03, 05, 123, 0, 0), DateTimeKind.Utc);

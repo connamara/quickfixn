@@ -28,7 +28,7 @@ public static class TimeHelper {
         // already includes ms
         DateTime dt = new(y, m, d, h, min, s, ms);
         long nanos = (us * NanosPerMicro) + ns;
-        long ticks = nanos / DateTimeConverter.NanosecondsPerTick;
+        long ticks = nanos / TimeSpan.NanosecondsPerTick;
         return dt.AddTicks(ticks);
     }
 
@@ -40,7 +40,7 @@ public static class TimeHelper {
         // already includes ms
         TimeOnly timeOnly = new(h, min, s, ms);
         long nanos = (us * NanosPerMicro) + ns;
-        long ticks = nanos / DateTimeConverter.NanosecondsPerTick;
+        long ticks = nanos / TimeSpan.NanosecondsPerTick;
 
         // TimeOnly has no AddTicks method!  Stupid!
         return new TimeOnly(timeOnly.Ticks + ticks);

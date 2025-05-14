@@ -10,8 +10,6 @@ namespace QuickFix.Fields.Converters;
 /// </summary>
 public static class DateTimeConverter
 {
-    public const int NanosecondsPerTick = 100;
-    
     /// <summary>
     /// Converts the specified span to a <see cref="DateTime"/> and, when the span contains 
     /// UTC offset information, a <see cref="DateTimeOffset"/> containing that information.
@@ -460,24 +458,14 @@ public static class DateTimeConverter
     /// <exception cref="FieldConvertError">The conversion cannot be performed successfully.</exception>
     public static DateTime ParseToDateOnly(string str) => ParseToDateOnly((ReadOnlySpan<char>)str).ToDateTime(default);
 
-    /// <summary>
-    /// Gets the nanoseconds component of the date represented by this instance truncated to 100 nanosecond resolution.
-    /// </summary>
-    /// <param name="dt"></param>
-    /// <returns>The nanoseconds component, expressed as a value between 0 and 99900.</returns>
-    public static int Nanosecond(this DateTime dt)
-    {
-        return (int)(dt.Ticks % TimeSpan.TicksPerMillisecond) * NanosecondsPerTick;
-    }
-
     private static long SubsecondAsNanoseconds(DateTime dt)
     {
-        return (dt.Ticks % TimeSpan.TicksPerSecond) * NanosecondsPerTick;
+        return (dt.Ticks % TimeSpan.TicksPerSecond) * TimeSpan.NanosecondsPerTick;
     }
 
     private static long SubsecondAsNanoseconds(TimeOnly time)
     {
-        return (time.Ticks % TimeSpan.TicksPerSecond) * NanosecondsPerTick;
+        return (time.Ticks % TimeSpan.TicksPerSecond) * TimeSpan.NanosecondsPerTick;
     }
 
     /// <summary>
