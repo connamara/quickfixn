@@ -363,8 +363,8 @@ public class SessionDynamicTest
     public void TearDown()
     {
         _listenSocket?.Close();
-        _initiator?.Stop(true);
-        _acceptor?.Stop(true);
+        _initiator?.Dispose();
+        _acceptor?.Dispose();
 
         _initiator = null;
         _acceptor = null;

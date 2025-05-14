@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using NUnit.Framework;
 using QuickFix.Logger;
 
@@ -8,6 +9,13 @@ namespace UnitTests.Logger;
 public class FileLogTests
 {
     private FileLog? _log;
+
+    private readonly QuickFix.SessionID _defaultSessionId = new ("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
+    private readonly string _logDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "log");
+    private readonly string _eventLogFilePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "log",
+        "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log");
+    private readonly string _messagesLogFilePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "log",
+            "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log");
 
     [SetUp]
     public void Setup()
@@ -40,60 +48,83 @@ public class FileLogTests
         Assert.That(FileLog.Prefix(sessionIdWithSubsNoLocation), Is.EqualTo("FIX.4.2-SENDERCOMP_SENDERSUB-TARGETCOMP_TARGETSUB"));
     }
 
+    private FileLogFactory CreateTestFactory()
+    {
+        if (Directory.Exists(_logDirectory))
+            Directory.Delete(_logDirectory, true);
+
+        QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
+        QuickFix.SettingsDictionary config = new QuickFix.SettingsDictionary();
+        config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
+        config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, _logDirectory);
+
+        settings.Set(_defaultSessionId, config);
+        return new FileLogFactory(settings);
+    }
+
     [Test]
     public void TestGeneratedFileName()
     {
-        var logDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "log");
+        FileLogFactory factory = CreateTestFactory();
+        _log = (FileLog)factory.Create(_defaultSessionId);
 
-        if (Directory.Exists(logDirectory))
-            Directory.Delete(logDirectory, true);
-
-        QuickFix.SessionID sessionId = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
-        QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
-
-        QuickFix.SettingsDictionary config = new QuickFix.SettingsDictionary();
-        config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
-        config.SetString(QuickFix.SessionSettings.FILE_LOG_PATH, logDirectory);
-
-        settings.Set(sessionId, config);
-
-        string expectedEventLogFilePath = Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.event.current.log");
-        string expectedMessagesLogFilePath = Path.Combine(logDirectory, "FIX.4.2-SENDERCOMP-TARGETCOMP.messages.current.log");
-
-        FileLogFactory factory = new FileLogFactory(settings);
-        _log = (FileLog)factory.Create(sessionId);
-
-        Assert.That(!File.Exists(expectedEventLogFilePath));
-        Assert.That(!File.Exists(expectedMessagesLogFilePath));
+        // Log files aren't created before first log statement
+        Assert.That(!File.Exists(_eventLogFilePath));
+        Assert.That(!File.Exists(_messagesLogFilePath));
 
         _log.OnEvent("some event");
 
-        Assert.That(File.Exists(expectedEventLogFilePath));
-        Assert.That(!File.Exists(expectedMessagesLogFilePath));
+        // The event file exists now
+        Assert.That(File.Exists(_eventLogFilePath));
+        Assert.That(!File.Exists(_messagesLogFilePath));
 
         _log.OnIncoming("some incoming");
         _log.OnOutgoing("some outgoing");
 
-        Assert.That(File.Exists(expectedEventLogFilePath));
-        Assert.That(File.Exists(expectedMessagesLogFilePath));
+        // The message file exists now
+        Assert.That(File.Exists(_eventLogFilePath));
+        Assert.That(File.Exists(_messagesLogFilePath));
 
         // cleanup (don't delete log unless success)
         _log.Dispose();
         _log = null;
-        Directory.Delete(logDirectory, true);
+        Directory.Delete(_logDirectory, true);
     }
 
     [Test]
     public void TestThrowsIfNoConfig()
     {
-        QuickFix.SessionID sessionId = new QuickFix.SessionID("FIX.4.2", "SENDERCOMP", "TARGETCOMP");
         QuickFix.SettingsDictionary config = new QuickFix.SettingsDictionary();
         config.SetString(QuickFix.SessionSettings.CONNECTION_TYPE, "initiator");
         QuickFix.SessionSettings settings = new QuickFix.SessionSettings();
-        settings.Set(sessionId, config);
+        settings.Set(_defaultSessionId, config);
 
         FileLogFactory factory = new FileLogFactory(settings);
+        var ex = Assert.Throws<QuickFix.ConfigError>(delegate { factory.Create(_defaultSessionId); });
+        Assert.That(ex!.Message, Does.Contain("Configuration failed: No value for key: FileLogPath"));
+    }
 
-        Assert.Throws<QuickFix.ConfigError>(delegate { factory.Create(sessionId); });
+    [Test]
+    public void TestClear()
+    {
+        FileLogFactory factory = CreateTestFactory();
+        _log = (FileLog)factory.Create(_defaultSessionId);
+
+        _log.OnEvent("some event");
+        _log.OnIncoming("some incoming");
+
+        // Clear() should delete the contents of the log files...
+        _log.Clear();
+        Assert.That(new FileInfo(_eventLogFilePath).Length, Is.EqualTo(0));
+        Assert.That(new FileInfo(_messagesLogFilePath).Length, Is.EqualTo(0));
+
+        // ... and leave them ready for more logging
+        Assert.DoesNotThrow(delegate { _log.OnEvent("another event after clear"); });
+        Assert.DoesNotThrow(delegate { _log.OnIncoming("another incoming after clear"); });
+
+        // cleanup (don't delete log unless success)
+        _log.Dispose();
+        _log = null;
+        Directory.Delete(_logDirectory, true);
     }
 }
