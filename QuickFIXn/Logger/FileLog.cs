@@ -91,6 +91,9 @@ public class FileLog : ILog
 
     #region Log Members
 
+    /// <summary>
+    /// Delete log content and leave ready for next log message
+    /// </summary>
     public void Clear()
     {
         lock (_sync)
@@ -99,6 +102,9 @@ public class FileLog : ILog
 
             _messageLog?.Dispose();
             _eventLog?.Dispose();
+
+            _messageLog = null;
+            _eventLog = null;
 
             EnsureMessageLogInit(append: false);
             EnsureEventLogInit(append: false);
