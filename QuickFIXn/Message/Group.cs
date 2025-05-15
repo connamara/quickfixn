@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QuickFix.ObjectPooling;
+using System;
 using System.Text;
 
 namespace QuickFix
@@ -66,8 +67,10 @@ namespace QuickFix
         /// Creates a FIX (ish) string representation of this FieldMap (does not change the object state)
         /// </summary>
         /// <returns></returns>
-        public override string CalculateString() {
-            return base.CalculateString(new StringBuilder(), FieldOrder ?? new[] { Delim });
+        public override string CalculateString()
+        {
+            using PooledStringBuilder pooledSb = new PooledStringBuilder();
+            return base.CalculateString(pooledSb.Builder, FieldOrder ?? new[] { Delim });
         }
 
         public override string ToString()

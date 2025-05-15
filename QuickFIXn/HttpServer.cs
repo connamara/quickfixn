@@ -6,6 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using QuickFix.Fields.Converters;
+using QuickFix.ObjectPooling;
 
 namespace QuickFix;
 
@@ -96,7 +97,8 @@ public class HttpServer : IDisposable {
                 HttpListenerRequest request = context.Request;
                 HttpListenerResponse response = context.Response;
 
-                StringBuilder sb = new StringBuilder();
+                using PooledStringBuilder pooledSb = new PooledStringBuilder();
+                StringBuilder sb = pooledSb.Builder;
                 sb.AppendLine("<html>");
                 sb.AppendLine("  <head>");
                 sb.AppendLine("    <title>QuickFIX/n Engine Simple Web Interface</title>");
