@@ -117,11 +117,7 @@ namespace QuickFix.DataDictionary
                 throw new RepeatedTag(map.RepeatedTags[0].Tag);
         }
 
-        public DDMap? GetMapForMessage(string msgType) {
-            return Messages.ContainsKey(msgType)
-                ? Messages[msgType]
-                : null;
-        }
+        public DDMap? GetMapForMessage(string msgType) => Messages.TryGetValue(msgType, out var message) ? message : null;
 
         /// <summary>
         /// If DD defines this message type, returns with no side effect; else throws InvalidMessageType.
@@ -413,7 +409,7 @@ namespace QuickFix.DataDictionary
 
         public bool IsGroup(string msgType, int tag)
         {
-            return Messages.ContainsKey(msgType) && Messages[msgType].IsGroup(tag);
+            return Messages.TryGetValue(msgType, out DDMap? dd) && dd.IsGroup(tag);
         }
 
         /// <summary>

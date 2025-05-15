@@ -295,10 +295,7 @@ namespace QuickFix
 
         public void Queue(SeqNumType msgSeqNum, Message msg)
         {
-            if (!MsgQueue.ContainsKey(msgSeqNum))
-            {
-                MsgQueue.Add(msgSeqNum, msg);
-            }
+            MsgQueue.TryAdd(msgSeqNum, msg);
         }
 
         public void ClearQueue()
@@ -308,25 +305,12 @@ namespace QuickFix
 
         public QuickFix.Message? Dequeue(SeqNumType num)
         {
-            if (MsgQueue.ContainsKey(num))
-            {
-                QuickFix.Message msg = MsgQueue[num];
-                MsgQueue.Remove(num);
-                return msg;
-            }
-            return null;
+            return MsgQueue.Remove(num, out Message? msg) ? msg : null;
         }
 
         public Message? Retrieve(SeqNumType msgSeqNum)
         {
-            if (MsgQueue.ContainsKey(msgSeqNum))
-            {
-                Message msg = MsgQueue[msgSeqNum];
-                MsgQueue.Remove(msgSeqNum);
-                return msg;
-            }
-
-            return null;
+            return MsgQueue.Remove(msgSeqNum, out Message? msg) ? msg : null;
         }
 
         /// <summary>
