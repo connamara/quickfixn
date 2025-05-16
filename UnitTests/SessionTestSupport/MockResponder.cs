@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace UnitTests.SessionTestSupport;
 
-internal class MockResponder : QuickFix.IResponder
+public class MockResponder : QuickFix.IResponder
 {
     private readonly QuickFix.DefaultMessageFactory _messageFactory = new();
     private readonly QuickFix.IMessageFactory _defaultMsgFactory = new QuickFix.DefaultMessageFactory();
