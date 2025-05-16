@@ -15,7 +15,7 @@ using QuickFix.Store;
 namespace UnitTests
 {
     [TestFixture]
-    public class RestartingTheThreadedSocketAcceptorTests
+    public class ThreadedSocketAcceptor_RestartTests
     {
         private const string Host = "127.0.0.1";
         private const int AcceptPort = 55101;
