@@ -2,7 +2,7 @@ using System;
 
 namespace UnitTests.SessionTestSupport;
 
-internal class MockApplication : QuickFix.IApplication
+public class MockApplication : QuickFix.IApplication
 {
     public Exception? FromAppException { get; set; }
     public Exception? FromAdminException { get; set; }
@@ -35,10 +35,7 @@ internal class MockApplication : QuickFix.IApplication
 
     public void OnCreate(QuickFix.SessionID sessionId) { }
 
-    public void OnLogout(QuickFix.SessionID sessionId)
-    {
-        throw new NotImplementedException();
-    }
+    public void OnLogout(QuickFix.SessionID sessionId) { }
 
     public void OnLogon(QuickFix.SessionID sessionId) { }
 }

@@ -379,6 +379,8 @@ namespace QuickFix
         /// <summary>
         /// Sets some internal state variables to disable the session.
         /// Users will be disconnected on next cycle.
+        /// (This function is for actively initiating a logout,
+        /// it is NOT for processing a logout request from the counterparty.)
         /// </summary>
         public void Logout(string reason = "")
         {
@@ -1198,7 +1200,7 @@ namespace QuickFix
                 return;
             }
 
-            Log.OnEvent("Error sending ResendRequest (" + beginSeqNum + " ," + endChunkSeqNum + ")");
+            Log.OnEvent($"Error sending ResendRequest ({beginSeqNum}, {endChunkSeqNum})");
         }
 
         /// <summary>
