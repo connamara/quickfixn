@@ -260,14 +260,14 @@ namespace QuickFix
             // copy, in case user code reuses input object
             Group group = grp.Clone();
 
-            if (!_groups.TryGetValue(group.CounterField, out var groupList))
+            if (_groups.TryGetValue(group.CounterField, out var groupList))
             {
-                groupList = new List<Group> { group };
-                _groups.Add(group.CounterField, groupList);
+                groupList.Add(group);
             }
             else
             {
-                groupList.Add(group);
+                groupList = new List<Group> { group };
+                _groups.Add(group.CounterField, groupList);
             }
 
             if (autoIncCounter)
@@ -290,7 +290,7 @@ namespace QuickFix
         /// <exception cref="FieldNotFoundException" />
         public Group GetGroup(int num, int counterTag)
         {
-            if (!_groups.TryGetValue(counterTag, out var groupList) || num <= 0 || groupList.Count < num)
+            if (!_groups.TryGetValue(counterTag, out List<Group>? groupList) || num <= 0 || groupList.Count < num)
                 throw new FieldNotFoundException(counterTag);
 
             return groupList[num - 1];
@@ -339,7 +339,7 @@ namespace QuickFix
                     return ((ULongField)fld).Value;
                 return ULongConverter.Convert(fld.ToString());
             }
-            catch (System.Collections.Generic.KeyNotFoundException)
+            catch (KeyNotFoundException)
             {
                 throw new FieldNotFoundException(tag);
             }

@@ -17,7 +17,7 @@ namespace UnitTests
         [Test]
         public void VersionTest()
         {
-            DataDictionary dd44 = new DataDictionary();
+            DataDictionary dd44 = new();
             dd44.LoadFIXSpec("FIX44");
             Assert.That(dd44.MajorVersion, Is.EqualTo("4"));
             Assert.That(dd44.MinorVersion, Is.EqualTo("4"));
@@ -27,7 +27,7 @@ namespace UnitTests
         [Test]
         public void LoadFieldsTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             Assert.That(dd.FieldsByTag[1].Name, Is.EqualTo("Account"));
             Assert.That(dd.FieldsByName["Account"].Tag, Is.EqualTo(1));
@@ -38,7 +38,7 @@ namespace UnitTests
 		[Test]
 		public void LoadFieldsFromStreamTest()
 		{
-			DataDictionary dd = new DataDictionary();
+			DataDictionary dd = new();
 		    Stream stream = new FileStream(Path.Combine(TestContext.CurrentContext.TestDirectory, "spec", "fix", "FIX44.xml"), FileMode.Open, FileAccess.Read);
 			dd.Load(stream);
 			Assert.That(dd.FieldsByTag[1].Name, Is.EqualTo("Account"));
@@ -50,7 +50,7 @@ namespace UnitTests
         [Test]
         public void FieldHasValueTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "1"), Is.EqualTo(true));
             Assert.That(dd.FieldHasValue(QuickFix.Fields.Tags.StatusValue, "CONNECTED"), Is.EqualTo(false));
@@ -61,9 +61,8 @@ namespace UnitTests
         [Test]
         public void FieldHasDescriptionTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
-            //Assert.That(dd.FieldsByTag[945].EnumDict.GetType(), Is.EqualTo(typeof(Dictionary<string, string>)));
             Assert.That("COMPLETED", Is.EqualTo(dd.FieldsByTag[945].EnumDict["2"]));
             Assert.That(dd.FieldsByTag[35].EnumDict["A"], Is.Not.EqualTo("HEARTBEAT"));
         }
@@ -71,7 +70,7 @@ namespace UnitTests
         [Test]
         public void BasicMessageTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             Assert.That(dd.Messages["3"].Fields.Count, Is.EqualTo(7));
         }
@@ -79,7 +78,7 @@ namespace UnitTests
         [Test]
         public void ComponentSmokeTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             DDMap tcr = dd.Messages["AE"];
             Assert.That(tcr.Fields.ContainsKey(55), Is.True);
@@ -89,7 +88,7 @@ namespace UnitTests
         [Test]
         public void GroupTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             DDMap tcrr = dd.Messages["AD"];
             Assert.That(tcrr.IsGroup(711), Is.True);
@@ -104,7 +103,7 @@ namespace UnitTests
         [Test]
         public void NestedGroupTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             DDMap msgJ = dd.Messages["J"];
 
@@ -116,7 +115,7 @@ namespace UnitTests
         [Test]
         public void GroupBeginsGroupTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadTestFIXSpec("group_begins_group");
             DDMap msg = dd.Messages["magic"];
             Assert.That(msg.IsGroup(6660), Is.True); // NoMagics group
@@ -130,7 +129,7 @@ namespace UnitTests
         [Test]
         public void HeaderGroupTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             DDMap headerMap = dd.Header;
             Assert.That(headerMap.IsGroup(627), Is.True);
@@ -142,7 +141,7 @@ namespace UnitTests
         [Test]
         public void ReqFldTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             Assert.That(dd.Messages["AE"].ReqFields.Contains(571), Is.True);
             Assert.That(dd.Messages["AE"].ReqFields.Contains(828), Is.False);
@@ -151,7 +150,7 @@ namespace UnitTests
         [Test]
         public void HeaderTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             Assert.That(dd.Header.ReqFields.Contains(9), Is.True);
             Assert.That(dd.Header.Fields.Count, Is.EqualTo(27));
@@ -160,7 +159,7 @@ namespace UnitTests
         [Test]
         public void TrailerTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             Assert.That(dd.Trailer.ReqFields.Contains(10), Is.True);
             Assert.That(dd.Trailer.Fields.Count, Is.EqualTo(3));
@@ -169,7 +168,7 @@ namespace UnitTests
         [Test]
         public void CheckValidFormat()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             dd.CheckFieldsHaveValues = true;
 
@@ -233,7 +232,7 @@ namespace UnitTests
         [Test]
         public void CheckValidTagNumberTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
 
             Assert.DoesNotThrow(delegate { dd.CheckValidTagNumber(35); });
@@ -248,7 +247,7 @@ namespace UnitTests
         [Test]
         public void CheckValue()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
 
             // unknown field
@@ -278,7 +277,7 @@ namespace UnitTests
         [Test]
         public void CheckIsInMessageTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
 
             Assert.DoesNotThrow(delegate { dd.CheckIsInMessage(new QuickFix.Fields.MDReqID("foo"), "W"); });
@@ -293,7 +292,7 @@ namespace UnitTests
         [Test]
         public void CheckIsInGroupTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
             DDGrp g = dd.Messages["B"].GetGroup(33);
 
@@ -307,7 +306,7 @@ namespace UnitTests
         [Test]
         public void CheckGroupCountTest()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX42");
 
             QuickFix.FIX42.NewOrderSingle n = new QuickFix.FIX42.NewOrderSingle();
@@ -333,14 +332,14 @@ namespace UnitTests
         public void DuplicateEnumsDoesNotThrow()
         {
             // If this test throws, it failed.
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadTestFIXSpec("FIX43_dup_enum");
         }
 
         [Test]
         public void ComponentFieldsRequirements()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadFIXSpec("FIX44");
 
             // AD => Instrument component (optional) => 55 (Symbol)
@@ -352,7 +351,7 @@ namespace UnitTests
         [Test]
         public void Issue134_RequiredIsOptional()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadTestFIXSpec("required_is_optional");
             Assert.That(dd.Messages["magic"].ReqFields.Contains(1111), Is.True);  //base required field
             Assert.That(dd.Messages["magic"].ReqFields.Contains(5555), Is.False); //base optional field
@@ -365,7 +364,7 @@ namespace UnitTests
         [Test] // Issue #493
         public void ParseThroughComments()
         {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadTestFIXSpec("comments");
 
             // The fact that it doesn't throw is sufficient, but we'll do some other checks anyway.
@@ -382,7 +381,7 @@ namespace UnitTests
 
         [Test]
         public void TestCheckMsgType() {
-            DataDictionary dd = new DataDictionary();
+            DataDictionary dd = new();
             dd.LoadTestFIXSpec("msg_type_test");
 
             Assert.Throws(typeof(InvalidMessageType), delegate { dd.CheckMsgType("foo"); });
