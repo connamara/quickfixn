@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using QuickFix.Fields;
 using QuickFix.Fields.Converters;
+using QuickFix.ObjectPooling;
 
 namespace QuickFix;
 
@@ -576,7 +577,8 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
     /// <returns></returns>
     public virtual string CalculateString()
     {
-        return CalculateString(new StringBuilder(), FieldOrder);
+        using PooledStringBuilder pooledSb = new PooledStringBuilder();
+        return CalculateString(pooledSb.Builder, FieldOrder);
     }
 
     /// <summary>
@@ -593,11 +595,11 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
         {
             if (IsSetField(preField))
             {
-                sb.Append(preField + "=" + GetString(preField)).Append(Message.SOH);
+                sb.Append(preField).Append('=').Append(GetString(preField)).Append(Message.SOH);
                 if (groupCounterTags.Contains(preField))
                 {
-                    List<Group> glist = _groups[preField];
-                    foreach (Group g in glist)
+                    List<Group> groupList = _groups[preField];
+                    foreach (Group g in groupList)
                         sb.Append(g.CalculateString());
                 }
             }
@@ -609,7 +611,7 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
                 continue;
             if (preFields.Contains(field.Tag))
                 continue; //already did this one
-            sb.Append($"{field.Tag}={field.ToString()}");
+            sb.Append(field.Tag).Append('=').Append(field.ToString());
             sb.Append(Message.SOH);
         }
 
