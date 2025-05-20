@@ -43,7 +43,7 @@ What's New
 * #940 - Create an alternate CharEncoding.GetBytes impl which uses ArrayPool to improve memory performance (VAllens)
 * #951 - fix: restore Session disconnect during SocketInitiatorThread.Read exception (gbirchmeier/trevor-bush)
 * #963 - fix: concurrency bug with NonSessionLog on Windows (gbirchmeier)
-* #195 - fix: Acceptor.Stop() then restart now works (huwmjenkins/vyourtchenko)
+* #196 - fix: Acceptor.Stop() then restart now works (huwmjenkins/vyourtchenko)
 * #956 - fix: FileLog.Clear() broke in 1.13, now fixed again (hansw96/gbirchmeier)
 * #950 - added the ability to mask fields when converting a FIX message to FIX JSON (trevor-bush)
 * #765 - overhaul of DateTimeConverter (Rob-Hague/vyourtchenko/gbirchmeier)
