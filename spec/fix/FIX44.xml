@@ -194,7 +194,7 @@
       <group name="NoUnderlyings" required="N">
         <component name="UnderlyingInstrument" required="N" />
       </group>
-      <group name="LinesOfText" required="Y">
+      <group name="LinesOfText" required="N">
         <field name="Text" required="Y" />
         <field name="EncodedTextLen" required="N" />
         <field name="EncodedText" required="N" />
@@ -225,7 +225,7 @@
       </group>
       <field name="OrderID" required="N" />
       <field name="ClOrdID" required="N" />
-      <group name="LinesOfText" required="Y">
+      <group name="LinesOfText" required="N">
         <field name="Text" required="Y" />
         <field name="EncodedTextLen" required="N" />
         <field name="EncodedText" required="N" />

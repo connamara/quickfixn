@@ -12,10 +12,9 @@ I8=FIX.4.435=AP34=249=TW52=<TIME>56=ISLD1=2005050000155=EURUSD453=0581=
 # Rejection resulting from previous message
 E8=FIX.4.435=334=249=ISLD52=00000000-00:00:00.00056=TW45=258=Group 702's first entry does not start with delimiter 703371=702372=AP373=99
 
-#Send news and receive echo
-#(basically, force an echo to ensure that above was not rejected)
-I8=FIX.4.435=B34=349=TW52=<TIME>56=ISLD148=FOO33=0
-E8=FIX.4.435=B34=349=ISLD52=00000000-00:00:00.00056=TW33=0148=FOO
+# Do a TestRequest to get a response that ensures the above was not rejected
+I8=FIX.4.435=134=349=TW52=<TIME>56=ISLD112=TEST
+E8=FIX.4.435=034=349=ISLD52=00000000-00:00:00.00056=TW112=TEST
 
 
 # logout message and response

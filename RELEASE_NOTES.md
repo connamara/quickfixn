@@ -48,6 +48,7 @@ What's New
 * #950 - added the ability to mask fields when converting a FIX message to FIX JSON (trevor-bush)
 * #765 - overhaul of DateTimeConverter (Rob-Hague/vyourtchenko/gbirchmeier)
 * #964 - Reduce unnecessary ContainsKey function calls to avoid multiple duplicate key lookups (VAllens)
+* #969 - correct LinesOfText in DDs to not be required; make ATs not auto-echo News (gbirchmeier)
 
 ### v1.13.1
 * backport #951 to 1.13

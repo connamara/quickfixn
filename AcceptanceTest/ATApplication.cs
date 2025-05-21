@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using QuickFix;
 using QuickFix.Fields;
 
@@ -100,10 +102,10 @@ namespace AcceptanceTest
             Message echo = new(message);
 
             bool possResend = false;
-            if (message.Header.IsSetField(QuickFix.Fields.Tags.PossResend))
-                possResend = message.Header.GetBoolean(QuickFix.Fields.Tags.PossResend);
+            if (message.Header.IsSetField(Tags.PossResend))
+                possResend = message.Header.GetBoolean(Tags.PossResend);
 
-            KeyValuePair<string, SessionID> pair = new(message.GetString(QuickFix.Fields.Tags.ClOrdID), sessionId);
+            KeyValuePair<string, SessionID> pair = new(message.GetString(Tags.ClOrdID), sessionId);
             if (possResend && _clOrdIDs.Contains(pair))
                 return;
             _clOrdIDs.Add(pair);
@@ -111,17 +113,15 @@ namespace AcceptanceTest
             Session.SendToTarget(echo, sessionId);
         }
 
-        private void AcknowledgeXmlMessage(Message msg, SessionID sessionId) {
-            string beginString = Message.ExtractBeginString(msg.ToString());
-            string seqNo = msg.Header.GetString(34);
+        private static Message CreateNewsReply(Message source, string headlineString) {
+            string beginString = Message.ExtractBeginString(source.ToString());
 
             Message response = new();
             response.Header.SetField(new BeginString(beginString));
             response.Header.SetField(new MsgType("B"));
-            response.SetField(new Headline($"Successfully received 'n' message with seqNo={seqNo}"));
-            response.SetField(new NoLinesOfText(0));
+            response.SetField(new Headline(headlineString));
 
-            Session.SendToTarget(response, sessionId);
+            return response;
         }
 
         public void OnMessage(QuickFix.FIX41.News news, SessionID sessionId) { ProcessNews(news, sessionId); }
@@ -134,13 +134,26 @@ namespace AcceptanceTest
 
         private void ProcessNews(Message msg, SessionID sessionId)
         {
-            if (msg.IsSetField(QuickFix.Fields.Tags.Headline) && (msg.GetString(QuickFix.Fields.Tags.Headline) == "STOPME"))
+            if (msg.IsSetField(Tags.Headline))
             {
-                if (this.StopMeEvent != null)
+                string headline = msg.GetString(Tags.Headline);
+                if (headline == "STOPME" && StopMeEvent is not null)
+                {
                     StopMeEvent();
+                }
+                else if (headline.StartsWith("echo:"))
+                {
+                    Match match = Regex.Match(headline, "echo: *(.*)");
+                    Message reply = CreateNewsReply(msg, match.Groups[1].Value);
+
+                    if (msg.Header.IsSetField(Tags.MessageEncoding))
+                        reply.Header.SetField(new MessageEncoding(msg.Header.GetString(Tags.MessageEncoding)));
+                    if (msg.IsSetField(Tags.EncodedHeadline))
+                        reply.SetField(new EncodedHeadline(msg.GetString(Tags.EncodedHeadline)));
+
+                    Session.SendToTarget(reply, sessionId);
+                }
             }
-            else
-                Echo(msg, sessionId);
         }
 
         public void OnMessage(QuickFix.FIX44.TradeCaptureReportRequest msg, SessionID sessionId)
@@ -186,9 +199,13 @@ namespace AcceptanceTest
             }
         }
 
-        public void FromAdmin(Message message, SessionID sessionId) {
-            if (message.Header.GetString(35) == "n")
-                AcknowledgeXmlMessage(message, sessionId);
+        public void FromAdmin(Message msg, SessionID sessionId) {
+            if (msg.Header.GetString(35) == "n") {
+                string seqNo = msg.Header.GetString(34);
+                Session.SendToTarget(
+                    CreateNewsReply(msg, $"Successfully received 'n' message with seqNo={seqNo}"),
+                    sessionId);
+            }
         }
 
         public void ToAdmin(Message message, SessionID sessionId) { }
