@@ -135,7 +135,7 @@
         <field name="Issuer" required="N"/>
         <field name="SecurityDesc" required="N"/>
       </group>
-      <group name="LinesOfText" required="Y">
+      <group name="LinesOfText" required="N">
         <field name="Text" required="Y"/>
       </group>
       <field name="URLLink" required="N"/>
@@ -164,7 +164,7 @@
       </group>
       <field name="OrderID" required="N"/>
       <field name="ClOrdID" required="N"/>
-      <group name="LinesOfText" required="Y">
+      <group name="LinesOfText" required="N">
         <field name="Text" required="Y"/>
       </group>
       <field name="RawDataLength" required="N"/>

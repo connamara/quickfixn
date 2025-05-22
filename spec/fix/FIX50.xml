@@ -247,7 +247,7 @@
    <component name='InstrmtGrp' required='N' />
    <component name='InstrmtLegGrp' required='N' />
    <component name='UndInstrmtGrp' required='N' />
-   <component name='LinesOfTextGrp' required='Y' />
+   <component name='LinesOfTextGrp' required='N' />
    <field name='URLLink' required='N' />
    <field name='RawDataLength' required='N' />
    <field name='RawData' required='N' />
@@ -265,7 +265,7 @@
    <component name='InstrmtLegGrp' required='N' />
    <field name='OrderID' required='N' />
    <field name='ClOrdID' required='N' />
-   <component name='LinesOfTextGrp' required='Y' />
+   <component name='LinesOfTextGrp' required='N' />
    <field name='RawDataLength' required='N' />
    <field name='RawData' required='N' />
   </message>
@@ -3086,7 +3086,7 @@
    <component name='AttrbGrp' required='N' />
   </component>
   <component name='LinesOfTextGrp'>
-   <group name='NoLinesOfText' required='Y'>
+   <group name='NoLinesOfText' required='N'>
     <field name='Text' required='Y' />
     <field name='EncodedTextLen' required='N' />
     <field name='EncodedText' required='N' />

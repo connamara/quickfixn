@@ -94,7 +94,7 @@
       <field name="OrigTime" required="N"/>
       <field name="Urgency" required="N"/>
       <field name="RelatdSym" required="N" repeating="Y"/>
-      <group name="LinesOfText" required="Y">
+      <group name="LinesOfText" required="N">
         <field name="Text" required="Y"/>
       </group>
       <field name="RawDataLength" required="N"/>
@@ -106,7 +106,7 @@
       <field name="RelatdSym" required="N" repeating="Y"/>
       <field name="OrderID" required="N"/>
       <field name="ClOrdID" required="N"/>
-      <group name="LinesOfText" required="Y">
+      <group name="LinesOfText" required="N">
         <field name="Text" required="Y"/>
       </group>
       <field name="RawDataLength" required="N"/>
