@@ -28,7 +28,6 @@ public class SocketInitiatorThread : IResponder
     private readonly CancellationTokenSource _readCancellationTokenSource = new();
     private readonly IPEndPoint _socketEndPoint;
     private readonly SocketSettings _socketSettings;
-    private bool _isDisconnectRequested = false;
     private readonly IQuickFixLoggerFactory _loggerFactory;
 
     /// <summary>
