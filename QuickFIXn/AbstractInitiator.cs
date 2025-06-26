@@ -32,24 +32,32 @@ namespace QuickFix
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
             ILogFactory? logFactoryNullable = null,
-            IMessageFactory? messageFactoryNullable = null) : this(app, storeFactory, settings,
-            logFactoryNullable is null
-                ? NullQuickFixLoggerFactory.Instance
-                : new LogFactoryAdapter(logFactoryNullable), messageFactoryNullable)
-        {
-        }
+            IMessageFactory? messageFactoryNullable = null)
+            : this(
+                app,
+                storeFactory,
+                settings,
+                logFactoryNullable is null
+                    ? NullQuickFixLoggerFactory.Instance
+                    : new LogFactoryAdapter(logFactoryNullable),
+                messageFactoryNullable)
+        { }
 
         protected AbstractInitiator(
             IApplication app,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
             ILoggerFactory? loggerFactoryNullable = null,
-            IMessageFactory? messageFactoryNullable = null) : this(app, storeFactory, settings,
-            loggerFactoryNullable is null
-                ? NullQuickFixLoggerFactory.Instance
-                : new MelQuickFixLoggerFactory(loggerFactoryNullable), messageFactoryNullable)
-        {
-        }
+            IMessageFactory? messageFactoryNullable = null)
+            : this(
+                app,
+                storeFactory,
+                settings,
+                loggerFactoryNullable is null
+                    ? NullQuickFixLoggerFactory.Instance
+                    : new MelQuickFixLoggerFactory(loggerFactoryNullable),
+                messageFactoryNullable)
+        { }
 
         private AbstractInitiator(
             IApplication app,

@@ -22,7 +22,7 @@ namespace QuickFix
             }
         }
 
-        internal delegate void ExitedEventHandler(object sender, ClientHandlerThread.ExitedEventArgs e);
+        internal delegate void ExitedEventHandler(object sender, ExitedEventArgs e);
         internal event ExitedEventHandler? Exited;
 
         public long Id { get; private set; }

@@ -154,7 +154,7 @@ namespace QuickFix
 
         #endregion
 
-        public SessionState(bool isInitiator, ILogger logger, int heartBtInt, IMessageStore messageStore)
+        internal SessionState(bool isInitiator, ILogger logger, int heartBtInt, IMessageStore messageStore)
         {
             Log = logger;
             HeartBtInt = heartBtInt;

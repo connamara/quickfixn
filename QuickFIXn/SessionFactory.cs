@@ -9,7 +9,7 @@ namespace QuickFix;
 /// <summary>
 /// Creates a Session based on specified settings
 /// </summary>
-public class SessionFactory
+internal class SessionFactory
 {
     protected IApplication _application;
     protected IMessageStoreFactory _messageStoreFactory;
@@ -17,7 +17,7 @@ public class SessionFactory
     protected IMessageFactory _messageFactory;
     protected Dictionary<string, DataDictionary.DataDictionary> _dictionariesByPath = new();
 
-    public SessionFactory(
+    internal SessionFactory(
         IApplication app,
         IMessageStoreFactory storeFactory,
         IQuickFixLoggerFactory? loggerFactory = null,

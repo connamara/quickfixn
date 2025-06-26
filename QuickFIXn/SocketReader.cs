@@ -25,6 +25,7 @@ public class SocketReader : IDisposable
     {
         get
         {
+            // 'is { } logger' means "if it is non-null then assign it to new var logger"
             if (_qfSession?.Log is { } logger) return logger;
             return _nonSessionLog;
         }

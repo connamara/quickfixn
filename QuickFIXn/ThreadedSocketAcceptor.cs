@@ -32,7 +32,7 @@ namespace QuickFix
         /// <param name="application"></param>
         /// <param name="storeFactory"></param>
         /// <param name="settings"></param>
-        /// <param name="logFactory">If null, a NullFactory will be used.</param>
+        /// <param name="logFactory">If null, a NullQuickFixLoggerFactory (which produces no logs) will be used.</param>
         /// <param name="messageFactory">If null, a DefaultMessageFactory will be created (using settings parameters)</param>
         [Obsolete("Use \"Microsoft.Extensions.Logging.ILoggerFactory\" instead of \"QuickFix.Logger.ILogFactory\".")]
         public ThreadedSocketAcceptor(
@@ -40,11 +40,14 @@ namespace QuickFix
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
             ILogFactory? logFactory = null,
-            IMessageFactory? messageFactory = null) : this(application, storeFactory, settings,
-            logFactory is null ? NullQuickFixLoggerFactory.Instance : new LogFactoryAdapter(logFactory),
-            messageFactory)
-        {
-        }
+            IMessageFactory? messageFactory = null)
+            : this(
+                application,
+                storeFactory,
+                settings,
+                logFactory is null ? NullQuickFixLoggerFactory.Instance : new LogFactoryAdapter(logFactory),
+                messageFactory)
+        { }
 
         /// <summary>
         /// Create a ThreadedSocketAcceptor
@@ -52,18 +55,23 @@ namespace QuickFix
         /// <param name="application"></param>
         /// <param name="storeFactory"></param>
         /// <param name="settings"></param>
-        /// <param name="loggerFactory">If null, a NullFactory will be used.</param>
+        /// <param name="loggerFactory">If null, a NullQuickFixLoggerFactory (which produces no logs) will be used.</param>
         /// <param name="messageFactory">If null, a DefaultMessageFactory will be created (using settings parameters)</param>
         public ThreadedSocketAcceptor(
             IApplication application,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
             ILoggerFactory? loggerFactory = null,
-            IMessageFactory? messageFactory = null) : this(application, storeFactory, settings,
-            loggerFactory is null ? NullQuickFixLoggerFactory.Instance : new MelQuickFixLoggerFactory(loggerFactory),
-            messageFactory)
-        {
-        }
+            IMessageFactory? messageFactory = null)
+            : this(
+                application,
+                storeFactory,
+                settings,
+                loggerFactory is null
+                    ? NullQuickFixLoggerFactory.Instance
+                    : new MelQuickFixLoggerFactory(loggerFactory),
+                messageFactory)
+        { }
 
         private ThreadedSocketAcceptor(
             IApplication application,
@@ -436,6 +444,7 @@ namespace QuickFix
             {
                 Stop();
                 DisposeSessions();
+                _logFactoryAdapter?.Dispose();
                 _sessions.Clear();
                 _disposed = true;
             }

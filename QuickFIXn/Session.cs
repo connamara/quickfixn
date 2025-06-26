@@ -225,7 +225,7 @@ namespace QuickFix
 
         #endregion
 
-        public Session(
+        internal Session(
             bool isInitiator,
             IApplication app,
             IMessageStoreFactory storeFactory,
@@ -251,7 +251,7 @@ namespace QuickFix
                 ? DataDictionaryProvider.GetApplicationDataDictionary(SenderDefaultApplVerID)
                 : SessionDataDictionary;
 
-            var logger = loggerFactory.CreateSessionLogger(sessId);
+            ILogger logger = loggerFactory.CreateSessionLogger(sessId);
 
             _state = new SessionState(isInitiator, logger, heartBtInt, storeFactory.Create(sessId));
 
@@ -283,7 +283,7 @@ namespace QuickFix
             }
 
             Application.OnCreate(SessionID);
-            Log.Log(LogLevel.Debug, "Created session");
+            Log.Log(LogLevel.Information, "Created session");
         }
 
         #region Static Methods
@@ -411,13 +411,14 @@ namespace QuickFix
             {
                 if (_responder is not null)
                 {
-                    Log.Log(LogLevel.Debug, "Session {SessionID} disconnecting: {Reason}", SessionID, reason);
+                    Log.Log(LogLevel.Information, "Session {SessionID} disconnecting: {Reason}", SessionID, reason);
                     _responder.Disconnect();
                     _responder = null;
                 }
                 else
                 {
-                    Log.Log(LogLevel.Debug, "Session {SessionID} already disconnected: {Reason}", SessionID, reason);
+                    Log.Log(LogLevel.Information, "Session {SessionID} already disconnected: {Reason}",
+                        SessionID, reason);
                 }
 
                 if (_state.ReceivedLogon || _state.SentLogon)
@@ -466,7 +467,7 @@ namespace QuickFix
 
                 if (!_state.SentLogout)
                 {
-                    Log.Log(LogLevel.Debug, "Initiated logout request");
+                    Log.Log(LogLevel.Information, "Initiated logout request");
                     GenerateLogout(_state.LogoutReason);
                 }
             }
@@ -476,7 +477,7 @@ namespace QuickFix
                 if (_state.ShouldSendLogon && IsTimeToGenerateLogon())
                 {
                     if (GenerateLogon())
-                        Log.Log(LogLevel.Debug, "Initiated logon request");
+                        Log.Log(LogLevel.Information, "Initiated logon request");
                     else
                         Log.Log(LogLevel.Error, "Error during logon request initiation");
 
@@ -509,7 +510,7 @@ namespace QuickFix
                 {
                     GenerateTestRequest("TEST");
                     _state.TestRequestCounter += 1;
-                    Log.Log(LogLevel.Debug, "Sent test request TEST");
+                    Log.Log(LogLevel.Information, "Sent test request TEST");
                 }
                 else if (_state.NeedHeartbeat())
                 {
@@ -703,7 +704,7 @@ namespace QuickFix
 
             if (_state.ReceivedReset)
             {
-                Log.Log(LogLevel.Debug, "Sequence numbers reset due to ResetSeqNumFlag=Y");
+                Log.Log(LogLevel.Information, "Sequence numbers reset due to ResetSeqNumFlag=Y");
                 if (!_state.SentReset)
                 {
                     _state.Reset("Reset requested by counterparty");
@@ -726,13 +727,14 @@ namespace QuickFix
             }
 
             _state.ReceivedLogon = true;
-            Log.Log(LogLevel.Debug, "Received logon");
+            Log.Log(LogLevel.Information, "Received logon");
             if (IsAcceptor)
             {
                 int heartBtInt = logon.GetInt(Fields.Tags.HeartBtInt);
                 _state.HeartBtInt = heartBtInt;
                 GenerateLogon(logon);
-                Log.Log(LogLevel.Debug, $"Responding to logon request; heartbeat is {heartBtInt} seconds");
+                Log.Log(LogLevel.Information, "Responding to logon request; heartbeat is {HeartBtInt} seconds",
+                    heartBtInt);
             }
 
             _state.SentReset = false;
@@ -770,7 +772,8 @@ namespace QuickFix
                 {
                     SeqNumType begSeqNo = resendReq.GetULong(Fields.Tags.BeginSeqNo);
                     SeqNumType endSeqNo = resendReq.GetULong(Fields.Tags.EndSeqNo);
-                    Log.Log(LogLevel.Information, "Got resend request from {BeginSeqNo} to {EndSeqNo}", begSeqNo, endSeqNo);
+                    Log.Log(LogLevel.Information, "Got resend request from {BeginSeqNo} to {EndSeqNo}",
+                        begSeqNo, endSeqNo);
 
                     if (endSeqNo == 999999 || endSeqNo == 0)
                     {
@@ -885,14 +888,14 @@ namespace QuickFix
             if (!_state.SentLogout)
             {
                 disconnectReason = "Received logout request";
-                Log.Log(LogLevel.Debug, "{Message}", disconnectReason);
+                Log.Log(LogLevel.Information, "{Message}", disconnectReason);
                 GenerateLogout(logout);
-                Log.Log(LogLevel.Debug, "Sending logout response");
+                Log.Log(LogLevel.Information, "Sending logout response");
             }
             else
             {
                 disconnectReason = "Received logout response";
-                Log.Log(LogLevel.Debug, "{Message}", disconnectReason);
+                Log.Log(LogLevel.Information, "{Message}", disconnectReason);
             }
 
             _state.IncrNextTargetMsgSeqNum();
@@ -920,7 +923,8 @@ namespace QuickFix
             if (sequenceReset.IsSetField(Fields.Tags.NewSeqNo))
             {
                 SeqNumType newSeqNo = sequenceReset.GetULong(Fields.Tags.NewSeqNo);
-                Log.Log(LogLevel.Debug, "Received SequenceRequest FROM: {NextTargetMsgSeqNum} TO: {NewSeqNo}", _state.NextTargetMsgSeqNum, newSeqNo);
+                Log.Log(LogLevel.Information, "Received SequenceRequest FROM: {NextTargetMsgSeqNum} TO: {NewSeqNo}",
+                    _state.NextTargetMsgSeqNum, newSeqNo);
 
                 if (newSeqNo > _state.NextTargetMsgSeqNum)
                 {
@@ -973,22 +977,22 @@ namespace QuickFix
                         {
                             if (range.EndSeqNo == 0)
                             {
-                                Log.Log(LogLevel.Debug,
-                                    "ResendRequest for messages FROM: {BeginSeqNo} TO: {EndSeqNo} has been satisfied.",
+                                Log.Log(LogLevel.Information,
+                                    "ResendRequest for messages FROM: {BeginSeqNo} TO: {EndSeqNo} has been satisfied",
                                     range.BeginSeqNo, range.EndSeqNo);
                             }
                             else
                             {
-                                Log.Log(LogLevel.Debug,
-                                    "ResendRequest for messages FROM: {BeginSeqNo} TO: {EndSeqNo} has been started.",
+                                Log.Log(LogLevel.Information,
+                                    "ResendRequest for messages FROM: {BeginSeqNo} TO: {EndSeqNo} has been started",
                                     range.BeginSeqNo, range.EndSeqNo);
                             }
                             _state.SetResendRange(0, 0);
                         }
                         else if (msgSeqNum >= range.ChunkEndSeqNo)
                         {
-                            Log.Log(LogLevel.Debug,
-                                "Chunked ResendRequest for messages FROM: {BeginSeqNo} TO: {ChunkEndSeqNo} has been satisfied.",
+                            Log.Log(LogLevel.Information,
+                                "Chunked ResendRequest for messages FROM: {BeginSeqNo} TO: {ChunkEndSeqNo} has been satisfied",
                                 range.BeginSeqNo, range.ChunkEndSeqNo);
                             SeqNumType newStart = range.ChunkEndSeqNo + 1;
                             SeqNumType newChunkEndSeqNo = Math.Min(range.EndSeqNo, range.ChunkEndSeqNo + MaxMessagesInResendRequest);
@@ -1000,12 +1004,14 @@ namespace QuickFix
 
                             if (SendRaw(resendRequest))
                             {
-                                Log.Log(LogLevel.Debug, "Sent ResendRequest FROM: {NewStart} TO: {NewChunkEndSeqNo}",
+                                Log.Log(LogLevel.Information,
+                                    "Sent ResendRequest FROM: {NewStart} TO: {NewChunkEndSeqNo}",
                                     newStart, newChunkEndSeqNo);
                             }
                             else
                             {
-                                Log.Log(LogLevel.Debug, "Error sending ResendRequest ({NewStart}, {NewChunkEndSeqNo})",
+                                Log.Log(LogLevel.Information,
+                                    "Error sending ResendRequest ({NewStart}, {NewChunkEndSeqNo})",
                                     newStart, newChunkEndSeqNo);
                             }
 
@@ -1123,7 +1129,9 @@ namespace QuickFix
 
                 if (!SendRedundantResendRequests && msgSeqNum >= range.BeginSeqNo)
                 {
-                    Log.Log(LogLevel.Debug, "Already sent ResendRequest FROM: {BeginSeqNo} TO: {EndSeqNo}. Not sending another.", range.BeginSeqNo, range.EndSeqNo);
+                    Log.Log(LogLevel.Information,
+                        "Already sent ResendRequest FROM: {BeginSeqNo} TO: {EndSeqNo}. Not sending another",
+                        range.BeginSeqNo, range.EndSeqNo);
                     return;
                 }
             }
@@ -1203,7 +1211,7 @@ namespace QuickFix
 
 
             reject.SetField(new Text(reason));
-            Log.Log(LogLevel.Debug, "Reject sent for Message: {MsgSeqNum} Reason: {Reason}", msgSeqNum, reason);
+            Log.Log(LogLevel.Information, "Reject sent for Message: {MsgSeqNum} Reason: {Reason}", msgSeqNum, reason);
             SendRaw(reject);
         }
 
@@ -1241,14 +1249,14 @@ namespace QuickFix
 
             if (SendRaw(resendRequest))
             {
-                Log.Log(LogLevel.Debug, "Sent ResendRequest FROM: {BeginSeqNum} TO: {EndChunkSeqNum}", beginSeqNum,
-                    endChunkSeqNum);
+                Log.Log(LogLevel.Information, "Sent ResendRequest FROM: {BeginSeqNum} TO: {EndChunkSeqNum}",
+                    beginSeqNum, endChunkSeqNum);
                 _state.SetResendRange(beginSeqNum, endRangeSeqNum, endChunkSeqNum);
                 return;
             }
 
-            Log.Log(LogLevel.Error, "Error sending ResendRequest ({BeginSeqNum} ,{EndChunkSeqNum})", beginSeqNum,
-                endChunkSeqNum);
+            Log.Log(LogLevel.Error, "Error sending ResendRequest ({BeginSeqNum} ,{EndChunkSeqNum})",
+                beginSeqNum, endChunkSeqNum);
         }
 
         /// <summary>
@@ -1551,11 +1559,12 @@ namespace QuickFix
                 }
                 catch (FieldNotFoundException e)
                 {
-                    Log.Log(LogLevel.Error, e, "Error: Received message without MsgSeqNum: {ReceivedMessage}", receivedMessage);
+                    Log.Log(LogLevel.Error, e, "Error: Received message without MsgSeqNum: {ReceivedMessage}",
+                        receivedMessage);
                 }
             }
             SendRaw(sequenceReset, beginSeqNo);
-            Log.Log(LogLevel.Debug, "Sent SequenceReset TO: {NewSeqNo}", newSeqNo);
+            Log.Log(LogLevel.Information, "Sent SequenceReset TO: {NewSeqNo}", newSeqNo);
         }
 
         protected void InsertOrigSendingTime(FieldMap header, DateTime sendingTime)
@@ -1578,7 +1587,7 @@ namespace QuickFix
 
             if (msg is not null)
             {
-                Log.Log(LogLevel.Debug, "Processing queued message: {Num}", num);
+                Log.Log(LogLevel.Information, "Processing queued message: {Num}", num);
 
                 string msgType = msg.Header.GetString(Tags.MsgType);
                 if (msgType.Equals(MsgType.LOGON) || msgType.Equals(MsgType.RESEND_REQUEST))

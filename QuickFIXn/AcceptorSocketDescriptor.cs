@@ -12,7 +12,7 @@ namespace QuickFix
 
         private readonly Dictionary<SessionID, Session> _acceptedSessions = new ();
 
-        public AcceptorSocketDescriptor(
+        internal AcceptorSocketDescriptor(
             IPEndPoint socketEndPoint,
             SocketSettings socketSettings,
             IQuickFixLoggerFactory loggerFactory)
@@ -22,7 +22,7 @@ namespace QuickFix
         }
 
         [Obsolete("Param 'sessionDict' is unused.  Use the alt constructor without it.")]
-        public AcceptorSocketDescriptor(
+        internal AcceptorSocketDescriptor(
             IPEndPoint socketEndPoint,
             SocketSettings socketSettings,
             SettingsDictionary sessionDict,

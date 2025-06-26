@@ -35,7 +35,7 @@ public class SocketInitiatorThread : IResponder
     /// </summary>
     private Task<int>? _currentReadTask;
 
-    public SocketInitiatorThread(
+    internal SocketInitiatorThread(
         Transport.SocketInitiator initiator,
         Session session,
         IPEndPoint socketEndPoint,
