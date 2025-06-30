@@ -40,7 +40,9 @@ public class NonSessionLogTests
     public void TestWithFileLogFactory()
     {
         FileLogFactory flf = CreateFileLogFactory();
+#pragma warning disable CS0618
         NonSessionLog nslog = new(flf);
+#pragma warning restore CS0618
 
         // Log artifact not created before first log-write
         Assert.That(Directory.Exists(_logDirectory), Is.False);
@@ -58,10 +60,14 @@ public class NonSessionLogTests
     public void TestTwoFileLogs()
     {
         FileLogFactory flf = CreateFileLogFactory();
+#pragma warning disable CS0618
         NonSessionLog nslog = new(flf);
+#pragma warning restore CS0618
         nslog.OnEvent("log1");
 
+#pragma warning disable CS0618
         NonSessionLog nslog2 = new(flf);
+#pragma warning restore CS0618
         nslog2.OnEvent("log2");
 
         // cleanup (don't delete log unless success)
@@ -72,7 +78,9 @@ public class NonSessionLogTests
     public void TestWithCompositeLogFactory()
     {
         CompositeLogFactory clf = new CompositeLogFactory([CreateFileLogFactory(), new NullLogFactory()]);
+#pragma warning disable CS0618
         NonSessionLog nslog = new(clf);
+#pragma warning restore CS0618
 
         // Log artifact not created before first log-write
         Assert.That(Directory.Exists(_logDirectory), Is.False);

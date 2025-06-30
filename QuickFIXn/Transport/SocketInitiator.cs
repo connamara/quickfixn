@@ -25,7 +25,6 @@ namespace QuickFix.Transport
         private readonly object _sync = new();
         private readonly ILogger _nonSessionLog;
 
-        [Obsolete("Use \"Microsoft.Extensions.Logging.ILoggerFactory\" instead of \"QuickFix.Logger.ILogFactory\".")]
         public SocketInitiator(
             IApplication application,
             IMessageStoreFactory storeFactory,

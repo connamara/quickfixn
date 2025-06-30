@@ -2,7 +2,6 @@
 
 namespace QuickFix.Logger;
 
-[Obsolete("Use Microsoft.Extensions.Logging instead.")]
 public class NullLogFactory : ILogFactory
 {
     public NullLogFactory() { }

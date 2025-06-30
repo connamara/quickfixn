@@ -21,7 +21,6 @@ namespace QuickFix
             SocketReactor = new ThreadedSocketReactor(Address, socketSettings, this, loggerFactory);
         }
 
-        [Obsolete("Param 'sessionDict' is unused.  Use the alt constructor without it.")]
         internal AcceptorSocketDescriptor(
             IPEndPoint socketEndPoint,
             SocketSettings socketSettings,

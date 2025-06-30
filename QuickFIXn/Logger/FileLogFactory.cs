@@ -5,7 +5,6 @@ namespace QuickFix.Logger;
 /// <summary>
 /// Creates a message store that stores messages in a file
 /// </summary>
-[Obsolete("Use Microsoft.Extensions.Logging instead")]
 public class FileLogFactory : ILogFactory
 {
     private readonly SessionSettings _settings;

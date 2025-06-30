@@ -26,7 +26,6 @@ namespace QuickFix
 
         public bool IsStopped { get; private set; } = true;
 
-        [Obsolete("Use \"Microsoft.Extensions.Logging.ILoggerFactory\" instead of \"QuickFix.Logger.ILogFactory\".")]
         protected AbstractInitiator(
             IApplication app,
             IMessageStoreFactory storeFactory,
@@ -69,7 +68,8 @@ namespace QuickFix
             _settings = settings;
             if (loggerFactory is LogFactoryAdapter lfa)
             {
-                // LogFactoryAdapter is only ever created in the constructor marked obsolete, which means we own it and
+                // LogFactoryAdapter is only created in the constructor that takes ILogFactory,
+                // which means we own it and
                 // must save a ref to it so we can dispose it later. Any other loggerFactory is owned by someone else
                 // so we'll leave the dispose up to them. This should be removed eventually together with the old ILog
                 // and ILogFactory.

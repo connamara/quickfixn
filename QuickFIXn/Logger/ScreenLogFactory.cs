@@ -2,7 +2,6 @@
 
 namespace QuickFix.Logger;
 
-[Obsolete("Use Microsoft.Extensions.Logging instead.")]
 public class ScreenLogFactory : ILogFactory
 {
     private const string SCREEN_LOG_SHOW_INCOMING = "ScreenLogShowIncoming";

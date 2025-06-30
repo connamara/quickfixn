@@ -10,7 +10,6 @@ namespace QuickFix.Logger;
 /// <summary>
 /// File log implementation
 /// </summary>
-[Obsolete("Use Microsoft.Extensions.Logging instead")]
 public class FileLog : ILog
 {
     private readonly object _sync = new();

@@ -5,7 +5,6 @@ namespace QuickFix.Logger;
 /// <summary>
 /// Session log for messages and events
 /// </summary>
-[Obsolete("Use Microsoft.Extensions.Logging instead")]
 public interface ILog : IDisposable
 {
     /// <summary>
