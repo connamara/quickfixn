@@ -254,7 +254,6 @@ namespace QuickFix
                 _disconnected.Clear();
             }
 
-            _logFactoryAdapter?.Dispose();
         }
 
         public bool IsLoggedOn
@@ -422,6 +421,7 @@ namespace QuickFix
             if (disposing)
             {
                 this.Stop();
+                _logFactoryAdapter?.Dispose();
             }
             _disposed = true;
         }
