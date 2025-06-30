@@ -6,7 +6,7 @@ namespace QuickFix.Logger;
 /// A logger that can be used when the calling logic cannot identify a session (which is rare).
 /// Does not create a log artifact until first write.
 /// </summary>
-[Obsolete("Use Microsoft.Extensions.Logging instead.")]
+[Obsolete("No longer needed.  Will be deleted in v1.16.")]
 public class NonSessionLog {
 
     private readonly ILogFactory _logFactory;

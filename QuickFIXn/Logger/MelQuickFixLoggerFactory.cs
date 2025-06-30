@@ -2,6 +2,9 @@ using Microsoft.Extensions.Logging;
 
 namespace QuickFix.Logger;
 
+/// <summary>
+/// Factory that invokes its member ILoggerFactory to create MEL ILoggers
+/// </summary>
 internal class MelQuickFixLoggerFactory : IQuickFixLoggerFactory
 {
     private readonly ILoggerFactory _loggerFactory;
