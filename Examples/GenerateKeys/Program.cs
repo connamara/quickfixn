@@ -29,18 +29,19 @@ static X509Certificate2 CreateServerCertificate(X509Certificate2 caCertificate)
         var request = new CertificateRequest($"CN=QuickFixn-TestServer", rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
         request.CertificateExtensions.Add(new X509BasicConstraintsExtension(false, false, 0, false));
         request.CertificateExtensions.Add(new X509KeyUsageExtension(X509KeyUsageFlags.DigitalSignature | X509KeyUsageFlags.DataEncipherment, true));
+        request.CertificateExtensions.Add(new X509SubjectKeyIdentifierExtension(request.PublicKey, false));
 
         var sanBuilder = new SubjectAlternativeNameBuilder();
         sanBuilder.AddIpAddress(new System.Net.IPAddress([127, 0, 0, 1]));
         request.CertificateExtensions.Add(sanBuilder.Build());
 
-    var enhancedKeyUsages = new OidCollection
-    {
-        new Oid("1.3.6.1.5.5.7.3.1"), // OID for Server Authentication
-    };
+        var enhancedKeyUsages = new OidCollection
+        {
+            new Oid("1.3.6.1.5.5.7.3.1"), // OID for Server Authentication
+        };
         request.CertificateExtensions.Add(new X509EnhancedKeyUsageExtension(enhancedKeyUsages, true));
 
-    X509Certificate2 certificate = request.Create(caCertificate, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(1), [0, 0, 0, 0, 0, 0, 0, 1]);
+        X509Certificate2 certificate = request.Create(caCertificate, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(1), [0, 0, 0, 0, 0, 0, 0, 1]);
         return certificate.CopyWithPrivateKey(rsa);
     }
 }
@@ -48,25 +49,35 @@ static X509Certificate2 CreateServerCertificate(X509Certificate2 caCertificate)
 static X509Certificate2 CreateClientCertificate(X509Certificate2 caCertificate)
 {
     using var rsa = RSA.Create();
-    var request = new CertificateRequest($"CN=QuickFixn-TestClient", rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
-    request.CertificateExtensions.Add(new X509BasicConstraintsExtension(false, false, 0, false));
-    request.CertificateExtensions.Add(new X509KeyUsageExtension(X509KeyUsageFlags.DigitalSignature | X509KeyUsageFlags.DataEncipherment, true));
-
-    var enhancedKeyUsages = new OidCollection
+    using (RSA caPrivateKey = caCertificate.GetRSAPrivateKey())
     {
-        new Oid("1.3.6.1.5.5.7.3.2")  // OID for Client Authentication
-    };
-    request.CertificateExtensions.Add(new X509EnhancedKeyUsageExtension(enhancedKeyUsages, true));
+        var request = new CertificateRequest($"CN=QuickFixn-TestClient", rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        request.CertificateExtensions.Add(new X509BasicConstraintsExtension(false, false, 0, false));
+        request.CertificateExtensions.Add(new X509KeyUsageExtension(X509KeyUsageFlags.DigitalSignature | X509KeyUsageFlags.DataEncipherment, true));
+        request.CertificateExtensions.Add(new X509SubjectKeyIdentifierExtension(request.PublicKey, false));
 
-    X509Certificate2 certificate = request.Create(caCertificate, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(1), [0, 0, 0, 0, 0, 0, 0, 2]);
-    return certificate;
+        var sanBuilder = new SubjectAlternativeNameBuilder();
+        sanBuilder.AddIpAddress(new System.Net.IPAddress([127, 0, 0, 1]));
+        request.CertificateExtensions.Add(sanBuilder.Build());
+
+        var enhancedKeyUsages = new OidCollection
+        {
+            new Oid("1.3.6.1.5.5.7.3.2")  // OID for Client Authentication
+        };
+        request.CertificateExtensions.Add(new X509EnhancedKeyUsageExtension(enhancedKeyUsages, true));
+
+        X509Certificate2 certificate = request.Create(caCertificate, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(1), [0, 0, 0, 0, 0, 0, 0, 2]);
+        return certificate.CopyWithPrivateKey(rsa);
+    }
 }
 
 var caCertificate = CreateCACertificate();
 File.WriteAllBytes(CaCertificatePath, caCertificate.Export(X509ContentType.Cert));
 
 var serverCertificate = CreateServerCertificate(caCertificate);
+File.WriteAllBytes(ServerCertificatePath, serverCertificate.Export(X509ContentType.Cert));
 File.WriteAllBytes(ServerPfxCertificatePath, serverCertificate.Export(X509ContentType.Pfx, PfxPassword));
 
 var clientCertificate = CreateClientCertificate(caCertificate);
+File.WriteAllBytes(ClientCertificatePath, clientCertificate.Export(X509ContentType.Cert));
 File.WriteAllBytes(ClientPfxCertificatePath, clientCertificate.Export(X509ContentType.Pfx, PfxPassword));
