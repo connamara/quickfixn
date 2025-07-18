@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 using QuickFix;
+using QuickFix.Logger;
 using QuickFix.Store;
 
 namespace SimpleAcceptor
@@ -30,11 +31,18 @@ namespace SimpleAcceptor
                 SessionSettings settings = new SessionSettings(args[0]);
                 IApplication app = new SimpleAcceptorApp();
                 IMessageStoreFactory storeFactory = new FileStoreFactory(settings);
-                using var loggerFactory = LoggerFactory.Create(builder =>
+
+                ILogFactory logFactory = new ScreenLogFactory(settings);
+                ThreadedSocketAcceptor acceptor = new ThreadedSocketAcceptor(app, storeFactory, settings, logFactory);
+
+                /*
+                // v1.14: you can use Microsoft.Extensions.Logging instead
+                using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
                 {
                     builder.AddConsole();
                 });
                 IAcceptor acceptor = new ThreadedSocketAcceptor(app, storeFactory, settings, loggerFactory);
+                */
 
                 acceptor.Start();
                 Console.WriteLine("press <enter> to quit");
