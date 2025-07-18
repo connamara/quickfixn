@@ -23,11 +23,11 @@ namespace QuickFix
         private readonly SessionFactory _sessionFactory;
         private bool _disposed = false;
         private readonly object _sync = new();
-        private readonly IQuickFixLoggerFactory _loggerFactory;
+        private readonly IQuickFixLoggerFactory _qfLoggerFactory;
         private readonly LogFactoryAdapter? _logFactoryAdapter;
 
         /// <summary>
-        /// Create a ThreadedSocketAcceptor
+        /// Create a ThreadedSocketAcceptor (with a legacy ILogFactory)
         /// </summary>
         /// <param name="application"></param>
         /// <param name="storeFactory"></param>
@@ -76,10 +76,10 @@ namespace QuickFix
             IApplication application,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
-            IQuickFixLoggerFactory loggerFactory,
+            IQuickFixLoggerFactory qfLoggerFactory,
             IMessageFactory? messageFactory = null)
         {
-            if (loggerFactory is LogFactoryAdapter lfa)
+            if (qfLoggerFactory is LogFactoryAdapter lfa)
             {
                 // LogFactoryAdapter is only ever created in the constructor marked obsolete, which means we own it and
                 // must save a ref to it so we can dispose it later. Any other loggerFactory is owned by someone else
@@ -89,8 +89,8 @@ namespace QuickFix
             }
             IMessageFactory mf = messageFactory ?? new DefaultMessageFactory();
             _settings = settings;
-            _sessionFactory = new SessionFactory(application, storeFactory, loggerFactory, mf);
-            _loggerFactory = loggerFactory;
+            _sessionFactory = new SessionFactory(application, storeFactory, qfLoggerFactory, mf);
+            _qfLoggerFactory = qfLoggerFactory;
 
             try
             {
@@ -139,7 +139,7 @@ namespace QuickFix
 
             if (!_socketDescriptorForAddress.TryGetValue(socketEndPoint, out var descriptor))
             {
-                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, _loggerFactory);
+                descriptor = new AcceptorSocketDescriptor(socketEndPoint, socketSettings, _qfLoggerFactory);
                 _socketDescriptorForAddress[socketEndPoint] = descriptor;
             }
 

@@ -33,7 +33,7 @@ namespace QuickFix.Transport
             IMessageFactory? messageFactoryNullable = null)
             : base(application, storeFactory, settings, logFactoryNullable, messageFactoryNullable)
         {
-            _nonSessionLog = LoggerFactory.CreateNonSessionLogger<SocketInitiator>();
+            _nonSessionLog = QfLoggerFactory.CreateNonSessionLogger<SocketInitiator>();
         }
 
         public SocketInitiator(
@@ -44,7 +44,7 @@ namespace QuickFix.Transport
             IMessageFactory? messageFactoryNullable = null)
             : base(application, storeFactory, settings, loggerFactoryNullable, messageFactoryNullable)
         {
-            _nonSessionLog = LoggerFactory.CreateNonSessionLogger<SocketInitiator>();
+            _nonSessionLog = QfLoggerFactory.CreateNonSessionLogger<SocketInitiator>();
         }
 
         public static void SocketInitiatorThreadStart(object? socketInitiatorThread)
@@ -241,7 +241,7 @@ namespace QuickFix.Transport
 
                 // Create a Ssl-SocketInitiatorThread if a certificate is given
                 SocketInitiatorThread t = new SocketInitiatorThread(
-                    this, session, socketEndPoint, socketSettings, LoggerFactory);
+                    this, session, socketEndPoint, socketSettings, QfLoggerFactory);
                 t.Start();
                 AddThread(t);
             }

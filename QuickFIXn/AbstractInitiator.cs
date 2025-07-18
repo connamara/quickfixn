@@ -21,7 +21,7 @@ namespace QuickFix
         private readonly SessionFactory _sessionFactory;
         private Thread? _thread;
 
-        protected readonly IQuickFixLoggerFactory LoggerFactory;
+        internal readonly IQuickFixLoggerFactory QfLoggerFactory;
         private readonly LogFactoryAdapter? _logFactoryAdapter;
 
         public bool IsStopped { get; private set; } = true;
@@ -62,22 +62,21 @@ namespace QuickFix
             IApplication app,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
-            IQuickFixLoggerFactory loggerFactory,
+            IQuickFixLoggerFactory qfLoggerFactory,
             IMessageFactory? messageFactoryNullable = null)
         {
             _settings = settings;
-            if (loggerFactory is LogFactoryAdapter lfa)
+            if (qfLoggerFactory is LogFactoryAdapter lfa)
             {
                 // LogFactoryAdapter is only created in the constructor that takes ILogFactory,
-                // which means we own it and
-                // must save a ref to it so we can dispose it later. Any other loggerFactory is owned by someone else
-                // so we'll leave the dispose up to them. This should be removed eventually together with the old ILog
-                // and ILogFactory.
+                // which means we own it and must save a ref to it so we can dispose it later.
+                // Any other loggerFactory is owned by someone else
+                // so we'll leave the dispose up to them.
                 _logFactoryAdapter = lfa;
             }
             var msgFactory = messageFactoryNullable ?? new DefaultMessageFactory();
-            _sessionFactory = new SessionFactory(app, storeFactory, loggerFactory, msgFactory);
-            LoggerFactory = loggerFactory;
+            _sessionFactory = new SessionFactory(app, storeFactory, qfLoggerFactory, msgFactory);
+            QfLoggerFactory = qfLoggerFactory;
 
             HashSet<SessionID> definedSessions = _settings.GetSessions();
             if (0 == definedSessions.Count)
