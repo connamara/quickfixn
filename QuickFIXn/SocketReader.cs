@@ -21,15 +21,8 @@ public class SocketReader : IDisposable
     private readonly ClientHandlerThread _responder;
     private readonly AcceptorSocketDescriptor? _acceptorDescriptor;
     private readonly ILogger _nonSessionLog;
-    private ILogger UnconditionalLogger
-    {
-        get
-        {
-            // 'is { } logger' means "if it is non-null then assign it to new var logger"
-            if (_qfSession?.Log is { } logger) return logger;
-            return _nonSessionLog;
-        }
-    }
+
+    private ILogger UnconditionalLogger => _qfSession?.Log is not null ? _qfSession.Log : _nonSessionLog;
 
     /// <summary>
     /// Keep a task for handling async read
