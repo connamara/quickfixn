@@ -379,7 +379,7 @@ namespace QuickFix
             lock (_sync)
             {
                 MessageStore.Reset();
-                Log.Log(LogLevel.Debug, "Session reset: {Reason}", reason);
+                Log.Log(LogLevel.Information, "Session reset: {Reason}", reason);
             }
         }
 

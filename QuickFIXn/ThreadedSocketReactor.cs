@@ -63,7 +63,7 @@ namespace QuickFix
                         _tcpListener.BeginAcceptTcpClient(AcceptTcpClientCallback, _tcpListener);
                     }
                     catch (Exception e) {
-                        _nonSessionLog.LogError(e, "Error starting listener");
+                        _nonSessionLog.Log(LogLevel.Error, e, "Error starting listener");
                         throw;
                     }
                 }
@@ -85,7 +85,7 @@ namespace QuickFix
                     }
                     catch (Exception e)
                     {
-                        _nonSessionLog.LogError(e, "Error while closing server socket");
+                        _nonSessionLog.Log(LogLevel.Error, e, "Error while closing server socket");
                     }
                 }
             }
@@ -117,7 +117,7 @@ namespace QuickFix
             catch (Exception e)
             {
                 if (IsRunning)
-                    _nonSessionLog.LogError(e, "Error accepting connection");
+                    _nonSessionLog.Log(LogLevel.Error, e, "Error accepting connection");
             }
             if( IsRunning )
             {
@@ -181,7 +181,7 @@ namespace QuickFix
                         }
                         catch (Exception e)
                         {
-                            _nonSessionLog.LogError(e, "Error shutting down");
+                            _nonSessionLog.Log(LogLevel.Error, e, "Error shutting down");
                         }
                         t.Dispose();
                     }

@@ -56,7 +56,7 @@ namespace QuickFix.Transport
             {
                 t.Connect();
                 t.Initiator.SetConnected(t.Session.SessionID);
-                t.Session.Log.Log(LogLevel.Debug, "Connection succeeded");
+                t.Session.Log.Log(LogLevel.Information, "Connection succeeded");
                 t.Session.Next();
                 while (t.Read()) {
                 }
@@ -92,10 +92,10 @@ namespace QuickFix.Transport
             if (t.Session.Disposed)
             {
                 t.NonSessionLog.Log(LogLevel.Error, e, "Connection failed [session {SessionID}]: {Message}",
-                    t.Session.SessionID, e);
+                    t.Session.SessionID, e.Message);
                 return;
             }
-            t.Session.Log.Log(LogLevel.Error, e, "Connection failed: {Error}", e);
+            t.Session.Log.Log(LogLevel.Error, e, "Connection failed: {Message}", e.Message);
         }
 
         private void AddThread(SocketInitiatorThread thread)
@@ -175,7 +175,7 @@ namespace QuickFix.Transport
             catch (Exception)
             { }
 
-            // Don't know if this is required in order to handle settings in the general section
+            // TODO: Don't know if this is required in order to handle settings in the general section
             _socketSettings.Configure(settings.Get());
         }       
 
@@ -198,7 +198,7 @@ namespace QuickFix.Transport
                 }
                 catch (Exception e)
                 {
-                    _nonSessionLog.Log(LogLevel.Error, e, "Failed to start: {Error}", e);
+                    _nonSessionLog.Log(LogLevel.Error, e, "Failed to start: {Message}", e.Message);
                 }
 
                 Thread.Sleep(1 * 1000);
@@ -233,7 +233,8 @@ namespace QuickFix.Transport
 
                 IPEndPoint socketEndPoint = GetNextSocketEndPoint(session.SessionID, settings);
                 SetPending(session.SessionID);
-                session.Log.Log(LogLevel.Debug, "Connecting to {Address} on port {Port}", socketEndPoint.Address, socketEndPoint.Port);
+                session.Log.Log(LogLevel.Information, "Connecting to {Address} on port {Port}",
+                    socketEndPoint.Address, socketEndPoint.Port);
 
                 //Setup socket settings based on current section
                 var socketSettings = _socketSettings.Clone();
@@ -246,7 +247,7 @@ namespace QuickFix.Transport
                 AddThread(t);
             }
             catch (Exception e) {
-                session.Log.Log(LogLevel.Error, e, "{Exception}", e);
+                session.Log.Log(LogLevel.Error, e, "Connection error: {Message}", e.Message);
             }
         }
 

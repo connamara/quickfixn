@@ -144,7 +144,7 @@ public class SocketReader : IDisposable
                     return;
                 }
 
-                _qfSession.Log.Log(LogLevel.Debug,
+                _qfSession.Log.Log(LogLevel.Information,
                     "{SessionId} Socket Reader {ReaderId} accepting session {AcceptedSessionId} from {Endpoint}",
                     _qfSession.SessionID, GetHashCode(), _qfSession.SessionID, _tcpClient.Client.RemoteEndPoint);
                 _qfSession.SetResponder(_responder);
