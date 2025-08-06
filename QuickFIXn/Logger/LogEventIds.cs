@@ -2,8 +2,8 @@ using Microsoft.Extensions.Logging;
 
 namespace QuickFix.Logger;
 
-internal static class LogEventIds
+public static class LogEventIds
 {
-    internal static readonly EventId IncomingMessage = 7702;
-    internal static readonly EventId OutgoingMessage = 7203;
+    public static readonly EventId IncomingMessage = new(7702, "IncomingMessage");
+    public static readonly EventId OutgoingMessage = new(7703, "OutgoingMessage");
 }
