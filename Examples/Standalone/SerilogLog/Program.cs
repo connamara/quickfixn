@@ -20,7 +20,8 @@ class Program
                 .Filter
                 .ByIncludingOnly(Matching.FromSource("QuickFix.SessionLogs"))
                 .Filter
-                .ByIncludingOnly(Matching.WithProperty("MessageType"))
+                .ByIncludingOnly("EventId.Id in [7702, 7703]") // QuickFix.Logger.LogEventIds.IncomingMessage.Id
+                                                               //    and .OutgoingMessage.Id
                 .WriteTo.Map(Constants.SourceContextPropertyName, "", (source, lc) =>
                 {
                     var fileName = GetSessionIdFromSourceContext(source);
@@ -31,11 +32,11 @@ class Program
                 .Filter
                 .ByIncludingOnly(Matching.FromSource("QuickFix.SessionLogs"))
                 .Filter
-                .ByExcluding(Matching.WithProperty("MessageType"))
+                .ByExcluding("EventId.Id in [7702, 7703]")
                 .WriteTo.Map(Constants.SourceContextPropertyName, "", (source, lc) =>
                 {
                     var fileName = GetSessionIdFromSourceContext(source);
-                    lc.File($"log/{fileName}.event.log", rollingInterval: RollingInterval.Minute, outputTemplate:"{Message:lj}{NewLine}");
+                    lc.File($"log/{fileName}.event.log", rollingInterval: RollingInterval.Hour, outputTemplate:"{Message:lj}{NewLine}");
                 })
             )
             .WriteTo.Logger(l => l
