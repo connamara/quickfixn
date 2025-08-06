@@ -19,10 +19,8 @@ namespace QuickFix
     /// </summary>
     public class Session : IDisposable
     {
-        #region Private Members
-
         private static readonly Dictionary<SessionID, Session> Sessions = new();
-        private static readonly HashSet<string> AdminMsgTypes = new() { "0", "A", "1", "2", "3", "4", "5" };
+        private static readonly HashSet<string> AdminMsgTypes = ["0", "A", "1", "2", "3", "4", "5"];
 
         private readonly object _sync = new();
         private IResponder? _responder;
@@ -31,7 +29,7 @@ namespace QuickFix
         private readonly IMessageFactory _msgFactory;
         private readonly bool _appDoesEarlyIntercept;
 
-        #endregion
+        private const LogLevel MessagesLogLevel = LogLevel.Information;
 
         #region Properties
 
@@ -364,15 +362,14 @@ namespace QuickFix
                 if (_responder is null)
                     return false;
 
-                const LogLevel messagesLogLevel = LogLevel.Information;
-                if (Log.IsEnabled(messagesLogLevel))
+                if (Log.IsEnabled(MessagesLogLevel))
                 {
                     using (Log.BeginScope(new Dictionary<string, object>
                            {
                                {"MessageType", Message.GetMsgType(message)}
                            }))
                     {
-                        Log.Log(messagesLogLevel, LogEventIds.OutgoingMessage, "{Message}", message);
+                        Log.Log(MessagesLogLevel, LogEventIds.OutgoingMessage, "{Message}", message);
                     }
                 }
 
@@ -535,23 +532,22 @@ namespace QuickFix
         /// <param name="msgStr"></param>
         private void NextMessage(string msgStr)
         {
-            const LogLevel messageLogLevel = LogLevel.Information;
             try
             {
-                if (Log.IsEnabled(messageLogLevel))
+                if (Log.IsEnabled(MessagesLogLevel))
                 {
                     using (Log.BeginScope(new Dictionary<string, object>
                            {
                                {"MessageType", Message.GetMsgType(msgStr)}
                            }))
                     {
-                        Log.Log(messageLogLevel, LogEventIds.IncomingMessage, "{Message}", msgStr);
+                        Log.Log(MessagesLogLevel, LogEventIds.IncomingMessage, "{Message}", msgStr);
                     }
                 }
             }
             catch (Exception)
             {
-                Log.Log(messageLogLevel, LogEventIds.IncomingMessage, "{Message}", msgStr);
+                Log.Log(MessagesLogLevel, LogEventIds.IncomingMessage, "{Message}", msgStr);
             }
 
             MessageBuilder msgBuilder = new MessageBuilder(
