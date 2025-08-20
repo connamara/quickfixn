@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace QuickFix.Logger;
 
 /// <summary>
-/// Wraps the legacy (pre-v1.15) ILogFactory interface so that it can
+/// Wraps the legacy (pre-v1.14) ILogFactory interface so that it can
 /// be used as an IQuickFixLoggerFactory.
 /// </summary>
 internal class LogFactoryAdapter : IQuickFixLoggerFactory, IDisposable
