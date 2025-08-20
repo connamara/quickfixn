@@ -36,7 +36,7 @@ internal class LogAdapter : ILogger, IDisposable
 
     public bool IsEnabled(LogLevel logLevel) => logLevel != LogLevel.None;
 
-    public IDisposable BeginScope<TState>(TState state) => default!;
+    public IDisposable BeginScope<TState>(TState state) where TState : notnull => default!;
 
     public void Dispose()
     {
