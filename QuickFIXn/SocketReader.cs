@@ -22,7 +22,7 @@ public class SocketReader : IDisposable
     private readonly AcceptorSocketDescriptor? _acceptorDescriptor;
     private readonly ILogger _nonSessionLog;
 
-    private ILogger UnconditionalLogger => _qfSession?.Log is not null ? _qfSession.Log : _nonSessionLog;
+    private ILogger UnconditionalLogger => _qfSession?.Log ?? _nonSessionLog;
 
     /// <summary>
     /// Keep a task for handling async read
