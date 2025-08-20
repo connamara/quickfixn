@@ -11,9 +11,8 @@ This example shows how to configure a Serilog ILogger that:
 * Rolls event log files on the minute
 * Creates separate log file sets for each session
 
-This config is meant to demonstrate some features for educational purposes,
-but is probably not something you'd actually *want* to use on a real app
-(for instance, you wouldn't want to roll logs on the minute...).
+This config is meant to demonstrate some features for educational purposes.
+It is not expected to be appropriate for a production application.
 
 This application's configuration will allow it to connect with the Executor example.
 
