@@ -669,7 +669,7 @@ namespace QuickFix
             }
             catch (FieldNotFoundException e)
             {
-                Log.Log(LogLevel.Information, e, "Rejecting invalid message, field not found: {Message}", e.Message);
+                Log.Log(LogLevel.Warning, e, "Rejecting invalid message, field not found: {Message}", e.Message);
                 if (string.CompareOrdinal(SessionID.BeginString, FixValues.BeginString.FIX42) >= 0 && message!.IsApp())
                 {
                     GenerateBusinessMessageReject(message, Fields.BusinessRejectReason.CONDITIONALLY_REQUIRED_FIELD_MISSING, e.Field);
