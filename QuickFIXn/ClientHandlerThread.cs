@@ -22,7 +22,7 @@ namespace QuickFix
             }
         }
 
-        internal delegate void ExitedEventHandler(object sender, ClientHandlerThread.ExitedEventArgs e);
+        internal delegate void ExitedEventHandler(object sender, ExitedEventArgs e);
         internal event ExitedEventHandler? Exited;
 
         public long Id { get; private set; }
@@ -36,10 +36,10 @@ namespace QuickFix
             long clientId,
             SocketSettings socketSettings,
             AcceptorSocketDescriptor? acceptorDescriptor,
-            NonSessionLog nonSessionLog
+            IQuickFixLoggerFactory loggerFactory
         ) {
             Id = clientId;
-            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor, nonSessionLog);
+            _socketReader = new SocketReader(tcpClient, socketSettings, this, acceptorDescriptor, loggerFactory);
         }
 
         public void Start()

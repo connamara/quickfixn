@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Collections.Generic;
 using System;
+using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 using QuickFix.Store;
 
@@ -20,7 +21,8 @@ namespace QuickFix
         private readonly SessionFactory _sessionFactory;
         private Thread? _thread;
 
-        protected readonly NonSessionLog _nonSessionLog;
+        internal readonly IQuickFixLoggerFactory QfLoggerFactory;
+        private readonly LogFactoryAdapter? _logFactoryAdapter;
 
         public bool IsStopped { get; private set; } = true;
 
@@ -28,14 +30,53 @@ namespace QuickFix
             IApplication app,
             IMessageStoreFactory storeFactory,
             SessionSettings settings,
-            ILogFactory? logFactoryNullable,
-            IMessageFactory? messageFactoryNullable)
+            ILogFactory? logFactoryNullable = null,
+            IMessageFactory? messageFactoryNullable = null)
+            : this(
+                app,
+                storeFactory,
+                settings,
+                logFactoryNullable is null
+                    ? NullQuickFixLoggerFactory.Instance
+                    : new LogFactoryAdapter(logFactoryNullable),
+                messageFactoryNullable)
+        { }
+
+        protected AbstractInitiator(
+            IApplication app,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            ILoggerFactory? loggerFactoryNullable = null,
+            IMessageFactory? messageFactoryNullable = null)
+            : this(
+                app,
+                storeFactory,
+                settings,
+                loggerFactoryNullable is null
+                    ? NullQuickFixLoggerFactory.Instance
+                    : new MelQuickFixLoggerFactory(loggerFactoryNullable),
+                messageFactoryNullable)
+        { }
+
+        private AbstractInitiator(
+            IApplication app,
+            IMessageStoreFactory storeFactory,
+            SessionSettings settings,
+            IQuickFixLoggerFactory qfLoggerFactory,
+            IMessageFactory? messageFactoryNullable = null)
         {
             _settings = settings;
-            var logFactory = logFactoryNullable ?? new NullLogFactory();
+            if (qfLoggerFactory is LogFactoryAdapter lfa)
+            {
+                // LogFactoryAdapter is only created in the constructor that takes ILogFactory,
+                // which means we own it and must save a ref to it so we can dispose it later.
+                // Any other loggerFactory is owned by someone else
+                // so we'll leave the dispose up to them.
+                _logFactoryAdapter = lfa;
+            }
             var msgFactory = messageFactoryNullable ?? new DefaultMessageFactory();
-            _sessionFactory = new SessionFactory(app, storeFactory, logFactory, msgFactory);
-            _nonSessionLog = new NonSessionLog(logFactory);
+            _sessionFactory = new SessionFactory(app, storeFactory, qfLoggerFactory, msgFactory);
+            QfLoggerFactory = qfLoggerFactory;
 
             HashSet<SessionID> definedSessions = _settings.GetSessions();
             if (0 == definedSessions.Count)
@@ -211,6 +252,7 @@ namespace QuickFix
                 _connected.Clear();
                 _disconnected.Clear();
             }
+
         }
 
         public bool IsLoggedOn
@@ -378,6 +420,7 @@ namespace QuickFix
             if (disposing)
             {
                 this.Stop();
+                _logFactoryAdapter?.Dispose();
             }
             _disposed = true;
         }

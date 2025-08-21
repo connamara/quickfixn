@@ -49,6 +49,8 @@ What's New
 * #765 - overhaul of DateTimeConverter (Rob-Hague/vyourtchenko/gbirchmeier)
 * #964 - Reduce unnecessary ContainsKey function calls to avoid multiple duplicate key lookups (VAllens)
 * #969 - correct LinesOfText in DDs to not be required; make ATs not auto-echo News (gbirchmeier)
+* #679 - Change logging to use .NET ILogger API aka Microsoft.Extensions.Logging (jkulubya/gbirchmeier)
+         The existing logging interface is preserved and can still be used.
 
 ### v1.13.1
 * backport #951 to 1.13
