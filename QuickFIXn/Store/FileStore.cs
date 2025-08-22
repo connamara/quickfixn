@@ -34,7 +34,8 @@ public class FileStore : IMessageStore
 
     public static string Prefix(SessionID sessionId)
     {
-        StringBuilder prefix = new StringBuilder(sessionId.BeginString)
+        using PooledStringBuilder pooledSb = new PooledStringBuilder();
+        StringBuilder prefix = pooledSb.Builder.Append(sessionId.BeginString)
             .Append('-').Append(sessionId.SenderCompID);
         if (SessionID.IsSet(sessionId.SenderSubID))
             prefix.Append('_').Append(sessionId.SenderSubID);

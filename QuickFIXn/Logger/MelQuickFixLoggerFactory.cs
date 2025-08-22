@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using QuickFix.ObjectPooling;
 
 namespace QuickFix.Logger;
 
@@ -30,7 +31,8 @@ internal class MelQuickFixLoggerFactory : IQuickFixLoggerFactory
 
     private static string GetCategoryFromSessionId(SessionID sessionId)
     {
-        System.Text.StringBuilder category = new System.Text.StringBuilder(sessionId.BeginString)
+        using PooledStringBuilder pooledSb = new PooledStringBuilder();
+        System.Text.StringBuilder category = pooledSb.Builder.Append(sessionId.BeginString)
             .Append('-').Append(sessionId.SenderCompID);
         if (SessionID.IsSet(sessionId.SenderSubID))
             category.Append('_').Append(sessionId.SenderSubID);
