@@ -105,7 +105,7 @@ public class SslStreamFactoryTest
         var settings = new SocketSettings();
         settings.Configure(dict);
 
-        var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
+        var logger = new LogFactoryAdapter(new ScreenLogFactory(true, true, true));
         var factory = new SslStreamFactory(settings, logger);
 
         var resultServer = factory.VerifyRemoteCertificate(ServerCertificate, SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
@@ -127,7 +127,7 @@ public class SslStreamFactoryTest
         var settings = new SocketSettings();
         settings.Configure(dict);
 
-        var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
+        var logger = new LogFactoryAdapter(new ScreenLogFactory(true, true, true));
         var factory = new SslStreamFactory(settings, logger);
 
         var resultServer = factory.VerifyRemoteCertificate(ServerCertificate, SslPolicyErrors.RemoteCertificateChainErrors, SslStreamFactory.SERVER_AUTHENTICATION_OID);
@@ -150,7 +150,7 @@ public class SslStreamFactoryTest
         var settings = new SocketSettings();
         settings.Configure(dict);
 
-        var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
+        var logger = new LogFactoryAdapter(new ScreenLogFactory(true, true, true));
         var factory = new SslStreamFactory(settings, logger);
 
         var resultServer = factory.VerifyRemoteCertificate(ServerCertificate, SslPolicyErrors.RemoteCertificateChainErrors, SslStreamFactory.SERVER_AUTHENTICATION_OID);
@@ -173,7 +173,7 @@ public class SslStreamFactoryTest
         var settings = new SocketSettings();
         settings.Configure(dict);
 
-        var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
+        var logger = new LogFactoryAdapter(new ScreenLogFactory(true, true, true));
         var factory = new SslStreamFactory(settings, logger);
 
         var resultServer = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.None, SslStreamFactory.SERVER_AUTHENTICATION_OID);
@@ -195,7 +195,7 @@ public class SslStreamFactoryTest
         var settings = new SocketSettings();
         settings.Configure(dict);
 
-        var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
+        var logger = new LogFactoryAdapter(new ScreenLogFactory(true, true, true));
         var factory = new SslStreamFactory(settings, logger);
 
         var resultServer = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.RemoteCertificateChainErrors, SslStreamFactory.SERVER_AUTHENTICATION_OID);
@@ -218,7 +218,7 @@ public class SslStreamFactoryTest
         var settings = new SocketSettings();
         settings.Configure(dict);
 
-        var logger = new NonSessionLog(new ScreenLogFactory(true, true, true));
+        var logger = new LogFactoryAdapter(new ScreenLogFactory(true, true, true));
         var factory = new SslStreamFactory(settings, logger);
 
         var resultServer = factory.VerifyRemoteCertificate(ClientCertificate, SslPolicyErrors.RemoteCertificateChainErrors, SslStreamFactory.SERVER_AUTHENTICATION_OID);

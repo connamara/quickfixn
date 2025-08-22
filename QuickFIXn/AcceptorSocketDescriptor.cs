@@ -12,21 +12,20 @@ namespace QuickFix
 
         private readonly Dictionary<SessionID, Session> _acceptedSessions = new ();
 
-        public AcceptorSocketDescriptor(
+        internal AcceptorSocketDescriptor(
             IPEndPoint socketEndPoint,
             SocketSettings socketSettings,
-            NonSessionLog nonSessionLog)
+            IQuickFixLoggerFactory loggerFactory)
         {
             Address = socketEndPoint;
-            SocketReactor = new ThreadedSocketReactor(Address, socketSettings, this, nonSessionLog);
+            SocketReactor = new ThreadedSocketReactor(Address, socketSettings, this, loggerFactory);
         }
 
-        [Obsolete("Param 'sessionDict' is unused.  Use the alt constructor without it.")]
-        public AcceptorSocketDescriptor(
+        internal AcceptorSocketDescriptor(
             IPEndPoint socketEndPoint,
             SocketSettings socketSettings,
             SettingsDictionary sessionDict,
-            NonSessionLog nonSessionLog) : this(socketEndPoint, socketSettings, nonSessionLog)
+            IQuickFixLoggerFactory nonSessionLog) : this(socketEndPoint, socketSettings, nonSessionLog)
         { }
 
         internal void AcceptSession(Session session)

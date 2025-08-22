@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace QuickFix.Logger;
 
 /// <summary>
