@@ -22,12 +22,12 @@ public class Session : IDisposable
     private static readonly Dictionary<SessionID, Session> Sessions = new();
     private static readonly HashSet<string> AdminMsgTypes = ["0", "A", "1", "2", "3", "4", "5"];
 
-    private readonly object _sync = new();
-    private IResponder? _responder;
-    private readonly SessionSchedule _schedule;
-    private readonly SessionState _state;
-    private readonly IMessageFactory _msgFactory;
-    private readonly bool _appDoesEarlyIntercept;
+        private readonly Lock _sync = new();
+        private IResponder? _responder;
+        private readonly SessionSchedule _schedule;
+        private readonly SessionState _state;
+        private readonly IMessageFactory _msgFactory;
+        private readonly bool _appDoesEarlyIntercept;
 
     private const LogLevel MessagesLogLevel = LogLevel.Information;
 

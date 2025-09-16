@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using QuickFix.Fields;
 
 namespace QuickFix;
@@ -115,10 +116,10 @@ public class DefaultMessageFactory : IMessageFactory
         return dict;
     }
 
-    private static bool _dllsAreLoaded = false;
-    private static readonly object _dllLoadSync = new object();
+        private static bool _dllsAreLoaded = false;
+        private static readonly Lock _dllLoadSync = new object();
 
-    private static void LoadLocalDlls()
+        private static void LoadLocalDlls()
     {
         lock (_dllLoadSync)
         {

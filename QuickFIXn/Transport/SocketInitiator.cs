@@ -9,21 +9,21 @@ using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 using QuickFix.Store;
 
-namespace QuickFix.Transport;
-
-/// <summary>
-/// Initiates connections and uses a single thread to process messages for all sessions.
-/// </summary>
-public class SocketInitiator : AbstractInitiator
+namespace QuickFix.Transport
 {
-    private volatile bool _shutdownRequested = false;
-    private DateTime _lastConnectTimeDt = DateTime.MinValue;
-    private int _reconnectInterval = 30;
-    private readonly SocketSettings _socketSettings = new();
-    private readonly Dictionary<SessionID, SocketInitiatorThread> _threads = new();
-    private readonly Dictionary<SessionID, int> _sessionToHostNum = new();
-    private readonly object _sync = new();
-    private readonly ILogger _nonSessionLog;
+    /// <summary>
+    /// Initiates connections and uses a single thread to process messages for all sessions.
+    /// </summary>
+    public class SocketInitiator : AbstractInitiator
+    {
+        private volatile bool _shutdownRequested = false;
+        private DateTime _lastConnectTimeDt = DateTime.MinValue;
+        private int _reconnectInterval = 30;
+        private readonly SocketSettings _socketSettings = new();
+        private readonly Dictionary<SessionID, SocketInitiatorThread> _threads = new();
+        private readonly Dictionary<SessionID, int> _sessionToHostNum = new();
+        private readonly Lock _sync = new();
+        private readonly ILogger _nonSessionLog;
 
     public SocketInitiator(
         IApplication application,
