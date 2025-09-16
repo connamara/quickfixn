@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.Extensions.Logging;
 using QuickFix.Store;
 using MessagesBySeqNum = System.Collections.Generic.Dictionary<ulong, QuickFix.Message>;
@@ -12,9 +13,7 @@ namespace QuickFix;
 /// </summary>
 public class SessionState : IDisposable
 {
-    #region Private Members
-
-    private readonly object _sync = new();
+    private readonly Lock _sync = new();
     private bool _isEnabled = true;
     private bool _receivedLogon = false;
     private bool _receivedReset = false;
@@ -33,8 +32,6 @@ public class SessionState : IDisposable
     private long _logoutTimeoutAsMilliSecs = 2 * 1000;
     private readonly ResendRange _resendRange = new ();
     private MessagesBySeqNum _msgQueue = new ();
-
-    #endregion
 
     #region Unsynchronized Properties
 

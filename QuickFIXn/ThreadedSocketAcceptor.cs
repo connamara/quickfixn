@@ -22,7 +22,7 @@ public class ThreadedSocketAcceptor : IAcceptor
     private readonly Dictionary<IPEndPoint, AcceptorSocketDescriptor> _socketDescriptorForAddress = new();
     private readonly SessionFactory _sessionFactory;
     private bool _disposed = false;
-    private readonly object _sync = new();
+    private readonly Lock _sync = new();
     private readonly IQuickFixLoggerFactory _qfLoggerFactory;
     private readonly LogFactoryAdapter? _logFactoryAdapter;
 
