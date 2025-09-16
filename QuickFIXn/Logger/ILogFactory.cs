@@ -1,4 +1,6 @@
-﻿namespace QuickFix.Logger;
+﻿using System;
+
+namespace QuickFix.Logger;
 
 /// <summary>
 /// Creates a log instance

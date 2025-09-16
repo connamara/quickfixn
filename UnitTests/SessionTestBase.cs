@@ -30,7 +30,7 @@ public abstract class SessionTestBase
         _config.SetString(QuickFix.SessionSettings.END_TIME, "00:00:00");
         _settings.Set(_sessionId, _config);
 
-        var logFactory = new NullLogFactory(); // use QuickFix.ScreenLogFactory(_settings) if you need to see output
+        var logFactory = new LogFactoryAdapter(new NullLogFactory());
 
         // acceptor
         _session = new QuickFix.Session(false, _application, new MemoryStoreFactory(), _sessionId,

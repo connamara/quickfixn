@@ -34,6 +34,12 @@ What's New
 **Breaking changes**
 * #627 - rename message packages to get rid of superfluous period (gbirchmeier)
     * e.g. QuickFIX.FIX4.4 is now QuickFIX.FIX44, etc.
+* #679 - Change logging to use .NET ILogger API aka Microsoft.Extensions.Logging (jkulubya/gbirchmeier)  
+         The existing logging interface is preserved and can still be used.  
+         Breaks to public interface:
+     * changed ctors to be internal: AcceptorSocketDescriptor, Session, SocketInitiatorThread
+     * SessionFactory is now internal
+     * type of SocketInitiatorThread.NonSessionLog is now ILogger
 
 **Non-breaking changes**
 * #939 - minor checkTooHigh/checkTooLow refactor in Session.cs (gbirchmeier)
@@ -49,6 +55,7 @@ What's New
 * #765 - overhaul of DateTimeConverter (Rob-Hague/vyourtchenko/gbirchmeier)
 * #964 - Reduce unnecessary ContainsKey function calls to avoid multiple duplicate key lookups (VAllens)
 * #969 - correct LinesOfText in DDs to not be required; make ATs not auto-echo News (gbirchmeier)
+* #965 - Reusing StringBuilder with Object Pooling (VAllens)
 
 ### v1.13.1
 * backport #951 to 1.13
@@ -60,7 +67,7 @@ What's New
 * #878 - corrections to tag 45 "Side" in various DDs (gbirchmeier) - most people won't notice, easy fix if they do
      * fix typo in FIX50 and FIX50SP1: `CROSS_SHORT_EXXMPT` fixed to `CROSS_SHORT_EXEMPT`
      * correction in FIX41 and FIX42: `D` to `UNDISCLOSED`
-* #863 - Change Message.ToString() to not alter object state anymore. (gbirchmeier)
+* #863 - Change Message.ToString() to not alter object state anymore. (gbirchmeier)  
          Use new function Message.ConstructString() if you need BodyLength/CheckSum to be updated.
 * #887 - cleanup/nullable-ize FixValues, Session, DataDictionary, DataDictionaryProvider, Message, MessageCracker,
          SocketSettings, SslStreamFactory (gbirchmeier)

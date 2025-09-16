@@ -1,35 +1,23 @@
-﻿Sample QuickFix.ILog Implementation
+Sample QuickFix.ILog Implementation
 ===================================
 
-This is an example of enriching QuickFIX/N logging using a 3rd party NuGet
-(Serilog.Sinks.File in this case). Features added are rolling log files 
-and limited total log size.
+This is an example of using the third-party Serilog ILogger implementation
+in your QuickFIX/n program.
 
-The solution contains 2 projects:
+This example shows how to configure a Serilog ILogger that:
 
-1. The SerilogLog is a sample implementation of ILog and ILogFactory.  
-     _NOTE: this is a sample, **NOT** a finished ready-to-use product.
-     Follow comments in the source code to adjust the example to
-     your actual requirements._
+* Logs to files
+* Rolls message log files on the hour
+* Rolls event log files on the minute
+* Creates separate log file sets for each session
 
-2. The UnitTests are proof that limits for log size are working.
+This config is meant to demonstrate some features for educational purposes.
+It is not expected to be appropriate for a production application.
 
-The projects are dependent on QuickFix.dll (ILog and ILogFactory interfaces).
-Assuming the standard directory structure, the reference path is:
+This application's configuration will allow it to connect with the Executor example.
 
-    <project-root>\QuickFIXn\bin\Debug\net6.0\QuickFix.dll
+Run it with:
 
-You need to build QuickFIXn release configuration to have the DLL available.
-Alternatively, you can change the reference in the both projects.
+`Examples/Standalone/SerilogLog$ dotnet run`
 
-If you copy/paste the source code in your project, you need to have
-references to QuickFix.dll and NuGet Serilog.Sinks.File installed.
-
-Usage example:
-
-    ILogFactory logFactory = new SerilogLogFactory(settings);
-    ThreadedSocketAcceptor _acceptor = new ThreadedSocketAcceptor(executorApp,
-        storeFactory, settings, logFactory);
-
-All sessions created by this `_acceptor` will be using SerilogLog
-for messages and events logging.
+(config file is specified via appsettings.json)

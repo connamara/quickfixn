@@ -600,7 +600,8 @@ public class SessionTest : SessionTestBase
     {
         var mockApp = new SessionTestSupport.MockApplicationExt();
         _session = new QuickFix.Session(true, mockApp, new MemoryStoreFactory(), _sessionId,
-            new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(_config), 0, new NullLogFactory(), new QuickFix.DefaultMessageFactory(), "blah");
+            new QuickFix.DataDictionaryProvider(), new QuickFix.SessionSchedule(_config), 0,
+            NullQuickFixLoggerFactory.Instance, new QuickFix.DefaultMessageFactory(), "blah");
         _session.SetResponder(_responder);
         _session.CheckLatency = false;
 
@@ -762,4 +763,3 @@ public class SessionTest : SessionTestBase
         }
     }
 }
-
