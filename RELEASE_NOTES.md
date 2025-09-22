@@ -29,7 +29,7 @@ What's New
 * **There are breaking changes between 1.11 and 1.12!  Please review the 1.12.0 notes below.**
 * **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
-### next release
+### next release (v1.14.0)
 
 **Breaking changes**
 * #627 - rename message packages to get rid of superfluous period (gbirchmeier)
@@ -56,6 +56,7 @@ What's New
 * #964 - Reduce unnecessary ContainsKey function calls to avoid multiple duplicate key lookups (VAllens)
 * #969 - correct LinesOfText in DDs to not be required; make ATs not auto-echo News (gbirchmeier)
 * #965 - Reusing StringBuilder with Object Pooling (VAllens)
+* #980 - fix: ToJSON returns invalid json when content contains newlines/tabs/etc (Rob-Hague)
 
 ### v1.13.1
 * backport #951 to 1.13
