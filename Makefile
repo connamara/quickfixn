@@ -6,7 +6,7 @@ generate:
 pack:
 	dotnet pack -c Release
 
-PKG_VERSION=1.11.111
+PKG_VERSION=1.11.116
 
 publish: pack
 	dotnet nuget push QuickFIXn/bin/Release/ArtexFIX.Core.$(PKG_VERSION).nupkg  --source https://api.nuget.org/v3/index.json --api-key $(NUGET_API_KEY)

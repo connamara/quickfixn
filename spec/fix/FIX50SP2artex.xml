@@ -85,6 +85,7 @@
             <field name='OrderOrigination' required='N' />
             <field name='ExpireDate' required='N' />
             <field name='RoutingInstruction' required='N' />
+            <field name='ExceptionToken' required='N' />
         </message>
         <message name='OrderCancelRequest' msgtype='F' msgcat='app'>
             <field name='OrigClOrdID' required='N' />
@@ -96,8 +97,6 @@
             <field name='Side' required='Y' />
             <field name='TransactTime' required='Y' />
             <component name='OrderQtyData' required='N' />
-            <field name='OrderCapacity' required='N' />
-            <field name='CustOrderCapacity' required='N' />
             <field name='Text' required='N' />
             <field name='RoutingInstruction' required='N' />
         </message>
@@ -117,6 +116,7 @@
             <field name='ExpireDate' required='N' />
             <field name='Text' required='N' />
             <field name='OrderOrigination' required='N' />
+            <field name='OrderCapacity' required='N' />
             <field name='CustOrderCapacity' required='N' />
             <field name='RoutingInstruction' required='N' />
         </message>
@@ -1398,6 +1398,7 @@
             <value enum='2' description='CLEARING_FIRM_TRADING_FOR_ITS_PROPRIETARY_ACCOUNT' />
             <value enum='3' description='MEMBER_TRADING_FOR_ANOTHER_MEMBER' />
             <value enum='4' description='ALL_OTHER' />
+            <value enum='5' description='RETAIL_CUSTOMER' />
         </field>
         <field number='584' name='MassStatusReqID' type='STRING' />
         <field number='585' name='MassStatusReqType' type='INT'>
@@ -1507,6 +1508,8 @@
             <value enum='28' description='TRI_PARTY' />
             <value enum='29' description='LENDER' />
         </field>
+        <!-- FIX ARTEX Custom fields -->
+        <field number='25000' name='ExceptionToken' type='STRING' />
         <!-- FIX STI Custom fields --> 
         <field number='9487' name='RoutingInstruction' type='STRING' />
         <field number='26561' name='BookType' type='STRING' />

@@ -635,6 +635,38 @@ namespace QuickFix
                 return IsSetField(Tags.OrderOrigination);
             }
 
+            public QuickFix.Fields.OrderCapacity OrderCapacity
+            {
+                get
+                {
+                    QuickFix.Fields.OrderCapacity val = new QuickFix.Fields.OrderCapacity();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.OrderCapacity val)
+            {
+                this.OrderCapacity = val;
+            }
+
+            public QuickFix.Fields.OrderCapacity Get(QuickFix.Fields.OrderCapacity val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.OrderCapacity val)
+            {
+                return IsSetOrderCapacity();
+            }
+
+            public bool IsSetOrderCapacity()
+            {
+                return IsSetField(Tags.OrderCapacity);
+            }
+
             public QuickFix.Fields.CustOrderCapacity CustOrderCapacity
             {
                 get

@@ -763,6 +763,38 @@ namespace QuickFix
                 return IsSetField(Tags.RoutingInstruction);
             }
 
+            public QuickFix.Fields.ExceptionToken ExceptionToken
+            {
+                get
+                {
+                    QuickFix.Fields.ExceptionToken val = new QuickFix.Fields.ExceptionToken();
+                    GetField(val);
+                    return val;
+                }
+                set { SetField(value); }
+            }
+
+            public void Set(QuickFix.Fields.ExceptionToken val)
+            {
+                this.ExceptionToken = val;
+            }
+
+            public QuickFix.Fields.ExceptionToken Get(QuickFix.Fields.ExceptionToken val)
+            {
+                GetField(val);
+                return val;
+            }
+
+            public bool IsSet(QuickFix.Fields.ExceptionToken val)
+            {
+                return IsSetExceptionToken();
+            }
+
+            public bool IsSetExceptionToken()
+            {
+                return IsSetField(Tags.ExceptionToken);
+            }
+
             public class NoPartyIDsGroup : Group
             {
                 public static int[] fieldOrder = {Tags.PartyID, Tags.PartyIDSource, Tags.PartyRole, Tags.NoPartySubIDs, Tags.PartyRoleQualifier, 0};

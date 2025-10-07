@@ -2815,6 +2815,7 @@ namespace QuickFix.Fields
         public const int CLEARING_FIRM_TRADING_FOR_ITS_PROPRIETARY_ACCOUNT = 2;
         public const int MEMBER_TRADING_FOR_ANOTHER_MEMBER = 3;
         public const int ALL_OTHER = 4;
+        public const int RETAIL_CUSTOMER = 5;
     }
 
 
@@ -3226,6 +3227,21 @@ namespace QuickFix.Fields
         public const int SUPERVISOR = 27;
         public const int TRI_PARTY = 28;
         public const int LENDER = 29;
+    }
+
+
+    /// <summary>
+    /// ExceptionToken Field
+    /// </summary>
+    public sealed class ExceptionToken : StringField
+    {
+        public const int TAG = 25000;
+
+        public ExceptionToken()
+            :base(Tags.ExceptionToken) {}
+        public ExceptionToken(string val)
+            :base(Tags.ExceptionToken, val) {}
+
     }
 
 

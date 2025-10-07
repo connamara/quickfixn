@@ -146,6 +146,7 @@ namespace QuickFix.Fields
         public const int BidQuoteID = 1747;
         public const int OfferQuoteID = 1748;
         public const int PartyRoleQualifier = 2376;
+        public const int ExceptionToken = 25000;
         public const int RoutingInstruction = 9487;
         public const int BookType = 26561;
         public const int BookSubType = 26562;
