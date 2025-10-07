@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using QuickFix.DataDictionary;
 using DD = QuickFix.DataDictionary.DataDictionary;
 using QuickFix.ObjectPooling;
+using System.IO;
 
 namespace QuickFix;
 
@@ -888,8 +889,8 @@ public class Message : FieldMap
     /// <summary>
     /// ToJSON() helper method.
     /// </summary>
-    /// <returns>an XML string</returns>
-    private static StringBuilder FieldMapToJson(StringBuilder sb, DD? dd, FieldMap fields, bool humanReadableValues, List<int>? tagsToMask, string maskText)
+    /// <returns>a JSON string</returns>
+    private static void FieldMapToJson(Utf8JsonWriter writer, DD? dd, FieldMap fields, bool humanReadableValues, List<int>? tagsToMask, string maskText)
     {
         IList<int> numInGroupTagList = fields.GetGroupTags();
         IList<IField> numInGroupFieldList = new List<IField>();
@@ -908,27 +909,28 @@ public class Message : FieldMap
 
             if (dd is not null && dd.FieldsByTag.TryGetValue(field.Tag, out DDField? ddField))
             {
-                sb.Append("\"" + ddField.Name + "\":");
+                writer.WritePropertyName(ddField.Name);
+
                 if (tagsToMask != null && tagsToMask.Contains(field.Tag))
                 {
-                    sb.Append("\"" + maskText + "\",");
+                    writer.WriteStringValue(maskText);
                 }
                 else if (humanReadableValues)
                 {
                     if (dd.FieldsByTag[field.Tag].EnumDict.TryGetValue(field.ToString(), out var valueDescription))
-                        sb.Append("\"" + valueDescription + "\",");
+                        writer.WriteStringValue(valueDescription);
                     else
-                        sb.Append("\"" + field + "\",");
+                        writer.WriteStringValue(field.ToString());
                 }
                 else
                 {
-                    sb.Append("\"" + field + "\",");
+                    writer.WriteStringValue(field.ToString());
                 }
             }
             else
             {
-                sb.Append("\"" + field.Tag + "\":");
-                sb.Append("\"" + field + "\",");
+                writer.WritePropertyName(field.Tag.ToString());
+                writer.WriteStringValue(field.ToString());
             }
         }
 
@@ -937,29 +939,20 @@ public class Message : FieldMap
         {
             // The name of the NumInGroup field is the key of the JSON list containing the Group items
             if (dd is not null && dd.FieldsByTag.TryGetValue(numInGroupField.Tag, out DDField? field))
-                sb.Append("\"" + field.Name + "\":[");
+                writer.WriteStartArray(field.Name);
             else
-                sb.Append("\"" + numInGroupField.Tag + "\":[");
+                writer.WriteStartArray(numInGroupField.Tag.ToString());
 
             // Populate the JSON list with the Group items
             for (int counter = 1; counter <= fields.GroupCount(numInGroupField.Tag); counter++)
             {
-                sb.Append('{');
-                FieldMapToJson(sb, dd, fields.GetGroup(counter, numInGroupField.Tag), humanReadableValues, tagsToMask, maskText);
-                sb.Append("},");
+                writer.WriteStartObject();
+                FieldMapToJson(writer, dd, fields.GetGroup(counter, numInGroupField.Tag), humanReadableValues, tagsToMask, maskText);
+                writer.WriteEndObject();
             }
 
-            // Remove trailing comma
-            if (sb.Length > 0 && sb[^1] == ',')
-                sb.Remove(sb.Length - 1, 1);
-
-            sb.Append("],");
+            writer.WriteEndArray();
         }
-        // Remove trailing comma
-        if (sb.Length > 0 && sb[^1] == ',')
-            sb.Remove(sb.Length - 1, 1);
-
-        return sb;
     }
 
     /// <summary>
@@ -1007,11 +1000,28 @@ public class Message : FieldMap
                 $"Must be non-null if '{nameof(convertEnumsToDescriptions)}' is true.");
         }
 
-        using PooledStringBuilder pooledSb = new PooledStringBuilder();
-        StringBuilder sb = pooledSb.Builder.Append('{').Append("\"Header\":{");
-        FieldMapToJson(sb, dataDictionary, Header, convertEnumsToDescriptions, tagsToMask, maskText).Append("},\"Body\":{");
-        FieldMapToJson(sb, dataDictionary, this, convertEnumsToDescriptions, tagsToMask, maskText).Append("},\"Trailer\":{");
-        FieldMapToJson(sb, dataDictionary, Trailer, convertEnumsToDescriptions, tagsToMask, maskText).Append("}}");
-        return sb.ToString();
+        using MemoryStream stream = new();
+        using Utf8JsonWriter writer = new(stream);
+
+        writer.WriteStartObject();
+        writer.WriteStartObject("Header");
+
+        FieldMapToJson(writer, dataDictionary, Header, convertEnumsToDescriptions, tagsToMask, maskText);
+
+        writer.WriteEndObject();
+        writer.WriteStartObject("Body");
+
+        FieldMapToJson(writer, dataDictionary, this, convertEnumsToDescriptions, tagsToMask, maskText);
+
+        writer.WriteEndObject();
+        writer.WriteStartObject("Trailer");
+
+        FieldMapToJson(writer, dataDictionary, Trailer, convertEnumsToDescriptions, tagsToMask, maskText);
+
+        writer.WriteEndObject();
+        writer.WriteEndObject();
+        writer.Flush();
+
+        return Encoding.UTF8.GetString(stream.GetBuffer(), 0, (int)stream.Length);
     }
 }
