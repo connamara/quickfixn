@@ -523,6 +523,7 @@ namespace QuickFix
         public void Next(string msgStr)
         {
             NextMessage(msgStr);
+            _state.LastProcessedMessageWasQueued = false;
             NextQueued();
         }
 
@@ -962,8 +963,20 @@ namespace QuickFix
                     }
                     if (checkTooLow && IsTargetTooLow(msgSeqNum))
                     {
-                        DoTargetTooLow(msg, msgSeqNum);
-                        return false;
+                        if (_state.LastProcessedMessageWasQueued
+                            && msg.Header.GetString(35) == MsgType.SEQUENCE_RESET
+                            && msg.GetBoolean(Tags.GapFillFlag))
+                        {
+                            Log.Log(LogLevel.Warning,
+                                "SequenceReset-GapFill 34={MsgSeqNum} is too low (expected {NextTargetMsgSeqNum}), but in this case I'm going to obey it anyway",
+                                msgSeqNum, _state.NextTargetMsgSeqNum);
+                            // This is an uncommon situation, see #309
+                        }
+                        else
+                        {
+                            DoTargetTooLow(msg, msgSeqNum);
+                            return false;
+                        }
                     }
 
                     if (IsResendRequested)
@@ -1594,6 +1607,7 @@ namespace QuickFix
                 {
                     NextMessage(msg.ConstructString());
                 }
+                _state.LastProcessedMessageWasQueued = true;
                 return true;
             }
             return false;
