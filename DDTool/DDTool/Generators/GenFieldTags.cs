@@ -17,6 +17,8 @@ public static class GenFieldTags {
     /// <returns></returns>
     public static string WriteFile(string baseDir, List<DDField> fields) {
         string fieldTagsPath = Path.Join(baseDir, "QuickFIXn", "Fields", "FieldTags.cs");
+        Directory.CreateDirectory(
+            Path.GetDirectoryName(fieldTagsPath)!);
         File.WriteAllText(fieldTagsPath, Generate(fields));
         return fieldTagsPath;
     }

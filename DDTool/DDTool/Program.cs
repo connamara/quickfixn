@@ -55,8 +55,8 @@ public static class Program {
             Console.WriteLine($"* Wrote {Generators.GenFields.WriteFile(options.OutputDir, aggFields)}");
             Console.WriteLine($"* Wrote {Generators.GenFieldTags.WriteFile(options.OutputDir, aggFields)}");
 
-            List<string> factory_files = Generators.GenMessageFactories.WriteFiles(options.OutputDir, dds);
-            foreach (var ff in factory_files) {
+            List<string> factoryFiles = Generators.GenMessageFactories.WriteFiles(options.OutputDir, dds);
+            foreach (var ff in factoryFiles) {
                 Console.WriteLine($"* Wrote {ff}");
             }
 
