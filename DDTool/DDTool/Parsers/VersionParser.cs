@@ -10,11 +10,11 @@ public static class VersionParser
 {
     public static void SetVersionInfo(XmlDocument doc, DataDictionary dd)
     {
-        dd.MajorVersion = int.Parse(doc.SelectSingleNode("/fix/@major").Value);
-        dd.MinorVersion = int.Parse(doc.SelectSingleNode("/fix/@minor").Value);
+        dd.MajorVersion = int.Parse(doc.SelectSingleNode("/fix/@major")!.Value!);
+        dd.MinorVersion = int.Parse(doc.SelectSingleNode("/fix/@minor")!.Value!);
 
-        XmlNode node = doc.SelectSingleNode("/fix/@type");
-        if (node != null)
+        XmlNode? node = doc.SelectSingleNode("/fix/@type");
+        if (node is not null)
         {
             if (new[] { "FIX", "FIXT" }.Contains(node.Value) == false)
                 throw new ParsingException($"Unsupported /fix/type value: '{node.Value}' (expected FIX or FIXT)");

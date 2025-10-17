@@ -7,7 +7,7 @@ namespace DDTool.Parsers;
 
 public static class MessageParser {
     public static void ParseMessages(XmlDocument doc, DataDictionary dd) {
-        XmlNodeList nodeList = doc.SelectNodes("//messages/message");
+        XmlNodeList nodeList = doc.SelectNodes("//messages/message")!;
         foreach (XmlNode msgNode in nodeList) {
             dd.AddMessage(CreateMessage(msgNode, dd, doc));
         }
@@ -15,9 +15,9 @@ public static class MessageParser {
 
     private static DDMessage CreateMessage(XmlNode node, DataDictionary dd, XmlDocument doc) {
         var ddMsg = new DDMessage(
-            node.Attributes["name"].Value,
-            node.Attributes["msgtype"].Value,
-            node.Attributes["msgcat"].Value);
+            node.Attributes!["name"]!.Value,
+            node.Attributes["msgtype"]!.Value,
+            node.Attributes["msgcat"]!.Value);
 
         foreach (XmlNode childNode in node.ChildNodes)
             ReadChildNode(childNode, ddMsg, dd, doc);
@@ -26,7 +26,7 @@ public static class MessageParser {
     }
 
     private static DDGroup CreateGroup(XmlNode node, DataDictionary dd, XmlDocument doc) {
-        var groupName = node.Attributes["name"].Value;
+        var groupName = node.Attributes!["name"]!.Value;
         var counterField = dd.LookupField(groupName);
 
         if (node.ChildNodes.Count < 1)
@@ -44,11 +44,11 @@ public static class MessageParser {
 
     private static void ReadChildNode(
         XmlNode childNode, IElementSequence elSeq, DataDictionary dd, XmlDocument doc, bool overrideReq = false) {
-        bool req = childNode.Attributes["required"]?.Value == "Y" && !overrideReq;
+        bool req = childNode.Attributes!["required"]?.Value == "Y" && !overrideReq;
 
         switch (childNode.Name.ToLowerInvariant()) {
             case "field":
-                elSeq.AddElement(dd.LookupField(childNode.Attributes["name"].Value), req);
+                elSeq.AddElement(dd.LookupField(childNode.Attributes["name"]!.Value), req);
                 break;
 
             case "group":
@@ -56,8 +56,8 @@ public static class MessageParser {
                 break;
 
             case "component":
-                var componentName = childNode.Attributes["name"].Value;
-                XmlNode compNode = doc.SelectSingleNode($"//components/component[@name='{componentName}']");
+                var componentName = childNode.Attributes["name"]!.Value;
+                XmlNode compNode = doc.SelectSingleNode($"//components/component[@name='{componentName}']")!;
 
                 if (compNode == null)
                     throw new ParsingException($"Can't find component: {componentName}");

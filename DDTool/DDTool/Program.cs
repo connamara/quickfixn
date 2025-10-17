@@ -52,17 +52,17 @@ public static class Program {
             Console.WriteLine("============================");
             Console.WriteLine("Writing files:");
 
-            Console.WriteLine($"* Wrote {Generators.GenFields.WriteFile(options.OutputDir, aggFields)}");
-            Console.WriteLine($"* Wrote {Generators.GenFieldTags.WriteFile(options.OutputDir, aggFields)}");
+            Console.WriteLine($"* Wrote {Generators.GenFields.WriteFile(options.OutputDir!, aggFields)}");
+            Console.WriteLine($"* Wrote {Generators.GenFieldTags.WriteFile(options.OutputDir!, aggFields)}");
 
-            List<string> factoryFiles = Generators.GenMessageFactories.WriteFiles(options.OutputDir, dds);
+            List<string> factoryFiles = Generators.GenMessageFactories.WriteFiles(options.OutputDir!, dds);
             foreach (var ff in factoryFiles) {
                 Console.WriteLine($"* Wrote {ff}");
             }
 
             // Messages
             foreach (var dd in dds.OrderBy(x => x.Identifier)) {
-                var msgFiles = Generators.GenMessages.WriteFilesForDD(options.OutputDir, dd);
+                var msgFiles = Generators.GenMessages.WriteFilesForDD(options.OutputDir!, dd);
                 Console.WriteLine($"* Wrote {msgFiles.Count} message files for {dd.IdentifierNoDots}");
                 Console.WriteLine($"  From {msgFiles.First()}");
                 Console.WriteLine($"    to {msgFiles.Last()}");
@@ -114,10 +114,10 @@ public static class Program {
     }
 
     private static DDField MergedField(string name, List<DataDictionary> dds) {
-        List<DDField> flds = new();
+        List<DDField> flds = [];
 
         foreach (var dd in dds.OrderByDescending(x => x.Identifier)) {
-            if (dd.FieldsByName.TryGetValue(name, out DDField fld)) {
+            if (dd.FieldsByName.TryGetValue(name, out DDField? fld)) {
                 flds.Add(fld);
             }
         }

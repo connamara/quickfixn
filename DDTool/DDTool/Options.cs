@@ -5,7 +5,7 @@ using System.Linq;
 namespace DDTool;
 
 public class Options {
-    public string OutputDir { get; }
+    public string? OutputDir { get; }
 
     public bool HasOutputDir => !string.IsNullOrEmpty(OutputDir);
 
