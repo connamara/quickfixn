@@ -5,8 +5,10 @@ using System.Linq;
 namespace DDTool;
 
 public class Options {
-    public string? OutputDir { get; }
+    public string? RepoRoot { get; }
+    public bool HasRepoRoot => !string.IsNullOrEmpty(RepoRoot);
 
+    public string? OutputDir { get; }
     public bool HasOutputDir => !string.IsNullOrEmpty(OutputDir);
 
     public List<string> DDFiles { get; } = [];
@@ -26,6 +28,11 @@ public class Options {
             }
 
             switch (next) {
+                case "--reporoot":
+                    RepoRoot = argList.First();
+                    argList.RemoveFirst();
+                    break;
+
                 case "--outputdir":
                     OutputDir = argList.First();
                     argList.RemoveFirst();

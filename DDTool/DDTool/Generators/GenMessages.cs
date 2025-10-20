@@ -27,7 +27,7 @@ public static class GenMessages {
 
     private static string WriteBaseMessageFile(string baseDir, DataDictionary dd) {
         var beginString = dd.IdentifierNoDots.Contains("FIX50") ? "FIXT11" : dd.IdentifierNoDots;
-        string filePath = Path.Join($"{baseDir}", "Messages", dd.IdentifierNoDots, "Message.cs");
+        string filePath = Path.Join($"{baseDir}", "Messages", dd.Name, "Message.cs");
         Directory.CreateDirectory(
             Path.GetDirectoryName(filePath)!);
 
@@ -53,7 +53,7 @@ public static class GenMessages {
     }
 
     private static string WriteMessageFile(string baseDir, DDMessage msg, DataDictionary dd) {
-        string filePath = Path.Join($"{baseDir}", "Messages", dd.IdentifierNoDots, $"{msg.Name}.cs");
+        string filePath = Path.Join($"{baseDir}", "Messages", dd.Name, $"{msg.Name}.cs");
         Directory.CreateDirectory(
             Path.GetDirectoryName(filePath)!);
 

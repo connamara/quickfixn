@@ -21,8 +21,10 @@ public static class Program {
         foreach (var file in options.DDFiles)
             Console.WriteLine($"* {file}");
 
-        if (!options.HasOutputDir) {
-            Console.WriteLine("No output dir was specified, so I won't generate anything.");
+        bool doGeneration = options.HasOutputDir && options.HasRepoRoot;
+
+        if (!doGeneration) {
+            Console.WriteLine("Unspecified outputdir and/or reporoot params; I won't generate anything.");
         } else if (!Directory.Exists(options.OutputDir)) {
             Console.WriteLine($"OutputDir does not exist: {options.OutputDir}");
             Environment.Exit(1);
@@ -58,14 +60,14 @@ public static class Program {
                 Console.WriteLine($"* {err}");
         }
 
-        if (options.HasOutputDir) {
+        if (doGeneration) {
             List<DDField> aggFields = AggregateFields(dds);
 
             Console.WriteLine("============================");
             Console.WriteLine("Writing files:");
 
-            Console.WriteLine($"* Wrote {Generators.GenFields.WriteFile(options.OutputDir!, aggFields)}");
-            Console.WriteLine($"* Wrote {Generators.GenFieldTags.WriteFile(options.OutputDir!, aggFields)}");
+            Console.WriteLine($"* Wrote {Generators.GenFields.WriteFile(options.RepoRoot!, aggFields)}");
+            Console.WriteLine($"* Wrote {Generators.GenFieldTags.WriteFile(options.RepoRoot!, aggFields)}");
 
             List<string> factoryFiles = Generators.GenMessageFactories.WriteFiles(options.OutputDir!, dds);
             foreach (var ff in factoryFiles) {

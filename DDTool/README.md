@@ -12,4 +12,4 @@ To parse DDs, but only analyze (not generate):
 `> dotnet run --project DDTool <ddFile> <ddFile>...`
 
 To parse DDs and generate:  
-`> dotnet run --project DDTool --outputdir <qfRepoDir> <ddFile> <ddFile>...`
+`> dotnet run --project DDTool --reporoot <qfRepoDir> --outputdir <destDir> <ddFile> <ddFile>...`
