@@ -1,0 +1,33 @@
+# issue 309
+# When a GapFill skips over seqnos past the ExpectedNextTargetSeqNum,
+#   the engine needs to skip with it.
+
+iCONNECT
+I8=FIX.4.435=A34=149=TW52=<TIME>56=ISLD98=0108=2
+E8=FIX.4.435=A34=149=ISLD52=00000000-00:00:00.00056=TW98=0108=210=0
+
+# News msg to bump the seq up
+I8=FIX.4.435=B34=249=TW52=<TIME>56=ISLD148=no_echo
+
+# Heartbeat with seq 5 (when 3 is expected)
+I8=FIX.4.435=034=549=TW52=<TIME>56=ISLD
+
+# Expect ResendRequest for 3+
+E8=FIX.4.435=234=249=ISLD52=00000000-00:00:00.00056=TW7=316=010=0
+
+# Resend 3 and 4
+I8=FIX.4.435=B34=343=Y49=TW52=<TIME>56=ISLD148=no_echo
+I8=FIX.4.435=B34=443=Y49=TW52=<TIME>56=ISLD148=no_echo
+sleep(0.2)
+
+# Session now processes the Heartbeat (seq=5) from its queue
+E8=FIX.4.435=034=349=ISLD52=00000000-00:00:00.00056=TW10=0
+
+# Counterparty is still resending - it is on 5 now.
+# 5 is that heartbeat, an admin msg, so send a GapFill instead.
+# The EndSeqNo is 7, completely skipping over 6.
+I8=FIX.4.435=434=549=TW52=<TIME>56=ISLD43=Y122=<TIME-1>36=7123=Y
+
+# Do an echo to ensure that client obeyed the SequenceReset and set NextExpected=7
+I8=FIX.4.435=B34=749=TW52=<TIME>56=ISLD148=echo: NextExpected/7
+E8=FIX.4.435=B34=449=ISLD52=00000000-00:00:00.00056=TW148=NextExpected/710=0

@@ -113,5 +113,18 @@ namespace UnitTests
             Assert.That(ex.Message,
                 Does.Contain("Must be non-null if 'convertEnumsToDescriptions' is true. (Parameter 'dataDictionary')"));
         }
+
+        [Test]
+        public void ToJSONWithNewLineTest()
+        {
+            var dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.Load(Path.Combine(TestContext.CurrentContext.TestDirectory, "spec", "fix", "FIX44.xml"));
+
+            var msg = new Message();
+            msg.SetField(new QuickFix.Fields.Text("Some text.\r\n With some more text"));
+
+            const string expected = "{\"Header\":{},\"Body\":{\"Text\":\"Some text.\\r\\n With some more text\"},\"Trailer\":{}}";
+            Assert.That(msg.ToJSON(dd), Is.EqualTo(expected));
+        }
     }
 }
