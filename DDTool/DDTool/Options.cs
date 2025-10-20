@@ -9,7 +9,7 @@ public class Options {
 
     public bool HasOutputDir => !string.IsNullOrEmpty(OutputDir);
 
-    public List<string> DDFiles { get; } = new List<string>();
+    public List<string> DDFiles { get; } = [];
 
     public Options(string[] args) {
         var errors = new List<string>();
@@ -35,7 +35,7 @@ public class Options {
                     if (next.StartsWith("-"))
                         errors.Add($"Unrecognized option: {next}");
                     else {
-                        // All done with cmd line options now,
+                        // All done with cmd-line options now,
                         //   the rest are files.
                         DDFiles.Add(next);
                         foreach (var arg in argList) {

@@ -39,6 +39,18 @@ public static class Program {
                 errors.Add($"{dd.SourceFile}: {dde}");
         }
 
+        // Check that all DDs have unique names
+        if (dds.Count != dds.DistinctBy(dd => dd.Name).Count())
+        {
+            string ddnames = string.Join(',', dds.Select(dd => dd.Name));
+            errors.Add("Found duplicate DD names in your input set.  "
+                       + "All DDs must have unique names.  "
+                       + "If two DDs have identical Major/Minor/SP values, you can add a \"customname\" attribute "
+                       + "in the root <fix> tag to force a custom name instead.  "
+                       + "Your DD names are: [" + ddnames + "]");
+        }
+
+
         if (errors.Count > 0) {
             Console.WriteLine("============================");
             Console.WriteLine("Errors found.  Code generation (if commanded) will not run.");

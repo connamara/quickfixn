@@ -11,6 +11,11 @@ public class DataDictionary {
     /// <value></value>
     public string SourceFile { get; }
 
+    /// <summary>
+    /// Optional "customname" attribute on root ‹fix› tag
+    /// </summary>
+    public string? CustomName { get; set; }
+
     public int? MajorVersion { get; set; }
     public int? MinorVersion { get; set; }
     public int? ServicePack { get; set; }
@@ -20,6 +25,10 @@ public class DataDictionary {
     public Dictionary<string, DDField> FieldsByName { get; } = new();
     public Dictionary<string, DDMessage> Messages { get; } = new();
 
+    /// <summary>
+    /// This does not initiate parsing.
+    /// </summary>
+    /// <param name="sourceFile"></param>
     public DataDictionary(string sourceFile) {
         SourceFile = sourceFile;
     }
@@ -43,6 +52,11 @@ public class DataDictionary {
     /// Returns e.g. "FIX42", "FIXT11", "FIX50SP2"
     /// </summary>
     public string IdentifierNoDots => Identifier.Replace(".", "");
+
+    /// <summary>
+    /// Name to use for dir and project
+    /// </summary>
+    public string Name => CustomName ?? IdentifierNoDots;
 
     public void AddField(DDField fld) {
         if (FieldsByTag.ContainsKey(fld.Tag))

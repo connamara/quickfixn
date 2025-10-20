@@ -29,5 +29,11 @@ public static class VersionParser
             if (dd.ServicePack == 0)
                 dd.ServicePack = null;
         }
+
+        XmlNode? customNameNode = doc.SelectSingleNode("/fix/@customname");
+        if (customNameNode != null && !string.IsNullOrEmpty(customNameNode.Value))
+        {
+            dd.CustomName = customNameNode.Value;
+        }
     }
 }
