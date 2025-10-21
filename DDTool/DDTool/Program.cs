@@ -2,6 +2,7 @@
 using System.IO;
 using System;
 using System.Collections.Generic;
+using DDTool.Generators;
 using DDTool.Parsers;
 using DDTool.Structures;
 
@@ -42,8 +43,7 @@ public static class Program {
         }
 
         // Check that all DDs have unique names
-        if (dds.Count != dds.DistinctBy(dd => dd.Name).Count())
-        {
+        if (dds.Count != dds.DistinctBy(dd => dd.Name).Count()) {
             string ddnames = string.Join(',', dds.Select(dd => dd.Name));
             errors.Add("Found duplicate DD names in your input set.  "
                        + "All DDs must have unique names.  "
@@ -66,20 +66,25 @@ public static class Program {
             Console.WriteLine("============================");
             Console.WriteLine("Writing files:");
 
-            Console.WriteLine($"* Wrote {Generators.GenFields.WriteFile(options.RepoRoot!, aggFields)}");
-            Console.WriteLine($"* Wrote {Generators.GenFieldTags.WriteFile(options.RepoRoot!, aggFields)}");
+            Console.WriteLine($"* Wrote {GenFields.WriteFile(options.RepoRoot!, aggFields)}");
+            Console.WriteLine($"* Wrote {GenFieldTags.WriteFile(options.RepoRoot!, aggFields)}");
 
-            List<string> factoryFiles = Generators.GenMessageFactories.WriteFiles(options.OutputDir!, dds);
+            List<string> factoryFiles = GenMessageFactories.WriteFiles(options.OutputDir!, dds);
             foreach (var ff in factoryFiles) {
                 Console.WriteLine($"* Wrote {ff}");
             }
 
-            // Messages
+            // Messages projects
             foreach (var dd in dds.OrderBy(x => x.Identifier)) {
-                var msgFiles = Generators.GenMessages.WriteFilesForDD(options.OutputDir!, dd);
-                Console.WriteLine($"* Wrote {msgFiles.Count} message files for {dd.IdentifierNoDots}");
+                var msgFiles = GenMessages.WriteFilesForDD(options.OutputDir!, dd);
+                Console.WriteLine($"* Wrote {msgFiles.Count} message files for {dd.Name}");
                 Console.WriteLine($"  From {msgFiles.First()}");
                 Console.WriteLine($"    to {msgFiles.Last()}");
+
+                if (!GenCsproj.IsExistingCsproj(options.OutputDir!, dd.Name)) {
+                    string projFile = GenCsproj.WriteFile(options.OutputDir!, dd.Name, options.RepoRoot!);
+                    Console.WriteLine($"* Created new project file {projFile} (you will want to review this)");
+                }
             }
         }
     }

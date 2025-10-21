@@ -35,7 +35,7 @@ public static class GenMessages {
         {
             "// This is a generated file.  Don't edit it directly!",
             "",
-            $"namespace QuickFix.{dd.IdentifierNoDots};",
+            $"namespace QuickFix.{dd.Name};",
             "",
             "public abstract class Message : QuickFix.Message",
             "{",
@@ -64,7 +64,7 @@ public static class GenMessages {
             "using System;",
             "using QuickFix.Fields;",
             "",
-            $"namespace QuickFix.{dd.IdentifierNoDots};",
+            $"namespace QuickFix.{dd.Name};",
             "",
             $"public class {msg.Name} : Message",
             "{",

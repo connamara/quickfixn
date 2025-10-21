@@ -31,8 +31,7 @@ public static class VersionParser
         }
 
         XmlNode? customNameNode = doc.SelectSingleNode("/fix/@customname");
-        if (customNameNode != null && !string.IsNullOrEmpty(customNameNode.Value))
-        {
+        if (customNameNode != null && !string.IsNullOrEmpty(customNameNode.Value)) {
             dd.CustomName = customNameNode.Value;
         }
     }

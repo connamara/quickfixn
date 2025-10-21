@@ -24,8 +24,7 @@ public class VersionParserTests {
     }
 
     [TestMethod]
-    public void SetVersionInfo_CustomName()
-    {
+    public void SetVersionInfo_CustomName() {
         var dd = ParserTestUtil.ReadDD("<fix major='4' minor='4'/>", ParserTask.Version);
         Assert.IsNull(dd.CustomName);
 
