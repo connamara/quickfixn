@@ -2,6 +2,7 @@
 using System.IO;
 using System;
 using System.Collections.Generic;
+using DDTool.Generators;
 using DDTool.Parsers;
 using DDTool.Structures;
 
@@ -21,8 +22,10 @@ public static class Program {
         foreach (var file in options.DDFiles)
             Console.WriteLine($"* {file}");
 
-        if (!options.HasOutputDir) {
-            Console.WriteLine("No output dir was specified, so I won't generate anything.");
+        bool doGeneration = options.HasOutputDir && options.HasRepoRoot;
+
+        if (!doGeneration) {
+            Console.WriteLine("Unspecified outputdir and/or reporoot params; I won't generate anything.");
         } else if (!Directory.Exists(options.OutputDir)) {
             Console.WriteLine($"OutputDir does not exist: {options.OutputDir}");
             Environment.Exit(1);
@@ -39,6 +42,17 @@ public static class Program {
                 errors.Add($"{dd.SourceFile}: {dde}");
         }
 
+        // Check that all DDs have unique names
+        if (dds.Count != dds.DistinctBy(dd => dd.Name).Count()) {
+            string ddnames = string.Join(',', dds.Select(dd => dd.Name));
+            errors.Add("Found duplicate DD names in your input set.  "
+                       + "All DDs must have unique names.  "
+                       + "If two DDs have identical Major/Minor/SP values, you can add a \"customname\" attribute "
+                       + "in the root <fix> tag to force a custom name instead.  "
+                       + "Your DD names are: [" + ddnames + "]");
+        }
+
+
         if (errors.Count > 0) {
             Console.WriteLine("============================");
             Console.WriteLine("Errors found.  Code generation (if commanded) will not run.");
@@ -46,26 +60,31 @@ public static class Program {
                 Console.WriteLine($"* {err}");
         }
 
-        if (options.HasOutputDir) {
+        if (doGeneration) {
             List<DDField> aggFields = AggregateFields(dds);
 
             Console.WriteLine("============================");
             Console.WriteLine("Writing files:");
 
-            Console.WriteLine($"* Wrote {Generators.GenFields.WriteFile(options.OutputDir, aggFields)}");
-            Console.WriteLine($"* Wrote {Generators.GenFieldTags.WriteFile(options.OutputDir, aggFields)}");
+            Console.WriteLine($"* Wrote {GenFields.WriteFile(options.RepoRoot!, aggFields)}");
+            Console.WriteLine($"* Wrote {GenFieldTags.WriteFile(options.RepoRoot!, aggFields)}");
 
-            List<string> factory_files = Generators.GenMessageFactories.WriteFiles(options.OutputDir, dds);
-            foreach (var ff in factory_files) {
+            List<string> factoryFiles = GenMessageFactories.WriteFiles(options.OutputDir!, dds);
+            foreach (var ff in factoryFiles) {
                 Console.WriteLine($"* Wrote {ff}");
             }
 
-            // Messages
+            // Messages projects
             foreach (var dd in dds.OrderBy(x => x.Identifier)) {
-                var msgFiles = Generators.GenMessages.WriteFilesForDD(options.OutputDir, dd);
-                Console.WriteLine($"* Wrote {msgFiles.Count} message files for {dd.IdentifierNoDots}");
+                var msgFiles = GenMessages.WriteFilesForDD(options.OutputDir!, dd);
+                Console.WriteLine($"* Wrote {msgFiles.Count} message files for {dd.Name}");
                 Console.WriteLine($"  From {msgFiles.First()}");
                 Console.WriteLine($"    to {msgFiles.Last()}");
+
+                if (!GenCsproj.IsExistingCsproj(options.OutputDir!, dd.Name)) {
+                    string projFile = GenCsproj.WriteFile(options.OutputDir!, dd.Name, options.RepoRoot!);
+                    Console.WriteLine($"* Created new project file {projFile} (you will want to review this)");
+                }
             }
         }
     }
@@ -114,10 +133,10 @@ public static class Program {
     }
 
     private static DDField MergedField(string name, List<DataDictionary> dds) {
-        List<DDField> flds = new();
+        List<DDField> flds = [];
 
         foreach (var dd in dds.OrderByDescending(x => x.Identifier)) {
-            if (dd.FieldsByName.TryGetValue(name, out DDField fld)) {
+            if (dd.FieldsByName.TryGetValue(name, out DDField? fld)) {
                 flds.Add(fld);
             }
         }

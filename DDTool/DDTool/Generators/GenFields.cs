@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using DDTool.Structures;
 
@@ -14,11 +13,11 @@ public static class GenFields {
     /// <summary>
     /// Returns path of file that is written
     /// </summary>
-    /// <param name="baseDir"></param>
+    /// <param name="repoRootDir"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static string WriteFile(string baseDir, List<DDField> fields) {
-        string fieldsPath = Path.Join(baseDir, "QuickFIXn", "Fields", "Fields.cs");
+    public static string WriteFile(string repoRootDir, List<DDField> fields) {
+        string fieldsPath = Path.Join(repoRootDir, "QuickFIXn", "Fields", "Fields.cs");
         File.WriteAllText(fieldsPath, Generate(fields));
         return fieldsPath;
     }

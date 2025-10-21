@@ -12,11 +12,11 @@ public static class GenFieldTags {
     /// <summary>
     /// Returns path of file that is written
     /// </summary>
-    /// <param name="baseDir"></param>
+    /// <param name="repoRootDir"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static string WriteFile(string baseDir, List<DDField> fields) {
-        string fieldTagsPath = Path.Join(baseDir, "QuickFIXn", "Fields", "FieldTags.cs");
+    public static string WriteFile(string repoRootDir, List<DDField> fields) {
+        string fieldTagsPath = Path.Join(repoRootDir, "QuickFIXn", "Fields", "FieldTags.cs");
         File.WriteAllText(fieldTagsPath, Generate(fields));
         return fieldTagsPath;
     }
