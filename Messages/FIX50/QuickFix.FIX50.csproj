@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <GenerateAppxPackageOnBuild>true</GenerateAppxPackageOnBuild>
     <Title>QuickFIX/n FIX5.0 Messages</Title>
     <PackageId>QuickFIXn.FIX50</PackageId>
     <PackageTitle>$(Title)</PackageTitle>
