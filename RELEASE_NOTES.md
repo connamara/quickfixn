@@ -60,6 +60,7 @@ What's New
 * #309 - fix: obey a SeqReset-GapFill even if it 'replaces' a message that was processed off
          queue in a ResendRequest series (gbirchmeier/oclancy)
 * #979 - improve DDTool: nullable enable, custom name, generate csproj if needed (gbirchmeier)
+* #978 - delete some redundant lines in SocketInitiatorThreadStart (gbirchmeier)
 
 ### v1.13.1
 * backport #951 to 1.13
