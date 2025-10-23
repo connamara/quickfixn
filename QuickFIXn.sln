@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QuickFix", "QuickFIXn\Quick
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{755A0272-0599-4729-A519-AEDDF7DA36D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples.GenerateKeys", "Examples\GenerateKeys\Examples.GenerateKeys.csproj", "{308AF5BC-87E1-48EB-9542-EC53B13CD503}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.Executor", "Examples\Executor\Examples.Executor.csproj", "{54B02E22-AD44-444E-BA4E-4DB156ABC47C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Examples.FixToJson", "Examples\FixToJson\Examples.FixToJson.csproj", "{495CA3EF-1899-4410-B152-814ACAF44AF5}"
@@ -192,6 +194,14 @@ Global
 		{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}.Release|x64.ActiveCfg = Release|Any CPU
 		{A6E267D7-CF1E-4C28-BB72-8F004E4375FC}.Release|x64.Build.0 = Release|Any CPU
+		{308AF5BC-87E1-48EB-9542-EC53B13CD503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{308AF5BC-87E1-48EB-9542-EC53B13CD503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{308AF5BC-87E1-48EB-9542-EC53B13CD503}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{308AF5BC-87E1-48EB-9542-EC53B13CD503}.Debug|x64.Build.0 = Debug|Any CPU
+		{308AF5BC-87E1-48EB-9542-EC53B13CD503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{308AF5BC-87E1-48EB-9542-EC53B13CD503}.Release|Any CPU.Build.0 = Release|Any CPU
+		{308AF5BC-87E1-48EB-9542-EC53B13CD503}.Release|x64.ActiveCfg = Release|Any CPU
+		{308AF5BC-87E1-48EB-9542-EC53B13CD503}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
