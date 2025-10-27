@@ -29,7 +29,11 @@ What's New
 * **There are breaking changes between 1.11 and 1.12!  Please review the 1.12.0 notes below.**
 * **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
-### next release (v1.14.0)
+
+### next release (v1.14.1 or higher)
+
+
+### v1.14.0
 
 **Breaking changes**
 * #627 - rename message packages to get rid of superfluous period (gbirchmeier)
