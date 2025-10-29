@@ -60,10 +60,6 @@ namespace QuickFix.Transport
                 t.Session.Next();
                 while (t.Read()) {
                 }
-
-                if (t.Initiator.IsStopped)
-                    t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
             }
             catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
             {
@@ -81,11 +77,9 @@ namespace QuickFix.Transport
             {
                 LogThreadStartConnectionFailed(t, ex);
             }
-            finally
-            {
-                t.Initiator.RemoveThread(t);
-                t.Initiator.SetDisconnected(t.Session.SessionID);
-            }
+
+            t.Initiator.RemoveThread(t);
+            t.Initiator.SetDisconnected(t.Session.SessionID);
         }
 
         private static void LogThreadStartConnectionFailed(SocketInitiatorThread t, Exception e) {

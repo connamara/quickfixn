@@ -5,11 +5,13 @@ using System.Linq;
 namespace DDTool;
 
 public class Options {
-    public string OutputDir { get; }
+    public string? RepoRoot { get; }
+    public bool HasRepoRoot => !string.IsNullOrEmpty(RepoRoot);
 
+    public string? OutputDir { get; }
     public bool HasOutputDir => !string.IsNullOrEmpty(OutputDir);
 
-    public List<string> DDFiles { get; } = new List<string>();
+    public List<string> DDFiles { get; } = [];
 
     public Options(string[] args) {
         var errors = new List<string>();
@@ -26,6 +28,11 @@ public class Options {
             }
 
             switch (next) {
+                case "--reporoot":
+                    RepoRoot = argList.First();
+                    argList.RemoveFirst();
+                    break;
+
                 case "--outputdir":
                     OutputDir = argList.First();
                     argList.RemoveFirst();
@@ -35,7 +42,7 @@ public class Options {
                     if (next.StartsWith("-"))
                         errors.Add($"Unrecognized option: {next}");
                     else {
-                        // All done with cmd line options now,
+                        // All done with cmd-line options now,
                         //   the rest are files.
                         DDFiles.Add(next);
                         foreach (var arg in argList) {

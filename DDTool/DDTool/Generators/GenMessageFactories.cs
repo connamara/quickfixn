@@ -17,7 +17,9 @@ public static class GenMessageFactories {
     }
 
     private static string WriteFile(string baseDir, DataDictionary dd) {
-        string filePath = Path.Join(baseDir, "Messages", dd.IdentifierNoDots, "MessageFactory.cs");
+        string filePath = Path.Join(baseDir, "Messages", dd.Name, "MessageFactory.cs");
+        Directory.CreateDirectory(
+            Path.GetDirectoryName(filePath)!);
         File.WriteAllText(filePath, Generate(dd));
         return filePath;
     }
@@ -30,7 +32,7 @@ public static class GenMessageFactories {
             "using System.Collections.Generic;",
             "using QuickFix.FixValues;",
             "",
-            $"namespace QuickFix.{dd.IdentifierNoDots};",
+            $"namespace QuickFix.{dd.Name};",
             "",
             "public class MessageFactory : IMessageFactory",
             "{",
@@ -52,7 +54,7 @@ public static class GenMessageFactories {
 
         // TODO: foreach order is technically non-deterministic (though not in practice)
         foreach (var msg in dd.Messages.Values) {
-            var fullname = $"QuickFix.{dd.IdentifierNoDots}.{msg.Name}";
+            var fullname = $"QuickFix.{dd.Name}.{msg.Name}";
             lines.Add(new string(' ', 12) + $"{fullname}.MsgType => new {fullname}(),");
         }
 
@@ -75,13 +77,13 @@ public static class GenMessageFactories {
 
             List<string> xLines = new();
 
-            xLines.Add($"if (QuickFix.{dd.IdentifierNoDots}.{msg.Name}.MsgType.Equals(msgType))");
+            xLines.Add($"if (QuickFix.{dd.Name}.{msg.Name}.MsgType.Equals(msgType))");
             xLines.Add("{");
             xLines.Add("    switch (correspondingFieldId)");
             xLines.Add("    {");
 
             foreach (var group in groups) {
-                AppendGroupCases(xLines, group, $"QuickFix.{dd.IdentifierNoDots}.{msg.Name}");
+                AppendGroupCases(xLines, group, $"QuickFix.{dd.Name}.{msg.Name}");
             }
 
             xLines.Add("    }");

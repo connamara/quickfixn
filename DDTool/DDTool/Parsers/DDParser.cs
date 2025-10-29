@@ -17,10 +17,6 @@ public static class DDParser {
             VersionParser.SetVersionInfo(doc, dd);
             FieldParser.ParseFields(doc, dd);
             MessageParser.ParseMessages(doc, dd);
-            /*
-            ParseHeader(RootDoc);
-            ParseTrailer(RootDoc)
-            */
         }
 
         return dd;
