@@ -1,12 +1,12 @@
-using Microsoft.Extensions.Logging;
-using QuickFix.Logger;
-using QuickFix.Util;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.Logging;
+using QuickFix.Logger;
+using QuickFix.Util;
 
 namespace QuickFix.Transport;
 
