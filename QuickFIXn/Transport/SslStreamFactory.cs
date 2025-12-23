@@ -1,12 +1,13 @@
+using Microsoft.Extensions.Logging;
+using QuickFix.Logger;
+using QuickFix.Util;
 using System;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Security;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
-using Microsoft.Extensions.Logging;
-using QuickFix.Logger;
-using QuickFix.Util;
 
 namespace QuickFix.Transport;
 
@@ -174,7 +175,7 @@ internal sealed class SslStreamFactory
         // Validate enhanced key usage
         if (!ContainsEnhancedKeyUsage(certificate, enhancedKeyUsage)) {
             var role = enhancedKeyUsage.Equals(CLIENT_AUTHENTICATION_OID, StringComparison.Ordinal) ? "client" : "server";
-            _nonSessionLog.Log(LogLevel.Warning,
+            _nonSessionLog.Log(LogLevel.Error,
                 "Remote certificate is not intended for {Role} authentication: It is missing enhanced key usage {KeyUsage}",
                 role, enhancedKeyUsage);
             return false;
@@ -182,7 +183,7 @@ internal sealed class SslStreamFactory
 
         // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
         if (string.IsNullOrEmpty(_socketSettings.CACertificatePath)) {
-            _nonSessionLog.Log(LogLevel.Warning, "CACertificatePath is not specified, using machine store");
+            _nonSessionLog.Log(LogLevel.Information, "CACertificatePath is not specified, using local trust store");
 
             X509Chain chain = new();
             chain.ChainPolicy.RevocationMode = _socketSettings.CheckCertificateRevocation ? X509RevocationMode.Online : X509RevocationMode.NoCheck;
@@ -195,6 +196,10 @@ internal sealed class SslStreamFactory
                 {
                     if (!status.Status.HasFlag(X509ChainStatusFlags.NoError))
                     {
+                        _nonSessionLog.Log(LogLevel.Warning,
+                            "Certificate Chain: {Status} {StatusInformation}",
+                            status.Status, status.StatusInformation);
+
                         isChainValid = false;
                         break;
                     }
@@ -207,6 +212,13 @@ internal sealed class SslStreamFactory
             }
             else
             {
+                foreach (var status in chain.ChainStatus)
+                {
+                    _nonSessionLog.Log(LogLevel.Error,
+                        "Certificate Chain Build Failure: {Status} {StatusInformation}",
+                        status.Status, status.StatusInformation);
+                }
+
                 sslPolicyErrors |= SslPolicyErrors.RemoteCertificateChainErrors;
             }
         }
@@ -217,7 +229,7 @@ internal sealed class SslStreamFactory
             X509Certificate2? caCert = SslCertCache.LoadCertificate(caCertPath, null);
             if (caCert is null)
             {
-                _nonSessionLog.Log(LogLevel.Warning,
+                _nonSessionLog.Log(LogLevel.Error,
                     "Certificate '{CertificatePath}' could not be loaded from store or path '{Directory}'", caCertPath,
                     Directory.GetCurrentDirectory());
                 return false;
@@ -235,6 +247,10 @@ internal sealed class SslStreamFactory
                 foreach (var status in chain.ChainStatus) {
                     if (!status.Status.HasFlag(X509ChainStatusFlags.NoError))
                     {
+                        _nonSessionLog.Log(LogLevel.Warning,
+                            "Certificate Chain: {Status} {StatusInformation}",
+                            status.Status, status.StatusInformation);
+
                         isChainValid = false;
                         break;
                     }
@@ -246,6 +262,13 @@ internal sealed class SslStreamFactory
                     sslPolicyErrors |= SslPolicyErrors.RemoteCertificateChainErrors;
             }
             else {
+                foreach (var status in chain.ChainStatus)
+                {
+                    _nonSessionLog.Log(LogLevel.Error,
+                        "Certificate Chain Build Failure: {Status} {StatusInformation}",
+                        status.Status, status.StatusInformation);
+                }
+
                 sslPolicyErrors |= SslPolicyErrors.RemoteCertificateChainErrors;
             }
         }
@@ -253,7 +276,7 @@ internal sealed class SslStreamFactory
         // Any basic authentication check failed, do after checking CA
         if (sslPolicyErrors != SslPolicyErrors.None)
         {
-            _nonSessionLog.Log(LogLevel.Warning,
+            _nonSessionLog.Log(LogLevel.Error,
                 "Remote certificate was not recognized as a valid certificate: {Errors}", sslPolicyErrors);
             return false;
         }
