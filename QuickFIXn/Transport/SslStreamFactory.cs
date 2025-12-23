@@ -182,7 +182,7 @@ internal sealed class SslStreamFactory
 
         // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
         if (string.IsNullOrEmpty(_socketSettings.CACertificatePath)) {
-            _nonSessionLog.Log(LogLevel.Warning, "CACertificatePath is not specified");
+            _nonSessionLog.Log(LogLevel.Warning, "CACertificatePath is not specified, using machine store");
 
             X509Chain chain = new();
             chain.ChainPolicy.RevocationMode = _socketSettings.CheckCertificateRevocation ? X509RevocationMode.Online : X509RevocationMode.NoCheck;
