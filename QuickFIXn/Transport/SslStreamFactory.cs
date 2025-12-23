@@ -209,8 +209,7 @@ internal sealed class SslStreamFactory
                 else
                     sslPolicyErrors |= SslPolicyErrors.RemoteCertificateChainErrors;
             }
-            else
-            {
+            else {
                 foreach (var status in chain.ChainStatus)
                 {
                     _nonSessionLog.Log(LogLevel.Error,
