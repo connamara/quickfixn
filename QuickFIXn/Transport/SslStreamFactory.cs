@@ -183,6 +183,32 @@ internal sealed class SslStreamFactory
         // If CA Certificate is specified then validate against the CA certificate, otherwise it is validated against the installed certificates
         if (string.IsNullOrEmpty(_socketSettings.CACertificatePath)) {
             _nonSessionLog.Log(LogLevel.Warning, "CACertificatePath is not specified");
+
+            X509Chain chain = new();
+            chain.ChainPolicy.RevocationMode = _socketSettings.CheckCertificateRevocation ? X509RevocationMode.Online : X509RevocationMode.NoCheck;
+
+            bool isValid = chain.Build((X509Certificate2)certificate);
+            if (isValid)
+            {
+                bool isChainValid = true;
+                foreach (var status in chain.ChainStatus)
+                {
+                    if (!status.Status.HasFlag(X509ChainStatusFlags.NoError))
+                    {
+                        isChainValid = false;
+                        break;
+                    }
+                }
+                if (isChainValid)
+                    // resets the sslPolicyErrors.RemoteCertificateChainErrors status
+                    sslPolicyErrors &= ~SslPolicyErrors.RemoteCertificateChainErrors;
+                else
+                    sslPolicyErrors |= SslPolicyErrors.RemoteCertificateChainErrors;
+            }
+            else
+            {
+                sslPolicyErrors |= SslPolicyErrors.RemoteCertificateChainErrors;
+            }
         }
         else
         {
