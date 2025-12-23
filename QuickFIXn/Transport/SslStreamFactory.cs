@@ -2,7 +2,6 @@ using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 using QuickFix.Util;
 using System;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Security;
