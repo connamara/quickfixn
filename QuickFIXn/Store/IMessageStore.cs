@@ -48,4 +48,21 @@ public interface IMessageStore : IDisposable
     /// or throw an exception.
     /// </summary>
     void Refresh();
+
+    /// <summary>
+    /// Adds a raw fix message to the store with the give sequence number
+    /// and increments the <see cref="NextSenderMsgSeqNum" />. This method
+    /// has a default implementation calling <see cref="Set(SeqNumType, string)" />
+    /// and <see cref="IncrNextSenderMsgSeqNum()" />. It is not intended to change
+    /// this default implementation in custom IMessageStore implementations.
+    /// </summary>
+    /// <param name="msgSeqNum">the sequence number</param>
+    /// <param name="msg">the raw FIX message string</param>
+    /// <returns>true if successful, false otherwise</returns>
+    public bool SetAndIncrNextSenderMsgSeqNum(SeqNumType msgSeqNum, string msg)
+    {
+        bool result = Set(msgSeqNum, msg);
+        IncrNextSenderMsgSeqNum();
+        return result;
+    }
 }
