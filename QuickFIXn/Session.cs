@@ -1533,9 +1533,12 @@ namespace QuickFix
             if (PersistMessages)
             {
                 SeqNumType msgSeqNum = message.Header.GetULong(Fields.Tags.MsgSeqNum);
-                _state.Set(msgSeqNum, messageString);
+                _state.SetAndIncrNextSenderMsgSeqNum(msgSeqNum, messageString);
             }
-            _state.IncrNextSenderMsgSeqNum();
+            else
+            {
+                _state.IncrNextSenderMsgSeqNum();
+            }
         }
 
         protected bool IsGoodTime(Message msg)

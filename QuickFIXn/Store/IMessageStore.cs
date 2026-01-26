@@ -48,4 +48,11 @@ public interface IMessageStore : IDisposable
     /// or throw an exception.
     /// </summary>
     void Refresh();
+
+    public bool SetAndIncrNextSenderMsgSeqNum(SeqNumType msgSeqNum, string msg)
+    {
+        bool result = Set(msgSeqNum, msg);
+        IncrNextSenderMsgSeqNum();
+        return result;
+    }
 }

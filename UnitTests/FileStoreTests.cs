@@ -209,5 +209,31 @@ namespace UnitTests
 
             Assert.That(msgs, Is.EqualTo(expected));
         }
+
+        [Test]
+        public void SetAndIncrNextSenderMsgSeqNumTest()
+        {
+            IMessageStore messageStore = _store ?? throw new InvalidProgramException();
+
+            messageStore.SetAndIncrNextSenderMsgSeqNum(1, "dude");
+            messageStore.SetAndIncrNextSenderMsgSeqNum(2, "pude");
+            messageStore.SetAndIncrNextSenderMsgSeqNum(3, "ok");
+            messageStore.SetAndIncrNextSenderMsgSeqNum(4, "ohai");
+
+            var msgs = new List<string>();
+            _store.Get(2, 3, msgs);
+            var expected = new List<string>() { "pude", "ok" };
+
+            Assert.That(msgs, Is.EqualTo(expected));
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(5));
+
+            RebuildStore();
+
+            msgs = new List<string>();
+            _store.Get(2, 3, msgs);
+
+            Assert.That(msgs, Is.EqualTo(expected));
+            Assert.That(_store.NextSenderMsgSeqNum, Is.EqualTo(5));
+        }
     }
 }
