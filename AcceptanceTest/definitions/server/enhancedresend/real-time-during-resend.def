@@ -1,0 +1,50 @@
+# Enhanced resend - a new message is interleaved with the resent content
+
+# Based on CME Autocert+ "Dropcopy CGW/MSGW Sequencing Tests - Process real-time messages during a Resend Response from CME Globex"
+
+iCONNECT
+I8=FIX.4.435=A34=149=TW52=<TIME>56=ISLD369=098=0108=30
+E8=FIX.4.435=A34=149=ISLD52=00000000-00:00:00.00056=TW369=198=0108=30
+
+# Do a test request just to increment the counters
+I8=FIX.4.435=134=249=TW52=<TIME>56=ISLD112=TEST
+E8=FIX.4.435=034=249=ISLD52=00000000-00:00:00.00056=TW369=2112=TEST
+
+# App (ISLD) expects 34=3 next
+
+# Send it 34=11
+I8=FIX.4.435=B34=1149=TW56=ISLD52=<TIME>148=blah
+
+# App sends resend request 7/BeginSeqNo=3 16/EndSeqNo=10
+E8=FIX.4.435=234=349=ISLD52=00000000-00:00:00.00056=TW369=117=316=10
+
+# Resend 34=3-11 with a new message 12 in the middle
+I8=FIX.4.435=B34=349=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.003000148=seq3
+I8=FIX.4.435=B34=449=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.004000148=seq4
+I8=FIX.4.435=B34=549=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.005000148=seq5
+
+I8=FIX.4.435=B34=1249=TW56=ISLD52=<TIME>148=seq12
+
+sleep(0.100)
+# NOTIFY:* * * If we just received a 35=2, then the client failed!
+
+I8=FIX.4.435=B34=649=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.006000148=seq6
+I8=FIX.4.435=B34=749=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.007000148=seq7
+I8=FIX.4.435=B34=849=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.008000148=seq8
+I8=FIX.4.435=B34=949=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.009000148=seq9
+I8=FIX.4.435=B34=1049=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.010000148=seq10
+I8=FIX.4.435=B34=1149=TW56=ISLD43=Y52=<TIME>122=20010309-20:00:00.011000148=seq11
+
+
+# resend is complete
+
+# Send another TestRequest to confirm seqnums are good
+I8=FIX.4.435=134=1349=TW52=<TIME>56=ISLD112=ALLGOOD
+E8=FIX.4.435=034=449=ISLD52=00000000-00:00:00.00056=TW369=13112=ALLGOOD
+
+# logout message and response
+I8=FIX.4.435=534=1349=TW52=<TIME>56=ISLD
+E8=FIX.4.435=534=549=ISLD52=00000000-00:00:00.00056=TW369=13
+
+eDISCONNECT
+

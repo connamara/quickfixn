@@ -72,6 +72,7 @@ public class SessionSettings
     public const string MAX_LATENCY = "MaxLatency";
     public const string SOCKET_IGNORE_PROXY = "SocketIgnoreProxy";
     public const string ENCODING = "Encoding";
+    public const string CME_ENHANCED_RESEND = "CmeEnhancedResend";
 
     public const string SSL_ENABLE = "SSLEnable";
     public const string SSL_SERVERNAME = "SSLServerName";

@@ -388,6 +388,32 @@ namespace UnitTests
         }
 
         [Test]
+        public void TempExtraLogoutField()
+        {
+            string data = "8=FIX.4.4|9=40|35=5|58=this is a logout|789=100|10=228|"
+                .Replace('|', Message.SOH);
+
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX44");
+            var logout = new QuickFix.FIX44.Logout();
+            logout.FromString(data, false, dd, dd, _defaultMsgFactory);
+            Assert.That(logout.GetInt(Tags.NextExpectedMsgSeqNum), Is.EqualTo(100));
+        }
+
+        [Test]
+        public void TempExtraLogoutFieldFIX42()
+        {
+            string data = "8=FIX.4.2|9=40|35=5|58=this is a logout|789=100|10=228|"
+                .Replace('|', Message.SOH);
+
+            QuickFix.DataDictionary.DataDictionary dd = new QuickFix.DataDictionary.DataDictionary();
+            dd.LoadFIXSpec("FIX42");
+            var logout = new QuickFix.FIX44.Logout();
+            logout.FromString(data, false, dd, dd, _defaultMsgFactory);
+            Assert.That(logout.GetInt(Tags.NextExpectedMsgSeqNum), Is.EqualTo(100));
+        }
+
+        [Test]
         public void MsgType()
         {
             Assert.That(QuickFix.FIX42.News.MsgType, Is.EqualTo("B"));

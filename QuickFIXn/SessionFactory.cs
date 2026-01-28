@@ -160,6 +160,8 @@ internal class SessionFactory
             session.ValidateLengthAndChecksum = settings.GetBool(SessionSettings.VALIDATE_LENGTH_AND_CHECKSUM);
         if (settings.Has(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME))
             session.RequiresOrigSendingTime = settings.GetBool(SessionSettings.RESETSEQUENCE_MESSAGE_REQUIRES_ORIGSENDINGTIME);
+        if (settings.Has(SessionSettings.CME_ENHANCED_RESEND))
+            session.CmeEnhancedResend = settings.GetBool(SessionSettings.CME_ENHANCED_RESEND);
 
         return session;
     }
