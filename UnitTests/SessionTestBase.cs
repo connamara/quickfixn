@@ -47,6 +47,9 @@ public abstract class SessionTestBase
         _seqNum = 1;
     }
 
+    /// <summary>
+    /// The UT sends a logon to _session
+    /// </summary>
     public void Logon()
     {
         SendLogon(new QuickFix.FIX42.Logon());
