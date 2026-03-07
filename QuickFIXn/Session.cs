@@ -601,9 +601,12 @@ namespace QuickFix
                         : Message.GetApplVerID(beginString);
                 }
 
-                if (SessionID.IsFIXT && !Message.IsAdminMsgType(msgType))
+                if (SessionID.IsFIXT)
                 {
-                    DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, ApplicationDataDictionary, beginString, msgType);
+                    if (!Message.IsAdminMsgType(msgType))
+                    {
+                        DataDictionary.DataDictionary.Validate(message, SessionDataDictionary, ApplicationDataDictionary, beginString, msgType);
+                    }
                 }
                 else
                 {
