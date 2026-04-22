@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 using QuickFix.Store;
 using QuickFix.Util;
@@ -99,6 +100,16 @@ internal class SessionFactory
         if(defaultApplVerId is not null)
             senderDefaultApplVerId = defaultApplVerId.Value;
 
+        LogLevel messagesLogLevel = LogLevel.Information;
+        string? messagesLogLevelName = null;
+        if(settings.Has(SessionSettings.MESSAGES_LOG_LEVEL))
+        {
+            messagesLogLevelName = settings.GetString(SessionSettings.MESSAGES_LOG_LEVEL);
+            if (!Enum.TryParse(messagesLogLevelName, true, out LogLevel logLevel))
+                throw new ConfigError($"Invalid {SessionSettings.MESSAGES_LOG_LEVEL} value: {messagesLogLevelName}");
+            messagesLogLevel = logLevel;
+        }
+
         Session session = new Session(
             isInitiator,
             _application,
@@ -109,7 +120,8 @@ internal class SessionFactory
             heartBtInt,
             _loggerFactory,
             sessionMsgFactory,
-            senderDefaultApplVerId);
+            senderDefaultApplVerId,
+            messagesLogLevel);
 
         if (settings.Has("MillisecondsInTimeStamp")) {
             throw new ApplicationException(

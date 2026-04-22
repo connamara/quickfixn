@@ -29,8 +29,7 @@ public class Session : IDisposable
     private readonly SessionState _state;
     private readonly IMessageFactory _msgFactory;
     private readonly bool _appDoesEarlyIntercept;
-
-    private const LogLevel MessagesLogLevel = LogLevel.Information;
+    private readonly LogLevel _messagesLogLevel;
 
     #region Properties
 
@@ -239,7 +238,8 @@ public class Session : IDisposable
         int heartBtInt,
         IQuickFixLoggerFactory loggerFactory,
         IMessageFactory msgFactory,
-        string senderDefaultApplVerId)
+        string senderDefaultApplVerId,
+        LogLevel messagesLogLevel)
     {
         _schedule = sessionSchedule;
         _msgFactory = msgFactory;
@@ -249,13 +249,14 @@ public class Session : IDisposable
         SessionID = sessId;
         DataDictionaryProvider = new DataDictionaryProvider(dataDictProvider);
         SenderDefaultApplVerID = senderDefaultApplVerId;
-
+        
         SessionDataDictionary = DataDictionaryProvider.GetSessionDataDictionary(SessionID.BeginString);
         ApplicationDataDictionary = SessionID.IsFIXT
             ? DataDictionaryProvider.GetApplicationDataDictionary(SenderDefaultApplVerID)
             : SessionDataDictionary;
 
         ILogger logger = loggerFactory.CreateSessionLogger(sessId);
+        _messagesLogLevel = messagesLogLevel;
 
         _state = new SessionState(isInitiator, logger, heartBtInt, storeFactory.Create(sessId));
 
@@ -368,14 +369,14 @@ public class Session : IDisposable
             if (_responder is null)
                 return false;
 
-            if (Log.IsEnabled(MessagesLogLevel))
+            if (Log.IsEnabled(_messagesLogLevel))
             {
                 using (Log.BeginScope(new Dictionary<string, object>
                        {
                            { "MessageType", Message.GetMsgType(message) }
                        }))
                 {
-                    Log.Log(MessagesLogLevel, LogEventIds.OutgoingMessage, "{Message}",
+                    Log.Log(_messagesLogLevel, LogEventIds.OutgoingMessage, "{Message}",
                         LogAssist.RedactSensitiveFields(message, RedactFieldsInLogs, RedactionLogText));
                 }
             }
@@ -542,20 +543,20 @@ public class Session : IDisposable
     {
         try
         {
-            if (Log.IsEnabled(MessagesLogLevel))
+            if (Log.IsEnabled(_messagesLogLevel))
             {
                 using (Log.BeginScope(new Dictionary<string, object>
                        {
                            { "MessageType", Message.GetMsgType(msgStr) }
                        }))
                 {
-                    Log.Log(MessagesLogLevel, LogEventIds.IncomingMessage, "{Message}",
+                    Log.Log(_messagesLogLevel, LogEventIds.IncomingMessage, "{Message}",
                         LogAssist.RedactSensitiveFields(msgStr, RedactFieldsInLogs, RedactionLogText));
                 }
             }
         } catch (Exception)
         {
-            Log.Log(MessagesLogLevel, LogEventIds.IncomingMessage, "{Message}",
+            Log.Log(_messagesLogLevel, LogEventIds.IncomingMessage, "{Message}",
                 LogAssist.RedactSensitiveFields(msgStr, RedactFieldsInLogs, RedactionLogText));
         }
 
