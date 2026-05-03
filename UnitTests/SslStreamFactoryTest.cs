@@ -18,9 +18,17 @@ public class SslStreamFactoryTest
     const string ServerCertificatePath = "serverCertificate.cer";
     const string ClientCertificatePath = "clientCertificate.cer";
 
+    const string CaIntermediateCertificatePath = "CaIntermediateCertificate.cer";
+    const string ServerIntermediateCertificatePath = "serverIntermediateCertificate.cer";
+    const string ClientIntermediateCertificatePath = "clientIntermediateCertificate.cer";
+
     X509Certificate2 CaCertificate { get; set; } = null!;
     X509Certificate2 ClientCertificate { get; set; } = null!;
     X509Certificate2 ServerCertificate { get; set; } = null!;
+
+    X509Certificate2 CaIntermediateCertificate { get; set; } = null!;
+    X509Certificate2 ClientIntermediateCertificate { get; set; } = null!;
+    X509Certificate2 ServerIntermediateCertificate { get; set; } = null!;
 
     [OneTimeSetUp]
     public void BuildCerts()
@@ -36,6 +44,20 @@ public class SslStreamFactoryTest
         var clientCertificate = CreateClientCertificate(caCertificate);
         File.WriteAllBytes(ClientCertificatePath, clientCertificate.Export(X509ContentType.Cert));
         ClientCertificate = clientCertificate;
+
+
+        var caIntermediateCertificate = CreateCACertificate(caCertificate);
+        File.WriteAllBytes(CaIntermediateCertificatePath, caIntermediateCertificate.Export(X509ContentType.Cert));
+        CaIntermediateCertificate = caIntermediateCertificate;
+
+        var serverIntermediateCertificate = CreateServerCertificate(caIntermediateCertificate);
+        File.WriteAllBytes(ServerIntermediateCertificatePath, serverIntermediateCertificate.Export(X509ContentType.Cert));
+        ServerIntermediateCertificate = serverIntermediateCertificate;
+
+        var clientIntermediateCertificate = CreateClientCertificate(caIntermediateCertificate);
+        File.WriteAllBytes(ClientIntermediateCertificatePath, clientIntermediateCertificate.Export(X509ContentType.Cert));
+        ClientIntermediateCertificate = clientIntermediateCertificate;
+
 
         var differentCaCertificate = CreateCACertificate();
         File.WriteAllBytes(DifferentCaCertificatePath, differentCaCertificate.Export(X509ContentType.Cert));
@@ -58,8 +80,21 @@ public class SslStreamFactoryTest
         request.CertificateExtensions.Add(new X509KeyUsageExtension(X509KeyUsageFlags.KeyCertSign | X509KeyUsageFlags.CrlSign, true));
         request.CertificateExtensions.Add(new X509SubjectKeyIdentifierExtension(request.PublicKey, false));
 
-        X509Certificate2 certificate = request.CreateSelfSigned(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(5));
+        X509Certificate2 certificate = request.CreateSelfSigned(DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(10));
         return certificate;
+    }
+
+    static X509Certificate2 CreateCACertificate(X509Certificate2 caCertificate)
+    {
+        var rsa = RSA.Create();
+        var request = new CertificateRequest("CN=127.0.0.1 Test Intermediate CA", rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        request.CertificateExtensions.Add(new X509BasicConstraintsExtension(true, false, 0, true));
+        request.CertificateExtensions.Add(new X509SubjectKeyIdentifierExtension(request.PublicKey, false));
+
+        X509Certificate2 certificate = request.Create(caCertificate, DateTimeOffset.UtcNow, DateTimeOffset.UtcNow.AddDays(5), [1, 0, 0, 0, 0, 0, 0, 0]);
+
+        var rootCertificate = certificate.CopyWithPrivateKey(rsa);
+        return rootCertificate;
     }
 
     static X509Certificate2 CreateServerCertificate(X509Certificate2 caCertificate)
