@@ -1,6 +1,6 @@
 if ($args.Length -gt 0) {
     Write-Error "This script does not take any parameters."
-    Write-Error "The version number comes from the project files, which are updated by Build-NuGets.ps1"
+    Write-Error "The version number comes from the project files, which you should have updated by invoking Bump-Versions.ps1"
     Exit 1
 }
 

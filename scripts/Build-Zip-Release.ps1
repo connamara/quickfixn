@@ -14,7 +14,7 @@ Param (
 )
 $ErrorActionPreference = "Stop"
 
-$dotNetVer = 'net8.0'
+$dotNetVers = 'net8.0','net10.0'
 
 $rootPath = Join-Path $PSScriptRoot '..' | Resolve-Path
 $zipContentPath = Join-Path $rootPath 'tmp' 'zip' "quickfixn-$NewVersion"
@@ -37,38 +37,47 @@ if (Test-Path $zipContentPath) {
     New-Item -ItemType Directory -Path $zipContentPath > $null
 }
 
-@(
+
+
+$dirsToCreate = @(
     "bin"
-    "bin\$dotNetVer"
     "spec"
     "spec\fix"
     "config"
-) | ForEach-Object {
-    $d = Join-Path $zipContentPath $_
+)
+foreach($dnv in $dotNetVers) {
+    $dirsToCreate += "bin\$dnv"
+}
+foreach($dir in $dirsToCreate) {
+    $d = Join-Path $zipContentPath $dir
     New-Item -ItemType Directory $d > $null
 }
 
-@(
-    "QuickFIXn\bin\Release\$dotNetVer\QuickFix.dll",
-    "Messages\FIXT11\bin\Release\$dotNetVer\QuickFix.FIXT11.dll",
-    "Messages\FIX40\bin\Release\$dotNetVer\QuickFix.FIX40.dll",
-    "Messages\FIX41\bin\Release\$dotNetVer\QuickFix.FIX41.dll",
-    "Messages\FIX42\bin\Release\$dotNetVer\QuickFix.FIX42.dll",
-    "Messages\FIX43\bin\Release\$dotNetVer\QuickFix.FIX43.dll",
-    "Messages\FIX44\bin\Release\$dotNetVer\QuickFix.FIX44.dll",
-    "Messages\FIX50\bin\Release\$dotNetVer\QuickFix.FIX50.dll",
-    "Messages\FIX50SP1\bin\Release\$dotNetVer\QuickFix.FIX50SP1.dll",
-    "Messages\FIX50SP2\bin\Release\$dotNetVer\QuickFix.FIX50SP2.dll"
-) | ForEach-Object {
-    $toPath = Join-Path $zipContentPath 'bin' $dotNetVer
 
-    $dllPath = Join-Path $rootPath $_ | Resolve-Path
-    Copy-Item $_ -Destination $toPath
-    Write-Host "* Copied $dllPath to $toPath" -ForegroundColor Cyan
 
-    $debugPath = ($dllPath -replace 'dll', 'pdb')
-    Copy-Item $debugPath -Destination $toPath
-    Write-Host "* Copied $debugpath to $toPath" -ForegroundColor Cyan
+foreach($dnv in $dotNetVers) {
+    @(
+        "QuickFIXn\bin\Release\$dnv\QuickFix.dll",
+        "Messages\FIXT11\bin\Release\$dnv\QuickFix.FIXT11.dll",
+        "Messages\FIX40\bin\Release\$dnv\QuickFix.FIX40.dll",
+        "Messages\FIX41\bin\Release\$dnv\QuickFix.FIX41.dll",
+        "Messages\FIX42\bin\Release\$dnv\QuickFix.FIX42.dll",
+        "Messages\FIX43\bin\Release\$dnv\QuickFix.FIX43.dll",
+        "Messages\FIX44\bin\Release\$dnv\QuickFix.FIX44.dll",
+        "Messages\FIX50\bin\Release\$dnv\QuickFix.FIX50.dll",
+        "Messages\FIX50SP1\bin\Release\$dnv\QuickFix.FIX50SP1.dll",
+        "Messages\FIX50SP2\bin\Release\$dnv\QuickFix.FIX50SP2.dll"
+    ) | ForEach-Object {
+        $toPath = Join-Path $zipContentPath 'bin' $dnv
+    
+        $dllPath = Join-Path $rootPath $_ | Resolve-Path
+        Copy-Item $_ -Destination $toPath
+        Write-Host "* Copied $dllPath to $toPath" -ForegroundColor Cyan
+    
+        $debugPath = ($dllPath -replace 'dll', 'pdb')
+        Copy-Item $debugPath -Destination $toPath
+        Write-Host "* Copied $debugpath to $toPath" -ForegroundColor Cyan
+    }
 }
 
 $dest = Join-Path $zipContentPath 'spec\fix' | Resolve-Path
