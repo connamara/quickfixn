@@ -34,7 +34,10 @@ foreach($proj in $projs) {
 }
 
 Write-Host 'Bump-Version completed successfully.' -ForegroundColor Green
-Write-Host '(Don''t forget to commit these csproj changes after reviewing.)' -ForegroundColor Green
+Write-Host 'Now you should (1) commit/PR/merge this change' -ForegroundColor Yellow
+Write-Host '               (2) `git tag -a <version> -m "Release version <version>"`' -ForegroundColor Yellow
+Write-Host '                   (this creates a tag named <version>)' -ForegroundColor Yellow
+Write-Host '               (3) git push this the tag to github: `git push origin <version>`' -ForegroundColor Yellow
 
 
 

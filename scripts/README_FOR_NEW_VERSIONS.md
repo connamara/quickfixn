@@ -16,11 +16,13 @@ If you didn't change the DD, then this should have no effect.
 
 ### `Delete-Generated-Sources.ps1`
 
-Deletes all generated sources.  Occasionally useful.
+You probably don't need to do this.  Deletes all generated sources.  Occasionally useful.
 
 ### `Bump-Versions.ps1`
 
 Updates the "Version" tag in each csproj file.
+
+The script output will tell you how to create a git tag for this release.  Do it!
 
 ### `Build-Zip-Release.ps1`
 
