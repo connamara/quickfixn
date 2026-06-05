@@ -38,7 +38,12 @@ What's New
 * **There are breaking changes between 1.10 and 1.11!  Please review the 1.11.0 notes below.**
 
 
-### next release (v1.14.1 or higher)
+### v1.15.0
+* #1021 - remove .NET 8 support; remove expired deprecations
+
+
+### v1.14.1
+
 * #841 - experimental support for CME Enhanced Resend (gbirchmeier)
 * #961 - new GenerateKeys app to create Example-app SSL certs (dckorben/gbirchmeier)
 * #1001 - AcceptanceTests bug: double.Parse with InvariantCulture (gbirchmeier)

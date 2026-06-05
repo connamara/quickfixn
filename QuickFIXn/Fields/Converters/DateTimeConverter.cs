@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -546,81 +546,6 @@ public static class DateTimeConverter
     /// <exception cref="ArgumentOutOfRangeException"><paramref name="precision"/> is an invalid value.</exception>
     public static string ToFIXTimeOnly(DateTime dt, TimeStampPrecision precision)
         => ToFIXTimeOnly(TimeOnly.FromDateTime(dt), precision);
-
-    [Obsolete("The 'precision' parameter is no longer needed.  This form of the function will be deleted in v1.15.")]
-    public static DateTime ParseToTimeOnly(string str, TimeStampPrecision precision = TimeStampPrecision.Millisecond) {
-        return ParseToTimeOnly(str);
-    }
-
-    [Obsolete("Use ParseToDateTime(string str) instead.  The 'precision' parameter is not needed.  This function will be deleted in v1.15.")]
-    public static DateTime ConvertToDateTime(string str, TimeStampPrecision precision = TimeStampPrecision.Millisecond) {
-        return ParseToDateTime(str);
-    }
-
-    [Obsolete("Renamed to ParseToDateOnly(str).  This is a legacy wrapper that will be deleted in v1.15.")]
-    public static DateTime ConvertToDateOnly(string str) {
-        return ParseToDateOnly(str);
-    }
-
-    [Obsolete("Renamed to ParseToTimeOnly(str, precision).  This is a legacy wrapper that will be deleted in v1.15.")]
-    public static DateTime ConvertToTimeOnly(string str, TimeStampPrecision precision = TimeStampPrecision.Millisecond) {
-        return ParseToTimeOnly(str, precision);
-    }
-    
-    /// <summary>
-    /// Converts the specified string to a <see cref="TimeSpan"/>.
-    /// The string must be in the format "HH:mm:ss" optionally followed by fractional seconds
-    /// and then optionally followed by UTC offset information.
-    /// </summary>
-    /// <param name="str">A <see cref="string"/> containing the characters that represent a time to convert.</param>
-    /// <returns>
-    /// A value representing the time in <paramref name="str"/>.
-    /// The value is unaffected by UTC offset information in <paramref name="str"/>.
-    /// For example, for the string "11:03:15 +05:30" the returned <see cref="TimeSpan"/> will be equivalent
-    /// to 11:03:15.
-    /// </returns>
-    /// <remarks>
-    /// This method supports parsing spans containing fractional seconds of arbitrary precision.
-    /// However, the conversion can be lossy since <see cref="TimeSpan"/> objects can only retain
-    /// fractional second precision to 100ns.
-    /// <br/><br/>
-    /// This method calls <see cref="ParseToTimeOnly(ReadOnlySpan{char}, out TimeSpan?)"/>
-    /// which returns a <see cref="TimeOnly"/>
-    /// and, when UTC offset information is present, a <see cref="TimeSpan"/> containing that information.
-    /// Consider calling the latter for flexibility.
-    /// </remarks>
-    /// <exception cref="FieldConvertError">The conversion cannot be performed successfully.</exception>
-    [Obsolete("QF/n doesn't use this, so it will be deleted in v1.15.  Copy it into your own application if you need it.")]
-    public static TimeSpan ConvertToTimeSpan(string str) => ParseToTimeOnly(str, out _).ToTimeSpan();
-
-    [Obsolete("Use ToFIX(dt, precision) instead.  This will be deleted in v1.15.")]
-    public static string Convert(DateTime dt, bool includeMilliseconds = true) {
-        return includeMilliseconds
-            ? ToFIX(dt, TimeStampPrecision.Millisecond)
-            : ToFIX(dt, TimeStampPrecision.Second);
-    }
-
-    [Obsolete("Renamed to ToFIX(dt, precision).  This is a legacy wrapper that will be deleted in v1.15.")]
-    public static string Convert(DateTime dt, TimeStampPrecision precision) {
-        return ToFIX(dt, precision);
-    }
-
-    [Obsolete("Renamed to ToFIXDateOnly(dt).  This is a legacy wrapper that will be deleted in v1.15.")]
-    public static string ConvertDateOnly(DateTime dt) {
-        return ToFIXDateOnly(dt);
-    }
-
-    [Obsolete("Renamed to ToFixTimeOnly(dt, precision).  This is a legacy wrapper that will be deleted in v1.15.")]
-    public static string ConvertTimeOnly(DateTime dt, TimeStampPrecision precision) {
-        return ToFIXTimeOnly(dt, precision);
-    }
-
-    [Obsolete("Use ToFIXTimeOnly(dt, precision) instead.  This function will be deleted in v1.15.")]
-    public static string ConvertTimeOnly(DateTime dt, bool includeMilliseconds = true) {
-        return includeMilliseconds
-            ? ToFIXTimeOnly(dt, TimeStampPrecision.Millisecond)
-            : ToFIXTimeOnly(dt, TimeStampPrecision.Second);
-    }
 
     [Obsolete("Don't use this function, it probably doesn't do what you think it does.  Will be removed in v1.16.")]
     public static DateTime ParseToTimeOnly(string str) => InternalParseToTimeOnly(str);
