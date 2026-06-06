@@ -64,7 +64,7 @@ public class SettingsDictionary : System.Collections.IEnumerable
         throw new ConfigError($"No value for key: {key}");
     }
 
-    [Obsolete("Will be removed in a future release because the engine doesn't use it")]
+    [Obsolete("This function will be removed in 1.16 (because it's unused)")]
     public String GetString(string key, bool capitalize)
     {
         string s = GetString(key);
