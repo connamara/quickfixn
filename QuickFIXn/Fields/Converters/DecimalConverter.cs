@@ -35,7 +35,7 @@ public static class DecimalConverter
         }
         catch (System.ArgumentNullException e)
         {
-            throw new FieldConvertError($"Could not convert string to decimal ({d})", e);
+            throw new FieldConvertError("Could not convert null string to decimal", e);
         }
     }
 

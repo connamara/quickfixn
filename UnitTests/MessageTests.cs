@@ -834,9 +834,8 @@ public class MessageTests
         msg.FromString(msgStr, true, dd, dd, _defaultMsgFactory);
         QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup gentry1 = new();
         msg.GetGroup(1, gentry1);
-        Assert.That(gentry1.MDEntryDate.Value, Is.EqualTo(new DateTime(2012, 10, 24)));
-        Assert.That(gentry1.MDEntryTime.Value.TimeOfDay, Is.EqualTo(new DateTime(2012, 10, 24, 7, 30, 47).TimeOfDay));
-        Assert.That(gentry1.MDEntryDate.Value + gentry1.MDEntryTime.Value.TimeOfDay, Is.EqualTo(new DateTime(2012, 10, 24, 7, 30, 47)));
+        Assert.That(gentry1.MDEntryDate.Value, Is.EqualTo(new DateOnly(2012, 10, 24)));
+        Assert.That(gentry1.MDEntryTime.Value.TimeOfDay, Is.EqualTo(new DateTime(1, 1, 1, 7, 30, 47).TimeOfDay));
     }
 
     [Test]
@@ -855,7 +854,7 @@ public class MessageTests
         grp.MDEntryPx = new MDEntryPx((decimal)97.625);
         grp.Currency = new Currency("EUR");
         grp.MDEntrySize = new MDEntrySize(1246000);
-        grp.MDEntryDate = new MDEntryDate(new DateTime(2012, 10, 24));
+        grp.MDEntryDate = new MDEntryDate(new DateOnly(2012, 10, 24));
         grp.MDEntryTime = new MDEntryTime(new DateTime(1, 1, 1, 7, 30, 47), false);
         grp.QuoteCondition = new QuoteCondition(QuoteCondition.NON_FIRM);
         grp.MDEntryOriginator = new MDEntryOriginator("BEARGB21XXX");
@@ -867,7 +866,7 @@ public class MessageTests
         grp.MDEntryPx = new MDEntryPx((decimal)108.08);
         grp.Currency = new Currency("EUR");
         grp.MDEntrySize = new MDEntrySize(884000);
-        grp.MDEntryDate = new MDEntryDate(new DateTime(2012, 10, 24));
+        grp.MDEntryDate = new MDEntryDate(new DateOnly(2012, 10, 24));
         grp.MDEntryTime = new MDEntryTime(new DateTime(1, 1, 1, 7, 30, 47), false);
         grp.QuoteCondition = new QuoteCondition(QuoteCondition.NON_FIRM);
         grp.MDEntryOriginator = new MDEntryOriginator("BEARGB21XXX");

@@ -74,9 +74,10 @@ public static class FieldTypeInfo {
             case QfnFieldClass.DecimalField:
                 return "decimal";
             case QfnFieldClass.DateTimeField:
-            case QfnFieldClass.DateOnlyField:
             case QfnFieldClass.TimeOnlyField:
                 return "DateTime";
+            case QfnFieldClass.DateOnlyField:
+                return "DateOnly";
             case QfnFieldClass.BooleanField:
                 return "Boolean";
             case QfnFieldClass.StringField:

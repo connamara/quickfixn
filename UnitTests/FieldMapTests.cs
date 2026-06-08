@@ -111,14 +111,14 @@ public class FieldMapTests
     public void DateOnlyFieldTest()
     {
         FieldMap fm = new();
-        fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
+        fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateOnly(2009, 12, 10)));
         MDEntryDate ed = new MDEntryDate();
         fm.GetField(ed);
-        Assert.That(ed.Value, Is.EqualTo(new DateTime(2009, 12, 10)));
+        Assert.That(ed.Value, Is.EqualTo(new DateOnly(2009, 12, 10)));
 
-        fm.SetField(new MDEntryDate(new DateTime(2010, 12, 10)));
+        fm.SetField(new MDEntryDate(new DateOnly(2010, 12, 10)));
         DateOnlyField r = fm.GetField(ed);
-        Assert.That(ed.Value, Is.EqualTo(new DateTime(2010, 12, 10)));
+        Assert.That(ed.Value, Is.EqualTo(new DateOnly(2010, 12, 10)));
 
         Assert.That(ed, Is.SameAs(r));
         Assert.That(ed.ToString(), Is.EqualTo("20101210"));
@@ -148,8 +148,17 @@ public class FieldMapTests
         fm.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
         Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
 
+        fm.SetField(new DateOnlyField(Tags.TransactTime, new DateOnly(2009, 12, 10)));
+        Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
+
         fm.SetField(new StringField(Tags.TransactTime, "20091211-12:12:44"));
         Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 11, 12, 12, 44)));
+
+        fm.SetField(new StringField(Tags.TransactTime, "pants"));
+        Assert.Throws<FieldConvertError>(delegate { fm.GetDateTime(Tags.TransactTime); });
+
+        fm.SetField(new IntField(Tags.TransactTime, 999));
+        Assert.Throws<FieldConvertError>(delegate { fm.GetDateTime(Tags.TransactTime); });
 
         Assert.Throws(typeof(FieldNotFoundException),
                 delegate { fm.GetDateTime(99900); });
@@ -159,11 +168,20 @@ public class FieldMapTests
     public void GetDateOnlyTest()
     {
         FieldMap fm = new();
+        fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateOnly(2009, 12, 10)));
+        Assert.That(fm.GetDateOnly(Tags.MDEntryDate), Is.EqualTo(new DateOnly(2009, 12, 10)));
+
         fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateTime(2009, 12, 10, 1, 2, 3)));
-        Assert.That(fm.GetDateTime(Tags.MDEntryDate), Is.EqualTo(new DateTime(2009, 12, 10)));
+        Assert.That(fm.GetDateOnly(Tags.MDEntryDate), Is.EqualTo(new DateOnly(2009, 12, 10)));
 
         fm.SetField(new StringField(Tags.MDEntryDate, "20091211"));
-        Assert.That(fm.GetDateOnly(Tags.MDEntryDate), Is.EqualTo(new DateTime(2009, 12, 11)));
+        Assert.That(fm.GetDateOnly(Tags.MDEntryDate), Is.EqualTo(new DateOnly(2009, 12, 11)));
+
+        fm.SetField(new StringField(Tags.MDEntryDate, "pants"));
+        Assert.Throws<FieldConvertError>(delegate { fm.GetDateOnly(Tags.MDEntryDate); });
+
+        fm.SetField(new IntField(Tags.MDEntryDate, 999));
+        Assert.Throws<FieldConvertError>(delegate { fm.GetDateOnly(Tags.MDEntryDate); });
 
         Assert.Throws(typeof(FieldNotFoundException),
             delegate { fm.GetDateOnly(99900); });
@@ -178,6 +196,12 @@ public class FieldMapTests
 
         fm.SetField(new StringField(Tags.MDEntryTime, "07:30:47"));
         Assert.That(fm.GetTimeOnly(Tags.MDEntryTime), Is.EqualTo(new DateTime(1980, 01, 01, 7, 30, 47)));
+
+        fm.SetField(new StringField(Tags.MDEntryTime, "pants"));
+        Assert.Throws<FieldConvertError>(delegate { fm.GetTimeOnly(Tags.MDEntryTime); });
+
+        fm.SetField(new IntField(Tags.MDEntryTime, 999));
+        Assert.Throws<FieldConvertError>(delegate { fm.GetTimeOnly(Tags.MDEntryTime); });
 
         Assert.Throws(typeof(FieldNotFoundException),
             delegate { fm.GetTimeOnly(99900); });
