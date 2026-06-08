@@ -4339,7 +4339,7 @@ public sealed class MDEntryDate : DateOnlyField
 
     public MDEntryDate()
         : base(Tags.MDEntryDate) {}
-    public MDEntryDate(DateTime val)
+    public MDEntryDate(DateOnly val)
         : base(Tags.MDEntryDate, val) {}
 }
 
@@ -8426,7 +8426,7 @@ public sealed class TotalVolumeTradedDate : DateOnlyField
 
     public TotalVolumeTradedDate()
         : base(Tags.TotalVolumeTradedDate) {}
-    public TotalVolumeTradedDate(DateTime val)
+    public TotalVolumeTradedDate(DateOnly val)
         : base(Tags.TotalVolumeTradedDate, val) {}
 }
 

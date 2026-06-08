@@ -169,7 +169,7 @@ public class FieldTests
     [Test]
     public void DateOnlyFieldTest()
     {
-        MDEntryDate d = new MDEntryDate(new DateTime(2011, 11, 30, 8, 9, 10, 555));
+        MDEntryDate d = new MDEntryDate(new DateOnly(2011, 11, 30));
         Assert.That(d.ToString(), Is.EqualTo("20111130"));
     }
 

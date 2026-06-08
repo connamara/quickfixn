@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using QuickFix.Fields;
 using QuickFix.Fields.Converters;
@@ -347,7 +346,7 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
     }
 
     /// <summary>
-    /// Gets the DateTime value of a field
+    /// Gets the value of a field as a DateTime
     /// </summary>
     /// <param name="tag">the FIX tag</param>
     /// <returns>the DateTime value</returns>
@@ -359,7 +358,7 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
 
         return fld switch
         {
-            DateOnlyField dateOnlyField => dateOnlyField.Value.Date,
+            DateOnlyField dateOnlyField => dateOnlyField.Value.ToDateTime(new TimeOnly()),
             TimeOnlyField timeOnlyField => new DateTime(1980, 01, 01).Add(timeOnlyField.Value.TimeOfDay),
             FieldBase<DateTime> dateTimeField => dateTimeField.Value,
             _ => DateTimeConverter.ParseToDateTime(fld.ToString())
@@ -367,20 +366,20 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
     }
 
     /// <summary>
-    /// Gets the DateOnly value of a field
+    /// Gets the value of a field as a DateOnly
     /// </summary>
     /// <param name="tag">the FIX tag</param>
-    /// <returns>the DateTime value</returns>
+    /// <returns>the DateOnly value</returns>
     /// <exception cref="FieldNotFoundException" />
-    public DateTime GetDateOnly(int tag)
+    public DateOnly GetDateOnly(int tag)
     {
         if (!_fields.TryGetValue(tag, out IField? fld))
             throw new FieldNotFoundException(tag);
 
         if (fld is FieldBase<DateTime> dateTimeField)
-            return dateTimeField.Value.Date;
+            return DateOnly.FromDateTime(dateTimeField.Value);
 
-        return DateTimeConverter.ParseToDateOnly(fld.ToString());
+        return DateOnlyConverter.Convert(fld.ToString());
     }
 
     /// <summary>
