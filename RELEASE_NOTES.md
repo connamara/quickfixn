@@ -77,7 +77,7 @@ What's New
 * #1015 - rework DateOnlyField/TimeOnlyField to be backed by DateOnly/TimeOnly types instead of DateTime (gbirchmeier)
 * #1023 - new config setting "FieldSeparatorInMessageLogs" (gbirchmeier)
 * #1030 - new UtcDateTimeField class so UTCTIMESTAMP fields always have DateTimeKind.Utc (stic)
-
+* #1025 - fix: SocketReader task throws System.InvalidOperationException (Tar-Elendil)
 
 ### v1.14.1
 

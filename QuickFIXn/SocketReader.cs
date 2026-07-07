@@ -14,6 +14,7 @@ public class SocketReader : IDisposable
 {
     public const int BUF_SIZE = 4096;
     private readonly byte[] _readBuffer = new byte[BUF_SIZE];
+    private const int _readTimeoutMilliseconds = 1000;
     private readonly Parser _parser = new();
     private Session? _qfSession;
     private readonly Stream _stream;
@@ -48,7 +49,7 @@ public class SocketReader : IDisposable
     {
         try
         {
-            int bytesRead = ReadSome(_readBuffer, 1000);
+            int bytesRead = ReadSome(_readBuffer, _readTimeoutMilliseconds);
             if (bytesRead > 0)
                 _parser.AddToStream(new ReadOnlySpan<byte>(_readBuffer, 0, bytesRead));
             else
@@ -293,8 +294,8 @@ public class SocketReader : IDisposable
             _readCancellationTokenSource.Dispose();
 
             // just wait when read task will be cancelled
-            _currentReadTask?.ContinueWith(_ => { }).Wait(1000);
-            _currentReadTask?.Dispose();
+            _currentReadTask?.ContinueWith(_ => { }).Wait(_readTimeoutMilliseconds);
+            _currentReadTask = null;
 
             _stream.Dispose();
             _tcpClient.Close();
