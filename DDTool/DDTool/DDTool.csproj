@@ -4,6 +4,47 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
+
+    <PackageId>QuickFIXn.DDTool</PackageId>
+    <Title>QuickFIX/n DDTool</Title>
+    <PackageTitle>$(Title)</PackageTitle>
+    <Description>
+      MSBuild codegen tool for QuickFIX/n broker data dictionaries.
+      Reference this package and include FIX XML via a FIXDataDictionary item;
+      C# message sources are generated before build.
+    </Description>
+    <Copyright>Copyright © 2011 - $([System.DateTime]::UtcNow.Year) QuickFIXn.org. All rights reserved.</Copyright>
+    <Authors>Connamara Systems, LLC and QuickFIX/n contributors</Authors>
+    <Version>1.14.1</Version>
+    <RepositoryUrl>https://github.com/connamara/quickfixn</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>FIX, QuickFIX, QuickFIX/n, DDTool, codegen</PackageTags>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>http://quickfixn.org/</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+
+    <IsPackable>true</IsPackable>
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+    <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <NoWarn>$(NoWarn);NU5128</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\README.md" Pack="true" PackagePath="README.md" />
+    <None Include="build\QuickFIXn.DDTool.targets" Pack="true" PackagePath="build\" />
+  </ItemGroup>
+
+  <!-- Ship the built tool under tools/ so PackageReference consumers can invoke it from MSBuild. -->
+  <Target Name="IncludeToolBinariesInPackage" BeforeTargets="_GetPackageFiles" DependsOnTargets="Build">
+    <ItemGroup>
+      <_PackageFiles Include="$(OutputPath)*" Exclude="$(OutputPath)*.pdb">
+        <PackagePath>tools\$(TargetFramework)\any\</PackagePath>
+        <Visible>false</Visible>
+      </_PackageFiles>
+    </ItemGroup>
+  </Target>
 
 </Project>

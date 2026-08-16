@@ -1,0 +1,23 @@
+<Project>
+
+  <PropertyGroup>
+    <DDToolDll Condition="'$(DDToolDll)' == ''">$(MSBuildThisFileDirectory)..\tools\net10.0\any\DDTool.dll</DDToolDll>
+  </PropertyGroup>
+
+  <!-- If the consumer did not declare FIXDataDictionary, generate from every *.xml in the project directory. -->
+  <ItemGroup Condition="'@(FIXDataDictionary)' == ''">
+    <FIXDataDictionary Include="*.xml" />
+  </ItemGroup>
+
+  <Target Name="GenerateFIXMessages"
+          BeforeTargets="PrepareForBuild"
+          Condition="'@(FIXDataDictionary)' != '' AND '$(DDToolSkipGenerate)' != 'true'"
+          Inputs="@(FIXDataDictionary)"
+          Outputs="%(FIXDataDictionary.Filename)\MessageFactory.cs">
+    <Error Condition="!Exists('$(DDToolDll)')"
+           Text="QuickFIXn.DDTool: tool not found at '$(DDToolDll)'." />
+    <Exec Command="dotnet exec &quot;$(DDToolDll)&quot; --outputdir &quot;$(MSBuildProjectDirectory)&quot; --brokerproject %(FIXDataDictionary.Identity)"
+          WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
+
+</Project>

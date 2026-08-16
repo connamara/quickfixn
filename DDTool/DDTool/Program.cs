@@ -52,6 +52,8 @@ public static class Program {
                        + "Your DD names are: [" + ddnames + "]");
         }
 
+        if (options.BrokerProject)
+            errors.AddRange(DDTool.Validations.BrokerProjectValidator.Check(dds));
 
         if (errors.Count > 0) {
             Console.WriteLine("============================");
