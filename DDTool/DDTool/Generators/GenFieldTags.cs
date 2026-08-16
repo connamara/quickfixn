@@ -12,21 +12,29 @@ public static class GenFieldTags {
     /// <summary>
     /// Returns path of file that is written
     /// </summary>
-    /// <param name="repoRootDir"></param>
+    /// <param name="fieldsTagsPath"></param>
+    /// <param name="ddName"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static string WriteFile(string repoRootDir, List<DDField> fields) {
-        string fieldTagsPath = Path.Join(repoRootDir, "QuickFIXn", "Fields", "FieldTags.cs");
-        File.WriteAllText(fieldTagsPath, Generate(fields));
-        return fieldTagsPath;
+    public static string WriteFile(string fieldsTagsPath, string? ddName, List<DDField> fields) 
+    {
+        Directory.CreateDirectory(
+            Path.GetDirectoryName(fieldsTagsPath)!);
+        File.WriteAllText(fieldsTagsPath, Generate(fields, ddName));
+        return fieldsTagsPath;
     }
 
-    private static string Generate(List<DDField> fields) {
+    private static string Generate(List<DDField> fields, string? ddName) {
+
+        var ns = ddName != null 
+            ? $"QuickFix.{ddName}.Fields" 
+            : "QuickFix.Fields";
+
         var lines = new List<string>
         {
             "// This is a generated file.  Don't edit it directly!",
             "",
-            "namespace QuickFix.Fields;",
+            $"namespace {ns};",
             "",
             "/// <summary>",
             "/// FIX Field Tag Values",

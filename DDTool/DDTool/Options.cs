@@ -11,6 +11,10 @@ public class Options {
     public string? OutputDir { get; }
     public bool HasOutputDir => !string.IsNullOrEmpty(OutputDir);
 
+    public bool BrokerProject { get; }
+
+    public string? Framework { get; }
+
     public List<string> DDFiles { get; } = [];
 
     public Options(string[] args) {
@@ -35,6 +39,15 @@ public class Options {
 
                 case "--outputdir":
                     OutputDir = argList.First();
+                    argList.RemoveFirst();
+                    break;
+
+                case "--brokerproject":
+                    BrokerProject = true;
+                    break;
+
+                case "--framework":
+                    Framework = argList.First();
                     argList.RemoveFirst();
                     break;
 

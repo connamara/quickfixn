@@ -22,7 +22,7 @@ public static class Program {
         foreach (var file in options.DDFiles)
             Console.WriteLine($"* {file}");
 
-        bool doGeneration = options.HasOutputDir && options.HasRepoRoot;
+        bool doGeneration = options.HasOutputDir && (options.HasRepoRoot || options.BrokerProject);
 
         if (!doGeneration) {
             Console.WriteLine("Unspecified outputdir and/or reporoot params; I won't generate anything.");
@@ -62,28 +62,52 @@ public static class Program {
         }
 
         if (doGeneration) {
-            List<DDField> aggFields = AggregateFields(dds);
 
-            Console.WriteLine("============================");
-            Console.WriteLine("Writing files:");
+            if (options.HasRepoRoot)
+            {
+                List<DDField> aggFields = AggregateFields(dds);
 
-            Console.WriteLine($"* Wrote {GenFields.WriteFile(options.RepoRoot!, aggFields)}");
-            Console.WriteLine($"* Wrote {GenFieldTags.WriteFile(options.RepoRoot!, aggFields)}");
+                Console.WriteLine("============================");
+                Console.WriteLine("Writing files:");
 
-            List<string> factoryFiles = GenMessageFactories.WriteFiles(options.OutputDir!, dds);
+                string fieldsPath = Path.Join(options.RepoRoot!, "QuickFIXn", "Fields", "Fields.cs");
+                string fieldsTagsPath = Path.Join(options.RepoRoot!, "QuickFIXn", "Fields", "FieldTags.cs");
+
+                Console.WriteLine($"* Wrote {GenFields.WriteFile(fieldsPath, null, aggFields)}");
+                Console.WriteLine($"* Wrote {GenFieldTags.WriteFile(fieldsTagsPath, null, aggFields)}");
+            }
+
+            if (options.BrokerProject)
+            {
+                foreach (var dd in dds)
+                {
+                    string fieldsPath = Path.Join(options.OutputDir!, dd.Name, "Fields.cs");
+                    string fieldsTagsPath = Path.Join(options.OutputDir!, dd.Name, "FieldTags.cs");
+
+                    var fields = dd.FieldsByName.Values.OrderBy(v => v.Name).ToList();
+                    Console.WriteLine($"* Wrote {GenFields.WriteFile(fieldsPath, dd.Name, fields)}");
+                    Console.WriteLine($"* Wrote {GenFieldTags.WriteFile(fieldsTagsPath, dd.Name, fields)}");
+                }
+            }
+
+            List<string> factoryFiles = GenMessageFactories.WriteFiles(options.OutputDir!, options.BrokerProject, dds);
             foreach (var ff in factoryFiles) {
                 Console.WriteLine($"* Wrote {ff}");
             }
 
             // Messages projects
-            foreach (var dd in dds.OrderBy(x => x.Identifier)) {
-                var msgFiles = GenMessages.WriteFilesForDD(options.OutputDir!, dd);
+            foreach (var dd in dds.OrderBy(x => x.Identifier))
+            {
+                var outputDir = options.OutputDir!;
+                if (options.BrokerProject)
+                    outputDir = Path.Join(outputDir, dd.Name);
+                var msgFiles = GenMessages.WriteFilesForDD(outputDir, dd);
                 Console.WriteLine($"* Wrote {msgFiles.Count} message files for {dd.Name}");
                 Console.WriteLine($"  From {msgFiles.First()}");
                 Console.WriteLine($"    to {msgFiles.Last()}");
 
-                if (!GenCsproj.IsExistingCsproj(options.OutputDir!, dd.Name)) {
-                    string projFile = GenCsproj.WriteFile(options.OutputDir!, dd.Name, options.RepoRoot!);
+                if (!options.BrokerProject && !GenCsproj.IsExistingCsproj(options.OutputDir!, dd.Name)) {
+                    string projFile = GenCsproj.WriteFile(options, dd.Name);
                     Console.WriteLine($"* Created new project file {projFile} (you will want to review this)");
                 }
             }

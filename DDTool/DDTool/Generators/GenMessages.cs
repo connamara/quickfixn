@@ -12,6 +12,7 @@ public static class GenMessages {
     /// Write the message classes using the DD content
     /// </summary>
     /// <param name="baseDir"></param>
+    /// <param name="brokerProject"></param>
     /// <param name="dd"></param>
     /// <returns>List of filenames that were written</returns>
     public static List<string> WriteFilesForDD(string baseDir, DataDictionary dd) {
@@ -27,7 +28,7 @@ public static class GenMessages {
 
     private static string WriteBaseMessageFile(string baseDir, DataDictionary dd) {
         var beginString = dd.IdentifierNoDots.Contains("FIX50") ? "FIXT11" : dd.IdentifierNoDots;
-        string filePath = Path.Join($"{baseDir}", "Messages", dd.Name, "Message.cs");
+        string filePath = Path.Join($"{baseDir}", "Messages", "Message.cs");
         Directory.CreateDirectory(
             Path.GetDirectoryName(filePath)!);
 
@@ -53,7 +54,7 @@ public static class GenMessages {
     }
 
     private static string WriteMessageFile(string baseDir, DDMessage msg, DataDictionary dd) {
-        string filePath = Path.Join($"{baseDir}", "Messages", dd.Name, $"{msg.Name}.cs");
+        string filePath = Path.Join($"{baseDir}", "Messages", $"{msg.Name}.cs");
         Directory.CreateDirectory(
             Path.GetDirectoryName(filePath)!);
 
@@ -62,7 +63,7 @@ public static class GenMessages {
             "// This is a generated file.  Don't edit it directly!",
             "",
             "using System;",
-            "using QuickFix.Fields;",
+            $"using QuickFix.{dd.Name}.Fields;",
             "",
             $"namespace QuickFix.{dd.Name};",
             "",
