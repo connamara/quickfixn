@@ -48,6 +48,19 @@ public class DefaultMessageFactory : IMessageFactory
         _factories = ConvertToDictionary(factories);
     }
 
+    /// <summary>
+    /// This constructor will
+    /// 1. Use the provided IMessageFactory implementations
+    /// 2. Use them based on begin strings they support
+    /// </summary>
+    /// <param name="factories">IMessageFactory implementations</param>
+    /// <param name="defaultApplVerId">ApplVerID value used by default in Create methods that don't explicitly specify it (only relevant for FIX5+)</param>
+    public DefaultMessageFactory(IEnumerable<IMessageFactory> factories, string defaultApplVerId = QuickFix.FixValues.ApplVerID.FIX50SP2)
+    {
+        _defaultApplVerId = new ApplVerID(defaultApplVerId);
+        _factories = ConvertToDictionary(factories);
+    }
+
     #region IMessageFactory Members
 
     public ICollection<string> GetSupportedBeginStrings()
@@ -115,75 +128,16 @@ public class DefaultMessageFactory : IMessageFactory
         return dict;
     }
 
-    private static bool _dllsAreLoaded = false;
-    private static readonly object _dllLoadSync = new object();
-
-    private static void LoadLocalDlls()
-    {
-        lock (_dllLoadSync)
-        {
-            // check again in case the load happened while this thread was waiting for the lock
-            if (_dllsAreLoaded)
-                return;
-
-            try
-            {
-                var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-                if (String.IsNullOrWhiteSpace(assemblyLocation))
-                    return;
-
-                var directory = Path.GetDirectoryName(assemblyLocation);
-                if (String.IsNullOrWhiteSpace(directory))
-                    return;
-
-                var dlls = Directory.GetFiles(directory, "QuickFix.*.dll");
-                foreach (var path in dlls)
-                    Assembly.LoadFrom(path);
-
-                _dllsAreLoaded = true;
-            }
-            catch (Exception ex)
-            {
-                // TODO: can we log this properly instead of Console write?
-                Console.Error.WriteLine("Found quickfix.*.dll dlls but failed to load them, " + ex);
-            }
-        }
-    }
-
     private static ICollection<IMessageFactory> GetMessageFactories(IEnumerable<Assembly> assemblies)
     {
-        var factoryTypes = assemblies
-            .SelectMany(assembly => assembly.GetExportedTypes())
-            .Where(IsMessageFactory)
-            .ToList();
-        var factories = new List<IMessageFactory>();
-        foreach (var factoryType in factoryTypes)
-        {
-            var factory = (IMessageFactory)Activator.CreateInstance(factoryType)!;
-            factories.Add(factory);
-        }
-
-        return factories;
+        var factoryTypes = MessageFactoryHelper.GetMessageFactoriesTypes(assemblies);
+        return MessageFactoryHelper.InstantiateMessageFactories(factoryTypes);
     }
 
     private static ICollection<Assembly> GetAppDomainAssemblies()
     {
-        LoadLocalDlls();
-        var assemblies = AppDomain
-            .CurrentDomain
-            .GetAssemblies()
-            .Where(assembly => !assembly.IsDynamic && assembly.GetName().Name!.StartsWith("QuickFix", StringComparison.Ordinal))
-            .ToList();
-        return assemblies;
-    }
-
-    private static bool IsMessageFactory(Type type)
-    {
-        return type != typeof(DefaultMessageFactory) &&
-               type.IsClass &&
-               !type.IsAbstract &&
-               typeof(IMessageFactory).IsAssignableFrom(type) &&
-               type.GetConstructor(Type.EmptyTypes) != null;
+        MessageFactoryHelper.LoadLocalDlls();
+        return MessageFactoryHelper.GetAppDomainAssemblies();
     }
 
     #endregion
