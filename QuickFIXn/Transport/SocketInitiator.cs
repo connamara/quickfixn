@@ -105,24 +105,30 @@ namespace QuickFix.Transport
         RemoveThread(thread.Session.SessionID);
     }
 
-    private void RemoveThread(SessionID sessionId)
-    {
-        // We can come in here on the thread being removed, and on another thread too in the case
-        // of dynamic session removal, so make sure we won't deadlock...
-        if (Monitor.TryEnter(_sync))
+        private void RemoveThread(SessionID sessionId)
         {
-            if (_threads.TryGetValue(sessionId, out var thread))
+            // We can come in here on the thread being removed, and on another thread too in the case
+            // of dynamic session removal, so make sure we won't deadlock...
+            if (_sync.TryEnter())
             {
                 try
                 {
-                    thread.Join();
+                    if (_threads.TryGetValue(sessionId, out var thread))
+                    {
+                        try
+                        {
+                            thread.Join();
+                        }
+                        catch { }
+                        _threads.Remove(sessionId);
+                    }
                 }
-                catch { }
-                _threads.Remove(sessionId);
+                finally
+                {
+                    _sync.Exit();
+                }
             }
-            Monitor.Exit(_sync);
         }
-    }
 
     private IPEndPoint GetNextSocketEndPoint(SessionID sessionId, SettingsDictionary settings)
     {
