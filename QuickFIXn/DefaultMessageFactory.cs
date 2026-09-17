@@ -117,7 +117,7 @@ public class DefaultMessageFactory : IMessageFactory
     }
 
         private static bool _dllsAreLoaded = false;
-        private static readonly Lock _dllLoadSync = new object();
+        private static readonly Lock _dllLoadSync = new();
 
         private static void LoadLocalDlls()
     {

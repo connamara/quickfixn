@@ -15,7 +15,7 @@ public class SessionState : IDisposable
 {
     #region Private Members
 
-        private readonly Lock _sync = new object();
+        private readonly Lock _sync = new();
         private bool _isEnabled = true;
         private bool _receivedLogon = false;
         private bool _receivedReset = false;
