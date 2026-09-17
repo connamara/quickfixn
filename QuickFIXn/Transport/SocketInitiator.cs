@@ -9,21 +9,21 @@ using Microsoft.Extensions.Logging;
 using QuickFix.Logger;
 using QuickFix.Store;
 
-namespace QuickFix.Transport
+namespace QuickFix.Transport;
+
+/// <summary>
+/// Initiates connections and uses a single thread to process messages for all sessions.
+/// </summary>
+public class SocketInitiator : AbstractInitiator
 {
-    /// <summary>
-    /// Initiates connections and uses a single thread to process messages for all sessions.
-    /// </summary>
-    public class SocketInitiator : AbstractInitiator
-    {
-        private volatile bool _shutdownRequested = false;
-        private DateTime _lastConnectTimeDt = DateTime.MinValue;
-        private int _reconnectInterval = 30;
-        private readonly SocketSettings _socketSettings = new();
-        private readonly Dictionary<SessionID, SocketInitiatorThread> _threads = new();
-        private readonly Dictionary<SessionID, int> _sessionToHostNum = new();
-        private readonly Lock _sync = new();
-        private readonly ILogger _nonSessionLog;
+    private volatile bool _shutdownRequested = false;
+    private DateTime _lastConnectTimeDt = DateTime.MinValue;
+    private int _reconnectInterval = 30;
+    private readonly SocketSettings _socketSettings = new();
+    private readonly Dictionary<SessionID, SocketInitiatorThread> _threads = new();
+    private readonly Dictionary<SessionID, int> _sessionToHostNum = new();
+    private readonly Lock _sync = new();
+    private readonly ILogger _nonSessionLog;
 
     public SocketInitiator(
         IApplication application,
@@ -58,7 +58,8 @@ namespace QuickFix.Transport
             t.Initiator.SetConnected(t.Session.SessionID);
             t.Session.Log.Log(LogLevel.Information, "Connection succeeded");
             t.Session.Next();
-            while (t.Read()) {
+            while (t.Read())
+            {
             }
         }
         catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
@@ -82,7 +83,8 @@ namespace QuickFix.Transport
         t.Initiator.SetDisconnected(t.Session.SessionID);
     }
 
-    private static void LogThreadStartConnectionFailed(SocketInitiatorThread t, Exception e) {
+    private static void LogThreadStartConnectionFailed(SocketInitiatorThread t, Exception e)
+    {
         if (t.Session.Disposed)
         {
             t.NonSessionLog.Log(LogLevel.Error, e, "Connection failed [session {SessionID}]: {Message}",
@@ -105,30 +107,30 @@ namespace QuickFix.Transport
         RemoveThread(thread.Session.SessionID);
     }
 
-        private void RemoveThread(SessionID sessionId)
+    private void RemoveThread(SessionID sessionId)
+    {
+        // We can come in here on the thread being removed, and on another thread too in the case
+        // of dynamic session removal, so make sure we won't deadlock...
+        if (_sync.TryEnter())
         {
-            // We can come in here on the thread being removed, and on another thread too in the case
-            // of dynamic session removal, so make sure we won't deadlock...
-            if (_sync.TryEnter())
+            try
             {
-                try
+                if (_threads.TryGetValue(sessionId, out var thread))
                 {
-                    if (_threads.TryGetValue(sessionId, out var thread))
+                    try
                     {
-                        try
-                        {
-                            thread.Join();
-                        }
-                        catch { }
-                        _threads.Remove(sessionId);
+                        thread.Join();
                     }
-                }
-                finally
-                {
-                    _sync.Exit();
+                    catch { }
+                    _threads.Remove(sessionId);
                 }
             }
+            finally
+            {
+                _sync.Exit();
+            }
         }
+    }
 
     private IPEndPoint GetNextSocketEndPoint(SessionID sessionId, SettingsDictionary settings)
     {
@@ -183,7 +185,7 @@ namespace QuickFix.Transport
     {
         _shutdownRequested = false;
 
-        while(!_shutdownRequested)
+        while (!_shutdownRequested)
         {
             try
             {
@@ -246,7 +248,8 @@ namespace QuickFix.Transport
             t.Start();
             AddThread(t);
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             session.Log.Log(LogLevel.Error, e, "Connection error: {Message}", e.Message);
         }
     }
