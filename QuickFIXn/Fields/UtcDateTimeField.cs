@@ -18,28 +18,47 @@ public class UtcDateTimeField : DateTimeField
     public UtcDateTimeField(int tag)
         : base(tag, DateTime.SpecifyKind(default, DateTimeKind.Utc)) {}
 
+    /// <summary>
+    /// If <c>dt.Kind</c> is <c>Local</c>, then its time value will be shifted to UTC.
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="dt"></param>
     public UtcDateTimeField(int tag, DateTime dt)
         : base(tag, ToUtc(dt)) {}
 
     // Not [Obsolete] here, matching DateTimeField; the deprecation is applied to the generated field classes.
+    /// <summary>
+    /// If <c>dt.Kind</c> is <c>Local</c>, then its time value will be shifted to UTC.
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="dt"></param>
+    /// <param name="showMilliseconds"></param>
     public UtcDateTimeField(int tag, DateTime dt, bool showMilliseconds)
         : base(tag, ToUtc(dt), showMilliseconds) {}
 
+    /// <summary>
+    /// If <c>dt.Kind</c> is <c>Local</c>, then its time value will be shifted to UTC.
+    /// </summary>
+    /// <param name="tag"></param>
+    /// <param name="dt"></param>
+    /// <param name="timeFormatPrecision"></param>
     public UtcDateTimeField(int tag, DateTime dt, TimePrecision timeFormatPrecision)
         : base(tag, ToUtc(dt), timeFormatPrecision) {}
 
-    // Deliberately an override, not `new`-hiding, even though FieldBase<T>.Value is on a hot path.
-    // Hiding binds normalization at compile time, so assigning through a DateTimeField-typed reference
-    // would silently emit un-normalized (e.g. local) time into a UTCTIMESTAMP field -- a wire-correctness
-    // bug. The virtual cost is negligible: the generated field classes (SendingTime, TransactTime, ...)
-    // are sealed so the JIT devirtualizes access through them, and any remaining call sits next to
-    // DateTime formatting/parsing that costs orders of magnitude more.
+    /// <summary>
+    /// If the setter's Value param has <c>dt.Kind=Local</c>, then its time value will be shifted to UTC.
+    /// </summary>
     public override DateTime Value
     {
         get => base.Value;
         set => base.Value = ToUtc(value);
     }
 
+    /// <summary>
+    /// The return value will have <c>Kind=UTC</c>.  If <c>dt.Kind</c> was local, shift the time value to UTC.
+    /// </summary>
+    /// <param name="dt"></param>
+    /// <returns></returns>
     private static DateTime ToUtc(DateTime dt) => dt.Kind switch
     {
         DateTimeKind.Utc => dt,

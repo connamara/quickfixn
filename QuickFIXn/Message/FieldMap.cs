@@ -373,7 +373,8 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
     }
 
     /// <summary>
-    /// Gets the value of a field as a DateTime
+    /// Gets the value of a field as a DateTime with <c>Kind=Unspecified</c>
+    /// If you know the field is UTC, you should use instead use <see cref="GetUtcDateTime(int)"/>.
     /// </summary>
     /// <param name="tag">the FIX tag</param>
     /// <returns>the DateTime value</returns>
@@ -394,12 +395,10 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
     }
 
     /// <summary>
-    /// Gets the value of a field as a UTC DateTime, normalizing a wire-decoded UTCTIMESTAMP value to UTC.
+    /// Gets the value of a field as a DateTime with DateTime.Kind=UTC.
+    /// If the field has TimeZone information and that TimeZone is not UTC, then the value will be converted to UTC.
+    /// This function should be used only when the caller is sure that the field is UTC.
     /// </summary>
-    /// <remarks>
-    /// A <see cref="DateOnlyField"/>/<see cref="TimeOnlyField"/> is labelled UTC too, for consistency with
-    /// <see cref="GetDateTime"/>, even though e.g. LOCALMKTDATE is not actually a UTC value.
-    /// </remarks>
     /// <param name="tag">the FIX tag</param>
     /// <returns>the DateTime value with <see cref="DateTimeKind.Utc"/></returns>
     /// <exception cref="FieldNotFoundException" />

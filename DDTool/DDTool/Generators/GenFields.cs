@@ -22,7 +22,7 @@ public static class GenFields {
         return fieldsPath;
     }
 
-    private static string Generate(List<DDField> fields) {
+    internal static string Generate(List<DDField> fields) {
         var lines = new List<string>
         {
             "// This is a generated file.  Don't edit it directly!",

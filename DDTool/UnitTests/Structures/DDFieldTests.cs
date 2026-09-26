@@ -9,7 +9,7 @@ public class DDFieldTests {
 
     [TestMethod]
     public void UtcTimestampMapsToUtcDateTimeField() {
-        var field = new DDField(52, "SendingTime", new List<EnumValue>(), "UTCTIMESTAMP");
+        var field = new DDField(52, "SendingTime", [], "UTCTIMESTAMP");
 
         Assert.AreEqual("UtcDateTimeField", field.CsClass);
         Assert.AreEqual("DateTime", field.BaseType);
@@ -17,7 +17,7 @@ public class DDFieldTests {
 
     [TestMethod]
     public void TzTimestampMapsToDateTimeField() {
-        var field = new DDField(1132, "TZTransactTime", new List<EnumValue>(), "TZTIMESTAMP");
+        var field = new DDField(1132, "TZTransactTime", [], "TZTIMESTAMP");
 
         Assert.AreEqual("DateTimeField", field.CsClass);
         Assert.AreEqual("DateTime", field.BaseType);
@@ -25,7 +25,7 @@ public class DDFieldTests {
 
     [TestMethod]
     public void TimeMapsToDateTimeField() {
-        var field = new DDField(273, "MDEntryTime", new List<EnumValue>(), "TIME");
+        var field = new DDField(273, "MDEntryTime", [], "TIME");
 
         Assert.AreEqual("DateTimeField", field.CsClass);
         Assert.AreEqual("DateTime", field.BaseType);

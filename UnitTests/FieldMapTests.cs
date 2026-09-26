@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
-using QuickFix.Fields.Converters;
 
 namespace UnitTests;
 
@@ -111,8 +110,8 @@ public class FieldMapTests
     [Test]
     public void SendingTimeParsedFromWireHasUtcKindTest()
     {
-        // regression test: UTCTIMESTAMP fields parsed from the wire (no offset) must come back as
-        // DateTimeKind.Utc, not Unspecified
+        // UTCTIMESTAMP fields parsed from the wire (no offset)
+        // must come back as DateTimeKind.Utc, not Unspecified
         FieldMap fm = new();
         fm.SetField(new StringField(Tags.SendingTime, "20091211-12:12:44"));
         SendingTime st = new();
@@ -131,18 +130,19 @@ public class FieldMapTests
         fm.GetField(st);
 
         Assert.That(st.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
+        Assert.That(st.Value == new DateTime(2009, 12, 11, 12, 12, 44, DateTimeKind.Utc), Is.True);
     }
 
     [Test]
     public void TZTransactTimeRetainsOffsetAwareParsingTest()
     {
-        // TZTIMESTAMP fields must be unaffected by the UtcDateTimeField change
         FieldMap fm = new();
         fm.SetField(new StringField(Tags.TZTransactTime, "20091211-12:12:44+02:00"));
         TZTransactTime tzt = new();
         fm.GetField(tzt);
 
-        Assert.That(tzt.Value, Is.EqualTo(new DateTime(2009, 12, 11, 10, 12, 44)));
+        Assert.That(tzt.Value, Is.EqualTo(new DateTime(2009, 12, 11, 10, 12, 44))); // the hour is 10 now
+        Assert.That(tzt.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
     }
 
     [Test]
@@ -186,10 +186,10 @@ public class FieldMapTests
     {
         FieldMap fm = new();
         fm.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
-        Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
+        Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10, 0, 0, 0)));
 
         fm.SetField(new DateOnlyField(Tags.TransactTime, new DateOnly(2009, 12, 10)));
-        Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
+        Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10, 0, 0, 0)));
 
         fm.SetField(new TimeOnlyField(Tags.MDEntryTime, new TimeOnly(1, 2, 3)));
         Assert.That(fm.GetDateTime(Tags.MDEntryTime), Is.EqualTo(new DateTime(1980, 01, 01, 1, 2, 3)));
@@ -225,8 +225,7 @@ public class FieldMapTests
         fm.SetField(new StringField(Tags.SendingTime, "oops"));
         Assert.Throws<FieldConvertError>(delegate { fm.GetUtcDateTime(Tags.SendingTime); });
 
-        Assert.Throws(typeof(FieldNotFoundException),
-                delegate { fm.GetUtcDateTime(99900); });
+        Assert.Throws<FieldNotFoundException>(delegate { fm.GetUtcDateTime(99900); });
     }
 
     [Test]
@@ -254,7 +253,7 @@ public class FieldMapTests
         DateTime actual = fm.GetUtcDateTime(Tags.TransactTime);
 
         Assert.That(actual.Kind, Is.EqualTo(DateTimeKind.Utc));
-        Assert.That(actual == new DateTime(2009, 12, 11, 10, 12, 44, DateTimeKind.Utc), Is.True);
+        Assert.That(actual == new DateTime(2009, 12, 11, 10, 12, 44, DateTimeKind.Utc), Is.True); // the hour is 10 now
     }
 
     [Test]

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
-using QuickFix.Fields.Converters;
 using UnitTests.TestHelpers;
 using Message = QuickFix.Message;
 

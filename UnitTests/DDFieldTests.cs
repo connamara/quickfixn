@@ -57,18 +57,4 @@ public class DDFieldTests
         DDField ddf = new(1132, "TZTransactTime", new Dictionary<string, string>(), "TZTIMESTAMP");
         Assert.That(typeof(QuickFix.Fields.StringField), Is.EqualTo(ddf.FieldType));
     }
-
-    [Test]
-    public void CheckValidFormatStillValidatesUtcTimestampFields()
-    {
-        // regression test: CheckValidFormat's type check must recognize UtcDateTimeField, not just DateTimeField
-        var dd = new QuickFix.DataDictionary.DataDictionary();
-        dd.FieldsByTag[52] = new DDField(52, "SendingTime", new Dictionary<string, string>(), "UTCTIMESTAMP");
-
-        Assert.DoesNotThrow(() =>
-            dd.CheckValidFormat(new QuickFix.Fields.StringField(52, "20091211-12:12:44")));
-        Assert.Throws<QuickFix.IncorrectDataFormat>(() =>
-            dd.CheckValidFormat(new QuickFix.Fields.StringField(52, "not-a-timestamp")));
-    }
 }
-

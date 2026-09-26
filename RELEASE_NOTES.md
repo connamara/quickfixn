@@ -10,6 +10,29 @@ What's New
 
 **IMPORTANT NOTICES:**  
 
+* **1.15 introduces a new `UtcDateTimeField` class for UTCTIMESTAMP fields.**
+    * Fields whose FIX type is UTCTIMESTAMP (`SendingTime`, `TransactTime`, `ExpireTime`, etc.) now
+      derive from `UtcDateTimeField` instead of `DateTimeField`.  Their `Value` always has
+      `DateTime.Kind == Utc`, as the FIX spec requires, instead of `Unspecified`.
+    * **If you set Local DateTimes to UTCTIMESTAMP fields, they will now be implicitly converted to UTC!**
+      If you construct one of these fields from a
+      `DateTime` with `Kind=Local` (e.g. `new TransactTime(DateTime.Now)`), it is now converted to
+      UTC before being written; previously the local wall-clock time was written as-is.  Applications
+      that were compensating for the old behavior will need to stop doing so.  (`Kind=Unspecified` values are
+      relabeled to UTC only, never shifted.)
+    * `FieldBase<T>.Value` is now `virtual` so the new class can normalize on assignment.  TZTIMESTAMP
+      fields (`TZTransactTime`) are unaffected and remain on `DateTimeField`.
+    * `FieldMap.GetDateTime(int tag)` is unchanged and still returns `Unspecified`, because a lookup by
+      tag alone has no DataDictionary context to know the field is a UTCTIMESTAMP.
+    * #### IMPORTANT ACTION ITEMS FOR DEVELOPERS
+      * Review all user code that sets values for UTCTIMESTAMP fields
+        (search your DD xml file for UTCTIMESTAMP to get a list of such fields).
+      * **When you set a UtcDateTimeField, ensure that the input has the DateTime.Kind that you expect.
+        Kind.Local times will be implicitly converted to UTC based on your system's timezone.
+      * When constructing DateTimes, consider always explicitly specifying the `Kind` parameter to avoid confusion.
+      * Note that `DateTime.Now()` yields a Datetime w/Kind=Local.  `DateTime.UtcNow()` gives Kind=Utc.
+    * These changes are introduced in Issue #1030/Pull Request #1031.
+      
 * **1.15 introduces breaking changes to `TimeOnlyField`/`DateOnlyField` classes and derived FIX fields.**
     * These field types are now backed by C# `TimeOnly`/`DateOnly` instances instead of `DateTime`.
       Some ctors/functions were deprecated as per usual procedure, but certain ctors/functions have
@@ -52,6 +75,7 @@ What's New
 * #1021 - remove .NET 8 support; remove expired deprecations (gbirchmeier)
 * #1015 - rework DateOnlyField/TimeOnlyField to be backed by DateOnly/TimeOnly types instead of DateTime (gbirchmeier)
 * #1023 - new config setting "FieldSeparatorInMessageLogs" (gbirchmeier)
+* #1030 - new UtcDateTimeField class so UTCTIMESTAMP fields always have DateTimeKind.Utc (stic)
 
 
 ### v1.14.1
