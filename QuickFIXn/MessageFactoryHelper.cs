@@ -17,28 +17,30 @@ internal static class MessageFactoryHelper
     /// Loads all QuickFix.*.dll assemblies from the executing assembly's directory and caches them for future use.
     /// </summary>
     /// <returns></returns>
-    public static Assembly[] LoadLocalDlls() => _loadedDlls.Value;
+    internal static Assembly[] LoadLocalDlls() => _loadedDlls.Value;
 
     /// <summary>
     /// Gets all currently loaded QuickFix.*.dll assemblies from the AppDomain.
     /// </summary>
     /// <returns></returns>
-    public static ICollection<Assembly> GetAppDomainAssemblies()
+    internal static ICollection<Assembly> GetAppDomainAssemblies()
     {
         var assemblies = AppDomain
             .CurrentDomain
             .GetAssemblies()
-            .Where(assembly => !assembly.IsDynamic && assembly.GetName().Name!.StartsWith("QuickFix", StringComparison.Ordinal))
+            .Where(assembly => !assembly.IsDynamic &&
+                               assembly.GetName().Name!.StartsWith("QuickFix", StringComparison.Ordinal))
             .ToList();
         return assemblies;
     }
 
     /// <summary>
-    /// Gets all IMessageFactory implementations from the provided assemblies. Each type must implement IMessageFactory and have a parameterless constructor.
+    /// Gets all IMessageFactory implementations from the provided assemblies.
+    /// Each type must implement IMessageFactory and have a parameterless constructor.
     /// </summary>
     /// <param name="assemblies"></param>
     /// <returns></returns>
-    public static ICollection<Type> GetMessageFactoriesTypes(IEnumerable<Assembly> assemblies)
+    internal static ICollection<Type> GetMessageFactoriesTypes(IEnumerable<Assembly> assemblies)
     {
         var factoryTypes = assemblies
             .SelectMany(assembly => assembly.GetExportedTypes())
@@ -49,11 +51,12 @@ internal static class MessageFactoryHelper
     }
 
     /// <summary>
-    /// Instantiates IMessageFactory implementations from the provided types. Each type must implement IMessageFactory and have a parameterless constructor.
+    /// Instantiates IMessageFactory implementations from the provided types.
+    /// Each type must implement IMessageFactory and have a parameterless constructor.
     /// </summary>
     /// <param name="factoryTypes"></param>
     /// <returns></returns>
-    public static ICollection<IMessageFactory> InstantiateMessageFactories(ICollection<Type> factoryTypes)
+    internal static ICollection<IMessageFactory> InstantiateMessageFactories(ICollection<Type> factoryTypes)
     {
         var factories = new List<IMessageFactory>();
         foreach (var factoryType in factoryTypes)
@@ -67,12 +70,13 @@ internal static class MessageFactoryHelper
 
     /// <summary>
     /// Determines if the provided type is a valid IMessageFactory implementation.
-    /// A valid IMessageFactory must be a non-abstract class that implements IMessageFactory and has a parameterless constructor.
+    /// A valid IMessageFactory must be a non-abstract class that
+    /// implements IMessageFactory and has a parameterless constructor.
     /// The DefaultMessageFactory is excluded from this check.
     /// </summary>
     /// <param name="type"></param>
     /// <returns></returns>
-    public static bool IsMessageFactory(Type type)
+    internal static bool IsMessageFactory(Type type)
     {
         return type != typeof(DefaultMessageFactory) &&
                type.IsClass &&
@@ -90,11 +94,11 @@ internal static class MessageFactoryHelper
         try
         {
             var assemblyLocation = Assembly.GetExecutingAssembly().Location;
-            if (String.IsNullOrWhiteSpace(assemblyLocation))
+            if (string.IsNullOrWhiteSpace(assemblyLocation))
                 return [];
 
             var directory = Path.GetDirectoryName(assemblyLocation);
-            if (String.IsNullOrWhiteSpace(directory))
+            if (string.IsNullOrWhiteSpace(directory))
                 return [];
 
             var dlls = Directory.GetFiles(directory, "QuickFix.*.dll");

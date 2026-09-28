@@ -6,6 +6,13 @@ It doesn't do much analyzing yet.
 It intentionally has minimal dependencies, and the UTs use
 Microsoft's default TestFramework.
 
+## Build and test
+
+```
+> dotnet build
+> dotnet test
+```
+
 ## To run
 
 To parse DDs, but only analyze (not generate):  
@@ -30,6 +37,7 @@ Pack this project as `QuickFIXn.DDTool`. Consumers reference it; FIX XML is take
 </ItemGroup>
 ```
 
-On build, the package runs DDTool with `--brokerproject` and writes generated C# under `{DDName}/` (e.g. `{DDName}/MessageFactory.cs`).
+On build, the package runs DDTool with `--brokerproject` and writes
+generated C# under `{DDName}/` (e.g. `{DDName}/MessageFactory.cs`).
 
 With `--brokerproject`, every input dictionary must set a unique `customname` on the root `<fix>` tag.

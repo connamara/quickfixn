@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using QuickFix.Fields;
@@ -25,12 +24,14 @@ public class DefaultMessageFactory : IMessageFactory
     /// 2. Find all IMessageFactory implementations in these assemblies (must have parameterless constructor)
     /// 3. Use them based on begin strings they support
     /// </summary>
-    /// <param name="defaultApplVerId">ApplVerID value used by default in Create methods that don't explicitly specify it (only relevant for FIX5+)</param>
+    /// <param name="defaultApplVerId">
+    /// ApplVerID value used by default in Create methods that don't explicitly specify it (only relevant for FIX5+)
+    /// </param>
     public DefaultMessageFactory(string defaultApplVerId = QuickFix.FixValues.ApplVerID.FIX50SP2)
     {
         _defaultApplVerId = new ApplVerID(defaultApplVerId);
-        var assemblies = GetAppDomainAssemblies();
-        var factories = GetMessageFactories(assemblies);
+        ICollection<Assembly> assemblies = GetAppDomainAssemblies();
+        ICollection<IMessageFactory> factories = GetMessageFactories(assemblies);
         _factories = ConvertToDictionary(factories);
     }
 
@@ -40,11 +41,14 @@ public class DefaultMessageFactory : IMessageFactory
     /// 2. Use them based on begin strings they support
     /// </summary>
     /// <param name="assemblies">Assemblies that may contain IMessageFactory implementations</param>
-    /// <param name="defaultApplVerId">ApplVerID value used by default in Create methods that don't explicitly specify it (only relevant for FIX5+)</param>
-    public DefaultMessageFactory(IEnumerable<Assembly> assemblies, string defaultApplVerId = QuickFix.FixValues.ApplVerID.FIX50SP2)
+    /// <param name="defaultApplVerId">
+    /// ApplVerID value used by default in Create methods that don't explicitly specify it (only relevant for FIX5+)
+    /// </param>
+    public DefaultMessageFactory(IEnumerable<Assembly> assemblies,
+        string defaultApplVerId = QuickFix.FixValues.ApplVerID.FIX50SP2)
     {
         _defaultApplVerId = new ApplVerID(defaultApplVerId);
-        var factories = GetMessageFactories(assemblies);
+        ICollection<IMessageFactory> factories = GetMessageFactories(assemblies);
         _factories = ConvertToDictionary(factories);
     }
 
@@ -54,8 +58,11 @@ public class DefaultMessageFactory : IMessageFactory
     /// 2. Use them based on begin strings they support
     /// </summary>
     /// <param name="factories">IMessageFactory implementations</param>
-    /// <param name="defaultApplVerId">ApplVerID value used by default in Create methods that don't explicitly specify it (only relevant for FIX5+)</param>
-    public DefaultMessageFactory(IEnumerable<IMessageFactory> factories, string defaultApplVerId = QuickFix.FixValues.ApplVerID.FIX50SP2)
+    /// <param name="defaultApplVerId">
+    /// ApplVerID value used by default in Create methods that don't explicitly specify it (only relevant for FIX5+)
+    /// </param>
+    public DefaultMessageFactory(IEnumerable<IMessageFactory> factories,
+        string defaultApplVerId = QuickFix.FixValues.ApplVerID.FIX50SP2)
     {
         _defaultApplVerId = new ApplVerID(defaultApplVerId);
         _factories = ConvertToDictionary(factories);
@@ -88,7 +95,7 @@ public class DefaultMessageFactory : IMessageFactory
             return messageFactory.Create(beginString, applVerId, msgType);
 
         // didn't find a factory, so return a generic Message object
-        var message = new Message();
+        Message message = new();
         message.Header.SetField(new StringField(QuickFix.Fields.Tags.MsgType, msgType));
         return message;
     }
@@ -117,9 +124,9 @@ public class DefaultMessageFactory : IMessageFactory
     private static Dictionary<string, IMessageFactory> ConvertToDictionary(IEnumerable<IMessageFactory> factories)
     {
         var dict = new Dictionary<string, IMessageFactory>();
-        foreach (var factory in factories)
+        foreach (IMessageFactory factory in factories)
         {
-            foreach (var beginString in factory.GetSupportedBeginStrings())
+            foreach (string beginString in factory.GetSupportedBeginStrings())
             {
                 dict[beginString] = factory;
             }
@@ -130,7 +137,7 @@ public class DefaultMessageFactory : IMessageFactory
 
     private static ICollection<IMessageFactory> GetMessageFactories(IEnumerable<Assembly> assemblies)
     {
-        var factoryTypes = MessageFactoryHelper.GetMessageFactoriesTypes(assemblies);
+        ICollection<Type> factoryTypes = MessageFactoryHelper.GetMessageFactoriesTypes(assemblies);
         return MessageFactoryHelper.InstantiateMessageFactories(factoryTypes);
     }
 

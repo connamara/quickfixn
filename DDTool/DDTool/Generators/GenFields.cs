@@ -26,7 +26,7 @@ public static class GenFields {
     }
 
     private static string Generate(List<DDField> fields, string? ddName) {
-        var ns = ddName != null
+        string ns = ddName != null
             ? $"QuickFix.{ddName}.Fields"
             : "QuickFix.Fields";
 

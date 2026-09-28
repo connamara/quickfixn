@@ -11,7 +11,7 @@ public class Options {
     public string? OutputDir { get; }
     public bool HasOutputDir => !string.IsNullOrEmpty(OutputDir);
 
-    public bool BrokerProject { get; }
+    public bool IsBrokerProject { get; }
 
     public string? Framework { get; }
 
@@ -43,7 +43,7 @@ public class Options {
                     break;
 
                 case "--brokerproject":
-                    BrokerProject = true;
+                    IsBrokerProject = true;
                     break;
 
                 case "--framework":
@@ -52,7 +52,7 @@ public class Options {
                     break;
 
                 default:
-                    if (next.StartsWith("-"))
+                    if (next.StartsWith('-'))
                         errors.Add($"Unrecognized option: {next}");
                     else {
                         // All done with cmd-line options now,

@@ -10,8 +10,8 @@ public class MessageFactoryBuilder
     private bool _loadLocalDlls = false;
     private bool _addLoadedDlls = false;
 
-    private readonly List<Assembly> _assemblies = new();
-    private readonly List<Type> _factoriesTypes = new();
+    private readonly List<Assembly> _assemblies = [];
+    private readonly List<Type> _factoriesTypes = [];
     private string _defaultApplVerId = QuickFix.FixValues.ApplVerID.FIX50SP2;
 
     /// <summary>
@@ -35,7 +35,8 @@ public class MessageFactoryBuilder
     }
 
     /// <summary>
-    /// Adds a collection of IMessageFactory types to the builder. Each type must implement IMessageFactory and have a parameterless constructor.
+    /// Adds a collection of IMessageFactory types to the builder.
+    /// Each type must implement IMessageFactory and have a parameterless constructor.
     /// </summary>
     /// <param name="factoryTypes"></param>
     /// <returns></returns>
@@ -52,7 +53,8 @@ public class MessageFactoryBuilder
     }
 
     /// <summary>
-    /// Adds a collection of assemblies to the builder. The builder will search for IMessageFactory implementations in these assemblies.
+    /// Adds a collection of assemblies to the builder.
+    /// The builder will search for IMessageFactory implementations in these assemblies.
     /// </summary>
     /// <param name="assemblies"></param>
     /// <returns></returns>
@@ -69,7 +71,8 @@ public class MessageFactoryBuilder
     }
 
     /// <summary>
-    /// Adds a single IMessageFactory type to the builder. The type must implement IMessageFactory and have a parameterless constructor.
+    /// Adds a single IMessageFactory type to the builder.
+    /// The type must implement IMessageFactory and have a parameterless constructor.
     /// </summary>
     /// <param name="factoryType"></param>
     /// <returns></returns>
@@ -86,7 +89,8 @@ public class MessageFactoryBuilder
     }
 
     /// <summary>
-    /// Adds a single IMessageFactory type to the builder. The type must implement IMessageFactory and have a parameterless constructor.
+    /// Adds a single IMessageFactory type to the builder.
+    /// The type must implement IMessageFactory and have a parameterless constructor.
     /// </summary>
     /// <typeparam name="TMessageFactory"></typeparam>
     /// <returns></returns>
@@ -97,7 +101,8 @@ public class MessageFactoryBuilder
     }
 
     /// <summary>
-    /// Adds a single assembly to the builder. The builder will search for IMessageFactory implementations in this assembly.
+    /// Adds a single assembly to the builder.
+    /// The builder will search for IMessageFactory implementations in this assembly.
     /// </summary>
     /// <param name="assembly"></param>
     /// <returns></returns>
@@ -109,7 +114,8 @@ public class MessageFactoryBuilder
     }
 
     /// <summary>
-    /// Sets the default ApplVerID to be used by the built IMessageFactory. This value will be used when creating messages that do not have a specific ApplVerID set.
+    /// Sets the default ApplVerID to be used by the built IMessageFactory.
+    /// This value will be used when creating messages that do not have a specific ApplVerID set.
     /// </summary>
     /// <param name="defaultApplVerId"></param>
     /// <returns></returns>
@@ -124,7 +130,8 @@ public class MessageFactoryBuilder
 
     /// <summary>
     /// Builds and returns an IMessageFactory instance based on the configuration provided to the builder.
-    /// The built IMessageFactory will include all added IMessageFactory types and assemblies, and will use the specified default ApplVerID.
+    /// The built IMessageFactory will include all added IMessageFactory types and assemblies,
+    /// and will use the specified default ApplVerID.
     /// </summary>
     /// <returns></returns>
     public IMessageFactory Build()
@@ -144,21 +151,22 @@ public class MessageFactoryBuilder
         }
 
         // Avoid duplicate assemblies
-        var assemblies = _assemblies.DistinctBy(a => a.FullName).ToArray();
+        Assembly[] assemblies = _assemblies.DistinctBy(a => a.FullName).ToArray();
 
         // Get all IMessageFactory types from the specified assemblies
-        var factoryTypes = MessageFactoryHelper.GetMessageFactoriesTypes(assemblies);
+        ICollection<Type> factoryTypes = MessageFactoryHelper.GetMessageFactoriesTypes(assemblies);
 
         // Add the found factory types to the list of factory types
         _factoriesTypes.AddRange(factoryTypes);
 
         // Avoid duplicate factory types
-        var factoriesTypes = _factoriesTypes.DistinctBy(f => f.FullName).ToArray();
+        Type[] factoriesTypes = _factoriesTypes.DistinctBy(f => f.FullName).ToArray();
 
         // Instantiate the IMessageFactory instances from the types
-        var factories = MessageFactoryHelper.InstantiateMessageFactories(factoriesTypes);
+        ICollection<IMessageFactory> factories = MessageFactoryHelper.InstantiateMessageFactories(factoriesTypes);
 
-        // Create and return the DefaultMessageFactory with the instantiated factories and the specified default ApplVerID
+        // Create and return the DefaultMessageFactory with the instantiated factories
+        // and the specified default ApplVerID
         return new DefaultMessageFactory(factories, _defaultApplVerId);
     }
 }

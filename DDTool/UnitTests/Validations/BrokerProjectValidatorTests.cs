@@ -10,40 +10,39 @@ public class BrokerProjectValidatorTests {
 
     [TestMethod]
     public void Check_RequiresCustomName() {
-        var dd = new DataDictionary("a.xml") { MajorVersion = 4, MinorVersion = 4 };
-        var errors = BrokerProjectValidator.Check(new List<DataDictionary> { dd });
+        DataDictionary dd = new("a.xml") { MajorVersion = 4, MinorVersion = 4 };
+        List<string> errors = BrokerProjectValidator.Check([dd]);
         Assert.AreEqual(1, errors.Count);
-        StringAssert.Contains(errors[0], "customname");
-        StringAssert.Contains(errors[0], "a.xml");
+        StringAssert.StartsWith(errors[0],
+            "a.xml: --brokerproject requires a \"customname\" attribute on the root <fix> tag");
     }
 
     [TestMethod]
     public void Check_RejectsWhitespaceCustomName() {
-        var dd = new DataDictionary("a.xml") {
+        DataDictionary dd = new("a.xml") {
             MajorVersion = 4, MinorVersion = 4, CustomName = "   "
         };
-        var errors = BrokerProjectValidator.Check(new List<DataDictionary> { dd });
+        List<string> errors = BrokerProjectValidator.Check([dd]);
         Assert.AreEqual(1, errors.Count);
-        StringAssert.Contains(errors[0], "customname");
+        StringAssert.StartsWith(errors[0],
+            "a.xml: --brokerproject requires a \"customname\" attribute on the root <fix> tag");
     }
 
     [TestMethod]
     public void Check_RequiresUniqueCustomNames() {
-        var a = new DataDictionary("a.xml") { CustomName = "SAME" };
-        var b = new DataDictionary("b.xml") { CustomName = "SAME" };
-        var errors = BrokerProjectValidator.Check(new List<DataDictionary> { a, b });
+        DataDictionary a = new("a.xml") { CustomName = "SAME" };
+        DataDictionary b = new("b.xml") { CustomName = "SAME" };
+        List<string> errors = BrokerProjectValidator.Check([a, b]);
         Assert.AreEqual(1, errors.Count);
-        StringAssert.Contains(errors[0], "Duplicate customname");
-        StringAssert.Contains(errors[0], "SAME");
-        StringAssert.Contains(errors[0], "a.xml");
-        StringAssert.Contains(errors[0], "b.xml");
+        StringAssert.StartsWith(errors[0], "Duplicate customname \"SAME\"");
+        StringAssert.EndsWith(errors[0], "Files: [a.xml, b.xml]");
     }
 
     [TestMethod]
     public void Check_AcceptsUniqueCustomNames() {
-        var a = new DataDictionary("a.xml") { CustomName = "Alpha" };
-        var b = new DataDictionary("b.xml") { CustomName = "Beta" };
-        var errors = BrokerProjectValidator.Check(new List<DataDictionary> { a, b });
+        DataDictionary a = new("a.xml") { CustomName = "Alpha" };
+        DataDictionary b = new("b.xml") { CustomName = "Beta" };
+        List<string> errors = BrokerProjectValidator.Check([a, b]);
         Assert.AreEqual(0, errors.Count);
     }
 }

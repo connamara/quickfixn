@@ -7,28 +7,28 @@ using DDTool.Structures;
 namespace DDTool.Generators;
 
 public static class GenMessageFactories {
-    public static List<string> WriteFiles(string baseDir, bool brokerProject, List<DataDictionary> dds) {
+    public static List<string> WriteFiles(string baseDir, bool isBrokerProject, List<DataDictionary> dds) {
         List<string> rv = new();
         foreach (var dd in dds.OrderBy(x => x.Identifier)) {
-            rv.Add(WriteFile(baseDir, brokerProject, dd));
+            rv.Add(WriteFile(baseDir, isBrokerProject, dd));
         }
 
         return rv;
     }
 
-    private static string WriteFile(string baseDir, bool brokerProject, DataDictionary dd) {
-        string filePath = brokerProject 
+    private static string WriteFile(string baseDir, bool isBrokerProject, DataDictionary dd) {
+        string filePath = isBrokerProject
             ? Path.Join(baseDir, dd.Name, "MessageFactory.cs") 
             : Path.Join(baseDir, "MessageFactory.cs");
         Directory.CreateDirectory(
             Path.GetDirectoryName(filePath)!);
-        File.WriteAllText(filePath, Generate(brokerProject, dd));
+        File.WriteAllText(filePath, Generate(isBrokerProject, dd));
         return filePath;
     }
 
-    private static string Generate(bool brokerProject, DataDictionary dd) {
+    private static string Generate(bool isBrokerProject, DataDictionary dd) {
 
-        var tagsPath = brokerProject ? $"QuickFix.{dd.Name}.Fields.Tags" : "QuickFix.Fields.Tags";
+        string tagsPath = isBrokerProject ? $"QuickFix.{dd.Name}.Fields.Tags" : "QuickFix.Fields.Tags";
 
         var lines = new List<string>
         {
