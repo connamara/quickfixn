@@ -58,6 +58,7 @@ public static class Program {
             Console.WriteLine("Errors found.  Code generation (if commanded) will not run.");
             foreach (var err in errors)
                 Console.WriteLine($"* {err}");
+            Environment.Exit(1);
         }
 
         if (doGeneration) {
