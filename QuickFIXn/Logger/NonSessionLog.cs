@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 
 namespace QuickFix.Logger;
 
@@ -11,7 +12,7 @@ public class NonSessionLog {
 
     private readonly ILogFactory _logFactory;
 
-    private readonly static object _sync = new();
+    private readonly static Lock _sync = new();
 
     internal NonSessionLog(ILogFactory logFactory) {
         _logFactory = logFactory;

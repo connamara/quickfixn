@@ -14,7 +14,7 @@ namespace QuickFix.Logger;
 /// </summary>
 public class FileLog : ILog
 {
-    private readonly object _sync = new();
+    private readonly Lock _sync = new();
 
     private System.IO.StreamWriter? _messageLog;
     private System.IO.StreamWriter? _eventLog;
@@ -71,7 +71,7 @@ public class FileLog : ILog
     [MemberNotNull(nameof(_messageLog))]
     private void EnsureMessageLogInit(bool append = true)
     {
-        Debug.Assert(Monitor.IsEntered(_sync), "Expected to hold the lock");
+        Debug.Assert(_sync.IsHeldByCurrentThread, "Expected to hold the lock");
 
         _messageLog ??= new System.IO.StreamWriter(_messageLogFileName, append)
         {
@@ -82,7 +82,7 @@ public class FileLog : ILog
     [MemberNotNull(nameof(_eventLog))]
     private void EnsureEventLogInit(bool append = true)
     {
-        Debug.Assert(Monitor.IsEntered(_sync), "Expected to hold the lock");
+        Debug.Assert(_sync.IsHeldByCurrentThread, "Expected to hold the lock");
 
         _eventLog ??= new System.IO.StreamWriter(_eventLogFileName, append)
         {

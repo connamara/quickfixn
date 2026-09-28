@@ -22,7 +22,7 @@ public class SocketInitiator : AbstractInitiator
     private readonly SocketSettings _socketSettings = new();
     private readonly Dictionary<SessionID, SocketInitiatorThread> _threads = new();
     private readonly Dictionary<SessionID, int> _sessionToHostNum = new();
-    private readonly object _sync = new();
+    private readonly Lock _sync = new();
     private readonly ILogger _nonSessionLog;
 
     public SocketInitiator(
@@ -58,7 +58,8 @@ public class SocketInitiator : AbstractInitiator
             t.Initiator.SetConnected(t.Session.SessionID);
             t.Session.Log.Log(LogLevel.Information, "Connection succeeded");
             t.Session.Next();
-            while (t.Read()) {
+            while (t.Read())
+            {
             }
         }
         catch (IOException ex) // Can be exception when connecting, during ssl authentication or when reading
@@ -82,7 +83,8 @@ public class SocketInitiator : AbstractInitiator
         t.Initiator.SetDisconnected(t.Session.SessionID);
     }
 
-    private static void LogThreadStartConnectionFailed(SocketInitiatorThread t, Exception e) {
+    private static void LogThreadStartConnectionFailed(SocketInitiatorThread t, Exception e)
+    {
         if (t.Session.Disposed)
         {
             t.NonSessionLog.Log(LogLevel.Error, e, "Connection failed [session {SessionID}]: {Message}",
@@ -109,18 +111,24 @@ public class SocketInitiator : AbstractInitiator
     {
         // We can come in here on the thread being removed, and on another thread too in the case
         // of dynamic session removal, so make sure we won't deadlock...
-        if (Monitor.TryEnter(_sync))
+        if (_sync.TryEnter())
         {
-            if (_threads.TryGetValue(sessionId, out var thread))
+            try
             {
-                try
+                if (_threads.TryGetValue(sessionId, out var thread))
                 {
-                    thread.Join();
+                    try
+                    {
+                        thread.Join();
+                    }
+                    catch { }
+                    _threads.Remove(sessionId);
                 }
-                catch { }
-                _threads.Remove(sessionId);
             }
-            Monitor.Exit(_sync);
+            finally
+            {
+                _sync.Exit();
+            }
         }
     }
 
@@ -177,7 +185,7 @@ public class SocketInitiator : AbstractInitiator
     {
         _shutdownRequested = false;
 
-        while(!_shutdownRequested)
+        while (!_shutdownRequested)
         {
             try
             {
@@ -240,7 +248,8 @@ public class SocketInitiator : AbstractInitiator
             t.Start();
             AddThread(t);
         }
-        catch (Exception e) {
+        catch (Exception e)
+        {
             session.Log.Log(LogLevel.Error, e, "Connection error: {Message}", e.Message);
         }
     }
