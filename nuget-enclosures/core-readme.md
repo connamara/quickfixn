@@ -11,15 +11,15 @@ You most likely also need one or more message definition packages:
 
 **Starting with v1.14, we removed the weird extra period from the package names so that they read easier.  
 The packages have been renamed as follows:**
-* ~~QuickFIX.FIX4.0.{ver}~~ becomes **QuickFIX.FIX40.{ver}**
-* ~~QuickFIX.FIX4.1.{ver}~~ becomes **QuickFIX.FIX41.{ver}**
-* ~~QuickFIX.FIX4.2.{ver}~~ becomes **QuickFIX.FIX42.{ver}**
-* ~~QuickFIX.FIX4.3.{ver}~~ becomes **QuickFIX.FIX43.{ver}**
-* ~~QuickFIX.FIX4.4.{ver}~~ becomes **QuickFIX.FIX44.{ver}**
-* ~~QuickFIX.FIX5.0.{ver}~~ becomes **QuickFIX.FIX50.{ver}**
-* ~~QuickFIX.FIX5.0SP1.{ver}~~ becomes **QuickFIX.FIX50SP1.{ver}**
-* ~~QuickFIX.FIX5.0SP2.{ver}~~ becomes **QuickFIX.FIX50SP2.{ver}**
-* ~~QuickFIX.FIXT1.1.{ver}~~ becomes **QuickFIX.FIXT11.{ver}**
+* ~~QuickFIXn.FIX4.0.{ver}~~ becomes **QuickFIXn.FIX40.{ver}**
+* ~~QuickFIXn.FIX4.1.{ver}~~ becomes **QuickFIXn.FIX41.{ver}**
+* ~~QuickFIXn.FIX4.2.{ver}~~ becomes **QuickFIXn.FIX42.{ver}**
+* ~~QuickFIXn.FIX4.3.{ver}~~ becomes **QuickFIXn.FIX43.{ver}**
+* ~~QuickFIXn.FIX4.4.{ver}~~ becomes **QuickFIXn.FIX44.{ver}**
+* ~~QuickFIXn.FIX5.0.{ver}~~ becomes **QuickFIXn.FIX50.{ver}**
+* ~~QuickFIXn.FIX5.0SP1.{ver}~~ becomes **QuickFIXn.FIX50SP1.{ver}**
+* ~~QuickFIXn.FIX5.0SP2.{ver}~~ becomes **QuickFIXn.FIX50SP2.{ver}**
+* ~~QuickFIXn.FIXT1.1.{ver}~~ becomes **QuickFIXn.FIXT11.{ver}**
 
 When you update your QuickFIXn.Core nuget package, please change to the new message packages to keep the version numbers in sync!
 
