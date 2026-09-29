@@ -19,15 +19,16 @@ What's New
       `DateTime` with `Kind=Local` (e.g. `new TransactTime(DateTime.Now)`), it is now converted to
       UTC before being written; previously the local wall-clock time was written as-is.  Applications
       that were compensating for the old behavior will need to stop doing so.  (`Kind=Unspecified` values are
-      relabeled to UTC only, never shifted.)
+      have their `Kind` changed to `UTC`, but the time is not shifted.)
     * `FieldBase<T>.Value` is now `virtual` so the new class can normalize on assignment.  TZTIMESTAMP
-      fields (`TZTransactTime`) are unaffected and remain on `DateTimeField`.
-    * `FieldMap.GetDateTime(int tag)` is unchanged and still returns `Unspecified`, because a lookup by
-      tag alone has no DataDictionary context to know the field is a UTCTIMESTAMP.
+      fields (`TZTransactTime`) are unaffected and remain with `DateTimeField` as base.
+    * `FieldMap.GetDateTime(int tag)` is unchanged.  Returned DateTimes will be `Kind=Unspecified`
+      when extracted from a string off the wire, because a lookup by tag alone has no DataDictionary
+      context to know the field is a UTCTIMESTAMP.
     * #### IMPORTANT ACTION ITEMS FOR DEVELOPERS
       * Review all user code that sets values for UTCTIMESTAMP fields
         (search your DD xml file for UTCTIMESTAMP to get a list of such fields).
-      * **When you set a UtcDateTimeField, ensure that the input has the DateTime.Kind that you expect.
+      * **When you set a UtcDateTimeField, ensure that the input has the DateTime.Kind that you expect.**
         Kind.Local times will be implicitly converted to UTC based on your system's timezone.
       * When constructing DateTimes, consider always explicitly specifying the `Kind` parameter to avoid confusion.
       * Note that `DateTime.Now()` yields a Datetime w/Kind=Local.  `DateTime.UtcNow()` gives Kind=Utc.

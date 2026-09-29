@@ -182,14 +182,17 @@ public class FieldMapTests
     }
 
     [Test]
-    public void GetDateTimeTest()
+    public void GetDateTimeTest_TicksOnly()
     {
+        // NOTE: DateTime equality ignores Kind.  It must be checked explicitly.
+        //       This test doesn't check it.  See GetDateTime_KindTest().
+
         FieldMap fm = new();
         fm.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
         Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10, 0, 0, 0)));
 
-        fm.SetField(new DateOnlyField(Tags.TransactTime, new DateOnly(2009, 12, 10)));
-        Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10, 0, 0, 0)));
+        fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateOnly(2009, 12, 10)));
+        Assert.That(fm.GetDateTime(Tags.MDEntryDate), Is.EqualTo(new DateTime(2009, 12, 10, 0, 0, 0)));
 
         fm.SetField(new TimeOnlyField(Tags.MDEntryTime, new TimeOnly(1, 2, 3)));
         Assert.That(fm.GetDateTime(Tags.MDEntryTime), Is.EqualTo(new DateTime(1980, 01, 01, 1, 2, 3)));
@@ -203,8 +206,34 @@ public class FieldMapTests
         fm.SetField(new IntField(Tags.TransactTime, 999));
         Assert.Throws<FieldConvertError>(delegate { fm.GetDateTime(Tags.TransactTime); });
 
-        Assert.Throws(typeof(FieldNotFoundException),
-                delegate { fm.GetDateTime(99900); });
+        Assert.Throws<FieldNotFoundException>(delegate { fm.GetDateTime(99900); });
+    }
+
+    [Test]
+    public void GetDateTimeTest_KindOnly()
+    {
+        // NOTE: This test checks only the resulting DateTime.Kind values (which DateTime equality ignores).
+        FieldMap fm = new();
+        fm.SetField(new DateTimeField(Tags.TransactTime, DateTime.UtcNow));
+        Assert.That(fm.GetDateTime(Tags.TransactTime).Kind, Is.EqualTo(DateTimeKind.Utc));
+
+        fm.SetField(new DateTimeField(Tags.TransactTime, DateTime.Now));
+        Assert.That(fm.GetDateTime(Tags.TransactTime).Kind, Is.EqualTo(DateTimeKind.Local));
+
+        fm.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10, 0, 0, 0, DateTimeKind.Unspecified)));
+        Assert.That(fm.GetDateTime(Tags.TransactTime).Kind, Is.EqualTo(DateTimeKind.Unspecified));
+
+        fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateOnly(2009, 12, 10)));
+        Assert.That(fm.GetDateTime(Tags.MDEntryDate).Kind, Is.EqualTo(DateTimeKind.Unspecified));
+
+        fm.SetField(new TimeOnlyField(Tags.MDEntryTime, new TimeOnly(1, 2, 3)));
+        Assert.That(fm.GetDateTime(Tags.MDEntryTime).Kind, Is.EqualTo(DateTimeKind.Unspecified));
+
+        fm.SetField(new UtcDateTimeField(Tags.TransactTime, DateTime.UtcNow));
+        Assert.That(fm.GetDateTime(Tags.TransactTime).Kind, Is.EqualTo(DateTimeKind.Utc));
+
+        fm.SetField(new StringField(Tags.TransactTime, "20091211-12:12:44"));
+        Assert.That(fm.GetDateTime(Tags.TransactTime).Kind, Is.EqualTo(DateTimeKind.Unspecified));
     }
 
     [Test]
