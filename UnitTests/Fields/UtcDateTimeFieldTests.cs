@@ -14,76 +14,67 @@ public class UtcDateTimeFieldTests
         Assert.That(f.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
     }
 
-    [Test]
-    public void CtorWithUnspecifiedKindTest()
+    [TestCase(DateTimeKind.Unspecified)]
+    [TestCase(DateTimeKind.Utc)]
+    public void CtorWithKindUtcOrUnspecifiedTest(DateTimeKind kind)
     {
-        DateTime dt = new(2025, 10, 31, 17, 30, 59, DateTimeKind.Unspecified);
-        UtcDateTimeField f = new(Tags.SendingTime, dt);
+        // Unspecified is assumed to be UTC
+        DateTime dt = new(2025, 10, 31, 17, 30, 59, kind);
+        UtcDateTimeField f = new(Tags.SendingTime, dt, TimePrecision.Millisecond);
 
         Assert.That(f.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
-        Assert.That(f.Value.ToString("HH:mm:ss"), Is.EqualTo("17:30:59"));
+        Assert.That(f.ToString(), Is.EqualTo("20251031-17:30:59.000"));
     }
 
     [Test]
     public void CtorWithLocalKindTest()
     {
         DateTime local = DateTime.SpecifyKind(new DateTime(2025, 10, 31, 17, 30, 59), DateTimeKind.Local);
+        UtcDateTimeField f = new(Tags.SendingTime, local, TimePrecision.Millisecond);
+
         // derive the expectation from TimeZoneInfo, not from ToUniversalTime, so this isn't just a
         // restatement of the implementation
         TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(local);
-
-        UtcDateTimeField f = new(Tags.SendingTime, local);
-
         DateTime expectedUtc = DateTime.SpecifyKind(local - offset, DateTimeKind.Utc);
 
         Assert.That(f.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
         Assert.That(f.Value == expectedUtc, Is.True);
-        if (offset != TimeSpan.Zero) // CI runs UTC, where a converted value is indistinguishable from a relabeled one
-            Assert.That(f.Value == DateTime.SpecifyKind(local, DateTimeKind.Utc), Is.False);
+        if (offset != TimeSpan.Zero) // this will fail if CI is in UTC, of course
+            Assert.That(f.ToString(), Is.Not.EqualTo("20251031-17:30:59.000")); // because it got shifted from local
     }
 
-    [Test]
-    public void CtorWithUtcKindTest()
-    {
-        DateTime dt = DateTime.SpecifyKind(new DateTime(2025, 10, 31, 17, 30, 59), DateTimeKind.Utc);
-        UtcDateTimeField f = new(Tags.SendingTime, dt);
-
-        Assert.That(f.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
-        Assert.That(f.Value, Is.EqualTo(dt));
-    }
-
-    [Test]
-    public void ValueSetterForcesUtcTest()
+    [TestCase(DateTimeKind.Unspecified)]
+    [TestCase(DateTimeKind.Utc)]
+    public void ValueSetterUtcOrUnspecifiedTest(DateTimeKind kind)
     {
         UtcDateTimeField f = new(Tags.SendingTime);
-        f.Value = new DateTime(2025, 10, 31, 17, 30, 59, DateTimeKind.Unspecified);
+        f.Value = new DateTime(2025, 10, 31, 17, 30, 59, kind);
 
         Assert.That(f.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
-        Assert.That(f.Value.ToString("HH:mm:ss"), Is.EqualTo("17:30:59"));
+        Assert.That(f.ToString(), Is.EqualTo("20251031-17:30:59.000"));
     }
 
     [Test]
     public void ValueSetterForcesUtcViaBaseTypedReferenceTest()
     {
-        // Value must be an override, not `new`-hiding, or a base-typed reference would write local
-        // wall-clock time into a UTCTIMESTAMP field
         DateTimeField f = new SendingTime();
         DateTime local = DateTime.SpecifyKind(new DateTime(2025, 10, 31, 17, 30, 59), DateTimeKind.Local);
-        TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(local);
-
         f.Value = local;
 
+        TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(local);
         DateTime expectedUtc = DateTime.SpecifyKind(local - offset, DateTimeKind.Utc);
 
         Assert.That(f.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
-        Assert.That(f.Value == expectedUtc, Is.True); // local was converted to UTC
+        Assert.That(f.Value == expectedUtc, Is.True);
+        if (offset != TimeSpan.Zero) // this will fail if CI is in UTC, of course
+            Assert.That(f.ToString(), Is.Not.EqualTo("20251031-17:30:59.000")); // because it got shifted from local
     }
 
     [Test]
     public void DateTimeKindHasNoUnhandledMembers()
     {
         // UtcDateTimeField.ToUtc treats anything that isn't Utc/Local as Unspecified;
-        // fail loudly if a future runtime adds a member that assumption would silently swallow
+        // fail loudly if a future runtime adds a new DateTimeKind member, which this impl would silently swallow
         Assert.That(Enum.GetValues<DateTimeKind>(), Is.EquivalentTo(new[]
             { DateTimeKind.Unspecified, DateTimeKind.Utc, DateTimeKind.Local }));
     }
