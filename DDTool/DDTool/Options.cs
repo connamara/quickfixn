@@ -11,6 +11,10 @@ public class Options {
     public string? OutputDir { get; }
     public bool HasOutputDir => !string.IsNullOrEmpty(OutputDir);
 
+    public bool IsBrokerProject { get; }
+
+    public string? Framework { get; }
+
     public List<string> DDFiles { get; } = [];
 
     public Options(string[] args) {
@@ -38,8 +42,17 @@ public class Options {
                     argList.RemoveFirst();
                     break;
 
+                case "--brokerproject":
+                    IsBrokerProject = true;
+                    break;
+
+                case "--framework":
+                    Framework = argList.First();
+                    argList.RemoveFirst();
+                    break;
+
                 default:
-                    if (next.StartsWith("-"))
+                    if (next.StartsWith('-'))
                         errors.Add($"Unrecognized option: {next}");
                     else {
                         // All done with cmd-line options now,

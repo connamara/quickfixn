@@ -7,24 +7,29 @@ using DDTool.Structures;
 namespace DDTool.Generators;
 
 public static class GenMessageFactories {
-    public static List<string> WriteFiles(string baseDir, List<DataDictionary> dds) {
+    public static List<string> WriteFiles(string baseDir, bool isBrokerProject, List<DataDictionary> dds) {
         List<string> rv = new();
         foreach (var dd in dds.OrderBy(x => x.Identifier)) {
-            rv.Add(WriteFile(baseDir, dd));
+            rv.Add(WriteFile(baseDir, isBrokerProject, dd));
         }
 
         return rv;
     }
 
-    private static string WriteFile(string baseDir, DataDictionary dd) {
-        string filePath = Path.Join(baseDir, "Messages", dd.Name, "MessageFactory.cs");
+    private static string WriteFile(string baseDir, bool isBrokerProject, DataDictionary dd) {
+        string filePath = isBrokerProject
+            ? Path.Join(baseDir, dd.Name, "MessageFactory.cs") 
+            : Path.Join(baseDir, "MessageFactory.cs");
         Directory.CreateDirectory(
             Path.GetDirectoryName(filePath)!);
-        File.WriteAllText(filePath, Generate(dd));
+        File.WriteAllText(filePath, Generate(isBrokerProject, dd));
         return filePath;
     }
 
-    private static string Generate(DataDictionary dd) {
+    private static string Generate(bool isBrokerProject, DataDictionary dd) {
+
+        string tagsPath = isBrokerProject ? $"QuickFix.{dd.Name}.Fields.Tags" : "QuickFix.Fields.Tags";
+
         var lines = new List<string>
         {
             "// This is a generated file.  Don't edit it directly!",
@@ -81,9 +86,8 @@ public static class GenMessageFactories {
             xLines.Add("{");
             xLines.Add("    switch (correspondingFieldId)");
             xLines.Add("    {");
-
             foreach (var group in groups) {
-                AppendGroupCases(xLines, group, $"QuickFix.{dd.Name}.{msg.Name}");
+                AppendGroupCases(xLines, group, $"QuickFix.{dd.Name}.{msg.Name}", tagsPath);
             }
 
             xLines.Add("    }");
@@ -104,14 +108,14 @@ public static class GenMessageFactories {
         return string.Join(Environment.NewLine, lines);
     }
 
-    private static void AppendGroupCases(List<string> lines, DDGroup group, string namePath) {
+    private static void AppendGroupCases(List<string> lines, DDGroup group, string namePath, string tagsPath) {
         var newNamePath = $"{namePath}.{group.Name}Group";
         lines.Add(
-            $"        case QuickFix.Fields.Tags.{group.Name}: return new {newNamePath}();");
+            $"        case {tagsPath}.{group.Name}: return new {newNamePath}();");
 
         var subgroups = group.Elements.Values.OfType<DDGroup>();
         foreach (var subgroup in subgroups) {
-            AppendGroupCases(lines, subgroup, newNamePath);
+            AppendGroupCases(lines, subgroup, newNamePath, tagsPath);
         }
     }
 }

@@ -13,25 +13,35 @@ public static class GenFields {
     /// <summary>
     /// Returns path of file that is written
     /// </summary>
-    /// <param name="repoRootDir"></param>
+    /// <param name="fieldsPath"></param>
+    /// <param name="ddName"></param>
     /// <param name="fields"></param>
     /// <returns></returns>
-    public static string WriteFile(string repoRootDir, List<DDField> fields) {
-        string fieldsPath = Path.Join(repoRootDir, "QuickFIXn", "Fields", "Fields.cs");
-        File.WriteAllText(fieldsPath, Generate(fields));
+    public static string WriteFile(string fieldsPath, string? ddName, List<DDField> fields)
+    {
+        Directory.CreateDirectory(
+            Path.GetDirectoryName(fieldsPath)!);
+        File.WriteAllText(fieldsPath, Generate(fields, ddName));
         return fieldsPath;
     }
 
-    private static string Generate(List<DDField> fields) {
+    private static string Generate(List<DDField> fields, string? ddName) {
+        string ns = ddName != null
+            ? $"QuickFix.{ddName}.Fields"
+            : "QuickFix.Fields";
+
         var lines = new List<string>
         {
             "// This is a generated file.  Don't edit it directly!",
             "",
             "using System;",
+            "using QuickFix.Fields;",
             "",
-            "namespace QuickFix.Fields;",
+            "using SeqNumType = System.UInt64;",
+            "using SeqNumFieldType = QuickFix.Fields.ULongField;",
+            "",
+            $"namespace {ns};",
         };
-
         foreach (var field in fields) {
             lines.Add("");
             switch (field.CsClass) {

@@ -6,7 +6,7 @@ namespace DDTool.Generators;
 
 public static class GenCsproj {
     private static string ProjFilePath(string outputDir, string ddName) {
-        return Path.Join(outputDir, "Messages", ddName, $"QuickFix.{ddName}.csproj");
+        return Path.Join(outputDir, $"QuickFix.{ddName}.csproj");
     }
 
     public static bool IsExistingCsproj(string outputDir, string ddName) {
@@ -14,15 +14,18 @@ public static class GenCsproj {
             ProjFilePath(outputDir, ddName));
     }
 
-    public static string WriteFile(string outputDir, string ddName, string repoRoot) {
-        string csprojPath = ProjFilePath(outputDir, ddName);
+    public static string WriteFile(Options options, string ddName)
+    {
+        string csprojPath = ProjFilePath(options.OutputDir!, ddName);
         File.WriteAllText(
-            csprojPath, Generate(ddName, repoRoot));
+            csprojPath, Generate(options, ddName));
         return csprojPath;
     }
 
-    private static string Generate(string name, string repoRoot) {
-        string qfPath = Path.Join(repoRoot, "QuickFIXn", "QuickFix.csproj");
+    private static string Generate(Options options, string ddName)
+    {
+        string qfPath = Path.Join(options.RepoRoot!, "QuickFIXn", "QuickFix.csproj");
+        var framework = options.Framework ?? "net10.0";
 
         var lines = new List<string>
         {
@@ -33,8 +36,8 @@ public static class GenCsproj {
             "  -->",
             "",
             "  <PropertyGroup>",
-            "    <TargetFramework>net10.0</TargetFramework>",
-            $"    <Description>Custom '{name}' build of QF/n message definitions</Description>",
+            $"    <TargetFramework>{framework}</TargetFramework>",
+            $"    <Description>Custom '{ddName}' build of QF/n message definitions</Description>",
             "    <Nullable>enable</Nullable>",
             "  </PropertyGroup>",
             "",

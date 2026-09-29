@@ -19,6 +19,15 @@ if ($LastExitCode -eq 0) {
     Exit $ExitCode
 }
 
+dotnet pack -c Release -o $nugetOutPath ./DDTool/DDTool/DDTool.csproj
+
+if ($LastExitCode -eq 0) {
+    Write-Host '* Built QuickFIXn.DDTool NuGet package' -ForegroundColor Cyan
+} else {
+    Write-Error "There was an error building QuickFIXn.DDTool."
+    Exit $ExitCode
+}
+
 Write-Host "* Created NuGet packages in $nugetOutPath" -ForegroundColor Cyan
 
 Write-Host "NuGet packages created successfully" -ForegroundColor Green

@@ -17,6 +17,7 @@ $ErrorActionPreference = "Stop"
 
 $projs = @(
     Join-Path 'QuickFIXn' 'QuickFix.csproj'
+    Join-Path 'DDTool' 'DDTool' 'DDTool.csproj'
 )
 foreach($rls in '40','41','42','43','44','50','50SP1','50SP2','T11') {
     $projs += Join-Path 'Messages' "FIX$rls" "QuickFix.FIX$rls.csproj"
