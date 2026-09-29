@@ -19,7 +19,8 @@ public class UtcDateTimeField : DateTimeField
         : base(tag, DateTime.SpecifyKind(default, DateTimeKind.Utc)) {}
 
     /// <summary>
-    /// If <c>dt.Kind</c> is <c>Local</c>, then its time value will be shifted to UTC.
+    /// IMPORTANT: If <c>dt.Kind</c> is <c>Local</c>, then dt
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
     /// </summary>
     /// <param name="tag"></param>
     /// <param name="dt"></param>
@@ -28,7 +29,8 @@ public class UtcDateTimeField : DateTimeField
 
     // Not [Obsolete] here, matching DateTimeField; the deprecation is applied to the generated field classes.
     /// <summary>
-    /// If <c>dt.Kind</c> is <c>Local</c>, then its time value will be shifted to UTC.
+    /// IMPORTANT: If <c>dt.Kind</c> is <c>Local</c>, then dt
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
     /// </summary>
     /// <param name="tag"></param>
     /// <param name="dt"></param>
@@ -37,7 +39,8 @@ public class UtcDateTimeField : DateTimeField
         : base(tag, ToUtc(dt), showMilliseconds) {}
 
     /// <summary>
-    /// If <c>dt.Kind</c> is <c>Local</c>, then its time value will be shifted to UTC.
+    /// IMPORTANT: If <c>dt.Kind</c> is <c>Local</c>, then dt
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
     /// </summary>
     /// <param name="tag"></param>
     /// <param name="dt"></param>
@@ -46,7 +49,8 @@ public class UtcDateTimeField : DateTimeField
         : base(tag, ToUtc(dt), timeFormatPrecision) {}
 
     /// <summary>
-    /// If the setter's Value param has <c>dt.Kind=Local</c>, then its time value will be shifted to UTC.
+    /// IMPORTANT: If the setter's Value param has <c>dt.Kind=Local</c>, then Value
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
     /// </summary>
     public override DateTime Value
     {
