@@ -22,7 +22,7 @@ public static class GenFields {
         return fieldsPath;
     }
 
-    private static string Generate(List<DDField> fields) {
+    internal static string Generate(List<DDField> fields) {
         var lines = new List<string>
         {
             "// This is a generated file.  Don't edit it directly!",
@@ -40,6 +40,9 @@ public static class GenFields {
                     break;
                 case "TimeOnlyField":
                     AppendTimeOnlyField(lines, field);
+                    break;
+                case "UtcDateTimeField":
+                    AppendUtcDateTimeField(lines, field);
                     break;
                 default:
                     AppendVanillaField(lines, field);
@@ -90,9 +93,43 @@ public static class GenFields {
         lines.Add($"        : base(Tags.{field.Name}, val) {{}}");
         lines.Add($"    public {field.Name}({field.BaseType} val, TimePrecision precision)");
         lines.Add($"        : base(Tags.{field.Name}, val, precision) {{}}");
+        lines.Add("}");
+    }
 
-        AppendFieldEnumerations(lines, field);
+    private static void AppendUtcDateTimeField(List<string> lines, DDField field)
+    {
+        string utcWarning = """
 
+                                /// <summary>
+                                /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+                                /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+                                /// </summary>
+                                /// <param name="val"></param>
+                            """.TrimEnd();
+
+
+        lines.Add("/// <summary>");
+        lines.Add($"/// {field.Name} Field");
+        lines.Add("/// </summary>");
+        lines.Add($"public sealed class {field.Name} : {field.CsClass}");
+        lines.Add("{");
+        lines.Add($"    public const int TAG = {field.Tag};");
+        lines.Add("");
+
+        lines.Add($"    public {field.Name}()");
+        lines.Add($"        : base(Tags.{field.Name}) {{}}");
+        lines.Add(utcWarning);
+        lines.Add($"    public {field.Name}({field.BaseType} val)");
+        lines.Add($"        : base(Tags.{field.Name}, val) {{}}");
+        lines.Add(utcWarning);
+        lines.Add("    /// <param name=\"showMilliseconds\"></param>");
+        lines.Add("    [Obsolete(\"Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.\")]");
+        lines.Add($"    public {field.Name}({field.BaseType} val, bool showMilliseconds)");
+        lines.Add($"        : base(Tags.{field.Name}, val, showMilliseconds) {{}}");
+        lines.Add(utcWarning);
+        lines.Add("    /// <param name=\"precision\"></param>");
+        lines.Add($"    public {field.Name}({field.BaseType} val, TimePrecision precision)");
+        lines.Add($"        : base(Tags.{field.Name}, val, precision) {{}}");
         lines.Add("}");
     }
 

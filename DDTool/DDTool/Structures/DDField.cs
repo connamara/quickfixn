@@ -59,6 +59,9 @@ public class DDField : IElement {
                 baseType = "Decimal";
                 return;
             case "UTCTIMESTAMP":
+                csClass = "UtcDateTimeField";
+                baseType = "DateTime";
+                return;
             case "TZTIMESTAMP":
             case "TIME":
                 csClass = "DateTimeField";

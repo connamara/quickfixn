@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
-using QuickFix.Fields.Converters;
 using UnitTests.TestHelpers;
 using Message = QuickFix.Message;
 
@@ -237,6 +236,20 @@ public class MessageTests
     {
         Assert.That(Message.IsTrailerField(Tags.CheckSum), Is.EqualTo(true));
         Assert.That(Message.IsTrailerField(Tags.Price), Is.EqualTo(false));
+    }
+
+    [Test]
+    public void SendingTimeFromParsedMessageHasUtcKindTest()
+    {
+        string msgStr = "8=FIX.4.2|9=55|35=0|34=3|49=TW|52=20000426-12:05:06|56=ISLD|1=acct123|10=123|"
+            .Replace('|', Message.SOH);
+        Message msg = new Message(msgStr);
+
+        SendingTime st = new();
+        msg.Header.GetField(st);
+
+        Assert.That(st.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
+        Assert.That(st.Value == new DateTime(2000, 4, 26, 12, 5, 6, DateTimeKind.Utc), Is.True);
     }
 
     [Test]

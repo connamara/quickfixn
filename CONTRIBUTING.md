@@ -35,4 +35,5 @@ Pull requests (with tests) are appreciated. No pull request is too small. Please
 * Contributions without a signed CLA won't be accepted.
 * Generally, contributions without tests won't be accepted.
 * Contributions that fail the automated build won't be accepted.
-* Please don't update the version in the Assembly Info source or the Release Notes.
+* Please don't update the version in the Assembly Info source.
+* Feel free to suggest updates to RELEASE\_NOTES.md describing your change.

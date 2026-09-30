@@ -5,7 +5,7 @@ namespace DDTool.Validations;
 
 public enum QfnFieldClass
 {
-    CharField, IntField, DecimalField, DateTimeField, DateOnlyField, TimeOnlyField, BooleanField, StringField
+    CharField, IntField, DecimalField, DateTimeField, UtcDateTimeField, DateOnlyField, TimeOnlyField, BooleanField, StringField
 }
 
 public static class FieldTypeInfo {
@@ -32,6 +32,7 @@ public static class FieldTypeInfo {
             case "FLOAT":
                 return QfnFieldClass.DecimalField;
             case "UTCTIMESTAMP":
+                return QfnFieldClass.UtcDateTimeField;
             case "TZTIMESTAMP":
             case "TIME":
                 return QfnFieldClass.DateTimeField;
@@ -74,6 +75,7 @@ public static class FieldTypeInfo {
             case QfnFieldClass.DecimalField:
                 return "decimal";
             case QfnFieldClass.DateTimeField:
+            case QfnFieldClass.UtcDateTimeField:
                 return "DateTime";
             case QfnFieldClass.DateOnlyField:
                 return "DateOnly";
