@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.Extensions.Logging;
 
 namespace QuickFix.Logger;
@@ -11,7 +12,7 @@ namespace QuickFix.Logger;
 internal class LogFactoryAdapter : IQuickFixLoggerFactory, IDisposable
 {
     private readonly ILogFactory _logFactory;
-    private readonly object _dictionaryLock = new();
+    private readonly Lock _sync = new();
     private readonly Dictionary<SessionID, ILogger> _loggers = new();
     private readonly Lazy<ILogger> _nonSessionLogger;
 
@@ -23,7 +24,7 @@ internal class LogFactoryAdapter : IQuickFixLoggerFactory, IDisposable
 
     public ILogger CreateSessionLogger(SessionID sessionId)
     {
-        lock (_dictionaryLock)
+        lock (_sync)
         {
             if (!_loggers.TryGetValue(sessionId, out var logger))
             {
@@ -39,7 +40,7 @@ internal class LogFactoryAdapter : IQuickFixLoggerFactory, IDisposable
 
     public void Dispose()
     {
-        lock (_dictionaryLock)
+        lock (_sync)
         {
             foreach (var (_, logger) in _loggers)
             {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Microsoft.Extensions.Logging;
 using QuickFix.Store;
 using MessagesBySeqNum = System.Collections.Generic.Dictionary<ulong, QuickFix.Message>;
@@ -14,25 +15,25 @@ public class SessionState : IDisposable
 {
     #region Private Members
 
-    private readonly object _sync = new();
-    private bool _isEnabled = true;
-    private bool _receivedLogon = false;
-    private bool _receivedReset = false;
-    private bool _sentLogon = false;
-    private bool _sentLogout = false;
-    private bool _sentReset = false;
-    private string _logoutReason = "";
-    private int _testRequestCounter = 0;
-    private int _heartBtInt = 0;
-    private int _heartBtIntAsMilliSecs = 0;
-    private DateTime _lastReceivedTimeDt = DateTime.MinValue;
-    private DateTime _lastSentTimeDt = DateTime.MinValue;
-    private int _logonTimeout = 10;
-    private long _logonTimeoutAsMilliSecs = 10 * 1000;
-    private int _logoutTimeout = 2;
-    private long _logoutTimeoutAsMilliSecs = 2 * 1000;
-    private readonly ResendRange _resendRange = new ();
-    private MessagesBySeqNum _msgQueue = new ();
+        private readonly Lock _sync = new();
+        private bool _isEnabled = true;
+        private bool _receivedLogon = false;
+        private bool _receivedReset = false;
+        private bool _sentLogon = false;
+        private bool _sentLogout = false;
+        private bool _sentReset = false;
+        private string _logoutReason = "";
+        private int _testRequestCounter = 0;
+        private int _heartBtInt = 0;
+        private int _heartBtIntAsMilliSecs = 0;
+        private DateTime _lastReceivedTimeDt = DateTime.MinValue;
+        private DateTime _lastSentTimeDt = DateTime.MinValue;
+        private int _logonTimeout = 10;
+        private long _logonTimeoutAsMilliSecs = 10 * 1000;
+        private int _logoutTimeout = 2;
+        private long _logoutTimeoutAsMilliSecs = 2 * 1000;
+        private readonly ResendRange _resendRange = new ();
+        private MessagesBySeqNum _msgQueue = new ();
 
     #endregion
 

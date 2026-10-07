@@ -17,14 +17,14 @@ public class ThreadedSocketAcceptor : IAcceptor
 {
     private const int TenSecondsInTicks = 10000;
 
-    private readonly Dictionary<SessionID, Session> _sessions = new();
-    private readonly SessionSettings _settings;
-    private readonly Dictionary<IPEndPoint, AcceptorSocketDescriptor> _socketDescriptorForAddress = new();
-    private readonly SessionFactory _sessionFactory;
-    private bool _disposed = false;
-    private readonly object _sync = new();
-    private readonly IQuickFixLoggerFactory _qfLoggerFactory;
-    private readonly LogFactoryAdapter? _logFactoryAdapter;
+        private readonly Dictionary<SessionID, Session> _sessions = new();
+        private readonly SessionSettings _settings;
+        private readonly Dictionary<IPEndPoint, AcceptorSocketDescriptor> _socketDescriptorForAddress = new();
+        private readonly SessionFactory _sessionFactory;
+        private bool _disposed = false;
+        private readonly Lock _sync = new();
+        private readonly IQuickFixLoggerFactory _qfLoggerFactory;
+        private readonly LogFactoryAdapter? _logFactoryAdapter;
 
     /// <summary>
     /// Create a ThreadedSocketAcceptor (with a legacy ILogFactory)

@@ -12,14 +12,14 @@ public abstract class AbstractInitiator : IInitiator
     // from constructor
     private readonly SessionSettings _settings;
 
-    private readonly object _sync = new();
-    private readonly Dictionary<SessionID, Session> _sessions = new();
-    private readonly HashSet<SessionID> _sessionIDs = [];
-    private readonly HashSet<SessionID> _pending = [];
-    private readonly HashSet<SessionID> _connected = [];
-    private readonly HashSet<SessionID> _disconnected = [];
-    private readonly SessionFactory _sessionFactory;
-    private Thread? _thread;
+        private readonly Lock _sync = new();
+        private readonly Dictionary<SessionID, Session> _sessions = new();
+        private readonly HashSet<SessionID> _sessionIDs = new();
+        private readonly HashSet<SessionID> _pending = new();
+        private readonly HashSet<SessionID> _connected = new();
+        private readonly HashSet<SessionID> _disconnected = new();
+        private readonly SessionFactory _sessionFactory;
+        private Thread? _thread;
 
     internal readonly IQuickFixLoggerFactory QfLoggerFactory;
     private readonly LogFactoryAdapter? _logFactoryAdapter;
