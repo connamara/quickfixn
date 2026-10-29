@@ -189,7 +189,24 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
     }
 
     /// <summary>
+    /// Gets a UTC datetime field; saves its value into the parameter object, which is also the return value.
+    /// </summary>
+    /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
+    /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
+    /// <exception cref="FieldConvertError">thrown if string value in the message cannot be converted to this type</exception>
+    /// <returns><paramref name="field"/></returns>
+    public UtcDateTimeField GetField(UtcDateTimeField field)
+    {
+        field.Value = GetUtcDateTime(field.Tag);
+        return field;
+    }
+
+    /// <summary>
     /// Gets a datetime field; saves its value into the parameter object, which is also the return value.
+    /// The DateTime.Kind of the internal value is <c>Unspecified</c> if parsed from a string
+    /// or from a previously-set non-DateTime field.  If the internal value was originally set as a DateTime, then
+    /// the Kind will be preserved in this FieldMap.
+    /// See also <see cref="GetField(UtcDateTimeField)"/>.
     /// </summary>
     /// <param name="field">this field's tag is used to extract the value from the message; that value is saved back into this object</param>
     /// <exception cref="FieldNotFoundException">thrown if <paramref name="field"/> isn't found</exception>
@@ -360,7 +377,11 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
     }
 
     /// <summary>
-    /// Gets the value of a field as a DateTime
+    /// Gets the value of a field as a DateTime.
+    /// The DateTime.Kind of the returned value is <c>Unspecified</c> if parsed from a string
+    /// or from a previously-set non-DateTime field.  If the value was set as a DateTime, then
+    /// the Kind will be preserved in this FieldMap.
+    /// If you know the field is UTC, you should instead use <see cref="GetUtcDateTime(int)"/>.
     /// </summary>
     /// <param name="tag">the FIX tag</param>
     /// <returns>the DateTime value</returns>
@@ -379,6 +400,17 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
             _ => DateTimeConverter.ParseToDateTime(fld.ToString())
         };
     }
+
+    /// <summary>
+    /// Gets the value of a field as a DateTime with DateTime.Kind=UTC.
+    /// If the field has TimeZone information and that TimeZone is not UTC, then the value will be converted to UTC.
+    /// This function should be used only when the caller is sure that the field is UTC.
+    /// </summary>
+    /// <param name="tag">the FIX tag</param>
+    /// <returns>the DateTime value with <see cref="DateTimeKind.Utc"/></returns>
+    /// <exception cref="FieldNotFoundException" />
+    /// <exception cref="FieldConvertError" />
+    public DateTime GetUtcDateTime(int tag) => NormalizeUtc(GetDateTime(tag));
 
     /// <summary>
     /// Gets the value of a field as a DateOnly
@@ -694,6 +726,14 @@ public class FieldMap : IEnumerable<KeyValuePair<int, IField>> {
             }
         }
     }
+
+    private static DateTime NormalizeUtc(DateTime dt) => dt.Kind switch
+    {
+        DateTimeKind.Utc => dt,
+        DateTimeKind.Local => dt.ToUniversalTime(),
+        // Unspecified: per FIX spec a UTCTIMESTAMP is already UTC, so relabel without shifting.
+        _ => DateTime.SpecifyKind(dt, DateTimeKind.Utc)
+    };
 
     // IEnumerable<KeyValuePair<int,IField>> Member
     public IEnumerator<KeyValuePair<int, IField>> GetEnumerator()

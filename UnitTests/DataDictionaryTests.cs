@@ -180,7 +180,8 @@ public class DataDictionaryTests
             new(QuickFix.Fields.Tags.ContraTradeTime, "20011217-09:30:47.123"), // datetime
             new(QuickFix.Fields.Tags.MDEntryDate, "20030910"), // dateonly
             new(QuickFix.Fields.Tags.MDEntryTime, "13:20:00.123"), // timeonly
-            new(QuickFix.Fields.Tags.Symbol, "") // string
+            new(QuickFix.Fields.Tags.Symbol, ""), // string
+            new(QuickFix.Fields.Tags.SendingTime, "20091211-12:12:44") // UtcDateTime
         };
 
         foreach (var datum in goodFields)
@@ -196,7 +197,8 @@ public class DataDictionaryTests
             new(QuickFix.Fields.Tags.ReportToExch, "notbool"), // bool
             new(QuickFix.Fields.Tags.ContraTradeTime, "notdatetime"), // datetime
             new(QuickFix.Fields.Tags.MDEntryDate, "notdate"), // dateonly
-            new(QuickFix.Fields.Tags.MDEntryTime, "nottime") // timeonly
+            new(QuickFix.Fields.Tags.MDEntryTime, "nottime"), // timeonly
+            new(QuickFix.Fields.Tags.SendingTime, "not-a-timestamp") // UtcDateTime
         };
 
         foreach (var datum in badFields)

@@ -945,17 +945,37 @@ public sealed class OrigClOrdID : StringField
 /// <summary>
 /// OrigTime Field
 /// </summary>
-public sealed class OrigTime : DateTimeField
+public sealed class OrigTime : UtcDateTimeField
 {
     public const int TAG = 42;
 
     public OrigTime()
         : base(Tags.OrigTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public OrigTime(DateTime val)
         : base(Tags.OrigTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public OrigTime(DateTime val, bool showMilliseconds)
         : base(Tags.OrigTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public OrigTime(DateTime val, TimePrecision precision)
         : base(Tags.OrigTime, val, precision) {}
 }
@@ -1125,17 +1145,37 @@ public sealed class SenderSubID : StringField
 /// <summary>
 /// SendingTime Field
 /// </summary>
-public sealed class SendingTime : DateTimeField
+public sealed class SendingTime : UtcDateTimeField
 {
     public const int TAG = 52;
 
     public SendingTime()
         : base(Tags.SendingTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public SendingTime(DateTime val)
         : base(Tags.SendingTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public SendingTime(DateTime val, bool showMilliseconds)
         : base(Tags.SendingTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public SendingTime(DateTime val, TimePrecision precision)
         : base(Tags.SendingTime, val, precision) {}
 }
@@ -1264,17 +1304,37 @@ public sealed class TimeInForce : CharField
 /// <summary>
 /// TransactTime Field
 /// </summary>
-public sealed class TransactTime : DateTimeField
+public sealed class TransactTime : UtcDateTimeField
 {
     public const int TAG = 60;
 
     public TransactTime()
         : base(Tags.TransactTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public TransactTime(DateTime val)
         : base(Tags.TransactTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TransactTime(DateTime val, bool showMilliseconds)
         : base(Tags.TransactTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public TransactTime(DateTime val, TimePrecision precision)
         : base(Tags.TransactTime, val, precision) {}
 }
@@ -1300,17 +1360,37 @@ public sealed class Urgency : CharField
 /// <summary>
 /// ValidUntilTime Field
 /// </summary>
-public sealed class ValidUntilTime : DateTimeField
+public sealed class ValidUntilTime : UtcDateTimeField
 {
     public const int TAG = 62;
 
     public ValidUntilTime()
         : base(Tags.ValidUntilTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public ValidUntilTime(DateTime val)
         : base(Tags.ValidUntilTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ValidUntilTime(DateTime val, bool showMilliseconds)
         : base(Tags.ValidUntilTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public ValidUntilTime(DateTime val, TimePrecision precision)
         : base(Tags.ValidUntilTime, val, precision) {}
 }
@@ -2267,17 +2347,37 @@ public sealed class ForexReq : BooleanField
 /// <summary>
 /// OrigSendingTime Field
 /// </summary>
-public sealed class OrigSendingTime : DateTimeField
+public sealed class OrigSendingTime : UtcDateTimeField
 {
     public const int TAG = 122;
 
     public OrigSendingTime()
         : base(Tags.OrigSendingTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public OrigSendingTime(DateTime val)
         : base(Tags.OrigSendingTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public OrigSendingTime(DateTime val, bool showMilliseconds)
         : base(Tags.OrigSendingTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public OrigSendingTime(DateTime val, TimePrecision precision)
         : base(Tags.OrigSendingTime, val, precision) {}
 }
@@ -2334,17 +2434,37 @@ public sealed class CxlType : CharField
 /// <summary>
 /// ExpireTime Field
 /// </summary>
-public sealed class ExpireTime : DateTimeField
+public sealed class ExpireTime : UtcDateTimeField
 {
     public const int TAG = 126;
 
     public ExpireTime()
         : base(Tags.ExpireTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public ExpireTime(DateTime val)
         : base(Tags.ExpireTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ExpireTime(DateTime val, bool showMilliseconds)
         : base(Tags.ExpireTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public ExpireTime(DateTime val, TimePrecision precision)
         : base(Tags.ExpireTime, val, precision) {}
 }
@@ -3133,17 +3253,37 @@ public sealed class SecurityType : StringField
 /// <summary>
 /// EffectiveTime Field
 /// </summary>
-public sealed class EffectiveTime : DateTimeField
+public sealed class EffectiveTime : UtcDateTimeField
 {
     public const int TAG = 168;
 
     public EffectiveTime()
         : base(Tags.EffectiveTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public EffectiveTime(DateTime val)
         : base(Tags.EffectiveTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public EffectiveTime(DateTime val, bool showMilliseconds)
         : base(Tags.EffectiveTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public EffectiveTime(DateTime val, TimePrecision precision)
         : base(Tags.EffectiveTime, val, precision) {}
 }
@@ -5392,17 +5532,37 @@ public sealed class TradSesStatus : IntField
 /// <summary>
 /// TradSesStartTime Field
 /// </summary>
-public sealed class TradSesStartTime : DateTimeField
+public sealed class TradSesStartTime : UtcDateTimeField
 {
     public const int TAG = 341;
 
     public TradSesStartTime()
         : base(Tags.TradSesStartTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public TradSesStartTime(DateTime val)
         : base(Tags.TradSesStartTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TradSesStartTime(DateTime val, bool showMilliseconds)
         : base(Tags.TradSesStartTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public TradSesStartTime(DateTime val, TimePrecision precision)
         : base(Tags.TradSesStartTime, val, precision) {}
 }
@@ -5410,17 +5570,37 @@ public sealed class TradSesStartTime : DateTimeField
 /// <summary>
 /// TradSesOpenTime Field
 /// </summary>
-public sealed class TradSesOpenTime : DateTimeField
+public sealed class TradSesOpenTime : UtcDateTimeField
 {
     public const int TAG = 342;
 
     public TradSesOpenTime()
         : base(Tags.TradSesOpenTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public TradSesOpenTime(DateTime val)
         : base(Tags.TradSesOpenTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TradSesOpenTime(DateTime val, bool showMilliseconds)
         : base(Tags.TradSesOpenTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public TradSesOpenTime(DateTime val, TimePrecision precision)
         : base(Tags.TradSesOpenTime, val, precision) {}
 }
@@ -5428,17 +5608,37 @@ public sealed class TradSesOpenTime : DateTimeField
 /// <summary>
 /// TradSesPreCloseTime Field
 /// </summary>
-public sealed class TradSesPreCloseTime : DateTimeField
+public sealed class TradSesPreCloseTime : UtcDateTimeField
 {
     public const int TAG = 343;
 
     public TradSesPreCloseTime()
         : base(Tags.TradSesPreCloseTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public TradSesPreCloseTime(DateTime val)
         : base(Tags.TradSesPreCloseTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TradSesPreCloseTime(DateTime val, bool showMilliseconds)
         : base(Tags.TradSesPreCloseTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public TradSesPreCloseTime(DateTime val, TimePrecision precision)
         : base(Tags.TradSesPreCloseTime, val, precision) {}
 }
@@ -5446,17 +5646,37 @@ public sealed class TradSesPreCloseTime : DateTimeField
 /// <summary>
 /// TradSesCloseTime Field
 /// </summary>
-public sealed class TradSesCloseTime : DateTimeField
+public sealed class TradSesCloseTime : UtcDateTimeField
 {
     public const int TAG = 344;
 
     public TradSesCloseTime()
         : base(Tags.TradSesCloseTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public TradSesCloseTime(DateTime val)
         : base(Tags.TradSesCloseTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TradSesCloseTime(DateTime val, bool showMilliseconds)
         : base(Tags.TradSesCloseTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public TradSesCloseTime(DateTime val, TimePrecision precision)
         : base(Tags.TradSesCloseTime, val, precision) {}
 }
@@ -5464,17 +5684,37 @@ public sealed class TradSesCloseTime : DateTimeField
 /// <summary>
 /// TradSesEndTime Field
 /// </summary>
-public sealed class TradSesEndTime : DateTimeField
+public sealed class TradSesEndTime : UtcDateTimeField
 {
     public const int TAG = 345;
 
     public TradSesEndTime()
         : base(Tags.TradSesEndTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public TradSesEndTime(DateTime val)
         : base(Tags.TradSesEndTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TradSesEndTime(DateTime val, bool showMilliseconds)
         : base(Tags.TradSesEndTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public TradSesEndTime(DateTime val, TimePrecision precision)
         : base(Tags.TradSesEndTime, val, precision) {}
 }
@@ -5761,17 +6001,37 @@ public sealed class AllocPrice : DecimalField
 /// <summary>
 /// QuoteSetValidUntilTime Field
 /// </summary>
-public sealed class QuoteSetValidUntilTime : DateTimeField
+public sealed class QuoteSetValidUntilTime : UtcDateTimeField
 {
     public const int TAG = 367;
 
     public QuoteSetValidUntilTime()
         : base(Tags.QuoteSetValidUntilTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public QuoteSetValidUntilTime(DateTime val)
         : base(Tags.QuoteSetValidUntilTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public QuoteSetValidUntilTime(DateTime val, bool showMilliseconds)
         : base(Tags.QuoteSetValidUntilTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public QuoteSetValidUntilTime(DateTime val, TimePrecision precision)
         : base(Tags.QuoteSetValidUntilTime, val, precision) {}
 }
@@ -5821,17 +6081,37 @@ public sealed class LastMsgSeqNumProcessed : SeqNumFieldType
 /// <summary>
 /// OnBehalfOfSendingTime Field
 /// </summary>
-public sealed class OnBehalfOfSendingTime : DateTimeField
+public sealed class OnBehalfOfSendingTime : UtcDateTimeField
 {
     public const int TAG = 370;
 
     public OnBehalfOfSendingTime()
         : base(Tags.OnBehalfOfSendingTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public OnBehalfOfSendingTime(DateTime val)
         : base(Tags.OnBehalfOfSendingTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public OnBehalfOfSendingTime(DateTime val, bool showMilliseconds)
         : base(Tags.OnBehalfOfSendingTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public OnBehalfOfSendingTime(DateTime val, TimePrecision precision)
         : base(Tags.OnBehalfOfSendingTime, val, precision) {}
 }
@@ -6918,17 +7198,37 @@ public sealed class ContraTradeQty : DecimalField
 /// <summary>
 /// ContraTradeTime Field
 /// </summary>
-public sealed class ContraTradeTime : DateTimeField
+public sealed class ContraTradeTime : UtcDateTimeField
 {
     public const int TAG = 438;
 
     public ContraTradeTime()
         : base(Tags.ContraTradeTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public ContraTradeTime(DateTime val)
         : base(Tags.ContraTradeTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ContraTradeTime(DateTime val, bool showMilliseconds)
         : base(Tags.ContraTradeTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public ContraTradeTime(DateTime val, TimePrecision precision)
         : base(Tags.ContraTradeTime, val, precision) {}
 }
@@ -6994,17 +7294,37 @@ public sealed class MultiLegReportingType : CharField
 /// <summary>
 /// StrikeTime Field
 /// </summary>
-public sealed class StrikeTime : DateTimeField
+public sealed class StrikeTime : UtcDateTimeField
 {
     public const int TAG = 443;
 
     public StrikeTime()
         : base(Tags.StrikeTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public StrikeTime(DateTime val)
         : base(Tags.StrikeTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public StrikeTime(DateTime val, bool showMilliseconds)
         : base(Tags.StrikeTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public StrikeTime(DateTime val, TimePrecision precision)
         : base(Tags.StrikeTime, val, precision) {}
 }
@@ -8562,17 +8882,37 @@ public sealed class MailingInst : StringField
 /// <summary>
 /// TransBkdTime Field
 /// </summary>
-public sealed class TransBkdTime : DateTimeField
+public sealed class TransBkdTime : UtcDateTimeField
 {
     public const int TAG = 483;
 
     public TransBkdTime()
         : base(Tags.TransBkdTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public TransBkdTime(DateTime val)
         : base(Tags.TransBkdTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TransBkdTime(DateTime val, bool showMilliseconds)
         : base(Tags.TransBkdTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public TransBkdTime(DateTime val, TimePrecision precision)
         : base(Tags.TransBkdTime, val, precision) {}
 }
@@ -9096,17 +9436,37 @@ public sealed class RegistTransType : CharField
 /// <summary>
 /// ExecValuationPoint Field
 /// </summary>
-public sealed class ExecValuationPoint : DateTimeField
+public sealed class ExecValuationPoint : UtcDateTimeField
 {
     public const int TAG = 515;
 
     public ExecValuationPoint()
         : base(Tags.ExecValuationPoint) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public ExecValuationPoint(DateTime val)
         : base(Tags.ExecValuationPoint, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ExecValuationPoint(DateTime val, bool showMilliseconds)
         : base(Tags.ExecValuationPoint, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public ExecValuationPoint(DateTime val, TimePrecision precision)
         : base(Tags.ExecValuationPoint, val, precision) {}
 }
@@ -10327,17 +10687,37 @@ public sealed class MassStatusReqType : IntField
 /// <summary>
 /// OrigOrdModTime Field
 /// </summary>
-public sealed class OrigOrdModTime : DateTimeField
+public sealed class OrigOrdModTime : UtcDateTimeField
 {
     public const int TAG = 586;
 
     public OrigOrdModTime()
         : base(Tags.OrigOrdModTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public OrigOrdModTime(DateTime val)
         : base(Tags.OrigOrdModTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public OrigOrdModTime(DateTime val, bool showMilliseconds)
         : base(Tags.OrigOrdModTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public OrigOrdModTime(DateTime val, TimePrecision precision)
         : base(Tags.OrigOrdModTime, val, precision) {}
 }
@@ -10935,17 +11315,37 @@ public sealed class HopCompID : StringField
 /// <summary>
 /// HopSendingTime Field
 /// </summary>
-public sealed class HopSendingTime : DateTimeField
+public sealed class HopSendingTime : UtcDateTimeField
 {
     public const int TAG = 629;
 
     public HopSendingTime()
         : base(Tags.HopSendingTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public HopSendingTime(DateTime val)
         : base(Tags.HopSendingTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public HopSendingTime(DateTime val, bool showMilliseconds)
         : base(Tags.HopSendingTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public HopSendingTime(DateTime val, TimePrecision precision)
         : base(Tags.HopSendingTime, val, precision) {}
 }
@@ -13259,17 +13659,37 @@ public sealed class NoTrdRegTimestamps : IntField
 /// <summary>
 /// TrdRegTimestamp Field
 /// </summary>
-public sealed class TrdRegTimestamp : DateTimeField
+public sealed class TrdRegTimestamp : UtcDateTimeField
 {
     public const int TAG = 769;
 
     public TrdRegTimestamp()
         : base(Tags.TrdRegTimestamp) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public TrdRegTimestamp(DateTime val)
         : base(Tags.TrdRegTimestamp, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TrdRegTimestamp(DateTime val, bool showMilliseconds)
         : base(Tags.TrdRegTimestamp, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public TrdRegTimestamp(DateTime val, TimePrecision precision)
         : base(Tags.TrdRegTimestamp, val, precision) {}
 }
@@ -13418,17 +13838,37 @@ public sealed class NoSettlInst : IntField
 /// <summary>
 /// LastUpdateTime Field
 /// </summary>
-public sealed class LastUpdateTime : DateTimeField
+public sealed class LastUpdateTime : UtcDateTimeField
 {
     public const int TAG = 779;
 
     public LastUpdateTime()
         : base(Tags.LastUpdateTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public LastUpdateTime(DateTime val)
         : base(Tags.LastUpdateTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public LastUpdateTime(DateTime val, bool showMilliseconds)
         : base(Tags.LastUpdateTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public LastUpdateTime(DateTime val, TimePrecision precision)
         : base(Tags.LastUpdateTime, val, precision) {}
 }
@@ -16407,17 +16847,37 @@ public sealed class HostCrossID : StringField
 /// <summary>
 /// SideTimeInForce Field
 /// </summary>
-public sealed class SideTimeInForce : DateTimeField
+public sealed class SideTimeInForce : UtcDateTimeField
 {
     public const int TAG = 962;
 
     public SideTimeInForce()
         : base(Tags.SideTimeInForce) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public SideTimeInForce(DateTime val)
         : base(Tags.SideTimeInForce, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public SideTimeInForce(DateTime val, bool showMilliseconds)
         : base(Tags.SideTimeInForce, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public SideTimeInForce(DateTime val, TimePrecision precision)
         : base(Tags.SideTimeInForce, val, precision) {}
 }
@@ -17094,17 +17554,37 @@ public sealed class MessageEventSource : StringField
 /// <summary>
 /// SideTrdRegTimestamp Field
 /// </summary>
-public sealed class SideTrdRegTimestamp : DateTimeField
+public sealed class SideTrdRegTimestamp : UtcDateTimeField
 {
     public const int TAG = 1012;
 
     public SideTrdRegTimestamp()
         : base(Tags.SideTrdRegTimestamp) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public SideTrdRegTimestamp(DateTime val)
         : base(Tags.SideTrdRegTimestamp, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public SideTrdRegTimestamp(DateTime val, bool showMilliseconds)
         : base(Tags.SideTrdRegTimestamp, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public SideTrdRegTimestamp(DateTime val, TimePrecision precision)
         : base(Tags.SideTrdRegTimestamp, val, precision) {}
 }
@@ -19055,17 +19535,37 @@ public sealed class ImpliedMarketIndicator : IntField
 /// <summary>
 /// EventTime Field
 /// </summary>
-public sealed class EventTime : DateTimeField
+public sealed class EventTime : UtcDateTimeField
 {
     public const int TAG = 1145;
 
     public EventTime()
         : base(Tags.EventTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public EventTime(DateTime val)
         : base(Tags.EventTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public EventTime(DateTime val, bool showMilliseconds)
         : base(Tags.EventTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public EventTime(DateTime val, TimePrecision precision)
         : base(Tags.EventTime, val, precision) {}
 }
@@ -20989,17 +21489,37 @@ public sealed class DerivativeEventDate : StringField
 /// <summary>
 /// DerivativeEventTime Field
 /// </summary>
-public sealed class DerivativeEventTime : DateTimeField
+public sealed class DerivativeEventTime : UtcDateTimeField
 {
     public const int TAG = 1289;
 
     public DerivativeEventTime()
         : base(Tags.DerivativeEventTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public DerivativeEventTime(DateTime val)
         : base(Tags.DerivativeEventTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public DerivativeEventTime(DateTime val, bool showMilliseconds)
         : base(Tags.DerivativeEventTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public DerivativeEventTime(DateTime val, TimePrecision precision)
         : base(Tags.DerivativeEventTime, val, precision) {}
 }
@@ -24064,17 +24584,37 @@ public sealed class NoComplexEventDates : IntField
 /// <summary>
 /// ComplexEventStartDate Field
 /// </summary>
-public sealed class ComplexEventStartDate : DateTimeField
+public sealed class ComplexEventStartDate : UtcDateTimeField
 {
     public const int TAG = 1492;
 
     public ComplexEventStartDate()
         : base(Tags.ComplexEventStartDate) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public ComplexEventStartDate(DateTime val)
         : base(Tags.ComplexEventStartDate, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ComplexEventStartDate(DateTime val, bool showMilliseconds)
         : base(Tags.ComplexEventStartDate, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public ComplexEventStartDate(DateTime val, TimePrecision precision)
         : base(Tags.ComplexEventStartDate, val, precision) {}
 }
@@ -24082,17 +24622,37 @@ public sealed class ComplexEventStartDate : DateTimeField
 /// <summary>
 /// ComplexEventEndDate Field
 /// </summary>
-public sealed class ComplexEventEndDate : DateTimeField
+public sealed class ComplexEventEndDate : UtcDateTimeField
 {
     public const int TAG = 1493;
 
     public ComplexEventEndDate()
         : base(Tags.ComplexEventEndDate) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public ComplexEventEndDate(DateTime val)
         : base(Tags.ComplexEventEndDate, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ComplexEventEndDate(DateTime val, bool showMilliseconds)
         : base(Tags.ComplexEventEndDate, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public ComplexEventEndDate(DateTime val, TimePrecision precision)
         : base(Tags.ComplexEventEndDate, val, precision) {}
 }
@@ -24249,17 +24809,37 @@ public sealed class StreamAsgnAckType : IntField
 /// <summary>
 /// RelSymTransactTime Field
 /// </summary>
-public sealed class RelSymTransactTime : DateTimeField
+public sealed class RelSymTransactTime : UtcDateTimeField
 {
     public const int TAG = 1504;
 
     public RelSymTransactTime()
         : base(Tags.RelSymTransactTime) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
     public RelSymTransactTime(DateTime val)
         : base(Tags.RelSymTransactTime, val) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public RelSymTransactTime(DateTime val, bool showMilliseconds)
         : base(Tags.RelSymTransactTime, val, showMilliseconds) {}
+
+    /// <summary>
+    /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
+    /// will be converted to UTC and this UTC-adjusted time will be in the FIX string
+    /// </summary>
+    /// <param name="val"></param>
+    /// <param name="precision"></param>
     public RelSymTransactTime(DateTime val, TimePrecision precision)
         : base(Tags.RelSymTransactTime, val, precision) {}
 }

@@ -58,7 +58,7 @@ public class DDField
             case "MULTIPLESTRINGVALUE": isMultipleValueFieldWithEnums = true; return typeof(Fields.StringField);
             case "MULTIPLECHARVALUE": isMultipleValueFieldWithEnums = true; return typeof(Fields.StringField);
             case "EXCHANGE": return typeof(Fields.StringField);
-            case "UTCTIMESTAMP": return typeof(Fields.DateTimeField);
+            case "UTCTIMESTAMP": return typeof(Fields.UtcDateTimeField);
             case "BOOLEAN": return typeof(Fields.BooleanField);
             case "LOCALMKTDATE": return typeof(Fields.StringField);
             case "LOCALMKTTIME": return typeof(Fields.StringField);

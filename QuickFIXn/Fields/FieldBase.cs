@@ -34,7 +34,7 @@ public abstract class FieldBase<T> : IField
         _stringField = "";
     }
 
-    public T Value
+    public virtual T Value
     {
         get => _value;
         set

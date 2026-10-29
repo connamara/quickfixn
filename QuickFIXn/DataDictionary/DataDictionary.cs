@@ -300,7 +300,7 @@ public class DataDictionary
             else if (type == typeof(BooleanField))
                 Fields.Converters.BoolConverter.Convert(field.ToString());
 
-            else if (type == typeof(DateTimeField))
+            else if (type == typeof(DateTimeField) || type == typeof(UtcDateTimeField))
                 Fields.Converters.DateTimeConverter.ParseToDateTime(field.ToString());
             else if (type == typeof(DateOnlyField))
                 Fields.Converters.DateOnlyConverter.Convert(field.ToString());

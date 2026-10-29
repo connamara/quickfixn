@@ -43,4 +43,18 @@ public class DDFieldTests
         Assert.That(ddf.IsMultipleValueFieldWithEnums, Is.True);
         Assert.That(ddf.HasEnums(), Is.False);
     }
+
+    [Test]
+    public void UtcTimestampResolvesToUtcDateTimeField()
+    {
+        DDField ddf = new(52, "SendingTime", new Dictionary<string, string>(), "UTCTIMESTAMP");
+        Assert.That(typeof(QuickFix.Fields.UtcDateTimeField), Is.EqualTo(ddf.FieldType));
+    }
+
+    [Test]
+    public void TzTimestampResolvesToStringField()
+    {
+        DDField ddf = new(1132, "TZTransactTime", new Dictionary<string, string>(), "TZTIMESTAMP");
+        Assert.That(typeof(QuickFix.Fields.StringField), Is.EqualTo(ddf.FieldType));
+    }
 }

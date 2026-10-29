@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using QuickFix;
 using QuickFix.Fields;
-using QuickFix.Fields.Converters;
 
 namespace UnitTests;
 
@@ -109,6 +108,44 @@ public class FieldMapTests
     }
 
     [Test]
+    public void SendingTimeParsedFromWireHasUtcKindTest()
+    {
+        // UTCTIMESTAMP fields parsed from the wire (no offset)
+        // must come back as DateTimeKind.Utc, not Unspecified
+        FieldMap fm = new();
+        fm.SetField(new StringField(Tags.SendingTime, "20091211-12:12:44"));
+        SendingTime st = new();
+        fm.GetField(st);
+
+        Assert.That(st.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
+        Assert.That(st.Value == new DateTime(2009, 12, 11, 12, 12, 44, DateTimeKind.Utc), Is.True);
+    }
+
+    [Test]
+    public void SendingTimeParsedFromWireHasUtcKindViaBaseTypedReferenceTest()
+    {
+        FieldMap fm = new();
+        fm.SetField(new StringField(Tags.SendingTime, "20091211-12:12:44"));
+        DateTimeField st = new SendingTime();
+        fm.GetField(st);
+
+        Assert.That(st.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
+        Assert.That(st.Value == new DateTime(2009, 12, 11, 12, 12, 44, DateTimeKind.Utc), Is.True);
+    }
+
+    [Test]
+    public void TZTransactTimeRetainsOffsetAwareParsingTest()
+    {
+        FieldMap fm = new();
+        fm.SetField(new StringField(Tags.TZTransactTime, "20091211-12:12:44+02:00"));
+        TZTransactTime tzt = new();
+        fm.GetField(tzt);
+
+        Assert.That(tzt.Value, Is.EqualTo(new DateTime(2009, 12, 11, 10, 12, 44))); // the hour is 10 now
+        Assert.That(tzt.Value.Kind, Is.EqualTo(DateTimeKind.Utc));
+    }
+
+    [Test]
     public void DateOnlyFieldTest()
     {
         FieldMap fm = new();
@@ -145,14 +182,17 @@ public class FieldMapTests
     }
 
     [Test]
-    public void GetDateTimeTest()
+    public void GetDateTimeTest_TicksOnly()
     {
+        // NOTE: DateTime equality ignores Kind.  It must be checked explicitly.
+        //       This test doesn't check it.  See GetDateTime_KindTest().
+
         FieldMap fm = new();
         fm.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10)));
-        Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
+        Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10, 0, 0, 0)));
 
-        fm.SetField(new DateOnlyField(Tags.TransactTime, new DateOnly(2009, 12, 10)));
-        Assert.That(fm.GetDateTime(Tags.TransactTime), Is.EqualTo(new DateTime(2009, 12, 10)));
+        fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateOnly(2009, 12, 10)));
+        Assert.That(fm.GetDateTime(Tags.MDEntryDate), Is.EqualTo(new DateTime(2009, 12, 10, 0, 0, 0)));
 
         fm.SetField(new TimeOnlyField(Tags.MDEntryTime, new TimeOnly(1, 2, 3)));
         Assert.That(fm.GetDateTime(Tags.MDEntryTime), Is.EqualTo(new DateTime(1980, 01, 01, 1, 2, 3)));
@@ -166,8 +206,99 @@ public class FieldMapTests
         fm.SetField(new IntField(Tags.TransactTime, 999));
         Assert.Throws<FieldConvertError>(delegate { fm.GetDateTime(Tags.TransactTime); });
 
-        Assert.Throws(typeof(FieldNotFoundException),
-                delegate { fm.GetDateTime(99900); });
+        Assert.Throws<FieldNotFoundException>(delegate { fm.GetDateTime(99900); });
+    }
+
+    [Test]
+    public void GetDateTimeTest_KindOnly()
+    {
+        // NOTE: This test checks only the resulting DateTime.Kind values (which DateTime equality ignores).
+        FieldMap fm = new();
+        fm.SetField(new DateTimeField(Tags.TransactTime, DateTime.UtcNow));
+        Assert.That(fm.GetDateTime(Tags.TransactTime).Kind, Is.EqualTo(DateTimeKind.Utc));
+
+        fm.SetField(new DateTimeField(Tags.TransactTime, DateTime.Now));
+        Assert.That(fm.GetDateTime(Tags.TransactTime).Kind, Is.EqualTo(DateTimeKind.Local));
+
+        fm.SetField(new DateTimeField(Tags.TransactTime, new DateTime(2009, 12, 10, 0, 0, 0, DateTimeKind.Unspecified)));
+        Assert.That(fm.GetDateTime(Tags.TransactTime).Kind, Is.EqualTo(DateTimeKind.Unspecified));
+
+        fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateOnly(2009, 12, 10)));
+        Assert.That(fm.GetDateTime(Tags.MDEntryDate).Kind, Is.EqualTo(DateTimeKind.Unspecified));
+
+        fm.SetField(new TimeOnlyField(Tags.MDEntryTime, new TimeOnly(1, 2, 3)));
+        Assert.That(fm.GetDateTime(Tags.MDEntryTime).Kind, Is.EqualTo(DateTimeKind.Unspecified));
+
+        fm.SetField(new UtcDateTimeField(Tags.TransactTime, DateTime.UtcNow));
+        Assert.That(fm.GetDateTime(Tags.TransactTime).Kind, Is.EqualTo(DateTimeKind.Utc));
+
+        fm.SetField(new StringField(Tags.TransactTime, "20091211-12:12:44"));
+        Assert.That(fm.GetDateTime(Tags.TransactTime).Kind, Is.EqualTo(DateTimeKind.Unspecified));
+    }
+
+    [Test]
+    public void GetUtcDateTimeTest()
+    {
+        // Is.EqualTo ignores DateTime.Kind, so assert the instant with == and the Kind separately
+        FieldMap fm = new();
+
+        DateTime dt = new(2025, 10, 31, 17, 30, 59, DateTimeKind.Utc);
+        fm.SetField(new UtcDateTimeField(Tags.SendingTime, dt));
+        Assert.That(fm.GetUtcDateTime(Tags.SendingTime) == dt, Is.True);
+        Assert.That(fm.GetUtcDateTime(Tags.SendingTime).Kind, Is.EqualTo(DateTimeKind.Utc));
+
+        fm.SetField(new StringField(Tags.SendingTime, "20251031-17:30:59"));
+        Assert.That(fm.GetUtcDateTime(Tags.SendingTime) == dt, Is.True);
+        Assert.That(fm.GetUtcDateTime(Tags.SendingTime).Kind, Is.EqualTo(DateTimeKind.Utc));
+
+        fm.SetField(new StringField(Tags.SendingTime, "oops"));
+        Assert.Throws<FieldConvertError>(delegate { fm.GetUtcDateTime(Tags.SendingTime); });
+
+        Assert.Throws<FieldNotFoundException>(delegate { fm.GetUtcDateTime(99900); });
+    }
+
+    [Test]
+    public void GetUtcDateTimeConvertsLocalKindTest()
+    {
+        FieldMap fm = new();
+        DateTime local = DateTime.SpecifyKind(new DateTime(2025, 10, 31, 17, 30, 59), DateTimeKind.Local);
+        TimeSpan offset = TimeZoneInfo.Local.GetUtcOffset(local);
+        fm.SetField(new DateTimeField(Tags.TransactTime, local));
+
+        DateTime actual = fm.GetUtcDateTime(Tags.TransactTime);
+
+        Assert.That(actual.Kind, Is.EqualTo(DateTimeKind.Utc));
+        Assert.That(actual == DateTime.SpecifyKind(local - offset, DateTimeKind.Utc), Is.True);
+        if (offset != TimeSpan.Zero) // CI runs UTC, where a converted value is indistinguishable from a relabelled one
+            Assert.That(actual == DateTime.SpecifyKind(local, DateTimeKind.Utc), Is.False);
+    }
+
+    [Test]
+    public void GetUtcDateTimeWithWireOffsetTest()
+    {
+        FieldMap fm = new();
+        fm.SetField(new StringField(Tags.TransactTime, "20091211-12:12:44+02:00"));
+
+        DateTime actual = fm.GetUtcDateTime(Tags.TransactTime);
+
+        Assert.That(actual.Kind, Is.EqualTo(DateTimeKind.Utc));
+        Assert.That(actual == new DateTime(2009, 12, 11, 10, 12, 44, DateTimeKind.Utc), Is.True); // the hour is 10 now
+    }
+
+    [Test]
+    public void GetUtcDateTimeFromDateOnlyAndTimeOnlyTest()
+    {
+        FieldMap fm = new();
+
+        fm.SetField(new DateOnlyField(Tags.MDEntryDate, new DateOnly(2009, 12, 10)));
+        DateTime fromDate = fm.GetUtcDateTime(Tags.MDEntryDate);
+        Assert.That(fromDate.Kind, Is.EqualTo(DateTimeKind.Utc));
+        Assert.That(fromDate == new DateTime(2009, 12, 10, 0, 0, 0, DateTimeKind.Utc), Is.True);
+
+        fm.SetField(new TimeOnlyField(Tags.MDEntryTime, new TimeOnly(1, 2, 3)));
+        DateTime fromTime = fm.GetUtcDateTime(Tags.MDEntryTime);
+        Assert.That(fromTime.Kind, Is.EqualTo(DateTimeKind.Utc));
+        Assert.That(fromTime == new DateTime(1980, 1, 1, 1, 2, 3, DateTimeKind.Utc), Is.True);
     }
 
     [Test]
