@@ -79,6 +79,7 @@ What's New
 * #1030 - new UtcDateTimeField class so UTCTIMESTAMP fields always have DateTimeKind.Utc (stic)
 * #1025 - fix: SocketReader task throws System.InvalidOperationException (Tar-Elendil)
 * #1034 - Update locks from Monitor to .NET 9.0 Threading.Lock (dckorben)
+* #990/#991 - Fallback to Custom CA/Certificate Validation when CA Certificate Path Is Present (dckorben)
 
 ### v1.14.1
 
