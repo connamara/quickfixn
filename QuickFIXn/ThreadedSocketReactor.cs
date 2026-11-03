@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Microsoft.Extensions.Logging;
+using QuickFix.Logger;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
-using Microsoft.Extensions.Logging;
-using QuickFix.Logger;
+using System.Threading;
 
 namespace QuickFix;
 
@@ -27,7 +28,7 @@ public class ThreadedSocketReactor
     /// </value>
     public bool IsRunning => ReactorState == State.RUNNING;
 
-    private readonly object _sync = new ();
+    private readonly Lock _sync = new ();
     private State _state = State.SHUTDOWN_COMPLETE;
     private long _nextClientId = 0;
     private readonly Dictionary<long, ClientHandlerThread> _clientThreads = new ();
