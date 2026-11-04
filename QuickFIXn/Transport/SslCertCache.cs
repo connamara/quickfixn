@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using QuickFix.Util;
 
 namespace QuickFix.Transport;
@@ -12,7 +13,8 @@ internal static class SslCertCache {
     /// <summary>
     /// Cache loaded certificates since loading a certificate can be a costly operation
     /// </summary>
-    private static readonly Dictionary<string, X509Certificate2> CertificateCache = new ();
+    private static readonly Dictionary<string, X509Certificate2> CertificateCache = new();
+    private static readonly Lock CertificateCacheLock = new();
 
     /// <summary>
     /// Loads the specified certificate given a path, DistinguishedName or subject name
@@ -23,10 +25,7 @@ internal static class SslCertCache {
     /// <returns>The specified certificate</returns>
     internal static X509Certificate2? LoadCertificate(string name, string? password)
     {
-        // TODO: Change _certificateCache's type to ConcurrentDictionary once we start targeting .NET 4,
-        //   then remove this lock and use GetOrAdd function of concurrent dictionary
-        //   e.g.: certificate = _certificateCache.GetOrAdd(name, (key) => LoadCertificateInner(name, password));
-        lock (CertificateCache)
+        lock (CertificateCacheLock)
         {
             if (CertificateCache.TryGetValue(name, out X509Certificate2? certificate))
                 return certificate;
