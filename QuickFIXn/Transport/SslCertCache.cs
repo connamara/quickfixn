@@ -4,6 +4,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using Microsoft.Extensions.Logging;
 using QuickFix.Util;
 
 namespace QuickFix.Transport;
@@ -22,8 +23,9 @@ internal static class SslCertCache {
     /// <param name="name">The certificate path or DistinguishedName/subjectname
     /// if it should be loaded from the personal certificate store.</param>
     /// <param name="password">The certificate password.</param>
-    /// <returns>The specified certificate</returns>
-    internal static X509Certificate2? LoadCertificate(string name, string? password)
+    /// <param name="log">Logger used to report a certificate that could not be loaded.</param>
+    /// <returns>The specified certificate, or null if it could not be loaded (the reason is logged)</returns>
+    internal static X509Certificate2? LoadCertificate(string name, string? password, ILogger log)
     {
         lock (CertificateCacheLock)
         {
@@ -35,9 +37,8 @@ internal static class SslCertCache {
                 CertificateCache.Add(name, certificate);
 
                 return certificate;
-            } catch (ApplicationException) {
-                // TODO refactor this function+callers to throw an exception up the stack instead of returning null
-                // Callers should log as appropriate
+            } catch (ApplicationException ex) {
+                log.Log(LogLevel.Error, ex, "Unable to load certificate: {Message}", ex.Message);
                 return null;
             }
         }
@@ -63,7 +64,6 @@ internal static class SslCertCache {
 
             string msg =
                 $"Certificate '{name}' could not be loaded from store or path '{Directory.GetCurrentDirectory()}'";
-            Console.WriteLine(msg);
             throw new ApplicationException(msg);
         }
 

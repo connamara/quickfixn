@@ -73,6 +73,7 @@ What's New
 
 
 ### upcoming for v1.15.0
+
 * #1021 - remove .NET 8 support; remove expired deprecations (gbirchmeier)
 * #1015 - rework DateOnlyField/TimeOnlyField to be backed by DateOnly/TimeOnly types instead of DateTime (gbirchmeier)
 * #1023 - new config setting "FieldSeparatorInMessageLogs" (gbirchmeier)
@@ -82,6 +83,7 @@ What's New
 * #990/#991 - Fallback to Custom CA/Certificate Validation when CA Certificate Path Is Present (dckorben)
 * #1040 - deprecation fix: use X509CertificateLoader.LoadCertificateFromFile() instead of X509Certificate2 ctor (gbirchmeier)
 * #1041 - use a proper Lock in SslCertCache (gbirchmeier)
+* #1042 - Log (don't swallow) certificate-load failures (gbirchmeier)
 
 ### v1.14.1
 
