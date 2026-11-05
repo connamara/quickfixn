@@ -88,8 +88,23 @@ internal static class SslCertCache {
     /// <returns>The cert, or null if not found</returns>
     private static X509Certificate2? GetCertificateFromStore(string certName)
     {
-        return GetCertificateFromStoreHelper(certName, new X509Store(StoreLocation.LocalMachine))
-            ?? GetCertificateFromStoreHelper(certName, new X509Store(StoreLocation.CurrentUser));
+        // On Unix-like systems, LocalMachine does not behave like the Windows "My" store.
+        // Opening it can throw e.g. "Unix localMachine x509Store is limited to the root and certificateauthority stores."
+        // For the certificate lookup used here, the CurrentUser store is the portable fallback.
+
+        List<StoreLocation> storeLocs = [];
+        if (OperatingSystem.IsWindows())
+            storeLocs.Add(StoreLocation.LocalMachine);
+        storeLocs.Add(StoreLocation.CurrentUser);
+
+        foreach (StoreLocation loc in storeLocs)
+        {
+            X509Certificate2? cert = GetCertificateFromStoreHelper(certName, new X509Store(loc));
+            if (cert is not null)
+                return cert;
+        }
+
+        return null;
     }
 
     private static X509Certificate2? GetCertificateFromStoreHelper(string certName, X509Store store)
@@ -112,6 +127,15 @@ internal static class SslCertCache {
                 return null;
 
             return currentCerts[0];
+        }
+        catch (CryptographicException)
+        {
+            // Some stores are not available on non-Windows platforms or are restricted by OS policy.
+            return null;
+        }
+        catch (PlatformNotSupportedException)
+        {
+            return null;
         }
         finally
         {
