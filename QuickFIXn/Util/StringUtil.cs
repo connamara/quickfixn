@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+using System;
 
 namespace QuickFix.Util;
 
@@ -11,7 +11,7 @@ public static class StringUtil
     /// <param name="s"></param>
     /// <returns></returns>
     public static string FixSlashes(string s) {
-        return RuntimeInformation.IsOSPlatform(OSPlatform.Windows)
+        return OperatingSystem.IsWindows()
             ? s.Replace('/', '\\')
             : s.Replace('\\', '/');
     }
