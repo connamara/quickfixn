@@ -84,6 +84,7 @@ What's New
 * #1040 - deprecation fix: use X509CertificateLoader.LoadCertificateFromFile() instead of X509Certificate2 ctor (gbirchmeier)
 * #1041 - use a proper Lock in SslCertCache (gbirchmeier)
 * #1042 - Log (don't swallow) certificate-load failures (gbirchmeier)
+* #1032 - Fix certificate lookup on non-Windows platforms (plesiu)
 
 ### v1.14.1
 
