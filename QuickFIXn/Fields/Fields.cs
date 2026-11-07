@@ -12,9 +12,9 @@ public sealed class Account : StringField
     public const int TAG = 1;
 
     public Account()
-        : base(Tags.Account) {}
+        : base(TAG) {}
     public Account(string val)
-        : base(Tags.Account, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25,9 +25,9 @@ public sealed class AdvId : StringField
     public const int TAG = 2;
 
     public AdvId()
-        : base(Tags.AdvId) {}
+        : base(TAG) {}
     public AdvId(string val)
-        : base(Tags.AdvId, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -38,9 +38,9 @@ public sealed class AdvRefID : StringField
     public const int TAG = 3;
 
     public AdvRefID()
-        : base(Tags.AdvRefID) {}
+        : base(TAG) {}
     public AdvRefID(string val)
-        : base(Tags.AdvRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -51,9 +51,9 @@ public sealed class AdvSide : CharField
     public const int TAG = 4;
 
     public AdvSide()
-        : base(Tags.AdvSide) {}
+        : base(TAG) {}
     public AdvSide(char val)
-        : base(Tags.AdvSide, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char BUY = 'B';
@@ -70,9 +70,9 @@ public sealed class AdvTransType : StringField
     public const int TAG = 5;
 
     public AdvTransType()
-        : base(Tags.AdvTransType) {}
+        : base(TAG) {}
     public AdvTransType(string val)
-        : base(Tags.AdvTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string CANCEL = "C";
@@ -88,9 +88,9 @@ public sealed class AvgPx : DecimalField
     public const int TAG = 6;
 
     public AvgPx()
-        : base(Tags.AvgPx) {}
+        : base(TAG) {}
     public AvgPx(Decimal val)
-        : base(Tags.AvgPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -101,9 +101,9 @@ public sealed class BeginSeqNo : SeqNumFieldType
     public const int TAG = 7;
 
     public BeginSeqNo()
-        : base(Tags.BeginSeqNo) {}
+        : base(TAG) {}
     public BeginSeqNo(SeqNumType val)
-        : base(Tags.BeginSeqNo, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -114,9 +114,9 @@ public sealed class BeginString : StringField
     public const int TAG = 8;
 
     public BeginString()
-        : base(Tags.BeginString) {}
+        : base(TAG) {}
     public BeginString(string val)
-        : base(Tags.BeginString, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -127,9 +127,9 @@ public sealed class BodyLength : IntField
     public const int TAG = 9;
 
     public BodyLength()
-        : base(Tags.BodyLength) {}
+        : base(TAG) {}
     public BodyLength(int val)
-        : base(Tags.BodyLength, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -140,9 +140,9 @@ public sealed class CheckSum : StringField
     public const int TAG = 10;
 
     public CheckSum()
-        : base(Tags.CheckSum) {}
+        : base(TAG) {}
     public CheckSum(string val)
-        : base(Tags.CheckSum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -153,9 +153,9 @@ public sealed class ClOrdID : StringField
     public const int TAG = 11;
 
     public ClOrdID()
-        : base(Tags.ClOrdID) {}
+        : base(TAG) {}
     public ClOrdID(string val)
-        : base(Tags.ClOrdID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -166,9 +166,9 @@ public sealed class Commission : DecimalField
     public const int TAG = 12;
 
     public Commission()
-        : base(Tags.Commission) {}
+        : base(TAG) {}
     public Commission(Decimal val)
-        : base(Tags.Commission, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -179,9 +179,9 @@ public sealed class CommType : CharField
     public const int TAG = 13;
 
     public CommType()
-        : base(Tags.CommType) {}
+        : base(TAG) {}
     public CommType(char val)
-        : base(Tags.CommType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char PER_UNIT = '1';
@@ -206,9 +206,9 @@ public sealed class CumQty : DecimalField
     public const int TAG = 14;
 
     public CumQty()
-        : base(Tags.CumQty) {}
+        : base(TAG) {}
     public CumQty(Decimal val)
-        : base(Tags.CumQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -219,9 +219,9 @@ public sealed class Currency : StringField
     public const int TAG = 15;
 
     public Currency()
-        : base(Tags.Currency) {}
+        : base(TAG) {}
     public Currency(string val)
-        : base(Tags.Currency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -232,9 +232,9 @@ public sealed class EndSeqNo : SeqNumFieldType
     public const int TAG = 16;
 
     public EndSeqNo()
-        : base(Tags.EndSeqNo) {}
+        : base(TAG) {}
     public EndSeqNo(SeqNumType val)
-        : base(Tags.EndSeqNo, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -245,9 +245,9 @@ public sealed class ExecID : StringField
     public const int TAG = 17;
 
     public ExecID()
-        : base(Tags.ExecID) {}
+        : base(TAG) {}
     public ExecID(string val)
-        : base(Tags.ExecID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -258,9 +258,9 @@ public sealed class ExecInst : StringField
     public const int TAG = 18;
 
     public ExecInst()
-        : base(Tags.ExecInst) {}
+        : base(TAG) {}
     public ExecInst(string val)
-        : base(Tags.ExecInst, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string STAY_ON_OFFER_SIDE = "0";
@@ -340,9 +340,9 @@ public sealed class ExecRefID : StringField
     public const int TAG = 19;
 
     public ExecRefID()
-        : base(Tags.ExecRefID) {}
+        : base(TAG) {}
     public ExecRefID(string val)
-        : base(Tags.ExecRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -353,9 +353,9 @@ public sealed class ExecTransType : CharField
     public const int TAG = 20;
 
     public ExecTransType()
-        : base(Tags.ExecTransType) {}
+        : base(TAG) {}
     public ExecTransType(char val)
-        : base(Tags.ExecTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NEW = '0';
@@ -372,9 +372,9 @@ public sealed class HandlInst : CharField
     public const int TAG = 21;
 
     public HandlInst()
-        : base(Tags.HandlInst) {}
+        : base(TAG) {}
     public HandlInst(char val)
-        : base(Tags.HandlInst, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char AUTOMATED_EXECUTION_ORDER_PRIVATE_NO_BROKER_INTERVENTION = '1';
@@ -393,9 +393,9 @@ public sealed class IDSource : StringField
     public const int TAG = 22;
 
     public IDSource()
-        : base(Tags.IDSource) {}
+        : base(TAG) {}
     public IDSource(string val)
-        : base(Tags.IDSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string CUSIP = "1";
@@ -417,9 +417,9 @@ public sealed class IOIid : StringField
     public const int TAG = 23;
 
     public IOIid()
-        : base(Tags.IOIid) {}
+        : base(TAG) {}
     public IOIid(string val)
-        : base(Tags.IOIid, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -430,9 +430,9 @@ public sealed class IOIOthSvc : CharField
     public const int TAG = 24;
 
     public IOIOthSvc()
-        : base(Tags.IOIOthSvc) {}
+        : base(TAG) {}
     public IOIOthSvc(char val)
-        : base(Tags.IOIOthSvc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -443,9 +443,9 @@ public sealed class IOIQltyInd : CharField
     public const int TAG = 25;
 
     public IOIQltyInd()
-        : base(Tags.IOIQltyInd) {}
+        : base(TAG) {}
     public IOIQltyInd(char val)
-        : base(Tags.IOIQltyInd, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char HIGH = 'H';
@@ -461,9 +461,9 @@ public sealed class IOIRefID : StringField
     public const int TAG = 26;
 
     public IOIRefID()
-        : base(Tags.IOIRefID) {}
+        : base(TAG) {}
     public IOIRefID(string val)
-        : base(Tags.IOIRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -474,9 +474,9 @@ public sealed class IOIShares : StringField
     public const int TAG = 27;
 
     public IOIShares()
-        : base(Tags.IOIShares) {}
+        : base(TAG) {}
     public IOIShares(string val)
-        : base(Tags.IOIShares, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -487,9 +487,9 @@ public sealed class IOITransType : CharField
     public const int TAG = 28;
 
     public IOITransType()
-        : base(Tags.IOITransType) {}
+        : base(TAG) {}
     public IOITransType(char val)
-        : base(Tags.IOITransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CANCEL = 'C';
@@ -505,9 +505,9 @@ public sealed class LastCapacity : CharField
     public const int TAG = 29;
 
     public LastCapacity()
-        : base(Tags.LastCapacity) {}
+        : base(TAG) {}
     public LastCapacity(char val)
-        : base(Tags.LastCapacity, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char AGENT = '1';
@@ -524,9 +524,9 @@ public sealed class LastMkt : StringField
     public const int TAG = 30;
 
     public LastMkt()
-        : base(Tags.LastMkt) {}
+        : base(TAG) {}
     public LastMkt(string val)
-        : base(Tags.LastMkt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -537,9 +537,9 @@ public sealed class LastPx : DecimalField
     public const int TAG = 31;
 
     public LastPx()
-        : base(Tags.LastPx) {}
+        : base(TAG) {}
     public LastPx(Decimal val)
-        : base(Tags.LastPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -550,9 +550,9 @@ public sealed class LastShares : DecimalField
     public const int TAG = 32;
 
     public LastShares()
-        : base(Tags.LastShares) {}
+        : base(TAG) {}
     public LastShares(Decimal val)
-        : base(Tags.LastShares, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -563,9 +563,9 @@ public sealed class LinesOfText : IntField
     public const int TAG = 33;
 
     public LinesOfText()
-        : base(Tags.LinesOfText) {}
+        : base(TAG) {}
     public LinesOfText(int val)
-        : base(Tags.LinesOfText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -576,9 +576,9 @@ public sealed class MsgSeqNum : SeqNumFieldType
     public const int TAG = 34;
 
     public MsgSeqNum()
-        : base(Tags.MsgSeqNum) {}
+        : base(TAG) {}
     public MsgSeqNum(SeqNumType val)
-        : base(Tags.MsgSeqNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -589,9 +589,9 @@ public sealed class MsgType : StringField
     public const int TAG = 35;
 
     public MsgType()
-        : base(Tags.MsgType) {}
+        : base(TAG) {}
     public MsgType(string val)
-        : base(Tags.MsgType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string HEARTBEAT = "0";
@@ -826,9 +826,9 @@ public sealed class NewSeqNo : SeqNumFieldType
     public const int TAG = 36;
 
     public NewSeqNo()
-        : base(Tags.NewSeqNo) {}
+        : base(TAG) {}
     public NewSeqNo(SeqNumType val)
-        : base(Tags.NewSeqNo, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -839,9 +839,9 @@ public sealed class OrderID : StringField
     public const int TAG = 37;
 
     public OrderID()
-        : base(Tags.OrderID) {}
+        : base(TAG) {}
     public OrderID(string val)
-        : base(Tags.OrderID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -852,9 +852,9 @@ public sealed class OrderQty : DecimalField
     public const int TAG = 38;
 
     public OrderQty()
-        : base(Tags.OrderQty) {}
+        : base(TAG) {}
     public OrderQty(Decimal val)
-        : base(Tags.OrderQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -865,9 +865,9 @@ public sealed class OrdStatus : CharField
     public const int TAG = 39;
 
     public OrdStatus()
-        : base(Tags.OrdStatus) {}
+        : base(TAG) {}
     public OrdStatus(char val)
-        : base(Tags.OrdStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NEW = '0';
@@ -896,9 +896,9 @@ public sealed class OrdType : CharField
     public const int TAG = 40;
 
     public OrdType()
-        : base(Tags.OrdType) {}
+        : base(TAG) {}
     public OrdType(char val)
-        : base(Tags.OrdType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char MARKET = '1';
@@ -937,9 +937,9 @@ public sealed class OrigClOrdID : StringField
     public const int TAG = 41;
 
     public OrigClOrdID()
-        : base(Tags.OrigClOrdID) {}
+        : base(TAG) {}
     public OrigClOrdID(string val)
-        : base(Tags.OrigClOrdID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -950,7 +950,7 @@ public sealed class OrigTime : UtcDateTimeField
     public const int TAG = 42;
 
     public OrigTime()
-        : base(Tags.OrigTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -958,7 +958,7 @@ public sealed class OrigTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public OrigTime(DateTime val)
-        : base(Tags.OrigTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -968,7 +968,7 @@ public sealed class OrigTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public OrigTime(DateTime val, bool showMilliseconds)
-        : base(Tags.OrigTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -977,7 +977,7 @@ public sealed class OrigTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public OrigTime(DateTime val, TimePrecision precision)
-        : base(Tags.OrigTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -988,9 +988,9 @@ public sealed class PossDupFlag : BooleanField
     public const int TAG = 43;
 
     public PossDupFlag()
-        : base(Tags.PossDupFlag) {}
+        : base(TAG) {}
     public PossDupFlag(Boolean val)
-        : base(Tags.PossDupFlag, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -1007,9 +1007,9 @@ public sealed class Price : DecimalField
     public const int TAG = 44;
 
     public Price()
-        : base(Tags.Price) {}
+        : base(TAG) {}
     public Price(Decimal val)
-        : base(Tags.Price, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1020,9 +1020,9 @@ public sealed class RefSeqNum : SeqNumFieldType
     public const int TAG = 45;
 
     public RefSeqNum()
-        : base(Tags.RefSeqNum) {}
+        : base(TAG) {}
     public RefSeqNum(SeqNumType val)
-        : base(Tags.RefSeqNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1033,9 +1033,9 @@ public sealed class RelatdSym : StringField
     public const int TAG = 46;
 
     public RelatdSym()
-        : base(Tags.RelatdSym) {}
+        : base(TAG) {}
     public RelatdSym(string val)
-        : base(Tags.RelatdSym, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1046,9 +1046,9 @@ public sealed class Rule80A : CharField
     public const int TAG = 47;
 
     public Rule80A()
-        : base(Tags.Rule80A) {}
+        : base(TAG) {}
     public Rule80A(char val)
-        : base(Tags.Rule80A, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char AGENCY_SINGLE_ORDER = 'A';
@@ -1111,9 +1111,9 @@ public sealed class SecurityID : StringField
     public const int TAG = 48;
 
     public SecurityID()
-        : base(Tags.SecurityID) {}
+        : base(TAG) {}
     public SecurityID(string val)
-        : base(Tags.SecurityID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1124,9 +1124,9 @@ public sealed class SenderCompID : StringField
     public const int TAG = 49;
 
     public SenderCompID()
-        : base(Tags.SenderCompID) {}
+        : base(TAG) {}
     public SenderCompID(string val)
-        : base(Tags.SenderCompID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1137,9 +1137,9 @@ public sealed class SenderSubID : StringField
     public const int TAG = 50;
 
     public SenderSubID()
-        : base(Tags.SenderSubID) {}
+        : base(TAG) {}
     public SenderSubID(string val)
-        : base(Tags.SenderSubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1150,7 +1150,7 @@ public sealed class SendingTime : UtcDateTimeField
     public const int TAG = 52;
 
     public SendingTime()
-        : base(Tags.SendingTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -1158,7 +1158,7 @@ public sealed class SendingTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public SendingTime(DateTime val)
-        : base(Tags.SendingTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -1168,7 +1168,7 @@ public sealed class SendingTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public SendingTime(DateTime val, bool showMilliseconds)
-        : base(Tags.SendingTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -1177,7 +1177,7 @@ public sealed class SendingTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public SendingTime(DateTime val, TimePrecision precision)
-        : base(Tags.SendingTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -1188,9 +1188,9 @@ public sealed class Shares : DecimalField
     public const int TAG = 53;
 
     public Shares()
-        : base(Tags.Shares) {}
+        : base(TAG) {}
     public Shares(Decimal val)
-        : base(Tags.Shares, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1201,9 +1201,9 @@ public sealed class Side : CharField
     public const int TAG = 54;
 
     public Side()
-        : base(Tags.Side) {}
+        : base(TAG) {}
     public Side(char val)
-        : base(Tags.Side, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char BUY = '1';
@@ -1232,9 +1232,9 @@ public sealed class Symbol : StringField
     public const int TAG = 55;
 
     public Symbol()
-        : base(Tags.Symbol) {}
+        : base(TAG) {}
     public Symbol(string val)
-        : base(Tags.Symbol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1245,9 +1245,9 @@ public sealed class TargetCompID : StringField
     public const int TAG = 56;
 
     public TargetCompID()
-        : base(Tags.TargetCompID) {}
+        : base(TAG) {}
     public TargetCompID(string val)
-        : base(Tags.TargetCompID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1258,9 +1258,9 @@ public sealed class TargetSubID : StringField
     public const int TAG = 57;
 
     public TargetSubID()
-        : base(Tags.TargetSubID) {}
+        : base(TAG) {}
     public TargetSubID(string val)
-        : base(Tags.TargetSubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1271,9 +1271,9 @@ public sealed class Text : StringField
     public const int TAG = 58;
 
     public Text()
-        : base(Tags.Text) {}
+        : base(TAG) {}
     public Text(string val)
-        : base(Tags.Text, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1284,9 +1284,9 @@ public sealed class TimeInForce : CharField
     public const int TAG = 59;
 
     public TimeInForce()
-        : base(Tags.TimeInForce) {}
+        : base(TAG) {}
     public TimeInForce(char val)
-        : base(Tags.TimeInForce, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char DAY = '0';
@@ -1309,7 +1309,7 @@ public sealed class TransactTime : UtcDateTimeField
     public const int TAG = 60;
 
     public TransactTime()
-        : base(Tags.TransactTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -1317,7 +1317,7 @@ public sealed class TransactTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public TransactTime(DateTime val)
-        : base(Tags.TransactTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -1327,7 +1327,7 @@ public sealed class TransactTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TransactTime(DateTime val, bool showMilliseconds)
-        : base(Tags.TransactTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -1336,7 +1336,7 @@ public sealed class TransactTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public TransactTime(DateTime val, TimePrecision precision)
-        : base(Tags.TransactTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -1347,9 +1347,9 @@ public sealed class Urgency : CharField
     public const int TAG = 61;
 
     public Urgency()
-        : base(Tags.Urgency) {}
+        : base(TAG) {}
     public Urgency(char val)
-        : base(Tags.Urgency, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NORMAL = '0';
@@ -1365,7 +1365,7 @@ public sealed class ValidUntilTime : UtcDateTimeField
     public const int TAG = 62;
 
     public ValidUntilTime()
-        : base(Tags.ValidUntilTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -1373,7 +1373,7 @@ public sealed class ValidUntilTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public ValidUntilTime(DateTime val)
-        : base(Tags.ValidUntilTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -1383,7 +1383,7 @@ public sealed class ValidUntilTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ValidUntilTime(DateTime val, bool showMilliseconds)
-        : base(Tags.ValidUntilTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -1392,7 +1392,7 @@ public sealed class ValidUntilTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public ValidUntilTime(DateTime val, TimePrecision precision)
-        : base(Tags.ValidUntilTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -1403,9 +1403,9 @@ public sealed class SettlmntTyp : CharField
     public const int TAG = 63;
 
     public SettlmntTyp()
-        : base(Tags.SettlmntTyp) {}
+        : base(TAG) {}
     public SettlmntTyp(char val)
-        : base(Tags.SettlmntTyp, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char REGULAR = '0';
@@ -1434,9 +1434,9 @@ public sealed class FutSettDate : StringField
     public const int TAG = 64;
 
     public FutSettDate()
-        : base(Tags.FutSettDate) {}
+        : base(TAG) {}
     public FutSettDate(string val)
-        : base(Tags.FutSettDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1447,9 +1447,9 @@ public sealed class SymbolSfx : StringField
     public const int TAG = 65;
 
     public SymbolSfx()
-        : base(Tags.SymbolSfx) {}
+        : base(TAG) {}
     public SymbolSfx(string val)
-        : base(Tags.SymbolSfx, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string EUCP_WITH_LUMP_SUM_INTEREST_RATHER_THAN_DISCOUNT_PRICE = "CD";
@@ -1466,9 +1466,9 @@ public sealed class ListID : StringField
     public const int TAG = 66;
 
     public ListID()
-        : base(Tags.ListID) {}
+        : base(TAG) {}
     public ListID(string val)
-        : base(Tags.ListID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1479,9 +1479,9 @@ public sealed class ListSeqNo : IntField
     public const int TAG = 67;
 
     public ListSeqNo()
-        : base(Tags.ListSeqNo) {}
+        : base(TAG) {}
     public ListSeqNo(int val)
-        : base(Tags.ListSeqNo, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1492,9 +1492,9 @@ public sealed class ListNoOrds : IntField
     public const int TAG = 68;
 
     public ListNoOrds()
-        : base(Tags.ListNoOrds) {}
+        : base(TAG) {}
     public ListNoOrds(int val)
-        : base(Tags.ListNoOrds, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1505,9 +1505,9 @@ public sealed class ListExecInst : StringField
     public const int TAG = 69;
 
     public ListExecInst()
-        : base(Tags.ListExecInst) {}
+        : base(TAG) {}
     public ListExecInst(string val)
-        : base(Tags.ListExecInst, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1518,9 +1518,9 @@ public sealed class AllocID : StringField
     public const int TAG = 70;
 
     public AllocID()
-        : base(Tags.AllocID) {}
+        : base(TAG) {}
     public AllocID(string val)
-        : base(Tags.AllocID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1531,9 +1531,9 @@ public sealed class AllocTransType : CharField
     public const int TAG = 71;
 
     public AllocTransType()
-        : base(Tags.AllocTransType) {}
+        : base(TAG) {}
     public AllocTransType(char val)
-        : base(Tags.AllocTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NEW = '0';
@@ -1553,9 +1553,9 @@ public sealed class RefAllocID : StringField
     public const int TAG = 72;
 
     public RefAllocID()
-        : base(Tags.RefAllocID) {}
+        : base(TAG) {}
     public RefAllocID(string val)
-        : base(Tags.RefAllocID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1566,9 +1566,9 @@ public sealed class NoOrders : IntField
     public const int TAG = 73;
 
     public NoOrders()
-        : base(Tags.NoOrders) {}
+        : base(TAG) {}
     public NoOrders(int val)
-        : base(Tags.NoOrders, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1579,9 +1579,9 @@ public sealed class AvgPrxPrecision : IntField
     public const int TAG = 74;
 
     public AvgPrxPrecision()
-        : base(Tags.AvgPrxPrecision) {}
+        : base(TAG) {}
     public AvgPrxPrecision(int val)
-        : base(Tags.AvgPrxPrecision, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1592,9 +1592,9 @@ public sealed class TradeDate : StringField
     public const int TAG = 75;
 
     public TradeDate()
-        : base(Tags.TradeDate) {}
+        : base(TAG) {}
     public TradeDate(string val)
-        : base(Tags.TradeDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1605,9 +1605,9 @@ public sealed class ExecBroker : StringField
     public const int TAG = 76;
 
     public ExecBroker()
-        : base(Tags.ExecBroker) {}
+        : base(TAG) {}
     public ExecBroker(string val)
-        : base(Tags.ExecBroker, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1618,9 +1618,9 @@ public sealed class OpenClose : CharField
     public const int TAG = 77;
 
     public OpenClose()
-        : base(Tags.OpenClose) {}
+        : base(TAG) {}
     public OpenClose(char val)
-        : base(Tags.OpenClose, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char OPEN = 'O';
@@ -1635,9 +1635,9 @@ public sealed class NoAllocs : IntField
     public const int TAG = 78;
 
     public NoAllocs()
-        : base(Tags.NoAllocs) {}
+        : base(TAG) {}
     public NoAllocs(int val)
-        : base(Tags.NoAllocs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1648,9 +1648,9 @@ public sealed class AllocAccount : StringField
     public const int TAG = 79;
 
     public AllocAccount()
-        : base(Tags.AllocAccount) {}
+        : base(TAG) {}
     public AllocAccount(string val)
-        : base(Tags.AllocAccount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1661,9 +1661,9 @@ public sealed class AllocShares : DecimalField
     public const int TAG = 80;
 
     public AllocShares()
-        : base(Tags.AllocShares) {}
+        : base(TAG) {}
     public AllocShares(Decimal val)
-        : base(Tags.AllocShares, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1674,9 +1674,9 @@ public sealed class ProcessCode : CharField
     public const int TAG = 81;
 
     public ProcessCode()
-        : base(Tags.ProcessCode) {}
+        : base(TAG) {}
     public ProcessCode(char val)
-        : base(Tags.ProcessCode, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char REGULAR = '0';
@@ -1700,9 +1700,9 @@ public sealed class NoRpts : IntField
     public const int TAG = 82;
 
     public NoRpts()
-        : base(Tags.NoRpts) {}
+        : base(TAG) {}
     public NoRpts(int val)
-        : base(Tags.NoRpts, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1713,9 +1713,9 @@ public sealed class RptSeq : IntField
     public const int TAG = 83;
 
     public RptSeq()
-        : base(Tags.RptSeq) {}
+        : base(TAG) {}
     public RptSeq(int val)
-        : base(Tags.RptSeq, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1726,9 +1726,9 @@ public sealed class CxlQty : DecimalField
     public const int TAG = 84;
 
     public CxlQty()
-        : base(Tags.CxlQty) {}
+        : base(TAG) {}
     public CxlQty(Decimal val)
-        : base(Tags.CxlQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1739,9 +1739,9 @@ public sealed class NoDlvyInst : IntField
     public const int TAG = 85;
 
     public NoDlvyInst()
-        : base(Tags.NoDlvyInst) {}
+        : base(TAG) {}
     public NoDlvyInst(int val)
-        : base(Tags.NoDlvyInst, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1752,9 +1752,9 @@ public sealed class DlvyInst : StringField
     public const int TAG = 86;
 
     public DlvyInst()
-        : base(Tags.DlvyInst) {}
+        : base(TAG) {}
     public DlvyInst(string val)
-        : base(Tags.DlvyInst, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1765,9 +1765,9 @@ public sealed class AllocStatus : IntField
     public const int TAG = 87;
 
     public AllocStatus()
-        : base(Tags.AllocStatus) {}
+        : base(TAG) {}
     public AllocStatus(int val)
-        : base(Tags.AllocStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACCEPTED = 0;
@@ -1790,9 +1790,9 @@ public sealed class AllocRejCode : IntField
     public const int TAG = 88;
 
     public AllocRejCode()
-        : base(Tags.AllocRejCode) {}
+        : base(TAG) {}
     public AllocRejCode(int val)
-        : base(Tags.AllocRejCode, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNKNOWN_ACCOUNT = 0;
@@ -1824,9 +1824,9 @@ public sealed class Signature : StringField
     public const int TAG = 89;
 
     public Signature()
-        : base(Tags.Signature) {}
+        : base(TAG) {}
     public Signature(string val)
-        : base(Tags.Signature, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1837,9 +1837,9 @@ public sealed class SecureDataLen : IntField
     public const int TAG = 90;
 
     public SecureDataLen()
-        : base(Tags.SecureDataLen) {}
+        : base(TAG) {}
     public SecureDataLen(int val)
-        : base(Tags.SecureDataLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1850,9 +1850,9 @@ public sealed class SecureData : StringField
     public const int TAG = 91;
 
     public SecureData()
-        : base(Tags.SecureData) {}
+        : base(TAG) {}
     public SecureData(string val)
-        : base(Tags.SecureData, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1863,9 +1863,9 @@ public sealed class BrokerOfCredit : StringField
     public const int TAG = 92;
 
     public BrokerOfCredit()
-        : base(Tags.BrokerOfCredit) {}
+        : base(TAG) {}
     public BrokerOfCredit(string val)
-        : base(Tags.BrokerOfCredit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1876,9 +1876,9 @@ public sealed class SignatureLength : IntField
     public const int TAG = 93;
 
     public SignatureLength()
-        : base(Tags.SignatureLength) {}
+        : base(TAG) {}
     public SignatureLength(int val)
-        : base(Tags.SignatureLength, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1889,9 +1889,9 @@ public sealed class EmailType : CharField
     public const int TAG = 94;
 
     public EmailType()
-        : base(Tags.EmailType) {}
+        : base(TAG) {}
     public EmailType(char val)
-        : base(Tags.EmailType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NEW = '0';
@@ -1907,9 +1907,9 @@ public sealed class RawDataLength : IntField
     public const int TAG = 95;
 
     public RawDataLength()
-        : base(Tags.RawDataLength) {}
+        : base(TAG) {}
     public RawDataLength(int val)
-        : base(Tags.RawDataLength, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1920,9 +1920,9 @@ public sealed class RawData : StringField
     public const int TAG = 96;
 
     public RawData()
-        : base(Tags.RawData) {}
+        : base(TAG) {}
     public RawData(string val)
-        : base(Tags.RawData, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1933,9 +1933,9 @@ public sealed class PossResend : BooleanField
     public const int TAG = 97;
 
     public PossResend()
-        : base(Tags.PossResend) {}
+        : base(TAG) {}
     public PossResend(Boolean val)
-        : base(Tags.PossResend, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -1950,9 +1950,9 @@ public sealed class EncryptMethod : IntField
     public const int TAG = 98;
 
     public EncryptMethod()
-        : base(Tags.EncryptMethod) {}
+        : base(TAG) {}
     public EncryptMethod(int val)
-        : base(Tags.EncryptMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NONE_OTHER = 0;
@@ -1983,9 +1983,9 @@ public sealed class StopPx : DecimalField
     public const int TAG = 99;
 
     public StopPx()
-        : base(Tags.StopPx) {}
+        : base(TAG) {}
     public StopPx(Decimal val)
-        : base(Tags.StopPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -1996,9 +1996,9 @@ public sealed class ExDestination : StringField
     public const int TAG = 100;
 
     public ExDestination()
-        : base(Tags.ExDestination) {}
+        : base(TAG) {}
     public ExDestination(string val)
-        : base(Tags.ExDestination, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string NONE = "0";
@@ -2013,9 +2013,9 @@ public sealed class CxlRejReason : IntField
     public const int TAG = 102;
 
     public CxlRejReason()
-        : base(Tags.CxlRejReason) {}
+        : base(TAG) {}
     public CxlRejReason(int val)
-        : base(Tags.CxlRejReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int TOO_LATE_TO_CANCEL = 0;
@@ -2044,9 +2044,9 @@ public sealed class OrdRejReason : IntField
     public const int TAG = 103;
 
     public OrdRejReason()
-        : base(Tags.OrdRejReason) {}
+        : base(TAG) {}
     public OrdRejReason(int val)
-        : base(Tags.OrdRejReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int BROKER = 0;
@@ -2082,9 +2082,9 @@ public sealed class IOIQualifier : CharField
     public const int TAG = 104;
 
     public IOIQualifier()
-        : base(Tags.IOIQualifier) {}
+        : base(TAG) {}
     public IOIQualifier(char val)
-        : base(Tags.IOIQualifier, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ALL_OR_NONE = 'A';
@@ -2119,9 +2119,9 @@ public sealed class WaveNo : StringField
     public const int TAG = 105;
 
     public WaveNo()
-        : base(Tags.WaveNo) {}
+        : base(TAG) {}
     public WaveNo(string val)
-        : base(Tags.WaveNo, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2132,9 +2132,9 @@ public sealed class Issuer : StringField
     public const int TAG = 106;
 
     public Issuer()
-        : base(Tags.Issuer) {}
+        : base(TAG) {}
     public Issuer(string val)
-        : base(Tags.Issuer, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2145,9 +2145,9 @@ public sealed class SecurityDesc : StringField
     public const int TAG = 107;
 
     public SecurityDesc()
-        : base(Tags.SecurityDesc) {}
+        : base(TAG) {}
     public SecurityDesc(string val)
-        : base(Tags.SecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2158,9 +2158,9 @@ public sealed class HeartBtInt : IntField
     public const int TAG = 108;
 
     public HeartBtInt()
-        : base(Tags.HeartBtInt) {}
+        : base(TAG) {}
     public HeartBtInt(int val)
-        : base(Tags.HeartBtInt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2171,9 +2171,9 @@ public sealed class ClientID : StringField
     public const int TAG = 109;
 
     public ClientID()
-        : base(Tags.ClientID) {}
+        : base(TAG) {}
     public ClientID(string val)
-        : base(Tags.ClientID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2184,9 +2184,9 @@ public sealed class MinQty : DecimalField
     public const int TAG = 110;
 
     public MinQty()
-        : base(Tags.MinQty) {}
+        : base(TAG) {}
     public MinQty(Decimal val)
-        : base(Tags.MinQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2197,9 +2197,9 @@ public sealed class MaxFloor : DecimalField
     public const int TAG = 111;
 
     public MaxFloor()
-        : base(Tags.MaxFloor) {}
+        : base(TAG) {}
     public MaxFloor(Decimal val)
-        : base(Tags.MaxFloor, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2210,9 +2210,9 @@ public sealed class TestReqID : StringField
     public const int TAG = 112;
 
     public TestReqID()
-        : base(Tags.TestReqID) {}
+        : base(TAG) {}
     public TestReqID(string val)
-        : base(Tags.TestReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2223,9 +2223,9 @@ public sealed class ReportToExch : BooleanField
     public const int TAG = 113;
 
     public ReportToExch()
-        : base(Tags.ReportToExch) {}
+        : base(TAG) {}
     public ReportToExch(Boolean val)
-        : base(Tags.ReportToExch, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -2240,9 +2240,9 @@ public sealed class LocateReqd : BooleanField
     public const int TAG = 114;
 
     public LocateReqd()
-        : base(Tags.LocateReqd) {}
+        : base(TAG) {}
     public LocateReqd(Boolean val)
-        : base(Tags.LocateReqd, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -2257,9 +2257,9 @@ public sealed class OnBehalfOfCompID : StringField
     public const int TAG = 115;
 
     public OnBehalfOfCompID()
-        : base(Tags.OnBehalfOfCompID) {}
+        : base(TAG) {}
     public OnBehalfOfCompID(string val)
-        : base(Tags.OnBehalfOfCompID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2270,9 +2270,9 @@ public sealed class OnBehalfOfSubID : StringField
     public const int TAG = 116;
 
     public OnBehalfOfSubID()
-        : base(Tags.OnBehalfOfSubID) {}
+        : base(TAG) {}
     public OnBehalfOfSubID(string val)
-        : base(Tags.OnBehalfOfSubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2283,9 +2283,9 @@ public sealed class QuoteID : StringField
     public const int TAG = 117;
 
     public QuoteID()
-        : base(Tags.QuoteID) {}
+        : base(TAG) {}
     public QuoteID(string val)
-        : base(Tags.QuoteID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2296,9 +2296,9 @@ public sealed class NetMoney : DecimalField
     public const int TAG = 118;
 
     public NetMoney()
-        : base(Tags.NetMoney) {}
+        : base(TAG) {}
     public NetMoney(Decimal val)
-        : base(Tags.NetMoney, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2309,9 +2309,9 @@ public sealed class SettlCurrAmt : DecimalField
     public const int TAG = 119;
 
     public SettlCurrAmt()
-        : base(Tags.SettlCurrAmt) {}
+        : base(TAG) {}
     public SettlCurrAmt(Decimal val)
-        : base(Tags.SettlCurrAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2322,9 +2322,9 @@ public sealed class SettlCurrency : StringField
     public const int TAG = 120;
 
     public SettlCurrency()
-        : base(Tags.SettlCurrency) {}
+        : base(TAG) {}
     public SettlCurrency(string val)
-        : base(Tags.SettlCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2335,9 +2335,9 @@ public sealed class ForexReq : BooleanField
     public const int TAG = 121;
 
     public ForexReq()
-        : base(Tags.ForexReq) {}
+        : base(TAG) {}
     public ForexReq(Boolean val)
-        : base(Tags.ForexReq, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -2352,7 +2352,7 @@ public sealed class OrigSendingTime : UtcDateTimeField
     public const int TAG = 122;
 
     public OrigSendingTime()
-        : base(Tags.OrigSendingTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -2360,7 +2360,7 @@ public sealed class OrigSendingTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public OrigSendingTime(DateTime val)
-        : base(Tags.OrigSendingTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -2370,7 +2370,7 @@ public sealed class OrigSendingTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public OrigSendingTime(DateTime val, bool showMilliseconds)
-        : base(Tags.OrigSendingTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -2379,7 +2379,7 @@ public sealed class OrigSendingTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public OrigSendingTime(DateTime val, TimePrecision precision)
-        : base(Tags.OrigSendingTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -2390,9 +2390,9 @@ public sealed class GapFillFlag : BooleanField
     public const int TAG = 123;
 
     public GapFillFlag()
-        : base(Tags.GapFillFlag) {}
+        : base(TAG) {}
     public GapFillFlag(Boolean val)
-        : base(Tags.GapFillFlag, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -2409,9 +2409,9 @@ public sealed class NoExecs : IntField
     public const int TAG = 124;
 
     public NoExecs()
-        : base(Tags.NoExecs) {}
+        : base(TAG) {}
     public NoExecs(int val)
-        : base(Tags.NoExecs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2422,9 +2422,9 @@ public sealed class CxlType : CharField
     public const int TAG = 125;
 
     public CxlType()
-        : base(Tags.CxlType) {}
+        : base(TAG) {}
     public CxlType(char val)
-        : base(Tags.CxlType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char PARTIAL_CANCEL = 'P';
@@ -2439,7 +2439,7 @@ public sealed class ExpireTime : UtcDateTimeField
     public const int TAG = 126;
 
     public ExpireTime()
-        : base(Tags.ExpireTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -2447,7 +2447,7 @@ public sealed class ExpireTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public ExpireTime(DateTime val)
-        : base(Tags.ExpireTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -2457,7 +2457,7 @@ public sealed class ExpireTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ExpireTime(DateTime val, bool showMilliseconds)
-        : base(Tags.ExpireTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -2466,7 +2466,7 @@ public sealed class ExpireTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public ExpireTime(DateTime val, TimePrecision precision)
-        : base(Tags.ExpireTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -2477,9 +2477,9 @@ public sealed class DKReason : CharField
     public const int TAG = 127;
 
     public DKReason()
-        : base(Tags.DKReason) {}
+        : base(TAG) {}
     public DKReason(char val)
-        : base(Tags.DKReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char UNKNOWN_SYMBOL = 'A';
@@ -2499,9 +2499,9 @@ public sealed class DeliverToCompID : StringField
     public const int TAG = 128;
 
     public DeliverToCompID()
-        : base(Tags.DeliverToCompID) {}
+        : base(TAG) {}
     public DeliverToCompID(string val)
-        : base(Tags.DeliverToCompID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2512,9 +2512,9 @@ public sealed class DeliverToSubID : StringField
     public const int TAG = 129;
 
     public DeliverToSubID()
-        : base(Tags.DeliverToSubID) {}
+        : base(TAG) {}
     public DeliverToSubID(string val)
-        : base(Tags.DeliverToSubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2525,9 +2525,9 @@ public sealed class IOINaturalFlag : BooleanField
     public const int TAG = 130;
 
     public IOINaturalFlag()
-        : base(Tags.IOINaturalFlag) {}
+        : base(TAG) {}
     public IOINaturalFlag(Boolean val)
-        : base(Tags.IOINaturalFlag, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -2544,9 +2544,9 @@ public sealed class QuoteReqID : StringField
     public const int TAG = 131;
 
     public QuoteReqID()
-        : base(Tags.QuoteReqID) {}
+        : base(TAG) {}
     public QuoteReqID(string val)
-        : base(Tags.QuoteReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2557,9 +2557,9 @@ public sealed class BidPx : DecimalField
     public const int TAG = 132;
 
     public BidPx()
-        : base(Tags.BidPx) {}
+        : base(TAG) {}
     public BidPx(Decimal val)
-        : base(Tags.BidPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2570,9 +2570,9 @@ public sealed class OfferPx : DecimalField
     public const int TAG = 133;
 
     public OfferPx()
-        : base(Tags.OfferPx) {}
+        : base(TAG) {}
     public OfferPx(Decimal val)
-        : base(Tags.OfferPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2583,9 +2583,9 @@ public sealed class BidSize : DecimalField
     public const int TAG = 134;
 
     public BidSize()
-        : base(Tags.BidSize) {}
+        : base(TAG) {}
     public BidSize(Decimal val)
-        : base(Tags.BidSize, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2596,9 +2596,9 @@ public sealed class OfferSize : DecimalField
     public const int TAG = 135;
 
     public OfferSize()
-        : base(Tags.OfferSize) {}
+        : base(TAG) {}
     public OfferSize(Decimal val)
-        : base(Tags.OfferSize, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2609,9 +2609,9 @@ public sealed class NoMiscFees : IntField
     public const int TAG = 136;
 
     public NoMiscFees()
-        : base(Tags.NoMiscFees) {}
+        : base(TAG) {}
     public NoMiscFees(int val)
-        : base(Tags.NoMiscFees, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2622,9 +2622,9 @@ public sealed class MiscFeeAmt : DecimalField
     public const int TAG = 137;
 
     public MiscFeeAmt()
-        : base(Tags.MiscFeeAmt) {}
+        : base(TAG) {}
     public MiscFeeAmt(Decimal val)
-        : base(Tags.MiscFeeAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2635,9 +2635,9 @@ public sealed class MiscFeeCurr : StringField
     public const int TAG = 138;
 
     public MiscFeeCurr()
-        : base(Tags.MiscFeeCurr) {}
+        : base(TAG) {}
     public MiscFeeCurr(string val)
-        : base(Tags.MiscFeeCurr, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2648,9 +2648,9 @@ public sealed class MiscFeeType : StringField
     public const int TAG = 139;
 
     public MiscFeeType()
-        : base(Tags.MiscFeeType) {}
+        : base(TAG) {}
     public MiscFeeType(string val)
-        : base(Tags.MiscFeeType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string REGULATORY = "1";
@@ -2677,9 +2677,9 @@ public sealed class PrevClosePx : DecimalField
     public const int TAG = 140;
 
     public PrevClosePx()
-        : base(Tags.PrevClosePx) {}
+        : base(TAG) {}
     public PrevClosePx(Decimal val)
-        : base(Tags.PrevClosePx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2690,9 +2690,9 @@ public sealed class ResetSeqNumFlag : BooleanField
     public const int TAG = 141;
 
     public ResetSeqNumFlag()
-        : base(Tags.ResetSeqNumFlag) {}
+        : base(TAG) {}
     public ResetSeqNumFlag(Boolean val)
-        : base(Tags.ResetSeqNumFlag, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -2708,9 +2708,9 @@ public sealed class SenderLocationID : StringField
     public const int TAG = 142;
 
     public SenderLocationID()
-        : base(Tags.SenderLocationID) {}
+        : base(TAG) {}
     public SenderLocationID(string val)
-        : base(Tags.SenderLocationID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2721,9 +2721,9 @@ public sealed class TargetLocationID : StringField
     public const int TAG = 143;
 
     public TargetLocationID()
-        : base(Tags.TargetLocationID) {}
+        : base(TAG) {}
     public TargetLocationID(string val)
-        : base(Tags.TargetLocationID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2734,9 +2734,9 @@ public sealed class OnBehalfOfLocationID : StringField
     public const int TAG = 144;
 
     public OnBehalfOfLocationID()
-        : base(Tags.OnBehalfOfLocationID) {}
+        : base(TAG) {}
     public OnBehalfOfLocationID(string val)
-        : base(Tags.OnBehalfOfLocationID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2747,9 +2747,9 @@ public sealed class DeliverToLocationID : StringField
     public const int TAG = 145;
 
     public DeliverToLocationID()
-        : base(Tags.DeliverToLocationID) {}
+        : base(TAG) {}
     public DeliverToLocationID(string val)
-        : base(Tags.DeliverToLocationID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2760,9 +2760,9 @@ public sealed class NoRelatedSym : IntField
     public const int TAG = 146;
 
     public NoRelatedSym()
-        : base(Tags.NoRelatedSym) {}
+        : base(TAG) {}
     public NoRelatedSym(int val)
-        : base(Tags.NoRelatedSym, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2773,9 +2773,9 @@ public sealed class Subject : StringField
     public const int TAG = 147;
 
     public Subject()
-        : base(Tags.Subject) {}
+        : base(TAG) {}
     public Subject(string val)
-        : base(Tags.Subject, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2786,9 +2786,9 @@ public sealed class Headline : StringField
     public const int TAG = 148;
 
     public Headline()
-        : base(Tags.Headline) {}
+        : base(TAG) {}
     public Headline(string val)
-        : base(Tags.Headline, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2799,9 +2799,9 @@ public sealed class URLLink : StringField
     public const int TAG = 149;
 
     public URLLink()
-        : base(Tags.URLLink) {}
+        : base(TAG) {}
     public URLLink(string val)
-        : base(Tags.URLLink, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2812,9 +2812,9 @@ public sealed class ExecType : CharField
     public const int TAG = 150;
 
     public ExecType()
-        : base(Tags.ExecType) {}
+        : base(TAG) {}
     public ExecType(char val)
-        : base(Tags.ExecType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NEW = '0';
@@ -2852,9 +2852,9 @@ public sealed class LeavesQty : DecimalField
     public const int TAG = 151;
 
     public LeavesQty()
-        : base(Tags.LeavesQty) {}
+        : base(TAG) {}
     public LeavesQty(Decimal val)
-        : base(Tags.LeavesQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2865,9 +2865,9 @@ public sealed class CashOrderQty : DecimalField
     public const int TAG = 152;
 
     public CashOrderQty()
-        : base(Tags.CashOrderQty) {}
+        : base(TAG) {}
     public CashOrderQty(Decimal val)
-        : base(Tags.CashOrderQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2878,9 +2878,9 @@ public sealed class AllocAvgPx : DecimalField
     public const int TAG = 153;
 
     public AllocAvgPx()
-        : base(Tags.AllocAvgPx) {}
+        : base(TAG) {}
     public AllocAvgPx(Decimal val)
-        : base(Tags.AllocAvgPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2891,9 +2891,9 @@ public sealed class AllocNetMoney : DecimalField
     public const int TAG = 154;
 
     public AllocNetMoney()
-        : base(Tags.AllocNetMoney) {}
+        : base(TAG) {}
     public AllocNetMoney(Decimal val)
-        : base(Tags.AllocNetMoney, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2904,9 +2904,9 @@ public sealed class SettlCurrFxRate : DecimalField
     public const int TAG = 155;
 
     public SettlCurrFxRate()
-        : base(Tags.SettlCurrFxRate) {}
+        : base(TAG) {}
     public SettlCurrFxRate(Decimal val)
-        : base(Tags.SettlCurrFxRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2917,9 +2917,9 @@ public sealed class SettlCurrFxRateCalc : CharField
     public const int TAG = 156;
 
     public SettlCurrFxRateCalc()
-        : base(Tags.SettlCurrFxRateCalc) {}
+        : base(TAG) {}
     public SettlCurrFxRateCalc(char val)
-        : base(Tags.SettlCurrFxRateCalc, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char MULTIPLY = 'M';
@@ -2934,9 +2934,9 @@ public sealed class NumDaysInterest : IntField
     public const int TAG = 157;
 
     public NumDaysInterest()
-        : base(Tags.NumDaysInterest) {}
+        : base(TAG) {}
     public NumDaysInterest(int val)
-        : base(Tags.NumDaysInterest, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2947,9 +2947,9 @@ public sealed class AccruedInterestRate : DecimalField
     public const int TAG = 158;
 
     public AccruedInterestRate()
-        : base(Tags.AccruedInterestRate) {}
+        : base(TAG) {}
     public AccruedInterestRate(Decimal val)
-        : base(Tags.AccruedInterestRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2960,9 +2960,9 @@ public sealed class AccruedInterestAmt : DecimalField
     public const int TAG = 159;
 
     public AccruedInterestAmt()
-        : base(Tags.AccruedInterestAmt) {}
+        : base(TAG) {}
     public AccruedInterestAmt(Decimal val)
-        : base(Tags.AccruedInterestAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -2973,9 +2973,9 @@ public sealed class SettlInstMode : CharField
     public const int TAG = 160;
 
     public SettlInstMode()
-        : base(Tags.SettlInstMode) {}
+        : base(TAG) {}
     public SettlInstMode(char val)
-        : base(Tags.SettlInstMode, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char DEFAULT = '0';
@@ -2994,9 +2994,9 @@ public sealed class AllocText : StringField
     public const int TAG = 161;
 
     public AllocText()
-        : base(Tags.AllocText) {}
+        : base(TAG) {}
     public AllocText(string val)
-        : base(Tags.AllocText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3007,9 +3007,9 @@ public sealed class SettlInstID : StringField
     public const int TAG = 162;
 
     public SettlInstID()
-        : base(Tags.SettlInstID) {}
+        : base(TAG) {}
     public SettlInstID(string val)
-        : base(Tags.SettlInstID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3020,9 +3020,9 @@ public sealed class SettlInstTransType : CharField
     public const int TAG = 163;
 
     public SettlInstTransType()
-        : base(Tags.SettlInstTransType) {}
+        : base(TAG) {}
     public SettlInstTransType(char val)
-        : base(Tags.SettlInstTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CANCEL = 'C';
@@ -3039,9 +3039,9 @@ public sealed class EmailThreadID : StringField
     public const int TAG = 164;
 
     public EmailThreadID()
-        : base(Tags.EmailThreadID) {}
+        : base(TAG) {}
     public EmailThreadID(string val)
-        : base(Tags.EmailThreadID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3052,9 +3052,9 @@ public sealed class SettlInstSource : CharField
     public const int TAG = 165;
 
     public SettlInstSource()
-        : base(Tags.SettlInstSource) {}
+        : base(TAG) {}
     public SettlInstSource(char val)
-        : base(Tags.SettlInstSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char BROKERS_INSTRUCTIONS = '1';
@@ -3072,9 +3072,9 @@ public sealed class SettlLocation : StringField
     public const int TAG = 166;
 
     public SettlLocation()
-        : base(Tags.SettlLocation) {}
+        : base(TAG) {}
     public SettlLocation(string val)
-        : base(Tags.SettlLocation, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string CEDEL = "CED";
@@ -3096,9 +3096,9 @@ public sealed class SecurityType : StringField
     public const int TAG = 167;
 
     public SecurityType()
-        : base(Tags.SecurityType) {}
+        : base(TAG) {}
     public SecurityType(string val)
-        : base(Tags.SecurityType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string ASSET_BACKED_SECURITIES = "ABS";
@@ -3258,7 +3258,7 @@ public sealed class EffectiveTime : UtcDateTimeField
     public const int TAG = 168;
 
     public EffectiveTime()
-        : base(Tags.EffectiveTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -3266,7 +3266,7 @@ public sealed class EffectiveTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public EffectiveTime(DateTime val)
-        : base(Tags.EffectiveTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -3276,7 +3276,7 @@ public sealed class EffectiveTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public EffectiveTime(DateTime val, bool showMilliseconds)
-        : base(Tags.EffectiveTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -3285,7 +3285,7 @@ public sealed class EffectiveTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public EffectiveTime(DateTime val, TimePrecision precision)
-        : base(Tags.EffectiveTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -3296,9 +3296,9 @@ public sealed class StandInstDbType : IntField
     public const int TAG = 169;
 
     public StandInstDbType()
-        : base(Tags.StandInstDbType) {}
+        : base(TAG) {}
     public StandInstDbType(int val)
-        : base(Tags.StandInstDbType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int OTHER = 0;
@@ -3316,9 +3316,9 @@ public sealed class StandInstDbName : StringField
     public const int TAG = 170;
 
     public StandInstDbName()
-        : base(Tags.StandInstDbName) {}
+        : base(TAG) {}
     public StandInstDbName(string val)
-        : base(Tags.StandInstDbName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3329,9 +3329,9 @@ public sealed class StandInstDbID : StringField
     public const int TAG = 171;
 
     public StandInstDbID()
-        : base(Tags.StandInstDbID) {}
+        : base(TAG) {}
     public StandInstDbID(string val)
-        : base(Tags.StandInstDbID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3342,9 +3342,9 @@ public sealed class SettlDeliveryType : IntField
     public const int TAG = 172;
 
     public SettlDeliveryType()
-        : base(Tags.SettlDeliveryType) {}
+        : base(TAG) {}
     public SettlDeliveryType(int val)
-        : base(Tags.SettlDeliveryType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int VERSUS_PAYMENT_DELIVER = 0;
@@ -3363,9 +3363,9 @@ public sealed class SettlDepositoryCode : StringField
     public const int TAG = 173;
 
     public SettlDepositoryCode()
-        : base(Tags.SettlDepositoryCode) {}
+        : base(TAG) {}
     public SettlDepositoryCode(string val)
-        : base(Tags.SettlDepositoryCode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3376,9 +3376,9 @@ public sealed class SettlBrkrCode : StringField
     public const int TAG = 174;
 
     public SettlBrkrCode()
-        : base(Tags.SettlBrkrCode) {}
+        : base(TAG) {}
     public SettlBrkrCode(string val)
-        : base(Tags.SettlBrkrCode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3389,9 +3389,9 @@ public sealed class SettlInstCode : StringField
     public const int TAG = 175;
 
     public SettlInstCode()
-        : base(Tags.SettlInstCode) {}
+        : base(TAG) {}
     public SettlInstCode(string val)
-        : base(Tags.SettlInstCode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3402,9 +3402,9 @@ public sealed class SecuritySettlAgentName : StringField
     public const int TAG = 176;
 
     public SecuritySettlAgentName()
-        : base(Tags.SecuritySettlAgentName) {}
+        : base(TAG) {}
     public SecuritySettlAgentName(string val)
-        : base(Tags.SecuritySettlAgentName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3415,9 +3415,9 @@ public sealed class SecuritySettlAgentCode : StringField
     public const int TAG = 177;
 
     public SecuritySettlAgentCode()
-        : base(Tags.SecuritySettlAgentCode) {}
+        : base(TAG) {}
     public SecuritySettlAgentCode(string val)
-        : base(Tags.SecuritySettlAgentCode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3428,9 +3428,9 @@ public sealed class SecuritySettlAgentAcctNum : StringField
     public const int TAG = 178;
 
     public SecuritySettlAgentAcctNum()
-        : base(Tags.SecuritySettlAgentAcctNum) {}
+        : base(TAG) {}
     public SecuritySettlAgentAcctNum(string val)
-        : base(Tags.SecuritySettlAgentAcctNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3441,9 +3441,9 @@ public sealed class SecuritySettlAgentAcctName : StringField
     public const int TAG = 179;
 
     public SecuritySettlAgentAcctName()
-        : base(Tags.SecuritySettlAgentAcctName) {}
+        : base(TAG) {}
     public SecuritySettlAgentAcctName(string val)
-        : base(Tags.SecuritySettlAgentAcctName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3454,9 +3454,9 @@ public sealed class SecuritySettlAgentContactName : StringField
     public const int TAG = 180;
 
     public SecuritySettlAgentContactName()
-        : base(Tags.SecuritySettlAgentContactName) {}
+        : base(TAG) {}
     public SecuritySettlAgentContactName(string val)
-        : base(Tags.SecuritySettlAgentContactName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3467,9 +3467,9 @@ public sealed class SecuritySettlAgentContactPhone : StringField
     public const int TAG = 181;
 
     public SecuritySettlAgentContactPhone()
-        : base(Tags.SecuritySettlAgentContactPhone) {}
+        : base(TAG) {}
     public SecuritySettlAgentContactPhone(string val)
-        : base(Tags.SecuritySettlAgentContactPhone, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3480,9 +3480,9 @@ public sealed class CashSettlAgentName : StringField
     public const int TAG = 182;
 
     public CashSettlAgentName()
-        : base(Tags.CashSettlAgentName) {}
+        : base(TAG) {}
     public CashSettlAgentName(string val)
-        : base(Tags.CashSettlAgentName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3493,9 +3493,9 @@ public sealed class CashSettlAgentCode : StringField
     public const int TAG = 183;
 
     public CashSettlAgentCode()
-        : base(Tags.CashSettlAgentCode) {}
+        : base(TAG) {}
     public CashSettlAgentCode(string val)
-        : base(Tags.CashSettlAgentCode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3506,9 +3506,9 @@ public sealed class CashSettlAgentAcctNum : StringField
     public const int TAG = 184;
 
     public CashSettlAgentAcctNum()
-        : base(Tags.CashSettlAgentAcctNum) {}
+        : base(TAG) {}
     public CashSettlAgentAcctNum(string val)
-        : base(Tags.CashSettlAgentAcctNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3519,9 +3519,9 @@ public sealed class CashSettlAgentAcctName : StringField
     public const int TAG = 185;
 
     public CashSettlAgentAcctName()
-        : base(Tags.CashSettlAgentAcctName) {}
+        : base(TAG) {}
     public CashSettlAgentAcctName(string val)
-        : base(Tags.CashSettlAgentAcctName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3532,9 +3532,9 @@ public sealed class CashSettlAgentContactName : StringField
     public const int TAG = 186;
 
     public CashSettlAgentContactName()
-        : base(Tags.CashSettlAgentContactName) {}
+        : base(TAG) {}
     public CashSettlAgentContactName(string val)
-        : base(Tags.CashSettlAgentContactName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3545,9 +3545,9 @@ public sealed class CashSettlAgentContactPhone : StringField
     public const int TAG = 187;
 
     public CashSettlAgentContactPhone()
-        : base(Tags.CashSettlAgentContactPhone) {}
+        : base(TAG) {}
     public CashSettlAgentContactPhone(string val)
-        : base(Tags.CashSettlAgentContactPhone, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3558,9 +3558,9 @@ public sealed class BidSpotRate : DecimalField
     public const int TAG = 188;
 
     public BidSpotRate()
-        : base(Tags.BidSpotRate) {}
+        : base(TAG) {}
     public BidSpotRate(Decimal val)
-        : base(Tags.BidSpotRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3571,9 +3571,9 @@ public sealed class BidForwardPoints : DecimalField
     public const int TAG = 189;
 
     public BidForwardPoints()
-        : base(Tags.BidForwardPoints) {}
+        : base(TAG) {}
     public BidForwardPoints(Decimal val)
-        : base(Tags.BidForwardPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3584,9 +3584,9 @@ public sealed class OfferSpotRate : DecimalField
     public const int TAG = 190;
 
     public OfferSpotRate()
-        : base(Tags.OfferSpotRate) {}
+        : base(TAG) {}
     public OfferSpotRate(Decimal val)
-        : base(Tags.OfferSpotRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3597,9 +3597,9 @@ public sealed class OfferForwardPoints : DecimalField
     public const int TAG = 191;
 
     public OfferForwardPoints()
-        : base(Tags.OfferForwardPoints) {}
+        : base(TAG) {}
     public OfferForwardPoints(Decimal val)
-        : base(Tags.OfferForwardPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3610,9 +3610,9 @@ public sealed class OrderQty2 : DecimalField
     public const int TAG = 192;
 
     public OrderQty2()
-        : base(Tags.OrderQty2) {}
+        : base(TAG) {}
     public OrderQty2(Decimal val)
-        : base(Tags.OrderQty2, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3623,9 +3623,9 @@ public sealed class FutSettDate2 : StringField
     public const int TAG = 193;
 
     public FutSettDate2()
-        : base(Tags.FutSettDate2) {}
+        : base(TAG) {}
     public FutSettDate2(string val)
-        : base(Tags.FutSettDate2, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3636,9 +3636,9 @@ public sealed class LastSpotRate : DecimalField
     public const int TAG = 194;
 
     public LastSpotRate()
-        : base(Tags.LastSpotRate) {}
+        : base(TAG) {}
     public LastSpotRate(Decimal val)
-        : base(Tags.LastSpotRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3649,9 +3649,9 @@ public sealed class LastForwardPoints : DecimalField
     public const int TAG = 195;
 
     public LastForwardPoints()
-        : base(Tags.LastForwardPoints) {}
+        : base(TAG) {}
     public LastForwardPoints(Decimal val)
-        : base(Tags.LastForwardPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3662,9 +3662,9 @@ public sealed class AllocLinkID : StringField
     public const int TAG = 196;
 
     public AllocLinkID()
-        : base(Tags.AllocLinkID) {}
+        : base(TAG) {}
     public AllocLinkID(string val)
-        : base(Tags.AllocLinkID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3675,9 +3675,9 @@ public sealed class AllocLinkType : IntField
     public const int TAG = 197;
 
     public AllocLinkType()
-        : base(Tags.AllocLinkType) {}
+        : base(TAG) {}
     public AllocLinkType(int val)
-        : base(Tags.AllocLinkType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int FX_NETTING = 0;
@@ -3694,9 +3694,9 @@ public sealed class SecondaryOrderID : StringField
     public const int TAG = 198;
 
     public SecondaryOrderID()
-        : base(Tags.SecondaryOrderID) {}
+        : base(TAG) {}
     public SecondaryOrderID(string val)
-        : base(Tags.SecondaryOrderID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3707,9 +3707,9 @@ public sealed class NoIOIQualifiers : IntField
     public const int TAG = 199;
 
     public NoIOIQualifiers()
-        : base(Tags.NoIOIQualifiers) {}
+        : base(TAG) {}
     public NoIOIQualifiers(int val)
-        : base(Tags.NoIOIQualifiers, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3720,9 +3720,9 @@ public sealed class MaturityMonthYear : StringField
     public const int TAG = 200;
 
     public MaturityMonthYear()
-        : base(Tags.MaturityMonthYear) {}
+        : base(TAG) {}
     public MaturityMonthYear(string val)
-        : base(Tags.MaturityMonthYear, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3733,9 +3733,9 @@ public sealed class PutOrCall : IntField
     public const int TAG = 201;
 
     public PutOrCall()
-        : base(Tags.PutOrCall) {}
+        : base(TAG) {}
     public PutOrCall(int val)
-        : base(Tags.PutOrCall, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PUT = 0;
@@ -3750,9 +3750,9 @@ public sealed class StrikePrice : DecimalField
     public const int TAG = 202;
 
     public StrikePrice()
-        : base(Tags.StrikePrice) {}
+        : base(TAG) {}
     public StrikePrice(Decimal val)
-        : base(Tags.StrikePrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3763,9 +3763,9 @@ public sealed class CoveredOrUncovered : IntField
     public const int TAG = 203;
 
     public CoveredOrUncovered()
-        : base(Tags.CoveredOrUncovered) {}
+        : base(TAG) {}
     public CoveredOrUncovered(int val)
-        : base(Tags.CoveredOrUncovered, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int COVERED = 0;
@@ -3780,9 +3780,9 @@ public sealed class CustomerOrFirm : IntField
     public const int TAG = 204;
 
     public CustomerOrFirm()
-        : base(Tags.CustomerOrFirm) {}
+        : base(TAG) {}
     public CustomerOrFirm(int val)
-        : base(Tags.CustomerOrFirm, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CUSTOMER = 0;
@@ -3797,9 +3797,9 @@ public sealed class MaturityDay : StringField
     public const int TAG = 205;
 
     public MaturityDay()
-        : base(Tags.MaturityDay) {}
+        : base(TAG) {}
     public MaturityDay(string val)
-        : base(Tags.MaturityDay, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3810,9 +3810,9 @@ public sealed class OptAttribute : CharField
     public const int TAG = 206;
 
     public OptAttribute()
-        : base(Tags.OptAttribute) {}
+        : base(TAG) {}
     public OptAttribute(char val)
-        : base(Tags.OptAttribute, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3823,9 +3823,9 @@ public sealed class SecurityExchange : StringField
     public const int TAG = 207;
 
     public SecurityExchange()
-        : base(Tags.SecurityExchange) {}
+        : base(TAG) {}
     public SecurityExchange(string val)
-        : base(Tags.SecurityExchange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3836,9 +3836,9 @@ public sealed class NotifyBrokerOfCredit : BooleanField
     public const int TAG = 208;
 
     public NotifyBrokerOfCredit()
-        : base(Tags.NotifyBrokerOfCredit) {}
+        : base(TAG) {}
     public NotifyBrokerOfCredit(Boolean val)
-        : base(Tags.NotifyBrokerOfCredit, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -3855,9 +3855,9 @@ public sealed class AllocHandlInst : IntField
     public const int TAG = 209;
 
     public AllocHandlInst()
-        : base(Tags.AllocHandlInst) {}
+        : base(TAG) {}
     public AllocHandlInst(int val)
-        : base(Tags.AllocHandlInst, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int MATCH = 1;
@@ -3873,9 +3873,9 @@ public sealed class MaxShow : DecimalField
     public const int TAG = 210;
 
     public MaxShow()
-        : base(Tags.MaxShow) {}
+        : base(TAG) {}
     public MaxShow(Decimal val)
-        : base(Tags.MaxShow, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3886,9 +3886,9 @@ public sealed class PegDifference : DecimalField
     public const int TAG = 211;
 
     public PegDifference()
-        : base(Tags.PegDifference) {}
+        : base(TAG) {}
     public PegDifference(Decimal val)
-        : base(Tags.PegDifference, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3899,9 +3899,9 @@ public sealed class TotNoOrders : IntField
     public const int TAG = 68;
 
     public TotNoOrders()
-        : base(Tags.TotNoOrders) {}
+        : base(TAG) {}
     public TotNoOrders(int val)
-        : base(Tags.TotNoOrders, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3912,9 +3912,9 @@ public sealed class XmlDataLen : IntField
     public const int TAG = 212;
 
     public XmlDataLen()
-        : base(Tags.XmlDataLen) {}
+        : base(TAG) {}
     public XmlDataLen(int val)
-        : base(Tags.XmlDataLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3925,9 +3925,9 @@ public sealed class XmlData : StringField
     public const int TAG = 213;
 
     public XmlData()
-        : base(Tags.XmlData) {}
+        : base(TAG) {}
     public XmlData(string val)
-        : base(Tags.XmlData, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3938,9 +3938,9 @@ public sealed class SettlInstRefID : StringField
     public const int TAG = 214;
 
     public SettlInstRefID()
-        : base(Tags.SettlInstRefID) {}
+        : base(TAG) {}
     public SettlInstRefID(string val)
-        : base(Tags.SettlInstRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3951,9 +3951,9 @@ public sealed class NoRoutingIDs : IntField
     public const int TAG = 215;
 
     public NoRoutingIDs()
-        : base(Tags.NoRoutingIDs) {}
+        : base(TAG) {}
     public NoRoutingIDs(int val)
-        : base(Tags.NoRoutingIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3964,9 +3964,9 @@ public sealed class RoutingType : IntField
     public const int TAG = 216;
 
     public RoutingType()
-        : base(Tags.RoutingType) {}
+        : base(TAG) {}
     public RoutingType(int val)
-        : base(Tags.RoutingType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int TARGET_FIRM = 1;
@@ -3983,9 +3983,9 @@ public sealed class RoutingID : StringField
     public const int TAG = 217;
 
     public RoutingID()
-        : base(Tags.RoutingID) {}
+        : base(TAG) {}
     public RoutingID(string val)
-        : base(Tags.RoutingID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -3996,9 +3996,9 @@ public sealed class SpreadToBenchmark : DecimalField
     public const int TAG = 218;
 
     public SpreadToBenchmark()
-        : base(Tags.SpreadToBenchmark) {}
+        : base(TAG) {}
     public SpreadToBenchmark(Decimal val)
-        : base(Tags.SpreadToBenchmark, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4009,9 +4009,9 @@ public sealed class Benchmark : CharField
     public const int TAG = 219;
 
     public Benchmark()
-        : base(Tags.Benchmark) {}
+        : base(TAG) {}
     public Benchmark(char val)
-        : base(Tags.Benchmark, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CURVE = '1';
@@ -4038,9 +4038,9 @@ public sealed class CouponRate : DecimalField
     public const int TAG = 223;
 
     public CouponRate()
-        : base(Tags.CouponRate) {}
+        : base(TAG) {}
     public CouponRate(Decimal val)
-        : base(Tags.CouponRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4051,9 +4051,9 @@ public sealed class ContractMultiplier : DecimalField
     public const int TAG = 231;
 
     public ContractMultiplier()
-        : base(Tags.ContractMultiplier) {}
+        : base(TAG) {}
     public ContractMultiplier(Decimal val)
-        : base(Tags.ContractMultiplier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4064,9 +4064,9 @@ public sealed class MDReqID : StringField
     public const int TAG = 262;
 
     public MDReqID()
-        : base(Tags.MDReqID) {}
+        : base(TAG) {}
     public MDReqID(string val)
-        : base(Tags.MDReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4077,9 +4077,9 @@ public sealed class SubscriptionRequestType : CharField
     public const int TAG = 263;
 
     public SubscriptionRequestType()
-        : base(Tags.SubscriptionRequestType) {}
+        : base(TAG) {}
     public SubscriptionRequestType(char val)
-        : base(Tags.SubscriptionRequestType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char SNAPSHOT = '0';
@@ -4096,9 +4096,9 @@ public sealed class MarketDepth : IntField
     public const int TAG = 264;
 
     public MarketDepth()
-        : base(Tags.MarketDepth) {}
+        : base(TAG) {}
     public MarketDepth(int val)
-        : base(Tags.MarketDepth, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4109,9 +4109,9 @@ public sealed class MDUpdateType : IntField
     public const int TAG = 265;
 
     public MDUpdateType()
-        : base(Tags.MDUpdateType) {}
+        : base(TAG) {}
     public MDUpdateType(int val)
-        : base(Tags.MDUpdateType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int FULL_REFRESH = 0;
@@ -4126,9 +4126,9 @@ public sealed class AggregatedBook : BooleanField
     public const int TAG = 266;
 
     public AggregatedBook()
-        : base(Tags.AggregatedBook) {}
+        : base(TAG) {}
     public AggregatedBook(Boolean val)
-        : base(Tags.AggregatedBook, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean YES = true;
@@ -4145,9 +4145,9 @@ public sealed class NoMDEntryTypes : IntField
     public const int TAG = 267;
 
     public NoMDEntryTypes()
-        : base(Tags.NoMDEntryTypes) {}
+        : base(TAG) {}
     public NoMDEntryTypes(int val)
-        : base(Tags.NoMDEntryTypes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4158,9 +4158,9 @@ public sealed class NoMDEntries : IntField
     public const int TAG = 268;
 
     public NoMDEntries()
-        : base(Tags.NoMDEntries) {}
+        : base(TAG) {}
     public NoMDEntries(int val)
-        : base(Tags.NoMDEntries, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4171,9 +4171,9 @@ public sealed class MDEntryType : CharField
     public const int TAG = 269;
 
     public MDEntryType()
-        : base(Tags.MDEntryType) {}
+        : base(TAG) {}
     public MDEntryType(char val)
-        : base(Tags.MDEntryType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char BID = '0';
@@ -4222,9 +4222,9 @@ public sealed class MDEntryPx : DecimalField
     public const int TAG = 270;
 
     public MDEntryPx()
-        : base(Tags.MDEntryPx) {}
+        : base(TAG) {}
     public MDEntryPx(Decimal val)
-        : base(Tags.MDEntryPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4235,9 +4235,9 @@ public sealed class MDEntrySize : DecimalField
     public const int TAG = 271;
 
     public MDEntrySize()
-        : base(Tags.MDEntrySize) {}
+        : base(TAG) {}
     public MDEntrySize(Decimal val)
-        : base(Tags.MDEntrySize, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4248,9 +4248,9 @@ public sealed class MDEntryDate : DateOnlyField
     public const int TAG = 272;
 
     public MDEntryDate()
-        : base(Tags.MDEntryDate) {}
+        : base(TAG) {}
     public MDEntryDate(DateOnly val)
-        : base(Tags.MDEntryDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4261,11 +4261,11 @@ public sealed class MDEntryTime : TimeOnlyField
     public const int TAG = 273;
 
     public MDEntryTime()
-        : base(Tags.MDEntryTime) {}
+        : base(TAG) {}
     public MDEntryTime(TimeOnly val)
-        : base(Tags.MDEntryTime, val) {}
+        : base(TAG, val) {}
     public MDEntryTime(TimeOnly val, TimePrecision precision)
-        : base(Tags.MDEntryTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -4276,9 +4276,9 @@ public sealed class TickDirection : CharField
     public const int TAG = 274;
 
     public TickDirection()
-        : base(Tags.TickDirection) {}
+        : base(TAG) {}
     public TickDirection(char val)
-        : base(Tags.TickDirection, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char PLUS_TICK = '0';
@@ -4297,9 +4297,9 @@ public sealed class MDMkt : StringField
     public const int TAG = 275;
 
     public MDMkt()
-        : base(Tags.MDMkt) {}
+        : base(TAG) {}
     public MDMkt(string val)
-        : base(Tags.MDMkt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4310,9 +4310,9 @@ public sealed class QuoteCondition : StringField
     public const int TAG = 276;
 
     public QuoteCondition()
-        : base(Tags.QuoteCondition) {}
+        : base(TAG) {}
     public QuoteCondition(string val)
-        : base(Tags.QuoteCondition, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string OPEN_ACTIVE = "A";
@@ -4388,9 +4388,9 @@ public sealed class TradeCondition : StringField
     public const int TAG = 277;
 
     public TradeCondition()
-        : base(Tags.TradeCondition) {}
+        : base(TAG) {}
     public TradeCondition(string val)
-        : base(Tags.TradeCondition, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string CASH = "A";
@@ -4485,9 +4485,9 @@ public sealed class MDEntryID : StringField
     public const int TAG = 278;
 
     public MDEntryID()
-        : base(Tags.MDEntryID) {}
+        : base(TAG) {}
     public MDEntryID(string val)
-        : base(Tags.MDEntryID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4498,9 +4498,9 @@ public sealed class MDUpdateAction : CharField
     public const int TAG = 279;
 
     public MDUpdateAction()
-        : base(Tags.MDUpdateAction) {}
+        : base(TAG) {}
     public MDUpdateAction(char val)
-        : base(Tags.MDUpdateAction, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NEW = '0';
@@ -4519,9 +4519,9 @@ public sealed class MDEntryRefID : StringField
     public const int TAG = 280;
 
     public MDEntryRefID()
-        : base(Tags.MDEntryRefID) {}
+        : base(TAG) {}
     public MDEntryRefID(string val)
-        : base(Tags.MDEntryRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4532,9 +4532,9 @@ public sealed class MDReqRejReason : CharField
     public const int TAG = 281;
 
     public MDReqRejReason()
-        : base(Tags.MDReqRejReason) {}
+        : base(TAG) {}
     public MDReqRejReason(char val)
-        : base(Tags.MDReqRejReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char UNKNOWN_SYMBOL = '0';
@@ -4561,9 +4561,9 @@ public sealed class MDEntryOriginator : StringField
     public const int TAG = 282;
 
     public MDEntryOriginator()
-        : base(Tags.MDEntryOriginator) {}
+        : base(TAG) {}
     public MDEntryOriginator(string val)
-        : base(Tags.MDEntryOriginator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4574,9 +4574,9 @@ public sealed class LocationID : StringField
     public const int TAG = 283;
 
     public LocationID()
-        : base(Tags.LocationID) {}
+        : base(TAG) {}
     public LocationID(string val)
-        : base(Tags.LocationID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4587,9 +4587,9 @@ public sealed class DeskID : StringField
     public const int TAG = 284;
 
     public DeskID()
-        : base(Tags.DeskID) {}
+        : base(TAG) {}
     public DeskID(string val)
-        : base(Tags.DeskID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4600,9 +4600,9 @@ public sealed class DeleteReason : CharField
     public const int TAG = 285;
 
     public DeleteReason()
-        : base(Tags.DeleteReason) {}
+        : base(TAG) {}
     public DeleteReason(char val)
-        : base(Tags.DeleteReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CANCELLATION = '0';
@@ -4619,9 +4619,9 @@ public sealed class OpenCloseSettleFlag : StringField
     public const int TAG = 286;
 
     public OpenCloseSettleFlag()
-        : base(Tags.OpenCloseSettleFlag) {}
+        : base(TAG) {}
     public OpenCloseSettleFlag(string val)
-        : base(Tags.OpenCloseSettleFlag, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string DAILY_OPEN = "0";
@@ -4641,9 +4641,9 @@ public sealed class SellerDays : IntField
     public const int TAG = 287;
 
     public SellerDays()
-        : base(Tags.SellerDays) {}
+        : base(TAG) {}
     public SellerDays(int val)
-        : base(Tags.SellerDays, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4654,9 +4654,9 @@ public sealed class MDEntryBuyer : StringField
     public const int TAG = 288;
 
     public MDEntryBuyer()
-        : base(Tags.MDEntryBuyer) {}
+        : base(TAG) {}
     public MDEntryBuyer(string val)
-        : base(Tags.MDEntryBuyer, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4667,9 +4667,9 @@ public sealed class MDEntrySeller : StringField
     public const int TAG = 289;
 
     public MDEntrySeller()
-        : base(Tags.MDEntrySeller) {}
+        : base(TAG) {}
     public MDEntrySeller(string val)
-        : base(Tags.MDEntrySeller, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4680,9 +4680,9 @@ public sealed class MDEntryPositionNo : IntField
     public const int TAG = 290;
 
     public MDEntryPositionNo()
-        : base(Tags.MDEntryPositionNo) {}
+        : base(TAG) {}
     public MDEntryPositionNo(int val)
-        : base(Tags.MDEntryPositionNo, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4693,9 +4693,9 @@ public sealed class FinancialStatus : StringField
     public const int TAG = 291;
 
     public FinancialStatus()
-        : base(Tags.FinancialStatus) {}
+        : base(TAG) {}
     public FinancialStatus(string val)
-        : base(Tags.FinancialStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string BANKRUPT = "1";
@@ -4711,9 +4711,9 @@ public sealed class CorporateAction : StringField
     public const int TAG = 292;
 
     public CorporateAction()
-        : base(Tags.CorporateAction) {}
+        : base(TAG) {}
     public CorporateAction(string val)
-        : base(Tags.CorporateAction, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string EX_DIVIDEND = "A";
@@ -4753,9 +4753,9 @@ public sealed class DefBidSize : DecimalField
     public const int TAG = 293;
 
     public DefBidSize()
-        : base(Tags.DefBidSize) {}
+        : base(TAG) {}
     public DefBidSize(Decimal val)
-        : base(Tags.DefBidSize, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4766,9 +4766,9 @@ public sealed class DefOfferSize : DecimalField
     public const int TAG = 294;
 
     public DefOfferSize()
-        : base(Tags.DefOfferSize) {}
+        : base(TAG) {}
     public DefOfferSize(Decimal val)
-        : base(Tags.DefOfferSize, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4779,9 +4779,9 @@ public sealed class NoQuoteEntries : IntField
     public const int TAG = 295;
 
     public NoQuoteEntries()
-        : base(Tags.NoQuoteEntries) {}
+        : base(TAG) {}
     public NoQuoteEntries(int val)
-        : base(Tags.NoQuoteEntries, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4792,9 +4792,9 @@ public sealed class NoQuoteSets : IntField
     public const int TAG = 296;
 
     public NoQuoteSets()
-        : base(Tags.NoQuoteSets) {}
+        : base(TAG) {}
     public NoQuoteSets(int val)
-        : base(Tags.NoQuoteSets, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4805,9 +4805,9 @@ public sealed class QuoteAckStatus : IntField
     public const int TAG = 297;
 
     public QuoteAckStatus()
-        : base(Tags.QuoteAckStatus) {}
+        : base(TAG) {}
     public QuoteAckStatus(int val)
-        : base(Tags.QuoteAckStatus, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4818,9 +4818,9 @@ public sealed class QuoteCancelType : IntField
     public const int TAG = 298;
 
     public QuoteCancelType()
-        : base(Tags.QuoteCancelType) {}
+        : base(TAG) {}
     public QuoteCancelType(int val)
-        : base(Tags.QuoteCancelType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CANCEL_FOR_ONE_OR_MORE_SECURITIES = 1;
@@ -4843,9 +4843,9 @@ public sealed class QuoteEntryID : StringField
     public const int TAG = 299;
 
     public QuoteEntryID()
-        : base(Tags.QuoteEntryID) {}
+        : base(TAG) {}
     public QuoteEntryID(string val)
-        : base(Tags.QuoteEntryID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4856,9 +4856,9 @@ public sealed class QuoteRejectReason : IntField
     public const int TAG = 300;
 
     public QuoteRejectReason()
-        : base(Tags.QuoteRejectReason) {}
+        : base(TAG) {}
     public QuoteRejectReason(int val)
-        : base(Tags.QuoteRejectReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNKNOWN_SYMBOL = 1;
@@ -4887,9 +4887,9 @@ public sealed class QuoteResponseLevel : IntField
     public const int TAG = 301;
 
     public QuoteResponseLevel()
-        : base(Tags.QuoteResponseLevel) {}
+        : base(TAG) {}
     public QuoteResponseLevel(int val)
-        : base(Tags.QuoteResponseLevel, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NO_ACKNOWLEDGEMENT = 0;
@@ -4907,9 +4907,9 @@ public sealed class QuoteSetID : StringField
     public const int TAG = 302;
 
     public QuoteSetID()
-        : base(Tags.QuoteSetID) {}
+        : base(TAG) {}
     public QuoteSetID(string val)
-        : base(Tags.QuoteSetID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4920,9 +4920,9 @@ public sealed class QuoteRequestType : IntField
     public const int TAG = 303;
 
     public QuoteRequestType()
-        : base(Tags.QuoteRequestType) {}
+        : base(TAG) {}
     public QuoteRequestType(int val)
-        : base(Tags.QuoteRequestType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int MANUAL = 1;
@@ -4937,9 +4937,9 @@ public sealed class TotQuoteEntries : IntField
     public const int TAG = 304;
 
     public TotQuoteEntries()
-        : base(Tags.TotQuoteEntries) {}
+        : base(TAG) {}
     public TotQuoteEntries(int val)
-        : base(Tags.TotQuoteEntries, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4950,9 +4950,9 @@ public sealed class UnderlyingIDSource : StringField
     public const int TAG = 305;
 
     public UnderlyingIDSource()
-        : base(Tags.UnderlyingIDSource) {}
+        : base(TAG) {}
     public UnderlyingIDSource(string val)
-        : base(Tags.UnderlyingIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4963,9 +4963,9 @@ public sealed class UnderlyingIssuer : StringField
     public const int TAG = 306;
 
     public UnderlyingIssuer()
-        : base(Tags.UnderlyingIssuer) {}
+        : base(TAG) {}
     public UnderlyingIssuer(string val)
-        : base(Tags.UnderlyingIssuer, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4976,9 +4976,9 @@ public sealed class UnderlyingSecurityDesc : StringField
     public const int TAG = 307;
 
     public UnderlyingSecurityDesc()
-        : base(Tags.UnderlyingSecurityDesc) {}
+        : base(TAG) {}
     public UnderlyingSecurityDesc(string val)
-        : base(Tags.UnderlyingSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -4989,9 +4989,9 @@ public sealed class UnderlyingSecurityExchange : StringField
     public const int TAG = 308;
 
     public UnderlyingSecurityExchange()
-        : base(Tags.UnderlyingSecurityExchange) {}
+        : base(TAG) {}
     public UnderlyingSecurityExchange(string val)
-        : base(Tags.UnderlyingSecurityExchange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5002,9 +5002,9 @@ public sealed class UnderlyingSecurityID : StringField
     public const int TAG = 309;
 
     public UnderlyingSecurityID()
-        : base(Tags.UnderlyingSecurityID) {}
+        : base(TAG) {}
     public UnderlyingSecurityID(string val)
-        : base(Tags.UnderlyingSecurityID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5015,9 +5015,9 @@ public sealed class UnderlyingSecurityType : StringField
     public const int TAG = 310;
 
     public UnderlyingSecurityType()
-        : base(Tags.UnderlyingSecurityType) {}
+        : base(TAG) {}
     public UnderlyingSecurityType(string val)
-        : base(Tags.UnderlyingSecurityType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5028,9 +5028,9 @@ public sealed class UnderlyingSymbol : StringField
     public const int TAG = 311;
 
     public UnderlyingSymbol()
-        : base(Tags.UnderlyingSymbol) {}
+        : base(TAG) {}
     public UnderlyingSymbol(string val)
-        : base(Tags.UnderlyingSymbol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5041,9 +5041,9 @@ public sealed class UnderlyingSymbolSfx : StringField
     public const int TAG = 312;
 
     public UnderlyingSymbolSfx()
-        : base(Tags.UnderlyingSymbolSfx) {}
+        : base(TAG) {}
     public UnderlyingSymbolSfx(string val)
-        : base(Tags.UnderlyingSymbolSfx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5054,9 +5054,9 @@ public sealed class UnderlyingMaturityMonthYear : StringField
     public const int TAG = 313;
 
     public UnderlyingMaturityMonthYear()
-        : base(Tags.UnderlyingMaturityMonthYear) {}
+        : base(TAG) {}
     public UnderlyingMaturityMonthYear(string val)
-        : base(Tags.UnderlyingMaturityMonthYear, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5067,9 +5067,9 @@ public sealed class UnderlyingMaturityDay : StringField
     public const int TAG = 314;
 
     public UnderlyingMaturityDay()
-        : base(Tags.UnderlyingMaturityDay) {}
+        : base(TAG) {}
     public UnderlyingMaturityDay(string val)
-        : base(Tags.UnderlyingMaturityDay, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5080,9 +5080,9 @@ public sealed class UnderlyingPutOrCall : IntField
     public const int TAG = 315;
 
     public UnderlyingPutOrCall()
-        : base(Tags.UnderlyingPutOrCall) {}
+        : base(TAG) {}
     public UnderlyingPutOrCall(int val)
-        : base(Tags.UnderlyingPutOrCall, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PUT = 0;
@@ -5097,9 +5097,9 @@ public sealed class UnderlyingStrikePrice : DecimalField
     public const int TAG = 316;
 
     public UnderlyingStrikePrice()
-        : base(Tags.UnderlyingStrikePrice) {}
+        : base(TAG) {}
     public UnderlyingStrikePrice(Decimal val)
-        : base(Tags.UnderlyingStrikePrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5110,9 +5110,9 @@ public sealed class UnderlyingOptAttribute : CharField
     public const int TAG = 317;
 
     public UnderlyingOptAttribute()
-        : base(Tags.UnderlyingOptAttribute) {}
+        : base(TAG) {}
     public UnderlyingOptAttribute(char val)
-        : base(Tags.UnderlyingOptAttribute, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5123,9 +5123,9 @@ public sealed class UnderlyingCurrency : StringField
     public const int TAG = 318;
 
     public UnderlyingCurrency()
-        : base(Tags.UnderlyingCurrency) {}
+        : base(TAG) {}
     public UnderlyingCurrency(string val)
-        : base(Tags.UnderlyingCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5136,9 +5136,9 @@ public sealed class RatioQty : DecimalField
     public const int TAG = 319;
 
     public RatioQty()
-        : base(Tags.RatioQty) {}
+        : base(TAG) {}
     public RatioQty(Decimal val)
-        : base(Tags.RatioQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5149,9 +5149,9 @@ public sealed class SecurityReqID : StringField
     public const int TAG = 320;
 
     public SecurityReqID()
-        : base(Tags.SecurityReqID) {}
+        : base(TAG) {}
     public SecurityReqID(string val)
-        : base(Tags.SecurityReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5162,9 +5162,9 @@ public sealed class SecurityRequestType : IntField
     public const int TAG = 321;
 
     public SecurityRequestType()
-        : base(Tags.SecurityRequestType) {}
+        : base(TAG) {}
     public SecurityRequestType(int val)
-        : base(Tags.SecurityRequestType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int REQUEST_SECURITY_IDENTITY_AND_SPECIFICATIONS = 0;
@@ -5187,9 +5187,9 @@ public sealed class SecurityResponseID : StringField
     public const int TAG = 322;
 
     public SecurityResponseID()
-        : base(Tags.SecurityResponseID) {}
+        : base(TAG) {}
     public SecurityResponseID(string val)
-        : base(Tags.SecurityResponseID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5200,9 +5200,9 @@ public sealed class SecurityResponseType : IntField
     public const int TAG = 323;
 
     public SecurityResponseType()
-        : base(Tags.SecurityResponseType) {}
+        : base(TAG) {}
     public SecurityResponseType(int val)
-        : base(Tags.SecurityResponseType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACCEPT_SECURITY_PROPOSAL_AS_IS = 1;
@@ -5222,9 +5222,9 @@ public sealed class SecurityStatusReqID : StringField
     public const int TAG = 324;
 
     public SecurityStatusReqID()
-        : base(Tags.SecurityStatusReqID) {}
+        : base(TAG) {}
     public SecurityStatusReqID(string val)
-        : base(Tags.SecurityStatusReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5235,9 +5235,9 @@ public sealed class UnsolicitedIndicator : BooleanField
     public const int TAG = 325;
 
     public UnsolicitedIndicator()
-        : base(Tags.UnsolicitedIndicator) {}
+        : base(TAG) {}
     public UnsolicitedIndicator(Boolean val)
-        : base(Tags.UnsolicitedIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -5254,9 +5254,9 @@ public sealed class SecurityTradingStatus : IntField
     public const int TAG = 326;
 
     public SecurityTradingStatus()
-        : base(Tags.SecurityTradingStatus) {}
+        : base(TAG) {}
     public SecurityTradingStatus(int val)
-        : base(Tags.SecurityTradingStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int OPENING_DELAY = 1;
@@ -5301,9 +5301,9 @@ public sealed class HaltReason : CharField
     public const int TAG = 327;
 
     public HaltReason()
-        : base(Tags.HaltReason) {}
+        : base(TAG) {}
     public HaltReason(char val)
-        : base(Tags.HaltReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ORDER_IMBALANCE = 'I';
@@ -5322,9 +5322,9 @@ public sealed class InViewOfCommon : BooleanField
     public const int TAG = 328;
 
     public InViewOfCommon()
-        : base(Tags.InViewOfCommon) {}
+        : base(TAG) {}
     public InViewOfCommon(Boolean val)
-        : base(Tags.InViewOfCommon, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -5341,9 +5341,9 @@ public sealed class DueToRelated : BooleanField
     public const int TAG = 329;
 
     public DueToRelated()
-        : base(Tags.DueToRelated) {}
+        : base(TAG) {}
     public DueToRelated(Boolean val)
-        : base(Tags.DueToRelated, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -5360,9 +5360,9 @@ public sealed class BuyVolume : DecimalField
     public const int TAG = 330;
 
     public BuyVolume()
-        : base(Tags.BuyVolume) {}
+        : base(TAG) {}
     public BuyVolume(Decimal val)
-        : base(Tags.BuyVolume, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5373,9 +5373,9 @@ public sealed class SellVolume : DecimalField
     public const int TAG = 331;
 
     public SellVolume()
-        : base(Tags.SellVolume) {}
+        : base(TAG) {}
     public SellVolume(Decimal val)
-        : base(Tags.SellVolume, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5386,9 +5386,9 @@ public sealed class HighPx : DecimalField
     public const int TAG = 332;
 
     public HighPx()
-        : base(Tags.HighPx) {}
+        : base(TAG) {}
     public HighPx(Decimal val)
-        : base(Tags.HighPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5399,9 +5399,9 @@ public sealed class LowPx : DecimalField
     public const int TAG = 333;
 
     public LowPx()
-        : base(Tags.LowPx) {}
+        : base(TAG) {}
     public LowPx(Decimal val)
-        : base(Tags.LowPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5412,9 +5412,9 @@ public sealed class Adjustment : IntField
     public const int TAG = 334;
 
     public Adjustment()
-        : base(Tags.Adjustment) {}
+        : base(TAG) {}
     public Adjustment(int val)
-        : base(Tags.Adjustment, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CANCEL = 1;
@@ -5430,9 +5430,9 @@ public sealed class TradSesReqID : StringField
     public const int TAG = 335;
 
     public TradSesReqID()
-        : base(Tags.TradSesReqID) {}
+        : base(TAG) {}
     public TradSesReqID(string val)
-        : base(Tags.TradSesReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5443,9 +5443,9 @@ public sealed class TradingSessionID : StringField
     public const int TAG = 336;
 
     public TradingSessionID()
-        : base(Tags.TradingSessionID) {}
+        : base(TAG) {}
     public TradingSessionID(string val)
-        : base(Tags.TradingSessionID, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string DAY = "1";
@@ -5464,9 +5464,9 @@ public sealed class ContraTrader : StringField
     public const int TAG = 337;
 
     public ContraTrader()
-        : base(Tags.ContraTrader) {}
+        : base(TAG) {}
     public ContraTrader(string val)
-        : base(Tags.ContraTrader, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5477,9 +5477,9 @@ public sealed class TradSesMethod : IntField
     public const int TAG = 338;
 
     public TradSesMethod()
-        : base(Tags.TradSesMethod) {}
+        : base(TAG) {}
     public TradSesMethod(int val)
-        : base(Tags.TradSesMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ELECTRONIC = 1;
@@ -5495,9 +5495,9 @@ public sealed class TradSesMode : IntField
     public const int TAG = 339;
 
     public TradSesMode()
-        : base(Tags.TradSesMode) {}
+        : base(TAG) {}
     public TradSesMode(int val)
-        : base(Tags.TradSesMode, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int TESTING = 1;
@@ -5513,9 +5513,9 @@ public sealed class TradSesStatus : IntField
     public const int TAG = 340;
 
     public TradSesStatus()
-        : base(Tags.TradSesStatus) {}
+        : base(TAG) {}
     public TradSesStatus(int val)
-        : base(Tags.TradSesStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNKNOWN = 0;
@@ -5537,7 +5537,7 @@ public sealed class TradSesStartTime : UtcDateTimeField
     public const int TAG = 341;
 
     public TradSesStartTime()
-        : base(Tags.TradSesStartTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5545,7 +5545,7 @@ public sealed class TradSesStartTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public TradSesStartTime(DateTime val)
-        : base(Tags.TradSesStartTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5555,7 +5555,7 @@ public sealed class TradSesStartTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TradSesStartTime(DateTime val, bool showMilliseconds)
-        : base(Tags.TradSesStartTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5564,7 +5564,7 @@ public sealed class TradSesStartTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public TradSesStartTime(DateTime val, TimePrecision precision)
-        : base(Tags.TradSesStartTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -5575,7 +5575,7 @@ public sealed class TradSesOpenTime : UtcDateTimeField
     public const int TAG = 342;
 
     public TradSesOpenTime()
-        : base(Tags.TradSesOpenTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5583,7 +5583,7 @@ public sealed class TradSesOpenTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public TradSesOpenTime(DateTime val)
-        : base(Tags.TradSesOpenTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5593,7 +5593,7 @@ public sealed class TradSesOpenTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TradSesOpenTime(DateTime val, bool showMilliseconds)
-        : base(Tags.TradSesOpenTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5602,7 +5602,7 @@ public sealed class TradSesOpenTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public TradSesOpenTime(DateTime val, TimePrecision precision)
-        : base(Tags.TradSesOpenTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -5613,7 +5613,7 @@ public sealed class TradSesPreCloseTime : UtcDateTimeField
     public const int TAG = 343;
 
     public TradSesPreCloseTime()
-        : base(Tags.TradSesPreCloseTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5621,7 +5621,7 @@ public sealed class TradSesPreCloseTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public TradSesPreCloseTime(DateTime val)
-        : base(Tags.TradSesPreCloseTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5631,7 +5631,7 @@ public sealed class TradSesPreCloseTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TradSesPreCloseTime(DateTime val, bool showMilliseconds)
-        : base(Tags.TradSesPreCloseTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5640,7 +5640,7 @@ public sealed class TradSesPreCloseTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public TradSesPreCloseTime(DateTime val, TimePrecision precision)
-        : base(Tags.TradSesPreCloseTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -5651,7 +5651,7 @@ public sealed class TradSesCloseTime : UtcDateTimeField
     public const int TAG = 344;
 
     public TradSesCloseTime()
-        : base(Tags.TradSesCloseTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5659,7 +5659,7 @@ public sealed class TradSesCloseTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public TradSesCloseTime(DateTime val)
-        : base(Tags.TradSesCloseTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5669,7 +5669,7 @@ public sealed class TradSesCloseTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TradSesCloseTime(DateTime val, bool showMilliseconds)
-        : base(Tags.TradSesCloseTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5678,7 +5678,7 @@ public sealed class TradSesCloseTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public TradSesCloseTime(DateTime val, TimePrecision precision)
-        : base(Tags.TradSesCloseTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -5689,7 +5689,7 @@ public sealed class TradSesEndTime : UtcDateTimeField
     public const int TAG = 345;
 
     public TradSesEndTime()
-        : base(Tags.TradSesEndTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5697,7 +5697,7 @@ public sealed class TradSesEndTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public TradSesEndTime(DateTime val)
-        : base(Tags.TradSesEndTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5707,7 +5707,7 @@ public sealed class TradSesEndTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TradSesEndTime(DateTime val, bool showMilliseconds)
-        : base(Tags.TradSesEndTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -5716,7 +5716,7 @@ public sealed class TradSesEndTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public TradSesEndTime(DateTime val, TimePrecision precision)
-        : base(Tags.TradSesEndTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -5727,9 +5727,9 @@ public sealed class NumberOfOrders : IntField
     public const int TAG = 346;
 
     public NumberOfOrders()
-        : base(Tags.NumberOfOrders) {}
+        : base(TAG) {}
     public NumberOfOrders(int val)
-        : base(Tags.NumberOfOrders, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5740,9 +5740,9 @@ public sealed class MessageEncoding : StringField
     public const int TAG = 347;
 
     public MessageEncoding()
-        : base(Tags.MessageEncoding) {}
+        : base(TAG) {}
     public MessageEncoding(string val)
-        : base(Tags.MessageEncoding, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string ISO_2022_JP = "ISO-2022-JP";
@@ -5759,9 +5759,9 @@ public sealed class EncodedIssuerLen : IntField
     public const int TAG = 348;
 
     public EncodedIssuerLen()
-        : base(Tags.EncodedIssuerLen) {}
+        : base(TAG) {}
     public EncodedIssuerLen(int val)
-        : base(Tags.EncodedIssuerLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5772,9 +5772,9 @@ public sealed class EncodedIssuer : StringField
     public const int TAG = 349;
 
     public EncodedIssuer()
-        : base(Tags.EncodedIssuer) {}
+        : base(TAG) {}
     public EncodedIssuer(string val)
-        : base(Tags.EncodedIssuer, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5785,9 +5785,9 @@ public sealed class EncodedSecurityDescLen : IntField
     public const int TAG = 350;
 
     public EncodedSecurityDescLen()
-        : base(Tags.EncodedSecurityDescLen) {}
+        : base(TAG) {}
     public EncodedSecurityDescLen(int val)
-        : base(Tags.EncodedSecurityDescLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5798,9 +5798,9 @@ public sealed class EncodedSecurityDesc : StringField
     public const int TAG = 351;
 
     public EncodedSecurityDesc()
-        : base(Tags.EncodedSecurityDesc) {}
+        : base(TAG) {}
     public EncodedSecurityDesc(string val)
-        : base(Tags.EncodedSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5811,9 +5811,9 @@ public sealed class EncodedListExecInstLen : IntField
     public const int TAG = 352;
 
     public EncodedListExecInstLen()
-        : base(Tags.EncodedListExecInstLen) {}
+        : base(TAG) {}
     public EncodedListExecInstLen(int val)
-        : base(Tags.EncodedListExecInstLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5824,9 +5824,9 @@ public sealed class EncodedListExecInst : StringField
     public const int TAG = 353;
 
     public EncodedListExecInst()
-        : base(Tags.EncodedListExecInst) {}
+        : base(TAG) {}
     public EncodedListExecInst(string val)
-        : base(Tags.EncodedListExecInst, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5837,9 +5837,9 @@ public sealed class EncodedTextLen : IntField
     public const int TAG = 354;
 
     public EncodedTextLen()
-        : base(Tags.EncodedTextLen) {}
+        : base(TAG) {}
     public EncodedTextLen(int val)
-        : base(Tags.EncodedTextLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5850,9 +5850,9 @@ public sealed class EncodedText : StringField
     public const int TAG = 355;
 
     public EncodedText()
-        : base(Tags.EncodedText) {}
+        : base(TAG) {}
     public EncodedText(string val)
-        : base(Tags.EncodedText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5863,9 +5863,9 @@ public sealed class EncodedSubjectLen : IntField
     public const int TAG = 356;
 
     public EncodedSubjectLen()
-        : base(Tags.EncodedSubjectLen) {}
+        : base(TAG) {}
     public EncodedSubjectLen(int val)
-        : base(Tags.EncodedSubjectLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5876,9 +5876,9 @@ public sealed class EncodedSubject : StringField
     public const int TAG = 357;
 
     public EncodedSubject()
-        : base(Tags.EncodedSubject) {}
+        : base(TAG) {}
     public EncodedSubject(string val)
-        : base(Tags.EncodedSubject, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5889,9 +5889,9 @@ public sealed class EncodedHeadlineLen : IntField
     public const int TAG = 358;
 
     public EncodedHeadlineLen()
-        : base(Tags.EncodedHeadlineLen) {}
+        : base(TAG) {}
     public EncodedHeadlineLen(int val)
-        : base(Tags.EncodedHeadlineLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5902,9 +5902,9 @@ public sealed class EncodedHeadline : StringField
     public const int TAG = 359;
 
     public EncodedHeadline()
-        : base(Tags.EncodedHeadline) {}
+        : base(TAG) {}
     public EncodedHeadline(string val)
-        : base(Tags.EncodedHeadline, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5915,9 +5915,9 @@ public sealed class EncodedAllocTextLen : IntField
     public const int TAG = 360;
 
     public EncodedAllocTextLen()
-        : base(Tags.EncodedAllocTextLen) {}
+        : base(TAG) {}
     public EncodedAllocTextLen(int val)
-        : base(Tags.EncodedAllocTextLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5928,9 +5928,9 @@ public sealed class EncodedAllocText : StringField
     public const int TAG = 361;
 
     public EncodedAllocText()
-        : base(Tags.EncodedAllocText) {}
+        : base(TAG) {}
     public EncodedAllocText(string val)
-        : base(Tags.EncodedAllocText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5941,9 +5941,9 @@ public sealed class EncodedUnderlyingIssuerLen : IntField
     public const int TAG = 362;
 
     public EncodedUnderlyingIssuerLen()
-        : base(Tags.EncodedUnderlyingIssuerLen) {}
+        : base(TAG) {}
     public EncodedUnderlyingIssuerLen(int val)
-        : base(Tags.EncodedUnderlyingIssuerLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5954,9 +5954,9 @@ public sealed class EncodedUnderlyingIssuer : StringField
     public const int TAG = 363;
 
     public EncodedUnderlyingIssuer()
-        : base(Tags.EncodedUnderlyingIssuer) {}
+        : base(TAG) {}
     public EncodedUnderlyingIssuer(string val)
-        : base(Tags.EncodedUnderlyingIssuer, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5967,9 +5967,9 @@ public sealed class EncodedUnderlyingSecurityDescLen : IntField
     public const int TAG = 364;
 
     public EncodedUnderlyingSecurityDescLen()
-        : base(Tags.EncodedUnderlyingSecurityDescLen) {}
+        : base(TAG) {}
     public EncodedUnderlyingSecurityDescLen(int val)
-        : base(Tags.EncodedUnderlyingSecurityDescLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5980,9 +5980,9 @@ public sealed class EncodedUnderlyingSecurityDesc : StringField
     public const int TAG = 365;
 
     public EncodedUnderlyingSecurityDesc()
-        : base(Tags.EncodedUnderlyingSecurityDesc) {}
+        : base(TAG) {}
     public EncodedUnderlyingSecurityDesc(string val)
-        : base(Tags.EncodedUnderlyingSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -5993,9 +5993,9 @@ public sealed class AllocPrice : DecimalField
     public const int TAG = 366;
 
     public AllocPrice()
-        : base(Tags.AllocPrice) {}
+        : base(TAG) {}
     public AllocPrice(Decimal val)
-        : base(Tags.AllocPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6006,7 +6006,7 @@ public sealed class QuoteSetValidUntilTime : UtcDateTimeField
     public const int TAG = 367;
 
     public QuoteSetValidUntilTime()
-        : base(Tags.QuoteSetValidUntilTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -6014,7 +6014,7 @@ public sealed class QuoteSetValidUntilTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public QuoteSetValidUntilTime(DateTime val)
-        : base(Tags.QuoteSetValidUntilTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -6024,7 +6024,7 @@ public sealed class QuoteSetValidUntilTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public QuoteSetValidUntilTime(DateTime val, bool showMilliseconds)
-        : base(Tags.QuoteSetValidUntilTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -6033,7 +6033,7 @@ public sealed class QuoteSetValidUntilTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public QuoteSetValidUntilTime(DateTime val, TimePrecision precision)
-        : base(Tags.QuoteSetValidUntilTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -6044,9 +6044,9 @@ public sealed class QuoteEntryRejectReason : IntField
     public const int TAG = 368;
 
     public QuoteEntryRejectReason()
-        : base(Tags.QuoteEntryRejectReason) {}
+        : base(TAG) {}
     public QuoteEntryRejectReason(int val)
-        : base(Tags.QuoteEntryRejectReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNKNOWN_SYMBOL = 1;
@@ -6073,9 +6073,9 @@ public sealed class LastMsgSeqNumProcessed : SeqNumFieldType
     public const int TAG = 369;
 
     public LastMsgSeqNumProcessed()
-        : base(Tags.LastMsgSeqNumProcessed) {}
+        : base(TAG) {}
     public LastMsgSeqNumProcessed(SeqNumType val)
-        : base(Tags.LastMsgSeqNumProcessed, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6086,7 +6086,7 @@ public sealed class OnBehalfOfSendingTime : UtcDateTimeField
     public const int TAG = 370;
 
     public OnBehalfOfSendingTime()
-        : base(Tags.OnBehalfOfSendingTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -6094,7 +6094,7 @@ public sealed class OnBehalfOfSendingTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public OnBehalfOfSendingTime(DateTime val)
-        : base(Tags.OnBehalfOfSendingTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -6104,7 +6104,7 @@ public sealed class OnBehalfOfSendingTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public OnBehalfOfSendingTime(DateTime val, bool showMilliseconds)
-        : base(Tags.OnBehalfOfSendingTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -6113,7 +6113,7 @@ public sealed class OnBehalfOfSendingTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public OnBehalfOfSendingTime(DateTime val, TimePrecision precision)
-        : base(Tags.OnBehalfOfSendingTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -6124,9 +6124,9 @@ public sealed class RefTagID : IntField
     public const int TAG = 371;
 
     public RefTagID()
-        : base(Tags.RefTagID) {}
+        : base(TAG) {}
     public RefTagID(int val)
-        : base(Tags.RefTagID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6137,9 +6137,9 @@ public sealed class RefMsgType : StringField
     public const int TAG = 372;
 
     public RefMsgType()
-        : base(Tags.RefMsgType) {}
+        : base(TAG) {}
     public RefMsgType(string val)
-        : base(Tags.RefMsgType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6150,9 +6150,9 @@ public sealed class SessionRejectReason : IntField
     public const int TAG = 373;
 
     public SessionRejectReason()
-        : base(Tags.SessionRejectReason) {}
+        : base(TAG) {}
     public SessionRejectReason(int val)
-        : base(Tags.SessionRejectReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int INVALID_TAG_NUMBER = 0;
@@ -6186,9 +6186,9 @@ public sealed class BidRequestTransType : CharField
     public const int TAG = 374;
 
     public BidRequestTransType()
-        : base(Tags.BidRequestTransType) {}
+        : base(TAG) {}
     public BidRequestTransType(char val)
-        : base(Tags.BidRequestTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CANCEL = 'C';
@@ -6204,9 +6204,9 @@ public sealed class ContraBroker : StringField
     public const int TAG = 375;
 
     public ContraBroker()
-        : base(Tags.ContraBroker) {}
+        : base(TAG) {}
     public ContraBroker(string val)
-        : base(Tags.ContraBroker, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6217,9 +6217,9 @@ public sealed class ComplianceID : StringField
     public const int TAG = 376;
 
     public ComplianceID()
-        : base(Tags.ComplianceID) {}
+        : base(TAG) {}
     public ComplianceID(string val)
-        : base(Tags.ComplianceID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6230,9 +6230,9 @@ public sealed class SolicitedFlag : BooleanField
     public const int TAG = 377;
 
     public SolicitedFlag()
-        : base(Tags.SolicitedFlag) {}
+        : base(TAG) {}
     public SolicitedFlag(Boolean val)
-        : base(Tags.SolicitedFlag, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -6249,9 +6249,9 @@ public sealed class ExecRestatementReason : IntField
     public const int TAG = 378;
 
     public ExecRestatementReason()
-        : base(Tags.ExecRestatementReason) {}
+        : base(TAG) {}
     public ExecRestatementReason(int val)
-        : base(Tags.ExecRestatementReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int GT_CORPORATE_ACTION = 0;
@@ -6279,9 +6279,9 @@ public sealed class BusinessRejectRefID : StringField
     public const int TAG = 379;
 
     public BusinessRejectRefID()
-        : base(Tags.BusinessRejectRefID) {}
+        : base(TAG) {}
     public BusinessRejectRefID(string val)
-        : base(Tags.BusinessRejectRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6292,9 +6292,9 @@ public sealed class BusinessRejectReason : IntField
     public const int TAG = 380;
 
     public BusinessRejectReason()
-        : base(Tags.BusinessRejectReason) {}
+        : base(TAG) {}
     public BusinessRejectReason(int val)
-        : base(Tags.BusinessRejectReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int OTHER = 0;
@@ -6318,9 +6318,9 @@ public sealed class GrossTradeAmt : DecimalField
     public const int TAG = 381;
 
     public GrossTradeAmt()
-        : base(Tags.GrossTradeAmt) {}
+        : base(TAG) {}
     public GrossTradeAmt(Decimal val)
-        : base(Tags.GrossTradeAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6331,9 +6331,9 @@ public sealed class NoContraBrokers : IntField
     public const int TAG = 382;
 
     public NoContraBrokers()
-        : base(Tags.NoContraBrokers) {}
+        : base(TAG) {}
     public NoContraBrokers(int val)
-        : base(Tags.NoContraBrokers, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6344,9 +6344,9 @@ public sealed class MaxMessageSize : IntField
     public const int TAG = 383;
 
     public MaxMessageSize()
-        : base(Tags.MaxMessageSize) {}
+        : base(TAG) {}
     public MaxMessageSize(int val)
-        : base(Tags.MaxMessageSize, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6357,9 +6357,9 @@ public sealed class NoMsgTypes : IntField
     public const int TAG = 384;
 
     public NoMsgTypes()
-        : base(Tags.NoMsgTypes) {}
+        : base(TAG) {}
     public NoMsgTypes(int val)
-        : base(Tags.NoMsgTypes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6370,9 +6370,9 @@ public sealed class MsgDirection : CharField
     public const int TAG = 385;
 
     public MsgDirection()
-        : base(Tags.MsgDirection) {}
+        : base(TAG) {}
     public MsgDirection(char val)
-        : base(Tags.MsgDirection, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char RECEIVE = 'R';
@@ -6387,9 +6387,9 @@ public sealed class NoTradingSessions : IntField
     public const int TAG = 386;
 
     public NoTradingSessions()
-        : base(Tags.NoTradingSessions) {}
+        : base(TAG) {}
     public NoTradingSessions(int val)
-        : base(Tags.NoTradingSessions, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6400,9 +6400,9 @@ public sealed class TotalVolumeTraded : DecimalField
     public const int TAG = 387;
 
     public TotalVolumeTraded()
-        : base(Tags.TotalVolumeTraded) {}
+        : base(TAG) {}
     public TotalVolumeTraded(Decimal val)
-        : base(Tags.TotalVolumeTraded, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6413,9 +6413,9 @@ public sealed class DiscretionInst : CharField
     public const int TAG = 388;
 
     public DiscretionInst()
-        : base(Tags.DiscretionInst) {}
+        : base(TAG) {}
     public DiscretionInst(char val)
-        : base(Tags.DiscretionInst, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char RELATED_TO_DISPLAYED_PRICE = '0';
@@ -6436,9 +6436,9 @@ public sealed class DiscretionOffset : DecimalField
     public const int TAG = 389;
 
     public DiscretionOffset()
-        : base(Tags.DiscretionOffset) {}
+        : base(TAG) {}
     public DiscretionOffset(Decimal val)
-        : base(Tags.DiscretionOffset, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6449,9 +6449,9 @@ public sealed class BidID : StringField
     public const int TAG = 390;
 
     public BidID()
-        : base(Tags.BidID) {}
+        : base(TAG) {}
     public BidID(string val)
-        : base(Tags.BidID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6462,9 +6462,9 @@ public sealed class ClientBidID : StringField
     public const int TAG = 391;
 
     public ClientBidID()
-        : base(Tags.ClientBidID) {}
+        : base(TAG) {}
     public ClientBidID(string val)
-        : base(Tags.ClientBidID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6475,9 +6475,9 @@ public sealed class ListName : StringField
     public const int TAG = 392;
 
     public ListName()
-        : base(Tags.ListName) {}
+        : base(TAG) {}
     public ListName(string val)
-        : base(Tags.ListName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6488,9 +6488,9 @@ public sealed class TotalNumSecurities : IntField
     public const int TAG = 393;
 
     public TotalNumSecurities()
-        : base(Tags.TotalNumSecurities) {}
+        : base(TAG) {}
     public TotalNumSecurities(int val)
-        : base(Tags.TotalNumSecurities, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6501,9 +6501,9 @@ public sealed class BidType : IntField
     public const int TAG = 394;
 
     public BidType()
-        : base(Tags.BidType) {}
+        : base(TAG) {}
     public BidType(int val)
-        : base(Tags.BidType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NON_DISCLOSED_STYLE = 1;
@@ -6521,9 +6521,9 @@ public sealed class NumTickets : IntField
     public const int TAG = 395;
 
     public NumTickets()
-        : base(Tags.NumTickets) {}
+        : base(TAG) {}
     public NumTickets(int val)
-        : base(Tags.NumTickets, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6534,9 +6534,9 @@ public sealed class SideValue1 : DecimalField
     public const int TAG = 396;
 
     public SideValue1()
-        : base(Tags.SideValue1) {}
+        : base(TAG) {}
     public SideValue1(Decimal val)
-        : base(Tags.SideValue1, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6547,9 +6547,9 @@ public sealed class SideValue2 : DecimalField
     public const int TAG = 397;
 
     public SideValue2()
-        : base(Tags.SideValue2) {}
+        : base(TAG) {}
     public SideValue2(Decimal val)
-        : base(Tags.SideValue2, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6560,9 +6560,9 @@ public sealed class NoBidDescriptors : IntField
     public const int TAG = 398;
 
     public NoBidDescriptors()
-        : base(Tags.NoBidDescriptors) {}
+        : base(TAG) {}
     public NoBidDescriptors(int val)
-        : base(Tags.NoBidDescriptors, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6573,9 +6573,9 @@ public sealed class BidDescriptorType : IntField
     public const int TAG = 399;
 
     public BidDescriptorType()
-        : base(Tags.BidDescriptorType) {}
+        : base(TAG) {}
     public BidDescriptorType(int val)
-        : base(Tags.BidDescriptorType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SECTOR = 1;
@@ -6591,9 +6591,9 @@ public sealed class BidDescriptor : StringField
     public const int TAG = 400;
 
     public BidDescriptor()
-        : base(Tags.BidDescriptor) {}
+        : base(TAG) {}
     public BidDescriptor(string val)
-        : base(Tags.BidDescriptor, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6604,9 +6604,9 @@ public sealed class SideValueInd : IntField
     public const int TAG = 401;
 
     public SideValueInd()
-        : base(Tags.SideValueInd) {}
+        : base(TAG) {}
     public SideValueInd(int val)
-        : base(Tags.SideValueInd, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SIDE_VALUE_1 = 1;
@@ -6624,9 +6624,9 @@ public sealed class LiquidityPctLow : DecimalField
     public const int TAG = 402;
 
     public LiquidityPctLow()
-        : base(Tags.LiquidityPctLow) {}
+        : base(TAG) {}
     public LiquidityPctLow(Decimal val)
-        : base(Tags.LiquidityPctLow, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6637,9 +6637,9 @@ public sealed class LiquidityPctHigh : DecimalField
     public const int TAG = 403;
 
     public LiquidityPctHigh()
-        : base(Tags.LiquidityPctHigh) {}
+        : base(TAG) {}
     public LiquidityPctHigh(Decimal val)
-        : base(Tags.LiquidityPctHigh, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6650,9 +6650,9 @@ public sealed class LiquidityValue : DecimalField
     public const int TAG = 404;
 
     public LiquidityValue()
-        : base(Tags.LiquidityValue) {}
+        : base(TAG) {}
     public LiquidityValue(Decimal val)
-        : base(Tags.LiquidityValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6663,9 +6663,9 @@ public sealed class EFPTrackingError : DecimalField
     public const int TAG = 405;
 
     public EFPTrackingError()
-        : base(Tags.EFPTrackingError) {}
+        : base(TAG) {}
     public EFPTrackingError(Decimal val)
-        : base(Tags.EFPTrackingError, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6676,9 +6676,9 @@ public sealed class FairValue : DecimalField
     public const int TAG = 406;
 
     public FairValue()
-        : base(Tags.FairValue) {}
+        : base(TAG) {}
     public FairValue(Decimal val)
-        : base(Tags.FairValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6689,9 +6689,9 @@ public sealed class OutsideIndexPct : DecimalField
     public const int TAG = 407;
 
     public OutsideIndexPct()
-        : base(Tags.OutsideIndexPct) {}
+        : base(TAG) {}
     public OutsideIndexPct(Decimal val)
-        : base(Tags.OutsideIndexPct, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6702,9 +6702,9 @@ public sealed class ValueOfFutures : DecimalField
     public const int TAG = 408;
 
     public ValueOfFutures()
-        : base(Tags.ValueOfFutures) {}
+        : base(TAG) {}
     public ValueOfFutures(Decimal val)
-        : base(Tags.ValueOfFutures, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6715,9 +6715,9 @@ public sealed class LiquidityIndType : IntField
     public const int TAG = 409;
 
     public LiquidityIndType()
-        : base(Tags.LiquidityIndType) {}
+        : base(TAG) {}
     public LiquidityIndType(int val)
-        : base(Tags.LiquidityIndType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int VAL_5_DAY_MOVING_AVERAGE = 1;
@@ -6736,9 +6736,9 @@ public sealed class WtAverageLiquidity : DecimalField
     public const int TAG = 410;
 
     public WtAverageLiquidity()
-        : base(Tags.WtAverageLiquidity) {}
+        : base(TAG) {}
     public WtAverageLiquidity(Decimal val)
-        : base(Tags.WtAverageLiquidity, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6749,9 +6749,9 @@ public sealed class ExchangeForPhysical : BooleanField
     public const int TAG = 411;
 
     public ExchangeForPhysical()
-        : base(Tags.ExchangeForPhysical) {}
+        : base(TAG) {}
     public ExchangeForPhysical(Boolean val)
-        : base(Tags.ExchangeForPhysical, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -6768,9 +6768,9 @@ public sealed class OutMainCntryUIndex : DecimalField
     public const int TAG = 412;
 
     public OutMainCntryUIndex()
-        : base(Tags.OutMainCntryUIndex) {}
+        : base(TAG) {}
     public OutMainCntryUIndex(Decimal val)
-        : base(Tags.OutMainCntryUIndex, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6781,9 +6781,9 @@ public sealed class CrossPercent : DecimalField
     public const int TAG = 413;
 
     public CrossPercent()
-        : base(Tags.CrossPercent) {}
+        : base(TAG) {}
     public CrossPercent(Decimal val)
-        : base(Tags.CrossPercent, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6794,9 +6794,9 @@ public sealed class ProgRptReqs : IntField
     public const int TAG = 414;
 
     public ProgRptReqs()
-        : base(Tags.ProgRptReqs) {}
+        : base(TAG) {}
     public ProgRptReqs(int val)
-        : base(Tags.ProgRptReqs, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int BUY_SIDE_EXPLICITLY_REQUESTS_STATUS_USING_STATUE_REQUEST = 1;
@@ -6814,9 +6814,9 @@ public sealed class ProgPeriodInterval : IntField
     public const int TAG = 415;
 
     public ProgPeriodInterval()
-        : base(Tags.ProgPeriodInterval) {}
+        : base(TAG) {}
     public ProgPeriodInterval(int val)
-        : base(Tags.ProgPeriodInterval, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6827,9 +6827,9 @@ public sealed class IncTaxInd : IntField
     public const int TAG = 416;
 
     public IncTaxInd()
-        : base(Tags.IncTaxInd) {}
+        : base(TAG) {}
     public IncTaxInd(int val)
-        : base(Tags.IncTaxInd, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NET = 1;
@@ -6844,9 +6844,9 @@ public sealed class NumBidders : IntField
     public const int TAG = 417;
 
     public NumBidders()
-        : base(Tags.NumBidders) {}
+        : base(TAG) {}
     public NumBidders(int val)
-        : base(Tags.NumBidders, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6857,9 +6857,9 @@ public sealed class TradeType : CharField
     public const int TAG = 418;
 
     public TradeType()
-        : base(Tags.TradeType) {}
+        : base(TAG) {}
     public TradeType(char val)
-        : base(Tags.TradeType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6870,9 +6870,9 @@ public sealed class BasisPxType : CharField
     public const int TAG = 419;
 
     public BasisPxType()
-        : base(Tags.BasisPxType) {}
+        : base(TAG) {}
     public BasisPxType(char val)
-        : base(Tags.BasisPxType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CLOSING_PRICE_AT_MORNINGN_SESSION = '2';
@@ -6899,9 +6899,9 @@ public sealed class NoBidComponents : IntField
     public const int TAG = 420;
 
     public NoBidComponents()
-        : base(Tags.NoBidComponents) {}
+        : base(TAG) {}
     public NoBidComponents(int val)
-        : base(Tags.NoBidComponents, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6912,9 +6912,9 @@ public sealed class Country : StringField
     public const int TAG = 421;
 
     public Country()
-        : base(Tags.Country) {}
+        : base(TAG) {}
     public Country(string val)
-        : base(Tags.Country, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6925,9 +6925,9 @@ public sealed class TotNoStrikes : IntField
     public const int TAG = 422;
 
     public TotNoStrikes()
-        : base(Tags.TotNoStrikes) {}
+        : base(TAG) {}
     public TotNoStrikes(int val)
-        : base(Tags.TotNoStrikes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6938,9 +6938,9 @@ public sealed class PriceType : IntField
     public const int TAG = 423;
 
     public PriceType()
-        : base(Tags.PriceType) {}
+        : base(TAG) {}
     public PriceType(int val)
-        : base(Tags.PriceType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PERCENTAGE = 1;
@@ -6973,9 +6973,9 @@ public sealed class DayOrderQty : DecimalField
     public const int TAG = 424;
 
     public DayOrderQty()
-        : base(Tags.DayOrderQty) {}
+        : base(TAG) {}
     public DayOrderQty(Decimal val)
-        : base(Tags.DayOrderQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6986,9 +6986,9 @@ public sealed class DayCumQty : DecimalField
     public const int TAG = 425;
 
     public DayCumQty()
-        : base(Tags.DayCumQty) {}
+        : base(TAG) {}
     public DayCumQty(Decimal val)
-        : base(Tags.DayCumQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -6999,9 +6999,9 @@ public sealed class DayAvgPx : DecimalField
     public const int TAG = 426;
 
     public DayAvgPx()
-        : base(Tags.DayAvgPx) {}
+        : base(TAG) {}
     public DayAvgPx(Decimal val)
-        : base(Tags.DayAvgPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7012,9 +7012,9 @@ public sealed class GTBookingInst : IntField
     public const int TAG = 427;
 
     public GTBookingInst()
-        : base(Tags.GTBookingInst) {}
+        : base(TAG) {}
     public GTBookingInst(int val)
-        : base(Tags.GTBookingInst, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int BOOK_OUT_ALL_TRADES_ON_DAY_OF_EXECUTION = 0;
@@ -7032,9 +7032,9 @@ public sealed class NoStrikes : IntField
     public const int TAG = 428;
 
     public NoStrikes()
-        : base(Tags.NoStrikes) {}
+        : base(TAG) {}
     public NoStrikes(int val)
-        : base(Tags.NoStrikes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7045,9 +7045,9 @@ public sealed class ListStatusType : IntField
     public const int TAG = 429;
 
     public ListStatusType()
-        : base(Tags.ListStatusType) {}
+        : base(TAG) {}
     public ListStatusType(int val)
-        : base(Tags.ListStatusType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACK = 1;
@@ -7068,9 +7068,9 @@ public sealed class NetGrossInd : IntField
     public const int TAG = 430;
 
     public NetGrossInd()
-        : base(Tags.NetGrossInd) {}
+        : base(TAG) {}
     public NetGrossInd(int val)
-        : base(Tags.NetGrossInd, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NET = 1;
@@ -7085,9 +7085,9 @@ public sealed class ListOrderStatus : IntField
     public const int TAG = 431;
 
     public ListOrderStatus()
-        : base(Tags.ListOrderStatus) {}
+        : base(TAG) {}
     public ListOrderStatus(int val)
-        : base(Tags.ListOrderStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int IN_BIDDING_PROCESS = 1;
@@ -7110,9 +7110,9 @@ public sealed class ExpireDate : StringField
     public const int TAG = 432;
 
     public ExpireDate()
-        : base(Tags.ExpireDate) {}
+        : base(TAG) {}
     public ExpireDate(string val)
-        : base(Tags.ExpireDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7123,9 +7123,9 @@ public sealed class ListExecInstType : CharField
     public const int TAG = 433;
 
     public ListExecInstType()
-        : base(Tags.ListExecInstType) {}
+        : base(TAG) {}
     public ListExecInstType(char val)
-        : base(Tags.ListExecInstType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char IMMEDIATE = '1';
@@ -7147,9 +7147,9 @@ public sealed class CxlRejResponseTo : CharField
     public const int TAG = 434;
 
     public CxlRejResponseTo()
-        : base(Tags.CxlRejResponseTo) {}
+        : base(TAG) {}
     public CxlRejResponseTo(char val)
-        : base(Tags.CxlRejResponseTo, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ORDER_CANCEL_REQUEST = '1';
@@ -7164,9 +7164,9 @@ public sealed class UnderlyingCouponRate : DecimalField
     public const int TAG = 435;
 
     public UnderlyingCouponRate()
-        : base(Tags.UnderlyingCouponRate) {}
+        : base(TAG) {}
     public UnderlyingCouponRate(Decimal val)
-        : base(Tags.UnderlyingCouponRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7177,9 +7177,9 @@ public sealed class UnderlyingContractMultiplier : DecimalField
     public const int TAG = 436;
 
     public UnderlyingContractMultiplier()
-        : base(Tags.UnderlyingContractMultiplier) {}
+        : base(TAG) {}
     public UnderlyingContractMultiplier(Decimal val)
-        : base(Tags.UnderlyingContractMultiplier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7190,9 +7190,9 @@ public sealed class ContraTradeQty : DecimalField
     public const int TAG = 437;
 
     public ContraTradeQty()
-        : base(Tags.ContraTradeQty) {}
+        : base(TAG) {}
     public ContraTradeQty(Decimal val)
-        : base(Tags.ContraTradeQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7203,7 +7203,7 @@ public sealed class ContraTradeTime : UtcDateTimeField
     public const int TAG = 438;
 
     public ContraTradeTime()
-        : base(Tags.ContraTradeTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -7211,7 +7211,7 @@ public sealed class ContraTradeTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public ContraTradeTime(DateTime val)
-        : base(Tags.ContraTradeTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -7221,7 +7221,7 @@ public sealed class ContraTradeTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ContraTradeTime(DateTime val, bool showMilliseconds)
-        : base(Tags.ContraTradeTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -7230,7 +7230,7 @@ public sealed class ContraTradeTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public ContraTradeTime(DateTime val, TimePrecision precision)
-        : base(Tags.ContraTradeTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -7241,9 +7241,9 @@ public sealed class ClearingFirm : StringField
     public const int TAG = 439;
 
     public ClearingFirm()
-        : base(Tags.ClearingFirm) {}
+        : base(TAG) {}
     public ClearingFirm(string val)
-        : base(Tags.ClearingFirm, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7254,9 +7254,9 @@ public sealed class ClearingAccount : StringField
     public const int TAG = 440;
 
     public ClearingAccount()
-        : base(Tags.ClearingAccount) {}
+        : base(TAG) {}
     public ClearingAccount(string val)
-        : base(Tags.ClearingAccount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7267,9 +7267,9 @@ public sealed class LiquidityNumSecurities : IntField
     public const int TAG = 441;
 
     public LiquidityNumSecurities()
-        : base(Tags.LiquidityNumSecurities) {}
+        : base(TAG) {}
     public LiquidityNumSecurities(int val)
-        : base(Tags.LiquidityNumSecurities, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7280,9 +7280,9 @@ public sealed class MultiLegReportingType : CharField
     public const int TAG = 442;
 
     public MultiLegReportingType()
-        : base(Tags.MultiLegReportingType) {}
+        : base(TAG) {}
     public MultiLegReportingType(char val)
-        : base(Tags.MultiLegReportingType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char SINGLE_SECURITY = '1';
@@ -7299,7 +7299,7 @@ public sealed class StrikeTime : UtcDateTimeField
     public const int TAG = 443;
 
     public StrikeTime()
-        : base(Tags.StrikeTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -7307,7 +7307,7 @@ public sealed class StrikeTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public StrikeTime(DateTime val)
-        : base(Tags.StrikeTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -7317,7 +7317,7 @@ public sealed class StrikeTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public StrikeTime(DateTime val, bool showMilliseconds)
-        : base(Tags.StrikeTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -7326,7 +7326,7 @@ public sealed class StrikeTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public StrikeTime(DateTime val, TimePrecision precision)
-        : base(Tags.StrikeTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -7337,9 +7337,9 @@ public sealed class ListStatusText : StringField
     public const int TAG = 444;
 
     public ListStatusText()
-        : base(Tags.ListStatusText) {}
+        : base(TAG) {}
     public ListStatusText(string val)
-        : base(Tags.ListStatusText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7350,9 +7350,9 @@ public sealed class EncodedListStatusTextLen : IntField
     public const int TAG = 445;
 
     public EncodedListStatusTextLen()
-        : base(Tags.EncodedListStatusTextLen) {}
+        : base(TAG) {}
     public EncodedListStatusTextLen(int val)
-        : base(Tags.EncodedListStatusTextLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7363,9 +7363,9 @@ public sealed class EncodedListStatusText : StringField
     public const int TAG = 446;
 
     public EncodedListStatusText()
-        : base(Tags.EncodedListStatusText) {}
+        : base(TAG) {}
     public EncodedListStatusText(string val)
-        : base(Tags.EncodedListStatusText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7376,9 +7376,9 @@ public sealed class SecurityIDSource : StringField
     public const int TAG = 22;
 
     public SecurityIDSource()
-        : base(Tags.SecurityIDSource) {}
+        : base(TAG) {}
     public SecurityIDSource(string val)
-        : base(Tags.SecurityIDSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string CUSIP = "1";
@@ -7415,9 +7415,9 @@ public sealed class IOIQty : StringField
     public const int TAG = 27;
 
     public IOIQty()
-        : base(Tags.IOIQty) {}
+        : base(TAG) {}
     public IOIQty(string val)
-        : base(Tags.IOIQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7428,9 +7428,9 @@ public sealed class LastQty : DecimalField
     public const int TAG = 32;
 
     public LastQty()
-        : base(Tags.LastQty) {}
+        : base(TAG) {}
     public LastQty(Decimal val)
-        : base(Tags.LastQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7441,9 +7441,9 @@ public sealed class SendingDate : StringField
     public const int TAG = 51;
 
     public SendingDate()
-        : base(Tags.SendingDate) {}
+        : base(TAG) {}
     public SendingDate(string val)
-        : base(Tags.SendingDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7454,9 +7454,9 @@ public sealed class Quantity : DecimalField
     public const int TAG = 53;
 
     public Quantity()
-        : base(Tags.Quantity) {}
+        : base(TAG) {}
     public Quantity(Decimal val)
-        : base(Tags.Quantity, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7467,9 +7467,9 @@ public sealed class PositionEffect : CharField
     public const int TAG = 77;
 
     public PositionEffect()
-        : base(Tags.PositionEffect) {}
+        : base(TAG) {}
     public PositionEffect(char val)
-        : base(Tags.PositionEffect, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CLOSE = 'C';
@@ -7488,9 +7488,9 @@ public sealed class AllocQty : DecimalField
     public const int TAG = 80;
 
     public AllocQty()
-        : base(Tags.AllocQty) {}
+        : base(TAG) {}
     public AllocQty(Decimal val)
-        : base(Tags.AllocQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7501,9 +7501,9 @@ public sealed class Spread : DecimalField
     public const int TAG = 218;
 
     public Spread()
-        : base(Tags.Spread) {}
+        : base(TAG) {}
     public Spread(Decimal val)
-        : base(Tags.Spread, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7514,9 +7514,9 @@ public sealed class BenchmarkCurveCurrency : StringField
     public const int TAG = 220;
 
     public BenchmarkCurveCurrency()
-        : base(Tags.BenchmarkCurveCurrency) {}
+        : base(TAG) {}
     public BenchmarkCurveCurrency(string val)
-        : base(Tags.BenchmarkCurveCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7527,9 +7527,9 @@ public sealed class BenchmarkCurveName : StringField
     public const int TAG = 221;
 
     public BenchmarkCurveName()
-        : base(Tags.BenchmarkCurveName) {}
+        : base(TAG) {}
     public BenchmarkCurveName(string val)
-        : base(Tags.BenchmarkCurveName, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string EONIA = "EONIA";
@@ -7554,9 +7554,9 @@ public sealed class BenchmarkCurvePoint : StringField
     public const int TAG = 222;
 
     public BenchmarkCurvePoint()
-        : base(Tags.BenchmarkCurvePoint) {}
+        : base(TAG) {}
     public BenchmarkCurvePoint(string val)
-        : base(Tags.BenchmarkCurvePoint, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7567,9 +7567,9 @@ public sealed class CouponPaymentDate : StringField
     public const int TAG = 224;
 
     public CouponPaymentDate()
-        : base(Tags.CouponPaymentDate) {}
+        : base(TAG) {}
     public CouponPaymentDate(string val)
-        : base(Tags.CouponPaymentDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7580,9 +7580,9 @@ public sealed class IssueDate : StringField
     public const int TAG = 225;
 
     public IssueDate()
-        : base(Tags.IssueDate) {}
+        : base(TAG) {}
     public IssueDate(string val)
-        : base(Tags.IssueDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7593,9 +7593,9 @@ public sealed class RepurchaseTerm : IntField
     public const int TAG = 226;
 
     public RepurchaseTerm()
-        : base(Tags.RepurchaseTerm) {}
+        : base(TAG) {}
     public RepurchaseTerm(int val)
-        : base(Tags.RepurchaseTerm, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7606,9 +7606,9 @@ public sealed class RepurchaseRate : DecimalField
     public const int TAG = 227;
 
     public RepurchaseRate()
-        : base(Tags.RepurchaseRate) {}
+        : base(TAG) {}
     public RepurchaseRate(Decimal val)
-        : base(Tags.RepurchaseRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7619,9 +7619,9 @@ public sealed class Factor : DecimalField
     public const int TAG = 228;
 
     public Factor()
-        : base(Tags.Factor) {}
+        : base(TAG) {}
     public Factor(Decimal val)
-        : base(Tags.Factor, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7632,9 +7632,9 @@ public sealed class TradeOriginationDate : StringField
     public const int TAG = 229;
 
     public TradeOriginationDate()
-        : base(Tags.TradeOriginationDate) {}
+        : base(TAG) {}
     public TradeOriginationDate(string val)
-        : base(Tags.TradeOriginationDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7645,9 +7645,9 @@ public sealed class ExDate : StringField
     public const int TAG = 230;
 
     public ExDate()
-        : base(Tags.ExDate) {}
+        : base(TAG) {}
     public ExDate(string val)
-        : base(Tags.ExDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7658,9 +7658,9 @@ public sealed class NoStipulations : IntField
     public const int TAG = 232;
 
     public NoStipulations()
-        : base(Tags.NoStipulations) {}
+        : base(TAG) {}
     public NoStipulations(int val)
-        : base(Tags.NoStipulations, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7671,9 +7671,9 @@ public sealed class StipulationType : StringField
     public const int TAG = 233;
 
     public StipulationType()
-        : base(Tags.StipulationType) {}
+        : base(TAG) {}
     public StipulationType(string val)
-        : base(Tags.StipulationType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string ABSOLUTE_PREPAYMENT_SPEED = "ABS";
@@ -7770,9 +7770,9 @@ public sealed class StipulationValue : StringField
     public const int TAG = 234;
 
     public StipulationValue()
-        : base(Tags.StipulationValue) {}
+        : base(TAG) {}
     public StipulationValue(string val)
-        : base(Tags.StipulationValue, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string SPECIAL_CUM_DIVIDEND = "CD";
@@ -7799,9 +7799,9 @@ public sealed class YieldType : StringField
     public const int TAG = 235;
 
     public YieldType()
-        : base(Tags.YieldType) {}
+        : base(TAG) {}
     public YieldType(string val)
-        : base(Tags.YieldType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string AFTER_TAX_YIELD = "AFTERTAX";
@@ -7854,9 +7854,9 @@ public sealed class Yield : DecimalField
     public const int TAG = 236;
 
     public Yield()
-        : base(Tags.Yield) {}
+        : base(TAG) {}
     public Yield(Decimal val)
-        : base(Tags.Yield, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7867,9 +7867,9 @@ public sealed class TotalTakedown : DecimalField
     public const int TAG = 237;
 
     public TotalTakedown()
-        : base(Tags.TotalTakedown) {}
+        : base(TAG) {}
     public TotalTakedown(Decimal val)
-        : base(Tags.TotalTakedown, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7880,9 +7880,9 @@ public sealed class Concession : DecimalField
     public const int TAG = 238;
 
     public Concession()
-        : base(Tags.Concession) {}
+        : base(TAG) {}
     public Concession(Decimal val)
-        : base(Tags.Concession, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7893,9 +7893,9 @@ public sealed class RepoCollateralSecurityType : IntField
     public const int TAG = 239;
 
     public RepoCollateralSecurityType()
-        : base(Tags.RepoCollateralSecurityType) {}
+        : base(TAG) {}
     public RepoCollateralSecurityType(int val)
-        : base(Tags.RepoCollateralSecurityType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7906,9 +7906,9 @@ public sealed class RedemptionDate : StringField
     public const int TAG = 240;
 
     public RedemptionDate()
-        : base(Tags.RedemptionDate) {}
+        : base(TAG) {}
     public RedemptionDate(string val)
-        : base(Tags.RedemptionDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7919,9 +7919,9 @@ public sealed class UnderlyingCouponPaymentDate : StringField
     public const int TAG = 241;
 
     public UnderlyingCouponPaymentDate()
-        : base(Tags.UnderlyingCouponPaymentDate) {}
+        : base(TAG) {}
     public UnderlyingCouponPaymentDate(string val)
-        : base(Tags.UnderlyingCouponPaymentDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7932,9 +7932,9 @@ public sealed class UnderlyingIssueDate : StringField
     public const int TAG = 242;
 
     public UnderlyingIssueDate()
-        : base(Tags.UnderlyingIssueDate) {}
+        : base(TAG) {}
     public UnderlyingIssueDate(string val)
-        : base(Tags.UnderlyingIssueDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7945,9 +7945,9 @@ public sealed class UnderlyingRepoCollateralSecurityType : IntField
     public const int TAG = 243;
 
     public UnderlyingRepoCollateralSecurityType()
-        : base(Tags.UnderlyingRepoCollateralSecurityType) {}
+        : base(TAG) {}
     public UnderlyingRepoCollateralSecurityType(int val)
-        : base(Tags.UnderlyingRepoCollateralSecurityType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7958,9 +7958,9 @@ public sealed class UnderlyingRepurchaseTerm : IntField
     public const int TAG = 244;
 
     public UnderlyingRepurchaseTerm()
-        : base(Tags.UnderlyingRepurchaseTerm) {}
+        : base(TAG) {}
     public UnderlyingRepurchaseTerm(int val)
-        : base(Tags.UnderlyingRepurchaseTerm, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7971,9 +7971,9 @@ public sealed class UnderlyingRepurchaseRate : DecimalField
     public const int TAG = 245;
 
     public UnderlyingRepurchaseRate()
-        : base(Tags.UnderlyingRepurchaseRate) {}
+        : base(TAG) {}
     public UnderlyingRepurchaseRate(Decimal val)
-        : base(Tags.UnderlyingRepurchaseRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7984,9 +7984,9 @@ public sealed class UnderlyingFactor : DecimalField
     public const int TAG = 246;
 
     public UnderlyingFactor()
-        : base(Tags.UnderlyingFactor) {}
+        : base(TAG) {}
     public UnderlyingFactor(Decimal val)
-        : base(Tags.UnderlyingFactor, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -7997,9 +7997,9 @@ public sealed class UnderlyingRedemptionDate : StringField
     public const int TAG = 247;
 
     public UnderlyingRedemptionDate()
-        : base(Tags.UnderlyingRedemptionDate) {}
+        : base(TAG) {}
     public UnderlyingRedemptionDate(string val)
-        : base(Tags.UnderlyingRedemptionDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8010,9 +8010,9 @@ public sealed class LegCouponPaymentDate : StringField
     public const int TAG = 248;
 
     public LegCouponPaymentDate()
-        : base(Tags.LegCouponPaymentDate) {}
+        : base(TAG) {}
     public LegCouponPaymentDate(string val)
-        : base(Tags.LegCouponPaymentDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8023,9 +8023,9 @@ public sealed class LegIssueDate : StringField
     public const int TAG = 249;
 
     public LegIssueDate()
-        : base(Tags.LegIssueDate) {}
+        : base(TAG) {}
     public LegIssueDate(string val)
-        : base(Tags.LegIssueDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8036,9 +8036,9 @@ public sealed class LegRepoCollateralSecurityType : IntField
     public const int TAG = 250;
 
     public LegRepoCollateralSecurityType()
-        : base(Tags.LegRepoCollateralSecurityType) {}
+        : base(TAG) {}
     public LegRepoCollateralSecurityType(int val)
-        : base(Tags.LegRepoCollateralSecurityType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8049,9 +8049,9 @@ public sealed class LegRepurchaseTerm : IntField
     public const int TAG = 251;
 
     public LegRepurchaseTerm()
-        : base(Tags.LegRepurchaseTerm) {}
+        : base(TAG) {}
     public LegRepurchaseTerm(int val)
-        : base(Tags.LegRepurchaseTerm, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8062,9 +8062,9 @@ public sealed class LegRepurchaseRate : DecimalField
     public const int TAG = 252;
 
     public LegRepurchaseRate()
-        : base(Tags.LegRepurchaseRate) {}
+        : base(TAG) {}
     public LegRepurchaseRate(Decimal val)
-        : base(Tags.LegRepurchaseRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8075,9 +8075,9 @@ public sealed class LegFactor : DecimalField
     public const int TAG = 253;
 
     public LegFactor()
-        : base(Tags.LegFactor) {}
+        : base(TAG) {}
     public LegFactor(Decimal val)
-        : base(Tags.LegFactor, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8088,9 +8088,9 @@ public sealed class LegRedemptionDate : StringField
     public const int TAG = 254;
 
     public LegRedemptionDate()
-        : base(Tags.LegRedemptionDate) {}
+        : base(TAG) {}
     public LegRedemptionDate(string val)
-        : base(Tags.LegRedemptionDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8101,9 +8101,9 @@ public sealed class CreditRating : StringField
     public const int TAG = 255;
 
     public CreditRating()
-        : base(Tags.CreditRating) {}
+        : base(TAG) {}
     public CreditRating(string val)
-        : base(Tags.CreditRating, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8114,9 +8114,9 @@ public sealed class UnderlyingCreditRating : StringField
     public const int TAG = 256;
 
     public UnderlyingCreditRating()
-        : base(Tags.UnderlyingCreditRating) {}
+        : base(TAG) {}
     public UnderlyingCreditRating(string val)
-        : base(Tags.UnderlyingCreditRating, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8127,9 +8127,9 @@ public sealed class LegCreditRating : StringField
     public const int TAG = 257;
 
     public LegCreditRating()
-        : base(Tags.LegCreditRating) {}
+        : base(TAG) {}
     public LegCreditRating(string val)
-        : base(Tags.LegCreditRating, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8140,9 +8140,9 @@ public sealed class TradedFlatSwitch : BooleanField
     public const int TAG = 258;
 
     public TradedFlatSwitch()
-        : base(Tags.TradedFlatSwitch) {}
+        : base(TAG) {}
     public TradedFlatSwitch(Boolean val)
-        : base(Tags.TradedFlatSwitch, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -8157,9 +8157,9 @@ public sealed class BasisFeatureDate : StringField
     public const int TAG = 259;
 
     public BasisFeatureDate()
-        : base(Tags.BasisFeatureDate) {}
+        : base(TAG) {}
     public BasisFeatureDate(string val)
-        : base(Tags.BasisFeatureDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8170,9 +8170,9 @@ public sealed class BasisFeaturePrice : DecimalField
     public const int TAG = 260;
 
     public BasisFeaturePrice()
-        : base(Tags.BasisFeaturePrice) {}
+        : base(TAG) {}
     public BasisFeaturePrice(Decimal val)
-        : base(Tags.BasisFeaturePrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8183,9 +8183,9 @@ public sealed class QuoteStatus : IntField
     public const int TAG = 297;
 
     public QuoteStatus()
-        : base(Tags.QuoteStatus) {}
+        : base(TAG) {}
     public QuoteStatus(int val)
-        : base(Tags.QuoteStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACCEPTED = 0;
@@ -8220,9 +8220,9 @@ public sealed class UnderlyingSecurityIDSource : StringField
     public const int TAG = 305;
 
     public UnderlyingSecurityIDSource()
-        : base(Tags.UnderlyingSecurityIDSource) {}
+        : base(TAG) {}
     public UnderlyingSecurityIDSource(string val)
-        : base(Tags.UnderlyingSecurityIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8233,9 +8233,9 @@ public sealed class PartyIDSource : CharField
     public const int TAG = 447;
 
     public PartyIDSource()
-        : base(Tags.PartyIDSource) {}
+        : base(TAG) {}
     public PartyIDSource(char val)
-        : base(Tags.PartyIDSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char KOREAN_INVESTOR_ID = '1';
@@ -8273,9 +8273,9 @@ public sealed class PartyID : StringField
     public const int TAG = 448;
 
     public PartyID()
-        : base(Tags.PartyID) {}
+        : base(TAG) {}
     public PartyID(string val)
-        : base(Tags.PartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8286,9 +8286,9 @@ public sealed class TotalVolumeTradedDate : DateOnlyField
     public const int TAG = 449;
 
     public TotalVolumeTradedDate()
-        : base(Tags.TotalVolumeTradedDate) {}
+        : base(TAG) {}
     public TotalVolumeTradedDate(DateOnly val)
-        : base(Tags.TotalVolumeTradedDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8299,11 +8299,11 @@ public sealed class TotalVolumeTradedTime : TimeOnlyField
     public const int TAG = 450;
 
     public TotalVolumeTradedTime()
-        : base(Tags.TotalVolumeTradedTime) {}
+        : base(TAG) {}
     public TotalVolumeTradedTime(TimeOnly val)
-        : base(Tags.TotalVolumeTradedTime, val) {}
+        : base(TAG, val) {}
     public TotalVolumeTradedTime(TimeOnly val, TimePrecision precision)
-        : base(Tags.TotalVolumeTradedTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -8314,9 +8314,9 @@ public sealed class NetChgPrevDay : DecimalField
     public const int TAG = 451;
 
     public NetChgPrevDay()
-        : base(Tags.NetChgPrevDay) {}
+        : base(TAG) {}
     public NetChgPrevDay(Decimal val)
-        : base(Tags.NetChgPrevDay, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8327,9 +8327,9 @@ public sealed class PartyRole : IntField
     public const int TAG = 452;
 
     public PartyRole()
-        : base(Tags.PartyRole) {}
+        : base(TAG) {}
     public PartyRole(int val)
-        : base(Tags.PartyRole, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int EXECUTING_FIRM = 1;
@@ -8428,9 +8428,9 @@ public sealed class NoPartyIDs : IntField
     public const int TAG = 453;
 
     public NoPartyIDs()
-        : base(Tags.NoPartyIDs) {}
+        : base(TAG) {}
     public NoPartyIDs(int val)
-        : base(Tags.NoPartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8441,9 +8441,9 @@ public sealed class NoSecurityAltID : IntField
     public const int TAG = 454;
 
     public NoSecurityAltID()
-        : base(Tags.NoSecurityAltID) {}
+        : base(TAG) {}
     public NoSecurityAltID(int val)
-        : base(Tags.NoSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8454,9 +8454,9 @@ public sealed class SecurityAltID : StringField
     public const int TAG = 455;
 
     public SecurityAltID()
-        : base(Tags.SecurityAltID) {}
+        : base(TAG) {}
     public SecurityAltID(string val)
-        : base(Tags.SecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8467,9 +8467,9 @@ public sealed class SecurityAltIDSource : StringField
     public const int TAG = 456;
 
     public SecurityAltIDSource()
-        : base(Tags.SecurityAltIDSource) {}
+        : base(TAG) {}
     public SecurityAltIDSource(string val)
-        : base(Tags.SecurityAltIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8480,9 +8480,9 @@ public sealed class NoUnderlyingSecurityAltID : IntField
     public const int TAG = 457;
 
     public NoUnderlyingSecurityAltID()
-        : base(Tags.NoUnderlyingSecurityAltID) {}
+        : base(TAG) {}
     public NoUnderlyingSecurityAltID(int val)
-        : base(Tags.NoUnderlyingSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8493,9 +8493,9 @@ public sealed class UnderlyingSecurityAltID : StringField
     public const int TAG = 458;
 
     public UnderlyingSecurityAltID()
-        : base(Tags.UnderlyingSecurityAltID) {}
+        : base(TAG) {}
     public UnderlyingSecurityAltID(string val)
-        : base(Tags.UnderlyingSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8506,9 +8506,9 @@ public sealed class UnderlyingSecurityAltIDSource : StringField
     public const int TAG = 459;
 
     public UnderlyingSecurityAltIDSource()
-        : base(Tags.UnderlyingSecurityAltIDSource) {}
+        : base(TAG) {}
     public UnderlyingSecurityAltIDSource(string val)
-        : base(Tags.UnderlyingSecurityAltIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8519,9 +8519,9 @@ public sealed class Product : IntField
     public const int TAG = 460;
 
     public Product()
-        : base(Tags.Product) {}
+        : base(TAG) {}
     public Product(int val)
-        : base(Tags.Product, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int AGENCY = 1;
@@ -8547,9 +8547,9 @@ public sealed class CFICode : StringField
     public const int TAG = 461;
 
     public CFICode()
-        : base(Tags.CFICode) {}
+        : base(TAG) {}
     public CFICode(string val)
-        : base(Tags.CFICode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8560,9 +8560,9 @@ public sealed class UnderlyingProduct : IntField
     public const int TAG = 462;
 
     public UnderlyingProduct()
-        : base(Tags.UnderlyingProduct) {}
+        : base(TAG) {}
     public UnderlyingProduct(int val)
-        : base(Tags.UnderlyingProduct, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8573,9 +8573,9 @@ public sealed class UnderlyingCFICode : StringField
     public const int TAG = 463;
 
     public UnderlyingCFICode()
-        : base(Tags.UnderlyingCFICode) {}
+        : base(TAG) {}
     public UnderlyingCFICode(string val)
-        : base(Tags.UnderlyingCFICode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8586,9 +8586,9 @@ public sealed class TestMessageIndicator : BooleanField
     public const int TAG = 464;
 
     public TestMessageIndicator()
-        : base(Tags.TestMessageIndicator) {}
+        : base(TAG) {}
     public TestMessageIndicator(Boolean val)
-        : base(Tags.TestMessageIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -8603,9 +8603,9 @@ public sealed class QuantityType : IntField
     public const int TAG = 465;
 
     public QuantityType()
-        : base(Tags.QuantityType) {}
+        : base(TAG) {}
     public QuantityType(int val)
-        : base(Tags.QuantityType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SHARES = 1;
@@ -8626,9 +8626,9 @@ public sealed class BookingRefID : StringField
     public const int TAG = 466;
 
     public BookingRefID()
-        : base(Tags.BookingRefID) {}
+        : base(TAG) {}
     public BookingRefID(string val)
-        : base(Tags.BookingRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8639,9 +8639,9 @@ public sealed class IndividualAllocID : StringField
     public const int TAG = 467;
 
     public IndividualAllocID()
-        : base(Tags.IndividualAllocID) {}
+        : base(TAG) {}
     public IndividualAllocID(string val)
-        : base(Tags.IndividualAllocID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8652,9 +8652,9 @@ public sealed class RoundingDirection : CharField
     public const int TAG = 468;
 
     public RoundingDirection()
-        : base(Tags.RoundingDirection) {}
+        : base(TAG) {}
     public RoundingDirection(char val)
-        : base(Tags.RoundingDirection, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ROUND_TO_NEAREST = '0';
@@ -8670,9 +8670,9 @@ public sealed class RoundingModulus : DecimalField
     public const int TAG = 469;
 
     public RoundingModulus()
-        : base(Tags.RoundingModulus) {}
+        : base(TAG) {}
     public RoundingModulus(Decimal val)
-        : base(Tags.RoundingModulus, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8683,9 +8683,9 @@ public sealed class CountryOfIssue : StringField
     public const int TAG = 470;
 
     public CountryOfIssue()
-        : base(Tags.CountryOfIssue) {}
+        : base(TAG) {}
     public CountryOfIssue(string val)
-        : base(Tags.CountryOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8696,9 +8696,9 @@ public sealed class StateOrProvinceOfIssue : StringField
     public const int TAG = 471;
 
     public StateOrProvinceOfIssue()
-        : base(Tags.StateOrProvinceOfIssue) {}
+        : base(TAG) {}
     public StateOrProvinceOfIssue(string val)
-        : base(Tags.StateOrProvinceOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8709,9 +8709,9 @@ public sealed class LocaleOfIssue : StringField
     public const int TAG = 472;
 
     public LocaleOfIssue()
-        : base(Tags.LocaleOfIssue) {}
+        : base(TAG) {}
     public LocaleOfIssue(string val)
-        : base(Tags.LocaleOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8722,9 +8722,9 @@ public sealed class NoRegistDtls : IntField
     public const int TAG = 473;
 
     public NoRegistDtls()
-        : base(Tags.NoRegistDtls) {}
+        : base(TAG) {}
     public NoRegistDtls(int val)
-        : base(Tags.NoRegistDtls, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8735,9 +8735,9 @@ public sealed class MailingDtls : StringField
     public const int TAG = 474;
 
     public MailingDtls()
-        : base(Tags.MailingDtls) {}
+        : base(TAG) {}
     public MailingDtls(string val)
-        : base(Tags.MailingDtls, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8748,9 +8748,9 @@ public sealed class InvestorCountryOfResidence : StringField
     public const int TAG = 475;
 
     public InvestorCountryOfResidence()
-        : base(Tags.InvestorCountryOfResidence) {}
+        : base(TAG) {}
     public InvestorCountryOfResidence(string val)
-        : base(Tags.InvestorCountryOfResidence, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8761,9 +8761,9 @@ public sealed class PaymentRef : StringField
     public const int TAG = 476;
 
     public PaymentRef()
-        : base(Tags.PaymentRef) {}
+        : base(TAG) {}
     public PaymentRef(string val)
-        : base(Tags.PaymentRef, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8774,9 +8774,9 @@ public sealed class DistribPaymentMethod : IntField
     public const int TAG = 477;
 
     public DistribPaymentMethod()
-        : base(Tags.DistribPaymentMethod) {}
+        : base(TAG) {}
     public DistribPaymentMethod(int val)
-        : base(Tags.DistribPaymentMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CREST = 1;
@@ -8803,9 +8803,9 @@ public sealed class CashDistribCurr : StringField
     public const int TAG = 478;
 
     public CashDistribCurr()
-        : base(Tags.CashDistribCurr) {}
+        : base(TAG) {}
     public CashDistribCurr(string val)
-        : base(Tags.CashDistribCurr, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8816,9 +8816,9 @@ public sealed class CommCurrency : StringField
     public const int TAG = 479;
 
     public CommCurrency()
-        : base(Tags.CommCurrency) {}
+        : base(TAG) {}
     public CommCurrency(string val)
-        : base(Tags.CommCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8829,9 +8829,9 @@ public sealed class CancellationRights : CharField
     public const int TAG = 480;
 
     public CancellationRights()
-        : base(Tags.CancellationRights) {}
+        : base(TAG) {}
     public CancellationRights(char val)
-        : base(Tags.CancellationRights, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NO_M = 'M';
@@ -8851,9 +8851,9 @@ public sealed class MoneyLaunderingStatus : CharField
     public const int TAG = 481;
 
     public MoneyLaunderingStatus()
-        : base(Tags.MoneyLaunderingStatus) {}
+        : base(TAG) {}
     public MoneyLaunderingStatus(char val)
-        : base(Tags.MoneyLaunderingStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char EXEMPT_1 = '1';
@@ -8874,9 +8874,9 @@ public sealed class MailingInst : StringField
     public const int TAG = 482;
 
     public MailingInst()
-        : base(Tags.MailingInst) {}
+        : base(TAG) {}
     public MailingInst(string val)
-        : base(Tags.MailingInst, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8887,7 +8887,7 @@ public sealed class TransBkdTime : UtcDateTimeField
     public const int TAG = 483;
 
     public TransBkdTime()
-        : base(Tags.TransBkdTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -8895,7 +8895,7 @@ public sealed class TransBkdTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public TransBkdTime(DateTime val)
-        : base(Tags.TransBkdTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -8905,7 +8905,7 @@ public sealed class TransBkdTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TransBkdTime(DateTime val, bool showMilliseconds)
-        : base(Tags.TransBkdTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -8914,7 +8914,7 @@ public sealed class TransBkdTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public TransBkdTime(DateTime val, TimePrecision precision)
-        : base(Tags.TransBkdTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -8925,9 +8925,9 @@ public sealed class ExecPriceType : CharField
     public const int TAG = 484;
 
     public ExecPriceType()
-        : base(Tags.ExecPriceType) {}
+        : base(TAG) {}
     public ExecPriceType(char val)
-        : base(Tags.ExecPriceType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char BID_PRICE = 'B';
@@ -8948,9 +8948,9 @@ public sealed class ExecPriceAdjustment : DecimalField
     public const int TAG = 485;
 
     public ExecPriceAdjustment()
-        : base(Tags.ExecPriceAdjustment) {}
+        : base(TAG) {}
     public ExecPriceAdjustment(Decimal val)
-        : base(Tags.ExecPriceAdjustment, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8961,9 +8961,9 @@ public sealed class DateOfBirth : StringField
     public const int TAG = 486;
 
     public DateOfBirth()
-        : base(Tags.DateOfBirth) {}
+        : base(TAG) {}
     public DateOfBirth(string val)
-        : base(Tags.DateOfBirth, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -8974,9 +8974,9 @@ public sealed class TradeReportTransType : IntField
     public const int TAG = 487;
 
     public TradeReportTransType()
-        : base(Tags.TradeReportTransType) {}
+        : base(TAG) {}
     public TradeReportTransType(int val)
-        : base(Tags.TradeReportTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NEW = 0;
@@ -8995,9 +8995,9 @@ public sealed class CardHolderName : StringField
     public const int TAG = 488;
 
     public CardHolderName()
-        : base(Tags.CardHolderName) {}
+        : base(TAG) {}
     public CardHolderName(string val)
-        : base(Tags.CardHolderName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9008,9 +9008,9 @@ public sealed class CardNumber : StringField
     public const int TAG = 489;
 
     public CardNumber()
-        : base(Tags.CardNumber) {}
+        : base(TAG) {}
     public CardNumber(string val)
-        : base(Tags.CardNumber, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9021,9 +9021,9 @@ public sealed class CardExpDate : StringField
     public const int TAG = 490;
 
     public CardExpDate()
-        : base(Tags.CardExpDate) {}
+        : base(TAG) {}
     public CardExpDate(string val)
-        : base(Tags.CardExpDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9034,9 +9034,9 @@ public sealed class CardIssNo : StringField
     public const int TAG = 491;
 
     public CardIssNo()
-        : base(Tags.CardIssNo) {}
+        : base(TAG) {}
     public CardIssNo(string val)
-        : base(Tags.CardIssNo, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9047,9 +9047,9 @@ public sealed class PaymentMethod : IntField
     public const int TAG = 492;
 
     public PaymentMethod()
-        : base(Tags.PaymentMethod) {}
+        : base(TAG) {}
     public PaymentMethod(int val)
-        : base(Tags.PaymentMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CREST = 1;
@@ -9078,9 +9078,9 @@ public sealed class RegistAcctType : StringField
     public const int TAG = 493;
 
     public RegistAcctType()
-        : base(Tags.RegistAcctType) {}
+        : base(TAG) {}
     public RegistAcctType(string val)
-        : base(Tags.RegistAcctType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9091,9 +9091,9 @@ public sealed class Designation : StringField
     public const int TAG = 494;
 
     public Designation()
-        : base(Tags.Designation) {}
+        : base(TAG) {}
     public Designation(string val)
-        : base(Tags.Designation, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9104,9 +9104,9 @@ public sealed class TaxAdvantageType : IntField
     public const int TAG = 495;
 
     public TaxAdvantageType()
-        : base(Tags.TaxAdvantageType) {}
+        : base(TAG) {}
     public TaxAdvantageType(int val)
-        : base(Tags.TaxAdvantageType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NONE_NOT_APPLICABLE = 0;
@@ -9152,9 +9152,9 @@ public sealed class RegistRejReasonText : StringField
     public const int TAG = 496;
 
     public RegistRejReasonText()
-        : base(Tags.RegistRejReasonText) {}
+        : base(TAG) {}
     public RegistRejReasonText(string val)
-        : base(Tags.RegistRejReasonText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9165,9 +9165,9 @@ public sealed class FundRenewWaiv : CharField
     public const int TAG = 497;
 
     public FundRenewWaiv()
-        : base(Tags.FundRenewWaiv) {}
+        : base(TAG) {}
     public FundRenewWaiv(char val)
-        : base(Tags.FundRenewWaiv, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NO = 'N';
@@ -9182,9 +9182,9 @@ public sealed class CashDistribAgentName : StringField
     public const int TAG = 498;
 
     public CashDistribAgentName()
-        : base(Tags.CashDistribAgentName) {}
+        : base(TAG) {}
     public CashDistribAgentName(string val)
-        : base(Tags.CashDistribAgentName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9195,9 +9195,9 @@ public sealed class CashDistribAgentCode : StringField
     public const int TAG = 499;
 
     public CashDistribAgentCode()
-        : base(Tags.CashDistribAgentCode) {}
+        : base(TAG) {}
     public CashDistribAgentCode(string val)
-        : base(Tags.CashDistribAgentCode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9208,9 +9208,9 @@ public sealed class CashDistribAgentAcctNumber : StringField
     public const int TAG = 500;
 
     public CashDistribAgentAcctNumber()
-        : base(Tags.CashDistribAgentAcctNumber) {}
+        : base(TAG) {}
     public CashDistribAgentAcctNumber(string val)
-        : base(Tags.CashDistribAgentAcctNumber, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9221,9 +9221,9 @@ public sealed class CashDistribPayRef : StringField
     public const int TAG = 501;
 
     public CashDistribPayRef()
-        : base(Tags.CashDistribPayRef) {}
+        : base(TAG) {}
     public CashDistribPayRef(string val)
-        : base(Tags.CashDistribPayRef, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9234,9 +9234,9 @@ public sealed class CashDistribAgentAcctName : StringField
     public const int TAG = 502;
 
     public CashDistribAgentAcctName()
-        : base(Tags.CashDistribAgentAcctName) {}
+        : base(TAG) {}
     public CashDistribAgentAcctName(string val)
-        : base(Tags.CashDistribAgentAcctName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9247,9 +9247,9 @@ public sealed class CardStartDate : StringField
     public const int TAG = 503;
 
     public CardStartDate()
-        : base(Tags.CardStartDate) {}
+        : base(TAG) {}
     public CardStartDate(string val)
-        : base(Tags.CardStartDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9260,9 +9260,9 @@ public sealed class PaymentDate : StringField
     public const int TAG = 504;
 
     public PaymentDate()
-        : base(Tags.PaymentDate) {}
+        : base(TAG) {}
     public PaymentDate(string val)
-        : base(Tags.PaymentDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9273,9 +9273,9 @@ public sealed class PaymentRemitterID : StringField
     public const int TAG = 505;
 
     public PaymentRemitterID()
-        : base(Tags.PaymentRemitterID) {}
+        : base(TAG) {}
     public PaymentRemitterID(string val)
-        : base(Tags.PaymentRemitterID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9286,9 +9286,9 @@ public sealed class RegistStatus : CharField
     public const int TAG = 506;
 
     public RegistStatus()
-        : base(Tags.RegistStatus) {}
+        : base(TAG) {}
     public RegistStatus(char val)
-        : base(Tags.RegistStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ACCEPTED = 'A';
@@ -9305,9 +9305,9 @@ public sealed class RegistRejReasonCode : IntField
     public const int TAG = 507;
 
     public RegistRejReasonCode()
-        : base(Tags.RegistRejReasonCode) {}
+        : base(TAG) {}
     public RegistRejReasonCode(int val)
-        : base(Tags.RegistRejReasonCode, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int INVALID_UNACCEPTABLE_ACCOUNT_TYPE = 1;
@@ -9345,9 +9345,9 @@ public sealed class RegistRefID : StringField
     public const int TAG = 508;
 
     public RegistRefID()
-        : base(Tags.RegistRefID) {}
+        : base(TAG) {}
     public RegistRefID(string val)
-        : base(Tags.RegistRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9358,9 +9358,9 @@ public sealed class RegistDetls : StringField
     public const int TAG = 509;
 
     public RegistDetls()
-        : base(Tags.RegistDetls) {}
+        : base(TAG) {}
     public RegistDetls(string val)
-        : base(Tags.RegistDetls, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9371,9 +9371,9 @@ public sealed class NoDistribInsts : IntField
     public const int TAG = 510;
 
     public NoDistribInsts()
-        : base(Tags.NoDistribInsts) {}
+        : base(TAG) {}
     public NoDistribInsts(int val)
-        : base(Tags.NoDistribInsts, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9384,9 +9384,9 @@ public sealed class RegistEmail : StringField
     public const int TAG = 511;
 
     public RegistEmail()
-        : base(Tags.RegistEmail) {}
+        : base(TAG) {}
     public RegistEmail(string val)
-        : base(Tags.RegistEmail, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9397,9 +9397,9 @@ public sealed class DistribPercentage : DecimalField
     public const int TAG = 512;
 
     public DistribPercentage()
-        : base(Tags.DistribPercentage) {}
+        : base(TAG) {}
     public DistribPercentage(Decimal val)
-        : base(Tags.DistribPercentage, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9410,9 +9410,9 @@ public sealed class RegistID : StringField
     public const int TAG = 513;
 
     public RegistID()
-        : base(Tags.RegistID) {}
+        : base(TAG) {}
     public RegistID(string val)
-        : base(Tags.RegistID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9423,9 +9423,9 @@ public sealed class RegistTransType : CharField
     public const int TAG = 514;
 
     public RegistTransType()
-        : base(Tags.RegistTransType) {}
+        : base(TAG) {}
     public RegistTransType(char val)
-        : base(Tags.RegistTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NEW = '0';
@@ -9441,7 +9441,7 @@ public sealed class ExecValuationPoint : UtcDateTimeField
     public const int TAG = 515;
 
     public ExecValuationPoint()
-        : base(Tags.ExecValuationPoint) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -9449,7 +9449,7 @@ public sealed class ExecValuationPoint : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public ExecValuationPoint(DateTime val)
-        : base(Tags.ExecValuationPoint, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -9459,7 +9459,7 @@ public sealed class ExecValuationPoint : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ExecValuationPoint(DateTime val, bool showMilliseconds)
-        : base(Tags.ExecValuationPoint, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -9468,7 +9468,7 @@ public sealed class ExecValuationPoint : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public ExecValuationPoint(DateTime val, TimePrecision precision)
-        : base(Tags.ExecValuationPoint, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -9479,9 +9479,9 @@ public sealed class OrderPercent : DecimalField
     public const int TAG = 516;
 
     public OrderPercent()
-        : base(Tags.OrderPercent) {}
+        : base(TAG) {}
     public OrderPercent(Decimal val)
-        : base(Tags.OrderPercent, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9492,9 +9492,9 @@ public sealed class OwnershipType : CharField
     public const int TAG = 517;
 
     public OwnershipType()
-        : base(Tags.OwnershipType) {}
+        : base(TAG) {}
     public OwnershipType(char val)
-        : base(Tags.OwnershipType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char JOINT_TRUSTEES = '2';
@@ -9510,9 +9510,9 @@ public sealed class NoContAmts : IntField
     public const int TAG = 518;
 
     public NoContAmts()
-        : base(Tags.NoContAmts) {}
+        : base(TAG) {}
     public NoContAmts(int val)
-        : base(Tags.NoContAmts, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9523,9 +9523,9 @@ public sealed class ContAmtType : IntField
     public const int TAG = 519;
 
     public ContAmtType()
-        : base(Tags.ContAmtType) {}
+        : base(TAG) {}
     public ContAmtType(int val)
-        : base(Tags.ContAmtType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int COMMISSION_AMOUNT = 1;
@@ -9553,9 +9553,9 @@ public sealed class ContAmtValue : DecimalField
     public const int TAG = 520;
 
     public ContAmtValue()
-        : base(Tags.ContAmtValue) {}
+        : base(TAG) {}
     public ContAmtValue(Decimal val)
-        : base(Tags.ContAmtValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9566,9 +9566,9 @@ public sealed class ContAmtCurr : StringField
     public const int TAG = 521;
 
     public ContAmtCurr()
-        : base(Tags.ContAmtCurr) {}
+        : base(TAG) {}
     public ContAmtCurr(string val)
-        : base(Tags.ContAmtCurr, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9579,9 +9579,9 @@ public sealed class OwnerType : IntField
     public const int TAG = 522;
 
     public OwnerType()
-        : base(Tags.OwnerType) {}
+        : base(TAG) {}
     public OwnerType(int val)
-        : base(Tags.OwnerType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int INDIVIDUAL_INVESTOR = 1;
@@ -9607,9 +9607,9 @@ public sealed class PartySubID : StringField
     public const int TAG = 523;
 
     public PartySubID()
-        : base(Tags.PartySubID) {}
+        : base(TAG) {}
     public PartySubID(string val)
-        : base(Tags.PartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9620,9 +9620,9 @@ public sealed class NestedPartyID : StringField
     public const int TAG = 524;
 
     public NestedPartyID()
-        : base(Tags.NestedPartyID) {}
+        : base(TAG) {}
     public NestedPartyID(string val)
-        : base(Tags.NestedPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9633,9 +9633,9 @@ public sealed class NestedPartyIDSource : CharField
     public const int TAG = 525;
 
     public NestedPartyIDSource()
-        : base(Tags.NestedPartyIDSource) {}
+        : base(TAG) {}
     public NestedPartyIDSource(char val)
-        : base(Tags.NestedPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9646,9 +9646,9 @@ public sealed class SecondaryClOrdID : StringField
     public const int TAG = 526;
 
     public SecondaryClOrdID()
-        : base(Tags.SecondaryClOrdID) {}
+        : base(TAG) {}
     public SecondaryClOrdID(string val)
-        : base(Tags.SecondaryClOrdID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9659,9 +9659,9 @@ public sealed class SecondaryExecID : StringField
     public const int TAG = 527;
 
     public SecondaryExecID()
-        : base(Tags.SecondaryExecID) {}
+        : base(TAG) {}
     public SecondaryExecID(string val)
-        : base(Tags.SecondaryExecID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9672,9 +9672,9 @@ public sealed class OrderCapacity : CharField
     public const int TAG = 528;
 
     public OrderCapacity()
-        : base(Tags.OrderCapacity) {}
+        : base(TAG) {}
     public OrderCapacity(char val)
-        : base(Tags.OrderCapacity, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char AGENCY = 'A';
@@ -9693,9 +9693,9 @@ public sealed class OrderRestrictions : StringField
     public const int TAG = 529;
 
     public OrderRestrictions()
-        : base(Tags.OrderRestrictions) {}
+        : base(TAG) {}
     public OrderRestrictions(string val)
-        : base(Tags.OrderRestrictions, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string PROGRAM_TRADE = "1";
@@ -9725,9 +9725,9 @@ public sealed class MassCancelRequestType : CharField
     public const int TAG = 530;
 
     public MassCancelRequestType()
-        : base(Tags.MassCancelRequestType) {}
+        : base(TAG) {}
     public MassCancelRequestType(char val)
-        : base(Tags.MassCancelRequestType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CANCEL_ORDERS_FOR_A_SECURITY = '1';
@@ -9752,9 +9752,9 @@ public sealed class MassCancelResponse : CharField
     public const int TAG = 531;
 
     public MassCancelResponse()
-        : base(Tags.MassCancelResponse) {}
+        : base(TAG) {}
     public MassCancelResponse(char val)
-        : base(Tags.MassCancelResponse, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CANCEL_REQUEST_REJECTED = '0';
@@ -9780,9 +9780,9 @@ public sealed class MassCancelRejectReason : IntField
     public const int TAG = 532;
 
     public MassCancelRejectReason()
-        : base(Tags.MassCancelRejectReason) {}
+        : base(TAG) {}
     public MassCancelRejectReason(int val)
-        : base(Tags.MassCancelRejectReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int MASS_CANCEL_NOT_SUPPORTED = 0;
@@ -9810,9 +9810,9 @@ public sealed class TotalAffectedOrders : IntField
     public const int TAG = 533;
 
     public TotalAffectedOrders()
-        : base(Tags.TotalAffectedOrders) {}
+        : base(TAG) {}
     public TotalAffectedOrders(int val)
-        : base(Tags.TotalAffectedOrders, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9823,9 +9823,9 @@ public sealed class NoAffectedOrders : IntField
     public const int TAG = 534;
 
     public NoAffectedOrders()
-        : base(Tags.NoAffectedOrders) {}
+        : base(TAG) {}
     public NoAffectedOrders(int val)
-        : base(Tags.NoAffectedOrders, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9836,9 +9836,9 @@ public sealed class AffectedOrderID : StringField
     public const int TAG = 535;
 
     public AffectedOrderID()
-        : base(Tags.AffectedOrderID) {}
+        : base(TAG) {}
     public AffectedOrderID(string val)
-        : base(Tags.AffectedOrderID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9849,9 +9849,9 @@ public sealed class AffectedSecondaryOrderID : StringField
     public const int TAG = 536;
 
     public AffectedSecondaryOrderID()
-        : base(Tags.AffectedSecondaryOrderID) {}
+        : base(TAG) {}
     public AffectedSecondaryOrderID(string val)
-        : base(Tags.AffectedSecondaryOrderID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9862,9 +9862,9 @@ public sealed class QuoteType : IntField
     public const int TAG = 537;
 
     public QuoteType()
-        : base(Tags.QuoteType) {}
+        : base(TAG) {}
     public QuoteType(int val)
-        : base(Tags.QuoteType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int INDICATIVE = 0;
@@ -9881,9 +9881,9 @@ public sealed class NestedPartyRole : IntField
     public const int TAG = 538;
 
     public NestedPartyRole()
-        : base(Tags.NestedPartyRole) {}
+        : base(TAG) {}
     public NestedPartyRole(int val)
-        : base(Tags.NestedPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9894,9 +9894,9 @@ public sealed class NoNestedPartyIDs : IntField
     public const int TAG = 539;
 
     public NoNestedPartyIDs()
-        : base(Tags.NoNestedPartyIDs) {}
+        : base(TAG) {}
     public NoNestedPartyIDs(int val)
-        : base(Tags.NoNestedPartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9907,9 +9907,9 @@ public sealed class TotalAccruedInterestAmt : DecimalField
     public const int TAG = 540;
 
     public TotalAccruedInterestAmt()
-        : base(Tags.TotalAccruedInterestAmt) {}
+        : base(TAG) {}
     public TotalAccruedInterestAmt(Decimal val)
-        : base(Tags.TotalAccruedInterestAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9920,9 +9920,9 @@ public sealed class MaturityDate : StringField
     public const int TAG = 541;
 
     public MaturityDate()
-        : base(Tags.MaturityDate) {}
+        : base(TAG) {}
     public MaturityDate(string val)
-        : base(Tags.MaturityDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9933,9 +9933,9 @@ public sealed class UnderlyingMaturityDate : StringField
     public const int TAG = 542;
 
     public UnderlyingMaturityDate()
-        : base(Tags.UnderlyingMaturityDate) {}
+        : base(TAG) {}
     public UnderlyingMaturityDate(string val)
-        : base(Tags.UnderlyingMaturityDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9946,9 +9946,9 @@ public sealed class InstrRegistry : StringField
     public const int TAG = 543;
 
     public InstrRegistry()
-        : base(Tags.InstrRegistry) {}
+        : base(TAG) {}
     public InstrRegistry(string val)
-        : base(Tags.InstrRegistry, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string COUNTRY_IN_WHICH_REGISTRY_IS_KEPT = "Code";
@@ -9963,9 +9963,9 @@ public sealed class CashMargin : CharField
     public const int TAG = 544;
 
     public CashMargin()
-        : base(Tags.CashMargin) {}
+        : base(TAG) {}
     public CashMargin(char val)
-        : base(Tags.CashMargin, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CASH = '1';
@@ -9981,9 +9981,9 @@ public sealed class NestedPartySubID : StringField
     public const int TAG = 545;
 
     public NestedPartySubID()
-        : base(Tags.NestedPartySubID) {}
+        : base(TAG) {}
     public NestedPartySubID(string val)
-        : base(Tags.NestedPartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -9994,9 +9994,9 @@ public sealed class Scope : StringField
     public const int TAG = 546;
 
     public Scope()
-        : base(Tags.Scope) {}
+        : base(TAG) {}
     public Scope(string val)
-        : base(Tags.Scope, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string LOCAL_MARKET = "1";
@@ -10013,9 +10013,9 @@ public sealed class MDImplicitDelete : BooleanField
     public const int TAG = 547;
 
     public MDImplicitDelete()
-        : base(Tags.MDImplicitDelete) {}
+        : base(TAG) {}
     public MDImplicitDelete(Boolean val)
-        : base(Tags.MDImplicitDelete, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -10030,9 +10030,9 @@ public sealed class CrossID : StringField
     public const int TAG = 548;
 
     public CrossID()
-        : base(Tags.CrossID) {}
+        : base(TAG) {}
     public CrossID(string val)
-        : base(Tags.CrossID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10043,9 +10043,9 @@ public sealed class CrossType : IntField
     public const int TAG = 549;
 
     public CrossType()
-        : base(Tags.CrossType) {}
+        : base(TAG) {}
     public CrossType(int val)
-        : base(Tags.CrossType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CROSS_AON = 1;
@@ -10066,9 +10066,9 @@ public sealed class CrossPrioritization : IntField
     public const int TAG = 550;
 
     public CrossPrioritization()
-        : base(Tags.CrossPrioritization) {}
+        : base(TAG) {}
     public CrossPrioritization(int val)
-        : base(Tags.CrossPrioritization, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NONE = 0;
@@ -10084,9 +10084,9 @@ public sealed class OrigCrossID : StringField
     public const int TAG = 551;
 
     public OrigCrossID()
-        : base(Tags.OrigCrossID) {}
+        : base(TAG) {}
     public OrigCrossID(string val)
-        : base(Tags.OrigCrossID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10097,9 +10097,9 @@ public sealed class NoSides : IntField
     public const int TAG = 552;
 
     public NoSides()
-        : base(Tags.NoSides) {}
+        : base(TAG) {}
     public NoSides(int val)
-        : base(Tags.NoSides, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ONE_SIDE = 1;
@@ -10114,9 +10114,9 @@ public sealed class Username : StringField
     public const int TAG = 553;
 
     public Username()
-        : base(Tags.Username) {}
+        : base(TAG) {}
     public Username(string val)
-        : base(Tags.Username, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10127,9 +10127,9 @@ public sealed class Password : StringField
     public const int TAG = 554;
 
     public Password()
-        : base(Tags.Password) {}
+        : base(TAG) {}
     public Password(string val)
-        : base(Tags.Password, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10140,9 +10140,9 @@ public sealed class NoLegs : IntField
     public const int TAG = 555;
 
     public NoLegs()
-        : base(Tags.NoLegs) {}
+        : base(TAG) {}
     public NoLegs(int val)
-        : base(Tags.NoLegs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10153,9 +10153,9 @@ public sealed class LegCurrency : StringField
     public const int TAG = 556;
 
     public LegCurrency()
-        : base(Tags.LegCurrency) {}
+        : base(TAG) {}
     public LegCurrency(string val)
-        : base(Tags.LegCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10166,9 +10166,9 @@ public sealed class TotalNumSecurityTypes : IntField
     public const int TAG = 557;
 
     public TotalNumSecurityTypes()
-        : base(Tags.TotalNumSecurityTypes) {}
+        : base(TAG) {}
     public TotalNumSecurityTypes(int val)
-        : base(Tags.TotalNumSecurityTypes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10179,9 +10179,9 @@ public sealed class NoSecurityTypes : IntField
     public const int TAG = 558;
 
     public NoSecurityTypes()
-        : base(Tags.NoSecurityTypes) {}
+        : base(TAG) {}
     public NoSecurityTypes(int val)
-        : base(Tags.NoSecurityTypes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10192,9 +10192,9 @@ public sealed class SecurityListRequestType : IntField
     public const int TAG = 559;
 
     public SecurityListRequestType()
-        : base(Tags.SecurityListRequestType) {}
+        : base(TAG) {}
     public SecurityListRequestType(int val)
-        : base(Tags.SecurityListRequestType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SYMBOL = 0;
@@ -10214,9 +10214,9 @@ public sealed class SecurityRequestResult : IntField
     public const int TAG = 560;
 
     public SecurityRequestResult()
-        : base(Tags.SecurityRequestResult) {}
+        : base(TAG) {}
     public SecurityRequestResult(int val)
-        : base(Tags.SecurityRequestResult, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int VALID_REQUEST = 0;
@@ -10235,9 +10235,9 @@ public sealed class RoundLot : DecimalField
     public const int TAG = 561;
 
     public RoundLot()
-        : base(Tags.RoundLot) {}
+        : base(TAG) {}
     public RoundLot(Decimal val)
-        : base(Tags.RoundLot, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10248,9 +10248,9 @@ public sealed class MinTradeVol : DecimalField
     public const int TAG = 562;
 
     public MinTradeVol()
-        : base(Tags.MinTradeVol) {}
+        : base(TAG) {}
     public MinTradeVol(Decimal val)
-        : base(Tags.MinTradeVol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10261,9 +10261,9 @@ public sealed class MultiLegRptTypeReq : IntField
     public const int TAG = 563;
 
     public MultiLegRptTypeReq()
-        : base(Tags.MultiLegRptTypeReq) {}
+        : base(TAG) {}
     public MultiLegRptTypeReq(int val)
-        : base(Tags.MultiLegRptTypeReq, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int REPORT_BY_MULITLEG_SECURITY_ONLY = 0;
@@ -10279,9 +10279,9 @@ public sealed class LegPositionEffect : CharField
     public const int TAG = 564;
 
     public LegPositionEffect()
-        : base(Tags.LegPositionEffect) {}
+        : base(TAG) {}
     public LegPositionEffect(char val)
-        : base(Tags.LegPositionEffect, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10292,9 +10292,9 @@ public sealed class LegCoveredOrUncovered : IntField
     public const int TAG = 565;
 
     public LegCoveredOrUncovered()
-        : base(Tags.LegCoveredOrUncovered) {}
+        : base(TAG) {}
     public LegCoveredOrUncovered(int val)
-        : base(Tags.LegCoveredOrUncovered, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10305,9 +10305,9 @@ public sealed class LegPrice : DecimalField
     public const int TAG = 566;
 
     public LegPrice()
-        : base(Tags.LegPrice) {}
+        : base(TAG) {}
     public LegPrice(Decimal val)
-        : base(Tags.LegPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10318,9 +10318,9 @@ public sealed class TradSesStatusRejReason : IntField
     public const int TAG = 567;
 
     public TradSesStatusRejReason()
-        : base(Tags.TradSesStatusRejReason) {}
+        : base(TAG) {}
     public TradSesStatusRejReason(int val)
-        : base(Tags.TradSesStatusRejReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNKNOWN_OR_INVALID_TRADINGSESSIONID = 1;
@@ -10335,9 +10335,9 @@ public sealed class TradeRequestID : StringField
     public const int TAG = 568;
 
     public TradeRequestID()
-        : base(Tags.TradeRequestID) {}
+        : base(TAG) {}
     public TradeRequestID(string val)
-        : base(Tags.TradeRequestID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10348,9 +10348,9 @@ public sealed class TradeRequestType : IntField
     public const int TAG = 569;
 
     public TradeRequestType()
-        : base(Tags.TradeRequestType) {}
+        : base(TAG) {}
     public TradeRequestType(int val)
-        : base(Tags.TradeRequestType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ALL_TRADES = 0;
@@ -10368,9 +10368,9 @@ public sealed class PreviouslyReported : BooleanField
     public const int TAG = 570;
 
     public PreviouslyReported()
-        : base(Tags.PreviouslyReported) {}
+        : base(TAG) {}
     public PreviouslyReported(Boolean val)
-        : base(Tags.PreviouslyReported, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -10385,9 +10385,9 @@ public sealed class TradeReportID : StringField
     public const int TAG = 571;
 
     public TradeReportID()
-        : base(Tags.TradeReportID) {}
+        : base(TAG) {}
     public TradeReportID(string val)
-        : base(Tags.TradeReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10398,9 +10398,9 @@ public sealed class TradeReportRefID : StringField
     public const int TAG = 572;
 
     public TradeReportRefID()
-        : base(Tags.TradeReportRefID) {}
+        : base(TAG) {}
     public TradeReportRefID(string val)
-        : base(Tags.TradeReportRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10411,9 +10411,9 @@ public sealed class MatchStatus : CharField
     public const int TAG = 573;
 
     public MatchStatus()
-        : base(Tags.MatchStatus) {}
+        : base(TAG) {}
     public MatchStatus(char val)
-        : base(Tags.MatchStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char COMPARED_MATCHED_OR_AFFIRMED = '0';
@@ -10432,9 +10432,9 @@ public sealed class MatchType : StringField
     public const int TAG = 574;
 
     public MatchType()
-        : base(Tags.MatchType) {}
+        : base(TAG) {}
     public MatchType(string val)
-        : base(Tags.MatchType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string EXACT_MATCH_ON_TRADE_DATE_STOCK_SYMBOL_QUANTITY_PRICE_TRADE_TYPE_AND_SPECIAL_TRADE_INDICATOR_PLUS_FOUR_BADGES_AND_EXECUTION_TIME = "A1";
@@ -10499,9 +10499,9 @@ public sealed class OddLot : BooleanField
     public const int TAG = 575;
 
     public OddLot()
-        : base(Tags.OddLot) {}
+        : base(TAG) {}
     public OddLot(Boolean val)
-        : base(Tags.OddLot, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -10516,9 +10516,9 @@ public sealed class NoClearingInstructions : IntField
     public const int TAG = 576;
 
     public NoClearingInstructions()
-        : base(Tags.NoClearingInstructions) {}
+        : base(TAG) {}
     public NoClearingInstructions(int val)
-        : base(Tags.NoClearingInstructions, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10529,9 +10529,9 @@ public sealed class ClearingInstruction : IntField
     public const int TAG = 577;
 
     public ClearingInstruction()
-        : base(Tags.ClearingInstruction) {}
+        : base(TAG) {}
     public ClearingInstruction(int val)
-        : base(Tags.ClearingInstruction, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PROCESS_NORMALLY = 0;
@@ -10559,9 +10559,9 @@ public sealed class TradeInputSource : StringField
     public const int TAG = 578;
 
     public TradeInputSource()
-        : base(Tags.TradeInputSource) {}
+        : base(TAG) {}
     public TradeInputSource(string val)
-        : base(Tags.TradeInputSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10572,9 +10572,9 @@ public sealed class TradeInputDevice : StringField
     public const int TAG = 579;
 
     public TradeInputDevice()
-        : base(Tags.TradeInputDevice) {}
+        : base(TAG) {}
     public TradeInputDevice(string val)
-        : base(Tags.TradeInputDevice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10585,9 +10585,9 @@ public sealed class NoDates : IntField
     public const int TAG = 580;
 
     public NoDates()
-        : base(Tags.NoDates) {}
+        : base(TAG) {}
     public NoDates(int val)
-        : base(Tags.NoDates, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10598,9 +10598,9 @@ public sealed class AccountType : IntField
     public const int TAG = 581;
 
     public AccountType()
-        : base(Tags.AccountType) {}
+        : base(TAG) {}
     public AccountType(int val)
-        : base(Tags.AccountType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACCOUNT_IS_CARRIED_ON_CUSTOMER_SIDE_OF_THE_BOOKS = 1;
@@ -10622,9 +10622,9 @@ public sealed class CustOrderCapacity : IntField
     public const int TAG = 582;
 
     public CustOrderCapacity()
-        : base(Tags.CustOrderCapacity) {}
+        : base(TAG) {}
     public CustOrderCapacity(int val)
-        : base(Tags.CustOrderCapacity, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int MEMBER_TRADING_FOR_THEIR_OWN_ACCOUNT = 1;
@@ -10641,9 +10641,9 @@ public sealed class ClOrdLinkID : StringField
     public const int TAG = 583;
 
     public ClOrdLinkID()
-        : base(Tags.ClOrdLinkID) {}
+        : base(TAG) {}
     public ClOrdLinkID(string val)
-        : base(Tags.ClOrdLinkID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10654,9 +10654,9 @@ public sealed class MassStatusReqID : StringField
     public const int TAG = 584;
 
     public MassStatusReqID()
-        : base(Tags.MassStatusReqID) {}
+        : base(TAG) {}
     public MassStatusReqID(string val)
-        : base(Tags.MassStatusReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10667,9 +10667,9 @@ public sealed class MassStatusReqType : IntField
     public const int TAG = 585;
 
     public MassStatusReqType()
-        : base(Tags.MassStatusReqType) {}
+        : base(TAG) {}
     public MassStatusReqType(int val)
-        : base(Tags.MassStatusReqType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int STATUS_FOR_ORDERS_FOR_A_SECURITY = 1;
@@ -10692,7 +10692,7 @@ public sealed class OrigOrdModTime : UtcDateTimeField
     public const int TAG = 586;
 
     public OrigOrdModTime()
-        : base(Tags.OrigOrdModTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -10700,7 +10700,7 @@ public sealed class OrigOrdModTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public OrigOrdModTime(DateTime val)
-        : base(Tags.OrigOrdModTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -10710,7 +10710,7 @@ public sealed class OrigOrdModTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public OrigOrdModTime(DateTime val, bool showMilliseconds)
-        : base(Tags.OrigOrdModTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -10719,7 +10719,7 @@ public sealed class OrigOrdModTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public OrigOrdModTime(DateTime val, TimePrecision precision)
-        : base(Tags.OrigOrdModTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -10730,9 +10730,9 @@ public sealed class LegSettlmntTyp : CharField
     public const int TAG = 587;
 
     public LegSettlmntTyp()
-        : base(Tags.LegSettlmntTyp) {}
+        : base(TAG) {}
     public LegSettlmntTyp(char val)
-        : base(Tags.LegSettlmntTyp, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10743,9 +10743,9 @@ public sealed class LegFutSettDate : StringField
     public const int TAG = 588;
 
     public LegFutSettDate()
-        : base(Tags.LegFutSettDate) {}
+        : base(TAG) {}
     public LegFutSettDate(string val)
-        : base(Tags.LegFutSettDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10756,9 +10756,9 @@ public sealed class DayBookingInst : CharField
     public const int TAG = 589;
 
     public DayBookingInst()
-        : base(Tags.DayBookingInst) {}
+        : base(TAG) {}
     public DayBookingInst(char val)
-        : base(Tags.DayBookingInst, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CAN_TRIGGER_BOOKING_WITHOUT_REFERENCE_TO_THE_ORDER_INITIATOR = '0';
@@ -10774,9 +10774,9 @@ public sealed class BookingUnit : CharField
     public const int TAG = 590;
 
     public BookingUnit()
-        : base(Tags.BookingUnit) {}
+        : base(TAG) {}
     public BookingUnit(char val)
-        : base(Tags.BookingUnit, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char EACH_PARTIAL_EXECUTION_IS_A_BOOKABLE_UNIT = '0';
@@ -10792,9 +10792,9 @@ public sealed class PreallocMethod : CharField
     public const int TAG = 591;
 
     public PreallocMethod()
-        : base(Tags.PreallocMethod) {}
+        : base(TAG) {}
     public PreallocMethod(char val)
-        : base(Tags.PreallocMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char PRO_RATA = '0';
@@ -10809,9 +10809,9 @@ public sealed class UnderlyingCountryOfIssue : StringField
     public const int TAG = 592;
 
     public UnderlyingCountryOfIssue()
-        : base(Tags.UnderlyingCountryOfIssue) {}
+        : base(TAG) {}
     public UnderlyingCountryOfIssue(string val)
-        : base(Tags.UnderlyingCountryOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10822,9 +10822,9 @@ public sealed class UnderlyingStateOrProvinceOfIssue : StringField
     public const int TAG = 593;
 
     public UnderlyingStateOrProvinceOfIssue()
-        : base(Tags.UnderlyingStateOrProvinceOfIssue) {}
+        : base(TAG) {}
     public UnderlyingStateOrProvinceOfIssue(string val)
-        : base(Tags.UnderlyingStateOrProvinceOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10835,9 +10835,9 @@ public sealed class UnderlyingLocaleOfIssue : StringField
     public const int TAG = 594;
 
     public UnderlyingLocaleOfIssue()
-        : base(Tags.UnderlyingLocaleOfIssue) {}
+        : base(TAG) {}
     public UnderlyingLocaleOfIssue(string val)
-        : base(Tags.UnderlyingLocaleOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10848,9 +10848,9 @@ public sealed class UnderlyingInstrRegistry : StringField
     public const int TAG = 595;
 
     public UnderlyingInstrRegistry()
-        : base(Tags.UnderlyingInstrRegistry) {}
+        : base(TAG) {}
     public UnderlyingInstrRegistry(string val)
-        : base(Tags.UnderlyingInstrRegistry, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10861,9 +10861,9 @@ public sealed class LegCountryOfIssue : StringField
     public const int TAG = 596;
 
     public LegCountryOfIssue()
-        : base(Tags.LegCountryOfIssue) {}
+        : base(TAG) {}
     public LegCountryOfIssue(string val)
-        : base(Tags.LegCountryOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10874,9 +10874,9 @@ public sealed class LegStateOrProvinceOfIssue : StringField
     public const int TAG = 597;
 
     public LegStateOrProvinceOfIssue()
-        : base(Tags.LegStateOrProvinceOfIssue) {}
+        : base(TAG) {}
     public LegStateOrProvinceOfIssue(string val)
-        : base(Tags.LegStateOrProvinceOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10887,9 +10887,9 @@ public sealed class LegLocaleOfIssue : StringField
     public const int TAG = 598;
 
     public LegLocaleOfIssue()
-        : base(Tags.LegLocaleOfIssue) {}
+        : base(TAG) {}
     public LegLocaleOfIssue(string val)
-        : base(Tags.LegLocaleOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10900,9 +10900,9 @@ public sealed class LegInstrRegistry : StringField
     public const int TAG = 599;
 
     public LegInstrRegistry()
-        : base(Tags.LegInstrRegistry) {}
+        : base(TAG) {}
     public LegInstrRegistry(string val)
-        : base(Tags.LegInstrRegistry, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10913,9 +10913,9 @@ public sealed class LegSymbol : StringField
     public const int TAG = 600;
 
     public LegSymbol()
-        : base(Tags.LegSymbol) {}
+        : base(TAG) {}
     public LegSymbol(string val)
-        : base(Tags.LegSymbol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10926,9 +10926,9 @@ public sealed class LegSymbolSfx : StringField
     public const int TAG = 601;
 
     public LegSymbolSfx()
-        : base(Tags.LegSymbolSfx) {}
+        : base(TAG) {}
     public LegSymbolSfx(string val)
-        : base(Tags.LegSymbolSfx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10939,9 +10939,9 @@ public sealed class LegSecurityID : StringField
     public const int TAG = 602;
 
     public LegSecurityID()
-        : base(Tags.LegSecurityID) {}
+        : base(TAG) {}
     public LegSecurityID(string val)
-        : base(Tags.LegSecurityID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10952,9 +10952,9 @@ public sealed class LegSecurityIDSource : StringField
     public const int TAG = 603;
 
     public LegSecurityIDSource()
-        : base(Tags.LegSecurityIDSource) {}
+        : base(TAG) {}
     public LegSecurityIDSource(string val)
-        : base(Tags.LegSecurityIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10965,9 +10965,9 @@ public sealed class NoLegSecurityAltID : StringField
     public const int TAG = 604;
 
     public NoLegSecurityAltID()
-        : base(Tags.NoLegSecurityAltID) {}
+        : base(TAG) {}
     public NoLegSecurityAltID(string val)
-        : base(Tags.NoLegSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10978,9 +10978,9 @@ public sealed class LegSecurityAltID : StringField
     public const int TAG = 605;
 
     public LegSecurityAltID()
-        : base(Tags.LegSecurityAltID) {}
+        : base(TAG) {}
     public LegSecurityAltID(string val)
-        : base(Tags.LegSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -10991,9 +10991,9 @@ public sealed class LegSecurityAltIDSource : StringField
     public const int TAG = 606;
 
     public LegSecurityAltIDSource()
-        : base(Tags.LegSecurityAltIDSource) {}
+        : base(TAG) {}
     public LegSecurityAltIDSource(string val)
-        : base(Tags.LegSecurityAltIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11004,9 +11004,9 @@ public sealed class LegProduct : IntField
     public const int TAG = 607;
 
     public LegProduct()
-        : base(Tags.LegProduct) {}
+        : base(TAG) {}
     public LegProduct(int val)
-        : base(Tags.LegProduct, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11017,9 +11017,9 @@ public sealed class LegCFICode : StringField
     public const int TAG = 608;
 
     public LegCFICode()
-        : base(Tags.LegCFICode) {}
+        : base(TAG) {}
     public LegCFICode(string val)
-        : base(Tags.LegCFICode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11030,9 +11030,9 @@ public sealed class LegSecurityType : StringField
     public const int TAG = 609;
 
     public LegSecurityType()
-        : base(Tags.LegSecurityType) {}
+        : base(TAG) {}
     public LegSecurityType(string val)
-        : base(Tags.LegSecurityType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11043,9 +11043,9 @@ public sealed class LegMaturityMonthYear : StringField
     public const int TAG = 610;
 
     public LegMaturityMonthYear()
-        : base(Tags.LegMaturityMonthYear) {}
+        : base(TAG) {}
     public LegMaturityMonthYear(string val)
-        : base(Tags.LegMaturityMonthYear, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11056,9 +11056,9 @@ public sealed class LegMaturityDate : StringField
     public const int TAG = 611;
 
     public LegMaturityDate()
-        : base(Tags.LegMaturityDate) {}
+        : base(TAG) {}
     public LegMaturityDate(string val)
-        : base(Tags.LegMaturityDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11069,9 +11069,9 @@ public sealed class LegStrikePrice : DecimalField
     public const int TAG = 612;
 
     public LegStrikePrice()
-        : base(Tags.LegStrikePrice) {}
+        : base(TAG) {}
     public LegStrikePrice(Decimal val)
-        : base(Tags.LegStrikePrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11082,9 +11082,9 @@ public sealed class LegOptAttribute : CharField
     public const int TAG = 613;
 
     public LegOptAttribute()
-        : base(Tags.LegOptAttribute) {}
+        : base(TAG) {}
     public LegOptAttribute(char val)
-        : base(Tags.LegOptAttribute, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11095,9 +11095,9 @@ public sealed class LegContractMultiplier : DecimalField
     public const int TAG = 614;
 
     public LegContractMultiplier()
-        : base(Tags.LegContractMultiplier) {}
+        : base(TAG) {}
     public LegContractMultiplier(Decimal val)
-        : base(Tags.LegContractMultiplier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11108,9 +11108,9 @@ public sealed class LegCouponRate : DecimalField
     public const int TAG = 615;
 
     public LegCouponRate()
-        : base(Tags.LegCouponRate) {}
+        : base(TAG) {}
     public LegCouponRate(Decimal val)
-        : base(Tags.LegCouponRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11121,9 +11121,9 @@ public sealed class LegSecurityExchange : StringField
     public const int TAG = 616;
 
     public LegSecurityExchange()
-        : base(Tags.LegSecurityExchange) {}
+        : base(TAG) {}
     public LegSecurityExchange(string val)
-        : base(Tags.LegSecurityExchange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11134,9 +11134,9 @@ public sealed class LegIssuer : StringField
     public const int TAG = 617;
 
     public LegIssuer()
-        : base(Tags.LegIssuer) {}
+        : base(TAG) {}
     public LegIssuer(string val)
-        : base(Tags.LegIssuer, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11147,9 +11147,9 @@ public sealed class EncodedLegIssuerLen : IntField
     public const int TAG = 618;
 
     public EncodedLegIssuerLen()
-        : base(Tags.EncodedLegIssuerLen) {}
+        : base(TAG) {}
     public EncodedLegIssuerLen(int val)
-        : base(Tags.EncodedLegIssuerLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11160,9 +11160,9 @@ public sealed class EncodedLegIssuer : StringField
     public const int TAG = 619;
 
     public EncodedLegIssuer()
-        : base(Tags.EncodedLegIssuer) {}
+        : base(TAG) {}
     public EncodedLegIssuer(string val)
-        : base(Tags.EncodedLegIssuer, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11173,9 +11173,9 @@ public sealed class LegSecurityDesc : StringField
     public const int TAG = 620;
 
     public LegSecurityDesc()
-        : base(Tags.LegSecurityDesc) {}
+        : base(TAG) {}
     public LegSecurityDesc(string val)
-        : base(Tags.LegSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11186,9 +11186,9 @@ public sealed class EncodedLegSecurityDescLen : IntField
     public const int TAG = 621;
 
     public EncodedLegSecurityDescLen()
-        : base(Tags.EncodedLegSecurityDescLen) {}
+        : base(TAG) {}
     public EncodedLegSecurityDescLen(int val)
-        : base(Tags.EncodedLegSecurityDescLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11199,9 +11199,9 @@ public sealed class EncodedLegSecurityDesc : StringField
     public const int TAG = 622;
 
     public EncodedLegSecurityDesc()
-        : base(Tags.EncodedLegSecurityDesc) {}
+        : base(TAG) {}
     public EncodedLegSecurityDesc(string val)
-        : base(Tags.EncodedLegSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11212,9 +11212,9 @@ public sealed class LegRatioQty : DecimalField
     public const int TAG = 623;
 
     public LegRatioQty()
-        : base(Tags.LegRatioQty) {}
+        : base(TAG) {}
     public LegRatioQty(Decimal val)
-        : base(Tags.LegRatioQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11225,9 +11225,9 @@ public sealed class LegSide : CharField
     public const int TAG = 624;
 
     public LegSide()
-        : base(Tags.LegSide) {}
+        : base(TAG) {}
     public LegSide(char val)
-        : base(Tags.LegSide, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11238,9 +11238,9 @@ public sealed class TradingSessionSubID : StringField
     public const int TAG = 625;
 
     public TradingSessionSubID()
-        : base(Tags.TradingSessionSubID) {}
+        : base(TAG) {}
     public TradingSessionSubID(string val)
-        : base(Tags.TradingSessionSubID, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string PRE_TRADING = "1";
@@ -11260,9 +11260,9 @@ public sealed class AllocType : IntField
     public const int TAG = 626;
 
     public AllocType()
-        : base(Tags.AllocType) {}
+        : base(TAG) {}
     public AllocType(int val)
-        : base(Tags.AllocType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CALCULATED = 1;
@@ -11294,9 +11294,9 @@ public sealed class NoHops : IntField
     public const int TAG = 627;
 
     public NoHops()
-        : base(Tags.NoHops) {}
+        : base(TAG) {}
     public NoHops(int val)
-        : base(Tags.NoHops, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11307,9 +11307,9 @@ public sealed class HopCompID : StringField
     public const int TAG = 628;
 
     public HopCompID()
-        : base(Tags.HopCompID) {}
+        : base(TAG) {}
     public HopCompID(string val)
-        : base(Tags.HopCompID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11320,7 +11320,7 @@ public sealed class HopSendingTime : UtcDateTimeField
     public const int TAG = 629;
 
     public HopSendingTime()
-        : base(Tags.HopSendingTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -11328,7 +11328,7 @@ public sealed class HopSendingTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public HopSendingTime(DateTime val)
-        : base(Tags.HopSendingTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -11338,7 +11338,7 @@ public sealed class HopSendingTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public HopSendingTime(DateTime val, bool showMilliseconds)
-        : base(Tags.HopSendingTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -11347,7 +11347,7 @@ public sealed class HopSendingTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public HopSendingTime(DateTime val, TimePrecision precision)
-        : base(Tags.HopSendingTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -11358,9 +11358,9 @@ public sealed class HopRefID : SeqNumFieldType
     public const int TAG = 630;
 
     public HopRefID()
-        : base(Tags.HopRefID) {}
+        : base(TAG) {}
     public HopRefID(SeqNumType val)
-        : base(Tags.HopRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11371,9 +11371,9 @@ public sealed class MidPx : DecimalField
     public const int TAG = 631;
 
     public MidPx()
-        : base(Tags.MidPx) {}
+        : base(TAG) {}
     public MidPx(Decimal val)
-        : base(Tags.MidPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11384,9 +11384,9 @@ public sealed class BidYield : DecimalField
     public const int TAG = 632;
 
     public BidYield()
-        : base(Tags.BidYield) {}
+        : base(TAG) {}
     public BidYield(Decimal val)
-        : base(Tags.BidYield, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11397,9 +11397,9 @@ public sealed class MidYield : DecimalField
     public const int TAG = 633;
 
     public MidYield()
-        : base(Tags.MidYield) {}
+        : base(TAG) {}
     public MidYield(Decimal val)
-        : base(Tags.MidYield, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11410,9 +11410,9 @@ public sealed class OfferYield : DecimalField
     public const int TAG = 634;
 
     public OfferYield()
-        : base(Tags.OfferYield) {}
+        : base(TAG) {}
     public OfferYield(Decimal val)
-        : base(Tags.OfferYield, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11423,9 +11423,9 @@ public sealed class ClearingFeeIndicator : StringField
     public const int TAG = 635;
 
     public ClearingFeeIndicator()
-        : base(Tags.ClearingFeeIndicator) {}
+        : base(TAG) {}
     public ClearingFeeIndicator(string val)
-        : base(Tags.ClearingFeeIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string VAL_1ST_YEAR_DELEGATE_TRADING_FOR_OWN_ACCOUNT = "1";
@@ -11454,9 +11454,9 @@ public sealed class WorkingIndicator : BooleanField
     public const int TAG = 636;
 
     public WorkingIndicator()
-        : base(Tags.WorkingIndicator) {}
+        : base(TAG) {}
     public WorkingIndicator(Boolean val)
-        : base(Tags.WorkingIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -11471,9 +11471,9 @@ public sealed class LegLastPx : DecimalField
     public const int TAG = 637;
 
     public LegLastPx()
-        : base(Tags.LegLastPx) {}
+        : base(TAG) {}
     public LegLastPx(Decimal val)
-        : base(Tags.LegLastPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11484,9 +11484,9 @@ public sealed class PriorityIndicator : IntField
     public const int TAG = 638;
 
     public PriorityIndicator()
-        : base(Tags.PriorityIndicator) {}
+        : base(TAG) {}
     public PriorityIndicator(int val)
-        : base(Tags.PriorityIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PRIORITY_UNCHANGED = 0;
@@ -11501,9 +11501,9 @@ public sealed class PriceImprovement : DecimalField
     public const int TAG = 639;
 
     public PriceImprovement()
-        : base(Tags.PriceImprovement) {}
+        : base(TAG) {}
     public PriceImprovement(Decimal val)
-        : base(Tags.PriceImprovement, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11514,9 +11514,9 @@ public sealed class Price2 : DecimalField
     public const int TAG = 640;
 
     public Price2()
-        : base(Tags.Price2) {}
+        : base(TAG) {}
     public Price2(Decimal val)
-        : base(Tags.Price2, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11527,9 +11527,9 @@ public sealed class LastForwardPoints2 : DecimalField
     public const int TAG = 641;
 
     public LastForwardPoints2()
-        : base(Tags.LastForwardPoints2) {}
+        : base(TAG) {}
     public LastForwardPoints2(Decimal val)
-        : base(Tags.LastForwardPoints2, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11540,9 +11540,9 @@ public sealed class BidForwardPoints2 : DecimalField
     public const int TAG = 642;
 
     public BidForwardPoints2()
-        : base(Tags.BidForwardPoints2) {}
+        : base(TAG) {}
     public BidForwardPoints2(Decimal val)
-        : base(Tags.BidForwardPoints2, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11553,9 +11553,9 @@ public sealed class OfferForwardPoints2 : DecimalField
     public const int TAG = 643;
 
     public OfferForwardPoints2()
-        : base(Tags.OfferForwardPoints2) {}
+        : base(TAG) {}
     public OfferForwardPoints2(Decimal val)
-        : base(Tags.OfferForwardPoints2, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11566,9 +11566,9 @@ public sealed class RFQReqID : StringField
     public const int TAG = 644;
 
     public RFQReqID()
-        : base(Tags.RFQReqID) {}
+        : base(TAG) {}
     public RFQReqID(string val)
-        : base(Tags.RFQReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11579,9 +11579,9 @@ public sealed class MktBidPx : DecimalField
     public const int TAG = 645;
 
     public MktBidPx()
-        : base(Tags.MktBidPx) {}
+        : base(TAG) {}
     public MktBidPx(Decimal val)
-        : base(Tags.MktBidPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11592,9 +11592,9 @@ public sealed class MktOfferPx : DecimalField
     public const int TAG = 646;
 
     public MktOfferPx()
-        : base(Tags.MktOfferPx) {}
+        : base(TAG) {}
     public MktOfferPx(Decimal val)
-        : base(Tags.MktOfferPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11605,9 +11605,9 @@ public sealed class MinBidSize : DecimalField
     public const int TAG = 647;
 
     public MinBidSize()
-        : base(Tags.MinBidSize) {}
+        : base(TAG) {}
     public MinBidSize(Decimal val)
-        : base(Tags.MinBidSize, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11618,9 +11618,9 @@ public sealed class MinOfferSize : DecimalField
     public const int TAG = 648;
 
     public MinOfferSize()
-        : base(Tags.MinOfferSize) {}
+        : base(TAG) {}
     public MinOfferSize(Decimal val)
-        : base(Tags.MinOfferSize, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11631,9 +11631,9 @@ public sealed class QuoteStatusReqID : StringField
     public const int TAG = 649;
 
     public QuoteStatusReqID()
-        : base(Tags.QuoteStatusReqID) {}
+        : base(TAG) {}
     public QuoteStatusReqID(string val)
-        : base(Tags.QuoteStatusReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11644,9 +11644,9 @@ public sealed class LegalConfirm : BooleanField
     public const int TAG = 650;
 
     public LegalConfirm()
-        : base(Tags.LegalConfirm) {}
+        : base(TAG) {}
     public LegalConfirm(Boolean val)
-        : base(Tags.LegalConfirm, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -11661,9 +11661,9 @@ public sealed class UnderlyingLastPx : DecimalField
     public const int TAG = 651;
 
     public UnderlyingLastPx()
-        : base(Tags.UnderlyingLastPx) {}
+        : base(TAG) {}
     public UnderlyingLastPx(Decimal val)
-        : base(Tags.UnderlyingLastPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11674,9 +11674,9 @@ public sealed class UnderlyingLastQty : DecimalField
     public const int TAG = 652;
 
     public UnderlyingLastQty()
-        : base(Tags.UnderlyingLastQty) {}
+        : base(TAG) {}
     public UnderlyingLastQty(Decimal val)
-        : base(Tags.UnderlyingLastQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11687,9 +11687,9 @@ public sealed class SecDefStatus : IntField
     public const int TAG = 653;
 
     public SecDefStatus()
-        : base(Tags.SecDefStatus) {}
+        : base(TAG) {}
     public SecDefStatus(int val)
-        : base(Tags.SecDefStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PENDING_APPROVAL = 0;
@@ -11707,9 +11707,9 @@ public sealed class LegRefID : StringField
     public const int TAG = 654;
 
     public LegRefID()
-        : base(Tags.LegRefID) {}
+        : base(TAG) {}
     public LegRefID(string val)
-        : base(Tags.LegRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11720,9 +11720,9 @@ public sealed class ContraLegRefID : StringField
     public const int TAG = 655;
 
     public ContraLegRefID()
-        : base(Tags.ContraLegRefID) {}
+        : base(TAG) {}
     public ContraLegRefID(string val)
-        : base(Tags.ContraLegRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11733,9 +11733,9 @@ public sealed class SettlCurrBidFxRate : DecimalField
     public const int TAG = 656;
 
     public SettlCurrBidFxRate()
-        : base(Tags.SettlCurrBidFxRate) {}
+        : base(TAG) {}
     public SettlCurrBidFxRate(Decimal val)
-        : base(Tags.SettlCurrBidFxRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11746,9 +11746,9 @@ public sealed class SettlCurrOfferFxRate : DecimalField
     public const int TAG = 657;
 
     public SettlCurrOfferFxRate()
-        : base(Tags.SettlCurrOfferFxRate) {}
+        : base(TAG) {}
     public SettlCurrOfferFxRate(Decimal val)
-        : base(Tags.SettlCurrOfferFxRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11759,9 +11759,9 @@ public sealed class QuoteRequestRejectReason : IntField
     public const int TAG = 658;
 
     public QuoteRequestRejectReason()
-        : base(Tags.QuoteRequestRejectReason) {}
+        : base(TAG) {}
     public QuoteRequestRejectReason(int val)
-        : base(Tags.QuoteRequestRejectReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNKNOWN_SYMBOL = 1;
@@ -11787,9 +11787,9 @@ public sealed class SideComplianceID : StringField
     public const int TAG = 659;
 
     public SideComplianceID()
-        : base(Tags.SideComplianceID) {}
+        : base(TAG) {}
     public SideComplianceID(string val)
-        : base(Tags.SideComplianceID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11800,9 +11800,9 @@ public sealed class SettlType : StringField
     public const int TAG = 63;
 
     public SettlType()
-        : base(Tags.SettlType) {}
+        : base(TAG) {}
     public SettlType(string val)
-        : base(Tags.SettlType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string REGULAR = "0";
@@ -11827,9 +11827,9 @@ public sealed class SettlDate : StringField
     public const int TAG = 64;
 
     public SettlDate()
-        : base(Tags.SettlDate) {}
+        : base(TAG) {}
     public SettlDate(string val)
-        : base(Tags.SettlDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11840,9 +11840,9 @@ public sealed class AvgPxPrecision : IntField
     public const int TAG = 74;
 
     public AvgPxPrecision()
-        : base(Tags.AvgPxPrecision) {}
+        : base(TAG) {}
     public AvgPxPrecision(int val)
-        : base(Tags.AvgPxPrecision, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11853,9 +11853,9 @@ public sealed class SettlDate2 : StringField
     public const int TAG = 193;
 
     public SettlDate2()
-        : base(Tags.SettlDate2) {}
+        : base(TAG) {}
     public SettlDate2(string val)
-        : base(Tags.SettlDate2, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11866,9 +11866,9 @@ public sealed class PegOffsetValue : DecimalField
     public const int TAG = 211;
 
     public PegOffsetValue()
-        : base(Tags.PegOffsetValue) {}
+        : base(TAG) {}
     public PegOffsetValue(Decimal val)
-        : base(Tags.PegOffsetValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11879,9 +11879,9 @@ public sealed class OpenCloseSettlFlag : StringField
     public const int TAG = 286;
 
     public OpenCloseSettlFlag()
-        : base(Tags.OpenCloseSettlFlag) {}
+        : base(TAG) {}
     public OpenCloseSettlFlag(string val)
-        : base(Tags.OpenCloseSettlFlag, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string DAILY_OPEN = "0";
@@ -11902,9 +11902,9 @@ public sealed class TotNoQuoteEntries : IntField
     public const int TAG = 304;
 
     public TotNoQuoteEntries()
-        : base(Tags.TotNoQuoteEntries) {}
+        : base(TAG) {}
     public TotNoQuoteEntries(int val)
-        : base(Tags.TotNoQuoteEntries, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11915,9 +11915,9 @@ public sealed class DiscretionOffsetValue : DecimalField
     public const int TAG = 389;
 
     public DiscretionOffsetValue()
-        : base(Tags.DiscretionOffsetValue) {}
+        : base(TAG) {}
     public DiscretionOffsetValue(Decimal val)
-        : base(Tags.DiscretionOffsetValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11928,9 +11928,9 @@ public sealed class TotNoRelatedSym : IntField
     public const int TAG = 393;
 
     public TotNoRelatedSym()
-        : base(Tags.TotNoRelatedSym) {}
+        : base(TAG) {}
     public TotNoRelatedSym(int val)
-        : base(Tags.TotNoRelatedSym, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11941,9 +11941,9 @@ public sealed class BidTradeType : CharField
     public const int TAG = 418;
 
     public BidTradeType()
-        : base(Tags.BidTradeType) {}
+        : base(TAG) {}
     public BidTradeType(char val)
-        : base(Tags.BidTradeType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char AGENCY = 'A';
@@ -11960,9 +11960,9 @@ public sealed class CardIssNum : StringField
     public const int TAG = 491;
 
     public CardIssNum()
-        : base(Tags.CardIssNum) {}
+        : base(TAG) {}
     public CardIssNum(string val)
-        : base(Tags.CardIssNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11973,9 +11973,9 @@ public sealed class RegistDtls : StringField
     public const int TAG = 509;
 
     public RegistDtls()
-        : base(Tags.RegistDtls) {}
+        : base(TAG) {}
     public RegistDtls(string val)
-        : base(Tags.RegistDtls, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11986,9 +11986,9 @@ public sealed class TotNoSecurityTypes : IntField
     public const int TAG = 557;
 
     public TotNoSecurityTypes()
-        : base(Tags.TotNoSecurityTypes) {}
+        : base(TAG) {}
     public TotNoSecurityTypes(int val)
-        : base(Tags.TotNoSecurityTypes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -11999,9 +11999,9 @@ public sealed class LegSettlType : CharField
     public const int TAG = 587;
 
     public LegSettlType()
-        : base(Tags.LegSettlType) {}
+        : base(TAG) {}
     public LegSettlType(char val)
-        : base(Tags.LegSettlType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12012,9 +12012,9 @@ public sealed class LegSettlDate : StringField
     public const int TAG = 588;
 
     public LegSettlDate()
-        : base(Tags.LegSettlDate) {}
+        : base(TAG) {}
     public LegSettlDate(string val)
-        : base(Tags.LegSettlDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12025,9 +12025,9 @@ public sealed class AcctIDSource : IntField
     public const int TAG = 660;
 
     public AcctIDSource()
-        : base(Tags.AcctIDSource) {}
+        : base(TAG) {}
     public AcctIDSource(int val)
-        : base(Tags.AcctIDSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int BIC = 1;
@@ -12046,9 +12046,9 @@ public sealed class AllocAcctIDSource : IntField
     public const int TAG = 661;
 
     public AllocAcctIDSource()
-        : base(Tags.AllocAcctIDSource) {}
+        : base(TAG) {}
     public AllocAcctIDSource(int val)
-        : base(Tags.AllocAcctIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12059,9 +12059,9 @@ public sealed class BenchmarkPrice : DecimalField
     public const int TAG = 662;
 
     public BenchmarkPrice()
-        : base(Tags.BenchmarkPrice) {}
+        : base(TAG) {}
     public BenchmarkPrice(Decimal val)
-        : base(Tags.BenchmarkPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12072,9 +12072,9 @@ public sealed class BenchmarkPriceType : IntField
     public const int TAG = 663;
 
     public BenchmarkPriceType()
-        : base(Tags.BenchmarkPriceType) {}
+        : base(TAG) {}
     public BenchmarkPriceType(int val)
-        : base(Tags.BenchmarkPriceType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12085,9 +12085,9 @@ public sealed class ConfirmID : StringField
     public const int TAG = 664;
 
     public ConfirmID()
-        : base(Tags.ConfirmID) {}
+        : base(TAG) {}
     public ConfirmID(string val)
-        : base(Tags.ConfirmID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12098,9 +12098,9 @@ public sealed class ConfirmStatus : IntField
     public const int TAG = 665;
 
     public ConfirmStatus()
-        : base(Tags.ConfirmStatus) {}
+        : base(TAG) {}
     public ConfirmStatus(int val)
-        : base(Tags.ConfirmStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int RECEIVED = 1;
@@ -12118,9 +12118,9 @@ public sealed class ConfirmTransType : IntField
     public const int TAG = 666;
 
     public ConfirmTransType()
-        : base(Tags.ConfirmTransType) {}
+        : base(TAG) {}
     public ConfirmTransType(int val)
-        : base(Tags.ConfirmTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NEW = 0;
@@ -12136,9 +12136,9 @@ public sealed class ContractSettlMonth : StringField
     public const int TAG = 667;
 
     public ContractSettlMonth()
-        : base(Tags.ContractSettlMonth) {}
+        : base(TAG) {}
     public ContractSettlMonth(string val)
-        : base(Tags.ContractSettlMonth, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12149,9 +12149,9 @@ public sealed class DeliveryForm : IntField
     public const int TAG = 668;
 
     public DeliveryForm()
-        : base(Tags.DeliveryForm) {}
+        : base(TAG) {}
     public DeliveryForm(int val)
-        : base(Tags.DeliveryForm, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int BOOK_ENTRY = 1;
@@ -12167,9 +12167,9 @@ public sealed class LastParPx : DecimalField
     public const int TAG = 669;
 
     public LastParPx()
-        : base(Tags.LastParPx) {}
+        : base(TAG) {}
     public LastParPx(Decimal val)
-        : base(Tags.LastParPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12180,9 +12180,9 @@ public sealed class NoLegAllocs : IntField
     public const int TAG = 670;
 
     public NoLegAllocs()
-        : base(Tags.NoLegAllocs) {}
+        : base(TAG) {}
     public NoLegAllocs(int val)
-        : base(Tags.NoLegAllocs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12193,9 +12193,9 @@ public sealed class LegAllocAccount : StringField
     public const int TAG = 671;
 
     public LegAllocAccount()
-        : base(Tags.LegAllocAccount) {}
+        : base(TAG) {}
     public LegAllocAccount(string val)
-        : base(Tags.LegAllocAccount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12206,9 +12206,9 @@ public sealed class LegIndividualAllocID : StringField
     public const int TAG = 672;
 
     public LegIndividualAllocID()
-        : base(Tags.LegIndividualAllocID) {}
+        : base(TAG) {}
     public LegIndividualAllocID(string val)
-        : base(Tags.LegIndividualAllocID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12219,9 +12219,9 @@ public sealed class LegAllocQty : DecimalField
     public const int TAG = 673;
 
     public LegAllocQty()
-        : base(Tags.LegAllocQty) {}
+        : base(TAG) {}
     public LegAllocQty(Decimal val)
-        : base(Tags.LegAllocQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12232,9 +12232,9 @@ public sealed class LegAllocAcctIDSource : StringField
     public const int TAG = 674;
 
     public LegAllocAcctIDSource()
-        : base(Tags.LegAllocAcctIDSource) {}
+        : base(TAG) {}
     public LegAllocAcctIDSource(string val)
-        : base(Tags.LegAllocAcctIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12245,9 +12245,9 @@ public sealed class LegSettlCurrency : StringField
     public const int TAG = 675;
 
     public LegSettlCurrency()
-        : base(Tags.LegSettlCurrency) {}
+        : base(TAG) {}
     public LegSettlCurrency(string val)
-        : base(Tags.LegSettlCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12258,9 +12258,9 @@ public sealed class LegBenchmarkCurveCurrency : StringField
     public const int TAG = 676;
 
     public LegBenchmarkCurveCurrency()
-        : base(Tags.LegBenchmarkCurveCurrency) {}
+        : base(TAG) {}
     public LegBenchmarkCurveCurrency(string val)
-        : base(Tags.LegBenchmarkCurveCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12271,9 +12271,9 @@ public sealed class LegBenchmarkCurveName : StringField
     public const int TAG = 677;
 
     public LegBenchmarkCurveName()
-        : base(Tags.LegBenchmarkCurveName) {}
+        : base(TAG) {}
     public LegBenchmarkCurveName(string val)
-        : base(Tags.LegBenchmarkCurveName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12284,9 +12284,9 @@ public sealed class LegBenchmarkCurvePoint : StringField
     public const int TAG = 678;
 
     public LegBenchmarkCurvePoint()
-        : base(Tags.LegBenchmarkCurvePoint) {}
+        : base(TAG) {}
     public LegBenchmarkCurvePoint(string val)
-        : base(Tags.LegBenchmarkCurvePoint, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12297,9 +12297,9 @@ public sealed class LegBenchmarkPrice : DecimalField
     public const int TAG = 679;
 
     public LegBenchmarkPrice()
-        : base(Tags.LegBenchmarkPrice) {}
+        : base(TAG) {}
     public LegBenchmarkPrice(Decimal val)
-        : base(Tags.LegBenchmarkPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12310,9 +12310,9 @@ public sealed class LegBenchmarkPriceType : IntField
     public const int TAG = 680;
 
     public LegBenchmarkPriceType()
-        : base(Tags.LegBenchmarkPriceType) {}
+        : base(TAG) {}
     public LegBenchmarkPriceType(int val)
-        : base(Tags.LegBenchmarkPriceType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12323,9 +12323,9 @@ public sealed class LegBidPx : DecimalField
     public const int TAG = 681;
 
     public LegBidPx()
-        : base(Tags.LegBidPx) {}
+        : base(TAG) {}
     public LegBidPx(Decimal val)
-        : base(Tags.LegBidPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12336,9 +12336,9 @@ public sealed class LegIOIQty : StringField
     public const int TAG = 682;
 
     public LegIOIQty()
-        : base(Tags.LegIOIQty) {}
+        : base(TAG) {}
     public LegIOIQty(string val)
-        : base(Tags.LegIOIQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12349,9 +12349,9 @@ public sealed class NoLegStipulations : IntField
     public const int TAG = 683;
 
     public NoLegStipulations()
-        : base(Tags.NoLegStipulations) {}
+        : base(TAG) {}
     public NoLegStipulations(int val)
-        : base(Tags.NoLegStipulations, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12362,9 +12362,9 @@ public sealed class LegOfferPx : DecimalField
     public const int TAG = 684;
 
     public LegOfferPx()
-        : base(Tags.LegOfferPx) {}
+        : base(TAG) {}
     public LegOfferPx(Decimal val)
-        : base(Tags.LegOfferPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12375,9 +12375,9 @@ public sealed class LegOrderQty : DecimalField
     public const int TAG = 685;
 
     public LegOrderQty()
-        : base(Tags.LegOrderQty) {}
+        : base(TAG) {}
     public LegOrderQty(Decimal val)
-        : base(Tags.LegOrderQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12388,9 +12388,9 @@ public sealed class LegPriceType : IntField
     public const int TAG = 686;
 
     public LegPriceType()
-        : base(Tags.LegPriceType) {}
+        : base(TAG) {}
     public LegPriceType(int val)
-        : base(Tags.LegPriceType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12401,9 +12401,9 @@ public sealed class LegQty : DecimalField
     public const int TAG = 687;
 
     public LegQty()
-        : base(Tags.LegQty) {}
+        : base(TAG) {}
     public LegQty(Decimal val)
-        : base(Tags.LegQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12414,9 +12414,9 @@ public sealed class LegStipulationType : StringField
     public const int TAG = 688;
 
     public LegStipulationType()
-        : base(Tags.LegStipulationType) {}
+        : base(TAG) {}
     public LegStipulationType(string val)
-        : base(Tags.LegStipulationType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12427,9 +12427,9 @@ public sealed class LegStipulationValue : StringField
     public const int TAG = 689;
 
     public LegStipulationValue()
-        : base(Tags.LegStipulationValue) {}
+        : base(TAG) {}
     public LegStipulationValue(string val)
-        : base(Tags.LegStipulationValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12440,9 +12440,9 @@ public sealed class LegSwapType : IntField
     public const int TAG = 690;
 
     public LegSwapType()
-        : base(Tags.LegSwapType) {}
+        : base(TAG) {}
     public LegSwapType(int val)
-        : base(Tags.LegSwapType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PAR_FOR_PAR = 1;
@@ -12459,9 +12459,9 @@ public sealed class Pool : StringField
     public const int TAG = 691;
 
     public Pool()
-        : base(Tags.Pool) {}
+        : base(TAG) {}
     public Pool(string val)
-        : base(Tags.Pool, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12472,9 +12472,9 @@ public sealed class QuotePriceType : IntField
     public const int TAG = 692;
 
     public QuotePriceType()
-        : base(Tags.QuotePriceType) {}
+        : base(TAG) {}
     public QuotePriceType(int val)
-        : base(Tags.QuotePriceType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PERCENT = 1;
@@ -12498,9 +12498,9 @@ public sealed class QuoteRespID : StringField
     public const int TAG = 693;
 
     public QuoteRespID()
-        : base(Tags.QuoteRespID) {}
+        : base(TAG) {}
     public QuoteRespID(string val)
-        : base(Tags.QuoteRespID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12511,9 +12511,9 @@ public sealed class QuoteRespType : IntField
     public const int TAG = 694;
 
     public QuoteRespType()
-        : base(Tags.QuoteRespType) {}
+        : base(TAG) {}
     public QuoteRespType(int val)
-        : base(Tags.QuoteRespType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int HIT_LIFT = 1;
@@ -12534,9 +12534,9 @@ public sealed class QuoteQualifier : CharField
     public const int TAG = 695;
 
     public QuoteQualifier()
-        : base(Tags.QuoteQualifier) {}
+        : base(TAG) {}
     public QuoteQualifier(char val)
-        : base(Tags.QuoteQualifier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12547,9 +12547,9 @@ public sealed class YieldRedemptionDate : StringField
     public const int TAG = 696;
 
     public YieldRedemptionDate()
-        : base(Tags.YieldRedemptionDate) {}
+        : base(TAG) {}
     public YieldRedemptionDate(string val)
-        : base(Tags.YieldRedemptionDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12560,9 +12560,9 @@ public sealed class YieldRedemptionPrice : DecimalField
     public const int TAG = 697;
 
     public YieldRedemptionPrice()
-        : base(Tags.YieldRedemptionPrice) {}
+        : base(TAG) {}
     public YieldRedemptionPrice(Decimal val)
-        : base(Tags.YieldRedemptionPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12573,9 +12573,9 @@ public sealed class YieldRedemptionPriceType : IntField
     public const int TAG = 698;
 
     public YieldRedemptionPriceType()
-        : base(Tags.YieldRedemptionPriceType) {}
+        : base(TAG) {}
     public YieldRedemptionPriceType(int val)
-        : base(Tags.YieldRedemptionPriceType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12586,9 +12586,9 @@ public sealed class BenchmarkSecurityID : StringField
     public const int TAG = 699;
 
     public BenchmarkSecurityID()
-        : base(Tags.BenchmarkSecurityID) {}
+        : base(TAG) {}
     public BenchmarkSecurityID(string val)
-        : base(Tags.BenchmarkSecurityID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12599,9 +12599,9 @@ public sealed class ReversalIndicator : BooleanField
     public const int TAG = 700;
 
     public ReversalIndicator()
-        : base(Tags.ReversalIndicator) {}
+        : base(TAG) {}
     public ReversalIndicator(Boolean val)
-        : base(Tags.ReversalIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12612,9 +12612,9 @@ public sealed class YieldCalcDate : StringField
     public const int TAG = 701;
 
     public YieldCalcDate()
-        : base(Tags.YieldCalcDate) {}
+        : base(TAG) {}
     public YieldCalcDate(string val)
-        : base(Tags.YieldCalcDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12625,9 +12625,9 @@ public sealed class NoPositions : IntField
     public const int TAG = 702;
 
     public NoPositions()
-        : base(Tags.NoPositions) {}
+        : base(TAG) {}
     public NoPositions(int val)
-        : base(Tags.NoPositions, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12638,9 +12638,9 @@ public sealed class PosType : StringField
     public const int TAG = 703;
 
     public PosType()
-        : base(Tags.PosType) {}
+        : base(TAG) {}
     public PosType(string val)
-        : base(Tags.PosType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string ALLOCATION_TRADE_QTY = "ALC";
@@ -12680,9 +12680,9 @@ public sealed class LongQty : DecimalField
     public const int TAG = 704;
 
     public LongQty()
-        : base(Tags.LongQty) {}
+        : base(TAG) {}
     public LongQty(Decimal val)
-        : base(Tags.LongQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12693,9 +12693,9 @@ public sealed class ShortQty : DecimalField
     public const int TAG = 705;
 
     public ShortQty()
-        : base(Tags.ShortQty) {}
+        : base(TAG) {}
     public ShortQty(Decimal val)
-        : base(Tags.ShortQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12706,9 +12706,9 @@ public sealed class PosQtyStatus : IntField
     public const int TAG = 706;
 
     public PosQtyStatus()
-        : base(Tags.PosQtyStatus) {}
+        : base(TAG) {}
     public PosQtyStatus(int val)
-        : base(Tags.PosQtyStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SUBMITTED = 0;
@@ -12724,9 +12724,9 @@ public sealed class PosAmtType : StringField
     public const int TAG = 707;
 
     public PosAmtType()
-        : base(Tags.PosAmtType) {}
+        : base(TAG) {}
     public PosAmtType(string val)
-        : base(Tags.PosAmtType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string CASH_AMOUNT = "CASH";
@@ -12757,9 +12757,9 @@ public sealed class PosAmt : DecimalField
     public const int TAG = 708;
 
     public PosAmt()
-        : base(Tags.PosAmt) {}
+        : base(TAG) {}
     public PosAmt(Decimal val)
-        : base(Tags.PosAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12770,9 +12770,9 @@ public sealed class PosTransType : IntField
     public const int TAG = 709;
 
     public PosTransType()
-        : base(Tags.PosTransType) {}
+        : base(TAG) {}
     public PosTransType(int val)
-        : base(Tags.PosTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int EXERCISE = 1;
@@ -12791,9 +12791,9 @@ public sealed class PosReqID : StringField
     public const int TAG = 710;
 
     public PosReqID()
-        : base(Tags.PosReqID) {}
+        : base(TAG) {}
     public PosReqID(string val)
-        : base(Tags.PosReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12804,9 +12804,9 @@ public sealed class NoUnderlyings : IntField
     public const int TAG = 711;
 
     public NoUnderlyings()
-        : base(Tags.NoUnderlyings) {}
+        : base(TAG) {}
     public NoUnderlyings(int val)
-        : base(Tags.NoUnderlyings, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12817,9 +12817,9 @@ public sealed class PosMaintAction : IntField
     public const int TAG = 712;
 
     public PosMaintAction()
-        : base(Tags.PosMaintAction) {}
+        : base(TAG) {}
     public PosMaintAction(int val)
-        : base(Tags.PosMaintAction, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NEW = 1;
@@ -12836,9 +12836,9 @@ public sealed class OrigPosReqRefID : StringField
     public const int TAG = 713;
 
     public OrigPosReqRefID()
-        : base(Tags.OrigPosReqRefID) {}
+        : base(TAG) {}
     public OrigPosReqRefID(string val)
-        : base(Tags.OrigPosReqRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12849,9 +12849,9 @@ public sealed class PosMaintRptRefID : StringField
     public const int TAG = 714;
 
     public PosMaintRptRefID()
-        : base(Tags.PosMaintRptRefID) {}
+        : base(TAG) {}
     public PosMaintRptRefID(string val)
-        : base(Tags.PosMaintRptRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12862,9 +12862,9 @@ public sealed class ClearingBusinessDate : StringField
     public const int TAG = 715;
 
     public ClearingBusinessDate()
-        : base(Tags.ClearingBusinessDate) {}
+        : base(TAG) {}
     public ClearingBusinessDate(string val)
-        : base(Tags.ClearingBusinessDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12875,9 +12875,9 @@ public sealed class SettlSessID : StringField
     public const int TAG = 716;
 
     public SettlSessID()
-        : base(Tags.SettlSessID) {}
+        : base(TAG) {}
     public SettlSessID(string val)
-        : base(Tags.SettlSessID, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string INTRADAY = "ITD";
@@ -12894,9 +12894,9 @@ public sealed class SettlSessSubID : StringField
     public const int TAG = 717;
 
     public SettlSessSubID()
-        : base(Tags.SettlSessSubID) {}
+        : base(TAG) {}
     public SettlSessSubID(string val)
-        : base(Tags.SettlSessSubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12907,9 +12907,9 @@ public sealed class AdjustmentType : IntField
     public const int TAG = 718;
 
     public AdjustmentType()
-        : base(Tags.AdjustmentType) {}
+        : base(TAG) {}
     public AdjustmentType(int val)
-        : base(Tags.AdjustmentType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PROCESS_REQUEST_AS_MARGIN_DISPOSITION = 0;
@@ -12926,9 +12926,9 @@ public sealed class ContraryInstructionIndicator : BooleanField
     public const int TAG = 719;
 
     public ContraryInstructionIndicator()
-        : base(Tags.ContraryInstructionIndicator) {}
+        : base(TAG) {}
     public ContraryInstructionIndicator(Boolean val)
-        : base(Tags.ContraryInstructionIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12939,9 +12939,9 @@ public sealed class PriorSpreadIndicator : BooleanField
     public const int TAG = 720;
 
     public PriorSpreadIndicator()
-        : base(Tags.PriorSpreadIndicator) {}
+        : base(TAG) {}
     public PriorSpreadIndicator(Boolean val)
-        : base(Tags.PriorSpreadIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12952,9 +12952,9 @@ public sealed class PosMaintRptID : StringField
     public const int TAG = 721;
 
     public PosMaintRptID()
-        : base(Tags.PosMaintRptID) {}
+        : base(TAG) {}
     public PosMaintRptID(string val)
-        : base(Tags.PosMaintRptID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -12965,9 +12965,9 @@ public sealed class PosMaintStatus : IntField
     public const int TAG = 722;
 
     public PosMaintStatus()
-        : base(Tags.PosMaintStatus) {}
+        : base(TAG) {}
     public PosMaintStatus(int val)
-        : base(Tags.PosMaintStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACCEPTED = 0;
@@ -12985,9 +12985,9 @@ public sealed class PosMaintResult : IntField
     public const int TAG = 723;
 
     public PosMaintResult()
-        : base(Tags.PosMaintResult) {}
+        : base(TAG) {}
     public PosMaintResult(int val)
-        : base(Tags.PosMaintResult, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SUCCESSFUL_COMPLETION = 0;
@@ -13004,9 +13004,9 @@ public sealed class PosReqType : IntField
     public const int TAG = 724;
 
     public PosReqType()
-        : base(Tags.PosReqType) {}
+        : base(TAG) {}
     public PosReqType(int val)
-        : base(Tags.PosReqType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int POSITIONS = 0;
@@ -13026,9 +13026,9 @@ public sealed class ResponseTransportType : IntField
     public const int TAG = 725;
 
     public ResponseTransportType()
-        : base(Tags.ResponseTransportType) {}
+        : base(TAG) {}
     public ResponseTransportType(int val)
-        : base(Tags.ResponseTransportType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int INBAND = 0;
@@ -13043,9 +13043,9 @@ public sealed class ResponseDestination : StringField
     public const int TAG = 726;
 
     public ResponseDestination()
-        : base(Tags.ResponseDestination) {}
+        : base(TAG) {}
     public ResponseDestination(string val)
-        : base(Tags.ResponseDestination, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13056,9 +13056,9 @@ public sealed class TotalNumPosReports : IntField
     public const int TAG = 727;
 
     public TotalNumPosReports()
-        : base(Tags.TotalNumPosReports) {}
+        : base(TAG) {}
     public TotalNumPosReports(int val)
-        : base(Tags.TotalNumPosReports, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13069,9 +13069,9 @@ public sealed class PosReqResult : IntField
     public const int TAG = 728;
 
     public PosReqResult()
-        : base(Tags.PosReqResult) {}
+        : base(TAG) {}
     public PosReqResult(int val)
-        : base(Tags.PosReqResult, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int VALID_REQUEST = 0;
@@ -13090,9 +13090,9 @@ public sealed class PosReqStatus : IntField
     public const int TAG = 729;
 
     public PosReqStatus()
-        : base(Tags.PosReqStatus) {}
+        : base(TAG) {}
     public PosReqStatus(int val)
-        : base(Tags.PosReqStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int COMPLETED = 0;
@@ -13108,9 +13108,9 @@ public sealed class SettlPrice : DecimalField
     public const int TAG = 730;
 
     public SettlPrice()
-        : base(Tags.SettlPrice) {}
+        : base(TAG) {}
     public SettlPrice(Decimal val)
-        : base(Tags.SettlPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13121,9 +13121,9 @@ public sealed class SettlPriceType : IntField
     public const int TAG = 731;
 
     public SettlPriceType()
-        : base(Tags.SettlPriceType) {}
+        : base(TAG) {}
     public SettlPriceType(int val)
-        : base(Tags.SettlPriceType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int FINAL = 1;
@@ -13138,9 +13138,9 @@ public sealed class UnderlyingSettlPrice : DecimalField
     public const int TAG = 732;
 
     public UnderlyingSettlPrice()
-        : base(Tags.UnderlyingSettlPrice) {}
+        : base(TAG) {}
     public UnderlyingSettlPrice(Decimal val)
-        : base(Tags.UnderlyingSettlPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13151,9 +13151,9 @@ public sealed class UnderlyingSettlPriceType : IntField
     public const int TAG = 733;
 
     public UnderlyingSettlPriceType()
-        : base(Tags.UnderlyingSettlPriceType) {}
+        : base(TAG) {}
     public UnderlyingSettlPriceType(int val)
-        : base(Tags.UnderlyingSettlPriceType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13164,9 +13164,9 @@ public sealed class PriorSettlPrice : DecimalField
     public const int TAG = 734;
 
     public PriorSettlPrice()
-        : base(Tags.PriorSettlPrice) {}
+        : base(TAG) {}
     public PriorSettlPrice(Decimal val)
-        : base(Tags.PriorSettlPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13177,9 +13177,9 @@ public sealed class NoQuoteQualifiers : IntField
     public const int TAG = 735;
 
     public NoQuoteQualifiers()
-        : base(Tags.NoQuoteQualifiers) {}
+        : base(TAG) {}
     public NoQuoteQualifiers(int val)
-        : base(Tags.NoQuoteQualifiers, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13190,9 +13190,9 @@ public sealed class AllocSettlCurrency : StringField
     public const int TAG = 736;
 
     public AllocSettlCurrency()
-        : base(Tags.AllocSettlCurrency) {}
+        : base(TAG) {}
     public AllocSettlCurrency(string val)
-        : base(Tags.AllocSettlCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13203,9 +13203,9 @@ public sealed class AllocSettlCurrAmt : DecimalField
     public const int TAG = 737;
 
     public AllocSettlCurrAmt()
-        : base(Tags.AllocSettlCurrAmt) {}
+        : base(TAG) {}
     public AllocSettlCurrAmt(Decimal val)
-        : base(Tags.AllocSettlCurrAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13216,9 +13216,9 @@ public sealed class InterestAtMaturity : DecimalField
     public const int TAG = 738;
 
     public InterestAtMaturity()
-        : base(Tags.InterestAtMaturity) {}
+        : base(TAG) {}
     public InterestAtMaturity(Decimal val)
-        : base(Tags.InterestAtMaturity, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13229,9 +13229,9 @@ public sealed class LegDatedDate : StringField
     public const int TAG = 739;
 
     public LegDatedDate()
-        : base(Tags.LegDatedDate) {}
+        : base(TAG) {}
     public LegDatedDate(string val)
-        : base(Tags.LegDatedDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13242,9 +13242,9 @@ public sealed class LegPool : StringField
     public const int TAG = 740;
 
     public LegPool()
-        : base(Tags.LegPool) {}
+        : base(TAG) {}
     public LegPool(string val)
-        : base(Tags.LegPool, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13255,9 +13255,9 @@ public sealed class AllocInterestAtMaturity : DecimalField
     public const int TAG = 741;
 
     public AllocInterestAtMaturity()
-        : base(Tags.AllocInterestAtMaturity) {}
+        : base(TAG) {}
     public AllocInterestAtMaturity(Decimal val)
-        : base(Tags.AllocInterestAtMaturity, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13268,9 +13268,9 @@ public sealed class AllocAccruedInterestAmt : DecimalField
     public const int TAG = 742;
 
     public AllocAccruedInterestAmt()
-        : base(Tags.AllocAccruedInterestAmt) {}
+        : base(TAG) {}
     public AllocAccruedInterestAmt(Decimal val)
-        : base(Tags.AllocAccruedInterestAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13281,9 +13281,9 @@ public sealed class DeliveryDate : StringField
     public const int TAG = 743;
 
     public DeliveryDate()
-        : base(Tags.DeliveryDate) {}
+        : base(TAG) {}
     public DeliveryDate(string val)
-        : base(Tags.DeliveryDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13294,9 +13294,9 @@ public sealed class AssignmentMethod : CharField
     public const int TAG = 744;
 
     public AssignmentMethod()
-        : base(Tags.AssignmentMethod) {}
+        : base(TAG) {}
     public AssignmentMethod(char val)
-        : base(Tags.AssignmentMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char PRO_RATA = 'P';
@@ -13312,9 +13312,9 @@ public sealed class AssignmentUnit : DecimalField
     public const int TAG = 745;
 
     public AssignmentUnit()
-        : base(Tags.AssignmentUnit) {}
+        : base(TAG) {}
     public AssignmentUnit(Decimal val)
-        : base(Tags.AssignmentUnit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13325,9 +13325,9 @@ public sealed class OpenInterest : DecimalField
     public const int TAG = 746;
 
     public OpenInterest()
-        : base(Tags.OpenInterest) {}
+        : base(TAG) {}
     public OpenInterest(Decimal val)
-        : base(Tags.OpenInterest, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13338,9 +13338,9 @@ public sealed class ExerciseMethod : CharField
     public const int TAG = 747;
 
     public ExerciseMethod()
-        : base(Tags.ExerciseMethod) {}
+        : base(TAG) {}
     public ExerciseMethod(char val)
-        : base(Tags.ExerciseMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char AUTOMATIC = 'A';
@@ -13355,9 +13355,9 @@ public sealed class TotNumTradeReports : IntField
     public const int TAG = 748;
 
     public TotNumTradeReports()
-        : base(Tags.TotNumTradeReports) {}
+        : base(TAG) {}
     public TotNumTradeReports(int val)
-        : base(Tags.TotNumTradeReports, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13368,9 +13368,9 @@ public sealed class TradeRequestResult : IntField
     public const int TAG = 749;
 
     public TradeRequestResult()
-        : base(Tags.TradeRequestResult) {}
+        : base(TAG) {}
     public TradeRequestResult(int val)
-        : base(Tags.TradeRequestResult, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SUCCESSFUL = 0;
@@ -13395,9 +13395,9 @@ public sealed class TradeRequestStatus : IntField
     public const int TAG = 750;
 
     public TradeRequestStatus()
-        : base(Tags.TradeRequestStatus) {}
+        : base(TAG) {}
     public TradeRequestStatus(int val)
-        : base(Tags.TradeRequestStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACCEPTED = 0;
@@ -13413,9 +13413,9 @@ public sealed class TradeReportRejectReason : IntField
     public const int TAG = 751;
 
     public TradeReportRejectReason()
-        : base(Tags.TradeReportRejectReason) {}
+        : base(TAG) {}
     public TradeReportRejectReason(int val)
-        : base(Tags.TradeReportRejectReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SUCCESSFUL = 0;
@@ -13436,9 +13436,9 @@ public sealed class SideMultiLegReportingType : IntField
     public const int TAG = 752;
 
     public SideMultiLegReportingType()
-        : base(Tags.SideMultiLegReportingType) {}
+        : base(TAG) {}
     public SideMultiLegReportingType(int val)
-        : base(Tags.SideMultiLegReportingType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SINGLE_SECURITY = 1;
@@ -13456,9 +13456,9 @@ public sealed class NoPosAmt : IntField
     public const int TAG = 753;
 
     public NoPosAmt()
-        : base(Tags.NoPosAmt) {}
+        : base(TAG) {}
     public NoPosAmt(int val)
-        : base(Tags.NoPosAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13469,9 +13469,9 @@ public sealed class AutoAcceptIndicator : BooleanField
     public const int TAG = 754;
 
     public AutoAcceptIndicator()
-        : base(Tags.AutoAcceptIndicator) {}
+        : base(TAG) {}
     public AutoAcceptIndicator(Boolean val)
-        : base(Tags.AutoAcceptIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13482,9 +13482,9 @@ public sealed class AllocReportID : StringField
     public const int TAG = 755;
 
     public AllocReportID()
-        : base(Tags.AllocReportID) {}
+        : base(TAG) {}
     public AllocReportID(string val)
-        : base(Tags.AllocReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13495,9 +13495,9 @@ public sealed class NoNested2PartyIDs : IntField
     public const int TAG = 756;
 
     public NoNested2PartyIDs()
-        : base(Tags.NoNested2PartyIDs) {}
+        : base(TAG) {}
     public NoNested2PartyIDs(int val)
-        : base(Tags.NoNested2PartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13508,9 +13508,9 @@ public sealed class Nested2PartyID : StringField
     public const int TAG = 757;
 
     public Nested2PartyID()
-        : base(Tags.Nested2PartyID) {}
+        : base(TAG) {}
     public Nested2PartyID(string val)
-        : base(Tags.Nested2PartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13521,9 +13521,9 @@ public sealed class Nested2PartyIDSource : CharField
     public const int TAG = 758;
 
     public Nested2PartyIDSource()
-        : base(Tags.Nested2PartyIDSource) {}
+        : base(TAG) {}
     public Nested2PartyIDSource(char val)
-        : base(Tags.Nested2PartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13534,9 +13534,9 @@ public sealed class Nested2PartyRole : IntField
     public const int TAG = 759;
 
     public Nested2PartyRole()
-        : base(Tags.Nested2PartyRole) {}
+        : base(TAG) {}
     public Nested2PartyRole(int val)
-        : base(Tags.Nested2PartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13547,9 +13547,9 @@ public sealed class Nested2PartySubID : StringField
     public const int TAG = 760;
 
     public Nested2PartySubID()
-        : base(Tags.Nested2PartySubID) {}
+        : base(TAG) {}
     public Nested2PartySubID(string val)
-        : base(Tags.Nested2PartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13560,9 +13560,9 @@ public sealed class BenchmarkSecurityIDSource : StringField
     public const int TAG = 761;
 
     public BenchmarkSecurityIDSource()
-        : base(Tags.BenchmarkSecurityIDSource) {}
+        : base(TAG) {}
     public BenchmarkSecurityIDSource(string val)
-        : base(Tags.BenchmarkSecurityIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13573,9 +13573,9 @@ public sealed class SecuritySubType : StringField
     public const int TAG = 762;
 
     public SecuritySubType()
-        : base(Tags.SecuritySubType) {}
+        : base(TAG) {}
     public SecuritySubType(string val)
-        : base(Tags.SecuritySubType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13586,9 +13586,9 @@ public sealed class UnderlyingSecuritySubType : StringField
     public const int TAG = 763;
 
     public UnderlyingSecuritySubType()
-        : base(Tags.UnderlyingSecuritySubType) {}
+        : base(TAG) {}
     public UnderlyingSecuritySubType(string val)
-        : base(Tags.UnderlyingSecuritySubType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13599,9 +13599,9 @@ public sealed class LegSecuritySubType : StringField
     public const int TAG = 764;
 
     public LegSecuritySubType()
-        : base(Tags.LegSecuritySubType) {}
+        : base(TAG) {}
     public LegSecuritySubType(string val)
-        : base(Tags.LegSecuritySubType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13612,9 +13612,9 @@ public sealed class AllowableOneSidednessPct : DecimalField
     public const int TAG = 765;
 
     public AllowableOneSidednessPct()
-        : base(Tags.AllowableOneSidednessPct) {}
+        : base(TAG) {}
     public AllowableOneSidednessPct(Decimal val)
-        : base(Tags.AllowableOneSidednessPct, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13625,9 +13625,9 @@ public sealed class AllowableOneSidednessValue : DecimalField
     public const int TAG = 766;
 
     public AllowableOneSidednessValue()
-        : base(Tags.AllowableOneSidednessValue) {}
+        : base(TAG) {}
     public AllowableOneSidednessValue(Decimal val)
-        : base(Tags.AllowableOneSidednessValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13638,9 +13638,9 @@ public sealed class AllowableOneSidednessCurr : StringField
     public const int TAG = 767;
 
     public AllowableOneSidednessCurr()
-        : base(Tags.AllowableOneSidednessCurr) {}
+        : base(TAG) {}
     public AllowableOneSidednessCurr(string val)
-        : base(Tags.AllowableOneSidednessCurr, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13651,9 +13651,9 @@ public sealed class NoTrdRegTimestamps : IntField
     public const int TAG = 768;
 
     public NoTrdRegTimestamps()
-        : base(Tags.NoTrdRegTimestamps) {}
+        : base(TAG) {}
     public NoTrdRegTimestamps(int val)
-        : base(Tags.NoTrdRegTimestamps, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13664,7 +13664,7 @@ public sealed class TrdRegTimestamp : UtcDateTimeField
     public const int TAG = 769;
 
     public TrdRegTimestamp()
-        : base(Tags.TrdRegTimestamp) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -13672,7 +13672,7 @@ public sealed class TrdRegTimestamp : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public TrdRegTimestamp(DateTime val)
-        : base(Tags.TrdRegTimestamp, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -13682,7 +13682,7 @@ public sealed class TrdRegTimestamp : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TrdRegTimestamp(DateTime val, bool showMilliseconds)
-        : base(Tags.TrdRegTimestamp, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -13691,7 +13691,7 @@ public sealed class TrdRegTimestamp : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public TrdRegTimestamp(DateTime val, TimePrecision precision)
-        : base(Tags.TrdRegTimestamp, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -13702,9 +13702,9 @@ public sealed class TrdRegTimestampType : IntField
     public const int TAG = 770;
 
     public TrdRegTimestampType()
-        : base(Tags.TrdRegTimestampType) {}
+        : base(TAG) {}
     public TrdRegTimestampType(int val)
-        : base(Tags.TrdRegTimestampType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int EXECUTION_TIME = 1;
@@ -13724,9 +13724,9 @@ public sealed class TrdRegTimestampOrigin : StringField
     public const int TAG = 771;
 
     public TrdRegTimestampOrigin()
-        : base(Tags.TrdRegTimestampOrigin) {}
+        : base(TAG) {}
     public TrdRegTimestampOrigin(string val)
-        : base(Tags.TrdRegTimestampOrigin, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13737,9 +13737,9 @@ public sealed class ConfirmRefID : StringField
     public const int TAG = 772;
 
     public ConfirmRefID()
-        : base(Tags.ConfirmRefID) {}
+        : base(TAG) {}
     public ConfirmRefID(string val)
-        : base(Tags.ConfirmRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13750,9 +13750,9 @@ public sealed class ConfirmType : IntField
     public const int TAG = 773;
 
     public ConfirmType()
-        : base(Tags.ConfirmType) {}
+        : base(TAG) {}
     public ConfirmType(int val)
-        : base(Tags.ConfirmType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int STATUS = 1;
@@ -13768,9 +13768,9 @@ public sealed class ConfirmRejReason : IntField
     public const int TAG = 774;
 
     public ConfirmRejReason()
-        : base(Tags.ConfirmRejReason) {}
+        : base(TAG) {}
     public ConfirmRejReason(int val)
-        : base(Tags.ConfirmRejReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int MISMATCHED_ACCOUNT = 1;
@@ -13786,9 +13786,9 @@ public sealed class BookingType : IntField
     public const int TAG = 775;
 
     public BookingType()
-        : base(Tags.BookingType) {}
+        : base(TAG) {}
     public BookingType(int val)
-        : base(Tags.BookingType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int REGULAR_BOOKING = 0;
@@ -13804,9 +13804,9 @@ public sealed class IndividualAllocRejCode : IntField
     public const int TAG = 776;
 
     public IndividualAllocRejCode()
-        : base(Tags.IndividualAllocRejCode) {}
+        : base(TAG) {}
     public IndividualAllocRejCode(int val)
-        : base(Tags.IndividualAllocRejCode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13817,9 +13817,9 @@ public sealed class SettlInstMsgID : StringField
     public const int TAG = 777;
 
     public SettlInstMsgID()
-        : base(Tags.SettlInstMsgID) {}
+        : base(TAG) {}
     public SettlInstMsgID(string val)
-        : base(Tags.SettlInstMsgID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13830,9 +13830,9 @@ public sealed class NoSettlInst : IntField
     public const int TAG = 778;
 
     public NoSettlInst()
-        : base(Tags.NoSettlInst) {}
+        : base(TAG) {}
     public NoSettlInst(int val)
-        : base(Tags.NoSettlInst, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13843,7 +13843,7 @@ public sealed class LastUpdateTime : UtcDateTimeField
     public const int TAG = 779;
 
     public LastUpdateTime()
-        : base(Tags.LastUpdateTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -13851,7 +13851,7 @@ public sealed class LastUpdateTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public LastUpdateTime(DateTime val)
-        : base(Tags.LastUpdateTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -13861,7 +13861,7 @@ public sealed class LastUpdateTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public LastUpdateTime(DateTime val, bool showMilliseconds)
-        : base(Tags.LastUpdateTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -13870,7 +13870,7 @@ public sealed class LastUpdateTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public LastUpdateTime(DateTime val, TimePrecision precision)
-        : base(Tags.LastUpdateTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -13881,9 +13881,9 @@ public sealed class AllocSettlInstType : IntField
     public const int TAG = 780;
 
     public AllocSettlInstType()
-        : base(Tags.AllocSettlInstType) {}
+        : base(TAG) {}
     public AllocSettlInstType(int val)
-        : base(Tags.AllocSettlInstType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int USE_DEFAULT_INSTRUCTIONS = 0;
@@ -13901,9 +13901,9 @@ public sealed class NoSettlPartyIDs : IntField
     public const int TAG = 781;
 
     public NoSettlPartyIDs()
-        : base(Tags.NoSettlPartyIDs) {}
+        : base(TAG) {}
     public NoSettlPartyIDs(int val)
-        : base(Tags.NoSettlPartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13914,9 +13914,9 @@ public sealed class SettlPartyID : StringField
     public const int TAG = 782;
 
     public SettlPartyID()
-        : base(Tags.SettlPartyID) {}
+        : base(TAG) {}
     public SettlPartyID(string val)
-        : base(Tags.SettlPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13927,9 +13927,9 @@ public sealed class SettlPartyIDSource : CharField
     public const int TAG = 783;
 
     public SettlPartyIDSource()
-        : base(Tags.SettlPartyIDSource) {}
+        : base(TAG) {}
     public SettlPartyIDSource(char val)
-        : base(Tags.SettlPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13940,9 +13940,9 @@ public sealed class SettlPartyRole : IntField
     public const int TAG = 784;
 
     public SettlPartyRole()
-        : base(Tags.SettlPartyRole) {}
+        : base(TAG) {}
     public SettlPartyRole(int val)
-        : base(Tags.SettlPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13953,9 +13953,9 @@ public sealed class SettlPartySubID : StringField
     public const int TAG = 785;
 
     public SettlPartySubID()
-        : base(Tags.SettlPartySubID) {}
+        : base(TAG) {}
     public SettlPartySubID(string val)
-        : base(Tags.SettlPartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13966,9 +13966,9 @@ public sealed class SettlPartySubIDType : IntField
     public const int TAG = 786;
 
     public SettlPartySubIDType()
-        : base(Tags.SettlPartySubIDType) {}
+        : base(TAG) {}
     public SettlPartySubIDType(int val)
-        : base(Tags.SettlPartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -13979,9 +13979,9 @@ public sealed class DlvyInstType : CharField
     public const int TAG = 787;
 
     public DlvyInstType()
-        : base(Tags.DlvyInstType) {}
+        : base(TAG) {}
     public DlvyInstType(char val)
-        : base(Tags.DlvyInstType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CASH = 'C';
@@ -13996,9 +13996,9 @@ public sealed class TerminationType : IntField
     public const int TAG = 788;
 
     public TerminationType()
-        : base(Tags.TerminationType) {}
+        : base(TAG) {}
     public TerminationType(int val)
-        : base(Tags.TerminationType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int OVERNIGHT = 1;
@@ -14015,9 +14015,9 @@ public sealed class NextExpectedMsgSeqNum : SeqNumFieldType
     public const int TAG = 789;
 
     public NextExpectedMsgSeqNum()
-        : base(Tags.NextExpectedMsgSeqNum) {}
+        : base(TAG) {}
     public NextExpectedMsgSeqNum(SeqNumType val)
-        : base(Tags.NextExpectedMsgSeqNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14028,9 +14028,9 @@ public sealed class OrdStatusReqID : StringField
     public const int TAG = 790;
 
     public OrdStatusReqID()
-        : base(Tags.OrdStatusReqID) {}
+        : base(TAG) {}
     public OrdStatusReqID(string val)
-        : base(Tags.OrdStatusReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14041,9 +14041,9 @@ public sealed class SettlInstReqID : StringField
     public const int TAG = 791;
 
     public SettlInstReqID()
-        : base(Tags.SettlInstReqID) {}
+        : base(TAG) {}
     public SettlInstReqID(string val)
-        : base(Tags.SettlInstReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14054,9 +14054,9 @@ public sealed class SettlInstReqRejCode : IntField
     public const int TAG = 792;
 
     public SettlInstReqRejCode()
-        : base(Tags.SettlInstReqRejCode) {}
+        : base(TAG) {}
     public SettlInstReqRejCode(int val)
-        : base(Tags.SettlInstReqRejCode, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNABLE_TO_PROCESS_REQUEST = 0;
@@ -14073,9 +14073,9 @@ public sealed class SecondaryAllocID : StringField
     public const int TAG = 793;
 
     public SecondaryAllocID()
-        : base(Tags.SecondaryAllocID) {}
+        : base(TAG) {}
     public SecondaryAllocID(string val)
-        : base(Tags.SecondaryAllocID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14086,9 +14086,9 @@ public sealed class AllocReportType : IntField
     public const int TAG = 794;
 
     public AllocReportType()
-        : base(Tags.AllocReportType) {}
+        : base(TAG) {}
     public AllocReportType(int val)
-        : base(Tags.AllocReportType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SELLSIDE_CALCULATED_USING_PRELIMINARY = 3;
@@ -14111,9 +14111,9 @@ public sealed class AllocReportRefID : StringField
     public const int TAG = 795;
 
     public AllocReportRefID()
-        : base(Tags.AllocReportRefID) {}
+        : base(TAG) {}
     public AllocReportRefID(string val)
-        : base(Tags.AllocReportRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14124,9 +14124,9 @@ public sealed class AllocCancReplaceReason : IntField
     public const int TAG = 796;
 
     public AllocCancReplaceReason()
-        : base(Tags.AllocCancReplaceReason) {}
+        : base(TAG) {}
     public AllocCancReplaceReason(int val)
-        : base(Tags.AllocCancReplaceReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ORIGINAL_DETAILS_INCOMPLETE_INCORRECT = 1;
@@ -14142,9 +14142,9 @@ public sealed class CopyMsgIndicator : BooleanField
     public const int TAG = 797;
 
     public CopyMsgIndicator()
-        : base(Tags.CopyMsgIndicator) {}
+        : base(TAG) {}
     public CopyMsgIndicator(Boolean val)
-        : base(Tags.CopyMsgIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14155,9 +14155,9 @@ public sealed class AllocAccountType : IntField
     public const int TAG = 798;
 
     public AllocAccountType()
-        : base(Tags.AllocAccountType) {}
+        : base(TAG) {}
     public AllocAccountType(int val)
-        : base(Tags.AllocAccountType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACCOUNT_IS_CARRIED_PN_CUSTOMER_SIDE_OF_BOOKS = 1;
@@ -14179,9 +14179,9 @@ public sealed class OrderAvgPx : DecimalField
     public const int TAG = 799;
 
     public OrderAvgPx()
-        : base(Tags.OrderAvgPx) {}
+        : base(TAG) {}
     public OrderAvgPx(Decimal val)
-        : base(Tags.OrderAvgPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14192,9 +14192,9 @@ public sealed class OrderBookingQty : DecimalField
     public const int TAG = 800;
 
     public OrderBookingQty()
-        : base(Tags.OrderBookingQty) {}
+        : base(TAG) {}
     public OrderBookingQty(Decimal val)
-        : base(Tags.OrderBookingQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14205,9 +14205,9 @@ public sealed class NoSettlPartySubIDs : IntField
     public const int TAG = 801;
 
     public NoSettlPartySubIDs()
-        : base(Tags.NoSettlPartySubIDs) {}
+        : base(TAG) {}
     public NoSettlPartySubIDs(int val)
-        : base(Tags.NoSettlPartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14218,9 +14218,9 @@ public sealed class NoPartySubIDs : IntField
     public const int TAG = 802;
 
     public NoPartySubIDs()
-        : base(Tags.NoPartySubIDs) {}
+        : base(TAG) {}
     public NoPartySubIDs(int val)
-        : base(Tags.NoPartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14231,9 +14231,9 @@ public sealed class PartySubIDType : IntField
     public const int TAG = 803;
 
     public PartySubIDType()
-        : base(Tags.PartySubIDType) {}
+        : base(TAG) {}
     public PartySubIDType(int val)
-        : base(Tags.PartySubIDType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int FIRM = 1;
@@ -14279,9 +14279,9 @@ public sealed class NoNestedPartySubIDs : IntField
     public const int TAG = 804;
 
     public NoNestedPartySubIDs()
-        : base(Tags.NoNestedPartySubIDs) {}
+        : base(TAG) {}
     public NoNestedPartySubIDs(int val)
-        : base(Tags.NoNestedPartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14292,9 +14292,9 @@ public sealed class NestedPartySubIDType : IntField
     public const int TAG = 805;
 
     public NestedPartySubIDType()
-        : base(Tags.NestedPartySubIDType) {}
+        : base(TAG) {}
     public NestedPartySubIDType(int val)
-        : base(Tags.NestedPartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14305,9 +14305,9 @@ public sealed class NoNested2PartySubIDs : IntField
     public const int TAG = 806;
 
     public NoNested2PartySubIDs()
-        : base(Tags.NoNested2PartySubIDs) {}
+        : base(TAG) {}
     public NoNested2PartySubIDs(int val)
-        : base(Tags.NoNested2PartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14318,9 +14318,9 @@ public sealed class Nested2PartySubIDType : IntField
     public const int TAG = 807;
 
     public Nested2PartySubIDType()
-        : base(Tags.Nested2PartySubIDType) {}
+        : base(TAG) {}
     public Nested2PartySubIDType(int val)
-        : base(Tags.Nested2PartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14331,9 +14331,9 @@ public sealed class AllocIntermedReqType : IntField
     public const int TAG = 808;
 
     public AllocIntermedReqType()
-        : base(Tags.AllocIntermedReqType) {}
+        : base(TAG) {}
     public AllocIntermedReqType(int val)
-        : base(Tags.AllocIntermedReqType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PENDING_ACCEPT = 1;
@@ -14352,9 +14352,9 @@ public sealed class UnderlyingPx : DecimalField
     public const int TAG = 810;
 
     public UnderlyingPx()
-        : base(Tags.UnderlyingPx) {}
+        : base(TAG) {}
     public UnderlyingPx(Decimal val)
-        : base(Tags.UnderlyingPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14365,9 +14365,9 @@ public sealed class PriceDelta : DecimalField
     public const int TAG = 811;
 
     public PriceDelta()
-        : base(Tags.PriceDelta) {}
+        : base(TAG) {}
     public PriceDelta(Decimal val)
-        : base(Tags.PriceDelta, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14378,9 +14378,9 @@ public sealed class ApplQueueMax : IntField
     public const int TAG = 812;
 
     public ApplQueueMax()
-        : base(Tags.ApplQueueMax) {}
+        : base(TAG) {}
     public ApplQueueMax(int val)
-        : base(Tags.ApplQueueMax, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14391,9 +14391,9 @@ public sealed class ApplQueueDepth : IntField
     public const int TAG = 813;
 
     public ApplQueueDepth()
-        : base(Tags.ApplQueueDepth) {}
+        : base(TAG) {}
     public ApplQueueDepth(int val)
-        : base(Tags.ApplQueueDepth, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14404,9 +14404,9 @@ public sealed class ApplQueueResolution : IntField
     public const int TAG = 814;
 
     public ApplQueueResolution()
-        : base(Tags.ApplQueueResolution) {}
+        : base(TAG) {}
     public ApplQueueResolution(int val)
-        : base(Tags.ApplQueueResolution, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NO_ACTION_TAKEN = 0;
@@ -14423,9 +14423,9 @@ public sealed class ApplQueueAction : IntField
     public const int TAG = 815;
 
     public ApplQueueAction()
-        : base(Tags.ApplQueueAction) {}
+        : base(TAG) {}
     public ApplQueueAction(int val)
-        : base(Tags.ApplQueueAction, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NO_ACTION_TAKEN = 0;
@@ -14442,9 +14442,9 @@ public sealed class NoAltMDSource : IntField
     public const int TAG = 816;
 
     public NoAltMDSource()
-        : base(Tags.NoAltMDSource) {}
+        : base(TAG) {}
     public NoAltMDSource(int val)
-        : base(Tags.NoAltMDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14455,9 +14455,9 @@ public sealed class AltMDSourceID : StringField
     public const int TAG = 817;
 
     public AltMDSourceID()
-        : base(Tags.AltMDSourceID) {}
+        : base(TAG) {}
     public AltMDSourceID(string val)
-        : base(Tags.AltMDSourceID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14468,9 +14468,9 @@ public sealed class SecondaryTradeReportID : StringField
     public const int TAG = 818;
 
     public SecondaryTradeReportID()
-        : base(Tags.SecondaryTradeReportID) {}
+        : base(TAG) {}
     public SecondaryTradeReportID(string val)
-        : base(Tags.SecondaryTradeReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14481,9 +14481,9 @@ public sealed class AvgPxIndicator : IntField
     public const int TAG = 819;
 
     public AvgPxIndicator()
-        : base(Tags.AvgPxIndicator) {}
+        : base(TAG) {}
     public AvgPxIndicator(int val)
-        : base(Tags.AvgPxIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NO_AVERAGE_PRICING = 0;
@@ -14500,9 +14500,9 @@ public sealed class TradeLinkID : StringField
     public const int TAG = 820;
 
     public TradeLinkID()
-        : base(Tags.TradeLinkID) {}
+        : base(TAG) {}
     public TradeLinkID(string val)
-        : base(Tags.TradeLinkID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14513,9 +14513,9 @@ public sealed class OrderInputDevice : StringField
     public const int TAG = 821;
 
     public OrderInputDevice()
-        : base(Tags.OrderInputDevice) {}
+        : base(TAG) {}
     public OrderInputDevice(string val)
-        : base(Tags.OrderInputDevice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14526,9 +14526,9 @@ public sealed class UnderlyingTradingSessionID : StringField
     public const int TAG = 822;
 
     public UnderlyingTradingSessionID()
-        : base(Tags.UnderlyingTradingSessionID) {}
+        : base(TAG) {}
     public UnderlyingTradingSessionID(string val)
-        : base(Tags.UnderlyingTradingSessionID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14539,9 +14539,9 @@ public sealed class UnderlyingTradingSessionSubID : StringField
     public const int TAG = 823;
 
     public UnderlyingTradingSessionSubID()
-        : base(Tags.UnderlyingTradingSessionSubID) {}
+        : base(TAG) {}
     public UnderlyingTradingSessionSubID(string val)
-        : base(Tags.UnderlyingTradingSessionSubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14552,9 +14552,9 @@ public sealed class TradeLegRefID : StringField
     public const int TAG = 824;
 
     public TradeLegRefID()
-        : base(Tags.TradeLegRefID) {}
+        : base(TAG) {}
     public TradeLegRefID(string val)
-        : base(Tags.TradeLegRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14565,9 +14565,9 @@ public sealed class ExchangeRule : StringField
     public const int TAG = 825;
 
     public ExchangeRule()
-        : base(Tags.ExchangeRule) {}
+        : base(TAG) {}
     public ExchangeRule(string val)
-        : base(Tags.ExchangeRule, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14578,9 +14578,9 @@ public sealed class TradeAllocIndicator : IntField
     public const int TAG = 826;
 
     public TradeAllocIndicator()
-        : base(Tags.TradeAllocIndicator) {}
+        : base(TAG) {}
     public TradeAllocIndicator(int val)
-        : base(Tags.TradeAllocIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ALLOCATION_NOT_REQUIRED = 0;
@@ -14599,9 +14599,9 @@ public sealed class ExpirationCycle : IntField
     public const int TAG = 827;
 
     public ExpirationCycle()
-        : base(Tags.ExpirationCycle) {}
+        : base(TAG) {}
     public ExpirationCycle(int val)
-        : base(Tags.ExpirationCycle, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int EXPIRE_ON_TRADING_SESSION_CLOSE = 0;
@@ -14617,9 +14617,9 @@ public sealed class TrdType : IntField
     public const int TAG = 828;
 
     public TrdType()
-        : base(Tags.TrdType) {}
+        : base(TAG) {}
     public TrdType(int val)
-        : base(Tags.TrdType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int REGULAR_TRADE = 0;
@@ -14688,9 +14688,9 @@ public sealed class TrdSubType : IntField
     public const int TAG = 829;
 
     public TrdSubType()
-        : base(Tags.TrdSubType) {}
+        : base(TAG) {}
     public TrdSubType(int val)
-        : base(Tags.TrdSubType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CMTA = 0;
@@ -14742,9 +14742,9 @@ public sealed class TransferReason : StringField
     public const int TAG = 830;
 
     public TransferReason()
-        : base(Tags.TransferReason) {}
+        : base(TAG) {}
     public TransferReason(string val)
-        : base(Tags.TransferReason, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14755,9 +14755,9 @@ public sealed class AsgnReqID : StringField
     public const int TAG = 831;
 
     public AsgnReqID()
-        : base(Tags.AsgnReqID) {}
+        : base(TAG) {}
     public AsgnReqID(string val)
-        : base(Tags.AsgnReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14768,9 +14768,9 @@ public sealed class TotNumAssignmentReports : IntField
     public const int TAG = 832;
 
     public TotNumAssignmentReports()
-        : base(Tags.TotNumAssignmentReports) {}
+        : base(TAG) {}
     public TotNumAssignmentReports(int val)
-        : base(Tags.TotNumAssignmentReports, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14781,9 +14781,9 @@ public sealed class AsgnRptID : StringField
     public const int TAG = 833;
 
     public AsgnRptID()
-        : base(Tags.AsgnRptID) {}
+        : base(TAG) {}
     public AsgnRptID(string val)
-        : base(Tags.AsgnRptID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14794,9 +14794,9 @@ public sealed class ThresholdAmount : DecimalField
     public const int TAG = 834;
 
     public ThresholdAmount()
-        : base(Tags.ThresholdAmount) {}
+        : base(TAG) {}
     public ThresholdAmount(Decimal val)
-        : base(Tags.ThresholdAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14807,9 +14807,9 @@ public sealed class PegMoveType : IntField
     public const int TAG = 835;
 
     public PegMoveType()
-        : base(Tags.PegMoveType) {}
+        : base(TAG) {}
     public PegMoveType(int val)
-        : base(Tags.PegMoveType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int FLOATING = 0;
@@ -14824,9 +14824,9 @@ public sealed class PegOffsetType : IntField
     public const int TAG = 836;
 
     public PegOffsetType()
-        : base(Tags.PegOffsetType) {}
+        : base(TAG) {}
     public PegOffsetType(int val)
-        : base(Tags.PegOffsetType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PRICE = 0;
@@ -14844,9 +14844,9 @@ public sealed class PegLimitType : IntField
     public const int TAG = 837;
 
     public PegLimitType()
-        : base(Tags.PegLimitType) {}
+        : base(TAG) {}
     public PegLimitType(int val)
-        : base(Tags.PegLimitType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int OR_BETTER = 0;
@@ -14862,9 +14862,9 @@ public sealed class PegRoundDirection : IntField
     public const int TAG = 838;
 
     public PegRoundDirection()
-        : base(Tags.PegRoundDirection) {}
+        : base(TAG) {}
     public PegRoundDirection(int val)
-        : base(Tags.PegRoundDirection, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int MORE_AGGRESSIVE = 1;
@@ -14879,9 +14879,9 @@ public sealed class PeggedPrice : DecimalField
     public const int TAG = 839;
 
     public PeggedPrice()
-        : base(Tags.PeggedPrice) {}
+        : base(TAG) {}
     public PeggedPrice(Decimal val)
-        : base(Tags.PeggedPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14892,9 +14892,9 @@ public sealed class PegScope : IntField
     public const int TAG = 840;
 
     public PegScope()
-        : base(Tags.PegScope) {}
+        : base(TAG) {}
     public PegScope(int val)
-        : base(Tags.PegScope, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int LOCAL = 1;
@@ -14912,9 +14912,9 @@ public sealed class DiscretionMoveType : IntField
     public const int TAG = 841;
 
     public DiscretionMoveType()
-        : base(Tags.DiscretionMoveType) {}
+        : base(TAG) {}
     public DiscretionMoveType(int val)
-        : base(Tags.DiscretionMoveType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int FLOATING = 0;
@@ -14929,9 +14929,9 @@ public sealed class DiscretionOffsetType : IntField
     public const int TAG = 842;
 
     public DiscretionOffsetType()
-        : base(Tags.DiscretionOffsetType) {}
+        : base(TAG) {}
     public DiscretionOffsetType(int val)
-        : base(Tags.DiscretionOffsetType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PRICE = 0;
@@ -14949,9 +14949,9 @@ public sealed class DiscretionLimitType : IntField
     public const int TAG = 843;
 
     public DiscretionLimitType()
-        : base(Tags.DiscretionLimitType) {}
+        : base(TAG) {}
     public DiscretionLimitType(int val)
-        : base(Tags.DiscretionLimitType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int OR_BETTER = 0;
@@ -14967,9 +14967,9 @@ public sealed class DiscretionRoundDirection : IntField
     public const int TAG = 844;
 
     public DiscretionRoundDirection()
-        : base(Tags.DiscretionRoundDirection) {}
+        : base(TAG) {}
     public DiscretionRoundDirection(int val)
-        : base(Tags.DiscretionRoundDirection, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int MORE_AGGRESSIVE = 1;
@@ -14984,9 +14984,9 @@ public sealed class DiscretionPrice : DecimalField
     public const int TAG = 845;
 
     public DiscretionPrice()
-        : base(Tags.DiscretionPrice) {}
+        : base(TAG) {}
     public DiscretionPrice(Decimal val)
-        : base(Tags.DiscretionPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -14997,9 +14997,9 @@ public sealed class DiscretionScope : IntField
     public const int TAG = 846;
 
     public DiscretionScope()
-        : base(Tags.DiscretionScope) {}
+        : base(TAG) {}
     public DiscretionScope(int val)
-        : base(Tags.DiscretionScope, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int LOCAL = 1;
@@ -15016,9 +15016,9 @@ public sealed class TargetStrategy : IntField
     public const int TAG = 847;
 
     public TargetStrategy()
-        : base(Tags.TargetStrategy) {}
+        : base(TAG) {}
     public TargetStrategy(int val)
-        : base(Tags.TargetStrategy, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int VWAP = 1;
@@ -15034,9 +15034,9 @@ public sealed class TargetStrategyParameters : StringField
     public const int TAG = 848;
 
     public TargetStrategyParameters()
-        : base(Tags.TargetStrategyParameters) {}
+        : base(TAG) {}
     public TargetStrategyParameters(string val)
-        : base(Tags.TargetStrategyParameters, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15047,9 +15047,9 @@ public sealed class ParticipationRate : DecimalField
     public const int TAG = 849;
 
     public ParticipationRate()
-        : base(Tags.ParticipationRate) {}
+        : base(TAG) {}
     public ParticipationRate(Decimal val)
-        : base(Tags.ParticipationRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15060,9 +15060,9 @@ public sealed class TargetStrategyPerformance : DecimalField
     public const int TAG = 850;
 
     public TargetStrategyPerformance()
-        : base(Tags.TargetStrategyPerformance) {}
+        : base(TAG) {}
     public TargetStrategyPerformance(Decimal val)
-        : base(Tags.TargetStrategyPerformance, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15073,9 +15073,9 @@ public sealed class LastLiquidityInd : IntField
     public const int TAG = 851;
 
     public LastLiquidityInd()
-        : base(Tags.LastLiquidityInd) {}
+        : base(TAG) {}
     public LastLiquidityInd(int val)
-        : base(Tags.LastLiquidityInd, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ADDED_LIQUIDITY = 1;
@@ -15092,9 +15092,9 @@ public sealed class PublishTrdIndicator : BooleanField
     public const int TAG = 852;
 
     public PublishTrdIndicator()
-        : base(Tags.PublishTrdIndicator) {}
+        : base(TAG) {}
     public PublishTrdIndicator(Boolean val)
-        : base(Tags.PublishTrdIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -15109,9 +15109,9 @@ public sealed class ShortSaleReason : IntField
     public const int TAG = 853;
 
     public ShortSaleReason()
-        : base(Tags.ShortSaleReason) {}
+        : base(TAG) {}
     public ShortSaleReason(int val)
-        : base(Tags.ShortSaleReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int DEALER_SOLD_SHORT = 0;
@@ -15131,9 +15131,9 @@ public sealed class QtyType : IntField
     public const int TAG = 854;
 
     public QtyType()
-        : base(Tags.QtyType) {}
+        : base(TAG) {}
     public QtyType(int val)
-        : base(Tags.QtyType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNITS = 0;
@@ -15149,9 +15149,9 @@ public sealed class SecondaryTrdType : IntField
     public const int TAG = 855;
 
     public SecondaryTrdType()
-        : base(Tags.SecondaryTrdType) {}
+        : base(TAG) {}
     public SecondaryTrdType(int val)
-        : base(Tags.SecondaryTrdType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15162,9 +15162,9 @@ public sealed class TradeReportType : IntField
     public const int TAG = 856;
 
     public TradeReportType()
-        : base(Tags.TradeReportType) {}
+        : base(TAG) {}
     public TradeReportType(int val)
-        : base(Tags.TradeReportType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SUBMIT = 0;
@@ -15195,9 +15195,9 @@ public sealed class AllocNoOrdersType : IntField
     public const int TAG = 857;
 
     public AllocNoOrdersType()
-        : base(Tags.AllocNoOrdersType) {}
+        : base(TAG) {}
     public AllocNoOrdersType(int val)
-        : base(Tags.AllocNoOrdersType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NOT_SPECIFIED = 0;
@@ -15212,9 +15212,9 @@ public sealed class SharedCommission : DecimalField
     public const int TAG = 858;
 
     public SharedCommission()
-        : base(Tags.SharedCommission) {}
+        : base(TAG) {}
     public SharedCommission(Decimal val)
-        : base(Tags.SharedCommission, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15225,9 +15225,9 @@ public sealed class ConfirmReqID : StringField
     public const int TAG = 859;
 
     public ConfirmReqID()
-        : base(Tags.ConfirmReqID) {}
+        : base(TAG) {}
     public ConfirmReqID(string val)
-        : base(Tags.ConfirmReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15238,9 +15238,9 @@ public sealed class AvgParPx : DecimalField
     public const int TAG = 860;
 
     public AvgParPx()
-        : base(Tags.AvgParPx) {}
+        : base(TAG) {}
     public AvgParPx(Decimal val)
-        : base(Tags.AvgParPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15251,9 +15251,9 @@ public sealed class ReportedPx : DecimalField
     public const int TAG = 861;
 
     public ReportedPx()
-        : base(Tags.ReportedPx) {}
+        : base(TAG) {}
     public ReportedPx(Decimal val)
-        : base(Tags.ReportedPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15264,9 +15264,9 @@ public sealed class NoCapacities : IntField
     public const int TAG = 862;
 
     public NoCapacities()
-        : base(Tags.NoCapacities) {}
+        : base(TAG) {}
     public NoCapacities(int val)
-        : base(Tags.NoCapacities, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15277,9 +15277,9 @@ public sealed class OrderCapacityQty : DecimalField
     public const int TAG = 863;
 
     public OrderCapacityQty()
-        : base(Tags.OrderCapacityQty) {}
+        : base(TAG) {}
     public OrderCapacityQty(Decimal val)
-        : base(Tags.OrderCapacityQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15290,9 +15290,9 @@ public sealed class NoEvents : IntField
     public const int TAG = 864;
 
     public NoEvents()
-        : base(Tags.NoEvents) {}
+        : base(TAG) {}
     public NoEvents(int val)
-        : base(Tags.NoEvents, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15303,9 +15303,9 @@ public sealed class EventType : IntField
     public const int TAG = 865;
 
     public EventType()
-        : base(Tags.EventType) {}
+        : base(TAG) {}
     public EventType(int val)
-        : base(Tags.EventType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PUT = 1;
@@ -15338,9 +15338,9 @@ public sealed class EventDate : StringField
     public const int TAG = 866;
 
     public EventDate()
-        : base(Tags.EventDate) {}
+        : base(TAG) {}
     public EventDate(string val)
-        : base(Tags.EventDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15351,9 +15351,9 @@ public sealed class EventPx : DecimalField
     public const int TAG = 867;
 
     public EventPx()
-        : base(Tags.EventPx) {}
+        : base(TAG) {}
     public EventPx(Decimal val)
-        : base(Tags.EventPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15364,9 +15364,9 @@ public sealed class EventText : StringField
     public const int TAG = 868;
 
     public EventText()
-        : base(Tags.EventText) {}
+        : base(TAG) {}
     public EventText(string val)
-        : base(Tags.EventText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15377,9 +15377,9 @@ public sealed class PctAtRisk : DecimalField
     public const int TAG = 869;
 
     public PctAtRisk()
-        : base(Tags.PctAtRisk) {}
+        : base(TAG) {}
     public PctAtRisk(Decimal val)
-        : base(Tags.PctAtRisk, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15390,9 +15390,9 @@ public sealed class NoInstrAttrib : IntField
     public const int TAG = 870;
 
     public NoInstrAttrib()
-        : base(Tags.NoInstrAttrib) {}
+        : base(TAG) {}
     public NoInstrAttrib(int val)
-        : base(Tags.NoInstrAttrib, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15403,9 +15403,9 @@ public sealed class InstrAttribType : IntField
     public const int TAG = 871;
 
     public InstrAttribType()
-        : base(Tags.InstrAttribType) {}
+        : base(TAG) {}
     public InstrAttribType(int val)
-        : base(Tags.InstrAttribType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int FLAT = 1;
@@ -15450,9 +15450,9 @@ public sealed class InstrAttribValue : StringField
     public const int TAG = 872;
 
     public InstrAttribValue()
-        : base(Tags.InstrAttribValue) {}
+        : base(TAG) {}
     public InstrAttribValue(string val)
-        : base(Tags.InstrAttribValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15463,9 +15463,9 @@ public sealed class DatedDate : StringField
     public const int TAG = 873;
 
     public DatedDate()
-        : base(Tags.DatedDate) {}
+        : base(TAG) {}
     public DatedDate(string val)
-        : base(Tags.DatedDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15476,9 +15476,9 @@ public sealed class InterestAccrualDate : StringField
     public const int TAG = 874;
 
     public InterestAccrualDate()
-        : base(Tags.InterestAccrualDate) {}
+        : base(TAG) {}
     public InterestAccrualDate(string val)
-        : base(Tags.InterestAccrualDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15489,9 +15489,9 @@ public sealed class CPProgram : IntField
     public const int TAG = 875;
 
     public CPProgram()
-        : base(Tags.CPProgram) {}
+        : base(TAG) {}
     public CPProgram(int val)
-        : base(Tags.CPProgram, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int VAL_3 = 1;
@@ -15507,9 +15507,9 @@ public sealed class CPRegType : StringField
     public const int TAG = 876;
 
     public CPRegType()
-        : base(Tags.CPRegType) {}
+        : base(TAG) {}
     public CPRegType(string val)
-        : base(Tags.CPRegType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15520,9 +15520,9 @@ public sealed class UnderlyingCPProgram : StringField
     public const int TAG = 877;
 
     public UnderlyingCPProgram()
-        : base(Tags.UnderlyingCPProgram) {}
+        : base(TAG) {}
     public UnderlyingCPProgram(string val)
-        : base(Tags.UnderlyingCPProgram, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15533,9 +15533,9 @@ public sealed class UnderlyingCPRegType : StringField
     public const int TAG = 878;
 
     public UnderlyingCPRegType()
-        : base(Tags.UnderlyingCPRegType) {}
+        : base(TAG) {}
     public UnderlyingCPRegType(string val)
-        : base(Tags.UnderlyingCPRegType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15546,9 +15546,9 @@ public sealed class UnderlyingQty : DecimalField
     public const int TAG = 879;
 
     public UnderlyingQty()
-        : base(Tags.UnderlyingQty) {}
+        : base(TAG) {}
     public UnderlyingQty(Decimal val)
-        : base(Tags.UnderlyingQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15559,9 +15559,9 @@ public sealed class TrdMatchID : StringField
     public const int TAG = 880;
 
     public TrdMatchID()
-        : base(Tags.TrdMatchID) {}
+        : base(TAG) {}
     public TrdMatchID(string val)
-        : base(Tags.TrdMatchID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15572,9 +15572,9 @@ public sealed class SecondaryTradeReportRefID : StringField
     public const int TAG = 881;
 
     public SecondaryTradeReportRefID()
-        : base(Tags.SecondaryTradeReportRefID) {}
+        : base(TAG) {}
     public SecondaryTradeReportRefID(string val)
-        : base(Tags.SecondaryTradeReportRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15585,9 +15585,9 @@ public sealed class UnderlyingDirtyPrice : DecimalField
     public const int TAG = 882;
 
     public UnderlyingDirtyPrice()
-        : base(Tags.UnderlyingDirtyPrice) {}
+        : base(TAG) {}
     public UnderlyingDirtyPrice(Decimal val)
-        : base(Tags.UnderlyingDirtyPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15598,9 +15598,9 @@ public sealed class UnderlyingEndPrice : DecimalField
     public const int TAG = 883;
 
     public UnderlyingEndPrice()
-        : base(Tags.UnderlyingEndPrice) {}
+        : base(TAG) {}
     public UnderlyingEndPrice(Decimal val)
-        : base(Tags.UnderlyingEndPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15611,9 +15611,9 @@ public sealed class UnderlyingStartValue : DecimalField
     public const int TAG = 884;
 
     public UnderlyingStartValue()
-        : base(Tags.UnderlyingStartValue) {}
+        : base(TAG) {}
     public UnderlyingStartValue(Decimal val)
-        : base(Tags.UnderlyingStartValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15624,9 +15624,9 @@ public sealed class UnderlyingCurrentValue : DecimalField
     public const int TAG = 885;
 
     public UnderlyingCurrentValue()
-        : base(Tags.UnderlyingCurrentValue) {}
+        : base(TAG) {}
     public UnderlyingCurrentValue(Decimal val)
-        : base(Tags.UnderlyingCurrentValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15637,9 +15637,9 @@ public sealed class UnderlyingEndValue : DecimalField
     public const int TAG = 886;
 
     public UnderlyingEndValue()
-        : base(Tags.UnderlyingEndValue) {}
+        : base(TAG) {}
     public UnderlyingEndValue(Decimal val)
-        : base(Tags.UnderlyingEndValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15650,9 +15650,9 @@ public sealed class NoUnderlyingStips : IntField
     public const int TAG = 887;
 
     public NoUnderlyingStips()
-        : base(Tags.NoUnderlyingStips) {}
+        : base(TAG) {}
     public NoUnderlyingStips(int val)
-        : base(Tags.NoUnderlyingStips, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15663,9 +15663,9 @@ public sealed class UnderlyingStipType : StringField
     public const int TAG = 888;
 
     public UnderlyingStipType()
-        : base(Tags.UnderlyingStipType) {}
+        : base(TAG) {}
     public UnderlyingStipType(string val)
-        : base(Tags.UnderlyingStipType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15676,9 +15676,9 @@ public sealed class UnderlyingStipValue : StringField
     public const int TAG = 889;
 
     public UnderlyingStipValue()
-        : base(Tags.UnderlyingStipValue) {}
+        : base(TAG) {}
     public UnderlyingStipValue(string val)
-        : base(Tags.UnderlyingStipValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15689,9 +15689,9 @@ public sealed class MaturityNetMoney : DecimalField
     public const int TAG = 890;
 
     public MaturityNetMoney()
-        : base(Tags.MaturityNetMoney) {}
+        : base(TAG) {}
     public MaturityNetMoney(Decimal val)
-        : base(Tags.MaturityNetMoney, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15702,9 +15702,9 @@ public sealed class MiscFeeBasis : IntField
     public const int TAG = 891;
 
     public MiscFeeBasis()
-        : base(Tags.MiscFeeBasis) {}
+        : base(TAG) {}
     public MiscFeeBasis(int val)
-        : base(Tags.MiscFeeBasis, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ABSOLUTE = 0;
@@ -15720,9 +15720,9 @@ public sealed class TotNoAllocs : IntField
     public const int TAG = 892;
 
     public TotNoAllocs()
-        : base(Tags.TotNoAllocs) {}
+        : base(TAG) {}
     public TotNoAllocs(int val)
-        : base(Tags.TotNoAllocs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15733,9 +15733,9 @@ public sealed class LastFragment : BooleanField
     public const int TAG = 893;
 
     public LastFragment()
-        : base(Tags.LastFragment) {}
+        : base(TAG) {}
     public LastFragment(Boolean val)
-        : base(Tags.LastFragment, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -15750,9 +15750,9 @@ public sealed class CollReqID : StringField
     public const int TAG = 894;
 
     public CollReqID()
-        : base(Tags.CollReqID) {}
+        : base(TAG) {}
     public CollReqID(string val)
-        : base(Tags.CollReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15763,9 +15763,9 @@ public sealed class CollAsgnReason : IntField
     public const int TAG = 895;
 
     public CollAsgnReason()
-        : base(Tags.CollAsgnReason) {}
+        : base(TAG) {}
     public CollAsgnReason(int val)
-        : base(Tags.CollAsgnReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int INITIAL = 0;
@@ -15786,9 +15786,9 @@ public sealed class CollInquiryQualifier : IntField
     public const int TAG = 896;
 
     public CollInquiryQualifier()
-        : base(Tags.CollInquiryQualifier) {}
+        : base(TAG) {}
     public CollInquiryQualifier(int val)
-        : base(Tags.CollInquiryQualifier, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int TRADE_DATE = 0;
@@ -15811,9 +15811,9 @@ public sealed class NoTrades : IntField
     public const int TAG = 897;
 
     public NoTrades()
-        : base(Tags.NoTrades) {}
+        : base(TAG) {}
     public NoTrades(int val)
-        : base(Tags.NoTrades, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15824,9 +15824,9 @@ public sealed class MarginRatio : DecimalField
     public const int TAG = 898;
 
     public MarginRatio()
-        : base(Tags.MarginRatio) {}
+        : base(TAG) {}
     public MarginRatio(Decimal val)
-        : base(Tags.MarginRatio, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15837,9 +15837,9 @@ public sealed class MarginExcess : DecimalField
     public const int TAG = 899;
 
     public MarginExcess()
-        : base(Tags.MarginExcess) {}
+        : base(TAG) {}
     public MarginExcess(Decimal val)
-        : base(Tags.MarginExcess, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15850,9 +15850,9 @@ public sealed class TotalNetValue : DecimalField
     public const int TAG = 900;
 
     public TotalNetValue()
-        : base(Tags.TotalNetValue) {}
+        : base(TAG) {}
     public TotalNetValue(Decimal val)
-        : base(Tags.TotalNetValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15863,9 +15863,9 @@ public sealed class CashOutstanding : DecimalField
     public const int TAG = 901;
 
     public CashOutstanding()
-        : base(Tags.CashOutstanding) {}
+        : base(TAG) {}
     public CashOutstanding(Decimal val)
-        : base(Tags.CashOutstanding, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15876,9 +15876,9 @@ public sealed class CollAsgnID : StringField
     public const int TAG = 902;
 
     public CollAsgnID()
-        : base(Tags.CollAsgnID) {}
+        : base(TAG) {}
     public CollAsgnID(string val)
-        : base(Tags.CollAsgnID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15889,9 +15889,9 @@ public sealed class CollAsgnTransType : IntField
     public const int TAG = 903;
 
     public CollAsgnTransType()
-        : base(Tags.CollAsgnTransType) {}
+        : base(TAG) {}
     public CollAsgnTransType(int val)
-        : base(Tags.CollAsgnTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NEW = 0;
@@ -15909,9 +15909,9 @@ public sealed class CollRespID : StringField
     public const int TAG = 904;
 
     public CollRespID()
-        : base(Tags.CollRespID) {}
+        : base(TAG) {}
     public CollRespID(string val)
-        : base(Tags.CollRespID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15922,9 +15922,9 @@ public sealed class CollAsgnRespType : IntField
     public const int TAG = 905;
 
     public CollAsgnRespType()
-        : base(Tags.CollAsgnRespType) {}
+        : base(TAG) {}
     public CollAsgnRespType(int val)
-        : base(Tags.CollAsgnRespType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int RECEIVED = 0;
@@ -15941,9 +15941,9 @@ public sealed class CollAsgnRejectReason : IntField
     public const int TAG = 906;
 
     public CollAsgnRejectReason()
-        : base(Tags.CollAsgnRejectReason) {}
+        : base(TAG) {}
     public CollAsgnRejectReason(int val)
-        : base(Tags.CollAsgnRejectReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNKNOWN_DEAL = 0;
@@ -15963,9 +15963,9 @@ public sealed class CollAsgnRefID : StringField
     public const int TAG = 907;
 
     public CollAsgnRefID()
-        : base(Tags.CollAsgnRefID) {}
+        : base(TAG) {}
     public CollAsgnRefID(string val)
-        : base(Tags.CollAsgnRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15976,9 +15976,9 @@ public sealed class CollRptID : StringField
     public const int TAG = 908;
 
     public CollRptID()
-        : base(Tags.CollRptID) {}
+        : base(TAG) {}
     public CollRptID(string val)
-        : base(Tags.CollRptID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -15989,9 +15989,9 @@ public sealed class CollInquiryID : StringField
     public const int TAG = 909;
 
     public CollInquiryID()
-        : base(Tags.CollInquiryID) {}
+        : base(TAG) {}
     public CollInquiryID(string val)
-        : base(Tags.CollInquiryID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16002,9 +16002,9 @@ public sealed class CollStatus : IntField
     public const int TAG = 910;
 
     public CollStatus()
-        : base(Tags.CollStatus) {}
+        : base(TAG) {}
     public CollStatus(int val)
-        : base(Tags.CollStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNASSIGNED = 0;
@@ -16022,9 +16022,9 @@ public sealed class TotNumReports : IntField
     public const int TAG = 911;
 
     public TotNumReports()
-        : base(Tags.TotNumReports) {}
+        : base(TAG) {}
     public TotNumReports(int val)
-        : base(Tags.TotNumReports, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16035,9 +16035,9 @@ public sealed class LastRptRequested : BooleanField
     public const int TAG = 912;
 
     public LastRptRequested()
-        : base(Tags.LastRptRequested) {}
+        : base(TAG) {}
     public LastRptRequested(Boolean val)
-        : base(Tags.LastRptRequested, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean NO = false;
@@ -16052,9 +16052,9 @@ public sealed class AgreementDesc : StringField
     public const int TAG = 913;
 
     public AgreementDesc()
-        : base(Tags.AgreementDesc) {}
+        : base(TAG) {}
     public AgreementDesc(string val)
-        : base(Tags.AgreementDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16065,9 +16065,9 @@ public sealed class AgreementID : StringField
     public const int TAG = 914;
 
     public AgreementID()
-        : base(Tags.AgreementID) {}
+        : base(TAG) {}
     public AgreementID(string val)
-        : base(Tags.AgreementID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16078,9 +16078,9 @@ public sealed class AgreementDate : StringField
     public const int TAG = 915;
 
     public AgreementDate()
-        : base(Tags.AgreementDate) {}
+        : base(TAG) {}
     public AgreementDate(string val)
-        : base(Tags.AgreementDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16091,9 +16091,9 @@ public sealed class StartDate : StringField
     public const int TAG = 916;
 
     public StartDate()
-        : base(Tags.StartDate) {}
+        : base(TAG) {}
     public StartDate(string val)
-        : base(Tags.StartDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16104,9 +16104,9 @@ public sealed class EndDate : StringField
     public const int TAG = 917;
 
     public EndDate()
-        : base(Tags.EndDate) {}
+        : base(TAG) {}
     public EndDate(string val)
-        : base(Tags.EndDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16117,9 +16117,9 @@ public sealed class AgreementCurrency : StringField
     public const int TAG = 918;
 
     public AgreementCurrency()
-        : base(Tags.AgreementCurrency) {}
+        : base(TAG) {}
     public AgreementCurrency(string val)
-        : base(Tags.AgreementCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16130,9 +16130,9 @@ public sealed class DeliveryType : IntField
     public const int TAG = 919;
 
     public DeliveryType()
-        : base(Tags.DeliveryType) {}
+        : base(TAG) {}
     public DeliveryType(int val)
-        : base(Tags.DeliveryType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int VERSUS_PAYMENT_DELIVER = 0;
@@ -16151,9 +16151,9 @@ public sealed class EndAccruedInterestAmt : DecimalField
     public const int TAG = 920;
 
     public EndAccruedInterestAmt()
-        : base(Tags.EndAccruedInterestAmt) {}
+        : base(TAG) {}
     public EndAccruedInterestAmt(Decimal val)
-        : base(Tags.EndAccruedInterestAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16164,9 +16164,9 @@ public sealed class StartCash : DecimalField
     public const int TAG = 921;
 
     public StartCash()
-        : base(Tags.StartCash) {}
+        : base(TAG) {}
     public StartCash(Decimal val)
-        : base(Tags.StartCash, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16177,9 +16177,9 @@ public sealed class EndCash : DecimalField
     public const int TAG = 922;
 
     public EndCash()
-        : base(Tags.EndCash) {}
+        : base(TAG) {}
     public EndCash(Decimal val)
-        : base(Tags.EndCash, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16190,9 +16190,9 @@ public sealed class UserRequestID : StringField
     public const int TAG = 923;
 
     public UserRequestID()
-        : base(Tags.UserRequestID) {}
+        : base(TAG) {}
     public UserRequestID(string val)
-        : base(Tags.UserRequestID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16203,9 +16203,9 @@ public sealed class UserRequestType : IntField
     public const int TAG = 924;
 
     public UserRequestType()
-        : base(Tags.UserRequestType) {}
+        : base(TAG) {}
     public UserRequestType(int val)
-        : base(Tags.UserRequestType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int LOG_ON_USER = 1;
@@ -16225,9 +16225,9 @@ public sealed class NewPassword : StringField
     public const int TAG = 925;
 
     public NewPassword()
-        : base(Tags.NewPassword) {}
+        : base(TAG) {}
     public NewPassword(string val)
-        : base(Tags.NewPassword, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16238,9 +16238,9 @@ public sealed class UserStatus : IntField
     public const int TAG = 926;
 
     public UserStatus()
-        : base(Tags.UserStatus) {}
+        : base(TAG) {}
     public UserStatus(int val)
-        : base(Tags.UserStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int LOGGED_IN = 1;
@@ -16261,9 +16261,9 @@ public sealed class UserStatusText : StringField
     public const int TAG = 927;
 
     public UserStatusText()
-        : base(Tags.UserStatusText) {}
+        : base(TAG) {}
     public UserStatusText(string val)
-        : base(Tags.UserStatusText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16274,9 +16274,9 @@ public sealed class StatusValue : IntField
     public const int TAG = 928;
 
     public StatusValue()
-        : base(Tags.StatusValue) {}
+        : base(TAG) {}
     public StatusValue(int val)
-        : base(Tags.StatusValue, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CONNECTED = 1;
@@ -16295,9 +16295,9 @@ public sealed class StatusText : StringField
     public const int TAG = 929;
 
     public StatusText()
-        : base(Tags.StatusText) {}
+        : base(TAG) {}
     public StatusText(string val)
-        : base(Tags.StatusText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16308,9 +16308,9 @@ public sealed class RefCompID : StringField
     public const int TAG = 930;
 
     public RefCompID()
-        : base(Tags.RefCompID) {}
+        : base(TAG) {}
     public RefCompID(string val)
-        : base(Tags.RefCompID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16321,9 +16321,9 @@ public sealed class RefSubID : StringField
     public const int TAG = 931;
 
     public RefSubID()
-        : base(Tags.RefSubID) {}
+        : base(TAG) {}
     public RefSubID(string val)
-        : base(Tags.RefSubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16334,9 +16334,9 @@ public sealed class NetworkResponseID : StringField
     public const int TAG = 932;
 
     public NetworkResponseID()
-        : base(Tags.NetworkResponseID) {}
+        : base(TAG) {}
     public NetworkResponseID(string val)
-        : base(Tags.NetworkResponseID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16347,9 +16347,9 @@ public sealed class NetworkRequestID : StringField
     public const int TAG = 933;
 
     public NetworkRequestID()
-        : base(Tags.NetworkRequestID) {}
+        : base(TAG) {}
     public NetworkRequestID(string val)
-        : base(Tags.NetworkRequestID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16360,9 +16360,9 @@ public sealed class LastNetworkResponseID : StringField
     public const int TAG = 934;
 
     public LastNetworkResponseID()
-        : base(Tags.LastNetworkResponseID) {}
+        : base(TAG) {}
     public LastNetworkResponseID(string val)
-        : base(Tags.LastNetworkResponseID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16373,9 +16373,9 @@ public sealed class NetworkRequestType : IntField
     public const int TAG = 935;
 
     public NetworkRequestType()
-        : base(Tags.NetworkRequestType) {}
+        : base(TAG) {}
     public NetworkRequestType(int val)
-        : base(Tags.NetworkRequestType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SNAPSHOT = 1;
@@ -16393,9 +16393,9 @@ public sealed class NoCompIDs : IntField
     public const int TAG = 936;
 
     public NoCompIDs()
-        : base(Tags.NoCompIDs) {}
+        : base(TAG) {}
     public NoCompIDs(int val)
-        : base(Tags.NoCompIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16406,9 +16406,9 @@ public sealed class NetworkStatusResponseType : IntField
     public const int TAG = 937;
 
     public NetworkStatusResponseType()
-        : base(Tags.NetworkStatusResponseType) {}
+        : base(TAG) {}
     public NetworkStatusResponseType(int val)
-        : base(Tags.NetworkStatusResponseType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int FULL = 1;
@@ -16423,9 +16423,9 @@ public sealed class NoCollInquiryQualifier : IntField
     public const int TAG = 938;
 
     public NoCollInquiryQualifier()
-        : base(Tags.NoCollInquiryQualifier) {}
+        : base(TAG) {}
     public NoCollInquiryQualifier(int val)
-        : base(Tags.NoCollInquiryQualifier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16436,9 +16436,9 @@ public sealed class TrdRptStatus : IntField
     public const int TAG = 939;
 
     public TrdRptStatus()
-        : base(Tags.TrdRptStatus) {}
+        : base(TAG) {}
     public TrdRptStatus(int val)
-        : base(Tags.TrdRptStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACCEPTED = 0;
@@ -16454,9 +16454,9 @@ public sealed class AffirmStatus : IntField
     public const int TAG = 940;
 
     public AffirmStatus()
-        : base(Tags.AffirmStatus) {}
+        : base(TAG) {}
     public AffirmStatus(int val)
-        : base(Tags.AffirmStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int RECEIVED = 1;
@@ -16473,9 +16473,9 @@ public sealed class UnderlyingStrikeCurrency : StringField
     public const int TAG = 941;
 
     public UnderlyingStrikeCurrency()
-        : base(Tags.UnderlyingStrikeCurrency) {}
+        : base(TAG) {}
     public UnderlyingStrikeCurrency(string val)
-        : base(Tags.UnderlyingStrikeCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16486,9 +16486,9 @@ public sealed class LegStrikeCurrency : StringField
     public const int TAG = 942;
 
     public LegStrikeCurrency()
-        : base(Tags.LegStrikeCurrency) {}
+        : base(TAG) {}
     public LegStrikeCurrency(string val)
-        : base(Tags.LegStrikeCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16499,9 +16499,9 @@ public sealed class TimeBracket : StringField
     public const int TAG = 943;
 
     public TimeBracket()
-        : base(Tags.TimeBracket) {}
+        : base(TAG) {}
     public TimeBracket(string val)
-        : base(Tags.TimeBracket, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16512,9 +16512,9 @@ public sealed class CollAction : IntField
     public const int TAG = 944;
 
     public CollAction()
-        : base(Tags.CollAction) {}
+        : base(TAG) {}
     public CollAction(int val)
-        : base(Tags.CollAction, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int RETAIN = 0;
@@ -16530,9 +16530,9 @@ public sealed class CollInquiryStatus : IntField
     public const int TAG = 945;
 
     public CollInquiryStatus()
-        : base(Tags.CollInquiryStatus) {}
+        : base(TAG) {}
     public CollInquiryStatus(int val)
-        : base(Tags.CollInquiryStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACCEPTED = 0;
@@ -16550,9 +16550,9 @@ public sealed class CollInquiryResult : IntField
     public const int TAG = 946;
 
     public CollInquiryResult()
-        : base(Tags.CollInquiryResult) {}
+        : base(TAG) {}
     public CollInquiryResult(int val)
-        : base(Tags.CollInquiryResult, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SUCCESSFUL = 0;
@@ -16576,9 +16576,9 @@ public sealed class StrikeCurrency : StringField
     public const int TAG = 947;
 
     public StrikeCurrency()
-        : base(Tags.StrikeCurrency) {}
+        : base(TAG) {}
     public StrikeCurrency(string val)
-        : base(Tags.StrikeCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16589,9 +16589,9 @@ public sealed class NoNested3PartyIDs : IntField
     public const int TAG = 948;
 
     public NoNested3PartyIDs()
-        : base(Tags.NoNested3PartyIDs) {}
+        : base(TAG) {}
     public NoNested3PartyIDs(int val)
-        : base(Tags.NoNested3PartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16602,9 +16602,9 @@ public sealed class Nested3PartyID : StringField
     public const int TAG = 949;
 
     public Nested3PartyID()
-        : base(Tags.Nested3PartyID) {}
+        : base(TAG) {}
     public Nested3PartyID(string val)
-        : base(Tags.Nested3PartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16615,9 +16615,9 @@ public sealed class Nested3PartyIDSource : CharField
     public const int TAG = 950;
 
     public Nested3PartyIDSource()
-        : base(Tags.Nested3PartyIDSource) {}
+        : base(TAG) {}
     public Nested3PartyIDSource(char val)
-        : base(Tags.Nested3PartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16628,9 +16628,9 @@ public sealed class Nested3PartyRole : IntField
     public const int TAG = 951;
 
     public Nested3PartyRole()
-        : base(Tags.Nested3PartyRole) {}
+        : base(TAG) {}
     public Nested3PartyRole(int val)
-        : base(Tags.Nested3PartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16641,9 +16641,9 @@ public sealed class NoNested3PartySubIDs : IntField
     public const int TAG = 952;
 
     public NoNested3PartySubIDs()
-        : base(Tags.NoNested3PartySubIDs) {}
+        : base(TAG) {}
     public NoNested3PartySubIDs(int val)
-        : base(Tags.NoNested3PartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16654,9 +16654,9 @@ public sealed class Nested3PartySubID : StringField
     public const int TAG = 953;
 
     public Nested3PartySubID()
-        : base(Tags.Nested3PartySubID) {}
+        : base(TAG) {}
     public Nested3PartySubID(string val)
-        : base(Tags.Nested3PartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16667,9 +16667,9 @@ public sealed class Nested3PartySubIDType : IntField
     public const int TAG = 954;
 
     public Nested3PartySubIDType()
-        : base(Tags.Nested3PartySubIDType) {}
+        : base(TAG) {}
     public Nested3PartySubIDType(int val)
-        : base(Tags.Nested3PartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16680,9 +16680,9 @@ public sealed class LegContractSettlMonth : StringField
     public const int TAG = 955;
 
     public LegContractSettlMonth()
-        : base(Tags.LegContractSettlMonth) {}
+        : base(TAG) {}
     public LegContractSettlMonth(string val)
-        : base(Tags.LegContractSettlMonth, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16693,9 +16693,9 @@ public sealed class LegInterestAccrualDate : StringField
     public const int TAG = 956;
 
     public LegInterestAccrualDate()
-        : base(Tags.LegInterestAccrualDate) {}
+        : base(TAG) {}
     public LegInterestAccrualDate(string val)
-        : base(Tags.LegInterestAccrualDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16706,9 +16706,9 @@ public sealed class IOIID : StringField
     public const int TAG = 23;
 
     public IOIID()
-        : base(Tags.IOIID) {}
+        : base(TAG) {}
     public IOIID(string val)
-        : base(Tags.IOIID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16719,9 +16719,9 @@ public sealed class NoLinesOfText : IntField
     public const int TAG = 33;
 
     public NoLinesOfText()
-        : base(Tags.NoLinesOfText) {}
+        : base(TAG) {}
     public NoLinesOfText(int val)
-        : base(Tags.NoLinesOfText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16732,9 +16732,9 @@ public sealed class HaltReasonChar : CharField
     public const int TAG = 327;
 
     public HaltReasonChar()
-        : base(Tags.HaltReasonChar) {}
+        : base(TAG) {}
     public HaltReasonChar(char val)
-        : base(Tags.HaltReasonChar, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NEWS_DISSEMINATION = 'D';
@@ -16753,9 +16753,9 @@ public sealed class NoStrategyParameters : IntField
     public const int TAG = 957;
 
     public NoStrategyParameters()
-        : base(Tags.NoStrategyParameters) {}
+        : base(TAG) {}
     public NoStrategyParameters(int val)
-        : base(Tags.NoStrategyParameters, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16766,9 +16766,9 @@ public sealed class StrategyParameterName : StringField
     public const int TAG = 958;
 
     public StrategyParameterName()
-        : base(Tags.StrategyParameterName) {}
+        : base(TAG) {}
     public StrategyParameterName(string val)
-        : base(Tags.StrategyParameterName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16779,9 +16779,9 @@ public sealed class StrategyParameterType : IntField
     public const int TAG = 959;
 
     public StrategyParameterType()
-        : base(Tags.StrategyParameterType) {}
+        : base(TAG) {}
     public StrategyParameterType(int val)
-        : base(Tags.StrategyParameterType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int INT = 1;
@@ -16826,9 +16826,9 @@ public sealed class StrategyParameterValue : StringField
     public const int TAG = 960;
 
     public StrategyParameterValue()
-        : base(Tags.StrategyParameterValue) {}
+        : base(TAG) {}
     public StrategyParameterValue(string val)
-        : base(Tags.StrategyParameterValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16839,9 +16839,9 @@ public sealed class HostCrossID : StringField
     public const int TAG = 961;
 
     public HostCrossID()
-        : base(Tags.HostCrossID) {}
+        : base(TAG) {}
     public HostCrossID(string val)
-        : base(Tags.HostCrossID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16852,7 +16852,7 @@ public sealed class SideTimeInForce : UtcDateTimeField
     public const int TAG = 962;
 
     public SideTimeInForce()
-        : base(Tags.SideTimeInForce) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -16860,7 +16860,7 @@ public sealed class SideTimeInForce : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public SideTimeInForce(DateTime val)
-        : base(Tags.SideTimeInForce, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -16870,7 +16870,7 @@ public sealed class SideTimeInForce : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public SideTimeInForce(DateTime val, bool showMilliseconds)
-        : base(Tags.SideTimeInForce, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -16879,7 +16879,7 @@ public sealed class SideTimeInForce : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public SideTimeInForce(DateTime val, TimePrecision precision)
-        : base(Tags.SideTimeInForce, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -16890,9 +16890,9 @@ public sealed class MDReportID : IntField
     public const int TAG = 963;
 
     public MDReportID()
-        : base(Tags.MDReportID) {}
+        : base(TAG) {}
     public MDReportID(int val)
-        : base(Tags.MDReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16903,9 +16903,9 @@ public sealed class SecurityReportID : IntField
     public const int TAG = 964;
 
     public SecurityReportID()
-        : base(Tags.SecurityReportID) {}
+        : base(TAG) {}
     public SecurityReportID(int val)
-        : base(Tags.SecurityReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16916,9 +16916,9 @@ public sealed class SecurityStatus : StringField
     public const int TAG = 965;
 
     public SecurityStatus()
-        : base(Tags.SecurityStatus) {}
+        : base(TAG) {}
     public SecurityStatus(string val)
-        : base(Tags.SecurityStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string ACTIVE = "1";
@@ -16933,9 +16933,9 @@ public sealed class SettleOnOpenFlag : StringField
     public const int TAG = 966;
 
     public SettleOnOpenFlag()
-        : base(Tags.SettleOnOpenFlag) {}
+        : base(TAG) {}
     public SettleOnOpenFlag(string val)
-        : base(Tags.SettleOnOpenFlag, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16946,9 +16946,9 @@ public sealed class StrikeMultiplier : DecimalField
     public const int TAG = 967;
 
     public StrikeMultiplier()
-        : base(Tags.StrikeMultiplier) {}
+        : base(TAG) {}
     public StrikeMultiplier(Decimal val)
-        : base(Tags.StrikeMultiplier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16959,9 +16959,9 @@ public sealed class StrikeValue : DecimalField
     public const int TAG = 968;
 
     public StrikeValue()
-        : base(Tags.StrikeValue) {}
+        : base(TAG) {}
     public StrikeValue(Decimal val)
-        : base(Tags.StrikeValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16972,9 +16972,9 @@ public sealed class MinPriceIncrement : DecimalField
     public const int TAG = 969;
 
     public MinPriceIncrement()
-        : base(Tags.MinPriceIncrement) {}
+        : base(TAG) {}
     public MinPriceIncrement(Decimal val)
-        : base(Tags.MinPriceIncrement, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16985,9 +16985,9 @@ public sealed class PositionLimit : IntField
     public const int TAG = 970;
 
     public PositionLimit()
-        : base(Tags.PositionLimit) {}
+        : base(TAG) {}
     public PositionLimit(int val)
-        : base(Tags.PositionLimit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -16998,9 +16998,9 @@ public sealed class NTPositionLimit : IntField
     public const int TAG = 971;
 
     public NTPositionLimit()
-        : base(Tags.NTPositionLimit) {}
+        : base(TAG) {}
     public NTPositionLimit(int val)
-        : base(Tags.NTPositionLimit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17011,9 +17011,9 @@ public sealed class UnderlyingAllocationPercent : DecimalField
     public const int TAG = 972;
 
     public UnderlyingAllocationPercent()
-        : base(Tags.UnderlyingAllocationPercent) {}
+        : base(TAG) {}
     public UnderlyingAllocationPercent(Decimal val)
-        : base(Tags.UnderlyingAllocationPercent, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17024,9 +17024,9 @@ public sealed class UnderlyingCashAmount : DecimalField
     public const int TAG = 973;
 
     public UnderlyingCashAmount()
-        : base(Tags.UnderlyingCashAmount) {}
+        : base(TAG) {}
     public UnderlyingCashAmount(Decimal val)
-        : base(Tags.UnderlyingCashAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17037,9 +17037,9 @@ public sealed class UnderlyingCashType : StringField
     public const int TAG = 974;
 
     public UnderlyingCashType()
-        : base(Tags.UnderlyingCashType) {}
+        : base(TAG) {}
     public UnderlyingCashType(string val)
-        : base(Tags.UnderlyingCashType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string FIXED = "FIXED";
@@ -17054,9 +17054,9 @@ public sealed class UnderlyingSettlementType : IntField
     public const int TAG = 975;
 
     public UnderlyingSettlementType()
-        : base(Tags.UnderlyingSettlementType) {}
+        : base(TAG) {}
     public UnderlyingSettlementType(int val)
-        : base(Tags.UnderlyingSettlementType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int T_PLUS_1 = 2;
@@ -17072,9 +17072,9 @@ public sealed class QuantityDate : StringField
     public const int TAG = 976;
 
     public QuantityDate()
-        : base(Tags.QuantityDate) {}
+        : base(TAG) {}
     public QuantityDate(string val)
-        : base(Tags.QuantityDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17085,9 +17085,9 @@ public sealed class ContIntRptID : StringField
     public const int TAG = 977;
 
     public ContIntRptID()
-        : base(Tags.ContIntRptID) {}
+        : base(TAG) {}
     public ContIntRptID(string val)
-        : base(Tags.ContIntRptID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17098,9 +17098,9 @@ public sealed class LateIndicator : BooleanField
     public const int TAG = 978;
 
     public LateIndicator()
-        : base(Tags.LateIndicator) {}
+        : base(TAG) {}
     public LateIndicator(Boolean val)
-        : base(Tags.LateIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17111,9 +17111,9 @@ public sealed class InputSource : StringField
     public const int TAG = 979;
 
     public InputSource()
-        : base(Tags.InputSource) {}
+        : base(TAG) {}
     public InputSource(string val)
-        : base(Tags.InputSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17124,9 +17124,9 @@ public sealed class SecurityUpdateAction : CharField
     public const int TAG = 980;
 
     public SecurityUpdateAction()
-        : base(Tags.SecurityUpdateAction) {}
+        : base(TAG) {}
     public SecurityUpdateAction(char val)
-        : base(Tags.SecurityUpdateAction, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ADD = 'A';
@@ -17142,9 +17142,9 @@ public sealed class NoExpiration : IntField
     public const int TAG = 981;
 
     public NoExpiration()
-        : base(Tags.NoExpiration) {}
+        : base(TAG) {}
     public NoExpiration(int val)
-        : base(Tags.NoExpiration, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17155,9 +17155,9 @@ public sealed class ExpType : IntField
     public const int TAG = 982;
 
     public ExpType()
-        : base(Tags.ExpType) {}
+        : base(TAG) {}
     public ExpType(int val)
-        : base(Tags.ExpType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int AUTO_EXERCISE = 1;
@@ -17175,9 +17175,9 @@ public sealed class ExpQty : DecimalField
     public const int TAG = 983;
 
     public ExpQty()
-        : base(Tags.ExpQty) {}
+        : base(TAG) {}
     public ExpQty(Decimal val)
-        : base(Tags.ExpQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17188,9 +17188,9 @@ public sealed class NoUnderlyingAmounts : IntField
     public const int TAG = 984;
 
     public NoUnderlyingAmounts()
-        : base(Tags.NoUnderlyingAmounts) {}
+        : base(TAG) {}
     public NoUnderlyingAmounts(int val)
-        : base(Tags.NoUnderlyingAmounts, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17201,9 +17201,9 @@ public sealed class UnderlyingPayAmount : DecimalField
     public const int TAG = 985;
 
     public UnderlyingPayAmount()
-        : base(Tags.UnderlyingPayAmount) {}
+        : base(TAG) {}
     public UnderlyingPayAmount(Decimal val)
-        : base(Tags.UnderlyingPayAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17214,9 +17214,9 @@ public sealed class UnderlyingCollectAmount : DecimalField
     public const int TAG = 986;
 
     public UnderlyingCollectAmount()
-        : base(Tags.UnderlyingCollectAmount) {}
+        : base(TAG) {}
     public UnderlyingCollectAmount(Decimal val)
-        : base(Tags.UnderlyingCollectAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17227,9 +17227,9 @@ public sealed class UnderlyingSettlementDate : StringField
     public const int TAG = 987;
 
     public UnderlyingSettlementDate()
-        : base(Tags.UnderlyingSettlementDate) {}
+        : base(TAG) {}
     public UnderlyingSettlementDate(string val)
-        : base(Tags.UnderlyingSettlementDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17240,9 +17240,9 @@ public sealed class UnderlyingSettlementStatus : StringField
     public const int TAG = 988;
 
     public UnderlyingSettlementStatus()
-        : base(Tags.UnderlyingSettlementStatus) {}
+        : base(TAG) {}
     public UnderlyingSettlementStatus(string val)
-        : base(Tags.UnderlyingSettlementStatus, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17253,9 +17253,9 @@ public sealed class SecondaryIndividualAllocID : StringField
     public const int TAG = 989;
 
     public SecondaryIndividualAllocID()
-        : base(Tags.SecondaryIndividualAllocID) {}
+        : base(TAG) {}
     public SecondaryIndividualAllocID(string val)
-        : base(Tags.SecondaryIndividualAllocID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17266,9 +17266,9 @@ public sealed class LegReportID : StringField
     public const int TAG = 990;
 
     public LegReportID()
-        : base(Tags.LegReportID) {}
+        : base(TAG) {}
     public LegReportID(string val)
-        : base(Tags.LegReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17279,9 +17279,9 @@ public sealed class RndPx : DecimalField
     public const int TAG = 991;
 
     public RndPx()
-        : base(Tags.RndPx) {}
+        : base(TAG) {}
     public RndPx(Decimal val)
-        : base(Tags.RndPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17292,9 +17292,9 @@ public sealed class IndividualAllocType : IntField
     public const int TAG = 992;
 
     public IndividualAllocType()
-        : base(Tags.IndividualAllocType) {}
+        : base(TAG) {}
     public IndividualAllocType(int val)
-        : base(Tags.IndividualAllocType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SUB_ALLOCATE = 1;
@@ -17309,9 +17309,9 @@ public sealed class AllocCustomerCapacity : StringField
     public const int TAG = 993;
 
     public AllocCustomerCapacity()
-        : base(Tags.AllocCustomerCapacity) {}
+        : base(TAG) {}
     public AllocCustomerCapacity(string val)
-        : base(Tags.AllocCustomerCapacity, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17322,9 +17322,9 @@ public sealed class TierCode : StringField
     public const int TAG = 994;
 
     public TierCode()
-        : base(Tags.TierCode) {}
+        : base(TAG) {}
     public TierCode(string val)
-        : base(Tags.TierCode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17335,9 +17335,9 @@ public sealed class UnitOfMeasure : StringField
     public const int TAG = 996;
 
     public UnitOfMeasure()
-        : base(Tags.UnitOfMeasure) {}
+        : base(TAG) {}
     public UnitOfMeasure(string val)
-        : base(Tags.UnitOfMeasure, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string MEGAWATT_HOURS = "MWh";
@@ -17363,9 +17363,9 @@ public sealed class TimeUnit : StringField
     public const int TAG = 997;
 
     public TimeUnit()
-        : base(Tags.TimeUnit) {}
+        : base(TAG) {}
     public TimeUnit(string val)
-        : base(Tags.TimeUnit, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string SECOND = "S";
@@ -17385,9 +17385,9 @@ public sealed class UnderlyingUnitOfMeasure : StringField
     public const int TAG = 998;
 
     public UnderlyingUnitOfMeasure()
-        : base(Tags.UnderlyingUnitOfMeasure) {}
+        : base(TAG) {}
     public UnderlyingUnitOfMeasure(string val)
-        : base(Tags.UnderlyingUnitOfMeasure, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17398,9 +17398,9 @@ public sealed class LegUnitOfMeasure : StringField
     public const int TAG = 999;
 
     public LegUnitOfMeasure()
-        : base(Tags.LegUnitOfMeasure) {}
+        : base(TAG) {}
     public LegUnitOfMeasure(string val)
-        : base(Tags.LegUnitOfMeasure, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17411,9 +17411,9 @@ public sealed class UnderlyingTimeUnit : StringField
     public const int TAG = 1000;
 
     public UnderlyingTimeUnit()
-        : base(Tags.UnderlyingTimeUnit) {}
+        : base(TAG) {}
     public UnderlyingTimeUnit(string val)
-        : base(Tags.UnderlyingTimeUnit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17424,9 +17424,9 @@ public sealed class LegTimeUnit : StringField
     public const int TAG = 1001;
 
     public LegTimeUnit()
-        : base(Tags.LegTimeUnit) {}
+        : base(TAG) {}
     public LegTimeUnit(string val)
-        : base(Tags.LegTimeUnit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17437,9 +17437,9 @@ public sealed class AllocMethod : IntField
     public const int TAG = 1002;
 
     public AllocMethod()
-        : base(Tags.AllocMethod) {}
+        : base(TAG) {}
     public AllocMethod(int val)
-        : base(Tags.AllocMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int AUTOMATIC = 1;
@@ -17455,9 +17455,9 @@ public sealed class TradeID : StringField
     public const int TAG = 1003;
 
     public TradeID()
-        : base(Tags.TradeID) {}
+        : base(TAG) {}
     public TradeID(string val)
-        : base(Tags.TradeID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17468,9 +17468,9 @@ public sealed class SideTradeReportID : StringField
     public const int TAG = 1005;
 
     public SideTradeReportID()
-        : base(Tags.SideTradeReportID) {}
+        : base(TAG) {}
     public SideTradeReportID(string val)
-        : base(Tags.SideTradeReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17481,9 +17481,9 @@ public sealed class SideFillStationCd : StringField
     public const int TAG = 1006;
 
     public SideFillStationCd()
-        : base(Tags.SideFillStationCd) {}
+        : base(TAG) {}
     public SideFillStationCd(string val)
-        : base(Tags.SideFillStationCd, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17494,9 +17494,9 @@ public sealed class SideReasonCd : StringField
     public const int TAG = 1007;
 
     public SideReasonCd()
-        : base(Tags.SideReasonCd) {}
+        : base(TAG) {}
     public SideReasonCd(string val)
-        : base(Tags.SideReasonCd, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17507,9 +17507,9 @@ public sealed class SideTrdSubTyp : IntField
     public const int TAG = 1008;
 
     public SideTrdSubTyp()
-        : base(Tags.SideTrdSubTyp) {}
+        : base(TAG) {}
     public SideTrdSubTyp(int val)
-        : base(Tags.SideTrdSubTyp, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CMTA = 0;
@@ -17533,9 +17533,9 @@ public sealed class SideQty : IntField
     public const int TAG = 1009;
 
     public SideQty()
-        : base(Tags.SideQty) {}
+        : base(TAG) {}
     public SideQty(int val)
-        : base(Tags.SideQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17546,9 +17546,9 @@ public sealed class MessageEventSource : StringField
     public const int TAG = 1011;
 
     public MessageEventSource()
-        : base(Tags.MessageEventSource) {}
+        : base(TAG) {}
     public MessageEventSource(string val)
-        : base(Tags.MessageEventSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17559,7 +17559,7 @@ public sealed class SideTrdRegTimestamp : UtcDateTimeField
     public const int TAG = 1012;
 
     public SideTrdRegTimestamp()
-        : base(Tags.SideTrdRegTimestamp) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -17567,7 +17567,7 @@ public sealed class SideTrdRegTimestamp : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public SideTrdRegTimestamp(DateTime val)
-        : base(Tags.SideTrdRegTimestamp, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -17577,7 +17577,7 @@ public sealed class SideTrdRegTimestamp : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public SideTrdRegTimestamp(DateTime val, bool showMilliseconds)
-        : base(Tags.SideTrdRegTimestamp, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -17586,7 +17586,7 @@ public sealed class SideTrdRegTimestamp : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public SideTrdRegTimestamp(DateTime val, TimePrecision precision)
-        : base(Tags.SideTrdRegTimestamp, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -17597,9 +17597,9 @@ public sealed class SideTrdRegTimestampType : IntField
     public const int TAG = 1013;
 
     public SideTrdRegTimestampType()
-        : base(Tags.SideTrdRegTimestampType) {}
+        : base(TAG) {}
     public SideTrdRegTimestampType(int val)
-        : base(Tags.SideTrdRegTimestampType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17610,9 +17610,9 @@ public sealed class SideTrdRegTimestampSrc : StringField
     public const int TAG = 1014;
 
     public SideTrdRegTimestampSrc()
-        : base(Tags.SideTrdRegTimestampSrc) {}
+        : base(TAG) {}
     public SideTrdRegTimestampSrc(string val)
-        : base(Tags.SideTrdRegTimestampSrc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17623,9 +17623,9 @@ public sealed class AsOfIndicator : CharField
     public const int TAG = 1015;
 
     public AsOfIndicator()
-        : base(Tags.AsOfIndicator) {}
+        : base(TAG) {}
     public AsOfIndicator(char val)
-        : base(Tags.AsOfIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char FALSE = '0';
@@ -17640,9 +17640,9 @@ public sealed class NoSideTrdRegTS : IntField
     public const int TAG = 1016;
 
     public NoSideTrdRegTS()
-        : base(Tags.NoSideTrdRegTS) {}
+        : base(TAG) {}
     public NoSideTrdRegTS(int val)
-        : base(Tags.NoSideTrdRegTS, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17653,9 +17653,9 @@ public sealed class LegOptionRatio : DecimalField
     public const int TAG = 1017;
 
     public LegOptionRatio()
-        : base(Tags.LegOptionRatio) {}
+        : base(TAG) {}
     public LegOptionRatio(Decimal val)
-        : base(Tags.LegOptionRatio, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17666,9 +17666,9 @@ public sealed class NoInstrumentParties : IntField
     public const int TAG = 1018;
 
     public NoInstrumentParties()
-        : base(Tags.NoInstrumentParties) {}
+        : base(TAG) {}
     public NoInstrumentParties(int val)
-        : base(Tags.NoInstrumentParties, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17679,9 +17679,9 @@ public sealed class InstrumentPartyID : StringField
     public const int TAG = 1019;
 
     public InstrumentPartyID()
-        : base(Tags.InstrumentPartyID) {}
+        : base(TAG) {}
     public InstrumentPartyID(string val)
-        : base(Tags.InstrumentPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17692,9 +17692,9 @@ public sealed class TradeVolume : DecimalField
     public const int TAG = 1020;
 
     public TradeVolume()
-        : base(Tags.TradeVolume) {}
+        : base(TAG) {}
     public TradeVolume(Decimal val)
-        : base(Tags.TradeVolume, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17705,9 +17705,9 @@ public sealed class MDBookType : IntField
     public const int TAG = 1021;
 
     public MDBookType()
-        : base(Tags.MDBookType) {}
+        : base(TAG) {}
     public MDBookType(int val)
-        : base(Tags.MDBookType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int TOP_OF_BOOK = 1;
@@ -17723,9 +17723,9 @@ public sealed class MDFeedType : StringField
     public const int TAG = 1022;
 
     public MDFeedType()
-        : base(Tags.MDFeedType) {}
+        : base(TAG) {}
     public MDFeedType(string val)
-        : base(Tags.MDFeedType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17736,9 +17736,9 @@ public sealed class MDPriceLevel : IntField
     public const int TAG = 1023;
 
     public MDPriceLevel()
-        : base(Tags.MDPriceLevel) {}
+        : base(TAG) {}
     public MDPriceLevel(int val)
-        : base(Tags.MDPriceLevel, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17749,9 +17749,9 @@ public sealed class MDOriginType : IntField
     public const int TAG = 1024;
 
     public MDOriginType()
-        : base(Tags.MDOriginType) {}
+        : base(TAG) {}
     public MDOriginType(int val)
-        : base(Tags.MDOriginType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int BOOK = 0;
@@ -17767,9 +17767,9 @@ public sealed class FirstPx : DecimalField
     public const int TAG = 1025;
 
     public FirstPx()
-        : base(Tags.FirstPx) {}
+        : base(TAG) {}
     public FirstPx(Decimal val)
-        : base(Tags.FirstPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17780,9 +17780,9 @@ public sealed class MDEntrySpotRate : DecimalField
     public const int TAG = 1026;
 
     public MDEntrySpotRate()
-        : base(Tags.MDEntrySpotRate) {}
+        : base(TAG) {}
     public MDEntrySpotRate(Decimal val)
-        : base(Tags.MDEntrySpotRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17793,9 +17793,9 @@ public sealed class MDEntryForwardPoints : DecimalField
     public const int TAG = 1027;
 
     public MDEntryForwardPoints()
-        : base(Tags.MDEntryForwardPoints) {}
+        : base(TAG) {}
     public MDEntryForwardPoints(Decimal val)
-        : base(Tags.MDEntryForwardPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17806,9 +17806,9 @@ public sealed class ManualOrderIndicator : BooleanField
     public const int TAG = 1028;
 
     public ManualOrderIndicator()
-        : base(Tags.ManualOrderIndicator) {}
+        : base(TAG) {}
     public ManualOrderIndicator(Boolean val)
-        : base(Tags.ManualOrderIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17819,9 +17819,9 @@ public sealed class CustDirectedOrder : BooleanField
     public const int TAG = 1029;
 
     public CustDirectedOrder()
-        : base(Tags.CustDirectedOrder) {}
+        : base(TAG) {}
     public CustDirectedOrder(Boolean val)
-        : base(Tags.CustDirectedOrder, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17832,9 +17832,9 @@ public sealed class ReceivedDeptID : StringField
     public const int TAG = 1030;
 
     public ReceivedDeptID()
-        : base(Tags.ReceivedDeptID) {}
+        : base(TAG) {}
     public ReceivedDeptID(string val)
-        : base(Tags.ReceivedDeptID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -17845,9 +17845,9 @@ public sealed class CustOrderHandlingInst : StringField
     public const int TAG = 1031;
 
     public CustOrderHandlingInst()
-        : base(Tags.CustOrderHandlingInst) {}
+        : base(TAG) {}
     public CustOrderHandlingInst(string val)
-        : base(Tags.CustOrderHandlingInst, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string ADD_ON_ORDER = "ADD";
@@ -17884,9 +17884,9 @@ public sealed class OrderHandlingInstSource : IntField
     public const int TAG = 1032;
 
     public OrderHandlingInstSource()
-        : base(Tags.OrderHandlingInstSource) {}
+        : base(TAG) {}
     public OrderHandlingInstSource(int val)
-        : base(Tags.OrderHandlingInstSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NASD_OATS = 1;
@@ -17900,9 +17900,9 @@ public sealed class DeskType : StringField
     public const int TAG = 1033;
 
     public DeskType()
-        : base(Tags.DeskType) {}
+        : base(TAG) {}
     public DeskType(string val)
-        : base(Tags.DeskType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string AGENCY = "A";
@@ -17926,9 +17926,9 @@ public sealed class DeskTypeSource : IntField
     public const int TAG = 1034;
 
     public DeskTypeSource()
-        : base(Tags.DeskTypeSource) {}
+        : base(TAG) {}
     public DeskTypeSource(int val)
-        : base(Tags.DeskTypeSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NASD_OATS = 1;
@@ -17942,9 +17942,9 @@ public sealed class DeskOrderHandlingInst : StringField
     public const int TAG = 1035;
 
     public DeskOrderHandlingInst()
-        : base(Tags.DeskOrderHandlingInst) {}
+        : base(TAG) {}
     public DeskOrderHandlingInst(string val)
-        : base(Tags.DeskOrderHandlingInst, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string ADD_ON_ORDER = "ADD";
@@ -17981,9 +17981,9 @@ public sealed class ExecAckStatus : CharField
     public const int TAG = 1036;
 
     public ExecAckStatus()
-        : base(Tags.ExecAckStatus) {}
+        : base(TAG) {}
     public ExecAckStatus(char val)
-        : base(Tags.ExecAckStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char RECEIVED_NOT_YET_PROCESSED = '0';
@@ -17999,9 +17999,9 @@ public sealed class UnderlyingDeliveryAmount : DecimalField
     public const int TAG = 1037;
 
     public UnderlyingDeliveryAmount()
-        : base(Tags.UnderlyingDeliveryAmount) {}
+        : base(TAG) {}
     public UnderlyingDeliveryAmount(Decimal val)
-        : base(Tags.UnderlyingDeliveryAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18012,9 +18012,9 @@ public sealed class UnderlyingCapValue : DecimalField
     public const int TAG = 1038;
 
     public UnderlyingCapValue()
-        : base(Tags.UnderlyingCapValue) {}
+        : base(TAG) {}
     public UnderlyingCapValue(Decimal val)
-        : base(Tags.UnderlyingCapValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18025,9 +18025,9 @@ public sealed class UnderlyingSettlMethod : StringField
     public const int TAG = 1039;
 
     public UnderlyingSettlMethod()
-        : base(Tags.UnderlyingSettlMethod) {}
+        : base(TAG) {}
     public UnderlyingSettlMethod(string val)
-        : base(Tags.UnderlyingSettlMethod, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18038,9 +18038,9 @@ public sealed class SecondaryTradeID : StringField
     public const int TAG = 1040;
 
     public SecondaryTradeID()
-        : base(Tags.SecondaryTradeID) {}
+        : base(TAG) {}
     public SecondaryTradeID(string val)
-        : base(Tags.SecondaryTradeID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18051,9 +18051,9 @@ public sealed class FirmTradeID : StringField
     public const int TAG = 1041;
 
     public FirmTradeID()
-        : base(Tags.FirmTradeID) {}
+        : base(TAG) {}
     public FirmTradeID(string val)
-        : base(Tags.FirmTradeID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18064,9 +18064,9 @@ public sealed class SecondaryFirmTradeID : StringField
     public const int TAG = 1042;
 
     public SecondaryFirmTradeID()
-        : base(Tags.SecondaryFirmTradeID) {}
+        : base(TAG) {}
     public SecondaryFirmTradeID(string val)
-        : base(Tags.SecondaryFirmTradeID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18077,9 +18077,9 @@ public sealed class CollApplType : IntField
     public const int TAG = 1043;
 
     public CollApplType()
-        : base(Tags.CollApplType) {}
+        : base(TAG) {}
     public CollApplType(int val)
-        : base(Tags.CollApplType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SPECIFIC_DEPOSIT = 0;
@@ -18094,9 +18094,9 @@ public sealed class UnderlyingAdjustedQuantity : DecimalField
     public const int TAG = 1044;
 
     public UnderlyingAdjustedQuantity()
-        : base(Tags.UnderlyingAdjustedQuantity) {}
+        : base(TAG) {}
     public UnderlyingAdjustedQuantity(Decimal val)
-        : base(Tags.UnderlyingAdjustedQuantity, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18107,9 +18107,9 @@ public sealed class UnderlyingFXRate : DecimalField
     public const int TAG = 1045;
 
     public UnderlyingFXRate()
-        : base(Tags.UnderlyingFXRate) {}
+        : base(TAG) {}
     public UnderlyingFXRate(Decimal val)
-        : base(Tags.UnderlyingFXRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18120,9 +18120,9 @@ public sealed class UnderlyingFXRateCalc : CharField
     public const int TAG = 1046;
 
     public UnderlyingFXRateCalc()
-        : base(Tags.UnderlyingFXRateCalc) {}
+        : base(TAG) {}
     public UnderlyingFXRateCalc(char val)
-        : base(Tags.UnderlyingFXRateCalc, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char MULTIPLY = 'M';
@@ -18137,9 +18137,9 @@ public sealed class AllocPositionEffect : CharField
     public const int TAG = 1047;
 
     public AllocPositionEffect()
-        : base(Tags.AllocPositionEffect) {}
+        : base(TAG) {}
     public AllocPositionEffect(char val)
-        : base(Tags.AllocPositionEffect, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char OPEN = 'O';
@@ -18156,9 +18156,9 @@ public sealed class DealingCapacity : CharField
     public const int TAG = 1048;
 
     public DealingCapacity()
-        : base(Tags.DealingCapacity) {}
+        : base(TAG) {}
     public DealingCapacity(char val)
-        : base(Tags.DealingCapacity, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char AGENT = 'A';
@@ -18174,9 +18174,9 @@ public sealed class InstrmtAssignmentMethod : CharField
     public const int TAG = 1049;
 
     public InstrmtAssignmentMethod()
-        : base(Tags.InstrmtAssignmentMethod) {}
+        : base(TAG) {}
     public InstrmtAssignmentMethod(char val)
-        : base(Tags.InstrmtAssignmentMethod, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18187,9 +18187,9 @@ public sealed class InstrumentPartyIDSource : CharField
     public const int TAG = 1050;
 
     public InstrumentPartyIDSource()
-        : base(Tags.InstrumentPartyIDSource) {}
+        : base(TAG) {}
     public InstrumentPartyIDSource(char val)
-        : base(Tags.InstrumentPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18200,9 +18200,9 @@ public sealed class InstrumentPartyRole : IntField
     public const int TAG = 1051;
 
     public InstrumentPartyRole()
-        : base(Tags.InstrumentPartyRole) {}
+        : base(TAG) {}
     public InstrumentPartyRole(int val)
-        : base(Tags.InstrumentPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18213,9 +18213,9 @@ public sealed class NoInstrumentPartySubIDs : IntField
     public const int TAG = 1052;
 
     public NoInstrumentPartySubIDs()
-        : base(Tags.NoInstrumentPartySubIDs) {}
+        : base(TAG) {}
     public NoInstrumentPartySubIDs(int val)
-        : base(Tags.NoInstrumentPartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18226,9 +18226,9 @@ public sealed class InstrumentPartySubID : StringField
     public const int TAG = 1053;
 
     public InstrumentPartySubID()
-        : base(Tags.InstrumentPartySubID) {}
+        : base(TAG) {}
     public InstrumentPartySubID(string val)
-        : base(Tags.InstrumentPartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18239,9 +18239,9 @@ public sealed class InstrumentPartySubIDType : IntField
     public const int TAG = 1054;
 
     public InstrumentPartySubIDType()
-        : base(Tags.InstrumentPartySubIDType) {}
+        : base(TAG) {}
     public InstrumentPartySubIDType(int val)
-        : base(Tags.InstrumentPartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18252,9 +18252,9 @@ public sealed class PositionCurrency : StringField
     public const int TAG = 1055;
 
     public PositionCurrency()
-        : base(Tags.PositionCurrency) {}
+        : base(TAG) {}
     public PositionCurrency(string val)
-        : base(Tags.PositionCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18265,9 +18265,9 @@ public sealed class CalculatedCcyLastQty : DecimalField
     public const int TAG = 1056;
 
     public CalculatedCcyLastQty()
-        : base(Tags.CalculatedCcyLastQty) {}
+        : base(TAG) {}
     public CalculatedCcyLastQty(Decimal val)
-        : base(Tags.CalculatedCcyLastQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18278,9 +18278,9 @@ public sealed class AggressorIndicator : BooleanField
     public const int TAG = 1057;
 
     public AggressorIndicator()
-        : base(Tags.AggressorIndicator) {}
+        : base(TAG) {}
     public AggressorIndicator(Boolean val)
-        : base(Tags.AggressorIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const Boolean YES = true;
@@ -18295,9 +18295,9 @@ public sealed class NoUndlyInstrumentParties : IntField
     public const int TAG = 1058;
 
     public NoUndlyInstrumentParties()
-        : base(Tags.NoUndlyInstrumentParties) {}
+        : base(TAG) {}
     public NoUndlyInstrumentParties(int val)
-        : base(Tags.NoUndlyInstrumentParties, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18308,9 +18308,9 @@ public sealed class UndlyInstrumentPartyID : StringField
     public const int TAG = 1059;
 
     public UndlyInstrumentPartyID()
-        : base(Tags.UndlyInstrumentPartyID) {}
+        : base(TAG) {}
     public UndlyInstrumentPartyID(string val)
-        : base(Tags.UndlyInstrumentPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18321,9 +18321,9 @@ public sealed class UndlyInstrumentPartyIDSource : CharField
     public const int TAG = 1060;
 
     public UndlyInstrumentPartyIDSource()
-        : base(Tags.UndlyInstrumentPartyIDSource) {}
+        : base(TAG) {}
     public UndlyInstrumentPartyIDSource(char val)
-        : base(Tags.UndlyInstrumentPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18334,9 +18334,9 @@ public sealed class UndlyInstrumentPartyRole : IntField
     public const int TAG = 1061;
 
     public UndlyInstrumentPartyRole()
-        : base(Tags.UndlyInstrumentPartyRole) {}
+        : base(TAG) {}
     public UndlyInstrumentPartyRole(int val)
-        : base(Tags.UndlyInstrumentPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18347,9 +18347,9 @@ public sealed class NoUndlyInstrumentPartySubIDs : IntField
     public const int TAG = 1062;
 
     public NoUndlyInstrumentPartySubIDs()
-        : base(Tags.NoUndlyInstrumentPartySubIDs) {}
+        : base(TAG) {}
     public NoUndlyInstrumentPartySubIDs(int val)
-        : base(Tags.NoUndlyInstrumentPartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18360,9 +18360,9 @@ public sealed class UndlyInstrumentPartySubID : StringField
     public const int TAG = 1063;
 
     public UndlyInstrumentPartySubID()
-        : base(Tags.UndlyInstrumentPartySubID) {}
+        : base(TAG) {}
     public UndlyInstrumentPartySubID(string val)
-        : base(Tags.UndlyInstrumentPartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18373,9 +18373,9 @@ public sealed class UndlyInstrumentPartySubIDType : IntField
     public const int TAG = 1064;
 
     public UndlyInstrumentPartySubIDType()
-        : base(Tags.UndlyInstrumentPartySubIDType) {}
+        : base(TAG) {}
     public UndlyInstrumentPartySubIDType(int val)
-        : base(Tags.UndlyInstrumentPartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18386,9 +18386,9 @@ public sealed class BidSwapPoints : DecimalField
     public const int TAG = 1065;
 
     public BidSwapPoints()
-        : base(Tags.BidSwapPoints) {}
+        : base(TAG) {}
     public BidSwapPoints(Decimal val)
-        : base(Tags.BidSwapPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18399,9 +18399,9 @@ public sealed class OfferSwapPoints : DecimalField
     public const int TAG = 1066;
 
     public OfferSwapPoints()
-        : base(Tags.OfferSwapPoints) {}
+        : base(TAG) {}
     public OfferSwapPoints(Decimal val)
-        : base(Tags.OfferSwapPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18412,9 +18412,9 @@ public sealed class LegBidForwardPoints : DecimalField
     public const int TAG = 1067;
 
     public LegBidForwardPoints()
-        : base(Tags.LegBidForwardPoints) {}
+        : base(TAG) {}
     public LegBidForwardPoints(Decimal val)
-        : base(Tags.LegBidForwardPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18425,9 +18425,9 @@ public sealed class LegOfferForwardPoints : DecimalField
     public const int TAG = 1068;
 
     public LegOfferForwardPoints()
-        : base(Tags.LegOfferForwardPoints) {}
+        : base(TAG) {}
     public LegOfferForwardPoints(Decimal val)
-        : base(Tags.LegOfferForwardPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18438,9 +18438,9 @@ public sealed class SwapPoints : DecimalField
     public const int TAG = 1069;
 
     public SwapPoints()
-        : base(Tags.SwapPoints) {}
+        : base(TAG) {}
     public SwapPoints(Decimal val)
-        : base(Tags.SwapPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18451,9 +18451,9 @@ public sealed class MDQuoteType : IntField
     public const int TAG = 1070;
 
     public MDQuoteType()
-        : base(Tags.MDQuoteType) {}
+        : base(TAG) {}
     public MDQuoteType(int val)
-        : base(Tags.MDQuoteType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int INDICATIVE = 0;
@@ -18471,9 +18471,9 @@ public sealed class LastSwapPoints : DecimalField
     public const int TAG = 1071;
 
     public LastSwapPoints()
-        : base(Tags.LastSwapPoints) {}
+        : base(TAG) {}
     public LastSwapPoints(Decimal val)
-        : base(Tags.LastSwapPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18484,9 +18484,9 @@ public sealed class SideGrossTradeAmt : DecimalField
     public const int TAG = 1072;
 
     public SideGrossTradeAmt()
-        : base(Tags.SideGrossTradeAmt) {}
+        : base(TAG) {}
     public SideGrossTradeAmt(Decimal val)
-        : base(Tags.SideGrossTradeAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18497,9 +18497,9 @@ public sealed class LegLastForwardPoints : DecimalField
     public const int TAG = 1073;
 
     public LegLastForwardPoints()
-        : base(Tags.LegLastForwardPoints) {}
+        : base(TAG) {}
     public LegLastForwardPoints(Decimal val)
-        : base(Tags.LegLastForwardPoints, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18510,9 +18510,9 @@ public sealed class LegCalculatedCcyLastQty : DecimalField
     public const int TAG = 1074;
 
     public LegCalculatedCcyLastQty()
-        : base(Tags.LegCalculatedCcyLastQty) {}
+        : base(TAG) {}
     public LegCalculatedCcyLastQty(Decimal val)
-        : base(Tags.LegCalculatedCcyLastQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18523,9 +18523,9 @@ public sealed class LegGrossTradeAmt : DecimalField
     public const int TAG = 1075;
 
     public LegGrossTradeAmt()
-        : base(Tags.LegGrossTradeAmt) {}
+        : base(TAG) {}
     public LegGrossTradeAmt(Decimal val)
-        : base(Tags.LegGrossTradeAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18536,9 +18536,9 @@ public sealed class MaturityTime : StringField
     public const int TAG = 1079;
 
     public MaturityTime()
-        : base(Tags.MaturityTime) {}
+        : base(TAG) {}
     public MaturityTime(string val)
-        : base(Tags.MaturityTime, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18549,9 +18549,9 @@ public sealed class RefOrderID : StringField
     public const int TAG = 1080;
 
     public RefOrderID()
-        : base(Tags.RefOrderID) {}
+        : base(TAG) {}
     public RefOrderID(string val)
-        : base(Tags.RefOrderID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18562,9 +18562,9 @@ public sealed class RefOrderIDSource : CharField
     public const int TAG = 1081;
 
     public RefOrderIDSource()
-        : base(Tags.RefOrderIDSource) {}
+        : base(TAG) {}
     public RefOrderIDSource(char val)
-        : base(Tags.RefOrderIDSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char SECONDARYORDERID = '0';
@@ -18586,9 +18586,9 @@ public sealed class SecondaryDisplayQty : DecimalField
     public const int TAG = 1082;
 
     public SecondaryDisplayQty()
-        : base(Tags.SecondaryDisplayQty) {}
+        : base(TAG) {}
     public SecondaryDisplayQty(Decimal val)
-        : base(Tags.SecondaryDisplayQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18599,9 +18599,9 @@ public sealed class DisplayWhen : CharField
     public const int TAG = 1083;
 
     public DisplayWhen()
-        : base(Tags.DisplayWhen) {}
+        : base(TAG) {}
     public DisplayWhen(char val)
-        : base(Tags.DisplayWhen, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char IMMEDIATE = '1';
@@ -18616,9 +18616,9 @@ public sealed class DisplayMethod : CharField
     public const int TAG = 1084;
 
     public DisplayMethod()
-        : base(Tags.DisplayMethod) {}
+        : base(TAG) {}
     public DisplayMethod(char val)
-        : base(Tags.DisplayMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char INITIAL = '1';
@@ -18635,9 +18635,9 @@ public sealed class DisplayLowQty : DecimalField
     public const int TAG = 1085;
 
     public DisplayLowQty()
-        : base(Tags.DisplayLowQty) {}
+        : base(TAG) {}
     public DisplayLowQty(Decimal val)
-        : base(Tags.DisplayLowQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18648,9 +18648,9 @@ public sealed class DisplayHighQty : DecimalField
     public const int TAG = 1086;
 
     public DisplayHighQty()
-        : base(Tags.DisplayHighQty) {}
+        : base(TAG) {}
     public DisplayHighQty(Decimal val)
-        : base(Tags.DisplayHighQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18661,9 +18661,9 @@ public sealed class DisplayMinIncr : DecimalField
     public const int TAG = 1087;
 
     public DisplayMinIncr()
-        : base(Tags.DisplayMinIncr) {}
+        : base(TAG) {}
     public DisplayMinIncr(Decimal val)
-        : base(Tags.DisplayMinIncr, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18674,9 +18674,9 @@ public sealed class RefreshQty : DecimalField
     public const int TAG = 1088;
 
     public RefreshQty()
-        : base(Tags.RefreshQty) {}
+        : base(TAG) {}
     public RefreshQty(Decimal val)
-        : base(Tags.RefreshQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18687,9 +18687,9 @@ public sealed class MatchIncrement : DecimalField
     public const int TAG = 1089;
 
     public MatchIncrement()
-        : base(Tags.MatchIncrement) {}
+        : base(TAG) {}
     public MatchIncrement(Decimal val)
-        : base(Tags.MatchIncrement, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18700,9 +18700,9 @@ public sealed class MaxPriceLevels : IntField
     public const int TAG = 1090;
 
     public MaxPriceLevels()
-        : base(Tags.MaxPriceLevels) {}
+        : base(TAG) {}
     public MaxPriceLevels(int val)
-        : base(Tags.MaxPriceLevels, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18713,9 +18713,9 @@ public sealed class PreTradeAnonymity : BooleanField
     public const int TAG = 1091;
 
     public PreTradeAnonymity()
-        : base(Tags.PreTradeAnonymity) {}
+        : base(TAG) {}
     public PreTradeAnonymity(Boolean val)
-        : base(Tags.PreTradeAnonymity, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18726,9 +18726,9 @@ public sealed class PriceProtectionScope : CharField
     public const int TAG = 1092;
 
     public PriceProtectionScope()
-        : base(Tags.PriceProtectionScope) {}
+        : base(TAG) {}
     public PriceProtectionScope(char val)
-        : base(Tags.PriceProtectionScope, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NONE = '0';
@@ -18745,9 +18745,9 @@ public sealed class LotType : CharField
     public const int TAG = 1093;
 
     public LotType()
-        : base(Tags.LotType) {}
+        : base(TAG) {}
     public LotType(char val)
-        : base(Tags.LotType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ODD_LOT = '1';
@@ -18764,9 +18764,9 @@ public sealed class PegPriceType : IntField
     public const int TAG = 1094;
 
     public PegPriceType()
-        : base(Tags.PegPriceType) {}
+        : base(TAG) {}
     public PegPriceType(int val)
-        : base(Tags.PegPriceType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int LAST_PEG = 1;
@@ -18788,9 +18788,9 @@ public sealed class PeggedRefPrice : DecimalField
     public const int TAG = 1095;
 
     public PeggedRefPrice()
-        : base(Tags.PeggedRefPrice) {}
+        : base(TAG) {}
     public PeggedRefPrice(Decimal val)
-        : base(Tags.PeggedRefPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18801,9 +18801,9 @@ public sealed class PegSecurityIDSource : StringField
     public const int TAG = 1096;
 
     public PegSecurityIDSource()
-        : base(Tags.PegSecurityIDSource) {}
+        : base(TAG) {}
     public PegSecurityIDSource(string val)
-        : base(Tags.PegSecurityIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18814,9 +18814,9 @@ public sealed class PegSecurityID : StringField
     public const int TAG = 1097;
 
     public PegSecurityID()
-        : base(Tags.PegSecurityID) {}
+        : base(TAG) {}
     public PegSecurityID(string val)
-        : base(Tags.PegSecurityID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18827,9 +18827,9 @@ public sealed class PegSymbol : StringField
     public const int TAG = 1098;
 
     public PegSymbol()
-        : base(Tags.PegSymbol) {}
+        : base(TAG) {}
     public PegSymbol(string val)
-        : base(Tags.PegSymbol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18840,9 +18840,9 @@ public sealed class PegSecurityDesc : StringField
     public const int TAG = 1099;
 
     public PegSecurityDesc()
-        : base(Tags.PegSecurityDesc) {}
+        : base(TAG) {}
     public PegSecurityDesc(string val)
-        : base(Tags.PegSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18853,9 +18853,9 @@ public sealed class TriggerType : CharField
     public const int TAG = 1100;
 
     public TriggerType()
-        : base(Tags.TriggerType) {}
+        : base(TAG) {}
     public TriggerType(char val)
-        : base(Tags.TriggerType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char PARTIAL_EXECUTION = '1';
@@ -18872,9 +18872,9 @@ public sealed class TriggerAction : CharField
     public const int TAG = 1101;
 
     public TriggerAction()
-        : base(Tags.TriggerAction) {}
+        : base(TAG) {}
     public TriggerAction(char val)
-        : base(Tags.TriggerAction, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ACTIVATE = '1';
@@ -18890,9 +18890,9 @@ public sealed class TriggerPrice : DecimalField
     public const int TAG = 1102;
 
     public TriggerPrice()
-        : base(Tags.TriggerPrice) {}
+        : base(TAG) {}
     public TriggerPrice(Decimal val)
-        : base(Tags.TriggerPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18903,9 +18903,9 @@ public sealed class TriggerSymbol : StringField
     public const int TAG = 1103;
 
     public TriggerSymbol()
-        : base(Tags.TriggerSymbol) {}
+        : base(TAG) {}
     public TriggerSymbol(string val)
-        : base(Tags.TriggerSymbol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18916,9 +18916,9 @@ public sealed class TriggerSecurityID : StringField
     public const int TAG = 1104;
 
     public TriggerSecurityID()
-        : base(Tags.TriggerSecurityID) {}
+        : base(TAG) {}
     public TriggerSecurityID(string val)
-        : base(Tags.TriggerSecurityID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18929,9 +18929,9 @@ public sealed class TriggerSecurityIDSource : StringField
     public const int TAG = 1105;
 
     public TriggerSecurityIDSource()
-        : base(Tags.TriggerSecurityIDSource) {}
+        : base(TAG) {}
     public TriggerSecurityIDSource(string val)
-        : base(Tags.TriggerSecurityIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18942,9 +18942,9 @@ public sealed class TriggerSecurityDesc : StringField
     public const int TAG = 1106;
 
     public TriggerSecurityDesc()
-        : base(Tags.TriggerSecurityDesc) {}
+        : base(TAG) {}
     public TriggerSecurityDesc(string val)
-        : base(Tags.TriggerSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -18955,9 +18955,9 @@ public sealed class TriggerPriceType : CharField
     public const int TAG = 1107;
 
     public TriggerPriceType()
-        : base(Tags.TriggerPriceType) {}
+        : base(TAG) {}
     public TriggerPriceType(char val)
-        : base(Tags.TriggerPriceType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char BEST_OFFER = '1';
@@ -18976,9 +18976,9 @@ public sealed class TriggerPriceTypeScope : CharField
     public const int TAG = 1108;
 
     public TriggerPriceTypeScope()
-        : base(Tags.TriggerPriceTypeScope) {}
+        : base(TAG) {}
     public TriggerPriceTypeScope(char val)
-        : base(Tags.TriggerPriceTypeScope, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char NONE = '0';
@@ -18995,9 +18995,9 @@ public sealed class TriggerPriceDirection : CharField
     public const int TAG = 1109;
 
     public TriggerPriceDirection()
-        : base(Tags.TriggerPriceDirection) {}
+        : base(TAG) {}
     public TriggerPriceDirection(char val)
-        : base(Tags.TriggerPriceDirection, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char TRIGGER_IF_THE_PRICE_OF_THE_SPECIFIED_TYPE_GOES_UP_TO_OR_THROUGH_THE_SPECIFIED_TRIGGER_PRICE = 'U';
@@ -19012,9 +19012,9 @@ public sealed class TriggerNewPrice : DecimalField
     public const int TAG = 1110;
 
     public TriggerNewPrice()
-        : base(Tags.TriggerNewPrice) {}
+        : base(TAG) {}
     public TriggerNewPrice(Decimal val)
-        : base(Tags.TriggerNewPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19025,9 +19025,9 @@ public sealed class TriggerOrderType : CharField
     public const int TAG = 1111;
 
     public TriggerOrderType()
-        : base(Tags.TriggerOrderType) {}
+        : base(TAG) {}
     public TriggerOrderType(char val)
-        : base(Tags.TriggerOrderType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char MARKET = '1';
@@ -19042,9 +19042,9 @@ public sealed class TriggerNewQty : DecimalField
     public const int TAG = 1112;
 
     public TriggerNewQty()
-        : base(Tags.TriggerNewQty) {}
+        : base(TAG) {}
     public TriggerNewQty(Decimal val)
-        : base(Tags.TriggerNewQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19055,9 +19055,9 @@ public sealed class TriggerTradingSessionID : StringField
     public const int TAG = 1113;
 
     public TriggerTradingSessionID()
-        : base(Tags.TriggerTradingSessionID) {}
+        : base(TAG) {}
     public TriggerTradingSessionID(string val)
-        : base(Tags.TriggerTradingSessionID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19068,9 +19068,9 @@ public sealed class TriggerTradingSessionSubID : StringField
     public const int TAG = 1114;
 
     public TriggerTradingSessionSubID()
-        : base(Tags.TriggerTradingSessionSubID) {}
+        : base(TAG) {}
     public TriggerTradingSessionSubID(string val)
-        : base(Tags.TriggerTradingSessionSubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19081,9 +19081,9 @@ public sealed class OrderCategory : CharField
     public const int TAG = 1115;
 
     public OrderCategory()
-        : base(Tags.OrderCategory) {}
+        : base(TAG) {}
     public OrderCategory(char val)
-        : base(Tags.OrderCategory, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ORDER = '1';
@@ -19105,9 +19105,9 @@ public sealed class NoRootPartyIDs : IntField
     public const int TAG = 1116;
 
     public NoRootPartyIDs()
-        : base(Tags.NoRootPartyIDs) {}
+        : base(TAG) {}
     public NoRootPartyIDs(int val)
-        : base(Tags.NoRootPartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19118,9 +19118,9 @@ public sealed class RootPartyID : StringField
     public const int TAG = 1117;
 
     public RootPartyID()
-        : base(Tags.RootPartyID) {}
+        : base(TAG) {}
     public RootPartyID(string val)
-        : base(Tags.RootPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19131,9 +19131,9 @@ public sealed class RootPartyIDSource : CharField
     public const int TAG = 1118;
 
     public RootPartyIDSource()
-        : base(Tags.RootPartyIDSource) {}
+        : base(TAG) {}
     public RootPartyIDSource(char val)
-        : base(Tags.RootPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19144,9 +19144,9 @@ public sealed class RootPartyRole : IntField
     public const int TAG = 1119;
 
     public RootPartyRole()
-        : base(Tags.RootPartyRole) {}
+        : base(TAG) {}
     public RootPartyRole(int val)
-        : base(Tags.RootPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19157,9 +19157,9 @@ public sealed class NoRootPartySubIDs : IntField
     public const int TAG = 1120;
 
     public NoRootPartySubIDs()
-        : base(Tags.NoRootPartySubIDs) {}
+        : base(TAG) {}
     public NoRootPartySubIDs(int val)
-        : base(Tags.NoRootPartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19170,9 +19170,9 @@ public sealed class RootPartySubID : StringField
     public const int TAG = 1121;
 
     public RootPartySubID()
-        : base(Tags.RootPartySubID) {}
+        : base(TAG) {}
     public RootPartySubID(string val)
-        : base(Tags.RootPartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19183,9 +19183,9 @@ public sealed class RootPartySubIDType : IntField
     public const int TAG = 1122;
 
     public RootPartySubIDType()
-        : base(Tags.RootPartySubIDType) {}
+        : base(TAG) {}
     public RootPartySubIDType(int val)
-        : base(Tags.RootPartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19196,9 +19196,9 @@ public sealed class TradeHandlingInstr : CharField
     public const int TAG = 1123;
 
     public TradeHandlingInstr()
-        : base(Tags.TradeHandlingInstr) {}
+        : base(TAG) {}
     public TradeHandlingInstr(char val)
-        : base(Tags.TradeHandlingInstr, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char TRADE_CONFIRMATION = '0';
@@ -19217,9 +19217,9 @@ public sealed class OrigTradeHandlingInstr : CharField
     public const int TAG = 1124;
 
     public OrigTradeHandlingInstr()
-        : base(Tags.OrigTradeHandlingInstr) {}
+        : base(TAG) {}
     public OrigTradeHandlingInstr(char val)
-        : base(Tags.OrigTradeHandlingInstr, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19230,9 +19230,9 @@ public sealed class OrigTradeDate : StringField
     public const int TAG = 1125;
 
     public OrigTradeDate()
-        : base(Tags.OrigTradeDate) {}
+        : base(TAG) {}
     public OrigTradeDate(string val)
-        : base(Tags.OrigTradeDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19243,9 +19243,9 @@ public sealed class OrigTradeID : StringField
     public const int TAG = 1126;
 
     public OrigTradeID()
-        : base(Tags.OrigTradeID) {}
+        : base(TAG) {}
     public OrigTradeID(string val)
-        : base(Tags.OrigTradeID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19256,9 +19256,9 @@ public sealed class OrigSecondaryTradeID : StringField
     public const int TAG = 1127;
 
     public OrigSecondaryTradeID()
-        : base(Tags.OrigSecondaryTradeID) {}
+        : base(TAG) {}
     public OrigSecondaryTradeID(string val)
-        : base(Tags.OrigSecondaryTradeID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19269,9 +19269,9 @@ public sealed class ApplVerID : StringField
     public const int TAG = 1128;
 
     public ApplVerID()
-        : base(Tags.ApplVerID) {}
+        : base(TAG) {}
     public ApplVerID(string val)
-        : base(Tags.ApplVerID, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string FIX27 = "0";
@@ -19294,9 +19294,9 @@ public sealed class CstmApplVerID : StringField
     public const int TAG = 1129;
 
     public CstmApplVerID()
-        : base(Tags.CstmApplVerID) {}
+        : base(TAG) {}
     public CstmApplVerID(string val)
-        : base(Tags.CstmApplVerID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19307,9 +19307,9 @@ public sealed class RefApplVerID : StringField
     public const int TAG = 1130;
 
     public RefApplVerID()
-        : base(Tags.RefApplVerID) {}
+        : base(TAG) {}
     public RefApplVerID(string val)
-        : base(Tags.RefApplVerID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19320,9 +19320,9 @@ public sealed class RefCstmApplVerID : StringField
     public const int TAG = 1131;
 
     public RefCstmApplVerID()
-        : base(Tags.RefCstmApplVerID) {}
+        : base(TAG) {}
     public RefCstmApplVerID(string val)
-        : base(Tags.RefCstmApplVerID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19333,14 +19333,14 @@ public sealed class TZTransactTime : DateTimeField
     public const int TAG = 1132;
 
     public TZTransactTime()
-        : base(Tags.TZTransactTime) {}
+        : base(TAG) {}
     public TZTransactTime(DateTime val)
-        : base(Tags.TZTransactTime, val) {}
+        : base(TAG, val) {}
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public TZTransactTime(DateTime val, bool showMilliseconds)
-        : base(Tags.TZTransactTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
     public TZTransactTime(DateTime val, TimePrecision precision)
-        : base(Tags.TZTransactTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -19351,9 +19351,9 @@ public sealed class ExDestinationIDSource : CharField
     public const int TAG = 1133;
 
     public ExDestinationIDSource()
-        : base(Tags.ExDestinationIDSource) {}
+        : base(TAG) {}
     public ExDestinationIDSource(char val)
-        : base(Tags.ExDestinationIDSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char BIC = 'B';
@@ -19371,9 +19371,9 @@ public sealed class ReportedPxDiff : BooleanField
     public const int TAG = 1134;
 
     public ReportedPxDiff()
-        : base(Tags.ReportedPxDiff) {}
+        : base(TAG) {}
     public ReportedPxDiff(Boolean val)
-        : base(Tags.ReportedPxDiff, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19384,9 +19384,9 @@ public sealed class RptSys : StringField
     public const int TAG = 1135;
 
     public RptSys()
-        : base(Tags.RptSys) {}
+        : base(TAG) {}
     public RptSys(string val)
-        : base(Tags.RptSys, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19397,9 +19397,9 @@ public sealed class AllocClearingFeeIndicator : StringField
     public const int TAG = 1136;
 
     public AllocClearingFeeIndicator()
-        : base(Tags.AllocClearingFeeIndicator) {}
+        : base(TAG) {}
     public AllocClearingFeeIndicator(string val)
-        : base(Tags.AllocClearingFeeIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19410,9 +19410,9 @@ public sealed class DefaultApplVerID : StringField
     public const int TAG = 1137;
 
     public DefaultApplVerID()
-        : base(Tags.DefaultApplVerID) {}
+        : base(TAG) {}
     public DefaultApplVerID(string val)
-        : base(Tags.DefaultApplVerID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19423,9 +19423,9 @@ public sealed class DisplayQty : DecimalField
     public const int TAG = 1138;
 
     public DisplayQty()
-        : base(Tags.DisplayQty) {}
+        : base(TAG) {}
     public DisplayQty(Decimal val)
-        : base(Tags.DisplayQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19436,9 +19436,9 @@ public sealed class ExchangeSpecialInstructions : StringField
     public const int TAG = 1139;
 
     public ExchangeSpecialInstructions()
-        : base(Tags.ExchangeSpecialInstructions) {}
+        : base(TAG) {}
     public ExchangeSpecialInstructions(string val)
-        : base(Tags.ExchangeSpecialInstructions, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19449,9 +19449,9 @@ public sealed class ExpirationQtyType : IntField
     public const int TAG = 982;
 
     public ExpirationQtyType()
-        : base(Tags.ExpirationQtyType) {}
+        : base(TAG) {}
     public ExpirationQtyType(int val)
-        : base(Tags.ExpirationQtyType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int AUTO_EXERCISE = 1;
@@ -19469,9 +19469,9 @@ public sealed class MaxTradeVol : DecimalField
     public const int TAG = 1140;
 
     public MaxTradeVol()
-        : base(Tags.MaxTradeVol) {}
+        : base(TAG) {}
     public MaxTradeVol(Decimal val)
-        : base(Tags.MaxTradeVol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19482,9 +19482,9 @@ public sealed class NoMDFeedTypes : IntField
     public const int TAG = 1141;
 
     public NoMDFeedTypes()
-        : base(Tags.NoMDFeedTypes) {}
+        : base(TAG) {}
     public NoMDFeedTypes(int val)
-        : base(Tags.NoMDFeedTypes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19495,9 +19495,9 @@ public sealed class MatchAlgorithm : StringField
     public const int TAG = 1142;
 
     public MatchAlgorithm()
-        : base(Tags.MatchAlgorithm) {}
+        : base(TAG) {}
     public MatchAlgorithm(string val)
-        : base(Tags.MatchAlgorithm, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19508,9 +19508,9 @@ public sealed class MaxPriceVariation : DecimalField
     public const int TAG = 1143;
 
     public MaxPriceVariation()
-        : base(Tags.MaxPriceVariation) {}
+        : base(TAG) {}
     public MaxPriceVariation(Decimal val)
-        : base(Tags.MaxPriceVariation, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19521,9 +19521,9 @@ public sealed class ImpliedMarketIndicator : IntField
     public const int TAG = 1144;
 
     public ImpliedMarketIndicator()
-        : base(Tags.ImpliedMarketIndicator) {}
+        : base(TAG) {}
     public ImpliedMarketIndicator(int val)
-        : base(Tags.ImpliedMarketIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NOT_IMPLIED = 0;
@@ -19540,7 +19540,7 @@ public sealed class EventTime : UtcDateTimeField
     public const int TAG = 1145;
 
     public EventTime()
-        : base(Tags.EventTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -19548,7 +19548,7 @@ public sealed class EventTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public EventTime(DateTime val)
-        : base(Tags.EventTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -19558,7 +19558,7 @@ public sealed class EventTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public EventTime(DateTime val, bool showMilliseconds)
-        : base(Tags.EventTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -19567,7 +19567,7 @@ public sealed class EventTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public EventTime(DateTime val, TimePrecision precision)
-        : base(Tags.EventTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -19578,9 +19578,9 @@ public sealed class MinPriceIncrementAmount : DecimalField
     public const int TAG = 1146;
 
     public MinPriceIncrementAmount()
-        : base(Tags.MinPriceIncrementAmount) {}
+        : base(TAG) {}
     public MinPriceIncrementAmount(Decimal val)
-        : base(Tags.MinPriceIncrementAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19591,9 +19591,9 @@ public sealed class UnitOfMeasureQty : DecimalField
     public const int TAG = 1147;
 
     public UnitOfMeasureQty()
-        : base(Tags.UnitOfMeasureQty) {}
+        : base(TAG) {}
     public UnitOfMeasureQty(Decimal val)
-        : base(Tags.UnitOfMeasureQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19604,9 +19604,9 @@ public sealed class LowLimitPrice : DecimalField
     public const int TAG = 1148;
 
     public LowLimitPrice()
-        : base(Tags.LowLimitPrice) {}
+        : base(TAG) {}
     public LowLimitPrice(Decimal val)
-        : base(Tags.LowLimitPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19617,9 +19617,9 @@ public sealed class HighLimitPrice : DecimalField
     public const int TAG = 1149;
 
     public HighLimitPrice()
-        : base(Tags.HighLimitPrice) {}
+        : base(TAG) {}
     public HighLimitPrice(Decimal val)
-        : base(Tags.HighLimitPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19630,9 +19630,9 @@ public sealed class TradingReferencePrice : DecimalField
     public const int TAG = 1150;
 
     public TradingReferencePrice()
-        : base(Tags.TradingReferencePrice) {}
+        : base(TAG) {}
     public TradingReferencePrice(Decimal val)
-        : base(Tags.TradingReferencePrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19643,9 +19643,9 @@ public sealed class SecurityGroup : StringField
     public const int TAG = 1151;
 
     public SecurityGroup()
-        : base(Tags.SecurityGroup) {}
+        : base(TAG) {}
     public SecurityGroup(string val)
-        : base(Tags.SecurityGroup, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19656,9 +19656,9 @@ public sealed class LegNumber : IntField
     public const int TAG = 1152;
 
     public LegNumber()
-        : base(Tags.LegNumber) {}
+        : base(TAG) {}
     public LegNumber(int val)
-        : base(Tags.LegNumber, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19669,9 +19669,9 @@ public sealed class SettlementCycleNo : IntField
     public const int TAG = 1153;
 
     public SettlementCycleNo()
-        : base(Tags.SettlementCycleNo) {}
+        : base(TAG) {}
     public SettlementCycleNo(int val)
-        : base(Tags.SettlementCycleNo, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19682,9 +19682,9 @@ public sealed class SideCurrency : StringField
     public const int TAG = 1154;
 
     public SideCurrency()
-        : base(Tags.SideCurrency) {}
+        : base(TAG) {}
     public SideCurrency(string val)
-        : base(Tags.SideCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19695,9 +19695,9 @@ public sealed class SideSettlCurrency : StringField
     public const int TAG = 1155;
 
     public SideSettlCurrency()
-        : base(Tags.SideSettlCurrency) {}
+        : base(TAG) {}
     public SideSettlCurrency(string val)
-        : base(Tags.SideSettlCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19708,9 +19708,9 @@ public sealed class ApplExtID : IntField
     public const int TAG = 1156;
 
     public ApplExtID()
-        : base(Tags.ApplExtID) {}
+        : base(TAG) {}
     public ApplExtID(int val)
-        : base(Tags.ApplExtID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19721,9 +19721,9 @@ public sealed class CcyAmt : DecimalField
     public const int TAG = 1157;
 
     public CcyAmt()
-        : base(Tags.CcyAmt) {}
+        : base(TAG) {}
     public CcyAmt(Decimal val)
-        : base(Tags.CcyAmt, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19734,9 +19734,9 @@ public sealed class NoSettlDetails : IntField
     public const int TAG = 1158;
 
     public NoSettlDetails()
-        : base(Tags.NoSettlDetails) {}
+        : base(TAG) {}
     public NoSettlDetails(int val)
-        : base(Tags.NoSettlDetails, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19747,9 +19747,9 @@ public sealed class SettlObligMode : IntField
     public const int TAG = 1159;
 
     public SettlObligMode()
-        : base(Tags.SettlObligMode) {}
+        : base(TAG) {}
     public SettlObligMode(int val)
-        : base(Tags.SettlObligMode, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PRELIMINARY = 1;
@@ -19764,9 +19764,9 @@ public sealed class SettlObligMsgID : StringField
     public const int TAG = 1160;
 
     public SettlObligMsgID()
-        : base(Tags.SettlObligMsgID) {}
+        : base(TAG) {}
     public SettlObligMsgID(string val)
-        : base(Tags.SettlObligMsgID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19777,9 +19777,9 @@ public sealed class SettlObligID : StringField
     public const int TAG = 1161;
 
     public SettlObligID()
-        : base(Tags.SettlObligID) {}
+        : base(TAG) {}
     public SettlObligID(string val)
-        : base(Tags.SettlObligID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19790,9 +19790,9 @@ public sealed class SettlObligTransType : CharField
     public const int TAG = 1162;
 
     public SettlObligTransType()
-        : base(Tags.SettlObligTransType) {}
+        : base(TAG) {}
     public SettlObligTransType(char val)
-        : base(Tags.SettlObligTransType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CANCEL = 'C';
@@ -19809,9 +19809,9 @@ public sealed class SettlObligRefID : StringField
     public const int TAG = 1163;
 
     public SettlObligRefID()
-        : base(Tags.SettlObligRefID) {}
+        : base(TAG) {}
     public SettlObligRefID(string val)
-        : base(Tags.SettlObligRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19822,9 +19822,9 @@ public sealed class SettlObligSource : CharField
     public const int TAG = 1164;
 
     public SettlObligSource()
-        : base(Tags.SettlObligSource) {}
+        : base(TAG) {}
     public SettlObligSource(char val)
-        : base(Tags.SettlObligSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char INSTRUCTIONS_OF_BROKER = '1';
@@ -19840,9 +19840,9 @@ public sealed class NoSettlOblig : IntField
     public const int TAG = 1165;
 
     public NoSettlOblig()
-        : base(Tags.NoSettlOblig) {}
+        : base(TAG) {}
     public NoSettlOblig(int val)
-        : base(Tags.NoSettlOblig, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19853,9 +19853,9 @@ public sealed class QuoteMsgID : StringField
     public const int TAG = 1166;
 
     public QuoteMsgID()
-        : base(Tags.QuoteMsgID) {}
+        : base(TAG) {}
     public QuoteMsgID(string val)
-        : base(Tags.QuoteMsgID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19866,9 +19866,9 @@ public sealed class QuoteEntryStatus : IntField
     public const int TAG = 1167;
 
     public QuoteEntryStatus()
-        : base(Tags.QuoteEntryStatus) {}
+        : base(TAG) {}
     public QuoteEntryStatus(int val)
-        : base(Tags.QuoteEntryStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ACCEPTED = 0;
@@ -19890,9 +19890,9 @@ public sealed class TotNoCxldQuotes : IntField
     public const int TAG = 1168;
 
     public TotNoCxldQuotes()
-        : base(Tags.TotNoCxldQuotes) {}
+        : base(TAG) {}
     public TotNoCxldQuotes(int val)
-        : base(Tags.TotNoCxldQuotes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19903,9 +19903,9 @@ public sealed class TotNoAccQuotes : IntField
     public const int TAG = 1169;
 
     public TotNoAccQuotes()
-        : base(Tags.TotNoAccQuotes) {}
+        : base(TAG) {}
     public TotNoAccQuotes(int val)
-        : base(Tags.TotNoAccQuotes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19916,9 +19916,9 @@ public sealed class TotNoRejQuotes : IntField
     public const int TAG = 1170;
 
     public TotNoRejQuotes()
-        : base(Tags.TotNoRejQuotes) {}
+        : base(TAG) {}
     public TotNoRejQuotes(int val)
-        : base(Tags.TotNoRejQuotes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19929,9 +19929,9 @@ public sealed class PrivateQuote : BooleanField
     public const int TAG = 1171;
 
     public PrivateQuote()
-        : base(Tags.PrivateQuote) {}
+        : base(TAG) {}
     public PrivateQuote(Boolean val)
-        : base(Tags.PrivateQuote, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19942,9 +19942,9 @@ public sealed class RespondentType : IntField
     public const int TAG = 1172;
 
     public RespondentType()
-        : base(Tags.RespondentType) {}
+        : base(TAG) {}
     public RespondentType(int val)
-        : base(Tags.RespondentType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ALL_MARKET_PARTICIPANTS = 1;
@@ -19961,9 +19961,9 @@ public sealed class MDSubBookType : IntField
     public const int TAG = 1173;
 
     public MDSubBookType()
-        : base(Tags.MDSubBookType) {}
+        : base(TAG) {}
     public MDSubBookType(int val)
-        : base(Tags.MDSubBookType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -19974,9 +19974,9 @@ public sealed class SecurityTradingEvent : IntField
     public const int TAG = 1174;
 
     public SecurityTradingEvent()
-        : base(Tags.SecurityTradingEvent) {}
+        : base(TAG) {}
     public SecurityTradingEvent(int val)
-        : base(Tags.SecurityTradingEvent, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ORDER_IMBALANCE_AUCTION_IS_EXTENDED = 1;
@@ -19998,9 +19998,9 @@ public sealed class NoStatsIndicators : IntField
     public const int TAG = 1175;
 
     public NoStatsIndicators()
-        : base(Tags.NoStatsIndicators) {}
+        : base(TAG) {}
     public NoStatsIndicators(int val)
-        : base(Tags.NoStatsIndicators, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20011,9 +20011,9 @@ public sealed class StatsType : IntField
     public const int TAG = 1176;
 
     public StatsType()
-        : base(Tags.StatsType) {}
+        : base(TAG) {}
     public StatsType(int val)
-        : base(Tags.StatsType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int EXCHANGE_LAST = 1;
@@ -20030,9 +20030,9 @@ public sealed class NoOfSecSizes : IntField
     public const int TAG = 1177;
 
     public NoOfSecSizes()
-        : base(Tags.NoOfSecSizes) {}
+        : base(TAG) {}
     public NoOfSecSizes(int val)
-        : base(Tags.NoOfSecSizes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20043,9 +20043,9 @@ public sealed class MDSecSizeType : IntField
     public const int TAG = 1178;
 
     public MDSecSizeType()
-        : base(Tags.MDSecSizeType) {}
+        : base(TAG) {}
     public MDSecSizeType(int val)
-        : base(Tags.MDSecSizeType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CUSTOMER = 1;
@@ -20059,9 +20059,9 @@ public sealed class MDSecSize : DecimalField
     public const int TAG = 1179;
 
     public MDSecSize()
-        : base(Tags.MDSecSize) {}
+        : base(TAG) {}
     public MDSecSize(Decimal val)
-        : base(Tags.MDSecSize, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20072,9 +20072,9 @@ public sealed class ApplID : StringField
     public const int TAG = 1180;
 
     public ApplID()
-        : base(Tags.ApplID) {}
+        : base(TAG) {}
     public ApplID(string val)
-        : base(Tags.ApplID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20085,9 +20085,9 @@ public sealed class ApplSeqNum : SeqNumFieldType
     public const int TAG = 1181;
 
     public ApplSeqNum()
-        : base(Tags.ApplSeqNum) {}
+        : base(TAG) {}
     public ApplSeqNum(SeqNumType val)
-        : base(Tags.ApplSeqNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20098,9 +20098,9 @@ public sealed class ApplBegSeqNum : SeqNumFieldType
     public const int TAG = 1182;
 
     public ApplBegSeqNum()
-        : base(Tags.ApplBegSeqNum) {}
+        : base(TAG) {}
     public ApplBegSeqNum(SeqNumType val)
-        : base(Tags.ApplBegSeqNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20111,9 +20111,9 @@ public sealed class ApplEndSeqNum : SeqNumFieldType
     public const int TAG = 1183;
 
     public ApplEndSeqNum()
-        : base(Tags.ApplEndSeqNum) {}
+        : base(TAG) {}
     public ApplEndSeqNum(SeqNumType val)
-        : base(Tags.ApplEndSeqNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20124,9 +20124,9 @@ public sealed class SecurityXMLLen : IntField
     public const int TAG = 1184;
 
     public SecurityXMLLen()
-        : base(Tags.SecurityXMLLen) {}
+        : base(TAG) {}
     public SecurityXMLLen(int val)
-        : base(Tags.SecurityXMLLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20137,9 +20137,9 @@ public sealed class SecurityXML : StringField
     public const int TAG = 1185;
 
     public SecurityXML()
-        : base(Tags.SecurityXML) {}
+        : base(TAG) {}
     public SecurityXML(string val)
-        : base(Tags.SecurityXML, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20150,9 +20150,9 @@ public sealed class SecurityXMLSchema : StringField
     public const int TAG = 1186;
 
     public SecurityXMLSchema()
-        : base(Tags.SecurityXMLSchema) {}
+        : base(TAG) {}
     public SecurityXMLSchema(string val)
-        : base(Tags.SecurityXMLSchema, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20163,9 +20163,9 @@ public sealed class RefreshIndicator : BooleanField
     public const int TAG = 1187;
 
     public RefreshIndicator()
-        : base(Tags.RefreshIndicator) {}
+        : base(TAG) {}
     public RefreshIndicator(Boolean val)
-        : base(Tags.RefreshIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20176,9 +20176,9 @@ public sealed class Volatility : DecimalField
     public const int TAG = 1188;
 
     public Volatility()
-        : base(Tags.Volatility) {}
+        : base(TAG) {}
     public Volatility(Decimal val)
-        : base(Tags.Volatility, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20189,9 +20189,9 @@ public sealed class TimeToExpiration : DecimalField
     public const int TAG = 1189;
 
     public TimeToExpiration()
-        : base(Tags.TimeToExpiration) {}
+        : base(TAG) {}
     public TimeToExpiration(Decimal val)
-        : base(Tags.TimeToExpiration, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20202,9 +20202,9 @@ public sealed class RiskFreeRate : DecimalField
     public const int TAG = 1190;
 
     public RiskFreeRate()
-        : base(Tags.RiskFreeRate) {}
+        : base(TAG) {}
     public RiskFreeRate(Decimal val)
-        : base(Tags.RiskFreeRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20215,9 +20215,9 @@ public sealed class PriceUnitOfMeasure : StringField
     public const int TAG = 1191;
 
     public PriceUnitOfMeasure()
-        : base(Tags.PriceUnitOfMeasure) {}
+        : base(TAG) {}
     public PriceUnitOfMeasure(string val)
-        : base(Tags.PriceUnitOfMeasure, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20228,9 +20228,9 @@ public sealed class PriceUnitOfMeasureQty : DecimalField
     public const int TAG = 1192;
 
     public PriceUnitOfMeasureQty()
-        : base(Tags.PriceUnitOfMeasureQty) {}
+        : base(TAG) {}
     public PriceUnitOfMeasureQty(Decimal val)
-        : base(Tags.PriceUnitOfMeasureQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20241,9 +20241,9 @@ public sealed class SettlMethod : CharField
     public const int TAG = 1193;
 
     public SettlMethod()
-        : base(Tags.SettlMethod) {}
+        : base(TAG) {}
     public SettlMethod(char val)
-        : base(Tags.SettlMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char CASH_SETTLEMENT_REQUIRED = 'C';
@@ -20258,9 +20258,9 @@ public sealed class ExerciseStyle : IntField
     public const int TAG = 1194;
 
     public ExerciseStyle()
-        : base(Tags.ExerciseStyle) {}
+        : base(TAG) {}
     public ExerciseStyle(int val)
-        : base(Tags.ExerciseStyle, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int EUROPEAN = 0;
@@ -20276,9 +20276,9 @@ public sealed class OptPayAmount : DecimalField
     public const int TAG = 1195;
 
     public OptPayAmount()
-        : base(Tags.OptPayAmount) {}
+        : base(TAG) {}
     public OptPayAmount(Decimal val)
-        : base(Tags.OptPayAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20289,9 +20289,9 @@ public sealed class PriceQuoteMethod : StringField
     public const int TAG = 1196;
 
     public PriceQuoteMethod()
-        : base(Tags.PriceQuoteMethod) {}
+        : base(TAG) {}
     public PriceQuoteMethod(string val)
-        : base(Tags.PriceQuoteMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string STANDARD = "STD";
@@ -20308,9 +20308,9 @@ public sealed class FuturesValuationMethod : StringField
     public const int TAG = 1197;
 
     public FuturesValuationMethod()
-        : base(Tags.FuturesValuationMethod) {}
+        : base(TAG) {}
     public FuturesValuationMethod(string val)
-        : base(Tags.FuturesValuationMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string PREMIUM_STYLE = "EQTY";
@@ -20326,9 +20326,9 @@ public sealed class ListMethod : IntField
     public const int TAG = 1198;
 
     public ListMethod()
-        : base(Tags.ListMethod) {}
+        : base(TAG) {}
     public ListMethod(int val)
-        : base(Tags.ListMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PRE_LISTED_ONLY = 0;
@@ -20343,9 +20343,9 @@ public sealed class CapPrice : DecimalField
     public const int TAG = 1199;
 
     public CapPrice()
-        : base(Tags.CapPrice) {}
+        : base(TAG) {}
     public CapPrice(Decimal val)
-        : base(Tags.CapPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20356,9 +20356,9 @@ public sealed class FloorPrice : DecimalField
     public const int TAG = 1200;
 
     public FloorPrice()
-        : base(Tags.FloorPrice) {}
+        : base(TAG) {}
     public FloorPrice(Decimal val)
-        : base(Tags.FloorPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20369,9 +20369,9 @@ public sealed class NoStrikeRules : IntField
     public const int TAG = 1201;
 
     public NoStrikeRules()
-        : base(Tags.NoStrikeRules) {}
+        : base(TAG) {}
     public NoStrikeRules(int val)
-        : base(Tags.NoStrikeRules, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20382,9 +20382,9 @@ public sealed class StartStrikePxRange : DecimalField
     public const int TAG = 1202;
 
     public StartStrikePxRange()
-        : base(Tags.StartStrikePxRange) {}
+        : base(TAG) {}
     public StartStrikePxRange(Decimal val)
-        : base(Tags.StartStrikePxRange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20395,9 +20395,9 @@ public sealed class EndStrikePxRange : DecimalField
     public const int TAG = 1203;
 
     public EndStrikePxRange()
-        : base(Tags.EndStrikePxRange) {}
+        : base(TAG) {}
     public EndStrikePxRange(Decimal val)
-        : base(Tags.EndStrikePxRange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20408,9 +20408,9 @@ public sealed class StrikeIncrement : DecimalField
     public const int TAG = 1204;
 
     public StrikeIncrement()
-        : base(Tags.StrikeIncrement) {}
+        : base(TAG) {}
     public StrikeIncrement(Decimal val)
-        : base(Tags.StrikeIncrement, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20421,9 +20421,9 @@ public sealed class NoTickRules : IntField
     public const int TAG = 1205;
 
     public NoTickRules()
-        : base(Tags.NoTickRules) {}
+        : base(TAG) {}
     public NoTickRules(int val)
-        : base(Tags.NoTickRules, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20434,9 +20434,9 @@ public sealed class StartTickPriceRange : DecimalField
     public const int TAG = 1206;
 
     public StartTickPriceRange()
-        : base(Tags.StartTickPriceRange) {}
+        : base(TAG) {}
     public StartTickPriceRange(Decimal val)
-        : base(Tags.StartTickPriceRange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20447,9 +20447,9 @@ public sealed class EndTickPriceRange : DecimalField
     public const int TAG = 1207;
 
     public EndTickPriceRange()
-        : base(Tags.EndTickPriceRange) {}
+        : base(TAG) {}
     public EndTickPriceRange(Decimal val)
-        : base(Tags.EndTickPriceRange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20460,9 +20460,9 @@ public sealed class TickIncrement : DecimalField
     public const int TAG = 1208;
 
     public TickIncrement()
-        : base(Tags.TickIncrement) {}
+        : base(TAG) {}
     public TickIncrement(Decimal val)
-        : base(Tags.TickIncrement, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20473,9 +20473,9 @@ public sealed class TickRuleType : IntField
     public const int TAG = 1209;
 
     public TickRuleType()
-        : base(Tags.TickRuleType) {}
+        : base(TAG) {}
     public TickRuleType(int val)
-        : base(Tags.TickRuleType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int REGULAR = 0;
@@ -20493,9 +20493,9 @@ public sealed class NestedInstrAttribType : IntField
     public const int TAG = 1210;
 
     public NestedInstrAttribType()
-        : base(Tags.NestedInstrAttribType) {}
+        : base(TAG) {}
     public NestedInstrAttribType(int val)
-        : base(Tags.NestedInstrAttribType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20506,9 +20506,9 @@ public sealed class NestedInstrAttribValue : StringField
     public const int TAG = 1211;
 
     public NestedInstrAttribValue()
-        : base(Tags.NestedInstrAttribValue) {}
+        : base(TAG) {}
     public NestedInstrAttribValue(string val)
-        : base(Tags.NestedInstrAttribValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20519,9 +20519,9 @@ public sealed class LegMaturityTime : StringField
     public const int TAG = 1212;
 
     public LegMaturityTime()
-        : base(Tags.LegMaturityTime) {}
+        : base(TAG) {}
     public LegMaturityTime(string val)
-        : base(Tags.LegMaturityTime, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20532,9 +20532,9 @@ public sealed class UnderlyingMaturityTime : StringField
     public const int TAG = 1213;
 
     public UnderlyingMaturityTime()
-        : base(Tags.UnderlyingMaturityTime) {}
+        : base(TAG) {}
     public UnderlyingMaturityTime(string val)
-        : base(Tags.UnderlyingMaturityTime, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20545,9 +20545,9 @@ public sealed class DerivativeSymbol : StringField
     public const int TAG = 1214;
 
     public DerivativeSymbol()
-        : base(Tags.DerivativeSymbol) {}
+        : base(TAG) {}
     public DerivativeSymbol(string val)
-        : base(Tags.DerivativeSymbol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20558,9 +20558,9 @@ public sealed class DerivativeSymbolSfx : StringField
     public const int TAG = 1215;
 
     public DerivativeSymbolSfx()
-        : base(Tags.DerivativeSymbolSfx) {}
+        : base(TAG) {}
     public DerivativeSymbolSfx(string val)
-        : base(Tags.DerivativeSymbolSfx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20571,9 +20571,9 @@ public sealed class DerivativeSecurityID : StringField
     public const int TAG = 1216;
 
     public DerivativeSecurityID()
-        : base(Tags.DerivativeSecurityID) {}
+        : base(TAG) {}
     public DerivativeSecurityID(string val)
-        : base(Tags.DerivativeSecurityID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20584,9 +20584,9 @@ public sealed class DerivativeSecurityIDSource : StringField
     public const int TAG = 1217;
 
     public DerivativeSecurityIDSource()
-        : base(Tags.DerivativeSecurityIDSource) {}
+        : base(TAG) {}
     public DerivativeSecurityIDSource(string val)
-        : base(Tags.DerivativeSecurityIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20597,9 +20597,9 @@ public sealed class NoDerivativeSecurityAltID : IntField
     public const int TAG = 1218;
 
     public NoDerivativeSecurityAltID()
-        : base(Tags.NoDerivativeSecurityAltID) {}
+        : base(TAG) {}
     public NoDerivativeSecurityAltID(int val)
-        : base(Tags.NoDerivativeSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20610,9 +20610,9 @@ public sealed class DerivativeSecurityAltID : StringField
     public const int TAG = 1219;
 
     public DerivativeSecurityAltID()
-        : base(Tags.DerivativeSecurityAltID) {}
+        : base(TAG) {}
     public DerivativeSecurityAltID(string val)
-        : base(Tags.DerivativeSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20623,9 +20623,9 @@ public sealed class DerivativeSecurityAltIDSource : StringField
     public const int TAG = 1220;
 
     public DerivativeSecurityAltIDSource()
-        : base(Tags.DerivativeSecurityAltIDSource) {}
+        : base(TAG) {}
     public DerivativeSecurityAltIDSource(string val)
-        : base(Tags.DerivativeSecurityAltIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20636,9 +20636,9 @@ public sealed class SecondaryLowLimitPrice : DecimalField
     public const int TAG = 1221;
 
     public SecondaryLowLimitPrice()
-        : base(Tags.SecondaryLowLimitPrice) {}
+        : base(TAG) {}
     public SecondaryLowLimitPrice(Decimal val)
-        : base(Tags.SecondaryLowLimitPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20649,9 +20649,9 @@ public sealed class MaturityRuleID : StringField
     public const int TAG = 1222;
 
     public MaturityRuleID()
-        : base(Tags.MaturityRuleID) {}
+        : base(TAG) {}
     public MaturityRuleID(string val)
-        : base(Tags.MaturityRuleID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20662,9 +20662,9 @@ public sealed class StrikeRuleID : StringField
     public const int TAG = 1223;
 
     public StrikeRuleID()
-        : base(Tags.StrikeRuleID) {}
+        : base(TAG) {}
     public StrikeRuleID(string val)
-        : base(Tags.StrikeRuleID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20675,9 +20675,9 @@ public sealed class LegUnitOfMeasureQty : DecimalField
     public const int TAG = 1224;
 
     public LegUnitOfMeasureQty()
-        : base(Tags.LegUnitOfMeasureQty) {}
+        : base(TAG) {}
     public LegUnitOfMeasureQty(Decimal val)
-        : base(Tags.LegUnitOfMeasureQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20688,9 +20688,9 @@ public sealed class DerivativeOptPayAmount : DecimalField
     public const int TAG = 1225;
 
     public DerivativeOptPayAmount()
-        : base(Tags.DerivativeOptPayAmount) {}
+        : base(TAG) {}
     public DerivativeOptPayAmount(Decimal val)
-        : base(Tags.DerivativeOptPayAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20701,9 +20701,9 @@ public sealed class EndMaturityMonthYear : StringField
     public const int TAG = 1226;
 
     public EndMaturityMonthYear()
-        : base(Tags.EndMaturityMonthYear) {}
+        : base(TAG) {}
     public EndMaturityMonthYear(string val)
-        : base(Tags.EndMaturityMonthYear, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20714,9 +20714,9 @@ public sealed class ProductComplex : StringField
     public const int TAG = 1227;
 
     public ProductComplex()
-        : base(Tags.ProductComplex) {}
+        : base(TAG) {}
     public ProductComplex(string val)
-        : base(Tags.ProductComplex, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20727,9 +20727,9 @@ public sealed class DerivativeProductComplex : StringField
     public const int TAG = 1228;
 
     public DerivativeProductComplex()
-        : base(Tags.DerivativeProductComplex) {}
+        : base(TAG) {}
     public DerivativeProductComplex(string val)
-        : base(Tags.DerivativeProductComplex, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20740,9 +20740,9 @@ public sealed class MaturityMonthYearIncrement : IntField
     public const int TAG = 1229;
 
     public MaturityMonthYearIncrement()
-        : base(Tags.MaturityMonthYearIncrement) {}
+        : base(TAG) {}
     public MaturityMonthYearIncrement(int val)
-        : base(Tags.MaturityMonthYearIncrement, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20753,9 +20753,9 @@ public sealed class SecondaryHighLimitPrice : DecimalField
     public const int TAG = 1230;
 
     public SecondaryHighLimitPrice()
-        : base(Tags.SecondaryHighLimitPrice) {}
+        : base(TAG) {}
     public SecondaryHighLimitPrice(Decimal val)
-        : base(Tags.SecondaryHighLimitPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20766,9 +20766,9 @@ public sealed class MinLotSize : DecimalField
     public const int TAG = 1231;
 
     public MinLotSize()
-        : base(Tags.MinLotSize) {}
+        : base(TAG) {}
     public MinLotSize(Decimal val)
-        : base(Tags.MinLotSize, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20779,9 +20779,9 @@ public sealed class NoExecInstRules : IntField
     public const int TAG = 1232;
 
     public NoExecInstRules()
-        : base(Tags.NoExecInstRules) {}
+        : base(TAG) {}
     public NoExecInstRules(int val)
-        : base(Tags.NoExecInstRules, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20792,9 +20792,9 @@ public sealed class NoLotTypeRules : IntField
     public const int TAG = 1234;
 
     public NoLotTypeRules()
-        : base(Tags.NoLotTypeRules) {}
+        : base(TAG) {}
     public NoLotTypeRules(int val)
-        : base(Tags.NoLotTypeRules, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20805,9 +20805,9 @@ public sealed class NoMatchRules : IntField
     public const int TAG = 1235;
 
     public NoMatchRules()
-        : base(Tags.NoMatchRules) {}
+        : base(TAG) {}
     public NoMatchRules(int val)
-        : base(Tags.NoMatchRules, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20818,9 +20818,9 @@ public sealed class NoMaturityRules : IntField
     public const int TAG = 1236;
 
     public NoMaturityRules()
-        : base(Tags.NoMaturityRules) {}
+        : base(TAG) {}
     public NoMaturityRules(int val)
-        : base(Tags.NoMaturityRules, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20831,9 +20831,9 @@ public sealed class NoOrdTypeRules : IntField
     public const int TAG = 1237;
 
     public NoOrdTypeRules()
-        : base(Tags.NoOrdTypeRules) {}
+        : base(TAG) {}
     public NoOrdTypeRules(int val)
-        : base(Tags.NoOrdTypeRules, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20844,9 +20844,9 @@ public sealed class NoTimeInForceRules : IntField
     public const int TAG = 1239;
 
     public NoTimeInForceRules()
-        : base(Tags.NoTimeInForceRules) {}
+        : base(TAG) {}
     public NoTimeInForceRules(int val)
-        : base(Tags.NoTimeInForceRules, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20857,9 +20857,9 @@ public sealed class SecondaryTradingReferencePrice : DecimalField
     public const int TAG = 1240;
 
     public SecondaryTradingReferencePrice()
-        : base(Tags.SecondaryTradingReferencePrice) {}
+        : base(TAG) {}
     public SecondaryTradingReferencePrice(Decimal val)
-        : base(Tags.SecondaryTradingReferencePrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20870,9 +20870,9 @@ public sealed class StartMaturityMonthYear : StringField
     public const int TAG = 1241;
 
     public StartMaturityMonthYear()
-        : base(Tags.StartMaturityMonthYear) {}
+        : base(TAG) {}
     public StartMaturityMonthYear(string val)
-        : base(Tags.StartMaturityMonthYear, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20883,9 +20883,9 @@ public sealed class FlexProductEligibilityIndicator : BooleanField
     public const int TAG = 1242;
 
     public FlexProductEligibilityIndicator()
-        : base(Tags.FlexProductEligibilityIndicator) {}
+        : base(TAG) {}
     public FlexProductEligibilityIndicator(Boolean val)
-        : base(Tags.FlexProductEligibilityIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20896,9 +20896,9 @@ public sealed class DerivFlexProductEligibilityIndicator : BooleanField
     public const int TAG = 1243;
 
     public DerivFlexProductEligibilityIndicator()
-        : base(Tags.DerivFlexProductEligibilityIndicator) {}
+        : base(TAG) {}
     public DerivFlexProductEligibilityIndicator(Boolean val)
-        : base(Tags.DerivFlexProductEligibilityIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20909,9 +20909,9 @@ public sealed class FlexibleIndicator : BooleanField
     public const int TAG = 1244;
 
     public FlexibleIndicator()
-        : base(Tags.FlexibleIndicator) {}
+        : base(TAG) {}
     public FlexibleIndicator(Boolean val)
-        : base(Tags.FlexibleIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20922,9 +20922,9 @@ public sealed class TradingCurrency : StringField
     public const int TAG = 1245;
 
     public TradingCurrency()
-        : base(Tags.TradingCurrency) {}
+        : base(TAG) {}
     public TradingCurrency(string val)
-        : base(Tags.TradingCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20935,9 +20935,9 @@ public sealed class DerivativeProduct : IntField
     public const int TAG = 1246;
 
     public DerivativeProduct()
-        : base(Tags.DerivativeProduct) {}
+        : base(TAG) {}
     public DerivativeProduct(int val)
-        : base(Tags.DerivativeProduct, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20948,9 +20948,9 @@ public sealed class DerivativeSecurityGroup : StringField
     public const int TAG = 1247;
 
     public DerivativeSecurityGroup()
-        : base(Tags.DerivativeSecurityGroup) {}
+        : base(TAG) {}
     public DerivativeSecurityGroup(string val)
-        : base(Tags.DerivativeSecurityGroup, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20961,9 +20961,9 @@ public sealed class DerivativeCFICode : StringField
     public const int TAG = 1248;
 
     public DerivativeCFICode()
-        : base(Tags.DerivativeCFICode) {}
+        : base(TAG) {}
     public DerivativeCFICode(string val)
-        : base(Tags.DerivativeCFICode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20974,9 +20974,9 @@ public sealed class DerivativeSecurityType : StringField
     public const int TAG = 1249;
 
     public DerivativeSecurityType()
-        : base(Tags.DerivativeSecurityType) {}
+        : base(TAG) {}
     public DerivativeSecurityType(string val)
-        : base(Tags.DerivativeSecurityType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -20987,9 +20987,9 @@ public sealed class DerivativeSecuritySubType : StringField
     public const int TAG = 1250;
 
     public DerivativeSecuritySubType()
-        : base(Tags.DerivativeSecuritySubType) {}
+        : base(TAG) {}
     public DerivativeSecuritySubType(string val)
-        : base(Tags.DerivativeSecuritySubType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21000,9 +21000,9 @@ public sealed class DerivativeMaturityMonthYear : StringField
     public const int TAG = 1251;
 
     public DerivativeMaturityMonthYear()
-        : base(Tags.DerivativeMaturityMonthYear) {}
+        : base(TAG) {}
     public DerivativeMaturityMonthYear(string val)
-        : base(Tags.DerivativeMaturityMonthYear, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21013,9 +21013,9 @@ public sealed class DerivativeMaturityDate : StringField
     public const int TAG = 1252;
 
     public DerivativeMaturityDate()
-        : base(Tags.DerivativeMaturityDate) {}
+        : base(TAG) {}
     public DerivativeMaturityDate(string val)
-        : base(Tags.DerivativeMaturityDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21026,9 +21026,9 @@ public sealed class DerivativeMaturityTime : StringField
     public const int TAG = 1253;
 
     public DerivativeMaturityTime()
-        : base(Tags.DerivativeMaturityTime) {}
+        : base(TAG) {}
     public DerivativeMaturityTime(string val)
-        : base(Tags.DerivativeMaturityTime, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21039,9 +21039,9 @@ public sealed class DerivativeSettleOnOpenFlag : StringField
     public const int TAG = 1254;
 
     public DerivativeSettleOnOpenFlag()
-        : base(Tags.DerivativeSettleOnOpenFlag) {}
+        : base(TAG) {}
     public DerivativeSettleOnOpenFlag(string val)
-        : base(Tags.DerivativeSettleOnOpenFlag, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21052,9 +21052,9 @@ public sealed class DerivativeInstrmtAssignmentMethod : CharField
     public const int TAG = 1255;
 
     public DerivativeInstrmtAssignmentMethod()
-        : base(Tags.DerivativeInstrmtAssignmentMethod) {}
+        : base(TAG) {}
     public DerivativeInstrmtAssignmentMethod(char val)
-        : base(Tags.DerivativeInstrmtAssignmentMethod, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21065,9 +21065,9 @@ public sealed class DerivativeSecurityStatus : StringField
     public const int TAG = 1256;
 
     public DerivativeSecurityStatus()
-        : base(Tags.DerivativeSecurityStatus) {}
+        : base(TAG) {}
     public DerivativeSecurityStatus(string val)
-        : base(Tags.DerivativeSecurityStatus, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21078,9 +21078,9 @@ public sealed class DerivativeInstrRegistry : StringField
     public const int TAG = 1257;
 
     public DerivativeInstrRegistry()
-        : base(Tags.DerivativeInstrRegistry) {}
+        : base(TAG) {}
     public DerivativeInstrRegistry(string val)
-        : base(Tags.DerivativeInstrRegistry, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21091,9 +21091,9 @@ public sealed class DerivativeCountryOfIssue : StringField
     public const int TAG = 1258;
 
     public DerivativeCountryOfIssue()
-        : base(Tags.DerivativeCountryOfIssue) {}
+        : base(TAG) {}
     public DerivativeCountryOfIssue(string val)
-        : base(Tags.DerivativeCountryOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21104,9 +21104,9 @@ public sealed class DerivativeStateOrProvinceOfIssue : StringField
     public const int TAG = 1259;
 
     public DerivativeStateOrProvinceOfIssue()
-        : base(Tags.DerivativeStateOrProvinceOfIssue) {}
+        : base(TAG) {}
     public DerivativeStateOrProvinceOfIssue(string val)
-        : base(Tags.DerivativeStateOrProvinceOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21117,9 +21117,9 @@ public sealed class DerivativeLocaleOfIssue : StringField
     public const int TAG = 1260;
 
     public DerivativeLocaleOfIssue()
-        : base(Tags.DerivativeLocaleOfIssue) {}
+        : base(TAG) {}
     public DerivativeLocaleOfIssue(string val)
-        : base(Tags.DerivativeLocaleOfIssue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21130,9 +21130,9 @@ public sealed class DerivativeStrikePrice : DecimalField
     public const int TAG = 1261;
 
     public DerivativeStrikePrice()
-        : base(Tags.DerivativeStrikePrice) {}
+        : base(TAG) {}
     public DerivativeStrikePrice(Decimal val)
-        : base(Tags.DerivativeStrikePrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21143,9 +21143,9 @@ public sealed class DerivativeStrikeCurrency : StringField
     public const int TAG = 1262;
 
     public DerivativeStrikeCurrency()
-        : base(Tags.DerivativeStrikeCurrency) {}
+        : base(TAG) {}
     public DerivativeStrikeCurrency(string val)
-        : base(Tags.DerivativeStrikeCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21156,9 +21156,9 @@ public sealed class DerivativeStrikeMultiplier : DecimalField
     public const int TAG = 1263;
 
     public DerivativeStrikeMultiplier()
-        : base(Tags.DerivativeStrikeMultiplier) {}
+        : base(TAG) {}
     public DerivativeStrikeMultiplier(Decimal val)
-        : base(Tags.DerivativeStrikeMultiplier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21169,9 +21169,9 @@ public sealed class DerivativeStrikeValue : DecimalField
     public const int TAG = 1264;
 
     public DerivativeStrikeValue()
-        : base(Tags.DerivativeStrikeValue) {}
+        : base(TAG) {}
     public DerivativeStrikeValue(Decimal val)
-        : base(Tags.DerivativeStrikeValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21182,9 +21182,9 @@ public sealed class DerivativeOptAttribute : CharField
     public const int TAG = 1265;
 
     public DerivativeOptAttribute()
-        : base(Tags.DerivativeOptAttribute) {}
+        : base(TAG) {}
     public DerivativeOptAttribute(char val)
-        : base(Tags.DerivativeOptAttribute, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21195,9 +21195,9 @@ public sealed class DerivativeContractMultiplier : DecimalField
     public const int TAG = 1266;
 
     public DerivativeContractMultiplier()
-        : base(Tags.DerivativeContractMultiplier) {}
+        : base(TAG) {}
     public DerivativeContractMultiplier(Decimal val)
-        : base(Tags.DerivativeContractMultiplier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21208,9 +21208,9 @@ public sealed class DerivativeMinPriceIncrement : DecimalField
     public const int TAG = 1267;
 
     public DerivativeMinPriceIncrement()
-        : base(Tags.DerivativeMinPriceIncrement) {}
+        : base(TAG) {}
     public DerivativeMinPriceIncrement(Decimal val)
-        : base(Tags.DerivativeMinPriceIncrement, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21221,9 +21221,9 @@ public sealed class DerivativeMinPriceIncrementAmount : DecimalField
     public const int TAG = 1268;
 
     public DerivativeMinPriceIncrementAmount()
-        : base(Tags.DerivativeMinPriceIncrementAmount) {}
+        : base(TAG) {}
     public DerivativeMinPriceIncrementAmount(Decimal val)
-        : base(Tags.DerivativeMinPriceIncrementAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21234,9 +21234,9 @@ public sealed class DerivativeUnitOfMeasure : StringField
     public const int TAG = 1269;
 
     public DerivativeUnitOfMeasure()
-        : base(Tags.DerivativeUnitOfMeasure) {}
+        : base(TAG) {}
     public DerivativeUnitOfMeasure(string val)
-        : base(Tags.DerivativeUnitOfMeasure, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21247,9 +21247,9 @@ public sealed class DerivativeUnitOfMeasureQty : DecimalField
     public const int TAG = 1270;
 
     public DerivativeUnitOfMeasureQty()
-        : base(Tags.DerivativeUnitOfMeasureQty) {}
+        : base(TAG) {}
     public DerivativeUnitOfMeasureQty(Decimal val)
-        : base(Tags.DerivativeUnitOfMeasureQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21260,9 +21260,9 @@ public sealed class DerivativeTimeUnit : StringField
     public const int TAG = 1271;
 
     public DerivativeTimeUnit()
-        : base(Tags.DerivativeTimeUnit) {}
+        : base(TAG) {}
     public DerivativeTimeUnit(string val)
-        : base(Tags.DerivativeTimeUnit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21273,9 +21273,9 @@ public sealed class DerivativeSecurityExchange : StringField
     public const int TAG = 1272;
 
     public DerivativeSecurityExchange()
-        : base(Tags.DerivativeSecurityExchange) {}
+        : base(TAG) {}
     public DerivativeSecurityExchange(string val)
-        : base(Tags.DerivativeSecurityExchange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21286,9 +21286,9 @@ public sealed class DerivativePositionLimit : IntField
     public const int TAG = 1273;
 
     public DerivativePositionLimit()
-        : base(Tags.DerivativePositionLimit) {}
+        : base(TAG) {}
     public DerivativePositionLimit(int val)
-        : base(Tags.DerivativePositionLimit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21299,9 +21299,9 @@ public sealed class DerivativeNTPositionLimit : IntField
     public const int TAG = 1274;
 
     public DerivativeNTPositionLimit()
-        : base(Tags.DerivativeNTPositionLimit) {}
+        : base(TAG) {}
     public DerivativeNTPositionLimit(int val)
-        : base(Tags.DerivativeNTPositionLimit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21312,9 +21312,9 @@ public sealed class DerivativeIssuer : StringField
     public const int TAG = 1275;
 
     public DerivativeIssuer()
-        : base(Tags.DerivativeIssuer) {}
+        : base(TAG) {}
     public DerivativeIssuer(string val)
-        : base(Tags.DerivativeIssuer, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21325,9 +21325,9 @@ public sealed class DerivativeIssueDate : StringField
     public const int TAG = 1276;
 
     public DerivativeIssueDate()
-        : base(Tags.DerivativeIssueDate) {}
+        : base(TAG) {}
     public DerivativeIssueDate(string val)
-        : base(Tags.DerivativeIssueDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21338,9 +21338,9 @@ public sealed class DerivativeEncodedIssuerLen : IntField
     public const int TAG = 1277;
 
     public DerivativeEncodedIssuerLen()
-        : base(Tags.DerivativeEncodedIssuerLen) {}
+        : base(TAG) {}
     public DerivativeEncodedIssuerLen(int val)
-        : base(Tags.DerivativeEncodedIssuerLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21351,9 +21351,9 @@ public sealed class DerivativeEncodedIssuer : StringField
     public const int TAG = 1278;
 
     public DerivativeEncodedIssuer()
-        : base(Tags.DerivativeEncodedIssuer) {}
+        : base(TAG) {}
     public DerivativeEncodedIssuer(string val)
-        : base(Tags.DerivativeEncodedIssuer, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21364,9 +21364,9 @@ public sealed class DerivativeSecurityDesc : StringField
     public const int TAG = 1279;
 
     public DerivativeSecurityDesc()
-        : base(Tags.DerivativeSecurityDesc) {}
+        : base(TAG) {}
     public DerivativeSecurityDesc(string val)
-        : base(Tags.DerivativeSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21377,9 +21377,9 @@ public sealed class DerivativeEncodedSecurityDescLen : IntField
     public const int TAG = 1280;
 
     public DerivativeEncodedSecurityDescLen()
-        : base(Tags.DerivativeEncodedSecurityDescLen) {}
+        : base(TAG) {}
     public DerivativeEncodedSecurityDescLen(int val)
-        : base(Tags.DerivativeEncodedSecurityDescLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21390,9 +21390,9 @@ public sealed class DerivativeEncodedSecurityDesc : StringField
     public const int TAG = 1281;
 
     public DerivativeEncodedSecurityDesc()
-        : base(Tags.DerivativeEncodedSecurityDesc) {}
+        : base(TAG) {}
     public DerivativeEncodedSecurityDesc(string val)
-        : base(Tags.DerivativeEncodedSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21403,9 +21403,9 @@ public sealed class DerivativeSecurityXMLLen : IntField
     public const int TAG = 1282;
 
     public DerivativeSecurityXMLLen()
-        : base(Tags.DerivativeSecurityXMLLen) {}
+        : base(TAG) {}
     public DerivativeSecurityXMLLen(int val)
-        : base(Tags.DerivativeSecurityXMLLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21416,9 +21416,9 @@ public sealed class DerivativeSecurityXML : StringField
     public const int TAG = 1283;
 
     public DerivativeSecurityXML()
-        : base(Tags.DerivativeSecurityXML) {}
+        : base(TAG) {}
     public DerivativeSecurityXML(string val)
-        : base(Tags.DerivativeSecurityXML, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21429,9 +21429,9 @@ public sealed class DerivativeSecurityXMLSchema : StringField
     public const int TAG = 1284;
 
     public DerivativeSecurityXMLSchema()
-        : base(Tags.DerivativeSecurityXMLSchema) {}
+        : base(TAG) {}
     public DerivativeSecurityXMLSchema(string val)
-        : base(Tags.DerivativeSecurityXMLSchema, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21442,9 +21442,9 @@ public sealed class DerivativeContractSettlMonth : StringField
     public const int TAG = 1285;
 
     public DerivativeContractSettlMonth()
-        : base(Tags.DerivativeContractSettlMonth) {}
+        : base(TAG) {}
     public DerivativeContractSettlMonth(string val)
-        : base(Tags.DerivativeContractSettlMonth, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21455,9 +21455,9 @@ public sealed class NoDerivativeEvents : IntField
     public const int TAG = 1286;
 
     public NoDerivativeEvents()
-        : base(Tags.NoDerivativeEvents) {}
+        : base(TAG) {}
     public NoDerivativeEvents(int val)
-        : base(Tags.NoDerivativeEvents, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21468,9 +21468,9 @@ public sealed class DerivativeEventType : IntField
     public const int TAG = 1287;
 
     public DerivativeEventType()
-        : base(Tags.DerivativeEventType) {}
+        : base(TAG) {}
     public DerivativeEventType(int val)
-        : base(Tags.DerivativeEventType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21481,9 +21481,9 @@ public sealed class DerivativeEventDate : StringField
     public const int TAG = 1288;
 
     public DerivativeEventDate()
-        : base(Tags.DerivativeEventDate) {}
+        : base(TAG) {}
     public DerivativeEventDate(string val)
-        : base(Tags.DerivativeEventDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21494,7 +21494,7 @@ public sealed class DerivativeEventTime : UtcDateTimeField
     public const int TAG = 1289;
 
     public DerivativeEventTime()
-        : base(Tags.DerivativeEventTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -21502,7 +21502,7 @@ public sealed class DerivativeEventTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public DerivativeEventTime(DateTime val)
-        : base(Tags.DerivativeEventTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -21512,7 +21512,7 @@ public sealed class DerivativeEventTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public DerivativeEventTime(DateTime val, bool showMilliseconds)
-        : base(Tags.DerivativeEventTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -21521,7 +21521,7 @@ public sealed class DerivativeEventTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public DerivativeEventTime(DateTime val, TimePrecision precision)
-        : base(Tags.DerivativeEventTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -21532,9 +21532,9 @@ public sealed class DerivativeEventPx : DecimalField
     public const int TAG = 1290;
 
     public DerivativeEventPx()
-        : base(Tags.DerivativeEventPx) {}
+        : base(TAG) {}
     public DerivativeEventPx(Decimal val)
-        : base(Tags.DerivativeEventPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21545,9 +21545,9 @@ public sealed class DerivativeEventText : StringField
     public const int TAG = 1291;
 
     public DerivativeEventText()
-        : base(Tags.DerivativeEventText) {}
+        : base(TAG) {}
     public DerivativeEventText(string val)
-        : base(Tags.DerivativeEventText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21558,9 +21558,9 @@ public sealed class NoDerivativeInstrumentParties : IntField
     public const int TAG = 1292;
 
     public NoDerivativeInstrumentParties()
-        : base(Tags.NoDerivativeInstrumentParties) {}
+        : base(TAG) {}
     public NoDerivativeInstrumentParties(int val)
-        : base(Tags.NoDerivativeInstrumentParties, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21571,9 +21571,9 @@ public sealed class DerivativeInstrumentPartyID : StringField
     public const int TAG = 1293;
 
     public DerivativeInstrumentPartyID()
-        : base(Tags.DerivativeInstrumentPartyID) {}
+        : base(TAG) {}
     public DerivativeInstrumentPartyID(string val)
-        : base(Tags.DerivativeInstrumentPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21584,9 +21584,9 @@ public sealed class DerivativeInstrumentPartyIDSource : StringField
     public const int TAG = 1294;
 
     public DerivativeInstrumentPartyIDSource()
-        : base(Tags.DerivativeInstrumentPartyIDSource) {}
+        : base(TAG) {}
     public DerivativeInstrumentPartyIDSource(string val)
-        : base(Tags.DerivativeInstrumentPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21597,9 +21597,9 @@ public sealed class DerivativeInstrumentPartyRole : IntField
     public const int TAG = 1295;
 
     public DerivativeInstrumentPartyRole()
-        : base(Tags.DerivativeInstrumentPartyRole) {}
+        : base(TAG) {}
     public DerivativeInstrumentPartyRole(int val)
-        : base(Tags.DerivativeInstrumentPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21610,9 +21610,9 @@ public sealed class NoDerivativeInstrumentPartySubIDs : IntField
     public const int TAG = 1296;
 
     public NoDerivativeInstrumentPartySubIDs()
-        : base(Tags.NoDerivativeInstrumentPartySubIDs) {}
+        : base(TAG) {}
     public NoDerivativeInstrumentPartySubIDs(int val)
-        : base(Tags.NoDerivativeInstrumentPartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21623,9 +21623,9 @@ public sealed class DerivativeInstrumentPartySubID : StringField
     public const int TAG = 1297;
 
     public DerivativeInstrumentPartySubID()
-        : base(Tags.DerivativeInstrumentPartySubID) {}
+        : base(TAG) {}
     public DerivativeInstrumentPartySubID(string val)
-        : base(Tags.DerivativeInstrumentPartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21636,9 +21636,9 @@ public sealed class DerivativeInstrumentPartySubIDType : IntField
     public const int TAG = 1298;
 
     public DerivativeInstrumentPartySubIDType()
-        : base(Tags.DerivativeInstrumentPartySubIDType) {}
+        : base(TAG) {}
     public DerivativeInstrumentPartySubIDType(int val)
-        : base(Tags.DerivativeInstrumentPartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21649,9 +21649,9 @@ public sealed class DerivativeExerciseStyle : CharField
     public const int TAG = 1299;
 
     public DerivativeExerciseStyle()
-        : base(Tags.DerivativeExerciseStyle) {}
+        : base(TAG) {}
     public DerivativeExerciseStyle(char val)
-        : base(Tags.DerivativeExerciseStyle, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21662,9 +21662,9 @@ public sealed class MarketSegmentID : StringField
     public const int TAG = 1300;
 
     public MarketSegmentID()
-        : base(Tags.MarketSegmentID) {}
+        : base(TAG) {}
     public MarketSegmentID(string val)
-        : base(Tags.MarketSegmentID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21675,9 +21675,9 @@ public sealed class MarketID : StringField
     public const int TAG = 1301;
 
     public MarketID()
-        : base(Tags.MarketID) {}
+        : base(TAG) {}
     public MarketID(string val)
-        : base(Tags.MarketID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21688,9 +21688,9 @@ public sealed class MaturityMonthYearIncrementUnits : IntField
     public const int TAG = 1302;
 
     public MaturityMonthYearIncrementUnits()
-        : base(Tags.MaturityMonthYearIncrementUnits) {}
+        : base(TAG) {}
     public MaturityMonthYearIncrementUnits(int val)
-        : base(Tags.MaturityMonthYearIncrementUnits, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int MONTHS = 0;
@@ -21707,9 +21707,9 @@ public sealed class MaturityMonthYearFormat : IntField
     public const int TAG = 1303;
 
     public MaturityMonthYearFormat()
-        : base(Tags.MaturityMonthYearFormat) {}
+        : base(TAG) {}
     public MaturityMonthYearFormat(int val)
-        : base(Tags.MaturityMonthYearFormat, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int YEARMONTH_ONLY = 0;
@@ -21725,9 +21725,9 @@ public sealed class StrikeExerciseStyle : IntField
     public const int TAG = 1304;
 
     public StrikeExerciseStyle()
-        : base(Tags.StrikeExerciseStyle) {}
+        : base(TAG) {}
     public StrikeExerciseStyle(int val)
-        : base(Tags.StrikeExerciseStyle, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21738,9 +21738,9 @@ public sealed class SecondaryPriceLimitType : IntField
     public const int TAG = 1305;
 
     public SecondaryPriceLimitType()
-        : base(Tags.SecondaryPriceLimitType) {}
+        : base(TAG) {}
     public SecondaryPriceLimitType(int val)
-        : base(Tags.SecondaryPriceLimitType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21751,9 +21751,9 @@ public sealed class PriceLimitType : IntField
     public const int TAG = 1306;
 
     public PriceLimitType()
-        : base(Tags.PriceLimitType) {}
+        : base(TAG) {}
     public PriceLimitType(int val)
-        : base(Tags.PriceLimitType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PRICE = 0;
@@ -21769,9 +21769,9 @@ public sealed class DerivativeSecurityListRequestType : IntField
     public const int TAG = 1307;
 
     public DerivativeSecurityListRequestType()
-        : base(Tags.DerivativeSecurityListRequestType) {}
+        : base(TAG) {}
     public DerivativeSecurityListRequestType(int val)
-        : base(Tags.DerivativeSecurityListRequestType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SYMBOL = 0;
@@ -21793,9 +21793,9 @@ public sealed class ExecInstValue : CharField
     public const int TAG = 1308;
 
     public ExecInstValue()
-        : base(Tags.ExecInstValue) {}
+        : base(TAG) {}
     public ExecInstValue(char val)
-        : base(Tags.ExecInstValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21806,9 +21806,9 @@ public sealed class NoTradingSessionRules : IntField
     public const int TAG = 1309;
 
     public NoTradingSessionRules()
-        : base(Tags.NoTradingSessionRules) {}
+        : base(TAG) {}
     public NoTradingSessionRules(int val)
-        : base(Tags.NoTradingSessionRules, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21819,9 +21819,9 @@ public sealed class NoMarketSegments : IntField
     public const int TAG = 1310;
 
     public NoMarketSegments()
-        : base(Tags.NoMarketSegments) {}
+        : base(TAG) {}
     public NoMarketSegments(int val)
-        : base(Tags.NoMarketSegments, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21832,9 +21832,9 @@ public sealed class NoDerivativeInstrAttrib : IntField
     public const int TAG = 1311;
 
     public NoDerivativeInstrAttrib()
-        : base(Tags.NoDerivativeInstrAttrib) {}
+        : base(TAG) {}
     public NoDerivativeInstrAttrib(int val)
-        : base(Tags.NoDerivativeInstrAttrib, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21845,9 +21845,9 @@ public sealed class NoNestedInstrAttrib : IntField
     public const int TAG = 1312;
 
     public NoNestedInstrAttrib()
-        : base(Tags.NoNestedInstrAttrib) {}
+        : base(TAG) {}
     public NoNestedInstrAttrib(int val)
-        : base(Tags.NoNestedInstrAttrib, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21858,9 +21858,9 @@ public sealed class DerivativeInstrAttribType : IntField
     public const int TAG = 1313;
 
     public DerivativeInstrAttribType()
-        : base(Tags.DerivativeInstrAttribType) {}
+        : base(TAG) {}
     public DerivativeInstrAttribType(int val)
-        : base(Tags.DerivativeInstrAttribType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21871,9 +21871,9 @@ public sealed class DerivativeInstrAttribValue : StringField
     public const int TAG = 1314;
 
     public DerivativeInstrAttribValue()
-        : base(Tags.DerivativeInstrAttribValue) {}
+        : base(TAG) {}
     public DerivativeInstrAttribValue(string val)
-        : base(Tags.DerivativeInstrAttribValue, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21884,9 +21884,9 @@ public sealed class DerivativePriceUnitOfMeasure : StringField
     public const int TAG = 1315;
 
     public DerivativePriceUnitOfMeasure()
-        : base(Tags.DerivativePriceUnitOfMeasure) {}
+        : base(TAG) {}
     public DerivativePriceUnitOfMeasure(string val)
-        : base(Tags.DerivativePriceUnitOfMeasure, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21897,9 +21897,9 @@ public sealed class DerivativePriceUnitOfMeasureQty : DecimalField
     public const int TAG = 1316;
 
     public DerivativePriceUnitOfMeasureQty()
-        : base(Tags.DerivativePriceUnitOfMeasureQty) {}
+        : base(TAG) {}
     public DerivativePriceUnitOfMeasureQty(Decimal val)
-        : base(Tags.DerivativePriceUnitOfMeasureQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21910,9 +21910,9 @@ public sealed class DerivativeSettlMethod : CharField
     public const int TAG = 1317;
 
     public DerivativeSettlMethod()
-        : base(Tags.DerivativeSettlMethod) {}
+        : base(TAG) {}
     public DerivativeSettlMethod(char val)
-        : base(Tags.DerivativeSettlMethod, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21923,9 +21923,9 @@ public sealed class DerivativePriceQuoteMethod : StringField
     public const int TAG = 1318;
 
     public DerivativePriceQuoteMethod()
-        : base(Tags.DerivativePriceQuoteMethod) {}
+        : base(TAG) {}
     public DerivativePriceQuoteMethod(string val)
-        : base(Tags.DerivativePriceQuoteMethod, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21936,9 +21936,9 @@ public sealed class DerivativeFuturesValuationMethod : StringField
     public const int TAG = 1319;
 
     public DerivativeFuturesValuationMethod()
-        : base(Tags.DerivativeFuturesValuationMethod) {}
+        : base(TAG) {}
     public DerivativeFuturesValuationMethod(string val)
-        : base(Tags.DerivativeFuturesValuationMethod, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21949,9 +21949,9 @@ public sealed class DerivativeListMethod : IntField
     public const int TAG = 1320;
 
     public DerivativeListMethod()
-        : base(Tags.DerivativeListMethod) {}
+        : base(TAG) {}
     public DerivativeListMethod(int val)
-        : base(Tags.DerivativeListMethod, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21962,9 +21962,9 @@ public sealed class DerivativeCapPrice : DecimalField
     public const int TAG = 1321;
 
     public DerivativeCapPrice()
-        : base(Tags.DerivativeCapPrice) {}
+        : base(TAG) {}
     public DerivativeCapPrice(Decimal val)
-        : base(Tags.DerivativeCapPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21975,9 +21975,9 @@ public sealed class DerivativeFloorPrice : DecimalField
     public const int TAG = 1322;
 
     public DerivativeFloorPrice()
-        : base(Tags.DerivativeFloorPrice) {}
+        : base(TAG) {}
     public DerivativeFloorPrice(Decimal val)
-        : base(Tags.DerivativeFloorPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -21988,9 +21988,9 @@ public sealed class DerivativePutOrCall : IntField
     public const int TAG = 1323;
 
     public DerivativePutOrCall()
-        : base(Tags.DerivativePutOrCall) {}
+        : base(TAG) {}
     public DerivativePutOrCall(int val)
-        : base(Tags.DerivativePutOrCall, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22001,9 +22001,9 @@ public sealed class ListUpdateAction : CharField
     public const int TAG = 1324;
 
     public ListUpdateAction()
-        : base(Tags.ListUpdateAction) {}
+        : base(TAG) {}
     public ListUpdateAction(char val)
-        : base(Tags.ListUpdateAction, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22014,9 +22014,9 @@ public sealed class ParentMktSegmID : StringField
     public const int TAG = 1325;
 
     public ParentMktSegmID()
-        : base(Tags.ParentMktSegmID) {}
+        : base(TAG) {}
     public ParentMktSegmID(string val)
-        : base(Tags.ParentMktSegmID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22027,9 +22027,9 @@ public sealed class TradingSessionDesc : StringField
     public const int TAG = 1326;
 
     public TradingSessionDesc()
-        : base(Tags.TradingSessionDesc) {}
+        : base(TAG) {}
     public TradingSessionDesc(string val)
-        : base(Tags.TradingSessionDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22040,9 +22040,9 @@ public sealed class TradSesUpdateAction : CharField
     public const int TAG = 1327;
 
     public TradSesUpdateAction()
-        : base(Tags.TradSesUpdateAction) {}
+        : base(TAG) {}
     public TradSesUpdateAction(char val)
-        : base(Tags.TradSesUpdateAction, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22053,9 +22053,9 @@ public sealed class RejectText : StringField
     public const int TAG = 1328;
 
     public RejectText()
-        : base(Tags.RejectText) {}
+        : base(TAG) {}
     public RejectText(string val)
-        : base(Tags.RejectText, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22066,9 +22066,9 @@ public sealed class FeeMultiplier : DecimalField
     public const int TAG = 1329;
 
     public FeeMultiplier()
-        : base(Tags.FeeMultiplier) {}
+        : base(TAG) {}
     public FeeMultiplier(Decimal val)
-        : base(Tags.FeeMultiplier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22079,9 +22079,9 @@ public sealed class UnderlyingLegSymbol : StringField
     public const int TAG = 1330;
 
     public UnderlyingLegSymbol()
-        : base(Tags.UnderlyingLegSymbol) {}
+        : base(TAG) {}
     public UnderlyingLegSymbol(string val)
-        : base(Tags.UnderlyingLegSymbol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22092,9 +22092,9 @@ public sealed class UnderlyingLegSymbolSfx : StringField
     public const int TAG = 1331;
 
     public UnderlyingLegSymbolSfx()
-        : base(Tags.UnderlyingLegSymbolSfx) {}
+        : base(TAG) {}
     public UnderlyingLegSymbolSfx(string val)
-        : base(Tags.UnderlyingLegSymbolSfx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22105,9 +22105,9 @@ public sealed class UnderlyingLegSecurityID : StringField
     public const int TAG = 1332;
 
     public UnderlyingLegSecurityID()
-        : base(Tags.UnderlyingLegSecurityID) {}
+        : base(TAG) {}
     public UnderlyingLegSecurityID(string val)
-        : base(Tags.UnderlyingLegSecurityID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22118,9 +22118,9 @@ public sealed class UnderlyingLegSecurityIDSource : StringField
     public const int TAG = 1333;
 
     public UnderlyingLegSecurityIDSource()
-        : base(Tags.UnderlyingLegSecurityIDSource) {}
+        : base(TAG) {}
     public UnderlyingLegSecurityIDSource(string val)
-        : base(Tags.UnderlyingLegSecurityIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22131,9 +22131,9 @@ public sealed class NoUnderlyingLegSecurityAltID : IntField
     public const int TAG = 1334;
 
     public NoUnderlyingLegSecurityAltID()
-        : base(Tags.NoUnderlyingLegSecurityAltID) {}
+        : base(TAG) {}
     public NoUnderlyingLegSecurityAltID(int val)
-        : base(Tags.NoUnderlyingLegSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22144,9 +22144,9 @@ public sealed class UnderlyingLegSecurityAltID : StringField
     public const int TAG = 1335;
 
     public UnderlyingLegSecurityAltID()
-        : base(Tags.UnderlyingLegSecurityAltID) {}
+        : base(TAG) {}
     public UnderlyingLegSecurityAltID(string val)
-        : base(Tags.UnderlyingLegSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22157,9 +22157,9 @@ public sealed class UnderlyingLegSecurityAltIDSource : StringField
     public const int TAG = 1336;
 
     public UnderlyingLegSecurityAltIDSource()
-        : base(Tags.UnderlyingLegSecurityAltIDSource) {}
+        : base(TAG) {}
     public UnderlyingLegSecurityAltIDSource(string val)
-        : base(Tags.UnderlyingLegSecurityAltIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22170,9 +22170,9 @@ public sealed class UnderlyingLegSecurityType : StringField
     public const int TAG = 1337;
 
     public UnderlyingLegSecurityType()
-        : base(Tags.UnderlyingLegSecurityType) {}
+        : base(TAG) {}
     public UnderlyingLegSecurityType(string val)
-        : base(Tags.UnderlyingLegSecurityType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22183,9 +22183,9 @@ public sealed class UnderlyingLegSecuritySubType : StringField
     public const int TAG = 1338;
 
     public UnderlyingLegSecuritySubType()
-        : base(Tags.UnderlyingLegSecuritySubType) {}
+        : base(TAG) {}
     public UnderlyingLegSecuritySubType(string val)
-        : base(Tags.UnderlyingLegSecuritySubType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22196,9 +22196,9 @@ public sealed class UnderlyingLegMaturityMonthYear : StringField
     public const int TAG = 1339;
 
     public UnderlyingLegMaturityMonthYear()
-        : base(Tags.UnderlyingLegMaturityMonthYear) {}
+        : base(TAG) {}
     public UnderlyingLegMaturityMonthYear(string val)
-        : base(Tags.UnderlyingLegMaturityMonthYear, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22209,9 +22209,9 @@ public sealed class UnderlyingLegStrikePrice : DecimalField
     public const int TAG = 1340;
 
     public UnderlyingLegStrikePrice()
-        : base(Tags.UnderlyingLegStrikePrice) {}
+        : base(TAG) {}
     public UnderlyingLegStrikePrice(Decimal val)
-        : base(Tags.UnderlyingLegStrikePrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22222,9 +22222,9 @@ public sealed class UnderlyingLegSecurityExchange : StringField
     public const int TAG = 1341;
 
     public UnderlyingLegSecurityExchange()
-        : base(Tags.UnderlyingLegSecurityExchange) {}
+        : base(TAG) {}
     public UnderlyingLegSecurityExchange(string val)
-        : base(Tags.UnderlyingLegSecurityExchange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22235,9 +22235,9 @@ public sealed class NoOfLegUnderlyings : IntField
     public const int TAG = 1342;
 
     public NoOfLegUnderlyings()
-        : base(Tags.NoOfLegUnderlyings) {}
+        : base(TAG) {}
     public NoOfLegUnderlyings(int val)
-        : base(Tags.NoOfLegUnderlyings, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22248,9 +22248,9 @@ public sealed class UnderlyingLegPutOrCall : IntField
     public const int TAG = 1343;
 
     public UnderlyingLegPutOrCall()
-        : base(Tags.UnderlyingLegPutOrCall) {}
+        : base(TAG) {}
     public UnderlyingLegPutOrCall(int val)
-        : base(Tags.UnderlyingLegPutOrCall, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22261,9 +22261,9 @@ public sealed class UnderlyingLegCFICode : StringField
     public const int TAG = 1344;
 
     public UnderlyingLegCFICode()
-        : base(Tags.UnderlyingLegCFICode) {}
+        : base(TAG) {}
     public UnderlyingLegCFICode(string val)
-        : base(Tags.UnderlyingLegCFICode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22274,9 +22274,9 @@ public sealed class UnderlyingLegMaturityDate : StringField
     public const int TAG = 1345;
 
     public UnderlyingLegMaturityDate()
-        : base(Tags.UnderlyingLegMaturityDate) {}
+        : base(TAG) {}
     public UnderlyingLegMaturityDate(string val)
-        : base(Tags.UnderlyingLegMaturityDate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22287,9 +22287,9 @@ public sealed class ApplReqID : StringField
     public const int TAG = 1346;
 
     public ApplReqID()
-        : base(Tags.ApplReqID) {}
+        : base(TAG) {}
     public ApplReqID(string val)
-        : base(Tags.ApplReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22300,9 +22300,9 @@ public sealed class ApplReqType : IntField
     public const int TAG = 1347;
 
     public ApplReqType()
-        : base(Tags.ApplReqType) {}
+        : base(TAG) {}
     public ApplReqType(int val)
-        : base(Tags.ApplReqType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int RETRANSMISSION_OF_APPLICATION_MESSAGES_FOR_THE_SPECIFIED_APPLICATIONS = 0;
@@ -22322,9 +22322,9 @@ public sealed class ApplResponseType : IntField
     public const int TAG = 1348;
 
     public ApplResponseType()
-        : base(Tags.ApplResponseType) {}
+        : base(TAG) {}
     public ApplResponseType(int val)
-        : base(Tags.ApplResponseType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int REQUEST_SUCCESSFULLY_PROCESSED = 0;
@@ -22340,9 +22340,9 @@ public sealed class ApplTotalMessageCount : IntField
     public const int TAG = 1349;
 
     public ApplTotalMessageCount()
-        : base(Tags.ApplTotalMessageCount) {}
+        : base(TAG) {}
     public ApplTotalMessageCount(int val)
-        : base(Tags.ApplTotalMessageCount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22353,9 +22353,9 @@ public sealed class ApplLastSeqNum : SeqNumFieldType
     public const int TAG = 1350;
 
     public ApplLastSeqNum()
-        : base(Tags.ApplLastSeqNum) {}
+        : base(TAG) {}
     public ApplLastSeqNum(SeqNumType val)
-        : base(Tags.ApplLastSeqNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22366,9 +22366,9 @@ public sealed class NoApplIDs : IntField
     public const int TAG = 1351;
 
     public NoApplIDs()
-        : base(Tags.NoApplIDs) {}
+        : base(TAG) {}
     public NoApplIDs(int val)
-        : base(Tags.NoApplIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22379,9 +22379,9 @@ public sealed class ApplResendFlag : BooleanField
     public const int TAG = 1352;
 
     public ApplResendFlag()
-        : base(Tags.ApplResendFlag) {}
+        : base(TAG) {}
     public ApplResendFlag(Boolean val)
-        : base(Tags.ApplResendFlag, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22392,9 +22392,9 @@ public sealed class ApplResponseID : StringField
     public const int TAG = 1353;
 
     public ApplResponseID()
-        : base(Tags.ApplResponseID) {}
+        : base(TAG) {}
     public ApplResponseID(string val)
-        : base(Tags.ApplResponseID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22405,9 +22405,9 @@ public sealed class ApplResponseError : IntField
     public const int TAG = 1354;
 
     public ApplResponseError()
-        : base(Tags.ApplResponseError) {}
+        : base(TAG) {}
     public ApplResponseError(int val)
-        : base(Tags.ApplResponseError, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int APPLICATION_DOES_NOT_EXIST = 0;
@@ -22423,9 +22423,9 @@ public sealed class RefApplID : StringField
     public const int TAG = 1355;
 
     public RefApplID()
-        : base(Tags.RefApplID) {}
+        : base(TAG) {}
     public RefApplID(string val)
-        : base(Tags.RefApplID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22436,9 +22436,9 @@ public sealed class ApplReportID : StringField
     public const int TAG = 1356;
 
     public ApplReportID()
-        : base(Tags.ApplReportID) {}
+        : base(TAG) {}
     public ApplReportID(string val)
-        : base(Tags.ApplReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22449,9 +22449,9 @@ public sealed class RefApplLastSeqNum : SeqNumFieldType
     public const int TAG = 1357;
 
     public RefApplLastSeqNum()
-        : base(Tags.RefApplLastSeqNum) {}
+        : base(TAG) {}
     public RefApplLastSeqNum(SeqNumType val)
-        : base(Tags.RefApplLastSeqNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22462,9 +22462,9 @@ public sealed class LegPutOrCall : IntField
     public const int TAG = 1358;
 
     public LegPutOrCall()
-        : base(Tags.LegPutOrCall) {}
+        : base(TAG) {}
     public LegPutOrCall(int val)
-        : base(Tags.LegPutOrCall, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22475,9 +22475,9 @@ public sealed class EncodedSymbolLen : IntField
     public const int TAG = 1359;
 
     public EncodedSymbolLen()
-        : base(Tags.EncodedSymbolLen) {}
+        : base(TAG) {}
     public EncodedSymbolLen(int val)
-        : base(Tags.EncodedSymbolLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22488,9 +22488,9 @@ public sealed class EncodedSymbol : StringField
     public const int TAG = 1360;
 
     public EncodedSymbol()
-        : base(Tags.EncodedSymbol) {}
+        : base(TAG) {}
     public EncodedSymbol(string val)
-        : base(Tags.EncodedSymbol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22501,9 +22501,9 @@ public sealed class TotNoFills : IntField
     public const int TAG = 1361;
 
     public TotNoFills()
-        : base(Tags.TotNoFills) {}
+        : base(TAG) {}
     public TotNoFills(int val)
-        : base(Tags.TotNoFills, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22514,9 +22514,9 @@ public sealed class NoFills : IntField
     public const int TAG = 1362;
 
     public NoFills()
-        : base(Tags.NoFills) {}
+        : base(TAG) {}
     public NoFills(int val)
-        : base(Tags.NoFills, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22527,9 +22527,9 @@ public sealed class FillExecID : StringField
     public const int TAG = 1363;
 
     public FillExecID()
-        : base(Tags.FillExecID) {}
+        : base(TAG) {}
     public FillExecID(string val)
-        : base(Tags.FillExecID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22540,9 +22540,9 @@ public sealed class FillPx : DecimalField
     public const int TAG = 1364;
 
     public FillPx()
-        : base(Tags.FillPx) {}
+        : base(TAG) {}
     public FillPx(Decimal val)
-        : base(Tags.FillPx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22553,9 +22553,9 @@ public sealed class FillQty : DecimalField
     public const int TAG = 1365;
 
     public FillQty()
-        : base(Tags.FillQty) {}
+        : base(TAG) {}
     public FillQty(Decimal val)
-        : base(Tags.FillQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22566,9 +22566,9 @@ public sealed class LegAllocID : StringField
     public const int TAG = 1366;
 
     public LegAllocID()
-        : base(Tags.LegAllocID) {}
+        : base(TAG) {}
     public LegAllocID(string val)
-        : base(Tags.LegAllocID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22579,9 +22579,9 @@ public sealed class LegAllocSettlCurrency : StringField
     public const int TAG = 1367;
 
     public LegAllocSettlCurrency()
-        : base(Tags.LegAllocSettlCurrency) {}
+        : base(TAG) {}
     public LegAllocSettlCurrency(string val)
-        : base(Tags.LegAllocSettlCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22592,9 +22592,9 @@ public sealed class TradSesEvent : IntField
     public const int TAG = 1368;
 
     public TradSesEvent()
-        : base(Tags.TradSesEvent) {}
+        : base(TAG) {}
     public TradSesEvent(int val)
-        : base(Tags.TradSesEvent, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int TRADING_RESUMES = 0;
@@ -22611,9 +22611,9 @@ public sealed class MassActionReportID : StringField
     public const int TAG = 1369;
 
     public MassActionReportID()
-        : base(Tags.MassActionReportID) {}
+        : base(TAG) {}
     public MassActionReportID(string val)
-        : base(Tags.MassActionReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22624,9 +22624,9 @@ public sealed class NoNotAffectedOrders : IntField
     public const int TAG = 1370;
 
     public NoNotAffectedOrders()
-        : base(Tags.NoNotAffectedOrders) {}
+        : base(TAG) {}
     public NoNotAffectedOrders(int val)
-        : base(Tags.NoNotAffectedOrders, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22637,9 +22637,9 @@ public sealed class NotAffectedOrderID : StringField
     public const int TAG = 1371;
 
     public NotAffectedOrderID()
-        : base(Tags.NotAffectedOrderID) {}
+        : base(TAG) {}
     public NotAffectedOrderID(string val)
-        : base(Tags.NotAffectedOrderID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22650,9 +22650,9 @@ public sealed class NotAffOrigClOrdID : StringField
     public const int TAG = 1372;
 
     public NotAffOrigClOrdID()
-        : base(Tags.NotAffOrigClOrdID) {}
+        : base(TAG) {}
     public NotAffOrigClOrdID(string val)
-        : base(Tags.NotAffOrigClOrdID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22663,9 +22663,9 @@ public sealed class MassActionType : IntField
     public const int TAG = 1373;
 
     public MassActionType()
-        : base(Tags.MassActionType) {}
+        : base(TAG) {}
     public MassActionType(int val)
-        : base(Tags.MassActionType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SUSPEND_ORDERS = 1;
@@ -22681,9 +22681,9 @@ public sealed class MassActionScope : IntField
     public const int TAG = 1374;
 
     public MassActionScope()
-        : base(Tags.MassActionScope) {}
+        : base(TAG) {}
     public MassActionScope(int val)
-        : base(Tags.MassActionScope, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ALL_ORDERS_FOR_A_SECURITY = 1;
@@ -22708,9 +22708,9 @@ public sealed class MassActionResponse : IntField
     public const int TAG = 1375;
 
     public MassActionResponse()
-        : base(Tags.MassActionResponse) {}
+        : base(TAG) {}
     public MassActionResponse(int val)
-        : base(Tags.MassActionResponse, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int REJECTED = 0;
@@ -22725,9 +22725,9 @@ public sealed class MassActionRejectReason : IntField
     public const int TAG = 1376;
 
     public MassActionRejectReason()
-        : base(Tags.MassActionRejectReason) {}
+        : base(TAG) {}
     public MassActionRejectReason(int val)
-        : base(Tags.MassActionRejectReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int MASS_ACTION_NOT_SUPPORTED = 0;
@@ -22753,9 +22753,9 @@ public sealed class MultilegModel : IntField
     public const int TAG = 1377;
 
     public MultilegModel()
-        : base(Tags.MultilegModel) {}
+        : base(TAG) {}
     public MultilegModel(int val)
-        : base(Tags.MultilegModel, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PREDEFINED_MULTILEG_SECURITY = 0;
@@ -22771,9 +22771,9 @@ public sealed class MultilegPriceMethod : IntField
     public const int TAG = 1378;
 
     public MultilegPriceMethod()
-        : base(Tags.MultilegPriceMethod) {}
+        : base(TAG) {}
     public MultilegPriceMethod(int val)
-        : base(Tags.MultilegPriceMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NET_PRICE = 0;
@@ -22792,9 +22792,9 @@ public sealed class LegVolatility : DecimalField
     public const int TAG = 1379;
 
     public LegVolatility()
-        : base(Tags.LegVolatility) {}
+        : base(TAG) {}
     public LegVolatility(Decimal val)
-        : base(Tags.LegVolatility, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22805,9 +22805,9 @@ public sealed class DividendYield : DecimalField
     public const int TAG = 1380;
 
     public DividendYield()
-        : base(Tags.DividendYield) {}
+        : base(TAG) {}
     public DividendYield(Decimal val)
-        : base(Tags.DividendYield, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22818,9 +22818,9 @@ public sealed class LegDividendYield : DecimalField
     public const int TAG = 1381;
 
     public LegDividendYield()
-        : base(Tags.LegDividendYield) {}
+        : base(TAG) {}
     public LegDividendYield(Decimal val)
-        : base(Tags.LegDividendYield, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22831,9 +22831,9 @@ public sealed class CurrencyRatio : DecimalField
     public const int TAG = 1382;
 
     public CurrencyRatio()
-        : base(Tags.CurrencyRatio) {}
+        : base(TAG) {}
     public CurrencyRatio(Decimal val)
-        : base(Tags.CurrencyRatio, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22844,9 +22844,9 @@ public sealed class LegCurrencyRatio : DecimalField
     public const int TAG = 1383;
 
     public LegCurrencyRatio()
-        : base(Tags.LegCurrencyRatio) {}
+        : base(TAG) {}
     public LegCurrencyRatio(Decimal val)
-        : base(Tags.LegCurrencyRatio, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22857,9 +22857,9 @@ public sealed class LegExecInst : StringField
     public const int TAG = 1384;
 
     public LegExecInst()
-        : base(Tags.LegExecInst) {}
+        : base(TAG) {}
     public LegExecInst(string val)
-        : base(Tags.LegExecInst, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22870,9 +22870,9 @@ public sealed class ContingencyType : IntField
     public const int TAG = 1385;
 
     public ContingencyType()
-        : base(Tags.ContingencyType) {}
+        : base(TAG) {}
     public ContingencyType(int val)
-        : base(Tags.ContingencyType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ONE_CANCELS_THE_OTHER = 1;
@@ -22889,9 +22889,9 @@ public sealed class ListRejectReason : IntField
     public const int TAG = 1386;
 
     public ListRejectReason()
-        : base(Tags.ListRejectReason) {}
+        : base(TAG) {}
     public ListRejectReason(int val)
-        : base(Tags.ListRejectReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int BROKER = 0;
@@ -22911,9 +22911,9 @@ public sealed class NoTrdRepIndicators : IntField
     public const int TAG = 1387;
 
     public NoTrdRepIndicators()
-        : base(Tags.NoTrdRepIndicators) {}
+        : base(TAG) {}
     public NoTrdRepIndicators(int val)
-        : base(Tags.NoTrdRepIndicators, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22924,9 +22924,9 @@ public sealed class TrdRepPartyRole : IntField
     public const int TAG = 1388;
 
     public TrdRepPartyRole()
-        : base(Tags.TrdRepPartyRole) {}
+        : base(TAG) {}
     public TrdRepPartyRole(int val)
-        : base(Tags.TrdRepPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22937,9 +22937,9 @@ public sealed class TrdRepIndicator : BooleanField
     public const int TAG = 1389;
 
     public TrdRepIndicator()
-        : base(Tags.TrdRepIndicator) {}
+        : base(TAG) {}
     public TrdRepIndicator(Boolean val)
-        : base(Tags.TrdRepIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22950,9 +22950,9 @@ public sealed class TradePublishIndicator : IntField
     public const int TAG = 1390;
 
     public TradePublishIndicator()
-        : base(Tags.TradePublishIndicator) {}
+        : base(TAG) {}
     public TradePublishIndicator(int val)
-        : base(Tags.TradePublishIndicator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int DO_NOT_PUBLISH_TRADE = 0;
@@ -22968,9 +22968,9 @@ public sealed class UnderlyingLegOptAttribute : CharField
     public const int TAG = 1391;
 
     public UnderlyingLegOptAttribute()
-        : base(Tags.UnderlyingLegOptAttribute) {}
+        : base(TAG) {}
     public UnderlyingLegOptAttribute(char val)
-        : base(Tags.UnderlyingLegOptAttribute, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22981,9 +22981,9 @@ public sealed class UnderlyingLegSecurityDesc : StringField
     public const int TAG = 1392;
 
     public UnderlyingLegSecurityDesc()
-        : base(Tags.UnderlyingLegSecurityDesc) {}
+        : base(TAG) {}
     public UnderlyingLegSecurityDesc(string val)
-        : base(Tags.UnderlyingLegSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -22994,9 +22994,9 @@ public sealed class MarketReqID : StringField
     public const int TAG = 1393;
 
     public MarketReqID()
-        : base(Tags.MarketReqID) {}
+        : base(TAG) {}
     public MarketReqID(string val)
-        : base(Tags.MarketReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23007,9 +23007,9 @@ public sealed class MarketReportID : StringField
     public const int TAG = 1394;
 
     public MarketReportID()
-        : base(Tags.MarketReportID) {}
+        : base(TAG) {}
     public MarketReportID(string val)
-        : base(Tags.MarketReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23020,9 +23020,9 @@ public sealed class MarketUpdateAction : CharField
     public const int TAG = 1395;
 
     public MarketUpdateAction()
-        : base(Tags.MarketUpdateAction) {}
+        : base(TAG) {}
     public MarketUpdateAction(char val)
-        : base(Tags.MarketUpdateAction, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ADD = 'A';
@@ -23038,9 +23038,9 @@ public sealed class MarketSegmentDesc : StringField
     public const int TAG = 1396;
 
     public MarketSegmentDesc()
-        : base(Tags.MarketSegmentDesc) {}
+        : base(TAG) {}
     public MarketSegmentDesc(string val)
-        : base(Tags.MarketSegmentDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23051,9 +23051,9 @@ public sealed class EncodedMktSegmDescLen : IntField
     public const int TAG = 1397;
 
     public EncodedMktSegmDescLen()
-        : base(Tags.EncodedMktSegmDescLen) {}
+        : base(TAG) {}
     public EncodedMktSegmDescLen(int val)
-        : base(Tags.EncodedMktSegmDescLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23064,9 +23064,9 @@ public sealed class EncodedMktSegmDesc : StringField
     public const int TAG = 1398;
 
     public EncodedMktSegmDesc()
-        : base(Tags.EncodedMktSegmDesc) {}
+        : base(TAG) {}
     public EncodedMktSegmDesc(string val)
-        : base(Tags.EncodedMktSegmDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23077,9 +23077,9 @@ public sealed class ApplNewSeqNum : SeqNumFieldType
     public const int TAG = 1399;
 
     public ApplNewSeqNum()
-        : base(Tags.ApplNewSeqNum) {}
+        : base(TAG) {}
     public ApplNewSeqNum(SeqNumType val)
-        : base(Tags.ApplNewSeqNum, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23090,9 +23090,9 @@ public sealed class EncryptedPasswordMethod : IntField
     public const int TAG = 1400;
 
     public EncryptedPasswordMethod()
-        : base(Tags.EncryptedPasswordMethod) {}
+        : base(TAG) {}
     public EncryptedPasswordMethod(int val)
-        : base(Tags.EncryptedPasswordMethod, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23103,9 +23103,9 @@ public sealed class EncryptedPasswordLen : IntField
     public const int TAG = 1401;
 
     public EncryptedPasswordLen()
-        : base(Tags.EncryptedPasswordLen) {}
+        : base(TAG) {}
     public EncryptedPasswordLen(int val)
-        : base(Tags.EncryptedPasswordLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23116,9 +23116,9 @@ public sealed class EncryptedPassword : StringField
     public const int TAG = 1402;
 
     public EncryptedPassword()
-        : base(Tags.EncryptedPassword) {}
+        : base(TAG) {}
     public EncryptedPassword(string val)
-        : base(Tags.EncryptedPassword, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23129,9 +23129,9 @@ public sealed class EncryptedNewPasswordLen : IntField
     public const int TAG = 1403;
 
     public EncryptedNewPasswordLen()
-        : base(Tags.EncryptedNewPasswordLen) {}
+        : base(TAG) {}
     public EncryptedNewPasswordLen(int val)
-        : base(Tags.EncryptedNewPasswordLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23142,9 +23142,9 @@ public sealed class EncryptedNewPassword : StringField
     public const int TAG = 1404;
 
     public EncryptedNewPassword()
-        : base(Tags.EncryptedNewPassword) {}
+        : base(TAG) {}
     public EncryptedNewPassword(string val)
-        : base(Tags.EncryptedNewPassword, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23155,9 +23155,9 @@ public sealed class UnderlyingLegMaturityTime : StringField
     public const int TAG = 1405;
 
     public UnderlyingLegMaturityTime()
-        : base(Tags.UnderlyingLegMaturityTime) {}
+        : base(TAG) {}
     public UnderlyingLegMaturityTime(string val)
-        : base(Tags.UnderlyingLegMaturityTime, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23168,9 +23168,9 @@ public sealed class RefApplExtID : IntField
     public const int TAG = 1406;
 
     public RefApplExtID()
-        : base(Tags.RefApplExtID) {}
+        : base(TAG) {}
     public RefApplExtID(int val)
-        : base(Tags.RefApplExtID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23181,9 +23181,9 @@ public sealed class DefaultApplExtID : IntField
     public const int TAG = 1407;
 
     public DefaultApplExtID()
-        : base(Tags.DefaultApplExtID) {}
+        : base(TAG) {}
     public DefaultApplExtID(int val)
-        : base(Tags.DefaultApplExtID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23194,9 +23194,9 @@ public sealed class DefaultCstmApplVerID : StringField
     public const int TAG = 1408;
 
     public DefaultCstmApplVerID()
-        : base(Tags.DefaultCstmApplVerID) {}
+        : base(TAG) {}
     public DefaultCstmApplVerID(string val)
-        : base(Tags.DefaultCstmApplVerID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23207,9 +23207,9 @@ public sealed class SessionStatus : IntField
     public const int TAG = 1409;
 
     public SessionStatus()
-        : base(Tags.SessionStatus) {}
+        : base(TAG) {}
     public SessionStatus(int val)
-        : base(Tags.SessionStatus, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SESSION_ACTIVE = 0;
@@ -23231,9 +23231,9 @@ public sealed class DefaultVerIndicator : BooleanField
     public const int TAG = 1410;
 
     public DefaultVerIndicator()
-        : base(Tags.DefaultVerIndicator) {}
+        : base(TAG) {}
     public DefaultVerIndicator(Boolean val)
-        : base(Tags.DefaultVerIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23244,9 +23244,9 @@ public sealed class Nested4PartySubIDType : IntField
     public const int TAG = 1411;
 
     public Nested4PartySubIDType()
-        : base(Tags.Nested4PartySubIDType) {}
+        : base(TAG) {}
     public Nested4PartySubIDType(int val)
-        : base(Tags.Nested4PartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23257,9 +23257,9 @@ public sealed class Nested4PartySubID : StringField
     public const int TAG = 1412;
 
     public Nested4PartySubID()
-        : base(Tags.Nested4PartySubID) {}
+        : base(TAG) {}
     public Nested4PartySubID(string val)
-        : base(Tags.Nested4PartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23270,9 +23270,9 @@ public sealed class NoNested4PartySubIDs : IntField
     public const int TAG = 1413;
 
     public NoNested4PartySubIDs()
-        : base(Tags.NoNested4PartySubIDs) {}
+        : base(TAG) {}
     public NoNested4PartySubIDs(int val)
-        : base(Tags.NoNested4PartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23283,9 +23283,9 @@ public sealed class NoNested4PartyIDs : IntField
     public const int TAG = 1414;
 
     public NoNested4PartyIDs()
-        : base(Tags.NoNested4PartyIDs) {}
+        : base(TAG) {}
     public NoNested4PartyIDs(int val)
-        : base(Tags.NoNested4PartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23296,9 +23296,9 @@ public sealed class Nested4PartyID : StringField
     public const int TAG = 1415;
 
     public Nested4PartyID()
-        : base(Tags.Nested4PartyID) {}
+        : base(TAG) {}
     public Nested4PartyID(string val)
-        : base(Tags.Nested4PartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23309,9 +23309,9 @@ public sealed class Nested4PartyIDSource : CharField
     public const int TAG = 1416;
 
     public Nested4PartyIDSource()
-        : base(Tags.Nested4PartyIDSource) {}
+        : base(TAG) {}
     public Nested4PartyIDSource(char val)
-        : base(Tags.Nested4PartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23322,9 +23322,9 @@ public sealed class Nested4PartyRole : IntField
     public const int TAG = 1417;
 
     public Nested4PartyRole()
-        : base(Tags.Nested4PartyRole) {}
+        : base(TAG) {}
     public Nested4PartyRole(int val)
-        : base(Tags.Nested4PartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23335,9 +23335,9 @@ public sealed class LegLastQty : DecimalField
     public const int TAG = 1418;
 
     public LegLastQty()
-        : base(Tags.LegLastQty) {}
+        : base(TAG) {}
     public LegLastQty(Decimal val)
-        : base(Tags.LegLastQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23348,9 +23348,9 @@ public sealed class UnderlyingExerciseStyle : IntField
     public const int TAG = 1419;
 
     public UnderlyingExerciseStyle()
-        : base(Tags.UnderlyingExerciseStyle) {}
+        : base(TAG) {}
     public UnderlyingExerciseStyle(int val)
-        : base(Tags.UnderlyingExerciseStyle, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23361,9 +23361,9 @@ public sealed class LegExerciseStyle : IntField
     public const int TAG = 1420;
 
     public LegExerciseStyle()
-        : base(Tags.LegExerciseStyle) {}
+        : base(TAG) {}
     public LegExerciseStyle(int val)
-        : base(Tags.LegExerciseStyle, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23374,9 +23374,9 @@ public sealed class LegPriceUnitOfMeasure : StringField
     public const int TAG = 1421;
 
     public LegPriceUnitOfMeasure()
-        : base(Tags.LegPriceUnitOfMeasure) {}
+        : base(TAG) {}
     public LegPriceUnitOfMeasure(string val)
-        : base(Tags.LegPriceUnitOfMeasure, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23387,9 +23387,9 @@ public sealed class LegPriceUnitOfMeasureQty : DecimalField
     public const int TAG = 1422;
 
     public LegPriceUnitOfMeasureQty()
-        : base(Tags.LegPriceUnitOfMeasureQty) {}
+        : base(TAG) {}
     public LegPriceUnitOfMeasureQty(Decimal val)
-        : base(Tags.LegPriceUnitOfMeasureQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23400,9 +23400,9 @@ public sealed class UnderlyingUnitOfMeasureQty : DecimalField
     public const int TAG = 1423;
 
     public UnderlyingUnitOfMeasureQty()
-        : base(Tags.UnderlyingUnitOfMeasureQty) {}
+        : base(TAG) {}
     public UnderlyingUnitOfMeasureQty(Decimal val)
-        : base(Tags.UnderlyingUnitOfMeasureQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23413,9 +23413,9 @@ public sealed class UnderlyingPriceUnitOfMeasure : StringField
     public const int TAG = 1424;
 
     public UnderlyingPriceUnitOfMeasure()
-        : base(Tags.UnderlyingPriceUnitOfMeasure) {}
+        : base(TAG) {}
     public UnderlyingPriceUnitOfMeasure(string val)
-        : base(Tags.UnderlyingPriceUnitOfMeasure, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23426,9 +23426,9 @@ public sealed class UnderlyingPriceUnitOfMeasureQty : DecimalField
     public const int TAG = 1425;
 
     public UnderlyingPriceUnitOfMeasureQty()
-        : base(Tags.UnderlyingPriceUnitOfMeasureQty) {}
+        : base(TAG) {}
     public UnderlyingPriceUnitOfMeasureQty(Decimal val)
-        : base(Tags.UnderlyingPriceUnitOfMeasureQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23439,9 +23439,9 @@ public sealed class ApplReportType : IntField
     public const int TAG = 1426;
 
     public ApplReportType()
-        : base(Tags.ApplReportType) {}
+        : base(TAG) {}
     public ApplReportType(int val)
-        : base(Tags.ApplReportType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int RESET_APPLSEQNUM_TO_NEW_VALUE_SPECIFIED_IN_APPLNEWSEQNUM = 0;
@@ -23458,9 +23458,9 @@ public sealed class HaltReasonInt : IntField
     public const int TAG = 327;
 
     public HaltReasonInt()
-        : base(Tags.HaltReasonInt) {}
+        : base(TAG) {}
     public HaltReasonInt(int val)
-        : base(Tags.HaltReasonInt, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NEWS_DISSEMINATION = 0;
@@ -23479,9 +23479,9 @@ public sealed class SideLastQty : IntField
     public const int TAG = 1009;
 
     public SideLastQty()
-        : base(Tags.SideLastQty) {}
+        : base(TAG) {}
     public SideLastQty(int val)
-        : base(Tags.SideLastQty, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23492,9 +23492,9 @@ public sealed class UnderlyingInstrumentPartyID : StringField
     public const int TAG = 1059;
 
     public UnderlyingInstrumentPartyID()
-        : base(Tags.UnderlyingInstrumentPartyID) {}
+        : base(TAG) {}
     public UnderlyingInstrumentPartyID(string val)
-        : base(Tags.UnderlyingInstrumentPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23505,9 +23505,9 @@ public sealed class UnderlyingInstrumentPartyIDSource : CharField
     public const int TAG = 1060;
 
     public UnderlyingInstrumentPartyIDSource()
-        : base(Tags.UnderlyingInstrumentPartyIDSource) {}
+        : base(TAG) {}
     public UnderlyingInstrumentPartyIDSource(char val)
-        : base(Tags.UnderlyingInstrumentPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23518,9 +23518,9 @@ public sealed class UnderlyingInstrumentPartyRole : IntField
     public const int TAG = 1061;
 
     public UnderlyingInstrumentPartyRole()
-        : base(Tags.UnderlyingInstrumentPartyRole) {}
+        : base(TAG) {}
     public UnderlyingInstrumentPartyRole(int val)
-        : base(Tags.UnderlyingInstrumentPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23531,9 +23531,9 @@ public sealed class UnderlyingInstrumentPartySubID : StringField
     public const int TAG = 1063;
 
     public UnderlyingInstrumentPartySubID()
-        : base(Tags.UnderlyingInstrumentPartySubID) {}
+        : base(TAG) {}
     public UnderlyingInstrumentPartySubID(string val)
-        : base(Tags.UnderlyingInstrumentPartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23544,9 +23544,9 @@ public sealed class UnderlyingInstrumentPartySubIDType : IntField
     public const int TAG = 1064;
 
     public UnderlyingInstrumentPartySubIDType()
-        : base(Tags.UnderlyingInstrumentPartySubIDType) {}
+        : base(TAG) {}
     public UnderlyingInstrumentPartySubIDType(int val)
-        : base(Tags.UnderlyingInstrumentPartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23557,9 +23557,9 @@ public sealed class OptPayoutAmount : DecimalField
     public const int TAG = 1195;
 
     public OptPayoutAmount()
-        : base(Tags.OptPayoutAmount) {}
+        : base(TAG) {}
     public OptPayoutAmount(Decimal val)
-        : base(Tags.OptPayoutAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23570,9 +23570,9 @@ public sealed class ValuationMethod : StringField
     public const int TAG = 1197;
 
     public ValuationMethod()
-        : base(Tags.ValuationMethod) {}
+        : base(TAG) {}
     public ValuationMethod(string val)
-        : base(Tags.ValuationMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string PREMIUM_STYLE = "EQTY";
@@ -23590,9 +23590,9 @@ public sealed class DerivativeValuationMethod : StringField
     public const int TAG = 1319;
 
     public DerivativeValuationMethod()
-        : base(Tags.DerivativeValuationMethod) {}
+        : base(TAG) {}
     public DerivativeValuationMethod(string val)
-        : base(Tags.DerivativeValuationMethod, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23603,9 +23603,9 @@ public sealed class SideExecID : StringField
     public const int TAG = 1427;
 
     public SideExecID()
-        : base(Tags.SideExecID) {}
+        : base(TAG) {}
     public SideExecID(string val)
-        : base(Tags.SideExecID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23616,9 +23616,9 @@ public sealed class OrderDelay : IntField
     public const int TAG = 1428;
 
     public OrderDelay()
-        : base(Tags.OrderDelay) {}
+        : base(TAG) {}
     public OrderDelay(int val)
-        : base(Tags.OrderDelay, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23629,9 +23629,9 @@ public sealed class OrderDelayUnit : IntField
     public const int TAG = 1429;
 
     public OrderDelayUnit()
-        : base(Tags.OrderDelayUnit) {}
+        : base(TAG) {}
     public OrderDelayUnit(int val)
-        : base(Tags.OrderDelayUnit, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SECONDS = 0;
@@ -23656,9 +23656,9 @@ public sealed class VenueType : CharField
     public const int TAG = 1430;
 
     public VenueType()
-        : base(Tags.VenueType) {}
+        : base(TAG) {}
     public VenueType(char val)
-        : base(Tags.VenueType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const char ELECTRONIC = 'E';
@@ -23674,9 +23674,9 @@ public sealed class RefOrdIDReason : IntField
     public const int TAG = 1431;
 
     public RefOrdIDReason()
-        : base(Tags.RefOrdIDReason) {}
+        : base(TAG) {}
     public RefOrdIDReason(int val)
-        : base(Tags.RefOrdIDReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int GTC_FROM_PREVIOUS_DAY = 0;
@@ -23692,9 +23692,9 @@ public sealed class OrigCustOrderCapacity : IntField
     public const int TAG = 1432;
 
     public OrigCustOrderCapacity()
-        : base(Tags.OrigCustOrderCapacity) {}
+        : base(TAG) {}
     public OrigCustOrderCapacity(int val)
-        : base(Tags.OrigCustOrderCapacity, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int MEMBER_TRADING_FOR_THEIR_OWN_ACCOUNT = 1;
@@ -23711,9 +23711,9 @@ public sealed class RefApplReqID : StringField
     public const int TAG = 1433;
 
     public RefApplReqID()
-        : base(Tags.RefApplReqID) {}
+        : base(TAG) {}
     public RefApplReqID(string val)
-        : base(Tags.RefApplReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23724,9 +23724,9 @@ public sealed class ModelType : IntField
     public const int TAG = 1434;
 
     public ModelType()
-        : base(Tags.ModelType) {}
+        : base(TAG) {}
     public ModelType(int val)
-        : base(Tags.ModelType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UTILITY_PROVIDED_STANDARD_MODEL = 0;
@@ -23741,9 +23741,9 @@ public sealed class ContractMultiplierUnit : IntField
     public const int TAG = 1435;
 
     public ContractMultiplierUnit()
-        : base(Tags.ContractMultiplierUnit) {}
+        : base(TAG) {}
     public ContractMultiplierUnit(int val)
-        : base(Tags.ContractMultiplierUnit, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int SHARES = 0;
@@ -23759,9 +23759,9 @@ public sealed class LegContractMultiplierUnit : IntField
     public const int TAG = 1436;
 
     public LegContractMultiplierUnit()
-        : base(Tags.LegContractMultiplierUnit) {}
+        : base(TAG) {}
     public LegContractMultiplierUnit(int val)
-        : base(Tags.LegContractMultiplierUnit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23772,9 +23772,9 @@ public sealed class UnderlyingContractMultiplierUnit : IntField
     public const int TAG = 1437;
 
     public UnderlyingContractMultiplierUnit()
-        : base(Tags.UnderlyingContractMultiplierUnit) {}
+        : base(TAG) {}
     public UnderlyingContractMultiplierUnit(int val)
-        : base(Tags.UnderlyingContractMultiplierUnit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23785,9 +23785,9 @@ public sealed class DerivativeContractMultiplierUnit : IntField
     public const int TAG = 1438;
 
     public DerivativeContractMultiplierUnit()
-        : base(Tags.DerivativeContractMultiplierUnit) {}
+        : base(TAG) {}
     public DerivativeContractMultiplierUnit(int val)
-        : base(Tags.DerivativeContractMultiplierUnit, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23798,9 +23798,9 @@ public sealed class FlowScheduleType : IntField
     public const int TAG = 1439;
 
     public FlowScheduleType()
-        : base(Tags.FlowScheduleType) {}
+        : base(TAG) {}
     public FlowScheduleType(int val)
-        : base(Tags.FlowScheduleType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int NERC_EASTERN_OFF_PEAK = 0;
@@ -23818,9 +23818,9 @@ public sealed class LegFlowScheduleType : IntField
     public const int TAG = 1440;
 
     public LegFlowScheduleType()
-        : base(Tags.LegFlowScheduleType) {}
+        : base(TAG) {}
     public LegFlowScheduleType(int val)
-        : base(Tags.LegFlowScheduleType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23831,9 +23831,9 @@ public sealed class UnderlyingFlowScheduleType : IntField
     public const int TAG = 1441;
 
     public UnderlyingFlowScheduleType()
-        : base(Tags.UnderlyingFlowScheduleType) {}
+        : base(TAG) {}
     public UnderlyingFlowScheduleType(int val)
-        : base(Tags.UnderlyingFlowScheduleType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23844,9 +23844,9 @@ public sealed class DerivativeFlowScheduleType : IntField
     public const int TAG = 1442;
 
     public DerivativeFlowScheduleType()
-        : base(Tags.DerivativeFlowScheduleType) {}
+        : base(TAG) {}
     public DerivativeFlowScheduleType(int val)
-        : base(Tags.DerivativeFlowScheduleType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23857,9 +23857,9 @@ public sealed class FillLiquidityInd : IntField
     public const int TAG = 1443;
 
     public FillLiquidityInd()
-        : base(Tags.FillLiquidityInd) {}
+        : base(TAG) {}
     public FillLiquidityInd(int val)
-        : base(Tags.FillLiquidityInd, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23870,9 +23870,9 @@ public sealed class SideLiquidityInd : IntField
     public const int TAG = 1444;
 
     public SideLiquidityInd()
-        : base(Tags.SideLiquidityInd) {}
+        : base(TAG) {}
     public SideLiquidityInd(int val)
-        : base(Tags.SideLiquidityInd, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23883,9 +23883,9 @@ public sealed class NoRateSources : IntField
     public const int TAG = 1445;
 
     public NoRateSources()
-        : base(Tags.NoRateSources) {}
+        : base(TAG) {}
     public NoRateSources(int val)
-        : base(Tags.NoRateSources, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23896,9 +23896,9 @@ public sealed class RateSource : IntField
     public const int TAG = 1446;
 
     public RateSource()
-        : base(Tags.RateSource) {}
+        : base(TAG) {}
     public RateSource(int val)
-        : base(Tags.RateSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int BLOOMBERG = 0;
@@ -23915,9 +23915,9 @@ public sealed class RateSourceType : IntField
     public const int TAG = 1447;
 
     public RateSourceType()
-        : base(Tags.RateSourceType) {}
+        : base(TAG) {}
     public RateSourceType(int val)
-        : base(Tags.RateSourceType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int PRIMARY = 0;
@@ -23932,9 +23932,9 @@ public sealed class ReferencePage : StringField
     public const int TAG = 1448;
 
     public ReferencePage()
-        : base(Tags.ReferencePage) {}
+        : base(TAG) {}
     public ReferencePage(string val)
-        : base(Tags.ReferencePage, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23945,9 +23945,9 @@ public sealed class RestructuringType : StringField
     public const int TAG = 1449;
 
     public RestructuringType()
-        : base(Tags.RestructuringType) {}
+        : base(TAG) {}
     public RestructuringType(string val)
-        : base(Tags.RestructuringType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string FULL_RESTRUCTURING = "FR";
@@ -23964,9 +23964,9 @@ public sealed class Seniority : StringField
     public const int TAG = 1450;
 
     public Seniority()
-        : base(Tags.Seniority) {}
+        : base(TAG) {}
     public Seniority(string val)
-        : base(Tags.Seniority, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const string SENIOR_SECURED = "SD";
@@ -23982,9 +23982,9 @@ public sealed class NotionalPercentageOutstanding : DecimalField
     public const int TAG = 1451;
 
     public NotionalPercentageOutstanding()
-        : base(Tags.NotionalPercentageOutstanding) {}
+        : base(TAG) {}
     public NotionalPercentageOutstanding(Decimal val)
-        : base(Tags.NotionalPercentageOutstanding, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -23995,9 +23995,9 @@ public sealed class OriginalNotionalPercentageOutstanding : DecimalField
     public const int TAG = 1452;
 
     public OriginalNotionalPercentageOutstanding()
-        : base(Tags.OriginalNotionalPercentageOutstanding) {}
+        : base(TAG) {}
     public OriginalNotionalPercentageOutstanding(Decimal val)
-        : base(Tags.OriginalNotionalPercentageOutstanding, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24008,9 +24008,9 @@ public sealed class UnderlyingRestructuringType : StringField
     public const int TAG = 1453;
 
     public UnderlyingRestructuringType()
-        : base(Tags.UnderlyingRestructuringType) {}
+        : base(TAG) {}
     public UnderlyingRestructuringType(string val)
-        : base(Tags.UnderlyingRestructuringType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24021,9 +24021,9 @@ public sealed class UnderlyingSeniority : StringField
     public const int TAG = 1454;
 
     public UnderlyingSeniority()
-        : base(Tags.UnderlyingSeniority) {}
+        : base(TAG) {}
     public UnderlyingSeniority(string val)
-        : base(Tags.UnderlyingSeniority, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24034,9 +24034,9 @@ public sealed class UnderlyingNotionalPercentageOutstanding : DecimalField
     public const int TAG = 1455;
 
     public UnderlyingNotionalPercentageOutstanding()
-        : base(Tags.UnderlyingNotionalPercentageOutstanding) {}
+        : base(TAG) {}
     public UnderlyingNotionalPercentageOutstanding(Decimal val)
-        : base(Tags.UnderlyingNotionalPercentageOutstanding, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24047,9 +24047,9 @@ public sealed class UnderlyingOriginalNotionalPercentageOutstanding : DecimalFie
     public const int TAG = 1456;
 
     public UnderlyingOriginalNotionalPercentageOutstanding()
-        : base(Tags.UnderlyingOriginalNotionalPercentageOutstanding) {}
+        : base(TAG) {}
     public UnderlyingOriginalNotionalPercentageOutstanding(Decimal val)
-        : base(Tags.UnderlyingOriginalNotionalPercentageOutstanding, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24060,9 +24060,9 @@ public sealed class AttachmentPoint : DecimalField
     public const int TAG = 1457;
 
     public AttachmentPoint()
-        : base(Tags.AttachmentPoint) {}
+        : base(TAG) {}
     public AttachmentPoint(Decimal val)
-        : base(Tags.AttachmentPoint, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24073,9 +24073,9 @@ public sealed class DetachmentPoint : DecimalField
     public const int TAG = 1458;
 
     public DetachmentPoint()
-        : base(Tags.DetachmentPoint) {}
+        : base(TAG) {}
     public DetachmentPoint(Decimal val)
-        : base(Tags.DetachmentPoint, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24086,9 +24086,9 @@ public sealed class UnderlyingAttachmentPoint : DecimalField
     public const int TAG = 1459;
 
     public UnderlyingAttachmentPoint()
-        : base(Tags.UnderlyingAttachmentPoint) {}
+        : base(TAG) {}
     public UnderlyingAttachmentPoint(Decimal val)
-        : base(Tags.UnderlyingAttachmentPoint, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24099,9 +24099,9 @@ public sealed class UnderlyingDetachmentPoint : DecimalField
     public const int TAG = 1460;
 
     public UnderlyingDetachmentPoint()
-        : base(Tags.UnderlyingDetachmentPoint) {}
+        : base(TAG) {}
     public UnderlyingDetachmentPoint(Decimal val)
-        : base(Tags.UnderlyingDetachmentPoint, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24112,9 +24112,9 @@ public sealed class NoTargetPartyIDs : IntField
     public const int TAG = 1461;
 
     public NoTargetPartyIDs()
-        : base(Tags.NoTargetPartyIDs) {}
+        : base(TAG) {}
     public NoTargetPartyIDs(int val)
-        : base(Tags.NoTargetPartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24125,9 +24125,9 @@ public sealed class TargetPartyID : StringField
     public const int TAG = 1462;
 
     public TargetPartyID()
-        : base(Tags.TargetPartyID) {}
+        : base(TAG) {}
     public TargetPartyID(string val)
-        : base(Tags.TargetPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24138,9 +24138,9 @@ public sealed class TargetPartyIDSource : CharField
     public const int TAG = 1463;
 
     public TargetPartyIDSource()
-        : base(Tags.TargetPartyIDSource) {}
+        : base(TAG) {}
     public TargetPartyIDSource(char val)
-        : base(Tags.TargetPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24151,9 +24151,9 @@ public sealed class TargetPartyRole : IntField
     public const int TAG = 1464;
 
     public TargetPartyRole()
-        : base(Tags.TargetPartyRole) {}
+        : base(TAG) {}
     public TargetPartyRole(int val)
-        : base(Tags.TargetPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24164,9 +24164,9 @@ public sealed class SecurityListID : StringField
     public const int TAG = 1465;
 
     public SecurityListID()
-        : base(Tags.SecurityListID) {}
+        : base(TAG) {}
     public SecurityListID(string val)
-        : base(Tags.SecurityListID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24177,9 +24177,9 @@ public sealed class SecurityListRefID : StringField
     public const int TAG = 1466;
 
     public SecurityListRefID()
-        : base(Tags.SecurityListRefID) {}
+        : base(TAG) {}
     public SecurityListRefID(string val)
-        : base(Tags.SecurityListRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24190,9 +24190,9 @@ public sealed class SecurityListDesc : StringField
     public const int TAG = 1467;
 
     public SecurityListDesc()
-        : base(Tags.SecurityListDesc) {}
+        : base(TAG) {}
     public SecurityListDesc(string val)
-        : base(Tags.SecurityListDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24203,9 +24203,9 @@ public sealed class EncodedSecurityListDescLen : IntField
     public const int TAG = 1468;
 
     public EncodedSecurityListDescLen()
-        : base(Tags.EncodedSecurityListDescLen) {}
+        : base(TAG) {}
     public EncodedSecurityListDescLen(int val)
-        : base(Tags.EncodedSecurityListDescLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24216,9 +24216,9 @@ public sealed class EncodedSecurityListDesc : StringField
     public const int TAG = 1469;
 
     public EncodedSecurityListDesc()
-        : base(Tags.EncodedSecurityListDesc) {}
+        : base(TAG) {}
     public EncodedSecurityListDesc(string val)
-        : base(Tags.EncodedSecurityListDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24229,9 +24229,9 @@ public sealed class SecurityListType : IntField
     public const int TAG = 1470;
 
     public SecurityListType()
-        : base(Tags.SecurityListType) {}
+        : base(TAG) {}
     public SecurityListType(int val)
-        : base(Tags.SecurityListType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int INDUSTRY_CLASSIFICATION = 1;
@@ -24248,9 +24248,9 @@ public sealed class SecurityListTypeSource : IntField
     public const int TAG = 1471;
 
     public SecurityListTypeSource()
-        : base(Tags.SecurityListTypeSource) {}
+        : base(TAG) {}
     public SecurityListTypeSource(int val)
-        : base(Tags.SecurityListTypeSource, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ICB = 1;
@@ -24266,9 +24266,9 @@ public sealed class NewsID : StringField
     public const int TAG = 1472;
 
     public NewsID()
-        : base(Tags.NewsID) {}
+        : base(TAG) {}
     public NewsID(string val)
-        : base(Tags.NewsID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24279,9 +24279,9 @@ public sealed class NewsCategory : IntField
     public const int TAG = 1473;
 
     public NewsCategory()
-        : base(Tags.NewsCategory) {}
+        : base(TAG) {}
     public NewsCategory(int val)
-        : base(Tags.NewsCategory, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int COMPANY_NEWS = 0;
@@ -24299,9 +24299,9 @@ public sealed class LanguageCode : StringField
     public const int TAG = 1474;
 
     public LanguageCode()
-        : base(Tags.LanguageCode) {}
+        : base(TAG) {}
     public LanguageCode(string val)
-        : base(Tags.LanguageCode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24312,9 +24312,9 @@ public sealed class NoNewsRefIDs : IntField
     public const int TAG = 1475;
 
     public NoNewsRefIDs()
-        : base(Tags.NoNewsRefIDs) {}
+        : base(TAG) {}
     public NoNewsRefIDs(int val)
-        : base(Tags.NoNewsRefIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24325,9 +24325,9 @@ public sealed class NewsRefID : StringField
     public const int TAG = 1476;
 
     public NewsRefID()
-        : base(Tags.NewsRefID) {}
+        : base(TAG) {}
     public NewsRefID(string val)
-        : base(Tags.NewsRefID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24338,9 +24338,9 @@ public sealed class NewsRefType : IntField
     public const int TAG = 1477;
 
     public NewsRefType()
-        : base(Tags.NewsRefType) {}
+        : base(TAG) {}
     public NewsRefType(int val)
-        : base(Tags.NewsRefType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int REPLACEMENT = 0;
@@ -24356,9 +24356,9 @@ public sealed class StrikePriceDeterminationMethod : IntField
     public const int TAG = 1478;
 
     public StrikePriceDeterminationMethod()
-        : base(Tags.StrikePriceDeterminationMethod) {}
+        : base(TAG) {}
     public StrikePriceDeterminationMethod(int val)
-        : base(Tags.StrikePriceDeterminationMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int FIXED_STRIKE = 1;
@@ -24375,9 +24375,9 @@ public sealed class StrikePriceBoundaryMethod : IntField
     public const int TAG = 1479;
 
     public StrikePriceBoundaryMethod()
-        : base(Tags.StrikePriceBoundaryMethod) {}
+        : base(TAG) {}
     public StrikePriceBoundaryMethod(int val)
-        : base(Tags.StrikePriceBoundaryMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int LESS_THAN_UNDERLYING_PRICE_IS_IN_THE_MONEY = 1;
@@ -24395,9 +24395,9 @@ public sealed class StrikePriceBoundaryPrecision : DecimalField
     public const int TAG = 1480;
 
     public StrikePriceBoundaryPrecision()
-        : base(Tags.StrikePriceBoundaryPrecision) {}
+        : base(TAG) {}
     public StrikePriceBoundaryPrecision(Decimal val)
-        : base(Tags.StrikePriceBoundaryPrecision, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24408,9 +24408,9 @@ public sealed class UnderlyingPriceDeterminationMethod : IntField
     public const int TAG = 1481;
 
     public UnderlyingPriceDeterminationMethod()
-        : base(Tags.UnderlyingPriceDeterminationMethod) {}
+        : base(TAG) {}
     public UnderlyingPriceDeterminationMethod(int val)
-        : base(Tags.UnderlyingPriceDeterminationMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int REGULAR = 1;
@@ -24427,9 +24427,9 @@ public sealed class OptPayoutType : IntField
     public const int TAG = 1482;
 
     public OptPayoutType()
-        : base(Tags.OptPayoutType) {}
+        : base(TAG) {}
     public OptPayoutType(int val)
-        : base(Tags.OptPayoutType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int VANILLA = 1;
@@ -24445,9 +24445,9 @@ public sealed class NoComplexEvents : IntField
     public const int TAG = 1483;
 
     public NoComplexEvents()
-        : base(Tags.NoComplexEvents) {}
+        : base(TAG) {}
     public NoComplexEvents(int val)
-        : base(Tags.NoComplexEvents, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24458,9 +24458,9 @@ public sealed class ComplexEventType : IntField
     public const int TAG = 1484;
 
     public ComplexEventType()
-        : base(Tags.ComplexEventType) {}
+        : base(TAG) {}
     public ComplexEventType(int val)
-        : base(Tags.ComplexEventType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int CAPPED = 1;
@@ -24482,9 +24482,9 @@ public sealed class ComplexOptPayoutAmount : DecimalField
     public const int TAG = 1485;
 
     public ComplexOptPayoutAmount()
-        : base(Tags.ComplexOptPayoutAmount) {}
+        : base(TAG) {}
     public ComplexOptPayoutAmount(Decimal val)
-        : base(Tags.ComplexOptPayoutAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24495,9 +24495,9 @@ public sealed class ComplexEventPrice : DecimalField
     public const int TAG = 1486;
 
     public ComplexEventPrice()
-        : base(Tags.ComplexEventPrice) {}
+        : base(TAG) {}
     public ComplexEventPrice(Decimal val)
-        : base(Tags.ComplexEventPrice, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24508,9 +24508,9 @@ public sealed class ComplexEventPriceBoundaryMethod : IntField
     public const int TAG = 1487;
 
     public ComplexEventPriceBoundaryMethod()
-        : base(Tags.ComplexEventPriceBoundaryMethod) {}
+        : base(TAG) {}
     public ComplexEventPriceBoundaryMethod(int val)
-        : base(Tags.ComplexEventPriceBoundaryMethod, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int LESS_THAN_COMPLEXEVENTPRICE = 1;
@@ -24528,9 +24528,9 @@ public sealed class ComplexEventPriceBoundaryPrecision : DecimalField
     public const int TAG = 1488;
 
     public ComplexEventPriceBoundaryPrecision()
-        : base(Tags.ComplexEventPriceBoundaryPrecision) {}
+        : base(TAG) {}
     public ComplexEventPriceBoundaryPrecision(Decimal val)
-        : base(Tags.ComplexEventPriceBoundaryPrecision, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24541,9 +24541,9 @@ public sealed class ComplexEventPriceTimeType : IntField
     public const int TAG = 1489;
 
     public ComplexEventPriceTimeType()
-        : base(Tags.ComplexEventPriceTimeType) {}
+        : base(TAG) {}
     public ComplexEventPriceTimeType(int val)
-        : base(Tags.ComplexEventPriceTimeType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int EXPIRATION = 1;
@@ -24559,9 +24559,9 @@ public sealed class ComplexEventCondition : IntField
     public const int TAG = 1490;
 
     public ComplexEventCondition()
-        : base(Tags.ComplexEventCondition) {}
+        : base(TAG) {}
     public ComplexEventCondition(int val)
-        : base(Tags.ComplexEventCondition, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int AND = 1;
@@ -24576,9 +24576,9 @@ public sealed class NoComplexEventDates : IntField
     public const int TAG = 1491;
 
     public NoComplexEventDates()
-        : base(Tags.NoComplexEventDates) {}
+        : base(TAG) {}
     public NoComplexEventDates(int val)
-        : base(Tags.NoComplexEventDates, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24589,7 +24589,7 @@ public sealed class ComplexEventStartDate : UtcDateTimeField
     public const int TAG = 1492;
 
     public ComplexEventStartDate()
-        : base(Tags.ComplexEventStartDate) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -24597,7 +24597,7 @@ public sealed class ComplexEventStartDate : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public ComplexEventStartDate(DateTime val)
-        : base(Tags.ComplexEventStartDate, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -24607,7 +24607,7 @@ public sealed class ComplexEventStartDate : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ComplexEventStartDate(DateTime val, bool showMilliseconds)
-        : base(Tags.ComplexEventStartDate, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -24616,7 +24616,7 @@ public sealed class ComplexEventStartDate : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public ComplexEventStartDate(DateTime val, TimePrecision precision)
-        : base(Tags.ComplexEventStartDate, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -24627,7 +24627,7 @@ public sealed class ComplexEventEndDate : UtcDateTimeField
     public const int TAG = 1493;
 
     public ComplexEventEndDate()
-        : base(Tags.ComplexEventEndDate) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -24635,7 +24635,7 @@ public sealed class ComplexEventEndDate : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public ComplexEventEndDate(DateTime val)
-        : base(Tags.ComplexEventEndDate, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -24645,7 +24645,7 @@ public sealed class ComplexEventEndDate : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public ComplexEventEndDate(DateTime val, bool showMilliseconds)
-        : base(Tags.ComplexEventEndDate, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -24654,7 +24654,7 @@ public sealed class ComplexEventEndDate : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public ComplexEventEndDate(DateTime val, TimePrecision precision)
-        : base(Tags.ComplexEventEndDate, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -24665,9 +24665,9 @@ public sealed class NoComplexEventTimes : IntField
     public const int TAG = 1494;
 
     public NoComplexEventTimes()
-        : base(Tags.NoComplexEventTimes) {}
+        : base(TAG) {}
     public NoComplexEventTimes(int val)
-        : base(Tags.NoComplexEventTimes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24678,11 +24678,11 @@ public sealed class ComplexEventStartTime : TimeOnlyField
     public const int TAG = 1495;
 
     public ComplexEventStartTime()
-        : base(Tags.ComplexEventStartTime) {}
+        : base(TAG) {}
     public ComplexEventStartTime(TimeOnly val)
-        : base(Tags.ComplexEventStartTime, val) {}
+        : base(TAG, val) {}
     public ComplexEventStartTime(TimeOnly val, TimePrecision precision)
-        : base(Tags.ComplexEventStartTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -24693,11 +24693,11 @@ public sealed class ComplexEventEndTime : TimeOnlyField
     public const int TAG = 1496;
 
     public ComplexEventEndTime()
-        : base(Tags.ComplexEventEndTime) {}
+        : base(TAG) {}
     public ComplexEventEndTime(TimeOnly val)
-        : base(Tags.ComplexEventEndTime, val) {}
+        : base(TAG, val) {}
     public ComplexEventEndTime(TimeOnly val, TimePrecision precision)
-        : base(Tags.ComplexEventEndTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -24708,9 +24708,9 @@ public sealed class StreamAsgnReqID : StringField
     public const int TAG = 1497;
 
     public StreamAsgnReqID()
-        : base(Tags.StreamAsgnReqID) {}
+        : base(TAG) {}
     public StreamAsgnReqID(string val)
-        : base(Tags.StreamAsgnReqID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24721,9 +24721,9 @@ public sealed class StreamAsgnReqType : IntField
     public const int TAG = 1498;
 
     public StreamAsgnReqType()
-        : base(Tags.StreamAsgnReqType) {}
+        : base(TAG) {}
     public StreamAsgnReqType(int val)
-        : base(Tags.StreamAsgnReqType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int STREAM_ASSIGNMENT_FOR_NEW_CUSTOMER = 1;
@@ -24738,9 +24738,9 @@ public sealed class NoAsgnReqs : IntField
     public const int TAG = 1499;
 
     public NoAsgnReqs()
-        : base(Tags.NoAsgnReqs) {}
+        : base(TAG) {}
     public NoAsgnReqs(int val)
-        : base(Tags.NoAsgnReqs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24751,9 +24751,9 @@ public sealed class MDStreamID : StringField
     public const int TAG = 1500;
 
     public MDStreamID()
-        : base(Tags.MDStreamID) {}
+        : base(TAG) {}
     public MDStreamID(string val)
-        : base(Tags.MDStreamID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24764,9 +24764,9 @@ public sealed class StreamAsgnRptID : StringField
     public const int TAG = 1501;
 
     public StreamAsgnRptID()
-        : base(Tags.StreamAsgnRptID) {}
+        : base(TAG) {}
     public StreamAsgnRptID(string val)
-        : base(Tags.StreamAsgnRptID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24777,9 +24777,9 @@ public sealed class StreamAsgnRejReason : IntField
     public const int TAG = 1502;
 
     public StreamAsgnRejReason()
-        : base(Tags.StreamAsgnRejReason) {}
+        : base(TAG) {}
     public StreamAsgnRejReason(int val)
-        : base(Tags.StreamAsgnRejReason, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int UNKNOWN_CLIENT = 0;
@@ -24797,9 +24797,9 @@ public sealed class StreamAsgnAckType : IntField
     public const int TAG = 1503;
 
     public StreamAsgnAckType()
-        : base(Tags.StreamAsgnAckType) {}
+        : base(TAG) {}
     public StreamAsgnAckType(int val)
-        : base(Tags.StreamAsgnAckType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ASSIGNMENT_ACCEPTED = 0;
@@ -24814,7 +24814,7 @@ public sealed class RelSymTransactTime : UtcDateTimeField
     public const int TAG = 1504;
 
     public RelSymTransactTime()
-        : base(Tags.RelSymTransactTime) {}
+        : base(TAG) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -24822,7 +24822,7 @@ public sealed class RelSymTransactTime : UtcDateTimeField
     /// </summary>
     /// <param name="val"></param>
     public RelSymTransactTime(DateTime val)
-        : base(Tags.RelSymTransactTime, val) {}
+        : base(TAG, val) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -24832,7 +24832,7 @@ public sealed class RelSymTransactTime : UtcDateTimeField
     /// <param name="showMilliseconds"></param>
     [Obsolete("Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.")]
     public RelSymTransactTime(DateTime val, bool showMilliseconds)
-        : base(Tags.RelSymTransactTime, val, showMilliseconds) {}
+        : base(TAG, val, showMilliseconds) {}
 
     /// <summary>
     /// IMPORTANT: If <c>val.Kind</c> is <c>Local</c>, then val
@@ -24841,7 +24841,7 @@ public sealed class RelSymTransactTime : UtcDateTimeField
     /// <param name="val"></param>
     /// <param name="precision"></param>
     public RelSymTransactTime(DateTime val, TimePrecision precision)
-        : base(Tags.RelSymTransactTime, val, precision) {}
+        : base(TAG, val, precision) {}
 }
 
 /// <summary>
@@ -24852,9 +24852,9 @@ public sealed class PartyDetailsListRequestID : StringField
     public const int TAG = 1505;
 
     public PartyDetailsListRequestID()
-        : base(Tags.PartyDetailsListRequestID) {}
+        : base(TAG) {}
     public PartyDetailsListRequestID(string val)
-        : base(Tags.PartyDetailsListRequestID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24865,9 +24865,9 @@ public sealed class NoPartyListResponseTypes : IntField
     public const int TAG = 1506;
 
     public NoPartyListResponseTypes()
-        : base(Tags.NoPartyListResponseTypes) {}
+        : base(TAG) {}
     public NoPartyListResponseTypes(int val)
-        : base(Tags.NoPartyListResponseTypes, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24878,9 +24878,9 @@ public sealed class PartyListResponseType : IntField
     public const int TAG = 1507;
 
     public PartyListResponseType()
-        : base(Tags.PartyListResponseType) {}
+        : base(TAG) {}
     public PartyListResponseType(int val)
-        : base(Tags.PartyListResponseType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int RETURN_ALL_AVAILABLE_INFORMATION_ON_PARTIES_AND_RELATED_PARTIES = 0;
@@ -24897,9 +24897,9 @@ public sealed class NoRequestedPartyRoles : IntField
     public const int TAG = 1508;
 
     public NoRequestedPartyRoles()
-        : base(Tags.NoRequestedPartyRoles) {}
+        : base(TAG) {}
     public NoRequestedPartyRoles(int val)
-        : base(Tags.NoRequestedPartyRoles, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24910,9 +24910,9 @@ public sealed class RequestedPartyRole : IntField
     public const int TAG = 1509;
 
     public RequestedPartyRole()
-        : base(Tags.RequestedPartyRole) {}
+        : base(TAG) {}
     public RequestedPartyRole(int val)
-        : base(Tags.RequestedPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24923,9 +24923,9 @@ public sealed class PartyDetailsListReportID : StringField
     public const int TAG = 1510;
 
     public PartyDetailsListReportID()
-        : base(Tags.PartyDetailsListReportID) {}
+        : base(TAG) {}
     public PartyDetailsListReportID(string val)
-        : base(Tags.PartyDetailsListReportID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24936,9 +24936,9 @@ public sealed class PartyDetailsRequestResult : IntField
     public const int TAG = 1511;
 
     public PartyDetailsRequestResult()
-        : base(Tags.PartyDetailsRequestResult) {}
+        : base(TAG) {}
     public PartyDetailsRequestResult(int val)
-        : base(Tags.PartyDetailsRequestResult, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int VALID_REQUEST = 0;
@@ -24959,9 +24959,9 @@ public sealed class TotNoPartyList : IntField
     public const int TAG = 1512;
 
     public TotNoPartyList()
-        : base(Tags.TotNoPartyList) {}
+        : base(TAG) {}
     public TotNoPartyList(int val)
-        : base(Tags.TotNoPartyList, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24972,9 +24972,9 @@ public sealed class NoPartyList : IntField
     public const int TAG = 1513;
 
     public NoPartyList()
-        : base(Tags.NoPartyList) {}
+        : base(TAG) {}
     public NoPartyList(int val)
-        : base(Tags.NoPartyList, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24985,9 +24985,9 @@ public sealed class NoPartyRelationships : IntField
     public const int TAG = 1514;
 
     public NoPartyRelationships()
-        : base(Tags.NoPartyRelationships) {}
+        : base(TAG) {}
     public NoPartyRelationships(int val)
-        : base(Tags.NoPartyRelationships, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -24998,9 +24998,9 @@ public sealed class PartyRelationship : IntField
     public const int TAG = 1515;
 
     public PartyRelationship()
-        : base(Tags.PartyRelationship) {}
+        : base(TAG) {}
     public PartyRelationship(int val)
-        : base(Tags.PartyRelationship, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int IS_ALSO = 0;
@@ -25050,9 +25050,9 @@ public sealed class NoPartyAltIDs : IntField
     public const int TAG = 1516;
 
     public NoPartyAltIDs()
-        : base(Tags.NoPartyAltIDs) {}
+        : base(TAG) {}
     public NoPartyAltIDs(int val)
-        : base(Tags.NoPartyAltIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25063,9 +25063,9 @@ public sealed class PartyAltID : StringField
     public const int TAG = 1517;
 
     public PartyAltID()
-        : base(Tags.PartyAltID) {}
+        : base(TAG) {}
     public PartyAltID(string val)
-        : base(Tags.PartyAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25076,9 +25076,9 @@ public sealed class PartyAltIDSource : CharField
     public const int TAG = 1518;
 
     public PartyAltIDSource()
-        : base(Tags.PartyAltIDSource) {}
+        : base(TAG) {}
     public PartyAltIDSource(char val)
-        : base(Tags.PartyAltIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25089,9 +25089,9 @@ public sealed class NoPartyAltSubIDs : IntField
     public const int TAG = 1519;
 
     public NoPartyAltSubIDs()
-        : base(Tags.NoPartyAltSubIDs) {}
+        : base(TAG) {}
     public NoPartyAltSubIDs(int val)
-        : base(Tags.NoPartyAltSubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25102,9 +25102,9 @@ public sealed class PartyAltSubID : StringField
     public const int TAG = 1520;
 
     public PartyAltSubID()
-        : base(Tags.PartyAltSubID) {}
+        : base(TAG) {}
     public PartyAltSubID(string val)
-        : base(Tags.PartyAltSubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25115,9 +25115,9 @@ public sealed class PartyAltSubIDType : IntField
     public const int TAG = 1521;
 
     public PartyAltSubIDType()
-        : base(Tags.PartyAltSubIDType) {}
+        : base(TAG) {}
     public PartyAltSubIDType(int val)
-        : base(Tags.PartyAltSubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25128,9 +25128,9 @@ public sealed class NoContextPartyIDs : IntField
     public const int TAG = 1522;
 
     public NoContextPartyIDs()
-        : base(Tags.NoContextPartyIDs) {}
+        : base(TAG) {}
     public NoContextPartyIDs(int val)
-        : base(Tags.NoContextPartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25141,9 +25141,9 @@ public sealed class ContextPartyID : StringField
     public const int TAG = 1523;
 
     public ContextPartyID()
-        : base(Tags.ContextPartyID) {}
+        : base(TAG) {}
     public ContextPartyID(string val)
-        : base(Tags.ContextPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25154,9 +25154,9 @@ public sealed class ContextPartyIDSource : CharField
     public const int TAG = 1524;
 
     public ContextPartyIDSource()
-        : base(Tags.ContextPartyIDSource) {}
+        : base(TAG) {}
     public ContextPartyIDSource(char val)
-        : base(Tags.ContextPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25167,9 +25167,9 @@ public sealed class ContextPartyRole : IntField
     public const int TAG = 1525;
 
     public ContextPartyRole()
-        : base(Tags.ContextPartyRole) {}
+        : base(TAG) {}
     public ContextPartyRole(int val)
-        : base(Tags.ContextPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25180,9 +25180,9 @@ public sealed class NoContextPartySubIDs : IntField
     public const int TAG = 1526;
 
     public NoContextPartySubIDs()
-        : base(Tags.NoContextPartySubIDs) {}
+        : base(TAG) {}
     public NoContextPartySubIDs(int val)
-        : base(Tags.NoContextPartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25193,9 +25193,9 @@ public sealed class ContextPartySubID : StringField
     public const int TAG = 1527;
 
     public ContextPartySubID()
-        : base(Tags.ContextPartySubID) {}
+        : base(TAG) {}
     public ContextPartySubID(string val)
-        : base(Tags.ContextPartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25206,9 +25206,9 @@ public sealed class ContextPartySubIDType : IntField
     public const int TAG = 1528;
 
     public ContextPartySubIDType()
-        : base(Tags.ContextPartySubIDType) {}
+        : base(TAG) {}
     public ContextPartySubIDType(int val)
-        : base(Tags.ContextPartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25219,9 +25219,9 @@ public sealed class NoRiskLimits : IntField
     public const int TAG = 1529;
 
     public NoRiskLimits()
-        : base(Tags.NoRiskLimits) {}
+        : base(TAG) {}
     public NoRiskLimits(int val)
-        : base(Tags.NoRiskLimits, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25232,9 +25232,9 @@ public sealed class RiskLimitType : IntField
     public const int TAG = 1530;
 
     public RiskLimitType()
-        : base(Tags.RiskLimitType) {}
+        : base(TAG) {}
     public RiskLimitType(int val)
-        : base(Tags.RiskLimitType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int GROSS_LIMIT = 1;
@@ -25252,9 +25252,9 @@ public sealed class RiskLimitAmount : DecimalField
     public const int TAG = 1531;
 
     public RiskLimitAmount()
-        : base(Tags.RiskLimitAmount) {}
+        : base(TAG) {}
     public RiskLimitAmount(Decimal val)
-        : base(Tags.RiskLimitAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25265,9 +25265,9 @@ public sealed class RiskLimitCurrency : StringField
     public const int TAG = 1532;
 
     public RiskLimitCurrency()
-        : base(Tags.RiskLimitCurrency) {}
+        : base(TAG) {}
     public RiskLimitCurrency(string val)
-        : base(Tags.RiskLimitCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25278,9 +25278,9 @@ public sealed class RiskLimitPlatform : StringField
     public const int TAG = 1533;
 
     public RiskLimitPlatform()
-        : base(Tags.RiskLimitPlatform) {}
+        : base(TAG) {}
     public RiskLimitPlatform(string val)
-        : base(Tags.RiskLimitPlatform, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25291,9 +25291,9 @@ public sealed class NoRiskInstruments : IntField
     public const int TAG = 1534;
 
     public NoRiskInstruments()
-        : base(Tags.NoRiskInstruments) {}
+        : base(TAG) {}
     public NoRiskInstruments(int val)
-        : base(Tags.NoRiskInstruments, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25304,9 +25304,9 @@ public sealed class RiskInstrumentOperator : IntField
     public const int TAG = 1535;
 
     public RiskInstrumentOperator()
-        : base(Tags.RiskInstrumentOperator) {}
+        : base(TAG) {}
     public RiskInstrumentOperator(int val)
-        : base(Tags.RiskInstrumentOperator, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int INCLUDE = 1;
@@ -25321,9 +25321,9 @@ public sealed class RiskSymbol : StringField
     public const int TAG = 1536;
 
     public RiskSymbol()
-        : base(Tags.RiskSymbol) {}
+        : base(TAG) {}
     public RiskSymbol(string val)
-        : base(Tags.RiskSymbol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25334,9 +25334,9 @@ public sealed class RiskSymbolSfx : StringField
     public const int TAG = 1537;
 
     public RiskSymbolSfx()
-        : base(Tags.RiskSymbolSfx) {}
+        : base(TAG) {}
     public RiskSymbolSfx(string val)
-        : base(Tags.RiskSymbolSfx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25347,9 +25347,9 @@ public sealed class RiskSecurityID : StringField
     public const int TAG = 1538;
 
     public RiskSecurityID()
-        : base(Tags.RiskSecurityID) {}
+        : base(TAG) {}
     public RiskSecurityID(string val)
-        : base(Tags.RiskSecurityID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25360,9 +25360,9 @@ public sealed class RiskSecurityIDSource : StringField
     public const int TAG = 1539;
 
     public RiskSecurityIDSource()
-        : base(Tags.RiskSecurityIDSource) {}
+        : base(TAG) {}
     public RiskSecurityIDSource(string val)
-        : base(Tags.RiskSecurityIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25373,9 +25373,9 @@ public sealed class NoRiskSecurityAltID : IntField
     public const int TAG = 1540;
 
     public NoRiskSecurityAltID()
-        : base(Tags.NoRiskSecurityAltID) {}
+        : base(TAG) {}
     public NoRiskSecurityAltID(int val)
-        : base(Tags.NoRiskSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25386,9 +25386,9 @@ public sealed class RiskSecurityAltID : StringField
     public const int TAG = 1541;
 
     public RiskSecurityAltID()
-        : base(Tags.RiskSecurityAltID) {}
+        : base(TAG) {}
     public RiskSecurityAltID(string val)
-        : base(Tags.RiskSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25399,9 +25399,9 @@ public sealed class RiskSecurityAltIDSource : StringField
     public const int TAG = 1542;
 
     public RiskSecurityAltIDSource()
-        : base(Tags.RiskSecurityAltIDSource) {}
+        : base(TAG) {}
     public RiskSecurityAltIDSource(string val)
-        : base(Tags.RiskSecurityAltIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25412,9 +25412,9 @@ public sealed class RiskProduct : IntField
     public const int TAG = 1543;
 
     public RiskProduct()
-        : base(Tags.RiskProduct) {}
+        : base(TAG) {}
     public RiskProduct(int val)
-        : base(Tags.RiskProduct, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25425,9 +25425,9 @@ public sealed class RiskProductComplex : StringField
     public const int TAG = 1544;
 
     public RiskProductComplex()
-        : base(Tags.RiskProductComplex) {}
+        : base(TAG) {}
     public RiskProductComplex(string val)
-        : base(Tags.RiskProductComplex, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25438,9 +25438,9 @@ public sealed class RiskSecurityGroup : StringField
     public const int TAG = 1545;
 
     public RiskSecurityGroup()
-        : base(Tags.RiskSecurityGroup) {}
+        : base(TAG) {}
     public RiskSecurityGroup(string val)
-        : base(Tags.RiskSecurityGroup, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25451,9 +25451,9 @@ public sealed class RiskCFICode : StringField
     public const int TAG = 1546;
 
     public RiskCFICode()
-        : base(Tags.RiskCFICode) {}
+        : base(TAG) {}
     public RiskCFICode(string val)
-        : base(Tags.RiskCFICode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25464,9 +25464,9 @@ public sealed class RiskSecurityType : StringField
     public const int TAG = 1547;
 
     public RiskSecurityType()
-        : base(Tags.RiskSecurityType) {}
+        : base(TAG) {}
     public RiskSecurityType(string val)
-        : base(Tags.RiskSecurityType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25477,9 +25477,9 @@ public sealed class RiskSecuritySubType : StringField
     public const int TAG = 1548;
 
     public RiskSecuritySubType()
-        : base(Tags.RiskSecuritySubType) {}
+        : base(TAG) {}
     public RiskSecuritySubType(string val)
-        : base(Tags.RiskSecuritySubType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25490,9 +25490,9 @@ public sealed class RiskMaturityMonthYear : StringField
     public const int TAG = 1549;
 
     public RiskMaturityMonthYear()
-        : base(Tags.RiskMaturityMonthYear) {}
+        : base(TAG) {}
     public RiskMaturityMonthYear(string val)
-        : base(Tags.RiskMaturityMonthYear, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25503,9 +25503,9 @@ public sealed class RiskMaturityTime : StringField
     public const int TAG = 1550;
 
     public RiskMaturityTime()
-        : base(Tags.RiskMaturityTime) {}
+        : base(TAG) {}
     public RiskMaturityTime(string val)
-        : base(Tags.RiskMaturityTime, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25516,9 +25516,9 @@ public sealed class RiskRestructuringType : StringField
     public const int TAG = 1551;
 
     public RiskRestructuringType()
-        : base(Tags.RiskRestructuringType) {}
+        : base(TAG) {}
     public RiskRestructuringType(string val)
-        : base(Tags.RiskRestructuringType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25529,9 +25529,9 @@ public sealed class RiskSeniority : StringField
     public const int TAG = 1552;
 
     public RiskSeniority()
-        : base(Tags.RiskSeniority) {}
+        : base(TAG) {}
     public RiskSeniority(string val)
-        : base(Tags.RiskSeniority, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25542,9 +25542,9 @@ public sealed class RiskPutOrCall : IntField
     public const int TAG = 1553;
 
     public RiskPutOrCall()
-        : base(Tags.RiskPutOrCall) {}
+        : base(TAG) {}
     public RiskPutOrCall(int val)
-        : base(Tags.RiskPutOrCall, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25555,9 +25555,9 @@ public sealed class RiskFlexibleIndicator : BooleanField
     public const int TAG = 1554;
 
     public RiskFlexibleIndicator()
-        : base(Tags.RiskFlexibleIndicator) {}
+        : base(TAG) {}
     public RiskFlexibleIndicator(Boolean val)
-        : base(Tags.RiskFlexibleIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25568,9 +25568,9 @@ public sealed class RiskCouponRate : DecimalField
     public const int TAG = 1555;
 
     public RiskCouponRate()
-        : base(Tags.RiskCouponRate) {}
+        : base(TAG) {}
     public RiskCouponRate(Decimal val)
-        : base(Tags.RiskCouponRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25581,9 +25581,9 @@ public sealed class RiskSecurityDesc : StringField
     public const int TAG = 1556;
 
     public RiskSecurityDesc()
-        : base(Tags.RiskSecurityDesc) {}
+        : base(TAG) {}
     public RiskSecurityDesc(string val)
-        : base(Tags.RiskSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25594,9 +25594,9 @@ public sealed class RiskInstrumentSettlType : StringField
     public const int TAG = 1557;
 
     public RiskInstrumentSettlType()
-        : base(Tags.RiskInstrumentSettlType) {}
+        : base(TAG) {}
     public RiskInstrumentSettlType(string val)
-        : base(Tags.RiskInstrumentSettlType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25607,9 +25607,9 @@ public sealed class RiskInstrumentMultiplier : DecimalField
     public const int TAG = 1558;
 
     public RiskInstrumentMultiplier()
-        : base(Tags.RiskInstrumentMultiplier) {}
+        : base(TAG) {}
     public RiskInstrumentMultiplier(Decimal val)
-        : base(Tags.RiskInstrumentMultiplier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25620,9 +25620,9 @@ public sealed class NoRiskWarningLevels : IntField
     public const int TAG = 1559;
 
     public NoRiskWarningLevels()
-        : base(Tags.NoRiskWarningLevels) {}
+        : base(TAG) {}
     public NoRiskWarningLevels(int val)
-        : base(Tags.NoRiskWarningLevels, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25633,9 +25633,9 @@ public sealed class RiskWarningLevelPercent : DecimalField
     public const int TAG = 1560;
 
     public RiskWarningLevelPercent()
-        : base(Tags.RiskWarningLevelPercent) {}
+        : base(TAG) {}
     public RiskWarningLevelPercent(Decimal val)
-        : base(Tags.RiskWarningLevelPercent, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25646,9 +25646,9 @@ public sealed class RiskWarningLevelName : StringField
     public const int TAG = 1561;
 
     public RiskWarningLevelName()
-        : base(Tags.RiskWarningLevelName) {}
+        : base(TAG) {}
     public RiskWarningLevelName(string val)
-        : base(Tags.RiskWarningLevelName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25659,9 +25659,9 @@ public sealed class NoRelatedPartyIDs : IntField
     public const int TAG = 1562;
 
     public NoRelatedPartyIDs()
-        : base(Tags.NoRelatedPartyIDs) {}
+        : base(TAG) {}
     public NoRelatedPartyIDs(int val)
-        : base(Tags.NoRelatedPartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25672,9 +25672,9 @@ public sealed class RelatedPartyID : StringField
     public const int TAG = 1563;
 
     public RelatedPartyID()
-        : base(Tags.RelatedPartyID) {}
+        : base(TAG) {}
     public RelatedPartyID(string val)
-        : base(Tags.RelatedPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25685,9 +25685,9 @@ public sealed class RelatedPartyIDSource : CharField
     public const int TAG = 1564;
 
     public RelatedPartyIDSource()
-        : base(Tags.RelatedPartyIDSource) {}
+        : base(TAG) {}
     public RelatedPartyIDSource(char val)
-        : base(Tags.RelatedPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25698,9 +25698,9 @@ public sealed class RelatedPartyRole : IntField
     public const int TAG = 1565;
 
     public RelatedPartyRole()
-        : base(Tags.RelatedPartyRole) {}
+        : base(TAG) {}
     public RelatedPartyRole(int val)
-        : base(Tags.RelatedPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25711,9 +25711,9 @@ public sealed class NoRelatedPartySubIDs : IntField
     public const int TAG = 1566;
 
     public NoRelatedPartySubIDs()
-        : base(Tags.NoRelatedPartySubIDs) {}
+        : base(TAG) {}
     public NoRelatedPartySubIDs(int val)
-        : base(Tags.NoRelatedPartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25724,9 +25724,9 @@ public sealed class RelatedPartySubID : StringField
     public const int TAG = 1567;
 
     public RelatedPartySubID()
-        : base(Tags.RelatedPartySubID) {}
+        : base(TAG) {}
     public RelatedPartySubID(string val)
-        : base(Tags.RelatedPartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25737,9 +25737,9 @@ public sealed class RelatedPartySubIDType : IntField
     public const int TAG = 1568;
 
     public RelatedPartySubIDType()
-        : base(Tags.RelatedPartySubIDType) {}
+        : base(TAG) {}
     public RelatedPartySubIDType(int val)
-        : base(Tags.RelatedPartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25750,9 +25750,9 @@ public sealed class NoRelatedPartyAltIDs : IntField
     public const int TAG = 1569;
 
     public NoRelatedPartyAltIDs()
-        : base(Tags.NoRelatedPartyAltIDs) {}
+        : base(TAG) {}
     public NoRelatedPartyAltIDs(int val)
-        : base(Tags.NoRelatedPartyAltIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25763,9 +25763,9 @@ public sealed class RelatedPartyAltID : StringField
     public const int TAG = 1570;
 
     public RelatedPartyAltID()
-        : base(Tags.RelatedPartyAltID) {}
+        : base(TAG) {}
     public RelatedPartyAltID(string val)
-        : base(Tags.RelatedPartyAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25776,9 +25776,9 @@ public sealed class RelatedPartyAltIDSource : CharField
     public const int TAG = 1571;
 
     public RelatedPartyAltIDSource()
-        : base(Tags.RelatedPartyAltIDSource) {}
+        : base(TAG) {}
     public RelatedPartyAltIDSource(char val)
-        : base(Tags.RelatedPartyAltIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25789,9 +25789,9 @@ public sealed class NoRelatedPartyAltSubIDs : IntField
     public const int TAG = 1572;
 
     public NoRelatedPartyAltSubIDs()
-        : base(Tags.NoRelatedPartyAltSubIDs) {}
+        : base(TAG) {}
     public NoRelatedPartyAltSubIDs(int val)
-        : base(Tags.NoRelatedPartyAltSubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25802,9 +25802,9 @@ public sealed class RelatedPartyAltSubID : StringField
     public const int TAG = 1573;
 
     public RelatedPartyAltSubID()
-        : base(Tags.RelatedPartyAltSubID) {}
+        : base(TAG) {}
     public RelatedPartyAltSubID(string val)
-        : base(Tags.RelatedPartyAltSubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25815,9 +25815,9 @@ public sealed class RelatedPartyAltSubIDType : IntField
     public const int TAG = 1574;
 
     public RelatedPartyAltSubIDType()
-        : base(Tags.RelatedPartyAltSubIDType) {}
+        : base(TAG) {}
     public RelatedPartyAltSubIDType(int val)
-        : base(Tags.RelatedPartyAltSubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25828,9 +25828,9 @@ public sealed class NoRelatedContextPartyIDs : IntField
     public const int TAG = 1575;
 
     public NoRelatedContextPartyIDs()
-        : base(Tags.NoRelatedContextPartyIDs) {}
+        : base(TAG) {}
     public NoRelatedContextPartyIDs(int val)
-        : base(Tags.NoRelatedContextPartyIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25841,9 +25841,9 @@ public sealed class RelatedContextPartyID : StringField
     public const int TAG = 1576;
 
     public RelatedContextPartyID()
-        : base(Tags.RelatedContextPartyID) {}
+        : base(TAG) {}
     public RelatedContextPartyID(string val)
-        : base(Tags.RelatedContextPartyID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25854,9 +25854,9 @@ public sealed class RelatedContextPartyIDSource : CharField
     public const int TAG = 1577;
 
     public RelatedContextPartyIDSource()
-        : base(Tags.RelatedContextPartyIDSource) {}
+        : base(TAG) {}
     public RelatedContextPartyIDSource(char val)
-        : base(Tags.RelatedContextPartyIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25867,9 +25867,9 @@ public sealed class RelatedContextPartyRole : IntField
     public const int TAG = 1578;
 
     public RelatedContextPartyRole()
-        : base(Tags.RelatedContextPartyRole) {}
+        : base(TAG) {}
     public RelatedContextPartyRole(int val)
-        : base(Tags.RelatedContextPartyRole, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25880,9 +25880,9 @@ public sealed class NoRelatedContextPartySubIDs : IntField
     public const int TAG = 1579;
 
     public NoRelatedContextPartySubIDs()
-        : base(Tags.NoRelatedContextPartySubIDs) {}
+        : base(TAG) {}
     public NoRelatedContextPartySubIDs(int val)
-        : base(Tags.NoRelatedContextPartySubIDs, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25893,9 +25893,9 @@ public sealed class RelatedContextPartySubID : StringField
     public const int TAG = 1580;
 
     public RelatedContextPartySubID()
-        : base(Tags.RelatedContextPartySubID) {}
+        : base(TAG) {}
     public RelatedContextPartySubID(string val)
-        : base(Tags.RelatedContextPartySubID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25906,9 +25906,9 @@ public sealed class RelatedContextPartySubIDType : IntField
     public const int TAG = 1581;
 
     public RelatedContextPartySubIDType()
-        : base(Tags.RelatedContextPartySubIDType) {}
+        : base(TAG) {}
     public RelatedContextPartySubIDType(int val)
-        : base(Tags.RelatedContextPartySubIDType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25919,9 +25919,9 @@ public sealed class NoRelationshipRiskLimits : IntField
     public const int TAG = 1582;
 
     public NoRelationshipRiskLimits()
-        : base(Tags.NoRelationshipRiskLimits) {}
+        : base(TAG) {}
     public NoRelationshipRiskLimits(int val)
-        : base(Tags.NoRelationshipRiskLimits, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25932,9 +25932,9 @@ public sealed class RelationshipRiskLimitType : IntField
     public const int TAG = 1583;
 
     public RelationshipRiskLimitType()
-        : base(Tags.RelationshipRiskLimitType) {}
+        : base(TAG) {}
     public RelationshipRiskLimitType(int val)
-        : base(Tags.RelationshipRiskLimitType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25945,9 +25945,9 @@ public sealed class RelationshipRiskLimitAmount : DecimalField
     public const int TAG = 1584;
 
     public RelationshipRiskLimitAmount()
-        : base(Tags.RelationshipRiskLimitAmount) {}
+        : base(TAG) {}
     public RelationshipRiskLimitAmount(Decimal val)
-        : base(Tags.RelationshipRiskLimitAmount, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25958,9 +25958,9 @@ public sealed class RelationshipRiskLimitCurrency : StringField
     public const int TAG = 1585;
 
     public RelationshipRiskLimitCurrency()
-        : base(Tags.RelationshipRiskLimitCurrency) {}
+        : base(TAG) {}
     public RelationshipRiskLimitCurrency(string val)
-        : base(Tags.RelationshipRiskLimitCurrency, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25971,9 +25971,9 @@ public sealed class RelationshipRiskLimitPlatform : StringField
     public const int TAG = 1586;
 
     public RelationshipRiskLimitPlatform()
-        : base(Tags.RelationshipRiskLimitPlatform) {}
+        : base(TAG) {}
     public RelationshipRiskLimitPlatform(string val)
-        : base(Tags.RelationshipRiskLimitPlatform, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25984,9 +25984,9 @@ public sealed class NoRelationshipRiskInstruments : IntField
     public const int TAG = 1587;
 
     public NoRelationshipRiskInstruments()
-        : base(Tags.NoRelationshipRiskInstruments) {}
+        : base(TAG) {}
     public NoRelationshipRiskInstruments(int val)
-        : base(Tags.NoRelationshipRiskInstruments, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -25997,9 +25997,9 @@ public sealed class RelationshipRiskInstrumentOperator : IntField
     public const int TAG = 1588;
 
     public RelationshipRiskInstrumentOperator()
-        : base(Tags.RelationshipRiskInstrumentOperator) {}
+        : base(TAG) {}
     public RelationshipRiskInstrumentOperator(int val)
-        : base(Tags.RelationshipRiskInstrumentOperator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26010,9 +26010,9 @@ public sealed class RelationshipRiskSymbol : StringField
     public const int TAG = 1589;
 
     public RelationshipRiskSymbol()
-        : base(Tags.RelationshipRiskSymbol) {}
+        : base(TAG) {}
     public RelationshipRiskSymbol(string val)
-        : base(Tags.RelationshipRiskSymbol, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26023,9 +26023,9 @@ public sealed class RelationshipRiskSymbolSfx : StringField
     public const int TAG = 1590;
 
     public RelationshipRiskSymbolSfx()
-        : base(Tags.RelationshipRiskSymbolSfx) {}
+        : base(TAG) {}
     public RelationshipRiskSymbolSfx(string val)
-        : base(Tags.RelationshipRiskSymbolSfx, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26036,9 +26036,9 @@ public sealed class RelationshipRiskSecurityID : StringField
     public const int TAG = 1591;
 
     public RelationshipRiskSecurityID()
-        : base(Tags.RelationshipRiskSecurityID) {}
+        : base(TAG) {}
     public RelationshipRiskSecurityID(string val)
-        : base(Tags.RelationshipRiskSecurityID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26049,9 +26049,9 @@ public sealed class RelationshipRiskSecurityIDSource : StringField
     public const int TAG = 1592;
 
     public RelationshipRiskSecurityIDSource()
-        : base(Tags.RelationshipRiskSecurityIDSource) {}
+        : base(TAG) {}
     public RelationshipRiskSecurityIDSource(string val)
-        : base(Tags.RelationshipRiskSecurityIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26062,9 +26062,9 @@ public sealed class NoRelationshipRiskSecurityAltID : IntField
     public const int TAG = 1593;
 
     public NoRelationshipRiskSecurityAltID()
-        : base(Tags.NoRelationshipRiskSecurityAltID) {}
+        : base(TAG) {}
     public NoRelationshipRiskSecurityAltID(int val)
-        : base(Tags.NoRelationshipRiskSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26075,9 +26075,9 @@ public sealed class RelationshipRiskSecurityAltID : StringField
     public const int TAG = 1594;
 
     public RelationshipRiskSecurityAltID()
-        : base(Tags.RelationshipRiskSecurityAltID) {}
+        : base(TAG) {}
     public RelationshipRiskSecurityAltID(string val)
-        : base(Tags.RelationshipRiskSecurityAltID, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26088,9 +26088,9 @@ public sealed class RelationshipRiskSecurityAltIDSource : StringField
     public const int TAG = 1595;
 
     public RelationshipRiskSecurityAltIDSource()
-        : base(Tags.RelationshipRiskSecurityAltIDSource) {}
+        : base(TAG) {}
     public RelationshipRiskSecurityAltIDSource(string val)
-        : base(Tags.RelationshipRiskSecurityAltIDSource, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26101,9 +26101,9 @@ public sealed class RelationshipRiskProduct : IntField
     public const int TAG = 1596;
 
     public RelationshipRiskProduct()
-        : base(Tags.RelationshipRiskProduct) {}
+        : base(TAG) {}
     public RelationshipRiskProduct(int val)
-        : base(Tags.RelationshipRiskProduct, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26114,9 +26114,9 @@ public sealed class RelationshipRiskProductComplex : StringField
     public const int TAG = 1597;
 
     public RelationshipRiskProductComplex()
-        : base(Tags.RelationshipRiskProductComplex) {}
+        : base(TAG) {}
     public RelationshipRiskProductComplex(string val)
-        : base(Tags.RelationshipRiskProductComplex, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26127,9 +26127,9 @@ public sealed class RelationshipRiskSecurityGroup : StringField
     public const int TAG = 1598;
 
     public RelationshipRiskSecurityGroup()
-        : base(Tags.RelationshipRiskSecurityGroup) {}
+        : base(TAG) {}
     public RelationshipRiskSecurityGroup(string val)
-        : base(Tags.RelationshipRiskSecurityGroup, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26140,9 +26140,9 @@ public sealed class RelationshipRiskCFICode : StringField
     public const int TAG = 1599;
 
     public RelationshipRiskCFICode()
-        : base(Tags.RelationshipRiskCFICode) {}
+        : base(TAG) {}
     public RelationshipRiskCFICode(string val)
-        : base(Tags.RelationshipRiskCFICode, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26153,9 +26153,9 @@ public sealed class RelationshipRiskSecurityType : StringField
     public const int TAG = 1600;
 
     public RelationshipRiskSecurityType()
-        : base(Tags.RelationshipRiskSecurityType) {}
+        : base(TAG) {}
     public RelationshipRiskSecurityType(string val)
-        : base(Tags.RelationshipRiskSecurityType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26166,9 +26166,9 @@ public sealed class RelationshipRiskSecuritySubType : StringField
     public const int TAG = 1601;
 
     public RelationshipRiskSecuritySubType()
-        : base(Tags.RelationshipRiskSecuritySubType) {}
+        : base(TAG) {}
     public RelationshipRiskSecuritySubType(string val)
-        : base(Tags.RelationshipRiskSecuritySubType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26179,9 +26179,9 @@ public sealed class RelationshipRiskMaturityMonthYear : StringField
     public const int TAG = 1602;
 
     public RelationshipRiskMaturityMonthYear()
-        : base(Tags.RelationshipRiskMaturityMonthYear) {}
+        : base(TAG) {}
     public RelationshipRiskMaturityMonthYear(string val)
-        : base(Tags.RelationshipRiskMaturityMonthYear, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26192,9 +26192,9 @@ public sealed class RelationshipRiskMaturityTime : StringField
     public const int TAG = 1603;
 
     public RelationshipRiskMaturityTime()
-        : base(Tags.RelationshipRiskMaturityTime) {}
+        : base(TAG) {}
     public RelationshipRiskMaturityTime(string val)
-        : base(Tags.RelationshipRiskMaturityTime, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26205,9 +26205,9 @@ public sealed class RelationshipRiskRestructuringType : StringField
     public const int TAG = 1604;
 
     public RelationshipRiskRestructuringType()
-        : base(Tags.RelationshipRiskRestructuringType) {}
+        : base(TAG) {}
     public RelationshipRiskRestructuringType(string val)
-        : base(Tags.RelationshipRiskRestructuringType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26218,9 +26218,9 @@ public sealed class RelationshipRiskSeniority : StringField
     public const int TAG = 1605;
 
     public RelationshipRiskSeniority()
-        : base(Tags.RelationshipRiskSeniority) {}
+        : base(TAG) {}
     public RelationshipRiskSeniority(string val)
-        : base(Tags.RelationshipRiskSeniority, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26231,9 +26231,9 @@ public sealed class RelationshipRiskPutOrCall : IntField
     public const int TAG = 1606;
 
     public RelationshipRiskPutOrCall()
-        : base(Tags.RelationshipRiskPutOrCall) {}
+        : base(TAG) {}
     public RelationshipRiskPutOrCall(int val)
-        : base(Tags.RelationshipRiskPutOrCall, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26244,9 +26244,9 @@ public sealed class RelationshipRiskFlexibleIndicator : BooleanField
     public const int TAG = 1607;
 
     public RelationshipRiskFlexibleIndicator()
-        : base(Tags.RelationshipRiskFlexibleIndicator) {}
+        : base(TAG) {}
     public RelationshipRiskFlexibleIndicator(Boolean val)
-        : base(Tags.RelationshipRiskFlexibleIndicator, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26257,9 +26257,9 @@ public sealed class RelationshipRiskCouponRate : DecimalField
     public const int TAG = 1608;
 
     public RelationshipRiskCouponRate()
-        : base(Tags.RelationshipRiskCouponRate) {}
+        : base(TAG) {}
     public RelationshipRiskCouponRate(Decimal val)
-        : base(Tags.RelationshipRiskCouponRate, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26270,9 +26270,9 @@ public sealed class RelationshipRiskSecurityExchange : StringField
     public const int TAG = 1609;
 
     public RelationshipRiskSecurityExchange()
-        : base(Tags.RelationshipRiskSecurityExchange) {}
+        : base(TAG) {}
     public RelationshipRiskSecurityExchange(string val)
-        : base(Tags.RelationshipRiskSecurityExchange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26283,9 +26283,9 @@ public sealed class RelationshipRiskSecurityDesc : StringField
     public const int TAG = 1610;
 
     public RelationshipRiskSecurityDesc()
-        : base(Tags.RelationshipRiskSecurityDesc) {}
+        : base(TAG) {}
     public RelationshipRiskSecurityDesc(string val)
-        : base(Tags.RelationshipRiskSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26296,9 +26296,9 @@ public sealed class RelationshipRiskInstrumentSettlType : StringField
     public const int TAG = 1611;
 
     public RelationshipRiskInstrumentSettlType()
-        : base(Tags.RelationshipRiskInstrumentSettlType) {}
+        : base(TAG) {}
     public RelationshipRiskInstrumentSettlType(string val)
-        : base(Tags.RelationshipRiskInstrumentSettlType, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26309,9 +26309,9 @@ public sealed class RelationshipRiskInstrumentMultiplier : DecimalField
     public const int TAG = 1612;
 
     public RelationshipRiskInstrumentMultiplier()
-        : base(Tags.RelationshipRiskInstrumentMultiplier) {}
+        : base(TAG) {}
     public RelationshipRiskInstrumentMultiplier(Decimal val)
-        : base(Tags.RelationshipRiskInstrumentMultiplier, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26322,9 +26322,9 @@ public sealed class NoRelationshipRiskWarningLevels : IntField
     public const int TAG = 1613;
 
     public NoRelationshipRiskWarningLevels()
-        : base(Tags.NoRelationshipRiskWarningLevels) {}
+        : base(TAG) {}
     public NoRelationshipRiskWarningLevels(int val)
-        : base(Tags.NoRelationshipRiskWarningLevels, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26335,9 +26335,9 @@ public sealed class RelationshipRiskWarningLevelPercent : DecimalField
     public const int TAG = 1614;
 
     public RelationshipRiskWarningLevelPercent()
-        : base(Tags.RelationshipRiskWarningLevelPercent) {}
+        : base(TAG) {}
     public RelationshipRiskWarningLevelPercent(Decimal val)
-        : base(Tags.RelationshipRiskWarningLevelPercent, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26348,9 +26348,9 @@ public sealed class RelationshipRiskWarningLevelName : StringField
     public const int TAG = 1615;
 
     public RelationshipRiskWarningLevelName()
-        : base(Tags.RelationshipRiskWarningLevelName) {}
+        : base(TAG) {}
     public RelationshipRiskWarningLevelName(string val)
-        : base(Tags.RelationshipRiskWarningLevelName, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26361,9 +26361,9 @@ public sealed class RiskSecurityExchange : StringField
     public const int TAG = 1616;
 
     public RiskSecurityExchange()
-        : base(Tags.RiskSecurityExchange) {}
+        : base(TAG) {}
     public RiskSecurityExchange(string val)
-        : base(Tags.RiskSecurityExchange, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26374,9 +26374,9 @@ public sealed class StreamAsgnType : IntField
     public const int TAG = 1617;
 
     public StreamAsgnType()
-        : base(Tags.StreamAsgnType) {}
+        : base(TAG) {}
     public StreamAsgnType(int val)
-        : base(Tags.StreamAsgnType, val) {}
+        : base(TAG, val) {}
 
     // Field Enumerations
     public const int ASSIGNMENT = 1;
@@ -26392,9 +26392,9 @@ public sealed class RelationshipRiskEncodedSecurityDescLen : IntField
     public const int TAG = 1618;
 
     public RelationshipRiskEncodedSecurityDescLen()
-        : base(Tags.RelationshipRiskEncodedSecurityDescLen) {}
+        : base(TAG) {}
     public RelationshipRiskEncodedSecurityDescLen(int val)
-        : base(Tags.RelationshipRiskEncodedSecurityDescLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26405,9 +26405,9 @@ public sealed class RelationshipRiskEncodedSecurityDesc : StringField
     public const int TAG = 1619;
 
     public RelationshipRiskEncodedSecurityDesc()
-        : base(Tags.RelationshipRiskEncodedSecurityDesc) {}
+        : base(TAG) {}
     public RelationshipRiskEncodedSecurityDesc(string val)
-        : base(Tags.RelationshipRiskEncodedSecurityDesc, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26418,9 +26418,9 @@ public sealed class RiskEncodedSecurityDescLen : IntField
     public const int TAG = 1620;
 
     public RiskEncodedSecurityDescLen()
-        : base(Tags.RiskEncodedSecurityDescLen) {}
+        : base(TAG) {}
     public RiskEncodedSecurityDescLen(int val)
-        : base(Tags.RiskEncodedSecurityDescLen, val) {}
+        : base(TAG, val) {}
 }
 
 /// <summary>
@@ -26431,7 +26431,7 @@ public sealed class RiskEncodedSecurityDesc : StringField
     public const int TAG = 1621;
 
     public RiskEncodedSecurityDesc()
-        : base(Tags.RiskEncodedSecurityDesc) {}
+        : base(TAG) {}
     public RiskEncodedSecurityDesc(string val)
-        : base(Tags.RiskEncodedSecurityDesc, val) {}
+        : base(TAG, val) {}
 }

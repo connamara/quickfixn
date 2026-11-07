@@ -64,14 +64,14 @@ public static class GenFields {
         lines.Add("");
 
         lines.Add($"    public {field.Name}()");
-        lines.Add($"        : base(Tags.{field.Name}) {{}}");
+        lines.Add($"        : base(TAG) {{}}");
         lines.Add($"    public {field.Name}({field.BaseType} val)");
-        lines.Add($"        : base(Tags.{field.Name}, val) {{}}");
+        lines.Add($"        : base(TAG, val) {{}}");
         lines.Add("    [Obsolete(\"Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.\")]");
         lines.Add($"    public {field.Name}({field.BaseType} val, bool showMilliseconds)");
-        lines.Add($"        : base(Tags.{field.Name}, val, showMilliseconds) {{}}");
+        lines.Add($"        : base(TAG, val, showMilliseconds) {{}}");
         lines.Add($"    public {field.Name}({field.BaseType} val, TimePrecision precision)");
-        lines.Add($"        : base(Tags.{field.Name}, val, precision) {{}}");
+        lines.Add($"        : base(TAG, val, precision) {{}}");
 
         AppendFieldEnumerations(lines, field);
 
@@ -88,11 +88,11 @@ public static class GenFields {
         lines.Add("");
 
         lines.Add($"    public {field.Name}()");
-        lines.Add($"        : base(Tags.{field.Name}) {{}}");
+        lines.Add($"        : base(TAG) {{}}");
         lines.Add($"    public {field.Name}({field.BaseType} val)");
-        lines.Add($"        : base(Tags.{field.Name}, val) {{}}");
+        lines.Add($"        : base(TAG, val) {{}}");
         lines.Add($"    public {field.Name}({field.BaseType} val, TimePrecision precision)");
-        lines.Add($"        : base(Tags.{field.Name}, val, precision) {{}}");
+        lines.Add($"        : base(TAG, val, precision) {{}}");
         lines.Add("}");
     }
 
@@ -117,19 +117,19 @@ public static class GenFields {
         lines.Add("");
 
         lines.Add($"    public {field.Name}()");
-        lines.Add($"        : base(Tags.{field.Name}) {{}}");
+        lines.Add($"        : base(TAG) {{}}");
         lines.Add(utcWarning);
         lines.Add($"    public {field.Name}({field.BaseType} val)");
-        lines.Add($"        : base(Tags.{field.Name}, val) {{}}");
+        lines.Add($"        : base(TAG, val) {{}}");
         lines.Add(utcWarning);
         lines.Add("    /// <param name=\"showMilliseconds\"></param>");
         lines.Add("    [Obsolete(\"Use the ctor that takes TimePrecision instead.  This ctor will be removed in 1.15.\")]");
         lines.Add($"    public {field.Name}({field.BaseType} val, bool showMilliseconds)");
-        lines.Add($"        : base(Tags.{field.Name}, val, showMilliseconds) {{}}");
+        lines.Add($"        : base(TAG, val, showMilliseconds) {{}}");
         lines.Add(utcWarning);
         lines.Add("    /// <param name=\"precision\"></param>");
         lines.Add($"    public {field.Name}({field.BaseType} val, TimePrecision precision)");
-        lines.Add($"        : base(Tags.{field.Name}, val, precision) {{}}");
+        lines.Add($"        : base(TAG, val, precision) {{}}");
         lines.Add("}");
     }
 
@@ -143,9 +143,9 @@ public static class GenFields {
         lines.Add("");
 
         lines.Add($"    public {field.Name}()");
-        lines.Add($"        : base(Tags.{field.Name}) {{}}");
+        lines.Add($"        : base(TAG) {{}}");
         lines.Add($"    public {field.Name}({field.BaseType} val)");
-        lines.Add($"        : base(Tags.{field.Name}, val) {{}}");
+        lines.Add($"        : base(TAG, val) {{}}");
 
         AppendFieldEnumerations(lines, field);
 
