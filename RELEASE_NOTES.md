@@ -76,8 +76,10 @@ What's New
 
 * #1021 - remove .NET 8 support; remove expired deprecations (gbirchmeier)
 * #1015 - rework DateOnlyField/TimeOnlyField to be backed by DateOnly/TimeOnly types instead of DateTime (gbirchmeier)
+    * (See important notice above!)
 * #1023 - new config setting "FieldSeparatorInMessageLogs" (gbirchmeier)
 * #1030 - new UtcDateTimeField class so UTCTIMESTAMP fields always have DateTimeKind.Utc (stic)
+    * (See important notice above!)
 * #1025 - fix: SocketReader task throws System.InvalidOperationException (Tar-Elendil)
 * #1034 - Update locks from Monitor to .NET 9.0 Threading.Lock (dckorben)
 * #990/#991 - Fallback to Custom CA/Certificate Validation when CA Certificate Path Is Present (dckorben)
@@ -85,6 +87,7 @@ What's New
 * #1041 - use a proper Lock in SslCertCache (gbirchmeier)
 * #1042 - Log (don't swallow) certificate-load failures (gbirchmeier)
 * #1032 - Fix certificate lookup on non-Windows platforms (plesiu)
+* #1045 - Don't act on ResetSeqNumFlag=Y until after Logon is verified (gbirchmeier)
 
 ### v1.14.1
 
