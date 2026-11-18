@@ -9,6 +9,8 @@ using QuickFix.Util;
 
 namespace QuickFix;
 
+// TODO for v2.0: reduce public interface
+
 /// <summary>
 /// The Session is the primary FIX abstraction for message communication.
 /// It performs sequencing and error recovery and represents a communication
@@ -721,6 +723,9 @@ public class Session : IDisposable
 
     protected void NextLogon(Message logon)
     {
+        bool shouldReset = false;
+        string resetReason = "";
+
         _state.ReceivedReset = logon.IsSetField(ResetSeqNumFlag.TAG) && logon.GetBoolean(ResetSeqNumFlag.TAG);
 
         if (_state.ReceivedReset)
@@ -728,17 +733,26 @@ public class Session : IDisposable
             Log.Log(LogLevel.Information, "Sequence numbers reset due to ResetSeqNumFlag=Y");
             if (!_state.SentReset)
             {
-                _state.Reset("Reset requested by counterparty");
+                shouldReset = true;
+                resetReason = "Reset requested by counterparty";
             }
         }
 
-        if (IsAcceptor && ResetOnLogon)
-            _state.Reset("ResetOnLogon");
+        if (!shouldReset && IsAcceptor && ResetOnLogon)
+        {
+            shouldReset = true;
+            resetReason = "ResetOnLogon";
+        }
+
+        if (!Verify(logon, false, !shouldReset))
+            return;
+
+        // Don't reset until Verify has passed (i.e. ensure any custom FromAdmin validations run first)
+        if (shouldReset)
+            _state.Reset(resetReason);
+
         if (RefreshOnLogon)
             Refresh();
-
-        if (!Verify(logon, false, true))
-            return;
 
         if (!IsGoodTime(logon))
         {
