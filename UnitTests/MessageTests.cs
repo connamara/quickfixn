@@ -865,7 +865,7 @@ public class MessageTests
         msg.NoMDEntries = new NoMDEntries(2);
         QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup grp = new();
         grp.MDEntryType = new MDEntryType(MDEntryType.BID);
-        grp.MDEntryPx = new MDEntryPx((decimal)97.625);
+        grp.MDEntryPx = new MDEntryPx(97.625m);
         grp.Currency = new Currency("EUR");
         grp.MDEntrySize = new MDEntrySize(1246000);
         grp.MDEntryDate = new MDEntryDate(new DateOnly(2012, 10, 24));
@@ -877,7 +877,7 @@ public class MessageTests
 
         grp = new QuickFix.FIX44.MarketDataIncrementalRefresh.NoMDEntriesGroup();
         grp.MDEntryType = new MDEntryType(MDEntryType.OFFER);
-        grp.MDEntryPx = new MDEntryPx((decimal)108.08);
+        grp.MDEntryPx = new MDEntryPx(108.08m);
         grp.Currency = new Currency("EUR");
         grp.MDEntrySize = new MDEntrySize(884000);
         grp.MDEntryDate = new MDEntryDate(new DateOnly(2012, 10, 24));
