@@ -810,10 +810,9 @@ public class Session : IDisposable
                 Log.Log(LogLevel.Information, "Got resend request from {BeginSeqNo} to {EndSeqNo}",
                     begSeqNo, endSeqNo);
 
-                if (endSeqNo == 999999 || endSeqNo == 0)
-                {
+                string beginString = resendReq.Header.GetString(Tags.BeginString);
+                if (endSeqNo==0 || (endSeqNo == 999999 && !BeginStringIsFix42OrAbove(beginString)))
                     endSeqNo = _state.NextSenderMsgSeqNum - 1;
-                }
 
                 if (!PersistMessages)
                 {
@@ -1372,10 +1371,7 @@ public class Session : IDisposable
         }
         else
         {
-            if (string.CompareOrdinal(beginString, FixValues.BeginString.FIX42) >= 0)
-                endRangeSeqNum = 0;
-            else if (string.CompareOrdinal(beginString, FixValues.BeginString.FIX41) <= 0)
-                endRangeSeqNum = 999999;
+            endRangeSeqNum = BeginStringIsFix42OrAbove(beginString) ? 0ul : 999999ul;
             endChunkSeqNum = endRangeSeqNum;
         }
 
@@ -1645,9 +1641,14 @@ public class Session : IDisposable
         InsertSendingTime(m.Header);
     }
 
-    private bool IsFix42OrAbove() {
-        return SessionID.BeginString == FixValues.BeginString.FIXT11
-            || string.CompareOrdinal(SessionID.BeginString, FixValues.BeginString.FIX42) >= 0;
+    private bool IsFix42OrAbove()
+    {
+        return BeginStringIsFix42OrAbove(SessionID.BeginString);
+    }
+
+    private static bool BeginStringIsFix42OrAbove(string beginString)
+    {
+        return beginString is not (FixValues.BeginString.FIX40 or FixValues.BeginString.FIX41);
     }
 
     protected void InsertSendingTime(FieldMap header)
