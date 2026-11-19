@@ -88,6 +88,7 @@ What's New
 * #1042 - Log (don't swallow) certificate-load failures (gbirchmeier)
 * #1032 - Fix certificate lookup on non-Windows platforms (plesiu)
 * #1045 - Don't act on ResetSeqNumFlag=Y until after Logon is verified (gbirchmeier)
+* #1047 - bugfix: EndSeqNo=999999 must be treated like a literal seqno in FIX42+ (gbirchmeier)
 
 ### v1.14.1
 
